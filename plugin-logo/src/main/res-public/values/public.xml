@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file is generated. -->
+<resources>
+
+    <!-- Whether the logo is visible on the map. -->
+    <public name="mapbox_logoEnabled" type="attr" />
+
+    <!-- Defines where the logo is positioned on the map -->
+    <public name="mapbox_logoGravity" type="attr" >
+
+    <!-- Defines the margin to the left that the attribution icon honors. -->
+    <public name="mapbox_logoMarginLeft" type="attr" />
+
+    <!-- Defines the margin to the top that the attribution icon honors. -->
+    <public name="mapbox_logoMarginTop" type="attr" />
+
+    <!-- Defines the margin to the right that the attribution icon honors. -->
+    <public name="mapbox_logoMarginRight" type="attr" />
+
+    <!-- Defines the margin to the bottom that the attribution icon honors. -->
+    <public name="mapbox_logoMarginBottom" type="attr" />
+</resources>
+<!-- End of generated file. -->

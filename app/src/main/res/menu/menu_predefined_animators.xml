@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_action_jump_to"
+        android:title="@string/menu_animator_jump_to"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_action_ease_to"
+        android:title="@string/menu_animator_ease_to"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_action_fly_to"
+        android:title="@string/menu_animator_fly_to"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_action_move_by"
+        android:title="@string/menu_animator_move_by"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_action_pitch_by"
+        android:title="@string/menu_animator_pitch_by"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_action_rotate_by"
+        android:title="@string/menu_animator_rotate_by"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_action_scale_by"
+        android:title="@string/menu_animator_scale_by"
+        app:showAsAction="never"/>
+</menu>

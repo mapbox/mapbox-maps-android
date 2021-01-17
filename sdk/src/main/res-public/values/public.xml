@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- A JSON Web token to associate API requests with your Mapbox account. -->
+    <public name="mapbox_resourcesAccessToken" type="attr" />
+
+    <!-- An URL that defines the base for API requests. -->
+    <public name="mapbox_resourcesBaseUrl" type="attr" />
+
+    <!-- The path to the assets. -->
+    <public name="mapbox_resourcesCachePath" type="attr" />
+
+    <!-- The path to the assets. -->
+    <public name="mapbox_resourcesAssetPath" type="attr" />
+
+    <!-- The path to the tile store. -->
+    <public name="mapbox_resourcesTileStorePath" type="attr" />
+
+    <!-- The size of the cache. -->
+    <public name="mapbox_resourcesCacheSize" type="attr" />
+
+    <!-- The map rendering mode. By default, it is set to Continuous so the map will render as data arrives from the network and react immediately to state changes. -->
+    <public name="mapbox_mapMapMode" type="attr" />
+
+    <!-- The map context mode. This can be used to optimizations if we know that the drawing context is not shared with other code. -->
+    <public name="mapbox_mapContextMode" type="attr" />
+
+    <!-- The map constrain mode. This can be used to limit the map to wrap around the globe horizontally. By default, it is set to HeightOnly. -->
+    <public name="mapbox_mapConstrainMode" type="attr" />
+
+    <!-- The viewport mode. This can be used to flip the vertical orientation of the map as some devices may use inverted orientation. -->
+    <public name="mapbox_mapViewportMode" type="attr" />
+
+    <!-- The orientation of the Map. By default, it is set to upwards. -->
+    <public name="mapbox_mapOrientation" type="attr" />
+
+    <!-- To enable cross-source symbol collision detection or not. By default, it is set to true. -->
+    <public name="mapbox_mapCrossSourceCollisionsEnabled" type="attr" />
+
+    <!-- The custom pixel ratio. By default, it is set to 1. -->
+    <public name="mapbox_mapPixelRatio" type="attr" />
+
+    <!-- Font family used for client-side text rendering. -->
+    <public name="mapbox_mapFontFamily" type="attr" />
+
+    <!-- The view type used to render. -->
+    <public name="mapbox_mapSurface" type="attr" />
+
+    <!-- Describes glyphs rasterization modes. -->
+    <public name="mapbox_mapGlyphRasterizationMode" type="attr" />
+
+    <!-- OLD MANUAL WRITTEN configuration-->
+
+    <!--Camera-->
+    <public name="mapbox_cameraTargetLat" type="attr"/>
+    <public name="mapbox_cameraTargetLng" type="attr"/>
+    <public name="mapbox_cameraZoom" type="attr"/>
+    <public name="mapbox_cameraBearing" type="attr"/>
+    <public name="mapbox_cameraTilt" type="attr"/>
+    <public name="mapbox_cameraPitch" type="attr"/>
+    <public name="mapbox_cameraAnchorX" type="attr"/>
+    <public name="mapbox_cameraAnchorY" type="attr"/>
+    <public name="mapbox_cameraPaddingTop" type="attr"/>
+    <public name="mapbox_cameraPaddingLeft" type="attr"/>
+    <public name="mapbox_cameraPaddingBottom" type="attr"/>
+    <public name="mapbox_cameraPaddingRight" type="attr"/>
+</resources>

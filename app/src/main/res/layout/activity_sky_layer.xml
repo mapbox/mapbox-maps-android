@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.mapbox.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        mapbox:mapbox_cameraPitch="85"
+        mapbox:mapbox_cameraTargetLat="60.192"
+        mapbox:mapbox_cameraTargetLng="24.946"
+        mapbox:mapbox_cameraZoom="3.05" />
+
+    <TextView
+        android:id="@+id/textSkyMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        mapbox:layout_constraintStart_toStartOf="parent"
+        mapbox:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switchSkyMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        mapbox:layout_constraintStart_toEndOf="@id/textSkyMode"
+        mapbox:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutGradient"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:visibility="visible"
+        mapbox:layout_constraintStart_toStartOf="parent"
+        mapbox:layout_constraintTop_toBottomOf="@id/switchSkyMode">
+
+        <TextView
+            android:id="@+id/captionGradientRadius"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"
+            mapbox:layout_constrainedWidth="true"
+            mapbox:layout_constraintBottom_toBottomOf="@id/seekBarGradientRadius"
+            mapbox:layout_constraintStart_toStartOf="parent"
+            mapbox:layout_constraintTop_toTopOf="@id/seekBarGradientRadius" />
+
+        <SeekBar
+            android:id="@+id/seekBarGradientRadius"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:max="180"
+            android:progress="10"
+            mapbox:layout_constrainedWidth="true"
+            mapbox:layout_constraintEnd_toEndOf="parent"
+            mapbox:layout_constraintStart_toEndOf="@id/captionGradientRadius"
+            mapbox:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/captionGradientCenterA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"
+            mapbox:layout_constrainedWidth="true"
+            mapbox:layout_constraintBottom_toBottomOf="@id/seekBarGradientCenterA"
+            mapbox:layout_constraintStart_toStartOf="parent"
+            mapbox:layout_constraintTop_toTopOf="@id/seekBarGradientCenterA" />
+
+        <SeekBar
+            android:id="@+id/seekBarGradientCenterA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:max="360"
+            android:progress="180"
+            mapbox:layout_constrainedWidth="true"
+            mapbox:layout_constraintEnd_toEndOf="parent"
+            mapbox:layout_constraintStart_toEndOf="@id/captionGradientCenterA"
+            mapbox:layout_constraintTop_toBottomOf="@id/seekBarGradientRadius" />
+
+        <TextView
+            android:id="@+id/captionGradientCenterP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"
+            mapbox:layout_constrainedWidth="true"
+            mapbox:layout_constraintBottom_toBottomOf="@id/seekBarGradientCenterP"
+            mapbox:layout_constraintStart_toStartOf="parent"
+            mapbox:layout_constraintTop_toTopOf="@id/seekBarGradientCenterP" />
+
+        <SeekBar
+            android:id="@+id/seekBarGradientCenterP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:max="180"
+            android:progress="90"
+            mapbox:layout_constrainedWidth="true"
+            mapbox:layout_constraintEnd_toEndOf="parent"
+            mapbox:layout_constraintStart_toEndOf="@id/captionGradientCenterP"
+            mapbox:layout_constraintTop_toBottomOf="@id/seekBarGradientCenterA" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutAtmosphere"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:visibility="gone"
+        mapbox:layout_constraintStart_toStartOf="parent"
+        mapbox:layout_constraintTop_toBottomOf="@id/switchSkyMode">
+
+        <TextView
+            android:id="@+id/captionAtmosphereSunIntensity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"
+            mapbox:layout_constrainedWidth="true"
+            mapbox:layout_constraintBottom_toBottomOf="@id/seekBarAtmosphereSunIntensity"
+            mapbox:layout_constraintStart_toStartOf="parent"
+            mapbox:layout_constraintTop_toTopOf="@id/seekBarAtmosphereSunIntensity" />
+
+        <SeekBar
+            android:id="@+id/seekBarAtmosphereSunIntensity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:max="100"
+            android:progress="10"
+            mapbox:layout_constrainedWidth="true"
+            mapbox:layout_constraintEnd_toEndOf="parent"
+            mapbox:layout_constraintStart_toEndOf="@id/captionAtmosphereSunIntensity"
+            mapbox:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/captionAtmosphereCenterA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"
+            mapbox:layout_constrainedWidth="true"
+            mapbox:layout_constraintBottom_toBottomOf="@id/seekBarAtmosphereCenterA"
+            mapbox:layout_constraintStart_toStartOf="parent"
+            mapbox:layout_constraintTop_toTopOf="@id/seekBarAtmosphereCenterA" />
+
+        <SeekBar
+            android:id="@+id/seekBarAtmosphereCenterA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:max="360"
+            android:progress="180"
+            mapbox:layout_constrainedWidth="true"
+            mapbox:layout_constraintEnd_toEndOf="parent"
+            mapbox:layout_constraintStart_toEndOf="@id/captionAtmosphereCenterA"
+            mapbox:layout_constraintTop_toBottomOf="@id/seekBarAtmosphereSunIntensity" />
+
+        <TextView
+            android:id="@+id/captionAtmosphereCenterP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"
+            mapbox:layout_constrainedWidth="true"
+            mapbox:layout_constraintBottom_toBottomOf="@id/seekBarAtmosphereCenterP"
+            mapbox:layout_constraintStart_toStartOf="parent"
+            mapbox:layout_constraintTop_toTopOf="@id/seekBarAtmosphereCenterP" />
+
+        <SeekBar
+            android:id="@+id/seekBarAtmosphereCenterP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:max="180"
+            android:progress="90"
+            mapbox:layout_constrainedWidth="true"
+            mapbox:layout_constraintEnd_toEndOf="parent"
+            mapbox:layout_constraintStart_toEndOf="@id/captionAtmosphereCenterP"
+            mapbox:layout_constraintTop_toBottomOf="@id/seekBarAtmosphereCenterA" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

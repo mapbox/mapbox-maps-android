@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.mapbox.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@color/simi_transparent_blue"
+        android:orientation="vertical">
+
+        <CheckedTextView
+            android:id="@+id/withImproveMap"
+            style="@style/CustomAttributionCheckbox"
+            android:text="@string/custom_attribution_withImproveMap" />
+
+        <CheckedTextView
+            android:id="@+id/withCopyrightSign"
+            style="@style/CustomAttributionCheckbox"
+            android:text="@string/custom_attribution_withCopyrightSign" />
+
+        <CheckedTextView
+            android:id="@+id/withTelemetryAttribution"
+            style="@style/CustomAttributionCheckbox"
+            android:text="@string/custom_attribution_withTelemetryAttribution" />
+
+        <CheckedTextView
+            android:id="@+id/withMapboxAttribution"
+            style="@style/CustomAttributionCheckbox"
+            android:text="@string/custom_attribution_withMapboxAttribution" />
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/custom_attribution_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_baseline_refresh_24" />
+
+</merge>
