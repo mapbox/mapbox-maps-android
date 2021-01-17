@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file is generated. -->
+<resources>
+
+    <!-- Whether the scale is visible on the map. -->
+    <public name="mapbox_scaleBarEnabled" type="attr" />
+
+    <!-- Defines where the scale bar is positioned on the map -->
+    <public name="mapbox_scaleBarGravity" type="attr" >
+
+    <!-- Defines the margin to the left that the scale bar honors. -->
+    <public name="mapbox_scaleBarMarginLeft" type="attr" />
+
+    <!-- Defines the margin to the top that the scale bar honors. -->
+    <public name="mapbox_scaleBarMarginTop" type="attr" />
+
+    <!-- Defines the margin to the right that the scale bar honors. -->
+    <public name="mapbox_scaleBarMarginRight" type="attr" />
+
+    <!-- Defines the margin to the bottom that the scale bar honors. -->
+    <public name="mapbox_scaleBarMarginBottom" type="attr" />
+
+    <!-- Defines text color of the scale bar. -->
+    <public name="mapbox_scaleBarTextColor" type="attr" />
+
+    <!-- Defines primary color of the scale bar. -->
+    <public name="mapbox_scaleBarPrimaryColor" type="attr" />
+
+    <!-- Defines secondary color of the scale bar. -->
+    <public name="mapbox_scaleBarSecondaryColor" type="attr" />
+
+    <!-- Defines width of the border for the scale bar. -->
+    <public name="mapbox_scaleBarBorderWidth" type="attr" />
+
+    <!-- Defines height of the scale bar. -->
+    <public name="mapbox_scaleBarHeight" type="attr" />
+
+    <!-- Defines margin of the text bar of the scale bar. -->
+    <public name="mapbox_scaleBarTextBarMargin" type="attr" />
+
+    <!-- Defines text border width of the scale bar. -->
+    <public name="mapbox_scaleBarTextBorderWidth" type="attr" />
+
+    <!-- Defines text size of the scale bar. -->
+    <public name="mapbox_scaleBarTextSize" type="attr" />
+
+    <!-- Whether the scale bar is using metric unit. True if the scale bar is using metric system, false if the scale bar is using imperial units. -->
+    <public name="mapbox_scaleBarIsMetricUnits" type="attr" />
+
+    <!-- Configures minimum refresh interval, in millisecond, default is 15. -->
+    <public name="mapbox_scaleBarRefreshInterval" type="attr" />
+
+    <!-- Configures whether to show the text border or not, default is true. -->
+    <public name="mapbox_scaleBarShowTextBorder" type="attr" />
+
+    <!-- configures ratio of scale bar max width compared with MapView width, default is 0.5. -->
+    <public name="mapbox_scaleBarRatio" type="attr" />
+</resources>
+<!-- End of generated file. -->

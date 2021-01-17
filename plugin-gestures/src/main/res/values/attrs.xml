@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file is generated. -->
+<resources>
+    <declare-styleable name="mapbox_MapView">
+        <!-- Whether rotation gestures are enabled. -->
+        <attr name="mapbox_gesturesRotateEnabled" format="boolean"/>
+        <!-- Whether zoom gestures are enabled. -->
+        <attr name="mapbox_gesturesZoomEnabled" format="boolean"/>
+        <!-- Whether scroll gestures are enabled. -->
+        <attr name="mapbox_gesturesScrollEnabled" format="boolean"/>
+        <!-- Whether pitch gestures are enabled. -->
+        <attr name="mapbox_gesturesPitchEnabled" format="boolean"/>
+        <!-- Whether double tapping the map results in a zoom gesture. -->
+        <attr name="mapbox_gesturesDoubleTapToZoomEnabled" format="boolean"/>
+        <!-- Whether quick zoom gesture is enabled. -->
+        <attr name="mapbox_gesturesQuickZoomEnabled" format="boolean"/>
+        <!-- Whether a gesture executes around a fixed focal point or the center of the gesture. -->
+        <attr name="mapbox_gesturesFocalPointX" format="float"/>
+        <attr name="mapbox_gesturesFocalPointY" format="float"/>
+        <!-- Whether scale velocity animations are enabled, true by default. -->
+        <attr name="mapbox_gesturesScaleVelocityAnimationEnabled" format="boolean"/>
+        <!-- Whether rotate velocity animations are enabled, true by default. -->
+        <attr name="mapbox_gesturesRotateVelocityAnimationEnabled" format="boolean"/>
+        <!-- Whether fling velocity animations are enabled, true by default. -->
+        <attr name="mapbox_gesturesFlingVelocityAnimationEnabled" format="boolean"/>
+        <!-- Whether rotate threshold increases when scaling. true by default. -->
+        <attr name="mapbox_gesturesIncreaseRotateThresholdWhenScaling" format="boolean"/>
+        <!-- Whether rotate is disabled when scaling. true by default. -->
+        <attr name="mapbox_gesturesDisableRotateWhenScaling" format="boolean"/>
+        <!-- Whether scale threshold increases when rotating. true by default. -->
+        <attr name="mapbox_gesturesIncreaseScaleThresholdWhenRotating" format="boolean"/>
+        <!-- The rate at which the zoom level increases. 1.0 by default -->
+        <attr name="mapbox_gesturesZoomRate" format="float"/>
+        <!-- The pixel ratio of the device that the gestures will take in account. -->
+        <attr name="mapbox_gesturesPixelRatio" format="float"/>
+    </declare-styleable>
+</resources>
+<!-- End of generated file. -->

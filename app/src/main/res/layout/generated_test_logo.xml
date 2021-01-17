@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file is generated. -->
+<com.mapbox.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mapView"
+    mapbox:mapbox_logoEnabled = "false"
+    mapbox:mapbox_logoGravity = "bottom|end"
+    mapbox:mapbox_logoMarginLeft = "10dp"
+    mapbox:mapbox_logoMarginTop = "10dp"
+    mapbox:mapbox_logoMarginRight = "10dp"
+    mapbox:mapbox_logoMarginBottom = "10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+<!-- End of generated file. -->

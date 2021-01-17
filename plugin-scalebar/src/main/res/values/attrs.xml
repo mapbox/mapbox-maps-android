@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file is generated. -->
+<resources>
+    <declare-styleable name="mapbox_MapView">
+        <!-- Whether the scale is visible on the map. -->
+        <attr name="mapbox_scaleBarEnabled" format="boolean"/>
+
+        <!-- Defines where the scale bar is positioned on the map -->
+        <attr name="mapbox_scaleBarGravity">
+            <!-- Push object to the top of its container, not changing its size. -->
+            <flag name="top" value="0x30" />
+            <!-- Push object to the bottom of its container, not changing its size. -->
+            <flag name="bottom" value="0x50" />
+            <!-- Push object to the left of its container, not changing its size. -->
+            <flag name="left" value="0x03" />
+            <!-- Push object to the right of its container, not changing its size. -->
+            <flag name="right" value="0x05" />
+            <!-- Place object in the vertical center of its container, not changing its size. -->
+            <flag name="center_vertical" value="0x10" />
+            <!-- Grow the vertical size of the object if needed so it completely fills its container. -->
+            <flag name="fill_vertical" value="0x70" />
+            <!-- Place object in the horizontal center of its container, not changing its size. -->
+            <flag name="center_horizontal" value="0x01" />
+            <!-- Grow the horizontal size of the object if needed so it completely fills its container. -->
+            <flag name="fill_horizontal" value="0x07" />
+            <!-- Place the object in the center of its container in both the vertical and horizontal axis, not changing its size. -->
+            <flag name="center" value="0x11" />
+            <!-- Grow the horizontal and vertical size of the object if needed so it completely fills its container. -->
+            <flag name="fill" value="0x77" />
+            <!-- Additional option that can be set to have the top and/or bottom edges of
+                 the child clipped to its container's bounds.
+                 The clip will be based on the vertical gravity: a top gravity will clip the bottom
+                 edge, a bottom gravity will clip the top edge, and neither will clip both edges. -->
+            <flag name="clip_vertical" value="0x80" />
+            <!-- Additional option that can be set to have the left and/or right edges of
+                 the child clipped to its container's bounds.
+                 The clip will be based on the horizontal gravity: a left gravity will clip the right
+                 edge, a right gravity will clip the left edge, and neither will clip both edges. -->
+            <flag name="clip_horizontal" value="0x08" />
+            <!-- Push object to the beginning of its container, not changing its size. -->
+            <flag name="start" value="0x00800003" />
+            <!-- Push object to the end of its container, not changing its size. -->
+            <flag name="end" value="0x00800005" />
+        </attr>
+        <!-- Defines the margin to the left that the scale bar honors. -->
+        <attr name="mapbox_scaleBarMarginLeft" format="dimension"/>
+        <!-- Defines the margin to the top that the scale bar honors. -->
+        <attr name="mapbox_scaleBarMarginTop" format="dimension"/>
+        <!-- Defines the margin to the right that the scale bar honors. -->
+        <attr name="mapbox_scaleBarMarginRight" format="dimension"/>
+        <!-- Defines the margin to the bottom that the scale bar honors. -->
+        <attr name="mapbox_scaleBarMarginBottom" format="dimension"/>
+        <!-- Defines text color of the scale bar. -->
+        <attr name="mapbox_scaleBarTextColor" format="color"/>
+        <!-- Defines primary color of the scale bar. -->
+        <attr name="mapbox_scaleBarPrimaryColor" format="color"/>
+        <!-- Defines secondary color of the scale bar. -->
+        <attr name="mapbox_scaleBarSecondaryColor" format="color"/>
+        <!-- Defines width of the border for the scale bar. -->
+        <attr name="mapbox_scaleBarBorderWidth" format="dimension"/>
+        <!-- Defines height of the scale bar. -->
+        <attr name="mapbox_scaleBarHeight" format="dimension"/>
+        <!-- Defines margin of the text bar of the scale bar. -->
+        <attr name="mapbox_scaleBarTextBarMargin" format="dimension"/>
+        <!-- Defines text border width of the scale bar. -->
+        <attr name="mapbox_scaleBarTextBorderWidth" format="dimension"/>
+        <!-- Defines text size of the scale bar. -->
+        <attr name="mapbox_scaleBarTextSize" format="dimension"/>
+        <!-- Whether the scale bar is using metric unit. True if the scale bar is using metric system, false if the scale bar is using imperial units. -->
+        <attr name="mapbox_scaleBarIsMetricUnits" format="boolean"/>
+        <!-- Configures minimum refresh interval, in millisecond, default is 15. -->
+        <attr name="mapbox_scaleBarRefreshInterval" format="integer"/>
+        <!-- Configures whether to show the text border or not, default is true. -->
+        <attr name="mapbox_scaleBarShowTextBorder" format="boolean"/>
+        <!-- configures ratio of scale bar max width compared with MapView width, default is 0.5. -->
+        <attr name="mapbox_scaleBarRatio" format="float"/>
+    </declare-styleable>
+</resources>
+<!-- End of generated file. -->

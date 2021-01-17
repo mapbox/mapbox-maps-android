@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file is generated. -->
+<resources>
+
+    <!-- Whether the attribution icon is visible on the map. -->
+    <public name="mapbox_attributionEnabled" type="attr" />
+
+    <!-- Defines text color of the attribution icon. -->
+    <public name="mapbox_attributionIconColor" type="attr" />
+
+    <!-- Defines where the attribution icon is positioned on the map -->
+    <public name="mapbox_attributionGravity" type="attr" >
+
+    <!-- Defines the margin to the left that the attribution icon honors. -->
+    <public name="mapbox_attributionMarginLeft" type="attr" />
+
+    <!-- Defines the margin to the top that the attribution icon honors. -->
+    <public name="mapbox_attributionMarginTop" type="attr" />
+
+    <!-- Defines the margin to the right that the attribution icon honors. -->
+    <public name="mapbox_attributionMarginRight" type="attr" />
+
+    <!-- Defines the margin to the bottom that the attribution icon honors. -->
+    <public name="mapbox_attributionMarginBottom" type="attr" />
+
+    <!-- Whether the attribution can be clicked and click events can be registered. -->
+    <public name="mapbox_attributionClickable" type="attr" />
+</resources>
+<!-- End of generated file. -->

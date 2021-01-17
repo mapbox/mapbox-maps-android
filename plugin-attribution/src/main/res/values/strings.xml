@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mapbox_telemetrySettings">Telemetry Settings</string>
+    <string name="mapbox_telemetryLink" translatable="false">https://www.mapbox.com/telemetry/</string>
+    <string name="mapbox_telemetryImproveMap">Improve This Map</string>
+    <string name="mapbox_attributionErrorNoBrowser">No web browser installed on device, can\'t open web page.</string>
+    <string name="mapbox_attributionsDialogTitle">Mapbox Maps SDK for Android</string>
+    <string name="mapbox_attributionTelemetryTitle">Make Mapbox Maps Better</string>
+    <string name="mapbox_attributionTelemetryMessage">You are helping to make OpenStreetMap and Mapbox maps better by contributing anonymous usage data.</string>
+    <string name="mapbox_attributionTelemetryPositive">Agree</string>
+    <string name="mapbox_attributionTelemetryNegative">Disagree</string>
+    <string name="mapbox_attributionTelemetryNeutral">More info</string>
+</resources>

@@ -1,0 +1,15 @@
+ext {
+    mapboxArtifactGroupId = project.property('POM_GROUP_ID')
+    mapboxArtifactId = project.property('POM_ARTIFACT_ID')
+    mapboxArtifactTitle = project.property('POM_ARTIFACT_TITLE')
+    mapboxArtifactDescription = project.property('POM_DESCRIPTION')
+    mapboxDeveloperName = 'Mapbox'
+    mapboxDeveloperId = 'mapbox'
+    mapboxArtifactUrl = 'https://github.com/mapbox/mapbox-maps-android'
+    mapboxArtifactVcsUrl = 'https://github.com/mapbox/mapbox-maps-android.git'
+    mapboxArtifactScmUrl = 'scm:git@github.com:mapbox/mapbox-maps-android.git'
+    mapboxArtifactLicenseName = 'BSD'
+    mapboxArtifactLicenseUrl = 'https://opensource.org/licenses/BSD-2-Clause'
+    versionName = project.property('VERSION_NAME')
+    mapboxRegistrySdkName = project.hasProperty('REGISTRY_SDK_NAME') ? project.property('REGISTRY_SDK_NAME') : System.getenv('REGISTRY_SDK_NAME')
+}

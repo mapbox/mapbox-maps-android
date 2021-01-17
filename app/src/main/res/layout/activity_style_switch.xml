@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".examples.StyleSwitchActivity">
+
+    <Button
+        android:id="@+id/light_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/menu_map_style_light"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toStartOf="@+id/streets_button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+    <com.mapbox.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:mapbox_attributionEnabled="true"
+        app:mapbox_attributionGravity="top|right"
+        app:mapbox_attributionMarginBottom="32dp"
+        app:mapbox_attributionMarginLeft="32dp"
+        app:mapbox_attributionMarginRight="32dp"
+        app:mapbox_attributionMarginTop="32dp"
+        app:mapbox_compassImage="@drawable/custom_compass"
+        app:mapbox_compassEnabled="true"
+        app:mapbox_compassFadeWhenFacingNorth="false"
+        app:mapbox_compassGravity="left|top"
+        app:mapbox_compassMarginBottom="32dp"
+        app:mapbox_compassMarginLeft="32dp"
+        app:mapbox_compassMarginRight="32dp"
+        app:mapbox_compassMarginTop="32dp"
+        app:mapbox_gesturesDoubleTapToZoomEnabled="false"
+        app:mapbox_logoEnabled="true"
+        app:mapbox_logoGravity="bottom|right"
+        app:mapbox_logoMarginBottom="32dp"
+        app:mapbox_logoMarginLeft="32dp"
+        app:mapbox_logoMarginRight="32dp"
+        app:mapbox_logoMarginTop="32dp"
+        app:mapbox_gesturesQuickZoomEnabled="false"
+        app:mapbox_gesturesRotateEnabled="true"
+        app:mapbox_gesturesScrollEnabled="false"
+        app:mapbox_gesturesPitchEnabled="false"
+        app:mapbox_gesturesZoomEnabled="false" />
+
+    <Button
+        android:id="@+id/satellite_streets_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/menu_map_style_satellite_streets"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="@+id/streets_button"
+        app:layout_constraintStart_toStartOf="@+id/streets_button"
+        app:layout_constraintTop_toBottomOf="@+id/streets_button" />
+
+    <Button
+        android:id="@+id/satellite_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/menu_map_style_satellite"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/satellite_streets_button"
+        app:layout_constraintStart_toStartOf="@+id/satellite_streets_button"
+        app:layout_constraintTop_toTopOf="@+id/outdoors_button"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/dark_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/menu_map_style_dark"
+        android:textAllCaps="false"
+        app:layout_constraintStart_toStartOf="@+id/light_button"
+        app:layout_constraintTop_toBottomOf="@+id/light_button" />
+
+    <Button
+        android:id="@+id/streets_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/menu_map_style_streets"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/light_button"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+
+    <Button
+        android:id="@+id/outdoors_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/menu_map_style_outdoors"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="@+id/dark_button"
+        app:layout_constraintHorizontal_bias="0.784"
+        app:layout_constraintStart_toEndOf="@+id/light_button"
+        app:layout_constraintStart_toStartOf="@+id/dark_button"
+        app:layout_constraintTop_toBottomOf="@+id/dark_button" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
