@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file is generated. -->
+<resources>
+
+    <!-- Whether the compass is visible on the map. -->
+    <public name="mapbox_compassEnabled" type="attr" />
+
+    <!-- Defines where the compass is positioned on the map -->
+    <public name="mapbox_compassGravity" type="attr" >
+
+    <!-- Defines the margin to the left that the compass icon honors. -->
+    <public name="mapbox_compassMarginLeft" type="attr" />
+
+    <!-- Defines the margin to the top that the compass icon honors. -->
+    <public name="mapbox_compassMarginTop" type="attr" />
+
+    <!-- Defines the margin to the right that the compass icon honors. -->
+    <public name="mapbox_compassMarginRight" type="attr" />
+
+    <!-- Defines the margin to the bottom that the compass icon honors. -->
+    <public name="mapbox_compassMarginBottom" type="attr" />
+
+    <!-- The alpha channel value of the compass image -->
+    <public name="mapbox_compassOpacity" type="attr" />
+
+    <!-- The clockwise rotation value in degrees of the compass. -->
+    <public name="mapbox_compassRotation" type="attr" />
+
+    <!-- Whether the compass is displayed. -->
+    <public name="mapbox_compassVisibility" type="attr" />
+
+    <!-- Whether the compass fades out to invisible when facing north direction. -->
+    <public name="mapbox_compassFadeWhenFacingNorth" type="attr" />
+
+    <!-- Whether the compass can be clicked and click events can be registered. -->
+    <public name="mapbox_compassClickable" type="attr" />
+
+    <!-- The compass image, the visual representation of the compass. -->
+    <public name="mapbox_compassImage" type="attr" />
+</resources>
+<!-- End of generated file. -->

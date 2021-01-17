@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleX="1.8"
+        android:scaleY="1.8" />
+
+    <com.mapbox.maps.MapView xmlns:mapbox="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        mapbox:mapbox_cameraTargetLat="48.507879"
+        mapbox:mapbox_cameraTargetLng="8.363795"
+        mapbox:mapbox_cameraZoom="2"
+        mapbox:mapbox_mapSurface="texture_view" />
+
+</merge>

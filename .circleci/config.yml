@@ -1,0 +1,392 @@
+version: 2.1
+parameters:
+  mapbox_upstream:
+    type: boolean
+    default: false
+  mapbox_slug:
+    type: string
+    default: "owner/repo"
+  mapbox_hash:
+    type: string
+    default: "000000"
+
+workflows:
+  version: 2
+  build:
+    when:
+      not: << pipeline.parameters.mapbox_upstream >>
+    jobs:
+      - verify-code:
+          filters:
+            tags:
+              only: /android-v.*/
+      - verify-docs:
+          requires:
+            - verify-code
+      - run-lint:
+          requires:
+            - verify-code
+      - run-unit-test
+      - run-robo-test:
+          requires:
+            - verify-code
+      - run-app-test:
+          requires:
+            - verify-code
+      - run-sdk-test:
+          requires:
+            - verify-code
+      - start-run-style-test:
+          type: approval
+      - run-style-test:
+          requires:
+            - start-run-style-test
+      - build-sdk-from-source:
+          requires:
+            - verify-code
+      - build-sdk-release:
+          requires:
+            - verify-code
+          filters:
+            tags:
+              only: /android-v.*/
+
+  validation:
+    when: << pipeline.parameters.mapbox_upstream >>
+    jobs:
+      - run-sdk-test
+
+commands:
+  restore-gradle-cache:
+    steps:
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "build.gradle.kts" }}-{{ checksum "app/build.gradle.kts" }}-{{ checksum "sdk/build.gradle.kts" }}-{{ checksum "buildSrc/src/main/kotlin/Project.kt" }}
+            - v1-dependencies-
+      - run:
+          name: Download dependencies
+          command: ./gradlew dependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: v1-dependencies-{{ checksum "build.gradle.kts" }}-{{ checksum "app/build.gradle.kts" }}-{{ checksum "sdk/build.gradle.kts" }}-{{ checksum "buildSrc/src/main/kotlin/Project.kt" }}
+
+  jvm-unit-tests:
+    steps:
+      - run:
+          name: Run JVM unit tests & create jacoco code coverage report
+          no_output_timeout: 30m
+          command: ./gradlew jacocoTestDebugUnitTestReport
+      - run:
+          name: Upload codecov
+          command: bash <(curl -sSfL https://codecov.io/bash)
+
+  store-results:
+    steps:
+      - store_artifacts:
+          path: sdk/build
+      - store_artifacts:
+          path: LICENSE.md
+
+  build-instrumentation-test:
+    parameters:
+      module_target:
+        description: module target
+        type: string
+    steps:
+      - run:
+          name: Initialize developer access token for sdk tests
+          command: |
+            if [ -n "${MAPBOX_DEVELOPER_CONFIG_XML}" ]; then
+              echo "${MAPBOX_DEVELOPER_CONFIG_XML}" > sdk/src/androidTest/res/values/developer-config.xml
+            fi
+      - run:
+          name: Build instrumentation test apk
+          no_output_timeout: 30m
+          command: ./gradlew << parameters.module_target >>:assembleAndroidTest
+
+  build-module:
+    parameters:
+      module_target:
+        description: module target
+        type: string
+      variant:
+        description: debug or release
+        type: string
+    steps:
+      - run:
+          name: Initialize developer access token for app tests
+          command: |
+            if [ -n "${MAPBOX_DEVELOPER_CONFIG_XML}" ]; then
+              echo "${MAPBOX_DEVELOPER_CONFIG_XML}" > app/src/main/res/values/developer-config.xml
+              echo "${MAPBOX_DEVELOPER_CONFIG_XML}" > extension-style-app/src/main/res/values/developer-config.xml
+            fi
+      - run:
+          name: Build << parameters.module_target >> apk in << parameters.variant >> mode
+          command: ./gradlew << parameters.module_target >>:assemble<< parameters.variant >>
+
+  update-version-name:
+    steps:
+      - run:
+          name: Update version name
+          command: |
+            if [[ $CIRCLE_TAG == android-v* ]]; then
+              sed -i -e "s/^VERSION_NAME=.*/VERSION_NAME=${CIRCLE_TAG:9}/" gradle.properties
+            fi
+
+  track-metrics:
+    steps:
+      - unless:
+          condition: << pipeline.parameters.mapbox_upstream >>
+          steps:
+            - run:
+                name: Track performance of the sdk
+                command: |
+                  if [ -n "${MOBILE_METRICS_TOKEN}" ]; then
+                    pip3 install requests
+                    if [[ $CIRCLE_BRANCH == main ]]; then
+                      python3 scripts/mobile-metrics-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} --target-slug mapbox/mobile-metrics --branch master
+                    else
+                      python3 scripts/mobile-metrics-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} --target-slug mapbox/mobile-metrics --mapbox_upstream True
+                    fi
+                  fi
+
+  publish-sdk-registry:
+    steps:
+      - unless:
+          condition: << pipeline.parameters.mapbox_upstream >>
+          steps:
+            - run:
+                name: Publish the SDK
+                command: |
+                  if [[ $CIRCLE_TAG == android-v* ||  $CIRCLE_BRANCH == main ]]; then
+                    make sdkRegistryUpload
+                  fi
+
+  login-google-cloud-platform:
+    steps:
+      - run:
+          name: Log in to Google Cloud Platform
+          command: |
+            if [[ -n "${GCLOUD_SERVICE_ACCOUNT_JSON}" ]]; then
+              echo "${GCLOUD_SERVICE_ACCOUNT_JSON}" > secret.json
+              gcloud auth activate-service-account --key-file secret.json --project mapbox-maps-android
+              rm secret.json
+            fi
+
+  generate-sanity-test:
+    steps:
+      - run:
+          name: Generate sanity test
+          command: |
+            npm install
+            make generate-sanity-test
+
+  run-firebase-instrumentation:
+    parameters:
+      module_target:
+        description: module target
+        type: string
+      app_target:
+        description: app target
+        type: string
+        default: "app"
+    steps:
+      - run:
+          name: Run instrumentation tests on Firebase
+          no_output_timeout: 50m
+          command: |
+            if [[ -n "${GCLOUD_SERVICE_ACCOUNT_JSON}" ]]; then
+              gcloud firebase test android run --type instrumentation \
+                --app << parameters.app_target >>/build/outputs/apk/debug/<< parameters.app_target >>-debug.apk \
+                --test << parameters.module_target >>/build/outputs/apk/androidTest/debug/<< parameters.module_target >>-debug-androidTest.apk \
+                --device-ids sailfish --os-version-ids "26" --locales en --orientations portrait --timeout 45m --use-orchestrator
+            fi
+
+  run-firebase-robo:
+    steps:
+      - run:
+          name: Run instrumentation tests on Firebase
+          no_output_timeout: 10m
+          command: |
+            if [[ -n "${GCLOUD_SERVICE_ACCOUNT_JSON}" ]]; then
+              gcloud firebase test android run --type robo \
+                --app app/build/outputs/apk/release/app-release.apk \
+                --device model=sailfish,version=28,locale=en,orientation=portrait \
+                --device model=zeroflte,version=23,locale=en,orientation=portrait \
+                --device model=mata,version=25,locale=en,orientation=portrait \
+                --timeout 90s
+            fi
+
+  mapbox-gl-native-begin:
+    steps:
+      - when:
+          condition: << pipeline.parameters.mapbox_upstream >>
+          steps:
+            - run:
+               name: Install Python dependencies
+               command: |
+                 pip3 install requests
+            - run:
+               name: Report upstream pending
+               command: |
+                 scripts/ci-github-set-commit-status.py --pending --slug << pipeline.parameters.mapbox_slug >> --hash << pipeline.parameters.mapbox_hash >>
+
+  mapbox-gl-native-end:
+    steps:
+      - when:
+          condition: << pipeline.parameters.mapbox_upstream >>
+          steps:
+            - run:
+               name: Report upstream success
+               command: |
+                 scripts/ci-github-set-commit-status.py --success --slug << pipeline.parameters.mapbox_slug >> --hash << pipeline.parameters.mapbox_hash >>
+            - run:
+               when: on_fail
+               name: Report upstream failure
+               command: |
+                 scripts/ci-github-set-commit-status.py --slug << pipeline.parameters.mapbox_slug >> --hash << pipeline.parameters.mapbox_hash >>
+
+jobs:
+  verify-code:
+    docker:
+      - image: mbgl/android-ndk-r21b:latest
+
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - run:
+          name: ktlint
+          command: ./gradlew ktlint
+      - run:
+          name: license
+          command: python scripts/license-validate.py
+      - store-results
+
+  verify-docs:
+    docker:
+      - image: mbgl/android-ndk-r21b:latest
+
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - run:
+          no_output_timeout: 20m
+          name: docs
+          command: sh scripts/kdoc-validate.sh
+
+  run-unit-test:
+    docker:
+      - image: mbgl/android-ndk-r21b:latest
+
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - jvm-unit-tests
+
+  run-lint:
+    docker:
+      - image: mbgl/android-ndk-r21b:latest
+
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - run:
+          name: lint
+          command: ./gradlew lint
+
+  run-robo-test:
+    docker:
+      - image: mbgl/android-ndk-r21b:latest
+
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - build-module:
+          module_target: "app"
+          variant: "Release"
+      - login-google-cloud-platform
+      - run-firebase-robo
+
+  run-app-test:
+    docker:
+      - image: mbgl/android-ndk-r21b:latest
+
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - generate-sanity-test
+      - build-instrumentation-test:
+          module_target: "app"
+      - build-module:
+          module_target: "app"
+          variant: "Debug"
+      - store_artifacts:
+          path: app/build/outputs/apk
+          destination: .
+      - login-google-cloud-platform
+      - run-firebase-instrumentation:
+          module_target: "app"
+
+  run-sdk-test:
+    docker:
+      - image: mbgl/android-ndk-r21b:latest
+
+    steps:
+      - checkout
+      - mapbox-gl-native-begin
+      - restore-gradle-cache
+      - build-instrumentation-test:
+          module_target: "sdk"
+      - build-module:
+          module_target: "app"
+          variant: "Debug"
+      - login-google-cloud-platform
+      - run-firebase-instrumentation:
+          module_target: "sdk"
+      - mapbox-gl-native-end
+
+  run-style-test:
+    docker:
+      - image: mbgl/android-ndk-r21b:latest
+
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - build-instrumentation-test:
+          module_target: "extension-style-app"
+      - build-module:
+          module_target: "extension-style-app"
+          variant: "Debug"
+      - store_artifacts:
+          path: extension-style-app/build/outputs/apk
+          destination: .
+      - login-google-cloud-platform
+      - run-firebase-instrumentation:
+          module_target: "extension-style-app"
+          app_target: "extension-style-app"
+
+  build-sdk-from-source:
+    docker:
+      - image: mbgl/android-ndk-r21b:latest
+
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - build-module:
+          module_target: "sdk"
+          variant: "Release"
+
+  build-sdk-release:
+    docker:
+      - image: mbgl/android-ndk-r21b:latest
+
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - build-module:
+          module_target: "sdk"
+          variant: "Release"
+      - update-version-name
+      - track-metrics
+      - publish-sdk-registry

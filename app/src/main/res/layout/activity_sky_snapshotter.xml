@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.mapbox.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        mapbox:mapbox_cameraPitch="85"
+        mapbox:mapbox_cameraTargetLat="60.192"
+        mapbox:mapbox_cameraTargetLng="24.946"
+        mapbox:mapbox_cameraZoom="3.05" />
+
+    <TextView
+        android:id="@+id/maneuverCaption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="@string/sky_snapshotter_maneuver"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        mapbox:layout_constraintEnd_toEndOf="@id/maneuverView"
+        mapbox:layout_constraintStart_toStartOf="@id/maneuverView"
+        mapbox:layout_constraintTop_toBottomOf="@id/maneuverView" />
+
+    <ImageView
+        android:id="@+id/maneuverView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_margin="10dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/sky_snapshotter_maneuver"
+        mapbox:layout_constraintEnd_toEndOf="parent"
+        mapbox:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

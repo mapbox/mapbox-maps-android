@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file is generated. -->
+<resources>
+
+    <!-- Whether the user location is visible on the map. -->
+    <public name="mapbox_locationComponentEnabled" type="attr" />
+
+    <!-- Whether the location puck is pulsing on the map. Only work for 2D location puck. -->
+    <public name="mapbox_locationComponentPulsingEnabled" type="attr" />
+
+    <!-- The color of the pulsing circle. Only work for 2D location puck. -->
+    <public name="mapbox_locationComponentPulsingColor" type="attr" />
+
+    <!-- The maximum radius of the pulsing circle. Only work for 2D location puck. -->
+    <public name="mapbox_locationComponentPulsingMaxRadius" type="attr" />
+
+    <!-- Sets the id of the layer that's added above to when placing the component on the map. -->
+    <public name="mapbox_locationComponentLayerAbove" type="attr" />
+
+    <!-- Sets the id of the layer that's added below to when placing the component on the map. -->
+    <public name="mapbox_locationComponentLayerBelow" type="attr" />
+
+    <!-- Location puck definitions for location_puck_2_d.  -->
+
+    <!-- Name of image in sprite to use as the top of the location indicator. -->
+    <public name="mapbox_locationComponentLocationPuckLocationPuck2DTopImage" type="attr" />
+    <!-- Name of image in sprite to use as the middle of the location indicator. -->
+    <public name="mapbox_locationComponentLocationPuckLocationPuck2DBearingImage" type="attr" />
+    <!-- Name of image in sprite to use as the background of the location indicator. -->
+    <public name="mapbox_locationComponentLocationPuckLocationPuck2DShadowImage" type="attr" />
+    <!-- The scale expression of the images. If defined, it will be applied to all the three images. -->
+    <public name="mapbox_locationComponentLocationPuckLocationPuck2DScaleExpression" type="attr" />
+
+    <!-- Location puck definitions for location_puck_3_d.  -->
+
+    <!-- An URL for the model file in gltf format. -->
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelUri" type="attr" />
+    <!-- The scale of the model. -->
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DPosition_lon" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DPosition_lat" type="attr" />
+    <!-- The opacity of the model. -->
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelOpacity" type="attr" />
+    <!-- The scale of the model. -->
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelScale_x" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelScale_y" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelScale_z" type="attr" />
+    <!-- The scale expression of the model, which will overwrite the default scale expression that keeps the model size constant during zoom. -->
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelScaleExpression" type="attr" />
+    <!-- The rotation of the model. -->
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_x" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_y" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_z" type="attr" />
+</resources>
+<!-- End of generated file. -->

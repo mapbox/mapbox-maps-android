@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_gesture_focus_point"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/toggle_focus_on_a_point" />
+    <item
+        android:id="@+id/menu_gesture_animation"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/toggle_velocity_animations" />
+    <item
+        android:id="@+id/menu_gesture_rotate"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/toggle_rotate_enabled" />
+    <item
+        android:id="@+id/menu_gesture_pitch"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/toggle_pitch_enabled" />
+    <item
+        android:id="@+id/menu_gesture_zoom"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/toggle_zoom_enabled" />
+    <item
+        android:id="@+id/menu_gesture_scroll"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/toggle_scroll_enabled" />
+    <item
+        android:id="@+id/menu_gesture_double_tap"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/toggle_double_tap_enabled" />
+    <item
+        android:id="@+id/menu_gesture_quick_zoom"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/toggle_quick_zoom_enabled" />
+</menu>

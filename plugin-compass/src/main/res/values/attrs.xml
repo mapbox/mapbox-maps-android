@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file is generated. -->
+<resources>
+    <declare-styleable name="mapbox_MapView">
+        <!-- Whether the compass is visible on the map. -->
+        <attr name="mapbox_compassEnabled" format="boolean"/>
+
+        <!-- Defines where the compass is positioned on the map -->
+        <attr name="mapbox_compassGravity">
+            <!-- Push object to the top of its container, not changing its size. -->
+            <flag name="top" value="0x30" />
+            <!-- Push object to the bottom of its container, not changing its size. -->
+            <flag name="bottom" value="0x50" />
+            <!-- Push object to the left of its container, not changing its size. -->
+            <flag name="left" value="0x03" />
+            <!-- Push object to the right of its container, not changing its size. -->
+            <flag name="right" value="0x05" />
+            <!-- Place object in the vertical center of its container, not changing its size. -->
+            <flag name="center_vertical" value="0x10" />
+            <!-- Grow the vertical size of the object if needed so it completely fills its container. -->
+            <flag name="fill_vertical" value="0x70" />
+            <!-- Place object in the horizontal center of its container, not changing its size. -->
+            <flag name="center_horizontal" value="0x01" />
+            <!-- Grow the horizontal size of the object if needed so it completely fills its container. -->
+            <flag name="fill_horizontal" value="0x07" />
+            <!-- Place the object in the center of its container in both the vertical and horizontal axis, not changing its size. -->
+            <flag name="center" value="0x11" />
+            <!-- Grow the horizontal and vertical size of the object if needed so it completely fills its container. -->
+            <flag name="fill" value="0x77" />
+            <!-- Additional option that can be set to have the top and/or bottom edges of
+                 the child clipped to its container's bounds.
+                 The clip will be based on the vertical gravity: a top gravity will clip the bottom
+                 edge, a bottom gravity will clip the top edge, and neither will clip both edges. -->
+            <flag name="clip_vertical" value="0x80" />
+            <!-- Additional option that can be set to have the left and/or right edges of
+                 the child clipped to its container's bounds.
+                 The clip will be based on the horizontal gravity: a left gravity will clip the right
+                 edge, a right gravity will clip the left edge, and neither will clip both edges. -->
+            <flag name="clip_horizontal" value="0x08" />
+            <!-- Push object to the beginning of its container, not changing its size. -->
+            <flag name="start" value="0x00800003" />
+            <!-- Push object to the end of its container, not changing its size. -->
+            <flag name="end" value="0x00800005" />
+        </attr>
+        <!-- Defines the margin to the left that the compass icon honors. -->
+        <attr name="mapbox_compassMarginLeft" format="dimension"/>
+        <!-- Defines the margin to the top that the compass icon honors. -->
+        <attr name="mapbox_compassMarginTop" format="dimension"/>
+        <!-- Defines the margin to the right that the compass icon honors. -->
+        <attr name="mapbox_compassMarginRight" format="dimension"/>
+        <!-- Defines the margin to the bottom that the compass icon honors. -->
+        <attr name="mapbox_compassMarginBottom" format="dimension"/>
+        <!-- The alpha channel value of the compass image -->
+        <attr name="mapbox_compassOpacity" format="float"/>
+        <!-- The clockwise rotation value in degrees of the compass. -->
+        <attr name="mapbox_compassRotation" format="float"/>
+        <!-- Whether the compass is displayed. -->
+        <attr name="mapbox_compassVisibility" format="boolean"/>
+        <!-- Whether the compass fades out to invisible when facing north direction. -->
+        <attr name="mapbox_compassFadeWhenFacingNorth" format="boolean"/>
+        <!-- Whether the compass can be clicked and click events can be registered. -->
+        <attr name="mapbox_compassClickable" format="boolean"/>
+        <!-- The compass image, the visual representation of the compass. -->
+        <attr name="mapbox_compassImage" format="reference"/>
+    </declare-styleable>
+</resources>
+<!-- End of generated file. -->

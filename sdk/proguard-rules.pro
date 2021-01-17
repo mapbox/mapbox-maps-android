@@ -1,0 +1,7 @@
+-keep class com.google.gson.** {*;}
+-keep class com.mapbox.geojson.** {*;}
+-keep class com.mapbox.bindgen.** {*;}
+-keep class com.mapbox.maps.** {*;}
+-keep class com.mapbox.mapboxsdk.log.** {*;}
+-keep class com.mapbox.common.** {*;}
+-keep class com.mapbox.mapboxsdk.text.** {*;}

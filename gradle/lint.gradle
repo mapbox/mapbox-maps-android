@@ -1,0 +1,8 @@
+android {
+    lintOptions {
+        checkReleaseBuilds false
+        warningsAsErrors true
+        xmlReport false
+        disable 'AllowBackup'
+    }
+}

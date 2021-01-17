@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_style_change"
+        android:title="@string/toggle_custom_locationlayer_style"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_map_style_change"
+        android:title="@string/toggle_custom_map_style"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_component_disable"
+        android:title="@string/location_disable_component"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_component_enabled"
+        android:title="@string/location_enable_component"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_gestures_management_enabled"
+        android:title="@string/location_enable_gestures_management"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_gestures_management_disabled"
+        android:title="@string/location_disable_gestures_management"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_component_throttling_enabled"
+        android:title="@string/location_enable_animation_throttling_5_fps"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_component_throttling_disabled"
+        android:title="@string/location_disable_animation_throttling"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_component_animate_while_tracking"
+        android:title="@string/location_animate_while_tracking"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_component_padding_animation_while_tracking"
+        android:title="@string/location_padding_while_tracking"
+        app:showAsAction="never"/>
+</menu>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mapbox="http://schemas.android.com/tools">
+
+    <com.mapbox.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        mapbox:mapbox_cameraTargetLat="11.302318"
+        mapbox:mapbox_cameraTargetLng="106.025839"
+        mapbox:mapbox_cameraZoom="5.11"
+        mapbox:mapbox_cameraZoomMin="3"
+        mapbox:mapbox_enableZMediaOverlay="true" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="90dp">
+
+        <FrameLayout
+            android:id="@+id/mini_map_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/show_bounds_toggle_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_swap_horiz_white_24dp" />
+
+</merge>

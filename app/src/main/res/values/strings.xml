@@ -1,0 +1,123 @@
+<resources>
+    <string name="app_name">Mapbox Maps SDK Carbon Test App</string>
+
+    <!--Default style names-->
+    <string name="menu_map_style_streets">Streets</string>
+    <string name="menu_map_style_dark">Dark</string>
+    <string name="menu_map_style_light">Light</string>
+    <string name="menu_map_style_outdoors">Outdoors</string>
+    <string name="menu_map_style_satellite">Satellite</string>
+    <string name="menu_map_style_satellite_streets">Satellite Streets</string>
+    <string name="toggle_focus_on_a_point">Toggle focus on a point</string>
+    <string name="toggle_velocity_animations">Toggle velocity animations</string>
+    <string name="toggle_rotate_enabled">Toggle rotate enabled</string>
+    <string name="toggle_pitch_enabled">Toggle pitch enabled</string>
+    <string name="toggle_zoom_enabled">Toggle zoom enabled</string>
+    <string name="toggle_scroll_enabled">Toggle scroll enabled</string>
+    <string name="toggle_double_tap_enabled">Toggle double tap enabled</string>
+    <string name="toggle_quick_zoom_enabled">Toggle quick zoom enabled</string>
+
+    <!--Cache Manager-->
+    <string name="menu_cache_clear">Clear ambient cache</string>
+    <string name="menu_cache_invalidate">Invalidate ambient cache</string>
+    <string name="menu_cache_maximum">Change cache size</string>
+
+    <!--Search-->
+    <string name="search_edittext_hint">Search for examples here</string>
+    <string name="clear_search_imageview_content_description">Clear example search button</string>
+    <string name="no_results_for_search_query">No results for that search query</string>
+
+    <!--Debug-->
+    <string name="debug_tile_borders">TILE_BORDERS</string>
+    <string name="debug_parse_status">PARSE_STATUS</string>
+    <string name="debug_timestamps">TIMESTAMPS</string>
+    <string name="debug_collision">COLLISION</string>
+    <string name="debug_overdraw">OVERDRAW</string>
+    <string name="debug_stencil_clip">STENCIL_CLIP</string>
+    <string name="debug_depth_buffer">DEPTH_BUFFER</string>
+    <string name="debug_button">Apply debug modes</string>
+
+    <!--Location-->
+    <string name="location_mode">Mode:</string>
+    <string name="location_normal">Normal</string>
+    <string name="location_tracking">Tracking:</string>
+    <string name="location_none">None</string>
+    <string name="toggle_customised_puck">Toggle customised puck style</string>
+    <string name="toggle_custom_locationlayer_style">Toggle custom LocationLayer style</string>
+    <string name="toggle_custom_map_style">Toggle custom Map style</string>
+    <string name="location_disable_component">Disable Component</string>
+    <string name="location_enable_component">Enable Component</string>
+    <string name="location_enable_gestures_management">Enable Gestures Management</string>
+    <string name="location_disable_gestures_management">Disable Gestures Management</string>
+    <string name="location_enable_animation_throttling_5_fps">Enable animation throttling (5 FPS)</string>
+    <string name="location_disable_animation_throttling">Disable animation throttling</string>
+    <string name="location_animate_while_tracking">Animate while tracking</string>
+    <string name="location_padding_while_tracking">PaddingAnimation while tracking</string>
+    <string name="location_stop_pulsing">Stop pulsing</string>
+    <string name="location_start_pulsing">Start pulsing</string>
+
+    <!--RestrictBounds-->
+    <string name="restrict_iceland">Restrict iceland</string>
+    <string name="restrict_almost_worldview">Restrict almost worldview</string>
+    <string name="restrict_across_idl">Restrict across IDL</string>
+    <string name="restrict_reset">Reset bounds</string>
+
+    <!--Space station toast-->
+    <string name="space_station_toast">Zoom in closely on the space station\nto see it moving across the map</string>
+
+    <!--On map click toast-->
+    <string name="tap_on_map_instruction">Tap anywhere on the map</string>
+
+    <!-- Camera -->
+    <string name="menu_animator_ease_to">Ease To</string>
+    <string name="menu_animator_fly_to">Fly To</string>
+    <string name="menu_animator_jump_to">Jump To Start</string>
+    <string name="menu_animator_move_by">Move By</string>
+    <string name="menu_animator_pitch_by">Pitch By</string>
+    <string name="menu_animator_scale_by">Scale By</string>
+    <string name="menu_animator_rotate_by">Rotate By</string>
+
+    <!--Marker strings for DirectionsActivity activity-->
+    <string name="snaking_directions_activity_error">Direction route retrieval failed</string>
+
+    <!--Zoom in and out map instruction for toast-->
+    <string name="zoom_map_in_and_out_instruction">Zoom in and out to see cluster numbers change</string>
+
+    <!--OfflineManager-->
+    <string name="view_map">View map</string>
+
+    <!-- Sky layer-->
+    <string name="sky_mode">Mode: %1$s</string>
+    <string name="sky_gradient_radius">Radius = %1$d</string>
+    <string name="sky_sun_intensity">Intensity = %1$d</string>
+    <string name="sky_center_azimuth">CenterA = %1$d</string>
+    <string name="sky_center_polar">CenterP = %1$d</string>
+    <string name="sky_snapshotter_maneuver">Next maneuver</string>
+
+    <!-- MapView Snapshot -->
+    <string name="content_description_snaphot">Snapshot image of the MapView</string>
+
+    <!-- Custom attribution-->
+    <string name="custom_attribution_custom">Applied the custom attribution</string>
+    <string name="custom_attribution_withImproveMap">WithImproveMap</string>
+    <string name="custom_attribution_withCopyrightSign">WithCopyrightSign</string>
+    <string name="custom_attribution_withTelemetryAttribution">WithTelemetry</string>
+    <string name="custom_attribution_withMapboxAttribution">WithMapbox</string>
+
+    <!-- Symbol Activity-->
+    <string name="toggle_draggable_state">Toggle draggable state</string>
+    <string name="change_icon_to_coffee">Change icon to coffee</string>
+    <string name="set_icon_rotation_to_45">Set icon rotation to 45</string>
+    <string name="set_icon_anchor_bottom">Set icon anchor bottom</string>
+    <string name="set_icon_opacity_to_0_5f">Set icon opacity to 0.5f</string>
+    <string name="offset_icon_by_10_20">Offset icon by 10, 20</string>
+    <string name="add_text">Add text</string>
+    <string name="set_text_color_to_white">Set text color to white</string>
+    <string name="set_text_size">Set text size</string>
+    <string name="set_text_anchor_top">Set text anchor top</string>
+    <string name="change_z_index">Change Z index</string>
+    <string name="add_icon_halo">Add icon halo</string>
+    <string name="filter">Filter</string>
+    <string name="animate_symbol">Animate symbol</string>
+
+</resources>

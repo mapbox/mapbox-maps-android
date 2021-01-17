@@ -1,0 +1,26 @@
+{
+  "name": "@mapbox/mapbox-maps-android",
+  "version": "1.0.0",
+  "description": "Renders map tiles with the Mapbox Maps SDK for Android",
+  "keywords": [
+    "mapbox",
+    "gl"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mapbox/mapbox-maps-android.git"
+  },
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "@mapbox/cloudfriend": "^4.2.0"
+  },
+  "devDependencies": {
+    "ejs": "^2.7.4",
+    "esm": "~3.1.0",
+    "lodash": "^4.16.4"
+  },
+  "engines": {
+    "node": ">=6"
+  },
+  "scripts": {}
+}

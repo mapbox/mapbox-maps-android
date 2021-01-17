@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file is generated. -->
+<com.mapbox.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mapView"
+    mapbox:mapbox_gesturesRotateEnabled = "false"
+    mapbox:mapbox_gesturesZoomEnabled = "false"
+    mapbox:mapbox_gesturesScrollEnabled = "false"
+    mapbox:mapbox_gesturesPitchEnabled = "false"
+    mapbox:mapbox_gesturesDoubleTapToZoomEnabled = "false"
+    mapbox:mapbox_gesturesQuickZoomEnabled = "false"
+    mapbox:mapbox_gesturesFocalPointX = "10.0"
+    mapbox:mapbox_gesturesFocalPointY = "20.0"
+    mapbox:mapbox_gesturesScaleVelocityAnimationEnabled = "false"
+    mapbox:mapbox_gesturesRotateVelocityAnimationEnabled = "false"
+    mapbox:mapbox_gesturesFlingVelocityAnimationEnabled = "false"
+    mapbox:mapbox_gesturesIncreaseRotateThresholdWhenScaling = "false"
+    mapbox:mapbox_gesturesDisableRotateWhenScaling = "false"
+    mapbox:mapbox_gesturesIncreaseScaleThresholdWhenRotating = "false"
+    mapbox:mapbox_gesturesZoomRate = "0.9"
+    mapbox:mapbox_gesturesPixelRatio = "0.9"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+<!-- End of generated file. -->

@@ -1,0 +1,352 @@
+package com.mapbox.maps.plugin.animation
+
+import android.animation.Animator
+import android.animation.ValueAnimator
+import android.os.Looper
+import com.mapbox.common.ShadowLogger
+import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
+import com.mapbox.maps.plugin.animation.animator.CameraBearingAnimator
+import com.mapbox.maps.plugin.delegates.MapCameraDelegate
+import com.mapbox.maps.plugin.delegates.MapDelegateProvider
+import com.mapbox.maps.plugin.delegates.MapTransformDelegate
+import io.mockk.*
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows
+import org.robolectric.annotation.Config
+import org.robolectric.annotation.LooperMode
+import org.robolectric.shadows.ShadowLog
+
+@RunWith(RobolectricTestRunner::class)
+@Config(shadows = [ShadowLogger::class])
+@LooperMode(LooperMode.Mode.PAUSED)
+class CameraAnimationsListenersTest {
+
+  private lateinit var cameraAnimationsPluginImpl: CameraAnimationsPluginImpl
+  private lateinit var mapTransformDelegate: MapTransformDelegate
+  private lateinit var mapCameraDelegate: MapCameraDelegate
+
+  private class Listener : Animator.AnimatorListener {
+    override fun onAnimationStart(animation: Animator?) {}
+
+    override fun onAnimationEnd(animation: Animator?) {}
+
+    override fun onAnimationCancel(animation: Animator?) {}
+
+    override fun onAnimationRepeat(animation: Animator?) {}
+  }
+
+  @Before
+  fun setUp() {
+    ShadowLog.stream = System.out
+    val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
+    mapCameraDelegate = mockk(relaxed = true)
+    mapTransformDelegate = mockk(relaxed = true)
+    mockkObject(CameraTransform)
+    every { delegateProvider.mapCameraDelegate } returns mapCameraDelegate
+    every { delegateProvider.mapTransformDelegate } returns mapTransformDelegate
+    every { CameraTransform.normalizeAngleRadians(any(), any()) } answers { secondArg() }
+    cameraAnimationsPluginImpl = CameraAnimationsPluginImpl().apply {
+      onDelegateProvider(delegateProvider)
+    }
+  }
+
+  @Test
+  fun testAddListenerBeforeRegister() {
+    val bearingAnimator = CameraBearingAnimator(CameraAnimatorOptions.Builder(1.0).build())
+    val listener1 = Listener()
+    val listener2 = Listener()
+    bearingAnimator.addListener(listener1)
+    bearingAnimator.addListener(listener2)
+    cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)
+    Assert.assertEquals(3, bearingAnimator.listeners.size)
+    Assert.assertEquals(
+      "User animator should be second (first one is always internal)",
+      listener1,
+      bearingAnimator.listeners[1]
+    )
+    Assert.assertEquals(
+      "User animator should be third (first one is always internal)",
+      listener2,
+      bearingAnimator.listeners[2]
+    )
+  }
+
+  @Test
+  fun testAddListenerAfterRegister() {
+    val bearingAnimator = CameraBearingAnimator(CameraAnimatorOptions.Builder(1.0).build())
+    val listener1 = Listener()
+    val listener2 = Listener()
+    cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)
+    bearingAnimator.addListener(listener1)
+    bearingAnimator.addListener(listener2)
+    Assert.assertEquals(3, bearingAnimator.listeners.size)
+    Assert.assertEquals(
+      "User animator should be second (first one is always internal)",
+      listener1,
+      bearingAnimator.listeners[1]
+    )
+    Assert.assertEquals(
+      "User animator should be third (first one is always internal)",
+      listener2,
+      bearingAnimator.listeners[2]
+    )
+  }
+
+  @Test
+  fun testAddAndRemoveUserListeners() {
+    val bearingAnimator = CameraBearingAnimator(CameraAnimatorOptions.Builder(1.0).build())
+    val listener1 = Listener()
+    bearingAnimator.addListener(listener1)
+    bearingAnimator.removeListener(listener1)
+    cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)
+    Assert.assertEquals(1, bearingAnimator.listeners.size)
+    Assert.assertNotEquals(listener1, bearingAnimator.listeners[0])
+
+    bearingAnimator.addListener(listener1)
+    bearingAnimator.addListener(listener1)
+    Assert.assertEquals(3, bearingAnimator.listeners.size)
+    Assert.assertEquals(listener1, bearingAnimator.listeners[1])
+    Assert.assertEquals(listener1, bearingAnimator.listeners[2])
+
+    bearingAnimator.removeListener(listener1)
+    Assert.assertEquals(2, bearingAnimator.listeners.size)
+    Assert.assertNotEquals(listener1, bearingAnimator.listeners[0])
+    Assert.assertEquals(listener1, bearingAnimator.listeners[1])
+  }
+
+  @Test
+  fun testAddAndRemoveInternalListeners() {
+    val bearingAnimator = CameraBearingAnimator(CameraAnimatorOptions.Builder(1.0).build())
+    val listener1 = Listener()
+    bearingAnimator.addListener(listener1)
+    cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)
+    cameraAnimationsPluginImpl.unregisterAnimators(bearingAnimator)
+
+    Assert.assertEquals(1, bearingAnimator.listeners.size)
+    Assert.assertEquals(
+      "User animator should be first (internal should be removed)",
+      listener1,
+      bearingAnimator.listeners[0]
+    )
+    val listener2 = Listener()
+    cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)
+    bearingAnimator.addListener(listener2)
+
+    Assert.assertEquals(3, bearingAnimator.listeners.size)
+    Assert.assertEquals(
+      "User animator should be second one (first one is always internal)",
+      listener1,
+      bearingAnimator.listeners[1]
+    )
+    Assert.assertEquals(
+      "User animator should be third one (first one is always internal)",
+      listener2,
+      bearingAnimator.listeners[2]
+    )
+
+    cameraAnimationsPluginImpl.unregisterAllAnimators()
+
+    Assert.assertEquals(2, bearingAnimator.listeners.size)
+    Assert.assertEquals(
+      "User animator should be first (internal should be removed)",
+      listener1,
+      bearingAnimator.listeners[0]
+    )
+    Assert.assertEquals(
+      "User animator should be first (internal should be removed)",
+      listener2,
+      bearingAnimator.listeners[1]
+    )
+  }
+
+  @Test
+  fun testAddUpdateListenerBeforeRegister() {
+    val bearingAnimator = CameraBearingAnimator(CameraAnimatorOptions.Builder(100.0).build()) {
+      duration = 0
+    }
+    val valuesList = mutableListOf<Int>()
+    val listener1 = ValueAnimator.AnimatorUpdateListener {
+      valuesList.add(1)
+    }
+    val listener2 = ValueAnimator.AnimatorUpdateListener {
+      valuesList.add(2)
+    }
+    bearingAnimator.addUpdateListener(listener1)
+    bearingAnimator.addUpdateListener(listener2)
+    cameraAnimationsPluginImpl.addCameraBearingChangeListener { valuesList.add(0) }
+    cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)
+
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    bearingAnimator.start()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    Assert.assertEquals(6, valuesList.size)
+    Assert.assertArrayEquals(intArrayOf(0, 1, 2), valuesList.slice(0..2).toIntArray())
+  }
+
+  @Test
+  fun testAddUpdateListenerAfterRegister() {
+    val bearingAnimator = CameraBearingAnimator(CameraAnimatorOptions.Builder(100.0).build()) {
+      duration = 0
+    }
+    val valuesList = mutableListOf<Int>()
+    val listener1 = ValueAnimator.AnimatorUpdateListener {
+      valuesList.add(1)
+    }
+    val listener2 = ValueAnimator.AnimatorUpdateListener {
+      valuesList.add(2)
+    }
+    cameraAnimationsPluginImpl.addCameraBearingChangeListener { valuesList.add(0) }
+    cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)
+    bearingAnimator.addUpdateListener(listener1)
+    bearingAnimator.addUpdateListener(listener2)
+
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    bearingAnimator.start()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    Assert.assertEquals(6, valuesList.size)
+    Assert.assertArrayEquals(intArrayOf(0, 1, 2), valuesList.slice(0..2).toIntArray())
+  }
+
+  @Test
+  fun testAddAndRemoveUserUpdateListeners() {
+    val bearingAnimator = CameraBearingAnimator(CameraAnimatorOptions.Builder(100.0).build()) {
+      duration = 0
+    }
+    val valuesList = mutableListOf<Int>()
+    val listener = ValueAnimator.AnimatorUpdateListener {
+      valuesList.add(1)
+    }
+    cameraAnimationsPluginImpl.addCameraBearingChangeListener { valuesList.add(0) }
+    bearingAnimator.addUpdateListener(listener)
+    bearingAnimator.removeUpdateListener(listener)
+    cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)
+
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    bearingAnimator.start()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    Assert.assertArrayEquals(intArrayOf(0, 0), valuesList.toIntArray())
+  }
+
+  @Test
+  fun testAddTwoSameUserUpdateListeners() {
+    val bearingAnimator = CameraBearingAnimator(CameraAnimatorOptions.Builder(100.0).build()) {
+      duration = 0
+    }
+    val valuesList = mutableListOf<Int>()
+    val listener = ValueAnimator.AnimatorUpdateListener {
+      valuesList.add(1)
+    }
+    cameraAnimationsPluginImpl.addCameraBearingChangeListener { valuesList.add(0) }
+    cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)
+
+    bearingAnimator.addUpdateListener(listener)
+    bearingAnimator.addUpdateListener(listener)
+
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    bearingAnimator.start()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    Assert.assertEquals(6, valuesList.size)
+    Assert.assertArrayEquals(intArrayOf(0, 1, 1), valuesList.slice(0..2).toIntArray())
+  }
+
+  @Test
+  fun testAddAndRemoveInternalUpdateListeners() {
+    val bearingAnimator = CameraBearingAnimator(CameraAnimatorOptions.Builder(100.0).build()) {
+      duration = 0
+    }
+    val valuesList = mutableListOf<Int>()
+    val listener1 = ValueAnimator.AnimatorUpdateListener {
+      valuesList.add(1)
+    }
+    cameraAnimationsPluginImpl.addCameraBearingChangeListener { valuesList.add(0) }
+    bearingAnimator.addUpdateListener(listener1)
+    cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)
+    cameraAnimationsPluginImpl.unregisterAnimators(bearingAnimator)
+
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    bearingAnimator.start()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    Assert.assertEquals(0, valuesList.size)
+
+    val listener2 = ValueAnimator.AnimatorUpdateListener {
+      valuesList.add(2)
+    }
+    cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)
+    bearingAnimator.addUpdateListener(listener2)
+
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    bearingAnimator.start()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    Assert.assertEquals(6, valuesList.size)
+    Assert.assertArrayEquals(intArrayOf(0, 1, 2), valuesList.slice(0..2).toIntArray())
+    valuesList.clear()
+
+    cameraAnimationsPluginImpl.unregisterAllAnimators()
+
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    bearingAnimator.start()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    Assert.assertEquals(0, valuesList.size)
+  }
+
+  @Test
+  fun testRemoveAllListeners() {
+    val bearingAnimator = CameraBearingAnimator(CameraAnimatorOptions.Builder(1.0).build())
+    val listener1 = Listener()
+    val listener2 = Listener()
+    cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)
+    bearingAnimator.addListener(listener1)
+    bearingAnimator.addListener(listener2)
+
+    bearingAnimator.removeAllListeners()
+    Assert.assertEquals(1, bearingAnimator.listeners.size)
+    Assert.assertNotEquals(listener1, bearingAnimator.listeners[0])
+    Assert.assertNotEquals(listener2, bearingAnimator.listeners[0])
+  }
+
+  @Test
+  fun testRemoveAllUpdateListeners() {
+    val bearingAnimator = CameraBearingAnimator(
+      cameraAnimatorOptions(100.0) {
+        startValue = 0.0
+      }
+    ) {
+      duration = 50
+    }
+    var bearing = 0.0
+    cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)
+    cameraAnimationsPluginImpl.addCameraBearingChangeListener { bearing = it }
+    var userBearing = bearing
+    val listener1 = ValueAnimator.AnimatorUpdateListener {
+      userBearing = it.animatedValue as Double
+    }
+    val listener2 = ValueAnimator.AnimatorUpdateListener {
+      userBearing = it.animatedValue as Double
+    }
+    bearingAnimator.addUpdateListener(listener1)
+    bearingAnimator.addUpdateListener(listener2)
+
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    bearingAnimator.start()
+    bearingAnimator.removeAllUpdateListeners()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    Assert.assertEquals(0.0, userBearing, EPS)
+    Assert.assertEquals(100.0, bearing, EPS)
+  }
+
+  companion object {
+    private const val EPS = 0.000001
+  }
+}
