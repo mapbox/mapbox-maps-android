@@ -299,7 +299,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
             val anchor = ScreenCoordinate(event.x.toDouble(), event.y.toDouble())
             val zoom =
               cameraAnimationsPlugin.calculateScaleBy(scrollDist.toDouble(), currentZoom)
-            mapTransformDelegate.jumpTo(CameraOptions.Builder().anchor(anchor).zoom(zoom).build())
+            cameraAnimationsPlugin.easeTo(
+              CameraOptions.Builder().anchor(anchor).zoom(zoom).build(),
+              mapAnimationOptions { duration = 0 }
+            )
           }
 
           return true
@@ -537,21 +540,23 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       var targetZoom =
         if (zoomedOut) startZoom - normalizedDeltaChange else startZoom + normalizedDeltaChange
       targetZoom *= internalSettings.zoomRate.toDouble()
-      mapTransformDelegate.jumpTo(
+      cameraAnimationsPlugin.easeTo(
         CameraOptions.Builder()
           .zoom(targetZoom)
           .anchor(focalPoint)
-          .build()
+          .build(),
+        mapAnimationOptions { duration = 0 }
       )
     } else {
       val zoomBy =
         ln(detector.scaleFactor.toDouble()) / ln(PI / 2) * ZOOM_RATE.toDouble() * internalSettings.zoomRate.toDouble()
       mapTransformDelegate.getCameraOptions(null).zoom?.let {
-        mapTransformDelegate.jumpTo(
+        cameraAnimationsPlugin.easeTo(
           CameraOptions.Builder()
             .zoom(it + zoomBy)
             .anchor(focalPoint)
-            .build()
+            .build(),
+          mapAnimationOptions { duration = 0 }
         )
       }
     }
@@ -779,11 +784,12 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
       // Rotate the map
       val focalPoint = getRotateFocalPoint(detector)
-      mapTransformDelegate.jumpTo(
+      cameraAnimationsPlugin.easeTo(
         CameraOptions.Builder()
           .anchor(focalPoint)
           .bearing(bearing)
-          .build()
+          .build(),
+        mapAnimationOptions { duration = 0 }
       )
 
       notifyOnRotateListeners(detector)
@@ -890,7 +896,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       pitch = clamp(optimizedPitch, MINIMUM_PITCH, MAXIMUM_PITCH)
 
       // Pitch the map
-      mapTransformDelegate.jumpTo(CameraOptions.Builder().pitch(pitch).build())
+      cameraAnimationsPlugin.easeTo(
+        CameraOptions.Builder().pitch(pitch).build(),
+        mapAnimationOptions { duration = 0 }
+      )
       notifyOnShoveListeners(detector)
     }
     return true
@@ -1211,7 +1220,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       }
       val target = cameraAnimationsPlugin.calculateMoveBy(offset)
       target?.let {
-        mapTransformDelegate.jumpTo(CameraOptions.Builder().center(it).build())
+        cameraAnimationsPlugin.easeTo(
+          CameraOptions.Builder().center(it).build(),
+          mapAnimationOptions { duration = 0 }
+        )
       }
       notifyOnMoveListeners(detector)
     }
