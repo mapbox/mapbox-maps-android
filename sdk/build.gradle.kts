@@ -54,7 +54,6 @@ dependencies {
   }
   implementation(Dependencies.mapboxAnnotations)
   api(project(":sdk-base"))
-  implementation(project(":module-loader"))
   implementation(project(":module-telemetry"))
   api(project(":extension-style"))
   api(project(":plugin-logo"))
