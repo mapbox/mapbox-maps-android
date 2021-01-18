@@ -75,12 +75,11 @@ class Terrain3DShowcaseActivity : AppCompatActivity(), OnDidFinishRenderingMapLi
     if (mode == RenderMode.FULL) {
       mapboxMap.easeTo(
         CameraOptions.Builder()
-          .pitch(75.0)
-          .bearing(180.0)
+          .pitch(85.0)
           .zoom(12.0)
           .build(),
         MapAnimationOptions.mapAnimationOptions {
-          duration = 15_000L
+          duration = 10_000L
           interpolator = FastOutSlowInInterpolator()
         }
       )

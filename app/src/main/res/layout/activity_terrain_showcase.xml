@@ -4,7 +4,7 @@
     android:id="@+id/mapView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    mapbox:mapbox_cameraPitch="85"
-    mapbox:mapbox_cameraTargetLat="28.2723"
-    mapbox:mapbox_cameraTargetLng="-16.6425"
-    mapbox:mapbox_cameraZoom="14" />
+    mapbox:mapbox_cameraPitch="60"
+    mapbox:mapbox_cameraTargetLat="35.3606"
+    mapbox:mapbox_cameraTargetLng="138.7274"
+    mapbox:mapbox_cameraZoom="9" />
