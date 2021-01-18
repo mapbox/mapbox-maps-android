@@ -1,18 +1,15 @@
 package com.mapbox.maps.plugin.locationcomponent
 
-import com.mapbox.maps.plugin.ContextBinder
-import com.mapbox.maps.plugin.LifecyclePlugin
-import com.mapbox.maps.plugin.MapCameraPlugin
-import com.mapbox.maps.plugin.MapStyleObserverPlugin
+import com.mapbox.maps.plugin.*
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettingsInterface
 
 /**
  * Define the interfaces for the Location plugin.
  */
 interface LocationComponentPlugin :
+  MapPlugin,
   MapStyleObserverPlugin,
   LifecyclePlugin,
-  MapCameraPlugin,
   ContextBinder,
   LocationConsumer,
   LocationComponentSettingsInterface {

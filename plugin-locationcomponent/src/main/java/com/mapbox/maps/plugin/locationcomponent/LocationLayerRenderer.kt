@@ -22,8 +22,6 @@ internal interface LocationLayerRenderer {
 
   fun setLatLng(latLng: Point)
 
-  fun setZoomLevel(zoomLevel: Double)
-
   fun setBearing(bearing: Float)
 
   fun setAccuracyRadius(accuracy: Float)

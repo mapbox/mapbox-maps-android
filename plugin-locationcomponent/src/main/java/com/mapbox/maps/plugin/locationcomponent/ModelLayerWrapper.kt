@@ -18,5 +18,7 @@ internal class ModelLayerWrapper(
 
   fun modelScale(scale: List<Double>) = updateProperty("model-scale", Value(scale.map { Value(it) }))
 
+  fun modelScaleExpression(scaleExpression: List<Value>) = updateProperty("model-scale", Value(scaleExpression))
+
   fun modelRotation(rotation: List<Double>) = updateProperty("model-rotation", Value(rotation.map { Value(it) }))
 }
