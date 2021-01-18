@@ -162,9 +162,9 @@ interface CameraAnimationsPlugin : MapPlugin {
   fun registerAnimators(vararg cameraAnimators: ValueAnimator)
 
   /**
-   * Cancel all animators
+   * Cancel all animators except ones owned by [exceptOwner] list.
    */
-  fun cancelAllAnimators()
+  fun cancelAllAnimators(vararg exceptOwner: String? = emptyArray())
 
   /**
    * Unregister all animators
@@ -293,4 +293,14 @@ interface CameraAnimationsPlugin : MapPlugin {
    * @param animators Variable number of [ValueAnimator]'s
    */
   fun playAnimatorsSequentially(vararg animators: ValueAnimator)
+
+  /**
+   * Static variables and methods.
+   */
+  companion object {
+    /**
+     * Map Camera animator owner.
+     */
+    const val MAP_ANIMATION_OWNER = "Maps-CameraInternal"
+  }
 }

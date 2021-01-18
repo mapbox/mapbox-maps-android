@@ -5,6 +5,8 @@ import com.mapbox.android.gestures.AndroidGesturesManager
 import com.mapbox.maps.plugin.ContextBinder
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.MapSizePlugin
+import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
+import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettingsInterface
 
 /**
@@ -144,4 +146,26 @@ interface GesturesPlugin : MapPlugin, ContextBinder, MapSizePlugin, GesturesSett
    * @param listener The shove listener to be removed
    */
   fun removeOnShoveListener(listener: OnShoveListener)
+
+  /**
+   * Add animator owner (see [CameraAnimatorOptions.owner] or [MapAnimationOptions.owner])
+   * which animation will not be cancelled with cancelAllAnimators call (when gesture animation is about to start).
+   */
+  fun addProtectedAnimationOwner(owner: String)
+
+  /**
+   * Remove animator owner (see [CameraAnimatorOptions.owner] or [MapAnimationOptions.owner])
+   * which animation will not be cancelled with cancelAllAnimators call (when gesture animation is about to start).
+   */
+  fun removeProtectedAnimationOwner(owner: String)
+
+  /**
+   * Static variables and methods.
+   */
+  companion object {
+    /**
+     * Map Camera animator owner.
+     */
+    const val MAP_ANIMATION_OWNER = "Maps-Gestures"
+  }
 }

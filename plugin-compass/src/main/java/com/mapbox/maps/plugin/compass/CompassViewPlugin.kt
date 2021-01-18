@@ -12,6 +12,7 @@ import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
+import com.mapbox.maps.plugin.compass.CompassPlugin.Companion.MAP_ANIMATION_OWNER
 import com.mapbox.maps.plugin.compass.generated.CompassAttributeParser
 import com.mapbox.maps.plugin.compass.generated.CompassSettings
 import com.mapbox.maps.plugin.compass.generated.CompassSettingsBase
@@ -248,7 +249,6 @@ open class CompassViewPlugin(
    * Static variables and methods.
    */
   companion object {
-    internal const val MAP_ANIMATION_OWNER = "Maps-Compass"
     private const val TIME_WAIT_IDLE = 500L
     private const val TIME_FADE_ANIMATION = TIME_WAIT_IDLE
     private const val BEARING_NORTH_ANIMATION_DURATION = 300L

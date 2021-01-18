@@ -8,7 +8,6 @@ import android.view.Gravity
 import android.widget.FrameLayout
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
-import com.mapbox.maps.plugin.compass.CompassViewPlugin.Companion.MAP_ANIMATION_OWNER
 import com.mapbox.maps.plugin.delegates.MapCameraDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import io.mockk.every
@@ -363,7 +362,7 @@ class CompassViewPluginTest {
       animatePlugin.flyTo(
         any(),
         mapAnimationOptions {
-          owner = MAP_ANIMATION_OWNER
+          owner = CompassPlugin.MAP_ANIMATION_OWNER
           duration = 300L
         }
       )

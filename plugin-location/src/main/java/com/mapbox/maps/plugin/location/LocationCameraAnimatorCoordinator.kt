@@ -15,6 +15,7 @@ import com.mapbox.maps.plugin.animation.CameraAnimatorType.*
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
 import com.mapbox.maps.plugin.delegates.MapTransformDelegate
+import com.mapbox.maps.plugin.location.LocationPlugin.Companion.MAP_ANIMATION_OWNER
 import com.mapbox.maps.plugin.location.listeneres.CancelableCallback
 import com.mapbox.maps.plugin.location.modes.CameraMode
 
@@ -367,9 +368,5 @@ internal class LocationCameraAnimatorCoordinator(
   internal fun jumpCamera(cameraOptions: CameraOptions) {
     cancelAndUnregisterAllAnimators()
     mapTransformDelegate.jumpTo(cameraOptions)
-  }
-
-  companion object {
-    private const val MAP_ANIMATION_OWNER = "Maps-Location"
   }
 }

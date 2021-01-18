@@ -16,9 +16,12 @@ import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
+import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
+import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.delegates.*
+import com.mapbox.maps.plugin.gestures.GesturesPlugin.Companion.MAP_ANIMATION_OWNER
 import com.mapbox.maps.plugin.gestures.GesturesPluginImpl.Companion.gesturesPlugin
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
@@ -41,6 +44,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   private lateinit var mapTransformDelegate: MapTransformDelegate
   private lateinit var mapPluginProviderDelegate: MapPluginProviderDelegate
   private lateinit var cameraAnimationsPlugin: CameraAnimationsPlugin
+
+  private val protectedCameraAnimatorOwnerList = CopyOnWriteArrayList<String>()
 
   // Listeners
   private val onMapClickListenerList = CopyOnWriteArrayList<OnMapClickListener>()
@@ -283,7 +288,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
           }
 
           // Cancel any animation
-          cameraAnimationsPlugin.cancelAllAnimators()
+          cameraAnimationsPlugin.cancelAllAnimators(*protectedCameraAnimatorOwnerList.toTypedArray())
 
           // Get the vertical scroll amount, one click = 1
           val scrollDist = event.getAxisValue(MotionEvent.AXIS_VSCROLL)
@@ -912,7 +917,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         return false
       }
 
-      cameraAnimationsPlugin.cancelAllAnimators()
+      cameraAnimationsPlugin.cancelAllAnimators(*protectedCameraAnimatorOwnerList.toTypedArray())
       // cameraChangeDispatcher.onCameraMoveStarted(REASON_API_GESTURE);
 
       val zoomFocalPoint: ScreenCoordinate
@@ -1035,7 +1040,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   private fun cancelTransitionsIfRequired() {
     // we need to cancel core transitions only if there is no started gesture yet
     if (noGesturesInProgress()) {
-      cameraAnimationsPlugin.cancelAllAnimators()
+      cameraAnimationsPlugin.cancelAllAnimators(*protectedCameraAnimatorOwnerList.toTypedArray())
     }
   }
 
@@ -1129,7 +1134,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       return false
     }
 
-    cameraAnimationsPlugin.cancelAllAnimators()
+    cameraAnimationsPlugin.cancelAllAnimators(*protectedCameraAnimatorOwnerList.toTypedArray())
     // cameraChangeDispatcher.onCameraMoveStarted(REASON_API_GESTURE);
 
     // pitch results in a bigger translation, limiting input for #5281
@@ -1219,7 +1224,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   }
 
   internal fun handleSingleTapUpEvent(): Boolean {
-    cameraAnimationsPlugin.cancelAllAnimators()
+    cameraAnimationsPlugin.cancelAllAnimators(*protectedCameraAnimatorOwnerList.toTypedArray())
     return true
   }
 
@@ -1426,6 +1431,22 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   }
 
   /**
+   * Add animator owner (see [CameraAnimatorOptions.owner] or [MapAnimationOptions.owner])
+   * which animation will not be cancelled with cancelAllAnimators call (when gesture animation is about to start).
+   */
+  override fun addProtectedAnimationOwner(owner: String) {
+    protectedCameraAnimatorOwnerList.add(owner)
+  }
+
+  /**
+   * Remove animator owner (see [CameraAnimatorOptions.owner] or [MapAnimationOptions.owner])
+   * which animation will not be cancelled with cancelAllAnimators call (when gesture animation is about to start).
+   */
+  override fun removeProtectedAnimationOwner(owner: String) {
+    protectedCameraAnimatorOwnerList.remove(owner)
+  }
+
+  /**
    * Get the current configured AndroidGesturesManager.
    */
   override fun getGesturesManager(): AndroidGesturesManager {
@@ -1465,6 +1486,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
    * Called when the map is destroyed. Should be used to cleanup plugin resources for that map.
    */
   override fun cleanup() {
+    protectedCameraAnimatorOwnerList.clear()
     gesturesPluginWeakRef?.clear()
     gesturesPluginWeakRef = null
   }
@@ -1524,7 +1546,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
    * Static variables and methods.
    */
   companion object {
-    private const val MAP_ANIMATION_OWNER = "Maps-Gestures"
     private var gesturesPluginWeakRef: WeakReference<GesturesPluginImpl>? = null
     internal val gesturesPlugin: GesturesPluginImpl?
       get() = gesturesPluginWeakRef?.get()
