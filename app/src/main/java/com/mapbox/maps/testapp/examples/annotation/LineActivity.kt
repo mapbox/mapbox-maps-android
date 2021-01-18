@@ -13,6 +13,8 @@ import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.utils.Assets
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
+import kotlinx.android.synthetic.main.activity_add_marker_symbol.mapView
+import kotlinx.android.synthetic.main.activity_annotation.*
 import java.io.IOException
 import java.util.*
 
@@ -21,13 +23,14 @@ import java.util.*
  */
 class LineActivity : AppCompatActivity() {
   private val random = Random()
+  private lateinit var lineManager: LineManager
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_annotation)
     mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
       val annotationPlugin = mapView.getAnnotationPlugin()
-      val lineManager = annotationPlugin.getLineManager()
+      lineManager = annotationPlugin.getLineManager()
       lineManager.addClickListener(
         OnLineClickListener {
           Toast.makeText(
@@ -78,6 +81,8 @@ class LineActivity : AppCompatActivity() {
         throw RuntimeException("Unable to parse annotations.json")
       }
     }
+
+    deleteAll.setOnClickListener { lineManager.deleteAll() }
   }
 
   private fun createRandomPoints(): List<Point> {

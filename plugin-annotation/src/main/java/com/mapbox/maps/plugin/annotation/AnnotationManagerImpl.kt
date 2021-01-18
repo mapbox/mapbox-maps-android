@@ -185,9 +185,6 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Trigger an update to the underlying source
    */
   private fun updateSource() {
-    if (annotations.isEmpty()) {
-      return
-    }
     val features = annotations.map {
       val annotation = Feature.fromGeometry(it.value.geometry, it.value.jsonObject)
       it.value.setUsedDataDrivenProperties()
