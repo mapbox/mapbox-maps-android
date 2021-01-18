@@ -6,6 +6,7 @@ import com.mapbox.maps.extension.style.image.ImageExtensionImpl
 import com.mapbox.maps.extension.style.layers.*
 import com.mapbox.maps.extension.style.light.generated.Light
 import com.mapbox.maps.extension.style.sources.*
+import com.mapbox.maps.extension.style.terrain.generated.Terrain
 
 /**
  * The concrete implementation of style plugin.
@@ -38,6 +39,11 @@ class StyleExtensionImpl private constructor(builder: Builder) : StyleContract.S
   override val light: Light? = builder.light
 
   /**
+   * The terrain of the style.
+   */
+  override val terrain: Terrain? = builder.terrain
+
+  /**
    * The builder for style plugin.
    */
   class Builder(
@@ -50,6 +56,7 @@ class StyleExtensionImpl private constructor(builder: Builder) : StyleContract.S
     internal val sources = mutableListOf<Source>()
     internal val images = mutableListOf<ImageExtensionImpl>()
     internal var light: Light? = null
+    internal var terrain: Terrain? = null
 
     /**
      * Extension function for [Layer] to overload Unary operations.
@@ -85,6 +92,15 @@ class StyleExtensionImpl private constructor(builder: Builder) : StyleContract.S
      */
     operator fun Light.unaryPlus() {
       light = this
+    }
+
+    /**
+     * Extension function for [Terrain] to overload Unary operations.
+     *
+     * Apply +[Terrain] will add the terrain to the [StyleExtensionImpl].
+     */
+    operator fun Terrain.unaryPlus() {
+      terrain = this
     }
 
     /**

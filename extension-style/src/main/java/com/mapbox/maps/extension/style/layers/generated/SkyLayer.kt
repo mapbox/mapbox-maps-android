@@ -17,7 +17,7 @@ import com.mapbox.maps.extension.style.utils.silentUnwrap
 import java.util.*
 
 /**
- * The background above the horizon when the map is pitched. Layers of this type always appear behind all other layer types.
+ * A spherical dome around the map that is always rendered behind all other layers.
  *
  * @see <a href="https://www.mapbox.com/mapbox-gl-style-spec/#layers-sky">The online documentation</a>
  *
@@ -131,7 +131,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
   // Property getters and setters
 
   /**
-   * Color coefficients used to determine how color channels scatter throughout the atmosphere. Using white will apply the default coefficients giving a blue color to the atmosphere. Changing a color channel will affect how heavily this particular channel is affected by scattering. The alpha channel describes how strongly the atmosphere color is represented in the sky layer.
+   * A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density.
    */
   val skyAtmosphereColor: String?
     /**
@@ -159,7 +159,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
   /**
    * This is an Expression representation of "sky-atmosphere-color".
    *
-   * Color coefficients used to determine how color channels scatter throughout the atmosphere. Using white will apply the default coefficients giving a blue color to the atmosphere. Changing a color channel will affect how heavily this particular channel is affected by scattering. The alpha channel describes how strongly the atmosphere color is represented in the sky layer.
+   * A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density.
    */
   val skyAtmosphereColorAsExpression: Expression?
     /**
@@ -185,11 +185,11 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
   }
 
   /**
-   * Color coefficients used to determine how color channels scatter throughout the atmosphere. Using white will apply the default coefficients giving a blue color to the atmosphere. Changing a color channel will affect how heavily this particular channel is affected by scattering. The alpha channel describes how strongly the atmosphere color is represented in the sky layer.
+   * A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density.
    */
   val skyAtmosphereColorAsColorInt: Int?
     /**
-     * Color coefficients used to determine how color channels scatter throughout the atmosphere. Using white will apply the default coefficients giving a blue color to the atmosphere. Changing a color channel will affect how heavily this particular channel is affected by scattering. The alpha channel describes how strongly the atmosphere color is represented in the sky layer.
+     * A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density.
      *
      * @return int representation of a rgba string color
      */
@@ -401,7 +401,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
   }
 
   /**
-   * Defines a color gradient with which to color the sky. The color values can be interpolated with an expression using `sky-radial-progress`.
+   * Defines a radial color gradient with which to color the sky. The color values can be interpolated with an expression using `sky-radial-progress`. The range [0, 1] for the interpolant covers a radial distance (in degrees) of [0, `sky-gradient-radius`] centered at the position specified by `sky-gradient-center`.
    */
   val skyGradient: Expression?
     /**
@@ -478,7 +478,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
   }
 
   /**
-   * The radius angle for a gradient. A value of 180 will make the gradient wrap around.
+   * The angular distance (measured in degrees) from `sky-gradient-center` up to which the gradient extends. A value of 180 causes the gradient to wrap around to the opposite direction from `sky-gradient-center`.
    */
   val skyGradientRadius: Double?
     /**
@@ -503,7 +503,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
   /**
    * This is an Expression representation of "sky-gradient-radius".
    *
-   * The radius angle for a gradient. A value of 180 will make the gradient wrap around.
+   * The angular distance (measured in degrees) from `sky-gradient-center` up to which the gradient extends. A value of 180 causes the gradient to wrap around to the opposite direction from `sky-gradient-center`.
    */
   val skyGradientRadiusAsExpression: Expression?
     /**
@@ -732,7 +732,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
       get() = StyleManager.getStyleLayerPropertyDefaultValue("sky", "maxzoom").silentUnwrap()
 
     /**
-     * Color coefficients used to determine how color channels scatter throughout the atmosphere. Using white will apply the default coefficients giving a blue color to the atmosphere. Changing a color channel will affect how heavily this particular channel is affected by scattering. The alpha channel describes how strongly the atmosphere color is represented in the sky layer.
+     * A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density.
      */
     val defaultSkyAtmosphereColor: String?
       /**
@@ -750,7 +750,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     /**
      * This is an Expression representation of "sky-atmosphere-color".
      *
-     * Color coefficients used to determine how color channels scatter throughout the atmosphere. Using white will apply the default coefficients giving a blue color to the atmosphere. Changing a color channel will affect how heavily this particular channel is affected by scattering. The alpha channel describes how strongly the atmosphere color is represented in the sky layer.
+     * A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density.
      */
     val defaultSkyAtmosphereColorAsExpression: Expression?
       /**
@@ -766,7 +766,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
       }
 
     /**
-     * Color coefficients used to determine how color channels scatter throughout the atmosphere. Using white will apply the default coefficients giving a blue color to the atmosphere. Changing a color channel will affect how heavily this particular channel is affected by scattering. The alpha channel describes how strongly the atmosphere color is represented in the sky layer.
+     * A color used to tweak the main atmospheric scattering coefficients. Using white applies the default coefficients giving the natural blue color to the atmosphere. This color affects how heavily the corresponding wavelength is represented during scattering. The alpha channel describes the density of the atmosphere, with 1 maximum density and 0 no density.
      */
     val defaultSkyAtmosphereColorAsColorInt: Int?
       /**
@@ -902,7 +902,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
       }
 
     /**
-     * Defines a color gradient with which to color the sky. The color values can be interpolated with an expression using `sky-radial-progress`.
+     * Defines a radial color gradient with which to color the sky. The color values can be interpolated with an expression using `sky-radial-progress`. The range [0, 1] for the interpolant covers a radial distance (in degrees) of [0, `sky-gradient-radius`] centered at the position specified by `sky-gradient-center`.
      */
     val defaultSkyGradient: Expression?
       /**
@@ -949,7 +949,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
       }
 
     /**
-     * The radius angle for a gradient. A value of 180 will make the gradient wrap around.
+     * The angular distance (measured in degrees) from `sky-gradient-center` up to which the gradient extends. A value of 180 causes the gradient to wrap around to the opposite direction from `sky-gradient-center`.
      */
     val defaultSkyGradientRadius: Double?
       /**
@@ -964,7 +964,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     /**
      * This is an Expression representation of "sky-gradient-radius".
      *
-     * The radius angle for a gradient. A value of 180 will make the gradient wrap around.
+     * The angular distance (measured in degrees) from `sky-gradient-center` up to which the gradient extends. A value of 180 causes the gradient to wrap around to the opposite direction from `sky-gradient-center`.
      */
     val defaultSkyGradientRadiusAsExpression: Expression?
       /**
@@ -1201,7 +1201,7 @@ interface SkyLayerDsl {
    *
    * @param skyGradientRadius value of skyGradientRadius
    */
-  fun skyGradientRadius(skyGradientRadius: Double = 180.0): SkyLayer
+  fun skyGradientRadius(skyGradientRadius: Double = 90.0): SkyLayer
 
   /**
    * Set the SkyGradientRadius property

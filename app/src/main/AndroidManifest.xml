@@ -848,6 +848,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
         </activity>
+        <activity
+            android:name=".examples.terrain.Terrain3DShowcaseActivity"
+            android:description="@string/description_terrain_showcase"
+            android:exported="true"
+            android:label="@string/activity_terrain_showcase">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_terrain" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
     </application>
 
 </manifest>

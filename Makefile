@@ -74,7 +74,7 @@ instrumentation-clean:
 
 .PHONY: generate-style-code
 generate-style-code:
-	cd vendor/mapbox-maps-stylegen && npm install && node generators/kotlin/generate-style-code
+	cd vendor/mapbox-maps-stylegen && npm install && node generators/kotlin/generate-style-code.js
 
 .PHONY: generate-config-code
 generate-config-code:

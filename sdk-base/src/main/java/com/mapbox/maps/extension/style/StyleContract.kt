@@ -40,6 +40,11 @@ interface StyleContract {
      * The light of the style.
      */
     val light: StyleLightExtension?
+
+    /**
+     * The 3D terrain of the style.
+     */
+    val terrain: StyleTerrainExtension?
   }
 
   /**
@@ -61,6 +66,18 @@ interface StyleContract {
   fun interface StyleLightExtension {
     /**
      * Bind the light to the Style.
+     *
+     * @param delegate The style delegate
+     */
+    fun bindTo(delegate: StyleManagerInterface)
+  }
+
+  /**
+   * Define the interfaces for the Terrain plugin.
+   */
+  fun interface StyleTerrainExtension {
+    /**
+     * Bind the terrain to the Style.
      *
      * @param delegate The style delegate
      */

@@ -147,6 +147,7 @@ class MapboxMap internal constructor(
       it.first.bindTo(style, it.second)
     }
     styleExtension.light?.bindTo(style)
+    styleExtension.terrain?.bindTo(style)
     onStyleLoaded?.onStyleLoaded(style)
   }
 

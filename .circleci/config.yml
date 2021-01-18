@@ -275,6 +275,7 @@ jobs:
 
     steps:
       - checkout
+      - checkout-submodules
       - restore-gradle-cache
       - run:
           name: ktlint

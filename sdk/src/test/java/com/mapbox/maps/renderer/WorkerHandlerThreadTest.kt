@@ -12,6 +12,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.LooperMode
+import java.time.Duration
 
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowLogger::class])
@@ -60,12 +61,16 @@ class WorkerHandlerThreadTest {
 
   @Test
   fun postThreadStarted() {
-    val action = mockk<() -> Unit>(relaxed = true)
-    workerHandlerThread.start()
+    val actionOne = mockk<() -> Unit>(relaxed = true)
+    val actionTwo = mockk<() -> Unit>(relaxed = true)
     Shadows.shadowOf(Looper.getMainLooper()).pause()
-    workerHandlerThread.post { action() }
-    workerHandlerThread.post { action() }
-    Shadows.shadowOf(Looper.getMainLooper()).idle()
-    verify(exactly = 2) { action.invoke() }
+    workerHandlerThread.apply {
+      start()
+      post { actionOne() }
+      post { actionTwo() }
+    }
+    Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(10))
+    verify(exactly = 1) { actionOne.invoke() }
+    verify(exactly = 1) { actionTwo.invoke() }
   }
 }
