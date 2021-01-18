@@ -99,6 +99,9 @@ class MapboxMapTest {
     val light = mockk<StyleContract.StyleLightExtension>(relaxed = true)
     every { stylePlugin.light } returns light
 
+    val terrain = mockk<StyleContract.StyleTerrainExtension>(relaxed = true)
+    every { stylePlugin.terrain } returns terrain
+
     val styleLoadCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     mapboxMap.onFinishLoadingStylePlugin(style, stylePlugin, styleLoadCallback)
 
@@ -107,6 +110,7 @@ class MapboxMapTest {
     verify { image.bindTo(style) }
     verify { layer.bindTo(style, layerPosition) }
     verify { light.bindTo(style) }
+    verify { terrain.bindTo(style) }
     verify { styleLoadCallback.onStyleLoaded(style) }
   }
 

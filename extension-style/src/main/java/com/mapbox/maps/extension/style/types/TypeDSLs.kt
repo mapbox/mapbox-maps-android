@@ -31,3 +31,11 @@ annotation class SourceDsl
  */
 @DslMarker
 annotation class ExpressionDsl
+
+/**
+ * Dsl marker for Terrain.
+ *
+ * Controls the scope of the Terrain Dsl.
+ */
+@DslMarker
+annotation class TerrainDsl
