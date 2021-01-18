@@ -16,6 +16,4 @@ internal interface LocationPuckManager {
   fun updateCurrentPosition(point: Point)
 
   fun updateCurrentBearing(bearing: Float)
-
-  fun updateCurrentZoomLevel(zoomLevel: Double)
 }
