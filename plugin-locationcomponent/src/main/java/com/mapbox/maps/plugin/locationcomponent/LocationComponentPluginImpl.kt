@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.locationcomponent
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.util.AttributeSet
 import com.mapbox.geojson.Point
@@ -16,13 +17,13 @@ import java.lang.ref.WeakReference
  * Default implementation of the LocationComponentPlugin, it renders the configured location puck
  * to the user's current location.
  */
-class LocationComponentPluginImpl : LocationComponentPlugin, LocationComponentSettingsBase() {
+class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer, LocationComponentSettingsBase() {
   private lateinit var delegateProvider: MapDelegateProvider
   private lateinit var puckPresetProvider: PuckPresetProvider
   private lateinit var context: WeakReference<Context>
 
   private var bitmapProvider = LayerBitmapProvider()
-  private var locationPuckManager: LocationPuckManagerImpl? = null
+  private var locationPuckManager: LocationPuckManager? = null
   private var locationProvider: LocationProvider? = null
   private var staleStateManager: StaleStateManager? = null
 
@@ -76,7 +77,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationComponentSe
 
       delegateProvider.getStyle { style ->
         if (locationPuckManager == null) {
-          locationPuckManager = LocationPuckManagerImpl(
+          locationPuckManager = LocationPuckManager(
             settings = internalSettings,
             delegateProvider = delegateProvider,
             style = style,
@@ -90,6 +91,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationComponentSe
             it.initialize(style)
           }
         }
+        locationPuckManager?.onStart()
         locationProvider?.registerLocationConsumer(this)
         staleStateManager?.onStart()
         isLocationComponentActivated = true
@@ -101,6 +103,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationComponentSe
    * Called whenever activity's/fragment's lifecycle is entering a "stopped" state.
    */
   override fun onStop() {
+    locationPuckManager?.onStop()
     staleStateManager?.onStop()
     locationProvider?.unRegisterLocationConsumer(this)
   }
@@ -126,17 +129,35 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationComponentSe
 
   /**
    * Called whenever the location is updated.
+   * Supports multiple points to create more complex animations with intermediate points.
+   * Last [location] value will always be first animator target for next animation.
    */
-  override fun onLocationUpdated(location: Point) {
-    locationPuckManager?.updateCurrentPosition(location)
+  override fun onLocationUpdated(vararg location: Point) {
+    locationPuckManager?.updateCurrentPosition(*location)
     staleStateManager?.updateLatestLocationTime()
   }
 
   /**
    * Called whenever the bearing is updated.
+   * Supports multiple bearing values to create more complex animations with intermediate points.
+   * Last [bearing] value will always be first animator target for next animation.
    */
-  override fun onBearingUpdated(bearing: Float) {
-    locationPuckManager?.updateCurrentBearing(bearing)
+  override fun onBearingUpdated(vararg bearing: Double) {
+    locationPuckManager?.updateCurrentBearing(*bearing)
+  }
+
+  /**
+   * Update [ValueAnimator] options that will be used to animate between [Point] updates.
+   */
+  override fun onPuckLocationAnimatorOptionsUpdated(options: ValueAnimator.() -> Unit) {
+    locationPuckManager?.updateLocationAnimator(options)
+  }
+
+  /**
+   * Update [ValueAnimator] options that will be used to animate between bearing [Double] updates.
+   */
+  override fun onPuckBearingAnimatorOptionsUpdated(options: ValueAnimator.() -> Unit) {
+    locationPuckManager?.updateBearingAnimator(options)
   }
 
   /**
