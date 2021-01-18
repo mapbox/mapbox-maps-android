@@ -19,6 +19,7 @@ import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.plugin.delegates.listeners.OnMapChangedListener
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
+import com.mapbox.maps.plugin.location.LocationComponentPlugin
 import com.mapbox.maps.plugin.location.LocationPlugin
 import com.mapbox.maps.plugin.logo.LogoPlugin
 import com.mapbox.maps.plugin.overlay.MapOverlayPlugin
@@ -304,6 +305,16 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       Logger.d(
         TAG,
         "Add location plugin dependency to take advantage of the default Mapbox location component implementation."
+      )
+    }
+
+    try {
+      val locationComponentPluginClass = Class.forName(PLUGIN_LOCATION_COMPONENT_CLASS_NAME) as Class<LocationComponentPlugin>
+      createPlugin(mapView, locationComponentPluginClass)
+    } catch (ex: ClassNotFoundException) {
+      Logger.d(
+        TAG,
+        "Add location component plugin dependency to take advantage of the default Mapbox location component implementation."
       )
     }
 

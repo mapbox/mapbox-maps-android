@@ -2,6 +2,9 @@
 
 package com.mapbox.maps.plugin
 
+import android.graphics.Color
+import android.graphics.drawable.Drawable
+
 /**
  * The map rendering mode. By default, it is set to Continuous so the map will render as data arrives from the network and react immediately to state changes.
  *
@@ -136,6 +139,119 @@ enum class Surface(val value: String) {
    * Map rendering on a TextureView.
    */
   TEXTURE_VIEW("texture-view"),
+}
+
+/**
+ * Sealed class representing a location-puck.
+ */
+sealed class LocationPuck
+
+/**
+ * Definition of a two_d_location_puck.
+ */
+data class TwoDLocationPuck(
+  /**
+   * Name of image in sprite to use as the top of the location indicator.
+   */
+  var topImage: Drawable? = null,
+  /**
+   * Name of image in sprite to use as the middle of the location indicator.
+   */
+  var bearingImage: Drawable? = null,
+  /**
+   * Name of image in sprite to use as the background of the location indicator.
+   */
+  var shadowImage: Drawable? = null,
+  /**
+   * Defines the bearing color.
+   */
+  var bearingTintColor: Int? = null,
+  /**
+   * Defines the bearing color.
+   */
+  var bearingStaleTintColor: Int? = null,
+  /**
+   * Defines the foreground color
+   */
+  var topTintColor: Int? = null,
+  /**
+   * Defines the foreground stale color.
+   */
+  var topStaleTintColor: Int? = null,
+  /**
+   * Defines the background color
+   */
+  var shadowTintColor: Int? = null,
+  /**
+   * Defines the background stale color.
+   */
+  var shadowStaleTintColor: Int? = null,
+  /**
+   * Whether the location puck is pulsing on the map.
+   */
+  var pulsingEnabled: Boolean = false,
+  /**
+   * The color of the pulsing circle.
+   */
+  var pulsingColor: Int = Color.BLUE,
+  /**
+   * The maximum radius of the pulsing circle.
+   */
+  var pulsingMaxRadius: Float = 10f,
+) : LocationPuck()
+
+/**
+ * Definition of a three_d_location_puck.
+ */
+data class ThreeDLocationPuck(
+  /**
+   * An URL for the model file in gltf format.
+   */
+  var modelUri: String,
+  /**
+   * The scale of the model.
+   */
+  var position: List<Float> = listOf(0f, 0f),
+  /**
+   * The opacity of the model.
+   */
+  var modelOpacity: Float = 1f,
+  /**
+   * The scale of the model.
+   */
+  var modelScale: List<Float> = listOf(1f, 1f, 1f),
+  /**
+   * The rotation of the model.
+   */
+  var modelRotation: List<Float> = listOf(0f, 0f, 90f),
+) : LocationPuck()
+
+/**
+ * Defines the preset puck styles bundled with the plugin.
+ *
+ * @param value
+ */
+enum class PresetPuckStyle(val value: String) {
+  /**
+   * Defines a puck that is a standard dot with a halo.
+   */
+  PRECISE("precise"),
+  /**
+   * Defines a approximate ring that has a fixed radius based on approximate location permissions.
+   */
+  APPROXIMATE("approximate"),
+  /**
+   * Defines a puck that matches the precise puck but contains a small arrow in the heading direction.
+   */
+  HEADING_ARROW("heading-arrow"),
+  /**
+   * Defines a puck that matches the precise puck but contains a beam in the heading direction.
+   */
+  HEADING_BEAM("heading-beam"),
+  /**
+   * Defines a puck that has an arrow and white circle around it.
+   */
+  ARROW("arrow"),
 }
 
 /**

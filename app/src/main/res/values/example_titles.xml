@@ -67,4 +67,5 @@
     <string name="activity_circle">Annotation Circle</string>
     <string name="activity_symbol">Annotation Symbol</string>
     <string name="activity_line">Annotation line</string>
+    <string name="activity_location_component">Location component</string>
 </resources>

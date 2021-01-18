@@ -1,0 +1,152 @@
+// This file is generated.
+
+package com.mapbox.maps.plugin.locationcomponent.generated
+
+import com.mapbox.maps.plugin.LocationPuck
+import com.mapbox.maps.plugin.PresetPuckStyle
+
+/**
+ * Abstract settings class for LocationComponentPlugin.
+ *
+ * This abstract class exposes all the required public APIs to configure the LocationComponentPlugin.
+ */
+abstract class LocationComponentSettingsBase : LocationComponentSettingsInterface {
+  /**
+   * Shows a location puck on the map.
+   */
+  protected abstract var internalSettings: LocationComponentSettings
+
+  /**
+   * Apply the changes to the LocationComponentSettings to the LocationComponentPlugin.
+   */
+  protected abstract fun applySettings()
+
+  /**
+   * Get current locationcomponent configuration.
+   *
+   * @return locationcomponent settings
+   */
+  override fun getSettings(): LocationComponentSettings {
+    return internalSettings.copy()
+  }
+
+  /**
+   * Update locationcomponent configuration, the update will be applied to the plugin automatically.
+   *
+   * @param block the receiver function of LocationComponentSettings
+   */
+  override fun updateSettings(block: LocationComponentSettings.() -> Unit) {
+    this.internalSettings.apply(block)
+    applySettings()
+  }
+
+  /**
+   * Whether the user location is visible on the map.
+   */
+  override var enabled: Boolean
+    get() {
+      return this.internalSettings.enabled
+    }
+    set(value) {
+      this.internalSettings.enabled = value
+      applySettings()
+    }
+
+  /**
+   * The stale state indicates to the user that the location being displayed on the map hasn't been updated in a specific amount of time.
+   */
+  override var staleStateEnabled: Boolean
+    get() {
+      return this.internalSettings.staleStateEnabled
+    }
+    set(value) {
+      this.internalSettings.staleStateEnabled = value
+      applySettings()
+    }
+
+  /**
+   * Set the delay before the location puck becomes stale. The timer begins approximately when a new location update comes in and using this defined time, if an update hasn't occured by the end, the location is considered stale.
+   */
+  override var staleStateTimeout: Long
+    get() {
+      return this.internalSettings.staleStateTimeout
+    }
+    set(value) {
+      this.internalSettings.staleStateTimeout = value
+      applySettings()
+    }
+
+  /**
+   * The scale factor of the location icon when the map is zoomed out. Scaling is linear.
+   */
+  override var minZoomIconScale: Float
+    get() {
+      return this.internalSettings.minZoomIconScale
+    }
+    set(value) {
+      this.internalSettings.minZoomIconScale = value
+      applySettings()
+    }
+
+  /**
+   * The scale factor of the location icon when the map is zoomed in. Scaling is linear.
+   */
+  override var maxZoomIconScale: Float
+    get() {
+      return this.internalSettings.maxZoomIconScale
+    }
+    set(value) {
+      this.internalSettings.maxZoomIconScale = value
+      applySettings()
+    }
+
+  /**
+   * Sets the id of the layer that's added above to when placing the component on the map.
+   */
+  override var layerAbove: String?
+    get() {
+      return this.internalSettings.layerAbove
+    }
+    set(value) {
+      this.internalSettings.layerAbove = value
+      applySettings()
+    }
+
+  /**
+   * Sets the id of the layer that's added below to when placing the component on the map.
+   */
+  override var layerBelow: String?
+    get() {
+      return this.internalSettings.layerBelow
+    }
+    set(value) {
+      this.internalSettings.layerBelow = value
+      applySettings()
+    }
+
+  /**
+   * Defines what the customised look of the location puck. Defining the puck will overwrite the puck style preset.
+   */
+  override var locationPuck: LocationPuck?
+    get() {
+      return this.internalSettings.locationPuck
+    }
+    set(value) {
+      this.internalSettings.locationPuck = value
+      applySettings()
+    }
+
+  /**
+   * Defines the preset puck styles bundled with the plugin.
+   */
+  override var presetPuckStyle: PresetPuckStyle
+    get() {
+      return this.internalSettings.presetPuckStyle
+    }
+    set(value) {
+      this.internalSettings.presetPuckStyle = value
+      applySettings()
+    }
+}
+
+// End of generated file.

@@ -67,4 +67,5 @@
     <string name="description_annotation_circle">Show circles on a map</string>
     <string name="description_annotation_symbol">Show symbols on a map</string>
     <string name="description_annotation_line">Show lines on a map</string>
+    <string name="description_location_component">Shows location puck on the map</string>
 </resources>
