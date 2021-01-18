@@ -61,6 +61,7 @@ dependencies {
   api(project(":plugin-gestures"))
   api(project(":plugin-attribution"))
   api(project(":plugin-location"))
+  api(project(":plugin-locationcomponent"))
   api(project(":plugin-animation"))
   api(project(":plugin-scalebar"))
   api(project(":plugin-overlay"))

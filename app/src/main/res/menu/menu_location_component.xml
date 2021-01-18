@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_puck_style_preset_change"
+        android:title="@string/toggle_preset_puck_style"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_3d_puck_style_change"
+        android:title="@string/toggle_3d_puck_style"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_2d_puck_style_change"
+        android:title="@string/toggle_2d_puck_style"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_map_style_change"
+        android:title="@string/toggle_custom_map_style"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_component_disable"
+        android:title="@string/location_disable_component"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_component_enabled"
+        android:title="@string/location_enable_component"
+        app:showAsAction="never"/>
+</menu>

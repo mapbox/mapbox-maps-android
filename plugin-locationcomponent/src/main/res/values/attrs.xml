@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file is generated. -->
+<resources>
+    <declare-styleable name="mapbox_MapView">
+        <!-- Whether the user location is visible on the map. -->
+        <attr name="mapbox_locationComponentEnabled" format="boolean"/>
+        <!-- The stale state indicates to the user that the location being displayed on the map hasn't been updated in a specific amount of time. -->
+        <attr name="mapbox_locationComponentStaleStateEnabled" format="boolean"/>
+        <!-- Set the delay before the location puck becomes stale. The timer begins approximately when a new location update comes in and using this defined time, if an update hasn't occured by the end, the location is considered stale. -->
+        <attr name="mapbox_locationComponentStaleStateTimeout" format="integer"/>
+        <!-- The scale factor of the location icon when the map is zoomed out. Scaling is linear. -->
+        <attr name="mapbox_locationComponentMinZoomIconScale" format="float"/>
+        <!-- The scale factor of the location icon when the map is zoomed in. Scaling is linear. -->
+        <attr name="mapbox_locationComponentMaxZoomIconScale" format="float"/>
+        <!-- Sets the id of the layer that's added above to when placing the component on the map. -->
+        <attr name="mapbox_locationComponentLayerAbove" format="string"/>
+        <!-- Sets the id of the layer that's added below to when placing the component on the map. -->
+        <attr name="mapbox_locationComponentLayerBelow" format="string"/>
+        <!-- Defines what the customised look of the location puck. Defining the puck will overwrite the puck style preset. -->
+        <attr name="mapbox_locationComponentLocationPuck" format="enum">
+          <!--  -->
+          <enum name="two_d_location_puck" value="0"/>
+          <!--  -->
+          <enum name="three_d_location_puck" value="1"/>
+        </attr>
+
+        <!-- Location puck definitions for two_d_location_puck.  -->
+
+        <!-- Name of image in sprite to use as the top of the location indicator. -->
+        <attr name="mapbox_locationComponentLocationPuckTwoDLocationPuckTopImage" format="reference"/>
+        <!-- Name of image in sprite to use as the middle of the location indicator. -->
+        <attr name="mapbox_locationComponentLocationPuckTwoDLocationPuckBearingImage" format="reference"/>
+        <!-- Name of image in sprite to use as the background of the location indicator. -->
+        <attr name="mapbox_locationComponentLocationPuckTwoDLocationPuckShadowImage" format="reference"/>
+        <!-- Defines the bearing color. -->
+        <attr name="mapbox_locationComponentLocationPuckTwoDLocationPuckBearingTintColor" format="color"/>
+        <!-- Defines the bearing color. -->
+        <attr name="mapbox_locationComponentLocationPuckTwoDLocationPuckBearingStaleTintColor" format="color"/>
+        <!-- Defines the foreground color -->
+        <attr name="mapbox_locationComponentLocationPuckTwoDLocationPuckTopTintColor" format="color"/>
+        <!-- Defines the foreground stale color. -->
+        <attr name="mapbox_locationComponentLocationPuckTwoDLocationPuckTopStaleTintColor" format="color"/>
+        <!-- Defines the background color -->
+        <attr name="mapbox_locationComponentLocationPuckTwoDLocationPuckShadowTintColor" format="color"/>
+        <!-- Defines the background stale color. -->
+        <attr name="mapbox_locationComponentLocationPuckTwoDLocationPuckShadowStaleTintColor" format="color"/>
+        <!-- Whether the location puck is pulsing on the map. -->
+        <attr name="mapbox_locationComponentLocationPuckTwoDLocationPuckPulsingEnabled" format="boolean"/>
+        <!-- The color of the pulsing circle. -->
+        <attr name="mapbox_locationComponentLocationPuckTwoDLocationPuckPulsingColor" format="color"/>
+        <!-- The maximum radius of the pulsing circle. -->
+        <attr name="mapbox_locationComponentLocationPuckTwoDLocationPuckPulsingMaxRadius" format="dimension"/>
+
+        <!-- Location puck definitions for three_d_location_puck.  -->
+
+        <!-- An URL for the model file in gltf format. -->
+        <attr name="mapbox_locationComponentLocationPuckThreeDLocationPuckModelUri" format="string"/>
+        <!-- The scale of the model. -->
+        <attr name="mapbox_locationComponentLocationPuckThreeDLocationPuckPosition_lon" format="float"/>
+        <attr name="mapbox_locationComponentLocationPuckThreeDLocationPuckPosition_lat" format="float"/>
+        <!-- The opacity of the model. -->
+        <attr name="mapbox_locationComponentLocationPuckThreeDLocationPuckModelOpacity" format="float"/>
+        <!-- The scale of the model. -->
+        <attr name="mapbox_locationComponentLocationPuckThreeDLocationPuckModelScale_x" format="float"/>
+        <attr name="mapbox_locationComponentLocationPuckThreeDLocationPuckModelScale_y" format="float"/>
+        <attr name="mapbox_locationComponentLocationPuckThreeDLocationPuckModelScale_z" format="float"/>
+        <!-- The rotation of the model. -->
+        <attr name="mapbox_locationComponentLocationPuckThreeDLocationPuckModelRotation_x" format="float"/>
+        <attr name="mapbox_locationComponentLocationPuckThreeDLocationPuckModelRotation_y" format="float"/>
+        <attr name="mapbox_locationComponentLocationPuckThreeDLocationPuckModelRotation_z" format="float"/>
+        <!-- Defines the preset puck styles bundled with the plugin. -->
+        <attr name="mapbox_locationComponentPresetPuckStyle" format="enum">
+          <!-- Defines a puck that is a standard dot with a halo. -->
+          <enum name="precise" value="0"/>
+          <!-- Defines a approximate ring that has a fixed radius based on approximate location permissions. -->
+          <enum name="approximate" value="1"/>
+          <!-- Defines a puck that matches the precise puck but contains a small arrow in the heading direction. -->
+          <enum name="heading_arrow" value="2"/>
+          <!-- Defines a puck that matches the precise puck but contains a beam in the heading direction. -->
+          <enum name="heading_beam" value="3"/>
+          <!-- Defines a puck that has an arrow and white circle around it. -->
+          <enum name="arrow" value="4"/>
+        </attr>
+    </declare-styleable>
+</resources>
+<!-- End of generated file. -->
