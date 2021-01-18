@@ -98,21 +98,6 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationComponentSe
   }
 
   /**
-   * Called whenever camera position changes.
-   */
-  override fun onCameraMove(
-    lat: Double,
-    lon: Double,
-    zoom: Double,
-    pitch: Double,
-    bearing: Double,
-    padding: Array<Double>?,
-    anchor: Pair<Double, Double>?
-  ) {
-    locationPuckManager?.updateCurrentZoomLevel(zoom)
-  }
-
-  /**
    * Bind the ViewPlugin with current map context. This will create a View that
    * will be added to the MapView.
    *

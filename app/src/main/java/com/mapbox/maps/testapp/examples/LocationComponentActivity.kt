@@ -67,7 +67,8 @@ class LocationComponentActivity : AppCompatActivity() {
     mapView.getLocationComponentPlugin().let {
       if (it.locationPuck == null) {
         it.locationPuck = ThreeDLocationPuck(
-          modelUri = "asset://race_car_model.gltf"
+          modelUri = "asset://race_car_model.gltf",
+          modelScale = listOf(0.1f, 0.1f, 0.1f)
         )
       } else {
         it.locationPuck = null

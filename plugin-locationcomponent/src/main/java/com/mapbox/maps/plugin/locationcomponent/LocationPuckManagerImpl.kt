@@ -8,6 +8,7 @@ import com.mapbox.maps.plugin.ThreeDLocationPuck
 import com.mapbox.maps.plugin.TwoDLocationPuck
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
+import kotlin.math.pow
 
 internal class LocationPuckManagerImpl(
   override var settings: LocationComponentSettings,
@@ -29,8 +30,6 @@ internal class LocationPuckManagerImpl(
   private var lastLocation: Point? = null
 
   private var lastBearing: Float = 0.0f
-
-  private var lastZoomLevel: Double = delegateProvider.mapCameraDelegate.getZoom()
 
   private fun getLocationPuck(locationSettings: LocationComponentSettings): LocationPuck {
     return locationSettings.locationPuck ?: presetProvider.getPresetPuck(settings.presetPuckStyle)
@@ -58,7 +57,6 @@ internal class LocationPuckManagerImpl(
       updateCurrentPosition(it)
     }
     updateCurrentBearing(lastBearing)
-    updateCurrentZoomLevel(lastZoomLevel)
     setLocationsStale(lastStaleState)
     if (settings.enabled) {
       show()
@@ -113,11 +111,6 @@ internal class LocationPuckManagerImpl(
     locationLayerRenderer.setBearing(bearing)
   }
 
-  override fun updateCurrentZoomLevel(zoomLevel: Double) {
-    lastZoomLevel = zoomLevel
-    locationLayerRenderer.setZoomLevel(zoomLevel)
-  }
-
   private fun prepareLocationIndicatorLayerBitmaps(puck: TwoDLocationPuck) {
     val topBitmap = puck.topImage?.let { bitmapProvider.generateBitmap(it, puck.topTintColor) }
     val topStaleBitmap =
@@ -142,15 +135,55 @@ internal class LocationPuckManagerImpl(
   }
 
   private fun styleScaling(settings: LocationComponentSettings) {
-    val scaleExpression = arrayListOf(
-      Value("interpolate"),
-      Value(arrayListOf(Value("linear"))),
-      Value(arrayListOf(Value("zoom"))),
-      Value(delegateProvider.mapTransformDelegate.getBounds().minZoom!!),
-      Value(settings.minZoomIconScale.toDouble()),
-      Value(delegateProvider.mapTransformDelegate.getBounds().maxZoom!!),
-      Value(settings.maxZoomIconScale.toDouble())
-    )
+    val puck = getLocationPuck(settings)
+    val minZoom = delegateProvider.mapTransformDelegate.getBounds().minZoom ?: 0.0
+    val maxZoom = delegateProvider.mapTransformDelegate.getBounds().maxZoom ?: 19.0
+    val scaleExpression = when (puck) {
+      is TwoDLocationPuck -> {
+        arrayListOf(
+          Value("interpolate"),
+          Value(arrayListOf(Value("linear"))),
+          Value(arrayListOf(Value("zoom"))),
+          Value(minZoom),
+          Value(settings.minZoomIconScale.toDouble()),
+          Value(maxZoom),
+          Value(settings.maxZoomIconScale.toDouble())
+        )
+      }
+      is ThreeDLocationPuck -> {
+        arrayListOf(
+          Value("interpolate"),
+          Value(arrayListOf(Value("exponential"), Value(0.5))),
+          Value(arrayListOf(Value("zoom"))),
+          Value(minZoom),
+          Value(
+            arrayListOf(
+              Value("literal"),
+              Value(
+                arrayListOf(
+                  Value(2.0.pow(maxZoom - minZoom) * puck.modelScale[0].toDouble()),
+                  Value(2.0.pow(maxZoom - minZoom) * puck.modelScale[1].toDouble()),
+                  Value(2.0.pow(maxZoom - minZoom) * puck.modelScale[2].toDouble())
+                )
+              )
+            )
+          ),
+          Value(maxZoom),
+          Value(
+            arrayListOf(
+              Value("literal"),
+              Value(
+                arrayListOf(
+                  Value(puck.modelScale[0].toDouble()),
+                  Value(puck.modelScale[1].toDouble()),
+                  Value(puck.modelScale[2].toDouble())
+                )
+              )
+            )
+          )
+        )
+      }
+    }
     locationLayerRenderer.styleScaling(scaleExpression)
   }
 

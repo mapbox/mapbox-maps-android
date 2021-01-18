@@ -63,10 +63,6 @@ internal class LocationIndicatorLayerRenderer(
     setLayerLocation(latLng)
   }
 
-  override fun setZoomLevel(zoomLevel: Double) {
-    // not supported
-  }
-
   override fun setBearing(bearing: Float) {
     setLayerBearing(bearing.toDouble())
   }

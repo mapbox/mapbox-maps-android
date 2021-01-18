@@ -6,7 +6,6 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.plugin.ThreeDLocationPuck
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_SOURCE
-import kotlin.math.pow
 
 internal class ModelLayerRenderer(
   layerSourceProvider: LayerSourceProvider,
@@ -50,11 +49,6 @@ internal class ModelLayerRenderer(
     setLayerLocation(latLng)
   }
 
-  override fun setZoomLevel(zoomLevel: Double) {
-    val scale = 2.0.pow(MAX_ZOOM_LEVEL - zoomLevel)
-    modelLayer.modelScale(locationModelLayerOptions.modelScale.map { it * scale })
-  }
-
   override fun setBearing(bearing: Float) {
     setLayerBearing(bearing.toDouble())
   }
@@ -63,6 +57,7 @@ internal class ModelLayerRenderer(
   }
 
   override fun styleScaling(scaleExpression: List<Value>) {
+    modelLayer.modelScaleExpression(scaleExpression)
   }
 
   override fun setLocationStale(isStale: Boolean) {
@@ -109,9 +104,5 @@ internal class ModelLayerRenderer(
   }
 
   override fun clearBitmaps() {
-  }
-
-  companion object {
-    internal const val MAX_ZOOM_LEVEL = 19
   }
 }
