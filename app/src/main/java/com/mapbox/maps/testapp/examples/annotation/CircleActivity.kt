@@ -13,6 +13,8 @@ import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.utils.Assets
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
+import kotlinx.android.synthetic.main.activity_add_marker_symbol.mapView
+import kotlinx.android.synthetic.main.activity_annotation.*
 import java.io.IOException
 import java.util.*
 
@@ -21,13 +23,14 @@ import java.util.*
  */
 class CircleActivity : AppCompatActivity() {
   private val random = Random()
+  private lateinit var circleManager: CircleManager
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_annotation)
     mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
       val annotationPlugin = mapView.getAnnotationPlugin()
-      val circleManager = annotationPlugin.getCircleManager()
+      circleManager = annotationPlugin.getCircleManager()
       circleManager.addClickListener(
         OnCircleClickListener {
           Toast.makeText(this@CircleActivity, "click", Toast.LENGTH_LONG).show()
@@ -69,6 +72,8 @@ class CircleActivity : AppCompatActivity() {
         throw RuntimeException("Unable to parse annotations.json")
       }
     }
+
+    deleteAll.setOnClickListener { circleManager.deleteAll() }
   }
 
   private fun createRandomPoints(): Point {
