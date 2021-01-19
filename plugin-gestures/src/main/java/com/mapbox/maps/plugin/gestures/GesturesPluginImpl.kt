@@ -301,7 +301,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
               cameraAnimationsPlugin.calculateScaleBy(scrollDist.toDouble(), currentZoom)
             cameraAnimationsPlugin.easeTo(
               CameraOptions.Builder().anchor(anchor).zoom(zoom).build(),
-              mapAnimationOptions { duration = 0 }
+              mapAnimationOptions {
+                duration = 0
+                owner = MAP_ANIMATION_OWNER
+              }
             )
           }
 
@@ -545,7 +548,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
           .zoom(targetZoom)
           .anchor(focalPoint)
           .build(),
-        mapAnimationOptions { duration = 0 }
+        mapAnimationOptions {
+          duration = 0
+          owner = MAP_ANIMATION_OWNER
+        }
       )
     } else {
       val zoomBy =
@@ -556,7 +562,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
             .zoom(it + zoomBy)
             .anchor(focalPoint)
             .build(),
-          mapAnimationOptions { duration = 0 }
+          mapAnimationOptions {
+            duration = 0
+            owner = MAP_ANIMATION_OWNER
+          }
         )
       }
     }
@@ -789,7 +798,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
           .anchor(focalPoint)
           .bearing(bearing)
           .build(),
-        mapAnimationOptions { duration = 0 }
+        mapAnimationOptions {
+          duration = 0
+          owner = MAP_ANIMATION_OWNER
+        }
       )
 
       notifyOnRotateListeners(detector)
@@ -898,7 +910,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       // Pitch the map
       cameraAnimationsPlugin.easeTo(
         CameraOptions.Builder().pitch(pitch).build(),
-        mapAnimationOptions { duration = 0 }
+        mapAnimationOptions {
+          duration = 0
+          owner = MAP_ANIMATION_OWNER
+        }
       )
       notifyOnShoveListeners(detector)
     }
@@ -1222,7 +1237,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       target?.let {
         cameraAnimationsPlugin.easeTo(
           CameraOptions.Builder().center(it).build(),
-          mapAnimationOptions { duration = 0 }
+          mapAnimationOptions {
+            duration = 0
+            owner = MAP_ANIMATION_OWNER
+          }
         )
       }
       notifyOnMoveListeners(detector)
