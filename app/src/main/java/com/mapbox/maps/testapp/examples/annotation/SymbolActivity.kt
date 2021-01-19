@@ -45,7 +45,14 @@ class SymbolActivity : AppCompatActivity() {
       val symbolManager = annotationPlugin.getSymbolManager()
       symbolManager.addClickListener(
         OnSymbolClickListener {
-          Toast.makeText(this@SymbolActivity, "click", Toast.LENGTH_LONG).show()
+          Toast.makeText(this@SymbolActivity, "Click: $it", Toast.LENGTH_LONG).show()
+          false
+        }
+      )
+
+      symbolManager.addLongClickListener(
+        OnSymbolLongClickListener {
+          Toast.makeText(this@SymbolActivity, "LongClick: $it", Toast.LENGTH_LONG).show()
           false
         }
       )

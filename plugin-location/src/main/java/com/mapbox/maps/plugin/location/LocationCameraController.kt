@@ -352,15 +352,16 @@ internal class LocationCameraController {
       }
     }
 
-    override fun onMove(detector: MoveGestureDetector) {
+    override fun onMove(detector: MoveGestureDetector): Boolean {
       if (interrupt) {
         detector.interrupt()
-        return
+        return false
       }
       if (isLocationTracking || isBearingTracking) {
         setCameraMode(CameraMode.NONE)
         detector.interrupt()
       }
+      return false
     }
 
     override fun onMoveEnd(detector: MoveGestureDetector) {
