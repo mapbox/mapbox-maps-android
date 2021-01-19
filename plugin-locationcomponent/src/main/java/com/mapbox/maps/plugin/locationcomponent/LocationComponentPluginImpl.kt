@@ -26,13 +26,17 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationComponentSe
   private var locationProvider: LocationProvider? = null
   private var staleStateManager: StaleStateManager? = null
 
+  private var isLocationComponentActivated = false
+
   /**
    * Set the LocationProvider, it will replace the default location provider provided by the LocationComponentPlugin.
    */
   override fun setLocationProvider(locationProvider: LocationProvider) {
     this.locationProvider?.unRegisterLocationConsumer(this)
-    locationProvider.registerLocationConsumer(this)
     this.locationProvider = locationProvider
+    if (isLocationComponentActivated) {
+      locationProvider.registerLocationConsumer(this)
+    }
   }
 
   /**
@@ -57,6 +61,10 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationComponentSe
    * Called whenever activity's/fragment's lifecycle is entering a "started" state.
    */
   override fun onStart() {
+    activateLocationComponent()
+  }
+
+  private fun activateLocationComponent() {
     if (internalSettings.enabled) {
       if (staleStateManager == null) {
         staleStateManager = StaleStateManager(
@@ -82,10 +90,10 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationComponentSe
             it.initialize(style)
           }
         }
+        locationProvider?.registerLocationConsumer(this)
+        staleStateManager?.onStart()
+        isLocationComponentActivated = true
       }
-
-      locationProvider?.registerLocationConsumer(this)
-      staleStateManager?.onStart()
     }
   }
 
@@ -111,7 +119,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationComponentSe
     internalSettings =
       LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, pixelRatio)
     puckPresetProvider = PuckPresetProvider(context)
-    if (internalSettings.enabled) {
+    if (internalSettings.enabled && locationProvider == null) {
       locationProvider = LocationProviderImpl(context)
     }
   }
@@ -151,11 +159,12 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationComponentSe
    * Apply the changes to the LocationComponentSettings to the LocationComponentPlugin.
    */
   override fun applySettings() {
-    if (internalSettings.enabled) {
+    if (internalSettings.enabled && !isLocationComponentActivated) {
       context.get()?.let {
         if (locationProvider == null) {
           locationProvider = LocationProviderImpl(it)
         }
+        activateLocationComponent()
       }
     }
     locationPuckManager?.updateSettings(internalSettings)
