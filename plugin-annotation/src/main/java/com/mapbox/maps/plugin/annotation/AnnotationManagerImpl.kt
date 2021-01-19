@@ -8,6 +8,7 @@ import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.RenderedQueryOptions
+import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -300,12 +301,9 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
      * Called when the move gesture is starting.
      */
     override fun onMoveBegin(detector: MoveGestureDetector) {
-      if (dragListeners.isEmpty()) {
-        return
-      }
       if (detector.pointersCount == 1) {
         queryMapForFeatures(
-          Point.fromLngLat(
+          ScreenCoordinate(
             detector.focalPoint.x.toDouble(),
             detector.focalPoint.y.toDouble()
           )
@@ -320,14 +318,11 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     /**
      * Called when the move gesture is executing.
      */
-    override fun onMove(detector: MoveGestureDetector) {
-      if (dragListeners.isEmpty()) {
-        return
-      }
+    override fun onMove(detector: MoveGestureDetector): Boolean {
       if (draggedAnnotation != null && (detector.pointersCount > 1 || !draggedAnnotation!!.isDraggable)) {
         // Stopping the drag when we don't work with a simple, on-pointer move anymore
         stopDragging(draggedAnnotation)
-        return
+        return true
       }
 
       // Updating symbol's position
@@ -338,7 +333,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         val pointF = PointF(x, y)
         if (pointF.x < 0 || pointF.y < 0 || pointF.x > width || pointF.y > height) {
           stopDragging(draggedAnnotation)
-          return
+          return true
         }
         val shiftedGeometry: G? = delegateProvider.let {
           annotation.getOffsetGeometry(
@@ -351,17 +346,16 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
           dragListeners.forEach {
             it.onAnnotationDrag(annotation)
           }
+          return true
         }
       }
+      return false
     }
 
     /**
      * Called when the move gesture is ending.
      */
     override fun onMoveEnd(detector: MoveGestureDetector) {
-      if (dragListeners.isEmpty()) {
-        return
-      }
       // Stopping the drag when move ends
       stopDragging(draggedAnnotation)
     }
@@ -415,11 +409,27 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
 
   /**
    * Query the rendered annotation around the point
+   *
+   * @param point the point for querying
+   * @param callback query callback
    */
   fun queryMapForFeatures(point: Point, callback: QueryAnnotationCallback<T>) {
-    val pixel = mapProjectionDelegate.pixelForCoordinate(point)
+    val screenCoordinate = mapProjectionDelegate.pixelForCoordinate(point)
+    queryMapForFeatures(screenCoordinate, callback)
+  }
+
+  /**
+   * Query the rendered annotation around the point
+   *
+   * @param screenCoordinate the screenCoordinate for querying
+   * @param callback query callback
+   */
+  fun queryMapForFeatures(
+    screenCoordinate: ScreenCoordinate,
+    callback: QueryAnnotationCallback<T>
+  ) {
     mapFeatureQueryDelegate.queryRenderedFeatures(
-      pixel,
+      screenCoordinate,
       RenderedQueryOptions(
         listOf(
           layer.layerId

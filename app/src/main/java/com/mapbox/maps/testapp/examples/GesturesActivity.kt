@@ -100,8 +100,9 @@ class GesturesActivity : AppCompatActivity() {
         gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_START, "MOVE START"))
       }
 
-      override fun onMove(@NonNull detector: MoveGestureDetector) {
+      override fun onMove(@NonNull detector: MoveGestureDetector): Boolean {
         gestureAlertsAdapter.addAlert(GestureAlert(GestureAlert.TYPE_PROGRESS, "MOVE PROGRESS"))
+        return false
       }
 
       override fun onMoveEnd(@NonNull detector: MoveGestureDetector) {

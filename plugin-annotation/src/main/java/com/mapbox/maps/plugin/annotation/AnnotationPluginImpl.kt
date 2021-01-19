@@ -13,7 +13,8 @@ import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 class AnnotationPluginImpl : AnnotationPlugin {
   private lateinit var delegateProvider: MapDelegateProvider
   private val managerList = mutableListOf<AnnotationManager<*, *, *, *, *, *>>()
-
+  private var width = 0
+  private var height = 0
   /**
    * Get an annotation manger
    *
@@ -36,6 +37,7 @@ class AnnotationPluginImpl : AnnotationPlugin {
       AnnotationType.Line -> LineManager(delegateProvider, belowLayerId, touchAreaShiftX, touchAreaShiftY)
       AnnotationType.Symbol -> SymbolManager(delegateProvider, belowLayerId, touchAreaShiftX, touchAreaShiftY)
     }
+    manager.onSizeChanged(width, height)
     managerList.add(manager)
     return manager
   }
@@ -46,6 +48,8 @@ class AnnotationPluginImpl : AnnotationPlugin {
    * @param height the height of mapView
    */
   override fun onSizeChanged(width: Int, height: Int) {
+    this.width = width
+    this.height = height
     managerList.forEach { it.onSizeChanged(width, height) }
   }
 

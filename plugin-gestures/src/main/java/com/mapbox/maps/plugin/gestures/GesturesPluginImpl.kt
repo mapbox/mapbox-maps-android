@@ -100,7 +100,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     pixelRatio: Float
   ) {
     this.context = context
-    internalSettings = GesturesAttributeParser.parseGesturesSettings(context, attributeSet, pixelRatio)
+    internalSettings =
+      GesturesAttributeParser.parseGesturesSettings(context, attributeSet, pixelRatio)
   }
 
   override fun applySettings() {
@@ -1192,7 +1193,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     if (distanceX != 0f || distanceY != 0f) {
       // dispatching camera start event only when the movement actually occurred
       // cameraChangeDispatcher.onCameraMoveStarted(CameraChangeDispatcher.REASON_API_GESTURE);
-
+      if (notifyOnMoveListeners(detector)) {
+        return true
+      }
       val pitch = mapTransformDelegate.getCameraOptions(null).pitch
 
       // Scroll the map
@@ -1208,7 +1211,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       target?.let {
         mapTransformDelegate.jumpTo(CameraOptions.Builder().center(it).build())
       }
-      notifyOnMoveListeners(detector)
     }
     return true
   }
@@ -1239,12 +1241,15 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     }
   }
 
-  private fun notifyOnMoveListeners(detector: MoveGestureDetector) {
+  private fun notifyOnMoveListeners(detector: MoveGestureDetector): Boolean {
     if (!onMoveListenerList.isEmpty()) {
       for (listener in onMoveListenerList) {
-        listener.onMove(detector)
+        if (listener.onMove(detector)) {
+          return true
+        }
       }
     }
+    return false
   }
 
   private fun notifyOnMoveEndListeners(detector: MoveGestureDetector) {

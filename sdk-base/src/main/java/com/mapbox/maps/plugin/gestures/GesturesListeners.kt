@@ -55,8 +55,10 @@ interface OnMoveListener {
 
   /**
    * Called when the move gesture is executing.
+   *
+   * @return true if the gesture was handled, false otherwise
    */
-  fun onMove(detector: MoveGestureDetector)
+  fun onMove(detector: MoveGestureDetector): Boolean
 
   /**
    * Called when the move gesture is ending.
