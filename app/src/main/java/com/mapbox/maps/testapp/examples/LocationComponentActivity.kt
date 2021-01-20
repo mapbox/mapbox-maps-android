@@ -6,9 +6,9 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.mapbox.maps.Style
+import com.mapbox.maps.plugin.LocationPuck2D
+import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.PresetPuckStyle
-import com.mapbox.maps.plugin.ThreeDLocationPuck
-import com.mapbox.maps.plugin.TwoDLocationPuck
 import com.mapbox.maps.plugin.locationcomponent.getLocationComponentPlugin
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
@@ -66,7 +66,7 @@ class LocationComponentActivity : AppCompatActivity() {
   private fun toggle3DPuck() {
     mapView.getLocationComponentPlugin().let {
       if (it.locationPuck == null) {
-        it.locationPuck = ThreeDLocationPuck(
+        it.locationPuck = LocationPuck3D(
           modelUri = "asset://race_car_model.gltf",
           modelScale = listOf(0.1f, 0.1f, 0.1f)
         )
@@ -79,7 +79,7 @@ class LocationComponentActivity : AppCompatActivity() {
   private fun toggle2DPuck() {
     mapView.getLocationComponentPlugin().let {
       if (it.locationPuck == null) {
-        it.locationPuck = TwoDLocationPuck(
+        it.locationPuck = LocationPuck2D(
           bearingImage = ContextCompat.getDrawable(this, R.drawable.android_symbol)
         )
       } else {

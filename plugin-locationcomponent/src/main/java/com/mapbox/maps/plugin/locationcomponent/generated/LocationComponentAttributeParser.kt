@@ -5,9 +5,9 @@ package com.mapbox.maps.plugin.locationcomponent.generated
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
+import com.mapbox.maps.plugin.LocationPuck2D
+import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.PresetPuckStyle
-import com.mapbox.maps.plugin.ThreeDLocationPuck
-import com.mapbox.maps.plugin.TwoDLocationPuck
 import com.mapbox.maps.plugin.locationcomponent.R
 
 /**
@@ -29,52 +29,53 @@ object LocationComponentAttributeParser {
         staleStateTimeout = typedArray.getInt(R.styleable.mapbox_MapView_mapbox_locationComponentStaleStateTimeout, 30000).toLong(),
         minZoomIconScale = typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentMinZoomIconScale, 0.6f),
         maxZoomIconScale = typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentMaxZoomIconScale, 1f),
+        pulsingEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_locationComponentPulsingEnabled, false),
+        pulsingColor = typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentPulsingColor, Color.BLUE),
+        pulsingMaxRadius = typedArray.getDimension(R.styleable.mapbox_MapView_mapbox_locationComponentPulsingMaxRadius, 10f * pixelRatio),
         layerAbove = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLayerAbove),
         layerBelow = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLayerBelow),
         locationPuck = when (typedArray.getInt(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuck, -1)) {
-          0 -> TwoDLocationPuck(
-            topImage = typedArray.getDrawable(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckTwoDLocationPuckTopImage),
-            bearingImage = typedArray.getDrawable(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckTwoDLocationPuckBearingImage),
-            shadowImage = typedArray.getDrawable(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckTwoDLocationPuckShadowImage),
-            bearingTintColor = if (typedArray.hasValue(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckTwoDLocationPuckBearingTintColor)) {
-              typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckTwoDLocationPuckBearingTintColor, -1)
+          0 -> LocationPuck2D(
+            topImage = typedArray.getDrawable(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DTopImage),
+            bearingImage = typedArray.getDrawable(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DBearingImage),
+            shadowImage = typedArray.getDrawable(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DShadowImage),
+            bearingTintColor = if (typedArray.hasValue(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DBearingTintColor)) {
+              typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DBearingTintColor, -1)
             } else null,
-            bearingStaleTintColor = if (typedArray.hasValue(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckTwoDLocationPuckBearingStaleTintColor)) {
-              typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckTwoDLocationPuckBearingStaleTintColor, -1)
+            bearingStaleTintColor = if (typedArray.hasValue(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DBearingStaleTintColor)) {
+              typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DBearingStaleTintColor, -1)
             } else null,
-            topTintColor = if (typedArray.hasValue(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckTwoDLocationPuckTopTintColor)) {
-              typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckTwoDLocationPuckTopTintColor, -1)
+            topTintColor = if (typedArray.hasValue(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DTopTintColor)) {
+              typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DTopTintColor, -1)
             } else null,
-            topStaleTintColor = if (typedArray.hasValue(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckTwoDLocationPuckTopStaleTintColor)) {
-              typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckTwoDLocationPuckTopStaleTintColor, -1)
+            topStaleTintColor = if (typedArray.hasValue(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DTopStaleTintColor)) {
+              typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DTopStaleTintColor, -1)
             } else null,
-            shadowTintColor = if (typedArray.hasValue(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckTwoDLocationPuckShadowTintColor)) {
-              typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckTwoDLocationPuckShadowTintColor, -1)
+            shadowTintColor = if (typedArray.hasValue(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DShadowTintColor)) {
+              typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DShadowTintColor, -1)
             } else null,
-            shadowStaleTintColor = if (typedArray.hasValue(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckTwoDLocationPuckShadowStaleTintColor)) {
-              typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckTwoDLocationPuckShadowStaleTintColor, -1)
+            shadowStaleTintColor = if (typedArray.hasValue(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DShadowStaleTintColor)) {
+              typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DShadowStaleTintColor, -1)
             } else null,
-            pulsingEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckTwoDLocationPuckPulsingEnabled, false),
-            pulsingColor = typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckTwoDLocationPuckPulsingColor, Color.BLUE),
-            pulsingMaxRadius = typedArray.getDimension(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckTwoDLocationPuckPulsingMaxRadius, 10f),
           )
-          1 -> ThreeDLocationPuck(
-            modelUri = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckThreeDLocationPuckModelUri)
+          1 -> LocationPuck3D(
+            modelUri = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelUri)
               ?: throw RuntimeException("model-uri must be specified in order to use 3d location puck."),
             position = listOf(
-              typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckThreeDLocationPuckPosition_lon, 0.0f),
-              typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckThreeDLocationPuckPosition_lat, 0.0f),
+              typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DPosition_lon, 0.0f),
+              typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DPosition_lat, 0.0f),
             ),
-            modelOpacity = typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckThreeDLocationPuckModelOpacity, 1f),
+            modelOpacity = typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelOpacity, 1f),
             modelScale = listOf(
-              typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckThreeDLocationPuckModelScale_x, 1.0f),
-              typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckThreeDLocationPuckModelScale_y, 1.0f),
-              typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckThreeDLocationPuckModelScale_z, 1.0f),
+              typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelScale_x, 1.0f),
+              typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelScale_y, 1.0f),
+              typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelScale_z, 1.0f),
             ),
+            modelScaleExpression = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelScaleExpression),
             modelRotation = listOf(
-              typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckThreeDLocationPuckModelRotation_x, 0.0f),
-              typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckThreeDLocationPuckModelRotation_y, 0.0f),
-              typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckThreeDLocationPuckModelRotation_z, 90.0f),
+              typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_x, 0.0f),
+              typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_y, 0.0f),
+              typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_z, 90.0f),
             ),
           )
           else -> null

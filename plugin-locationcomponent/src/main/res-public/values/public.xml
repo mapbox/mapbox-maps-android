@@ -5,17 +5,26 @@
     <!-- Whether the user location is visible on the map. -->
     <public name="mapbox_locationComponentEnabled" type="attr" />
 
-    <!-- The stale state indicates to the user that the location being displayed on the map hasn't been updated in a specific amount of time. -->
+    <!-- The stale state indicates to the user that the location being displayed on the map hasn't been updated in a specific amount of time. Currently only work for 2D location puck and presets. -->
     <public name="mapbox_locationComponentStaleStateEnabled" type="attr" />
 
-    <!-- Set the delay before the location puck becomes stale. The timer begins approximately when a new location update comes in and using this defined time, if an update hasn't occured by the end, the location is considered stale. -->
+    <!-- Set the delay before the location puck becomes stale. The timer begins approximately when a new location update comes in and using this defined time, if an update hasn't occured by the end, the location is considered stale. Currently only work for 2D location puck and presets. -->
     <public name="mapbox_locationComponentStaleStateTimeout" type="attr" />
 
-    <!-- The scale factor of the location icon when the map is zoomed out. Scaling is linear. -->
+    <!-- The scale factor of the location icon when the map is zoomed out. Scaling is linear. Currently only work for 2D location puck and presets. -->
     <public name="mapbox_locationComponentMinZoomIconScale" type="attr" />
 
-    <!-- The scale factor of the location icon when the map is zoomed in. Scaling is linear. -->
+    <!-- The scale factor of the location icon when the map is zoomed in. Scaling is linear. Currently only work for 2D location puck and presets. -->
     <public name="mapbox_locationComponentMaxZoomIconScale" type="attr" />
+
+    <!-- Whether the location puck is pulsing on the map. Currently only work for 2D location puck and presets. -->
+    <public name="mapbox_locationComponentPulsingEnabled" type="attr" />
+
+    <!-- The color of the pulsing circle. Currently only work for 2D location puck and presets. -->
+    <public name="mapbox_locationComponentPulsingColor" type="attr" />
+
+    <!-- The maximum radius of the pulsing circle. Currently only work for 2D location puck and presets. -->
+    <public name="mapbox_locationComponentPulsingMaxRadius" type="attr" />
 
     <!-- Sets the id of the layer that's added above to when placing the component on the map. -->
     <public name="mapbox_locationComponentLayerAbove" type="attr" />
@@ -23,50 +32,46 @@
     <!-- Sets the id of the layer that's added below to when placing the component on the map. -->
     <public name="mapbox_locationComponentLayerBelow" type="attr" />
 
-    <!-- Location puck definitions for two_d_location_puck.  -->
+    <!-- Location puck definitions for location_puck_2_d.  -->
 
     <!-- Name of image in sprite to use as the top of the location indicator. -->
-    <public name="mapbox_locationComponentLocationPuckTwoDLocationPuckTopImage" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck2DTopImage" type="attr" />
     <!-- Name of image in sprite to use as the middle of the location indicator. -->
-    <public name="mapbox_locationComponentLocationPuckTwoDLocationPuckBearingImage" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck2DBearingImage" type="attr" />
     <!-- Name of image in sprite to use as the background of the location indicator. -->
-    <public name="mapbox_locationComponentLocationPuckTwoDLocationPuckShadowImage" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck2DShadowImage" type="attr" />
     <!-- Defines the bearing color. -->
-    <public name="mapbox_locationComponentLocationPuckTwoDLocationPuckBearingTintColor" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck2DBearingTintColor" type="attr" />
     <!-- Defines the bearing color. -->
-    <public name="mapbox_locationComponentLocationPuckTwoDLocationPuckBearingStaleTintColor" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck2DBearingStaleTintColor" type="attr" />
     <!-- Defines the foreground color -->
-    <public name="mapbox_locationComponentLocationPuckTwoDLocationPuckTopTintColor" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck2DTopTintColor" type="attr" />
     <!-- Defines the foreground stale color. -->
-    <public name="mapbox_locationComponentLocationPuckTwoDLocationPuckTopStaleTintColor" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck2DTopStaleTintColor" type="attr" />
     <!-- Defines the background color -->
-    <public name="mapbox_locationComponentLocationPuckTwoDLocationPuckShadowTintColor" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck2DShadowTintColor" type="attr" />
     <!-- Defines the background stale color. -->
-    <public name="mapbox_locationComponentLocationPuckTwoDLocationPuckShadowStaleTintColor" type="attr" />
-    <!-- Whether the location puck is pulsing on the map. -->
-    <public name="mapbox_locationComponentLocationPuckTwoDLocationPuckPulsingEnabled" type="attr" />
-    <!-- The color of the pulsing circle. -->
-    <public name="mapbox_locationComponentLocationPuckTwoDLocationPuckPulsingColor" type="attr" />
-    <!-- The maximum radius of the pulsing circle. -->
-    <public name="mapbox_locationComponentLocationPuckTwoDLocationPuckPulsingMaxRadius" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck2DShadowStaleTintColor" type="attr" />
 
-    <!-- Location puck definitions for three_d_location_puck.  -->
+    <!-- Location puck definitions for location_puck_3_d.  -->
 
     <!-- An URL for the model file in gltf format. -->
-    <public name="mapbox_locationComponentLocationPuckThreeDLocationPuckModelUri" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelUri" type="attr" />
     <!-- The scale of the model. -->
-    <public name="mapbox_locationComponentLocationPuckThreeDLocationPuckPosition_lon" type="attr" />
-    <public name="mapbox_locationComponentLocationPuckThreeDLocationPuckPosition_lat" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DPosition_lon" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DPosition_lat" type="attr" />
     <!-- The opacity of the model. -->
-    <public name="mapbox_locationComponentLocationPuckThreeDLocationPuckModelOpacity" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelOpacity" type="attr" />
     <!-- The scale of the model. -->
-    <public name="mapbox_locationComponentLocationPuckThreeDLocationPuckModelScale_x" type="attr" />
-    <public name="mapbox_locationComponentLocationPuckThreeDLocationPuckModelScale_y" type="attr" />
-    <public name="mapbox_locationComponentLocationPuckThreeDLocationPuckModelScale_z" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelScale_x" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelScale_y" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelScale_z" type="attr" />
+    <!-- The scale expression of the model, which will overwrite the default scale expression that keeps the model size constant during zoom. -->
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelScaleExpression" type="attr" />
     <!-- The rotation of the model. -->
-    <public name="mapbox_locationComponentLocationPuckThreeDLocationPuckModelRotation_x" type="attr" />
-    <public name="mapbox_locationComponentLocationPuckThreeDLocationPuckModelRotation_y" type="attr" />
-    <public name="mapbox_locationComponentLocationPuckThreeDLocationPuckModelRotation_z" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_x" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_y" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_z" type="attr" />
 
     <!-- Defines the preset puck styles bundled with the plugin. -->
     <public name="mapbox_locationComponentPresetPuckStyle" type="attr" />

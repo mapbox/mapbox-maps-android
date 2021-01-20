@@ -6,7 +6,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.addStyleImage
-import com.mapbox.maps.plugin.TwoDLocationPuck
+import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.BEARING_ICON
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.BEARING_STALE_ICON
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.LOCATION_INDICATOR_LAYER
@@ -19,7 +19,7 @@ import java.text.NumberFormat
 import java.util.Locale
 
 internal class LocationIndicatorLayerRenderer(
-  val puckOptions: TwoDLocationPuck,
+  val puckOptions: LocationPuck2D,
   layerSourceProvider: LayerSourceProvider
 ) :
   LocationLayerRenderer {
@@ -132,17 +132,16 @@ internal class LocationIndicatorLayerRenderer(
    * Adjust the visual appearance of the pulsing LocationComponent circle.
    */
   override fun updatePulsingUi(
+    @ColorInt
+    pulsingColorInt: Int,
     radius: Float,
     opacity: Float?
   ) {
-    // Check if pulsing effect is enabled and style the pulsing circle.
-    if (puckOptions.pulsingEnabled) {
-      val rgbaArray = colorToRgbaArray(puckOptions.pulsingColor)
-      rgbaArray[3] = opacity ?: 1f
-      layer.emphasisCircleRadius(radius.toDouble())
-      layer.emphasisCircleColorTransition(100)
-      layer.emphasisCircleColor(buildRGBAExpression(rgbaArray))
-    }
+    val rgbaArray = colorToRgbaArray(pulsingColorInt)
+    rgbaArray[3] = opacity ?: 1f
+    layer.emphasisCircleRadius(radius.toDouble())
+    layer.emphasisCircleColorTransition(100)
+    layer.emphasisCircleColor(buildRGBAExpression(rgbaArray))
   }
 
   private fun setImages(isStale: Boolean) {

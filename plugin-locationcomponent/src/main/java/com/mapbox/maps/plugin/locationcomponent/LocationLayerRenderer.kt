@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.locationcomponent
 
 import android.graphics.Bitmap
+import androidx.annotation.ColorInt
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.StyleManagerInterface
@@ -32,7 +33,12 @@ internal interface LocationLayerRenderer {
 
   fun adjustPulsingCircleLayerVisibility(visible: Boolean)
 
-  fun updatePulsingUi(radius: Float, opacity: Float?)
+  fun updatePulsingUi(
+    @ColorInt
+    pulsingColorInt: Int,
+    radius: Float,
+    opacity: Float?
+  )
 
   fun addBitmaps(
     topBitmap: Bitmap?,
