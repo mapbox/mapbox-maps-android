@@ -97,4 +97,24 @@ class LineActivity : AppCompatActivity() {
     }
     return points
   }
+
+  override fun onStart() {
+    super.onStart()
+    mapView.onStart()
+  }
+
+  override fun onStop() {
+    super.onStop()
+    mapView.onStop()
+  }
+
+  override fun onLowMemory() {
+    super.onLowMemory()
+    mapView.onLowMemory()
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    mapView.onDestroy()
+  }
 }

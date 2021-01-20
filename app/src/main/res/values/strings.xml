@@ -84,7 +84,7 @@
 
     <!--OfflineManager-->
     <string name="view_map">View map</string>
-    
+
     <!-- Sky layer-->
     <string name="sky_mode">Mode: %1$s</string>
     <string name="sky_gradient_radius">Radius = %1$d</string>
@@ -102,5 +102,21 @@
     <string name="custom_attribution_withCopyrightSign">WithCopyrightSign</string>
     <string name="custom_attribution_withTelemetryAttribution">WithTelemetry</string>
     <string name="custom_attribution_withMapboxAttribution">WithMapbox</string>
+
+    <!-- Symbol Activity-->
+    <string name="toggle_draggable_state">Toggle draggable state</string>
+    <string name="change_icon_to_coffee">Change icon to coffee</string>
+    <string name="set_icon_rotation_to_45">Set icon rotation to 45</string>
+    <string name="set_icon_anchor_bottom">Set icon anchor bottom</string>
+    <string name="set_icon_opacity_to_0_5f">Set icon opacity to 0.5f</string>
+    <string name="offset_icon_by_10_20">Offset icon by 10, 20</string>
+    <string name="add_text">Add text</string>
+    <string name="set_text_color_to_white">Set text color to white</string>
+    <string name="set_text_size">Set text size</string>
+    <string name="set_text_anchor_top">Set text anchor top</string>
+    <string name="change_z_index">Change Z index</string>
+    <string name="add_icon_halo">Add icon halo</string>
+    <string name="filter">Filter</string>
+    <string name="animate_symbol">Animate symbol</string>
 
 </resources>
