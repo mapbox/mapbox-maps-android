@@ -29,24 +29,39 @@ interface LocationComponentSettingsInterface {
   var enabled: Boolean
 
   /**
-   * The stale state indicates to the user that the location being displayed on the map hasn't been updated in a specific amount of time.
+   * The stale state indicates to the user that the location being displayed on the map hasn't been updated in a specific amount of time. Currently only work for 2D location puck and presets.
    */
   var staleStateEnabled: Boolean
 
   /**
-   * Set the delay before the location puck becomes stale. The timer begins approximately when a new location update comes in and using this defined time, if an update hasn't occured by the end, the location is considered stale.
+   * Set the delay before the location puck becomes stale. The timer begins approximately when a new location update comes in and using this defined time, if an update hasn't occured by the end, the location is considered stale. Currently only work for 2D location puck and presets.
    */
   var staleStateTimeout: Long
 
   /**
-   * The scale factor of the location icon when the map is zoomed out. Scaling is linear.
+   * The scale factor of the location icon when the map is zoomed out. Scaling is linear. Currently only work for 2D location puck and presets.
    */
   var minZoomIconScale: Float
 
   /**
-   * The scale factor of the location icon when the map is zoomed in. Scaling is linear.
+   * The scale factor of the location icon when the map is zoomed in. Scaling is linear. Currently only work for 2D location puck and presets.
    */
   var maxZoomIconScale: Float
+
+  /**
+   * Whether the location puck is pulsing on the map. Currently only work for 2D location puck and presets.
+   */
+  var pulsingEnabled: Boolean
+
+  /**
+   * The color of the pulsing circle. Currently only work for 2D location puck and presets.
+   */
+  var pulsingColor: Int
+
+  /**
+   * The maximum radius of the pulsing circle. Currently only work for 2D location puck and presets.
+   */
+  var pulsingMaxRadius: Float
 
   /**
    * Sets the id of the layer that's added above to when placing the component on the map.

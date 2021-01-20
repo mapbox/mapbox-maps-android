@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.testapp.locationcomponent.generated
 
+import android.graphics.Color
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.maps.R
@@ -55,6 +56,21 @@ class LocationComponentAttributeParserTest : BaseMapTest() {
       "maxZoomIconScale test failed..",
       0.9f,
       mapView.getLocationComponentPlugin().getSettings().maxZoomIconScale
+    )
+    assertEquals(
+      "pulsingEnabled test failed..",
+      false,
+      mapView.getLocationComponentPlugin().getSettings().pulsingEnabled
+    )
+    assertEquals(
+      "pulsingColor test failed..",
+      Color.BLACK,
+      mapView.getLocationComponentPlugin().getSettings().pulsingColor
+    )
+    assertEquals(
+      "pulsingMaxRadius test failed..",
+      10.0f * pixelRatio,
+      mapView.getLocationComponentPlugin().getSettings().pulsingMaxRadius
     )
     assertEquals(
       "layerAbove test failed..",

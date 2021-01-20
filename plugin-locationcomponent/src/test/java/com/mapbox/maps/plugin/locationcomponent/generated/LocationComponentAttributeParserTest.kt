@@ -98,6 +98,34 @@ class LocationComponentAttributeParserTest {
   }
 
   @Test
+  fun pulsingEnabledTestTrue() {
+    every { typedArray.getBoolean(any(), any()) } returns true
+    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
+    assertEquals(true, settings.pulsingEnabled)
+  }
+
+  @Test
+  fun pulsingEnabledTestFalse() {
+    every { typedArray.getBoolean(any(), any()) } returns false
+    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
+    assertEquals(false, settings.pulsingEnabled)
+  }
+
+  @Test
+  fun pulsingColorTest() {
+    every { typedArray.getColor(any(), any()) } returns Color.BLUE
+    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
+    assertEquals(Color.BLUE, settings.pulsingColor)
+  }
+
+  @Test
+  fun pulsingMaxRadiusTest() {
+    every { typedArray.getDimension(any(), any()) } returns 10f
+    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
+    assertEquals(10f, settings.pulsingMaxRadius)
+  }
+
+  @Test
   fun layerAboveTest() {
     every { typedArray.getString(any()) } returns null
     val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
