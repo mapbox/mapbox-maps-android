@@ -12,6 +12,7 @@ import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
+import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
 import com.mapbox.maps.plugin.compass.generated.CompassAttributeParser
 import com.mapbox.maps.plugin.compass.generated.CompassSettings
 import com.mapbox.maps.plugin.compass.generated.CompassSettingsBase
@@ -203,7 +204,7 @@ open class CompassViewPlugin(
       animationPlugin?.flyTo(
         CameraOptions.Builder().bearing(0.0).build(),
         mapAnimationOptions {
-          owner = MAP_ANIMATION_OWNER
+          owner = MapAnimationOwnerRegistry.COMPASS
           duration = BEARING_NORTH_ANIMATION_DURATION
         }
       ) ?: mapCameraDelegate.setBearing(0.0)
@@ -248,7 +249,6 @@ open class CompassViewPlugin(
    * Static variables and methods.
    */
   companion object {
-    internal const val MAP_ANIMATION_OWNER = "Maps-Compass"
     private const val TIME_WAIT_IDLE = 500L
     private const val TIME_FADE_ANIMATION = TIME_WAIT_IDLE
     private const val BEARING_NORTH_ANIMATION_DURATION = 300L

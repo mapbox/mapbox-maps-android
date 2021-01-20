@@ -162,9 +162,9 @@ interface CameraAnimationsPlugin : MapPlugin {
   fun registerAnimators(vararg cameraAnimators: ValueAnimator)
 
   /**
-   * Cancel all animators
+   * Cancel all animators except ones owned by [exceptOwnerList] list.
    */
-  fun cancelAllAnimators()
+  fun cancelAllAnimators(exceptOwnerList: List<String> = emptyList())
 
   /**
    * Unregister all animators

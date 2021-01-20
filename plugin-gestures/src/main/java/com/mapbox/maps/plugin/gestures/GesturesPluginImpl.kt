@@ -16,8 +16,11 @@ import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
+import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
+import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
+import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.gestures.GesturesPluginImpl.Companion.gesturesPlugin
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
@@ -41,6 +44,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   private lateinit var mapTransformDelegate: MapTransformDelegate
   private lateinit var mapPluginProviderDelegate: MapPluginProviderDelegate
   private lateinit var cameraAnimationsPlugin: CameraAnimationsPlugin
+
+  private val protectedCameraAnimatorOwnerList = CopyOnWriteArrayList<String>()
 
   // Listeners
   private val onMapClickListenerList = CopyOnWriteArrayList<OnMapClickListener>()
@@ -284,7 +289,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
           }
 
           // Cancel any animation
-          cameraAnimationsPlugin.cancelAllAnimators()
+          cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
 
           // Get the vertical scroll amount, one click = 1
           val scrollDist = event.getAxisValue(MotionEvent.AXIS_VSCROLL)
@@ -295,7 +300,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
             val anchor = ScreenCoordinate(event.x.toDouble(), event.y.toDouble())
             val zoom =
               cameraAnimationsPlugin.calculateScaleBy(scrollDist.toDouble(), currentZoom)
-            mapTransformDelegate.jumpTo(CameraOptions.Builder().anchor(anchor).zoom(zoom).build())
+            cameraAnimationsPlugin.easeTo(
+              CameraOptions.Builder().anchor(anchor).zoom(zoom).build(),
+              immediateCameraJumpOptions
+            )
           }
 
           return true
@@ -533,21 +541,23 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       var targetZoom =
         if (zoomedOut) startZoom - normalizedDeltaChange else startZoom + normalizedDeltaChange
       targetZoom *= internalSettings.zoomRate.toDouble()
-      mapTransformDelegate.jumpTo(
+      cameraAnimationsPlugin.easeTo(
         CameraOptions.Builder()
           .zoom(targetZoom)
           .anchor(focalPoint)
-          .build()
+          .build(),
+        immediateCameraJumpOptions
       )
     } else {
       val zoomBy =
         ln(detector.scaleFactor.toDouble()) / ln(PI / 2) * ZOOM_RATE.toDouble() * internalSettings.zoomRate.toDouble()
       mapTransformDelegate.getCameraOptions(null).zoom?.let {
-        mapTransformDelegate.jumpTo(
+        cameraAnimationsPlugin.easeTo(
           CameraOptions.Builder()
             .zoom(it + zoomBy)
             .anchor(focalPoint)
-            .build()
+            .build(),
+          immediateCameraJumpOptions
         )
       }
     }
@@ -685,7 +695,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     val bearingAnimator = cameraAnimationsPlugin.createBearingAnimator(
       options = cameraAnimatorOptions(bearingTarget) {
-        owner = MAP_ANIMATION_OWNER
+        owner = MapAnimationOwnerRegistry.GESTURES
         startValue = bearingCurrent
       },
     ) {
@@ -696,7 +706,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     val screenCoordinate = ScreenCoordinate(animationFocalPoint.x, animationFocalPoint.y)
     val anchorAnimator = cameraAnimationsPlugin.createAnchorAnimator(
       options = cameraAnimatorOptions(screenCoordinate) {
-        owner = MAP_ANIMATION_OWNER
+        owner = MapAnimationOwnerRegistry.GESTURES
         startValue = screenCoordinate
       },
     ) {
@@ -775,11 +785,12 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
       // Rotate the map
       val focalPoint = getRotateFocalPoint(detector)
-      mapTransformDelegate.jumpTo(
+      cameraAnimationsPlugin.easeTo(
         CameraOptions.Builder()
           .anchor(focalPoint)
           .bearing(bearing)
-          .build()
+          .build(),
+        immediateCameraJumpOptions
       )
 
       notifyOnRotateListeners(detector)
@@ -886,7 +897,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       pitch = clamp(optimizedPitch, MINIMUM_PITCH, MAXIMUM_PITCH)
 
       // Pitch the map
-      mapTransformDelegate.jumpTo(CameraOptions.Builder().pitch(pitch).build())
+      cameraAnimationsPlugin.easeTo(
+        CameraOptions.Builder().pitch(pitch).build(),
+        immediateCameraJumpOptions
+      )
       notifyOnShoveListeners(detector)
     }
     return true
@@ -913,7 +927,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         return false
       }
 
-      cameraAnimationsPlugin.cancelAllAnimators()
+      cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
       // cameraChangeDispatcher.onCameraMoveStarted(REASON_API_GESTURE);
 
       val zoomFocalPoint: ScreenCoordinate
@@ -943,7 +957,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     val scaleInterpolator = gesturesInterpolator
     val zoomAnimator = cameraAnimationsPlugin.createZoomAnimator(
       options = cameraAnimatorOptions(currentZoom + zoomAddition) {
-        owner = MAP_ANIMATION_OWNER
+        owner = MapAnimationOwnerRegistry.GESTURES
         startValue = currentZoom
       }
     ) {
@@ -953,7 +967,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     val anchorAnimator = cameraAnimationsPlugin.createAnchorAnimator(
       options = cameraAnimatorOptions(animationFocalPoint) {
-        owner = MAP_ANIMATION_OWNER
+        owner = MapAnimationOwnerRegistry.GESTURES
         startValue = animationFocalPoint
       },
     ) {
@@ -1036,7 +1050,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   private fun cancelTransitionsIfRequired() {
     // we need to cancel core transitions only if there is no started gesture yet
     if (noGesturesInProgress()) {
-      cameraAnimationsPlugin.cancelAllAnimators()
+      cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
     }
   }
 
@@ -1130,7 +1144,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       return false
     }
 
-    cameraAnimationsPlugin.cancelAllAnimators()
+    cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
     // cameraChangeDispatcher.onCameraMoveStarted(REASON_API_GESTURE);
 
     // pitch results in a bigger translation, limiting input for #5281
@@ -1165,7 +1179,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       cameraAnimationsPlugin.moveBy(
         ScreenCoordinate(offsetX, offsetY),
         mapAnimationOptions {
-          owner = MAP_ANIMATION_OWNER
+          owner = MapAnimationOwnerRegistry.GESTURES
           duration = animationTime
           interpolator = gesturesInterpolator
         }
@@ -1209,7 +1223,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       }
       val target = cameraAnimationsPlugin.calculateMoveBy(offset)
       target?.let {
-        mapTransformDelegate.jumpTo(CameraOptions.Builder().center(it).build())
+        cameraAnimationsPlugin.easeTo(
+          CameraOptions.Builder().center(it).build(),
+          immediateCameraJumpOptions
+        )
       }
     }
     return true
@@ -1221,7 +1238,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   }
 
   internal fun handleSingleTapUpEvent(): Boolean {
-    cameraAnimationsPlugin.cancelAllAnimators()
+    cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
     return true
   }
 
@@ -1431,6 +1448,24 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   }
 
   /**
+   * Add animator owner (see [CameraAnimatorOptions.owner] or [MapAnimationOptions.owner]
+   * which animation will not be canceled with when gesture animation is about to start.
+   * When specified, you are responsible for listening to gesture interactions and canceling the specified owners' animations to avoid competing with gestures.
+   */
+  override fun addProtectedAnimationOwner(owner: String) {
+    protectedCameraAnimatorOwnerList.add(owner)
+  }
+
+  /**
+   * Remove animator owner (see [CameraAnimatorOptions.owner] or [MapAnimationOptions.owner])
+   * which animation will not be canceled with when gesture animation is about to start.
+   * When specified, you are responsible for listening to gesture interactions and canceling the specified owners' animations to avoid competing with gestures.
+   */
+  override fun removeProtectedAnimationOwner(owner: String) {
+    protectedCameraAnimatorOwnerList.remove(owner)
+  }
+
+  /**
    * Get the current configured AndroidGesturesManager.
    */
   override fun getGesturesManager(): AndroidGesturesManager {
@@ -1470,6 +1505,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
    * Called when the map is destroyed. Should be used to cleanup plugin resources for that map.
    */
   override fun cleanup() {
+    protectedCameraAnimatorOwnerList.clear()
     gesturesPluginWeakRef?.clear()
     gesturesPluginWeakRef = null
   }
@@ -1529,7 +1565,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
    * Static variables and methods.
    */
   companion object {
-    private const val MAP_ANIMATION_OWNER = "Maps-Gestures"
+    private val immediateCameraJumpOptions = mapAnimationOptions {
+      duration = 0
+      owner = MapAnimationOwnerRegistry.GESTURES
+    }
     private var gesturesPluginWeakRef: WeakReference<GesturesPluginImpl>? = null
     internal val gesturesPlugin: GesturesPluginImpl?
       get() = gesturesPluginWeakRef?.get()

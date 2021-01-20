@@ -35,8 +35,10 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
   /**
    * Using single [AnimatorSet] for high-level API functions like easeTo, flyTo etc
+   * Only one high-level animator set could be active in a moment of time.
+   * Consists of set owner + animator set itself.
    */
-  private var animatorSet: AnimatorSet? = null
+  private var highLevelAnimatorSet: HighLevelAnimatorSet? = null
 
   private val centerListeners = CopyOnWriteArraySet<CameraAnimatorChangeListener<Point>>()
   private val zoomListeners = CopyOnWriteArraySet<CameraAnimatorChangeListener<Double>>()
@@ -335,20 +337,22 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
   private fun startAnimatorSet(
     animatorSet: AnimatorSet,
+    animatorOwner: String?,
     animatorListener: Animator.AnimatorListener?
   ) {
     cancelAnimatorSet()
     animatorListener?.let {
       animatorSet.addListener(it)
     }
-    this.animatorSet = animatorSet
-    this.animatorSet?.start()
+    highLevelAnimatorSet = HighLevelAnimatorSet(animatorOwner, animatorSet).also {
+      it.animatorSet.start()
+    }
   }
 
   private fun cancelAnimatorSet() {
-    animatorSet?.let {
-      it.cancel()
-      it.removeAllListeners()
+    highLevelAnimatorSet?.let {
+      it.animatorSet.cancel()
+      it.animatorSet.removeAllListeners()
     }
   }
 
@@ -406,14 +410,18 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   }
 
   /**
-   * Cancel all given [ValueAnimator]'s.
+   * Cancel all animators except ones owned by [exceptOwnerList] list.
    */
-  override fun cancelAllAnimators() {
+  override fun cancelAllAnimators(exceptOwnerList: List<String>) {
     // Safely iterate over new set because of the possible changes of "this.animators" in Animator callbacks
     HashSet(animators).forEach {
-      it.cancel()
+      if (!exceptOwnerList.contains(it.owner)) {
+        it.cancel()
+      }
     }
-    cancelAnimatorSet()
+    if (!exceptOwnerList.contains(highLevelAnimatorSet?.owner)) {
+      cancelAnimatorSet()
+    }
   }
 
   // property update listeners
@@ -560,7 +568,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       animationOptions?.interpolator,
       true
     )
-    startAnimatorSet(animatorSet, animationOptions?.animatorListener)
+    startAnimatorSet(animatorSet, animationOptions?.owner, animationOptions?.animatorListener)
   }
 
   /**
@@ -581,7 +589,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       animationOptions?.interpolator,
       true
     )
-    startAnimatorSet(animatorSet, animationOptions?.animatorListener)
+    startAnimatorSet(animatorSet, animationOptions?.owner, animationOptions?.animatorListener)
   }
 
   /**
@@ -617,7 +625,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       animationOptions?.interpolator,
       true
     )
-    startAnimatorSet(animatorSet, animationOptions?.animatorListener)
+    startAnimatorSet(animatorSet, animationOptions?.owner, animationOptions?.animatorListener)
   }
 
   /**
@@ -649,7 +657,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       animationOptions?.interpolator,
       true
     )
-    startAnimatorSet(animatorSet, animationOptions?.animatorListener)
+    startAnimatorSet(animatorSet, animationOptions?.owner, animationOptions?.animatorListener)
   }
 
   /**
@@ -670,7 +678,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       animationOptions?.interpolator,
       true
     )
-    startAnimatorSet(animatorSet, animationOptions?.animatorListener)
+    startAnimatorSet(animatorSet, animationOptions?.owner, animationOptions?.animatorListener)
   }
 
   /**
@@ -698,7 +706,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       animationOptions?.interpolator,
       true
     )
-    startAnimatorSet(animatorSet, animationOptions?.animatorListener)
+    startAnimatorSet(animatorSet, animationOptions?.owner, animationOptions?.animatorListener)
   }
 
   override fun createZoomAnimator(
@@ -747,7 +755,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     }
     val animatorSet = registerInternalAnimators(
       cameraAnimators.toTypedArray(),
-      MAP_ANIMATION_OWNER,
+      MapAnimationOwnerRegistry.INTERNAL,
       null,
       null,
       true
@@ -772,7 +780,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     val animatorSet =
       registerInternalAnimators(
         cameraAnimators.toTypedArray(),
-        MAP_ANIMATION_OWNER,
+        MapAnimationOwnerRegistry.INTERNAL,
         null,
         null,
         false
@@ -808,7 +816,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
    */
   companion object {
     private const val TAG = "Mbgl-CameraManager"
-    private const val MAP_ANIMATION_OWNER = "Maps-CameraInternal"
     internal var animationsPluginWeakRef: WeakReference<CameraAnimationsPluginImpl>? = null
   }
 }

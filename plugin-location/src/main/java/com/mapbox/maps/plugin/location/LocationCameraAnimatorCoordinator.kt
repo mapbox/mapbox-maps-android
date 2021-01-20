@@ -13,6 +13,7 @@ import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAn
 import com.mapbox.maps.plugin.animation.CameraAnimatorType
 import com.mapbox.maps.plugin.animation.CameraAnimatorType.*
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
+import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
 import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
 import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import com.mapbox.maps.plugin.location.listeneres.CancelableCallback
@@ -173,7 +174,7 @@ internal class LocationCameraAnimatorCoordinator(
     unregisterCameraAnimator(CENTER)
     val centerAnimator = cameraAnimationsPlugin.createCenterAnimator(
       options = cameraAnimatorOptions(*targetLatLng) {
-        owner = MAP_ANIMATION_OWNER
+        owner = MapAnimationOwnerRegistry.LOCATION
         startValue = startLatLng
       }
     )
@@ -186,7 +187,7 @@ internal class LocationCameraAnimatorCoordinator(
     unregisterCameraAnimator(BEARING)
     val bearingAnimator = cameraAnimationsPlugin.createBearingAnimator(
       options = cameraAnimatorOptions(*targetBearings.toTypedArray()) {
-        owner = MAP_ANIMATION_OWNER
+        owner = MapAnimationOwnerRegistry.LOCATION
         startValue = startBearing
       }
     )
@@ -223,7 +224,7 @@ internal class LocationCameraAnimatorCoordinator(
     unregisterCameraAnimator(ZOOM)
     val zoomAnimator = cameraAnimationsPlugin.createZoomAnimator(
       options = cameraAnimatorOptions(targetZoomLevel) {
-        owner = MAP_ANIMATION_OWNER
+        owner = MapAnimationOwnerRegistry.LOCATION
         startValue = previousZoomLevel
       }
     )
@@ -245,7 +246,7 @@ internal class LocationCameraAnimatorCoordinator(
     unregisterCameraAnimator(PADDING)
     val paddingAnimator = cameraAnimationsPlugin.createPaddingAnimator(
       options = cameraAnimatorOptions(target) {
-        owner = MAP_ANIMATION_OWNER
+        owner = MapAnimationOwnerRegistry.LOCATION
         startValue = current
       }
     )
@@ -267,7 +268,7 @@ internal class LocationCameraAnimatorCoordinator(
     unregisterCameraAnimator(PITCH)
     val pitchAnimator = cameraAnimationsPlugin.createPitchAnimator(
       options = cameraAnimatorOptions(targetPitch) {
-        owner = MAP_ANIMATION_OWNER
+        owner = MapAnimationOwnerRegistry.LOCATION
         startValue = previousPitch
       }
     )
@@ -346,7 +347,7 @@ internal class LocationCameraAnimatorCoordinator(
     cameraAnimationsPlugin.flyTo(
       cameraOptions,
       mapAnimationOptions {
-        owner = MAP_ANIMATION_OWNER
+        owner = MapAnimationOwnerRegistry.LOCATION
         duration = animationDuration
         animatorListener = object : Animator.AnimatorListener {
           override fun onAnimationEnd(animation: Animator?) {
@@ -367,9 +368,5 @@ internal class LocationCameraAnimatorCoordinator(
   internal fun jumpCamera(cameraOptions: CameraOptions) {
     cancelAndUnregisterAllAnimators()
     mapTransformDelegate.jumpTo(cameraOptions)
-  }
-
-  companion object {
-    private const val MAP_ANIMATION_OWNER = "Maps-Location"
   }
 }
