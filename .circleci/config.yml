@@ -145,7 +145,7 @@ commands:
                   if [ -n "${MOBILE_METRICS_TOKEN}" ]; then
                     pip3 install requests
                     if [[ $CIRCLE_BRANCH == main ]]; then
-                      python3 scripts/mobile-metrics-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} --target-slug mapbox/mobile-metrics --branch main
+                      python3 scripts/mobile-metrics-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} --target-slug mapbox/mobile-metrics --branch master
                     else
                       python3 scripts/mobile-metrics-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} --target-slug mapbox/mobile-metrics --mapbox_upstream True
                     fi
