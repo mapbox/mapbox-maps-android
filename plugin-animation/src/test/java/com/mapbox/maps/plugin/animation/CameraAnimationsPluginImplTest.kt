@@ -716,7 +716,7 @@ class CameraAnimationsPluginImplTest {
     animatorThree.start()
     handler.postDelayed(
       {
-        cameraAnimationsPluginImpl.cancelAllAnimators("Owner_1", "Owner_3")
+        cameraAnimationsPluginImpl.cancelAllAnimators(listOf("Owner_1", "Owner_3"))
       },
       5L
     )

@@ -410,16 +410,16 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   }
 
   /**
-   * Cancel all animators except ones owned by [exceptOwner] list.
+   * Cancel all animators except ones owned by [exceptOwnerList] list.
    */
-  override fun cancelAllAnimators(vararg exceptOwner: String?) {
+  override fun cancelAllAnimators(exceptOwnerList: List<String>) {
     // Safely iterate over new set because of the possible changes of "this.animators" in Animator callbacks
     HashSet(animators).forEach {
-      if (!exceptOwner.contains(it.owner)) {
+      if (!exceptOwnerList.contains(it.owner)) {
         it.cancel()
       }
     }
-    if (!exceptOwner.contains(highLevelAnimatorSet?.owner)) {
+    if (!exceptOwnerList.contains(highLevelAnimatorSet?.owner)) {
       cancelAnimatorSet()
     }
   }

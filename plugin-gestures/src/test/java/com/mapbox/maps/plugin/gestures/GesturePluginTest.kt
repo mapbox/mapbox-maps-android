@@ -636,7 +636,7 @@ class GesturePluginTest {
     every { cameraAnimationsPlugin.calculateScaleBy(any(), any()) } returns 2.0
     presenter.addProtectedAnimationOwner("Owner")
     assert(presenter.onGenericMotionEvent(obtainMotionEventButton(BUTTON_SECONDARY)))
-    verify { cameraAnimationsPlugin.cancelAllAnimators("Owner") }
+    verify { cameraAnimationsPlugin.cancelAllAnimators(listOf("Owner")) }
   }
 
   @Test
@@ -647,7 +647,7 @@ class GesturePluginTest {
     presenter.addProtectedAnimationOwner("OwnerTwo")
     presenter.removeProtectedAnimationOwner("OwnerOne")
     assert(presenter.onGenericMotionEvent(obtainMotionEventButton(BUTTON_SECONDARY)))
-    verify { cameraAnimationsPlugin.cancelAllAnimators("OwnerTwo") }
+    verify { cameraAnimationsPlugin.cancelAllAnimators(listOf("OwnerTwo")) }
     presenter.removeProtectedAnimationOwner("OwnerTwo")
     assert(presenter.onGenericMotionEvent(obtainMotionEventButton(BUTTON_SECONDARY)))
     verify { cameraAnimationsPlugin.cancelAllAnimators() }
