@@ -2,7 +2,6 @@
 
 package com.mapbox.maps.plugin
 
-import android.graphics.Color
 import android.graphics.drawable.Drawable
 
 /**
@@ -147,9 +146,9 @@ enum class Surface(val value: String) {
 sealed class LocationPuck
 
 /**
- * Definition of a two_d_location_puck.
+ * Definition of a location_puck_2_d.
  */
-data class TwoDLocationPuck(
+data class LocationPuck2D(
   /**
    * Name of image in sprite to use as the top of the location indicator.
    */
@@ -186,24 +185,12 @@ data class TwoDLocationPuck(
    * Defines the background stale color.
    */
   var shadowStaleTintColor: Int? = null,
-  /**
-   * Whether the location puck is pulsing on the map.
-   */
-  var pulsingEnabled: Boolean = false,
-  /**
-   * The color of the pulsing circle.
-   */
-  var pulsingColor: Int = Color.BLUE,
-  /**
-   * The maximum radius of the pulsing circle.
-   */
-  var pulsingMaxRadius: Float = 10f,
 ) : LocationPuck()
 
 /**
- * Definition of a three_d_location_puck.
+ * Definition of a location_puck_3_d.
  */
-data class ThreeDLocationPuck(
+data class LocationPuck3D(
   /**
    * An URL for the model file in gltf format.
    */
@@ -220,6 +207,10 @@ data class ThreeDLocationPuck(
    * The scale of the model.
    */
   var modelScale: List<Float> = listOf(1f, 1f, 1f),
+  /**
+   * The scale expression of the model, which will overwrite the default scale expression that keeps the model size constant during zoom.
+   */
+  var modelScaleExpression: String? = null,
   /**
    * The rotation of the model.
    */

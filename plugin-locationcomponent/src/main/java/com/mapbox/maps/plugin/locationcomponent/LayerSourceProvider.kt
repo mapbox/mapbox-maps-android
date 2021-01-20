@@ -1,15 +1,15 @@
 package com.mapbox.maps.plugin.locationcomponent
 
 import android.text.TextUtils
-import com.mapbox.maps.plugin.ThreeDLocationPuck
-import com.mapbox.maps.plugin.TwoDLocationPuck
+import com.mapbox.maps.plugin.LocationPuck2D
+import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.LOCATION_INDICATOR_LAYER
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_LAYER
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_SOURCE
 
 internal class LayerSourceProvider {
 
-  fun getModelSource(locationModelLayerOptions: ThreeDLocationPuck): ModelSourceWrapper {
+  fun getModelSource(locationModelLayerOptions: LocationPuck3D): ModelSourceWrapper {
     if (TextUtils.isEmpty(locationModelLayerOptions.modelUri)) {
       throw RuntimeException("Model Url must not be empty!")
     }
@@ -20,7 +20,7 @@ internal class LayerSourceProvider {
     )
   }
 
-  fun getModelLayer(locationModelLayerOptions: ThreeDLocationPuck) =
+  fun getModelLayer(locationModelLayerOptions: LocationPuck3D) =
     ModelLayerWrapper(
       MODEL_LAYER,
       MODEL_SOURCE,
@@ -30,9 +30,9 @@ internal class LayerSourceProvider {
 
   fun getLocationIndicatorLayer() = LocationIndicatorLayerWrapper(LOCATION_INDICATOR_LAYER)
 
-  fun getLocationIndicatorLayerRenderer(puckOptions: TwoDLocationPuck) =
+  fun getLocationIndicatorLayerRenderer(puckOptions: LocationPuck2D) =
     LocationIndicatorLayerRenderer(puckOptions, this)
 
-  fun getModelLayerRenderer(locationModelLayerOptions: ThreeDLocationPuck) =
+  fun getModelLayerRenderer(locationModelLayerOptions: LocationPuck3D) =
     ModelLayerRenderer(this, locationModelLayerOptions)
 }

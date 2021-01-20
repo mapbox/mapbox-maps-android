@@ -4,12 +4,12 @@ import android.graphics.Bitmap
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.StyleManagerInterface
-import com.mapbox.maps.plugin.ThreeDLocationPuck
+import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_SOURCE
 
 internal class ModelLayerRenderer(
   layerSourceProvider: LayerSourceProvider,
-  private val locationModelLayerOptions: ThreeDLocationPuck
+  private val locationModelLayerOptions: LocationPuck3D
 ) :
   LocationLayerRenderer {
   private var style: StyleManagerInterface? = null
@@ -87,10 +87,7 @@ internal class ModelLayerRenderer(
   /**
    * Adjust the visual appearance of the pulsing LocationComponent circle.
    */
-  override fun updatePulsingUi(
-    radius: Float,
-    opacity: Float?
-  ) {
+  override fun updatePulsingUi(pulsingColorInt: Int, radius: Float, opacity: Float?) {
   }
 
   override fun addBitmaps(
