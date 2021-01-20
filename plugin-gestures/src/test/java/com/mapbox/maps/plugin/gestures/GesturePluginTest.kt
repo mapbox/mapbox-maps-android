@@ -104,7 +104,7 @@ class GesturePluginTest {
     every { mapTransformDelegate.getCameraOptions(null) } returns CameraOptions.Builder().zoom(1.0).build()
     every { cameraAnimationsPlugin.calculateScaleBy(any(), any()) } returns 2.0
     assert(presenter.onGenericMotionEvent(obtainMotionEventButton(BUTTON_SECONDARY)))
-    verify { mapTransformDelegate.jumpTo(any()) }
+    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
   }
 
   @Test
@@ -331,7 +331,7 @@ class GesturePluginTest {
     val handled = presenter.handleMove(mockk(), 50.0f, 50.0f)
     assert(handled)
     verify { listener.onMove(any()) }
-    verify { mapTransformDelegate.jumpTo(any()) }
+    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
   }
 
   @Test
@@ -434,7 +434,7 @@ class GesturePluginTest {
     val result = presenter.handleScale(scaleDetector)
     assert(result)
     // setMoveDetectorEnabled
-    verify { mapTransformDelegate.jumpTo(any()) }
+    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
     verify { listener.onScale(any()) }
   }
 
@@ -463,7 +463,7 @@ class GesturePluginTest {
     val result = presenter.handleScale(scaleDetector)
     assert(result)
     // setMoveDetectorEnabled
-    verify { mapTransformDelegate.jumpTo(any()) }
+    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
     verify { listener.onScale(any()) }
   }
 
@@ -555,7 +555,7 @@ class GesturePluginTest {
     every { rotateGestureDetector.focalPoint } returns PointF(0.0f, 0.0f)
     val result = presenter.handleRotate(rotateGestureDetector, 34.0f)
     assert(result)
-    verify { mapTransformDelegate.jumpTo(any()) }
+    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
     verify { listener.onRotate(any()) }
   }
 
@@ -628,6 +628,29 @@ class GesturePluginTest {
       setDefaultMutuallyExclusives = false
     )
     assertEquals(customManager, presenter.getGesturesManager())
+  }
+
+  @Test
+  fun verifyAddProtectedAnimationOwner() {
+    every { mapTransformDelegate.getCameraOptions(null) } returns CameraOptions.Builder().zoom(1.0).build()
+    every { cameraAnimationsPlugin.calculateScaleBy(any(), any()) } returns 2.0
+    presenter.addProtectedAnimationOwner("Owner")
+    assert(presenter.onGenericMotionEvent(obtainMotionEventButton(BUTTON_SECONDARY)))
+    verify { cameraAnimationsPlugin.cancelAllAnimators("Owner") }
+  }
+
+  @Test
+  fun verifyRemoveProtectedAnimationOwner() {
+    every { mapTransformDelegate.getCameraOptions(null) } returns CameraOptions.Builder().zoom(1.0).build()
+    every { cameraAnimationsPlugin.calculateScaleBy(any(), any()) } returns 2.0
+    presenter.addProtectedAnimationOwner("OwnerOne")
+    presenter.addProtectedAnimationOwner("OwnerTwo")
+    presenter.removeProtectedAnimationOwner("OwnerOne")
+    assert(presenter.onGenericMotionEvent(obtainMotionEventButton(BUTTON_SECONDARY)))
+    verify { cameraAnimationsPlugin.cancelAllAnimators("OwnerTwo") }
+    presenter.removeProtectedAnimationOwner("OwnerTwo")
+    assert(presenter.onGenericMotionEvent(obtainMotionEventButton(BUTTON_SECONDARY)))
+    verify { cameraAnimationsPlugin.cancelAllAnimators() }
   }
 
   fun obtainMotionEventButton(buttonType: Int): MotionEvent {

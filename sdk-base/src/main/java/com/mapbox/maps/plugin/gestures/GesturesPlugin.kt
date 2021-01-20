@@ -148,24 +148,16 @@ interface GesturesPlugin : MapPlugin, ContextBinder, MapSizePlugin, GesturesSett
   fun removeOnShoveListener(listener: OnShoveListener)
 
   /**
-   * Add animator owner (see [CameraAnimatorOptions.owner] or [MapAnimationOptions.owner])
-   * which animation will not be cancelled with cancelAllAnimators call (when gesture animation is about to start).
+   * Add animator owner (see [CameraAnimatorOptions.owner] or [MapAnimationOptions.owner]
+   * which animation will not be canceled with when gesture animation is about to start.
+   * When specified, you are responsible for listening to gesture interactions and canceling the specified owners' animations to avoid competing with gestures.
    */
   fun addProtectedAnimationOwner(owner: String)
 
   /**
    * Remove animator owner (see [CameraAnimatorOptions.owner] or [MapAnimationOptions.owner])
-   * which animation will not be cancelled with cancelAllAnimators call (when gesture animation is about to start).
+   * which animation will not be canceled with when gesture animation is about to start.
+   * When specified, you are responsible for listening to gesture interactions and canceling the specified owners' animations to avoid competing with gestures.
    */
   fun removeProtectedAnimationOwner(owner: String)
-
-  /**
-   * Static variables and methods.
-   */
-  companion object {
-    /**
-     * Map Camera animator owner.
-     */
-    const val MAP_ANIMATION_OWNER = "Maps-Gestures"
-  }
 }

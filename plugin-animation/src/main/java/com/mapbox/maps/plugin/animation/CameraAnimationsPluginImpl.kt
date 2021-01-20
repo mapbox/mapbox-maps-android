@@ -10,7 +10,6 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
-import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin.Companion.MAP_ANIMATION_OWNER
 import com.mapbox.maps.plugin.animation.animator.*
 import com.mapbox.maps.plugin.delegates.*
 import java.lang.ref.WeakReference
@@ -36,9 +35,10 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
   /**
    * Using single [AnimatorSet] for high-level API functions like easeTo, flyTo etc
+   * Only one high-level animator set could be active in a moment of time.
    * Consists of set owner + animator set itself.
    */
-  private var animatorSet: Pair<String?, AnimatorSet>? = null
+  private var highLevelAnimatorSet: HighLevelAnimatorSet? = null
 
   private val centerListeners = CopyOnWriteArraySet<CameraAnimatorChangeListener<Point>>()
   private val zoomListeners = CopyOnWriteArraySet<CameraAnimatorChangeListener<Double>>()
@@ -344,14 +344,15 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     animatorListener?.let {
       animatorSet.addListener(it)
     }
-    this.animatorSet = Pair(animatorOwner, animatorSet)
-    this.animatorSet?.second?.start()
+    highLevelAnimatorSet = HighLevelAnimatorSet(animatorOwner, animatorSet).also {
+      it.animatorSet.start()
+    }
   }
 
   private fun cancelAnimatorSet() {
-    animatorSet?.second?.let {
-      it.cancel()
-      it.removeAllListeners()
+    highLevelAnimatorSet?.let {
+      it.animatorSet.cancel()
+      it.animatorSet.removeAllListeners()
     }
   }
 
@@ -418,7 +419,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         it.cancel()
       }
     }
-    if (!exceptOwner.contains(animatorSet?.first)) {
+    if (!exceptOwner.contains(highLevelAnimatorSet?.owner)) {
       cancelAnimatorSet()
     }
   }
@@ -754,7 +755,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     }
     val animatorSet = registerInternalAnimators(
       cameraAnimators.toTypedArray(),
-      MAP_ANIMATION_OWNER,
+      MapAnimationOwnerRegistry.INTERNAL,
       null,
       null,
       true
@@ -779,7 +780,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     val animatorSet =
       registerInternalAnimators(
         cameraAnimators.toTypedArray(),
-        MAP_ANIMATION_OWNER,
+        MapAnimationOwnerRegistry.INTERNAL,
         null,
         null,
         false

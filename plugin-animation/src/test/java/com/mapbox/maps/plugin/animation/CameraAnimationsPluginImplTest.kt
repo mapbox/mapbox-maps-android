@@ -676,6 +676,58 @@ class CameraAnimationsPluginImplTest {
   }
 
   @Test
+  fun testCancelAllExceptProtected() {
+
+    val listenerOne = CameraAnimatorListener()
+    val listenerTwo = CameraAnimatorListener()
+    val listenerThree = CameraAnimatorListener()
+
+    val animatorOne = cameraAnimationsPluginImpl.createBearingAnimator(
+      cameraAnimatorOptions(2.0) {
+        owner = "Owner_1"
+      }
+    ) {
+      duration = 200L
+      addListener(listenerOne)
+    }
+    val animatorTwo = cameraAnimationsPluginImpl.createZoomAnimator(
+      cameraAnimatorOptions(3.0) {
+        owner = "Owner_2"
+      }
+    ) {
+      duration = 200L
+      addListener(listenerTwo)
+    }
+    val animatorThree = cameraAnimationsPluginImpl.createPitchAnimator(
+      cameraAnimatorOptions(4.0) {
+        owner = "Owner_3"
+      }
+    ) {
+      duration = 200L
+      addListener(listenerThree)
+    }
+
+    val handler = Handler(getMainLooper())
+
+    shadowOf(getMainLooper()).pause()
+    cameraAnimationsPluginImpl.registerAnimators(animatorOne, animatorTwo, animatorThree)
+    animatorOne.start()
+    animatorTwo.start()
+    animatorThree.start()
+    handler.postDelayed(
+      {
+        cameraAnimationsPluginImpl.cancelAllAnimators("Owner_1", "Owner_3")
+      },
+      5L
+    )
+    shadowOf(getMainLooper()).idleFor(Duration.ofMillis(20L))
+
+    assertEquals(false, listenerOne.canceled)
+    assertEquals(true, listenerTwo.canceled)
+    assertEquals(false, listenerThree.canceled)
+  }
+
+  @Test
   fun testAnimatorListenerParameterCancelAnotherAnimation() {
     val listenerOne = CameraAnimatorListener()
     val listenerTwo = CameraAnimatorListener()

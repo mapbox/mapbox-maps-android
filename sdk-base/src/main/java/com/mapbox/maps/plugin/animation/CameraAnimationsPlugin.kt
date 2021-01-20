@@ -293,14 +293,4 @@ interface CameraAnimationsPlugin : MapPlugin {
    * @param animators Variable number of [ValueAnimator]'s
    */
   fun playAnimatorsSequentially(vararg animators: ValueAnimator)
-
-  /**
-   * Static variables and methods.
-   */
-  companion object {
-    /**
-     * Map Camera animator owner.
-     */
-    const val MAP_ANIMATION_OWNER = "Maps-CameraInternal"
-  }
 }

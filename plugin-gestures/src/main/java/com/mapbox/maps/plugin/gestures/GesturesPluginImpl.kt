@@ -20,8 +20,8 @@ import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
+import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
 import com.mapbox.maps.plugin.delegates.*
-import com.mapbox.maps.plugin.gestures.GesturesPlugin.Companion.MAP_ANIMATION_OWNER
 import com.mapbox.maps.plugin.gestures.GesturesPluginImpl.Companion.gesturesPlugin
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
@@ -303,7 +303,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
               CameraOptions.Builder().anchor(anchor).zoom(zoom).build(),
               mapAnimationOptions {
                 duration = 0
-                owner = MAP_ANIMATION_OWNER
+                owner = MapAnimationOwnerRegistry.GESTURES
               }
             )
           }
@@ -550,7 +550,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
           .build(),
         mapAnimationOptions {
           duration = 0
-          owner = MAP_ANIMATION_OWNER
+          owner = MapAnimationOwnerRegistry.GESTURES
         }
       )
     } else {
@@ -564,7 +564,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
             .build(),
           mapAnimationOptions {
             duration = 0
-            owner = MAP_ANIMATION_OWNER
+            owner = MapAnimationOwnerRegistry.GESTURES
           }
         )
       }
@@ -703,7 +703,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     val bearingAnimator = cameraAnimationsPlugin.createBearingAnimator(
       options = cameraAnimatorOptions(bearingTarget) {
-        owner = MAP_ANIMATION_OWNER
+        owner = MapAnimationOwnerRegistry.GESTURES
         startValue = bearingCurrent
       },
     ) {
@@ -714,7 +714,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     val screenCoordinate = ScreenCoordinate(animationFocalPoint.x, animationFocalPoint.y)
     val anchorAnimator = cameraAnimationsPlugin.createAnchorAnimator(
       options = cameraAnimatorOptions(screenCoordinate) {
-        owner = MAP_ANIMATION_OWNER
+        owner = MapAnimationOwnerRegistry.GESTURES
         startValue = screenCoordinate
       },
     ) {
@@ -800,7 +800,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
           .build(),
         mapAnimationOptions {
           duration = 0
-          owner = MAP_ANIMATION_OWNER
+          owner = MapAnimationOwnerRegistry.GESTURES
         }
       )
 
@@ -912,7 +912,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         CameraOptions.Builder().pitch(pitch).build(),
         mapAnimationOptions {
           duration = 0
-          owner = MAP_ANIMATION_OWNER
+          owner = MapAnimationOwnerRegistry.GESTURES
         }
       )
       notifyOnShoveListeners(detector)
@@ -971,7 +971,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     val scaleInterpolator = gesturesInterpolator
     val zoomAnimator = cameraAnimationsPlugin.createZoomAnimator(
       options = cameraAnimatorOptions(currentZoom + zoomAddition) {
-        owner = MAP_ANIMATION_OWNER
+        owner = MapAnimationOwnerRegistry.GESTURES
         startValue = currentZoom
       }
     ) {
@@ -981,7 +981,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     val anchorAnimator = cameraAnimationsPlugin.createAnchorAnimator(
       options = cameraAnimatorOptions(animationFocalPoint) {
-        owner = MAP_ANIMATION_OWNER
+        owner = MapAnimationOwnerRegistry.GESTURES
         startValue = animationFocalPoint
       },
     ) {
@@ -1193,7 +1193,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       cameraAnimationsPlugin.moveBy(
         ScreenCoordinate(offsetX, offsetY),
         mapAnimationOptions {
-          owner = MAP_ANIMATION_OWNER
+          owner = MapAnimationOwnerRegistry.GESTURES
           duration = animationTime
           interpolator = gesturesInterpolator
         }
@@ -1239,7 +1239,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
           CameraOptions.Builder().center(it).build(),
           mapAnimationOptions {
             duration = 0
-            owner = MAP_ANIMATION_OWNER
+            owner = MapAnimationOwnerRegistry.GESTURES
           }
         )
       }
@@ -1461,8 +1461,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   }
 
   /**
-   * Add animator owner (see [CameraAnimatorOptions.owner] or [MapAnimationOptions.owner])
-   * which animation will not be cancelled with cancelAllAnimators call (when gesture animation is about to start).
+   * Add animator owner (see [CameraAnimatorOptions.owner] or [MapAnimationOptions.owner]
+   * which animation will not be canceled with when gesture animation is about to start.
+   * When specified, you are responsible for listening to gesture interactions and canceling the specified owners' animations to avoid competing with gestures.
    */
   override fun addProtectedAnimationOwner(owner: String) {
     protectedCameraAnimatorOwnerList.add(owner)
@@ -1470,7 +1471,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
   /**
    * Remove animator owner (see [CameraAnimatorOptions.owner] or [MapAnimationOptions.owner])
-   * which animation will not be cancelled with cancelAllAnimators call (when gesture animation is about to start).
+   * which animation will not be canceled with when gesture animation is about to start.
+   * When specified, you are responsible for listening to gesture interactions and canceling the specified owners' animations to avoid competing with gestures.
    */
   override fun removeProtectedAnimationOwner(owner: String) {
     protectedCameraAnimatorOwnerList.remove(owner)

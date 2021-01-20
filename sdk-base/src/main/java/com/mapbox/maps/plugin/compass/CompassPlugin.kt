@@ -28,14 +28,4 @@ interface CompassPlugin : ViewPlugin, MapCameraPlugin, LifecyclePlugin, CompassS
    * Invoked when the compass view is clicked.
    */
   fun onCompassClicked()
-
-  /**
-   * Static variables and methods.
-   */
-  companion object {
-    /**
-     * Map Camera animator owner.
-     */
-    const val MAP_ANIMATION_OWNER = "Maps-Compass"
-  }
 }
