@@ -4,7 +4,7 @@ import android.graphics.Color
 import androidx.annotation.ColorInt
 import androidx.core.view.animation.PathInterpolatorCompat
 
-internal class PulsingPuckAnimator : PuckAnimator<Double>(Evaluators.DOUBLE) {
+internal class PuckPulsingAnimator : PuckAnimator<Double>(Evaluators.DOUBLE) {
 
   var enabled = false
   var maxRadius: Double = 10.0

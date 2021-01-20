@@ -58,7 +58,7 @@ internal class LocationPuckManager(
     if (puck is LocationPuck2D) {
       prepareLocationIndicatorLayerBitmaps(puck)
       if (settings.pulsingEnabled) {
-        animationManager.enablePulsingAnimation(settings.pulsingMaxRadius)
+        animationManager.enablePulsingAnimation(settings)
       }
     }
     styleScaling(settings)
@@ -108,16 +108,16 @@ internal class LocationPuckManager(
     animationManager.onStop()
   }
 
-  fun updateCurrentPosition(vararg points: Point) {
+  fun updateCurrentPosition(vararg points: Point, options: (ValueAnimator.() -> Unit)? = null) {
     val targets = arrayOf(lastLocation, *points)
     lastLocation = arrayOf(*points).last()
-    animationManager.animatePoints(*targets)
+    animationManager.animatePoints(*targets, options = options)
   }
 
-  fun updateCurrentBearing(vararg bearings: Double) {
+  fun updateCurrentBearing(vararg bearings: Double, options: (ValueAnimator.() -> Unit)? = null) {
     val targets = doubleArrayOf(lastBearing, *bearings)
     lastBearing = doubleArrayOf(*bearings).last()
-    animationManager.animateBearing(*targets)
+    animationManager.animateBearing(*targets, options = options)
   }
 
   fun updateLocationAnimator(block: ValueAnimator.() -> Unit) {

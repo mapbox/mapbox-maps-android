@@ -129,34 +129,40 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer, L
 
   /**
    * Called whenever the location is updated.
-   * Supports multiple points to create more complex animations with intermediate points.
-   * Last [location] value will always be first animator target for next animation.
+   * @param location - supports multiple points to create more complex animations with intermediate points.
+   *  Last [location] value will always be the animator target for next animation.
+   * @param options - if specified explicitly will apply current animator option to single location update animation.
+   *  Otherwise default animator options will be used.
    */
-  override fun onLocationUpdated(vararg location: Point) {
-    locationPuckManager?.updateCurrentPosition(*location)
+  override fun onLocationUpdated(vararg location: Point, options: (ValueAnimator.() -> Unit)?) {
+    locationPuckManager?.updateCurrentPosition(*location, options = options)
     staleStateManager?.updateLatestLocationTime()
   }
 
   /**
    * Called whenever the bearing is updated.
-   * Supports multiple bearing values to create more complex animations with intermediate points.
-   * Last [bearing] value will always be first animator target for next animation.
+   * @param bearing - supports multiple bearing values to create more complex animations with intermediate points.
+   *  Last [bearing] value will always be the animator target for next animation.
+   * @param options - if specified explicitly will apply current animator option to single location bearing animation.
+   *  Otherwise default animator options will be used.
    */
-  override fun onBearingUpdated(vararg bearing: Double) {
-    locationPuckManager?.updateCurrentBearing(*bearing)
+  override fun onBearingUpdated(vararg bearing: Double, options: (ValueAnimator.() -> Unit)?) {
+    locationPuckManager?.updateCurrentBearing(*bearing, options = options)
   }
 
   /**
-   * Update [ValueAnimator] options that will be used to animate between [Point] updates.
+   * Update [ValueAnimator] options that will be used to animate between [Point] updates by default.
+   * This will apply to all upcoming updates.
    */
-  override fun onPuckLocationAnimatorOptionsUpdated(options: ValueAnimator.() -> Unit) {
+  override fun onPuckLocationAnimatorDefaultOptionsUpdated(options: ValueAnimator.() -> Unit) {
     locationPuckManager?.updateLocationAnimator(options)
   }
 
   /**
-   * Update [ValueAnimator] options that will be used to animate between bearing [Double] updates.
+   * Update [ValueAnimator] options that will be used to animate between bearing [Double] updates by default.
+   * This will apply to all upcoming updates.
    */
-  override fun onPuckBearingAnimatorOptionsUpdated(options: ValueAnimator.() -> Unit) {
+  override fun onPuckBearingAnimatorDefaultOptionsUpdated(options: ValueAnimator.() -> Unit) {
     locationPuckManager?.updateBearingAnimator(options)
   }
 

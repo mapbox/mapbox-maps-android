@@ -33,12 +33,12 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
       // after several first emits we update puck animator options
       if (delta >= 0.005f && delta < 0.006) {
         locationConsumer?.let {
-          it.onPuckLocationAnimatorOptionsUpdated {
+          it.onPuckLocationAnimatorDefaultOptionsUpdated {
             // set same duration as our location emit frequency - it will make puck position change smooth
             duration = 2000
             interpolator = FastOutSlowInInterpolator()
           }
-          it.onPuckBearingAnimatorOptionsUpdated {
+          it.onPuckBearingAnimatorDefaultOptionsUpdated {
             // set duration bigger than our location emit frequency -
             // this will result in cancelling ongoing animation and starting new one with a visible non-smooth `jump`
             duration = 5000
@@ -49,7 +49,15 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
         {
           // default animation duration = 1000 ms while we emit updates each 2000 ms
           // this will result in gaps between puck animations
-          locationConsumer?.onLocationUpdated(Point.fromLngLat(POINT_LNG + delta, POINT_LAT + delta))
+
+          // however on third emit we will emit location almost immediately using custom animator options for single location update
+          if (delta >= 0.002f && delta < 0.003) {
+            locationConsumer?.onLocationUpdated(Point.fromLngLat(POINT_LNG + delta, POINT_LAT + delta)) {
+              duration = 100
+            }
+          } else {
+            locationConsumer?.onLocationUpdated(Point.fromLngLat(POINT_LNG + delta, POINT_LAT + delta))
+          }
           locationConsumer?.onBearingUpdated(BEARING + delta * 10000.0 * 5)
           delta += 0.001f
           emitFakeLocations()

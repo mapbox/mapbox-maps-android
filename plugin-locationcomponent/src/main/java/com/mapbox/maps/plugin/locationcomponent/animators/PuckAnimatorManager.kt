@@ -3,12 +3,13 @@ package com.mapbox.maps.plugin.locationcomponent.animators
 import android.animation.ValueAnimator
 import com.mapbox.geojson.Point
 import com.mapbox.maps.plugin.locationcomponent.LocationLayerRenderer
+import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 
 internal class PuckAnimatorManager {
 
-  private var bearingAnimator = BearingPuckAnimator()
-  private var pointAnimator = PositionPuckAnimator()
-  private var pulsingAnimator = PulsingPuckAnimator()
+  private var bearingAnimator = PuckBearingAnimator()
+  private var pointAnimator = PuckPositionAnimator()
+  private var pulsingAnimator = PuckPulsingAnimator()
 
   fun setLocationLayerRenderer(renderer: LocationLayerRenderer) {
     bearingAnimator.setLocationLayerRenderer(renderer)
@@ -28,18 +29,19 @@ internal class PuckAnimatorManager {
     pulsingAnimator.cancelRunning()
   }
 
-  fun animateBearing(vararg targets: Double) {
-    bearingAnimator.animate(*targets.toTypedArray())
+  fun animateBearing(vararg targets: Double, options: (ValueAnimator.() -> Unit)?) {
+    bearingAnimator.animate(*targets.toTypedArray(), options = options)
   }
 
-  fun animatePoints(vararg targets: Point) {
-    pointAnimator.animate(*targets)
+  fun animatePoints(vararg targets: Point, options: (ValueAnimator.() -> Unit)?) {
+    pointAnimator.animate(*targets, options = options)
   }
 
-  fun enablePulsingAnimation(radius: Float) {
+  fun enablePulsingAnimation(settings: LocationComponentSettings) {
     pulsingAnimator.apply {
       enabled = true
-      maxRadius = radius.toDouble()
+      maxRadius = settings.pulsingMaxRadius.toDouble()
+      pulsingColor = settings.pulsingColor
       animateInfinite()
     }
   }
