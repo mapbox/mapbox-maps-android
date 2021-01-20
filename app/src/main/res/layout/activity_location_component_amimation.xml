@@ -8,6 +8,6 @@
     mapbox:mapbox_locationComponentEnabled="true"
     mapbox:mapbox_locationComponentStaleStateEnabled="true"
     mapbox:mapbox_locationComponentPresetPuckStyle="heading_arrow"
-    mapbox:mapbox_locationComponentLocationPuckTwoDLocationPuckPulsingEnabled="true"
-    mapbox:mapbox_locationComponentLocationPuckTwoDLocationPuckPulsingMaxRadius="20dp"
+    mapbox:mapbox_locationComponentPulsingEnabled="true"
+    mapbox:mapbox_locationComponentPulsingMaxRadius="30dp"
     tools:context=".examples.LocationComponentActivity" />

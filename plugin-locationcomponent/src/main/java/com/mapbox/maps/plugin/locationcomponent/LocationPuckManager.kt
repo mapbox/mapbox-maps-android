@@ -5,8 +5,8 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.plugin.LocationPuck
-import com.mapbox.maps.plugin.ThreeDLocationPuck
-import com.mapbox.maps.plugin.TwoDLocationPuck
+import com.mapbox.maps.plugin.LocationPuck2D
+import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
@@ -39,10 +39,10 @@ internal class LocationPuckManager(
 
   private var locationLayerRenderer =
     when (val puck = getLocationPuck(settings)) {
-      is TwoDLocationPuck -> {
+      is LocationPuck2D -> {
         layerSourceProvider.getLocationIndicatorLayerRenderer(puck)
       }
-      is ThreeDLocationPuck -> {
+      is LocationPuck3D -> {
         layerSourceProvider.getModelLayerRenderer(puck)
       }
     }
@@ -55,10 +55,10 @@ internal class LocationPuckManager(
     locationLayerRenderer.addLayers(positionManager)
     locationLayerRenderer.initializeComponents(style)
     val puck = getLocationPuck(settings)
-    if (puck is TwoDLocationPuck) {
+    if (puck is LocationPuck2D) {
       prepareLocationIndicatorLayerBitmaps(puck)
-      if (puck.pulsingEnabled) {
-        animationManager.enablePulsingAnimation(puck.pulsingMaxRadius)
+      if (settings.pulsingEnabled) {
+        animationManager.enablePulsingAnimation(settings.pulsingMaxRadius)
       }
     }
     styleScaling(settings)
@@ -83,10 +83,10 @@ internal class LocationPuckManager(
     val locationPuck =
       settings.locationPuck ?: presetProvider.getPresetPuck(settings.presetPuckStyle)
     locationLayerRenderer = when (locationPuck) {
-      is TwoDLocationPuck -> {
+      is LocationPuck2D -> {
         layerSourceProvider.getLocationIndicatorLayerRenderer(locationPuck)
       }
-      is ThreeDLocationPuck -> {
+      is LocationPuck3D -> {
         layerSourceProvider.getModelLayerRenderer(locationPuck)
       }
     }
@@ -141,7 +141,7 @@ internal class LocationPuckManager(
     locationLayerRenderer.hide()
   }
 
-  private fun prepareLocationIndicatorLayerBitmaps(puck: TwoDLocationPuck) {
+  private fun prepareLocationIndicatorLayerBitmaps(puck: LocationPuck2D) {
     val topBitmap = puck.topImage?.let { bitmapProvider.generateBitmap(it, puck.topTintColor) }
     val topStaleBitmap =
       puck.topImage?.let { bitmapProvider.generateBitmap(it, puck.topStaleTintColor) }
@@ -169,7 +169,7 @@ internal class LocationPuckManager(
     val minZoom = delegateProvider.mapTransformDelegate.getBounds().minZoom ?: 0.0
     val maxZoom = delegateProvider.mapTransformDelegate.getBounds().maxZoom ?: 19.0
     val scaleExpression = when (puck) {
-      is TwoDLocationPuck -> {
+      is LocationPuck2D -> {
         arrayListOf(
           Value("interpolate"),
           Value(arrayListOf(Value("linear"))),
@@ -180,7 +180,7 @@ internal class LocationPuckManager(
           Value(settings.maxZoomIconScale.toDouble())
         )
       }
-      is ThreeDLocationPuck -> {
+      is LocationPuck3D -> {
         arrayListOf(
           Value("interpolate"),
           Value(arrayListOf(Value("exponential"), Value(0.5))),

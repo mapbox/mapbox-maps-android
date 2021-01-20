@@ -1,11 +1,15 @@
 package com.mapbox.maps.plugin.locationcomponent.animators
 
+import android.graphics.Color
+import androidx.annotation.ColorInt
 import androidx.core.view.animation.PathInterpolatorCompat
 
 internal class PulsingPuckAnimator : PuckAnimator<Double>(Evaluators.DOUBLE) {
 
   var enabled = false
   var maxRadius: Double = 10.0
+  @ColorInt
+  var pulsingColor: Int = Color.BLUE
   var pulseFadeEnabled = true
 
   init {
@@ -24,7 +28,7 @@ internal class PulsingPuckAnimator : PuckAnimator<Double>(Evaluators.DOUBLE) {
     if (pulseFadeEnabled) {
       opacity = 1.0f - (value / maxRadius).toFloat()
     }
-    locationRenderer?.updatePulsingUi(value.toFloat(), if (fraction <= 0.1f) 0f else opacity)
+    locationRenderer?.updatePulsingUi(pulsingColor, value.toFloat(), if (fraction <= 0.1f) 0f else opacity)
   }
 
   companion object {
