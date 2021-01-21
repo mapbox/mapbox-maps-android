@@ -24,62 +24,63 @@ import java.util.*
  */
 class FillActivity : AppCompatActivity() {
   private val random = Random()
-  private lateinit var fillManager: FillManager
+  private var fillManager: FillManager? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_annotation)
     mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
       val annotationPlugin = mapView.getAnnotationPlugin()
-      fillManager = annotationPlugin.getFillManager()
-      fillManager.addClickListener(
-        OnFillClickListener {
-          Toast.makeText(this@FillActivity, "click", Toast.LENGTH_LONG).show()
-          false
-        }
-      )
-      val points = listOf(
-        listOf(
-          Point.fromLngLat(-3.363937, -10.733102),
-          Point.fromLngLat(1.754703, -19.716317),
-          Point.fromLngLat(-15.747196, -21.085074),
-          Point.fromLngLat(-3.363937, -10.733102)
+      fillManager = annotationPlugin.getFillManager().apply {
+        addClickListener(
+          OnFillClickListener {
+            Toast.makeText(this@FillActivity, "click", Toast.LENGTH_LONG).show()
+            false
+          }
         )
-      )
-
-      val fillOptions: FillOptions = FillOptions()
-        .withPoints(points)
-        .withData(JsonPrimitive("Foobar"))
-        .withFillColor(ColorUtils.colorToRgbaString(Color.RED))
-      fillManager.create(fillOptions)
-
-      // random add fills across the globe
-      val fillOptionsList: MutableList<FillOptions> = ArrayList()
-      for (i in 0..2) {
-        val color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
-        fillOptionsList.add(
-          FillOptions()
-            .withPoints(createRandomPoints())
-            .withFillColor(ColorUtils.colorToRgbaString(color))
-        )
-      }
-      fillManager.create(fillOptionsList)
-
-      try {
-        fillManager.create(
-          FeatureCollection.fromJson(
-            Assets.loadStringFromAssets(
-              this,
-              "annotations.json"
-            )
+        val points = listOf(
+          listOf(
+            Point.fromLngLat(-3.363937, -10.733102),
+            Point.fromLngLat(1.754703, -19.716317),
+            Point.fromLngLat(-15.747196, -21.085074),
+            Point.fromLngLat(-3.363937, -10.733102)
           )
         )
-      } catch (e: IOException) {
-        throw RuntimeException("Unable to parse annotations.json")
+
+        val fillOptions: FillOptions = FillOptions()
+          .withPoints(points)
+          .withData(JsonPrimitive("Foobar"))
+          .withFillColor(ColorUtils.colorToRgbaString(Color.RED))
+        create(fillOptions)
+
+        // random add fills across the globe
+        val fillOptionsList: MutableList<FillOptions> = ArrayList()
+        for (i in 0..2) {
+          val color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
+          fillOptionsList.add(
+            FillOptions()
+              .withPoints(createRandomPoints())
+              .withFillColor(ColorUtils.colorToRgbaString(color))
+          )
+        }
+        create(fillOptionsList)
+
+        try {
+          create(
+            FeatureCollection.fromJson(
+              Assets.loadStringFromAssets(
+                this@FillActivity,
+                "annotations.json"
+              )
+            )
+          )
+        } catch (e: IOException) {
+          throw RuntimeException("Unable to parse annotations.json")
+        }
       }
     }
 
-    deleteAll.setOnClickListener { fillManager.deleteAll() }
+    deleteAll.setOnClickListener { fillManager?.deleteAll() }
   }
 
   private fun createRandomPoints(): List<List<Point>> {
