@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.appcompat.content.res.AppCompatResources
 import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
-import com.mapbox.maps.plugin.PresetPuckStyle
 import com.mapbox.maps.plugin.locationcomponent.getLocationComponentPlugin
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
@@ -35,16 +34,8 @@ class LocationComponentActivity : AppCompatActivity() {
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
-      R.id.action_puck_style_preset_change -> {
-        togglePresetPuckStyle()
-        return true
-      }
-      R.id.action_3d_puck_style_change -> {
-        toggle3DPuck()
-        return true
-      }
-      R.id.action_2d_puck_style_change -> {
-        toggle2DPuck()
+      R.id.action_customise_location_puck_change -> {
+        toggleCustomisedPuck()
         return true
       }
       R.id.action_map_style_change -> {
@@ -63,27 +54,27 @@ class LocationComponentActivity : AppCompatActivity() {
     }
   }
 
-  private fun toggle3DPuck() {
+  private fun toggleCustomisedPuck() {
     mapView.getLocationComponentPlugin().let {
-      if (it.locationPuck == null) {
-        it.locationPuck = LocationPuck3D(
+      when (it.locationPuck) {
+        is LocationPuck3D -> it.locationPuck = LocationPuck2D(
+          topImage = AppCompatResources.getDrawable(
+            this,
+            com.mapbox.maps.plugin.locationcomponent.R.drawable.mapbox_user_icon
+          ),
+          bearingImage = AppCompatResources.getDrawable(
+            this,
+            com.mapbox.maps.plugin.locationcomponent.R.drawable.mapbox_user_bearing_icon
+          ),
+          shadowImage = AppCompatResources.getDrawable(
+            this,
+            com.mapbox.maps.plugin.locationcomponent.R.drawable.mapbox_user_stroke_icon
+          ),
+        )
+        is LocationPuck2D -> it.locationPuck = LocationPuck3D(
           modelUri = "asset://race_car_model.gltf",
           modelScale = listOf(0.1f, 0.1f, 0.1f)
         )
-      } else {
-        it.locationPuck = null
-      }
-    }
-  }
-
-  private fun toggle2DPuck() {
-    mapView.getLocationComponentPlugin().let {
-      if (it.locationPuck == null) {
-        it.locationPuck = LocationPuck2D(
-          bearingImage = ContextCompat.getDrawable(this, R.drawable.android_symbol)
-        )
-      } else {
-        it.locationPuck = null
       }
     }
   }
@@ -92,25 +83,6 @@ class LocationComponentActivity : AppCompatActivity() {
     val styleUrl = if (lastStyleUri == Style.DARK) Style.LIGHT else Style.DARK
     mapView.getMapboxMap().loadStyleUri(styleUrl) {
       lastStyleUri = styleUrl
-    }
-  }
-
-  private fun togglePresetPuckStyle() {
-    mapView.getLocationComponentPlugin().let {
-      if (it.locationPuck != null) {
-        it.locationPuck = null
-      }
-      when (it.presetPuckStyle) {
-        PresetPuckStyle.PRECISE -> {
-          it.presetPuckStyle = PresetPuckStyle.APPROXIMATE
-        }
-        PresetPuckStyle.APPROXIMATE -> {
-          it.presetPuckStyle = PresetPuckStyle.HEADING_ARROW
-        }
-        PresetPuckStyle.HEADING_ARROW -> {
-          it.presetPuckStyle = PresetPuckStyle.PRECISE
-        }
-      }
     }
   }
 

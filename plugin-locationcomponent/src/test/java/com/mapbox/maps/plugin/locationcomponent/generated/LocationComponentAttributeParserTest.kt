@@ -7,7 +7,6 @@ import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
-import com.mapbox.maps.plugin.PresetPuckStyle
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
@@ -63,41 +62,6 @@ class LocationComponentAttributeParserTest {
   }
 
   @Test
-  fun staleStateEnabledTestTrue() {
-    every { typedArray.getBoolean(any(), any()) } returns true
-    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
-    assertEquals(true, settings.staleStateEnabled)
-  }
-
-  @Test
-  fun staleStateEnabledTestFalse() {
-    every { typedArray.getBoolean(any(), any()) } returns false
-    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
-    assertEquals(false, settings.staleStateEnabled)
-  }
-
-  @Test
-  fun staleStateTimeoutTest() {
-    every { typedArray.getInt(any(), any()) } returns 2
-    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
-    assertEquals(2L, settings.staleStateTimeout)
-  }
-
-  @Test
-  fun minZoomIconScaleTest() {
-    every { typedArray.getFloat(any(), any()) } returns 0.6f
-    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
-    assertEquals(0.6f, settings.minZoomIconScale)
-  }
-
-  @Test
-  fun maxZoomIconScaleTest() {
-    every { typedArray.getFloat(any(), any()) } returns 1f
-    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
-    assertEquals(1f, settings.maxZoomIconScale)
-  }
-
-  @Test
   fun pulsingEnabledTestTrue() {
     every { typedArray.getBoolean(any(), any()) } returns true
     val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
@@ -113,9 +77,9 @@ class LocationComponentAttributeParserTest {
 
   @Test
   fun pulsingColorTest() {
-    every { typedArray.getColor(any(), any()) } returns Color.BLUE
+    every { typedArray.getColor(any(), any()) } returns Color.parseColor("#4A90E2")
     val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
-    assertEquals(Color.BLUE, settings.pulsingColor)
+    assertEquals(Color.parseColor("#4A90E2"), settings.pulsingColor)
   }
 
   @Test
@@ -137,12 +101,6 @@ class LocationComponentAttributeParserTest {
     every { typedArray.getString(any()) } returns null
     val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
     assertEquals(null, settings.layerBelow)
-  }
-  @Test
-  fun presetPuckStyleTest() {
-    every { typedArray.getInt(any(), any()) } returns 0
-    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
-    assertEquals(PresetPuckStyle.PRECISE, settings.presetPuckStyle)
   }
 }
 

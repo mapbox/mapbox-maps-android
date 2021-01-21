@@ -161,30 +161,6 @@ data class LocationPuck2D(
    * Name of image in sprite to use as the background of the location indicator.
    */
   var shadowImage: Drawable? = null,
-  /**
-   * Defines the bearing color.
-   */
-  var bearingTintColor: Int? = null,
-  /**
-   * Defines the bearing color.
-   */
-  var bearingStaleTintColor: Int? = null,
-  /**
-   * Defines the foreground color
-   */
-  var topTintColor: Int? = null,
-  /**
-   * Defines the foreground stale color.
-   */
-  var topStaleTintColor: Int? = null,
-  /**
-   * Defines the background color
-   */
-  var shadowTintColor: Int? = null,
-  /**
-   * Defines the background stale color.
-   */
-  var shadowStaleTintColor: Int? = null,
 ) : LocationPuck()
 
 /**
@@ -216,34 +192,6 @@ data class LocationPuck3D(
    */
   var modelRotation: List<Float> = listOf(0f, 0f, 90f),
 ) : LocationPuck()
-
-/**
- * Defines the preset puck styles bundled with the plugin.
- *
- * @param value
- */
-enum class PresetPuckStyle(val value: String) {
-  /**
-   * Defines a puck that is a standard dot with a halo.
-   */
-  PRECISE("precise"),
-  /**
-   * Defines a approximate ring that has a fixed radius based on approximate location permissions.
-   */
-  APPROXIMATE("approximate"),
-  /**
-   * Defines a puck that matches the precise puck but contains a small arrow in the heading direction.
-   */
-  HEADING_ARROW("heading-arrow"),
-  /**
-   * Defines a puck that matches the precise puck but contains a beam in the heading direction.
-   */
-  HEADING_BEAM("heading-beam"),
-  /**
-   * Defines a puck that has an arrow and white circle around it.
-   */
-  ARROW("arrow"),
-}
 
 /**
  * Defines where the scale bar is positioned on the map

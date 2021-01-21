@@ -10,7 +10,6 @@ import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttributeParser
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettingsBase
-import com.mapbox.maps.plugin.locationcomponent.listeneres.OnLocationStaleListener
 import java.lang.ref.WeakReference
 
 /**
@@ -19,13 +18,10 @@ import java.lang.ref.WeakReference
  */
 class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer, LocationComponentSettingsBase() {
   private lateinit var delegateProvider: MapDelegateProvider
-  private lateinit var puckPresetProvider: PuckPresetProvider
   private lateinit var context: WeakReference<Context>
 
-  private var bitmapProvider = LayerBitmapProvider()
   private var locationPuckManager: LocationPuckManager? = null
   private var locationProvider: LocationProvider? = null
-  private var staleStateManager: StaleStateManager? = null
 
   private var isLocationComponentActivated = false
 
@@ -67,14 +63,6 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer, L
 
   private fun activateLocationComponent() {
     if (internalSettings.enabled) {
-      if (staleStateManager == null) {
-        staleStateManager = StaleStateManager(
-          onLocationStaleListener,
-          internalSettings.staleStateEnabled,
-          internalSettings.staleStateTimeout
-        )
-      }
-
       delegateProvider.getStyle { style ->
         if (locationPuckManager == null) {
           locationPuckManager = LocationPuckManager(
@@ -82,8 +70,6 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer, L
             delegateProvider = delegateProvider,
             style = style,
             layerSourceProvider = LayerSourceProvider(),
-            bitmapProvider = bitmapProvider,
-            presetProvider = puckPresetProvider
           )
         }
         locationPuckManager?.let {
@@ -93,7 +79,6 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer, L
         }
         locationPuckManager?.onStart()
         locationProvider?.registerLocationConsumer(this)
-        staleStateManager?.onStart()
         isLocationComponentActivated = true
       }
     }
@@ -104,7 +89,6 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer, L
    */
   override fun onStop() {
     locationPuckManager?.onStop()
-    staleStateManager?.onStop()
     locationProvider?.unRegisterLocationConsumer(this)
   }
 
@@ -121,7 +105,6 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer, L
     this.context = WeakReference(context)
     internalSettings =
       LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, pixelRatio)
-    puckPresetProvider = PuckPresetProvider(context)
     if (internalSettings.enabled && locationProvider == null) {
       locationProvider = LocationProviderImpl(context)
     }
@@ -136,7 +119,6 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer, L
    */
   override fun onLocationUpdated(vararg location: Point, options: (ValueAnimator.() -> Unit)?) {
     locationPuckManager?.updateCurrentPosition(*location, options = options)
-    staleStateManager?.updateLatestLocationTime()
   }
 
   /**
@@ -172,13 +154,6 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer, L
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     this.delegateProvider = delegateProvider
   }
-
-  private val onLocationStaleListener =
-    object : OnLocationStaleListener {
-      override fun onStaleStateChange(isStale: Boolean) {
-        locationPuckManager?.setLocationsStale(isStale)
-      }
-    }
 
   override lateinit var internalSettings: LocationComponentSettings
 

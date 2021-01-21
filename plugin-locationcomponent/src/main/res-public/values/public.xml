@@ -5,18 +5,6 @@
     <!-- Whether the user location is visible on the map. -->
     <public name="mapbox_locationComponentEnabled" type="attr" />
 
-    <!-- The stale state indicates to the user that the location being displayed on the map hasn't been updated in a specific amount of time. Currently only work for 2D location puck and presets. -->
-    <public name="mapbox_locationComponentStaleStateEnabled" type="attr" />
-
-    <!-- Set the delay before the location puck becomes stale. The timer begins approximately when a new location update comes in and using this defined time, if an update hasn't occured by the end, the location is considered stale. Currently only work for 2D location puck and presets. -->
-    <public name="mapbox_locationComponentStaleStateTimeout" type="attr" />
-
-    <!-- The scale factor of the location icon when the map is zoomed out. Scaling is linear. Currently only work for 2D location puck and presets. -->
-    <public name="mapbox_locationComponentMinZoomIconScale" type="attr" />
-
-    <!-- The scale factor of the location icon when the map is zoomed in. Scaling is linear. Currently only work for 2D location puck and presets. -->
-    <public name="mapbox_locationComponentMaxZoomIconScale" type="attr" />
-
     <!-- Whether the location puck is pulsing on the map. Currently only work for 2D location puck and presets. -->
     <public name="mapbox_locationComponentPulsingEnabled" type="attr" />
 
@@ -40,18 +28,6 @@
     <public name="mapbox_locationComponentLocationPuckLocationPuck2DBearingImage" type="attr" />
     <!-- Name of image in sprite to use as the background of the location indicator. -->
     <public name="mapbox_locationComponentLocationPuckLocationPuck2DShadowImage" type="attr" />
-    <!-- Defines the bearing color. -->
-    <public name="mapbox_locationComponentLocationPuckLocationPuck2DBearingTintColor" type="attr" />
-    <!-- Defines the bearing color. -->
-    <public name="mapbox_locationComponentLocationPuckLocationPuck2DBearingStaleTintColor" type="attr" />
-    <!-- Defines the foreground color -->
-    <public name="mapbox_locationComponentLocationPuckLocationPuck2DTopTintColor" type="attr" />
-    <!-- Defines the foreground stale color. -->
-    <public name="mapbox_locationComponentLocationPuckLocationPuck2DTopStaleTintColor" type="attr" />
-    <!-- Defines the background color -->
-    <public name="mapbox_locationComponentLocationPuckLocationPuck2DShadowTintColor" type="attr" />
-    <!-- Defines the background stale color. -->
-    <public name="mapbox_locationComponentLocationPuckLocationPuck2DShadowStaleTintColor" type="attr" />
 
     <!-- Location puck definitions for location_puck_3_d.  -->
 
@@ -72,8 +48,5 @@
     <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_x" type="attr" />
     <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_y" type="attr" />
     <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_z" type="attr" />
-
-    <!-- Defines the preset puck styles bundled with the plugin. -->
-    <public name="mapbox_locationComponentPresetPuckStyle" type="attr" />
 </resources>
 <!-- End of generated file. -->

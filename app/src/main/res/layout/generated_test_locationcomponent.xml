@@ -4,16 +4,11 @@
     xmlns:mapbox="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mapView"
     mapbox:mapbox_locationComponentEnabled = "false"
-    mapbox:mapbox_locationComponentStaleStateEnabled = "false"
-    mapbox:mapbox_locationComponentStaleStateTimeout = "1000000"
-    mapbox:mapbox_locationComponentMinZoomIconScale = "0.9"
-    mapbox:mapbox_locationComponentMaxZoomIconScale = "0.9"
     mapbox:mapbox_locationComponentPulsingEnabled = "false"
     mapbox:mapbox_locationComponentPulsingColor = "#000000"
     mapbox:mapbox_locationComponentPulsingMaxRadius = "10dp"
     mapbox:mapbox_locationComponentLayerAbove = "testString"
     mapbox:mapbox_locationComponentLayerBelow = "testString"
-    mapbox:mapbox_locationComponentPresetPuckStyle = "precise"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
 <!-- End of generated file. -->

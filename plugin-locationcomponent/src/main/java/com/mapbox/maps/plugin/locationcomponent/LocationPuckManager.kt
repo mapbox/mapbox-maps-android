@@ -4,7 +4,6 @@ import android.animation.ValueAnimator
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.StyleManagerInterface
-import com.mapbox.maps.plugin.LocationPuck
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
@@ -17,8 +16,6 @@ internal class LocationPuckManager(
   private val delegateProvider: MapDelegateProvider,
   style: StyleManagerInterface,
   private val layerSourceProvider: LayerSourceProvider,
-  private val bitmapProvider: LayerBitmapProvider,
-  private val presetProvider: PuckPresetProvider
 ) {
 
   var isHidden = true
@@ -27,18 +24,13 @@ internal class LocationPuckManager(
   private var positionManager =
     LocationComponentPositionManager(style, settings.layerAbove, settings.layerBelow)
 
-  private var lastStaleState = true
-
-  private var lastLocation: Point = delegateProvider.mapCameraDelegate.getCameraOptions(null).center!!
+  private var lastLocation: Point =
+    delegateProvider.mapCameraDelegate.getCameraOptions(null).center!!
 
   private var lastBearing: Double = delegateProvider.mapCameraDelegate.getBearing()
 
-  private fun getLocationPuck(locationSettings: LocationComponentSettings): LocationPuck {
-    return locationSettings.locationPuck ?: presetProvider.getPresetPuck(settings.presetPuckStyle)
-  }
-
   private var locationLayerRenderer =
-    when (val puck = getLocationPuck(settings)) {
+    when (val puck = settings.locationPuck) {
       is LocationPuck2D -> {
         layerSourceProvider.getLocationIndicatorLayerRenderer(puck)
       }
@@ -54,17 +46,12 @@ internal class LocationPuckManager(
   fun initialize(style: StyleManagerInterface) {
     locationLayerRenderer.addLayers(positionManager)
     locationLayerRenderer.initializeComponents(style)
-    val puck = getLocationPuck(settings)
-    if (puck is LocationPuck2D) {
-      prepareLocationIndicatorLayerBitmaps(puck)
-      if (settings.pulsingEnabled) {
-        animationManager.enablePulsingAnimation(settings)
-      }
+    if (settings.pulsingEnabled) {
+      animationManager.enablePulsingAnimation(settings)
     }
     styleScaling(settings)
     updateCurrentPosition(lastLocation)
     updateCurrentBearing(lastBearing)
-    setLocationsStale(lastStaleState)
     if (settings.enabled) {
       show()
     } else {
@@ -73,16 +60,14 @@ internal class LocationPuckManager(
   }
 
   fun isLayerInitialised(): Boolean {
-    return locationLayerRenderer.isLayerInitialised()
+    return locationLayerRenderer.isRendererInitialised()
   }
 
   fun updateSettings(settings: LocationComponentSettings) {
     this.settings = settings
     locationLayerRenderer.clearBitmaps()
     locationLayerRenderer.removeLayers()
-    val locationPuck =
-      settings.locationPuck ?: presetProvider.getPresetPuck(settings.presetPuckStyle)
-    locationLayerRenderer = when (locationPuck) {
+    locationLayerRenderer = when (val locationPuck = settings.locationPuck) {
       is LocationPuck2D -> {
         layerSourceProvider.getLocationIndicatorLayerRenderer(locationPuck)
       }
@@ -133,7 +118,7 @@ internal class LocationPuckManager(
   //
   fun show() {
     isHidden = false
-    locationLayerRenderer.show(lastStaleState)
+    locationLayerRenderer.show()
   }
 
   fun hide() {
@@ -141,47 +126,16 @@ internal class LocationPuckManager(
     locationLayerRenderer.hide()
   }
 
-  private fun prepareLocationIndicatorLayerBitmaps(puck: LocationPuck2D) {
-    val topBitmap = puck.topImage?.let { bitmapProvider.generateBitmap(it, puck.topTintColor) }
-    val topStaleBitmap =
-      puck.topImage?.let { bitmapProvider.generateBitmap(it, puck.topStaleTintColor) }
-    val bearingBitmap =
-      puck.bearingImage?.let { bitmapProvider.generateBitmap(it, puck.bearingTintColor) }
-    val bearingStaleBitmap =
-      puck.bearingImage?.let { bitmapProvider.generateBitmap(it, puck.bearingStaleTintColor) }
-    val shadowBitmap =
-      puck.shadowImage?.let { bitmapProvider.generateBitmap(it, puck.shadowTintColor) }
-    val shadowStaleBitmap =
-      puck.shadowImage?.let { bitmapProvider.generateBitmap(it, puck.shadowStaleTintColor) }
-
-    locationLayerRenderer.addBitmaps(
-      topBitmap,
-      topStaleBitmap,
-      bearingBitmap,
-      bearingStaleBitmap,
-      shadowBitmap,
-      shadowStaleBitmap
-    )
-  }
-
   private fun styleScaling(settings: LocationComponentSettings) {
-    val puck = getLocationPuck(settings)
+    val puck = settings.locationPuck
     val minZoom = delegateProvider.mapTransformDelegate.getBounds().minZoom ?: 0.0
     val maxZoom = delegateProvider.mapTransformDelegate.getBounds().maxZoom ?: 19.0
-    val scaleExpression = when (puck) {
+    when (puck) {
       is LocationPuck2D -> {
-        arrayListOf(
-          Value("interpolate"),
-          Value(arrayListOf(Value("linear"))),
-          Value(arrayListOf(Value("zoom"))),
-          Value(minZoom),
-          Value(settings.minZoomIconScale.toDouble()),
-          Value(maxZoom),
-          Value(settings.maxZoomIconScale.toDouble())
-        )
+        // do nothing for 2d puck.
       }
       is LocationPuck3D -> {
-        arrayListOf(
+        val scaleExpression = arrayListOf(
           Value("interpolate"),
           Value(arrayListOf(Value("exponential"), Value(0.5))),
           Value(arrayListOf(Value("zoom"))),
@@ -212,13 +166,8 @@ internal class LocationPuckManager(
             )
           )
         )
+        locationLayerRenderer.styleScaling(scaleExpression)
       }
     }
-    locationLayerRenderer.styleScaling(scaleExpression)
-  }
-
-  fun setLocationsStale(isStale: Boolean) {
-    this.lastStaleState = isStale
-    locationLayerRenderer.setLocationStale(isStale)
   }
 }
