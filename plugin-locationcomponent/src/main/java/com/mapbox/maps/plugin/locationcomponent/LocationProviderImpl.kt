@@ -61,7 +61,7 @@ internal class LocationProviderImpl(context: Context) : LocationProvider {
   internal fun notifyLocationUpdates(location: Location) {
     locationConsumers.forEach { consumer ->
       consumer.onLocationUpdated(Point.fromLngLat(location.longitude, location.latitude))
-      consumer.onBearingUpdated(location.bearing)
+      consumer.onBearingUpdated(location.bearing.toDouble())
     }
   }
 

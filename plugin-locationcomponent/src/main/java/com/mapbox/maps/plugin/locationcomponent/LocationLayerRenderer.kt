@@ -23,7 +23,7 @@ internal interface LocationLayerRenderer {
 
   fun setLatLng(latLng: Point)
 
-  fun setBearing(bearing: Float)
+  fun setBearing(bearing: Double)
 
   fun setAccuracyRadius(accuracy: Float)
 

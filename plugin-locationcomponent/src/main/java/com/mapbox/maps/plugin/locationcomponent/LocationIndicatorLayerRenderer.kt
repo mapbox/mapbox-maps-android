@@ -19,7 +19,7 @@ import java.text.NumberFormat
 import java.util.Locale
 
 internal class LocationIndicatorLayerRenderer(
-  val puckOptions: LocationPuck2D,
+  private val puckOptions: LocationPuck2D,
   layerSourceProvider: LayerSourceProvider
 ) :
   LocationLayerRenderer {
@@ -63,8 +63,8 @@ internal class LocationIndicatorLayerRenderer(
     setLayerLocation(latLng)
   }
 
-  override fun setBearing(bearing: Float) {
-    setLayerBearing(bearing.toDouble())
+  override fun setBearing(bearing: Double) {
+    setLayerBearing(bearing)
   }
 
   override fun setAccuracyRadius(accuracy: Float) {
@@ -140,7 +140,6 @@ internal class LocationIndicatorLayerRenderer(
     val rgbaArray = colorToRgbaArray(pulsingColorInt)
     rgbaArray[3] = opacity ?: 1f
     layer.emphasisCircleRadius(radius.toDouble())
-    layer.emphasisCircleColorTransition(100)
     layer.emphasisCircleColor(buildRGBAExpression(rgbaArray))
   }
 
