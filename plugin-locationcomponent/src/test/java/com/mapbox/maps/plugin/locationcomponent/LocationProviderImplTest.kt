@@ -120,8 +120,8 @@ class LocationProviderImplTest {
     }
     locationEngineCallbackSlot.captured.onSuccess(locationEngineResult)
     verify { locationConsumer1.onLocationUpdated(Point.fromLngLat(12.0, 34.0)) }
-    verify { locationConsumer1.onBearingUpdated(90.0f) }
+    verify { locationConsumer1.onBearingUpdated(90.0) }
     verify { locationConsumer2.onLocationUpdated(Point.fromLngLat(12.0, 34.0)) }
-    verify { locationConsumer2.onBearingUpdated(90.0f) }
+    verify { locationConsumer2.onBearingUpdated(90.0) }
   }
 }

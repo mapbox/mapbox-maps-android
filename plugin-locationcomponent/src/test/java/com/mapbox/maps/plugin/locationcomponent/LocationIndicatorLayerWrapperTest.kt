@@ -63,23 +63,23 @@ class LocationIndicatorLayerWrapperTest {
 
   @Test
   fun testShadowImageSize() {
-    val expression = arrayListOf(Value(1.0), Value(2.0))
+    val expression = Value(arrayListOf(Value(1.0), Value(2.0)))
     layer.shadowImageSize(expression)
-    verify { style.setStyleLayerProperty(INDICATOR_LAYER_ID, "shadow-image-size", Value(expression)) }
+    verify { style.setStyleLayerProperty(INDICATOR_LAYER_ID, "shadow-image-size", expression) }
   }
 
   @Test
   fun testBearingImageSize() {
-    val expression = arrayListOf(Value(1.0), Value(2.0))
+    val expression = Value(arrayListOf(Value(1.0), Value(2.0)))
     layer.bearingImageSize(expression)
-    verify { style.setStyleLayerProperty(INDICATOR_LAYER_ID, "bearing-image-size", Value(expression)) }
+    verify { style.setStyleLayerProperty(INDICATOR_LAYER_ID, "bearing-image-size", expression) }
   }
 
   @Test
   fun testTopImageSize() {
-    val expression = arrayListOf(Value(1.0), Value(2.0))
+    val expression = Value(arrayListOf(Value(1.0), Value(2.0)))
     layer.topImageSize(expression)
-    verify { style.setStyleLayerProperty(INDICATOR_LAYER_ID, "top-image-size", Value(expression)) }
+    verify { style.setStyleLayerProperty(INDICATOR_LAYER_ID, "top-image-size", expression) }
   }
 
   @Test

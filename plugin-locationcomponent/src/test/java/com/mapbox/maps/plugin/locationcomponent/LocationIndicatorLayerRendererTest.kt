@@ -3,17 +3,16 @@ package com.mapbox.maps.plugin.locationcomponent
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.BEARING_ICON
-import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.BEARING_STALE_ICON
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.SHADOW_ICON
-import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.SHADOW_STALE_ICON
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.TOP_ICON
-import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.TOP_STALE_ICON
+import com.mapbox.maps.plugin.locationcomponent.utils.BitmapUtils
 import io.mockk.*
 import org.junit.Assert
 import org.junit.Assert.assertEquals
@@ -33,14 +32,21 @@ class LocationIndicatorLayerRendererTest {
   private val expressionSlot = CapturingSlot<List<Value>>()
   private val doubleListSlot = CapturingSlot<List<Double>>()
 
-  private val puckOptions = LocationPuck2D()
+  private val puckOptions = mockk<LocationPuck2D>(relaxed = true)
+  private val bitmap = mockk<Bitmap>(relaxed = true)
+  private val drawable = mockk<Drawable>(relaxed = true)
 
   private lateinit var locationLayerRenderer: LocationIndicatorLayerRenderer
 
   @Before
   fun setup() {
-
+    mockkObject(BitmapUtils)
+    every { puckOptions.topImage } returns drawable
+    every { puckOptions.bearingImage } returns drawable
+    every { puckOptions.shadowImage } returns drawable
+    every { BitmapUtils.getBitmapFromDrawable(drawable) } returns bitmap
     every { style.removeStyleLayer(any()) } returns expected
+    every { style.styleLayerExists(any()) } returns true
     every { expected.error } returns null
     every { layerSourceProvider.getLocationIndicatorLayer() } returns layerWrapper
     every { layerWrapper.layerId } returns "id"
@@ -57,7 +63,7 @@ class LocationIndicatorLayerRendererTest {
   @Test
   fun initializeComponents_withLocation() {
     val latLng = Point.fromLngLat(10.0, 20.0)
-    val bearing = 11f
+    val bearing = 11.0
     val accuracy = 65f
     locationLayerRenderer.setLatLng(latLng)
     locationLayerRenderer.setBearing(bearing)
@@ -90,33 +96,14 @@ class LocationIndicatorLayerRendererTest {
   @Test
   fun hide() {
     locationLayerRenderer.hide()
-
     verify { layerWrapper.visibility(false) }
   }
 
   @Test
   fun show() {
-    locationLayerRenderer.show(false)
+    locationLayerRenderer.show()
 
     verify { layerWrapper.visibility(true) }
-  }
-
-  @Test
-  fun show_notStale() {
-    locationLayerRenderer.show(false)
-
-    verify { layerWrapper.topImage(TOP_ICON) }
-    verify { layerWrapper.bearingImage(BEARING_ICON) }
-    verify { layerWrapper.shadowImage(SHADOW_ICON) }
-  }
-
-  @Test
-  fun show_stale() {
-    locationLayerRenderer.show(true)
-
-    verify { layerWrapper.topImage(TOP_STALE_ICON) }
-    verify { layerWrapper.bearingImage(BEARING_STALE_ICON) }
-    verify { layerWrapper.shadowImage(SHADOW_STALE_ICON) }
   }
 
   @Test
@@ -146,8 +133,7 @@ class LocationIndicatorLayerRendererTest {
   @Test
   fun setBearing() {
     val bearing = 30.0
-    locationLayerRenderer.setBearing(bearing.toFloat())
-
+    locationLayerRenderer.setBearing(bearing)
     verify { layerWrapper.bearing(bearing) }
   }
 
@@ -161,7 +147,7 @@ class LocationIndicatorLayerRendererTest {
 
   @Test
   fun styleScaling() {
-    val exp = arrayListOf(Value(""))
+    val exp = Value("")
     locationLayerRenderer.styleScaling(exp)
 
     verify { layerWrapper.shadowImageSize(exp) }
@@ -170,31 +156,10 @@ class LocationIndicatorLayerRendererTest {
   }
 
   @Test
-  fun setLocationStale() {
-    locationLayerRenderer.setLocationStale(true)
-
-    verify { layerWrapper.topImage(TOP_STALE_ICON) }
-    verify { layerWrapper.bearingImage(BEARING_STALE_ICON) }
-    verify { layerWrapper.shadowImage(SHADOW_STALE_ICON) }
-  }
-
-  @Test
   fun testAddBitmaps() {
-    addBitmaps()
     verify {
       style.addStyleImage(
         TOP_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
-      )
-    }
-    verify {
-      style.addStyleImage(
-        TOP_STALE_ICON,
         defaultPixelRatio,
         any(),
         false,
@@ -216,17 +181,6 @@ class LocationIndicatorLayerRendererTest {
     }
     verify {
       style.addStyleImage(
-        BEARING_STALE_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
-      )
-    }
-    verify {
-      style.addStyleImage(
         SHADOW_ICON,
         defaultPixelRatio,
         any(),
@@ -236,35 +190,6 @@ class LocationIndicatorLayerRendererTest {
         null
       )
     }
-    verify {
-      style.addStyleImage(
-        SHADOW_STALE_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
-      )
-    }
-  }
-
-  private val topBitmap = mockk<Bitmap>(relaxed = true)
-  private val topStaleBitmap = mockk<Bitmap>(relaxed = true)
-  private val bearingBitmap = mockk<Bitmap>(relaxed = true)
-  private val bearingStaleBitmap = mockk<Bitmap>(relaxed = true)
-  private val shadowBitmap = mockk<Bitmap>(relaxed = true)
-  private val shadowStaleBitmap = mockk<Bitmap>(relaxed = true)
-
-  private fun addBitmaps() {
-    locationLayerRenderer.addBitmaps(
-      topBitmap,
-      topStaleBitmap,
-      bearingBitmap,
-      bearingStaleBitmap,
-      shadowBitmap,
-      shadowStaleBitmap
-    )
   }
 
   private fun Point.toLocationList() = listOf(latitude(), longitude(), 0.0)

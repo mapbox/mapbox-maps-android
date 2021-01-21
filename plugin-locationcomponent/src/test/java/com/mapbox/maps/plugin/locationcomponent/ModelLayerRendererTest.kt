@@ -17,13 +17,13 @@ class ModelLayerRendererTest {
   private val option: LocationPuck3D = mockk(relaxed = true)
   private val expected: Expected<Void, String> = mockk(relaxed = true)
 
-  private val doubleArraySlot = CapturingSlot<DoubleArray>()
-
   private lateinit var locationLayerRenderer: ModelLayerRenderer
 
   @Before
   fun setup() {
     every { style.removeStyleLayer(any()) } returns expected
+    every { style.styleLayerExists(any()) } returns true
+    every { style.styleSourceExists(any()) } returns true
     every { style.setStyleSourceProperty(any(), any(), any()) } returns expected
     every { expected.error } returns null
     every { layerSourceProvider.getModelLayer(any()) } returns layerWrapper
@@ -37,7 +37,7 @@ class ModelLayerRendererTest {
   @Test
   fun initializeComponents_withLocation() {
     val latLng = Point.fromLngLat(10.0, 20.0)
-    val bearing = 11f
+    val bearing = 11.0
     locationLayerRenderer.setLatLng(latLng)
     locationLayerRenderer.setBearing(bearing)
 
@@ -59,21 +59,18 @@ class ModelLayerRendererTest {
   @Test
   fun removeLayers() {
     locationLayerRenderer.removeLayers()
-
     verify { style.removeStyleLayer("id") }
   }
 
   @Test
   fun hide() {
     locationLayerRenderer.hide()
-
     verify { layerWrapper.visibility(false) }
   }
 
   @Test
   fun show() {
-    locationLayerRenderer.show(false)
-
+    locationLayerRenderer.show()
     verify { layerWrapper.visibility(true) }
   }
 
@@ -90,8 +87,8 @@ class ModelLayerRendererTest {
   @Test
   fun setBearing() {
     val bearing = 30.0
-    locationLayerRenderer.show(false)
-    locationLayerRenderer.setBearing(bearing.toFloat())
+    locationLayerRenderer.show()
+    locationLayerRenderer.setBearing(bearing)
     verify { layerWrapper.modelRotation(listOf(0.0, 0.0, bearing)) }
   }
 }
