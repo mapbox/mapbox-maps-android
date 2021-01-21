@@ -49,8 +49,8 @@ internal class ModelLayerRenderer(
     setLayerLocation(latLng)
   }
 
-  override fun setBearing(bearing: Float) {
-    setLayerBearing(bearing.toDouble())
+  override fun setBearing(bearing: Double) {
+    setLayerBearing(bearing)
   }
 
   override fun setAccuracyRadius(accuracy: Float) {

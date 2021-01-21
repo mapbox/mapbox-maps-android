@@ -11,7 +11,6 @@ interface LocationComponentPlugin :
   MapStyleObserverPlugin,
   LifecyclePlugin,
   ContextBinder,
-  LocationConsumer,
   LocationComponentSettingsInterface {
   /**
    * Set the LocationProvider, it will replace the default location provider provided by the LocationComponentPlugin.
