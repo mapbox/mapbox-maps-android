@@ -23,57 +23,58 @@ import java.util.*
  */
 class CircleActivity : AppCompatActivity() {
   private val random = Random()
-  private lateinit var circleManager: CircleManager
+  private var circleManager: CircleManager? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_annotation)
     mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
       val annotationPlugin = mapView.getAnnotationPlugin()
-      circleManager = annotationPlugin.getCircleManager()
-      circleManager.addClickListener(
-        OnCircleClickListener {
-          Toast.makeText(this@CircleActivity, "click", Toast.LENGTH_LONG).show()
-          false
-        }
-      )
-
-      val circleOptions: CircleOptions = CircleOptions()
-        .withPoint(Point.fromLngLat(0.381457, 6.687337))
-        .withCircleColor(ColorUtils.colorToRgbaString(Color.YELLOW))
-        .withCircleRadius(12.0)
-        .withDraggable(true)
-      circleManager.create(circleOptions)
-
-      // random add circles across the globe
-      val circleOptionsList: MutableList<CircleOptions> = ArrayList()
-      for (i in 0..20) {
-        val color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
-        circleOptionsList.add(
-          CircleOptions()
-            .withPoint(createRandomPoints())
-            .withCircleColor(ColorUtils.colorToRgbaString(color))
-            .withCircleRadius(8.0)
-            .withDraggable(true)
+      circleManager = annotationPlugin.getCircleManager().apply {
+        addClickListener(
+          OnCircleClickListener {
+            Toast.makeText(this@CircleActivity, "click", Toast.LENGTH_LONG).show()
+            false
+          }
         )
-      }
-      circleManager.create(circleOptionsList)
 
-      try {
-        circleManager.create(
-          FeatureCollection.fromJson(
-            Assets.loadStringFromAssets(
-              this,
-              "annotations.json"
+        val circleOptions: CircleOptions = CircleOptions()
+          .withPoint(Point.fromLngLat(0.381457, 6.687337))
+          .withCircleColor(ColorUtils.colorToRgbaString(Color.YELLOW))
+          .withCircleRadius(12.0)
+          .withDraggable(true)
+        create(circleOptions)
+
+        // random add circles across the globe
+        val circleOptionsList: MutableList<CircleOptions> = ArrayList()
+        for (i in 0..20) {
+          val color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
+          circleOptionsList.add(
+            CircleOptions()
+              .withPoint(createRandomPoints())
+              .withCircleColor(ColorUtils.colorToRgbaString(color))
+              .withCircleRadius(8.0)
+              .withDraggable(true)
+          )
+        }
+        create(circleOptionsList)
+
+        try {
+          create(
+            FeatureCollection.fromJson(
+              Assets.loadStringFromAssets(
+                this@CircleActivity,
+                "annotations.json"
+              )
             )
           )
-        )
-      } catch (e: IOException) {
-        throw RuntimeException("Unable to parse annotations.json")
+        } catch (e: IOException) {
+          throw RuntimeException("Unable to parse annotations.json")
+        }
       }
     }
 
-    deleteAll.setOnClickListener { circleManager.deleteAll() }
+    deleteAll.setOnClickListener { circleManager?.deleteAll() }
   }
 
   private fun createRandomPoints(): Point {

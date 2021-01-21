@@ -37,8 +37,8 @@ import java.util.*
  */
 class SymbolActivity : AppCompatActivity() {
   private val random = Random()
-  private lateinit var symbolManager: SymbolManager
-  private lateinit var symbol: Symbol
+  private var symbolManager: SymbolManager? = null
+  private var symbol: Symbol? = null
   private val animators: MutableList<ValueAnimator> = mutableListOf()
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,71 +59,72 @@ class SymbolActivity : AppCompatActivity() {
       }
 
       val annotationPlugin = mapView.getAnnotationPlugin()
-      symbolManager = annotationPlugin.getSymbolManager()
-      symbolManager.addClickListener(
-        OnSymbolClickListener {
-          Toast.makeText(this@SymbolActivity, "Click: $it", Toast.LENGTH_LONG).show()
-          false
-        }
-      )
-
-      symbolManager.addLongClickListener(
-        OnSymbolLongClickListener {
-          Toast.makeText(this@SymbolActivity, "LongClick: $it", Toast.LENGTH_LONG).show()
-          false
-        }
-      )
-
-      // set non data driven properties
-      symbolManager.iconAllowOverlap = true
-      symbolManager.textAllowOverlap = true
-
-      // create a symbol
-      val symbolOptions: SymbolOptions = SymbolOptions()
-        .withPoint(Point.fromLngLat(0.381457, 6.687337))
-        .withIconImage(ID_ICON_AIRPORT)
-        .withIconSize(1.3)
-        .withSymbolSortKey(10.0)
-        .withDraggable(true)
-      symbol = symbolManager.create(symbolOptions)
-
-      // create nearby symbols
-      val nearbyOptions: SymbolOptions = SymbolOptions()
-        .withPoint(Point.fromLngLat(0.367099, 6.626384))
-        .withIconImage(MAKI_ICON_CIRCLE)
-        .withIconColor(ColorUtils.colorToRgbaString(Color.YELLOW))
-        .withIconSize(2.5)
-        .withSymbolSortKey(5.0)
-        .withDraggable(true)
-      symbolManager.create(nearbyOptions)
-
-      // random add symbols across the globe
-      val symbolOptionsList: MutableList<SymbolOptions> = ArrayList()
-      for (i in 0..20) {
-        symbolOptionsList.add(
-          SymbolOptions()
-            .withPoint(createRandomPoints())
-            .withIconImage(MAKI_ICON_CAR)
-            .withDraggable(true)
+      symbolManager = annotationPlugin.getSymbolManager().apply {
+        addClickListener(
+          OnSymbolClickListener {
+            Toast.makeText(this@SymbolActivity, "Click: $it", Toast.LENGTH_LONG).show()
+            false
+          }
         )
-      }
-      symbolManager.create(symbolOptionsList)
 
-      try {
-        symbolManager.create(
-          FeatureCollection.fromJson(
-            Assets.loadStringFromAssets(
-              this,
-              "annotations.json"
+        addLongClickListener(
+          OnSymbolLongClickListener {
+            Toast.makeText(this@SymbolActivity, "LongClick: $it", Toast.LENGTH_LONG).show()
+            false
+          }
+        )
+
+        // set non data driven properties
+        iconAllowOverlap = true
+        textAllowOverlap = true
+
+        // create a symbol
+        val symbolOptions: SymbolOptions = SymbolOptions()
+          .withPoint(Point.fromLngLat(0.381457, 6.687337))
+          .withIconImage(ID_ICON_AIRPORT)
+          .withIconSize(1.3)
+          .withSymbolSortKey(10.0)
+          .withDraggable(true)
+        symbol = create(symbolOptions)
+
+        // create nearby symbols
+        val nearbyOptions: SymbolOptions = SymbolOptions()
+          .withPoint(Point.fromLngLat(0.367099, 6.626384))
+          .withIconImage(MAKI_ICON_CIRCLE)
+          .withIconColor(ColorUtils.colorToRgbaString(Color.YELLOW))
+          .withIconSize(2.5)
+          .withSymbolSortKey(5.0)
+          .withDraggable(true)
+        create(nearbyOptions)
+
+        // random add symbols across the globe
+        val symbolOptionsList: MutableList<SymbolOptions> = ArrayList()
+        for (i in 0..20) {
+          symbolOptionsList.add(
+            SymbolOptions()
+              .withPoint(createRandomPoints())
+              .withIconImage(MAKI_ICON_CAR)
+              .withDraggable(true)
+          )
+        }
+        create(symbolOptionsList)
+
+        try {
+          create(
+            FeatureCollection.fromJson(
+              Assets.loadStringFromAssets(
+                this@SymbolActivity,
+                "annotations.json"
+              )
             )
           )
-        )
-      } catch (e: IOException) {
-        throw RuntimeException("Unable to parse annotations.json")
+        } catch (e: IOException) {
+          throw RuntimeException("Unable to parse annotations.json")
+        }
       }
     }
 
-    deleteAll.setOnClickListener { symbolManager.deleteAll() }
+    deleteAll.setOnClickListener { symbolManager?.deleteAll() }
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -134,51 +135,53 @@ class SymbolActivity : AppCompatActivity() {
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
       R.id.menu_action_draggable -> {
-        symbolManager.annotations.forEach {
+        symbolManager?.annotations?.forEach {
           it.value.isDraggable = !it.value.isDraggable
         }
       }
       R.id.menu_action_filter -> {
-        val idKey = symbolManager.getAnnotationIdKey()
-        val expression: Expression = eq(toNumber(get(idKey)), literal(symbol.id.toDouble()))
-        val filter = symbolManager.layerFilter
-        if (filter != null && filter == expression) {
-          symbolManager.layerFilter = not(eq(toNumber(get(idKey)), literal(-1)))
-        } else {
-          symbolManager.layerFilter = expression
+        if (symbolManager != null && symbol != null) {
+          val idKey = symbolManager!!.getAnnotationIdKey()
+          val expression: Expression = eq(toNumber(get(idKey)), literal(symbol!!.id.toDouble()))
+          val filter = symbolManager!!.layerFilter
+          if (filter != null && filter == expression) {
+            symbolManager!!.layerFilter = not(eq(toNumber(get(idKey)), literal(-1)))
+          } else {
+            symbolManager!!.layerFilter = expression
+          }
         }
       }
-      R.id.menu_action_icon -> symbol.iconImage = MAKI_ICON_CAFE
-      R.id.menu_action_rotation -> symbol.iconRotate = 45.0
-      R.id.menu_action_text -> symbol.textField = "Hello world!"
-      R.id.menu_action_anchor -> symbol.iconAnchor = IconAnchor.BOTTOM
-      R.id.menu_action_opacity -> symbol.iconOpacity = 0.5
-      R.id.menu_action_offset -> symbol.iconOffset = listOf(10.0, 20.0)
-      R.id.menu_action_text_anchor -> symbol.textAnchor = TextAnchor.TOP
-      R.id.menu_action_text_color -> symbol.textColorInt = Color.WHITE
-      R.id.menu_action_text_size -> symbol.textSize = 22.0
-      R.id.menu_action_z_index -> symbol.symbolSortKey = 0.0
+      R.id.menu_action_icon -> symbol?.iconImage = MAKI_ICON_CAFE
+      R.id.menu_action_rotation -> symbol?.iconRotate = 45.0
+      R.id.menu_action_text -> symbol?.textField = "Hello world!"
+      R.id.menu_action_anchor -> symbol?.iconAnchor = IconAnchor.BOTTOM
+      R.id.menu_action_opacity -> symbol?.iconOpacity = 0.5
+      R.id.menu_action_offset -> symbol?.iconOffset = listOf(10.0, 20.0)
+      R.id.menu_action_text_anchor -> symbol?.textAnchor = TextAnchor.TOP
+      R.id.menu_action_text_color -> symbol?.textColorInt = Color.WHITE
+      R.id.menu_action_text_size -> symbol?.textSize = 22.0
+      R.id.menu_action_z_index -> symbol?.symbolSortKey = 0.0
       R.id.menu_action_halo -> {
-        symbol.iconHaloWidth = 5.0
-        symbol.iconHaloColorInt = Color.RED
-        symbol.iconHaloBlur = 1.0
+        symbol?.iconHaloWidth = 5.0
+        symbol?.iconHaloColorInt = Color.RED
+        symbol?.iconHaloBlur = 1.0
       }
 
       R.id.menu_action_animate -> {
         resetSymbol()
-        easeSymbol(symbol, Point.fromLngLat(6.687337, 0.381457), 180.0)
+        symbol?.let { easeSymbol(it, Point.fromLngLat(6.687337, 0.381457), 180.0) }
         return true
       }
       else -> return super.onOptionsItemSelected(item)
     }
-    symbolManager.update(symbol)
+    symbol?.let { symbolManager?.update(it) }
     return true
   }
 
   private fun resetSymbol() {
-    symbol.iconRotate = 0.0
-    symbol.geometry = Point.fromLngLat(0.381457, 6.687337)
-    symbolManager.update(symbol)
+    symbol?.iconRotate = 0.0
+    symbol?.geometry = Point.fromLngLat(0.381457, 6.687337)
+    symbol?.let { symbolManager?.update(it) }
   }
 
   private fun easeSymbol(symbol: Symbol, location: Point, rotation: Double) {
@@ -190,21 +193,23 @@ class SymbolActivity : AppCompatActivity() {
     val moveSymbol = ValueAnimator.ofFloat(0f, 1f).setDuration(5000)
     moveSymbol.interpolator = LinearInterpolator()
     moveSymbol.addUpdateListener { animation: ValueAnimator ->
-      if (symbolManager.annotations.values.indexOf(symbol) < 0) {
-        return@addUpdateListener
+      symbolManager?.let {
+        if (it.annotations.values.indexOf(symbol) < 0) {
+          return@addUpdateListener
+        }
+        val fraction = animation.animatedValue as Float
+        if (originalPosition != location) {
+          val lat =
+            (location.latitude() - originalPosition.latitude()) * fraction + originalPosition.latitude()
+          val lng =
+            (location.longitude() - originalPosition.longitude()) * fraction + originalPosition.longitude()
+          symbol.geometry = Point.fromLngLat(lng, lat)
+        }
+        if (originalRotation != null && originalRotation != rotation) {
+          symbol.iconRotate = (rotation - originalRotation) * fraction + originalRotation
+        }
+        it.update(symbol)
       }
-      val fraction = animation.animatedValue as Float
-      if (originalPosition != location) {
-        val lat =
-          (location.latitude() - originalPosition.latitude()) * fraction + originalPosition.latitude()
-        val lng =
-          (location.longitude() - originalPosition.longitude()) * fraction + originalPosition.longitude()
-        symbol.geometry = Point.fromLngLat(lng, lat)
-      }
-      if (originalRotation != null && originalRotation != rotation) {
-        symbol.iconRotate = (rotation - originalRotation) * fraction + originalRotation
-      }
-      symbolManager.update(symbol)
     }
     moveSymbol.start()
     animators.add(moveSymbol)
