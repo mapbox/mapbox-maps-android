@@ -364,125 +364,125 @@ class LineManagerTest {
   fun testLineJoinLayerProperty() {
     val manager = LineManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.lineJoin(Expression.get(LineOptions.PROPERTY_LINE_JOIN)) }
+    verify(exactly = 0) { manager.layer?.lineJoin(Expression.get(LineOptions.PROPERTY_LINE_JOIN)) }
     val options = LineOptions()
       .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
       .withLineJoin(LineJoin.MITER)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.lineJoin(Expression.get(LineOptions.PROPERTY_LINE_JOIN)) }
+    verify(exactly = 1) { manager.layer?.lineJoin(Expression.get(LineOptions.PROPERTY_LINE_JOIN)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.lineJoin(Expression.get(LineOptions.PROPERTY_LINE_JOIN)) }
+    verify(exactly = 1) { manager.layer?.lineJoin(Expression.get(LineOptions.PROPERTY_LINE_JOIN)) }
   }
 
   @Test
   fun testLineSortKeyLayerProperty() {
     val manager = LineManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.lineSortKey(Expression.get(LineOptions.PROPERTY_LINE_SORT_KEY)) }
+    verify(exactly = 0) { manager.layer?.lineSortKey(Expression.get(LineOptions.PROPERTY_LINE_SORT_KEY)) }
     val options = LineOptions()
       .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
       .withLineSortKey(1.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.lineSortKey(Expression.get(LineOptions.PROPERTY_LINE_SORT_KEY)) }
+    verify(exactly = 1) { manager.layer?.lineSortKey(Expression.get(LineOptions.PROPERTY_LINE_SORT_KEY)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.lineSortKey(Expression.get(LineOptions.PROPERTY_LINE_SORT_KEY)) }
+    verify(exactly = 1) { manager.layer?.lineSortKey(Expression.get(LineOptions.PROPERTY_LINE_SORT_KEY)) }
   }
 
   @Test
   fun testLineOpacityLayerProperty() {
     val manager = LineManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.lineOpacity(Expression.get(LineOptions.PROPERTY_LINE_OPACITY)) }
+    verify(exactly = 0) { manager.layer?.lineOpacity(Expression.get(LineOptions.PROPERTY_LINE_OPACITY)) }
     val options = LineOptions()
       .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
       .withLineOpacity(1.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.lineOpacity(Expression.get(LineOptions.PROPERTY_LINE_OPACITY)) }
+    verify(exactly = 1) { manager.layer?.lineOpacity(Expression.get(LineOptions.PROPERTY_LINE_OPACITY)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.lineOpacity(Expression.get(LineOptions.PROPERTY_LINE_OPACITY)) }
+    verify(exactly = 1) { manager.layer?.lineOpacity(Expression.get(LineOptions.PROPERTY_LINE_OPACITY)) }
   }
 
   @Test
   fun testLineColorLayerProperty() {
     val manager = LineManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.lineColor(Expression.get(LineOptions.PROPERTY_LINE_COLOR)) }
+    verify(exactly = 0) { manager.layer?.lineColor(Expression.get(LineOptions.PROPERTY_LINE_COLOR)) }
     val options = LineOptions()
       .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
       .withLineColor("rgba(0, 0, 0, 1)")
     manager.create(options)
-    verify(exactly = 1) { manager.layer.lineColor(Expression.get(LineOptions.PROPERTY_LINE_COLOR)) }
+    verify(exactly = 1) { manager.layer?.lineColor(Expression.get(LineOptions.PROPERTY_LINE_COLOR)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.lineColor(Expression.get(LineOptions.PROPERTY_LINE_COLOR)) }
+    verify(exactly = 1) { manager.layer?.lineColor(Expression.get(LineOptions.PROPERTY_LINE_COLOR)) }
   }
 
   @Test
   fun testLineWidthLayerProperty() {
     val manager = LineManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.lineWidth(Expression.get(LineOptions.PROPERTY_LINE_WIDTH)) }
+    verify(exactly = 0) { manager.layer?.lineWidth(Expression.get(LineOptions.PROPERTY_LINE_WIDTH)) }
     val options = LineOptions()
       .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
       .withLineWidth(1.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.lineWidth(Expression.get(LineOptions.PROPERTY_LINE_WIDTH)) }
+    verify(exactly = 1) { manager.layer?.lineWidth(Expression.get(LineOptions.PROPERTY_LINE_WIDTH)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.lineWidth(Expression.get(LineOptions.PROPERTY_LINE_WIDTH)) }
+    verify(exactly = 1) { manager.layer?.lineWidth(Expression.get(LineOptions.PROPERTY_LINE_WIDTH)) }
   }
 
   @Test
   fun testLineGapWidthLayerProperty() {
     val manager = LineManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.lineGapWidth(Expression.get(LineOptions.PROPERTY_LINE_GAP_WIDTH)) }
+    verify(exactly = 0) { manager.layer?.lineGapWidth(Expression.get(LineOptions.PROPERTY_LINE_GAP_WIDTH)) }
     val options = LineOptions()
       .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
       .withLineGapWidth(0.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.lineGapWidth(Expression.get(LineOptions.PROPERTY_LINE_GAP_WIDTH)) }
+    verify(exactly = 1) { manager.layer?.lineGapWidth(Expression.get(LineOptions.PROPERTY_LINE_GAP_WIDTH)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.lineGapWidth(Expression.get(LineOptions.PROPERTY_LINE_GAP_WIDTH)) }
+    verify(exactly = 1) { manager.layer?.lineGapWidth(Expression.get(LineOptions.PROPERTY_LINE_GAP_WIDTH)) }
   }
 
   @Test
   fun testLineOffsetLayerProperty() {
     val manager = LineManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.lineOffset(Expression.get(LineOptions.PROPERTY_LINE_OFFSET)) }
+    verify(exactly = 0) { manager.layer?.lineOffset(Expression.get(LineOptions.PROPERTY_LINE_OFFSET)) }
     val options = LineOptions()
       .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
       .withLineOffset(0.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.lineOffset(Expression.get(LineOptions.PROPERTY_LINE_OFFSET)) }
+    verify(exactly = 1) { manager.layer?.lineOffset(Expression.get(LineOptions.PROPERTY_LINE_OFFSET)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.lineOffset(Expression.get(LineOptions.PROPERTY_LINE_OFFSET)) }
+    verify(exactly = 1) { manager.layer?.lineOffset(Expression.get(LineOptions.PROPERTY_LINE_OFFSET)) }
   }
 
   @Test
   fun testLineBlurLayerProperty() {
     val manager = LineManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.lineBlur(Expression.get(LineOptions.PROPERTY_LINE_BLUR)) }
+    verify(exactly = 0) { manager.layer?.lineBlur(Expression.get(LineOptions.PROPERTY_LINE_BLUR)) }
     val options = LineOptions()
       .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
       .withLineBlur(0.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.lineBlur(Expression.get(LineOptions.PROPERTY_LINE_BLUR)) }
+    verify(exactly = 1) { manager.layer?.lineBlur(Expression.get(LineOptions.PROPERTY_LINE_BLUR)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.lineBlur(Expression.get(LineOptions.PROPERTY_LINE_BLUR)) }
+    verify(exactly = 1) { manager.layer?.lineBlur(Expression.get(LineOptions.PROPERTY_LINE_BLUR)) }
   }
 
   @Test
   fun testLinePatternLayerProperty() {
     val manager = LineManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.linePattern(Expression.get(LineOptions.PROPERTY_LINE_PATTERN)) }
+    verify(exactly = 0) { manager.layer?.linePattern(Expression.get(LineOptions.PROPERTY_LINE_PATTERN)) }
     val options = LineOptions()
       .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
       .withLinePattern("pedestrian-polygon")
     manager.create(options)
-    verify(exactly = 1) { manager.layer.linePattern(Expression.get(LineOptions.PROPERTY_LINE_PATTERN)) }
+    verify(exactly = 1) { manager.layer?.linePattern(Expression.get(LineOptions.PROPERTY_LINE_PATTERN)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.linePattern(Expression.get(LineOptions.PROPERTY_LINE_PATTERN)) }
+    verify(exactly = 1) { manager.layer?.linePattern(Expression.get(LineOptions.PROPERTY_LINE_PATTERN)) }
   }
 }

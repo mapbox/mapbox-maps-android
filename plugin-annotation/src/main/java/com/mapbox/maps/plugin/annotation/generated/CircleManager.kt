@@ -56,14 +56,14 @@ class CircleManager(
 
   override fun setDataDrivenPropertyIsUsed(property: String) {
     when (property) {
-      CircleOptions.PROPERTY_CIRCLE_SORT_KEY -> layer.circleSortKey(get(CircleOptions.PROPERTY_CIRCLE_SORT_KEY))
-      CircleOptions.PROPERTY_CIRCLE_RADIUS -> layer.circleRadius(get(CircleOptions.PROPERTY_CIRCLE_RADIUS))
-      CircleOptions.PROPERTY_CIRCLE_COLOR -> layer.circleColor(get(CircleOptions.PROPERTY_CIRCLE_COLOR))
-      CircleOptions.PROPERTY_CIRCLE_BLUR -> layer.circleBlur(get(CircleOptions.PROPERTY_CIRCLE_BLUR))
-      CircleOptions.PROPERTY_CIRCLE_OPACITY -> layer.circleOpacity(get(CircleOptions.PROPERTY_CIRCLE_OPACITY))
-      CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH -> layer.circleStrokeWidth(get(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH))
-      CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR -> layer.circleStrokeColor(get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR))
-      CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY -> layer.circleStrokeOpacity(get(CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY))
+      CircleOptions.PROPERTY_CIRCLE_SORT_KEY -> layer?.circleSortKey(get(CircleOptions.PROPERTY_CIRCLE_SORT_KEY))
+      CircleOptions.PROPERTY_CIRCLE_RADIUS -> layer?.circleRadius(get(CircleOptions.PROPERTY_CIRCLE_RADIUS))
+      CircleOptions.PROPERTY_CIRCLE_COLOR -> layer?.circleColor(get(CircleOptions.PROPERTY_CIRCLE_COLOR))
+      CircleOptions.PROPERTY_CIRCLE_BLUR -> layer?.circleBlur(get(CircleOptions.PROPERTY_CIRCLE_BLUR))
+      CircleOptions.PROPERTY_CIRCLE_OPACITY -> layer?.circleOpacity(get(CircleOptions.PROPERTY_CIRCLE_OPACITY))
+      CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH -> layer?.circleStrokeWidth(get(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH))
+      CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR -> layer?.circleStrokeColor(get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR))
+      CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY -> layer?.circleStrokeOpacity(get(CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY))
     }
   }
 
@@ -147,7 +147,7 @@ class CircleManager(
      * @return property wrapper value around List<Double>
      */
     get(): List<Double>? {
-      return layer.circleTranslate
+      return layer?.circleTranslate
     }
     /**
      * Set the CircleTranslate property
@@ -155,7 +155,7 @@ class CircleManager(
      */
     set(value) {
       value?.let {
-        layer.circleTranslate(it)
+        layer?.circleTranslate(it)
       }
     }
 
@@ -171,7 +171,7 @@ class CircleManager(
      * @return property wrapper value around CircleTranslateAnchor
      */
     get(): CircleTranslateAnchor? {
-      return layer.circleTranslateAnchor
+      return layer?.circleTranslateAnchor
     }
     /**
      * Set the CircleTranslateAnchor property
@@ -179,7 +179,7 @@ class CircleManager(
      */
     set(value) {
       value?.let {
-        layer.circleTranslateAnchor(it)
+        layer?.circleTranslateAnchor(it)
       }
     }
 
@@ -195,7 +195,7 @@ class CircleManager(
      * @return property wrapper value around CirclePitchScale
      */
     get(): CirclePitchScale? {
-      return layer.circlePitchScale
+      return layer?.circlePitchScale
     }
     /**
      * Set the CirclePitchScale property
@@ -203,7 +203,7 @@ class CircleManager(
      */
     set(value) {
       value?.let {
-        layer.circlePitchScale(it)
+        layer?.circlePitchScale(it)
       }
     }
 
@@ -219,7 +219,7 @@ class CircleManager(
      * @return property wrapper value around CirclePitchAlignment
      */
     get(): CirclePitchAlignment? {
-      return layer.circlePitchAlignment
+      return layer?.circlePitchAlignment
     }
     /**
      * Set the CirclePitchAlignment property
@@ -227,7 +227,7 @@ class CircleManager(
      */
     set(value) {
       value?.let {
-        layer.circlePitchAlignment(it)
+        layer?.circlePitchAlignment(it)
       }
     }
 
@@ -260,14 +260,14 @@ class CircleManager(
      *
      * @return expression
      */
-    get() = layer.filter
+    get() = layer?.filter
     /**
      * Set filter on the managed circles.
      *
      * @param expression expression
      */
     set(value) {
-      value?.let { layer.filter(it) }
+      value?.let { layer?.filter(it) }
     }
 
   /**

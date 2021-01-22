@@ -359,69 +359,69 @@ class FillManagerTest {
   fun testFillSortKeyLayerProperty() {
     val manager = FillManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.fillSortKey(Expression.get(FillOptions.PROPERTY_FILL_SORT_KEY)) }
+    verify(exactly = 0) { manager.layer?.fillSortKey(Expression.get(FillOptions.PROPERTY_FILL_SORT_KEY)) }
     val options = FillOptions()
       .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
       .withFillSortKey(1.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.fillSortKey(Expression.get(FillOptions.PROPERTY_FILL_SORT_KEY)) }
+    verify(exactly = 1) { manager.layer?.fillSortKey(Expression.get(FillOptions.PROPERTY_FILL_SORT_KEY)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.fillSortKey(Expression.get(FillOptions.PROPERTY_FILL_SORT_KEY)) }
+    verify(exactly = 1) { manager.layer?.fillSortKey(Expression.get(FillOptions.PROPERTY_FILL_SORT_KEY)) }
   }
 
   @Test
   fun testFillOpacityLayerProperty() {
     val manager = FillManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.fillOpacity(Expression.get(FillOptions.PROPERTY_FILL_OPACITY)) }
+    verify(exactly = 0) { manager.layer?.fillOpacity(Expression.get(FillOptions.PROPERTY_FILL_OPACITY)) }
     val options = FillOptions()
       .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
       .withFillOpacity(1.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.fillOpacity(Expression.get(FillOptions.PROPERTY_FILL_OPACITY)) }
+    verify(exactly = 1) { manager.layer?.fillOpacity(Expression.get(FillOptions.PROPERTY_FILL_OPACITY)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.fillOpacity(Expression.get(FillOptions.PROPERTY_FILL_OPACITY)) }
+    verify(exactly = 1) { manager.layer?.fillOpacity(Expression.get(FillOptions.PROPERTY_FILL_OPACITY)) }
   }
 
   @Test
   fun testFillColorLayerProperty() {
     val manager = FillManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.fillColor(Expression.get(FillOptions.PROPERTY_FILL_COLOR)) }
+    verify(exactly = 0) { manager.layer?.fillColor(Expression.get(FillOptions.PROPERTY_FILL_COLOR)) }
     val options = FillOptions()
       .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
       .withFillColor("rgba(0, 0, 0, 1)")
     manager.create(options)
-    verify(exactly = 1) { manager.layer.fillColor(Expression.get(FillOptions.PROPERTY_FILL_COLOR)) }
+    verify(exactly = 1) { manager.layer?.fillColor(Expression.get(FillOptions.PROPERTY_FILL_COLOR)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.fillColor(Expression.get(FillOptions.PROPERTY_FILL_COLOR)) }
+    verify(exactly = 1) { manager.layer?.fillColor(Expression.get(FillOptions.PROPERTY_FILL_COLOR)) }
   }
 
   @Test
   fun testFillOutlineColorLayerProperty() {
     val manager = FillManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.fillOutlineColor(Expression.get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
+    verify(exactly = 0) { manager.layer?.fillOutlineColor(Expression.get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
     val options = FillOptions()
       .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
       .withFillOutlineColor("rgba(0, 0, 0, 1)")
     manager.create(options)
-    verify(exactly = 1) { manager.layer.fillOutlineColor(Expression.get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
+    verify(exactly = 1) { manager.layer?.fillOutlineColor(Expression.get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.fillOutlineColor(Expression.get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
+    verify(exactly = 1) { manager.layer?.fillOutlineColor(Expression.get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
   }
 
   @Test
   fun testFillPatternLayerProperty() {
     val manager = FillManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.fillPattern(Expression.get(FillOptions.PROPERTY_FILL_PATTERN)) }
+    verify(exactly = 0) { manager.layer?.fillPattern(Expression.get(FillOptions.PROPERTY_FILL_PATTERN)) }
     val options = FillOptions()
       .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
       .withFillPattern("pedestrian-polygon")
     manager.create(options)
-    verify(exactly = 1) { manager.layer.fillPattern(Expression.get(FillOptions.PROPERTY_FILL_PATTERN)) }
+    verify(exactly = 1) { manager.layer?.fillPattern(Expression.get(FillOptions.PROPERTY_FILL_PATTERN)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.fillPattern(Expression.get(FillOptions.PROPERTY_FILL_PATTERN)) }
+    verify(exactly = 1) { manager.layer?.fillPattern(Expression.get(FillOptions.PROPERTY_FILL_PATTERN)) }
   }
 }

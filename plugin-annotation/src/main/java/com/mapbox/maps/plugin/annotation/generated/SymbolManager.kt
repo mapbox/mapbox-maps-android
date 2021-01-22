@@ -75,33 +75,33 @@ class SymbolManager(
 
   override fun setDataDrivenPropertyIsUsed(property: String) {
     when (property) {
-      SymbolOptions.PROPERTY_SYMBOL_SORT_KEY -> layer.symbolSortKey(get(SymbolOptions.PROPERTY_SYMBOL_SORT_KEY))
-      SymbolOptions.PROPERTY_ICON_SIZE -> layer.iconSize(get(SymbolOptions.PROPERTY_ICON_SIZE))
-      SymbolOptions.PROPERTY_ICON_IMAGE -> layer.iconImage(get(SymbolOptions.PROPERTY_ICON_IMAGE))
-      SymbolOptions.PROPERTY_ICON_ROTATE -> layer.iconRotate(get(SymbolOptions.PROPERTY_ICON_ROTATE))
-      SymbolOptions.PROPERTY_ICON_OFFSET -> layer.iconOffset(get(SymbolOptions.PROPERTY_ICON_OFFSET))
-      SymbolOptions.PROPERTY_ICON_ANCHOR -> layer.iconAnchor(get(SymbolOptions.PROPERTY_ICON_ANCHOR))
-      SymbolOptions.PROPERTY_TEXT_FIELD -> layer.textField(get(SymbolOptions.PROPERTY_TEXT_FIELD))
-      SymbolOptions.PROPERTY_TEXT_FONT -> layer.textFont(get(SymbolOptions.PROPERTY_TEXT_FONT))
-      SymbolOptions.PROPERTY_TEXT_SIZE -> layer.textSize(get(SymbolOptions.PROPERTY_TEXT_SIZE))
-      SymbolOptions.PROPERTY_TEXT_MAX_WIDTH -> layer.textMaxWidth(get(SymbolOptions.PROPERTY_TEXT_MAX_WIDTH))
-      SymbolOptions.PROPERTY_TEXT_LETTER_SPACING -> layer.textLetterSpacing(get(SymbolOptions.PROPERTY_TEXT_LETTER_SPACING))
-      SymbolOptions.PROPERTY_TEXT_JUSTIFY -> layer.textJustify(get(SymbolOptions.PROPERTY_TEXT_JUSTIFY))
-      SymbolOptions.PROPERTY_TEXT_RADIAL_OFFSET -> layer.textRadialOffset(get(SymbolOptions.PROPERTY_TEXT_RADIAL_OFFSET))
-      SymbolOptions.PROPERTY_TEXT_ANCHOR -> layer.textAnchor(get(SymbolOptions.PROPERTY_TEXT_ANCHOR))
-      SymbolOptions.PROPERTY_TEXT_ROTATE -> layer.textRotate(get(SymbolOptions.PROPERTY_TEXT_ROTATE))
-      SymbolOptions.PROPERTY_TEXT_TRANSFORM -> layer.textTransform(get(SymbolOptions.PROPERTY_TEXT_TRANSFORM))
-      SymbolOptions.PROPERTY_TEXT_OFFSET -> layer.textOffset(get(SymbolOptions.PROPERTY_TEXT_OFFSET))
-      SymbolOptions.PROPERTY_ICON_OPACITY -> layer.iconOpacity(get(SymbolOptions.PROPERTY_ICON_OPACITY))
-      SymbolOptions.PROPERTY_ICON_COLOR -> layer.iconColor(get(SymbolOptions.PROPERTY_ICON_COLOR))
-      SymbolOptions.PROPERTY_ICON_HALO_COLOR -> layer.iconHaloColor(get(SymbolOptions.PROPERTY_ICON_HALO_COLOR))
-      SymbolOptions.PROPERTY_ICON_HALO_WIDTH -> layer.iconHaloWidth(get(SymbolOptions.PROPERTY_ICON_HALO_WIDTH))
-      SymbolOptions.PROPERTY_ICON_HALO_BLUR -> layer.iconHaloBlur(get(SymbolOptions.PROPERTY_ICON_HALO_BLUR))
-      SymbolOptions.PROPERTY_TEXT_OPACITY -> layer.textOpacity(get(SymbolOptions.PROPERTY_TEXT_OPACITY))
-      SymbolOptions.PROPERTY_TEXT_COLOR -> layer.textColor(get(SymbolOptions.PROPERTY_TEXT_COLOR))
-      SymbolOptions.PROPERTY_TEXT_HALO_COLOR -> layer.textHaloColor(get(SymbolOptions.PROPERTY_TEXT_HALO_COLOR))
-      SymbolOptions.PROPERTY_TEXT_HALO_WIDTH -> layer.textHaloWidth(get(SymbolOptions.PROPERTY_TEXT_HALO_WIDTH))
-      SymbolOptions.PROPERTY_TEXT_HALO_BLUR -> layer.textHaloBlur(get(SymbolOptions.PROPERTY_TEXT_HALO_BLUR))
+      SymbolOptions.PROPERTY_SYMBOL_SORT_KEY -> layer?.symbolSortKey(get(SymbolOptions.PROPERTY_SYMBOL_SORT_KEY))
+      SymbolOptions.PROPERTY_ICON_SIZE -> layer?.iconSize(get(SymbolOptions.PROPERTY_ICON_SIZE))
+      SymbolOptions.PROPERTY_ICON_IMAGE -> layer?.iconImage(get(SymbolOptions.PROPERTY_ICON_IMAGE))
+      SymbolOptions.PROPERTY_ICON_ROTATE -> layer?.iconRotate(get(SymbolOptions.PROPERTY_ICON_ROTATE))
+      SymbolOptions.PROPERTY_ICON_OFFSET -> layer?.iconOffset(get(SymbolOptions.PROPERTY_ICON_OFFSET))
+      SymbolOptions.PROPERTY_ICON_ANCHOR -> layer?.iconAnchor(get(SymbolOptions.PROPERTY_ICON_ANCHOR))
+      SymbolOptions.PROPERTY_TEXT_FIELD -> layer?.textField(get(SymbolOptions.PROPERTY_TEXT_FIELD))
+      SymbolOptions.PROPERTY_TEXT_FONT -> layer?.textFont(get(SymbolOptions.PROPERTY_TEXT_FONT))
+      SymbolOptions.PROPERTY_TEXT_SIZE -> layer?.textSize(get(SymbolOptions.PROPERTY_TEXT_SIZE))
+      SymbolOptions.PROPERTY_TEXT_MAX_WIDTH -> layer?.textMaxWidth(get(SymbolOptions.PROPERTY_TEXT_MAX_WIDTH))
+      SymbolOptions.PROPERTY_TEXT_LETTER_SPACING -> layer?.textLetterSpacing(get(SymbolOptions.PROPERTY_TEXT_LETTER_SPACING))
+      SymbolOptions.PROPERTY_TEXT_JUSTIFY -> layer?.textJustify(get(SymbolOptions.PROPERTY_TEXT_JUSTIFY))
+      SymbolOptions.PROPERTY_TEXT_RADIAL_OFFSET -> layer?.textRadialOffset(get(SymbolOptions.PROPERTY_TEXT_RADIAL_OFFSET))
+      SymbolOptions.PROPERTY_TEXT_ANCHOR -> layer?.textAnchor(get(SymbolOptions.PROPERTY_TEXT_ANCHOR))
+      SymbolOptions.PROPERTY_TEXT_ROTATE -> layer?.textRotate(get(SymbolOptions.PROPERTY_TEXT_ROTATE))
+      SymbolOptions.PROPERTY_TEXT_TRANSFORM -> layer?.textTransform(get(SymbolOptions.PROPERTY_TEXT_TRANSFORM))
+      SymbolOptions.PROPERTY_TEXT_OFFSET -> layer?.textOffset(get(SymbolOptions.PROPERTY_TEXT_OFFSET))
+      SymbolOptions.PROPERTY_ICON_OPACITY -> layer?.iconOpacity(get(SymbolOptions.PROPERTY_ICON_OPACITY))
+      SymbolOptions.PROPERTY_ICON_COLOR -> layer?.iconColor(get(SymbolOptions.PROPERTY_ICON_COLOR))
+      SymbolOptions.PROPERTY_ICON_HALO_COLOR -> layer?.iconHaloColor(get(SymbolOptions.PROPERTY_ICON_HALO_COLOR))
+      SymbolOptions.PROPERTY_ICON_HALO_WIDTH -> layer?.iconHaloWidth(get(SymbolOptions.PROPERTY_ICON_HALO_WIDTH))
+      SymbolOptions.PROPERTY_ICON_HALO_BLUR -> layer?.iconHaloBlur(get(SymbolOptions.PROPERTY_ICON_HALO_BLUR))
+      SymbolOptions.PROPERTY_TEXT_OPACITY -> layer?.textOpacity(get(SymbolOptions.PROPERTY_TEXT_OPACITY))
+      SymbolOptions.PROPERTY_TEXT_COLOR -> layer?.textColor(get(SymbolOptions.PROPERTY_TEXT_COLOR))
+      SymbolOptions.PROPERTY_TEXT_HALO_COLOR -> layer?.textHaloColor(get(SymbolOptions.PROPERTY_TEXT_HALO_COLOR))
+      SymbolOptions.PROPERTY_TEXT_HALO_WIDTH -> layer?.textHaloWidth(get(SymbolOptions.PROPERTY_TEXT_HALO_WIDTH))
+      SymbolOptions.PROPERTY_TEXT_HALO_BLUR -> layer?.textHaloBlur(get(SymbolOptions.PROPERTY_TEXT_HALO_BLUR))
     }
   }
 
@@ -223,7 +223,7 @@ class SymbolManager(
      * @return property wrapper value around SymbolPlacement
      */
     get(): SymbolPlacement? {
-      return layer.symbolPlacement
+      return layer?.symbolPlacement
     }
     /**
      * Set the SymbolPlacement property
@@ -231,7 +231,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.symbolPlacement(it)
+        layer?.symbolPlacement(it)
       }
     }
 
@@ -247,7 +247,7 @@ class SymbolManager(
      * @return property wrapper value around Double
      */
     get(): Double? {
-      return layer.symbolSpacing
+      return layer?.symbolSpacing
     }
     /**
      * Set the SymbolSpacing property
@@ -255,7 +255,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.symbolSpacing(it)
+        layer?.symbolSpacing(it)
       }
     }
 
@@ -271,7 +271,7 @@ class SymbolManager(
      * @return property wrapper value around Boolean
      */
     get(): Boolean? {
-      return layer.symbolAvoidEdges
+      return layer?.symbolAvoidEdges
     }
     /**
      * Set the SymbolAvoidEdges property
@@ -279,7 +279,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.symbolAvoidEdges(it)
+        layer?.symbolAvoidEdges(it)
       }
     }
 
@@ -295,7 +295,7 @@ class SymbolManager(
      * @return property wrapper value around Boolean
      */
     get(): Boolean? {
-      return layer.iconAllowOverlap
+      return layer?.iconAllowOverlap
     }
     /**
      * Set the IconAllowOverlap property
@@ -303,7 +303,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.iconAllowOverlap(it)
+        layer?.iconAllowOverlap(it)
       }
     }
 
@@ -319,7 +319,7 @@ class SymbolManager(
      * @return property wrapper value around Boolean
      */
     get(): Boolean? {
-      return layer.iconIgnorePlacement
+      return layer?.iconIgnorePlacement
     }
     /**
      * Set the IconIgnorePlacement property
@@ -327,7 +327,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.iconIgnorePlacement(it)
+        layer?.iconIgnorePlacement(it)
       }
     }
 
@@ -343,7 +343,7 @@ class SymbolManager(
      * @return property wrapper value around Boolean
      */
     get(): Boolean? {
-      return layer.iconOptional
+      return layer?.iconOptional
     }
     /**
      * Set the IconOptional property
@@ -351,7 +351,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.iconOptional(it)
+        layer?.iconOptional(it)
       }
     }
 
@@ -367,7 +367,7 @@ class SymbolManager(
      * @return property wrapper value around IconRotationAlignment
      */
     get(): IconRotationAlignment? {
-      return layer.iconRotationAlignment
+      return layer?.iconRotationAlignment
     }
     /**
      * Set the IconRotationAlignment property
@@ -375,7 +375,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.iconRotationAlignment(it)
+        layer?.iconRotationAlignment(it)
       }
     }
 
@@ -391,7 +391,7 @@ class SymbolManager(
      * @return property wrapper value around IconTextFit
      */
     get(): IconTextFit? {
-      return layer.iconTextFit
+      return layer?.iconTextFit
     }
     /**
      * Set the IconTextFit property
@@ -399,7 +399,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.iconTextFit(it)
+        layer?.iconTextFit(it)
       }
     }
 
@@ -415,7 +415,7 @@ class SymbolManager(
      * @return property wrapper value around List<Double>
      */
     get(): List<Double>? {
-      return layer.iconTextFitPadding
+      return layer?.iconTextFitPadding
     }
     /**
      * Set the IconTextFitPadding property
@@ -423,7 +423,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.iconTextFitPadding(it)
+        layer?.iconTextFitPadding(it)
       }
     }
 
@@ -439,7 +439,7 @@ class SymbolManager(
      * @return property wrapper value around Double
      */
     get(): Double? {
-      return layer.iconPadding
+      return layer?.iconPadding
     }
     /**
      * Set the IconPadding property
@@ -447,7 +447,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.iconPadding(it)
+        layer?.iconPadding(it)
       }
     }
 
@@ -463,7 +463,7 @@ class SymbolManager(
      * @return property wrapper value around Boolean
      */
     get(): Boolean? {
-      return layer.iconKeepUpright
+      return layer?.iconKeepUpright
     }
     /**
      * Set the IconKeepUpright property
@@ -471,7 +471,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.iconKeepUpright(it)
+        layer?.iconKeepUpright(it)
       }
     }
 
@@ -487,7 +487,7 @@ class SymbolManager(
      * @return property wrapper value around IconPitchAlignment
      */
     get(): IconPitchAlignment? {
-      return layer.iconPitchAlignment
+      return layer?.iconPitchAlignment
     }
     /**
      * Set the IconPitchAlignment property
@@ -495,7 +495,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.iconPitchAlignment(it)
+        layer?.iconPitchAlignment(it)
       }
     }
 
@@ -511,7 +511,7 @@ class SymbolManager(
      * @return property wrapper value around TextPitchAlignment
      */
     get(): TextPitchAlignment? {
-      return layer.textPitchAlignment
+      return layer?.textPitchAlignment
     }
     /**
      * Set the TextPitchAlignment property
@@ -519,7 +519,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.textPitchAlignment(it)
+        layer?.textPitchAlignment(it)
       }
     }
 
@@ -535,7 +535,7 @@ class SymbolManager(
      * @return property wrapper value around TextRotationAlignment
      */
     get(): TextRotationAlignment? {
-      return layer.textRotationAlignment
+      return layer?.textRotationAlignment
     }
     /**
      * Set the TextRotationAlignment property
@@ -543,7 +543,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.textRotationAlignment(it)
+        layer?.textRotationAlignment(it)
       }
     }
 
@@ -559,7 +559,7 @@ class SymbolManager(
      * @return property wrapper value around Double
      */
     get(): Double? {
-      return layer.textLineHeight
+      return layer?.textLineHeight
     }
     /**
      * Set the TextLineHeight property
@@ -567,7 +567,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.textLineHeight(it)
+        layer?.textLineHeight(it)
       }
     }
 
@@ -583,7 +583,7 @@ class SymbolManager(
      * @return property wrapper value around List<String>
      */
     get(): List<String>? {
-      return layer.textVariableAnchor
+      return layer?.textVariableAnchor
     }
     /**
      * Set the TextVariableAnchor property
@@ -591,7 +591,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.textVariableAnchor(it)
+        layer?.textVariableAnchor(it)
       }
     }
 
@@ -607,7 +607,7 @@ class SymbolManager(
      * @return property wrapper value around Double
      */
     get(): Double? {
-      return layer.textMaxAngle
+      return layer?.textMaxAngle
     }
     /**
      * Set the TextMaxAngle property
@@ -615,7 +615,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.textMaxAngle(it)
+        layer?.textMaxAngle(it)
       }
     }
 
@@ -631,7 +631,7 @@ class SymbolManager(
      * @return property wrapper value around List<String>
      */
     get(): List<String>? {
-      return layer.textWritingMode
+      return layer?.textWritingMode
     }
     /**
      * Set the TextWritingMode property
@@ -639,7 +639,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.textWritingMode(it)
+        layer?.textWritingMode(it)
       }
     }
 
@@ -655,7 +655,7 @@ class SymbolManager(
      * @return property wrapper value around Double
      */
     get(): Double? {
-      return layer.textPadding
+      return layer?.textPadding
     }
     /**
      * Set the TextPadding property
@@ -663,7 +663,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.textPadding(it)
+        layer?.textPadding(it)
       }
     }
 
@@ -679,7 +679,7 @@ class SymbolManager(
      * @return property wrapper value around Boolean
      */
     get(): Boolean? {
-      return layer.textKeepUpright
+      return layer?.textKeepUpright
     }
     /**
      * Set the TextKeepUpright property
@@ -687,7 +687,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.textKeepUpright(it)
+        layer?.textKeepUpright(it)
       }
     }
 
@@ -703,7 +703,7 @@ class SymbolManager(
      * @return property wrapper value around Boolean
      */
     get(): Boolean? {
-      return layer.textAllowOverlap
+      return layer?.textAllowOverlap
     }
     /**
      * Set the TextAllowOverlap property
@@ -711,7 +711,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.textAllowOverlap(it)
+        layer?.textAllowOverlap(it)
       }
     }
 
@@ -727,7 +727,7 @@ class SymbolManager(
      * @return property wrapper value around Boolean
      */
     get(): Boolean? {
-      return layer.textIgnorePlacement
+      return layer?.textIgnorePlacement
     }
     /**
      * Set the TextIgnorePlacement property
@@ -735,7 +735,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.textIgnorePlacement(it)
+        layer?.textIgnorePlacement(it)
       }
     }
 
@@ -751,7 +751,7 @@ class SymbolManager(
      * @return property wrapper value around Boolean
      */
     get(): Boolean? {
-      return layer.textOptional
+      return layer?.textOptional
     }
     /**
      * Set the TextOptional property
@@ -759,7 +759,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.textOptional(it)
+        layer?.textOptional(it)
       }
     }
 
@@ -775,7 +775,7 @@ class SymbolManager(
      * @return property wrapper value around List<Double>
      */
     get(): List<Double>? {
-      return layer.iconTranslate
+      return layer?.iconTranslate
     }
     /**
      * Set the IconTranslate property
@@ -783,7 +783,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.iconTranslate(it)
+        layer?.iconTranslate(it)
       }
     }
 
@@ -799,7 +799,7 @@ class SymbolManager(
      * @return property wrapper value around IconTranslateAnchor
      */
     get(): IconTranslateAnchor? {
-      return layer.iconTranslateAnchor
+      return layer?.iconTranslateAnchor
     }
     /**
      * Set the IconTranslateAnchor property
@@ -807,7 +807,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.iconTranslateAnchor(it)
+        layer?.iconTranslateAnchor(it)
       }
     }
 
@@ -823,7 +823,7 @@ class SymbolManager(
      * @return property wrapper value around List<Double>
      */
     get(): List<Double>? {
-      return layer.textTranslate
+      return layer?.textTranslate
     }
     /**
      * Set the TextTranslate property
@@ -831,7 +831,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.textTranslate(it)
+        layer?.textTranslate(it)
       }
     }
 
@@ -847,7 +847,7 @@ class SymbolManager(
      * @return property wrapper value around TextTranslateAnchor
      */
     get(): TextTranslateAnchor? {
-      return layer.textTranslateAnchor
+      return layer?.textTranslateAnchor
     }
     /**
      * Set the TextTranslateAnchor property
@@ -855,7 +855,7 @@ class SymbolManager(
      */
     set(value) {
       value?.let {
-        layer.textTranslateAnchor(it)
+        layer?.textTranslateAnchor(it)
       }
     }
 
@@ -888,14 +888,14 @@ class SymbolManager(
      *
      * @return expression
      */
-    get() = layer.filter
+    get() = layer?.filter
     /**
      * Set filter on the managed symbols.
      *
      * @param expression expression
      */
     set(value) {
-      value?.let { layer.filter(it) }
+      value?.let { layer?.filter(it) }
     }
 
   /**

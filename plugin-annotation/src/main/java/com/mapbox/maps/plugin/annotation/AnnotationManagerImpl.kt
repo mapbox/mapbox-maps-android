@@ -45,10 +45,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   private var mapFeatureQueryDelegate: MapFeatureQueryDelegate =
     delegateProvider.mapFeatureQueryDelegate
   private var styleStateDelegate: MapStyleStateDelegate = delegateProvider.styleStateDelegate
-  internal lateinit var layer: L
-  protected lateinit var source: GeoJsonSource
   protected val dataDrivenPropertyUsageMap: MutableMap<String, Boolean> = HashMap()
-
   private var currentId = 0L
   private var width = 0
   private var height = 0
@@ -66,6 +63,12 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
       "Can't look up an instance of plugin, " +
         "is it available on the clazz path and loaded through the map?"
     )
+
+  /** The layer created by this manger. Annotations will be added to this layer.*/
+  var layer: L? = null
+
+  /** The source created by this manger. Feature data will bed added to this source.*/
+  var source: GeoJsonSource? = null
 
   /**
    * The added annotations
@@ -105,14 +108,14 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    *
    * @return the GeoJsonSource created
    */
-  abstract fun createSource(): GeoJsonSource
+  protected abstract fun createSource(): GeoJsonSource
 
   /**
    * Create the layer for managed annotations
    *
    * @return the layer created
    */
-  abstract fun createLayer(): L
+  protected abstract fun createLayer(): L
 
   /**
    * Set filter on the managed annotations.
@@ -123,10 +126,12 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     initializeDataDrivenPropertyMap()
     source = createSource()
     layer = createLayer()
-    if (belowLayerId == null) {
-      style.addLayer(layer)
-    } else {
-      style.addLayerBelow(layer, belowLayerId)
+    layer?.let {
+      if (belowLayerId == null) {
+        style.addLayer(it)
+      } else {
+        style.addLayerBelow(it, belowLayerId)
+      }
     }
     updateSource()
   }
@@ -191,9 +196,11 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
       it.value.setUsedDataDrivenProperties()
       annotation
     }
-    source.featureCollection(FeatureCollection.fromFeatures(features))
-    if (style.getSource(source.sourceId) == null) {
-      style.addSource(source)
+    source?.let {
+      it.featureCollection(FeatureCollection.fromFeatures(features))
+      if (style.getSource(it.sourceId) == null) {
+        style.addSource(it)
+      }
     }
   }
 
@@ -428,21 +435,23 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     screenCoordinate: ScreenCoordinate,
     callback: QueryAnnotationCallback<T>
   ) {
-    mapFeatureQueryDelegate.queryRenderedFeatures(
-      screenCoordinate,
-      RenderedQueryOptions(
-        listOf(
-          layer.layerId
-        ),
-        literal(true)
-      )
-    ) { features ->
-      features.value?.let { featureList ->
-        if (featureList.isNotEmpty()) {
-          val id = featureList.first().getProperty(getAnnotationIdKey()).asLong
-          callback.onQueryAnnotation(annotations[id])
+    if (layer != null) {
+      mapFeatureQueryDelegate.queryRenderedFeatures(
+        screenCoordinate,
+        RenderedQueryOptions(
+          listOf(layer!!.layerId),
+          literal(true)
+        )
+      ) { features ->
+        features.value?.let { featureList ->
+          if (featureList.isNotEmpty()) {
+            val id = featureList.first().getProperty(getAnnotationIdKey()).asLong
+            callback.onQueryAnnotation(annotations[id])
+          }
         }
       }
+    } else {
+      callback.onQueryAnnotation(null)
     }
   }
 

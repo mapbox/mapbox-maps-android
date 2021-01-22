@@ -57,15 +57,15 @@ class LineManager(
 
   override fun setDataDrivenPropertyIsUsed(property: String) {
     when (property) {
-      LineOptions.PROPERTY_LINE_JOIN -> layer.lineJoin(get(LineOptions.PROPERTY_LINE_JOIN))
-      LineOptions.PROPERTY_LINE_SORT_KEY -> layer.lineSortKey(get(LineOptions.PROPERTY_LINE_SORT_KEY))
-      LineOptions.PROPERTY_LINE_OPACITY -> layer.lineOpacity(get(LineOptions.PROPERTY_LINE_OPACITY))
-      LineOptions.PROPERTY_LINE_COLOR -> layer.lineColor(get(LineOptions.PROPERTY_LINE_COLOR))
-      LineOptions.PROPERTY_LINE_WIDTH -> layer.lineWidth(get(LineOptions.PROPERTY_LINE_WIDTH))
-      LineOptions.PROPERTY_LINE_GAP_WIDTH -> layer.lineGapWidth(get(LineOptions.PROPERTY_LINE_GAP_WIDTH))
-      LineOptions.PROPERTY_LINE_OFFSET -> layer.lineOffset(get(LineOptions.PROPERTY_LINE_OFFSET))
-      LineOptions.PROPERTY_LINE_BLUR -> layer.lineBlur(get(LineOptions.PROPERTY_LINE_BLUR))
-      LineOptions.PROPERTY_LINE_PATTERN -> layer.linePattern(get(LineOptions.PROPERTY_LINE_PATTERN))
+      LineOptions.PROPERTY_LINE_JOIN -> layer?.lineJoin(get(LineOptions.PROPERTY_LINE_JOIN))
+      LineOptions.PROPERTY_LINE_SORT_KEY -> layer?.lineSortKey(get(LineOptions.PROPERTY_LINE_SORT_KEY))
+      LineOptions.PROPERTY_LINE_OPACITY -> layer?.lineOpacity(get(LineOptions.PROPERTY_LINE_OPACITY))
+      LineOptions.PROPERTY_LINE_COLOR -> layer?.lineColor(get(LineOptions.PROPERTY_LINE_COLOR))
+      LineOptions.PROPERTY_LINE_WIDTH -> layer?.lineWidth(get(LineOptions.PROPERTY_LINE_WIDTH))
+      LineOptions.PROPERTY_LINE_GAP_WIDTH -> layer?.lineGapWidth(get(LineOptions.PROPERTY_LINE_GAP_WIDTH))
+      LineOptions.PROPERTY_LINE_OFFSET -> layer?.lineOffset(get(LineOptions.PROPERTY_LINE_OFFSET))
+      LineOptions.PROPERTY_LINE_BLUR -> layer?.lineBlur(get(LineOptions.PROPERTY_LINE_BLUR))
+      LineOptions.PROPERTY_LINE_PATTERN -> layer?.linePattern(get(LineOptions.PROPERTY_LINE_PATTERN))
     }
   }
 
@@ -151,7 +151,7 @@ class LineManager(
      * @return property wrapper value around LineCap
      */
     get(): LineCap? {
-      return layer.lineCap
+      return layer?.lineCap
     }
     /**
      * Set the LineCap property
@@ -159,7 +159,7 @@ class LineManager(
      */
     set(value) {
       value?.let {
-        layer.lineCap(it)
+        layer?.lineCap(it)
       }
     }
 
@@ -175,7 +175,7 @@ class LineManager(
      * @return property wrapper value around Double
      */
     get(): Double? {
-      return layer.lineMiterLimit
+      return layer?.lineMiterLimit
     }
     /**
      * Set the LineMiterLimit property
@@ -183,7 +183,7 @@ class LineManager(
      */
     set(value) {
       value?.let {
-        layer.lineMiterLimit(it)
+        layer?.lineMiterLimit(it)
       }
     }
 
@@ -199,7 +199,7 @@ class LineManager(
      * @return property wrapper value around Double
      */
     get(): Double? {
-      return layer.lineRoundLimit
+      return layer?.lineRoundLimit
     }
     /**
      * Set the LineRoundLimit property
@@ -207,7 +207,7 @@ class LineManager(
      */
     set(value) {
       value?.let {
-        layer.lineRoundLimit(it)
+        layer?.lineRoundLimit(it)
       }
     }
 
@@ -223,7 +223,7 @@ class LineManager(
      * @return property wrapper value around List<Double>
      */
     get(): List<Double>? {
-      return layer.lineTranslate
+      return layer?.lineTranslate
     }
     /**
      * Set the LineTranslate property
@@ -231,7 +231,7 @@ class LineManager(
      */
     set(value) {
       value?.let {
-        layer.lineTranslate(it)
+        layer?.lineTranslate(it)
       }
     }
 
@@ -247,7 +247,7 @@ class LineManager(
      * @return property wrapper value around LineTranslateAnchor
      */
     get(): LineTranslateAnchor? {
-      return layer.lineTranslateAnchor
+      return layer?.lineTranslateAnchor
     }
     /**
      * Set the LineTranslateAnchor property
@@ -255,7 +255,7 @@ class LineManager(
      */
     set(value) {
       value?.let {
-        layer.lineTranslateAnchor(it)
+        layer?.lineTranslateAnchor(it)
       }
     }
 
@@ -271,7 +271,7 @@ class LineManager(
      * @return property wrapper value around List<Double>
      */
     get(): List<Double>? {
-      return layer.lineDasharray
+      return layer?.lineDasharray
     }
     /**
      * Set the LineDasharray property
@@ -279,7 +279,7 @@ class LineManager(
      */
     set(value) {
       value?.let {
-        layer.lineDasharray(it)
+        layer?.lineDasharray(it)
       }
     }
 
@@ -312,14 +312,14 @@ class LineManager(
      *
      * @return expression
      */
-    get() = layer.filter
+    get() = layer?.filter
     /**
      * Set filter on the managed lines.
      *
      * @param expression expression
      */
     set(value) {
-      value?.let { layer.filter(it) }
+      value?.let { layer?.filter(it) }
     }
 
   /**

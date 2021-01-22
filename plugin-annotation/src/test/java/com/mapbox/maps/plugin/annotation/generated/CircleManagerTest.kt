@@ -361,111 +361,111 @@ class CircleManagerTest {
   fun testCircleSortKeyLayerProperty() {
     val manager = CircleManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.circleSortKey(Expression.get(CircleOptions.PROPERTY_CIRCLE_SORT_KEY)) }
+    verify(exactly = 0) { manager.layer?.circleSortKey(Expression.get(CircleOptions.PROPERTY_CIRCLE_SORT_KEY)) }
     val options = CircleOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withCircleSortKey(1.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleSortKey(Expression.get(CircleOptions.PROPERTY_CIRCLE_SORT_KEY)) }
+    verify(exactly = 1) { manager.layer?.circleSortKey(Expression.get(CircleOptions.PROPERTY_CIRCLE_SORT_KEY)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleSortKey(Expression.get(CircleOptions.PROPERTY_CIRCLE_SORT_KEY)) }
+    verify(exactly = 1) { manager.layer?.circleSortKey(Expression.get(CircleOptions.PROPERTY_CIRCLE_SORT_KEY)) }
   }
 
   @Test
   fun testCircleRadiusLayerProperty() {
     val manager = CircleManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.circleRadius(Expression.get(CircleOptions.PROPERTY_CIRCLE_RADIUS)) }
+    verify(exactly = 0) { manager.layer?.circleRadius(Expression.get(CircleOptions.PROPERTY_CIRCLE_RADIUS)) }
     val options = CircleOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withCircleRadius(5.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleRadius(Expression.get(CircleOptions.PROPERTY_CIRCLE_RADIUS)) }
+    verify(exactly = 1) { manager.layer?.circleRadius(Expression.get(CircleOptions.PROPERTY_CIRCLE_RADIUS)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleRadius(Expression.get(CircleOptions.PROPERTY_CIRCLE_RADIUS)) }
+    verify(exactly = 1) { manager.layer?.circleRadius(Expression.get(CircleOptions.PROPERTY_CIRCLE_RADIUS)) }
   }
 
   @Test
   fun testCircleColorLayerProperty() {
     val manager = CircleManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.circleColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_COLOR)) }
+    verify(exactly = 0) { manager.layer?.circleColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_COLOR)) }
     val options = CircleOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withCircleColor("rgba(0, 0, 0, 1)")
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_COLOR)) }
+    verify(exactly = 1) { manager.layer?.circleColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_COLOR)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_COLOR)) }
+    verify(exactly = 1) { manager.layer?.circleColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_COLOR)) }
   }
 
   @Test
   fun testCircleBlurLayerProperty() {
     val manager = CircleManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.circleBlur(Expression.get(CircleOptions.PROPERTY_CIRCLE_BLUR)) }
+    verify(exactly = 0) { manager.layer?.circleBlur(Expression.get(CircleOptions.PROPERTY_CIRCLE_BLUR)) }
     val options = CircleOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withCircleBlur(0.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleBlur(Expression.get(CircleOptions.PROPERTY_CIRCLE_BLUR)) }
+    verify(exactly = 1) { manager.layer?.circleBlur(Expression.get(CircleOptions.PROPERTY_CIRCLE_BLUR)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleBlur(Expression.get(CircleOptions.PROPERTY_CIRCLE_BLUR)) }
+    verify(exactly = 1) { manager.layer?.circleBlur(Expression.get(CircleOptions.PROPERTY_CIRCLE_BLUR)) }
   }
 
   @Test
   fun testCircleOpacityLayerProperty() {
     val manager = CircleManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.circleOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_OPACITY)) }
+    verify(exactly = 0) { manager.layer?.circleOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_OPACITY)) }
     val options = CircleOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withCircleOpacity(1.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_OPACITY)) }
+    verify(exactly = 1) { manager.layer?.circleOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_OPACITY)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_OPACITY)) }
+    verify(exactly = 1) { manager.layer?.circleOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_OPACITY)) }
   }
 
   @Test
   fun testCircleStrokeWidthLayerProperty() {
     val manager = CircleManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.circleStrokeWidth(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
+    verify(exactly = 0) { manager.layer?.circleStrokeWidth(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
     val options = CircleOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withCircleStrokeWidth(0.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleStrokeWidth(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
+    verify(exactly = 1) { manager.layer?.circleStrokeWidth(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleStrokeWidth(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
+    verify(exactly = 1) { manager.layer?.circleStrokeWidth(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
   }
 
   @Test
   fun testCircleStrokeColorLayerProperty() {
     val manager = CircleManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.circleStrokeColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
+    verify(exactly = 0) { manager.layer?.circleStrokeColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
     val options = CircleOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withCircleStrokeColor("rgba(0, 0, 0, 1)")
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleStrokeColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
+    verify(exactly = 1) { manager.layer?.circleStrokeColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleStrokeColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
+    verify(exactly = 1) { manager.layer?.circleStrokeColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
   }
 
   @Test
   fun testCircleStrokeOpacityLayerProperty() {
     val manager = CircleManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.circleStrokeOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY)) }
+    verify(exactly = 0) { manager.layer?.circleStrokeOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY)) }
     val options = CircleOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withCircleStrokeOpacity(1.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleStrokeOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY)) }
+    verify(exactly = 1) { manager.layer?.circleStrokeOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleStrokeOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY)) }
+    verify(exactly = 1) { manager.layer?.circleStrokeOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY)) }
   }
 }

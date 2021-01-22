@@ -60,6 +60,8 @@ class SymbolActivity : AppCompatActivity() {
 
       val annotationPlugin = mapView.getAnnotationPlugin()
       symbolManager = annotationPlugin.getSymbolManager().apply {
+        Toast.makeText(this@SymbolActivity, "Layer Id: ${layer?.layerId}", Toast.LENGTH_LONG).show()
+
         addClickListener(
           OnSymbolClickListener {
             Toast.makeText(this@SymbolActivity, "Click: $it", Toast.LENGTH_LONG).show()

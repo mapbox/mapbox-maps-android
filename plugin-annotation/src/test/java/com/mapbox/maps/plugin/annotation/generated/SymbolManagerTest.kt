@@ -381,377 +381,377 @@ class SymbolManagerTest {
   fun testSymbolSortKeyLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.symbolSortKey(Expression.get(SymbolOptions.PROPERTY_SYMBOL_SORT_KEY)) }
+    verify(exactly = 0) { manager.layer?.symbolSortKey(Expression.get(SymbolOptions.PROPERTY_SYMBOL_SORT_KEY)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withSymbolSortKey(1.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.symbolSortKey(Expression.get(SymbolOptions.PROPERTY_SYMBOL_SORT_KEY)) }
+    verify(exactly = 1) { manager.layer?.symbolSortKey(Expression.get(SymbolOptions.PROPERTY_SYMBOL_SORT_KEY)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.symbolSortKey(Expression.get(SymbolOptions.PROPERTY_SYMBOL_SORT_KEY)) }
+    verify(exactly = 1) { manager.layer?.symbolSortKey(Expression.get(SymbolOptions.PROPERTY_SYMBOL_SORT_KEY)) }
   }
 
   @Test
   fun testIconSizeLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.iconSize(Expression.get(SymbolOptions.PROPERTY_ICON_SIZE)) }
+    verify(exactly = 0) { manager.layer?.iconSize(Expression.get(SymbolOptions.PROPERTY_ICON_SIZE)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withIconSize(1.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.iconSize(Expression.get(SymbolOptions.PROPERTY_ICON_SIZE)) }
+    verify(exactly = 1) { manager.layer?.iconSize(Expression.get(SymbolOptions.PROPERTY_ICON_SIZE)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.iconSize(Expression.get(SymbolOptions.PROPERTY_ICON_SIZE)) }
+    verify(exactly = 1) { manager.layer?.iconSize(Expression.get(SymbolOptions.PROPERTY_ICON_SIZE)) }
   }
 
   @Test
   fun testIconImageLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.iconImage(Expression.get(SymbolOptions.PROPERTY_ICON_IMAGE)) }
+    verify(exactly = 0) { manager.layer?.iconImage(Expression.get(SymbolOptions.PROPERTY_ICON_IMAGE)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withIconImage("")
     manager.create(options)
-    verify(exactly = 1) { manager.layer.iconImage(Expression.get(SymbolOptions.PROPERTY_ICON_IMAGE)) }
+    verify(exactly = 1) { manager.layer?.iconImage(Expression.get(SymbolOptions.PROPERTY_ICON_IMAGE)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.iconImage(Expression.get(SymbolOptions.PROPERTY_ICON_IMAGE)) }
+    verify(exactly = 1) { manager.layer?.iconImage(Expression.get(SymbolOptions.PROPERTY_ICON_IMAGE)) }
   }
 
   @Test
   fun testIconRotateLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.iconRotate(Expression.get(SymbolOptions.PROPERTY_ICON_ROTATE)) }
+    verify(exactly = 0) { manager.layer?.iconRotate(Expression.get(SymbolOptions.PROPERTY_ICON_ROTATE)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withIconRotate(0.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.iconRotate(Expression.get(SymbolOptions.PROPERTY_ICON_ROTATE)) }
+    verify(exactly = 1) { manager.layer?.iconRotate(Expression.get(SymbolOptions.PROPERTY_ICON_ROTATE)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.iconRotate(Expression.get(SymbolOptions.PROPERTY_ICON_ROTATE)) }
+    verify(exactly = 1) { manager.layer?.iconRotate(Expression.get(SymbolOptions.PROPERTY_ICON_ROTATE)) }
   }
 
   @Test
   fun testIconOffsetLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.iconOffset(Expression.get(SymbolOptions.PROPERTY_ICON_OFFSET)) }
+    verify(exactly = 0) { manager.layer?.iconOffset(Expression.get(SymbolOptions.PROPERTY_ICON_OFFSET)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withIconOffset(listOf(0.0, 0.0))
     manager.create(options)
-    verify(exactly = 1) { manager.layer.iconOffset(Expression.get(SymbolOptions.PROPERTY_ICON_OFFSET)) }
+    verify(exactly = 1) { manager.layer?.iconOffset(Expression.get(SymbolOptions.PROPERTY_ICON_OFFSET)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.iconOffset(Expression.get(SymbolOptions.PROPERTY_ICON_OFFSET)) }
+    verify(exactly = 1) { manager.layer?.iconOffset(Expression.get(SymbolOptions.PROPERTY_ICON_OFFSET)) }
   }
 
   @Test
   fun testIconAnchorLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.iconAnchor(Expression.get(SymbolOptions.PROPERTY_ICON_ANCHOR)) }
+    verify(exactly = 0) { manager.layer?.iconAnchor(Expression.get(SymbolOptions.PROPERTY_ICON_ANCHOR)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withIconAnchor(IconAnchor.CENTER)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.iconAnchor(Expression.get(SymbolOptions.PROPERTY_ICON_ANCHOR)) }
+    verify(exactly = 1) { manager.layer?.iconAnchor(Expression.get(SymbolOptions.PROPERTY_ICON_ANCHOR)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.iconAnchor(Expression.get(SymbolOptions.PROPERTY_ICON_ANCHOR)) }
+    verify(exactly = 1) { manager.layer?.iconAnchor(Expression.get(SymbolOptions.PROPERTY_ICON_ANCHOR)) }
   }
 
   @Test
   fun testTextFieldLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.textField(Expression.get(SymbolOptions.PROPERTY_TEXT_FIELD)) }
+    verify(exactly = 0) { manager.layer?.textField(Expression.get(SymbolOptions.PROPERTY_TEXT_FIELD)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withTextField("")
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textField(Expression.get(SymbolOptions.PROPERTY_TEXT_FIELD)) }
+    verify(exactly = 1) { manager.layer?.textField(Expression.get(SymbolOptions.PROPERTY_TEXT_FIELD)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textField(Expression.get(SymbolOptions.PROPERTY_TEXT_FIELD)) }
+    verify(exactly = 1) { manager.layer?.textField(Expression.get(SymbolOptions.PROPERTY_TEXT_FIELD)) }
   }
 
   @Test
   fun testTextFontLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.textFont(Expression.get(SymbolOptions.PROPERTY_TEXT_FONT)) }
+    verify(exactly = 0) { manager.layer?.textFont(Expression.get(SymbolOptions.PROPERTY_TEXT_FONT)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withTextFont(listOf("Open Sans Regular", "Arial Unicode MS Regular"))
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textFont(Expression.get(SymbolOptions.PROPERTY_TEXT_FONT)) }
+    verify(exactly = 1) { manager.layer?.textFont(Expression.get(SymbolOptions.PROPERTY_TEXT_FONT)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textFont(Expression.get(SymbolOptions.PROPERTY_TEXT_FONT)) }
+    verify(exactly = 1) { manager.layer?.textFont(Expression.get(SymbolOptions.PROPERTY_TEXT_FONT)) }
   }
 
   @Test
   fun testTextSizeLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.textSize(Expression.get(SymbolOptions.PROPERTY_TEXT_SIZE)) }
+    verify(exactly = 0) { manager.layer?.textSize(Expression.get(SymbolOptions.PROPERTY_TEXT_SIZE)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withTextSize(16.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textSize(Expression.get(SymbolOptions.PROPERTY_TEXT_SIZE)) }
+    verify(exactly = 1) { manager.layer?.textSize(Expression.get(SymbolOptions.PROPERTY_TEXT_SIZE)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textSize(Expression.get(SymbolOptions.PROPERTY_TEXT_SIZE)) }
+    verify(exactly = 1) { manager.layer?.textSize(Expression.get(SymbolOptions.PROPERTY_TEXT_SIZE)) }
   }
 
   @Test
   fun testTextMaxWidthLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.textMaxWidth(Expression.get(SymbolOptions.PROPERTY_TEXT_MAX_WIDTH)) }
+    verify(exactly = 0) { manager.layer?.textMaxWidth(Expression.get(SymbolOptions.PROPERTY_TEXT_MAX_WIDTH)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withTextMaxWidth(10.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textMaxWidth(Expression.get(SymbolOptions.PROPERTY_TEXT_MAX_WIDTH)) }
+    verify(exactly = 1) { manager.layer?.textMaxWidth(Expression.get(SymbolOptions.PROPERTY_TEXT_MAX_WIDTH)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textMaxWidth(Expression.get(SymbolOptions.PROPERTY_TEXT_MAX_WIDTH)) }
+    verify(exactly = 1) { manager.layer?.textMaxWidth(Expression.get(SymbolOptions.PROPERTY_TEXT_MAX_WIDTH)) }
   }
 
   @Test
   fun testTextLetterSpacingLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.textLetterSpacing(Expression.get(SymbolOptions.PROPERTY_TEXT_LETTER_SPACING)) }
+    verify(exactly = 0) { manager.layer?.textLetterSpacing(Expression.get(SymbolOptions.PROPERTY_TEXT_LETTER_SPACING)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withTextLetterSpacing(0.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textLetterSpacing(Expression.get(SymbolOptions.PROPERTY_TEXT_LETTER_SPACING)) }
+    verify(exactly = 1) { manager.layer?.textLetterSpacing(Expression.get(SymbolOptions.PROPERTY_TEXT_LETTER_SPACING)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textLetterSpacing(Expression.get(SymbolOptions.PROPERTY_TEXT_LETTER_SPACING)) }
+    verify(exactly = 1) { manager.layer?.textLetterSpacing(Expression.get(SymbolOptions.PROPERTY_TEXT_LETTER_SPACING)) }
   }
 
   @Test
   fun testTextJustifyLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.textJustify(Expression.get(SymbolOptions.PROPERTY_TEXT_JUSTIFY)) }
+    verify(exactly = 0) { manager.layer?.textJustify(Expression.get(SymbolOptions.PROPERTY_TEXT_JUSTIFY)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withTextJustify(TextJustify.CENTER)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textJustify(Expression.get(SymbolOptions.PROPERTY_TEXT_JUSTIFY)) }
+    verify(exactly = 1) { manager.layer?.textJustify(Expression.get(SymbolOptions.PROPERTY_TEXT_JUSTIFY)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textJustify(Expression.get(SymbolOptions.PROPERTY_TEXT_JUSTIFY)) }
+    verify(exactly = 1) { manager.layer?.textJustify(Expression.get(SymbolOptions.PROPERTY_TEXT_JUSTIFY)) }
   }
 
   @Test
   fun testTextRadialOffsetLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.textRadialOffset(Expression.get(SymbolOptions.PROPERTY_TEXT_RADIAL_OFFSET)) }
+    verify(exactly = 0) { manager.layer?.textRadialOffset(Expression.get(SymbolOptions.PROPERTY_TEXT_RADIAL_OFFSET)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withTextRadialOffset(0.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textRadialOffset(Expression.get(SymbolOptions.PROPERTY_TEXT_RADIAL_OFFSET)) }
+    verify(exactly = 1) { manager.layer?.textRadialOffset(Expression.get(SymbolOptions.PROPERTY_TEXT_RADIAL_OFFSET)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textRadialOffset(Expression.get(SymbolOptions.PROPERTY_TEXT_RADIAL_OFFSET)) }
+    verify(exactly = 1) { manager.layer?.textRadialOffset(Expression.get(SymbolOptions.PROPERTY_TEXT_RADIAL_OFFSET)) }
   }
 
   @Test
   fun testTextAnchorLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.textAnchor(Expression.get(SymbolOptions.PROPERTY_TEXT_ANCHOR)) }
+    verify(exactly = 0) { manager.layer?.textAnchor(Expression.get(SymbolOptions.PROPERTY_TEXT_ANCHOR)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withTextAnchor(TextAnchor.CENTER)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textAnchor(Expression.get(SymbolOptions.PROPERTY_TEXT_ANCHOR)) }
+    verify(exactly = 1) { manager.layer?.textAnchor(Expression.get(SymbolOptions.PROPERTY_TEXT_ANCHOR)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textAnchor(Expression.get(SymbolOptions.PROPERTY_TEXT_ANCHOR)) }
+    verify(exactly = 1) { manager.layer?.textAnchor(Expression.get(SymbolOptions.PROPERTY_TEXT_ANCHOR)) }
   }
 
   @Test
   fun testTextRotateLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.textRotate(Expression.get(SymbolOptions.PROPERTY_TEXT_ROTATE)) }
+    verify(exactly = 0) { manager.layer?.textRotate(Expression.get(SymbolOptions.PROPERTY_TEXT_ROTATE)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withTextRotate(0.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textRotate(Expression.get(SymbolOptions.PROPERTY_TEXT_ROTATE)) }
+    verify(exactly = 1) { manager.layer?.textRotate(Expression.get(SymbolOptions.PROPERTY_TEXT_ROTATE)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textRotate(Expression.get(SymbolOptions.PROPERTY_TEXT_ROTATE)) }
+    verify(exactly = 1) { manager.layer?.textRotate(Expression.get(SymbolOptions.PROPERTY_TEXT_ROTATE)) }
   }
 
   @Test
   fun testTextTransformLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.textTransform(Expression.get(SymbolOptions.PROPERTY_TEXT_TRANSFORM)) }
+    verify(exactly = 0) { manager.layer?.textTransform(Expression.get(SymbolOptions.PROPERTY_TEXT_TRANSFORM)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withTextTransform(TextTransform.NONE)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textTransform(Expression.get(SymbolOptions.PROPERTY_TEXT_TRANSFORM)) }
+    verify(exactly = 1) { manager.layer?.textTransform(Expression.get(SymbolOptions.PROPERTY_TEXT_TRANSFORM)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textTransform(Expression.get(SymbolOptions.PROPERTY_TEXT_TRANSFORM)) }
+    verify(exactly = 1) { manager.layer?.textTransform(Expression.get(SymbolOptions.PROPERTY_TEXT_TRANSFORM)) }
   }
 
   @Test
   fun testTextOffsetLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.textOffset(Expression.get(SymbolOptions.PROPERTY_TEXT_OFFSET)) }
+    verify(exactly = 0) { manager.layer?.textOffset(Expression.get(SymbolOptions.PROPERTY_TEXT_OFFSET)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withTextOffset(listOf(0.0, 0.0))
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textOffset(Expression.get(SymbolOptions.PROPERTY_TEXT_OFFSET)) }
+    verify(exactly = 1) { manager.layer?.textOffset(Expression.get(SymbolOptions.PROPERTY_TEXT_OFFSET)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textOffset(Expression.get(SymbolOptions.PROPERTY_TEXT_OFFSET)) }
+    verify(exactly = 1) { manager.layer?.textOffset(Expression.get(SymbolOptions.PROPERTY_TEXT_OFFSET)) }
   }
 
   @Test
   fun testIconOpacityLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.iconOpacity(Expression.get(SymbolOptions.PROPERTY_ICON_OPACITY)) }
+    verify(exactly = 0) { manager.layer?.iconOpacity(Expression.get(SymbolOptions.PROPERTY_ICON_OPACITY)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withIconOpacity(1.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.iconOpacity(Expression.get(SymbolOptions.PROPERTY_ICON_OPACITY)) }
+    verify(exactly = 1) { manager.layer?.iconOpacity(Expression.get(SymbolOptions.PROPERTY_ICON_OPACITY)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.iconOpacity(Expression.get(SymbolOptions.PROPERTY_ICON_OPACITY)) }
+    verify(exactly = 1) { manager.layer?.iconOpacity(Expression.get(SymbolOptions.PROPERTY_ICON_OPACITY)) }
   }
 
   @Test
   fun testIconColorLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.iconColor(Expression.get(SymbolOptions.PROPERTY_ICON_COLOR)) }
+    verify(exactly = 0) { manager.layer?.iconColor(Expression.get(SymbolOptions.PROPERTY_ICON_COLOR)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withIconColor("rgba(0, 0, 0, 1)")
     manager.create(options)
-    verify(exactly = 1) { manager.layer.iconColor(Expression.get(SymbolOptions.PROPERTY_ICON_COLOR)) }
+    verify(exactly = 1) { manager.layer?.iconColor(Expression.get(SymbolOptions.PROPERTY_ICON_COLOR)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.iconColor(Expression.get(SymbolOptions.PROPERTY_ICON_COLOR)) }
+    verify(exactly = 1) { manager.layer?.iconColor(Expression.get(SymbolOptions.PROPERTY_ICON_COLOR)) }
   }
 
   @Test
   fun testIconHaloColorLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.iconHaloColor(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_COLOR)) }
+    verify(exactly = 0) { manager.layer?.iconHaloColor(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_COLOR)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withIconHaloColor("rgba(0, 0, 0, 1)")
     manager.create(options)
-    verify(exactly = 1) { manager.layer.iconHaloColor(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_COLOR)) }
+    verify(exactly = 1) { manager.layer?.iconHaloColor(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_COLOR)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.iconHaloColor(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_COLOR)) }
+    verify(exactly = 1) { manager.layer?.iconHaloColor(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_COLOR)) }
   }
 
   @Test
   fun testIconHaloWidthLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.iconHaloWidth(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_WIDTH)) }
+    verify(exactly = 0) { manager.layer?.iconHaloWidth(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_WIDTH)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withIconHaloWidth(0.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.iconHaloWidth(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_WIDTH)) }
+    verify(exactly = 1) { manager.layer?.iconHaloWidth(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_WIDTH)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.iconHaloWidth(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_WIDTH)) }
+    verify(exactly = 1) { manager.layer?.iconHaloWidth(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_WIDTH)) }
   }
 
   @Test
   fun testIconHaloBlurLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.iconHaloBlur(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_BLUR)) }
+    verify(exactly = 0) { manager.layer?.iconHaloBlur(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_BLUR)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withIconHaloBlur(0.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.iconHaloBlur(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_BLUR)) }
+    verify(exactly = 1) { manager.layer?.iconHaloBlur(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_BLUR)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.iconHaloBlur(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_BLUR)) }
+    verify(exactly = 1) { manager.layer?.iconHaloBlur(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_BLUR)) }
   }
 
   @Test
   fun testTextOpacityLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.textOpacity(Expression.get(SymbolOptions.PROPERTY_TEXT_OPACITY)) }
+    verify(exactly = 0) { manager.layer?.textOpacity(Expression.get(SymbolOptions.PROPERTY_TEXT_OPACITY)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withTextOpacity(1.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textOpacity(Expression.get(SymbolOptions.PROPERTY_TEXT_OPACITY)) }
+    verify(exactly = 1) { manager.layer?.textOpacity(Expression.get(SymbolOptions.PROPERTY_TEXT_OPACITY)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textOpacity(Expression.get(SymbolOptions.PROPERTY_TEXT_OPACITY)) }
+    verify(exactly = 1) { manager.layer?.textOpacity(Expression.get(SymbolOptions.PROPERTY_TEXT_OPACITY)) }
   }
 
   @Test
   fun testTextColorLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.textColor(Expression.get(SymbolOptions.PROPERTY_TEXT_COLOR)) }
+    verify(exactly = 0) { manager.layer?.textColor(Expression.get(SymbolOptions.PROPERTY_TEXT_COLOR)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withTextColor("rgba(0, 0, 0, 1)")
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textColor(Expression.get(SymbolOptions.PROPERTY_TEXT_COLOR)) }
+    verify(exactly = 1) { manager.layer?.textColor(Expression.get(SymbolOptions.PROPERTY_TEXT_COLOR)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textColor(Expression.get(SymbolOptions.PROPERTY_TEXT_COLOR)) }
+    verify(exactly = 1) { manager.layer?.textColor(Expression.get(SymbolOptions.PROPERTY_TEXT_COLOR)) }
   }
 
   @Test
   fun testTextHaloColorLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.textHaloColor(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_COLOR)) }
+    verify(exactly = 0) { manager.layer?.textHaloColor(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_COLOR)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withTextHaloColor("rgba(0, 0, 0, 1)")
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textHaloColor(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_COLOR)) }
+    verify(exactly = 1) { manager.layer?.textHaloColor(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_COLOR)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textHaloColor(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_COLOR)) }
+    verify(exactly = 1) { manager.layer?.textHaloColor(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_COLOR)) }
   }
 
   @Test
   fun testTextHaloWidthLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.textHaloWidth(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_WIDTH)) }
+    verify(exactly = 0) { manager.layer?.textHaloWidth(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_WIDTH)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withTextHaloWidth(0.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textHaloWidth(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_WIDTH)) }
+    verify(exactly = 1) { manager.layer?.textHaloWidth(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_WIDTH)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textHaloWidth(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_WIDTH)) }
+    verify(exactly = 1) { manager.layer?.textHaloWidth(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_WIDTH)) }
   }
 
   @Test
   fun testTextHaloBlurLayerProperty() {
     val manager = SymbolManager(delegateProvider, null, 0, 0)
     manager.layer = layer
-    verify(exactly = 0) { manager.layer.textHaloBlur(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_BLUR)) }
+    verify(exactly = 0) { manager.layer?.textHaloBlur(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_BLUR)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withTextHaloBlur(0.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textHaloBlur(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_BLUR)) }
+    verify(exactly = 1) { manager.layer?.textHaloBlur(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_BLUR)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.textHaloBlur(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_BLUR)) }
+    verify(exactly = 1) { manager.layer?.textHaloBlur(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_BLUR)) }
   }
 }

@@ -53,11 +53,11 @@ class FillManager(
 
   override fun setDataDrivenPropertyIsUsed(property: String) {
     when (property) {
-      FillOptions.PROPERTY_FILL_SORT_KEY -> layer.fillSortKey(get(FillOptions.PROPERTY_FILL_SORT_KEY))
-      FillOptions.PROPERTY_FILL_OPACITY -> layer.fillOpacity(get(FillOptions.PROPERTY_FILL_OPACITY))
-      FillOptions.PROPERTY_FILL_COLOR -> layer.fillColor(get(FillOptions.PROPERTY_FILL_COLOR))
-      FillOptions.PROPERTY_FILL_OUTLINE_COLOR -> layer.fillOutlineColor(get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR))
-      FillOptions.PROPERTY_FILL_PATTERN -> layer.fillPattern(get(FillOptions.PROPERTY_FILL_PATTERN))
+      FillOptions.PROPERTY_FILL_SORT_KEY -> layer?.fillSortKey(get(FillOptions.PROPERTY_FILL_SORT_KEY))
+      FillOptions.PROPERTY_FILL_OPACITY -> layer?.fillOpacity(get(FillOptions.PROPERTY_FILL_OPACITY))
+      FillOptions.PROPERTY_FILL_COLOR -> layer?.fillColor(get(FillOptions.PROPERTY_FILL_COLOR))
+      FillOptions.PROPERTY_FILL_OUTLINE_COLOR -> layer?.fillOutlineColor(get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR))
+      FillOptions.PROPERTY_FILL_PATTERN -> layer?.fillPattern(get(FillOptions.PROPERTY_FILL_PATTERN))
     }
   }
 
@@ -135,7 +135,7 @@ class FillManager(
      * @return property wrapper value around Boolean
      */
     get(): Boolean? {
-      return layer.fillAntialias
+      return layer?.fillAntialias
     }
     /**
      * Set the FillAntialias property
@@ -143,7 +143,7 @@ class FillManager(
      */
     set(value) {
       value?.let {
-        layer.fillAntialias(it)
+        layer?.fillAntialias(it)
       }
     }
 
@@ -159,7 +159,7 @@ class FillManager(
      * @return property wrapper value around List<Double>
      */
     get(): List<Double>? {
-      return layer.fillTranslate
+      return layer?.fillTranslate
     }
     /**
      * Set the FillTranslate property
@@ -167,7 +167,7 @@ class FillManager(
      */
     set(value) {
       value?.let {
-        layer.fillTranslate(it)
+        layer?.fillTranslate(it)
       }
     }
 
@@ -183,7 +183,7 @@ class FillManager(
      * @return property wrapper value around FillTranslateAnchor
      */
     get(): FillTranslateAnchor? {
-      return layer.fillTranslateAnchor
+      return layer?.fillTranslateAnchor
     }
     /**
      * Set the FillTranslateAnchor property
@@ -191,7 +191,7 @@ class FillManager(
      */
     set(value) {
       value?.let {
-        layer.fillTranslateAnchor(it)
+        layer?.fillTranslateAnchor(it)
       }
     }
 
@@ -224,14 +224,14 @@ class FillManager(
      *
      * @return expression
      */
-    get() = layer.filter
+    get() = layer?.filter
     /**
      * Set filter on the managed fills.
      *
      * @param expression expression
      */
     set(value) {
-      value?.let { layer.filter(it) }
+      value?.let { layer?.filter(it) }
     }
 
   /**
