@@ -28,17 +28,17 @@ interface LocationComponentSettingsInterface {
   var enabled: Boolean
 
   /**
-   * Whether the location puck is pulsing on the map. Currently only work for 2D location puck and presets.
+   * Whether the location puck is pulsing on the map. Only work for 2D location puck.
    */
   var pulsingEnabled: Boolean
 
   /**
-   * The color of the pulsing circle. Currently only work for 2D location puck and presets.
+   * The color of the pulsing circle. Only work for 2D location puck.
    */
   var pulsingColor: Int
 
   /**
-   * The maximum radius of the pulsing circle. Currently only work for 2D location puck and presets.
+   * The maximum radius of the pulsing circle. Only work for 2D location puck.
    */
   var pulsingMaxRadius: Float
 
@@ -53,7 +53,7 @@ interface LocationComponentSettingsInterface {
   var layerBelow: String?
 
   /**
-   * Defines what the customised look of the location puck. Defining the puck will overwrite the puck style preset.
+   * Defines what the customised look of the location puck.
    */
   var locationPuck: LocationPuck
 }

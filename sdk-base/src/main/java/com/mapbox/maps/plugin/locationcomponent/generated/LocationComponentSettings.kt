@@ -15,17 +15,17 @@ data class LocationComponentSettings(
   var enabled: Boolean = false,
 
   /**
-   * Whether the location puck is pulsing on the map. Currently only work for 2D location puck and presets.
+   * Whether the location puck is pulsing on the map. Only work for 2D location puck.
    */
   var pulsingEnabled: Boolean = false,
 
   /**
-   * The color of the pulsing circle. Currently only work for 2D location puck and presets.
+   * The color of the pulsing circle. Only work for 2D location puck.
    */
   var pulsingColor: Int = Color.parseColor("#4A90E2"),
 
   /**
-   * The maximum radius of the pulsing circle. Currently only work for 2D location puck and presets.
+   * The maximum radius of the pulsing circle. Only work for 2D location puck.
    */
   var pulsingMaxRadius: Float = 10f,
 
@@ -40,7 +40,7 @@ data class LocationComponentSettings(
   var layerBelow: String? = null,
 
   /**
-   * Defines what the customised look of the location puck. Defining the puck will overwrite the puck style preset.
+   * Defines what the customised look of the location puck.
    */
   var locationPuck: LocationPuck,
 )
