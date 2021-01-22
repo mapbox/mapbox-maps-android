@@ -39,20 +39,21 @@ abstract class BaseStyleTest {
   @Before
   fun before() {
     val latch = CountDownLatch(1)
-    rule.scenario.onActivity {
-      it.runOnUiThread {
+    rule.scenario.onActivity { activity ->
+      activity.runOnUiThread {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         mapView = MapView(context)
         mapView.id = R.id.mapView
-        it.setContentView(mapView)
+        activity.setContentView(mapView)
 
         mapboxMap = mapView.getMapboxMap()
         mapboxMap.loadStyleUri(
-          Style.DARK
-        ) {
-          this@BaseStyleTest.style = it
-          latch.countDown()
-        }
+          Style.DARK,
+          {
+            this@BaseStyleTest.style = it
+            latch.countDown()
+          }
+        )
         mapView.onStart()
       }
     }

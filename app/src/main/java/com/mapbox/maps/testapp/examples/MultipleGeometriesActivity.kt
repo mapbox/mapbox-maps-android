@@ -28,12 +28,13 @@ class MultipleGeometriesActivity : AppCompatActivity() {
 
     mapboxMap = mapView.getMapboxMap()
     mapboxMap.loadStyleUri(
-      Style.LIGHT
-    ) {
-      createGeoJsonSource(it)
-      addPolygonLayer(it)
-      addLineStringLayer(it)
-    }
+      Style.LIGHT,
+      {
+        createGeoJsonSource(it)
+        addPolygonLayer(it)
+        addLineStringLayer(it)
+      }
+    )
   }
 
   private fun createGeoJsonSource(loadedMapStyle: Style) {

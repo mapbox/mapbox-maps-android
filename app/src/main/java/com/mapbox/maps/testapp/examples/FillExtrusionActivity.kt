@@ -38,11 +38,12 @@ class FillExtrusionActivity : AppCompatActivity() {
     )
 
     mapboxMap.loadStyleUri(
-      Style.MAPBOX_STREETS
-    ) { style ->
-      setupBuildings(style)
-      setupLight(style)
-    }
+      Style.MAPBOX_STREETS,
+      {
+        setupBuildings(it)
+        setupLight(it)
+      }
+    )
   }
 
   private fun setupBuildings(style: Style) {

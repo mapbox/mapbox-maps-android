@@ -41,8 +41,11 @@ class RawExpressionActivity : AppCompatActivity() {
     setContentView(R.layout.activity_simple_map)
     mapboxMap = mapView.getMapboxMap()
     mapboxMap.loadStyleUri(
-      Style.MAPBOX_STREETS
-    ) { addExpressionToStyle(it) }
+      Style.MAPBOX_STREETS,
+      {
+        addExpressionToStyle(it)
+      }
+    )
   }
 
   private fun addExpressionToStyle(style: Style) {

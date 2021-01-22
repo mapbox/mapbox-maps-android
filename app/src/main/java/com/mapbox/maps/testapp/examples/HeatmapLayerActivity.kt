@@ -27,8 +27,8 @@ class HeatmapLayerActivity : AppCompatActivity() {
 
     mapboxMap = mapView.getMapboxMap()
     mapboxMap.loadStyleUri(
-      styleUri = Style.DARK
-    ) { style -> addRuntimeLayers(style) }
+      styleUri = Style.DARK, { style -> addRuntimeLayers(style) }
+    )
   }
 
   private fun addRuntimeLayers(style: Style) {

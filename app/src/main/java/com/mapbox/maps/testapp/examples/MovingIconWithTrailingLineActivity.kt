@@ -59,10 +59,11 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_dds_moving_icon_with_trailing_line)
     mapView.getMapboxMap().loadStyleUri(
-      Style.LIGHT
-    ) { // Use the Mapbox Directions API to get a directions route
-      getRoute()
-    }
+      Style.LIGHT,
+      { // Use the Mapbox Directions API to get a directions route
+        getRoute()
+      }
+    )
   }
 
   /**

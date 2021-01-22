@@ -21,9 +21,10 @@ class LineGradientActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_line_gradient)
-    mapView.getMapboxMap().loadStyle(createStyle()) {
-      Logger.d(TAG, "Style loaded: ${it.styleURI}")
-    }
+    mapView.getMapboxMap()
+      .loadStyle(createStyle()) { style ->
+        Logger.d(TAG, "Style loaded: ${style.styleURI}")
+      }
   }
 
   private fun createStyle() = style(styleUri = Style.TRAFFIC_DAY) {

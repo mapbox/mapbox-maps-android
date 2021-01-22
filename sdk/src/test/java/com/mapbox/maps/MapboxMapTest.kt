@@ -4,7 +4,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
-import com.mapbox.maps.plugin.delegates.listeners.*
+import com.mapbox.maps.listener.*
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -27,28 +27,24 @@ class MapboxMapTest {
   @Test
   fun loadStyleUri() {
     mapboxMap.loadStyleUri("foo")
-    verify { mapObserver.addOnMapChangedListener(any()) }
     verify { nativeMap.styleURI = "foo" }
   }
 
   @Test
   fun loadStyleUriLambda() {
-    mapboxMap.loadStyleUri("foo") {}
-    verify { mapObserver.addOnMapChangedListener(any()) }
+    mapboxMap.loadStyleUri("foo")
     verify { nativeMap.styleURI = "foo" }
   }
 
   @Test
   fun loadStyleJSON() {
     mapboxMap.loadStyleJSON("foo")
-    verify { mapObserver.addOnMapChangedListener(any()) }
     verify { nativeMap.styleJSON = "foo" }
   }
 
   @Test
   fun loadStyleJSONLambda() {
     mapboxMap.loadStyleJSON("foo") {}
-    verify { mapObserver.addOnMapChangedListener(any()) }
     verify { nativeMap.styleJSON = "foo" }
   }
 
@@ -56,7 +52,7 @@ class MapboxMapTest {
   fun loadStyle() {
     val stylePlugin = mockk<StyleContract.StyleExtension>()
     every { stylePlugin.styleUri } returns "foobar"
-    val onMapLoadError = mockk<OnMapLoadErrorListener>()
+    val onMapLoadError = mockk<Style.OnStyleError>()
     val onStyleLoadError = mockk<Style.OnStyleLoaded>()
     mapboxMap.loadStyle(stylePlugin, onStyleLoadError, onMapLoadError)
     verify { nativeMap.styleURI = "foobar" }
@@ -68,15 +64,6 @@ class MapboxMapTest {
     every { stylePlugin.styleUri } returns "foobar"
     mapboxMap.loadStyle(stylePlugin) {}
     verify { nativeMap.styleURI = "foobar" }
-  }
-
-  @Test
-  fun finishLoadingStyle() {
-    val styleLoadCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
-    val mapLoadError = mockk<OnMapLoadErrorListener>()
-    mapboxMap.onFinishLoadingStyle(styleLoadCallback, mapLoadError)
-    verify { styleLoadCallback.onStyleLoaded(any()) }
-    verify { mapObserver.awaitingStyleGetters.clear() }
   }
 
   @Test
@@ -166,34 +153,6 @@ class MapboxMapTest {
   fun getResourceOptions() {
     mapboxMap.getResourceOptions()
     verify { nativeMap.resourceOptions }
-  }
-
-  @Test
-  fun addOnMapChangedListener() {
-    val listener = mockk<OnMapChangedListener>()
-    mapboxMap.addOnMapChangedListener(listener)
-    verify { mapObserver.addOnMapChangedListener(listener) }
-  }
-
-  @Test
-  fun removeOnMapChangedListener() {
-    val listener = mockk<OnMapChangedListener>()
-    mapboxMap.removeOnMapChangedListener(listener)
-    verify { mapObserver.removeOnMapChangedListener(listener) }
-  }
-
-  @Test
-  fun addOnMapLoadErrorListener() {
-    val listener = mockk<OnMapLoadErrorListener>()
-    mapboxMap.addOnMapLoadErrorListener(listener)
-    verify { mapObserver.addOnMapLoadErrorListener(listener) }
-  }
-
-  @Test
-  fun removeOnMapLoadErrorListener() {
-    val listener = mockk<OnMapLoadErrorListener>()
-    mapboxMap.removeOnMapLoadErrorListener(listener)
-    verify { mapObserver.removeOnMapLoadErrorListener(listener) }
   }
 
   @Test

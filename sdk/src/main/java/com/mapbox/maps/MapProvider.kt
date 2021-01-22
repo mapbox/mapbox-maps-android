@@ -9,11 +9,9 @@ internal object MapProvider {
   fun getNativeMap(
     mapboxMapOptions: MapboxMapOptions,
     mapClient: MapClient,
-    mapObserver: MapObserver
   ): MapInterface = NativeMapImpl(
     Map(
       mapClient,
-      mapObserver,
       mapboxMapOptions.mapOptions,
       mapboxMapOptions.resourceOptions
     )

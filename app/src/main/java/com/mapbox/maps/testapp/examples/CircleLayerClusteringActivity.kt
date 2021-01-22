@@ -35,39 +35,40 @@ class CircleLayerClusteringActivity : AppCompatActivity() {
     val mapboxMap = mapView.getMapboxMap()
 
     mapboxMap.loadStyleUri(
-      Style.LIGHT
-    ) {
-      // Disable any type of fading transition when icons collide on the map. This enhances the visual
-      // look of the data clustering together and breaking apart.
-      it.styleTransition = TransitionOptions.Builder()
-        .duration(0)
-        .delay(0)
-        .enablePlacementTransitions(false)
-        .build()
-
-      mapboxMap.flyTo(
-        CameraOptions.Builder()
-          .center(Point.fromLngLat(-79.045, 12.099))
-          .zoom(3.0)
+      Style.LIGHT,
+      {
+        // Disable any type of fading transition when icons collide on the map. This enhances the visual
+        // look of the data clustering together and breaking apart.
+        it.styleTransition = TransitionOptions.Builder()
+          .duration(0)
+          .delay(0)
+          .enablePlacementTransitions(false)
           .build()
-      )
 
-      addClusteredGeoJsonSource(it)
+        mapboxMap.flyTo(
+          CameraOptions.Builder()
+            .center(Point.fromLngLat(-79.045, 12.099))
+            .zoom(3.0)
+            .build()
+        )
 
-      val drawable = ContextCompat.getDrawable(
-        this@CircleLayerClusteringActivity,
-        R.drawable.ic_cross
-      )
-      BitmapUtils.getBitmapFromDrawable(drawable)?.let { bitmap ->
-        it.addImage(CROSS_ICON_ID, bitmap, true)
+        addClusteredGeoJsonSource(it)
+
+        val drawable = ContextCompat.getDrawable(
+          this@CircleLayerClusteringActivity,
+          R.drawable.ic_cross
+        )
+        BitmapUtils.getBitmapFromDrawable(drawable)?.let { bitmap ->
+          it.addImage(CROSS_ICON_ID, bitmap, true)
+        }
+
+        Toast.makeText(
+          this@CircleLayerClusteringActivity,
+          R.string.zoom_map_in_and_out_instruction,
+          Toast.LENGTH_SHORT
+        ).show()
       }
-
-      Toast.makeText(
-        this@CircleLayerClusteringActivity,
-        R.string.zoom_map_in_and_out_instruction,
-        Toast.LENGTH_SHORT
-      ).show()
-    }
+    )
   }
 
   private fun addClusteredGeoJsonSource(style: Style) {

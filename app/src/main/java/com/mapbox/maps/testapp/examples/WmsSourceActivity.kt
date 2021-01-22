@@ -21,24 +21,25 @@ class WmsSourceActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_wms_source)
     mapView.getMapboxMap().loadStyleUri(
-      Style.LIGHT
-    ) {
-      it.addSource(
-        rasterSource(WMS_SOURCE_ID) {
-          tileSize(256)
-          tileSet(TILESET_JSON, listOf(WMS_SOURCE_URL)) {}
-        }
-      )
-
-      if (it.getLayer(BELOW_LAYER_ID) != null) {
-        it.addLayerBelow(
-          RasterLayer(RASTER_LAYER_ID, WMS_SOURCE_ID),
-          BELOW_LAYER_ID
+      Style.LIGHT,
+      {
+        it.addSource(
+          rasterSource(WMS_SOURCE_ID) {
+            tileSize(256)
+            tileSet(TILESET_JSON, listOf(WMS_SOURCE_URL)) {}
+          }
         )
-      } else {
-        it.addLayer(RasterLayer(RASTER_LAYER_ID, WMS_SOURCE_ID))
+
+        if (it.getLayer(BELOW_LAYER_ID) != null) {
+          it.addLayerBelow(
+            RasterLayer(RASTER_LAYER_ID, WMS_SOURCE_ID),
+            BELOW_LAYER_ID
+          )
+        } else {
+          it.addLayer(RasterLayer(RASTER_LAYER_ID, WMS_SOURCE_ID))
+        }
       }
-    }
+    )
   }
 
   override fun onStart() {

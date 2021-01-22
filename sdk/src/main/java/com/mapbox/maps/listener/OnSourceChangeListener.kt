@@ -1,4 +1,4 @@
-package com.mapbox.maps.plugin.delegates.listeners
+package com.mapbox.maps.listener
 
 /**
  * Definition for listener invoked whenever a source definition has changed.

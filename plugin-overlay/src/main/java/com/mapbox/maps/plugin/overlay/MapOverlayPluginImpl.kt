@@ -271,6 +271,7 @@ class MapOverlayPluginImpl : MapOverlayPlugin {
    */
   override fun cleanup() {
     unregisterMapOverlayCoordinatesProvider()
+    unregisterMapOverlayCoordinatesProvider()
     mapOverlays.clear()
   }
 

@@ -53,37 +53,43 @@ class LocationComponentTest {
   fun modelSourceTest() {
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
-        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) {
-          val locationComponent = mapView.getLocationPlugin()
-          locationComponent.activateLocationComponent(
-            LocationComponentActivationOptions
-              .builder(activity, it)
-              .useDefaultLocationEngine(false)
-              .locationModelLayerOptions(LocationModelLayerOptions("asset://race_car_model.gltf"))
-              .build()
-          )
-          locationComponent.enabled = true
-          locationComponent.randomLocationUpdates()
-          Handler().postDelayed(
-            {
-              locationComponent.randomLocationUpdates()
-              mapboxMap.loadStyleUri(Style.DARK) {
+        mapboxMap.loadStyleUri(
+          Style.MAPBOX_STREETS,
+          {
+            val locationComponent = mapView.getLocationPlugin()
+            locationComponent.activateLocationComponent(
+              LocationComponentActivationOptions
+                .builder(activity, it)
+                .useDefaultLocationEngine(false)
+                .locationModelLayerOptions(LocationModelLayerOptions("asset://race_car_model.gltf"))
+                .build()
+            )
+            locationComponent.enabled = true
+            locationComponent.randomLocationUpdates()
+            Handler().postDelayed(
+              {
                 locationComponent.randomLocationUpdates()
-                Handler().postDelayed(
+                mapboxMap.loadStyleUri(
+                  Style.DARK,
                   {
                     locationComponent.randomLocationUpdates()
-                    countDownLatch.countDown()
-                  },
-                  500
+                    Handler().postDelayed(
+                      {
+                        locationComponent.randomLocationUpdates()
+                        countDownLatch.countDown()
+                      },
+                      500
+                    )
+                    locationComponent.randomLocationUpdates()
+                  }
                 )
                 locationComponent.randomLocationUpdates()
-              }
-              locationComponent.randomLocationUpdates()
-            },
-            500
-          )
-          locationComponent.randomLocationUpdates()
-        }
+              },
+              500
+            )
+            locationComponent.randomLocationUpdates()
+          }
+        )
       }
     }
     countDownLatch = CountDownLatch(1)
@@ -96,36 +102,42 @@ class LocationComponentTest {
   fun locationLayerTest() {
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
-        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) {
-          val locationComponent = mapView.getLocationPlugin()
-          locationComponent.activateLocationComponent(
-            LocationComponentActivationOptions
-              .builder(activity, it)
-              .useDefaultLocationEngine(false)
-              .build()
-          )
-          locationComponent.enabled = true
-          locationComponent.randomLocationUpdates()
-          Handler().postDelayed(
-            {
-              locationComponent.randomLocationUpdates()
-              mapboxMap.loadStyleUri(Style.DARK) {
+        mapboxMap.loadStyleUri(
+          Style.MAPBOX_STREETS,
+          {
+            val locationComponent = mapView.getLocationPlugin()
+            locationComponent.activateLocationComponent(
+              LocationComponentActivationOptions
+                .builder(activity, it)
+                .useDefaultLocationEngine(false)
+                .build()
+            )
+            locationComponent.enabled = true
+            locationComponent.randomLocationUpdates()
+            Handler().postDelayed(
+              {
                 locationComponent.randomLocationUpdates()
-                Handler().postDelayed(
+                mapboxMap.loadStyleUri(
+                  Style.DARK,
                   {
                     locationComponent.randomLocationUpdates()
-                    countDownLatch.countDown()
-                  },
-                  500
+                    Handler().postDelayed(
+                      {
+                        locationComponent.randomLocationUpdates()
+                        countDownLatch.countDown()
+                      },
+                      500
+                    )
+                    locationComponent.randomLocationUpdates()
+                  }
                 )
                 locationComponent.randomLocationUpdates()
-              }
-              locationComponent.randomLocationUpdates()
-            },
-            500
-          )
-          locationComponent.randomLocationUpdates()
-        }
+              },
+              500
+            )
+            locationComponent.randomLocationUpdates()
+          }
+        )
       }
     }
     countDownLatch = CountDownLatch(1)

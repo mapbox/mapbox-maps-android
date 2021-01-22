@@ -7,8 +7,6 @@ import com.mapbox.annotation.module.MapboxModuleType
 import com.mapbox.common.Logger
 import com.mapbox.common.module.provider.MapboxModuleProvider
 import com.mapbox.common.module.provider.ModuleProviderArgument
-import com.mapbox.mapboxsdk.assets.AssetManagerProvider
-import com.mapbox.maps.loader.MapboxMapStaticInitializer
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.*
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
@@ -16,8 +14,6 @@ import com.mapbox.maps.plugin.annotation.AnnotationPluginImpl
 import com.mapbox.maps.plugin.attribution.AttributionPlugin
 import com.mapbox.maps.plugin.compass.CompassPlugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
-import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
-import com.mapbox.maps.plugin.delegates.listeners.OnMapChangedListener
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.location.LocationPlugin
 import com.mapbox.maps.plugin.logo.LogoPlugin
@@ -30,11 +26,9 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   private val renderer: MapboxRenderer
   private val mapObserver: NativeMapObserver
   private val mapboxMapOptions: MapboxMapOptions
-  private val nativeMap: MapInterface
   private val mapboxMap: MapboxMap
-  private val pluginRegistry: MapPluginRegistry
-  private val cameraChangeListener: OnCameraChangeListener
-  private val mapChangeListener: OnMapChangedListener
+  internal val pluginRegistry: MapPluginRegistry
+  internal val nativeMap: MapInterface
 
   constructor(
     renderer: MapboxRenderer,
@@ -44,11 +38,9 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.renderer = renderer
     this.mapObserver = mapObserver
     this.mapboxMapOptions = mapboxMapOptions
-    AssetManagerProvider().initialize(mapboxMapOptions.context.assets)
     this.nativeMap = MapProvider.getNativeMap(
       mapboxMapOptions,
-      renderer,
-      mapObserver
+      renderer
     )
     this.mapboxMap = MapProvider.getMapboxMap(nativeMap, mapObserver, mapboxMapOptions.pixelRatio)
     this.pluginRegistry = MapProvider.getMapPluginRegistry(
@@ -56,20 +48,6 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       this,
       dispatchTelemetryTurnstileEvent()
     )
-    this.cameraChangeListener = OnCameraChangeListener {
-      pluginRegistry.onCameraMove(nativeMap.getCameraOptions(null))
-    }
-    this.mapChangeListener = OnMapChangedListener {
-      when (it) {
-        MapChange.WILL_START_LOADING_MAP -> pluginRegistry.onStyleLoading()
-        MapChange.DID_FINISH_LOADING_STYLE -> mapboxMap.getStyle { style ->
-          pluginRegistry.onStyleChanged(
-            style
-          )
-        }
-        else -> Unit
-      }
-    }
     renderer.setMap(nativeMap)
     this.mapboxMapOptions.cameraOptions?.let {
       mapboxMap.jumpTo(it)
@@ -82,8 +60,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     mapboxMapOptions: MapboxMapOptions,
     nativeMap: MapInterface,
     mapboxMap: MapboxMap,
-    pluginRegistry: MapPluginRegistry,
-    mapChangeListener: OnMapChangedListener
+    pluginRegistry: MapPluginRegistry
   ) {
     this.renderer = renderer
     this.mapObserver = mapObserver
@@ -91,10 +68,6 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.nativeMap = nativeMap
     this.mapboxMap = mapboxMap
     this.pluginRegistry = pluginRegistry
-    this.cameraChangeListener = OnCameraChangeListener {
-      pluginRegistry.onCameraMove(nativeMap.getCameraOptions(null))
-    }
-    this.mapChangeListener = mapChangeListener
   }
 
   override fun getMapboxMap(): MapboxMap {
@@ -102,8 +75,6 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun onStart() {
-    mapObserver.addOnCameraChangeListener(cameraChangeListener)
-    mapObserver.addOnMapChangedListener(mapChangeListener)
     renderer.onStart()
     pluginRegistry.onStart()
   }
@@ -113,8 +84,6 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun onStop() {
-    mapObserver.removeOnCameraChangeListener(cameraChangeListener)
-    mapObserver.removeOnMapChangedListener(mapChangeListener)
     renderer.onStop()
     pluginRegistry.onStop()
   }
@@ -345,9 +314,5 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
 
   companion object {
     const val TAG = "MapController"
-
-    init {
-      MapboxMapStaticInitializer.loadMapboxMapNativeLib()
-    }
   }
 }

@@ -28,60 +28,63 @@ class LineActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_annotation)
-    mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
-      val annotationPlugin = mapView.getAnnotationPlugin()
-      lineManager = annotationPlugin.getLineManager().apply {
-        addClickListener(
-          OnLineClickListener {
-            Toast.makeText(
-              this@LineActivity,
-              "click",
-              Toast.LENGTH_LONG
-            ).show()
-            false
-          }
-        )
-
-        val points = listOf(
-          Point.fromLngLat(-4.375974, -2.178992),
-          Point.fromLngLat(-7.639772, -4.107888),
-          Point.fromLngLat(-11.439207, 2.798737),
-        )
-
-        val lineOptions: LineOptions = LineOptions()
-          .withPoints(points)
-          .withLineColor(ColorUtils.colorToRgbaString(Color.RED))
-          .withLineWidth(5.0)
-        create(lineOptions)
-
-        // random add lines across the globe
-        val lists: MutableList<List<Point>> = ArrayList<List<Point>>()
-        for (i in 0..99) {
-          lists.add(createRandomPoints())
-        }
-        val lineOptionsList = lists.map {
-          val color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
-          LineOptions()
-            .withPoints(it)
-            .withLineColor(ColorUtils.colorToRgbaString(color))
-        }
-
-        create(lineOptionsList)
-
-        try {
-          create(
-            FeatureCollection.fromJson(
-              Assets.loadStringFromAssets(
+    mapView.getMapboxMap().loadStyleUri(
+      Style.MAPBOX_STREETS,
+      {
+        val annotationPlugin = mapView.getAnnotationPlugin()
+        lineManager = annotationPlugin.getLineManager().apply {
+          addClickListener(
+            OnLineClickListener {
+              Toast.makeText(
                 this@LineActivity,
-                "annotations.json"
+                "click",
+                Toast.LENGTH_LONG
+              ).show()
+              false
+            }
+          )
+
+          val points = listOf(
+            Point.fromLngLat(-4.375974, -2.178992),
+            Point.fromLngLat(-7.639772, -4.107888),
+            Point.fromLngLat(-11.439207, 2.798737),
+          )
+
+          val lineOptions: LineOptions = LineOptions()
+            .withPoints(points)
+            .withLineColor(ColorUtils.colorToRgbaString(Color.RED))
+            .withLineWidth(5.0)
+          create(lineOptions)
+
+          // random add lines across the globe
+          val lists: MutableList<List<Point>> = ArrayList<List<Point>>()
+          for (i in 0..99) {
+            lists.add(createRandomPoints())
+          }
+          val lineOptionsList = lists.map {
+            val color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
+            LineOptions()
+              .withPoints(it)
+              .withLineColor(ColorUtils.colorToRgbaString(color))
+          }
+
+          create(lineOptionsList)
+
+          try {
+            create(
+              FeatureCollection.fromJson(
+                Assets.loadStringFromAssets(
+                  this@LineActivity,
+                  "annotations.json"
+                )
               )
             )
-          )
-        } catch (e: IOException) {
-          throw RuntimeException("Unable to parse annotations.json")
+          } catch (e: IOException) {
+            throw RuntimeException("Unable to parse annotations.json")
+          }
         }
       }
-    }
+    )
 
     deleteAll.setOnClickListener { lineManager?.deleteAll() }
   }

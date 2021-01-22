@@ -47,13 +47,13 @@ class SpaceStationLocationActivity : AppCompatActivity() {
     setContentView(R.layout.activity_lab_space_station_location)
     mapboxMap = mapView.getMapboxMap()
     mapboxMap.loadStyleUri(
-      Style.SATELLITE_STREETS
-    ) {
-      initSpaceStationSymbolLayer(it)
-      callApi()
-      showHintToast()
-    }
-
+      Style.SATELLITE_STREETS,
+      {
+        initSpaceStationSymbolLayer(it)
+        callApi()
+        showHintToast()
+      }
+    )
     mapboxMap.jumpTo(CameraOptions.Builder().zoom(2.0).build())
   }
 

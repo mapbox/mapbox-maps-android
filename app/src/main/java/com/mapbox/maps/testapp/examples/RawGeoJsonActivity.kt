@@ -43,8 +43,11 @@ class RawGeoJsonActivity : AppCompatActivity() {
     setContentView(R.layout.activity_simple_map)
     mapboxMap = mapView.getMapboxMap()
     mapboxMap.loadStyleUri(
-      Style.MAPBOX_STREETS
-    ) { addGeoJsonSource(it) }
+      Style.MAPBOX_STREETS,
+      {
+        addGeoJsonSource(it)
+      }
+    )
   }
 
   private fun addGeoJsonSource(style: Style) {

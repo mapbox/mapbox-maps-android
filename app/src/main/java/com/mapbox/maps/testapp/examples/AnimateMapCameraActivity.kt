@@ -24,15 +24,17 @@ class AnimateMapCameraActivity : AppCompatActivity(), OnMapClickListener {
     setContentView(R.layout.activity_camera_animate)
     mapboxMap = mapView.getMapboxMap()
     mapboxMap.loadStyleUri(
-      Style.MAPBOX_STREETS
-    ) { // Toast instructing user to tap on the map
-      Toast.makeText(
-        this@AnimateMapCameraActivity,
-        getString(R.string.tap_on_map_instruction),
-        Toast.LENGTH_LONG
-      ).show()
-      mapboxMap.addOnMapClickListener(this@AnimateMapCameraActivity)
-    }
+      Style.MAPBOX_STREETS,
+      {
+        // Toast instructing user to tap on the map
+        Toast.makeText(
+          this@AnimateMapCameraActivity,
+          getString(R.string.tap_on_map_instruction),
+          Toast.LENGTH_LONG
+        ).show()
+        mapboxMap.addOnMapClickListener(this@AnimateMapCameraActivity)
+      }
+    )
   }
 
   override fun onMapClick(point: Point): Boolean {

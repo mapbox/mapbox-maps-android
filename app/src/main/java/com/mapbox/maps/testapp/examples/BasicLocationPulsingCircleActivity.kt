@@ -43,11 +43,12 @@ class BasicLocationPulsingCircleActivity : AppCompatActivity() {
 
   private fun onMapReady() {
     mapboxMap.loadStyleUri(
-      Style.MAPBOX_STREETS
-    ) {
-      initLocationComponent(it)
-      lastStyleUri = it.styleURI
-    }
+      Style.MAPBOX_STREETS,
+      {
+        initLocationComponent(it)
+        lastStyleUri = it.styleURI
+      }
+    )
   }
 
   private fun initLocationComponent(style: Style) {
@@ -131,8 +132,8 @@ class BasicLocationPulsingCircleActivity : AppCompatActivity() {
   private fun loadNewStyle() {
     val styleUrl = if (lastStyleUri == Style.DARK) Style.LIGHT else Style.DARK
     mapboxMap.loadStyleUri(
-      styleUrl
-    ) { lastStyleUri = styleUrl }
+      styleUrl, { lastStyleUri = styleUrl }
+    )
   }
 
   override fun onRequestPermissionsResult(

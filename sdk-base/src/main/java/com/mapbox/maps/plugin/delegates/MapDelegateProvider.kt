@@ -43,11 +43,6 @@ interface MapDelegateProvider {
   val mapFeatureQueryDelegate: MapFeatureQueryDelegate
 
   /**
-   * Delegate used to manager listeners.
-   */
-  val mapListenerDelegate: MapListenerDelegate
-
-  /**
    * Delegate used for style state.
    */
   // TODO replace with style.isFullyLoaded

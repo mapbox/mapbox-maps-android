@@ -1,4 +1,4 @@
-package com.mapbox.maps.plugin.delegates.listeners
+package com.mapbox.maps.listener
 
 import com.mapbox.maps.RenderMode
 

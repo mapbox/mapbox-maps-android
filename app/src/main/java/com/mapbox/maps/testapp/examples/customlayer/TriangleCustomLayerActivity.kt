@@ -24,12 +24,13 @@ class TriangleCustomLayerActivity : AppCompatActivity() {
     setContentView(R.layout.activity_custom_layer)
     mapboxMap = mapView.getMapboxMap()
     mapboxMap.loadStyleUri(
-      Style.MAPBOX_STREETS
-    ) {
-      mapboxMap.jumpTo(CAMERA)
-      addCustomLayer(it)
-      initFab()
-    }
+      Style.MAPBOX_STREETS,
+      {
+        mapboxMap.jumpTo(CAMERA)
+        addCustomLayer(it)
+        initFab()
+      }
+    )
   }
 
   private fun addCustomLayer(style: Style) {

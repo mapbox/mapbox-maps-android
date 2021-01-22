@@ -12,9 +12,9 @@ import com.mapbox.maps.extension.style.layers.properties.generated.SkyType
 import com.mapbox.maps.extension.style.sources.generated.rasterDemSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.extension.style.terrain.generated.terrain
+import com.mapbox.maps.listener.OnDidFinishRenderingMapListener
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.easeTo
-import com.mapbox.maps.plugin.delegates.listeners.OnDidFinishRenderingMapListener
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_simple_map.*
 

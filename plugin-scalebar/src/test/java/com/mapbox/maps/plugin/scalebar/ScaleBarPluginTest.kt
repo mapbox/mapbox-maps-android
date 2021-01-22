@@ -9,7 +9,6 @@ import com.mapbox.maps.MapOptions
 import com.mapbox.maps.Projection
 import com.mapbox.maps.plugin.delegates.MapCameraDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.delegates.MapListenerDelegate
 import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarAttributeParser
 import io.mockk.*
@@ -29,7 +28,6 @@ class ScaleBarPluginTest {
   private val scaleBarView = mockk<ScaleBarImpl>(relaxUnitFun = true)
   private val delegateProvider = mockk<MapDelegateProvider>(relaxUnitFun = true)
   private val mapCameraDelegate = mockk<MapCameraDelegate>()
-  private val mapListenerManagerDelegate = mockk<MapListenerDelegate>(relaxed = true)
   private val mapTransformDelegate = mockk<MapTransformDelegate>()
   private val mapOptions = mockk<MapOptions>()
   private val mapView = mockk<FrameLayout>()
@@ -46,7 +44,6 @@ class ScaleBarPluginTest {
     every { mapTransformDelegate.getMapOptions() } returns mapOptions
     every { mapOptions.pixelRatio } returns 1.0f
     every { delegateProvider.mapCameraDelegate } returns mapCameraDelegate
-    every { delegateProvider.mapListenerDelegate } returns mapListenerManagerDelegate
     every { delegateProvider.mapTransformDelegate } returns mapTransformDelegate
     every { mapView.width } returns 1024
     every { mapView.context } returns context

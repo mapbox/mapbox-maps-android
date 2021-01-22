@@ -5,8 +5,6 @@ import android.annotation.TargetApi
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Build
-import android.os.Handler
-import android.os.Looper
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.SurfaceView
@@ -107,17 +105,23 @@ class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     } else {
       SurfaceView(context, attrs)
     }
+
+    val observer = NativeMapObserver()
     mapController = MapController(
       when (view) {
         is SurfaceView -> MapboxSurfaceHolderRenderer(view.holder)
         is TextureView -> MapboxTextureViewRenderer(WeakReference(view))
         else -> throw IllegalArgumentException("Provided view has to be a texture or a surface.")
       },
-      NativeMapObserver(Handler(Looper.getMainLooper())),
+      observer,
       options
     )
     addView(view, 0)
-
+    observer.initialize(
+      mapController.pluginRegistry,
+      mapController.nativeMap,
+      mapController.getMapboxMap()
+    )
     mapController.initializePlugins(this, context, attrs, options.pixelRatio)
   }
 

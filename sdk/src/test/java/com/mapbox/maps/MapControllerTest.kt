@@ -5,7 +5,6 @@ import android.view.MotionEvent
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.loader.MapboxMapStaticInitializer
 import com.mapbox.maps.plugin.MapPluginRegistry
-import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.renderer.MapboxRenderer
 import io.mockk.*
 import org.junit.Assert
@@ -58,8 +57,7 @@ class MapControllerTest {
     every {
       MapProvider.getNativeMap(
         mapboxMapOptions,
-        renderer,
-        mapObserver
+        renderer
       )
     } answers { nativeMap }
     every { nativeMap.getCameraOptions(any()) } returns cameraOptions
@@ -75,7 +73,6 @@ class MapControllerTest {
         nativeMap,
         mapboxMap,
         pluginRegistry,
-        mockk()
       )
   }
 
@@ -126,18 +123,6 @@ class MapControllerTest {
   @Test
   fun mapboxMapRequest() {
     Assert.assertEquals(mapboxMap, mapController.getMapboxMap())
-  }
-
-  @Test
-  fun cameraPluginNotified() {
-    val onCameraChangeListenerSlot = slot<OnCameraChangeListener>()
-    every { mapObserver.addOnCameraChangeListener(capture(onCameraChangeListenerSlot)) } answers {}
-    mapController.onStart()
-    val onCameraChangeListener = onCameraChangeListenerSlot.captured
-
-    onCameraChangeListener.onCameraChanged()
-    verify { nativeMap.getCameraOptions(null) }
-    verify { pluginRegistry.onCameraMove(cameraOptions) }
   }
 
   @Test

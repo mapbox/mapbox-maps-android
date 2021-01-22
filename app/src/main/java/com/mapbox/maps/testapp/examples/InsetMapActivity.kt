@@ -18,11 +18,11 @@ import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
+import com.mapbox.maps.listener.OnCameraChangeListener
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.plugin.attribution.getAttributionPlugin
 import com.mapbox.maps.plugin.compass.getCompassPlugin
-import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.plugin.gestures.getGesturesPlugin
 import com.mapbox.maps.plugin.logo.getLogoPlugin
 import com.mapbox.maps.plugin.scalebar.getScaleBarPlugin
@@ -41,8 +41,8 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
     mainMapView = findViewById(R.id.mapView)
     mainMapboxMap = mainMapView.getMapboxMap()
     mainMapboxMap.loadStyleUri(
-      styleUri = STYLE_URL
-    ) { mainMapboxMap.addOnCameraChangeListener(this@InsetMapActivity) }
+      styleUri = STYLE_URL, { mainMapboxMap.addOnCameraChangeListener(this@InsetMapActivity) }
+    )
 
     var insetMapFragment: MapFragment? =
       supportFragmentManager.findFragmentByTag(INSET_FRAGMENT_TAG) as? MapFragment
@@ -54,24 +54,25 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
       insetMapFragment.getMapAsync {
         insetMapboxMap = it
         insetMapboxMap.loadStyleUri(
-          styleUri = STYLE_URL
-        ) { style ->
-          val source = geoJsonSource(BOUNDS_LINE_LAYER_SOURCE_ID) {
-            feature(Feature.fromGeometry(LineString.fromLngLats(getRectanglePoints())))
-          }
-          style.addSource(source)
+          styleUri = STYLE_URL,
+          { style ->
+            val source = geoJsonSource(BOUNDS_LINE_LAYER_SOURCE_ID) {
+              feature(Feature.fromGeometry(LineString.fromLngLats(getRectanglePoints())))
+            }
+            style.addSource(source)
 
-          // The layer properties for our line. This is where we make the line dotted, set the color, etc.
-          val layer = lineLayer(BOUNDS_LINE_LAYER_LAYER_ID, BOUNDS_LINE_LAYER_SOURCE_ID) {
-            lineCap(LineCap.ROUND)
-            lineJoin(LineJoin.ROUND)
-            lineWidth(3.0)
-            lineColor(Color.YELLOW)
-            visibility(Visibility.VISIBLE)
+            // The layer properties for our line. This is where we make the line dotted, set the color, etc.
+            val layer = lineLayer(BOUNDS_LINE_LAYER_LAYER_ID, BOUNDS_LINE_LAYER_SOURCE_ID) {
+              lineCap(LineCap.ROUND)
+              lineJoin(LineJoin.ROUND)
+              lineWidth(3.0)
+              lineColor(Color.YELLOW)
+              visibility(Visibility.VISIBLE)
+            }
+            style.addLayer(layer)
+            updateInsetMapLineLayerBounds(style)
           }
-          style.addLayer(layer)
-          updateInsetMapLineLayerBounds(style)
-        }
+        )
         insetMapFragment.getMapView()?.apply {
           getLogoPlugin().enabled = false
           getScaleBarPlugin().enabled = false

@@ -18,8 +18,8 @@ class TestActivity : AppCompatActivity() {
 
     mapboxMap = mapView.getMapboxMap()
     mapboxMap.loadStyleUri(
-      Style.MAPBOX_STREETS
-    ) { loaded = true }
+      Style.MAPBOX_STREETS, { loaded = true }
+    )
   }
 
   override fun onStart() {

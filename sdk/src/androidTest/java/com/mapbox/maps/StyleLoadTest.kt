@@ -57,12 +57,13 @@ class StyleLoadTest {
         mapboxMap.getStyle { countDownLatch.countDown() }
 
         mapboxMap.loadStyleUri(
-          Style.MAPBOX_STREETS
-        ) { style ->
-          assertNotNull("Style should but non null", style)
-          assertTrue("Style should be fully loaded", style.fullyLoaded)
-          countDownLatch.countDown()
-        }
+          Style.MAPBOX_STREETS,
+          { style ->
+            assertNotNull("Style should but non null", style)
+            assertTrue("Style should be fully loaded", style.fullyLoaded)
+            countDownLatch.countDown()
+          }
+        )
       }
     }
     countDownLatch = CountDownLatch(2)
@@ -76,14 +77,15 @@ class StyleLoadTest {
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.loadStyleUri(
-          Style.MAPBOX_STREETS
-        ) { style ->
-          assertNotNull("Style should but non null", style)
-          assertTrue("Style should be fully loaded", style.fullyLoaded)
-          mapboxMap.loadStyleUri(Style.DARK)
-          assertFalse("Map shouldn't be fully loaded", style.fullyLoaded)
-          countDownLatch.countDown()
-        }
+          Style.MAPBOX_STREETS,
+          { style ->
+            assertNotNull("Style should but non null", style)
+            assertTrue("Style should be fully loaded", style.fullyLoaded)
+            mapboxMap.loadStyleUri(Style.DARK)
+            assertFalse("Map shouldn't be fully loaded", style.fullyLoaded)
+            countDownLatch.countDown()
+          }
+        )
       }
     }
     countDownLatch = CountDownLatch(1)

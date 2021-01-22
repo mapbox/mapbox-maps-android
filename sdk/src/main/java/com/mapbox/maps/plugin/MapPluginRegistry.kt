@@ -175,5 +175,11 @@ MapPluginRegistry(private val mapDelegateProvider: MapDelegateProvider) {
     plugins.forEach {
       it.value.cleanup()
     }
+    plugins.clear()
+    viewPlugins.clear()
+    cameraPlugins.clear()
+    gesturePlugins.clear()
+    styleObserverPlugins.clear()
+    mapSizePlugins.clear()
   }
 }

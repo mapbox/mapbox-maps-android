@@ -39,30 +39,31 @@ class PolygonHolesActivity : AppCompatActivity() {
           .build()
       )
       loadStyleUri(
-        Style.MAPBOX_STREETS
-      ) { style ->
-        val outerLineString: LineString = LineString.fromLngLats(POLYGON_COORDINATES)
-        val innerLineString: LineString = LineString.fromLngLats(HOLE_COORDINATES[0])
-        val secondInnerLineString: LineString = LineString.fromLngLats(HOLE_COORDINATES[1])
-        val innerList: MutableList<LineString> = ArrayList()
-        innerList.add(innerLineString)
-        innerList.add(secondInnerLineString)
-        style.addSource(
-          geoJsonSource(
-            "source-id"
-          ) {
-            feature(Feature.fromGeometry(Polygon.fromOuterInner(outerLineString, innerList)))
+        Style.MAPBOX_STREETS,
+        { style ->
+          val outerLineString: LineString = LineString.fromLngLats(POLYGON_COORDINATES)
+          val innerLineString: LineString = LineString.fromLngLats(HOLE_COORDINATES[0])
+          val secondInnerLineString: LineString = LineString.fromLngLats(HOLE_COORDINATES[1])
+          val innerList: MutableList<LineString> = ArrayList()
+          innerList.add(innerLineString)
+          innerList.add(secondInnerLineString)
+          style.addSource(
+            geoJsonSource(
+              "source-id"
+            ) {
+              feature(Feature.fromGeometry(Polygon.fromOuterInner(outerLineString, innerList)))
+            }
+          )
+          val polygonFillLayer: FillLayer = FillLayer("layer-id", "source-id").apply {
+            fillColor(BLUE_COLOR)
           }
-        )
-        val polygonFillLayer: FillLayer = FillLayer("layer-id", "source-id").apply {
-          fillColor(BLUE_COLOR)
+          if (style.getLayer("road-number-shield") != null) {
+            style.addLayerBelow(polygonFillLayer, "road-number-shield")
+          } else {
+            style.addLayer(polygonFillLayer)
+          }
         }
-        if (style.getLayer("road-number-shield") != null) {
-          style.addLayerBelow(polygonFillLayer, "road-number-shield")
-        } else {
-          style.addLayer(polygonFillLayer)
-        }
-      }
+      )
     }
   }
 

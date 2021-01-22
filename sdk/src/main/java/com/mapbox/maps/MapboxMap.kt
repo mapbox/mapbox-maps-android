@@ -4,9 +4,10 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
+import com.mapbox.maps.Style.OnStyleLoadedInternal
 import com.mapbox.maps.extension.style.StyleContract
+import com.mapbox.maps.listener.*
 import com.mapbox.maps.plugin.delegates.*
-import com.mapbox.maps.plugin.delegates.listeners.*
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -31,7 +32,6 @@ class MapboxMap internal constructor(
   MapProjectionDelegate,
   MapFeatureQueryDelegate,
   ObservableInterface,
-  MapListenerDelegate,
   MapStyleStateDelegate {
 
   private val nativeMapWeakRef = WeakReference(nativeMap)
@@ -66,22 +66,11 @@ class MapboxMap internal constructor(
   fun loadStyleUri(
     styleUri: String,
     onStyleLoaded: Style.OnStyleLoaded? = null,
-    onMapLoadErrorListener: OnMapLoadErrorListener? = null
+    onStyleError: Style.OnStyleError? = null
   ) {
-    initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener)
+    initializeStyleLoad(onStyleLoaded, onStyleError)
     nativeMapWeakRef.call { (this as StyleManagerInterface).styleURI = styleUri }
   }
-
-  /**
-   * Will load a new map style asynchronous from the specified URI.
-   *
-   * @param styleUri The style URI
-   * @param onStyleLoaded The OnStyleLoaded callback
-   */
-  fun loadStyleUri(
-    styleUri: String,
-    onStyleLoaded: Style.OnStyleLoaded
-  ) = loadStyleUri(styleUri, onStyleLoaded, null)
 
   /**
    * Load style JSON
@@ -89,9 +78,9 @@ class MapboxMap internal constructor(
   fun loadStyleJSON(
     json: String,
     onStyleLoaded: Style.OnStyleLoaded? = null,
-    onMapLoadErrorListener: OnMapLoadErrorListener? = null
+    onStyleError: Style.OnStyleError? = null
   ) {
-    initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener)
+    initializeStyleLoad(onStyleLoaded, onStyleError)
     nativeMapWeakRef.call {
       (this as StyleManagerInterface).styleJSON = json
     }
@@ -111,12 +100,12 @@ class MapboxMap internal constructor(
   fun loadStyle(
     styleExtension: StyleContract.StyleExtension,
     onStyleLoaded: Style.OnStyleLoaded? = null,
-    onMapLoadErrorListener: OnMapLoadErrorListener? = null
+    onStyleError: Style.OnStyleError? = null
   ) {
     this.loadStyleUri(
       styleExtension.styleUri,
       { style -> onFinishLoadingStylePlugin(style, styleExtension, onStyleLoaded) },
-      onMapLoadErrorListener
+      onStyleError
     )
   }
 
@@ -153,47 +142,44 @@ class MapboxMap internal constructor(
 
   private fun initializeStyleLoad(
     onStyleLoaded: Style.OnStyleLoaded? = null,
-    onMapLoadErrorListener: OnMapLoadErrorListener? = null
+    onStyleError: Style.OnStyleError? = null
   ) {
     if (::style.isInitialized) {
       style.fullyLoaded = false
     }
-    onMapLoadErrorListener?.let {
-      addOnMapLoadErrorListener(it)
-    }
-    addOnMapChangedListener(
-      object : OnMapChangedListener {
-        override fun onMapChange(mapChange: MapChange) {
-          if (mapChange == MapChange.DID_FINISH_LOADING_STYLE) {
-            onFinishLoadingStyle(onStyleLoaded, onMapLoadErrorListener)
-            removeOnMapChangedListener(this)
-          }
+
+    if (mapObserver.onStyleLoaded == null) {
+      mapObserver.onStyleLoaded = object : OnStyleLoadedInternal {
+        override fun onLoad(): Style {
+          return onFinishLoadingStyle()
         }
       }
-    )
+    }
+
+    onStyleLoaded?.let {
+      mapObserver.awaitingStyleGetters.add(it)
+    }
+
+    onStyleError?.let {
+      mapObserver.awaitingStyleErrors.add(it)
+    }
   }
 
   /**
    * Handle the style loading through native map
    */
-  internal fun onFinishLoadingStyle(
-    onStyleLoaded: Style.OnStyleLoaded? = null,
-    onMapLoadErrorListener: OnMapLoadErrorListener? = null
-  ) {
+  internal fun onFinishLoadingStyle(): Style {
     nativeMapWeakRef.get()?.let {
       style = Style(it as StyleManagerInterface, pixelRatio)
-      // notify the listener provided with the style setter
-      onStyleLoaded?.onStyleLoaded(style)
 
       // notify style getters
       for (styleGetter in mapObserver.awaitingStyleGetters) {
         styleGetter.onStyleLoaded(style)
       }
       mapObserver.awaitingStyleGetters.clear()
+      mapObserver.awaitingStyleErrors.clear()
     }
-    onMapLoadErrorListener?.let {
-      addOnMapLoadErrorListener(it)
-    }
+    return style
   }
 
   /**
@@ -874,100 +860,72 @@ class MapboxMap internal constructor(
   }
 
   /**
-   * Add a listener that's going to be invoked whenever map state changes.
-   */
-  override fun addOnMapChangedListener(onMapChangeListener: OnMapChangedListener) {
-    mapObserver.addOnMapChangedListener(onMapChangeListener)
-  }
-
-  /**
-   * Remove the map change listener.
-   */
-  override fun removeOnMapChangedListener(onMapChangedListener: OnMapChangedListener) {
-    mapObserver.removeOnMapChangedListener(onMapChangedListener)
-  }
-
-  /**
-   * Add a listener that's going to be invoked whenever a map load error occurs.
-   */
-  override fun addOnMapLoadErrorListener(onMapLoadErrorListener: OnMapLoadErrorListener) {
-    mapObserver.addOnMapLoadErrorListener(onMapLoadErrorListener)
-  }
-
-  /**
-   * Remove the map load error listener.
-   */
-  override fun removeOnMapLoadErrorListener(onMapLoadErrorListener: OnMapLoadErrorListener) {
-    mapObserver.removeOnMapLoadErrorListener(onMapLoadErrorListener)
-  }
-
-  /**
    * Add a listener that's going to be invoked whenever frame finished rendering.
    */
-  override fun addOnDidFinishRenderingFrameListener(onDidFinishRenderingFrameListener: OnDidFinishRenderingFrameListener) {
+  fun addOnDidFinishRenderingFrameListener(onDidFinishRenderingFrameListener: OnDidFinishRenderingFrameListener) {
     mapObserver.addOnDidFinishRenderingFrameListener(onDidFinishRenderingFrameListener)
   }
 
   /**
    * Remove the finish rendering frame listener.
    */
-  override fun removeOnDidFinishRenderingFrameListener(onDidFinishRenderingFrameListener: OnDidFinishRenderingFrameListener) {
+  fun removeOnDidFinishRenderingFrameListener(onDidFinishRenderingFrameListener: OnDidFinishRenderingFrameListener) {
     mapObserver.removeOnDidFinishRenderingFrameListener(onDidFinishRenderingFrameListener)
   }
 
   /**
    * Add a listener that's going to be invoked whenever the camera position changes.
    */
-  override fun addOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener) {
+  fun addOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener) {
     mapObserver.addOnCameraChangeListener(onCameraChangeListener)
   }
 
   /**
    * Remove the camera change listener.
    */
-  override fun removeOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener) {
+  fun removeOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener) {
     mapObserver.removeOnCameraChangeListener(onCameraChangeListener)
   }
 
   /**
    * Add a listener that's going to be invoked whenever a source changes.
    */
-  override fun addOnSourceChangeListener(onSourceChangeListener: OnSourceChangeListener) {
+  fun addOnSourceChangeListener(onSourceChangeListener: OnSourceChangeListener) {
     mapObserver.addOnSourceChangeListener(onSourceChangeListener)
   }
 
   /**
    * Remove the source change listener.
    */
-  override fun removeOnSourceChangeListener(onSourceChangeListener: OnSourceChangeListener) {
+  fun removeOnSourceChangeListener(onSourceChangeListener: OnSourceChangeListener) {
     mapObserver.removeOnSourceChangeListener(onSourceChangeListener)
   }
 
   /**
    * Add a listener that's going to be invoked whenever style image state changes.
    */
-  override fun addOnStyleImageChangeListener(onStyleImageChangeListener: OnStyleImageChangeListener) {
+  fun addOnStyleImageChangeListener(onStyleImageChangeListener: OnStyleImageChangeListener) {
     mapObserver.addOnStyleImageChangeListener(onStyleImageChangeListener)
   }
 
   /**
    * Remove the style image change listener.
    */
-  override fun removeOnStyleImageChangeListener(onStyleImageChangeListener: OnStyleImageChangeListener) {
+  fun removeOnStyleImageChangeListener(onStyleImageChangeListener: OnStyleImageChangeListener) {
     mapObserver.removeOnStyleImageChangeListener(onStyleImageChangeListener)
   }
 
   /**
    * Add a listener that's going to be invoked whenever the map finished rendering.
    */
-  override fun addOnDidFinishRenderingMapListener(onDidFinishRenderingMapListener: OnDidFinishRenderingMapListener) {
+  fun addOnDidFinishRenderingMapListener(onDidFinishRenderingMapListener: OnDidFinishRenderingMapListener) {
     mapObserver.addOnDidFinishRenderingMapListener(onDidFinishRenderingMapListener)
   }
 
   /**
    * Remove the did finish rendering map listener.
    */
-  override fun removeOnDidFinishRenderingMapListener(onDidFinishRenderingMapListener: OnDidFinishRenderingMapListener) {
+  fun removeOnDidFinishRenderingMapListener(onDidFinishRenderingMapListener: OnDidFinishRenderingMapListener) {
     mapObserver.removeOnDidFinishRenderingMapListener(onDidFinishRenderingMapListener)
   }
 

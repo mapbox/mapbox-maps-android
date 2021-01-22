@@ -12,6 +12,7 @@ import android.view.MotionEvent
 import android.view.animation.DecelerateInterpolator
 import com.mapbox.android.gestures.*
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.ObservableInterface
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
@@ -1587,112 +1588,112 @@ fun MapPluginProviderDelegate.getGesturesPlugin(): GesturesPlugin {
 /**
  * Add a callback that is invoked when the map is clicked.
  */
-fun MapListenerDelegate.addOnMapClickListener(onMapClickListener: OnMapClickListener) {
+fun ObservableInterface.addOnMapClickListener(onMapClickListener: OnMapClickListener) {
   gesturesPlugin?.addOnMapClickListener(onMapClickListener)
 }
 
 /**
  * Remove a callback that is invoked when the map is clicked.
  */
-fun MapListenerDelegate.removeOnMapClickListener(onMapClickListener: OnMapClickListener) {
+fun ObservableInterface.removeOnMapClickListener(onMapClickListener: OnMapClickListener) {
   gesturesPlugin?.removeOnMapClickListener(onMapClickListener)
 }
 
 /**
  * Add a callback that is invoked when the map is long clicked.
  */
-fun MapListenerDelegate.addOnMapLongClickListener(onMapLongClickListener: OnMapLongClickListener) {
+fun ObservableInterface.addOnMapLongClickListener(onMapLongClickListener: OnMapLongClickListener) {
   gesturesPlugin?.addOnMapLongClickListener(onMapLongClickListener)
 }
 
 /**
  * Remove a callback that is invoked when the map is long clicked.
  */
-fun MapListenerDelegate.removeOnMapLongClickListener(onMapLongClickListener: OnMapLongClickListener) {
+fun ObservableInterface.removeOnMapLongClickListener(onMapLongClickListener: OnMapLongClickListener) {
   gesturesPlugin?.removeOnMapLongClickListener(onMapLongClickListener)
 }
 
 /**
  * Add a callback that is invoked when the map is has received a fling gesture.
  */
-fun MapListenerDelegate.addOnFlingListener(onFlingListener: OnFlingListener) {
+fun ObservableInterface.addOnFlingListener(onFlingListener: OnFlingListener) {
   gesturesPlugin?.addOnFlingListener(onFlingListener)
 }
 
 /**
  * Remove a callback that is invoked when the map is has received a fling gesture.
  */
-fun MapListenerDelegate.removeOnFlingListener(onFlingListener: OnFlingListener) {
+fun ObservableInterface.removeOnFlingListener(onFlingListener: OnFlingListener) {
   gesturesPlugin?.removeOnFlingListener(onFlingListener)
 }
 
 /**
  * Add a callback that is invoked when the map is moved.
  */
-fun MapListenerDelegate.addOnMoveListener(listener: OnMoveListener) {
+fun ObservableInterface.addOnMoveListener(listener: OnMoveListener) {
   gesturesPlugin?.addOnMoveListener(listener)
 }
 
 /**
  * Remove a callback that is invoked when the map is moved.
  */
-fun MapListenerDelegate.removeOnMoveListener(listener: OnMoveListener) {
+fun ObservableInterface.removeOnMoveListener(listener: OnMoveListener) {
   gesturesPlugin?.removeOnMoveListener(listener)
 }
 
 /**
  * Add a callback that is invoked when the map is rotated.
  */
-fun MapListenerDelegate.addOnRotateListener(listener: OnRotateListener) {
+fun ObservableInterface.addOnRotateListener(listener: OnRotateListener) {
   gesturesPlugin?.addOnRotateListener(listener)
 }
 
 /**
  * Remove a callback that is invoked when the map is rotated.
  */
-fun MapListenerDelegate.removeOnRotateListener(listener: OnRotateListener) {
+fun ObservableInterface.removeOnRotateListener(listener: OnRotateListener) {
   gesturesPlugin?.removeOnRotateListener(listener)
 }
 
 /**
  * Add a callback that is invoked when the map is scaled.
  */
-fun MapListenerDelegate.addOnScaleListener(listener: OnScaleListener) {
+fun ObservableInterface.addOnScaleListener(listener: OnScaleListener) {
   gesturesPlugin?.addOnScaleListener(listener)
 }
 
 /**
  * Remove a callback that is invoked when the map is scaled.
  */
-fun MapListenerDelegate.removeOnScaleListener(listener: OnScaleListener) {
+fun ObservableInterface.removeOnScaleListener(listener: OnScaleListener) {
   gesturesPlugin?.removeOnScaleListener(listener)
 }
 
 /**
  * Add a callback that is invoked when the map is shoved.
  */
-fun MapListenerDelegate.addOnShoveListener(listener: OnShoveListener) {
+fun ObservableInterface.addOnShoveListener(listener: OnShoveListener) {
   gesturesPlugin?.addOnShoveListener(listener)
 }
 
 /**
  * Remove a callback that is invoked when the map is shoved.
  */
-fun MapListenerDelegate.removeOnShoveListener(listener: OnShoveListener) {
+fun ObservableInterface.removeOnShoveListener(listener: OnShoveListener) {
   gesturesPlugin?.removeOnShoveListener(listener)
 }
 
 /**
  * Get the current configured AndroidGesturesManager.
  */
-fun MapListenerDelegate.getGesturesManager(): AndroidGesturesManager? {
+fun ObservableInterface.getGesturesManager(): AndroidGesturesManager? {
   return gesturesPlugin?.getGesturesManager()
 }
 
 /**
  * Set the AndroidGesturesManager instance.
  */
-fun MapListenerDelegate.setGesturesManager(
+fun ObservableInterface.setGesturesManager(
   androidGesturesManager: AndroidGesturesManager,
   attachDefaultListeners: Boolean,
   setDefaultMutuallyExclusives: Boolean
@@ -1707,4 +1708,4 @@ fun MapListenerDelegate.setGesturesManager(
 /**
  * The gesture configuration object.
  */
-fun MapListenerDelegate.getGesturesSettings() = gesturesPlugin?.getSettings()
+fun ObservableInterface.getGesturesSettings() = gesturesPlugin?.getSettings()

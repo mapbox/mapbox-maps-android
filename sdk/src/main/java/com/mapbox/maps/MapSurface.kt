@@ -2,8 +2,6 @@ package com.mapbox.maps
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.os.Handler
-import android.os.Looper
 import android.view.MotionEvent
 import android.view.Surface
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
@@ -28,6 +26,7 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   private val mapObserver: MapObserver
   private val mapController: MapController
   private val renderer: MapboxSurfaceRenderer
+  private val nativeMapObserver: NativeMapObserver
 
   constructor(
     context: Context,
@@ -44,10 +43,16 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
     this.surface = surface
     this.mapObserver = mapObserver
     this.renderer = MapboxSurfaceRenderer()
+    this.nativeMapObserver = NativeMapObserver()
     this.mapController = MapController(
       renderer,
-      NativeMapObserver(Handler(Looper.getMainLooper())),
+      nativeMapObserver,
       mapboxMapOptions
+    )
+    nativeMapObserver.initialize(
+      mapController.pluginRegistry,
+      mapController.nativeMap,
+      mapController.getMapboxMap()
     )
     mapController.initializePlugins(
       null,

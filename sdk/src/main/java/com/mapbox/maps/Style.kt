@@ -827,4 +827,20 @@ class Style internal constructor(
      */
     fun onStyleLoaded(style: Style)
   }
+
+  /**
+   * Callback to be invoked when a style load has failed.
+   */
+  interface OnStyleError {
+    /**
+     * Invoked when a style has failed loading.
+     *
+     * @param errorMessage the error message of the style load failed event
+     */
+    fun onStyleError(errorMessage: String)
+  }
+
+  internal interface OnStyleLoadedInternal {
+    fun onLoad(): Style
+  }
 }

@@ -41,11 +41,12 @@ class LocationTrackingActivity : AppCompatActivity(), OnCameraTrackingChangedLis
         .build()
     )
     mapboxMap.loadStyleUri(
-      Style.MAPBOX_STREETS
-    ) {
-      initLocationComponent(it)
-      Style.MAPBOX_STREETS
-    }
+      Style.MAPBOX_STREETS,
+      {
+        initLocationComponent(it)
+        Style.MAPBOX_STREETS
+      }
+    )
   }
 
   private fun initLocationComponent(style: Style) {

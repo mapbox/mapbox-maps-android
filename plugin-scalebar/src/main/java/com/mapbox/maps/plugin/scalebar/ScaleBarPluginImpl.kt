@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.mapbox.maps.Projection.getMetersPerPixelAtLatitude
 import com.mapbox.maps.plugin.delegates.*
-import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarAttributeParser
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettingsBase
@@ -21,14 +20,9 @@ open class ScaleBarPluginImpl(
 
   private lateinit var scaleBar: ScaleBar
   private lateinit var mapCameraDelegate: MapCameraDelegate
-  private lateinit var mapListenerDelegate: MapListenerDelegate
   private lateinit var mapTransformDelegate: MapTransformDelegate
 
   override var internalSettings: ScaleBarSettings = ScaleBarSettings()
-
-  private val cameraChangeListener = OnCameraChangeListener {
-    invalidateScaleBar()
-  }
 
   override fun applySettings() {
     scaleBar.settings = internalSettings
@@ -42,7 +36,7 @@ open class ScaleBarPluginImpl(
   override fun onSizeChanged(width: Int, height: Int) {
     scaleBar.mapViewWidth = width.toFloat()
     if (enabled) {
-      invalidateScaleBar()
+      invalidateScaleBar(mapCameraDelegate.getLat(), mapCameraDelegate.getZoom())
     }
   }
 
@@ -60,10 +54,18 @@ open class ScaleBarPluginImpl(
   }
 
   /**
-   * Called when the map is destroyed. Should be used to cleanup plugin resources for that map.
+   * Called when the map camera is moved
    */
-  override fun cleanup() {
-    mapListenerDelegate.removeOnCameraChangeListener(cameraChangeListener)
+  override fun onCameraMove(
+    lat: Double,
+    lon: Double,
+    zoom: Double,
+    pitch: Double,
+    bearing: Double,
+    padding: Array<Double>?,
+    anchor: Pair<Double, Double>?
+  ) {
+    invalidateScaleBar(lat, zoom)
   }
 
   /**
@@ -71,17 +73,13 @@ open class ScaleBarPluginImpl(
    */
   override fun initialize() {
     applySettings()
-    mapListenerDelegate.addOnCameraChangeListener(cameraChangeListener)
   }
 
   /**
    * Invalid scale bar
    */
-  internal fun invalidateScaleBar() {
-    val metersPerPixelAtLatitude = getMetersPerPixelAtLatitude(
-      mapCameraDelegate.getLat(),
-      mapCameraDelegate.getZoom()
-    )
+  private fun invalidateScaleBar(lat: Double, zoom: Double) {
+    val metersPerPixelAtLatitude = getMetersPerPixelAtLatitude(lat, zoom)
     val pixelRatio = mapTransformDelegate.getMapOptions().pixelRatio
     scaleBar.distancePerPixel = (metersPerPixelAtLatitude / pixelRatio).toFloat()
   }
@@ -91,7 +89,6 @@ open class ScaleBarPluginImpl(
    */
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     mapCameraDelegate = delegateProvider.mapCameraDelegate
-    mapListenerDelegate = delegateProvider.mapListenerDelegate
     mapTransformDelegate = delegateProvider.mapTransformDelegate
   }
 
@@ -112,10 +109,7 @@ open class ScaleBarPluginImpl(
     get() = internalSettings.enabled
     set(value) {
       if (value) {
-        mapListenerDelegate.addOnCameraChangeListener(cameraChangeListener)
-        invalidateScaleBar()
-      } else {
-        mapListenerDelegate.removeOnCameraChangeListener(cameraChangeListener)
+        invalidateScaleBar(mapCameraDelegate.getLat(), mapCameraDelegate.getZoom())
       }
       internalSettings.enabled = value
       scaleBar.enable = value

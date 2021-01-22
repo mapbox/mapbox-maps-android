@@ -44,85 +44,89 @@ class SymbolActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_annotation)
-    mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) { style ->
-      BitmapUtils.getBitmapFromDrawable(
-        ResourcesCompat.getDrawable(
-          resources,
-          R.drawable.ic_airplanemode_active_black_24dp,
-          this@SymbolActivity.theme
-        )
-      )?.let {
-        style.addImage(
-          ID_ICON_AIRPORT,
-          it, true
-        )
-      }
-
-      val annotationPlugin = mapView.getAnnotationPlugin()
-      symbolManager = annotationPlugin.getSymbolManager().apply {
-        addClickListener(
-          OnSymbolClickListener {
-            Toast.makeText(this@SymbolActivity, "Click: $it", Toast.LENGTH_LONG).show()
-            false
-          }
-        )
-
-        addLongClickListener(
-          OnSymbolLongClickListener {
-            Toast.makeText(this@SymbolActivity, "LongClick: $it", Toast.LENGTH_LONG).show()
-            false
-          }
-        )
-
-        // set non data driven properties
-        iconAllowOverlap = true
-        textAllowOverlap = true
-
-        // create a symbol
-        val symbolOptions: SymbolOptions = SymbolOptions()
-          .withPoint(Point.fromLngLat(0.381457, 6.687337))
-          .withIconImage(ID_ICON_AIRPORT)
-          .withIconSize(1.3)
-          .withSymbolSortKey(10.0)
-          .withDraggable(true)
-        symbol = create(symbolOptions)
-
-        // create nearby symbols
-        val nearbyOptions: SymbolOptions = SymbolOptions()
-          .withPoint(Point.fromLngLat(0.367099, 6.626384))
-          .withIconImage(MAKI_ICON_CIRCLE)
-          .withIconColor(ColorUtils.colorToRgbaString(Color.YELLOW))
-          .withIconSize(2.5)
-          .withSymbolSortKey(5.0)
-          .withDraggable(true)
-        create(nearbyOptions)
-
-        // random add symbols across the globe
-        val symbolOptionsList: MutableList<SymbolOptions> = ArrayList()
-        for (i in 0..20) {
-          symbolOptionsList.add(
-            SymbolOptions()
-              .withPoint(createRandomPoints())
-              .withIconImage(MAKI_ICON_CAR)
-              .withDraggable(true)
+    mapView.getMapboxMap().loadStyleUri(
+      Style.MAPBOX_STREETS,
+      { style ->
+        BitmapUtils.getBitmapFromDrawable(
+          ResourcesCompat.getDrawable(
+            resources,
+            R.drawable.ic_airplanemode_active_black_24dp,
+            this@SymbolActivity.theme
+          )
+        )?.let {
+          style.addImage(
+            ID_ICON_AIRPORT,
+            it, true
           )
         }
-        create(symbolOptionsList)
 
-        try {
-          create(
-            FeatureCollection.fromJson(
-              Assets.loadStringFromAssets(
-                this@SymbolActivity,
-                "annotations.json"
+        val annotationPlugin = mapView.getAnnotationPlugin()
+        symbolManager = annotationPlugin.getSymbolManager().apply {
+          addClickListener(
+            OnSymbolClickListener {
+              Toast.makeText(this@SymbolActivity, "Click: $it", Toast.LENGTH_LONG).show()
+              false
+            }
+          )
+
+          addLongClickListener(
+            OnSymbolLongClickListener {
+              Toast.makeText(this@SymbolActivity, "LongClick: $it", Toast.LENGTH_LONG).show()
+              false
+            }
+          )
+
+          // set non data driven properties
+          iconAllowOverlap = true
+          textAllowOverlap = true
+
+          // create a symbol
+          val symbolOptions: SymbolOptions = SymbolOptions()
+            .withPoint(Point.fromLngLat(0.381457, 6.687337))
+            .withIconImage(ID_ICON_AIRPORT)
+            .withIconSize(1.3)
+            .withSymbolSortKey(10.0)
+            .withDraggable(true)
+          symbol = create(symbolOptions)
+
+          // create nearby symbols
+          val nearbyOptions: SymbolOptions = SymbolOptions()
+            .withPoint(Point.fromLngLat(0.367099, 6.626384))
+            .withIconImage(MAKI_ICON_CIRCLE)
+            .withIconColor(ColorUtils.colorToRgbaString(Color.YELLOW))
+            .withIconSize(2.5)
+            .withSymbolSortKey(5.0)
+            .withDraggable(true)
+          create(nearbyOptions)
+
+          // random add symbols across the globe
+          val symbolOptionsList: MutableList<SymbolOptions> = ArrayList()
+          for (i in 0..20) {
+            symbolOptionsList.add(
+              SymbolOptions()
+                .withPoint(createRandomPoints())
+                .withIconImage(MAKI_ICON_CAR)
+                .withDraggable(true)
+            )
+          }
+
+          create(symbolOptionsList)
+
+          try {
+            create(
+              FeatureCollection.fromJson(
+                Assets.loadStringFromAssets(
+                  this@SymbolActivity,
+                  "annotations.json"
+                )
               )
             )
-          )
-        } catch (e: IOException) {
-          throw RuntimeException("Unable to parse annotations.json")
+          } catch (e: IOException) {
+            throw RuntimeException("Unable to parse annotations.json")
+          }
         }
       }
-    }
+    )
 
     deleteAll.setOnClickListener { symbolManager?.deleteAll() }
   }

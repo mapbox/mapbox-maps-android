@@ -1,4 +1,4 @@
-package com.mapbox.maps.plugin.delegates.listeners
+package com.mapbox.maps.listener
 
 /**
  * Definition for listener invoked whenever an style image is requested that hasn't been added

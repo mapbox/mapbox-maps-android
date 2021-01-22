@@ -65,15 +65,16 @@ abstract class BaseMapTest {
 
   protected open fun loadMap() {
     val latch = CountDownLatch(1)
-    rule.scenario.onActivity {
-      it.runOnUiThread {
+    rule.scenario.onActivity { activity ->
+      activity.runOnUiThread {
         mapboxMap = mapView.getMapboxMap()
         mapboxMap.loadStyleUri(
-          Style.MAPBOX_STREETS
-        ) { style ->
-          this@BaseMapTest.style = style
-          latch.countDown()
-        }
+          Style.MAPBOX_STREETS,
+          {
+            this@BaseMapTest.style = it
+            latch.countDown()
+          }
+        )
         mapView.onStart()
       }
     }

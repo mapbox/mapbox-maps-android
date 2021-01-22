@@ -32,11 +32,12 @@ class LowLevelCameraAnimatorActivity : AppCompatActivity() {
     setContentView(R.layout.activity_camera_animate)
     mapboxMap = mapView.getMapboxMap()
     mapboxMap.loadStyleUri(
-      Style.MAPBOX_STREETS
-    ) {
-      setupBuildings(it)
-      animateCameraDelayed()
-    }
+      Style.MAPBOX_STREETS,
+      {
+        setupBuildings(it)
+        animateCameraDelayed()
+      }
+    )
   }
 
   private fun animateCameraDelayed() {

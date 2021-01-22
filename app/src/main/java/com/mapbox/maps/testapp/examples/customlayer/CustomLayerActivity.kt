@@ -24,13 +24,14 @@ class CustomLayerActivity : AppCompatActivity() {
     setContentView(R.layout.activity_custom_layer)
     mapboxMap = mapView.getMapboxMap()
     mapboxMap.loadStyleUri(
-      Style.MAPBOX_STREETS
-    ) {
-      mapboxMap.jumpTo(
-        CameraOptions.Builder().center(Point.fromLngLat(-243.60947, 39.91448)).zoom(10.0).build()
-      )
-      initFab()
-    }
+      Style.MAPBOX_STREETS,
+      {
+        mapboxMap.jumpTo(
+          CameraOptions.Builder().center(Point.fromLngLat(-243.60947, 39.91448)).zoom(10.0).build()
+        )
+        initFab()
+      }
+    )
   }
 
   private fun initFab() {
