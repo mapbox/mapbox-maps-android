@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.locationcomponent
 
 import android.animation.ValueAnimator
+import androidx.annotation.VisibleForTesting
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
 import com.mapbox.common.ValueConverter
@@ -17,22 +18,21 @@ import kotlin.math.pow
 internal class LocationPuckManager(
   var settings: LocationComponentSettings,
   private val delegateProvider: MapDelegateProvider,
-  style: StyleManagerInterface,
+  private val positionManager: LocationComponentPositionManager,
   private val layerSourceProvider: LayerSourceProvider,
+  private val animationManager: PuckAnimatorManager
 ) {
 
   var isHidden = true
     private set
-
-  private var positionManager =
-    LocationComponentPositionManager(style, settings.layerAbove, settings.layerBelow)
 
   private var lastLocation: Point =
     delegateProvider.mapCameraDelegate.getCameraOptions(null).center!!
 
   private var lastBearing: Double = delegateProvider.mapCameraDelegate.getBearing()
 
-  private var locationLayerRenderer =
+  @VisibleForTesting
+  internal var locationLayerRenderer =
     when (val puck = settings.locationPuck) {
       is LocationPuck2D -> {
         layerSourceProvider.getLocationIndicatorLayerRenderer(puck)
@@ -42,11 +42,8 @@ internal class LocationPuckManager(
       }
     }
 
-  private val animationManager = PuckAnimatorManager().apply {
-    setLocationLayerRenderer(locationLayerRenderer)
-  }
-
   fun initialize(style: StyleManagerInterface) {
+    animationManager.setLocationLayerRenderer(locationLayerRenderer)
     locationLayerRenderer.addLayers(positionManager)
     locationLayerRenderer.initializeComponents(style)
     if (settings.pulsingEnabled) {
@@ -68,6 +65,8 @@ internal class LocationPuckManager(
 
   fun updateSettings(settings: LocationComponentSettings) {
     this.settings = settings
+    positionManager.layerAbove = settings.layerAbove
+    positionManager.layerBelow = settings.layerBelow
     locationLayerRenderer.clearBitmaps()
     locationLayerRenderer.removeLayers()
     locationLayerRenderer = when (val locationPuck = settings.locationPuck) {
@@ -129,7 +128,8 @@ internal class LocationPuckManager(
     locationLayerRenderer.hide()
   }
 
-  private fun styleScaling(settings: LocationComponentSettings) {
+  @VisibleForTesting
+  internal fun styleScaling(settings: LocationComponentSettings) {
     val puck = settings.locationPuck
     val minZoom = delegateProvider.mapTransformDelegate.getBounds().minZoom ?: 0.0
     val maxZoom = delegateProvider.mapTransformDelegate.getBounds().maxZoom ?: 19.0
@@ -188,8 +188,8 @@ internal class LocationPuckManager(
 /**
  * Internal function to check if a method invoke on ValueConverter succeeded, throws exception if not.
  */
-private inline fun <reified T> Expected<T, String>?.take(): T {
-  this?.also {
+private inline fun <reified T> Expected<T, String>.take(): T {
+  this.also {
     it.error?.let { err ->
       throw RuntimeException(err)
     }
