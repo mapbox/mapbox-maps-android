@@ -100,22 +100,20 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
     }
   }
 
-  override fun onCameraChange(changeEvent: CameraChange, mode: CameraChangeMode) {
-    if (changeEvent != CameraChange.CAMERA_WILL_CHANGE) {
-      val mainCameraPosition = mainMapboxMap.getCameraOptions(null)
-      val insetCameraPosition = CameraOptions.Builder()
-        .zoom(mainCameraPosition.zoom?.minus(ZOOM_DISTANCE_BETWEEN_MAIN_AND_INSET_MAPS))
-        .bearing(mainCameraPosition.bearing)
-        .center(mainCameraPosition.center)
-        .build()
-      mainMapboxMap.flyTo(
-        insetCameraPosition,
-        mapAnimationOptions {
-          duration = DURATION_MS
-        }
-      )
-      insetMapboxMap.getStyle { style -> updateInsetMapLineLayerBounds(style) }
-    }
+  override fun onCameraChanged() {
+    val mainCameraPosition = mainMapboxMap.getCameraOptions(null)
+    val insetCameraPosition = CameraOptions.Builder()
+      .zoom(mainCameraPosition.zoom?.minus(ZOOM_DISTANCE_BETWEEN_MAIN_AND_INSET_MAPS))
+      .bearing(mainCameraPosition.bearing)
+      .center(mainCameraPosition.center)
+      .build()
+    mainMapboxMap.flyTo(
+      insetCameraPosition,
+      mapAnimationOptions {
+        duration = DURATION_MS
+      }
+    )
+    insetMapboxMap.getStyle { style -> updateInsetMapLineLayerBounds(style) }
   }
 
   private fun updateInsetMapLineLayerBounds(fullyLoadedStyle: Style) {

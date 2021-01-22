@@ -128,12 +128,21 @@ class NativeMapObserverTest {
   }
 
   @Test
-  fun addOnCameraChangeListener() {
+  fun addOnCameraChangeListenerDidChange() {
     val listener = mockk<OnCameraChangeListener>(relaxUnitFun = true)
     mapObserver.addOnCameraChangeListener(listener)
     mapObserver.onCameraChange(CameraChange.CAMERA_DID_CHANGE, CameraChangeMode.IMMEDIATE)
     runnableSlot.captured.run()
-    verify { listener.onCameraChange(CameraChange.CAMERA_DID_CHANGE, CameraChangeMode.IMMEDIATE) }
+    verify { listener.onCameraChanged() }
+  }
+
+  @Test
+  fun addOnCameraChangeListenerWillChange() {
+    val listener = mockk<OnCameraChangeListener>(relaxUnitFun = true)
+    mapObserver.addOnCameraChangeListener(listener)
+    mapObserver.onCameraChange(CameraChange.CAMERA_WILL_CHANGE, CameraChangeMode.IMMEDIATE)
+    runnableSlot.captured.run()
+    verify(exactly = 0) { listener.onCameraChanged() }
   }
 
   @Test
@@ -144,10 +153,7 @@ class NativeMapObserverTest {
     mapObserver.removeOnCameraChangeListener(listener)
     mapObserver.onCameraChange(CameraChange.CAMERA_DID_CHANGE, CameraChangeMode.IMMEDIATE)
     verify(exactly = 0) {
-      listener.onCameraChange(
-        CameraChange.CAMERA_DID_CHANGE,
-        CameraChangeMode.IMMEDIATE
-      )
+      listener.onCameraChanged()
     }
   }
 
@@ -160,10 +166,7 @@ class NativeMapObserverTest {
     mapObserver.onCameraChange(CameraChange.CAMERA_DID_CHANGE, CameraChangeMode.IMMEDIATE)
     runnableSlot.captured.run()
     verify(exactly = 0) {
-      listener.onCameraChange(
-        CameraChange.CAMERA_DID_CHANGE,
-        CameraChangeMode.IMMEDIATE
-      )
+      listener.onCameraChanged()
     }
   }
 
