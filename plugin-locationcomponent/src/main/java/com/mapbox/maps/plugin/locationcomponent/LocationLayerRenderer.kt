@@ -26,7 +26,7 @@ internal interface LocationLayerRenderer {
 
   fun setAccuracyRadius(accuracy: Float)
 
-  fun styleScaling(scaleExpression: List<Value>)
+  fun styleScaling(scaleExpression: Value)
 
   fun adjustPulsingCircleLayerVisibility(visible: Boolean)
 

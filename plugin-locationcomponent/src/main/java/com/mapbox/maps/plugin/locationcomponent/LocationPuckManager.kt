@@ -1,7 +1,9 @@
 package com.mapbox.maps.plugin.locationcomponent
 
 import android.animation.ValueAnimator
+import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
+import com.mapbox.common.ValueConverter
 import com.mapbox.geojson.Point
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.plugin.LocationPuck2D
@@ -9,6 +11,7 @@ import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
+import java.lang.RuntimeException
 import kotlin.math.pow
 
 internal class LocationPuckManager(
@@ -132,42 +135,67 @@ internal class LocationPuckManager(
     val maxZoom = delegateProvider.mapTransformDelegate.getBounds().maxZoom ?: 19.0
     when (puck) {
       is LocationPuck2D -> {
-        // do nothing for 2d puck.
+        val scaleExpression = puck.scaleExpression
+        if (scaleExpression != null) {
+          locationLayerRenderer.styleScaling(ValueConverter.fromJson(scaleExpression).take())
+        }
       }
       is LocationPuck3D -> {
-        val scaleExpression = arrayListOf(
-          Value("interpolate"),
-          Value(arrayListOf(Value("exponential"), Value(0.5))),
-          Value(arrayListOf(Value("zoom"))),
-          Value(minZoom),
+        val modelScaleExpression = puck.modelScaleExpression
+        val scaleExpression = if (modelScaleExpression == null) {
           Value(
             arrayListOf(
-              Value("literal"),
+              Value("interpolate"),
+              Value(arrayListOf(Value("exponential"), Value(0.5))),
+              Value(arrayListOf(Value("zoom"))),
+              Value(minZoom),
               Value(
                 arrayListOf(
-                  Value(2.0.pow(maxZoom - minZoom) * puck.modelScale[0].toDouble()),
-                  Value(2.0.pow(maxZoom - minZoom) * puck.modelScale[1].toDouble()),
-                  Value(2.0.pow(maxZoom - minZoom) * puck.modelScale[2].toDouble())
+                  Value("literal"),
+                  Value(
+                    arrayListOf(
+                      Value(2.0.pow(maxZoom - minZoom) * puck.modelScale[0].toDouble()),
+                      Value(2.0.pow(maxZoom - minZoom) * puck.modelScale[1].toDouble()),
+                      Value(2.0.pow(maxZoom - minZoom) * puck.modelScale[2].toDouble())
+                    )
+                  )
                 )
-              )
-            )
-          ),
-          Value(maxZoom),
-          Value(
-            arrayListOf(
-              Value("literal"),
+              ),
+              Value(maxZoom),
               Value(
                 arrayListOf(
-                  Value(puck.modelScale[0].toDouble()),
-                  Value(puck.modelScale[1].toDouble()),
-                  Value(puck.modelScale[2].toDouble())
+                  Value("literal"),
+                  Value(
+                    arrayListOf(
+                      Value(puck.modelScale[0].toDouble()),
+                      Value(puck.modelScale[1].toDouble()),
+                      Value(puck.modelScale[2].toDouble())
+                    )
+                  )
                 )
               )
             )
           )
-        )
+        } else {
+          ValueConverter.fromJson(modelScaleExpression).take()
+        }
         locationLayerRenderer.styleScaling(scaleExpression)
       }
     }
   }
+}
+
+/**
+ * Internal function to check if a method invoke on ValueConverter succeeded, throws exception if not.
+ */
+private inline fun <reified T> Expected<T, String>?.take(): T {
+  this?.also {
+    it.error?.let { err ->
+      throw RuntimeException(err)
+    }
+    it.value?.let { v ->
+      return v
+    }
+  }
+  throw RuntimeException("Error in parsing expression.")
 }

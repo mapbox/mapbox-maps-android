@@ -68,7 +68,7 @@ internal class LocationIndicatorLayerRenderer(
     layer.accuracyRadius(accuracy.toDouble())
   }
 
-  override fun styleScaling(scaleExpression: List<Value>) {
+  override fun styleScaling(scaleExpression: Value) {
     layer.shadowImageSize(scaleExpression)
     layer.bearingImageSize(scaleExpression)
     layer.topImageSize(scaleExpression)

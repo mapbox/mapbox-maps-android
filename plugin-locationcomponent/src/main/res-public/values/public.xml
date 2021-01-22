@@ -28,6 +28,8 @@
     <public name="mapbox_locationComponentLocationPuckLocationPuck2DBearingImage" type="attr" />
     <!-- Name of image in sprite to use as the background of the location indicator. -->
     <public name="mapbox_locationComponentLocationPuckLocationPuck2DShadowImage" type="attr" />
+    <!-- The scale expression of the images. If defined, it will be applied to all the three images. -->
+    <public name="mapbox_locationComponentLocationPuckLocationPuck2DScaleExpression" type="attr" />
 
     <!-- Location puck definitions for location_puck_3_d.  -->
 

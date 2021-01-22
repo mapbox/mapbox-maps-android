@@ -6,9 +6,11 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import com.mapbox.maps.Style
+import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.locationcomponent.getLocationComponentPlugin
+import com.mapbox.maps.plugin.toJson
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
 import kotlinx.android.synthetic.main.activity_simple_map.*
@@ -70,6 +72,18 @@ class LocationComponentActivity : AppCompatActivity() {
             this,
             com.mapbox.maps.plugin.locationcomponent.R.drawable.mapbox_user_stroke_icon
           ),
+          scaleExpression = interpolate {
+            linear()
+            zoom()
+            stop {
+              literal(0.0)
+              literal(0.6)
+            }
+            stop {
+              literal(20.0)
+              literal(1.0)
+            }
+          }.toJson()
         )
         is LocationPuck2D -> it.locationPuck = LocationPuck3D(
           modelUri = "asset://race_car_model.gltf",

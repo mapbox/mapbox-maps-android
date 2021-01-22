@@ -161,6 +161,10 @@ data class LocationPuck2D(
    * Name of image in sprite to use as the background of the location indicator.
    */
   var shadowImage: Drawable? = null,
+  /**
+   * The scale expression of the images. If defined, it will be applied to all the three images.
+   */
+  var scaleExpression: String? = null,
 ) : LocationPuck()
 
 /**

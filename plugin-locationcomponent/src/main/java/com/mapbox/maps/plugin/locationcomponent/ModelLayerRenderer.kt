@@ -64,7 +64,7 @@ internal class ModelLayerRenderer(
   override fun setAccuracyRadius(accuracy: Float) {
   }
 
-  override fun styleScaling(scaleExpression: List<Value>) {
+  override fun styleScaling(scaleExpression: Value) {
     modelLayer.modelScaleExpression(scaleExpression)
   }
 
