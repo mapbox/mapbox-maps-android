@@ -27,11 +27,11 @@ internal class LocationIndicatorLayerWrapper(layerId: String) : LocationLayerWra
 
   fun accuracyRadiusBorderColor(expression: List<Value>) = updateProperty("accuracy-radius-border-color", Value(expression))
 
-  fun shadowImageSize(shadowImageSizeExpression: List<Value>) = updateProperty("shadow-image-size", Value(shadowImageSizeExpression))
+  fun shadowImageSize(shadowImageSizeExpression: Value) = updateProperty("shadow-image-size", shadowImageSizeExpression)
 
-  fun bearingImageSize(bearingImageSizeExpression: List<Value>) = updateProperty("bearing-image-size", Value(bearingImageSizeExpression))
+  fun bearingImageSize(bearingImageSizeExpression: Value) = updateProperty("bearing-image-size", bearingImageSizeExpression)
 
-  fun topImageSize(topImageSizeExpression: List<Value>) = updateProperty("top-image-size", Value(topImageSizeExpression))
+  fun topImageSize(topImageSizeExpression: Value) = updateProperty("top-image-size", topImageSizeExpression)
 
   fun accuracyRadius(accuracyRadius: Double) = updateProperty("accuracy-radius", Value(accuracyRadius))
 

@@ -1,10 +1,10 @@
 package com.mapbox.maps.plugin.locationcomponent
 
-import android.graphics.Bitmap
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.plugin.LocationPuck3D
+import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_LAYER
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_SOURCE
 
 internal class ModelLayerRenderer(
@@ -21,7 +21,15 @@ internal class ModelLayerRenderer(
     source.bindTo(style)
   }
 
-  override fun isLayerInitialised(): Boolean {
+  override fun isRendererInitialised(): Boolean {
+    return isLayerInitialised() && isSourceInitialised()
+  }
+
+  private fun isLayerInitialised(): Boolean {
+    return style?.styleLayerExists(MODEL_LAYER) ?: false
+  }
+
+  private fun isSourceInitialised(): Boolean {
     return style?.styleSourceExists(MODEL_SOURCE) ?: false
   }
 
@@ -38,7 +46,7 @@ internal class ModelLayerRenderer(
     setLayerVisibility(false)
   }
 
-  override fun show(isStale: Boolean) {
+  override fun show() {
     setLayerVisibility(true)
   }
 
@@ -56,11 +64,8 @@ internal class ModelLayerRenderer(
   override fun setAccuracyRadius(accuracy: Float) {
   }
 
-  override fun styleScaling(scaleExpression: List<Value>) {
+  override fun styleScaling(scaleExpression: Value) {
     modelLayer.modelScaleExpression(scaleExpression)
-  }
-
-  override fun setLocationStale(isStale: Boolean) {
   }
 
   private fun setLayerVisibility(visible: Boolean) {
@@ -69,13 +74,17 @@ internal class ModelLayerRenderer(
 
   private fun setLayerLocation(latLng: Point) {
     val modelValues = listOf(latLng.longitude(), latLng.latitude())
-    source.setPosition(modelValues)
+    if (isSourceInitialised()) {
+      source.setPosition(modelValues)
+    }
   }
 
   private fun setLayerBearing(bearing: Double) {
     val orientation = locationModelLayerOptions.modelRotation.map { it.toDouble() }.toMutableList()
     orientation[2] = orientation[2] + bearing
-    modelLayer.modelRotation(orientation)
+    if (isLayerInitialised()) {
+      modelLayer.modelRotation(orientation)
+    }
   }
 
   /**
@@ -88,16 +97,6 @@ internal class ModelLayerRenderer(
    * Adjust the visual appearance of the pulsing LocationComponent circle.
    */
   override fun updatePulsingUi(pulsingColorInt: Int, radius: Float, opacity: Float?) {
-  }
-
-  override fun addBitmaps(
-    topBitmap: Bitmap?,
-    topStaleBitmap: Bitmap?,
-    bearingBitmap: Bitmap?,
-    bearingStaleBitmap: Bitmap?,
-    shadowBitmap: Bitmap?,
-    shadowStaleBitmap: Bitmap?
-  ) {
   }
 
   override fun clearBitmaps() {

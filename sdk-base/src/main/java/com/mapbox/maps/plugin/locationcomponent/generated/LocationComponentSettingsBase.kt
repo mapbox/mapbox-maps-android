@@ -3,7 +3,6 @@
 package com.mapbox.maps.plugin.locationcomponent.generated
 
 import com.mapbox.maps.plugin.LocationPuck
-import com.mapbox.maps.plugin.PresetPuckStyle
 
 /**
  * Abstract settings class for LocationComponentPlugin.
@@ -53,55 +52,7 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
 
   /**
-   * The stale state indicates to the user that the location being displayed on the map hasn't been updated in a specific amount of time. Currently only work for 2D location puck and presets.
-   */
-  override var staleStateEnabled: Boolean
-    get() {
-      return this.internalSettings.staleStateEnabled
-    }
-    set(value) {
-      this.internalSettings.staleStateEnabled = value
-      applySettings()
-    }
-
-  /**
-   * Set the delay before the location puck becomes stale. The timer begins approximately when a new location update comes in and using this defined time, if an update hasn't occured by the end, the location is considered stale. Currently only work for 2D location puck and presets.
-   */
-  override var staleStateTimeout: Long
-    get() {
-      return this.internalSettings.staleStateTimeout
-    }
-    set(value) {
-      this.internalSettings.staleStateTimeout = value
-      applySettings()
-    }
-
-  /**
-   * The scale factor of the location icon when the map is zoomed out. Scaling is linear. Currently only work for 2D location puck and presets.
-   */
-  override var minZoomIconScale: Float
-    get() {
-      return this.internalSettings.minZoomIconScale
-    }
-    set(value) {
-      this.internalSettings.minZoomIconScale = value
-      applySettings()
-    }
-
-  /**
-   * The scale factor of the location icon when the map is zoomed in. Scaling is linear. Currently only work for 2D location puck and presets.
-   */
-  override var maxZoomIconScale: Float
-    get() {
-      return this.internalSettings.maxZoomIconScale
-    }
-    set(value) {
-      this.internalSettings.maxZoomIconScale = value
-      applySettings()
-    }
-
-  /**
-   * Whether the location puck is pulsing on the map. Currently only work for 2D location puck and presets.
+   * Whether the location puck is pulsing on the map. Only work for 2D location puck.
    */
   override var pulsingEnabled: Boolean
     get() {
@@ -113,7 +64,7 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
 
   /**
-   * The color of the pulsing circle. Currently only work for 2D location puck and presets.
+   * The color of the pulsing circle. Only work for 2D location puck.
    */
   override var pulsingColor: Int
     get() {
@@ -125,7 +76,7 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
 
   /**
-   * The maximum radius of the pulsing circle. Currently only work for 2D location puck and presets.
+   * The maximum radius of the pulsing circle. Only work for 2D location puck.
    */
   override var pulsingMaxRadius: Float
     get() {
@@ -161,26 +112,14 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
 
   /**
-   * Defines what the customised look of the location puck. Defining the puck will overwrite the puck style preset.
+   * Defines what the customised look of the location puck.
    */
-  override var locationPuck: LocationPuck?
+  override var locationPuck: LocationPuck
     get() {
       return this.internalSettings.locationPuck
     }
     set(value) {
       this.internalSettings.locationPuck = value
-      applySettings()
-    }
-
-  /**
-   * Defines the preset puck styles bundled with the plugin.
-   */
-  override var presetPuckStyle: PresetPuckStyle
-    get() {
-      return this.internalSettings.presetPuckStyle
-    }
-    set(value) {
-      this.internalSettings.presetPuckStyle = value
       applySettings()
     }
 }

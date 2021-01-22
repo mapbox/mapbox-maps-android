@@ -6,7 +6,6 @@ import android.graphics.Color
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.maps.R
-import com.mapbox.maps.plugin.PresetPuckStyle
 import com.mapbox.maps.plugin.locationcomponent.getLocationComponentPlugin
 import com.mapbox.maps.testapp.BaseMapTest
 import org.junit.Assert.assertEquals
@@ -38,26 +37,6 @@ class LocationComponentAttributeParserTest : BaseMapTest() {
       mapView.getLocationComponentPlugin().getSettings().enabled
     )
     assertEquals(
-      "staleStateEnabled test failed..",
-      false,
-      mapView.getLocationComponentPlugin().getSettings().staleStateEnabled
-    )
-    assertEquals(
-      "staleStateTimeout test failed..",
-      1000000L,
-      mapView.getLocationComponentPlugin().getSettings().staleStateTimeout
-    )
-    assertEquals(
-      "minZoomIconScale test failed..",
-      0.9f,
-      mapView.getLocationComponentPlugin().getSettings().minZoomIconScale
-    )
-    assertEquals(
-      "maxZoomIconScale test failed..",
-      0.9f,
-      mapView.getLocationComponentPlugin().getSettings().maxZoomIconScale
-    )
-    assertEquals(
       "pulsingEnabled test failed..",
       false,
       mapView.getLocationComponentPlugin().getSettings().pulsingEnabled
@@ -83,11 +62,6 @@ class LocationComponentAttributeParserTest : BaseMapTest() {
       mapView.getLocationComponentPlugin().getSettings().layerBelow
     )
     // TODO, test for location puck.
-    assertEquals(
-      "presetPuckStyle test failed..",
-      PresetPuckStyle.PRECISE,
-      mapView.getLocationComponentPlugin().getSettings().presetPuckStyle
-    )
   }
 }
 

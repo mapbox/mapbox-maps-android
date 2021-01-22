@@ -1,6 +1,5 @@
 package com.mapbox.maps.plugin.locationcomponent
 
-import android.graphics.Bitmap
 import androidx.annotation.ColorInt
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
@@ -9,7 +8,7 @@ import com.mapbox.maps.StyleManagerInterface
 internal interface LocationLayerRenderer {
   fun initializeComponents(style: StyleManagerInterface)
 
-  fun isLayerInitialised(): Boolean
+  fun isRendererInitialised(): Boolean
 
   fun addLayers(positionManager: LocationComponentPositionManager)
 
@@ -17,7 +16,7 @@ internal interface LocationLayerRenderer {
 
   fun hide()
 
-  fun show(isStale: Boolean)
+  fun show()
 
   fun styleAccuracy(accuracyAlpha: Float, accuracyColor: Int)
 
@@ -27,9 +26,7 @@ internal interface LocationLayerRenderer {
 
   fun setAccuracyRadius(accuracy: Float)
 
-  fun styleScaling(scaleExpression: List<Value>)
-
-  fun setLocationStale(isStale: Boolean)
+  fun styleScaling(scaleExpression: Value)
 
   fun adjustPulsingCircleLayerVisibility(visible: Boolean)
 
@@ -38,15 +35,6 @@ internal interface LocationLayerRenderer {
     pulsingColorInt: Int,
     radius: Float,
     opacity: Float?
-  )
-
-  fun addBitmaps(
-    topBitmap: Bitmap?,
-    topStaleBitmap: Bitmap?,
-    bearingBitmap: Bitmap?,
-    bearingStaleBitmap: Bitmap?,
-    shadowBitmap: Bitmap?,
-    shadowStaleBitmap: Bitmap?
   )
 
   fun clearBitmaps()

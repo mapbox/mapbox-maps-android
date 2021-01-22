@@ -6,7 +6,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     mapbox:mapbox_locationComponentEnabled = "true"
-    mapbox:mapbox_locationComponentStaleStateEnabled = "true"
-    mapbox:mapbox_locationComponentStaleStateTimeout = "500"
-    mapbox:mapbox_locationComponentPresetPuckStyle = "precise"
     tools:context=".examples.LocationComponentActivity" />
