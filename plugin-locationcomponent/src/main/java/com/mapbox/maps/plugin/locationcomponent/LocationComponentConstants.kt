@@ -76,27 +76,12 @@ object LocationComponentConstants {
   const val TOP_ICON = "mapbox-location-top-icon"
 
   /**
-   * Image ID for the top stale icon of the location indicator layer.
-   */
-  const val TOP_STALE_ICON = "mapbox-location-top-stale-icon"
-
-  /**
    * Image ID for the shadow icon of the location indicator layer.
    */
   const val SHADOW_ICON = "mapbox-location-shadow-icon"
 
   /**
-   * Image ID for the shadow stale icon of the location indicator layer.
-   */
-  const val SHADOW_STALE_ICON = "mapbox-location-shadow-stale-icon"
-
-  /**
    * Image ID for the bearing icon of the location indicator layer.
    */
   const val BEARING_ICON = "mapbox-location-bearing-icon"
-
-  /**
-   * Image ID for the bearing stale icon of the location indicator layer.
-   */
-  const val BEARING_STALE_ICON = "mapbox-location-bearing-stale-icon"
 }

@@ -1,6 +1,5 @@
 package com.mapbox.maps.plugin.locationcomponent
 
-import android.graphics.Bitmap
 import androidx.annotation.ColorInt
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
@@ -8,12 +7,10 @@ import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.addStyleImage
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.BEARING_ICON
-import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.BEARING_STALE_ICON
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.LOCATION_INDICATOR_LAYER
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.SHADOW_ICON
-import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.SHADOW_STALE_ICON
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.TOP_ICON
-import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.TOP_STALE_ICON
+import com.mapbox.maps.plugin.locationcomponent.utils.BitmapUtils
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.Locale
@@ -28,9 +25,10 @@ internal class LocationIndicatorLayerRenderer(
 
   override fun initializeComponents(style: StyleManagerInterface) {
     this.style = style
+    setupBitmaps()
   }
 
-  override fun isLayerInitialised(): Boolean {
+  override fun isRendererInitialised(): Boolean {
     return style?.styleLayerExists(LOCATION_INDICATOR_LAYER) ?: false
   }
 
@@ -46,8 +44,7 @@ internal class LocationIndicatorLayerRenderer(
     setLayerVisibility(false)
   }
 
-  override fun show(isStale: Boolean) {
-    setImages(isStale)
+  override fun show() {
     setLayerVisibility(true)
   }
 
@@ -71,52 +68,47 @@ internal class LocationIndicatorLayerRenderer(
     layer.accuracyRadius(accuracy.toDouble())
   }
 
-  override fun styleScaling(scaleExpression: List<Value>) {
+  override fun styleScaling(scaleExpression: Value) {
     layer.shadowImageSize(scaleExpression)
     layer.bearingImageSize(scaleExpression)
     layer.topImageSize(scaleExpression)
   }
 
-  override fun setLocationStale(isStale: Boolean) {
-    setImages(isStale)
-  }
-
-  override fun addBitmaps(
-    topBitmap: Bitmap?,
-    topStaleBitmap: Bitmap?,
-    bearingBitmap: Bitmap?,
-    bearingStaleBitmap: Bitmap?,
-    shadowBitmap: Bitmap?,
-    shadowStaleBitmap: Bitmap?
-  ) {
-    topBitmap?.let { style?.addStyleImage(TOP_ICON, it) }
-    topStaleBitmap?.let { style?.addStyleImage(TOP_STALE_ICON, it) }
-    bearingBitmap?.let { style?.addStyleImage(BEARING_ICON, it) }
-    bearingStaleBitmap?.let { style?.addStyleImage(BEARING_STALE_ICON, it) }
-    shadowBitmap?.let { style?.addStyleImage(SHADOW_ICON, it) }
-    shadowStaleBitmap?.let { style?.addStyleImage(SHADOW_STALE_ICON, it) }
+  private fun setupBitmaps() {
+    puckOptions.topImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
+      ?.let { style?.addStyleImage(TOP_ICON, it) }
+    puckOptions.bearingImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
+      ?.let { style?.addStyleImage(BEARING_ICON, it) }
+    puckOptions.shadowImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
+      ?.let { style?.addStyleImage(SHADOW_ICON, it) }
+    layer.topImage(TOP_ICON)
+    layer.bearingImage(BEARING_ICON)
+    layer.shadowImage(SHADOW_ICON)
   }
 
   override fun clearBitmaps() {
     style?.removeStyleImage(TOP_ICON)
-    style?.removeStyleImage(TOP_STALE_ICON)
     style?.removeStyleImage(BEARING_ICON)
-    style?.removeStyleImage(BEARING_STALE_ICON)
     style?.removeStyleImage(SHADOW_ICON)
-    style?.removeStyleImage(SHADOW_STALE_ICON)
   }
 
   private fun setLayerVisibility(visible: Boolean) {
-    layer.visibility(visible)
+    if (isRendererInitialised()) {
+      layer.visibility(visible)
+    }
   }
 
   private fun setLayerLocation(latLng: Point) {
     val values = listOf(latLng.latitude(), latLng.longitude(), 0.0)
-    layer.location(values)
+    if (isRendererInitialised()) {
+      layer.location(values)
+    }
   }
 
   private fun setLayerBearing(bearing: Double) {
-    layer.bearing(bearing)
+    if (isRendererInitialised()) {
+      layer.bearing(bearing)
+    }
   }
 
   /**
@@ -141,15 +133,6 @@ internal class LocationIndicatorLayerRenderer(
     rgbaArray[3] = opacity ?: 1f
     layer.emphasisCircleRadius(radius.toDouble())
     layer.emphasisCircleColor(buildRGBAExpression(rgbaArray))
-  }
-
-  private fun setImages(isStale: Boolean) {
-    val topImage = if (isStale) TOP_STALE_ICON else TOP_ICON
-    val bearingImage = if (isStale) BEARING_STALE_ICON else BEARING_ICON
-    val shadowImage = if (isStale) SHADOW_STALE_ICON else SHADOW_ICON
-    layer.topImage(topImage)
-    layer.bearingImage(bearingImage)
-    layer.shadowImage(shadowImage)
   }
 
   companion object {

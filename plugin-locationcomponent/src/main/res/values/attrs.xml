@@ -4,25 +4,17 @@
     <declare-styleable name="mapbox_MapView">
         <!-- Whether the user location is visible on the map. -->
         <attr name="mapbox_locationComponentEnabled" format="boolean"/>
-        <!-- The stale state indicates to the user that the location being displayed on the map hasn't been updated in a specific amount of time. Currently only work for 2D location puck and presets. -->
-        <attr name="mapbox_locationComponentStaleStateEnabled" format="boolean"/>
-        <!-- Set the delay before the location puck becomes stale. The timer begins approximately when a new location update comes in and using this defined time, if an update hasn't occured by the end, the location is considered stale. Currently only work for 2D location puck and presets. -->
-        <attr name="mapbox_locationComponentStaleStateTimeout" format="integer"/>
-        <!-- The scale factor of the location icon when the map is zoomed out. Scaling is linear. Currently only work for 2D location puck and presets. -->
-        <attr name="mapbox_locationComponentMinZoomIconScale" format="float"/>
-        <!-- The scale factor of the location icon when the map is zoomed in. Scaling is linear. Currently only work for 2D location puck and presets. -->
-        <attr name="mapbox_locationComponentMaxZoomIconScale" format="float"/>
-        <!-- Whether the location puck is pulsing on the map. Currently only work for 2D location puck and presets. -->
+        <!-- Whether the location puck is pulsing on the map. Only work for 2D location puck. -->
         <attr name="mapbox_locationComponentPulsingEnabled" format="boolean"/>
-        <!-- The color of the pulsing circle. Currently only work for 2D location puck and presets. -->
+        <!-- The color of the pulsing circle. Only work for 2D location puck. -->
         <attr name="mapbox_locationComponentPulsingColor" format="color"/>
-        <!-- The maximum radius of the pulsing circle. Currently only work for 2D location puck and presets. -->
+        <!-- The maximum radius of the pulsing circle. Only work for 2D location puck. -->
         <attr name="mapbox_locationComponentPulsingMaxRadius" format="dimension"/>
         <!-- Sets the id of the layer that's added above to when placing the component on the map. -->
         <attr name="mapbox_locationComponentLayerAbove" format="string"/>
         <!-- Sets the id of the layer that's added below to when placing the component on the map. -->
         <attr name="mapbox_locationComponentLayerBelow" format="string"/>
-        <!-- Defines what the customised look of the location puck. Defining the puck will overwrite the puck style preset. -->
+        <!-- Defines what the customised look of the location puck. -->
         <attr name="mapbox_locationComponentLocationPuck" format="enum">
           <!--  -->
           <enum name="location_puck_2_d" value="0"/>
@@ -38,18 +30,8 @@
         <attr name="mapbox_locationComponentLocationPuckLocationPuck2DBearingImage" format="reference"/>
         <!-- Name of image in sprite to use as the background of the location indicator. -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck2DShadowImage" format="reference"/>
-        <!-- Defines the bearing color. -->
-        <attr name="mapbox_locationComponentLocationPuckLocationPuck2DBearingTintColor" format="color"/>
-        <!-- Defines the bearing color. -->
-        <attr name="mapbox_locationComponentLocationPuckLocationPuck2DBearingStaleTintColor" format="color"/>
-        <!-- Defines the foreground color -->
-        <attr name="mapbox_locationComponentLocationPuckLocationPuck2DTopTintColor" format="color"/>
-        <!-- Defines the foreground stale color. -->
-        <attr name="mapbox_locationComponentLocationPuckLocationPuck2DTopStaleTintColor" format="color"/>
-        <!-- Defines the background color -->
-        <attr name="mapbox_locationComponentLocationPuckLocationPuck2DShadowTintColor" format="color"/>
-        <!-- Defines the background stale color. -->
-        <attr name="mapbox_locationComponentLocationPuckLocationPuck2DShadowStaleTintColor" format="color"/>
+        <!-- The scale expression of the images. If defined, it will be applied to all the three images. -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck2DScaleExpression" format="string"/>
 
         <!-- Location puck definitions for location_puck_3_d.  -->
 
@@ -70,19 +52,6 @@
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_x" format="float"/>
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_y" format="float"/>
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_z" format="float"/>
-        <!-- Defines the preset puck styles bundled with the plugin. -->
-        <attr name="mapbox_locationComponentPresetPuckStyle" format="enum">
-          <!-- Defines a puck that is a standard dot with a halo. -->
-          <enum name="precise" value="0"/>
-          <!-- Defines a approximate ring that has a fixed radius based on approximate location permissions. -->
-          <enum name="approximate" value="1"/>
-          <!-- Defines a puck that matches the precise puck but contains a small arrow in the heading direction. -->
-          <enum name="heading_arrow" value="2"/>
-          <!-- Defines a puck that matches the precise puck but contains a beam in the heading direction. -->
-          <enum name="heading_beam" value="3"/>
-          <!-- Defines a puck that has an arrow and white circle around it. -->
-          <enum name="arrow" value="4"/>
-        </attr>
     </declare-styleable>
 </resources>
 <!-- End of generated file. -->

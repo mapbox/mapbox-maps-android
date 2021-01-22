@@ -42,9 +42,7 @@
     <string name="location_normal">Normal</string>
     <string name="location_tracking">Tracking:</string>
     <string name="location_none">None</string>
-    <string name="toggle_preset_puck_style">Toggle preset puck style</string>
-    <string name="toggle_3d_puck_style">Toggle 3D puck style</string>
-    <string name="toggle_2d_puck_style">Toggle 2D puck style</string>
+    <string name="toggle_customised_puck">Toggle customised puck style</string>
     <string name="toggle_custom_locationlayer_style">Toggle custom LocationLayer style</string>
     <string name="toggle_custom_map_style">Toggle custom Map style</string>
     <string name="location_disable_component">Disable Component</string>
