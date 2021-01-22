@@ -22,6 +22,8 @@ internal object CameraTransform {
 
   fun Double.deg2rad() = this * Math.PI / 180.0
 
+  fun MercatorCoordinate.offset(arg: MercatorCoordinate) = ScreenCoordinate(x - arg.x, y - arg.y)
+
   fun ScreenCoordinate.offset(arg: ScreenCoordinate) = ScreenCoordinate(x - arg.x, y - arg.y)
 
   fun getMapCenter(edgeInsets: EdgeInsets?, mapSize: Size): ScreenCoordinate {

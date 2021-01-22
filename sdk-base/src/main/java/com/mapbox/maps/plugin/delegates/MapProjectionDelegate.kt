@@ -197,7 +197,7 @@ interface MapProjectionDelegate {
    *
    * @return Returns a point on the map in Mercator projection.
    */
-  fun project(point: Point, zoomScale: Double): ScreenCoordinate
+  fun project(point: Point, zoomScale: Double): MercatorCoordinate
 
   /**
    * Calculate a coordinate for a given point on the map in Mercator Projection.
@@ -209,5 +209,5 @@ interface MapProjectionDelegate {
    *
    * @return Returns a coordinate.
    */
-  fun unproject(coordinate: ScreenCoordinate, zoomScale: Double): Point
+  fun unproject(coordinate: MercatorCoordinate, zoomScale: Double): Point
 }

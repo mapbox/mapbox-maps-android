@@ -606,4 +606,11 @@ class MapboxMapTest {
     mapboxMap.setFreeCameraOptions(options)
     verify { nativeMap.freeCameraOptions = options }
   }
+
+  @Test
+  fun getElevation() {
+    val point = mockk<Point>()
+    mapboxMap.getElevation(point)
+    verify { nativeMap.getElevation(point) }
+  }
 }

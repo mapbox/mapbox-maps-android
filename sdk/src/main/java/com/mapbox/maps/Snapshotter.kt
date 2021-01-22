@@ -130,15 +130,6 @@ class Snapshotter : MapSnapshotterObserver {
   }
 
   /**
-   * Rectangular bounds to which the snapshot is restricted.
-   *
-   * @param bounds Rectangular bounds.
-   */
-  fun setRegion(bounds: CoordinateBounds) {
-    coreSnapshotter.region = bounds
-  }
-
-  /**
    * Get the previously set rectangular bounds.
    *
    * @return CoordinateBounds

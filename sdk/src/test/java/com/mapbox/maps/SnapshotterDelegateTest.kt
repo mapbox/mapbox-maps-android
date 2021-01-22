@@ -91,13 +91,6 @@ class SnapshotterDelegateTest {
   }
 
   @Test
-  fun setRegion() {
-    val value = mockk<CoordinateBounds>()
-    snapshotter.setRegion(value)
-    verify { coreSnapshotter.region = value }
-  }
-
-  @Test
   fun getRegion() {
     snapshotter.getRegion()
     verify { coreSnapshotter.region }
