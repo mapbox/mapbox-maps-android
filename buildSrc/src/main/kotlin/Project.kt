@@ -65,6 +65,8 @@ object Dependencies {
   const val androidTestOrchestrator = androidxOrchestrator
   const val mapboxBaseAndroid = mapboxBase
   const val kotlinLib = kotlin
+  const val androidXTestCore = androidxTestCore
+  const val androidXStartupRuntime = "androidx.startup:startup-runtime:1.0.0"
 }
 
 object Versions {
@@ -82,8 +84,8 @@ object Versions {
   const val mapboxGestures = "0.7.0"
   const val mapboxJavaServices = "5.4.1"
   const val mapboxBase = "0.5.0"
-  const val mapboxGlNative = "10.0.0-beta.12"
-  const val mapboxCommon = "10.0.0-beta.7"
+  const val mapboxGlNative = "10.0.0-beta.13"
+  const val mapboxCommon = "10.0.0-beta.8"
   const val mapboxAndroidCore = "3.1.1"
   const val mapboxAndroidTelemetry = "6.2.2"
   const val androidxCore = "1.3.1"

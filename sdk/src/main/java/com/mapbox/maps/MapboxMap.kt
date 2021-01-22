@@ -601,7 +601,7 @@ class MapboxMap internal constructor(
    *
    * @return Returns a point on the map in Mercator projection.
    */
-  override fun project(point: Point, zoomScale: Double): ScreenCoordinate =
+  override fun project(point: Point, zoomScale: Double): MercatorCoordinate =
     Projection.project(point, zoomScale)
 
   /**
@@ -614,7 +614,7 @@ class MapboxMap internal constructor(
    *
    * @return Returns a coordinate.
    */
-  override fun unproject(coordinate: ScreenCoordinate, zoomScale: Double): Point =
+  override fun unproject(coordinate: MercatorCoordinate, zoomScale: Double): Point =
     Projection.unproject(coordinate, zoomScale)
 
   /**
@@ -995,6 +995,15 @@ class MapboxMap internal constructor(
   fun setFreeCameraOptions(options: FreeCameraOptions) {
     nativeMapWeakRef.call { this.freeCameraOptions = options }
   }
+
+  /**
+   * Get elevation for given coordinate. Value is available only for the visible region on the screen, if terrain (DEM) tile is available.
+   *
+   * @param coordinate defined as longitude-latitude pair.
+   *
+   * @return Elevation (in meters) multiplied by current terrain exaggeration, or empty if elevation for the coordinate is not available.
+   */
+  fun getElevation(coordinate: Point) = nativeMapWeakRef.call { this.getElevation(coordinate) }
 
   /**
    * Returns if the style has been fully loaded.

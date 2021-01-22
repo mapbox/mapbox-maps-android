@@ -5,6 +5,7 @@ import android.view.animation.Interpolator
 import androidx.core.view.animation.PathInterpolatorCompat
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MercatorCoordinate
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.CameraTransform.deg2rad
@@ -387,7 +388,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           // ρ-screenfuls.
           val s = fraction * S
           val us = if (fraction == 1.0f) 1.0 else u(s)
-          val interpolated = ScreenCoordinate(
+          val interpolated = MercatorCoordinate(
             startPoint.x + us * (endPoint.x - startPoint.x),
             startPoint.y + us * (endPoint.y - startPoint.y)
           )

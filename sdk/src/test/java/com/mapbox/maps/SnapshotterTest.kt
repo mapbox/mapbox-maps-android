@@ -1,7 +1,6 @@
 package com.mapbox.maps
 
 import com.mapbox.common.ShadowLogger
-import com.mapbox.geojson.Point
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -96,13 +95,6 @@ class SnapshotterTest {
   fun getCameraOptions() {
     snapshotter.getCameraOptions()
     verify { coreSnapshotter.cameraOptions }
-  }
-
-  @Test
-  fun setRegion() {
-    val bounds = CoordinateBounds(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))
-    snapshotter.setRegion(bounds)
-    verify { coreSnapshotter.region = bounds }
   }
 
   @Test
