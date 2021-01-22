@@ -1,5 +1,11 @@
 <!-- This file was generated. Use `python scripts/license-generate.py`to update. -->  
 ## Additional Mapbox Maps Android licenses  
+Mapbox Maps Android uses portions of the Android App Startup Runtime.
+URL: [https://developer.android.com/jetpack/androidx/releases/startup#1.0.0](https://developer.android.com/jetpack/androidx/releases/startup#1.0.0)
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
 Mapbox Maps Android uses portions of the Android Arch-Common.
 URL: [https://developer.android.com/topic/libraries/architecture/index.html](https://developer.android.com/topic/libraries/architecture/index.html)
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -32,6 +38,12 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 Mapbox Maps Android uses portions of the Android Support Library compat.
 URL: [https://developer.android.com/jetpack/androidx](https://developer.android.com/jetpack/androidx)
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Maps Android uses portions of the Android Tracing.
+URL: [https://developer.android.com/jetpack/androidx/releases/tracing#1.0.0](https://developer.android.com/jetpack/androidx/releases/tracing#1.0.0)
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
