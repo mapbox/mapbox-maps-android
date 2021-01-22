@@ -56,7 +56,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       this,
       dispatchTelemetryTurnstileEvent()
     )
-    this.cameraChangeListener = OnCameraChangeListener { _, _ ->
+    this.cameraChangeListener = OnCameraChangeListener {
       pluginRegistry.onCameraMove(nativeMap.getCameraOptions(null))
     }
     this.mapChangeListener = OnMapChangedListener {
@@ -91,7 +91,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.nativeMap = nativeMap
     this.mapboxMap = mapboxMap
     this.pluginRegistry = pluginRegistry
-    this.cameraChangeListener = OnCameraChangeListener { _, _ ->
+    this.cameraChangeListener = OnCameraChangeListener {
       pluginRegistry.onCameraMove(nativeMap.getCameraOptions(null))
     }
     this.mapChangeListener = mapChangeListener

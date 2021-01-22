@@ -1,19 +1,19 @@
 package com.mapbox.maps.plugin.delegates.listeners
 
-import com.mapbox.maps.CameraChange
-import com.mapbox.maps.CameraChangeMode
+import com.mapbox.maps.plugin.animation.CameraAnimationsLifecycleListener
+import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
+import com.mapbox.maps.plugin.animation.CameraAnimatorChangeListener
 
 /**
  * Definition for listener invoked whenever the camera position changes.
- * See [CameraChange] and [CameraChangeMode].
  */
 fun interface OnCameraChangeListener {
 
   /**
    * Invoked whenever camera position changes.
    *
-   * @param changeEvent the [CameraChange] event
-   * @param mode the [CameraChangeMode] mode
+   * For more precise information about actual map camera animations
+   * please check [CameraAnimationsPlugin], [CameraAnimationsLifecycleListener] and [CameraAnimatorChangeListener]
    */
-  fun onCameraChange(changeEvent: CameraChange, mode: CameraChangeMode)
+  fun onCameraChanged()
 }

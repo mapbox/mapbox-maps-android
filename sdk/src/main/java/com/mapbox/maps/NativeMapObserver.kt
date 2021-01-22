@@ -60,7 +60,9 @@ internal class NativeMapObserver(private val mainHandler: Handler) : MapObserver
       return
     }
     mainHandler.post {
-      onCameraChangeListeners.forEach { it.onCameraChange(changeEvent, mode) }
+      if (changeEvent == CameraChange.CAMERA_DID_CHANGE) {
+        onCameraChangeListeners.forEach { it.onCameraChanged() }
+      }
     }
   }
 
