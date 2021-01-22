@@ -4,6 +4,7 @@ import android.animation.ValueAnimator
 import com.mapbox.geojson.Point
 import com.mapbox.maps.plugin.locationcomponent.LocationLayerRenderer
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
+import com.mapbox.maps.plugin.locationcomponent.utils.MathUtils
 
 internal class PuckAnimatorManager {
 
@@ -30,7 +31,16 @@ internal class PuckAnimatorManager {
   }
 
   fun animateBearing(vararg targets: Double, options: (ValueAnimator.() -> Unit)?) {
-    bearingAnimator.animate(*targets.toTypedArray(), options = options)
+    val optimized = DoubleArray(targets.size)
+    targets.toTypedArray().apply {
+      for (i in 0 until size) {
+        optimized[i] = if (i == 0)
+          MathUtils.normalize(get(i))
+        else
+          MathUtils.shortestRotation(MathUtils.normalize(get(i)), optimized[i - 1])
+      }
+    }
+    bearingAnimator.animate(*optimized.toTypedArray(), options = options)
   }
 
   fun animatePoints(vararg targets: Point, options: (ValueAnimator.() -> Unit)?) {

@@ -49,7 +49,7 @@ internal object CameraTransform {
     cameraOptions: CameraOptions,
     mapTransformDelegate: MapTransformDelegate,
     mapProjectionDelegate: MapProjectionDelegate
-  ): Point? {
+  ): Point {
     val mapOptions = mapTransformDelegate.getMapOptions()
     val mapCenter = getMapCenter(
       cameraOptions.padding,
