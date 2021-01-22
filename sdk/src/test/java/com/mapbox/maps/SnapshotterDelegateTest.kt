@@ -1,6 +1,7 @@
 package com.mapbox.maps
 
 import com.mapbox.common.ShadowLogger
+import com.mapbox.geojson.Point
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -94,6 +95,14 @@ class SnapshotterDelegateTest {
   fun getRegion() {
     snapshotter.getRegion()
     verify { coreSnapshotter.region }
+  }
+
+  @Test
+  fun cameraForCoordinates() {
+    val coordinate = mockk<Point>()
+    val padding = mockk<EdgeInsets>()
+    snapshotter.cameraForCoordinates(listOf(coordinate), padding, 0.0, 0.0)
+    verify { coreSnapshotter.cameraForCoordinates(listOf(coordinate), padding, 0.0, 0.0) }
   }
 
   @Test

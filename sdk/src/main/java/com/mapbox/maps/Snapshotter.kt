@@ -12,6 +12,7 @@ import androidx.core.content.res.ResourcesCompat
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.common.Logger
+import com.mapbox.geojson.Point
 import com.mapbox.maps.attribution.AttributionLayout
 import com.mapbox.maps.attribution.AttributionMeasure
 import com.mapbox.maps.attribution.AttributionParser
@@ -136,6 +137,20 @@ class Snapshotter : MapSnapshotterObserver {
    */
   fun getRegion(): CoordinateBounds {
     return coreSnapshotter.region
+  }
+
+  /**
+   * Convenience method that returns the camera options object for given arguments
+   *
+   * @param coordinates The coordinates representing the bounds of the map
+   * @param padding The edge padding of the map
+   * @param bearing The bearing of the map
+   * @param pitch The pitch of the map
+   *
+   * @return Returns the camera options object representing the provided params
+   */
+  fun cameraForCoordinates(coordinates: List<Point>, padding: EdgeInsets, bearing: Double, pitch: Double): CameraOptions {
+    return coreSnapshotter.cameraForCoordinates(coordinates, padding, bearing, pitch)
   }
 
   /**
