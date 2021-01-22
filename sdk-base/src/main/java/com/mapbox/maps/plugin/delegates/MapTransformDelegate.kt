@@ -18,7 +18,7 @@ interface MapTransformDelegate {
    *
    * @param edgeInsets The optional padding
    */
-  fun getCameraOptions(edgeInsets: EdgeInsets?): CameraOptions
+  fun getCameraOptions(edgeInsets: EdgeInsets? = null): CameraOptions
 
   /**
    * Notify map about gesture being in progress.
