@@ -154,7 +154,7 @@ internal class LocationLayerAnimatorCoordinator(
    * This method also adds the animator to this class' animator array.
    *
    * @param options the [LocationComponentOptions] passed to this class upstream from the
-   * [LocationComponentPlugin].
+   * [LocationPluginImpl].
    */
   fun startLocationComponentCirclePulsing(options: LocationComponentOptions) {
     cancelAnimator(ANIMATOR_PULSING_CIRCLE)

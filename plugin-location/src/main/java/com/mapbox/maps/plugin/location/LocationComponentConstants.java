@@ -1,7 +1,7 @@
 package com.mapbox.maps.plugin.location;
 
 /**
- * Contains all the constants being used for the {@link LocationComponentPlugin}.
+ * Contains all the constants being used for the {@link LocationPluginImpl}.
  */
 public final class LocationComponentConstants {
 

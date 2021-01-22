@@ -33,7 +33,7 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowLogger::class])
 class LocationComponentTest {
-  private lateinit var locationComponent: LocationComponentPlugin
+  private lateinit var locationImpl: LocationPluginImpl
 
   private var locationComponentOptions: LocationComponentOptions = mockk(relaxed = true)
 
@@ -47,10 +47,10 @@ class LocationComponentTest {
 
   private val locationEngineRequest: LocationEngineRequest = mockk(relaxed = true)
 
-  private val currentListener: LocationComponentPlugin.CurrentLocationEngineCallback =
+  private val currentListener: LocationPluginImpl.CurrentLocationEngineCallback =
     mockk(relaxed = true)
 
-  private val lastListener: LocationComponentPlugin.LastLocationEngineCallback =
+  private val lastListener: LocationPluginImpl.LastLocationEngineCallback =
     mockk(relaxed = true)
 
   private val compassEngine: CompassEngine = mockk(relaxed = true)
@@ -63,7 +63,7 @@ class LocationComponentTest {
 
   private val staleStateManager: StaleStateManager = mockk(relaxed = true)
 
-  private val locationEngineProvider: LocationComponentPlugin.InternalLocationEngineProvider =
+  private val locationEngineProviderImpl: LocationPluginImpl.InternalLocationEngineProvider =
     mockk(relaxed = true)
 
   private val style: StyleManagerInterface = mockk(relaxed = true)
@@ -75,7 +75,7 @@ class LocationComponentTest {
   @Before
   fun before() {
     every { delegateProvider.mapPluginProviderDelegate.getPlugin(any<Class<GesturesPlugin>>()) } returns gesturesPlugin
-    every { locationEngineProvider.getBestLocationEngine(context) } returns locationEngine
+    every { locationEngineProviderImpl.getBestLocationEngine(context) } returns locationEngine
     every { delegateProvider.getStyle(any()) } answers {
       firstArg<(StyleManagerInterface) -> Unit>().invoke(style)
     }
@@ -83,7 +83,7 @@ class LocationComponentTest {
     every { delegateProvider.styleStateDelegate } returns styleStateDelegate
     every { styleStateDelegate.isFullyLoaded() } returns true
 
-    locationComponent = LocationComponentPlugin(
+    locationImpl = LocationPluginImpl(
       delegateProvider = delegateProvider,
       developerAnimationListeners = developerAnimationListeners,
       currentListener = currentListener,
@@ -93,7 +93,7 @@ class LocationComponentTest {
       locationAnimatorCoordinator = locationAnimatorCoordinator,
       staleStateManager = staleStateManager,
       compassEngine = compassEngine,
-      internalLocationEngineProvider = locationEngineProvider
+      internalLocationEngineProvider = locationEngineProviderImpl
     )
   }
 
@@ -104,9 +104,9 @@ class LocationComponentTest {
         .locationEngine(locationEngine)
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
-    locationComponent.activateLocationComponent(options)
+    locationImpl.activateLocationComponent(options)
 
-    assertEquals(locationEngineRequest, locationComponent.getLocationEngineRequest())
+    assertEquals(locationEngineRequest, locationImpl.getLocationEngineRequest())
 
     every {
       context.obtainStyledAttributes(
@@ -120,7 +120,7 @@ class LocationComponentTest {
     every { resources.getDimension(R.dimen.mapbox_locationComponentTrackingMultiFingerMoveThreshold) } returns 0f
     every { resources.getDimension(R.dimen.mapbox_locationComponentTrackingMultiFingerMoveThreshold) } returns 0f
 
-    locationComponent.activateLocationComponent(
+    locationImpl.activateLocationComponent(
       LocationComponentActivationOptions.builder(
         context,
         style
@@ -128,7 +128,7 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .build()
     )
-    assertEquals(locationEngineRequest, locationComponent.getLocationEngineRequest())
+    assertEquals(locationEngineRequest, locationImpl.getLocationEngineRequest())
   }
 
   @Test
@@ -138,9 +138,9 @@ class LocationComponentTest {
         .useDefaultLocationEngine(true)
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
-    locationComponent.activateLocationComponent(options)
-    assertEquals(locationEngineRequest, locationComponent.getLocationEngineRequest())
-    assertNotNull(locationComponent.getLocationEngine())
+    locationImpl.activateLocationComponent(options)
+    assertEquals(locationEngineRequest, locationImpl.getLocationEngineRequest())
+    assertNotNull(locationImpl.getLocationEngine())
   }
 
   @Test
@@ -150,9 +150,9 @@ class LocationComponentTest {
         .useDefaultLocationEngine(false)
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
-    locationComponent.activateLocationComponent(options)
-    assertEquals(locationEngineRequest, locationComponent.getLocationEngineRequest())
-    Assert.assertNull(locationComponent.getLocationEngine())
+    locationImpl.activateLocationComponent(options)
+    assertEquals(locationEngineRequest, locationImpl.getLocationEngineRequest())
+    Assert.assertNull(locationImpl.getLocationEngine())
   }
 
   @Test
@@ -162,7 +162,7 @@ class LocationComponentTest {
         .locationEngine(locationEngine)
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
-    locationComponent.activateLocationComponent(options)
+    locationImpl.activateLocationComponent(options)
     verify(exactly = 0) { locationEngine.removeLocationUpdates(currentListener) }
     verify(exactly = 0) {
       locationEngine.requestLocationUpdates(
@@ -172,7 +172,7 @@ class LocationComponentTest {
       )
     }
 
-    locationComponent.onStart()
+    locationImpl.onStart()
     verify(exactly = 0) { locationEngine.removeLocationUpdates(currentListener) }
     verify(exactly = 0) {
       locationEngine.requestLocationUpdates(
@@ -182,7 +182,7 @@ class LocationComponentTest {
       )
     }
 
-    locationComponent.enabled = true
+    locationImpl.enabled = true
     verify {
       locationEngine.requestLocationUpdates(
         locationEngineRequest,
@@ -191,7 +191,7 @@ class LocationComponentTest {
       )
     }
 
-    locationComponent.enabled = false
+    locationImpl.enabled = false
     verify {
       locationEngine.requestLocationUpdates(
         locationEngineRequest,
@@ -209,14 +209,14 @@ class LocationComponentTest {
         .locationEngine(locationEngine)
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
-    locationComponent.activateLocationComponent(options)
-    locationComponent.onStart()
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.onStart()
+    locationImpl.enabled = true
 
-    locationComponent.onStop()
+    locationImpl.onStop()
     verify { locationEngine.removeLocationUpdates(currentListener) }
 
-    locationComponent.onStart()
+    locationImpl.onStart()
     verify(exactly = 2) {
       locationEngine.requestLocationUpdates(
         locationEngineRequest,
@@ -234,12 +234,12 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.onStart()
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.onStart()
+    locationImpl.enabled = true
 
     val newRequest: LocationEngineRequest = mockk(relaxed = true)
-    locationComponent.setLocationEngineRequest(newRequest)
+    locationImpl.setLocationEngineRequest(newRequest)
     verify { locationEngine.removeLocationUpdates(currentListener) }
     verify {
       locationEngine.requestLocationUpdates(
@@ -258,9 +258,9 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.onStart()
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.onStart()
+    locationImpl.enabled = true
 
     verify { locationEngine.getLastLocation(lastListener) }
   }
@@ -273,9 +273,9 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.onStart()
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.onStart()
+    locationImpl.enabled = true
     every { transform.getCameraOptions(null) } returns CameraOptions.Builder()
       .center(Point.fromLngLat(0.0, 0.0))
       .bearing(0.0)
@@ -284,7 +284,7 @@ class LocationComponentTest {
     val listener: OnLocationCameraTransitionListener = mockk(relaxed = true)
 
     val callback = slot<OnLocationCameraTransitionListener>()
-    locationComponent.setCameraMode(CameraMode.TRACKING, listener)
+    locationImpl.setCameraMode(CameraMode.TRACKING, listener)
     verify {
       locationCameraController.setCameraMode(
         CameraMode.TRACKING,
@@ -309,9 +309,9 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.onStart()
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.onStart()
+    locationImpl.enabled = true
     every { transform.getCameraOptions(null) } returns CameraOptions.Builder()
       .center(Point.fromLngLat(0.0, 0.0))
       .bearing(0.0)
@@ -319,7 +319,7 @@ class LocationComponentTest {
 
     val listener: OnLocationCameraTransitionListener = mockk(relaxed = true)
     val callback = slot<OnLocationCameraTransitionListener>()
-    locationComponent.setCameraMode(CameraMode.TRACKING, listener)
+    locationImpl.setCameraMode(CameraMode.TRACKING, listener)
     verify {
       locationCameraController.setCameraMode(
         CameraMode.TRACKING,
@@ -344,9 +344,9 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.onStart()
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.onStart()
+    locationImpl.enabled = true
     every { transform.getCameraOptions(null) } returns CameraOptions.Builder()
       .center(Point.fromLngLat(0.0, 0.0))
       .bearing(0.0)
@@ -354,7 +354,7 @@ class LocationComponentTest {
 
     val listener: OnLocationCameraTransitionListener = mockk(relaxed = true)
     val callback = slot<OnLocationCameraTransitionListener>()
-    locationComponent.setCameraMode(CameraMode.TRACKING, 1200, 14.0, 13.0, 45.0, listener)
+    locationImpl.setCameraMode(CameraMode.TRACKING, 1200, 14.0, 13.0, 45.0, listener)
     verify {
       locationCameraController.setCameraMode(
         CameraMode.TRACKING,
@@ -379,15 +379,15 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.onStart()
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.onStart()
+    locationImpl.enabled = true
     every { transform.getCameraOptions(null) } returns CameraOptions.Builder()
       .center(Point.fromLngLat(0.0, 0.0))
       .bearing(0.0)
       .build()
     every { locationCameraController.isConsumingCompass } returns true
-    locationComponent.cameraMode = CameraMode.NONE_COMPASS
+    locationImpl.cameraMode = CameraMode.NONE_COMPASS
     verify { compassEngine.addCompassListener(any()) }
   }
 
@@ -398,15 +398,15 @@ class LocationComponentTest {
         .locationEngine(locationEngine)
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
-    locationComponent.activateLocationComponent(options)
-    locationComponent.onStart()
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.onStart()
+    locationImpl.enabled = true
     every { transform.getCameraOptions(null) } returns CameraOptions.Builder()
       .center(Point.fromLngLat(0.0, 0.0))
       .bearing(0.0)
       .build()
     every { locationCameraController.isConsumingCompass } returns true
-    locationComponent.cameraMode = CameraMode.TRACKING_COMPASS
+    locationImpl.cameraMode = CameraMode.TRACKING_COMPASS
     verify { compassEngine.addCompassListener(any()) }
   }
 
@@ -418,15 +418,15 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.onStart()
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.onStart()
+    locationImpl.enabled = true
     every { transform.getCameraOptions(null) } returns CameraOptions.Builder()
       .center(Point.fromLngLat(0.0, 0.0))
       .bearing(0.0)
       .build()
     every { locationCameraController.isConsumingCompass } returns true
-    locationComponent.renderMode = RenderMode.COMPASS
+    locationImpl.renderMode = RenderMode.COMPASS
     verify { compassEngine.addCompassListener(any()) }
   }
 
@@ -438,9 +438,9 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.onStart()
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.onStart()
+    locationImpl.enabled = true
     every { transform.getCameraOptions(null) } returns CameraOptions.Builder()
       .center(Point.fromLngLat(0.0, 0.0))
       .bearing(0.0)
@@ -449,13 +449,13 @@ class LocationComponentTest {
     every { locationLayerController.isConsumingCompass } returns false
     every { locationCameraController.isConsumingCompass } returns false
 
-    locationComponent.renderMode = RenderMode.GPS
-    locationComponent.renderMode = RenderMode.NORMAL
-    locationComponent.cameraMode = CameraMode.TRACKING
-    locationComponent.cameraMode = CameraMode.NONE
-    locationComponent.cameraMode = CameraMode.NONE_GPS
-    locationComponent.cameraMode = CameraMode.TRACKING_GPS
-    locationComponent.cameraMode = CameraMode.TRACKING_GPS_NORTH
+    locationImpl.renderMode = RenderMode.GPS
+    locationImpl.renderMode = RenderMode.NORMAL
+    locationImpl.cameraMode = CameraMode.TRACKING
+    locationImpl.cameraMode = CameraMode.NONE
+    locationImpl.cameraMode = CameraMode.NONE_GPS
+    locationImpl.cameraMode = CameraMode.TRACKING_GPS
+    locationImpl.cameraMode = CameraMode.TRACKING_GPS_NORTH
 
     verify(exactly = 0) { compassEngine.addCompassListener(any()) }
   }
@@ -468,17 +468,17 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.onStart()
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.onStart()
+    locationImpl.enabled = true
     every { transform.getCameraOptions(null) } returns CameraOptions.Builder()
       .center(Point.fromLngLat(0.0, 0.0))
       .bearing(0.0)
       .build()
     every { locationLayerController.isConsumingCompass } returns true
-    locationComponent.renderMode = RenderMode.COMPASS
+    locationImpl.renderMode = RenderMode.COMPASS
     every { locationLayerController.isConsumingCompass } returns false
-    locationComponent.renderMode = RenderMode.NORMAL
+    locationImpl.renderMode = RenderMode.NORMAL
     verify { compassEngine.removeCompassListener(any()) }
   }
 
@@ -490,16 +490,16 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.onStart()
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.onStart()
+    locationImpl.enabled = true
     every { transform.getCameraOptions(null) } returns CameraOptions.Builder()
       .center(Point.fromLngLat(0.0, 0.0))
       .bearing(0.0)
       .build()
     every { locationLayerController.isConsumingCompass } returns true
-    locationComponent.renderMode = RenderMode.COMPASS
-    locationComponent.onStop()
+    locationImpl.renderMode = RenderMode.COMPASS
+    locationImpl.onStop()
     verify { compassEngine.removeCompassListener(any()) }
   }
 
@@ -511,19 +511,19 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.onStart()
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.onStart()
+    locationImpl.enabled = true
     every { transform.getCameraOptions(null) } returns CameraOptions.Builder()
       .center(Point.fromLngLat(0.0, 0.0))
       .bearing(0.0)
       .build()
     every { locationLayerController.isConsumingCompass } returns true
 
-    locationComponent.renderMode = RenderMode.COMPASS
+    locationImpl.renderMode = RenderMode.COMPASS
     verify(exactly = 1) { compassEngine.addCompassListener(any()) }
-    locationComponent.onStop()
-    locationComponent.onStart()
+    locationImpl.onStop()
+    locationImpl.onStart()
     verify(exactly = 2) { compassEngine.addCompassListener(any()) }
   }
 
@@ -535,17 +535,17 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.onStart()
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.onStart()
+    locationImpl.enabled = true
     every { transform.getCameraOptions(null) } returns CameraOptions.Builder()
       .center(Point.fromLngLat(0.0, 0.0))
       .bearing(0.0)
       .build()
     every { locationLayerController.isConsumingCompass } returns true
 
-    locationComponent.renderMode = RenderMode.COMPASS
-    locationComponent.onStartLoadingMap()
+    locationImpl.renderMode = RenderMode.COMPASS
+    locationImpl.onStartLoadingMap()
     verify { compassEngine.removeCompassListener(any()) }
   }
 
@@ -557,18 +557,18 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.onStart()
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.onStart()
+    locationImpl.enabled = true
     every { transform.getCameraOptions(null) } returns CameraOptions.Builder()
       .center(Point.fromLngLat(0.0, 0.0))
       .bearing(0.0)
       .build()
     every { locationLayerController.isConsumingCompass } returns true
 
-    locationComponent.renderMode = RenderMode.COMPASS
-    locationComponent.onStartLoadingMap()
-    locationComponent.onFinishLoadingStyle()
+    locationImpl.renderMode = RenderMode.COMPASS
+    locationImpl.onStartLoadingMap()
+    locationImpl.onFinishLoadingStyle()
     verify(exactly = 2) { compassEngine.addCompassListener(any()) }
   }
 
@@ -580,20 +580,20 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.onStart()
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.onStart()
+    locationImpl.enabled = true
     every { transform.getCameraOptions(null) } returns CameraOptions.Builder()
       .center(Point.fromLngLat(0.0, 0.0))
       .bearing(0.0)
       .build()
     every { locationLayerController.isConsumingCompass } returns true
 
-    locationComponent.renderMode = RenderMode.COMPASS
-    locationComponent.enabled = false
+    locationImpl.renderMode = RenderMode.COMPASS
+    locationImpl.enabled = false
 
-    locationComponent.onStartLoadingMap()
-    locationComponent.onFinishLoadingStyle()
+    locationImpl.onStartLoadingMap()
+    locationImpl.onFinishLoadingStyle()
     verify { compassEngine.addCompassListener(any()) }
   }
 
@@ -605,14 +605,14 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.onStart()
+    locationImpl.activateLocationComponent(options)
+    locationImpl.onStart()
     every { transform.getCameraOptions(null) } returns CameraOptions.Builder()
       .center(Point.fromLngLat(0.0, 0.0))
       .bearing(0.0)
       .build()
     every { locationLayerController.isConsumingCompass } returns true
-    locationComponent.renderMode = RenderMode.COMPASS
+    locationImpl.renderMode = RenderMode.COMPASS
     verify(exactly = 0) { compassEngine.addCompassListener(any()) }
   }
 
@@ -624,15 +624,15 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.enabled = true
     every { transform.getCameraOptions(null) } returns CameraOptions.Builder()
       .center(Point.fromLngLat(0.0, 0.0))
       .bearing(0.0)
       .build()
     every { locationLayerController.isConsumingCompass } returns true
 
-    locationComponent.renderMode = RenderMode.COMPASS
+    locationImpl.renderMode = RenderMode.COMPASS
     verify(exactly = 0) { compassEngine.addCompassListener(any()) }
   }
 
@@ -644,21 +644,21 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.onStart()
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.onStart()
+    locationImpl.enabled = true
     every { transform.getCameraOptions(null) } returns CameraOptions.Builder()
       .center(Point.fromLngLat(0.0, 0.0))
       .bearing(0.0)
       .build()
     every { locationLayerController.isConsumingCompass } returns true
 
-    locationComponent.renderMode = RenderMode.COMPASS
+    locationImpl.renderMode = RenderMode.COMPASS
     verify(exactly = 1) { compassEngine.addCompassListener(any()) }
 
-    locationComponent.onStartLoadingMap()
+    locationImpl.onStartLoadingMap()
     // Layer should be disabled at this point
-    locationComponent.setCameraMode(CameraMode.TRACKING_COMPASS)
+    locationImpl.setCameraMode(CameraMode.TRACKING_COMPASS)
     verify(exactly = 1) { compassEngine.addCompassListener(any()) }
   }
 
@@ -670,8 +670,8 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.enabled = true
     for (listener in developerAnimationListeners) {
       listener.onDeveloperAnimationStarted()
     }
@@ -696,13 +696,13 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.enabled = true
 
     val cameraChangeListener: OnCameraTrackingChangedListener = mockk(relaxed = true)
-    locationComponent.addOnCameraTrackingChangedListener(cameraChangeListener)
+    locationImpl.addOnCameraTrackingChangedListener(cameraChangeListener)
 
-    locationComponent.cameraTrackingChangedListener.onCameraTrackingDismissed()
+    locationImpl.cameraTrackingChangedListener.onCameraTrackingDismissed()
 
     verify { cameraChangeListener.onCameraTrackingDismissed() }
   }
@@ -715,16 +715,16 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.enabled = true
 
     val layerValueListener: AnimatorListenerHolder = mockk(relaxed = true)
     every { locationLayerController.animationListeners } returns setOf(layerValueListener)
 
     val cameraChangeListener: OnCameraTrackingChangedListener = mockk(relaxed = true)
-    locationComponent.addOnCameraTrackingChangedListener(cameraChangeListener)
+    locationImpl.addOnCameraTrackingChangedListener(cameraChangeListener)
 
-    locationComponent.cameraTrackingChangedListener.onCameraTrackingChanged(CameraMode.TRACKING_GPS)
+    locationImpl.cameraTrackingChangedListener.onCameraTrackingChanged(CameraMode.TRACKING_GPS)
 
     verify { locationCameraController.cancelZoomAnimation() }
     verify { locationCameraController.cancelPitchAnimation() }
@@ -751,17 +751,17 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.enabled = true
 
     val layerValueListener: AnimatorListenerHolder = mockk(relaxed = true)
 
     every { locationLayerController.animationListeners } returns setOf(layerValueListener)
 
     val renderChangeListener: OnRenderModeChangedListener = mockk(relaxed = true)
-    locationComponent.addOnRenderModeChangedListener(renderChangeListener)
+    locationImpl.addOnRenderModeChangedListener(renderChangeListener)
 
-    locationComponent.renderModeChangedListener.onRenderModeChanged(RenderMode.NORMAL)
+    locationImpl.renderModeChangedListener.onRenderModeChanged(RenderMode.NORMAL)
 
     val holdersSlot = slot<Set<AnimatorListenerHolder>>()
     verify {
@@ -792,12 +792,12 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.enabled = true
 
     val callback: CancelableCallback = mockk(relaxed = true)
 
-    locationComponent.pitchWhileTracking(30.0, 500L, callback)
+    locationImpl.pitchWhileTracking(30.0, 500L, callback)
     verify { callback.onCancel() }
     verify(exactly = 0) {
       locationCameraController.feedNewCameraPitch(any(), any(), any())
@@ -817,14 +817,14 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.enabled = true
 
-    locationComponent.onStart()
+    locationImpl.onStart()
 
     val callback: CancelableCallback = mockk(relaxed = true)
 
-    locationComponent.pitchWhileTracking(30.0, 500L, callback)
+    locationImpl.pitchWhileTracking(30.0, 500L, callback)
     verify { callback.onCancel() }
     verify(exactly = 0) {
       locationCameraController.feedNewCameraPitch(any(), any(), any())
@@ -846,14 +846,14 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.enabled = true
 
-    locationComponent.onStart()
+    locationImpl.onStart()
 
     val callback: CancelableCallback = mockk(relaxed = true)
 
-    locationComponent.pitchWhileTracking(30.0, 500L, callback)
+    locationImpl.pitchWhileTracking(30.0, 500L, callback)
     verify { callback.onCancel() }
     verify(exactly = 0) {
       locationCameraController.feedNewCameraPitch(any(), any(), any())
@@ -874,14 +874,14 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.enabled = true
 
-    locationComponent.onStart()
+    locationImpl.onStart()
 
     val callback: CancelableCallback = mockk(relaxed = true)
 
-    locationComponent.pitchWhileTracking(30.0, 500L, callback)
+    locationImpl.pitchWhileTracking(30.0, 500L, callback)
     verify(exactly = 0) { callback.onCancel() }
     verify {
       locationCameraController.feedNewCameraPitch(
@@ -904,12 +904,12 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.enabled = true
+    locationImpl.activateLocationComponent(options)
+    locationImpl.enabled = true
 
     val callback: CancelableCallback = mockk(relaxed = true)
 
-    locationComponent.zoomWhileTracking(14.0, 500L, callback)
+    locationImpl.zoomWhileTracking(14.0, 500L, callback)
     verify { callback.onCancel() }
     verify(exactly = 0) {
       locationCameraController.feedNewCameraZoomLevel(any(), any(), any())
@@ -929,13 +929,13 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.enabled = true
-    locationComponent.onStart()
+    locationImpl.activateLocationComponent(options)
+    locationImpl.enabled = true
+    locationImpl.onStart()
 
     val callback: CancelableCallback = mockk(relaxed = true)
 
-    locationComponent.zoomWhileTracking(14.0, 500L, callback)
+    locationImpl.zoomWhileTracking(14.0, 500L, callback)
     verify { callback.onCancel() }
     verify(exactly = 0) {
       locationCameraController.feedNewCameraZoomLevel(any(), any(), any())
@@ -956,13 +956,13 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.enabled = true
-    locationComponent.onStart()
+    locationImpl.activateLocationComponent(options)
+    locationImpl.enabled = true
+    locationImpl.onStart()
 
     val callback: CancelableCallback = mockk(relaxed = true)
 
-    locationComponent.zoomWhileTracking(14.0, 500L, callback)
+    locationImpl.zoomWhileTracking(14.0, 500L, callback)
     verify { callback.onCancel() }
     verify(exactly = 0) {
       locationCameraController.feedNewCameraZoomLevel(any(), any(), any())
@@ -983,13 +983,13 @@ class LocationComponentTest {
         .locationEngineRequest(locationEngineRequest)
         .locationComponentOptions(locationComponentOptions).build()
 
-    locationComponent.activateLocationComponent(options)
-    locationComponent.enabled = true
-    locationComponent.onStart()
+    locationImpl.activateLocationComponent(options)
+    locationImpl.enabled = true
+    locationImpl.onStart()
 
     val callback: CancelableCallback = mockk(relaxed = true)
 
-    locationComponent.zoomWhileTracking(14.0, 500L, callback)
+    locationImpl.zoomWhileTracking(14.0, 500L, callback)
     verify(exactly = 0) { callback.onCancel() }
     verify {
       locationCameraController.feedNewCameraZoomLevel(
@@ -1004,7 +1004,7 @@ class LocationComponentTest {
   fun newLocation_accuracy_indicatorLayerRadiusValue() {
     val location = Location("test")
     location.accuracy = 50f
-    locationComponent = LocationComponentPlugin(
+    locationImpl = LocationPluginImpl(
       delegateProvider = delegateProvider,
       developerAnimationListeners = developerAnimationListeners,
       currentListener = currentListener,
@@ -1014,24 +1014,24 @@ class LocationComponentTest {
       locationAnimatorCoordinator = locationAnimatorCoordinator,
       staleStateManager = staleStateManager,
       compassEngine = compassEngine,
-      internalLocationEngineProvider = locationEngineProvider
+      internalLocationEngineProvider = locationEngineProviderImpl
     )
-    locationComponent.activateLocationComponent(
+    locationImpl.activateLocationComponent(
       LocationComponentActivationOptions.builder(context, style)
         .locationComponentOptions(locationComponentOptions)
         .useDefaultLocationEngine(false)
         .build()
     )
-    locationComponent.enabled = true
-    locationComponent.onStart()
-    locationComponent.forceLocationUpdate(location)
+    locationImpl.enabled = true
+    locationImpl.onStart()
+    locationImpl.forceLocationUpdate(location)
 
     verify { locationAnimatorCoordinator.feedNewAccuracyRadius(location.accuracy, false) }
   }
 
   @Test
   fun internal_indicatorPositionChangedListener_onIndicatorPositionChanged() {
-    locationComponent.activateLocationComponent(
+    locationImpl.activateLocationComponent(
       context,
       mockk(),
       null,
@@ -1039,12 +1039,12 @@ class LocationComponentTest {
       locationEngineRequest,
       locationComponentOptions
     )
-    locationComponent.enabled = true
+    locationImpl.enabled = true
 
     val onIndicatorPositionChangedListener: OnIndicatorPositionChangedListener = mockk(relaxed = true)
-    locationComponent.addOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
+    locationImpl.addOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
     val point: Point = mockk()
-    locationComponent.indicatorPositionChangedListener.onIndicatorPositionChanged(point)
+    locationImpl.indicatorPositionChangedListener.onIndicatorPositionChanged(point)
     verify { onIndicatorPositionChangedListener.onIndicatorPositionChanged(point) }
   }
 
@@ -1052,15 +1052,15 @@ class LocationComponentTest {
   fun newLocation_nullAnimationDurationPassed() {
     val location = Location("test")
     location.accuracy = 50f
-    locationComponent.activateLocationComponent(
+    locationImpl.activateLocationComponent(
       LocationComponentActivationOptions.builder(context, style)
         .locationComponentOptions(locationComponentOptions)
         .useDefaultLocationEngine(false)
         .build()
     )
-    locationComponent.enabled = true
-    locationComponent.onStart()
-    locationComponent.forceLocationUpdate(
+    locationImpl.enabled = true
+    locationImpl.onStart()
+    locationImpl.forceLocationUpdate(
       LocationUpdate(location)
     )
     verify { locationAnimatorCoordinator.feedNewLocation(eq(listOf(location).toTypedArray()), any(), isNull()) }
@@ -1070,21 +1070,21 @@ class LocationComponentTest {
   fun whenComponentReEnabled_noEngine_animationDurationZero() {
     val location = Location("test")
     location.accuracy = 50f
-    locationComponent.activateLocationComponent(
+    locationImpl.activateLocationComponent(
       LocationComponentActivationOptions.builder(context, style)
         .locationComponentOptions(locationComponentOptions)
         .useDefaultLocationEngine(false)
         .build()
     )
-    locationComponent.enabled = true
-    locationComponent.onStart()
-    locationComponent.forceLocationUpdate(
+    locationImpl.enabled = true
+    locationImpl.onStart()
+    locationImpl.forceLocationUpdate(
       LocationUpdate(location, null, 1500L)
     )
     verify { locationAnimatorCoordinator.feedNewLocation(eq(listOf(location).toTypedArray()), any(), eq(1500L)) }
 
-    locationComponent.onStop()
-    locationComponent.onStart()
+    locationImpl.onStop()
+    locationImpl.onStart()
     verify { locationAnimatorCoordinator.feedNewLocation(eq(listOf(location).toTypedArray()), any(), eq(0L)) }
   }
 }

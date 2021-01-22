@@ -10,9 +10,12 @@ import com.mapbox.android.core.location.LocationEngineRequest;
 import com.mapbox.maps.StyleManagerInterface;
 
 /**
- * A class which holds the various options for activating the Maps SDK's {@link LocationComponentPlugin} to eventually
+ * A class which holds the various options for activating the Maps SDK's {@link LocationPluginImpl} to eventually
  * show the device location on the map.
+ *
+ * @deprecated Use LocationComponentPlugin instead.
  */
+@Deprecated
 public class LocationComponentActivationOptions {
 
   private final Context context;
@@ -77,7 +80,7 @@ public class LocationComponentActivationOptions {
   }
 
   /**
-   * The {@link LocationEngine} which the {@link LocationComponentPlugin} should use
+   * The {@link LocationEngine} which the {@link LocationPluginImpl} should use
    *
    * @return the engine
    */
@@ -87,7 +90,7 @@ public class LocationComponentActivationOptions {
   }
 
   /**
-   * The location request which the {@link LocationComponentPlugin} should use
+   * The location request which the {@link LocationPluginImpl} should use
    *
    * @return the LocationEngineRequest object
    */
@@ -97,7 +100,7 @@ public class LocationComponentActivationOptions {
   }
 
   /**
-   * A built {@link LocationComponentOptions} object, which holds the various {@link LocationComponentPlugin} styling options
+   * A built {@link LocationComponentOptions} object, which holds the various {@link LocationPluginImpl} styling options
    *
    * @return the options for styling the actual LocationComponent
    */
@@ -177,7 +180,7 @@ public class LocationComponentActivationOptions {
 
     /**
      * @param locationEngineRequest the location request which the
-     *                              {@link LocationComponentPlugin} should use
+     *                              {@link LocationPluginImpl} should use
      * @return the {@link Builder} object being constructed
      */
     public Builder locationEngineRequest(LocationEngineRequest locationEngineRequest) {
@@ -187,7 +190,7 @@ public class LocationComponentActivationOptions {
 
     /**
      * @param locationComponentOptions a built {@link LocationComponentOptions} object,
-     *                                 which holds the various {@link LocationComponentPlugin}
+     *                                 which holds the various {@link LocationPluginImpl}
      *                                 styling options
      * @return the {@link Builder} object being constructed
      */
@@ -221,7 +224,7 @@ public class LocationComponentActivationOptions {
 
     /**
      * @param locationModelLayerOptions a build {@link LocationModelLayerOptions} object, which holds he various
-     *                                  {@link LocationComponentPlugin} 3D model styling options
+     *                                  {@link LocationPluginImpl} 3D model styling options
      * @return the {@link Builder} object being constructed
      */
     public Builder locationModelLayerOptions(LocationModelLayerOptions locationModelLayerOptions) {
