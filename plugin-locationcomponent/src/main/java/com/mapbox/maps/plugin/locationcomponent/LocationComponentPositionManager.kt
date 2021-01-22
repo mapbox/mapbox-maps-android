@@ -5,8 +5,8 @@ import com.mapbox.maps.StyleManagerInterface
 
 internal class LocationComponentPositionManager(
   private val style: StyleManagerInterface,
-  private var layerAbove: String?,
-  private var layerBelow: String?
+  internal var layerAbove: String?,
+  internal var layerBelow: String?
 ) {
   /**
    * Returns true whenever layer above/below configuration has changed and requires re-layout.

@@ -7,6 +7,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
+import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttributeParser
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettingsBase
@@ -40,7 +41,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer, L
    * Called when a new Style is being loaded.
    */
   override fun onStyleLoading() {
-    // TODO("Not yet implemented")
+    // no-ops
   }
 
   /**
@@ -68,8 +69,9 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer, L
           locationPuckManager = LocationPuckManager(
             settings = internalSettings,
             delegateProvider = delegateProvider,
-            style = style,
+            positionManager = LocationComponentPositionManager(style, internalSettings.layerAbove, internalSettings.layerBelow),
             layerSourceProvider = LayerSourceProvider(),
+            animationManager = PuckAnimatorManager()
           )
         }
         locationPuckManager?.let {
