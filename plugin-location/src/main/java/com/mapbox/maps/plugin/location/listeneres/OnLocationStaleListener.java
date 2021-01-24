@@ -8,7 +8,10 @@ import com.mapbox.maps.plugin.location.LocationComponentOptions;
  * <p>
  * The time from the last location update that determines if a location update
  * is stale or not is provided by {@link LocationComponentOptions#staleStateTimeout()}.
+ *
+ * @deprecated Location Plugin is deprecated, use Location Component Plugin instead.
  */
+@Deprecated
 public interface OnLocationStaleListener {
 
   /**

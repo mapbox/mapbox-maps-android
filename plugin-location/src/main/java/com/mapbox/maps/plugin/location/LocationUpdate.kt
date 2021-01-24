@@ -5,6 +5,7 @@ import android.location.Location
 /**
  * A class that contains the location update configuration.
  */
+@Deprecated("Location Plugin is deprecated, use Location Component Plugin instead.")
 data class LocationUpdate(
   /**
    * @return target location of the transition

@@ -6,6 +6,7 @@ import android.location.Location
  * Contains the variety of camera modes which determine how the camera will track
  * the user location.
  */
+@Deprecated("Location Plugin is deprecated, use Location Component Plugin instead.")
 enum class CameraMode {
   /**
    * No camera tracking.

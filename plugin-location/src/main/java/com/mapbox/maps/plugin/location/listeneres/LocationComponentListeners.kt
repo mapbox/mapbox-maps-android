@@ -10,6 +10,7 @@ import com.mapbox.maps.plugin.location.modes.RenderMode
 /**
  * Interface definition for a callback to be invoked when a task is complete or cancelled.
  */
+@Deprecated("Location Plugin is deprecated, use Location Component Plugin instead.")
 interface CancelableCallback {
   /**
    * Invoked when a task is cancelled.
@@ -25,6 +26,7 @@ interface CancelableCallback {
 /**
  * Listener that gets invoked when layer render mode changes.
  */
+@Deprecated("Location Plugin is deprecated, use Location Component Plugin instead.")
 fun interface OnRenderModeChangedListener {
   /**
    * Invoked on every [RenderMode] change.
@@ -37,6 +39,7 @@ fun interface OnRenderModeChangedListener {
 /**
  * Callbacks related to the compass
  */
+@Deprecated("Location Plugin is deprecated, use Location Component Plugin instead.")
 interface CompassListener {
   /**
    * Callback's invoked when a new compass update occurs. You can listen into the compass updates
@@ -69,6 +72,7 @@ interface CompassListener {
  * layer icon visible on the map. When this event occurs, the [.onLocationComponentClick] method
  * gets invoked.
  */
+@Deprecated("Location Plugin is deprecated, use Location Component Plugin instead.")
 fun interface OnLocationClickListener {
   /**
    * Called whenever user clicks on the location layer drawn on the map.
@@ -81,6 +85,7 @@ fun interface OnLocationClickListener {
 /**
  * Internal use.
  */
+@Deprecated("Location Plugin is deprecated, use Location Component Plugin instead.")
 fun interface OnDeveloperAnimationListener {
   /**
    * Notifies listener when a developer invoked animation is about to start.

@@ -4,7 +4,10 @@ import com.mapbox.maps.plugin.location.modes.CameraMode;
 
 /**
  * Listener that gets invoked when camera tracking state changes.
+ *
+ * @deprecated Location Plugin is deprecated, use Location Component Plugin instead.
  */
+@Deprecated
 public interface OnCameraTrackingChangedListener {
   /**
    * Invoked whenever camera tracking is broken.

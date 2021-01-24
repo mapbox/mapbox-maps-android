@@ -20,7 +20,10 @@ import static com.mapbox.turf.TurfConstants.UNIT_METRES;
 
 /**
  * Location utils.
+ *
+ * @deprecated Location Plugin is deprecated, use Location Component Plugin instead.
  */
+@Deprecated
 public final class Utils {
 
   private static final String TAG = "Mbgl-com.mapbox.maps.plugin.location.Utils";
