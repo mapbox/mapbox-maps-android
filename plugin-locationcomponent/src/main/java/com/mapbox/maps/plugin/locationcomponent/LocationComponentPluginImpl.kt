@@ -38,6 +38,13 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer, L
   }
 
   /**
+   * Get the current LocationProvider under usage with the LocationComponentPlugin.
+   */
+  override fun getLocationProvider(): LocationProvider? {
+    return locationProvider
+  }
+
+  /**
    * Called when a new Style is being loaded.
    */
   override fun onStyleLoading() {

@@ -16,4 +16,9 @@ interface LocationComponentPlugin :
    * Set the LocationProvider, it will replace the default location provider provided by the LocationComponentPlugin.
    */
   fun setLocationProvider(locationProvider: LocationProvider)
+
+  /**
+   * Get the current LocationProvider under usage with the LocationComponentPlugin.
+   */
+  fun getLocationProvider(): LocationProvider?
 }
