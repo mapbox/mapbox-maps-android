@@ -21,6 +21,7 @@ import com.mapbox.maps.extension.style.layers.addLayerBelow
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.extension.style.sources.addSource
+import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
 import com.mapbox.maps.plugin.annotation.ShadowValueConverter
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
@@ -49,14 +50,15 @@ class SymbolManagerTest {
   private val mapFeatureQueryDelegate: MapFeatureQueryDelegate = mockk()
   private val gesturesPlugin: GesturesPlugin = mockk()
   private val layer: SymbolLayer = mockk()
-
+  private val source: GeoJsonSource = mockk()
+  private lateinit var manager: SymbolManager
   @Before
   fun setUp() {
     mockkStatic("com.mapbox.maps.extension.style.layers.LayerKt")
     mockkStatic("com.mapbox.maps.extension.style.sources.SourceKt")
     mockkStatic(ValueConverter::class)
     every { delegateProvider.mapListenerDelegate.addOnDidFinishRenderingMapListener(any()) } just Runs
-    every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue<Value, String>(
+    every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue(
       Value(1)
     )
     val captureCallback = slot<(StyleManagerInterface) -> Unit>()
@@ -70,6 +72,8 @@ class SymbolManagerTest {
     every { style.addLayer(any()) } just Runs
     every { style.addLayerBelow(any(), any()) } just Runs
     every { style.getSource(any()) } returns null
+    every { style.styleSourceExists(any()) } returns false
+    every { style.styleLayerExists(any()) } returns false
     every { gesturesPlugin.addOnMapClickListener(any()) } just Runs
     every { gesturesPlugin.addOnMapLongClickListener(any()) } just Runs
     every { gesturesPlugin.addOnMoveListener(any()) } just Runs
@@ -81,6 +85,12 @@ class SymbolManagerTest {
     every { delegateProvider.mapFeatureQueryDelegate } returns mapFeatureQueryDelegate
     every { mapProjectionDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
     every { mapProjectionDelegate.pixelForCoordinate(any()) } returns ScreenCoordinate(1.0, 1.0)
+    every { layer.layerId } returns "layer0"
+    every { source.sourceId } returns "source0"
+    every { source.featureCollection(any()) } answers { source }
+    manager = SymbolManager(delegateProvider, null, 0, 0)
+    manager.layer = layer
+    manager.source = source
     every { layer.symbolSortKey(any<Expression>()) } answers { layer }
     every { layer.iconSize(any<Expression>()) } answers { layer }
     every { layer.iconImage(any<Expression>()) } answers { layer }
@@ -112,7 +122,6 @@ class SymbolManagerTest {
 
   @Test
   fun initialize() {
-    var manager = SymbolManager(delegateProvider, null, 0, 0)
     verify { gesturesPlugin.addOnMapClickListener(any()) }
     verify { gesturesPlugin.addOnMapLongClickListener(any()) }
     verify { gesturesPlugin.addOnMoveListener(any()) }
@@ -138,7 +147,6 @@ class SymbolManagerTest {
 
   @Test
   fun create() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
     val annotation = manager.create(
       SymbolOptions()
         .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -148,7 +156,6 @@ class SymbolManagerTest {
 
   @Test
   fun createFromFeature() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
     val featureCollection =
       FeatureCollection.fromFeature(Feature.fromGeometry(Point.fromLngLat(0.0, 0.0)))
     val annotations = manager.create(featureCollection.toJson())
@@ -159,7 +166,6 @@ class SymbolManagerTest {
 
   @Test
   fun createList() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
     val list = listOf(
       SymbolOptions().withPoint(Point.fromLngLat(0.0, 0.0)),
       SymbolOptions().withPoint(Point.fromLngLat(0.0, 0.0))
@@ -171,7 +177,6 @@ class SymbolManagerTest {
 
   @Test
   fun update() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
     val annotation = manager.create(SymbolOptions().withPoint(Point.fromLngLat(0.0, 0.0)))
     assertEquals(annotation, manager.annotations[0])
     annotation.point = Point.fromLngLat(1.0, 1.0)
@@ -181,7 +186,6 @@ class SymbolManagerTest {
 
   @Test
   fun updateList() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
     val list = listOf(
       SymbolOptions().withPoint(Point.fromLngLat(0.0, 0.0)),
       SymbolOptions().withPoint(Point.fromLngLat(0.0, 0.0))
@@ -198,7 +202,6 @@ class SymbolManagerTest {
 
   @Test
   fun delete() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
     val annotation = manager.create(
       SymbolOptions()
         .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -210,7 +213,6 @@ class SymbolManagerTest {
 
   @Test
   fun deleteList() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
     val list = listOf(
       SymbolOptions().withPoint(Point.fromLngLat(0.0, 0.0)),
       SymbolOptions().withPoint(Point.fromLngLat(0.0, 0.0))
@@ -225,7 +227,6 @@ class SymbolManagerTest {
 
   @Test
   fun deleteAll() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
     val list = listOf(
       SymbolOptions().withPoint(Point.fromLngLat(0.0, 0.0)),
       SymbolOptions().withPoint(Point.fromLngLat(0.0, 0.0))
@@ -380,8 +381,7 @@ class SymbolManagerTest {
 
   @Test
   fun testSymbolSortKeyLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.symbolSortKey(Expression.get(SymbolOptions.PROPERTY_SYMBOL_SORT_KEY)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -394,8 +394,7 @@ class SymbolManagerTest {
 
   @Test
   fun testIconSizeLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.iconSize(Expression.get(SymbolOptions.PROPERTY_ICON_SIZE)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -408,8 +407,7 @@ class SymbolManagerTest {
 
   @Test
   fun testIconImageLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.iconImage(Expression.get(SymbolOptions.PROPERTY_ICON_IMAGE)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -422,8 +420,7 @@ class SymbolManagerTest {
 
   @Test
   fun testIconRotateLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.iconRotate(Expression.get(SymbolOptions.PROPERTY_ICON_ROTATE)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -436,8 +433,7 @@ class SymbolManagerTest {
 
   @Test
   fun testIconOffsetLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.iconOffset(Expression.get(SymbolOptions.PROPERTY_ICON_OFFSET)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -450,8 +446,7 @@ class SymbolManagerTest {
 
   @Test
   fun testIconAnchorLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.iconAnchor(Expression.get(SymbolOptions.PROPERTY_ICON_ANCHOR)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -464,8 +459,7 @@ class SymbolManagerTest {
 
   @Test
   fun testTextFieldLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.textField(Expression.get(SymbolOptions.PROPERTY_TEXT_FIELD)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -478,8 +472,7 @@ class SymbolManagerTest {
 
   @Test
   fun testTextFontLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.textFont(Expression.get(SymbolOptions.PROPERTY_TEXT_FONT)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -492,8 +485,7 @@ class SymbolManagerTest {
 
   @Test
   fun testTextSizeLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.textSize(Expression.get(SymbolOptions.PROPERTY_TEXT_SIZE)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -506,8 +498,7 @@ class SymbolManagerTest {
 
   @Test
   fun testTextMaxWidthLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.textMaxWidth(Expression.get(SymbolOptions.PROPERTY_TEXT_MAX_WIDTH)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -520,8 +511,7 @@ class SymbolManagerTest {
 
   @Test
   fun testTextLetterSpacingLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.textLetterSpacing(Expression.get(SymbolOptions.PROPERTY_TEXT_LETTER_SPACING)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -534,8 +524,7 @@ class SymbolManagerTest {
 
   @Test
   fun testTextJustifyLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.textJustify(Expression.get(SymbolOptions.PROPERTY_TEXT_JUSTIFY)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -548,8 +537,7 @@ class SymbolManagerTest {
 
   @Test
   fun testTextRadialOffsetLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.textRadialOffset(Expression.get(SymbolOptions.PROPERTY_TEXT_RADIAL_OFFSET)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -562,8 +550,7 @@ class SymbolManagerTest {
 
   @Test
   fun testTextAnchorLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.textAnchor(Expression.get(SymbolOptions.PROPERTY_TEXT_ANCHOR)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -576,8 +563,7 @@ class SymbolManagerTest {
 
   @Test
   fun testTextRotateLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.textRotate(Expression.get(SymbolOptions.PROPERTY_TEXT_ROTATE)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -590,8 +576,7 @@ class SymbolManagerTest {
 
   @Test
   fun testTextTransformLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.textTransform(Expression.get(SymbolOptions.PROPERTY_TEXT_TRANSFORM)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -604,8 +589,7 @@ class SymbolManagerTest {
 
   @Test
   fun testTextOffsetLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.textOffset(Expression.get(SymbolOptions.PROPERTY_TEXT_OFFSET)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -618,8 +602,7 @@ class SymbolManagerTest {
 
   @Test
   fun testIconOpacityLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.iconOpacity(Expression.get(SymbolOptions.PROPERTY_ICON_OPACITY)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -632,8 +615,7 @@ class SymbolManagerTest {
 
   @Test
   fun testIconColorLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.iconColor(Expression.get(SymbolOptions.PROPERTY_ICON_COLOR)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -646,8 +628,7 @@ class SymbolManagerTest {
 
   @Test
   fun testIconHaloColorLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.iconHaloColor(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_COLOR)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -660,8 +641,7 @@ class SymbolManagerTest {
 
   @Test
   fun testIconHaloWidthLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.iconHaloWidth(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_WIDTH)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -674,8 +654,7 @@ class SymbolManagerTest {
 
   @Test
   fun testIconHaloBlurLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.iconHaloBlur(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_BLUR)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -688,8 +667,7 @@ class SymbolManagerTest {
 
   @Test
   fun testTextOpacityLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.textOpacity(Expression.get(SymbolOptions.PROPERTY_TEXT_OPACITY)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -702,8 +680,7 @@ class SymbolManagerTest {
 
   @Test
   fun testTextColorLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.textColor(Expression.get(SymbolOptions.PROPERTY_TEXT_COLOR)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -716,8 +693,7 @@ class SymbolManagerTest {
 
   @Test
   fun testTextHaloColorLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.textHaloColor(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_COLOR)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -730,8 +706,7 @@ class SymbolManagerTest {
 
   @Test
   fun testTextHaloWidthLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.textHaloWidth(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_WIDTH)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -744,8 +719,7 @@ class SymbolManagerTest {
 
   @Test
   fun testTextHaloBlurLayerProperty() {
-    val manager = SymbolManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.textHaloBlur(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_BLUR)) }
     val options = SymbolOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))

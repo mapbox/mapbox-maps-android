@@ -20,6 +20,7 @@ import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.addLayerBelow
 import com.mapbox.maps.extension.style.layers.generated.CircleLayer
 import com.mapbox.maps.extension.style.sources.addSource
+import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
 import com.mapbox.maps.plugin.annotation.ShadowValueConverter
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
@@ -48,14 +49,15 @@ class CircleManagerTest {
   private val mapFeatureQueryDelegate: MapFeatureQueryDelegate = mockk()
   private val gesturesPlugin: GesturesPlugin = mockk()
   private val layer: CircleLayer = mockk()
-
+  private val source: GeoJsonSource = mockk()
+  private lateinit var manager: CircleManager
   @Before
   fun setUp() {
     mockkStatic("com.mapbox.maps.extension.style.layers.LayerKt")
     mockkStatic("com.mapbox.maps.extension.style.sources.SourceKt")
     mockkStatic(ValueConverter::class)
     every { delegateProvider.mapListenerDelegate.addOnDidFinishRenderingMapListener(any()) } just Runs
-    every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue<Value, String>(
+    every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue(
       Value(1)
     )
     val captureCallback = slot<(StyleManagerInterface) -> Unit>()
@@ -69,6 +71,8 @@ class CircleManagerTest {
     every { style.addLayer(any()) } just Runs
     every { style.addLayerBelow(any(), any()) } just Runs
     every { style.getSource(any()) } returns null
+    every { style.styleSourceExists(any()) } returns false
+    every { style.styleLayerExists(any()) } returns false
     every { gesturesPlugin.addOnMapClickListener(any()) } just Runs
     every { gesturesPlugin.addOnMapLongClickListener(any()) } just Runs
     every { gesturesPlugin.addOnMoveListener(any()) } just Runs
@@ -80,6 +84,12 @@ class CircleManagerTest {
     every { delegateProvider.mapFeatureQueryDelegate } returns mapFeatureQueryDelegate
     every { mapProjectionDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
     every { mapProjectionDelegate.pixelForCoordinate(any()) } returns ScreenCoordinate(1.0, 1.0)
+    every { layer.layerId } returns "layer0"
+    every { source.sourceId } returns "source0"
+    every { source.featureCollection(any()) } answers { source }
+    manager = CircleManager(delegateProvider, null, 0, 0)
+    manager.layer = layer
+    manager.source = source
     every { layer.circleSortKey(any<Expression>()) } answers { layer }
     every { layer.circleRadius(any<Expression>()) } answers { layer }
     every { layer.circleColor(any<Expression>()) } answers { layer }
@@ -92,7 +102,6 @@ class CircleManagerTest {
 
   @Test
   fun initialize() {
-    var manager = CircleManager(delegateProvider, null, 0, 0)
     verify { gesturesPlugin.addOnMapClickListener(any()) }
     verify { gesturesPlugin.addOnMapLongClickListener(any()) }
     verify { gesturesPlugin.addOnMoveListener(any()) }
@@ -118,7 +127,6 @@ class CircleManagerTest {
 
   @Test
   fun create() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
     val annotation = manager.create(
       CircleOptions()
         .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -128,7 +136,6 @@ class CircleManagerTest {
 
   @Test
   fun createFromFeature() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
     val featureCollection =
       FeatureCollection.fromFeature(Feature.fromGeometry(Point.fromLngLat(0.0, 0.0)))
     val annotations = manager.create(featureCollection.toJson())
@@ -139,7 +146,6 @@ class CircleManagerTest {
 
   @Test
   fun createList() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
     val list = listOf(
       CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0)),
       CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0))
@@ -151,7 +157,6 @@ class CircleManagerTest {
 
   @Test
   fun update() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
     val annotation = manager.create(CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0)))
     assertEquals(annotation, manager.annotations[0])
     annotation.point = Point.fromLngLat(1.0, 1.0)
@@ -161,7 +166,6 @@ class CircleManagerTest {
 
   @Test
   fun updateList() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
     val list = listOf(
       CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0)),
       CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0))
@@ -178,7 +182,6 @@ class CircleManagerTest {
 
   @Test
   fun delete() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
     val annotation = manager.create(
       CircleOptions()
         .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -190,7 +193,6 @@ class CircleManagerTest {
 
   @Test
   fun deleteList() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
     val list = listOf(
       CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0)),
       CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0))
@@ -205,7 +207,6 @@ class CircleManagerTest {
 
   @Test
   fun deleteAll() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
     val list = listOf(
       CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0)),
       CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0))
@@ -360,8 +361,7 @@ class CircleManagerTest {
 
   @Test
   fun testCircleSortKeyLayerProperty() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.circleSortKey(Expression.get(CircleOptions.PROPERTY_CIRCLE_SORT_KEY)) }
     val options = CircleOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -374,8 +374,7 @@ class CircleManagerTest {
 
   @Test
   fun testCircleRadiusLayerProperty() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.circleRadius(Expression.get(CircleOptions.PROPERTY_CIRCLE_RADIUS)) }
     val options = CircleOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -388,8 +387,7 @@ class CircleManagerTest {
 
   @Test
   fun testCircleColorLayerProperty() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.circleColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_COLOR)) }
     val options = CircleOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -402,8 +400,7 @@ class CircleManagerTest {
 
   @Test
   fun testCircleBlurLayerProperty() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.circleBlur(Expression.get(CircleOptions.PROPERTY_CIRCLE_BLUR)) }
     val options = CircleOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -416,8 +413,7 @@ class CircleManagerTest {
 
   @Test
   fun testCircleOpacityLayerProperty() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.circleOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_OPACITY)) }
     val options = CircleOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -430,8 +426,7 @@ class CircleManagerTest {
 
   @Test
   fun testCircleStrokeWidthLayerProperty() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.circleStrokeWidth(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
     val options = CircleOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -444,8 +439,7 @@ class CircleManagerTest {
 
   @Test
   fun testCircleStrokeColorLayerProperty() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.circleStrokeColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
     val options = CircleOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -458,8 +452,7 @@ class CircleManagerTest {
 
   @Test
   fun testCircleStrokeOpacityLayerProperty() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.circleStrokeOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY)) }
     val options = CircleOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))

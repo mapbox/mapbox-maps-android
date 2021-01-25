@@ -22,6 +22,7 @@ import com.mapbox.maps.extension.style.layers.addLayerBelow
 import com.mapbox.maps.extension.style.layers.generated.LineLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.extension.style.sources.addSource
+import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
 import com.mapbox.maps.plugin.annotation.ShadowValueConverter
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
@@ -50,14 +51,15 @@ class LineManagerTest {
   private val mapFeatureQueryDelegate: MapFeatureQueryDelegate = mockk()
   private val gesturesPlugin: GesturesPlugin = mockk()
   private val layer: LineLayer = mockk()
-
+  private val source: GeoJsonSource = mockk()
+  private lateinit var manager: LineManager
   @Before
   fun setUp() {
     mockkStatic("com.mapbox.maps.extension.style.layers.LayerKt")
     mockkStatic("com.mapbox.maps.extension.style.sources.SourceKt")
     mockkStatic(ValueConverter::class)
     every { delegateProvider.mapListenerDelegate.addOnDidFinishRenderingMapListener(any()) } just Runs
-    every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue<Value, String>(
+    every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue(
       Value(1)
     )
     val captureCallback = slot<(StyleManagerInterface) -> Unit>()
@@ -71,6 +73,8 @@ class LineManagerTest {
     every { style.addLayer(any()) } just Runs
     every { style.addLayerBelow(any(), any()) } just Runs
     every { style.getSource(any()) } returns null
+    every { style.styleSourceExists(any()) } returns false
+    every { style.styleLayerExists(any()) } returns false
     every { gesturesPlugin.addOnMapClickListener(any()) } just Runs
     every { gesturesPlugin.addOnMapLongClickListener(any()) } just Runs
     every { gesturesPlugin.addOnMoveListener(any()) } just Runs
@@ -82,6 +86,12 @@ class LineManagerTest {
     every { delegateProvider.mapFeatureQueryDelegate } returns mapFeatureQueryDelegate
     every { mapProjectionDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
     every { mapProjectionDelegate.pixelForCoordinate(any()) } returns ScreenCoordinate(1.0, 1.0)
+    every { layer.layerId } returns "layer0"
+    every { source.sourceId } returns "source0"
+    every { source.featureCollection(any()) } answers { source }
+    manager = LineManager(delegateProvider, null, 0, 0)
+    manager.layer = layer
+    manager.source = source
     every { layer.lineJoin(any<Expression>()) } answers { layer }
     every { layer.lineSortKey(any<Expression>()) } answers { layer }
     every { layer.lineOpacity(any<Expression>()) } answers { layer }
@@ -95,7 +105,6 @@ class LineManagerTest {
 
   @Test
   fun initialize() {
-    var manager = LineManager(delegateProvider, null, 0, 0)
     verify { gesturesPlugin.addOnMapClickListener(any()) }
     verify { gesturesPlugin.addOnMapLongClickListener(any()) }
     verify { gesturesPlugin.addOnMoveListener(any()) }
@@ -121,7 +130,6 @@ class LineManagerTest {
 
   @Test
   fun create() {
-    val manager = LineManager(delegateProvider, null, 0, 0)
     val annotation = manager.create(
       LineOptions()
         .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -131,7 +139,6 @@ class LineManagerTest {
 
   @Test
   fun createFromFeature() {
-    val manager = LineManager(delegateProvider, null, 0, 0)
     val featureCollection =
       FeatureCollection.fromFeature(Feature.fromGeometry(LineString.fromLngLats(listOf(Point.fromLngLat(0.0, 0.0)))))
     val annotations = manager.create(featureCollection.toJson())
@@ -142,7 +149,6 @@ class LineManagerTest {
 
   @Test
   fun createList() {
-    val manager = LineManager(delegateProvider, null, 0, 0)
     val list = listOf(
       LineOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))),
       LineOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -154,7 +160,6 @@ class LineManagerTest {
 
   @Test
   fun update() {
-    val manager = LineManager(delegateProvider, null, 0, 0)
     val annotation = manager.create(LineOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))))
     assertEquals(annotation, manager.annotations[0])
     annotation.points = listOf(Point.fromLngLat(1.0, 1.0), Point.fromLngLat(1.0, 1.0))
@@ -164,7 +169,6 @@ class LineManagerTest {
 
   @Test
   fun updateList() {
-    val manager = LineManager(delegateProvider, null, 0, 0)
     val list = listOf(
       LineOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))),
       LineOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -181,7 +185,6 @@ class LineManagerTest {
 
   @Test
   fun delete() {
-    val manager = LineManager(delegateProvider, null, 0, 0)
     val annotation = manager.create(
       LineOptions()
         .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -193,7 +196,6 @@ class LineManagerTest {
 
   @Test
   fun deleteList() {
-    val manager = LineManager(delegateProvider, null, 0, 0)
     val list = listOf(
       LineOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))),
       LineOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -208,7 +210,6 @@ class LineManagerTest {
 
   @Test
   fun deleteAll() {
-    val manager = LineManager(delegateProvider, null, 0, 0)
     val list = listOf(
       LineOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))),
       LineOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -363,8 +364,7 @@ class LineManagerTest {
 
   @Test
   fun testLineJoinLayerProperty() {
-    val manager = LineManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.lineJoin(Expression.get(LineOptions.PROPERTY_LINE_JOIN)) }
     val options = LineOptions()
       .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -377,8 +377,7 @@ class LineManagerTest {
 
   @Test
   fun testLineSortKeyLayerProperty() {
-    val manager = LineManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.lineSortKey(Expression.get(LineOptions.PROPERTY_LINE_SORT_KEY)) }
     val options = LineOptions()
       .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -391,8 +390,7 @@ class LineManagerTest {
 
   @Test
   fun testLineOpacityLayerProperty() {
-    val manager = LineManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.lineOpacity(Expression.get(LineOptions.PROPERTY_LINE_OPACITY)) }
     val options = LineOptions()
       .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -405,8 +403,7 @@ class LineManagerTest {
 
   @Test
   fun testLineColorLayerProperty() {
-    val manager = LineManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.lineColor(Expression.get(LineOptions.PROPERTY_LINE_COLOR)) }
     val options = LineOptions()
       .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -419,8 +416,7 @@ class LineManagerTest {
 
   @Test
   fun testLineWidthLayerProperty() {
-    val manager = LineManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.lineWidth(Expression.get(LineOptions.PROPERTY_LINE_WIDTH)) }
     val options = LineOptions()
       .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -433,8 +429,7 @@ class LineManagerTest {
 
   @Test
   fun testLineGapWidthLayerProperty() {
-    val manager = LineManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.lineGapWidth(Expression.get(LineOptions.PROPERTY_LINE_GAP_WIDTH)) }
     val options = LineOptions()
       .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -447,8 +442,7 @@ class LineManagerTest {
 
   @Test
   fun testLineOffsetLayerProperty() {
-    val manager = LineManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.lineOffset(Expression.get(LineOptions.PROPERTY_LINE_OFFSET)) }
     val options = LineOptions()
       .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -461,8 +455,7 @@ class LineManagerTest {
 
   @Test
   fun testLineBlurLayerProperty() {
-    val manager = LineManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.lineBlur(Expression.get(LineOptions.PROPERTY_LINE_BLUR)) }
     val options = LineOptions()
       .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -475,8 +468,7 @@ class LineManagerTest {
 
   @Test
   fun testLinePatternLayerProperty() {
-    val manager = LineManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.linePattern(Expression.get(LineOptions.PROPERTY_LINE_PATTERN)) }
     val options = LineOptions()
       .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
