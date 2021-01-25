@@ -68,4 +68,6 @@
     <string name="activity_symbol">Annotation Symbol</string>
     <string name="activity_line">Annotation line</string>
     <string name="activity_terrain_showcase">3D Terrain showcase</string>
+    <string name="activity_location_component">Location component</string>
+    <string name="activity_location_component_animation">Location component animation</string>
 </resources>

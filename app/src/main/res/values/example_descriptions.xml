@@ -68,4 +68,6 @@
     <string name="description_annotation_symbol">Show symbols on a map</string>
     <string name="description_annotation_line">Show lines on a map</string>
     <string name="description_terrain_showcase">Terrain 3D camera fly</string>
+    <string name="description_location_component">Shows location puck on the map</string>
+    <string name="description_location_component_animation">Animates puck with custom location provider updates</string>
 </resources>

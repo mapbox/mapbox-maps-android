@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file is generated. -->
+<resources>
+    <declare-styleable name="mapbox_MapView">
+        <!-- Whether the user location is visible on the map. -->
+        <attr name="mapbox_locationComponentEnabled" format="boolean"/>
+        <!-- Whether the location puck is pulsing on the map. Only work for 2D location puck. -->
+        <attr name="mapbox_locationComponentPulsingEnabled" format="boolean"/>
+        <!-- The color of the pulsing circle. Only work for 2D location puck. -->
+        <attr name="mapbox_locationComponentPulsingColor" format="color"/>
+        <!-- The maximum radius of the pulsing circle. Only work for 2D location puck. -->
+        <attr name="mapbox_locationComponentPulsingMaxRadius" format="dimension"/>
+        <!-- Sets the id of the layer that's added above to when placing the component on the map. -->
+        <attr name="mapbox_locationComponentLayerAbove" format="string"/>
+        <!-- Sets the id of the layer that's added below to when placing the component on the map. -->
+        <attr name="mapbox_locationComponentLayerBelow" format="string"/>
+        <!-- Defines what the customised look of the location puck. -->
+        <attr name="mapbox_locationComponentLocationPuck" format="enum">
+          <!--  -->
+          <enum name="location_puck_2_d" value="0"/>
+          <!--  -->
+          <enum name="location_puck_3_d" value="1"/>
+        </attr>
+
+        <!-- Location puck definitions for location_puck_2_d.  -->
+
+        <!-- Name of image in sprite to use as the top of the location indicator. -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck2DTopImage" format="reference"/>
+        <!-- Name of image in sprite to use as the middle of the location indicator. -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck2DBearingImage" format="reference"/>
+        <!-- Name of image in sprite to use as the background of the location indicator. -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck2DShadowImage" format="reference"/>
+        <!-- The scale expression of the images. If defined, it will be applied to all the three images. -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck2DScaleExpression" format="string"/>
+
+        <!-- Location puck definitions for location_puck_3_d.  -->
+
+        <!-- An URL for the model file in gltf format. -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelUri" format="string"/>
+        <!-- The scale of the model. -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DPosition_lon" format="float"/>
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DPosition_lat" format="float"/>
+        <!-- The opacity of the model. -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelOpacity" format="float"/>
+        <!-- The scale of the model. -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelScale_x" format="float"/>
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelScale_y" format="float"/>
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelScale_z" format="float"/>
+        <!-- The scale expression of the model, which will overwrite the default scale expression that keeps the model size constant during zoom. -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelScaleExpression" format="string"/>
+        <!-- The rotation of the model. -->
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_x" format="float"/>
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_y" format="float"/>
+        <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_z" format="float"/>
+    </declare-styleable>
+</resources>
+<!-- End of generated file. -->

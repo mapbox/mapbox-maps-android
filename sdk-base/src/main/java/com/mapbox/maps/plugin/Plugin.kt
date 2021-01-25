@@ -21,6 +21,10 @@ const val PLUGIN_ATTRIBUTION_CLASS_NAME = "com.mapbox.maps.plugin.attribution.At
  */
 const val PLUGIN_LOCATION_CLASS_NAME = "com.mapbox.maps.plugin.location.LocationComponentPlugin"
 /**
+ * Class name for location component plugin.
+ */
+const val PLUGIN_LOCATION_COMPONENT_CLASS_NAME = "com.mapbox.maps.plugin.locationcomponent.LocationComponentPluginImpl"
+/**
  * Class name for scale bar plugin.
  */
 const val PLUGIN_SCALE_BAR_CLASS_NAME = "com.mapbox.maps.plugin.scalebar.ScaleBarPluginImpl"

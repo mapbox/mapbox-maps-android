@@ -34,7 +34,7 @@ class ScaleBarAttributeParserTest {
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
     every { typedArray.getString(any()) } returns "pk.token"
     every { typedArray.getBoolean(any(), any()) } returns true
-    every { typedArray.getInt(any(), any()) } returns 100
+    every { typedArray.getInt(any(), any()) } returns 2
     every { typedArray.getColor(any(), any()) } returns Color.RED
     every { typedArray.getDimension(any(), any()) } returns 10.0f
     every { typedArray.getFloat(any(), any()) } returns 10.0f
@@ -168,9 +168,9 @@ class ScaleBarAttributeParserTest {
 
   @Test
   fun refreshIntervalTest() {
-    every { typedArray.getInt(any(), any()) } returns 100
+    every { typedArray.getInt(any(), any()) } returns 2
     val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, 1.2f)
-    assertEquals(100L, settings.refreshInterval)
+    assertEquals(2L, settings.refreshInterval)
   }
 
   @Test
