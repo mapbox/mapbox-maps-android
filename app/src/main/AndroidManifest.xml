@@ -668,7 +668,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.OfflineActivity"
+            android:name=".examples.LegacyOfflineActivity"
             android:description="@string/description_offline"
             android:exported="true"
             android:label="@string/activity_offline">
