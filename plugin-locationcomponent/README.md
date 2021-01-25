@@ -42,7 +42,11 @@ Customizing Mapbox Maps Location Component Plugin for Android could be done in t
 val plugin = mapView.getLocationComponentPlugin()
 // Enable location component plugin
 plugin.enabled = true
+```
 
+#### Customize 2D puck appearance
+
+```kotlin
 // Customise a 2D location puck:
 plugin.locationPuck = LocationPuck2D(
  topImage = ... ,
@@ -63,7 +67,11 @@ plugin.locationPuck = LocationPuck2D(
    }
  }.toJson()
 )
+```
 
+#### Customize 3D puck appearance
+
+```kotlin
 // Customise a 3D location puck:
 plugin.locationPuck = LocationPuck3D(
  modelUri = ... ,
@@ -72,7 +80,11 @@ plugin.locationPuck = LocationPuck3D(
  // however, it could also be overwritten by the setting the modelScaleExpression property.
  modelScale = listOf(0.1f, 0.1f, 0.1f)
 )
+```
 
+#### Provide your own LocationProvider with custom puck animators
+
+```kotlin
 // Provide your own Location Updates:
 // Create your own Location Provider implementation that implements the LocationProvider interface.
 class MyLocationProvider : LocationProvider {
@@ -83,6 +95,28 @@ class MyLocationProvider : LocationProvider {
 val myLocationProvider = MyLocationProvider()
 // Set your own location provider, it will replace the default implementation.
 plugin.setLocationProvider(myLocationProvider)
+```
+
+If using own LocationProvider there is a possibility to customize puck animation to upcoming bearing and location updates.
+
+```kotlin
+private inner class CustomLocationProvider : LocationProvider {
+
+  override fun registerLocationConsumer(locationConsumer: LocationConsumer) {
+    // set default animation options that will be used for all upcoming location updates.
+    locationConsumer.onPuckLocationAnimatorDefaultOptionsUpdated() {
+      duration = 2000
+      interpolator = FastOutSlowInInterpolator()
+    }
+    locationConsumer.onLocationUpdated(geoPointOne)
+    locationConsumer.onLocationUpdated(geoPointTwo)
+    // set custom animator options for next update only, then default animator options will apply
+    locationConsumer.onLocationUpdated(geoPointThree) {
+      duration = 1000
+    }
+  }
+  ...
+}
 ```
 
 More concrete examples of the location component plugin can be found in our [test application](https://github.com/mapbox/mapbox-maps-android/tree/master/app/src/main/java/com/mapbox/maps/testapp).
