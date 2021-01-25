@@ -116,7 +116,9 @@ internal class LocationIndicatorLayerRenderer(
    */
   override fun adjustPulsingCircleLayerVisibility(visible: Boolean) {
     if (!visible) {
-      layer.emphasisCircleRadius(0.0)
+      if (isRendererInitialised()) {
+        layer.emphasisCircleRadius(0.0)
+      }
     }
   }
 
@@ -131,8 +133,10 @@ internal class LocationIndicatorLayerRenderer(
   ) {
     val rgbaArray = colorToRgbaArray(pulsingColorInt)
     rgbaArray[3] = opacity ?: 1f
-    layer.emphasisCircleRadius(radius.toDouble())
-    layer.emphasisCircleColor(buildRGBAExpression(rgbaArray))
+    if (isRendererInitialised()) {
+      layer.emphasisCircleRadius(radius.toDouble())
+      layer.emphasisCircleColor(buildRGBAExpression(rgbaArray))
+    }
   }
 
   companion object {

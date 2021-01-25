@@ -6,13 +6,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.android.core.location.LocationEngineRequest
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
-import com.mapbox.maps.plugin.location.LocationComponentActivationOptions
-import com.mapbox.maps.plugin.location.LocationComponentOptions
-import com.mapbox.maps.plugin.location.getLocationPlugin
-import com.mapbox.maps.plugin.location.modes.CameraMode
+import com.mapbox.maps.plugin.locationcomponent.getLocationComponentPlugin
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
 import kotlinx.android.synthetic.main.activity_location_layer_basic_pulsing_circle.*
@@ -32,9 +28,6 @@ class BasicLocationPulsingCircleActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_location_layer_basic_pulsing_circle)
     mapboxMap = mapView.getMapboxMap()
-    if (savedInstanceState != null) {
-      lastLocation = savedInstanceState.getParcelable(SAVED_STATE_LOCATION)
-    }
     locationPermissionHelper = LocationPermissionHelper(this)
     locationPermissionHelper.checkPermissions {
       onMapReady()
@@ -45,43 +38,8 @@ class BasicLocationPulsingCircleActivity : AppCompatActivity() {
     mapboxMap.loadStyleUri(
       Style.MAPBOX_STREETS
     ) {
-      initLocationComponent(it)
       lastStyleUri = it.styleURI
     }
-  }
-
-  private fun initLocationComponent(style: Style) {
-    val locationComponentOptions =
-      LocationComponentOptions.builder(this@BasicLocationPulsingCircleActivity)
-        .pulseEnabled(true)
-        .build()
-
-    val locationComponentActivationOptions =
-      buildLocationComponentActivationOptions(style, locationComponentOptions)
-
-    mapView.getLocationPlugin().apply {
-      activateLocationComponent(locationComponentActivationOptions)
-      enabled = true
-      setCameraMode(CameraMode.TRACKING)
-      forceLocationUpdate(lastLocation)
-    }
-  }
-
-  private fun buildLocationComponentActivationOptions(
-    style: Style,
-    locationComponentOptions: LocationComponentOptions
-  ): LocationComponentActivationOptions {
-    return LocationComponentActivationOptions
-      .builder(this, style)
-      .locationComponentOptions(locationComponentOptions)
-      .useDefaultLocationEngine(true)
-      .locationEngineRequest(
-        LocationEngineRequest.Builder(750)
-          .setFastestInterval(750)
-          .setPriority(LocationEngineRequest.PRIORITY_HIGH_ACCURACY)
-          .build()
-      )
-      .build()
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -97,31 +55,19 @@ class BasicLocationPulsingCircleActivity : AppCompatActivity() {
         return true
       }
       R.id.action_component_disable -> {
-        mapView.getLocationPlugin().enabled = false
+        mapView.getLocationComponentPlugin().enabled = false
         return true
       }
       R.id.action_component_enabled -> {
-        mapView.getLocationPlugin().enabled = true
+        mapView.getLocationComponentPlugin().enabled = true
         return true
       }
       R.id.action_stop_pulsing -> {
-        mapView.getLocationPlugin().applyStyle(
-          LocationComponentOptions.builder(
-            this@BasicLocationPulsingCircleActivity
-          )
-            .pulseEnabled(false)
-            .build()
-        )
+        mapView.getLocationComponentPlugin().pulsingEnabled = false
         return true
       }
       R.id.action_start_pulsing -> {
-        mapView.getLocationPlugin().applyStyle(
-          LocationComponentOptions.builder(
-            this@BasicLocationPulsingCircleActivity
-          )
-            .pulseEnabled(true)
-            .build()
-        )
+        mapView.getLocationComponentPlugin().pulsingEnabled = true
         return true
       }
       else -> return super.onOptionsItemSelected(item)
@@ -162,18 +108,5 @@ class BasicLocationPulsingCircleActivity : AppCompatActivity() {
   override fun onDestroy() {
     super.onDestroy()
     mapView.onDestroy()
-  }
-
-  @SuppressLint("MissingPermission")
-  override fun onSaveInstanceState(outState: Bundle) {
-    super.onSaveInstanceState(outState)
-    outState.putParcelable(
-      SAVED_STATE_LOCATION,
-      mapView.getLocationPlugin().lastKnownLocation
-    )
-  }
-
-  companion object {
-    private const val SAVED_STATE_LOCATION = "saved_state_location"
   }
 }
