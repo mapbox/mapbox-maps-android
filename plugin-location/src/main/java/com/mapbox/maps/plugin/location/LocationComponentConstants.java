@@ -1,8 +1,11 @@
 package com.mapbox.maps.plugin.location;
 
 /**
- * Contains all the constants being used for the {@link LocationComponentPlugin}.
+ * Contains all the constants being used for the {@link LocationPluginImpl}.
+ *
+ * @deprecated Location Plugin is deprecated, use Location Component Plugin instead.
  */
+@Deprecated
 public final class LocationComponentConstants {
 
   // Controls the compass update rate in milliseconds

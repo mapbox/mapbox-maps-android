@@ -49,7 +49,7 @@ import java.util.concurrent.CopyOnWriteArrayList
  *
  * This component also offers the ability to set a map camera behavior for tracking the user
  * location. These different [CameraMode]s will track, stop tracking the location based on the
- * mode set with [LocationComponentPlugin.setCameraMode].
+ * mode set with [LocationPluginImpl.setCameraMode].
  *
  *
  * **
@@ -89,7 +89,8 @@ import java.util.concurrent.CopyOnWriteArrayList
  *
  * Location Component doesn't support state saving out-of-the-box.
  */
-class LocationComponentPlugin : LocationPlugin {
+@Deprecated("Use LocationComponentPlugin instead.")
+class LocationPluginImpl : LocationPlugin {
   private lateinit var style: StyleManagerInterface
   private lateinit var delegateProvider: MapDelegateProvider
 
@@ -225,6 +226,7 @@ class LocationComponentPlugin : LocationPlugin {
    *
    * @param activationOptions a fully built [LocationComponentActivationOptions] object
    */
+  @Deprecated("LocationPlugin is deprecated, use LocationComponentPlugin instead.")
   fun activateLocationComponent(activationOptions: LocationComponentActivationOptions) {
     var options = activationOptions.locationComponentOptions()
     if (options == null) {
@@ -264,7 +266,7 @@ class LocationComponentPlugin : LocationPlugin {
   }
 
   /**
-   * Defines whether the [LocationComponentPlugin] is enabled.
+   * Defines whether the [LocationPluginImpl] is enabled.
    */
   @set:RequiresPermission(anyOf = [permission.ACCESS_FINE_LOCATION, permission.ACCESS_COARSE_LOCATION])
   var enabled: Boolean
@@ -900,7 +902,7 @@ class LocationComponentPlugin : LocationPlugin {
    *
    *
    * If `null` is passed in, all updates will have to occur through the
-   * [LocationComponentPlugin.forceLocationUpdate] method.
+   * [LocationPluginImpl.forceLocationUpdate] method.
    *
    * @param locationEngine a [LocationEngine] this component should use to handle updates
    */
@@ -1485,13 +1487,13 @@ class LocationComponentPlugin : LocationPlugin {
   }
 
   @VisibleForTesting
-  internal class CurrentLocationEngineCallback(component: LocationComponentPlugin) :
+  internal class CurrentLocationEngineCallback(impl: LocationPluginImpl) :
     LocationEngineCallback<LocationEngineResult> {
-    private val componentWeakReference: WeakReference<LocationComponentPlugin> =
-      WeakReference(component)
+    private val weakReferenceImpl: WeakReference<LocationPluginImpl> =
+      WeakReference(impl)
 
     override fun onSuccess(result: LocationEngineResult) {
-      componentWeakReference.get()?.updateLocation(result.lastLocation, false)
+      weakReferenceImpl.get()?.updateLocation(result.lastLocation, false)
     }
 
     override fun onFailure(exception: Exception) {
@@ -1503,14 +1505,14 @@ class LocationComponentPlugin : LocationPlugin {
   }
 
   @VisibleForTesting
-  internal class LastLocationEngineCallback(component: LocationComponentPlugin) :
+  internal class LastLocationEngineCallback(impl: LocationPluginImpl) :
     LocationEngineCallback<LocationEngineResult> {
-    private val componentWeakReference: WeakReference<LocationComponentPlugin> =
-      WeakReference(component)
+    private val weakReferenceImpl: WeakReference<LocationPluginImpl> =
+      WeakReference(impl)
 
     override fun onSuccess(result: LocationEngineResult) {
       val component =
-        componentWeakReference.get()
+        weakReferenceImpl.get()
       component?.updateLocation(result.lastLocation, true)
     }
 
@@ -1659,6 +1661,10 @@ class LocationComponentPlugin : LocationPlugin {
 /**
  * Extension function to the the LocationComponentPlugin instance.
  */
-fun MapPluginProviderDelegate.getLocationPlugin(): LocationComponentPlugin {
-  return this.getPlugin(LocationComponentPlugin::class.java)!!
+@Deprecated(
+  "Use getLocationComponentPlugin instead.",
+  ReplaceWith("getLocationComponentPlugin")
+)
+fun MapPluginProviderDelegate.getLocationPlugin(): LocationPluginImpl {
+  return this.getPlugin(LocationPluginImpl::class.java)!!
 }

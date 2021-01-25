@@ -141,14 +141,14 @@ class LocationComponentTest {
     mapView.onDestroy()
   }
 
-  private fun LocationComponentPlugin.randomLocationUpdates() {
+  private fun LocationPluginImpl.randomLocationUpdates() {
     val updateCounter = nextInt(50) + 20
     for (i in 0..updateCounter) {
       updateLocationRandomly(Location(""))
     }
   }
 
-  private fun LocationComponentPlugin.updateLocationRandomly(location: Location) {
+  private fun LocationPluginImpl.updateLocationRandomly(location: Location) {
     location.updateLocationRandomly()
     forceLocationUpdate(LocationUpdate(location))
   }

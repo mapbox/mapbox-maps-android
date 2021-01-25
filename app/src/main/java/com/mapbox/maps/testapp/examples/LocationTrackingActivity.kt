@@ -49,8 +49,8 @@ class LocationTrackingActivity : AppCompatActivity(), OnCameraTrackingChangedLis
   }
 
   private fun initLocationComponent(style: Style) {
-    val locationComponent = mapView.getLocationPlugin()
-    locationComponent.activateLocationComponent(
+    val locationPluginImpl = mapView.getLocationPlugin()
+    locationPluginImpl.activateLocationComponent(
       LocationComponentActivationOptions
         .builder(this, style)
         .useDefaultLocationEngine(true)
@@ -62,10 +62,10 @@ class LocationTrackingActivity : AppCompatActivity(), OnCameraTrackingChangedLis
         )
         .build()
     )
-    locationComponent.addOnCameraTrackingChangedListener(this)
-    locationComponent.cameraMode = CameraMode.TRACKING_GPS // CameraMode.TRACKING_GPS_NORTH
-    locationComponent.renderMode = RenderMode.GPS
-    locationComponent.enabled = true
+    locationPluginImpl.addOnCameraTrackingChangedListener(this)
+    locationPluginImpl.cameraMode = CameraMode.TRACKING_GPS // CameraMode.TRACKING_GPS_NORTH
+    locationPluginImpl.renderMode = RenderMode.GPS
+    locationPluginImpl.enabled = true
   }
 
   override fun onCameraTrackingDismissed() {

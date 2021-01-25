@@ -8,7 +8,7 @@ import com.mapbox.maps.plugin.location.modes.RenderMode;
 
 /**
  * Interface defining the source of compass heading data that is
- * consumed by the {@link LocationComponentPlugin} when in compass related
+ * consumed by the {@link LocationPluginImpl} when in compass related
  * {@link RenderMode} or
  * {@link CameraMode}s.
  */

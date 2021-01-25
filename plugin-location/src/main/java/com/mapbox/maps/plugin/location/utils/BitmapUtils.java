@@ -23,7 +23,10 @@ import java.util.Arrays;
 
 /**
  * Utility class for creating bitmaps
+ *
+ * @deprecated Location Plugin is deprecated, use Location Component Plugin instead.
  */
+@Deprecated
 public class BitmapUtils {
 
   /**

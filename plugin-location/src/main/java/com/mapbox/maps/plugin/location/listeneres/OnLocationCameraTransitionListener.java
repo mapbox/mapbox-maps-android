@@ -4,7 +4,10 @@ import com.mapbox.maps.plugin.location.modes.CameraMode;
 
 /**
  * Callback for {@link CameraMode } transition state.
+ *
+ * @deprecated Location Plugin is deprecated, use Location Component Plugin instead.
  */
+@Deprecated
 public interface OnLocationCameraTransitionListener {
   /**
    * Invoked when the camera mode transition animation has been finished.

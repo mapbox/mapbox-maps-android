@@ -3,6 +3,7 @@ package com.mapbox.maps.plugin.location
 /**
  * Option class that configs and defines the default values for ModelLayerRender
  */
+@Deprecated("Location Plugin is deprecated, use Location Component Plugin instead.")
 data class LocationModelLayerOptions(
   /**
    * The url of this model, in gltf format.

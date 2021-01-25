@@ -37,7 +37,7 @@ class LocationModesActivity :
   private lateinit var locationModeBtn: Button
   private lateinit var locationPermissionHelper: LocationPermissionHelper
   private lateinit var mapboxMap: MapboxMap
-  private var locationComponent: LocationComponentPlugin? = null
+  private var locationPlugin: LocationPluginImpl? = null
   private lateinit var locationTrackingBtn: Button
   private lateinit var protectedGestureArea: View
 
@@ -57,14 +57,14 @@ class LocationModesActivity :
 
     locationModeBtn = findViewById(R.id.button_location_mode)
     locationModeBtn.setOnClickListener {
-      locationComponent?.let { showModeListDialog() }
+      locationPlugin?.let { showModeListDialog() }
     }
     locationTrackingBtn = findViewById(R.id.button_location_tracking)
     locationTrackingBtn.setOnClickListener {
-      if (locationComponent == null) {
+      if (locationPlugin == null) {
         return@setOnClickListener
       }
-      locationComponent?.let { showTrackingListDialog() }
+      locationPlugin?.let { showTrackingListDialog() }
     }
 
     if (savedInstanceState != null) {
@@ -91,9 +91,9 @@ class LocationModesActivity :
   }
 
   private fun initLocationComponent(style: Style) {
-    locationComponent = mapView.getLocationPlugin()
+    locationPlugin = mapView.getLocationPlugin()
     // Activate with a built LocationComponentActivationOptions object
-    locationComponent?.let {
+    locationPlugin?.let {
       it.activateLocationComponent(
         LocationComponentActivationOptions
           .builder(this, style)
@@ -124,7 +124,7 @@ class LocationModesActivity :
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    if (locationComponent == null) {
+    if (locationPlugin == null) {
       return super.onOptionsItemSelected(item)
     }
     val id = item.itemId
@@ -135,10 +135,10 @@ class LocationModesActivity :
       toggleMapStyle()
       return true
     } else if (id == R.id.action_component_disable) {
-      locationComponent?.enabled = false
+      locationPlugin?.enabled = false
       return true
     } else if (id == R.id.action_component_enabled) {
-      locationComponent?.enabled = true
+      locationPlugin?.enabled = true
       return true
     } else if (id == R.id.action_gestures_management_disabled) {
       disableGesturesManagement()
@@ -147,27 +147,27 @@ class LocationModesActivity :
       enableGesturesManagement()
       return true
     } else if (id == R.id.action_component_throttling_enabled) {
-      locationComponent?.setMaxAnimationFps(5)
+      locationPlugin?.setMaxAnimationFps(5)
     } else if (id == R.id.action_component_throttling_disabled) {
-      locationComponent?.setMaxAnimationFps(Int.MAX_VALUE)
+      locationPlugin?.setMaxAnimationFps(Int.MAX_VALUE)
     } else if (id == R.id.action_component_animate_while_tracking) {
-      locationComponent?.zoomWhileTracking(
+      locationPlugin?.zoomWhileTracking(
         17.0, 750,
         object : CancelableCallback {
           override fun onCancel() { // No impl
           }
 
           override fun onFinish() {
-            locationComponent?.pitchWhileTracking(60.0)
+            locationPlugin?.pitchWhileTracking(60.0)
           }
         }
       )
-      if (locationComponent?.cameraMode === CameraMode.NONE) {
+      if (locationPlugin?.cameraMode === CameraMode.NONE) {
         Toast.makeText(this, "Not possible to animate - not tracking", Toast.LENGTH_SHORT).show()
       }
     } else if (id == R.id.action_component_padding_animation_while_tracking) {
       val paddingRandom = Random()
-      locationComponent?.paddingWhileTracking(
+      locationPlugin?.paddingWhileTracking(
         doubleArrayOf(
           paddingRandom.nextDouble() * 500 * if (paddingRandom.nextBoolean()) -1 else 1,
           paddingRandom.nextDouble() * 500 * if (paddingRandom.nextBoolean()) -1 else 1,
@@ -180,11 +180,11 @@ class LocationModesActivity :
           }
 
           override fun onFinish() {
-            locationComponent?.zoomWhileTracking(16.0)
+            locationPlugin?.zoomWhileTracking(16.0)
           }
         }
       )
-      if (locationComponent?.cameraMode == CameraMode.NONE) {
+      if (locationPlugin?.cameraMode == CameraMode.NONE) {
         Toast.makeText(this, "Not possible to animate - not tracking", Toast.LENGTH_SHORT).show()
       }
     }
@@ -194,7 +194,7 @@ class LocationModesActivity :
   @SuppressLint("SetTextI18n")
   private fun setRendererMode(mode: RenderMode) {
     renderMode = mode
-    locationComponent?.renderMode = mode
+    locationPlugin?.renderMode = mode
     when (mode) {
       RenderMode.NORMAL -> {
         locationModeBtn.text = "Normal"
@@ -209,7 +209,7 @@ class LocationModesActivity :
   }
 
   private fun toggleStyle() {
-    locationComponent?.let {
+    locationPlugin?.let {
       defaultStyle = !defaultStyle
       var options: LocationComponentOptions = LocationComponentOptions.createFromAttributes(
         this,
@@ -232,7 +232,7 @@ class LocationModesActivity :
   }
 
   private fun toggleMapStyle() {
-    locationComponent?.let {
+    locationPlugin?.let {
       val styleUrl = if (lastStyleUri == Style.DARK) Style.LIGHT else Style.DARK
       mapboxMap.loadStyleUri(
         styleUrl
@@ -241,7 +241,7 @@ class LocationModesActivity :
   }
 
   private fun disableGesturesManagement() {
-    locationComponent?.let {
+    locationPlugin?.let {
       val params = protectedGestureArea.layoutParams
       params.height = 0
       params.width = 0
@@ -257,7 +257,7 @@ class LocationModesActivity :
   }
 
   private fun enableGesturesManagement() {
-    locationComponent?.let {
+    locationPlugin?.let {
       val rectF = RectF(0f, 0f, mapView.width / 2f, mapView.height / 2f)
       val params = protectedGestureArea.layoutParams
       params.height = rectF.bottom.toInt()
@@ -357,7 +357,7 @@ class LocationModesActivity :
   }
 
   private fun setCameraTrackingMode(mode: CameraMode) {
-    locationComponent!!.setCameraMode(
+    locationPlugin!!.setCameraMode(
       mode, 1200, 16.0, null, 45.0,
       object : OnLocationCameraTransitionListener {
         override fun onLocationCameraTransitionFinished(cameraMode: CameraMode) {
@@ -397,7 +397,7 @@ class LocationModesActivity :
     super.onSaveInstanceState(outState)
     outState.putString(SAVED_STATE_CAMERA, cameraMode.toString())
     outState.putString(SAVED_STATE_RENDER, renderMode.toString())
-    locationComponent?.let {
+    locationPlugin?.let {
       outState.putParcelable(
         SAVED_STATE_LOCATION,
         it.lastKnownLocation

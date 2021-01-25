@@ -22,11 +22,11 @@ import java.util.Arrays;
 
 /**
  * This class exposes options for the Location Component. The options can be set by defining a
- * style in your apps style.xml file and passing in directly into the {@link LocationComponentPlugin}
+ * style in your apps style.xml file and passing in directly into the {@link LocationPluginImpl}
  * class. Alternatively, if properties need to be changed at runtime depending on a specific state,
  * you can build an instance of this class, setting the values you desire, and then passing it into
- * either the {@link LocationComponentPlugin} activation method (if it isn't initialized yet) or
- * {@link LocationComponentPlugin#applyStyle(LocationComponentOptions)}.
+ * either the {@link LocationPluginImpl} activation method (if it isn't initialized yet) or
+ * {@link LocationPluginImpl#applyStyle(LocationComponentOptions)}.
  * <p>
  * When the {@link #createFromAttributes(Context, int)} methods called, any attributes not found
  * inside the style will revert back to using their default set values. Likewise, when building a
@@ -34,11 +34,14 @@ import java.util.Arrays;
  * reset to their default values.
  * <p>
  * If you would like to keep your custom style changes while modifying a single attribute, you can
- * get the currently used options object using {@link LocationComponentPlugin#getLocationComponentOptions()}
+ * get the currently used options object using {@link LocationPluginImpl#getLocationComponentOptions()}
  * and it's {@code toBuilder} method to modify a single entry while also maintaining the other
  * settings. Once your modifications have been made, you'll need to pass it back into the location
- * component using {@link LocationComponentPlugin#applyStyle(LocationComponentOptions)}.
+ * component using {@link LocationPluginImpl#applyStyle(LocationComponentOptions)}.
+ *
+ * @deprecated Use LocationComponentPlugin instead.
  */
+@Deprecated
 public class LocationComponentOptions implements Parcelable {
 
   /**
