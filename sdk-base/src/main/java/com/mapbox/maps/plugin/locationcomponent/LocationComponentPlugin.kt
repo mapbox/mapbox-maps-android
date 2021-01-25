@@ -19,6 +19,8 @@ interface LocationComponentPlugin :
 
   /**
    * Get the current LocationProvider under usage with the LocationComponentPlugin.
+   *
+   * @return The location provider currently under usage, and will return null if the location component plugin is not enabled and not initialised.
    */
   fun getLocationProvider(): LocationProvider?
 }

@@ -39,6 +39,8 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer, L
 
   /**
    * Get the current LocationProvider under usage with the LocationComponentPlugin.
+   *
+   * @return The location provider currently under usage, and will return null if the location component plugin is not enabled and not initialised.
    */
   override fun getLocationProvider(): LocationProvider? {
     return locationProvider
