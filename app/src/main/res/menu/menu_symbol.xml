@@ -2,6 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/menu_action_change_style"
+        android:title="@string/change_style"
+        app:showAsAction="never"/>
+    <item
             android:id="@+id/menu_action_draggable"
             android:title="@string/toggle_draggable_state"
             app:showAsAction="never"/>

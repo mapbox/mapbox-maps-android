@@ -15,6 +15,7 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.addLayerBelow
+import com.mapbox.maps.extension.style.layers.getLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
@@ -94,6 +95,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     gesturesPlugin.addOnMapClickListener(mapClickResolver)
     gesturesPlugin.addOnMapLongClickListener(mapLongClickResolver)
     gesturesPlugin.addOnMoveListener(mapMoveResolver)
+    delegateProvider.mapListenerDelegate.addOnDidFinishRenderingMapListener { initLayerAndSource() }
   }
 
   /**
@@ -123,6 +125,11 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   abstract var layerFilter: Expression?
 
   protected fun initLayerAndSource() {
+    layer?.let {
+      if (style.getLayer(it.layerId) != null) {
+        return
+      }
+    }
     initializeDataDrivenPropertyMap()
     source = createSource()
     layer = createLayer()

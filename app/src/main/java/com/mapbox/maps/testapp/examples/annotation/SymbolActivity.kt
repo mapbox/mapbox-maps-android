@@ -136,6 +136,15 @@ class SymbolActivity : AppCompatActivity() {
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
+      R.id.menu_action_change_style -> {
+        mapView.getMapboxMap().getStyle()?.let {
+          if (it.styleURI == Style.MAPBOX_STREETS) {
+            mapView.getMapboxMap().loadStyleUri(Style.SATELLITE)
+          } else {
+            mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS)
+          }
+        }
+      }
       R.id.menu_action_draggable -> {
         symbolManager?.annotations?.forEach {
           it.value.isDraggable = !it.value.isDraggable

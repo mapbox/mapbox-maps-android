@@ -56,6 +56,7 @@ class LineManagerTest {
     mockkStatic("com.mapbox.maps.extension.style.layers.LayerKt")
     mockkStatic("com.mapbox.maps.extension.style.sources.SourceKt")
     mockkStatic(ValueConverter::class)
+    every { delegateProvider.mapListenerDelegate.addOnDidFinishRenderingMapListener(any()) } just Runs
     every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue<Value, String>(
       Value(1)
     )
