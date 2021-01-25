@@ -80,3 +80,16 @@ The SDK includes a test app in the project. Use Android Studio’s Run button to
 ### Generating documentation
 - For generating documentation as Javadocs run `make dokka-javadoc` from project root. Docs will be located in `build/dokka/javadocCollector`. Entry point to view them via browser is `build/dokka/javadocCollector/index.html`.
 - For generating documentation as Kotlin HTML run `make dokka-html` from project root. Docs will be located in `build/dokka/htmlCollector`. Entry point to view them via browser is `build/dokka/htmlCollector/project/index.html`.
+
+### License
+
+Mapbox Maps for Android version 10.0
+Mapbox Maps Android SDK
+
+Copyright © 2021 Mapbox
+
+All rights reserved.
+
+Mapbox Maps for Android version 10.0 (“Mapbox Maps Android SDK”) or higher must be used according to the Mapbox Terms of Service. This license allows developers with a current active Mapbox account to use and modify the Mapbox Maps Android SDK. Developers may modify the Mapbox Maps Android SDK code so long as the modifications do not change or interfere with marked portions of the code related to billing, accounting, and anonymized data collection. The Mapbox Maps Android SDK sends anonymized location and usage data, which Mapbox uses for fixing bugs and errors, accounting, and generating aggregated anonymized statistics. This license terminates automatically if a user no longer has an active Mapbox account.
+
+For the full license terms, please see the Mapbox Terms of Service at https://www.mapbox.com/legal/tos/
