@@ -121,6 +121,7 @@ interface MapTransformDelegate {
   fun getSize(): Size
 
   /**
+   * Is terrain enabled for loaded style of the map.
    * @return True if terrain is enabled for given style and false otherwise.
    */
   fun terrainEnabled(): Boolean

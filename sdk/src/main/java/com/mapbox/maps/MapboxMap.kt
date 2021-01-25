@@ -37,7 +37,7 @@ class MapboxMap internal constructor(
   private val nativeMapWeakRef = WeakReference(nativeMap)
   internal lateinit var style: Style
 
-  var terrainEnabled = false
+  private var terrainEnabled = false
 
   /**
    * Will load a new map style asynchronous from the specified URI.
@@ -1053,6 +1053,7 @@ class MapboxMap internal constructor(
   }
 
   /**
+   * Is terrain enabled for loaded style of the map.
    * @return True if terrain is enabled for given style and false otherwise.
    */
   override fun terrainEnabled() = terrainEnabled
