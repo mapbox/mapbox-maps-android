@@ -865,7 +865,7 @@ class SymbolManager(
    * @return the GeoJsonSource created
    */
   override fun createSource(): GeoJsonSource {
-    return geoJsonSource(sourceId) {}
+    return geoJsonSource(sourceId) { data("") }
   }
 
   /**

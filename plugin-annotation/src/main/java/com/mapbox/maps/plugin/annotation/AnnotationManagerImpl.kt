@@ -15,10 +15,9 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.addLayerBelow
-import com.mapbox.maps.extension.style.layers.getLayer
+import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
-import com.mapbox.maps.extension.style.sources.getSource
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.PLUGIN_GESTURE_CLASS_NAME
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
@@ -47,6 +46,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     delegateProvider.mapFeatureQueryDelegate
   private var styleStateDelegate: MapStyleStateDelegate = delegateProvider.styleStateDelegate
   protected val dataDrivenPropertyUsageMap: MutableMap<String, Boolean> = HashMap()
+  protected val constantPropertyUsageMap = mutableListOf<PropertyValue<*>>()
   private var currentId = 0L
   private var width = 0
   private var height = 0
@@ -95,7 +95,12 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     gesturesPlugin.addOnMapClickListener(mapClickResolver)
     gesturesPlugin.addOnMapLongClickListener(mapLongClickResolver)
     gesturesPlugin.addOnMoveListener(mapMoveResolver)
-    delegateProvider.mapListenerDelegate.addOnDidFinishRenderingMapListener { initLayerAndSource() }
+    delegateProvider.mapListenerDelegate.addOnDidFinishRenderingMapListener {
+      delegateProvider.getStyle {
+        style = it
+        initLayerAndSource()
+      }
+    }
   }
 
   /**
@@ -125,21 +130,27 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   abstract var layerFilter: Expression?
 
   protected fun initLayerAndSource() {
-    layer?.let {
-      if (style.getLayer(it.layerId) != null) {
-        return
+    if (layer == null || source == null) {
+      initializeDataDrivenPropertyMap()
+      source = createSource()
+      layer = createLayer()
+    }
+
+    source?.let {
+      if (!style.styleSourceExists(it.sourceId)) {
+        style.addSource(it)
       }
     }
-    initializeDataDrivenPropertyMap()
-    source = createSource()
-    layer = createLayer()
     layer?.let {
-      if (belowLayerId == null) {
-        style.addLayer(it)
-      } else {
-        style.addLayerBelow(it, belowLayerId)
+      if (!style.styleLayerExists(it.layerId)) {
+        if (belowLayerId == null) {
+          style.addLayer(it)
+        } else {
+          style.addLayerBelow(it, belowLayerId)
+        }
       }
     }
+
     updateSource()
   }
 
@@ -198,16 +209,20 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Trigger an update to the underlying source
    */
   private fun updateSource() {
-    val features = annotations.map {
-      val annotation = Feature.fromGeometry(it.value.geometry, it.value.jsonObject)
-      it.value.setUsedDataDrivenProperties()
-      annotation
+    if (!styleStateDelegate.isFullyLoaded()) {
+      return
     }
     source?.let {
-      it.featureCollection(FeatureCollection.fromFeatures(features))
-      if (style.getSource(it.sourceId) == null) {
-        style.addSource(it)
+      if (!style.styleSourceExists(it.sourceId)) {
+        return
       }
+      val features = annotations.map {
+        val annotation = Feature.fromGeometry(it.value.geometry, it.value.jsonObject)
+        it.value.setUsedDataDrivenProperties()
+        annotation
+      }
+
+      it.featureCollection(FeatureCollection.fromFeatures(features))
     }
   }
 
