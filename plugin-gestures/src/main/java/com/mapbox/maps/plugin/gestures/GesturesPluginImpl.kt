@@ -11,6 +11,7 @@ import android.view.InputDevice
 import android.view.MotionEvent
 import android.view.animation.DecelerateInterpolator
 import com.mapbox.android.gestures.*
+import com.mapbox.maps.AnimationOptions
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
@@ -205,6 +206,14 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     if (motionEvent.actionMasked == MotionEvent.ACTION_DOWN) {
       unregisterScheduledAnimators()
       mapTransformDelegate.setGestureInProgress(true)
+      if (mapTransformDelegate.terrainEnabled()) {
+        mapTransformDelegate.dragStart(
+          ScreenCoordinate(
+            motionEvent.x.toDouble(),
+            motionEvent.y.toDouble()
+          )
+        )
+      }
     }
 
     val result = gesturesManager.onTouchEvent(motionEvent)
@@ -215,6 +224,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       MotionEvent.ACTION_UP -> {
         doubleTapFinished()
         mapTransformDelegate.setGestureInProgress(false)
+        if (mapTransformDelegate.terrainEnabled()) {
+          mapTransformDelegate.dragEnd()
+        }
 
         if (scheduledAnimators.isNotEmpty()) {
           // Start all awaiting velocity animations
@@ -230,6 +242,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       MotionEvent.ACTION_CANCEL -> {
         scheduledAnimators.clear()
         mapTransformDelegate.setGestureInProgress(false)
+        if (mapTransformDelegate.terrainEnabled()) {
+          mapTransformDelegate.dragEnd()
+        }
         doubleTapFinished()
       }
     }
@@ -378,7 +393,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       velocityX: Float,
       velocityY: Float
     ): Boolean {
-      return handleFlingEvent(velocityX, velocityY)
+      return handleFlingEvent(e1, e2, velocityX, velocityY)
     }
   }
 
@@ -1122,7 +1137,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     return false
   }
 
-  internal fun handleFlingEvent(velocityX: Float, velocityY: Float): Boolean {
+  internal fun handleFlingEvent(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
     if (!internalSettings.scrollEnabled) {
       // don't allow a fling if scroll is disabled
       return false
@@ -1175,15 +1190,23 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       val animationTime =
         (velocityXY / 7.0 / pitchFactor + ANIMATION_DURATION_FLING_BASE).toLong()
 
-      // update transformation
-      cameraAnimationsPlugin.moveBy(
-        ScreenCoordinate(offsetX, offsetY),
-        mapAnimationOptions {
-          owner = MapAnimationOwnerRegistry.GESTURES
-          duration = animationTime
-          interpolator = gesturesInterpolator
-        }
-      )
+      if (mapTransformDelegate.terrainEnabled()) {
+        mapTransformDelegate.drag(
+          centerScreen,
+          ScreenCoordinate(centerScreen.x + offsetX, centerScreen.y + offsetY),
+          AnimationOptions.Builder().duration(animationTime).build()
+        )
+      } else {
+        // update transformation
+        cameraAnimationsPlugin.moveBy(
+          ScreenCoordinate(offsetX, offsetY),
+          mapAnimationOptions {
+            owner = MapAnimationOwnerRegistry.GESTURES
+            duration = animationTime
+            interpolator = gesturesInterpolator
+          }
+        )
+      }
     }
     return true
   }
@@ -1221,12 +1244,20 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       } else {
         ScreenCoordinate((-distanceX).toDouble(), (-distanceY).toDouble())
       }
-      val target = cameraAnimationsPlugin.calculateMoveBy(offset)
-      target?.let {
-        cameraAnimationsPlugin.easeTo(
-          CameraOptions.Builder().center(it).build(),
-          immediateCameraJumpOptions
+      if (mapTransformDelegate.terrainEnabled()) {
+        mapTransformDelegate.drag(
+          centerScreen,
+          ScreenCoordinate(centerScreen.x + offset.x, centerScreen.y + offset.y),
+          null
         )
+      } else {
+        val target = cameraAnimationsPlugin.calculateMoveBy(offset)
+        target?.let {
+          cameraAnimationsPlugin.easeTo(
+            CameraOptions.Builder().center(it).build(),
+            immediateCameraJumpOptions
+          )
+        }
       }
     }
     return true

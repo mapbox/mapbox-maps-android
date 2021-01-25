@@ -132,6 +132,7 @@ class GesturePluginTest {
   @Test
   fun verifyGestureInProgress() {
     every { gesturesManager.onTouchEvent(any()) }.returns(true)
+    every { mapTransformDelegate.terrainEnabled() } returns false
     presenter.onTouchEvent(obtainMotionEventAction(ACTION_DOWN))
     verify { mapTransformDelegate.setGestureInProgress(true) }
     presenter.onTouchEvent(obtainMotionEventAction(ACTION_UP))
@@ -141,6 +142,7 @@ class GesturePluginTest {
   @Test
   fun verifyMotionEvent() {
     every { gesturesManager.onTouchEvent(any()) }.returns(true)
+    every { mapTransformDelegate.terrainEnabled() } returns false
     val motionEvent: MotionEvent = obtainMotionEventAction(ACTION_DOWN)
     presenter.onTouchEvent(motionEvent)
     verify { gesturesManager.onTouchEvent(motionEvent) }
@@ -264,16 +266,16 @@ class GesturePluginTest {
   fun verifyFlingListener() {
     val listener: OnFlingListener = mockk(relaxed = true)
     presenter.addOnFlingListener(listener)
-    presenter.handleFlingEvent(0.0f, 0.0f)
+    presenter.handleFlingEvent(mockk(), mockk(), 0.0f, 0.0f)
     verify { listener.onFling() }
     presenter.removeOnFlingListener(listener)
-    presenter.handleFlingEvent(0.0f, 0.0f)
+    presenter.handleFlingEvent(mockk(), mockk(), 0.0f, 0.0f)
     verify(exactly = 1) { listener.onFling() }
   }
 
   @Test
   fun verifyFlingIgnoreSmallDisplacement() {
-    val result = presenter.handleFlingEvent(0.1f, 0.1f)
+    val result = presenter.handleFlingEvent(mockk(), mockk(), 0.1f, 0.1f)
     assertFalse(result)
   }
 
@@ -282,7 +284,7 @@ class GesturePluginTest {
     val listener: OnFlingListener = mockk(relaxed = true)
     presenter.addOnFlingListener(listener)
     presenter.scrollEnabled = false
-    val result = presenter.handleFlingEvent(10000f, 10000f)
+    val result = presenter.handleFlingEvent(mockk(), mockk(), 10000f, 10000f)
     assertFalse(result)
     verify(exactly = 0) { listener.onFling() }
   }
@@ -290,7 +292,8 @@ class GesturePluginTest {
   @Test
   fun verifyFling() {
     every { mapTransformDelegate.getPitch() } returns 0.0
-    val result = presenter.handleFlingEvent(10000f, 10000f)
+    every { mapTransformDelegate.terrainEnabled() } returns false
+    val result = presenter.handleFlingEvent(mockk(), mockk(), 10000f, 10000f)
     // todo can't verify since both objects do not implements a correct equals
     // verify { cameraAnimationsPluginImpl.moveBy(ScreenCoordinate(0.0, 0.0), 0) }
     assert(result)
@@ -328,10 +331,24 @@ class GesturePluginTest {
     presenter.addOnMoveListener(listener)
     every { mapTransformDelegate.getCameraOptions(any()) } returns CameraOptions.Builder().build()
     every { cameraAnimationsPlugin.calculateMoveBy(any()) } returns Point.fromLngLat(0.0, 0.0)
+    every { mapTransformDelegate.terrainEnabled() } returns false
     val handled = presenter.handleMove(mockk(), 50.0f, 50.0f)
     assert(handled)
     verify { listener.onMove(any()) }
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
+  }
+
+  @Test
+  fun verifyMoveListenerTerrain() {
+    val listener: OnMoveListener = mockk(relaxed = true)
+    presenter.addOnMoveListener(listener)
+    every { mapTransformDelegate.getCameraOptions(any()) } returns CameraOptions.Builder().build()
+    every { cameraAnimationsPlugin.calculateMoveBy(any()) } returns Point.fromLngLat(0.0, 0.0)
+    every { mapTransformDelegate.terrainEnabled() } returns true
+    val handled = presenter.handleMove(mockk(), 50.0f, 50.0f)
+    assert(handled)
+    verify { listener.onMove(any()) }
+    verify { mapTransformDelegate.drag(any(), any(), any()) }
   }
 
   @Test

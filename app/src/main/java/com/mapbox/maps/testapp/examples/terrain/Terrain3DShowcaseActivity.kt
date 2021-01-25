@@ -2,26 +2,20 @@ package com.mapbox.maps.testapp.examples.terrain
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator
-import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxMap
-import com.mapbox.maps.RenderMode
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.layers.generated.skyLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.SkyType
 import com.mapbox.maps.extension.style.sources.generated.rasterDemSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.extension.style.terrain.generated.terrain
-import com.mapbox.maps.plugin.animation.MapAnimationOptions
-import com.mapbox.maps.plugin.animation.easeTo
-import com.mapbox.maps.plugin.delegates.listeners.OnDidFinishRenderingMapListener
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_simple_map.*
 
 /**
  * Example that demonstrates realistic map with 3D terrain and atmosphere sky layer.
  */
-class Terrain3DShowcaseActivity : AppCompatActivity(), OnDidFinishRenderingMapListener {
+class Terrain3DShowcaseActivity : AppCompatActivity() {
 
   private lateinit var mapboxMap: MapboxMap
 
@@ -41,7 +35,7 @@ class Terrain3DShowcaseActivity : AppCompatActivity(), OnDidFinishRenderingMapLi
           skyAtmosphereSun(listOf(-50.0, 90.2))
         }
       }
-    ) { mapboxMap.addOnDidFinishRenderingMapListener(this) }
+    )
   }
 
   override fun onStart() {
@@ -61,7 +55,6 @@ class Terrain3DShowcaseActivity : AppCompatActivity(), OnDidFinishRenderingMapLi
 
   override fun onDestroy() {
     super.onDestroy()
-    mapboxMap.removeOnDidFinishRenderingMapListener(this)
     mapView.onDestroy()
   }
 
@@ -69,20 +62,5 @@ class Terrain3DShowcaseActivity : AppCompatActivity(), OnDidFinishRenderingMapLi
     private const val SOURCE = "TERRAIN_SOURCE"
     private const val SKY_LAYER = "sky"
     private const val TERRAIN_URL_TILE_RESOURCE = "mapbox://mapbox.terrain-rgb"
-  }
-
-  override fun onDidFinishRenderingMap(mode: RenderMode) {
-    if (mode == RenderMode.FULL) {
-      mapboxMap.easeTo(
-        CameraOptions.Builder()
-          .pitch(85.0)
-          .zoom(12.0)
-          .build(),
-        MapAnimationOptions.mapAnimationOptions {
-          duration = 10_000L
-          interpolator = FastOutSlowInInterpolator()
-        }
-      )
-    }
   }
 }

@@ -119,4 +119,38 @@ interface MapTransformDelegate {
    * @return size The size of the map in MapOptions#size platform pixels
    */
   fun getSize(): Size
+
+  /**
+   * Is terrain enabled for loaded style of the map.
+   * @return True if terrain is enabled for given style and false otherwise.
+   */
+  fun terrainEnabled(): Boolean
+
+  /**
+   * Prepares the drag gesture to use the provided screen coordinate as a pivot point.
+   * This function should be called each time when user starts a dragging action (e.g. by clicking on the map).
+   * The following dragging will be relative to the pivot.
+   *
+   * @param point The pivot coordinate, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
+   */
+  fun dragStart(point: ScreenCoordinate)
+
+  /**
+   * Ends the ongoing drag gesture.
+   * This function should be called always after the user has ended a drag gesture initiated by `dragStart`.
+   */
+  fun dragEnd()
+
+  /**
+   * Drags the map from one screen point to another. The method should be called after `dragStart` and before `dragEnd`.
+   *
+   * @param fromPoint The point to drag the map from, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
+   * @param toPoint The point to drag the map to, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
+   * @param animation Optional animation
+   */
+  fun drag(
+    fromPoint: ScreenCoordinate,
+    toPoint: ScreenCoordinate,
+    animation: AnimationOptions?
+  )
 }
