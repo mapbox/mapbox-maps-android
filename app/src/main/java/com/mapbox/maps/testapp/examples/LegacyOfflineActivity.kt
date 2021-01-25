@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_offline.*
  * Example app that downloads an offline region and when succeeded
  * shows a button to load a map at the offline region definition.
  */
-class OfflineActivity : AppCompatActivity() {
+class LegacyOfflineActivity : AppCompatActivity() {
 
   private lateinit var offlineManager: OfflineRegionManager
   private lateinit var offlineRegion: OfflineRegion
@@ -76,7 +76,7 @@ class OfflineActivity : AppCompatActivity() {
     show_map_button.setOnClickListener {
       it.visibility = View.GONE
       // create mapView
-      mapView = MapView(this@OfflineActivity).also { mapview ->
+      mapView = MapView(this@LegacyOfflineActivity).also { mapview ->
         val mapboxMap = mapview.getMapboxMap()
         mapboxMap.jumpTo(CameraOptions.Builder().zoom(zoom).center(point).build())
         mapboxMap.loadStyleUri(styleUrl)
