@@ -46,9 +46,7 @@ internal class LocationPuckManager(
     animationManager.setLocationLayerRenderer(locationLayerRenderer)
     locationLayerRenderer.addLayers(positionManager)
     locationLayerRenderer.initializeComponents(style)
-    if (settings.pulsingEnabled) {
-      animationManager.enablePulsingAnimation(settings)
-    }
+    animationManager.applyPulsingAnimationSettings(settings)
     styleScaling(settings)
     updateCurrentPosition(lastLocation)
     updateCurrentBearing(lastBearing)
@@ -78,6 +76,7 @@ internal class LocationPuckManager(
       }
     }
     animationManager.setLocationLayerRenderer(locationLayerRenderer)
+    animationManager.applyPulsingAnimationSettings(settings)
     delegateProvider.getStyle {
       initialize(it)
     }

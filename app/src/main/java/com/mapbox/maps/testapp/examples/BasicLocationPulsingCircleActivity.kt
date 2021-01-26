@@ -1,7 +1,6 @@
 package com.mapbox.maps.testapp.examples
 
 import android.annotation.SuppressLint
-import android.location.Location
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -21,7 +20,6 @@ class BasicLocationPulsingCircleActivity : AppCompatActivity() {
 
   private lateinit var mapboxMap: MapboxMap
   private lateinit var locationPermissionHelper: LocationPermissionHelper
-  private var lastLocation: Location? = null
   private var lastStyleUri = Style.DARK
 
   override fun onCreate(savedInstanceState: Bundle?) {

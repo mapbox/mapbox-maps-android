@@ -47,12 +47,16 @@ internal class PuckAnimatorManager {
     pointAnimator.animate(*targets, options = options)
   }
 
-  fun enablePulsingAnimation(settings: LocationComponentSettings) {
+  fun applyPulsingAnimationSettings(settings: LocationComponentSettings) {
     pulsingAnimator.apply {
-      enabled = true
+      enabled = settings.pulsingEnabled
       maxRadius = settings.pulsingMaxRadius.toDouble()
       pulsingColor = settings.pulsingColor
-      animateInfinite()
+      if (enabled) {
+        animateInfinite()
+      } else {
+        cancelRunning()
+      }
     }
   }
 
