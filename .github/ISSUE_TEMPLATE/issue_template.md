@@ -13,7 +13,7 @@ assignees: ''
 
 ## Observed behavior and steps to reproduce
 
-<!--- Please include as much evidence as possible (traces, videos, screenshots etc --->
+<!--- Please include as much evidence as possible (traces, videos, screenshots etc） --->
 
 ## Expected behavior
 
