@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.plugin.annotation.generated
 
+import android.view.View
 import com.mapbox.geojson.*
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
@@ -9,6 +10,7 @@ import com.mapbox.maps.extension.style.layers.generated.CircleLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
+import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationManagerImpl
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.AnnotationType
@@ -19,24 +21,20 @@ import java.util.concurrent.atomic.AtomicLong
  * The circle manager allows to add circles to a map.
  */
 class CircleManager(
+  mapView: View,
   delegateProvider: MapDelegateProvider,
-  belowLayerId: String?,
-  touchAreaShiftX: Int,
-  touchAreaShiftY: Int
+  annotationConfig: AnnotationConfig? = null
 ) :
   AnnotationManagerImpl<Point, Circle, CircleOptions, OnCircleDragListener, OnCircleClickListener, OnCircleLongClickListener, CircleLayer>(
-    delegateProvider,
-    belowLayerId,
-    touchAreaShiftX,
-    touchAreaShiftY
+    mapView, delegateProvider, annotationConfig
   ) {
   private val layerId: String
   private val sourceId: String
 
   init {
     val id = ID_GENERATOR.incrementAndGet()
-    layerId = "mapbox-android-circle-layer-$id"
-    sourceId = "mapbox-android-circle-source-$id"
+    layerId = annotationConfig?.layerId ?: "mapbox-android-fill-layer-$id"
+    sourceId = annotationConfig?.sourceId ?: "mapbox-android-fill-source-$id"
     delegateProvider.getStyle {
       style = it
       initLayerAndSource()
@@ -276,18 +274,6 @@ class CircleManager(
   companion object {
     /** The generator for id */
     var ID_GENERATOR = AtomicLong(0)
-
-    /** The property for circle-translate */
-    private val PROPERTY_CIRCLE_TRANSLATE = "circle-translate"
-
-    /** The property for circle-translate-anchor */
-    private val PROPERTY_CIRCLE_TRANSLATE_ANCHOR = "circle-translate-anchor"
-
-    /** The property for circle-pitch-scale */
-    private val PROPERTY_CIRCLE_PITCH_SCALE = "circle-pitch-scale"
-
-    /** The property for circle-pitch-alignment */
-    private val PROPERTY_CIRCLE_PITCH_ALIGNMENT = "circle-pitch-alignment"
   }
 }
 
@@ -295,14 +281,8 @@ class CircleManager(
  * Extension function to get CircleManager instance
  */
 fun AnnotationPlugin.getCircleManager(
-  belowLayerId: String? = null,
-  touchAreaShiftX: Int = 0,
-  touchAreaShiftY: Int = 0
+  mapView: View,
+  annotationConfig: AnnotationConfig? = null
 ): CircleManager {
-  return getAnnotationManager(
-    AnnotationType.Circle,
-    belowLayerId,
-    touchAreaShiftX,
-    touchAreaShiftY
-  ) as CircleManager
+  return getAnnotationManager(mapView, AnnotationType.Circle, annotationConfig) as CircleManager
 }

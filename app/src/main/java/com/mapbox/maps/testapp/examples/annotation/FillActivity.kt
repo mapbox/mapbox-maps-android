@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.JsonPrimitive
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
-import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
@@ -28,9 +27,9 @@ class FillActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_annotation)
-    mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
+    mapView.getMapboxMap().loadStyleUri(nextStyle) {
       val annotationPlugin = mapView.getAnnotationPlugin()
-      fillManager = annotationPlugin.getFillManager().apply {
+      fillManager = annotationPlugin.getFillManager(mapView).apply {
         addClickListener(
           OnFillClickListener {
             Toast.makeText(this@FillActivity, "click", Toast.LENGTH_LONG).show()
@@ -81,7 +80,7 @@ class FillActivity : AppCompatActivity() {
 
     deleteAll.setOnClickListener { fillManager?.deleteAll() }
     changeStyle.setOnClickListener {
-      mapView.getMapboxMap().loadStyleUri(Utils.nextStyle)
+      mapView.getMapboxMap().loadStyleUri(nextStyle)
     }
   }
 
@@ -103,5 +102,25 @@ class FillActivity : AppCompatActivity() {
   override fun onDestroy() {
     super.onDestroy()
     mapView.onDestroy()
+  }
+
+  companion object {
+    /** Current index of style*/
+    private var index: Int = 0
+
+    /**
+     * Utility to cycle through map styles. Useful to test if runtime styling source and layers transfer over to new
+     * style.
+     *
+     * @return a string ID representing the map style
+     */
+    val nextStyle: String
+      get() {
+        index++
+        if (index == Utils.STYLES.size) {
+          index = 0
+        }
+        return Utils.STYLES[index]
+      }
   }
 }

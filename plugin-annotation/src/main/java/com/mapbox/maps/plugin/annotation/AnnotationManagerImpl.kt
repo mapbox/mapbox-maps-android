@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.annotation
 
 import android.graphics.PointF
+import android.view.View
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Feature
@@ -34,11 +35,10 @@ import java.util.*
  * Base class for annotation managers
  */
 abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : AnnotationOptions<G, T>, D : OnAnnotationDragListener<T>, U : OnAnnotationClickListener<T>, V : OnAnnotationLongClickListener<T>, L : Layer>(
+  mapView: View,
   /** The delegateProvider */
   final override val delegateProvider: MapDelegateProvider,
-  private val belowLayerId: String?,
-  private val touchAreaShiftX: Int,
-  private val touchAreaShiftY: Int
+  private val annotationConfig: AnnotationConfig?
 ) : AnnotationManager<G, T, S, D, U, V> {
   protected lateinit var style: StyleManagerInterface
   private var mapProjectionDelegate: MapProjectionDelegate = delegateProvider.mapProjectionDelegate
@@ -54,6 +54,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   private val mapLongClickResolver = MapLongClick()
   private val mapMoveResolver = MapMove()
   private var draggedAnnotation: T? = null
+  protected var touchAreaShiftX: Int = mapView.scrollX
+  protected var touchAreaShiftY: Int = mapView.scrollY
 
   private var gesturesPlugin: GesturesPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
     Class.forName(
@@ -66,10 +68,10 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     )
 
   /** The layer created by this manger. Annotations will be added to this layer.*/
-  var layer: L? = null
+  internal var layer: L? = null
 
   /** The source created by this manger. Feature data will bed added to this source.*/
-  var source: GeoJsonSource? = null
+  internal var source: GeoJsonSource? = null
 
   /**
    * The added annotations
@@ -143,10 +145,10 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     }
     layer?.let {
       if (!style.styleLayerExists(it.layerId)) {
-        if (belowLayerId == null) {
+        if (annotationConfig?.belowLayerId == null) {
           style.addLayer(it)
         } else {
-          style.addLayerBelow(it, belowLayerId)
+          style.addLayerBelow(it, annotationConfig.belowLayerId)
         }
       }
     }

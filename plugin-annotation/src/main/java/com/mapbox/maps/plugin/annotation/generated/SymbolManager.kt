@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.plugin.annotation.generated
 
+import android.view.View
 import com.mapbox.geojson.*
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
@@ -9,6 +10,7 @@ import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
+import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationManagerImpl
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.AnnotationType
@@ -19,24 +21,20 @@ import java.util.concurrent.atomic.AtomicLong
  * The symbol manager allows to add symbols to a map.
  */
 class SymbolManager(
+  mapView: View,
   delegateProvider: MapDelegateProvider,
-  belowLayerId: String?,
-  touchAreaShiftX: Int,
-  touchAreaShiftY: Int
+  annotationConfig: AnnotationConfig? = null
 ) :
   AnnotationManagerImpl<Point, Symbol, SymbolOptions, OnSymbolDragListener, OnSymbolClickListener, OnSymbolLongClickListener, SymbolLayer>(
-    delegateProvider,
-    belowLayerId,
-    touchAreaShiftX,
-    touchAreaShiftY
+    mapView, delegateProvider, annotationConfig
   ) {
   private val layerId: String
   private val sourceId: String
 
   init {
     val id = ID_GENERATOR.incrementAndGet()
-    layerId = "mapbox-android-symbol-layer-$id"
-    sourceId = "mapbox-android-symbol-source-$id"
+    layerId = annotationConfig?.layerId ?: "mapbox-android-fill-layer-$id"
+    sourceId = annotationConfig?.sourceId ?: "mapbox-android-fill-source-$id"
     delegateProvider.getStyle {
       style = it
       initLayerAndSource()
@@ -904,87 +902,6 @@ class SymbolManager(
   companion object {
     /** The generator for id */
     var ID_GENERATOR = AtomicLong(0)
-
-    /** The property for symbol-placement */
-    private val PROPERTY_SYMBOL_PLACEMENT = "symbol-placement"
-
-    /** The property for symbol-spacing */
-    private val PROPERTY_SYMBOL_SPACING = "symbol-spacing"
-
-    /** The property for symbol-avoid-edges */
-    private val PROPERTY_SYMBOL_AVOID_EDGES = "symbol-avoid-edges"
-
-    /** The property for icon-allow-overlap */
-    private val PROPERTY_ICON_ALLOW_OVERLAP = "icon-allow-overlap"
-
-    /** The property for icon-ignore-placement */
-    private val PROPERTY_ICON_IGNORE_PLACEMENT = "icon-ignore-placement"
-
-    /** The property for icon-optional */
-    private val PROPERTY_ICON_OPTIONAL = "icon-optional"
-
-    /** The property for icon-rotation-alignment */
-    private val PROPERTY_ICON_ROTATION_ALIGNMENT = "icon-rotation-alignment"
-
-    /** The property for icon-text-fit */
-    private val PROPERTY_ICON_TEXT_FIT = "icon-text-fit"
-
-    /** The property for icon-text-fit-padding */
-    private val PROPERTY_ICON_TEXT_FIT_PADDING = "icon-text-fit-padding"
-
-    /** The property for icon-padding */
-    private val PROPERTY_ICON_PADDING = "icon-padding"
-
-    /** The property for icon-keep-upright */
-    private val PROPERTY_ICON_KEEP_UPRIGHT = "icon-keep-upright"
-
-    /** The property for icon-pitch-alignment */
-    private val PROPERTY_ICON_PITCH_ALIGNMENT = "icon-pitch-alignment"
-
-    /** The property for text-pitch-alignment */
-    private val PROPERTY_TEXT_PITCH_ALIGNMENT = "text-pitch-alignment"
-
-    /** The property for text-rotation-alignment */
-    private val PROPERTY_TEXT_ROTATION_ALIGNMENT = "text-rotation-alignment"
-
-    /** The property for text-line-height */
-    private val PROPERTY_TEXT_LINE_HEIGHT = "text-line-height"
-
-    /** The property for text-variable-anchor */
-    private val PROPERTY_TEXT_VARIABLE_ANCHOR = "text-variable-anchor"
-
-    /** The property for text-max-angle */
-    private val PROPERTY_TEXT_MAX_ANGLE = "text-max-angle"
-
-    /** The property for text-writing-mode */
-    private val PROPERTY_TEXT_WRITING_MODE = "text-writing-mode"
-
-    /** The property for text-padding */
-    private val PROPERTY_TEXT_PADDING = "text-padding"
-
-    /** The property for text-keep-upright */
-    private val PROPERTY_TEXT_KEEP_UPRIGHT = "text-keep-upright"
-
-    /** The property for text-allow-overlap */
-    private val PROPERTY_TEXT_ALLOW_OVERLAP = "text-allow-overlap"
-
-    /** The property for text-ignore-placement */
-    private val PROPERTY_TEXT_IGNORE_PLACEMENT = "text-ignore-placement"
-
-    /** The property for text-optional */
-    private val PROPERTY_TEXT_OPTIONAL = "text-optional"
-
-    /** The property for icon-translate */
-    private val PROPERTY_ICON_TRANSLATE = "icon-translate"
-
-    /** The property for icon-translate-anchor */
-    private val PROPERTY_ICON_TRANSLATE_ANCHOR = "icon-translate-anchor"
-
-    /** The property for text-translate */
-    private val PROPERTY_TEXT_TRANSLATE = "text-translate"
-
-    /** The property for text-translate-anchor */
-    private val PROPERTY_TEXT_TRANSLATE_ANCHOR = "text-translate-anchor"
   }
 }
 
@@ -992,14 +909,8 @@ class SymbolManager(
  * Extension function to get SymbolManager instance
  */
 fun AnnotationPlugin.getSymbolManager(
-  belowLayerId: String? = null,
-  touchAreaShiftX: Int = 0,
-  touchAreaShiftY: Int = 0
+  mapView: View,
+  annotationConfig: AnnotationConfig? = null
 ): SymbolManager {
-  return getAnnotationManager(
-    AnnotationType.Symbol,
-    belowLayerId,
-    touchAreaShiftX,
-    touchAreaShiftY
-  ) as SymbolManager
+  return getAnnotationManager(mapView, AnnotationType.Symbol, annotationConfig) as SymbolManager
 }

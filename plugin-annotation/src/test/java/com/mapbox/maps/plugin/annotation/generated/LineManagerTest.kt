@@ -3,6 +3,7 @@
 package com.mapbox.maps.plugin.annotation.generated
 
 import android.graphics.PointF
+import android.view.View
 import com.mapbox.android.gestures.MoveDistancesObject
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.bindgen.Expected
@@ -24,6 +25,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
+import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.ShadowValueConverter
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate
@@ -52,6 +54,7 @@ class LineManagerTest {
   private val gesturesPlugin: GesturesPlugin = mockk()
   private val layer: LineLayer = mockk()
   private val source: GeoJsonSource = mockk()
+  private val mapView: View = mockk()
   private lateinit var manager: LineManager
   @Before
   fun setUp() {
@@ -86,10 +89,12 @@ class LineManagerTest {
     every { delegateProvider.mapFeatureQueryDelegate } returns mapFeatureQueryDelegate
     every { mapProjectionDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
     every { mapProjectionDelegate.pixelForCoordinate(any()) } returns ScreenCoordinate(1.0, 1.0)
+    every { mapView.scrollX } returns 0
+    every { mapView.scrollY } returns 0
     every { layer.layerId } returns "layer0"
     every { source.sourceId } returns "source0"
     every { source.featureCollection(any()) } answers { source }
-    manager = LineManager(delegateProvider, null, 0, 0)
+    manager = LineManager(mapView, delegateProvider)
     manager.layer = layer
     manager.source = source
     every { layer.lineJoin(any<Expression>()) } answers { layer }
@@ -110,7 +115,7 @@ class LineManagerTest {
     verify { gesturesPlugin.addOnMoveListener(any()) }
     assertEquals(Line.ID_KEY, manager.getAnnotationIdKey())
     verify { style.addLayer(any()) }
-    manager = LineManager(delegateProvider, "test_layer", 0, 0)
+    manager = LineManager(mapView, delegateProvider, AnnotationConfig("test_layer"))
     verify { style.addLayerBelow(any(), "test_layer") }
 
     manager.addClickListener(mockk())
@@ -226,7 +231,7 @@ class LineManagerTest {
   fun click() {
     val captureSlot = slot<OnMapClickListener>()
     every { gesturesPlugin.addOnMapClickListener(capture(captureSlot)) } just Runs
-    val manager = LineManager(delegateProvider, null, 0, 0)
+    val manager = LineManager(mapView, delegateProvider)
     val annotation = manager.create(
       LineOptions()
         .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -265,7 +270,7 @@ class LineManagerTest {
   fun longClick() {
     val captureSlot = slot<OnMapLongClickListener>()
     every { gesturesPlugin.addOnMapLongClickListener(capture(captureSlot)) } just Runs
-    val manager = LineManager(delegateProvider, null, 0, 0)
+    val manager = LineManager(mapView, delegateProvider)
 
     val annotation = manager.create(
       LineOptions()
@@ -305,7 +310,7 @@ class LineManagerTest {
   fun drag() {
     val captureSlot = slot<OnMoveListener>()
     every { gesturesPlugin.addOnMoveListener(capture(captureSlot)) } just Runs
-    val manager = LineManager(delegateProvider, null, 0, 0)
+    val manager = LineManager(mapView, delegateProvider)
     manager.onSizeChanged(100, 100)
     val annotation = manager.create(
       LineOptions()

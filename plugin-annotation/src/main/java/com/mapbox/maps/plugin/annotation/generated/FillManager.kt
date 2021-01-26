@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.plugin.annotation.generated
 
+import android.view.View
 import com.mapbox.geojson.*
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
@@ -9,6 +10,7 @@ import com.mapbox.maps.extension.style.layers.generated.FillLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
+import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationManagerImpl
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.AnnotationType
@@ -19,24 +21,20 @@ import java.util.concurrent.atomic.AtomicLong
  * The fill manager allows to add fills to a map.
  */
 class FillManager(
+  mapView: View,
   delegateProvider: MapDelegateProvider,
-  belowLayerId: String?,
-  touchAreaShiftX: Int,
-  touchAreaShiftY: Int
+  annotationConfig: AnnotationConfig? = null
 ) :
   AnnotationManagerImpl<Polygon, Fill, FillOptions, OnFillDragListener, OnFillClickListener, OnFillLongClickListener, FillLayer>(
-    delegateProvider,
-    belowLayerId,
-    touchAreaShiftX,
-    touchAreaShiftY
+    mapView, delegateProvider, annotationConfig
   ) {
   private val layerId: String
   private val sourceId: String
 
   init {
     val id = ID_GENERATOR.incrementAndGet()
-    layerId = "mapbox-android-fill-layer-$id"
-    sourceId = "mapbox-android-fill-source-$id"
+    layerId = annotationConfig?.layerId ?: "mapbox-android-fill-layer-$id"
+    sourceId = annotationConfig?.sourceId ?: "mapbox-android-fill-source-$id"
     delegateProvider.getStyle {
       style = it
       initLayerAndSource()
@@ -240,15 +238,6 @@ class FillManager(
   companion object {
     /** The generator for id */
     var ID_GENERATOR = AtomicLong(0)
-
-    /** The property for fill-antialias */
-    private val PROPERTY_FILL_ANTIALIAS = "fill-antialias"
-
-    /** The property for fill-translate */
-    private val PROPERTY_FILL_TRANSLATE = "fill-translate"
-
-    /** The property for fill-translate-anchor */
-    private val PROPERTY_FILL_TRANSLATE_ANCHOR = "fill-translate-anchor"
   }
 }
 
@@ -256,14 +245,8 @@ class FillManager(
  * Extension function to get FillManager instance
  */
 fun AnnotationPlugin.getFillManager(
-  belowLayerId: String? = null,
-  touchAreaShiftX: Int = 0,
-  touchAreaShiftY: Int = 0
+  mapView: View,
+  annotationConfig: AnnotationConfig? = null
 ): FillManager {
-  return getAnnotationManager(
-    AnnotationType.Fill,
-    belowLayerId,
-    touchAreaShiftX,
-    touchAreaShiftY
-  ) as FillManager
+  return getAnnotationManager(mapView, AnnotationType.Fill, annotationConfig) as FillManager
 }

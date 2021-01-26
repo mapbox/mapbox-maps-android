@@ -6,8 +6,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
-import com.mapbox.maps.Style
+import com.mapbox.maps.extension.style.layers.getLayer
 import com.mapbox.maps.extension.style.utils.ColorUtils
+import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
 import com.mapbox.maps.testapp.R
@@ -27,9 +28,15 @@ class LineActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_annotation)
-    mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
+    mapView.getMapboxMap().loadStyleUri(nextStyle) {
       val annotationPlugin = mapView.getAnnotationPlugin()
-      lineManager = annotationPlugin.getLineManager().apply {
+      lineManager = annotationPlugin.getLineManager(
+        mapView,
+        AnnotationConfig(COUNTRY_LABEL, LAYER_ID, SOURCE_ID)
+      ).apply {
+        it.getLayer(LAYER_ID)?.let { layer ->
+          Toast.makeText(this@LineActivity, layer.layerId, Toast.LENGTH_LONG).show()
+        }
         addClickListener(
           OnLineClickListener {
             Toast.makeText(
@@ -84,7 +91,7 @@ class LineActivity : AppCompatActivity() {
 
     deleteAll.setOnClickListener { lineManager?.deleteAll() }
     changeStyle.setOnClickListener {
-      mapView.getMapboxMap().loadStyleUri(Utils.nextStyle)
+      mapView.getMapboxMap().loadStyleUri(nextStyle)
     }
   }
 
@@ -106,5 +113,29 @@ class LineActivity : AppCompatActivity() {
   override fun onDestroy() {
     super.onDestroy()
     mapView.onDestroy()
+  }
+
+  companion object {
+    private const val LAYER_ID = "line_layer"
+    private const val SOURCE_ID = "line_source"
+    private const val COUNTRY_LABEL = "country-label"
+
+    /** Current index of style*/
+    private var index: Int = 0
+
+    /**
+     * Utility to cycle through map styles. Useful to test if runtime styling source and layers transfer over to new
+     * style.
+     *
+     * @return a string ID representing the map style
+     */
+    val nextStyle: String
+      get() {
+        index++
+        if (index == Utils.STYLES.size) {
+          index = 0
+        }
+        return Utils.STYLES[index]
+      }
   }
 }

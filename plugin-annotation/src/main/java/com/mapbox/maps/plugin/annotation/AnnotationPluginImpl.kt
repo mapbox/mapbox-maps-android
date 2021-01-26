@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.annotation
 
+import android.view.View
 import com.mapbox.maps.plugin.annotation.generated.CircleManager
 import com.mapbox.maps.plugin.annotation.generated.FillManager
 import com.mapbox.maps.plugin.annotation.generated.LineManager
@@ -16,27 +17,25 @@ class AnnotationPluginImpl : AnnotationPlugin {
   private val managerList = mutableListOf<WeakReference<AnnotationManager<*, *, *, *, *, *>>>()
   private var width = 0
   private var height = 0
+
   /**
    * Get an annotation manger
    *
-   * @param type the type of annotation manger
-   * @param belowLayerId the id of the layer above the annotation layer
-   * @param touchAreaShiftX the scrolled left position of mapView
-   * @param touchAreaShiftY the scrolled top position of mapView
-   *
+   * @param mapView the mapView
+   * @param type The type of he type of annotation manger
+   * @param annotationConfig the configuration for AnnotationManager
    * @return the annotation manger
    */
   override fun getAnnotationManager(
+    mapView: View,
     type: AnnotationType,
-    belowLayerId: String?,
-    touchAreaShiftX: Int,
-    touchAreaShiftY: Int
+    annotationConfig: AnnotationConfig?
   ): AnnotationManager<*, *, *, *, *, *> {
     val manager = when (type) {
-      AnnotationType.Fill -> FillManager(delegateProvider, belowLayerId, touchAreaShiftX, touchAreaShiftY)
-      AnnotationType.Circle -> CircleManager(delegateProvider, belowLayerId, touchAreaShiftX, touchAreaShiftY)
-      AnnotationType.Line -> LineManager(delegateProvider, belowLayerId, touchAreaShiftX, touchAreaShiftY)
-      AnnotationType.Symbol -> SymbolManager(delegateProvider, belowLayerId, touchAreaShiftX, touchAreaShiftY)
+      AnnotationType.Fill -> FillManager(mapView, delegateProvider, annotationConfig)
+      AnnotationType.Circle -> CircleManager(mapView, delegateProvider, annotationConfig)
+      AnnotationType.Line -> LineManager(mapView, delegateProvider, annotationConfig)
+      AnnotationType.Symbol -> SymbolManager(mapView, delegateProvider, annotationConfig)
     }
     manager.onSizeChanged(width, height)
     managerList.add(WeakReference(manager))

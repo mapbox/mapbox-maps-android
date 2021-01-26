@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
-import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.eq
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
@@ -52,15 +51,13 @@ class SymbolActivity : AppCompatActivity() {
       )
     )
 
-    mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) { style ->
+    mapView.getMapboxMap().loadStyleUri(nextStyle) { style ->
       airPortImage?.let {
         style.addImage(ID_ICON_AIRPORT, it, true)
       }
 
       val annotationPlugin = mapView.getAnnotationPlugin()
-      symbolManager = annotationPlugin.getSymbolManager().apply {
-        Toast.makeText(this@SymbolActivity, "Layer Id: ${layer?.layerId}", Toast.LENGTH_LONG).show()
-
+      symbolManager = annotationPlugin.getSymbolManager(mapView).apply {
         addClickListener(
           OnSymbolClickListener {
             Toast.makeText(this@SymbolActivity, "Click: $it", Toast.LENGTH_LONG).show()
@@ -127,7 +124,7 @@ class SymbolActivity : AppCompatActivity() {
 
     deleteAll.setOnClickListener { symbolManager?.deleteAll() }
     changeStyle.setOnClickListener {
-      mapView.getMapboxMap().loadStyleUri(Utils.nextStyle) { style ->
+      mapView.getMapboxMap().loadStyleUri(nextStyle) { style ->
         airPortImage?.let { bitMap ->
           style.addImage(ID_ICON_AIRPORT, bitMap, true)
         }
@@ -249,5 +246,23 @@ class SymbolActivity : AppCompatActivity() {
     private const val MAKI_ICON_CAR = "car-15"
     private const val MAKI_ICON_CAFE = "cafe-15"
     private const val MAKI_ICON_CIRCLE = "fire-station-15"
+
+    /** Current index of style*/
+    private var index: Int = 0
+
+    /**
+     * Utility to cycle through map styles. Useful to test if runtime styling source and layers transfer over to new
+     * style.
+     *
+     * @return a string ID representing the map style
+     */
+    val nextStyle: String
+      get() {
+        index++
+        if (index == Utils.STYLES.size) {
+          index = 0
+        }
+        return Utils.STYLES[index]
+      }
   }
 }

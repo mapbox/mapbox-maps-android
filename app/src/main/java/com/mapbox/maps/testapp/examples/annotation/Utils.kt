@@ -16,25 +16,8 @@ import java.util.*
  */
 object Utils {
 
-  private val STYLES =
+  val STYLES =
     arrayOf(Style.MAPBOX_STREETS, Style.OUTDOORS, Style.LIGHT, Style.DARK, Style.SATELLITE_STREETS)
-
-  private var index: Int = 0
-
-  /**
-   * Utility to cycle through map styles. Useful to test if runtime styling source and layers transfer over to new
-   * style.
-   *
-   * @return a string ID representing the map style
-   */
-  val nextStyle: String
-    get() {
-      index++
-      if (index == STYLES.size) {
-        index = 0
-      }
-      return STYLES[index]
-    }
 
   /**
    * Utility for getting a list of random points.

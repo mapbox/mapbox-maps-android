@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
-import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
@@ -27,9 +26,9 @@ class CircleActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_annotation)
-    mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
+    mapView.getMapboxMap().loadStyleUri(nextStyle) {
       val annotationPlugin = mapView.getAnnotationPlugin()
-      circleManager = annotationPlugin.getCircleManager().apply {
+      circleManager = annotationPlugin.getCircleManager(mapView).apply {
         addClickListener(
           OnCircleClickListener {
             Toast.makeText(this@CircleActivity, "click", Toast.LENGTH_LONG).show()
@@ -75,7 +74,7 @@ class CircleActivity : AppCompatActivity() {
 
     deleteAll.setOnClickListener { circleManager?.deleteAll() }
     changeStyle.setOnClickListener {
-      mapView.getMapboxMap().loadStyleUri(Utils.nextStyle)
+      mapView.getMapboxMap().loadStyleUri(nextStyle)
     }
   }
 
@@ -97,5 +96,25 @@ class CircleActivity : AppCompatActivity() {
   override fun onDestroy() {
     super.onDestroy()
     mapView.onDestroy()
+  }
+
+  companion object {
+    /** Current index of style*/
+    private var index: Int = 0
+
+    /**
+     * Utility to cycle through map styles. Useful to test if runtime styling source and layers transfer over to new
+     * style.
+     *
+     * @return a string ID representing the map style
+     */
+    val nextStyle: String
+      get() {
+        index++
+        if (index == Utils.STYLES.size) {
+          index = 0
+        }
+        return Utils.STYLES[index]
+      }
   }
 }

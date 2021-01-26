@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.plugin.annotation.generated
 
+import android.view.View
 import com.mapbox.geojson.*
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
@@ -9,6 +10,7 @@ import com.mapbox.maps.extension.style.layers.generated.LineLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
+import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationManagerImpl
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.AnnotationType
@@ -19,24 +21,20 @@ import java.util.concurrent.atomic.AtomicLong
  * The line manager allows to add lines to a map.
  */
 class LineManager(
+  mapView: View,
   delegateProvider: MapDelegateProvider,
-  belowLayerId: String?,
-  touchAreaShiftX: Int,
-  touchAreaShiftY: Int
+  annotationConfig: AnnotationConfig? = null
 ) :
   AnnotationManagerImpl<LineString, Line, LineOptions, OnLineDragListener, OnLineClickListener, OnLineLongClickListener, LineLayer>(
-    delegateProvider,
-    belowLayerId,
-    touchAreaShiftX,
-    touchAreaShiftY
+    mapView, delegateProvider, annotationConfig
   ) {
   private val layerId: String
   private val sourceId: String
 
   init {
     val id = ID_GENERATOR.incrementAndGet()
-    layerId = "mapbox-android-line-layer-$id"
-    sourceId = "mapbox-android-line-source-$id"
+    layerId = annotationConfig?.layerId ?: "mapbox-android-fill-layer-$id"
+    sourceId = annotationConfig?.sourceId ?: "mapbox-android-fill-source-$id"
     delegateProvider.getStyle {
       style = it
       initLayerAndSource()
@@ -328,24 +326,6 @@ class LineManager(
   companion object {
     /** The generator for id */
     var ID_GENERATOR = AtomicLong(0)
-
-    /** The property for line-cap */
-    private val PROPERTY_LINE_CAP = "line-cap"
-
-    /** The property for line-miter-limit */
-    private val PROPERTY_LINE_MITER_LIMIT = "line-miter-limit"
-
-    /** The property for line-round-limit */
-    private val PROPERTY_LINE_ROUND_LIMIT = "line-round-limit"
-
-    /** The property for line-translate */
-    private val PROPERTY_LINE_TRANSLATE = "line-translate"
-
-    /** The property for line-translate-anchor */
-    private val PROPERTY_LINE_TRANSLATE_ANCHOR = "line-translate-anchor"
-
-    /** The property for line-dasharray */
-    private val PROPERTY_LINE_DASHARRAY = "line-dasharray"
   }
 }
 
@@ -353,14 +333,8 @@ class LineManager(
  * Extension function to get LineManager instance
  */
 fun AnnotationPlugin.getLineManager(
-  belowLayerId: String? = null,
-  touchAreaShiftX: Int = 0,
-  touchAreaShiftY: Int = 0
+  mapView: View,
+  annotationConfig: AnnotationConfig? = null
 ): LineManager {
-  return getAnnotationManager(
-    AnnotationType.Line,
-    belowLayerId,
-    touchAreaShiftX,
-    touchAreaShiftY
-  ) as LineManager
+  return getAnnotationManager(mapView, AnnotationType.Line, annotationConfig) as LineManager
 }
