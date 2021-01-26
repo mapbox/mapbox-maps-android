@@ -1,6 +1,0 @@
-[submodule "vendor/mapbox-maps-stylegen"]
-	path = vendor/mapbox-maps-stylegen
-	url = git@github.com:mapbox/mapbox-maps-stylegen.git
-[submodule "vendor/mapbox-gl-native-internal"]
-	path = vendor/mapbox-gl-native-internal
-	url = git@github.com:mapbox/mapbox-gl-native-internal.git

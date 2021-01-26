@@ -1,9 +1,6 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import org.jetbrains.dokka.gradle.DokkaTask
 
-val buildCommonFromSource = gradleLocalProperties(rootDir).getProperty("buildCommonFromSource")?.toBoolean() == true
-val buildMapsFromSource = gradleLocalProperties(rootDir).getProperty("buildFromSource")?.toBoolean() == true
-
 plugins {
   id("com.android.library")
   kotlin("android")
@@ -26,17 +23,8 @@ dependencies {
   implementation(Dependencies.mapboxBase)
   implementation(Dependencies.androidxAnnotations)
   api(Dependencies.mapboxGestures)
-  if (buildMapsFromSource) {
-    api(project(":maps-core"))
-    if (buildCommonFromSource) {
-      api(project(":common"))
-    } else {
-      api(Dependencies.mapboxCoreCommon)
-    }
-  } else {
-    api(Dependencies.mapboxGlNative)
-    api(Dependencies.mapboxCoreCommon)
-  }
+  api(Dependencies.mapboxGlNative)
+  api(Dependencies.mapboxCoreCommon)
 }
 
 tasks.withType<DokkaTask>().configureEach {

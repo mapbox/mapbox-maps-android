@@ -203,14 +203,6 @@ commands:
                 --device-ids sailfish --os-version-ids "26" --locales en --orientations portrait --timeout 45m --use-orchestrator
             fi
 
-  update-properties-to-build-from-source:
-    steps:
-      - run:
-          name: Build submodules from source
-          command: |
-            echo -e "\nbuildFromSource=true" >> local.properties
-            echo -e "\nbuildCommonFromSource=true" >> local.properties
-
   run-firebase-robo:
     steps:
       - run:
@@ -226,28 +218,15 @@ commands:
                 --timeout 90s
             fi
 
-  checkout-submodules:
-    steps:
-      - run:
-          name: Checkout vendor submodules
-          command: |
-            git submodule sync && git submodule update --init --recursive
-
   mapbox-gl-native-begin:
     steps:
       - when:
           condition: << pipeline.parameters.mapbox_upstream >>
           steps:
-            - update-properties-to-build-from-source
             - run:
                name: Install Python dependencies
                command: |
                  pip3 install requests
-            - run:
-               name: Updating Mapbox GL Native
-               command: |
-                 cd vendor/mapbox-gl-native-internal && git checkout << pipeline.parameters.mapbox_hash >>
-                 git submodule sync && git submodule update --init --recursive
             - run:
                name: Report upstream pending
                command: |
@@ -275,7 +254,6 @@ jobs:
 
     steps:
       - checkout
-      - checkout-submodules
       - restore-gradle-cache
       - run:
           name: ktlint
@@ -283,12 +261,6 @@ jobs:
       - run:
           name: license
           command: python scripts/license-validate.py
-      - run:
-          name: stylegen
-          command: sh scripts/stylegen-validate.sh
-      - run:
-          name: annotation
-          command: sh scripts/annotation-validate.sh
       - store-results
 
   verify-docs:
@@ -362,7 +334,6 @@ jobs:
 
     steps:
       - checkout
-      - checkout-submodules
       - mapbox-gl-native-begin
       - restore-gradle-cache
       - build-instrumentation-test:
@@ -401,9 +372,7 @@ jobs:
 
     steps:
       - checkout
-      - checkout-submodules
       - restore-gradle-cache
-      - update-properties-to-build-from-source
       - build-module:
           module_target: "sdk"
           variant: "Release"
