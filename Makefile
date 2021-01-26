@@ -3,7 +3,6 @@ check:
 	./gradlew ktlint lint;
 	python scripts/license-validate.py;
 	sh scripts/kdoc-validate.sh;
-	sh scripts/stylegen-validate.sh;
 
 .PHONY: test
 test:
@@ -71,26 +70,6 @@ instrumentation-tests:
 instrumentation-clean:
 	adb uninstall com.mapbox.maps.testapp || true;
 	adb uninstall com.mapbox.maps.testapp.test || true;
-
-.PHONY: generate-style-code
-generate-style-code:
-	cd vendor/mapbox-maps-stylegen && npm install && node generators/kotlin/generate-style-code.js
-
-.PHONY: generate-config-code
-generate-config-code:
-	 cd vendor/mapbox-maps-stylegen && npm install && node map-serialization-generator/generators/kotlin/generate-configurations-code.js
-
-.PHONY: ndk-stack-maps
-ndk-stack-maps:
-	 adb logcat | ndk-stack -sym vendor/mapbox-gl-native-internal/internal/platform/android/sdk/build/intermediates/cmake/debug/obj/arm64-v8a
-
-.PHONY: build-from-source-clean
-build-from-source-clean:
-	sh scripts/clean.sh
-
-.PHONY: generate-annotation-code
-generate-annotation-code:
-	cd vendor/mapbox-maps-stylegen/annotation-generator && npm install && node code-gen
 
 # Generates Activity sanity tests
 .PHONY: generate-sanity-test

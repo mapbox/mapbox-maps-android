@@ -1,26 +1,7 @@
 buildscript {
-  var buildFromSource = false
-  project.rootProject.file("local.properties").apply {
-    if (exists()) {
-      val properties = java.util.Properties()
-      properties.load(inputStream())
-      if (properties.getProperty("buildFromSource")?.toBoolean() == true) {
-        buildFromSource = true
-      }
-    }
-  }
   repositories {
     google()
     jcenter()
-    if (buildFromSource) {
-      maven {
-        url = uri("http://mapbox.bintray.com/mapbox_private")
-        credentials {
-          username = System.getenv("BINTRAY_USER") ?: project.property("BINTRAY_USER") as String
-          password = System.getenv("BINTRAY_API_KEY") ?: project.property("BINTRAY_API_KEY") as String
-        }
-      }
-    }
     maven {
       url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
       credentials {
@@ -43,11 +24,6 @@ buildscript {
     classpath(Plugins.androidPublish)
     classpath(Plugins.mapboxAccessToken)
     classpath(Plugins.mapboxSdkRegistry)
-    if (buildFromSource) {
-      classpath(Plugins.bintray)
-      classpath(Plugins.mapboxBindgen)
-      classpath(Plugins.mapboxNative)
-    }
   }
 }
 

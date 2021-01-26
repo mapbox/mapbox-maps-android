@@ -8,9 +8,6 @@ plugins {
   id("org.jetbrains.dokka")
 }
 
-val buildCommonFromSource = gradleLocalProperties(rootDir).getProperty("buildCommonFromSource")?.toBoolean() == true
-val buildMapsFromSource = gradleLocalProperties(rootDir).getProperty("buildFromSource")?.toBoolean() == true
-
 android {
   compileSdkVersion(AndroidVersions.compileSdkVersion)
 
@@ -47,11 +44,7 @@ android {
 
 dependencies {
   api(Dependencies.mapboxBase)
-  api(Dependencies.mapboxOkHttp) {
-    if (buildCommonFromSource && buildMapsFromSource) {
-      exclude(group = "com.mapbox.common")
-    }
-  }
+  api(Dependencies.mapboxOkHttp)
   implementation(Dependencies.mapboxAnnotations)
   api(project(":sdk-base"))
   implementation(project(":module-telemetry"))
