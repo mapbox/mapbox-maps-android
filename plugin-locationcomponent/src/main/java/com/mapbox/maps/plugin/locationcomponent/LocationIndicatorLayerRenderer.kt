@@ -93,22 +93,16 @@ internal class LocationIndicatorLayerRenderer(
   }
 
   private fun setLayerVisibility(visible: Boolean) {
-    if (isRendererInitialised()) {
-      layer.visibility(visible)
-    }
+    layer.visibility(visible)
   }
 
   private fun setLayerLocation(latLng: Point) {
     val values = listOf(latLng.latitude(), latLng.longitude(), 0.0)
-    if (isRendererInitialised()) {
-      layer.location(values)
-    }
+    layer.location(values)
   }
 
   private fun setLayerBearing(bearing: Double) {
-    if (isRendererInitialised()) {
-      layer.bearing(bearing)
-    }
+    layer.bearing(bearing)
   }
 
   /**
@@ -116,9 +110,7 @@ internal class LocationIndicatorLayerRenderer(
    */
   override fun adjustPulsingCircleLayerVisibility(visible: Boolean) {
     if (!visible) {
-      if (isRendererInitialised()) {
-        layer.emphasisCircleRadius(0.0)
-      }
+      layer.emphasisCircleRadius(0.0)
     }
   }
 
@@ -133,10 +125,8 @@ internal class LocationIndicatorLayerRenderer(
   ) {
     val rgbaArray = colorToRgbaArray(pulsingColorInt)
     rgbaArray[3] = opacity ?: 1f
-    if (isRendererInitialised()) {
-      layer.emphasisCircleRadius(radius.toDouble())
-      layer.emphasisCircleColor(buildRGBAExpression(rgbaArray))
-    }
+    layer.emphasisCircleRadius(radius.toDouble())
+    layer.emphasisCircleColor(buildRGBAExpression(rgbaArray))
   }
 
   companion object {

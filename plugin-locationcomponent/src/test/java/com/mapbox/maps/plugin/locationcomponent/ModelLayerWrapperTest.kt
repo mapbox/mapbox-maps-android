@@ -2,15 +2,21 @@ package com.mapbox.maps.plugin.locationcomponent
 
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
+import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import junit.framework.Assert.assertEquals
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
+@RunWith(RobolectricTestRunner::class)
+@Config(shadows = [ShadowLogger::class])
 class ModelLayerWrapperTest {
 
   private val style: StyleManagerInterface = mockk(relaxed = true)
@@ -19,6 +25,7 @@ class ModelLayerWrapperTest {
 
   @Before
   fun setup() {
+    every { style.styleLayerExists(any()) } returns true
     every { style.addStyleLayer(any(), any()) } returns expected
     every { style.setStyleLayerProperty(any(), any(), any()) } returns expected
     every { expected.error } returns null
@@ -41,10 +48,18 @@ class ModelLayerWrapperTest {
   }
 
   @Test
-  fun test() {
+  fun testRotation() {
     val rotation = arrayListOf(1.0, 2.0)
     layer.modelRotation(rotation)
     verify { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-rotation", Value(rotation.map { Value(it) })) }
+  }
+
+  @Test
+  fun testLayerNotReady() {
+    every { style.styleLayerExists(any()) } returns false
+    val scale = arrayListOf(1.0, 2.0)
+    layer.modelScale(scale)
+    verify(exactly = 0) { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-scale", Value(scale.map { Value(it) })) }
   }
 
   companion object {

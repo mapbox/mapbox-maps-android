@@ -2,9 +2,14 @@ package com.mapbox.maps.plugin.locationcomponent
 
 import android.util.Log
 import com.mapbox.bindgen.Value
+import com.mapbox.common.Logger
 import com.mapbox.maps.StyleManagerInterface
 
-internal class ModelSourceWrapper(val sourceId: String, private var url: String, position: List<Double>) {
+internal class ModelSourceWrapper(
+  val sourceId: String,
+  private var url: String,
+  position: List<Double>
+) {
 
   private var sourceProperties = HashMap<String, Value>()
   private var styleDelegate: StyleManagerInterface? = null
@@ -42,13 +47,20 @@ internal class ModelSourceWrapper(val sourceId: String, private var url: String,
   private fun updateProperty(propertyName: String, value: Value) {
     sourceProperties[propertyName] = value
     styleDelegate?.let { styleDelegate ->
-      val expected = styleDelegate.setStyleSourceProperty(
-        sourceId,
-        propertyName,
-        value
-      )
-      expected.error?.let {
-        throw RuntimeException("Set source property \"${propertyName}\" failed:\nError: $it\nValue set: $value")
+      if (styleDelegate.styleSourceExists(sourceId)) {
+        val expected = styleDelegate.setStyleSourceProperty(
+          sourceId,
+          propertyName,
+          value
+        )
+        expected.error?.let {
+          throw RuntimeException("Set source property \"${propertyName}\" failed:\nError: $it\nValue set: $value")
+        }
+      } else {
+        Logger.w(
+          TAG,
+          "Skip updating source property $propertyName, source $sourceId not ready yet."
+        )
       }
     }
   }

@@ -74,17 +74,13 @@ internal class ModelLayerRenderer(
 
   private fun setLayerLocation(latLng: Point) {
     val modelValues = listOf(latLng.longitude(), latLng.latitude())
-    if (isSourceInitialised()) {
-      source.setPosition(modelValues)
-    }
+    source.setPosition(modelValues)
   }
 
   private fun setLayerBearing(bearing: Double) {
     val orientation = locationModelLayerOptions.modelRotation.map { it.toDouble() }.toMutableList()
     orientation[2] = orientation[2] + bearing
-    if (isLayerInitialised()) {
-      modelLayer.modelRotation(orientation)
-    }
+    modelLayer.modelRotation(orientation)
   }
 
   /**
