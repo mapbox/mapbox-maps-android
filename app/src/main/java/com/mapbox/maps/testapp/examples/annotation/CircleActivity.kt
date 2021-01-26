@@ -11,7 +11,6 @@ import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
 import com.mapbox.maps.testapp.R
-import com.mapbox.maps.testapp.utils.Assets
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.mapView
 import kotlinx.android.synthetic.main.activity_annotation.*
@@ -51,7 +50,7 @@ class CircleActivity : AppCompatActivity() {
           val color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
           circleOptionsList.add(
             CircleOptions()
-              .withPoint(createRandomPoints())
+              .withPoint(Utils.createRandomPoint())
               .withCircleColor(ColorUtils.colorToRgbaString(color))
               .withCircleRadius(8.0)
               .withDraggable(true)
@@ -62,7 +61,7 @@ class CircleActivity : AppCompatActivity() {
         try {
           create(
             FeatureCollection.fromJson(
-              Assets.loadStringFromAssets(
+              Utils.loadStringFromAssets(
                 this@CircleActivity,
                 "annotations.json"
               )
@@ -75,13 +74,9 @@ class CircleActivity : AppCompatActivity() {
     }
 
     deleteAll.setOnClickListener { circleManager?.deleteAll() }
-  }
-
-  private fun createRandomPoints(): Point {
-    return Point.fromLngLat(
-      random.nextDouble() * -360.0 + 180.0,
-      random.nextDouble() * -180.0 + 90.0
-    )
+    changeStyle.setOnClickListener {
+      mapView.getMapboxMap().loadStyleUri(Utils.nextStyle)
+    }
   }
 
   override fun onStart() {

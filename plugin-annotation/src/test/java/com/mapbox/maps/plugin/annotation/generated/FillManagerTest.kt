@@ -21,6 +21,7 @@ import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.addLayerBelow
 import com.mapbox.maps.extension.style.layers.generated.FillLayer
 import com.mapbox.maps.extension.style.sources.addSource
+import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
 import com.mapbox.maps.plugin.annotation.ShadowValueConverter
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
@@ -49,13 +50,15 @@ class FillManagerTest {
   private val mapFeatureQueryDelegate: MapFeatureQueryDelegate = mockk()
   private val gesturesPlugin: GesturesPlugin = mockk()
   private val layer: FillLayer = mockk()
-
+  private val source: GeoJsonSource = mockk()
+  private lateinit var manager: FillManager
   @Before
   fun setUp() {
     mockkStatic("com.mapbox.maps.extension.style.layers.LayerKt")
     mockkStatic("com.mapbox.maps.extension.style.sources.SourceKt")
     mockkStatic(ValueConverter::class)
-    every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue<Value, String>(
+    every { delegateProvider.mapListenerDelegate.addOnDidFinishRenderingMapListener(any()) } just Runs
+    every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue(
       Value(1)
     )
     val captureCallback = slot<(StyleManagerInterface) -> Unit>()
@@ -69,6 +72,8 @@ class FillManagerTest {
     every { style.addLayer(any()) } just Runs
     every { style.addLayerBelow(any(), any()) } just Runs
     every { style.getSource(any()) } returns null
+    every { style.styleSourceExists(any()) } returns false
+    every { style.styleLayerExists(any()) } returns false
     every { gesturesPlugin.addOnMapClickListener(any()) } just Runs
     every { gesturesPlugin.addOnMapLongClickListener(any()) } just Runs
     every { gesturesPlugin.addOnMoveListener(any()) } just Runs
@@ -80,6 +85,12 @@ class FillManagerTest {
     every { delegateProvider.mapFeatureQueryDelegate } returns mapFeatureQueryDelegate
     every { mapProjectionDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
     every { mapProjectionDelegate.pixelForCoordinate(any()) } returns ScreenCoordinate(1.0, 1.0)
+    every { layer.layerId } returns "layer0"
+    every { source.sourceId } returns "source0"
+    every { source.featureCollection(any()) } answers { source }
+    manager = FillManager(delegateProvider, null, 0, 0)
+    manager.layer = layer
+    manager.source = source
     every { layer.fillSortKey(any<Expression>()) } answers { layer }
     every { layer.fillOpacity(any<Expression>()) } answers { layer }
     every { layer.fillColor(any<Expression>()) } answers { layer }
@@ -89,7 +100,6 @@ class FillManagerTest {
 
   @Test
   fun initialize() {
-    var manager = FillManager(delegateProvider, null, 0, 0)
     verify { gesturesPlugin.addOnMapClickListener(any()) }
     verify { gesturesPlugin.addOnMapLongClickListener(any()) }
     verify { gesturesPlugin.addOnMoveListener(any()) }
@@ -115,7 +125,6 @@ class FillManagerTest {
 
   @Test
   fun create() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
     val annotation = manager.create(
       FillOptions()
         .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -125,7 +134,6 @@ class FillManagerTest {
 
   @Test
   fun createFromFeature() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
     val featureCollection =
       FeatureCollection.fromFeature(Feature.fromGeometry(Polygon.fromLngLats(listOf(listOf(Point.fromLngLat(0.0, 0.0))))))
     val annotations = manager.create(featureCollection.toJson())
@@ -136,7 +144,6 @@ class FillManagerTest {
 
   @Test
   fun createList() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
     val list = listOf(
       FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))),
       FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -148,7 +155,6 @@ class FillManagerTest {
 
   @Test
   fun update() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
     val annotation = manager.create(FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))))
     assertEquals(annotation, manager.annotations[0])
     annotation.points = listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))
@@ -158,7 +164,6 @@ class FillManagerTest {
 
   @Test
   fun updateList() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
     val list = listOf(
       FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))),
       FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -175,7 +180,6 @@ class FillManagerTest {
 
   @Test
   fun delete() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
     val annotation = manager.create(
       FillOptions()
         .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -187,7 +191,6 @@ class FillManagerTest {
 
   @Test
   fun deleteList() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
     val list = listOf(
       FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))),
       FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -202,7 +205,6 @@ class FillManagerTest {
 
   @Test
   fun deleteAll() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
     val list = listOf(
       FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))),
       FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -357,8 +359,7 @@ class FillManagerTest {
 
   @Test
   fun testFillSortKeyLayerProperty() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.fillSortKey(Expression.get(FillOptions.PROPERTY_FILL_SORT_KEY)) }
     val options = FillOptions()
       .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -371,8 +372,7 @@ class FillManagerTest {
 
   @Test
   fun testFillOpacityLayerProperty() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.fillOpacity(Expression.get(FillOptions.PROPERTY_FILL_OPACITY)) }
     val options = FillOptions()
       .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -385,8 +385,7 @@ class FillManagerTest {
 
   @Test
   fun testFillColorLayerProperty() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.fillColor(Expression.get(FillOptions.PROPERTY_FILL_COLOR)) }
     val options = FillOptions()
       .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -399,8 +398,7 @@ class FillManagerTest {
 
   @Test
   fun testFillOutlineColorLayerProperty() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.fillOutlineColor(Expression.get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
     val options = FillOptions()
       .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -413,8 +411,7 @@ class FillManagerTest {
 
   @Test
   fun testFillPatternLayerProperty() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
+    every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.fillPattern(Expression.get(FillOptions.PROPERTY_FILL_PATTERN)) }
     val options = FillOptions()
       .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))

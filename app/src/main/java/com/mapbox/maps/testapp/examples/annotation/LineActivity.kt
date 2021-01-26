@@ -11,7 +11,6 @@ import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
 import com.mapbox.maps.testapp.R
-import com.mapbox.maps.testapp.utils.Assets
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.mapView
 import kotlinx.android.synthetic.main.activity_annotation.*
@@ -57,7 +56,7 @@ class LineActivity : AppCompatActivity() {
         // random add lines across the globe
         val lists: MutableList<List<Point>> = ArrayList<List<Point>>()
         for (i in 0..99) {
-          lists.add(createRandomPoints())
+          lists.add(Utils.createRandomPoints())
         }
         val lineOptionsList = lists.map {
           val color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
@@ -71,7 +70,7 @@ class LineActivity : AppCompatActivity() {
         try {
           create(
             FeatureCollection.fromJson(
-              Assets.loadStringFromAssets(
+              Utils.loadStringFromAssets(
                 this@LineActivity,
                 "annotations.json"
               )
@@ -84,19 +83,9 @@ class LineActivity : AppCompatActivity() {
     }
 
     deleteAll.setOnClickListener { lineManager?.deleteAll() }
-  }
-
-  private fun createRandomPoints(): List<Point> {
-    val points: MutableList<Point> = ArrayList<Point>()
-    for (i in 0 until random.nextInt(10)) {
-      points.add(
-        Point.fromLngLat(
-          random.nextDouble() * -360.0 + 180.0,
-          random.nextDouble() * -180.0 + 90.0
-        )
-      )
+    changeStyle.setOnClickListener {
+      mapView.getMapboxMap().loadStyleUri(Utils.nextStyle)
     }
-    return points
   }
 
   override fun onStart() {
