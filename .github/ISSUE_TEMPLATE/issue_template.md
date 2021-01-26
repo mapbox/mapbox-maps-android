@@ -25,4 +25,4 @@ assignees: ''
 
 ## Additional links and references
 
-<!--- Links to traces, videos et --->
+<!--- Links to traces, videos etc --->
