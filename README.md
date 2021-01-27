@@ -1,5 +1,7 @@
 ## Mapbox Maps SDK for Android
 
+[![CLA assistant](https://cla-assistant.io/readme/badge/mapbox/mapbox-maps-android)](https://cla-assistant.io/mapbox/mapbox-maps-android)
+
 ![](https://user-images.githubusercontent.com/4394910/66942701-7ed30100-effe-11e9-9948-14012d4c3289.png)
 
 The Mapbox Maps SDK for Android is a public library for displaying interactive, thoroughly customizable maps in native Android. It takes map styles that conform to the [Mapbox Style Specification](https://docs.mapbox.com/mapbox-gl-js/style-spec/), applies them to vector tiles that conform to the [Mapbox Vector Tile Specification](https://github.com/mapbox/vector-tile-spec), and renders them using OpenGL.
