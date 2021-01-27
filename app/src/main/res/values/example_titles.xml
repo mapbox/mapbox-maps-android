@@ -70,4 +70,5 @@
     <string name="activity_terrain_showcase">3D Terrain showcase</string>
     <string name="activity_location_component">Location component</string>
     <string name="activity_location_component_animation">Location component animation</string>
+    <string name="activity_santa_catalina">Santa Catalina Island</string>
 </resources>

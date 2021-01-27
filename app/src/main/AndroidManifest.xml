@@ -884,6 +884,20 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
         </activity>
+        <activity
+            android:name=".examples.terrain.SantaCatalinaActivity"
+            android:description="@string/description_santa_catalina"
+            android:screenOrientation="landscape"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:label="@string/activity_santa_catalina">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_terrain" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
     </application>
 
 </manifest>
