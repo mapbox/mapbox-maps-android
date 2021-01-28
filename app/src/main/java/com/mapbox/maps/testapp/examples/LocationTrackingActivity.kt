@@ -3,15 +3,18 @@ package com.mapbox.maps.testapp.examples
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.android.core.location.LocationEngineRequest
+import androidx.appcompat.content.res.AppCompatResources
+import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
-import com.mapbox.maps.plugin.location.LocationComponentActivationOptions
-import com.mapbox.maps.plugin.location.getLocationPlugin
-import com.mapbox.maps.plugin.location.listeneres.OnCameraTrackingChangedListener
-import com.mapbox.maps.plugin.location.modes.CameraMode
-import com.mapbox.maps.plugin.location.modes.RenderMode
+import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
+import com.mapbox.maps.plugin.LocationPuck2D
+import com.mapbox.maps.plugin.gestures.OnMoveListener
+import com.mapbox.maps.plugin.gestures.getGesturesPlugin
+import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener
+import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
+import com.mapbox.maps.plugin.locationcomponent.getLocationComponentPlugin
+import com.mapbox.maps.plugin.toJson
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
 import kotlinx.android.synthetic.main.activity_location_layer_mode.*
@@ -19,15 +22,34 @@ import kotlinx.android.synthetic.main.activity_location_layer_mode.*
 /**
  * Tracks the user location on screen, simulates a navigation session.
  */
-class LocationTrackingActivity : AppCompatActivity(), OnCameraTrackingChangedListener {
+class LocationTrackingActivity : AppCompatActivity() {
 
   private lateinit var locationPermissionHelper: LocationPermissionHelper
-  private lateinit var mapboxMap: MapboxMap
+
+  private val onIndicatorBearingChangedListener = OnIndicatorBearingChangedListener {
+    mapView.getMapboxMap().jumpTo(CameraOptions.Builder().bearing(it).build())
+  }
+
+  private val onIndicatorPositionChangedListener = OnIndicatorPositionChangedListener {
+    mapView.getMapboxMap().jumpTo(CameraOptions.Builder().center(it).build())
+    mapView.getGesturesPlugin().focalPoint = mapView.getMapboxMap().pixelForCoordinate(it)
+  }
+
+  private val onMoveListener = object : OnMoveListener {
+    override fun onMoveBegin(detector: MoveGestureDetector) {
+      onCameraTrackingDismissed()
+    }
+
+    override fun onMove(detector: MoveGestureDetector): Boolean {
+      return false
+    }
+
+    override fun onMoveEnd(detector: MoveGestureDetector) {}
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_simple_map)
-    mapboxMap = mapView.getMapboxMap()
     locationPermissionHelper = LocationPermissionHelper(this)
     locationPermissionHelper.checkPermissions {
       onMapReady()
@@ -35,45 +57,61 @@ class LocationTrackingActivity : AppCompatActivity(), OnCameraTrackingChangedLis
   }
 
   private fun onMapReady() {
-    mapboxMap.jumpTo(
+    mapView.getMapboxMap().jumpTo(
       CameraOptions.Builder()
         .zoom(14.0)
         .build()
     )
-    mapboxMap.loadStyleUri(
+    mapView.getMapboxMap().loadStyleUri(
       Style.MAPBOX_STREETS
     ) {
-      initLocationComponent(it)
-      Style.MAPBOX_STREETS
+      initLocationComponent()
+      setupGesturesListener()
     }
   }
 
-  private fun initLocationComponent(style: Style) {
-    val locationPluginImpl = mapView.getLocationPlugin()
-    locationPluginImpl.activateLocationComponent(
-      LocationComponentActivationOptions
-        .builder(this, style)
-        .useDefaultLocationEngine(true)
-        .locationEngineRequest(
-          LocationEngineRequest.Builder(750)
-            .setFastestInterval(750)
-            .setPriority(LocationEngineRequest.PRIORITY_HIGH_ACCURACY)
-            .build()
-        )
-        .build()
-    )
-    locationPluginImpl.addOnCameraTrackingChangedListener(this)
-    locationPluginImpl.cameraMode = CameraMode.TRACKING_GPS // CameraMode.TRACKING_GPS_NORTH
-    locationPluginImpl.renderMode = RenderMode.GPS
-    locationPluginImpl.enabled = true
+  private fun setupGesturesListener() {
+    mapView.getGesturesPlugin().addOnMoveListener(onMoveListener)
   }
 
-  override fun onCameraTrackingDismissed() {
+  private fun initLocationComponent() {
+    val locationComponentPlugin = mapView.getLocationComponentPlugin()
+    locationComponentPlugin.updateSettings {
+      this.enabled = true
+      this.locationPuck = LocationPuck2D(
+        bearingImage = AppCompatResources.getDrawable(
+          this@LocationTrackingActivity,
+          R.drawable.mapbox_user_puck_icon,
+        ),
+        shadowImage = AppCompatResources.getDrawable(
+          this@LocationTrackingActivity,
+          R.drawable.mapbox_user_icon_shadow,
+        ),
+        scaleExpression = interpolate {
+          linear()
+          zoom()
+          stop {
+            literal(0.0)
+            literal(0.6)
+          }
+          stop {
+            literal(20.0)
+            literal(1.0)
+          }
+        }.toJson()
+      )
+    }
+    locationComponentPlugin.addOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
+    locationComponentPlugin.addOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener)
+  }
+
+  private fun onCameraTrackingDismissed() {
     Toast.makeText(this, "onCameraTrackingDismissed", Toast.LENGTH_SHORT).show()
-  }
-
-  override fun onCameraTrackingChanged(currentMode: CameraMode) {
-    Toast.makeText(this, "onCameraTrackingChanged $currentMode", Toast.LENGTH_SHORT).show()
+    mapView.getLocationComponentPlugin()
+      .removeOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
+    mapView.getLocationComponentPlugin()
+      .removeOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener)
+    mapView.getGesturesPlugin().removeOnMoveListener(onMoveListener)
   }
 
   override fun onStart() {
@@ -94,6 +132,11 @@ class LocationTrackingActivity : AppCompatActivity(), OnCameraTrackingChangedLis
   override fun onDestroy() {
     super.onDestroy()
     mapView.onDestroy()
+    mapView.getLocationComponentPlugin()
+      .removeOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener)
+    mapView.getLocationComponentPlugin()
+      .removeOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
+    mapView.getGesturesPlugin().removeOnMoveListener(onMoveListener)
   }
 
   override fun onRequestPermissionsResult(
