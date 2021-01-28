@@ -5,10 +5,13 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
+import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
+import com.mapbox.maps.plugin.gestures.getGesturesPlugin
+import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.getLocationComponentPlugin
 import com.mapbox.maps.plugin.toJson
 import com.mapbox.maps.testapp.R
@@ -19,13 +22,22 @@ class LocationComponentActivity : AppCompatActivity() {
 
   private var lastStyleUri = Style.DARK
   private lateinit var locationPermissionHelper: LocationPermissionHelper
+  private val onIndicatorPositionChangedListener = OnIndicatorPositionChangedListener {
+    // Jump to the current indicator position
+    mapView.getMapboxMap().jumpTo(CameraOptions.Builder().center(it).build())
+    // Set the gestures plugin's focal point to the current indicator location.
+    mapView.getGesturesPlugin().focalPoint = mapView.getMapboxMap().pixelForCoordinate(it)
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_location_component)
     locationPermissionHelper = LocationPermissionHelper(this)
     locationPermissionHelper.checkPermissions {
-      mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS)
+      mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
+        // Disable scroll gesture, since we are updating the camera position based on the indicator location.
+        mapView.getGesturesPlugin().scrollEnabled = false
+      }
     }
   }
 
@@ -112,11 +124,15 @@ class LocationComponentActivity : AppCompatActivity() {
   override fun onStart() {
     super.onStart()
     mapView.onStart()
+    mapView.getLocationComponentPlugin()
+      .addOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
   }
 
   override fun onStop() {
     super.onStop()
     mapView.onStop()
+    mapView.getLocationComponentPlugin()
+      .removeOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
   }
 
   override fun onLowMemory() {

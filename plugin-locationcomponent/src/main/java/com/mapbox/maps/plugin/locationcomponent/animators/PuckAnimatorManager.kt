@@ -3,13 +3,18 @@ package com.mapbox.maps.plugin.locationcomponent.animators
 import android.animation.ValueAnimator
 import com.mapbox.geojson.Point
 import com.mapbox.maps.plugin.locationcomponent.LocationLayerRenderer
+import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener
+import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import com.mapbox.maps.plugin.locationcomponent.utils.MathUtils
 
-internal class PuckAnimatorManager {
+internal class PuckAnimatorManager(
+  indicatorPositionChangedListener: OnIndicatorPositionChangedListener,
+  indicatorBearingChangedListener: OnIndicatorBearingChangedListener
+) {
 
-  private var bearingAnimator = PuckBearingAnimator()
-  private var pointAnimator = PuckPositionAnimator()
+  private var bearingAnimator = PuckBearingAnimator(indicatorBearingChangedListener)
+  private var pointAnimator = PuckPositionAnimator(indicatorPositionChangedListener)
   private var pulsingAnimator = PuckPulsingAnimator()
 
   fun setLocationLayerRenderer(renderer: LocationLayerRenderer) {
