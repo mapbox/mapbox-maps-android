@@ -79,7 +79,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   override val annotations = mutableMapOf<Long, T>()
 
   /**
-   * The added dragListensers
+   * The added dragListeners
    */
   override val dragListeners = mutableListOf<D>()
 
@@ -212,10 +212,12 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    */
   private fun updateSource() {
     if (!styleStateDelegate.isFullyLoaded()) {
+      Logger.e(TAG, "Can't update source: style is not fully loaded.")
       return
     }
     source?.let {
       if (!style.styleSourceExists(it.sourceId)) {
+        Logger.e(TAG, "Can't update source: source has not been added to style.")
         return
       }
       val features = annotations.map {
