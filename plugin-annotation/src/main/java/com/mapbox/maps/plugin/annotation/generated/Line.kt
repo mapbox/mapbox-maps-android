@@ -119,26 +119,26 @@ class Line(
     }
 
   /**
-   * The lineOpacity property
+   * The lineBlur property
    * <p>
-   * The opacity at which the line will be drawn.
+   * Blur applied to the line, in density-independent pixels.
    * </p>
    */
-  var lineOpacity: Double?
+  var lineBlur: Double?
     /**
-     * Get the lineOpacity property
+     * Get the lineBlur property
      *
      * @return property wrapper value around Double
      */
     get() {
-      val value = jsonObject.get(LineOptions.PROPERTY_LINE_OPACITY)
+      val value = jsonObject.get(LineOptions.PROPERTY_LINE_BLUR)
       if (!value.isJsonNull) {
         return value.asString.toDouble()
       }
       return null
     }
     /**
-     * Set the lineOpacity property
+     * Set the lineBlur property
      * <p>
      * To update the line on the map use {@link lineManager#update(Annotation)}.
      * <p>
@@ -147,7 +147,7 @@ class Line(
      */
     set(value) {
       value?.let {
-        jsonObject.addProperty(LineOptions.PROPERTY_LINE_OPACITY, it)
+        jsonObject.addProperty(LineOptions.PROPERTY_LINE_BLUR, it)
       }
     }
 
@@ -219,39 +219,6 @@ class Line(
     }
 
   /**
-   * The lineWidth property
-   * <p>
-   * Stroke thickness.
-   * </p>
-   */
-  var lineWidth: Double?
-    /**
-     * Get the lineWidth property
-     *
-     * @return property wrapper value around Double
-     */
-    get() {
-      val value = jsonObject.get(LineOptions.PROPERTY_LINE_WIDTH)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
-      }
-      return null
-    }
-    /**
-     * Set the lineWidth property
-     * <p>
-     * To update the line on the map use {@link lineManager#update(Annotation)}.
-     * <p>
-     *
-     * @param value constant property value for Double
-     */
-    set(value) {
-      value?.let {
-        jsonObject.addProperty(LineOptions.PROPERTY_LINE_WIDTH, it)
-      }
-    }
-
-  /**
    * The lineGapWidth property
    * <p>
    * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
@@ -318,26 +285,26 @@ class Line(
     }
 
   /**
-   * The lineBlur property
+   * The lineOpacity property
    * <p>
-   * Blur applied to the line, in density-independent pixels.
+   * The opacity at which the line will be drawn.
    * </p>
    */
-  var lineBlur: Double?
+  var lineOpacity: Double?
     /**
-     * Get the lineBlur property
+     * Get the lineOpacity property
      *
      * @return property wrapper value around Double
      */
     get() {
-      val value = jsonObject.get(LineOptions.PROPERTY_LINE_BLUR)
+      val value = jsonObject.get(LineOptions.PROPERTY_LINE_OPACITY)
       if (!value.isJsonNull) {
         return value.asString.toDouble()
       }
       return null
     }
     /**
-     * Set the lineBlur property
+     * Set the lineOpacity property
      * <p>
      * To update the line on the map use {@link lineManager#update(Annotation)}.
      * <p>
@@ -346,7 +313,7 @@ class Line(
      */
     set(value) {
       value?.let {
-        jsonObject.addProperty(LineOptions.PROPERTY_LINE_BLUR, it)
+        jsonObject.addProperty(LineOptions.PROPERTY_LINE_OPACITY, it)
       }
     }
 
@@ -380,6 +347,39 @@ class Line(
     set(value) {
       value?.let {
         jsonObject.addProperty(LineOptions.PROPERTY_LINE_PATTERN, it)
+      }
+    }
+
+  /**
+   * The lineWidth property
+   * <p>
+   * Stroke thickness.
+   * </p>
+   */
+  var lineWidth: Double?
+    /**
+     * Get the lineWidth property
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = jsonObject.get(LineOptions.PROPERTY_LINE_WIDTH)
+      if (!value.isJsonNull) {
+        return value.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the lineWidth property
+     * <p>
+     * To update the line on the map use {@link lineManager#update(Annotation)}.
+     * <p>
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      value?.let {
+        jsonObject.addProperty(LineOptions.PROPERTY_LINE_WIDTH, it)
       }
     }
 
@@ -419,14 +419,11 @@ class Line(
     if (!(jsonObject.get(LineOptions.PROPERTY_LINE_SORT_KEY).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(LineOptions.PROPERTY_LINE_SORT_KEY)
     }
-    if (!(jsonObject.get(LineOptions.PROPERTY_LINE_OPACITY).isJsonNull)) {
-      annotationManager.enableDataDrivenProperty(LineOptions.PROPERTY_LINE_OPACITY)
+    if (!(jsonObject.get(LineOptions.PROPERTY_LINE_BLUR).isJsonNull)) {
+      annotationManager.enableDataDrivenProperty(LineOptions.PROPERTY_LINE_BLUR)
     }
     if (!(jsonObject.get(LineOptions.PROPERTY_LINE_COLOR).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(LineOptions.PROPERTY_LINE_COLOR)
-    }
-    if (!(jsonObject.get(LineOptions.PROPERTY_LINE_WIDTH).isJsonNull)) {
-      annotationManager.enableDataDrivenProperty(LineOptions.PROPERTY_LINE_WIDTH)
     }
     if (!(jsonObject.get(LineOptions.PROPERTY_LINE_GAP_WIDTH).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(LineOptions.PROPERTY_LINE_GAP_WIDTH)
@@ -434,11 +431,14 @@ class Line(
     if (!(jsonObject.get(LineOptions.PROPERTY_LINE_OFFSET).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(LineOptions.PROPERTY_LINE_OFFSET)
     }
-    if (!(jsonObject.get(LineOptions.PROPERTY_LINE_BLUR).isJsonNull)) {
-      annotationManager.enableDataDrivenProperty(LineOptions.PROPERTY_LINE_BLUR)
+    if (!(jsonObject.get(LineOptions.PROPERTY_LINE_OPACITY).isJsonNull)) {
+      annotationManager.enableDataDrivenProperty(LineOptions.PROPERTY_LINE_OPACITY)
     }
     if (!(jsonObject.get(LineOptions.PROPERTY_LINE_PATTERN).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(LineOptions.PROPERTY_LINE_PATTERN)
+    }
+    if (!(jsonObject.get(LineOptions.PROPERTY_LINE_WIDTH).isJsonNull)) {
+      annotationManager.enableDataDrivenProperty(LineOptions.PROPERTY_LINE_WIDTH)
     }
   }
 

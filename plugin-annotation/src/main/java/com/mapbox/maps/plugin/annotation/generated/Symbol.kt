@@ -55,68 +55,35 @@ class Symbol(
 
   // Property accessors
   /**
-   * The symbolSortKey property
+   * The iconAnchor property
    * <p>
-   * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first.  When {@link PropertyFactory#iconAllowOverlap} or {@link PropertyFactory#textAllowOverlap} is `false`, features with a lower sort key will have priority during placement. When {@link PropertyFactory#iconAllowOverlap} or {@link PropertyFactory#textAllowOverlap} is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
+   * Part of the icon placed closest to the anchor.
    * </p>
    */
-  var symbolSortKey: Double?
+  var iconAnchor: IconAnchor?
     /**
-     * Get the symbolSortKey property
+     * Get the iconAnchor property
      *
-     * @return property wrapper value around Double
+     * @return property wrapper value around IconAnchor
      */
     get() {
-      val value = jsonObject.get(SymbolOptions.PROPERTY_SYMBOL_SORT_KEY)
+      val value = jsonObject.get(SymbolOptions.PROPERTY_ICON_ANCHOR)
       if (!value.isJsonNull) {
-        return value.asString.toDouble()
+        return IconAnchor.valueOf(value.asString)
       }
       return null
     }
     /**
-     * Set the symbolSortKey property
+     * Set the iconAnchor property
      * <p>
      * To update the symbol on the map use {@link symbolManager#update(Annotation)}.
      * <p>
      *
-     * @param value constant property value for Double
+     * @param value constant property value for IconAnchor
      */
     set(value) {
       value?.let {
-        jsonObject.addProperty(SymbolOptions.PROPERTY_SYMBOL_SORT_KEY, it)
-      }
-    }
-
-  /**
-   * The iconSize property
-   * <p>
-   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by {@link PropertyFactory#iconSize}. 1 is the original size; 3 triples the size of the image.
-   * </p>
-   */
-  var iconSize: Double?
-    /**
-     * Get the iconSize property
-     *
-     * @return property wrapper value around Double
-     */
-    get() {
-      val value = jsonObject.get(SymbolOptions.PROPERTY_ICON_SIZE)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
-      }
-      return null
-    }
-    /**
-     * Set the iconSize property
-     * <p>
-     * To update the symbol on the map use {@link symbolManager#update(Annotation)}.
-     * <p>
-     *
-     * @param value constant property value for Double
-     */
-    set(value) {
-      value?.let {
-        jsonObject.addProperty(SymbolOptions.PROPERTY_ICON_SIZE, it)
+        jsonObject.addProperty(SymbolOptions.PROPERTY_ICON_ANCHOR, it.value)
       }
     }
 
@@ -150,39 +117,6 @@ class Symbol(
     set(value) {
       value?.let {
         jsonObject.addProperty(SymbolOptions.PROPERTY_ICON_IMAGE, it)
-      }
-    }
-
-  /**
-   * The iconRotate property
-   * <p>
-   * Rotates the icon clockwise.
-   * </p>
-   */
-  var iconRotate: Double?
-    /**
-     * Get the iconRotate property
-     *
-     * @return property wrapper value around Double
-     */
-    get() {
-      val value = jsonObject.get(SymbolOptions.PROPERTY_ICON_ROTATE)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
-      }
-      return null
-    }
-    /**
-     * Set the iconRotate property
-     * <p>
-     * To update the symbol on the map use {@link symbolManager#update(Annotation)}.
-     * <p>
-     *
-     * @param value constant property value for Double
-     */
-    set(value) {
-      value?.let {
-        jsonObject.addProperty(SymbolOptions.PROPERTY_ICON_ROTATE, it)
       }
     }
 
@@ -221,35 +155,134 @@ class Symbol(
     }
 
   /**
-   * The iconAnchor property
+   * The iconRotate property
    * <p>
-   * Part of the icon placed closest to the anchor.
+   * Rotates the icon clockwise.
    * </p>
    */
-  var iconAnchor: IconAnchor?
+  var iconRotate: Double?
     /**
-     * Get the iconAnchor property
+     * Get the iconRotate property
      *
-     * @return property wrapper value around IconAnchor
+     * @return property wrapper value around Double
      */
     get() {
-      val value = jsonObject.get(SymbolOptions.PROPERTY_ICON_ANCHOR)
+      val value = jsonObject.get(SymbolOptions.PROPERTY_ICON_ROTATE)
       if (!value.isJsonNull) {
-        return IconAnchor.valueOf(value.asString)
+        return value.asString.toDouble()
       }
       return null
     }
     /**
-     * Set the iconAnchor property
+     * Set the iconRotate property
      * <p>
      * To update the symbol on the map use {@link symbolManager#update(Annotation)}.
      * <p>
      *
-     * @param value constant property value for IconAnchor
+     * @param value constant property value for Double
      */
     set(value) {
       value?.let {
-        jsonObject.addProperty(SymbolOptions.PROPERTY_ICON_ANCHOR, it.value)
+        jsonObject.addProperty(SymbolOptions.PROPERTY_ICON_ROTATE, it)
+      }
+    }
+
+  /**
+   * The iconSize property
+   * <p>
+   * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by {@link PropertyFactory#iconSize}. 1 is the original size; 3 triples the size of the image.
+   * </p>
+   */
+  var iconSize: Double?
+    /**
+     * Get the iconSize property
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = jsonObject.get(SymbolOptions.PROPERTY_ICON_SIZE)
+      if (!value.isJsonNull) {
+        return value.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the iconSize property
+     * <p>
+     * To update the symbol on the map use {@link symbolManager#update(Annotation)}.
+     * <p>
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      value?.let {
+        jsonObject.addProperty(SymbolOptions.PROPERTY_ICON_SIZE, it)
+      }
+    }
+
+  /**
+   * The symbolSortKey property
+   * <p>
+   * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first.  When {@link PropertyFactory#iconAllowOverlap} or {@link PropertyFactory#textAllowOverlap} is `false`, features with a lower sort key will have priority during placement. When {@link PropertyFactory#iconAllowOverlap} or {@link PropertyFactory#textAllowOverlap} is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
+   * </p>
+   */
+  var symbolSortKey: Double?
+    /**
+     * Get the symbolSortKey property
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = jsonObject.get(SymbolOptions.PROPERTY_SYMBOL_SORT_KEY)
+      if (!value.isJsonNull) {
+        return value.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the symbolSortKey property
+     * <p>
+     * To update the symbol on the map use {@link symbolManager#update(Annotation)}.
+     * <p>
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      value?.let {
+        jsonObject.addProperty(SymbolOptions.PROPERTY_SYMBOL_SORT_KEY, it)
+      }
+    }
+
+  /**
+   * The textAnchor property
+   * <p>
+   * Part of the text placed closest to the anchor.
+   * </p>
+   */
+  var textAnchor: TextAnchor?
+    /**
+     * Get the textAnchor property
+     *
+     * @return property wrapper value around TextAnchor
+     */
+    get() {
+      val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_ANCHOR)
+      if (!value.isJsonNull) {
+        return TextAnchor.valueOf(value.asString)
+      }
+      return null
+    }
+    /**
+     * Set the textAnchor property
+     * <p>
+     * To update the symbol on the map use {@link symbolManager#update(Annotation)}.
+     * <p>
+     *
+     * @param value constant property value for TextAnchor
+     */
+    set(value) {
+      value?.let {
+        jsonObject.addProperty(SymbolOptions.PROPERTY_TEXT_ANCHOR, it.value)
       }
     }
 
@@ -319,68 +352,35 @@ class Symbol(
     }
 
   /**
-   * The textSize property
+   * The textJustify property
    * <p>
-   * Font size.
+   * Text justification options.
    * </p>
    */
-  var textSize: Double?
+  var textJustify: TextJustify?
     /**
-     * Get the textSize property
+     * Get the textJustify property
      *
-     * @return property wrapper value around Double
+     * @return property wrapper value around TextJustify
      */
     get() {
-      val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_SIZE)
+      val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_JUSTIFY)
       if (!value.isJsonNull) {
-        return value.asString.toDouble()
+        return TextJustify.valueOf(value.asString)
       }
       return null
     }
     /**
-     * Set the textSize property
+     * Set the textJustify property
      * <p>
      * To update the symbol on the map use {@link symbolManager#update(Annotation)}.
      * <p>
      *
-     * @param value constant property value for Double
+     * @param value constant property value for TextJustify
      */
     set(value) {
       value?.let {
-        jsonObject.addProperty(SymbolOptions.PROPERTY_TEXT_SIZE, it)
-      }
-    }
-
-  /**
-   * The textMaxWidth property
-   * <p>
-   * The maximum line width for text wrapping.
-   * </p>
-   */
-  var textMaxWidth: Double?
-    /**
-     * Get the textMaxWidth property
-     *
-     * @return property wrapper value around Double
-     */
-    get() {
-      val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_MAX_WIDTH)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
-      }
-      return null
-    }
-    /**
-     * Set the textMaxWidth property
-     * <p>
-     * To update the symbol on the map use {@link symbolManager#update(Annotation)}.
-     * <p>
-     *
-     * @param value constant property value for Double
-     */
-    set(value) {
-      value?.let {
-        jsonObject.addProperty(SymbolOptions.PROPERTY_TEXT_MAX_WIDTH, it)
+        jsonObject.addProperty(SymbolOptions.PROPERTY_TEXT_JUSTIFY, it.value)
       }
     }
 
@@ -418,59 +418,26 @@ class Symbol(
     }
 
   /**
-   * The textJustify property
+   * The textMaxWidth property
    * <p>
-   * Text justification options.
+   * The maximum line width for text wrapping.
    * </p>
    */
-  var textJustify: TextJustify?
+  var textMaxWidth: Double?
     /**
-     * Get the textJustify property
-     *
-     * @return property wrapper value around TextJustify
-     */
-    get() {
-      val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_JUSTIFY)
-      if (!value.isJsonNull) {
-        return TextJustify.valueOf(value.asString)
-      }
-      return null
-    }
-    /**
-     * Set the textJustify property
-     * <p>
-     * To update the symbol on the map use {@link symbolManager#update(Annotation)}.
-     * <p>
-     *
-     * @param value constant property value for TextJustify
-     */
-    set(value) {
-      value?.let {
-        jsonObject.addProperty(SymbolOptions.PROPERTY_TEXT_JUSTIFY, it.value)
-      }
-    }
-
-  /**
-   * The textRadialOffset property
-   * <p>
-   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with {@link PropertyFactory#textVariableAnchor}, which defaults to using the two-dimensional {@link PropertyFactory#textOffset} if present.
-   * </p>
-   */
-  var textRadialOffset: Double?
-    /**
-     * Get the textRadialOffset property
+     * Get the textMaxWidth property
      *
      * @return property wrapper value around Double
      */
     get() {
-      val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_RADIAL_OFFSET)
+      val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_MAX_WIDTH)
       if (!value.isJsonNull) {
         return value.asString.toDouble()
       }
       return null
     }
     /**
-     * Set the textRadialOffset property
+     * Set the textMaxWidth property
      * <p>
      * To update the symbol on the map use {@link symbolManager#update(Annotation)}.
      * <p>
@@ -479,106 +446,7 @@ class Symbol(
      */
     set(value) {
       value?.let {
-        jsonObject.addProperty(SymbolOptions.PROPERTY_TEXT_RADIAL_OFFSET, it)
-      }
-    }
-
-  /**
-   * The textAnchor property
-   * <p>
-   * Part of the text placed closest to the anchor.
-   * </p>
-   */
-  var textAnchor: TextAnchor?
-    /**
-     * Get the textAnchor property
-     *
-     * @return property wrapper value around TextAnchor
-     */
-    get() {
-      val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_ANCHOR)
-      if (!value.isJsonNull) {
-        return TextAnchor.valueOf(value.asString)
-      }
-      return null
-    }
-    /**
-     * Set the textAnchor property
-     * <p>
-     * To update the symbol on the map use {@link symbolManager#update(Annotation)}.
-     * <p>
-     *
-     * @param value constant property value for TextAnchor
-     */
-    set(value) {
-      value?.let {
-        jsonObject.addProperty(SymbolOptions.PROPERTY_TEXT_ANCHOR, it.value)
-      }
-    }
-
-  /**
-   * The textRotate property
-   * <p>
-   * Rotates the text clockwise.
-   * </p>
-   */
-  var textRotate: Double?
-    /**
-     * Get the textRotate property
-     *
-     * @return property wrapper value around Double
-     */
-    get() {
-      val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_ROTATE)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
-      }
-      return null
-    }
-    /**
-     * Set the textRotate property
-     * <p>
-     * To update the symbol on the map use {@link symbolManager#update(Annotation)}.
-     * <p>
-     *
-     * @param value constant property value for Double
-     */
-    set(value) {
-      value?.let {
-        jsonObject.addProperty(SymbolOptions.PROPERTY_TEXT_ROTATE, it)
-      }
-    }
-
-  /**
-   * The textTransform property
-   * <p>
-   * Specifies how to capitalize text, similar to the CSS {@link PropertyFactory#textTransform} property.
-   * </p>
-   */
-  var textTransform: TextTransform?
-    /**
-     * Get the textTransform property
-     *
-     * @return property wrapper value around TextTransform
-     */
-    get() {
-      val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_TRANSFORM)
-      if (!value.isJsonNull) {
-        return TextTransform.valueOf(value.asString)
-      }
-      return null
-    }
-    /**
-     * Set the textTransform property
-     * <p>
-     * To update the symbol on the map use {@link symbolManager#update(Annotation)}.
-     * <p>
-     *
-     * @param value constant property value for TextTransform
-     */
-    set(value) {
-      value?.let {
-        jsonObject.addProperty(SymbolOptions.PROPERTY_TEXT_TRANSFORM, it.value)
+        jsonObject.addProperty(SymbolOptions.PROPERTY_TEXT_MAX_WIDTH, it)
       }
     }
 
@@ -617,26 +485,26 @@ class Symbol(
     }
 
   /**
-   * The iconOpacity property
+   * The textRadialOffset property
    * <p>
-   * The opacity at which the icon will be drawn.
+   * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with {@link PropertyFactory#textVariableAnchor}, which defaults to using the two-dimensional {@link PropertyFactory#textOffset} if present.
    * </p>
    */
-  var iconOpacity: Double?
+  var textRadialOffset: Double?
     /**
-     * Get the iconOpacity property
+     * Get the textRadialOffset property
      *
      * @return property wrapper value around Double
      */
     get() {
-      val value = jsonObject.get(SymbolOptions.PROPERTY_ICON_OPACITY)
+      val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_RADIAL_OFFSET)
       if (!value.isJsonNull) {
         return value.asString.toDouble()
       }
       return null
     }
     /**
-     * Set the iconOpacity property
+     * Set the textRadialOffset property
      * <p>
      * To update the symbol on the map use {@link symbolManager#update(Annotation)}.
      * <p>
@@ -645,7 +513,106 @@ class Symbol(
      */
     set(value) {
       value?.let {
-        jsonObject.addProperty(SymbolOptions.PROPERTY_ICON_OPACITY, it)
+        jsonObject.addProperty(SymbolOptions.PROPERTY_TEXT_RADIAL_OFFSET, it)
+      }
+    }
+
+  /**
+   * The textRotate property
+   * <p>
+   * Rotates the text clockwise.
+   * </p>
+   */
+  var textRotate: Double?
+    /**
+     * Get the textRotate property
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_ROTATE)
+      if (!value.isJsonNull) {
+        return value.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the textRotate property
+     * <p>
+     * To update the symbol on the map use {@link symbolManager#update(Annotation)}.
+     * <p>
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      value?.let {
+        jsonObject.addProperty(SymbolOptions.PROPERTY_TEXT_ROTATE, it)
+      }
+    }
+
+  /**
+   * The textSize property
+   * <p>
+   * Font size.
+   * </p>
+   */
+  var textSize: Double?
+    /**
+     * Get the textSize property
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_SIZE)
+      if (!value.isJsonNull) {
+        return value.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the textSize property
+     * <p>
+     * To update the symbol on the map use {@link symbolManager#update(Annotation)}.
+     * <p>
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      value?.let {
+        jsonObject.addProperty(SymbolOptions.PROPERTY_TEXT_SIZE, it)
+      }
+    }
+
+  /**
+   * The textTransform property
+   * <p>
+   * Specifies how to capitalize text, similar to the CSS {@link PropertyFactory#textTransform} property.
+   * </p>
+   */
+  var textTransform: TextTransform?
+    /**
+     * Get the textTransform property
+     *
+     * @return property wrapper value around TextTransform
+     */
+    get() {
+      val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_TRANSFORM)
+      if (!value.isJsonNull) {
+        return TextTransform.valueOf(value.asString)
+      }
+      return null
+    }
+    /**
+     * Set the textTransform property
+     * <p>
+     * To update the symbol on the map use {@link symbolManager#update(Annotation)}.
+     * <p>
+     *
+     * @param value constant property value for TextTransform
+     */
+    set(value) {
+      value?.let {
+        jsonObject.addProperty(SymbolOptions.PROPERTY_TEXT_TRANSFORM, it.value)
       }
     }
 
@@ -714,6 +681,39 @@ class Symbol(
      */
     set(value) {
       jsonObject.addProperty("icon-color", value)
+    }
+
+  /**
+   * The iconHaloBlur property
+   * <p>
+   * Fade out the halo towards the outside.
+   * </p>
+   */
+  var iconHaloBlur: Double?
+    /**
+     * Get the iconHaloBlur property
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = jsonObject.get(SymbolOptions.PROPERTY_ICON_HALO_BLUR)
+      if (!value.isJsonNull) {
+        return value.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the iconHaloBlur property
+     * <p>
+     * To update the symbol on the map use {@link symbolManager#update(Annotation)}.
+     * <p>
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      value?.let {
+        jsonObject.addProperty(SymbolOptions.PROPERTY_ICON_HALO_BLUR, it)
+      }
     }
 
   /**
@@ -817,26 +817,26 @@ class Symbol(
     }
 
   /**
-   * The iconHaloBlur property
+   * The iconOpacity property
    * <p>
-   * Fade out the halo towards the outside.
+   * The opacity at which the icon will be drawn.
    * </p>
    */
-  var iconHaloBlur: Double?
+  var iconOpacity: Double?
     /**
-     * Get the iconHaloBlur property
+     * Get the iconOpacity property
      *
      * @return property wrapper value around Double
      */
     get() {
-      val value = jsonObject.get(SymbolOptions.PROPERTY_ICON_HALO_BLUR)
+      val value = jsonObject.get(SymbolOptions.PROPERTY_ICON_OPACITY)
       if (!value.isJsonNull) {
         return value.asString.toDouble()
       }
       return null
     }
     /**
-     * Set the iconHaloBlur property
+     * Set the iconOpacity property
      * <p>
      * To update the symbol on the map use {@link symbolManager#update(Annotation)}.
      * <p>
@@ -845,40 +845,7 @@ class Symbol(
      */
     set(value) {
       value?.let {
-        jsonObject.addProperty(SymbolOptions.PROPERTY_ICON_HALO_BLUR, it)
-      }
-    }
-
-  /**
-   * The textOpacity property
-   * <p>
-   * The opacity at which the text will be drawn.
-   * </p>
-   */
-  var textOpacity: Double?
-    /**
-     * Get the textOpacity property
-     *
-     * @return property wrapper value around Double
-     */
-    get() {
-      val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_OPACITY)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
-      }
-      return null
-    }
-    /**
-     * Set the textOpacity property
-     * <p>
-     * To update the symbol on the map use {@link symbolManager#update(Annotation)}.
-     * <p>
-     *
-     * @param value constant property value for Double
-     */
-    set(value) {
-      value?.let {
-        jsonObject.addProperty(SymbolOptions.PROPERTY_TEXT_OPACITY, it)
+        jsonObject.addProperty(SymbolOptions.PROPERTY_ICON_OPACITY, it)
       }
     }
 
@@ -947,6 +914,39 @@ class Symbol(
      */
     set(value) {
       jsonObject.addProperty("text-color", value)
+    }
+
+  /**
+   * The textHaloBlur property
+   * <p>
+   * The halo's fadeout distance towards the outside.
+   * </p>
+   */
+  var textHaloBlur: Double?
+    /**
+     * Get the textHaloBlur property
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_HALO_BLUR)
+      if (!value.isJsonNull) {
+        return value.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the textHaloBlur property
+     * <p>
+     * To update the symbol on the map use {@link symbolManager#update(Annotation)}.
+     * <p>
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      value?.let {
+        jsonObject.addProperty(SymbolOptions.PROPERTY_TEXT_HALO_BLUR, it)
+      }
     }
 
   /**
@@ -1050,26 +1050,26 @@ class Symbol(
     }
 
   /**
-   * The textHaloBlur property
+   * The textOpacity property
    * <p>
-   * The halo's fadeout distance towards the outside.
+   * The opacity at which the text will be drawn.
    * </p>
    */
-  var textHaloBlur: Double?
+  var textOpacity: Double?
     /**
-     * Get the textHaloBlur property
+     * Get the textOpacity property
      *
      * @return property wrapper value around Double
      */
     get() {
-      val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_HALO_BLUR)
+      val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_OPACITY)
       if (!value.isJsonNull) {
         return value.asString.toDouble()
       }
       return null
     }
     /**
-     * Set the textHaloBlur property
+     * Set the textOpacity property
      * <p>
      * To update the symbol on the map use {@link symbolManager#update(Annotation)}.
      * <p>
@@ -1078,7 +1078,7 @@ class Symbol(
      */
     set(value) {
       value?.let {
-        jsonObject.addProperty(SymbolOptions.PROPERTY_TEXT_HALO_BLUR, it)
+        jsonObject.addProperty(SymbolOptions.PROPERTY_TEXT_OPACITY, it)
       }
     }
 
@@ -1107,23 +1107,26 @@ class Symbol(
    * Set the used data-driven properties
    */
   override fun setUsedDataDrivenProperties() {
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_SYMBOL_SORT_KEY).isJsonNull)) {
-      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_SYMBOL_SORT_KEY)
-    }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_SIZE).isJsonNull)) {
-      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_SIZE)
+    if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_ANCHOR).isJsonNull)) {
+      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_ANCHOR)
     }
     if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_IMAGE).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_IMAGE)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_ROTATE).isJsonNull)) {
-      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_ROTATE)
-    }
     if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_OFFSET).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_OFFSET)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_ANCHOR).isJsonNull)) {
-      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_ANCHOR)
+    if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_ROTATE).isJsonNull)) {
+      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_ROTATE)
+    }
+    if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_SIZE).isJsonNull)) {
+      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_SIZE)
+    }
+    if (!(jsonObject.get(SymbolOptions.PROPERTY_SYMBOL_SORT_KEY).isJsonNull)) {
+      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_SYMBOL_SORT_KEY)
+    }
+    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_ANCHOR).isJsonNull)) {
+      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_ANCHOR)
     }
     if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_FIELD).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_FIELD)
@@ -1131,38 +1134,35 @@ class Symbol(
     if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_FONT).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_FONT)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_SIZE).isJsonNull)) {
-      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_SIZE)
-    }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_MAX_WIDTH).isJsonNull)) {
-      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_MAX_WIDTH)
+    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_JUSTIFY).isJsonNull)) {
+      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_JUSTIFY)
     }
     if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_LETTER_SPACING).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_LETTER_SPACING)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_JUSTIFY).isJsonNull)) {
-      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_JUSTIFY)
-    }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_RADIAL_OFFSET).isJsonNull)) {
-      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_RADIAL_OFFSET)
-    }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_ANCHOR).isJsonNull)) {
-      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_ANCHOR)
-    }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_ROTATE).isJsonNull)) {
-      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_ROTATE)
-    }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_TRANSFORM).isJsonNull)) {
-      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_TRANSFORM)
+    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_MAX_WIDTH).isJsonNull)) {
+      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_MAX_WIDTH)
     }
     if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_OFFSET).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_OFFSET)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_OPACITY).isJsonNull)) {
-      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_OPACITY)
+    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_RADIAL_OFFSET).isJsonNull)) {
+      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_RADIAL_OFFSET)
+    }
+    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_ROTATE).isJsonNull)) {
+      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_ROTATE)
+    }
+    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_SIZE).isJsonNull)) {
+      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_SIZE)
+    }
+    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_TRANSFORM).isJsonNull)) {
+      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_TRANSFORM)
     }
     if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_COLOR).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_COLOR)
+    }
+    if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_HALO_BLUR).isJsonNull)) {
+      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_HALO_BLUR)
     }
     if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_HALO_COLOR).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_HALO_COLOR)
@@ -1170,14 +1170,14 @@ class Symbol(
     if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_HALO_WIDTH).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_HALO_WIDTH)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_HALO_BLUR).isJsonNull)) {
-      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_HALO_BLUR)
-    }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_OPACITY).isJsonNull)) {
-      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_OPACITY)
+    if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_OPACITY).isJsonNull)) {
+      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_OPACITY)
     }
     if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_COLOR).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_COLOR)
+    }
+    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_HALO_BLUR).isJsonNull)) {
+      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_HALO_BLUR)
     }
     if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_HALO_COLOR).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_HALO_COLOR)
@@ -1185,8 +1185,8 @@ class Symbol(
     if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_HALO_WIDTH).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_HALO_WIDTH)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_HALO_BLUR).isJsonNull)) {
-      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_HALO_BLUR)
+    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_OPACITY).isJsonNull)) {
+      annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_OPACITY)
     }
   }
 

@@ -7,12 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.JsonPrimitive
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
-import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
 import com.mapbox.maps.testapp.R
-import com.mapbox.maps.testapp.utils.Assets
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.mapView
 import kotlinx.android.synthetic.main.activity_annotation.*
@@ -29,9 +27,9 @@ class FillActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_annotation)
-    mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
+    mapView.getMapboxMap().loadStyleUri(nextStyle) {
       val annotationPlugin = mapView.getAnnotationPlugin()
-      fillManager = annotationPlugin.getFillManager().apply {
+      fillManager = annotationPlugin.getFillManager(mapView).apply {
         addClickListener(
           OnFillClickListener {
             Toast.makeText(this@FillActivity, "click", Toast.LENGTH_LONG).show()
@@ -59,7 +57,7 @@ class FillActivity : AppCompatActivity() {
           val color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
           fillOptionsList.add(
             FillOptions()
-              .withPoints(createRandomPoints())
+              .withPoints(Utils.createRandomPointsList())
               .withFillColor(ColorUtils.colorToRgbaString(color))
           )
         }
@@ -68,7 +66,7 @@ class FillActivity : AppCompatActivity() {
         try {
           create(
             FeatureCollection.fromJson(
-              Assets.loadStringFromAssets(
+              Utils.loadStringFromAssets(
                 this@FillActivity,
                 "annotations.json"
               )
@@ -81,26 +79,11 @@ class FillActivity : AppCompatActivity() {
     }
 
     deleteAll.setOnClickListener { fillManager?.deleteAll() }
+    changeStyle.setOnClickListener {
+      mapView.getMapboxMap().loadStyleUri(nextStyle)
+    }
   }
 
-  private fun createRandomPoints(): List<List<Point>> {
-    val points = mutableListOf<Point>()
-    val firstLast = Point.fromLngLat(
-      random.nextDouble() * -360.0 + 180.0,
-      random.nextDouble() * -180.0 + 90.0
-    )
-    points.add(firstLast)
-    for (i in 0 until random.nextInt(10)) {
-      points.add(
-        Point.fromLngLat(
-          random.nextDouble() * -360.0 + 180.0,
-          random.nextDouble() * -180.0 + 90.0
-        )
-      )
-    }
-    points.add(firstLast)
-    return listOf(points)
-  }
   override fun onStart() {
     super.onStart()
     mapView.onStart()
@@ -119,5 +102,25 @@ class FillActivity : AppCompatActivity() {
   override fun onDestroy() {
     super.onDestroy()
     mapView.onDestroy()
+  }
+
+  companion object {
+    /** Current index of style*/
+    private var index: Int = 0
+
+    /**
+     * Utility to cycle through map styles. Useful to test if runtime styling source and layers transfer over to new
+     * style.
+     *
+     * @return a string ID representing the map style
+     */
+    val nextStyle: String
+      get() {
+        index++
+        if (index == Utils.STYLES.size) {
+          index = 0
+        }
+        return Utils.STYLES[index]
+      }
   }
 }

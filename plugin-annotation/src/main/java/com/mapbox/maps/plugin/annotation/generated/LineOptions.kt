@@ -56,20 +56,20 @@ class LineOptions : AnnotationOptions<LineString, Line> {
   }
 
   /**
-   * The opacity at which the line will be drawn.
+   * Blur applied to the line, in pixels.
    */
-  var lineOpacity: Double = 1.0
+  var lineBlur: Double = 0.0
 
   /**
-   * Set line-opacity to initialise the line with.
+   * Set line-blur to initialise the line with.
    * <p>
-   * The opacity at which the line will be drawn.
+   * Blur applied to the line, in density-independent pixels.
    * </p>
-   * @param lineOpacity the line-opacity value
+   * @param lineBlur the line-blur value
    * @return this
    */
-  fun withLineOpacity(lineOpacity: Double): LineOptions {
-    this.lineOpacity = lineOpacity
+  fun withLineBlur(lineBlur: Double): LineOptions {
+    this.lineBlur = lineBlur
     return this
   }
 
@@ -88,24 +88,6 @@ class LineOptions : AnnotationOptions<LineString, Line> {
    */
   fun withLineColor(lineColor: String): LineOptions {
     this.lineColor = lineColor
-    return this
-  }
-
-  /**
-   * Stroke thickness.
-   */
-  var lineWidth: Double = 1.0
-
-  /**
-   * Set line-width to initialise the line with.
-   * <p>
-   * Stroke thickness.
-   * </p>
-   * @param lineWidth the line-width value
-   * @return this
-   */
-  fun withLineWidth(lineWidth: Double): LineOptions {
-    this.lineWidth = lineWidth
     return this
   }
 
@@ -146,20 +128,20 @@ class LineOptions : AnnotationOptions<LineString, Line> {
   }
 
   /**
-   * Blur applied to the line, in pixels.
+   * The opacity at which the line will be drawn.
    */
-  var lineBlur: Double = 0.0
+  var lineOpacity: Double = 1.0
 
   /**
-   * Set line-blur to initialise the line with.
+   * Set line-opacity to initialise the line with.
    * <p>
-   * Blur applied to the line, in density-independent pixels.
+   * The opacity at which the line will be drawn.
    * </p>
-   * @param lineBlur the line-blur value
+   * @param lineOpacity the line-opacity value
    * @return this
    */
-  fun withLineBlur(lineBlur: Double): LineOptions {
-    this.lineBlur = lineBlur
+  fun withLineOpacity(lineOpacity: Double): LineOptions {
+    this.lineOpacity = lineOpacity
     return this
   }
 
@@ -178,6 +160,24 @@ class LineOptions : AnnotationOptions<LineString, Line> {
    */
   fun withLinePattern(linePattern: String): LineOptions {
     this.linePattern = linePattern
+    return this
+  }
+
+  /**
+   * Stroke thickness.
+   */
+  var lineWidth: Double = 1.0
+
+  /**
+   * Set line-width to initialise the line with.
+   * <p>
+   * Stroke thickness.
+   * </p>
+   * @param lineWidth the line-width value
+   * @return this
+   */
+  fun withLineWidth(lineWidth: Double): LineOptions {
+    this.lineWidth = lineWidth
     return this
   }
 
@@ -278,13 +278,13 @@ class LineOptions : AnnotationOptions<LineString, Line> {
     val jsonObject = JsonObject()
     jsonObject.addProperty(PROPERTY_LINE_JOIN, lineJoin.value)
     jsonObject.addProperty(PROPERTY_LINE_SORT_KEY, lineSortKey)
-    jsonObject.addProperty(PROPERTY_LINE_OPACITY, lineOpacity)
+    jsonObject.addProperty(PROPERTY_LINE_BLUR, lineBlur)
     jsonObject.addProperty(PROPERTY_LINE_COLOR, lineColor)
-    jsonObject.addProperty(PROPERTY_LINE_WIDTH, lineWidth)
     jsonObject.addProperty(PROPERTY_LINE_GAP_WIDTH, lineGapWidth)
     jsonObject.addProperty(PROPERTY_LINE_OFFSET, lineOffset)
-    jsonObject.addProperty(PROPERTY_LINE_BLUR, lineBlur)
+    jsonObject.addProperty(PROPERTY_LINE_OPACITY, lineOpacity)
     jsonObject.addProperty(PROPERTY_LINE_PATTERN, linePattern)
+    jsonObject.addProperty(PROPERTY_LINE_WIDTH, lineWidth)
     val line = Line(id, annotationManager, jsonObject, geometry!!)
     line.isDraggable = isDraggable
     line.setData(data)
@@ -302,14 +302,11 @@ class LineOptions : AnnotationOptions<LineString, Line> {
     /** The property for line-sort-key */
     const val PROPERTY_LINE_SORT_KEY = "line-sort-key"
 
-    /** The property for line-opacity */
-    const val PROPERTY_LINE_OPACITY = "line-opacity"
+    /** The property for line-blur */
+    const val PROPERTY_LINE_BLUR = "line-blur"
 
     /** The property for line-color */
     const val PROPERTY_LINE_COLOR = "line-color"
-
-    /** The property for line-width */
-    const val PROPERTY_LINE_WIDTH = "line-width"
 
     /** The property for line-gap-width */
     const val PROPERTY_LINE_GAP_WIDTH = "line-gap-width"
@@ -317,11 +314,14 @@ class LineOptions : AnnotationOptions<LineString, Line> {
     /** The property for line-offset */
     const val PROPERTY_LINE_OFFSET = "line-offset"
 
-    /** The property for line-blur */
-    const val PROPERTY_LINE_BLUR = "line-blur"
+    /** The property for line-opacity */
+    const val PROPERTY_LINE_OPACITY = "line-opacity"
 
     /** The property for line-pattern */
     const val PROPERTY_LINE_PATTERN = "line-pattern"
+
+    /** The property for line-width */
+    const val PROPERTY_LINE_WIDTH = "line-width"
 
     /** The property for is-draggable */
     private const val PROPERTY_IS_DRAGGABLE = "is-draggable"
@@ -348,14 +348,11 @@ class LineOptions : AnnotationOptions<LineString, Line> {
       if (feature.hasProperty(PROPERTY_LINE_SORT_KEY)) {
         options.lineSortKey = feature.getProperty(PROPERTY_LINE_SORT_KEY).asDouble
       }
-      if (feature.hasProperty(PROPERTY_LINE_OPACITY)) {
-        options.lineOpacity = feature.getProperty(PROPERTY_LINE_OPACITY).asDouble
+      if (feature.hasProperty(PROPERTY_LINE_BLUR)) {
+        options.lineBlur = feature.getProperty(PROPERTY_LINE_BLUR).asDouble
       }
       if (feature.hasProperty(PROPERTY_LINE_COLOR)) {
         options.lineColor = feature.getProperty(PROPERTY_LINE_COLOR).asString
-      }
-      if (feature.hasProperty(PROPERTY_LINE_WIDTH)) {
-        options.lineWidth = feature.getProperty(PROPERTY_LINE_WIDTH).asDouble
       }
       if (feature.hasProperty(PROPERTY_LINE_GAP_WIDTH)) {
         options.lineGapWidth = feature.getProperty(PROPERTY_LINE_GAP_WIDTH).asDouble
@@ -363,11 +360,14 @@ class LineOptions : AnnotationOptions<LineString, Line> {
       if (feature.hasProperty(PROPERTY_LINE_OFFSET)) {
         options.lineOffset = feature.getProperty(PROPERTY_LINE_OFFSET).asDouble
       }
-      if (feature.hasProperty(PROPERTY_LINE_BLUR)) {
-        options.lineBlur = feature.getProperty(PROPERTY_LINE_BLUR).asDouble
+      if (feature.hasProperty(PROPERTY_LINE_OPACITY)) {
+        options.lineOpacity = feature.getProperty(PROPERTY_LINE_OPACITY).asDouble
       }
       if (feature.hasProperty(PROPERTY_LINE_PATTERN)) {
         options.linePattern = feature.getProperty(PROPERTY_LINE_PATTERN).asString
+      }
+      if (feature.hasProperty(PROPERTY_LINE_WIDTH)) {
+        options.lineWidth = feature.getProperty(PROPERTY_LINE_WIDTH).asDouble
       }
       if (feature.hasProperty(PROPERTY_IS_DRAGGABLE)) {
         options.isDraggable = feature.getProperty(PROPERTY_IS_DRAGGABLE).asBoolean

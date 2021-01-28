@@ -86,26 +86,26 @@ class Circle(
     }
 
   /**
-   * The circleRadius property
+   * The circleBlur property
    * <p>
-   * Circle radius.
+   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity.
    * </p>
    */
-  var circleRadius: Double?
+  var circleBlur: Double?
     /**
-     * Get the circleRadius property
+     * Get the circleBlur property
      *
      * @return property wrapper value around Double
      */
     get() {
-      val value = jsonObject.get(CircleOptions.PROPERTY_CIRCLE_RADIUS)
+      val value = jsonObject.get(CircleOptions.PROPERTY_CIRCLE_BLUR)
       if (!value.isJsonNull) {
         return value.asString.toDouble()
       }
       return null
     }
     /**
-     * Set the circleRadius property
+     * Set the circleBlur property
      * <p>
      * To update the circle on the map use {@link circleManager#update(Annotation)}.
      * <p>
@@ -114,7 +114,7 @@ class Circle(
      */
     set(value) {
       value?.let {
-        jsonObject.addProperty(CircleOptions.PROPERTY_CIRCLE_RADIUS, it)
+        jsonObject.addProperty(CircleOptions.PROPERTY_CIRCLE_BLUR, it)
       }
     }
 
@@ -186,39 +186,6 @@ class Circle(
     }
 
   /**
-   * The circleBlur property
-   * <p>
-   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity.
-   * </p>
-   */
-  var circleBlur: Double?
-    /**
-     * Get the circleBlur property
-     *
-     * @return property wrapper value around Double
-     */
-    get() {
-      val value = jsonObject.get(CircleOptions.PROPERTY_CIRCLE_BLUR)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
-      }
-      return null
-    }
-    /**
-     * Set the circleBlur property
-     * <p>
-     * To update the circle on the map use {@link circleManager#update(Annotation)}.
-     * <p>
-     *
-     * @param value constant property value for Double
-     */
-    set(value) {
-      value?.let {
-        jsonObject.addProperty(CircleOptions.PROPERTY_CIRCLE_BLUR, it)
-      }
-    }
-
-  /**
    * The circleOpacity property
    * <p>
    * The opacity at which the circle will be drawn.
@@ -252,26 +219,26 @@ class Circle(
     }
 
   /**
-   * The circleStrokeWidth property
+   * The circleRadius property
    * <p>
-   * The width of the circle's stroke. Strokes are placed outside of the {@link PropertyFactory#circleRadius}.
+   * Circle radius.
    * </p>
    */
-  var circleStrokeWidth: Double?
+  var circleRadius: Double?
     /**
-     * Get the circleStrokeWidth property
+     * Get the circleRadius property
      *
      * @return property wrapper value around Double
      */
     get() {
-      val value = jsonObject.get(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH)
+      val value = jsonObject.get(CircleOptions.PROPERTY_CIRCLE_RADIUS)
       if (!value.isJsonNull) {
         return value.asString.toDouble()
       }
       return null
     }
     /**
-     * Set the circleStrokeWidth property
+     * Set the circleRadius property
      * <p>
      * To update the circle on the map use {@link circleManager#update(Annotation)}.
      * <p>
@@ -280,7 +247,7 @@ class Circle(
      */
     set(value) {
       value?.let {
-        jsonObject.addProperty(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH, it)
+        jsonObject.addProperty(CircleOptions.PROPERTY_CIRCLE_RADIUS, it)
       }
     }
 
@@ -385,6 +352,39 @@ class Circle(
     }
 
   /**
+   * The circleStrokeWidth property
+   * <p>
+   * The width of the circle's stroke. Strokes are placed outside of the {@link PropertyFactory#circleRadius}.
+   * </p>
+   */
+  var circleStrokeWidth: Double?
+    /**
+     * Get the circleStrokeWidth property
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = jsonObject.get(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH)
+      if (!value.isJsonNull) {
+        return value.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the circleStrokeWidth property
+     * <p>
+     * To update the circle on the map use {@link circleManager#update(Annotation)}.
+     * <p>
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      value?.let {
+        jsonObject.addProperty(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH, it)
+      }
+    }
+
+  /**
    * Get the offset geometry for the touch point
    */
   override fun getOffsetGeometry(
@@ -412,26 +412,26 @@ class Circle(
     if (!(jsonObject.get(CircleOptions.PROPERTY_CIRCLE_SORT_KEY).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(CircleOptions.PROPERTY_CIRCLE_SORT_KEY)
     }
-    if (!(jsonObject.get(CircleOptions.PROPERTY_CIRCLE_RADIUS).isJsonNull)) {
-      annotationManager.enableDataDrivenProperty(CircleOptions.PROPERTY_CIRCLE_RADIUS)
+    if (!(jsonObject.get(CircleOptions.PROPERTY_CIRCLE_BLUR).isJsonNull)) {
+      annotationManager.enableDataDrivenProperty(CircleOptions.PROPERTY_CIRCLE_BLUR)
     }
     if (!(jsonObject.get(CircleOptions.PROPERTY_CIRCLE_COLOR).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(CircleOptions.PROPERTY_CIRCLE_COLOR)
     }
-    if (!(jsonObject.get(CircleOptions.PROPERTY_CIRCLE_BLUR).isJsonNull)) {
-      annotationManager.enableDataDrivenProperty(CircleOptions.PROPERTY_CIRCLE_BLUR)
-    }
     if (!(jsonObject.get(CircleOptions.PROPERTY_CIRCLE_OPACITY).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(CircleOptions.PROPERTY_CIRCLE_OPACITY)
     }
-    if (!(jsonObject.get(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH).isJsonNull)) {
-      annotationManager.enableDataDrivenProperty(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH)
+    if (!(jsonObject.get(CircleOptions.PROPERTY_CIRCLE_RADIUS).isJsonNull)) {
+      annotationManager.enableDataDrivenProperty(CircleOptions.PROPERTY_CIRCLE_RADIUS)
     }
     if (!(jsonObject.get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR)
     }
     if (!(jsonObject.get(CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY)
+    }
+    if (!(jsonObject.get(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH).isJsonNull)) {
+      annotationManager.enableDataDrivenProperty(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH)
     }
   }
 
