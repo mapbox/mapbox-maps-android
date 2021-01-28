@@ -13,7 +13,6 @@ import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.mapView
 import kotlinx.android.synthetic.main.activity_annotation.*
-import java.io.IOException
 import java.util.*
 
 /**
@@ -22,6 +21,11 @@ import java.util.*
 class CircleActivity : AppCompatActivity() {
   private val random = Random()
   private var circleManager: CircleManager? = null
+  private var index: Int = 0
+  private val nextStyle: String
+    get() {
+      return AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]
+    }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -37,7 +41,7 @@ class CircleActivity : AppCompatActivity() {
         )
 
         val circleOptions: CircleOptions = CircleOptions()
-          .withPoint(Point.fromLngLat(0.381457, 6.687337))
+          .withPoint(Point.fromLngLat(CIRCLE_LONGITUDE, CIRCLE_LATITUDE))
           .withCircleColor(ColorUtils.colorToRgbaString(Color.YELLOW))
           .withCircleRadius(12.0)
           .withDraggable(true)
@@ -49,7 +53,7 @@ class CircleActivity : AppCompatActivity() {
           val color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
           circleOptionsList.add(
             CircleOptions()
-              .withPoint(Utils.createRandomPoint())
+              .withPoint(AnnotationUtils.createRandomPoint())
               .withCircleColor(ColorUtils.colorToRgbaString(color))
               .withCircleRadius(8.0)
               .withDraggable(true)
@@ -57,17 +61,10 @@ class CircleActivity : AppCompatActivity() {
         }
         create(circleOptionsList)
 
-        try {
-          create(
-            FeatureCollection.fromJson(
-              Utils.loadStringFromAssets(
-                this@CircleActivity,
-                "annotations.json"
-              )
-            )
-          )
-        } catch (e: IOException) {
-          throw RuntimeException("Unable to parse annotations.json")
+        AnnotationUtils.loadStringFromAssets(
+          this@CircleActivity, "annotations.json"
+        )?.let {
+          create(FeatureCollection.fromJson(it))
         }
       }
     }
@@ -99,22 +96,7 @@ class CircleActivity : AppCompatActivity() {
   }
 
   companion object {
-    /** Current index of style*/
-    private var index: Int = 0
-
-    /**
-     * Utility to cycle through map styles. Useful to test if runtime styling source and layers transfer over to new
-     * style.
-     *
-     * @return a string ID representing the map style
-     */
-    val nextStyle: String
-      get() {
-        index++
-        if (index == Utils.STYLES.size) {
-          index = 0
-        }
-        return Utils.STYLES[index]
-      }
+    private const val CIRCLE_LONGITUDE = 0.381457
+    private const val CIRCLE_LATITUDE = 6.687337
   }
 }

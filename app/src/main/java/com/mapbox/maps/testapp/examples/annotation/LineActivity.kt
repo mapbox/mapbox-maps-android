@@ -15,7 +15,6 @@ import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.mapView
 import kotlinx.android.synthetic.main.activity_annotation.*
-import java.io.IOException
 import java.util.*
 
 /**
@@ -24,6 +23,11 @@ import java.util.*
 class LineActivity : AppCompatActivity() {
   private val random = Random()
   private var lineManager: LineManager? = null
+  private var index: Int = 0
+  private val nextStyle: String
+    get() {
+      return AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]
+    }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -63,7 +67,7 @@ class LineActivity : AppCompatActivity() {
         // random add lines across the globe
         val lists: MutableList<List<Point>> = ArrayList<List<Point>>()
         for (i in 0..99) {
-          lists.add(Utils.createRandomPoints())
+          lists.add(AnnotationUtils.createRandomPoints())
         }
         val lineOptionsList = lists.map {
           val color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
@@ -74,17 +78,11 @@ class LineActivity : AppCompatActivity() {
 
         create(lineOptionsList)
 
-        try {
-          create(
-            FeatureCollection.fromJson(
-              Utils.loadStringFromAssets(
-                this@LineActivity,
-                "annotations.json"
-              )
-            )
-          )
-        } catch (e: IOException) {
-          throw RuntimeException("Unable to parse annotations.json")
+        AnnotationUtils.loadStringFromAssets(
+          this@LineActivity,
+          "annotations.json"
+        )?.let {
+          create(FeatureCollection.fromJson(it))
         }
       }
     }
@@ -119,23 +117,5 @@ class LineActivity : AppCompatActivity() {
     private const val LAYER_ID = "line_layer"
     private const val SOURCE_ID = "line_source"
     private const val COUNTRY_LABEL = "country-label"
-
-    /** Current index of style*/
-    private var index: Int = 0
-
-    /**
-     * Utility to cycle through map styles. Useful to test if runtime styling source and layers transfer over to new
-     * style.
-     *
-     * @return a string ID representing the map style
-     */
-    val nextStyle: String
-      get() {
-        index++
-        if (index == Utils.STYLES.size) {
-          index = 0
-        }
-        return Utils.STYLES[index]
-      }
   }
 }

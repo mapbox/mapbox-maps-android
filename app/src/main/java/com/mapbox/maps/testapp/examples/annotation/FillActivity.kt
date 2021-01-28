@@ -14,7 +14,6 @@ import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.mapView
 import kotlinx.android.synthetic.main.activity_annotation.*
-import java.io.IOException
 import java.util.*
 
 /**
@@ -23,6 +22,11 @@ import java.util.*
 class FillActivity : AppCompatActivity() {
   private val random = Random()
   private var fillManager: FillManager? = null
+  private var index: Int = 0
+  private val nextStyle: String
+    get() {
+      return AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]
+    }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -57,31 +61,23 @@ class FillActivity : AppCompatActivity() {
           val color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
           fillOptionsList.add(
             FillOptions()
-              .withPoints(Utils.createRandomPointsList())
+              .withPoints(AnnotationUtils.createRandomPointsList())
               .withFillColor(ColorUtils.colorToRgbaString(color))
           )
         }
         create(fillOptionsList)
 
-        try {
-          create(
-            FeatureCollection.fromJson(
-              Utils.loadStringFromAssets(
-                this@FillActivity,
-                "annotations.json"
-              )
-            )
-          )
-        } catch (e: IOException) {
-          throw RuntimeException("Unable to parse annotations.json")
+        AnnotationUtils.loadStringFromAssets(
+          this@FillActivity,
+          "annotations.json"
+        )?.let {
+          create(FeatureCollection.fromJson(it))
         }
       }
     }
 
     deleteAll.setOnClickListener { fillManager?.deleteAll() }
-    changeStyle.setOnClickListener {
-      mapView.getMapboxMap().loadStyleUri(nextStyle)
-    }
+    changeStyle.setOnClickListener { mapView.getMapboxMap().loadStyleUri(nextStyle) }
   }
 
   override fun onStart() {
@@ -102,25 +98,5 @@ class FillActivity : AppCompatActivity() {
   override fun onDestroy() {
     super.onDestroy()
     mapView.onDestroy()
-  }
-
-  companion object {
-    /** Current index of style*/
-    private var index: Int = 0
-
-    /**
-     * Utility to cycle through map styles. Useful to test if runtime styling source and layers transfer over to new
-     * style.
-     *
-     * @return a string ID representing the map style
-     */
-    val nextStyle: String
-      get() {
-        index++
-        if (index == Utils.STYLES.size) {
-          index = 0
-        }
-        return Utils.STYLES[index]
-      }
   }
 }

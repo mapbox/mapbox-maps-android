@@ -288,10 +288,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         return false
       }
       queryMapForFeatures(point) {
-        it?.let {
-          clickListeners.forEach { listener ->
-            listener.onAnnotationClick(it)
-          }
+        clickListeners.forEach { listener ->
+          listener.onAnnotationClick(it)
         }
       }
       return false
@@ -314,10 +312,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         return false
       }
       queryMapForFeatures(point) {
-        it?.let {
-          longClickListeners.forEach { listener ->
-            listener.onAnnotationLongClick(it)
-          }
+        longClickListeners.forEach { listener ->
+          listener.onAnnotationLongClick(it)
         }
       }
       return false
@@ -339,9 +335,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
             detector.focalPoint.y.toDouble()
           )
         ) {
-          it?.let {
-            startDragging(it)
-          }
+          startDragging(it)
         }
       }
     }
@@ -352,7 +346,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     override fun onMove(detector: MoveGestureDetector): Boolean {
       if (draggedAnnotation != null && (detector.pointersCount > 1 || !draggedAnnotation!!.isDraggable)) {
         // Stopping the drag when we don't work with a simple, on-pointer move anymore
-        stopDragging(draggedAnnotation)
+        stopDragging()
         return true
       }
 
@@ -363,7 +357,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         val y = moveObject.currentY - touchAreaShiftY
         val pointF = PointF(x, y)
         if (pointF.x < 0 || pointF.y < 0 || pointF.x > width || pointF.y > height) {
-          stopDragging(draggedAnnotation)
+          stopDragging()
           return true
         }
         val shiftedGeometry: G? = delegateProvider.let {
@@ -388,7 +382,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
      */
     override fun onMoveEnd(detector: MoveGestureDetector) {
       // Stopping the drag when move ends
-      stopDragging(draggedAnnotation)
+      stopDragging()
     }
 
     private fun startDragging(annotation: T): Boolean {
@@ -400,8 +394,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
       return false
     }
 
-    private fun stopDragging(annotation: T?) {
-      if (annotation != null) {
+    private fun stopDragging() {
+      draggedAnnotation?.let { annotation ->
         dragListeners.forEach { it.onAnnotationDragFinished(annotation) }
       }
       draggedAnnotation = null
@@ -459,23 +453,21 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     screenCoordinate: ScreenCoordinate,
     callback: QueryAnnotationCallback<T>
   ) {
-    if (layer != null) {
+    layer?.let {
       mapFeatureQueryDelegate.queryRenderedFeatures(
         screenCoordinate,
         RenderedQueryOptions(
-          listOf(layer!!.layerId),
+          listOf(it.layerId),
           literal(true)
         )
       ) { features ->
         features.value?.let { featureList ->
           if (featureList.isNotEmpty()) {
             val id = featureList.first().getProperty(getAnnotationIdKey()).asLong
-            callback.onQueryAnnotation(annotations[id])
+            annotations[id]?.let { annotation -> callback.onQueryAnnotation(annotation) }
           }
         }
       }
-    } else {
-      callback.onQueryAnnotation(null)
     }
   }
 

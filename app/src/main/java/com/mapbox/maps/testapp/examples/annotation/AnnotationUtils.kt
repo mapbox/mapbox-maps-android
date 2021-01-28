@@ -1,21 +1,20 @@
 package com.mapbox.maps.testapp.examples.annotation
 
 import android.content.Context
-import com.mapbox.core.utils.TextUtils
+import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.Style
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
-import java.io.Reader
 import java.nio.charset.Charset
 import java.util.*
 
 /**
  * Useful utilities used throughout the testapp.
  */
-object Utils {
-
+object AnnotationUtils {
+  private const val TAG = "AnnotationUtils"
   val STYLES =
     arrayOf(Style.MAPBOX_STREETS, Style.OUTDOORS, Style.LIGHT, Style.DARK, Style.SATELLITE_STREETS)
 
@@ -76,22 +75,24 @@ object Utils {
     )
   }
 
-  @Throws(IOException::class)
-  fun loadStringFromAssets(context: Context, fileName: String): String {
-    if (TextUtils.isEmpty(fileName)) {
-      throw NullPointerException("No GeoJSON File Name passed in.")
+  /**
+   * Load the string content from a assets file
+   *
+   * @param context the context
+   * @param fileName the file to load
+   */
+  fun loadStringFromAssets(context: Context, fileName: String): String? {
+    return try {
+      val inputStream = context.assets.open(fileName)
+      val rd = BufferedReader(InputStreamReader(inputStream, Charset.forName("UTF-8")))
+      val sb = StringBuilder()
+      rd.forEachLine {
+        sb.append(it)
+      }
+      sb.toString()
+    } catch (e: IOException) {
+      Logger.e(TAG, "Unable to parse $fileName")
+      null
     }
-    val `is` = context.assets.open(fileName)
-    val rd = BufferedReader(InputStreamReader(`is`, Charset.forName("UTF-8")))
-    return readAll(rd)
-  }
-
-  @Throws(IOException::class)
-  private fun readAll(rd: Reader): String {
-    val sb = StringBuilder()
-    rd.forEachLine {
-      sb.append(it)
-    }
-    return sb.toString()
   }
 }
