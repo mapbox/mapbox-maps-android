@@ -23,4 +23,32 @@ interface LocationComponentPlugin :
    * @return The location provider currently under usage, and will return null if the location component plugin is not enabled and not initialised.
    */
   fun getLocationProvider(): LocationProvider?
+
+  /**
+   * Adds a listener that gets invoked when indicator position changes.
+   *
+   * @param listener Listener that gets invoked when indicator position changes
+   */
+  fun addOnIndicatorPositionChangedListener(listener: OnIndicatorPositionChangedListener)
+
+  /**
+   * Removes a listener that gets invoked when indicator position changes.
+   *
+   * @param listener Listener that gets invoked when indicator position changes.
+   */
+  fun removeOnIndicatorPositionChangedListener(listener: OnIndicatorPositionChangedListener)
+
+  /**
+   * Adds a listener that gets invoked when indicator bearing changes.
+   *
+   * @param listener Listener that gets invoked when indicator bearing changes
+   */
+  fun addOnIndicatorBearingChangedListener(listener: OnIndicatorBearingChangedListener)
+
+  /**
+   * Removes a listener that gets invoked when indicator bearing changes.
+   *
+   * @param listener Listener that gets invoked when indicator bearing changes.
+   */
+  fun removeOnIndicatorBearingChangedListener(listener: OnIndicatorBearingChangedListener)
 }

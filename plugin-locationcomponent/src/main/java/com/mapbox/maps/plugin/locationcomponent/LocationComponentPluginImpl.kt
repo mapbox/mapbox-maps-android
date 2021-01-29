@@ -12,6 +12,7 @@ import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttri
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettingsBase
 import java.lang.ref.WeakReference
+import java.util.concurrent.CopyOnWriteArrayList
 
 /**
  * Default implementation of the LocationComponentPlugin, it renders the configured location puck
@@ -25,6 +26,60 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer, L
   private var locationProvider: LocationProvider? = null
 
   private var isLocationComponentActivated = false
+
+  private val onIndicatorPositionChangedListener =
+    CopyOnWriteArrayList<OnIndicatorPositionChangedListener>()
+
+  private val onIndicatorBearingChangedListener =
+    CopyOnWriteArrayList<OnIndicatorBearingChangedListener>()
+
+  /**
+   * Adds a listener that gets invoked when indicator position changes.
+   *
+   * @param listener Listener that gets invoked when indicator position changes
+   */
+  override fun addOnIndicatorPositionChangedListener(listener: OnIndicatorPositionChangedListener) {
+    onIndicatorPositionChangedListener.add(listener)
+  }
+
+  /**
+   * Removes a listener that gets invoked when indicator position changes.
+   *
+   * @param listener Listener that gets invoked when indicator position changes.
+   */
+  override fun removeOnIndicatorPositionChangedListener(listener: OnIndicatorPositionChangedListener) {
+    onIndicatorPositionChangedListener.remove(listener)
+  }
+
+  private val indicatorPositionChangedListener = OnIndicatorPositionChangedListener {
+    for (listener in onIndicatorPositionChangedListener) {
+      listener.onIndicatorPositionChanged(it)
+    }
+  }
+
+  /**
+   * Adds a listener that gets invoked when indicator bearing changes.
+   *
+   * @param listener Listener that gets invoked when indicator bearing changes
+   */
+  override fun addOnIndicatorBearingChangedListener(listener: OnIndicatorBearingChangedListener) {
+    onIndicatorBearingChangedListener.add(listener)
+  }
+
+  /**
+   * Removes a listener that gets invoked when indicator bearing changes.
+   *
+   * @param listener Listener that gets invoked when indicator bearing changes.
+   */
+  override fun removeOnIndicatorBearingChangedListener(listener: OnIndicatorBearingChangedListener) {
+    onIndicatorBearingChangedListener.remove(listener)
+  }
+
+  private val indicatorBearingChangedListener = OnIndicatorBearingChangedListener {
+    for (listener in onIndicatorBearingChangedListener) {
+      listener.onIndicatorBearingChanged(it)
+    }
+  }
 
   /**
    * Set the LocationProvider, it will replace the default location provider provided by the LocationComponentPlugin.
@@ -80,7 +135,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer, L
             delegateProvider = delegateProvider,
             positionManager = LocationComponentPositionManager(style, internalSettings.layerAbove, internalSettings.layerBelow),
             layerSourceProvider = LayerSourceProvider(),
-            animationManager = PuckAnimatorManager()
+            animationManager = PuckAnimatorManager(indicatorPositionChangedListener, indicatorBearingChangedListener)
           )
         }
         locationPuckManager?.let {
