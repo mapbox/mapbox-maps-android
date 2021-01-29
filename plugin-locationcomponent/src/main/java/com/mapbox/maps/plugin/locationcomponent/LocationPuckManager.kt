@@ -57,6 +57,13 @@ internal class LocationPuckManager(
     }
   }
 
+  fun cleanUp() {
+    hide()
+    animationManager.onStop()
+    locationLayerRenderer.clearBitmaps()
+    locationLayerRenderer.removeLayers()
+  }
+
   fun isLayerInitialised(): Boolean {
     return locationLayerRenderer.isRendererInitialised()
   }

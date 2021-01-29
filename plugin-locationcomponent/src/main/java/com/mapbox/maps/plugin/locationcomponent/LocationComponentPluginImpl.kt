@@ -18,7 +18,8 @@ import java.util.concurrent.CopyOnWriteArrayList
  * Default implementation of the LocationComponentPlugin, it renders the configured location puck
  * to the user's current location.
  */
-class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer, LocationComponentSettingsBase() {
+class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
+  LocationComponentSettingsBase() {
   private lateinit var delegateProvider: MapDelegateProvider
   private lateinit var context: WeakReference<Context>
 
@@ -133,9 +134,16 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer, L
           locationPuckManager = LocationPuckManager(
             settings = internalSettings,
             delegateProvider = delegateProvider,
-            positionManager = LocationComponentPositionManager(style, internalSettings.layerAbove, internalSettings.layerBelow),
+            positionManager = LocationComponentPositionManager(
+              style,
+              internalSettings.layerAbove,
+              internalSettings.layerBelow
+            ),
             layerSourceProvider = LayerSourceProvider(),
-            animationManager = PuckAnimatorManager(indicatorPositionChangedListener, indicatorBearingChangedListener)
+            animationManager = PuckAnimatorManager(
+              indicatorPositionChangedListener,
+              indicatorBearingChangedListener
+            )
           )
         }
         locationPuckManager?.let {
@@ -156,6 +164,12 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer, L
   override fun onStop() {
     locationPuckManager?.onStop()
     locationProvider?.unRegisterLocationConsumer(this)
+  }
+
+  private fun deactivateLocationComponent() {
+    locationPuckManager?.cleanUp()
+    locationProvider?.unRegisterLocationConsumer(this)
+    isLocationComponentActivated = false
   }
 
   /**
@@ -235,7 +249,11 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer, L
         activateLocationComponent()
       }
     }
-    locationPuckManager?.updateSettings(internalSettings)
+    if (internalSettings.enabled) {
+      locationPuckManager?.updateSettings(internalSettings)
+    } else {
+      deactivateLocationComponent()
+    }
   }
 }
 
