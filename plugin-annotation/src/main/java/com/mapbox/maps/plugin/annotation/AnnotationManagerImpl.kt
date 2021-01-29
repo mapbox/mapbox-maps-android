@@ -27,7 +27,6 @@ import com.mapbox.maps.plugin.annotation.generated.Symbol
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate
 import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
-import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
@@ -47,7 +46,6 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   private var mapProjectionDelegate: MapProjectionDelegate = delegateProvider.mapProjectionDelegate
   private var mapFeatureQueryDelegate: MapFeatureQueryDelegate =
     delegateProvider.mapFeatureQueryDelegate
-  private var styleStateDelegate: MapStyleStateDelegate = delegateProvider.styleStateDelegate
   protected val dataDrivenPropertyUsageMap: MutableMap<String, Boolean> = HashMap()
   protected val constantPropertyUsageMap = mutableListOf<PropertyValue<*>>()
   private var currentId = 0L
@@ -214,7 +212,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Trigger an update to the underlying source
    */
   private fun updateSource() {
-    if (!styleStateDelegate.isFullyLoaded()) {
+    if (!style.isFullyLoaded()) {
       Logger.e(TAG, "Can't update source: style is not fully loaded.")
       return
     }

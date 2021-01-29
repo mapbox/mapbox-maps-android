@@ -27,7 +27,7 @@ internal class LocationLayerController(
     private set
   private var isStale = options.enableStaleState()
   private var positionManager: LocationComponentPositionManager =
-    LocationComponentPositionManager(style, delegateProvider.styleStateDelegate, options.layerAbove(), options.layerBelow())
+    LocationComponentPositionManager(style, options.layerAbove(), options.layerBelow())
   private var locationLayerRenderer =
     if (locationModelLayerOptions != null) {
       layerSourceProvider.getModelLocationLayerRenderer(locationModelLayerOptions)
@@ -41,7 +41,7 @@ internal class LocationLayerController(
 
   fun initializeComponents(style: StyleManagerInterface, options: LocationComponentOptions) {
     locationLayerRenderer.addLayers(positionManager)
-    locationLayerRenderer.initializeComponents(style, delegateProvider.styleStateDelegate)
+    locationLayerRenderer.initializeComponents(style)
     applyStyle(options)
     if (isHidden) {
       hide()

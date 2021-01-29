@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.StyleManagerInterface
-import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
 import com.mapbox.maps.plugin.location.modes.RenderMode
 import kotlin.math.pow
 
@@ -21,9 +20,9 @@ internal class ModelLocationLayerRenderer(
   private var lastAccuracy = 0f
   private var renderMode = RenderMode.NORMAL
 
-  override fun initializeComponents(style: StyleManagerInterface, styleStateDelegate: MapStyleStateDelegate) {
+  override fun initializeComponents(style: StyleManagerInterface) {
     this.style = style
-    source.bindTo(style, styleStateDelegate)
+    source.bindTo(style)
     lastLatLng?.let {
       setLatLng(it)
     }

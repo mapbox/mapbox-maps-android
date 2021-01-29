@@ -3,21 +3,17 @@ package com.mapbox.maps.plugin.location
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.StyleManagerInterface
-import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
 
 internal open class LocationLayerWrapper(val layerId: String) {
 
   protected var layerProperties = HashMap<String, Value>()
   private var mapStyleDelegate: StyleManagerInterface? = null
-  private var stateDelegate: MapStyleStateDelegate? = null
 
   fun bindTo(
     mapStyleDelegate: StyleManagerInterface,
-    styleStateDelegate: MapStyleStateDelegate,
     position: LayerPosition? = null
   ) {
     this.mapStyleDelegate = mapStyleDelegate
-    this.stateDelegate = styleStateDelegate
     val expected = mapStyleDelegate.addStyleLayer(toValue(), position)
     expected.error?.let {
       throw RuntimeException("Add layer failed: $it")
@@ -25,8 +21,8 @@ internal open class LocationLayerWrapper(val layerId: String) {
   }
 
   protected fun updateProperty(propertyName: String, value: Value) {
-    stateDelegate?.let {
-      if (!it.isFullyLoaded()) {
+    mapStyleDelegate?.let {
+      if (it.isStyleFullyLoaded) {
         return
       }
     }

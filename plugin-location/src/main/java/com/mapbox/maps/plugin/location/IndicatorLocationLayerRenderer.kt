@@ -6,7 +6,6 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.addStyleImage
-import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
 import com.mapbox.maps.plugin.location.LocationComponentConstants.*
 import com.mapbox.maps.plugin.location.modes.RenderMode
 import com.mapbox.maps.plugin.location.utils.BitmapUtils
@@ -17,16 +16,14 @@ import java.util.Locale
 internal class IndicatorLocationLayerRenderer(layerSourceProvider: LayerSourceProvider) :
   LocationLayerRenderer {
   private var style: StyleManagerInterface? = null
-  private var styleStateDelegate: MapStyleStateDelegate? = null
   private var layer = layerSourceProvider.getIndicatorLocationLayer()
   private var lastLatLng: Point? = null
   private var lastBearing = 0.0
   private var lastAccuracy = 0f
   private lateinit var locationComponentOptions: LocationComponentOptions
 
-  override fun initializeComponents(style: StyleManagerInterface, styleStateDelegate: MapStyleStateDelegate) {
+  override fun initializeComponents(style: StyleManagerInterface) {
     this.style = style
-    this.styleStateDelegate = styleStateDelegate
     lastLatLng?.let {
       setLatLng(it)
     }

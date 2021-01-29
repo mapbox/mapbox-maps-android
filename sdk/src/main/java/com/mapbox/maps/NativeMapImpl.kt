@@ -244,8 +244,8 @@ internal class NativeMapImpl(private val map: MapInterface) :
     map.setDebug(list, debugActive)
   }
 
-  override fun isFullyLoaded(): Boolean {
-    return map.isFullyLoaded
+  override fun isMapFullyLoaded(): Boolean {
+    return map.isMapFullyLoaded
   }
 
   override fun dumpDebugLogs() {
@@ -305,6 +305,10 @@ internal class NativeMapImpl(private val map: MapInterface) :
 
   override fun getStyleTransition(): TransitionOptions {
     return map.styleTransition
+  }
+
+  override fun isStyleFullyLoaded(): Boolean {
+    return map.isStyleFullyLoaded
   }
 
   override fun setStyleTransition(transitionOptions: TransitionOptions) {
@@ -441,13 +445,13 @@ internal class NativeMapImpl(private val map: MapInterface) :
   }
 
   override fun getFreeCameraOptions(): FreeCameraOptions {
-    return map.getFreeCameraOptions()
+    return map.freeCameraOptions
   }
 
   override fun setFreeCameraOptions(
     options: FreeCameraOptions
   ) {
-    map.setFreeCameraOptions(options)
+    map.freeCameraOptions = options
   }
 
   override fun invalidateStyleCustomGeometrySourceTile(
