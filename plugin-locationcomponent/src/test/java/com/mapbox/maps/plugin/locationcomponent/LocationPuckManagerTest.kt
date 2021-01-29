@@ -77,6 +77,16 @@ class LocationPuckManagerTest {
   }
 
   @Test
+  fun testCleanUp() {
+    locationPuckManager.cleanUp()
+    verify { locationLayerRenderer.hide() }
+    assertTrue(locationPuckManager.isHidden)
+    verify { locationLayerRenderer.hide() }
+    verify { locationLayerRenderer.clearBitmaps() }
+    verify { locationLayerRenderer.removeLayers() }
+  }
+
+  @Test
   fun testIsLayerInitilised() {
     every { locationLayerRenderer.isRendererInitialised() } returns true
     assertTrue(locationPuckManager.isLayerInitialised())
