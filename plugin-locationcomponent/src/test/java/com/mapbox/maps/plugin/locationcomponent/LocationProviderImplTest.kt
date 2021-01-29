@@ -40,6 +40,9 @@ class LocationProviderImplTest {
         any()
       )
     }
+    verify(exactly = 0) {
+      locationEngine.getLastLocation(any())
+    }
   }
 
   @Test
@@ -64,6 +67,9 @@ class LocationProviderImplTest {
       LocationEngineRequest.PRIORITY_HIGH_ACCURACY,
       locationEngineRequestSlot.captured.priority
     )
+    verify(exactly = 1) {
+      locationEngine.getLastLocation(any())
+    }
   }
 
   @Test
@@ -76,6 +82,9 @@ class LocationProviderImplTest {
         any(),
         any()
       )
+    }
+    verify(exactly = 2) {
+      locationEngine.getLastLocation(any())
     }
   }
 

@@ -70,11 +70,13 @@ internal class LocationProviderImpl(context: Context) : LocationProvider, Locati
    *
    * @param locationConsumer
    */
+  @SuppressLint("MissingPermission")
   override fun registerLocationConsumer(locationConsumer: LocationConsumer) {
     if (locationConsumers.isEmpty()) {
       requestLocationUpdates()
     }
     locationConsumers.add(locationConsumer)
+    locationEngine.getLastLocation(this)
   }
 
   /**
