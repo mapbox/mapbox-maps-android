@@ -3,6 +3,7 @@
 package com.mapbox.maps.plugin.annotation.generated
 
 import android.graphics.PointF
+import android.view.View
 import com.mapbox.android.gestures.MoveDistancesObject
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.bindgen.Expected
@@ -21,7 +22,10 @@ import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.addLayerBelow
 import com.mapbox.maps.extension.style.layers.generated.FillLayer
 import com.mapbox.maps.extension.style.sources.addSource
+import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
+import com.mapbox.maps.plugin.annotation.AnnotationConfig
+import com.mapbox.maps.plugin.annotation.ShadowLogger
 import com.mapbox.maps.plugin.annotation.ShadowValueConverter
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate
@@ -41,7 +45,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowValueConverter::class])
+@Config(shadows = [ShadowValueConverter::class, ShadowLogger::class])
 class FillManagerTest {
   private val delegateProvider: MapDelegateProvider = mockk()
   private val style: StyleManagerInterface = mockk()
@@ -49,13 +53,16 @@ class FillManagerTest {
   private val mapFeatureQueryDelegate: MapFeatureQueryDelegate = mockk()
   private val gesturesPlugin: GesturesPlugin = mockk()
   private val layer: FillLayer = mockk()
-
+  private val source: GeoJsonSource = mockk()
+  private val mapView: View = mockk()
+  private lateinit var manager: FillManager
   @Before
   fun setUp() {
     mockkStatic("com.mapbox.maps.extension.style.layers.LayerKt")
     mockkStatic("com.mapbox.maps.extension.style.sources.SourceKt")
     mockkStatic(ValueConverter::class)
-    every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue<Value, String>(
+    every { delegateProvider.mapListenerDelegate.addOnDidFinishRenderingMapListener(any()) } just Runs
+    every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue(
       Value(1)
     )
     val captureCallback = slot<(StyleManagerInterface) -> Unit>()
@@ -69,6 +76,8 @@ class FillManagerTest {
     every { style.addLayer(any()) } just Runs
     every { style.addLayerBelow(any(), any()) } just Runs
     every { style.getSource(any()) } returns null
+    every { style.styleSourceExists(any()) } returns false
+    every { style.styleLayerExists(any()) } returns false
     every { gesturesPlugin.addOnMapClickListener(any()) } just Runs
     every { gesturesPlugin.addOnMapLongClickListener(any()) } just Runs
     every { gesturesPlugin.addOnMoveListener(any()) } just Runs
@@ -80,22 +89,29 @@ class FillManagerTest {
     every { delegateProvider.mapFeatureQueryDelegate } returns mapFeatureQueryDelegate
     every { mapProjectionDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
     every { mapProjectionDelegate.pixelForCoordinate(any()) } returns ScreenCoordinate(1.0, 1.0)
+    every { mapView.scrollX } returns 0
+    every { mapView.scrollY } returns 0
+    every { layer.layerId } returns "layer0"
+    every { source.sourceId } returns "source0"
+    every { source.featureCollection(any()) } answers { source }
+    manager = FillManager(mapView, delegateProvider)
+    manager.layer = layer
+    manager.source = source
     every { layer.fillSortKey(any<Expression>()) } answers { layer }
-    every { layer.fillOpacity(any<Expression>()) } answers { layer }
     every { layer.fillColor(any<Expression>()) } answers { layer }
+    every { layer.fillOpacity(any<Expression>()) } answers { layer }
     every { layer.fillOutlineColor(any<Expression>()) } answers { layer }
     every { layer.fillPattern(any<Expression>()) } answers { layer }
   }
 
   @Test
   fun initialize() {
-    var manager = FillManager(delegateProvider, null, 0, 0)
     verify { gesturesPlugin.addOnMapClickListener(any()) }
     verify { gesturesPlugin.addOnMapLongClickListener(any()) }
     verify { gesturesPlugin.addOnMoveListener(any()) }
     assertEquals(Fill.ID_KEY, manager.getAnnotationIdKey())
     verify { style.addLayer(any()) }
-    manager = FillManager(delegateProvider, "test_layer", 0, 0)
+    manager = FillManager(mapView, delegateProvider, AnnotationConfig("test_layer"))
     verify { style.addLayerBelow(any(), "test_layer") }
 
     manager.addClickListener(mockk())
@@ -115,7 +131,6 @@ class FillManagerTest {
 
   @Test
   fun create() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
     val annotation = manager.create(
       FillOptions()
         .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -125,7 +140,6 @@ class FillManagerTest {
 
   @Test
   fun createFromFeature() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
     val featureCollection =
       FeatureCollection.fromFeature(Feature.fromGeometry(Polygon.fromLngLats(listOf(listOf(Point.fromLngLat(0.0, 0.0))))))
     val annotations = manager.create(featureCollection.toJson())
@@ -136,7 +150,6 @@ class FillManagerTest {
 
   @Test
   fun createList() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
     val list = listOf(
       FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))),
       FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -148,7 +161,6 @@ class FillManagerTest {
 
   @Test
   fun update() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
     val annotation = manager.create(FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))))
     assertEquals(annotation, manager.annotations[0])
     annotation.points = listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))
@@ -158,7 +170,6 @@ class FillManagerTest {
 
   @Test
   fun updateList() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
     val list = listOf(
       FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))),
       FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -175,7 +186,6 @@ class FillManagerTest {
 
   @Test
   fun delete() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
     val annotation = manager.create(
       FillOptions()
         .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -187,7 +197,6 @@ class FillManagerTest {
 
   @Test
   fun deleteList() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
     val list = listOf(
       FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))),
       FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -202,7 +211,6 @@ class FillManagerTest {
 
   @Test
   fun deleteAll() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
     val list = listOf(
       FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))),
       FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -219,7 +227,7 @@ class FillManagerTest {
   fun click() {
     val captureSlot = slot<OnMapClickListener>()
     every { gesturesPlugin.addOnMapClickListener(capture(captureSlot)) } just Runs
-    val manager = FillManager(delegateProvider, null, 0, 0)
+    val manager = FillManager(mapView, delegateProvider)
     val annotation = manager.create(
       FillOptions()
         .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -258,7 +266,7 @@ class FillManagerTest {
   fun longClick() {
     val captureSlot = slot<OnMapLongClickListener>()
     every { gesturesPlugin.addOnMapLongClickListener(capture(captureSlot)) } just Runs
-    val manager = FillManager(delegateProvider, null, 0, 0)
+    val manager = FillManager(mapView, delegateProvider)
 
     val annotation = manager.create(
       FillOptions()
@@ -298,7 +306,7 @@ class FillManagerTest {
   fun drag() {
     val captureSlot = slot<OnMoveListener>()
     every { gesturesPlugin.addOnMoveListener(capture(captureSlot)) } just Runs
-    val manager = FillManager(delegateProvider, null, 0, 0)
+    val manager = FillManager(mapView, delegateProvider)
     manager.onSizeChanged(100, 100)
     val annotation = manager.create(
       FillOptions()
@@ -357,71 +365,66 @@ class FillManagerTest {
 
   @Test
   fun testFillSortKeyLayerProperty() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
-    verify(exactly = 0) { manager.layer.fillSortKey(Expression.get(FillOptions.PROPERTY_FILL_SORT_KEY)) }
+    every { style.styleSourceExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.fillSortKey(Expression.get(FillOptions.PROPERTY_FILL_SORT_KEY)) }
     val options = FillOptions()
       .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
       .withFillSortKey(1.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.fillSortKey(Expression.get(FillOptions.PROPERTY_FILL_SORT_KEY)) }
+    verify(exactly = 1) { manager.layer?.fillSortKey(Expression.get(FillOptions.PROPERTY_FILL_SORT_KEY)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.fillSortKey(Expression.get(FillOptions.PROPERTY_FILL_SORT_KEY)) }
-  }
-
-  @Test
-  fun testFillOpacityLayerProperty() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
-    verify(exactly = 0) { manager.layer.fillOpacity(Expression.get(FillOptions.PROPERTY_FILL_OPACITY)) }
-    val options = FillOptions()
-      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
-      .withFillOpacity(1.0)
-    manager.create(options)
-    verify(exactly = 1) { manager.layer.fillOpacity(Expression.get(FillOptions.PROPERTY_FILL_OPACITY)) }
-    manager.create(options)
-    verify(exactly = 1) { manager.layer.fillOpacity(Expression.get(FillOptions.PROPERTY_FILL_OPACITY)) }
+    verify(exactly = 1) { manager.layer?.fillSortKey(Expression.get(FillOptions.PROPERTY_FILL_SORT_KEY)) }
   }
 
   @Test
   fun testFillColorLayerProperty() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
-    verify(exactly = 0) { manager.layer.fillColor(Expression.get(FillOptions.PROPERTY_FILL_COLOR)) }
+    every { style.styleSourceExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.fillColor(Expression.get(FillOptions.PROPERTY_FILL_COLOR)) }
     val options = FillOptions()
       .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
       .withFillColor("rgba(0, 0, 0, 1)")
     manager.create(options)
-    verify(exactly = 1) { manager.layer.fillColor(Expression.get(FillOptions.PROPERTY_FILL_COLOR)) }
+    verify(exactly = 1) { manager.layer?.fillColor(Expression.get(FillOptions.PROPERTY_FILL_COLOR)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.fillColor(Expression.get(FillOptions.PROPERTY_FILL_COLOR)) }
+    verify(exactly = 1) { manager.layer?.fillColor(Expression.get(FillOptions.PROPERTY_FILL_COLOR)) }
+  }
+
+  @Test
+  fun testFillOpacityLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.fillOpacity(Expression.get(FillOptions.PROPERTY_FILL_OPACITY)) }
+    val options = FillOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+      .withFillOpacity(1.0)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.fillOpacity(Expression.get(FillOptions.PROPERTY_FILL_OPACITY)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.fillOpacity(Expression.get(FillOptions.PROPERTY_FILL_OPACITY)) }
   }
 
   @Test
   fun testFillOutlineColorLayerProperty() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
-    verify(exactly = 0) { manager.layer.fillOutlineColor(Expression.get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
+    every { style.styleSourceExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.fillOutlineColor(Expression.get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
     val options = FillOptions()
       .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
       .withFillOutlineColor("rgba(0, 0, 0, 1)")
     manager.create(options)
-    verify(exactly = 1) { manager.layer.fillOutlineColor(Expression.get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
+    verify(exactly = 1) { manager.layer?.fillOutlineColor(Expression.get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.fillOutlineColor(Expression.get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
+    verify(exactly = 1) { manager.layer?.fillOutlineColor(Expression.get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
   }
 
   @Test
   fun testFillPatternLayerProperty() {
-    val manager = FillManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
-    verify(exactly = 0) { manager.layer.fillPattern(Expression.get(FillOptions.PROPERTY_FILL_PATTERN)) }
+    every { style.styleSourceExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.fillPattern(Expression.get(FillOptions.PROPERTY_FILL_PATTERN)) }
     val options = FillOptions()
       .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
       .withFillPattern("pedestrian-polygon")
     manager.create(options)
-    verify(exactly = 1) { manager.layer.fillPattern(Expression.get(FillOptions.PROPERTY_FILL_PATTERN)) }
+    verify(exactly = 1) { manager.layer?.fillPattern(Expression.get(FillOptions.PROPERTY_FILL_PATTERN)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.fillPattern(Expression.get(FillOptions.PROPERTY_FILL_PATTERN)) }
+    verify(exactly = 1) { manager.layer?.fillPattern(Expression.get(FillOptions.PROPERTY_FILL_PATTERN)) }
   }
 }

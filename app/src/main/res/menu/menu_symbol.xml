@@ -1,60 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
-            android:id="@+id/menu_action_draggable"
-            android:title="@string/toggle_draggable_state"
-            app:showAsAction="never"/>
+        android:id="@+id/menu_action_draggable"
+        android:title="@string/toggle_draggable_state"
+        app:showAsAction="never" />
     <item
-            android:id="@+id/menu_action_icon"
-            android:title="@string/change_icon_to_coffee"
-            app:showAsAction="never"/>
+        android:id="@+id/menu_action_icon"
+        android:title="@string/change_icon_to_coffee"
+        app:showAsAction="never" />
     <item
-            android:id="@+id/menu_action_rotation"
-            android:title="@string/set_icon_rotation_to_45"
-            app:showAsAction="never"/>
+        android:id="@+id/menu_action_rotation"
+        android:title="@string/set_icon_rotation_to_45"
+        app:showAsAction="never" />
     <item
-            android:id="@+id/menu_action_anchor"
-            android:title="@string/set_icon_anchor_bottom"
-            app:showAsAction="never"/>
+        android:id="@+id/menu_action_anchor"
+        android:title="@string/set_icon_anchor_bottom"
+        app:showAsAction="never" />
     <item
-            android:id="@+id/menu_action_opacity"
-            android:title="@string/set_icon_opacity_to_0_5f"
-            app:showAsAction="never"/>
+        android:id="@+id/menu_action_opacity"
+        android:title="@string/set_icon_opacity_to_0_5f"
+        app:showAsAction="never" />
     <item
-            android:id="@+id/menu_action_offset"
-            android:title="@string/offset_icon_by_10_20"
-            app:showAsAction="never"/>
+        android:id="@+id/menu_action_offset"
+        android:title="@string/offset_icon_by_10_20"
+        app:showAsAction="never" />
     <item
-            android:id="@+id/menu_action_text"
-            android:title="@string/add_text"
-            app:showAsAction="never"/>
+        android:id="@+id/menu_action_text"
+        android:title="@string/add_text"
+        app:showAsAction="never" />
     <item
-            android:id="@+id/menu_action_text_color"
-            android:title="@string/set_text_color_to_white"
-            app:showAsAction="never"/>
+        android:id="@+id/menu_action_text_color"
+        android:title="@string/set_text_color_to_white"
+        app:showAsAction="never" />
     <item
-            android:id="@+id/menu_action_text_size"
-            android:title="@string/set_text_size"
-            app:showAsAction="never"/>
+        android:id="@+id/menu_action_text_size"
+        android:title="@string/set_text_size"
+        app:showAsAction="never" />
     <item
-            android:id="@+id/menu_action_text_anchor"
-            android:title="@string/set_text_anchor_top"
-            app:showAsAction="never"/>
+        android:id="@+id/menu_action_text_anchor"
+        android:title="@string/set_text_anchor_top"
+        app:showAsAction="never" />
     <item
-            android:id="@+id/menu_action_z_index"
-            android:title="@string/change_z_index"
-            app:showAsAction="never"/>
+        android:id="@+id/menu_action_z_index"
+        android:title="@string/change_z_index"
+        app:showAsAction="never" />
     <item
-            android:id="@+id/menu_action_halo"
-            android:title="@string/add_icon_halo"
-            app:showAsAction="never"/>
+        android:id="@+id/menu_action_halo"
+        android:title="@string/add_icon_halo"
+        app:showAsAction="never" />
     <item
-            android:id="@+id/menu_action_filter"
-            android:title="@string/filter"
-            app:showAsAction="never"/>
+        android:id="@+id/menu_action_filter"
+        android:title="@string/filter"
+        app:showAsAction="never" />
     <item
-            android:id="@+id/menu_action_animate"
-            android:title="@string/animate_symbol"
-            app:showAsAction="never"/>
+        android:id="@+id/menu_action_animate"
+        android:title="@string/animate_symbol"
+        app:showAsAction="never" />
 </menu>

@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.plugin.annotation.generated
 
+import android.view.View
 import com.mapbox.geojson.*
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
@@ -9,6 +10,7 @@ import com.mapbox.maps.extension.style.layers.generated.FillLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
+import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationManagerImpl
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.AnnotationType
@@ -19,24 +21,20 @@ import java.util.concurrent.atomic.AtomicLong
  * The fill manager allows to add fills to a map.
  */
 class FillManager(
+  mapView: View,
   delegateProvider: MapDelegateProvider,
-  belowLayerId: String?,
-  touchAreaShiftX: Int,
-  touchAreaShiftY: Int
+  annotationConfig: AnnotationConfig? = null
 ) :
   AnnotationManagerImpl<Polygon, Fill, FillOptions, OnFillDragListener, OnFillClickListener, OnFillLongClickListener, FillLayer>(
-    delegateProvider,
-    belowLayerId,
-    touchAreaShiftX,
-    touchAreaShiftY
+    mapView, delegateProvider, annotationConfig
   ) {
   private val layerId: String
   private val sourceId: String
 
   init {
     val id = ID_GENERATOR.incrementAndGet()
-    layerId = "mapbox-android-fill-layer-$id"
-    sourceId = "mapbox-android-fill-source-$id"
+    layerId = annotationConfig?.layerId ?: "mapbox-android-fill-layer-$id"
+    sourceId = annotationConfig?.sourceId ?: "mapbox-android-fill-source-$id"
     delegateProvider.getStyle {
       style = it
       initLayerAndSource()
@@ -45,19 +43,19 @@ class FillManager(
 
   override fun initializeDataDrivenPropertyMap() {
     dataDrivenPropertyUsageMap[FillOptions.PROPERTY_FILL_SORT_KEY] = false
-    dataDrivenPropertyUsageMap[FillOptions.PROPERTY_FILL_OPACITY] = false
     dataDrivenPropertyUsageMap[FillOptions.PROPERTY_FILL_COLOR] = false
+    dataDrivenPropertyUsageMap[FillOptions.PROPERTY_FILL_OPACITY] = false
     dataDrivenPropertyUsageMap[FillOptions.PROPERTY_FILL_OUTLINE_COLOR] = false
     dataDrivenPropertyUsageMap[FillOptions.PROPERTY_FILL_PATTERN] = false
   }
 
   override fun setDataDrivenPropertyIsUsed(property: String) {
     when (property) {
-      FillOptions.PROPERTY_FILL_SORT_KEY -> layer.fillSortKey(get(FillOptions.PROPERTY_FILL_SORT_KEY))
-      FillOptions.PROPERTY_FILL_OPACITY -> layer.fillOpacity(get(FillOptions.PROPERTY_FILL_OPACITY))
-      FillOptions.PROPERTY_FILL_COLOR -> layer.fillColor(get(FillOptions.PROPERTY_FILL_COLOR))
-      FillOptions.PROPERTY_FILL_OUTLINE_COLOR -> layer.fillOutlineColor(get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR))
-      FillOptions.PROPERTY_FILL_PATTERN -> layer.fillPattern(get(FillOptions.PROPERTY_FILL_PATTERN))
+      FillOptions.PROPERTY_FILL_SORT_KEY -> layer?.fillSortKey(get(FillOptions.PROPERTY_FILL_SORT_KEY))
+      FillOptions.PROPERTY_FILL_COLOR -> layer?.fillColor(get(FillOptions.PROPERTY_FILL_COLOR))
+      FillOptions.PROPERTY_FILL_OPACITY -> layer?.fillOpacity(get(FillOptions.PROPERTY_FILL_OPACITY))
+      FillOptions.PROPERTY_FILL_OUTLINE_COLOR -> layer?.fillOutlineColor(get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR))
+      FillOptions.PROPERTY_FILL_PATTERN -> layer?.fillPattern(get(FillOptions.PROPERTY_FILL_PATTERN))
     }
   }
 
@@ -68,8 +66,8 @@ class FillManager(
    * <p>
    * All supported properties are:<br>
    * FillOptions.PROPERTY_FILL_SORT_KEY - Double<br>
-   * FillOptions.PROPERTY_FILL_OPACITY - Double<br>
    * FillOptions.PROPERTY_FILL_COLOR - String<br>
+   * FillOptions.PROPERTY_FILL_OPACITY - Double<br>
    * FillOptions.PROPERTY_FILL_OUTLINE_COLOR - String<br>
    * FillOptions.PROPERTY_FILL_PATTERN - String<br>
    * Learn more about above properties in the <a href="https://www.mapbox.com/mapbox-gl-js/style-spec/">Style specification</a>.
@@ -91,8 +89,8 @@ class FillManager(
    * <p>
    * All supported properties are:<br>
    * FillOptions.PROPERTY_FILL_SORT_KEY - Double<br>
-   * FillOptions.PROPERTY_FILL_OPACITY - Double<br>
    * FillOptions.PROPERTY_FILL_COLOR - String<br>
+   * FillOptions.PROPERTY_FILL_OPACITY - Double<br>
    * FillOptions.PROPERTY_FILL_OUTLINE_COLOR - String<br>
    * FillOptions.PROPERTY_FILL_PATTERN - String<br>
    * Learn more about above properties in the <a href="https://www.mapbox.com/mapbox-gl-js/style-spec/">Style specification</a>.
@@ -135,7 +133,7 @@ class FillManager(
      * @return property wrapper value around Boolean
      */
     get(): Boolean? {
-      return layer.fillAntialias
+      return layer?.fillAntialias
     }
     /**
      * Set the FillAntialias property
@@ -143,7 +141,7 @@ class FillManager(
      */
     set(value) {
       value?.let {
-        layer.fillAntialias(it)
+        layer?.fillAntialias(it)
       }
     }
 
@@ -159,7 +157,7 @@ class FillManager(
      * @return property wrapper value around List<Double>
      */
     get(): List<Double>? {
-      return layer.fillTranslate
+      return layer?.fillTranslate
     }
     /**
      * Set the FillTranslate property
@@ -167,7 +165,7 @@ class FillManager(
      */
     set(value) {
       value?.let {
-        layer.fillTranslate(it)
+        layer?.fillTranslate(it)
       }
     }
 
@@ -183,7 +181,7 @@ class FillManager(
      * @return property wrapper value around FillTranslateAnchor
      */
     get(): FillTranslateAnchor? {
-      return layer.fillTranslateAnchor
+      return layer?.fillTranslateAnchor
     }
     /**
      * Set the FillTranslateAnchor property
@@ -191,7 +189,7 @@ class FillManager(
      */
     set(value) {
       value?.let {
-        layer.fillTranslateAnchor(it)
+        layer?.fillTranslateAnchor(it)
       }
     }
 
@@ -201,7 +199,7 @@ class FillManager(
    * @return the GeoJsonSource created
    */
   override fun createSource(): GeoJsonSource {
-    return geoJsonSource(sourceId) {}
+    return geoJsonSource(sourceId) { data("") }
   }
 
   /**
@@ -224,14 +222,14 @@ class FillManager(
      *
      * @return expression
      */
-    get() = layer.filter
+    get() = layer?.filter
     /**
      * Set filter on the managed fills.
      *
      * @param expression expression
      */
     set(value) {
-      value?.let { layer.filter(it) }
+      value?.let { layer?.filter(it) }
     }
 
   /**
@@ -240,15 +238,6 @@ class FillManager(
   companion object {
     /** The generator for id */
     var ID_GENERATOR = AtomicLong(0)
-
-    /** The property for fill-antialias */
-    private val PROPERTY_FILL_ANTIALIAS = "fill-antialias"
-
-    /** The property for fill-translate */
-    private val PROPERTY_FILL_TRANSLATE = "fill-translate"
-
-    /** The property for fill-translate-anchor */
-    private val PROPERTY_FILL_TRANSLATE_ANCHOR = "fill-translate-anchor"
   }
 }
 
@@ -256,14 +245,8 @@ class FillManager(
  * Extension function to get FillManager instance
  */
 fun AnnotationPlugin.getFillManager(
-  belowLayerId: String? = null,
-  touchAreaShiftX: Int = 0,
-  touchAreaShiftY: Int = 0
+  mapView: View,
+  annotationConfig: AnnotationConfig? = null
 ): FillManager {
-  return getAnnotationManager(
-    AnnotationType.Fill,
-    belowLayerId,
-    touchAreaShiftX,
-    touchAreaShiftY
-  ) as FillManager
+  return getAnnotationManager(mapView, AnnotationType.Fill, annotationConfig) as FillManager
 }

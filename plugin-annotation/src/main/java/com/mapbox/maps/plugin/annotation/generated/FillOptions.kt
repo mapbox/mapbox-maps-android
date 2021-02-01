@@ -37,24 +37,6 @@ class FillOptions : AnnotationOptions<Polygon, Fill> {
   }
 
   /**
-   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
-   */
-  var fillOpacity: Double = 1.0
-
-  /**
-   * Set fill-opacity to initialise the fill with.
-   * <p>
-   * The opacity of the entire fill layer. In contrast to the {@link PropertyFactory#fillColor}, this value will also affect the 1px stroke around the fill, if the stroke is used.
-   * </p>
-   * @param fillOpacity the fill-opacity value
-   * @return this
-   */
-  fun withFillOpacity(fillOpacity: Double): FillOptions {
-    this.fillOpacity = fillOpacity
-    return this
-  }
-
-  /**
    * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
    */
   var fillColor: String = "rgba(0, 0, 0, 1)"
@@ -69,6 +51,24 @@ class FillOptions : AnnotationOptions<Polygon, Fill> {
    */
   fun withFillColor(fillColor: String): FillOptions {
     this.fillColor = fillColor
+    return this
+  }
+
+  /**
+   * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
+   */
+  var fillOpacity: Double = 1.0
+
+  /**
+   * Set fill-opacity to initialise the fill with.
+   * <p>
+   * The opacity of the entire fill layer. In contrast to the {@link PropertyFactory#fillColor}, this value will also affect the 1px stroke around the fill, if the stroke is used.
+   * </p>
+   * @param fillOpacity the fill-opacity value
+   * @return this
+   */
+  fun withFillOpacity(fillOpacity: Double): FillOptions {
+    this.fillOpacity = fillOpacity
     return this
   }
 
@@ -204,8 +204,8 @@ class FillOptions : AnnotationOptions<Polygon, Fill> {
     }
     val jsonObject = JsonObject()
     jsonObject.addProperty(PROPERTY_FILL_SORT_KEY, fillSortKey)
-    jsonObject.addProperty(PROPERTY_FILL_OPACITY, fillOpacity)
     jsonObject.addProperty(PROPERTY_FILL_COLOR, fillColor)
+    jsonObject.addProperty(PROPERTY_FILL_OPACITY, fillOpacity)
     jsonObject.addProperty(PROPERTY_FILL_OUTLINE_COLOR, fillOutlineColor)
     jsonObject.addProperty(PROPERTY_FILL_PATTERN, fillPattern)
     val fill = Fill(id, annotationManager, jsonObject, geometry!!)
@@ -222,11 +222,11 @@ class FillOptions : AnnotationOptions<Polygon, Fill> {
     /** The property for fill-sort-key */
     const val PROPERTY_FILL_SORT_KEY = "fill-sort-key"
 
-    /** The property for fill-opacity */
-    const val PROPERTY_FILL_OPACITY = "fill-opacity"
-
     /** The property for fill-color */
     const val PROPERTY_FILL_COLOR = "fill-color"
+
+    /** The property for fill-opacity */
+    const val PROPERTY_FILL_OPACITY = "fill-opacity"
 
     /** The property for fill-outline-color */
     const val PROPERTY_FILL_OUTLINE_COLOR = "fill-outline-color"
@@ -255,11 +255,11 @@ class FillOptions : AnnotationOptions<Polygon, Fill> {
       if (feature.hasProperty(PROPERTY_FILL_SORT_KEY)) {
         options.fillSortKey = feature.getProperty(PROPERTY_FILL_SORT_KEY).asDouble
       }
-      if (feature.hasProperty(PROPERTY_FILL_OPACITY)) {
-        options.fillOpacity = feature.getProperty(PROPERTY_FILL_OPACITY).asDouble
-      }
       if (feature.hasProperty(PROPERTY_FILL_COLOR)) {
         options.fillColor = feature.getProperty(PROPERTY_FILL_COLOR).asString
+      }
+      if (feature.hasProperty(PROPERTY_FILL_OPACITY)) {
+        options.fillOpacity = feature.getProperty(PROPERTY_FILL_OPACITY).asDouble
       }
       if (feature.hasProperty(PROPERTY_FILL_OUTLINE_COLOR)) {
         options.fillOutlineColor = feature.getProperty(PROPERTY_FILL_OUTLINE_COLOR).asString

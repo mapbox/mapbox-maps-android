@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.plugin.annotation.generated
 
+import android.view.View
 import com.mapbox.geojson.*
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
@@ -9,6 +10,7 @@ import com.mapbox.maps.extension.style.layers.generated.LineLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
+import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationManagerImpl
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.AnnotationType
@@ -19,24 +21,20 @@ import java.util.concurrent.atomic.AtomicLong
  * The line manager allows to add lines to a map.
  */
 class LineManager(
+  mapView: View,
   delegateProvider: MapDelegateProvider,
-  belowLayerId: String?,
-  touchAreaShiftX: Int,
-  touchAreaShiftY: Int
+  annotationConfig: AnnotationConfig? = null
 ) :
   AnnotationManagerImpl<LineString, Line, LineOptions, OnLineDragListener, OnLineClickListener, OnLineLongClickListener, LineLayer>(
-    delegateProvider,
-    belowLayerId,
-    touchAreaShiftX,
-    touchAreaShiftY
+    mapView, delegateProvider, annotationConfig
   ) {
   private val layerId: String
   private val sourceId: String
 
   init {
     val id = ID_GENERATOR.incrementAndGet()
-    layerId = "mapbox-android-line-layer-$id"
-    sourceId = "mapbox-android-line-source-$id"
+    layerId = annotationConfig?.layerId ?: "mapbox-android-fill-layer-$id"
+    sourceId = annotationConfig?.sourceId ?: "mapbox-android-fill-source-$id"
     delegateProvider.getStyle {
       style = it
       initLayerAndSource()
@@ -46,26 +44,26 @@ class LineManager(
   override fun initializeDataDrivenPropertyMap() {
     dataDrivenPropertyUsageMap[LineOptions.PROPERTY_LINE_JOIN] = false
     dataDrivenPropertyUsageMap[LineOptions.PROPERTY_LINE_SORT_KEY] = false
-    dataDrivenPropertyUsageMap[LineOptions.PROPERTY_LINE_OPACITY] = false
+    dataDrivenPropertyUsageMap[LineOptions.PROPERTY_LINE_BLUR] = false
     dataDrivenPropertyUsageMap[LineOptions.PROPERTY_LINE_COLOR] = false
-    dataDrivenPropertyUsageMap[LineOptions.PROPERTY_LINE_WIDTH] = false
     dataDrivenPropertyUsageMap[LineOptions.PROPERTY_LINE_GAP_WIDTH] = false
     dataDrivenPropertyUsageMap[LineOptions.PROPERTY_LINE_OFFSET] = false
-    dataDrivenPropertyUsageMap[LineOptions.PROPERTY_LINE_BLUR] = false
+    dataDrivenPropertyUsageMap[LineOptions.PROPERTY_LINE_OPACITY] = false
     dataDrivenPropertyUsageMap[LineOptions.PROPERTY_LINE_PATTERN] = false
+    dataDrivenPropertyUsageMap[LineOptions.PROPERTY_LINE_WIDTH] = false
   }
 
   override fun setDataDrivenPropertyIsUsed(property: String) {
     when (property) {
-      LineOptions.PROPERTY_LINE_JOIN -> layer.lineJoin(get(LineOptions.PROPERTY_LINE_JOIN))
-      LineOptions.PROPERTY_LINE_SORT_KEY -> layer.lineSortKey(get(LineOptions.PROPERTY_LINE_SORT_KEY))
-      LineOptions.PROPERTY_LINE_OPACITY -> layer.lineOpacity(get(LineOptions.PROPERTY_LINE_OPACITY))
-      LineOptions.PROPERTY_LINE_COLOR -> layer.lineColor(get(LineOptions.PROPERTY_LINE_COLOR))
-      LineOptions.PROPERTY_LINE_WIDTH -> layer.lineWidth(get(LineOptions.PROPERTY_LINE_WIDTH))
-      LineOptions.PROPERTY_LINE_GAP_WIDTH -> layer.lineGapWidth(get(LineOptions.PROPERTY_LINE_GAP_WIDTH))
-      LineOptions.PROPERTY_LINE_OFFSET -> layer.lineOffset(get(LineOptions.PROPERTY_LINE_OFFSET))
-      LineOptions.PROPERTY_LINE_BLUR -> layer.lineBlur(get(LineOptions.PROPERTY_LINE_BLUR))
-      LineOptions.PROPERTY_LINE_PATTERN -> layer.linePattern(get(LineOptions.PROPERTY_LINE_PATTERN))
+      LineOptions.PROPERTY_LINE_JOIN -> layer?.lineJoin(get(LineOptions.PROPERTY_LINE_JOIN))
+      LineOptions.PROPERTY_LINE_SORT_KEY -> layer?.lineSortKey(get(LineOptions.PROPERTY_LINE_SORT_KEY))
+      LineOptions.PROPERTY_LINE_BLUR -> layer?.lineBlur(get(LineOptions.PROPERTY_LINE_BLUR))
+      LineOptions.PROPERTY_LINE_COLOR -> layer?.lineColor(get(LineOptions.PROPERTY_LINE_COLOR))
+      LineOptions.PROPERTY_LINE_GAP_WIDTH -> layer?.lineGapWidth(get(LineOptions.PROPERTY_LINE_GAP_WIDTH))
+      LineOptions.PROPERTY_LINE_OFFSET -> layer?.lineOffset(get(LineOptions.PROPERTY_LINE_OFFSET))
+      LineOptions.PROPERTY_LINE_OPACITY -> layer?.lineOpacity(get(LineOptions.PROPERTY_LINE_OPACITY))
+      LineOptions.PROPERTY_LINE_PATTERN -> layer?.linePattern(get(LineOptions.PROPERTY_LINE_PATTERN))
+      LineOptions.PROPERTY_LINE_WIDTH -> layer?.lineWidth(get(LineOptions.PROPERTY_LINE_WIDTH))
     }
   }
 
@@ -77,13 +75,13 @@ class LineManager(
    * All supported properties are:<br>
    * LineOptions.PROPERTY_LINE_JOIN - LineJoin<br>
    * LineOptions.PROPERTY_LINE_SORT_KEY - Double<br>
-   * LineOptions.PROPERTY_LINE_OPACITY - Double<br>
+   * LineOptions.PROPERTY_LINE_BLUR - Double<br>
    * LineOptions.PROPERTY_LINE_COLOR - String<br>
-   * LineOptions.PROPERTY_LINE_WIDTH - Double<br>
    * LineOptions.PROPERTY_LINE_GAP_WIDTH - Double<br>
    * LineOptions.PROPERTY_LINE_OFFSET - Double<br>
-   * LineOptions.PROPERTY_LINE_BLUR - Double<br>
+   * LineOptions.PROPERTY_LINE_OPACITY - Double<br>
    * LineOptions.PROPERTY_LINE_PATTERN - String<br>
+   * LineOptions.PROPERTY_LINE_WIDTH - Double<br>
    * Learn more about above properties in the <a href="https://www.mapbox.com/mapbox-gl-js/style-spec/">Style specification</a>.
    * <p>
    * Out of spec properties:<br>
@@ -104,13 +102,13 @@ class LineManager(
    * All supported properties are:<br>
    * LineOptions.PROPERTY_LINE_JOIN - LineJoin<br>
    * LineOptions.PROPERTY_LINE_SORT_KEY - Double<br>
-   * LineOptions.PROPERTY_LINE_OPACITY - Double<br>
+   * LineOptions.PROPERTY_LINE_BLUR - Double<br>
    * LineOptions.PROPERTY_LINE_COLOR - String<br>
-   * LineOptions.PROPERTY_LINE_WIDTH - Double<br>
    * LineOptions.PROPERTY_LINE_GAP_WIDTH - Double<br>
    * LineOptions.PROPERTY_LINE_OFFSET - Double<br>
-   * LineOptions.PROPERTY_LINE_BLUR - Double<br>
+   * LineOptions.PROPERTY_LINE_OPACITY - Double<br>
    * LineOptions.PROPERTY_LINE_PATTERN - String<br>
+   * LineOptions.PROPERTY_LINE_WIDTH - Double<br>
    * Learn more about above properties in the <a href="https://www.mapbox.com/mapbox-gl-js/style-spec/">Style specification</a>.
    * <p>
    * Out of spec properties:<br>
@@ -151,7 +149,7 @@ class LineManager(
      * @return property wrapper value around LineCap
      */
     get(): LineCap? {
-      return layer.lineCap
+      return layer?.lineCap
     }
     /**
      * Set the LineCap property
@@ -159,7 +157,7 @@ class LineManager(
      */
     set(value) {
       value?.let {
-        layer.lineCap(it)
+        layer?.lineCap(it)
       }
     }
 
@@ -175,7 +173,7 @@ class LineManager(
      * @return property wrapper value around Double
      */
     get(): Double? {
-      return layer.lineMiterLimit
+      return layer?.lineMiterLimit
     }
     /**
      * Set the LineMiterLimit property
@@ -183,7 +181,7 @@ class LineManager(
      */
     set(value) {
       value?.let {
-        layer.lineMiterLimit(it)
+        layer?.lineMiterLimit(it)
       }
     }
 
@@ -199,7 +197,7 @@ class LineManager(
      * @return property wrapper value around Double
      */
     get(): Double? {
-      return layer.lineRoundLimit
+      return layer?.lineRoundLimit
     }
     /**
      * Set the LineRoundLimit property
@@ -207,55 +205,7 @@ class LineManager(
      */
     set(value) {
       value?.let {
-        layer.lineRoundLimit(it)
-      }
-    }
-
-  /**
-   * The LineTranslate property
-   * <p>
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
-   */
-  var lineTranslate: List<Double>?
-    /**
-     * Get the LineTranslate property
-     *
-     * @return property wrapper value around List<Double>
-     */
-    get(): List<Double>? {
-      return layer.lineTranslate
-    }
-    /**
-     * Set the LineTranslate property
-     * @param value property wrapper value around List<Double>
-     */
-    set(value) {
-      value?.let {
-        layer.lineTranslate(it)
-      }
-    }
-
-  /**
-   * The LineTranslateAnchor property
-   * <p>
-   * Controls the frame of reference for {@link PropertyFactory#lineTranslate}.
-   */
-  var lineTranslateAnchor: LineTranslateAnchor?
-    /**
-     * Get the LineTranslateAnchor property
-     *
-     * @return property wrapper value around LineTranslateAnchor
-     */
-    get(): LineTranslateAnchor? {
-      return layer.lineTranslateAnchor
-    }
-    /**
-     * Set the LineTranslateAnchor property
-     * @param value property wrapper value around LineTranslateAnchor
-     */
-    set(value) {
-      value?.let {
-        layer.lineTranslateAnchor(it)
+        layer?.lineRoundLimit(it)
       }
     }
 
@@ -271,7 +221,7 @@ class LineManager(
      * @return property wrapper value around List<Double>
      */
     get(): List<Double>? {
-      return layer.lineDasharray
+      return layer?.lineDasharray
     }
     /**
      * Set the LineDasharray property
@@ -279,7 +229,55 @@ class LineManager(
      */
     set(value) {
       value?.let {
-        layer.lineDasharray(it)
+        layer?.lineDasharray(it)
+      }
+    }
+
+  /**
+   * The LineTranslate property
+   * <p>
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   */
+  var lineTranslate: List<Double>?
+    /**
+     * Get the LineTranslate property
+     *
+     * @return property wrapper value around List<Double>
+     */
+    get(): List<Double>? {
+      return layer?.lineTranslate
+    }
+    /**
+     * Set the LineTranslate property
+     * @param value property wrapper value around List<Double>
+     */
+    set(value) {
+      value?.let {
+        layer?.lineTranslate(it)
+      }
+    }
+
+  /**
+   * The LineTranslateAnchor property
+   * <p>
+   * Controls the frame of reference for {@link PropertyFactory#lineTranslate}.
+   */
+  var lineTranslateAnchor: LineTranslateAnchor?
+    /**
+     * Get the LineTranslateAnchor property
+     *
+     * @return property wrapper value around LineTranslateAnchor
+     */
+    get(): LineTranslateAnchor? {
+      return layer?.lineTranslateAnchor
+    }
+    /**
+     * Set the LineTranslateAnchor property
+     * @param value property wrapper value around LineTranslateAnchor
+     */
+    set(value) {
+      value?.let {
+        layer?.lineTranslateAnchor(it)
       }
     }
 
@@ -289,7 +287,7 @@ class LineManager(
    * @return the GeoJsonSource created
    */
   override fun createSource(): GeoJsonSource {
-    return geoJsonSource(sourceId) {}
+    return geoJsonSource(sourceId) { data("") }
   }
 
   /**
@@ -312,14 +310,14 @@ class LineManager(
      *
      * @return expression
      */
-    get() = layer.filter
+    get() = layer?.filter
     /**
      * Set filter on the managed lines.
      *
      * @param expression expression
      */
     set(value) {
-      value?.let { layer.filter(it) }
+      value?.let { layer?.filter(it) }
     }
 
   /**
@@ -328,24 +326,6 @@ class LineManager(
   companion object {
     /** The generator for id */
     var ID_GENERATOR = AtomicLong(0)
-
-    /** The property for line-cap */
-    private val PROPERTY_LINE_CAP = "line-cap"
-
-    /** The property for line-miter-limit */
-    private val PROPERTY_LINE_MITER_LIMIT = "line-miter-limit"
-
-    /** The property for line-round-limit */
-    private val PROPERTY_LINE_ROUND_LIMIT = "line-round-limit"
-
-    /** The property for line-translate */
-    private val PROPERTY_LINE_TRANSLATE = "line-translate"
-
-    /** The property for line-translate-anchor */
-    private val PROPERTY_LINE_TRANSLATE_ANCHOR = "line-translate-anchor"
-
-    /** The property for line-dasharray */
-    private val PROPERTY_LINE_DASHARRAY = "line-dasharray"
   }
 }
 
@@ -353,14 +333,8 @@ class LineManager(
  * Extension function to get LineManager instance
  */
 fun AnnotationPlugin.getLineManager(
-  belowLayerId: String? = null,
-  touchAreaShiftX: Int = 0,
-  touchAreaShiftY: Int = 0
+  mapView: View,
+  annotationConfig: AnnotationConfig? = null
 ): LineManager {
-  return getAnnotationManager(
-    AnnotationType.Line,
-    belowLayerId,
-    touchAreaShiftX,
-    touchAreaShiftY
-  ) as LineManager
+  return getAnnotationManager(mapView, AnnotationType.Line, annotationConfig) as LineManager
 }

@@ -1,6 +1,7 @@
 package com.mapbox.maps.testapp.examples.annotation
 
 import android.animation.ValueAnimator
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
@@ -11,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
-import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.eq
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
@@ -25,41 +25,43 @@ import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
 import com.mapbox.maps.plugin.location.utils.BitmapUtils
 import com.mapbox.maps.testapp.R
-import com.mapbox.maps.testapp.utils.Assets
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.mapView
 import kotlinx.android.synthetic.main.activity_annotation.*
-import java.io.IOException
 import java.util.*
 
 /**
  * Example showing how to add Symbol annotations
  */
 class SymbolActivity : AppCompatActivity() {
-  private val random = Random()
   private var symbolManager: SymbolManager? = null
   private var symbol: Symbol? = null
   private val animators: MutableList<ValueAnimator> = mutableListOf()
+  private var airportImage: Bitmap? = null
+  private var index: Int = 0
+  private val nextStyle: String
+    get() {
+      return AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]
+    }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_annotation)
-    mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) { style ->
-      BitmapUtils.getBitmapFromDrawable(
-        ResourcesCompat.getDrawable(
-          resources,
-          R.drawable.ic_airplanemode_active_black_24dp,
-          this@SymbolActivity.theme
-        )
-      )?.let {
-        style.addImage(
-          ID_ICON_AIRPORT,
-          it, true
-        )
+    airportImage = BitmapUtils.getBitmapFromDrawable(
+      ResourcesCompat.getDrawable(
+        resources,
+        R.drawable.ic_airplanemode_active_black_24dp,
+        this@SymbolActivity.theme
+      )
+    )
+
+    mapView.getMapboxMap().loadStyleUri(nextStyle) { style ->
+      airportImage?.let {
+        style.addImage(ID_ICON_AIRPORT, it, true)
       }
 
       val annotationPlugin = mapView.getAnnotationPlugin()
-      symbolManager = annotationPlugin.getSymbolManager().apply {
+      symbolManager = annotationPlugin.getSymbolManager(mapView).apply {
         addClickListener(
           OnSymbolClickListener {
             Toast.makeText(this@SymbolActivity, "Click: $it", Toast.LENGTH_LONG).show()
@@ -80,7 +82,7 @@ class SymbolActivity : AppCompatActivity() {
 
         // create a symbol
         val symbolOptions: SymbolOptions = SymbolOptions()
-          .withPoint(Point.fromLngLat(0.381457, 6.687337))
+          .withPoint(Point.fromLngLat(AIRPORT_LONGITUDE, AIRPORT_LATITUDE))
           .withIconImage(ID_ICON_AIRPORT)
           .withIconSize(1.3)
           .withSymbolSortKey(10.0)
@@ -89,7 +91,7 @@ class SymbolActivity : AppCompatActivity() {
 
         // create nearby symbols
         val nearbyOptions: SymbolOptions = SymbolOptions()
-          .withPoint(Point.fromLngLat(0.367099, 6.626384))
+          .withPoint(Point.fromLngLat(NEARBY_LONGITUDE, NEARBY_LATITUDE))
           .withIconImage(MAKI_ICON_CIRCLE)
           .withIconColor(ColorUtils.colorToRgbaString(Color.YELLOW))
           .withIconSize(2.5)
@@ -102,29 +104,30 @@ class SymbolActivity : AppCompatActivity() {
         for (i in 0..20) {
           symbolOptionsList.add(
             SymbolOptions()
-              .withPoint(createRandomPoints())
+              .withPoint(AnnotationUtils.createRandomPoint())
               .withIconImage(MAKI_ICON_CAR)
               .withDraggable(true)
           )
         }
         create(symbolOptionsList)
 
-        try {
-          create(
-            FeatureCollection.fromJson(
-              Assets.loadStringFromAssets(
-                this@SymbolActivity,
-                "annotations.json"
-              )
-            )
-          )
-        } catch (e: IOException) {
-          throw RuntimeException("Unable to parse annotations.json")
+        AnnotationUtils.loadStringFromAssets(
+          this@SymbolActivity,
+          "annotations.json"
+        )?.let {
+          create(FeatureCollection.fromJson(it))
         }
       }
     }
 
     deleteAll.setOnClickListener { symbolManager?.deleteAll() }
+    changeStyle.setOnClickListener {
+      mapView.getMapboxMap().loadStyleUri(nextStyle) { style ->
+        airportImage?.let { bitMap ->
+          style.addImage(ID_ICON_AIRPORT, bitMap, true)
+        }
+      }
+    }
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -169,7 +172,7 @@ class SymbolActivity : AppCompatActivity() {
 
       R.id.menu_action_animate -> {
         resetSymbol()
-        symbol?.let { easeSymbol(it, Point.fromLngLat(6.687337, 0.381457), 180.0) }
+        symbol?.let { easeSymbol(it, Point.fromLngLat(AIRPORT_LATITUDE, AIRPORT_LONGITUDE)) }
         return true
       }
       else -> return super.onOptionsItemSelected(item)
@@ -180,11 +183,11 @@ class SymbolActivity : AppCompatActivity() {
 
   private fun resetSymbol() {
     symbol?.iconRotate = 0.0
-    symbol?.geometry = Point.fromLngLat(0.381457, 6.687337)
+    symbol?.geometry = Point.fromLngLat(AIRPORT_LONGITUDE, AIRPORT_LATITUDE)
     symbol?.let { symbolManager?.update(it) }
   }
 
-  private fun easeSymbol(symbol: Symbol, location: Point, rotation: Double) {
+  private fun easeSymbol(symbol: Symbol, location: Point, rotation: Double = 180.0) {
     val originalPosition: Point = symbol.point
     val originalRotation = symbol.iconRotate
     if (originalPosition == location || originalRotation == rotation) {
@@ -236,17 +239,14 @@ class SymbolActivity : AppCompatActivity() {
     mapView.onDestroy()
   }
 
-  private fun createRandomPoints(): Point {
-    return Point.fromLngLat(
-      random.nextDouble() * -360.0 + 180.0,
-      random.nextDouble() * -180.0 + 90.0
-    )
-  }
-
   companion object {
     private const val ID_ICON_AIRPORT = "airport"
     private const val MAKI_ICON_CAR = "car-15"
     private const val MAKI_ICON_CAFE = "cafe-15"
     private const val MAKI_ICON_CIRCLE = "fire-station-15"
+    private const val AIRPORT_LONGITUDE = 0.381457
+    private const val AIRPORT_LATITUDE = 6.687337
+    private const val NEARBY_LONGITUDE = 0.367099
+    private const val NEARBY_LATITUDE = 6.526384
   }
 }

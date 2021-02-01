@@ -7,5 +7,5 @@ fun interface QueryAnnotationCallback<T> {
   /**
    * Get the queried annotation
    */
-  fun onQueryAnnotation(annotations: T?)
+  fun onQueryAnnotation(annotations: T)
 }

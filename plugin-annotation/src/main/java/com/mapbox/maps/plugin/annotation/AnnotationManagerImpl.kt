@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.annotation
 
 import android.graphics.PointF
+import android.view.View
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Feature
@@ -15,9 +16,9 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.Layer
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.addLayerBelow
+import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
-import com.mapbox.maps.extension.style.sources.getSource
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.PLUGIN_GESTURE_CLASS_NAME
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
@@ -34,21 +35,18 @@ import java.util.*
  * Base class for annotation managers
  */
 abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : AnnotationOptions<G, T>, D : OnAnnotationDragListener<T>, U : OnAnnotationClickListener<T>, V : OnAnnotationLongClickListener<T>, L : Layer>(
+  mapView: View,
   /** The delegateProvider */
   final override val delegateProvider: MapDelegateProvider,
-  private val belowLayerId: String?,
-  private val touchAreaShiftX: Int,
-  private val touchAreaShiftY: Int
+  private val annotationConfig: AnnotationConfig?
 ) : AnnotationManager<G, T, S, D, U, V> {
   protected lateinit var style: StyleManagerInterface
   private var mapProjectionDelegate: MapProjectionDelegate = delegateProvider.mapProjectionDelegate
   private var mapFeatureQueryDelegate: MapFeatureQueryDelegate =
     delegateProvider.mapFeatureQueryDelegate
   private var styleStateDelegate: MapStyleStateDelegate = delegateProvider.styleStateDelegate
-  internal lateinit var layer: L
-  protected lateinit var source: GeoJsonSource
   protected val dataDrivenPropertyUsageMap: MutableMap<String, Boolean> = HashMap()
-
+  protected val constantPropertyUsageMap = mutableListOf<PropertyValue<*>>()
   private var currentId = 0L
   private var width = 0
   private var height = 0
@@ -56,6 +54,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   private val mapLongClickResolver = MapLongClick()
   private val mapMoveResolver = MapMove()
   private var draggedAnnotation: T? = null
+  protected var touchAreaShiftX: Int = mapView.scrollX
+  protected var touchAreaShiftY: Int = mapView.scrollY
 
   private var gesturesPlugin: GesturesPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
     Class.forName(
@@ -67,13 +67,19 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         "is it available on the clazz path and loaded through the map?"
     )
 
+  /** The layer created by this manger. Annotations will be added to this layer.*/
+  internal var layer: L? = null
+
+  /** The source created by this manger. Feature data will bed added to this source.*/
+  internal var source: GeoJsonSource? = null
+
   /**
    * The added annotations
    */
   override val annotations = mutableMapOf<Long, T>()
 
   /**
-   * The added dragListensers
+   * The added dragListeners
    */
   override val dragListeners = mutableListOf<D>()
 
@@ -91,6 +97,12 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     gesturesPlugin.addOnMapClickListener(mapClickResolver)
     gesturesPlugin.addOnMapLongClickListener(mapLongClickResolver)
     gesturesPlugin.addOnMoveListener(mapMoveResolver)
+    delegateProvider.mapListenerDelegate.addOnDidFinishRenderingMapListener {
+      delegateProvider.getStyle {
+        style = it
+        initLayerAndSource()
+      }
+    }
   }
 
   /**
@@ -105,14 +117,14 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    *
    * @return the GeoJsonSource created
    */
-  abstract fun createSource(): GeoJsonSource
+  protected abstract fun createSource(): GeoJsonSource
 
   /**
    * Create the layer for managed annotations
    *
    * @return the layer created
    */
-  abstract fun createLayer(): L
+  protected abstract fun createLayer(): L
 
   /**
    * Set filter on the managed annotations.
@@ -120,14 +132,27 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   abstract var layerFilter: Expression?
 
   protected fun initLayerAndSource() {
-    initializeDataDrivenPropertyMap()
-    source = createSource()
-    layer = createLayer()
-    if (belowLayerId == null) {
-      style.addLayer(layer)
-    } else {
-      style.addLayerBelow(layer, belowLayerId)
+    if (layer == null || source == null) {
+      initializeDataDrivenPropertyMap()
+      source = createSource()
+      layer = createLayer()
     }
+
+    source?.let {
+      if (!style.styleSourceExists(it.sourceId)) {
+        style.addSource(it)
+      }
+    }
+    layer?.let {
+      if (!style.styleLayerExists(it.layerId)) {
+        if (annotationConfig?.belowLayerId == null) {
+          style.addLayer(it)
+        } else {
+          style.addLayerBelow(it, annotationConfig.belowLayerId)
+        }
+      }
+    }
+
     updateSource()
   }
 
@@ -186,14 +211,22 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Trigger an update to the underlying source
    */
   private fun updateSource() {
-    val features = annotations.map {
-      val annotation = Feature.fromGeometry(it.value.geometry, it.value.jsonObject)
-      it.value.setUsedDataDrivenProperties()
-      annotation
+    if (!styleStateDelegate.isFullyLoaded()) {
+      Logger.e(TAG, "Can't update source: style is not fully loaded.")
+      return
     }
-    source.featureCollection(FeatureCollection.fromFeatures(features))
-    if (style.getSource(source.sourceId) == null) {
-      style.addSource(source)
+    source?.let {
+      if (!style.styleSourceExists(it.sourceId)) {
+        Logger.e(TAG, "Can't update source: source has not been added to style.")
+        return
+      }
+      val features = annotations.map {
+        val annotation = Feature.fromGeometry(it.value.geometry, it.value.jsonObject)
+        it.value.setUsedDataDrivenProperties()
+        annotation
+      }
+
+      it.featureCollection(FeatureCollection.fromFeatures(features))
     }
   }
 
@@ -257,10 +290,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         return false
       }
       queryMapForFeatures(point) {
-        it?.let {
-          clickListeners.forEach { listener ->
-            listener.onAnnotationClick(it)
-          }
+        clickListeners.forEach { listener ->
+          listener.onAnnotationClick(it)
         }
       }
       return false
@@ -283,10 +314,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         return false
       }
       queryMapForFeatures(point) {
-        it?.let {
-          longClickListeners.forEach { listener ->
-            listener.onAnnotationLongClick(it)
-          }
+        longClickListeners.forEach { listener ->
+          listener.onAnnotationLongClick(it)
         }
       }
       return false
@@ -308,9 +337,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
             detector.focalPoint.y.toDouble()
           )
         ) {
-          it?.let {
-            startDragging(it)
-          }
+          startDragging(it)
         }
       }
     }
@@ -321,7 +348,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     override fun onMove(detector: MoveGestureDetector): Boolean {
       if (draggedAnnotation != null && (detector.pointersCount > 1 || !draggedAnnotation!!.isDraggable)) {
         // Stopping the drag when we don't work with a simple, on-pointer move anymore
-        stopDragging(draggedAnnotation)
+        stopDragging()
         return true
       }
 
@@ -332,7 +359,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         val y = moveObject.currentY - touchAreaShiftY
         val pointF = PointF(x, y)
         if (pointF.x < 0 || pointF.y < 0 || pointF.x > width || pointF.y > height) {
-          stopDragging(draggedAnnotation)
+          stopDragging()
           return true
         }
         val shiftedGeometry: G? = delegateProvider.let {
@@ -357,7 +384,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
      */
     override fun onMoveEnd(detector: MoveGestureDetector) {
       // Stopping the drag when move ends
-      stopDragging(draggedAnnotation)
+      stopDragging()
     }
 
     private fun startDragging(annotation: T): Boolean {
@@ -369,8 +396,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
       return false
     }
 
-    private fun stopDragging(annotation: T?) {
-      if (annotation != null) {
+    private fun stopDragging() {
+      draggedAnnotation?.let { annotation ->
         dragListeners.forEach { it.onAnnotationDragFinished(annotation) }
       }
       draggedAnnotation = null
@@ -428,19 +455,19 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     screenCoordinate: ScreenCoordinate,
     callback: QueryAnnotationCallback<T>
   ) {
-    mapFeatureQueryDelegate.queryRenderedFeatures(
-      screenCoordinate,
-      RenderedQueryOptions(
-        listOf(
-          layer.layerId
-        ),
-        literal(true)
-      )
-    ) { features ->
-      features.value?.let { featureList ->
-        if (featureList.isNotEmpty()) {
-          val id = featureList.first().getProperty(getAnnotationIdKey()).asLong
-          callback.onQueryAnnotation(annotations[id])
+    layer?.let {
+      mapFeatureQueryDelegate.queryRenderedFeatures(
+        screenCoordinate,
+        RenderedQueryOptions(
+          listOf(it.layerId),
+          literal(true)
+        )
+      ) { features ->
+        features.value?.let { featureList ->
+          if (featureList.isNotEmpty()) {
+            val id = featureList.first().getProperty(getAnnotationIdKey()).asLong
+            annotations[id]?.let { annotation -> callback.onQueryAnnotation(annotation) }
+          }
         }
       }
     }

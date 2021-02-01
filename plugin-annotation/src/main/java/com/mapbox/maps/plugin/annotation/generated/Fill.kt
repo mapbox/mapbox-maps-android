@@ -86,39 +86,6 @@ class Fill(
     }
 
   /**
-   * The fillOpacity property
-   * <p>
-   * The opacity of the entire fill layer. In contrast to the {@link PropertyFactory#fillColor}, this value will also affect the 1px stroke around the fill, if the stroke is used.
-   * </p>
-   */
-  var fillOpacity: Double?
-    /**
-     * Get the fillOpacity property
-     *
-     * @return property wrapper value around Double
-     */
-    get() {
-      val value = jsonObject.get(FillOptions.PROPERTY_FILL_OPACITY)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
-      }
-      return null
-    }
-    /**
-     * Set the fillOpacity property
-     * <p>
-     * To update the fill on the map use {@link fillManager#update(Annotation)}.
-     * <p>
-     *
-     * @param value constant property value for Double
-     */
-    set(value) {
-      value?.let {
-        jsonObject.addProperty(FillOptions.PROPERTY_FILL_OPACITY, it)
-      }
-    }
-
-  /**
    * The fillColor property in Int
    * <p>
    * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
@@ -183,6 +150,39 @@ class Fill(
      */
     set(value) {
       jsonObject.addProperty("fill-color", value)
+    }
+
+  /**
+   * The fillOpacity property
+   * <p>
+   * The opacity of the entire fill layer. In contrast to the {@link PropertyFactory#fillColor}, this value will also affect the 1px stroke around the fill, if the stroke is used.
+   * </p>
+   */
+  var fillOpacity: Double?
+    /**
+     * Get the fillOpacity property
+     *
+     * @return property wrapper value around Double
+     */
+    get() {
+      val value = jsonObject.get(FillOptions.PROPERTY_FILL_OPACITY)
+      if (!value.isJsonNull) {
+        return value.asString.toDouble()
+      }
+      return null
+    }
+    /**
+     * Set the fillOpacity property
+     * <p>
+     * To update the fill on the map use {@link fillManager#update(Annotation)}.
+     * <p>
+     *
+     * @param value constant property value for Double
+     */
+    set(value) {
+      value?.let {
+        jsonObject.addProperty(FillOptions.PROPERTY_FILL_OPACITY, it)
+      }
     }
 
   /**
@@ -321,11 +321,11 @@ class Fill(
     if (!(jsonObject.get(FillOptions.PROPERTY_FILL_SORT_KEY).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(FillOptions.PROPERTY_FILL_SORT_KEY)
     }
-    if (!(jsonObject.get(FillOptions.PROPERTY_FILL_OPACITY).isJsonNull)) {
-      annotationManager.enableDataDrivenProperty(FillOptions.PROPERTY_FILL_OPACITY)
-    }
     if (!(jsonObject.get(FillOptions.PROPERTY_FILL_COLOR).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(FillOptions.PROPERTY_FILL_COLOR)
+    }
+    if (!(jsonObject.get(FillOptions.PROPERTY_FILL_OPACITY).isJsonNull)) {
+      annotationManager.enableDataDrivenProperty(FillOptions.PROPERTY_FILL_OPACITY)
     }
     if (!(jsonObject.get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(FillOptions.PROPERTY_FILL_OUTLINE_COLOR)

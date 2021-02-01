@@ -36,20 +36,20 @@ class CircleOptions : AnnotationOptions<Point, Circle> {
   }
 
   /**
-   * Circle radius.
+   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity.
    */
-  var circleRadius: Double = 5.0
+  var circleBlur: Double = 0.0
 
   /**
-   * Set circle-radius to initialise the circle with.
+   * Set circle-blur to initialise the circle with.
    * <p>
-   * Circle radius.
+   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity.
    * </p>
-   * @param circleRadius the circle-radius value
+   * @param circleBlur the circle-blur value
    * @return this
    */
-  fun withCircleRadius(circleRadius: Double): CircleOptions {
-    this.circleRadius = circleRadius
+  fun withCircleBlur(circleBlur: Double): CircleOptions {
+    this.circleBlur = circleBlur
     return this
   }
 
@@ -72,24 +72,6 @@ class CircleOptions : AnnotationOptions<Point, Circle> {
   }
 
   /**
-   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity.
-   */
-  var circleBlur: Double = 0.0
-
-  /**
-   * Set circle-blur to initialise the circle with.
-   * <p>
-   * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity.
-   * </p>
-   * @param circleBlur the circle-blur value
-   * @return this
-   */
-  fun withCircleBlur(circleBlur: Double): CircleOptions {
-    this.circleBlur = circleBlur
-    return this
-  }
-
-  /**
    * The opacity at which the circle will be drawn.
    */
   var circleOpacity: Double = 1.0
@@ -108,20 +90,20 @@ class CircleOptions : AnnotationOptions<Point, Circle> {
   }
 
   /**
-   * The width of the circle's stroke. Strokes are placed outside of the `circle-radius`.
+   * Circle radius.
    */
-  var circleStrokeWidth: Double = 0.0
+  var circleRadius: Double = 5.0
 
   /**
-   * Set circle-stroke-width to initialise the circle with.
+   * Set circle-radius to initialise the circle with.
    * <p>
-   * The width of the circle's stroke. Strokes are placed outside of the {@link PropertyFactory#circleRadius}.
+   * Circle radius.
    * </p>
-   * @param circleStrokeWidth the circle-stroke-width value
+   * @param circleRadius the circle-radius value
    * @return this
    */
-  fun withCircleStrokeWidth(circleStrokeWidth: Double): CircleOptions {
-    this.circleStrokeWidth = circleStrokeWidth
+  fun withCircleRadius(circleRadius: Double): CircleOptions {
+    this.circleRadius = circleRadius
     return this
   }
 
@@ -158,6 +140,24 @@ class CircleOptions : AnnotationOptions<Point, Circle> {
    */
   fun withCircleStrokeOpacity(circleStrokeOpacity: Double): CircleOptions {
     this.circleStrokeOpacity = circleStrokeOpacity
+    return this
+  }
+
+  /**
+   * The width of the circle's stroke. Strokes are placed outside of the `circle-radius`.
+   */
+  var circleStrokeWidth: Double = 0.0
+
+  /**
+   * Set circle-stroke-width to initialise the circle with.
+   * <p>
+   * The width of the circle's stroke. Strokes are placed outside of the {@link PropertyFactory#circleRadius}.
+   * </p>
+   * @param circleStrokeWidth the circle-stroke-width value
+   * @return this
+   */
+  fun withCircleStrokeWidth(circleStrokeWidth: Double): CircleOptions {
+    this.circleStrokeWidth = circleStrokeWidth
     return this
   }
 
@@ -257,13 +257,13 @@ class CircleOptions : AnnotationOptions<Point, Circle> {
     }
     val jsonObject = JsonObject()
     jsonObject.addProperty(PROPERTY_CIRCLE_SORT_KEY, circleSortKey)
-    jsonObject.addProperty(PROPERTY_CIRCLE_RADIUS, circleRadius)
-    jsonObject.addProperty(PROPERTY_CIRCLE_COLOR, circleColor)
     jsonObject.addProperty(PROPERTY_CIRCLE_BLUR, circleBlur)
+    jsonObject.addProperty(PROPERTY_CIRCLE_COLOR, circleColor)
     jsonObject.addProperty(PROPERTY_CIRCLE_OPACITY, circleOpacity)
-    jsonObject.addProperty(PROPERTY_CIRCLE_STROKE_WIDTH, circleStrokeWidth)
+    jsonObject.addProperty(PROPERTY_CIRCLE_RADIUS, circleRadius)
     jsonObject.addProperty(PROPERTY_CIRCLE_STROKE_COLOR, circleStrokeColor)
     jsonObject.addProperty(PROPERTY_CIRCLE_STROKE_OPACITY, circleStrokeOpacity)
+    jsonObject.addProperty(PROPERTY_CIRCLE_STROKE_WIDTH, circleStrokeWidth)
     val circle = Circle(id, annotationManager, jsonObject, geometry!!)
     circle.isDraggable = isDraggable
     circle.setData(data)
@@ -278,26 +278,26 @@ class CircleOptions : AnnotationOptions<Point, Circle> {
     /** The property for circle-sort-key */
     const val PROPERTY_CIRCLE_SORT_KEY = "circle-sort-key"
 
-    /** The property for circle-radius */
-    const val PROPERTY_CIRCLE_RADIUS = "circle-radius"
+    /** The property for circle-blur */
+    const val PROPERTY_CIRCLE_BLUR = "circle-blur"
 
     /** The property for circle-color */
     const val PROPERTY_CIRCLE_COLOR = "circle-color"
 
-    /** The property for circle-blur */
-    const val PROPERTY_CIRCLE_BLUR = "circle-blur"
-
     /** The property for circle-opacity */
     const val PROPERTY_CIRCLE_OPACITY = "circle-opacity"
 
-    /** The property for circle-stroke-width */
-    const val PROPERTY_CIRCLE_STROKE_WIDTH = "circle-stroke-width"
+    /** The property for circle-radius */
+    const val PROPERTY_CIRCLE_RADIUS = "circle-radius"
 
     /** The property for circle-stroke-color */
     const val PROPERTY_CIRCLE_STROKE_COLOR = "circle-stroke-color"
 
     /** The property for circle-stroke-opacity */
     const val PROPERTY_CIRCLE_STROKE_OPACITY = "circle-stroke-opacity"
+
+    /** The property for circle-stroke-width */
+    const val PROPERTY_CIRCLE_STROKE_WIDTH = "circle-stroke-width"
 
     /** The property for is-draggable */
     private const val PROPERTY_IS_DRAGGABLE = "is-draggable"
@@ -321,26 +321,26 @@ class CircleOptions : AnnotationOptions<Point, Circle> {
       if (feature.hasProperty(PROPERTY_CIRCLE_SORT_KEY)) {
         options.circleSortKey = feature.getProperty(PROPERTY_CIRCLE_SORT_KEY).asDouble
       }
-      if (feature.hasProperty(PROPERTY_CIRCLE_RADIUS)) {
-        options.circleRadius = feature.getProperty(PROPERTY_CIRCLE_RADIUS).asDouble
+      if (feature.hasProperty(PROPERTY_CIRCLE_BLUR)) {
+        options.circleBlur = feature.getProperty(PROPERTY_CIRCLE_BLUR).asDouble
       }
       if (feature.hasProperty(PROPERTY_CIRCLE_COLOR)) {
         options.circleColor = feature.getProperty(PROPERTY_CIRCLE_COLOR).asString
       }
-      if (feature.hasProperty(PROPERTY_CIRCLE_BLUR)) {
-        options.circleBlur = feature.getProperty(PROPERTY_CIRCLE_BLUR).asDouble
-      }
       if (feature.hasProperty(PROPERTY_CIRCLE_OPACITY)) {
         options.circleOpacity = feature.getProperty(PROPERTY_CIRCLE_OPACITY).asDouble
       }
-      if (feature.hasProperty(PROPERTY_CIRCLE_STROKE_WIDTH)) {
-        options.circleStrokeWidth = feature.getProperty(PROPERTY_CIRCLE_STROKE_WIDTH).asDouble
+      if (feature.hasProperty(PROPERTY_CIRCLE_RADIUS)) {
+        options.circleRadius = feature.getProperty(PROPERTY_CIRCLE_RADIUS).asDouble
       }
       if (feature.hasProperty(PROPERTY_CIRCLE_STROKE_COLOR)) {
         options.circleStrokeColor = feature.getProperty(PROPERTY_CIRCLE_STROKE_COLOR).asString
       }
       if (feature.hasProperty(PROPERTY_CIRCLE_STROKE_OPACITY)) {
         options.circleStrokeOpacity = feature.getProperty(PROPERTY_CIRCLE_STROKE_OPACITY).asDouble
+      }
+      if (feature.hasProperty(PROPERTY_CIRCLE_STROKE_WIDTH)) {
+        options.circleStrokeWidth = feature.getProperty(PROPERTY_CIRCLE_STROKE_WIDTH).asDouble
       }
       if (feature.hasProperty(PROPERTY_IS_DRAGGABLE)) {
         options.isDraggable = feature.getProperty(PROPERTY_IS_DRAGGABLE).asBoolean

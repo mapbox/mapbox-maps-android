@@ -3,6 +3,7 @@
 package com.mapbox.maps.plugin.annotation.generated
 
 import android.graphics.PointF
+import android.view.View
 import com.mapbox.android.gestures.MoveDistancesObject
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.bindgen.Expected
@@ -20,7 +21,10 @@ import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.addLayerBelow
 import com.mapbox.maps.extension.style.layers.generated.CircleLayer
 import com.mapbox.maps.extension.style.sources.addSource
+import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
+import com.mapbox.maps.plugin.annotation.AnnotationConfig
+import com.mapbox.maps.plugin.annotation.ShadowLogger
 import com.mapbox.maps.plugin.annotation.ShadowValueConverter
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate
@@ -40,7 +44,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowValueConverter::class])
+@Config(shadows = [ShadowValueConverter::class, ShadowLogger::class])
 class CircleManagerTest {
   private val delegateProvider: MapDelegateProvider = mockk()
   private val style: StyleManagerInterface = mockk()
@@ -48,13 +52,16 @@ class CircleManagerTest {
   private val mapFeatureQueryDelegate: MapFeatureQueryDelegate = mockk()
   private val gesturesPlugin: GesturesPlugin = mockk()
   private val layer: CircleLayer = mockk()
-
+  private val source: GeoJsonSource = mockk()
+  private val mapView: View = mockk()
+  private lateinit var manager: CircleManager
   @Before
   fun setUp() {
     mockkStatic("com.mapbox.maps.extension.style.layers.LayerKt")
     mockkStatic("com.mapbox.maps.extension.style.sources.SourceKt")
     mockkStatic(ValueConverter::class)
-    every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue<Value, String>(
+    every { delegateProvider.mapListenerDelegate.addOnDidFinishRenderingMapListener(any()) } just Runs
+    every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue(
       Value(1)
     )
     val captureCallback = slot<(StyleManagerInterface) -> Unit>()
@@ -68,6 +75,8 @@ class CircleManagerTest {
     every { style.addLayer(any()) } just Runs
     every { style.addLayerBelow(any(), any()) } just Runs
     every { style.getSource(any()) } returns null
+    every { style.styleSourceExists(any()) } returns false
+    every { style.styleLayerExists(any()) } returns false
     every { gesturesPlugin.addOnMapClickListener(any()) } just Runs
     every { gesturesPlugin.addOnMapLongClickListener(any()) } just Runs
     every { gesturesPlugin.addOnMoveListener(any()) } just Runs
@@ -79,25 +88,32 @@ class CircleManagerTest {
     every { delegateProvider.mapFeatureQueryDelegate } returns mapFeatureQueryDelegate
     every { mapProjectionDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
     every { mapProjectionDelegate.pixelForCoordinate(any()) } returns ScreenCoordinate(1.0, 1.0)
+    every { mapView.scrollX } returns 0
+    every { mapView.scrollY } returns 0
+    every { layer.layerId } returns "layer0"
+    every { source.sourceId } returns "source0"
+    every { source.featureCollection(any()) } answers { source }
+    manager = CircleManager(mapView, delegateProvider)
+    manager.layer = layer
+    manager.source = source
     every { layer.circleSortKey(any<Expression>()) } answers { layer }
-    every { layer.circleRadius(any<Expression>()) } answers { layer }
-    every { layer.circleColor(any<Expression>()) } answers { layer }
     every { layer.circleBlur(any<Expression>()) } answers { layer }
+    every { layer.circleColor(any<Expression>()) } answers { layer }
     every { layer.circleOpacity(any<Expression>()) } answers { layer }
-    every { layer.circleStrokeWidth(any<Expression>()) } answers { layer }
+    every { layer.circleRadius(any<Expression>()) } answers { layer }
     every { layer.circleStrokeColor(any<Expression>()) } answers { layer }
     every { layer.circleStrokeOpacity(any<Expression>()) } answers { layer }
+    every { layer.circleStrokeWidth(any<Expression>()) } answers { layer }
   }
 
   @Test
   fun initialize() {
-    var manager = CircleManager(delegateProvider, null, 0, 0)
     verify { gesturesPlugin.addOnMapClickListener(any()) }
     verify { gesturesPlugin.addOnMapLongClickListener(any()) }
     verify { gesturesPlugin.addOnMoveListener(any()) }
     assertEquals(Circle.ID_KEY, manager.getAnnotationIdKey())
     verify { style.addLayer(any()) }
-    manager = CircleManager(delegateProvider, "test_layer", 0, 0)
+    manager = CircleManager(mapView, delegateProvider, AnnotationConfig("test_layer"))
     verify { style.addLayerBelow(any(), "test_layer") }
 
     manager.addClickListener(mockk())
@@ -117,7 +133,6 @@ class CircleManagerTest {
 
   @Test
   fun create() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
     val annotation = manager.create(
       CircleOptions()
         .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -127,7 +142,6 @@ class CircleManagerTest {
 
   @Test
   fun createFromFeature() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
     val featureCollection =
       FeatureCollection.fromFeature(Feature.fromGeometry(Point.fromLngLat(0.0, 0.0)))
     val annotations = manager.create(featureCollection.toJson())
@@ -138,7 +152,6 @@ class CircleManagerTest {
 
   @Test
   fun createList() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
     val list = listOf(
       CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0)),
       CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0))
@@ -150,7 +163,6 @@ class CircleManagerTest {
 
   @Test
   fun update() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
     val annotation = manager.create(CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0)))
     assertEquals(annotation, manager.annotations[0])
     annotation.point = Point.fromLngLat(1.0, 1.0)
@@ -160,7 +172,6 @@ class CircleManagerTest {
 
   @Test
   fun updateList() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
     val list = listOf(
       CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0)),
       CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0))
@@ -177,7 +188,6 @@ class CircleManagerTest {
 
   @Test
   fun delete() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
     val annotation = manager.create(
       CircleOptions()
         .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -189,7 +199,6 @@ class CircleManagerTest {
 
   @Test
   fun deleteList() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
     val list = listOf(
       CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0)),
       CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0))
@@ -204,7 +213,6 @@ class CircleManagerTest {
 
   @Test
   fun deleteAll() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
     val list = listOf(
       CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0)),
       CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0))
@@ -221,7 +229,7 @@ class CircleManagerTest {
   fun click() {
     val captureSlot = slot<OnMapClickListener>()
     every { gesturesPlugin.addOnMapClickListener(capture(captureSlot)) } just Runs
-    val manager = CircleManager(delegateProvider, null, 0, 0)
+    val manager = CircleManager(mapView, delegateProvider)
     val annotation = manager.create(
       CircleOptions()
         .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -260,7 +268,7 @@ class CircleManagerTest {
   fun longClick() {
     val captureSlot = slot<OnMapLongClickListener>()
     every { gesturesPlugin.addOnMapLongClickListener(capture(captureSlot)) } just Runs
-    val manager = CircleManager(delegateProvider, null, 0, 0)
+    val manager = CircleManager(mapView, delegateProvider)
 
     val annotation = manager.create(
       CircleOptions()
@@ -300,7 +308,7 @@ class CircleManagerTest {
   fun drag() {
     val captureSlot = slot<OnMoveListener>()
     every { gesturesPlugin.addOnMoveListener(capture(captureSlot)) } just Runs
-    val manager = CircleManager(delegateProvider, null, 0, 0)
+    val manager = CircleManager(mapView, delegateProvider)
     manager.onSizeChanged(100, 100)
     val annotation = manager.create(
       CircleOptions()
@@ -359,113 +367,105 @@ class CircleManagerTest {
 
   @Test
   fun testCircleSortKeyLayerProperty() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
-    verify(exactly = 0) { manager.layer.circleSortKey(Expression.get(CircleOptions.PROPERTY_CIRCLE_SORT_KEY)) }
+    every { style.styleSourceExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.circleSortKey(Expression.get(CircleOptions.PROPERTY_CIRCLE_SORT_KEY)) }
     val options = CircleOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withCircleSortKey(1.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleSortKey(Expression.get(CircleOptions.PROPERTY_CIRCLE_SORT_KEY)) }
+    verify(exactly = 1) { manager.layer?.circleSortKey(Expression.get(CircleOptions.PROPERTY_CIRCLE_SORT_KEY)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleSortKey(Expression.get(CircleOptions.PROPERTY_CIRCLE_SORT_KEY)) }
-  }
-
-  @Test
-  fun testCircleRadiusLayerProperty() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
-    verify(exactly = 0) { manager.layer.circleRadius(Expression.get(CircleOptions.PROPERTY_CIRCLE_RADIUS)) }
-    val options = CircleOptions()
-      .withPoint(Point.fromLngLat(0.0, 0.0))
-      .withCircleRadius(5.0)
-    manager.create(options)
-    verify(exactly = 1) { manager.layer.circleRadius(Expression.get(CircleOptions.PROPERTY_CIRCLE_RADIUS)) }
-    manager.create(options)
-    verify(exactly = 1) { manager.layer.circleRadius(Expression.get(CircleOptions.PROPERTY_CIRCLE_RADIUS)) }
-  }
-
-  @Test
-  fun testCircleColorLayerProperty() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
-    verify(exactly = 0) { manager.layer.circleColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_COLOR)) }
-    val options = CircleOptions()
-      .withPoint(Point.fromLngLat(0.0, 0.0))
-      .withCircleColor("rgba(0, 0, 0, 1)")
-    manager.create(options)
-    verify(exactly = 1) { manager.layer.circleColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_COLOR)) }
-    manager.create(options)
-    verify(exactly = 1) { manager.layer.circleColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_COLOR)) }
+    verify(exactly = 1) { manager.layer?.circleSortKey(Expression.get(CircleOptions.PROPERTY_CIRCLE_SORT_KEY)) }
   }
 
   @Test
   fun testCircleBlurLayerProperty() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
-    verify(exactly = 0) { manager.layer.circleBlur(Expression.get(CircleOptions.PROPERTY_CIRCLE_BLUR)) }
+    every { style.styleSourceExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.circleBlur(Expression.get(CircleOptions.PROPERTY_CIRCLE_BLUR)) }
     val options = CircleOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withCircleBlur(0.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleBlur(Expression.get(CircleOptions.PROPERTY_CIRCLE_BLUR)) }
+    verify(exactly = 1) { manager.layer?.circleBlur(Expression.get(CircleOptions.PROPERTY_CIRCLE_BLUR)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleBlur(Expression.get(CircleOptions.PROPERTY_CIRCLE_BLUR)) }
+    verify(exactly = 1) { manager.layer?.circleBlur(Expression.get(CircleOptions.PROPERTY_CIRCLE_BLUR)) }
+  }
+
+  @Test
+  fun testCircleColorLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.circleColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_COLOR)) }
+    val options = CircleOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+      .withCircleColor("rgba(0, 0, 0, 1)")
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.circleColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_COLOR)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.circleColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_COLOR)) }
   }
 
   @Test
   fun testCircleOpacityLayerProperty() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
-    verify(exactly = 0) { manager.layer.circleOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_OPACITY)) }
+    every { style.styleSourceExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.circleOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_OPACITY)) }
     val options = CircleOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withCircleOpacity(1.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_OPACITY)) }
+    verify(exactly = 1) { manager.layer?.circleOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_OPACITY)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_OPACITY)) }
+    verify(exactly = 1) { manager.layer?.circleOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_OPACITY)) }
   }
 
   @Test
-  fun testCircleStrokeWidthLayerProperty() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
-    verify(exactly = 0) { manager.layer.circleStrokeWidth(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
+  fun testCircleRadiusLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.circleRadius(Expression.get(CircleOptions.PROPERTY_CIRCLE_RADIUS)) }
     val options = CircleOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
-      .withCircleStrokeWidth(0.0)
+      .withCircleRadius(5.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleStrokeWidth(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
+    verify(exactly = 1) { manager.layer?.circleRadius(Expression.get(CircleOptions.PROPERTY_CIRCLE_RADIUS)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleStrokeWidth(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
+    verify(exactly = 1) { manager.layer?.circleRadius(Expression.get(CircleOptions.PROPERTY_CIRCLE_RADIUS)) }
   }
 
   @Test
   fun testCircleStrokeColorLayerProperty() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
-    verify(exactly = 0) { manager.layer.circleStrokeColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
+    every { style.styleSourceExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.circleStrokeColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
     val options = CircleOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withCircleStrokeColor("rgba(0, 0, 0, 1)")
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleStrokeColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
+    verify(exactly = 1) { manager.layer?.circleStrokeColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleStrokeColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
+    verify(exactly = 1) { manager.layer?.circleStrokeColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
   }
 
   @Test
   fun testCircleStrokeOpacityLayerProperty() {
-    val manager = CircleManager(delegateProvider, null, 0, 0)
-    manager.layer = layer
-    verify(exactly = 0) { manager.layer.circleStrokeOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY)) }
+    every { style.styleSourceExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.circleStrokeOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY)) }
     val options = CircleOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
       .withCircleStrokeOpacity(1.0)
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleStrokeOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY)) }
+    verify(exactly = 1) { manager.layer?.circleStrokeOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY)) }
     manager.create(options)
-    verify(exactly = 1) { manager.layer.circleStrokeOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY)) }
+    verify(exactly = 1) { manager.layer?.circleStrokeOpacity(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY)) }
+  }
+
+  @Test
+  fun testCircleStrokeWidthLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.circleStrokeWidth(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
+    val options = CircleOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+      .withCircleStrokeWidth(0.0)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.circleStrokeWidth(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.circleStrokeWidth(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
   }
 }

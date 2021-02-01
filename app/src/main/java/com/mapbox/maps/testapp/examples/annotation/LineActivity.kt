@@ -6,16 +6,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
-import com.mapbox.maps.Style
+import com.mapbox.maps.extension.style.layers.getLayer
 import com.mapbox.maps.extension.style.utils.ColorUtils
+import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
 import com.mapbox.maps.testapp.R
-import com.mapbox.maps.testapp.utils.Assets
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.mapView
 import kotlinx.android.synthetic.main.activity_annotation.*
-import java.io.IOException
 import java.util.*
 
 /**
@@ -24,13 +23,24 @@ import java.util.*
 class LineActivity : AppCompatActivity() {
   private val random = Random()
   private var lineManager: LineManager? = null
+  private var index: Int = 0
+  private val nextStyle: String
+    get() {
+      return AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]
+    }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_annotation)
-    mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
+    mapView.getMapboxMap().loadStyleUri(nextStyle) {
       val annotationPlugin = mapView.getAnnotationPlugin()
-      lineManager = annotationPlugin.getLineManager().apply {
+      lineManager = annotationPlugin.getLineManager(
+        mapView,
+        AnnotationConfig(COUNTRY_LABEL, LAYER_ID, SOURCE_ID)
+      ).apply {
+        it.getLayer(LAYER_ID)?.let { layer ->
+          Toast.makeText(this@LineActivity, layer.layerId, Toast.LENGTH_LONG).show()
+        }
         addClickListener(
           OnLineClickListener {
             Toast.makeText(
@@ -57,7 +67,7 @@ class LineActivity : AppCompatActivity() {
         // random add lines across the globe
         val lists: MutableList<List<Point>> = ArrayList<List<Point>>()
         for (i in 0..99) {
-          lists.add(createRandomPoints())
+          lists.add(AnnotationUtils.createRandomPoints())
         }
         val lineOptionsList = lists.map {
           val color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
@@ -68,35 +78,19 @@ class LineActivity : AppCompatActivity() {
 
         create(lineOptionsList)
 
-        try {
-          create(
-            FeatureCollection.fromJson(
-              Assets.loadStringFromAssets(
-                this@LineActivity,
-                "annotations.json"
-              )
-            )
-          )
-        } catch (e: IOException) {
-          throw RuntimeException("Unable to parse annotations.json")
+        AnnotationUtils.loadStringFromAssets(
+          this@LineActivity,
+          "annotations.json"
+        )?.let {
+          create(FeatureCollection.fromJson(it))
         }
       }
     }
 
     deleteAll.setOnClickListener { lineManager?.deleteAll() }
-  }
-
-  private fun createRandomPoints(): List<Point> {
-    val points: MutableList<Point> = ArrayList<Point>()
-    for (i in 0 until random.nextInt(10)) {
-      points.add(
-        Point.fromLngLat(
-          random.nextDouble() * -360.0 + 180.0,
-          random.nextDouble() * -180.0 + 90.0
-        )
-      )
+    changeStyle.setOnClickListener {
+      mapView.getMapboxMap().loadStyleUri(nextStyle)
     }
-    return points
   }
 
   override fun onStart() {
@@ -117,5 +111,11 @@ class LineActivity : AppCompatActivity() {
   override fun onDestroy() {
     super.onDestroy()
     mapView.onDestroy()
+  }
+
+  companion object {
+    private const val LAYER_ID = "line_layer"
+    private const val SOURCE_ID = "line_source"
+    private const val COUNTRY_LABEL = "country-label"
   }
 }

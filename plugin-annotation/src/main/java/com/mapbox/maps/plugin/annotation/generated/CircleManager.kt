@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.plugin.annotation.generated
 
+import android.view.View
 import com.mapbox.geojson.*
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
@@ -9,6 +10,7 @@ import com.mapbox.maps.extension.style.layers.generated.CircleLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
+import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationManagerImpl
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.AnnotationType
@@ -19,24 +21,20 @@ import java.util.concurrent.atomic.AtomicLong
  * The circle manager allows to add circles to a map.
  */
 class CircleManager(
+  mapView: View,
   delegateProvider: MapDelegateProvider,
-  belowLayerId: String?,
-  touchAreaShiftX: Int,
-  touchAreaShiftY: Int
+  annotationConfig: AnnotationConfig? = null
 ) :
   AnnotationManagerImpl<Point, Circle, CircleOptions, OnCircleDragListener, OnCircleClickListener, OnCircleLongClickListener, CircleLayer>(
-    delegateProvider,
-    belowLayerId,
-    touchAreaShiftX,
-    touchAreaShiftY
+    mapView, delegateProvider, annotationConfig
   ) {
   private val layerId: String
   private val sourceId: String
 
   init {
     val id = ID_GENERATOR.incrementAndGet()
-    layerId = "mapbox-android-circle-layer-$id"
-    sourceId = "mapbox-android-circle-source-$id"
+    layerId = annotationConfig?.layerId ?: "mapbox-android-fill-layer-$id"
+    sourceId = annotationConfig?.sourceId ?: "mapbox-android-fill-source-$id"
     delegateProvider.getStyle {
       style = it
       initLayerAndSource()
@@ -45,25 +43,25 @@ class CircleManager(
 
   override fun initializeDataDrivenPropertyMap() {
     dataDrivenPropertyUsageMap[CircleOptions.PROPERTY_CIRCLE_SORT_KEY] = false
-    dataDrivenPropertyUsageMap[CircleOptions.PROPERTY_CIRCLE_RADIUS] = false
-    dataDrivenPropertyUsageMap[CircleOptions.PROPERTY_CIRCLE_COLOR] = false
     dataDrivenPropertyUsageMap[CircleOptions.PROPERTY_CIRCLE_BLUR] = false
+    dataDrivenPropertyUsageMap[CircleOptions.PROPERTY_CIRCLE_COLOR] = false
     dataDrivenPropertyUsageMap[CircleOptions.PROPERTY_CIRCLE_OPACITY] = false
-    dataDrivenPropertyUsageMap[CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH] = false
+    dataDrivenPropertyUsageMap[CircleOptions.PROPERTY_CIRCLE_RADIUS] = false
     dataDrivenPropertyUsageMap[CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR] = false
     dataDrivenPropertyUsageMap[CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY] = false
+    dataDrivenPropertyUsageMap[CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH] = false
   }
 
   override fun setDataDrivenPropertyIsUsed(property: String) {
     when (property) {
-      CircleOptions.PROPERTY_CIRCLE_SORT_KEY -> layer.circleSortKey(get(CircleOptions.PROPERTY_CIRCLE_SORT_KEY))
-      CircleOptions.PROPERTY_CIRCLE_RADIUS -> layer.circleRadius(get(CircleOptions.PROPERTY_CIRCLE_RADIUS))
-      CircleOptions.PROPERTY_CIRCLE_COLOR -> layer.circleColor(get(CircleOptions.PROPERTY_CIRCLE_COLOR))
-      CircleOptions.PROPERTY_CIRCLE_BLUR -> layer.circleBlur(get(CircleOptions.PROPERTY_CIRCLE_BLUR))
-      CircleOptions.PROPERTY_CIRCLE_OPACITY -> layer.circleOpacity(get(CircleOptions.PROPERTY_CIRCLE_OPACITY))
-      CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH -> layer.circleStrokeWidth(get(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH))
-      CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR -> layer.circleStrokeColor(get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR))
-      CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY -> layer.circleStrokeOpacity(get(CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY))
+      CircleOptions.PROPERTY_CIRCLE_SORT_KEY -> layer?.circleSortKey(get(CircleOptions.PROPERTY_CIRCLE_SORT_KEY))
+      CircleOptions.PROPERTY_CIRCLE_BLUR -> layer?.circleBlur(get(CircleOptions.PROPERTY_CIRCLE_BLUR))
+      CircleOptions.PROPERTY_CIRCLE_COLOR -> layer?.circleColor(get(CircleOptions.PROPERTY_CIRCLE_COLOR))
+      CircleOptions.PROPERTY_CIRCLE_OPACITY -> layer?.circleOpacity(get(CircleOptions.PROPERTY_CIRCLE_OPACITY))
+      CircleOptions.PROPERTY_CIRCLE_RADIUS -> layer?.circleRadius(get(CircleOptions.PROPERTY_CIRCLE_RADIUS))
+      CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR -> layer?.circleStrokeColor(get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR))
+      CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY -> layer?.circleStrokeOpacity(get(CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY))
+      CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH -> layer?.circleStrokeWidth(get(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH))
     }
   }
 
@@ -74,13 +72,13 @@ class CircleManager(
    * <p>
    * All supported properties are:<br>
    * CircleOptions.PROPERTY_CIRCLE_SORT_KEY - Double<br>
-   * CircleOptions.PROPERTY_CIRCLE_RADIUS - Double<br>
-   * CircleOptions.PROPERTY_CIRCLE_COLOR - String<br>
    * CircleOptions.PROPERTY_CIRCLE_BLUR - Double<br>
+   * CircleOptions.PROPERTY_CIRCLE_COLOR - String<br>
    * CircleOptions.PROPERTY_CIRCLE_OPACITY - Double<br>
-   * CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH - Double<br>
+   * CircleOptions.PROPERTY_CIRCLE_RADIUS - Double<br>
    * CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR - String<br>
    * CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY - Double<br>
+   * CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH - Double<br>
    * Learn more about above properties in the <a href="https://www.mapbox.com/mapbox-gl-js/style-spec/">Style specification</a>.
    * <p>
    * Out of spec properties:<br>
@@ -100,13 +98,13 @@ class CircleManager(
    * <p>
    * All supported properties are:<br>
    * CircleOptions.PROPERTY_CIRCLE_SORT_KEY - Double<br>
-   * CircleOptions.PROPERTY_CIRCLE_RADIUS - Double<br>
-   * CircleOptions.PROPERTY_CIRCLE_COLOR - String<br>
    * CircleOptions.PROPERTY_CIRCLE_BLUR - Double<br>
+   * CircleOptions.PROPERTY_CIRCLE_COLOR - String<br>
    * CircleOptions.PROPERTY_CIRCLE_OPACITY - Double<br>
-   * CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH - Double<br>
+   * CircleOptions.PROPERTY_CIRCLE_RADIUS - Double<br>
    * CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR - String<br>
    * CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY - Double<br>
+   * CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH - Double<br>
    * Learn more about above properties in the <a href="https://www.mapbox.com/mapbox-gl-js/style-spec/">Style specification</a>.
    * <p>
    * Out of spec properties:<br>
@@ -136,50 +134,26 @@ class CircleManager(
 
   // Property accessors
   /**
-   * The CircleTranslate property
+   * The CirclePitchAlignment property
    * <p>
-   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
+   * Orientation of circle when map is pitched.
    */
-  var circleTranslate: List<Double>?
+  var circlePitchAlignment: CirclePitchAlignment?
     /**
-     * Get the CircleTranslate property
+     * Get the CirclePitchAlignment property
      *
-     * @return property wrapper value around List<Double>
+     * @return property wrapper value around CirclePitchAlignment
      */
-    get(): List<Double>? {
-      return layer.circleTranslate
+    get(): CirclePitchAlignment? {
+      return layer?.circlePitchAlignment
     }
     /**
-     * Set the CircleTranslate property
-     * @param value property wrapper value around List<Double>
+     * Set the CirclePitchAlignment property
+     * @param value property wrapper value around CirclePitchAlignment
      */
     set(value) {
       value?.let {
-        layer.circleTranslate(it)
-      }
-    }
-
-  /**
-   * The CircleTranslateAnchor property
-   * <p>
-   * Controls the frame of reference for {@link PropertyFactory#circleTranslate}.
-   */
-  var circleTranslateAnchor: CircleTranslateAnchor?
-    /**
-     * Get the CircleTranslateAnchor property
-     *
-     * @return property wrapper value around CircleTranslateAnchor
-     */
-    get(): CircleTranslateAnchor? {
-      return layer.circleTranslateAnchor
-    }
-    /**
-     * Set the CircleTranslateAnchor property
-     * @param value property wrapper value around CircleTranslateAnchor
-     */
-    set(value) {
-      value?.let {
-        layer.circleTranslateAnchor(it)
+        layer?.circlePitchAlignment(it)
       }
     }
 
@@ -195,7 +169,7 @@ class CircleManager(
      * @return property wrapper value around CirclePitchScale
      */
     get(): CirclePitchScale? {
-      return layer.circlePitchScale
+      return layer?.circlePitchScale
     }
     /**
      * Set the CirclePitchScale property
@@ -203,31 +177,55 @@ class CircleManager(
      */
     set(value) {
       value?.let {
-        layer.circlePitchScale(it)
+        layer?.circlePitchScale(it)
       }
     }
 
   /**
-   * The CirclePitchAlignment property
+   * The CircleTranslate property
    * <p>
-   * Orientation of circle when map is pitched.
+   * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
    */
-  var circlePitchAlignment: CirclePitchAlignment?
+  var circleTranslate: List<Double>?
     /**
-     * Get the CirclePitchAlignment property
+     * Get the CircleTranslate property
      *
-     * @return property wrapper value around CirclePitchAlignment
+     * @return property wrapper value around List<Double>
      */
-    get(): CirclePitchAlignment? {
-      return layer.circlePitchAlignment
+    get(): List<Double>? {
+      return layer?.circleTranslate
     }
     /**
-     * Set the CirclePitchAlignment property
-     * @param value property wrapper value around CirclePitchAlignment
+     * Set the CircleTranslate property
+     * @param value property wrapper value around List<Double>
      */
     set(value) {
       value?.let {
-        layer.circlePitchAlignment(it)
+        layer?.circleTranslate(it)
+      }
+    }
+
+  /**
+   * The CircleTranslateAnchor property
+   * <p>
+   * Controls the frame of reference for {@link PropertyFactory#circleTranslate}.
+   */
+  var circleTranslateAnchor: CircleTranslateAnchor?
+    /**
+     * Get the CircleTranslateAnchor property
+     *
+     * @return property wrapper value around CircleTranslateAnchor
+     */
+    get(): CircleTranslateAnchor? {
+      return layer?.circleTranslateAnchor
+    }
+    /**
+     * Set the CircleTranslateAnchor property
+     * @param value property wrapper value around CircleTranslateAnchor
+     */
+    set(value) {
+      value?.let {
+        layer?.circleTranslateAnchor(it)
       }
     }
 
@@ -237,7 +235,7 @@ class CircleManager(
    * @return the GeoJsonSource created
    */
   override fun createSource(): GeoJsonSource {
-    return geoJsonSource(sourceId) {}
+    return geoJsonSource(sourceId) { data("") }
   }
 
   /**
@@ -260,14 +258,14 @@ class CircleManager(
      *
      * @return expression
      */
-    get() = layer.filter
+    get() = layer?.filter
     /**
      * Set filter on the managed circles.
      *
      * @param expression expression
      */
     set(value) {
-      value?.let { layer.filter(it) }
+      value?.let { layer?.filter(it) }
     }
 
   /**
@@ -276,18 +274,6 @@ class CircleManager(
   companion object {
     /** The generator for id */
     var ID_GENERATOR = AtomicLong(0)
-
-    /** The property for circle-translate */
-    private val PROPERTY_CIRCLE_TRANSLATE = "circle-translate"
-
-    /** The property for circle-translate-anchor */
-    private val PROPERTY_CIRCLE_TRANSLATE_ANCHOR = "circle-translate-anchor"
-
-    /** The property for circle-pitch-scale */
-    private val PROPERTY_CIRCLE_PITCH_SCALE = "circle-pitch-scale"
-
-    /** The property for circle-pitch-alignment */
-    private val PROPERTY_CIRCLE_PITCH_ALIGNMENT = "circle-pitch-alignment"
   }
 }
 
@@ -295,14 +281,8 @@ class CircleManager(
  * Extension function to get CircleManager instance
  */
 fun AnnotationPlugin.getCircleManager(
-  belowLayerId: String? = null,
-  touchAreaShiftX: Int = 0,
-  touchAreaShiftY: Int = 0
+  mapView: View,
+  annotationConfig: AnnotationConfig? = null
 ): CircleManager {
-  return getAnnotationManager(
-    AnnotationType.Circle,
-    belowLayerId,
-    touchAreaShiftX,
-    touchAreaShiftY
-  ) as CircleManager
+  return getAnnotationManager(mapView, AnnotationType.Circle, annotationConfig) as CircleManager
 }
