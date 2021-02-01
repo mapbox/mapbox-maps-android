@@ -7,13 +7,26 @@ import com.google.gson.JsonArray
  */
 object ConvertUtils {
   /**
-   * Convert a list into a JsonArray
+   * Convert a list into a JsonArray with string format
    */
-  fun convertArray(value: List<Any>?): JsonArray {
+  fun convertStringArray(value: List<Any>?): JsonArray {
     val jsonArray = JsonArray()
     if (value != null) {
       for (element in value) {
         jsonArray.add(element.toString())
+      }
+    }
+    return jsonArray
+  }
+
+  /**
+   * Convert a list into a JsonArray with double format
+   */
+  fun convertDoubleArray(value: List<Any>?): JsonArray {
+    val jsonArray = JsonArray()
+    if (value != null) {
+      for (element in value) {
+        jsonArray.add(element.toString().toDouble())
       }
     }
     return jsonArray
