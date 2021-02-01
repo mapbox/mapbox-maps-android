@@ -19,16 +19,27 @@ class PuckBearingAnimatorTest {
   private lateinit var bearingAnimator: PuckBearingAnimator
   private lateinit var userConfiguredAnimator: ValueAnimator
 
+  private val bearingChangeListener = mockk<OnIndicatorBearingChangedListener>(relaxed = true)
+
   @Before
   fun setUp() {
-    val bearingChangeListener = mockk<OnIndicatorBearingChangedListener>()
     val animator = PuckBearingAnimator(bearingChangeListener).apply {
-      // update listeners have issues with casting because of specific animator creation
-      removeAllUpdateListeners()
+      setEvaluator(Evaluators.DOUBLE)
     }
     userConfiguredAnimator = spyk(animator.clone())
     animator.userConfiguredAnimator = userConfiguredAnimator
     bearingAnimator = spyk(animator)
+  }
+
+  @Test
+  fun animateUpdateListener() {
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    bearingAnimator.animate(0.0, 10.0)
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    verify {
+      bearingChangeListener.onIndicatorBearingChanged(any())
+    }
+    Assert.assertEquals(10.0, bearingAnimator.animatedValue as Double, 0.0001)
   }
 
   @Test

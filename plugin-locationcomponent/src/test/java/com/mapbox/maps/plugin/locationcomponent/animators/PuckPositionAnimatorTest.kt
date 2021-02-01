@@ -20,16 +20,27 @@ class PuckPositionAnimatorTest {
   private lateinit var positionAnimator: PuckPositionAnimator
   private lateinit var userConfiguredAnimator: ValueAnimator
 
+  private val positionChangeListener = mockk<OnIndicatorPositionChangedListener>(relaxed = true)
+
   @Before
   fun setUp() {
-    val positionChangeListener = mockk<OnIndicatorPositionChangedListener>()
     val animator = PuckPositionAnimator(positionChangeListener).apply {
-      // update listeners have issues with casting because of specific animator creation
-      removeAllUpdateListeners()
+      setEvaluator(Evaluators.POINT)
     }
     userConfiguredAnimator = spyk(animator.clone())
     animator.userConfiguredAnimator = userConfiguredAnimator
     positionAnimator = spyk(animator)
+  }
+
+  @Test
+  fun animateUpdateListener() {
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    positionAnimator.animate(START_POINT, END_POINT)
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    verify {
+      positionChangeListener.onIndicatorPositionChanged(any())
+    }
+    Assert.assertEquals(END_POINT, positionAnimator.animatedValue as Point)
   }
 
   @Test
