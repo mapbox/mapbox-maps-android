@@ -6,6 +6,8 @@ import android.animation.TypeEvaluator
 import android.animation.ValueAnimator
 import android.os.Build
 import android.view.animation.LinearInterpolator
+import androidx.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants
 import com.mapbox.maps.plugin.locationcomponent.LocationLayerRenderer
 
@@ -13,7 +15,8 @@ internal abstract class PuckAnimator<T>(
   evaluator: TypeEvaluator<T>
 ) : ValueAnimator() {
 
-  private val userConfiguredAnimator: ValueAnimator
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal var userConfiguredAnimator: ValueAnimator
   protected var locationRenderer: LocationLayerRenderer? = null
 
   abstract fun updateLayer(fraction: Float, value: T)
