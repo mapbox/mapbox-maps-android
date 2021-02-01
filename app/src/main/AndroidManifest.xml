@@ -913,7 +913,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.SecondaryDisplaySimpleMapActivity"
+            android:name=".examples.SecondaryDisplayActivity"
             android:launchMode="singleTask">
             <meta-data
                 android:name="android.allow_multiple_resumed_activities"

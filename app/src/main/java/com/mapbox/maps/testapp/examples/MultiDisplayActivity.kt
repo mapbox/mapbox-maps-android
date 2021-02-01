@@ -8,13 +8,20 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.geojson.Point
+import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.Style
+import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
+import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_multi_display.*
 import kotlinx.android.synthetic.main.activity_simple_map.mapView
 
 /**
  * Example of displaying a map on the second screen.
+ *
+ * To use this example, you need to attach a second display to your device, or
+ * have the simulated secondary display enabled in the developer settings.
  */
 class MultiDisplayActivity : AppCompatActivity() {
 
@@ -22,9 +29,26 @@ class MultiDisplayActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_multi_display)
     mapView.getMapboxMap().loadStyleUri(Style.DARK)
-    button.setOnClickListener {
+    displayOnSecondDisplayButton.setOnClickListener {
       displayMapInSecondaryScreen()
     }
+    moveCameraButton.setOnClickListener {
+      moveCamera()
+    }
+  }
+
+  private fun moveCamera() {
+    val cameraOption = CameraOptions.Builder()
+      .center(HELSINKI)
+      .zoom(ZOOM)
+      .build()
+
+    mapView.getMapboxMap().flyTo(
+      cameraOption,
+      mapAnimationOptions {
+        duration = DURATION
+      }
+    )
   }
 
   private fun displayMapInSecondaryScreen() {
@@ -37,7 +61,7 @@ class MultiDisplayActivity : AppCompatActivity() {
         options.launchDisplayId = displays[1].displayId
         // To display on the second screen, the intent must be launched using singleTask launchMode.
         startActivity(
-          Intent(this, SecondaryDisplaySimpleMapActivity::class.java),
+          Intent(this, SecondaryDisplayActivity::class.java),
           options.toBundle()
         )
       }
@@ -64,5 +88,11 @@ class MultiDisplayActivity : AppCompatActivity() {
   override fun onDestroy() {
     super.onDestroy()
     mapView.onDestroy()
+  }
+
+  companion object {
+    private val HELSINKI = Point.fromLngLat(24.9384, 60.1699)
+    private const val ZOOM = 14.0
+    private const val DURATION = 3000L
   }
 }
