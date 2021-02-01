@@ -71,6 +71,12 @@ commands:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle.kts" }}-{{ checksum "app/build.gradle.kts" }}-{{ checksum "sdk/build.gradle.kts" }}-{{ checksum "buildSrc/src/main/kotlin/Project.kt" }}
 
+  setup-build-from-source:
+    steps:
+      - run:
+          name: Setup build from source
+          command: make build-source-init-maps-v10.0.0-beta.14
+
   jvm-unit-tests:
     steps:
       - run:
@@ -381,6 +387,7 @@ jobs:
     steps:
       - checkout
       - restore-gradle-cache
+      - setup-build-from-source
       - build-module:
           module_target: "sdk"
           variant: "Release"

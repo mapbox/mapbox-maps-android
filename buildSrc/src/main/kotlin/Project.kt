@@ -67,6 +67,8 @@ object Dependencies {
   const val kotlinLib = kotlin
   const val androidXTestCore = androidxTestCore
   const val androidXStartupRuntime = "androidx.startup:startup-runtime:1.0.0"
+  const val okHttp = "com.squareup.okhttp3:okhttp:3.12.12"
+  const val nanoHttpd = "com.nanohttpd:nanohttpd-webserver:2.2.0"
 }
 
 object Versions {

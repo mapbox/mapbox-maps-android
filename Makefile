@@ -75,3 +75,38 @@ instrumentation-clean:
 .PHONY: generate-sanity-test
 generate-sanity-test:
 	node scripts/sanity-test/generate-sanity-test.js
+
+# Setup building from source with including a specific commit SHA
+.PHONY: build-source-init-%
+build-source-init:
+	python scripts/build-from-source/builder/build-from-source.py;
+	git clone git@github.com:mapbox/mapbox-gl-native-internal.git;
+	cd mapbox-gl-native-internal && git checkout $* && git submodule update --init --recursive
+
+# Refresh building from source setup without cloning upstream repository
+.PHONY: build-source-update
+build-source-update:
+	python scripts/build-from-source/builder/build-from-source.py;
+
+# Remove building from source setup, return to building from binaries
+.PHONY: build-source-remove
+build-source-remove:
+	git restore sdk-base/build.gradle.kts;
+	git restore sdk/build.gradle.kts;
+	git restore build.gradle.kts;
+	git restore settings.gradle.kts;
+	rm -rf mapbox-gl-native-internal;
+
+# Clean build folders related to building from source
+.PHONY: build-source-clean
+build-source-clean:
+	git restore sdk-base/build.gradle.kts;
+	git restore sdk/build.gradle.kts;
+	git restore build.gradle.kts;
+	git restore settings.gradle.kts;
+	rm -rf app/build;
+	rm -rf app/.cxx;
+	rm -rf mapbox-gl-native-internal/internal/platform/android/sdk/.cxx;
+	rm -rf mapbox-gl-native-internal/internal/platform/android/sdk/build;
+	rm -rf mapbox-gl-native-internal/internal/vendor/common/platform/android/common/.cxx;
+	rm -rf mapbox-gl-native-internal/internal/vendor/common/platform/android/common/build;
