@@ -6,6 +6,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.geojson.Point
 import com.mapbox.maps.RenderMode
+import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
+import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
+import com.mapbox.maps.extension.style.layers.properties.generated.TextJustify
+import com.mapbox.maps.extension.style.layers.properties.generated.TextTransform
 import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.generated.Symbol
 import com.mapbox.maps.plugin.annotation.generated.SymbolManager
@@ -48,6 +52,32 @@ class UpdateAnnotationTest : BaseMapTest(), OnDidFinishRenderingMapListener {
             SymbolOptions()
               .withIconColor(ColorUtils.colorToRgbaString(Color.RED))
               .withIconImage("car-15")
+              .withDraggable(true)
+              .withIconAnchor(IconAnchor.CENTER)
+              .withIconHaloBlur(1.0)
+              .withIconHaloColor(ColorUtils.colorToRgbaString(Color.YELLOW))
+              .withIconHaloWidth(2.0)
+              .withIconOffset(listOf(1.0, 2.0))
+              .withIconOpacity(0.8)
+              .withIconRotate(0.5)
+              .withIconSize(5.0)
+              .withIconHaloColor(ColorUtils.colorToRgbaString(Color.WHITE))
+              .withSymbolSortKey(1.0)
+              .withTextAnchor(TextAnchor.TOP)
+              .withTextColor(ColorUtils.colorToRgbaString(Color.YELLOW))
+              .withTextField("Car")
+              .withTextHaloBlur(1.0)
+              .withTextHaloWidth(5.0)
+              .withTextJustify(TextJustify.CENTER)
+              .withTextLetterSpacing(2.0)
+              .withTextRotate(5.0)
+              .withTextTransform(TextTransform.UPPERCASE)
+              .withTextSize(15.0)
+              .withTextRadialOffset(1.0)
+              .withTextOpacity(0.8)
+              .withTextOffset(listOf(1.0, 2.0))
+              .withTextMaxWidth(10.0)
+              .withTextFont(listOf("Open Sans Regular"))
               .withPoint(Point.fromLngLat(0.0, 0.0))
           )
           Assert.assertEquals(symbol, symbolManager.annotations[0])
