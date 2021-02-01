@@ -8,6 +8,8 @@ import com.mapbox.maps.module.telemetry.PerformanceEvent.PerformanceAttribute
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert
+import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.robolectric.util.ReflectionHelpers
@@ -126,6 +128,18 @@ class MapEventFactoryTest {
     val counterList = performanceEvent.counters
     Assert.assertEquals(1, counterList?.size)
     Assert.assertEquals(counter, counterList!![0])
+  }
+
+  @Test
+  fun testBuildConfigValues() {
+    // Regression test
+    assertNotEquals("user-agent shouldn't be null", "mapbox-maps-android/null", BuildConfig.MAPBOX_EVENTS_USER_AGENT)
+    assertNotEquals("version shouldn't be null", "null", BuildConfig.MAPBOX_SDK_VERSION)
+    assertNotEquals("sdk identifier shouldn't be null", "Mapbox/null", BuildConfig.MAPBOX_VERSION_STRING)
+    // Value test
+    assertTrue("user-agent should match", BuildConfig.MAPBOX_EVENTS_USER_AGENT.contains("mapbox-maps-android/"))
+    assertTrue("sdk identifier like should match", BuildConfig.MAPBOX_SDK_IDENTIFIER.contains("mapbox-maps-android"))
+    assertTrue("version like should match", BuildConfig.MAPBOX_VERSION_STRING.contains("Mapbox/"))
   }
 
   companion object {
