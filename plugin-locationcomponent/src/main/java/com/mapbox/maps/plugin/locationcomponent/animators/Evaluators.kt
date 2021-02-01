@@ -24,5 +24,7 @@ internal object Evaluators {
   /**
    * Type evaluator for Object data
    */
-  val OBJECT = TypeEvaluator<Any> { _, _, _ -> Any() }
+  val OBJECT = TypeEvaluator<Any> { _, _, _ -> dummyObject }
+
+  internal val dummyObject = Any()
 }
