@@ -23,9 +23,7 @@ class PuckBearingAnimatorTest {
 
   @Before
   fun setUp() {
-    val animator = PuckBearingAnimator(bearingChangeListener).apply {
-      setEvaluator(Evaluators.DOUBLE)
-    }
+    val animator = PuckBearingAnimator(bearingChangeListener)
     userConfiguredAnimator = spyk(animator.clone())
     animator.userConfiguredAnimator = userConfiguredAnimator
     bearingAnimator = spyk(animator)

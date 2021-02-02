@@ -24,9 +24,7 @@ class PuckPositionAnimatorTest {
 
   @Before
   fun setUp() {
-    val animator = PuckPositionAnimator(positionChangeListener).apply {
-      setEvaluator(Evaluators.POINT)
-    }
+    val animator = PuckPositionAnimator(positionChangeListener)
     userConfiguredAnimator = spyk(animator.clone())
     animator.userConfiguredAnimator = userConfiguredAnimator
     positionAnimator = spyk(animator)

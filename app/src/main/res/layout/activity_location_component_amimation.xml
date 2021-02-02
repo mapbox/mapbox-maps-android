@@ -7,5 +7,5 @@
     android:layout_height="match_parent"
     mapbox:mapbox_locationComponentEnabled="true"
     mapbox:mapbox_locationComponentPulsingEnabled="true"
-    mapbox:mapbox_locationComponentPulsingMaxRadius="30dp"
+    mapbox:mapbox_locationComponentPulsingMaxRadius="25dp"
     tools:context=".examples.LocationComponentActivity" />

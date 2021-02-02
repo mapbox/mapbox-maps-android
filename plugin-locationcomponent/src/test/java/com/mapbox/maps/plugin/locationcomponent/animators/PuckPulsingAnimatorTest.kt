@@ -19,10 +19,7 @@ class PuckPulsingAnimatorTest {
 
   @Before
   fun setUp() {
-    val animator = PuckPulsingAnimator().apply {
-      // update listeners have issues with casting because of specific animator creation
-      removeAllUpdateListeners()
-    }
+    val animator = PuckPulsingAnimator()
     pulsingAnimator = spyk(animator)
   }
 

@@ -31,14 +31,6 @@ class EvaluatorsTest {
     )
   }
 
-  @Test
-  fun objectEvaluatorTest() {
-    val evaluator = Evaluators.OBJECT
-    Assert.assertEquals(Evaluators.dummyObject, evaluator.evaluate(0.0f, Any(), Any()))
-    Assert.assertEquals(Evaluators.dummyObject, evaluator.evaluate(0.5f, Any(), Any()))
-    Assert.assertEquals(Evaluators.dummyObject, evaluator.evaluate(1.0f, Any(), Any()))
-  }
-
   companion object {
     private const val EPS = 0.0001
     private const val START_DOUBLE = 0.0

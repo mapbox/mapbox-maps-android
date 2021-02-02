@@ -4,7 +4,6 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.TypeEvaluator
 import android.animation.ValueAnimator
-import android.os.Build
 import android.view.animation.LinearInterpolator
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
@@ -23,12 +22,7 @@ internal abstract class PuckAnimator<T>(
 
   init {
     setObjectValues(emptyArray<Any>())
-    setEvaluator(
-      if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M)
-        Evaluators.OBJECT
-      else
-        evaluator
-    )
+    setEvaluator(evaluator)
     addUpdateListener {
       @Suppress("UNCHECKED_CAST")
       updateLayer(it.animatedFraction, it.animatedValue as T)
