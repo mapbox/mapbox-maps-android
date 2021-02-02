@@ -20,7 +20,7 @@ import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
 class Fill(
   id: Long,
   /** The annotation manger that manipulate this annotation */
-  val annotationManager: AnnotationManager<Polygon, Fill, *, *, *, *>,
+  private val annotationManager: AnnotationManager<Polygon, Fill, *, *, *, *>,
   jsonObject: JsonObject,
   geometry: Polygon
 ) : Annotation<Polygon>(id, jsonObject, geometry) {
@@ -149,7 +149,7 @@ class Fill(
      * @param color value for String
      */
     set(value) {
-      jsonObject.addProperty("fill-color", value)
+      jsonObject.addProperty(FillOptions.PROPERTY_FILL_COLOR, value)
     }
 
   /**
@@ -249,7 +249,7 @@ class Fill(
      * @param color value for String
      */
     set(value) {
-      jsonObject.addProperty("fill-outline-color", value)
+      jsonObject.addProperty(FillOptions.PROPERTY_FILL_OUTLINE_COLOR, value)
     }
 
   /**

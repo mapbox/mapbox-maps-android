@@ -20,7 +20,7 @@ import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
 class Circle(
   id: Long,
   /** The annotation manger that manipulate this annotation */
-  val annotationManager: AnnotationManager<Point, Circle, *, *, *, *>,
+  private val annotationManager: AnnotationManager<Point, Circle, *, *, *, *>,
   jsonObject: JsonObject,
   geometry: Point
 ) : Annotation<Point>(id, jsonObject, geometry) {
@@ -182,7 +182,7 @@ class Circle(
      * @param color value for String
      */
     set(value) {
-      jsonObject.addProperty("circle-color", value)
+      jsonObject.addProperty(CircleOptions.PROPERTY_CIRCLE_COLOR, value)
     }
 
   /**
@@ -315,7 +315,7 @@ class Circle(
      * @param color value for String
      */
     set(value) {
-      jsonObject.addProperty("circle-stroke-color", value)
+      jsonObject.addProperty(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR, value)
     }
 
   /**

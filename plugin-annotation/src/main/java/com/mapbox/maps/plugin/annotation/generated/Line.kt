@@ -20,7 +20,7 @@ import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
 class Line(
   id: Long,
   /** The annotation manger that manipulate this annotation */
-  val annotationManager: AnnotationManager<LineString, Line, *, *, *, *>,
+  private val annotationManager: AnnotationManager<LineString, Line, *, *, *, *>,
   jsonObject: JsonObject,
   geometry: LineString
 ) : Annotation<LineString>(id, jsonObject, geometry) {
@@ -215,7 +215,7 @@ class Line(
      * @param color value for String
      */
     set(value) {
-      jsonObject.addProperty("line-color", value)
+      jsonObject.addProperty(LineOptions.PROPERTY_LINE_COLOR, value)
     }
 
   /**

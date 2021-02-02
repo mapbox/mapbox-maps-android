@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.plugin.annotation.generated
 
+import android.graphics.Bitmap
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.mapbox.geojson.Feature
@@ -24,6 +25,20 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   private var isDraggable: Boolean = false
   private var data: JsonElement? = null
   private var geometry: Point? = null
+  private var iconImageBitmap: Bitmap? = null
+
+  /**
+   * Set bitmap icon-image to initialise the symbol.
+   *
+   * Will not take effect if a String iconImage name has been set.
+   *
+   * @param iconImage the bitmap image
+   * @return this
+   */
+  fun withIconImage(iconImageBitmap: Bitmap): SymbolOptions {
+    this.iconImageBitmap = iconImageBitmap
+    return this
+  }
 
   /**
    * Part of the icon placed closest to the anchor.
@@ -634,6 +649,9 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
     jsonObject.addProperty(PROPERTY_TEXT_HALO_WIDTH, textHaloWidth)
     jsonObject.addProperty(PROPERTY_TEXT_OPACITY, textOpacity)
     val symbol = Symbol(id, annotationManager, jsonObject, geometry!!)
+    iconImageBitmap?.let {
+      symbol.iconImageBitmap = iconImageBitmap
+    }
     symbol.isDraggable = isDraggable
     symbol.setData(data)
     return symbol
