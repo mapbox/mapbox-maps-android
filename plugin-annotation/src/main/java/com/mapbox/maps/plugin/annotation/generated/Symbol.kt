@@ -12,7 +12,7 @@ import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.Annotation
 import com.mapbox.maps.plugin.annotation.AnnotationManager
 import com.mapbox.maps.plugin.annotation.AnnotationType
-import com.mapbox.maps.plugin.annotation.ConvertUtils.convertArray
+import com.mapbox.maps.plugin.annotation.ConvertUtils.convertStringArray
 import com.mapbox.maps.plugin.annotation.ConvertUtils.toStringArray
 import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
 
@@ -347,7 +347,7 @@ class Symbol(
      * @param value constant property value for List<String>
      */
     set(value) {
-      val jsonArray = convertArray(value)
+      val jsonArray = convertStringArray(value)
       jsonObject.add(SymbolOptions.PROPERTY_TEXT_FONT, jsonArray)
     }
 

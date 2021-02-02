@@ -12,7 +12,8 @@ import com.mapbox.maps.extension.style.layers.properties.generated.TextJustify
 import com.mapbox.maps.extension.style.layers.properties.generated.TextTransform
 import com.mapbox.maps.plugin.annotation.AnnotationManager
 import com.mapbox.maps.plugin.annotation.AnnotationOptions
-import com.mapbox.maps.plugin.annotation.ConvertUtils.convertArray
+import com.mapbox.maps.plugin.annotation.ConvertUtils.convertDoubleArray
+import com.mapbox.maps.plugin.annotation.ConvertUtils.convertStringArray
 import com.mapbox.maps.plugin.annotation.ConvertUtils.toDoubleArray
 import com.mapbox.maps.plugin.annotation.ConvertUtils.toStringArray
 
@@ -607,17 +608,17 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
     val jsonObject = JsonObject()
     jsonObject.addProperty(PROPERTY_ICON_ANCHOR, iconAnchor.value)
     jsonObject.addProperty(PROPERTY_ICON_IMAGE, iconImage)
-    jsonObject.add(PROPERTY_ICON_OFFSET, convertArray(iconOffset))
+    jsonObject.add(PROPERTY_ICON_OFFSET, convertDoubleArray(iconOffset))
     jsonObject.addProperty(PROPERTY_ICON_ROTATE, iconRotate)
     jsonObject.addProperty(PROPERTY_ICON_SIZE, iconSize)
     jsonObject.addProperty(PROPERTY_SYMBOL_SORT_KEY, symbolSortKey)
     jsonObject.addProperty(PROPERTY_TEXT_ANCHOR, textAnchor.value)
     jsonObject.addProperty(PROPERTY_TEXT_FIELD, textField)
-    jsonObject.add(PROPERTY_TEXT_FONT, convertArray(textFont))
+    jsonObject.add(PROPERTY_TEXT_FONT, convertStringArray(textFont))
     jsonObject.addProperty(PROPERTY_TEXT_JUSTIFY, textJustify.value)
     jsonObject.addProperty(PROPERTY_TEXT_LETTER_SPACING, textLetterSpacing)
     jsonObject.addProperty(PROPERTY_TEXT_MAX_WIDTH, textMaxWidth)
-    jsonObject.add(PROPERTY_TEXT_OFFSET, convertArray(textOffset))
+    jsonObject.add(PROPERTY_TEXT_OFFSET, convertDoubleArray(textOffset))
     jsonObject.addProperty(PROPERTY_TEXT_RADIAL_OFFSET, textRadialOffset)
     jsonObject.addProperty(PROPERTY_TEXT_ROTATE, textRotate)
     jsonObject.addProperty(PROPERTY_TEXT_SIZE, textSize)
