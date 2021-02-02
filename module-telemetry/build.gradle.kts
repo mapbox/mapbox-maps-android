@@ -7,7 +7,7 @@ plugins {
   id("org.jetbrains.dokka")
 }
 
-val versionName: String by project
+val VERSION_NAME: String by project
 
 android {
   compileSdkVersion(AndroidVersions.compileSdkVersion)
@@ -16,9 +16,9 @@ android {
     targetSdkVersion(AndroidVersions.targetSdkVersion)
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     buildConfigField("String", "MAPBOX_SDK_IDENTIFIER", String.format("\"%s\"", "mapbox-maps-android"))
-    buildConfigField("String", "MAPBOX_SDK_VERSION", String.format("\"%s\"", versionName))
-    buildConfigField("String", "MAPBOX_VERSION_STRING", String.format("\"Mapbox/%s\"", versionName))
-    buildConfigField("String", "MAPBOX_EVENTS_USER_AGENT", String.format("\"mapbox-maps-android/%s\"", versionName))
+    buildConfigField("String", "MAPBOX_SDK_VERSION", String.format("\"%s\"", VERSION_NAME))
+    buildConfigField("String", "MAPBOX_VERSION_STRING", String.format("\"Mapbox/%s\"", VERSION_NAME))
+    buildConfigField("String", "MAPBOX_EVENTS_USER_AGENT", String.format("\"mapbox-maps-android/%s\"", VERSION_NAME))
   }
 }
 
