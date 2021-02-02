@@ -3,11 +3,13 @@ package com.mapbox.maps.testapp.examples
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
+import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.locationcomponent.LocationConsumer
 import com.mapbox.maps.plugin.locationcomponent.LocationProvider
 import com.mapbox.maps.plugin.locationcomponent.getLocationComponentPlugin
@@ -90,7 +92,17 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
             .center(Point.fromLngLat(POINT_LNG, POINT_LAT))
             .build()
         )
-        mapView.getLocationComponentPlugin().setLocationProvider(FakeLocationProvider())
+        mapView.getLocationComponentPlugin().apply {
+          setLocationProvider(FakeLocationProvider())
+          updateSettings {
+            locationPuck = LocationPuck2D(
+              bearingImage = AppCompatResources.getDrawable(
+                this@LocationComponentAnimationActivity,
+                R.drawable.mapbox_mylocation_icon_bearing,
+              )
+            )
+          }
+        }
       }
     }
   }

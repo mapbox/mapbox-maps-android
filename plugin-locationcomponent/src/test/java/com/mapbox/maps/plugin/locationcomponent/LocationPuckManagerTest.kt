@@ -127,7 +127,7 @@ class LocationPuckManagerTest {
   @Test
   fun testUpdateCurrentPosition() {
     locationPuckManager.updateCurrentPosition(Point.fromLngLat(0.0, 0.0))
-    verify { animationManager.animatePoints(targets = anyVararg(), options = null) }
+    verify { animationManager.animatePosition(targets = anyVararg(), options = null) }
   }
 
   @Test
@@ -139,7 +139,7 @@ class LocationPuckManagerTest {
   @Test
   fun testUpdateLocationAnimator() {
     locationPuckManager.updateLocationAnimator { }
-    verify { animationManager.updatePointAnimator(any()) }
+    verify { animationManager.updatePositionAnimator(any()) }
   }
 
   @Test

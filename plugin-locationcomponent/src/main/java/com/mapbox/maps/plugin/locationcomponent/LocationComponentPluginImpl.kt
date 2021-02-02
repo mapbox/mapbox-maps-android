@@ -130,6 +130,9 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
   private fun activateLocationComponent() {
     if (internalSettings.enabled) {
       delegateProvider.getStyle { style ->
+        if (locationPuckManager?.isLayerInitialised() == true && isLocationComponentActivated) {
+          return@getStyle
+        }
         if (locationPuckManager == null) {
           locationPuckManager = LocationPuckManager(
             settings = internalSettings,
@@ -162,6 +165,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
    * Called whenever activity's/fragment's lifecycle is entering a "stopped" state.
    */
   override fun onStop() {
+    isLocationComponentActivated = false
     locationPuckManager?.onStop()
     locationProvider?.unRegisterLocationConsumer(this)
   }

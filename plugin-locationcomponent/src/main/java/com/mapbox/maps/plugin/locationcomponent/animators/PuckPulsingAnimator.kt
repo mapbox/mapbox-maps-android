@@ -31,8 +31,8 @@ internal class PuckPulsingAnimator : PuckAnimator<Double>(Evaluators.DOUBLE) {
     locationRenderer?.updatePulsingUi(pulsingColor, value.toFloat(), if (fraction <= 0.1f) 0f else opacity)
   }
 
-  companion object {
-    private const val PULSING_DEFAULT_DURATION = 3_000L
+  internal companion object {
+    const val PULSING_DEFAULT_DURATION = 3_000L
     private val PULSING_DEFAULT_INTERPOLATOR = PathInterpolatorCompat.create(
       0.0f,
       0.0f,

@@ -1,6 +1,8 @@
 package com.mapbox.maps.plugin.locationcomponent.animators
 
 import android.animation.ValueAnimator
+import androidx.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.geojson.Point
 import com.mapbox.maps.plugin.locationcomponent.LocationLayerRenderer
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener
@@ -14,12 +16,25 @@ internal class PuckAnimatorManager(
 ) {
 
   private var bearingAnimator = PuckBearingAnimator(indicatorBearingChangedListener)
-  private var pointAnimator = PuckPositionAnimator(indicatorPositionChangedListener)
+  private var positionAnimator = PuckPositionAnimator(indicatorPositionChangedListener)
   private var pulsingAnimator = PuckPulsingAnimator()
+
+  @VisibleForTesting(otherwise = PRIVATE)
+  constructor(
+    indicatorPositionChangedListener: OnIndicatorPositionChangedListener,
+    indicatorBearingChangedListener: OnIndicatorBearingChangedListener,
+    bearingAnimator: PuckBearingAnimator,
+    positionAnimator: PuckPositionAnimator,
+    pulsingAnimator: PuckPulsingAnimator
+  ) : this(indicatorPositionChangedListener, indicatorBearingChangedListener) {
+    this.bearingAnimator = bearingAnimator
+    this.positionAnimator = positionAnimator
+    this.pulsingAnimator = pulsingAnimator
+  }
 
   fun setLocationLayerRenderer(renderer: LocationLayerRenderer) {
     bearingAnimator.setLocationLayerRenderer(renderer)
-    pointAnimator.setLocationLayerRenderer(renderer)
+    positionAnimator.setLocationLayerRenderer(renderer)
     pulsingAnimator.setLocationLayerRenderer(renderer)
   }
 
@@ -31,7 +46,7 @@ internal class PuckAnimatorManager(
 
   fun onStop() {
     bearingAnimator.cancelRunning()
-    pointAnimator.cancelRunning()
+    positionAnimator.cancelRunning()
     pulsingAnimator.cancelRunning()
   }
 
@@ -48,8 +63,8 @@ internal class PuckAnimatorManager(
     bearingAnimator.animate(*optimized.toTypedArray(), options = options)
   }
 
-  fun animatePoints(vararg targets: Point, options: (ValueAnimator.() -> Unit)?) {
-    pointAnimator.animate(*targets, options = options)
+  fun animatePosition(vararg targets: Point, options: (ValueAnimator.() -> Unit)?) {
+    positionAnimator.animate(*targets, options = options)
   }
 
   fun applyPulsingAnimationSettings(settings: LocationComponentSettings) {
@@ -57,7 +72,7 @@ internal class PuckAnimatorManager(
       enabled = settings.pulsingEnabled
       maxRadius = settings.pulsingMaxRadius.toDouble()
       pulsingColor = settings.pulsingColor
-      if (enabled) {
+      if (settings.pulsingEnabled) {
         animateInfinite()
       } else {
         cancelRunning()
@@ -69,7 +84,7 @@ internal class PuckAnimatorManager(
     bearingAnimator.updateOptions(block)
   }
 
-  fun updatePointAnimator(block: ValueAnimator.() -> Unit) {
-    pointAnimator.updateOptions(block)
+  fun updatePositionAnimator(block: ValueAnimator.() -> Unit) {
+    positionAnimator.updateOptions(block)
   }
 }

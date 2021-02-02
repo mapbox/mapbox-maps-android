@@ -20,9 +20,4 @@ internal object Evaluators {
   val DOUBLE = TypeEvaluator<Double> { fraction, startValue, endValue ->
     startValue + fraction * (endValue - startValue)
   }
-
-  /**
-   * Type evaluator for Object data
-   */
-  val OBJECT = TypeEvaluator<Any> { _, _, _ -> Any() }
 }
