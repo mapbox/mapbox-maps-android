@@ -33,8 +33,8 @@ class LineManager(
 
   init {
     val id = ID_GENERATOR.incrementAndGet()
-    layerId = annotationConfig?.layerId ?: "mapbox-android-fill-layer-$id"
-    sourceId = annotationConfig?.sourceId ?: "mapbox-android-fill-source-$id"
+    layerId = annotationConfig?.layerId ?: "mapbox-android-line-layer-$id"
+    sourceId = annotationConfig?.sourceId ?: "mapbox-android-line-source-$id"
     delegateProvider.getStyle {
       style = it
       initLayerAndSource()

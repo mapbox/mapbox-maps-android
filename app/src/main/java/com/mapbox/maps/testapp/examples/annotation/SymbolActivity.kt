@@ -86,16 +86,24 @@ class SymbolActivity : AppCompatActivity() {
             .withDraggable(true)
           symbol = create(symbolOptions)
         }
-        // create nearby symbols
-        val nearbyOptions: SymbolOptions = SymbolOptions()
-          .withPoint(Point.fromLngLat(NEARBY_LONGITUDE, NEARBY_LATITUDE))
-          .withIconImage(MAKI_ICON_CIRCLE)
-          .withIconColor(ColorUtils.colorToRgbaString(Color.YELLOW))
-          .withIconSize(2.5)
-          .withSymbolSortKey(5.0)
-          .withDraggable(true)
-        create(nearbyOptions)
 
+        BitmapUtils.getBitmapFromDrawable(
+          ResourcesCompat.getDrawable(
+            resources,
+            R.drawable.custom_user_arrow,
+            this@SymbolActivity.theme
+          )
+        )?.let {
+          // create nearby symbols
+          val nearbyOptions: SymbolOptions = SymbolOptions()
+            .withPoint(Point.fromLngLat(NEARBY_LONGITUDE, NEARBY_LATITUDE))
+            .withIconImage(it)
+            .withIconColor(ColorUtils.colorToRgbaString(Color.YELLOW))
+            .withIconSize(2.5)
+            .withSymbolSortKey(5.0)
+            .withDraggable(true)
+          create(nearbyOptions)
+        }
         // random add symbols across the globe
         val symbolOptionsList: MutableList<SymbolOptions> = ArrayList()
         for (i in 0..20) {

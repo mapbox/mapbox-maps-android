@@ -69,7 +69,7 @@ class Symbol(
       value?.let {
         field = it
         if (iconImage == null) {
-          iconImage = ICON_DEFAULT_NAME
+          iconImage = ICON_DEFAULT_NAME_PREFIX + id
         }
       }
     }
@@ -1217,6 +1217,6 @@ class Symbol(
     /** the Id key for annotation */
     const val ID_KEY: String = "Symbol"
     /** the default name for icon */
-    internal const val ICON_DEFAULT_NAME = "icon_default_name"
+    const val ICON_DEFAULT_NAME_PREFIX = "icon_default_name_"
   }
 }

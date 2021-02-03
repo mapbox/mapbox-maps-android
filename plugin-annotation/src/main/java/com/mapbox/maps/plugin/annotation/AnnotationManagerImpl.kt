@@ -226,11 +226,17 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
       annotations
         .filter { it.value.getType() == AnnotationType.Symbol }
         .forEach {
-          (it.value as Symbol).iconImageBitmap?.let {
-            val imagePlugin = image(Symbol.ICON_DEFAULT_NAME) {
-              bitmap(it)
+          val symbol = it.value as Symbol
+          symbol.iconImage?.let { image ->
+            if (image.startsWith(Symbol.ICON_DEFAULT_NAME_PREFIX)) {
+              // User set the bitmap icon, add the icon to style
+              symbol.iconImageBitmap?.let { bitmap ->
+                val imagePlugin = image(image) {
+                  bitmap(bitmap)
+                }
+                style.addImage(imagePlugin)
+              }
             }
-            style.addImage(imagePlugin)
           }
         }
       val features = annotations.map {

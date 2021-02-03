@@ -166,7 +166,7 @@ class SymbolManagerTest {
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
     assertEquals("car-15", annotation.iconImage)
-    verify(exactly = 1) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
+    verify(exactly = 0) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
   }
 
   @Test
@@ -177,7 +177,7 @@ class SymbolManagerTest {
         .withIconImage(bitmap)
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
-    assertEquals(Symbol.ICON_DEFAULT_NAME, annotation.iconImage)
+    assertEquals(Symbol.ICON_DEFAULT_NAME_PREFIX + annotation.id, annotation.iconImage)
 
     verify(exactly = 1) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
   }
