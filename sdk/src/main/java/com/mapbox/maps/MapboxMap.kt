@@ -5,8 +5,11 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
+import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.*
+import com.mapbox.maps.plugin.delegates.extensions.MapPluginExtensionsDelegate
 import com.mapbox.maps.plugin.delegates.listeners.*
+import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -32,12 +35,16 @@ class MapboxMap internal constructor(
   MapFeatureQueryDelegate,
   ObservableInterface,
   MapListenerDelegate,
+  MapPluginExtensionsDelegate,
   MapStyleStateDelegate {
 
   private val nativeMapWeakRef = WeakReference(nativeMap)
   internal lateinit var style: Style
 
   private var terrainEnabled = false
+
+  private var cameraAnimationsPlugin: WeakReference<CameraAnimationsPlugin>? = null
+  private var gesturesPlugin: WeakReference<GesturesPlugin>? = null
 
   /**
    * Will load a new map style asynchronous from the specified URI.
@@ -1057,4 +1064,28 @@ class MapboxMap internal constructor(
    * @return True if terrain is enabled for given style and false otherwise.
    */
   override fun terrainEnabled() = terrainEnabled
+
+  internal fun setCameraAnimationPlugin(cameraAnimationsPlugin: CameraAnimationsPlugin?) {
+    cameraAnimationsPlugin?.let {
+      this.cameraAnimationsPlugin = WeakReference(it)
+    }
+  }
+
+  /**
+   * Get an instance of [CameraAnimationsPlugin].
+   * In most cases must not be called directly.
+   */
+  override fun getCameraAnimationPlugin() = cameraAnimationsPlugin?.get()
+
+  internal fun setGesturesAnimationPlugin(gesturesPlugin: GesturesPlugin?) {
+    gesturesPlugin?.let {
+      this.gesturesPlugin = WeakReference(it)
+    }
+  }
+
+  /**
+   * Get an instance of [GesturesPlugin].
+   * In most cases must not be called directly.
+   */
+  override fun getGesturesPlugin() = gesturesPlugin?.get()
 }

@@ -24,6 +24,7 @@ import com.mapbox.maps.plugin.animation.*
 import com.mapbox.maps.plugin.animation.CameraAnimatorsFactory.Companion.DEFAULT_ANIMATION_DURATION_MS
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.animator.CameraAnimator
+import com.mapbox.maps.plugin.delegates.extensions.*
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_dds_style_circles_categorically.*
 

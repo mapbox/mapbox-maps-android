@@ -16,9 +16,9 @@ import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.extension.style.style
+import com.mapbox.maps.plugin.delegates.extensions.addOnMapClickListener
+import com.mapbox.maps.plugin.delegates.extensions.removeOnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
-import com.mapbox.maps.plugin.gestures.addOnMapClickListener
-import com.mapbox.maps.plugin.gestures.removeOnMapClickListener
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_icon_size_change_on_click.*
 

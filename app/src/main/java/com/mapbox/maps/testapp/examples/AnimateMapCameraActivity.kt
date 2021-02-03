@@ -6,9 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
-import com.mapbox.maps.plugin.animation.flyTo
+import com.mapbox.maps.plugin.delegates.extensions.addOnMapClickListener
+import com.mapbox.maps.plugin.delegates.extensions.flyTo
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
-import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_camera_animate.*
 

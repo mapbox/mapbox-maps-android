@@ -17,7 +17,7 @@ import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
-import com.mapbox.maps.plugin.animation.flyTo
+import com.mapbox.maps.plugin.delegates.extensions.flyTo
 import com.mapbox.maps.plugin.location.utils.BitmapUtils
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_dds_style_circles_categorically.*

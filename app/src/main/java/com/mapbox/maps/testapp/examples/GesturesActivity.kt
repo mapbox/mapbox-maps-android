@@ -17,6 +17,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
+import com.mapbox.maps.plugin.delegates.extensions.getGesturesSettings
 import com.mapbox.maps.plugin.gestures.*
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_gestures.*
