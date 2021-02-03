@@ -130,7 +130,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
    * Called when the plugin is first added to the map.
    */
   override fun initialize() {
-    animationsPluginWeakRef = WeakReference(this)
+    pluginRegistry[mapTransformDelegate] = WeakReference(this)
   }
 
   /**
@@ -138,7 +138,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
    * Cancel all running animations and cleanup all resources (registered animations, listeners).
    */
   override fun cleanup() {
-    unregisterAnimators(*animators.map { it as ValueAnimator }.toTypedArray())
+    unregisterAnimators(*animators.toTypedArray())
     cancelAnimatorSet()
     centerListeners.clear()
     zoomListeners.clear()
@@ -148,8 +148,9 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     paddingListeners.clear()
     lifecycleListener.clear()
     animators.clear()
-    animationsPluginWeakRef?.clear()
-    animationsPluginWeakRef = null
+    pluginRegistry.remove(mapTransformDelegate).also { weakRef ->
+      weakRef?.clear()
+    }
   }
 
   private fun performMapJump(cameraOptions: CameraOptions) {
@@ -358,8 +359,8 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
   /**
    * Register given [ValueAnimator]'s.
-   * Such [ValueAnimator]'s must be created with static methods like [CameraCenterAnimator.create] or similar.
-   * Only registered animations affect [MapboxMap] and would not even start otherwise.
+   * Such [ValueAnimator]'s must be created with static methods like [CameraAnimationsPlugin.createCenterAnimator] or similar.
+   * Only registered animations affect MapboxMap and would not even start otherwise.
    *
    * @param cameraAnimators Variable number of [ValueAnimator]'s
    */
@@ -406,7 +407,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
    * Unregister all previously registered [ValueAnimator]'s.
    */
   fun unregisterAllAnimators() {
-    unregisterAnimators(*animators.map { it as ValueAnimator }.toTypedArray())
+    unregisterAnimators(*animators.toTypedArray())
   }
 
   /**
@@ -427,108 +428,108 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   // property update listeners
 
   /**
-   * Add [CameraZoomAnimator.ChangeListener] to receive map zoom updates.
+   * Add [CameraAnimatorChangeListener] to receive map zoom updates.
    *
-   * @param listener Instance of [CameraZoomAnimator.ChangeListener]
+   * @param listener Instance of [CameraAnimatorChangeListener]
    */
   override fun addCameraZoomChangeListener(listener: CameraAnimatorChangeListener<Double>) {
     zoomListeners.add(listener)
   }
 
   /**
-   * Remove [CameraZoomAnimator.ChangeListener]. No updates will arrive after that.
+   * Remove [CameraAnimatorChangeListener]. No updates will arrive after that.
    *
-   * @param listener Instance of [CameraZoomAnimator.ChangeListener]
+   * @param listener Instance of [CameraAnimatorChangeListener]
    */
   override fun removeCameraZoomChangeListener(listener: CameraAnimatorChangeListener<Double>) {
     zoomListeners.remove(listener)
   }
 
   /**
-   * Add [CameraCenterAnimator.ChangeListener] to receive map center updates.
+   * Add [CameraAnimatorChangeListener] to receive map center updates.
    *
-   * @param listener Instance of [CameraCenterAnimator.ChangeListener]
+   * @param listener Instance of [CameraAnimatorChangeListener]
    */
   override fun addCameraCenterChangeListener(listener: CameraAnimatorChangeListener<Point>) {
     centerListeners.add(listener)
   }
 
   /**
-   * Remove [CameraCenterAnimator.ChangeListener]. No updates will arrive after that.
+   * Remove [CameraAnimatorChangeListener]. No updates will arrive after that.
    *
-   * @param listener Instance of [CameraCenterAnimator.ChangeListener]
+   * @param listener Instance of [CameraAnimatorChangeListener]
    */
   override fun removeCameraCenterChangeListener(listener: CameraAnimatorChangeListener<Point>) {
     centerListeners.remove(listener)
   }
 
   /**
-   * Add [CameraPaddingAnimator.ChangeListener] to receive map padding updates.
+   * Add [CameraAnimatorChangeListener] to receive map padding updates.
    *
-   * @param listener Instance of [CameraPaddingAnimator.ChangeListener]
+   * @param listener Instance of [CameraAnimatorChangeListener]
    */
   override fun addCameraPaddingChangeListener(listener: CameraAnimatorChangeListener<EdgeInsets>) {
     paddingListeners.add(listener)
   }
 
   /**
-   * Remove [CameraPaddingAnimator.ChangeListener]. No updates will arrive after that.
+   * Remove [CameraAnimatorChangeListener]. No updates will arrive after that.
    *
-   * @param listener Instance of [CameraPaddingAnimator.ChangeListener]
+   * @param listener Instance of [CameraAnimatorChangeListener]
    */
   override fun removeCameraPaddingChangeListener(listener: CameraAnimatorChangeListener<EdgeInsets>) {
     paddingListeners.remove(listener)
   }
 
   /**
-   * Add [CameraAnchorAnimator.ChangeListener] to receive map anchor updates.
+   * Add [CameraAnimatorChangeListener] to receive map anchor updates.
    *
-   * @param listener Instance of [CameraAnchorAnimator.ChangeListener]
+   * @param listener Instance of [CameraAnimatorChangeListener]
    */
   override fun addCameraAnchorChangeListener(listener: CameraAnimatorChangeListener<ScreenCoordinate>) {
     anchorListeners.add(listener)
   }
 
   /**
-   * Remove [CameraAnchorAnimator.ChangeListener]. No updates will arrive after that.
+   * Remove [CameraAnimatorChangeListener]. No updates will arrive after that.
    *
-   * @param listener Instance of [CameraAnchorAnimator.ChangeListener]
+   * @param listener Instance of [CameraAnimatorChangeListener]
    */
   override fun removeCameraAnchorChangeListener(listener: CameraAnimatorChangeListener<ScreenCoordinate>) {
     anchorListeners.remove(listener)
   }
 
   /**
-   * Add [CameraBearingAnimator.ChangeListener] to receive map bearing updates.
+   * Add [CameraAnimatorChangeListener] to receive map bearing updates.
    *
-   * @param listener Instance of [CameraBearingAnimator.ChangeListener]
+   * @param listener Instance of [CameraAnimatorChangeListener]
    */
   override fun addCameraBearingChangeListener(listener: CameraAnimatorChangeListener<Double>) {
     bearingListeners.add(listener)
   }
 
   /**
-   * Remove [CameraBearingAnimator.ChangeListener]. No updates will arrive after that.
+   * Remove [CameraAnimatorChangeListener]. No updates will arrive after that.
    *
-   * @param listener Instance of [CameraBearingAnimator.ChangeListener]
+   * @param listener Instance of [CameraAnimatorChangeListener]
    */
   override fun removeCameraBearingChangeListener(listener: CameraAnimatorChangeListener<Double>) {
     bearingListeners.remove(listener)
   }
 
   /**
-   * Add [CameraPitchAnimator.ChangeListener] to receive map pitch updates.
+   * Add [CameraAnimatorChangeListener] to receive map pitch updates.
    *
-   * @param listener Instance of [CameraPitchAnimator.ChangeListener]
+   * @param listener Instance of [CameraAnimatorChangeListener]
    */
   override fun addCameraPitchChangeListener(listener: CameraAnimatorChangeListener<Double>) {
     pitchListeners.add(listener)
   }
 
   /**
-   * Remove [CameraPitchAnimator.ChangeListener]. No updates will arrive after that.
+   * Remove [CameraAnimatorChangeListener]. No updates will arrive after that.
    *
-   * @param listener Instance of [CameraPitchAnimator.ChangeListener]
+   * @param listener Instance of [CameraAnimatorChangeListener]
    */
   override fun removeCameraPitchChangeListener(listener: CameraAnimatorChangeListener<Double>) {
     pitchListeners.remove(listener)
@@ -597,7 +598,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
    *
    * @param offset The screen coordinate distance to move by
    */
-  override fun calculateMoveBy(offset: ScreenCoordinate): Point? =
+  override fun calculateMoveBy(offset: ScreenCoordinate): Point =
     CameraTransform.calculateLatLngMoveBy(
       offset,
       mapCameraDelegate.getCameraOptions(),
@@ -816,7 +817,8 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
    */
   companion object {
     private const val TAG = "Mbgl-CameraManager"
-    internal var animationsPluginWeakRef: WeakReference<CameraAnimationsPluginImpl>? = null
+    internal var pluginRegistry: HashMap<MapTransformDelegate, WeakReference<CameraAnimationsPluginImpl>> =
+      HashMap()
   }
 }
 
@@ -839,9 +841,7 @@ fun MapPluginProviderDelegate.getCameraAnimationsPlugin(): CameraAnimationsPlugi
 fun MapTransformDelegate.easeTo(
   cameraOptions: CameraOptions,
   animationOptions: MapAnimationOptions? = null
-) =
-  CameraAnimationsPluginImpl.animationsPluginWeakRef?.get()
-    ?.easeTo(cameraOptions, animationOptions)
+) = CameraAnimationsPluginImpl.pluginRegistry[this]?.get()?.easeTo(cameraOptions, animationOptions)
 
 /**
  * Extension flyTo() function for [MapTransformDelegate]
@@ -853,9 +853,7 @@ fun MapTransformDelegate.easeTo(
 fun MapTransformDelegate.flyTo(
   cameraOptions: CameraOptions,
   animationOptions: MapAnimationOptions? = null
-) =
-  CameraAnimationsPluginImpl.animationsPluginWeakRef?.get()
-    ?.flyTo(cameraOptions, animationOptions)
+) = CameraAnimationsPluginImpl.pluginRegistry[this]?.get()?.flyTo(cameraOptions, animationOptions)
 
 /**
  * Extension pitchBy() function for [MapTransformDelegate]
@@ -867,9 +865,7 @@ fun MapTransformDelegate.flyTo(
 fun MapTransformDelegate.pitchBy(
   pitch: Double,
   animationOptions: MapAnimationOptions? = null
-) =
-  CameraAnimationsPluginImpl.animationsPluginWeakRef?.get()
-    ?.pitchBy(pitch, animationOptions)
+) = CameraAnimationsPluginImpl.pluginRegistry[this]?.get()?.pitchBy(pitch, animationOptions)
 
 /**
  * Extension scaleBy() function for [MapTransformDelegate]
@@ -883,9 +879,8 @@ fun MapTransformDelegate.scaleBy(
   amount: Double,
   screenCoordinate: ScreenCoordinate?,
   animationOptions: MapAnimationOptions? = null
-) =
-  CameraAnimationsPluginImpl.animationsPluginWeakRef?.get()
-    ?.scaleBy(amount, screenCoordinate, animationOptions)
+) = CameraAnimationsPluginImpl.pluginRegistry[this]?.get()
+  ?.scaleBy(amount, screenCoordinate, animationOptions)
 
 /**
  * Extension moveBy() function for [MapTransformDelegate]
@@ -897,9 +892,7 @@ fun MapTransformDelegate.scaleBy(
 fun MapTransformDelegate.moveBy(
   screenCoordinate: ScreenCoordinate,
   animationOptions: MapAnimationOptions? = null
-) =
-  CameraAnimationsPluginImpl.animationsPluginWeakRef?.get()
-    ?.moveBy(screenCoordinate, animationOptions)
+) = CameraAnimationsPluginImpl.pluginRegistry[this]?.get()?.moveBy(screenCoordinate, animationOptions)
 
 /**
  * Extension rotateBy() function for [MapTransformDelegate]
@@ -913,6 +906,4 @@ fun MapTransformDelegate.rotateBy(
   first: ScreenCoordinate,
   second: ScreenCoordinate,
   animationOptions: MapAnimationOptions? = null
-) =
-  CameraAnimationsPluginImpl.animationsPluginWeakRef?.get()
-    ?.rotateBy(first, second, animationOptions)
+) = CameraAnimationsPluginImpl.pluginRegistry[this]?.get()?.rotateBy(first, second, animationOptions)
