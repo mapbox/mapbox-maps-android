@@ -46,7 +46,7 @@ internal object BitmapUtils {
    * @param other  the bitmap to compare with
    * @return true if equal
    */
-  @VisibleForTesting
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   fun equals(bitmap: Bitmap, other: Bitmap): Boolean {
     val buffer =
       ByteBuffer.allocate(bitmap.height * bitmap.rowBytes)

@@ -3,6 +3,8 @@ package com.mapbox.maps.plugin.locationcomponent
 import android.animation.ValueAnimator
 import android.content.Context
 import android.util.AttributeSet
+import androidx.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.geojson.Point
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
@@ -21,12 +23,17 @@ import java.util.concurrent.CopyOnWriteArrayList
 class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
   LocationComponentSettingsBase() {
   private lateinit var delegateProvider: MapDelegateProvider
+
   private lateinit var context: WeakReference<Context>
 
-  private var locationPuckManager: LocationPuckManager? = null
-  private var locationProvider: LocationProvider? = null
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal var locationPuckManager: LocationPuckManager? = null
 
-  private var isLocationComponentActivated = false
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal var locationProvider: LocationProvider? = null
+
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal var isLocationComponentActivated = false
 
   private val onIndicatorPositionChangedListener =
     CopyOnWriteArrayList<OnIndicatorPositionChangedListener>()
@@ -52,7 +59,8 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
     onIndicatorPositionChangedListener.remove(listener)
   }
 
-  private val indicatorPositionChangedListener = OnIndicatorPositionChangedListener {
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal val indicatorPositionChangedListener = OnIndicatorPositionChangedListener {
     for (listener in onIndicatorPositionChangedListener) {
       listener.onIndicatorPositionChanged(it)
     }
@@ -76,7 +84,8 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
     onIndicatorBearingChangedListener.remove(listener)
   }
 
-  private val indicatorBearingChangedListener = OnIndicatorBearingChangedListener {
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal val indicatorBearingChangedListener = OnIndicatorBearingChangedListener {
     for (listener in onIndicatorBearingChangedListener) {
       listener.onIndicatorBearingChanged(it)
     }
@@ -172,6 +181,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
 
   private fun deactivateLocationComponent() {
     locationPuckManager?.cleanUp()
+    locationPuckManager = null
     locationProvider?.unRegisterLocationConsumer(this)
     isLocationComponentActivated = false
   }
@@ -192,6 +202,21 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
     if (internalSettings.enabled && locationProvider == null) {
       locationProvider = LocationProviderImpl(context)
     }
+  }
+
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal fun bind(
+    context: Context,
+    attrs: AttributeSet?,
+    pixelRatio: Float,
+    locationProvider: LocationProvider,
+    locationPuckManager: LocationPuckManager
+  ) {
+    this.context = WeakReference(context)
+    this.internalSettings =
+      LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, pixelRatio)
+    this.locationProvider = locationProvider
+    this.locationPuckManager = locationPuckManager
   }
 
   /**

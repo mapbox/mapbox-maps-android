@@ -31,7 +31,7 @@ internal class LocationPuckManager(
 
   private var lastBearing: Double = delegateProvider.mapCameraDelegate.getBearing()
 
-  @VisibleForTesting
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var locationLayerRenderer =
     when (val puck = settings.locationPuck) {
       is LocationPuck2D -> {
@@ -134,7 +134,7 @@ internal class LocationPuckManager(
     locationLayerRenderer.hide()
   }
 
-  @VisibleForTesting
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal fun styleScaling(settings: LocationComponentSettings) {
     val puck = settings.locationPuck
     val minZoom = delegateProvider.mapTransformDelegate.getBounds().minZoom ?: 0.0
