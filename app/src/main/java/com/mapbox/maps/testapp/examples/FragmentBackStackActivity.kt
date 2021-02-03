@@ -39,7 +39,7 @@ class FragmentBackStackActivity : AppCompatActivity() {
       }
     }
 
-    button.setOnClickListener { handleClick() }
+    displayOnSecondDisplayButton.setOnClickListener { handleClick() }
     fragmentButton.setOnClickListener { addNewFragment() }
   }
 

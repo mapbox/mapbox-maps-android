@@ -119,5 +119,7 @@
     <string name="add_icon_halo">Add icon halo</string>
     <string name="filter">Filter</string>
     <string name="animate_symbol">Animate symbol</string>
+    <string name="display_the_second_screen">Display map in the second screen</string>
+    <string name="move_camera">Move Camera</string>
 
 </resources>

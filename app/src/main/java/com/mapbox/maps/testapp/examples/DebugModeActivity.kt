@@ -51,7 +51,7 @@ class DebugModeActivity : AppCompatActivity() {
     scaleBarPlugin = mapView.getScaleBarPlugin()
     scaleBarPlugin.enabled = false
     scaleBarPlugin.textColor = ContextCompat.getColor(this@DebugModeActivity, R.color.primary)
-    button.setOnClickListener {
+    displayOnSecondDisplayButton.setOnClickListener {
       scaleBarPlugin.enabled = true
 
       mapboxMap.setDebug(debugOptions, false)
