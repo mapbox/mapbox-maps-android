@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.plugin.annotation.generated
 
+import android.graphics.Bitmap
 import android.graphics.PointF
 import android.view.View
 import com.mapbox.android.gestures.MoveDistancesObject
@@ -56,6 +57,7 @@ class SymbolManagerTest {
   private val source: GeoJsonSource = mockk()
   private val mapView: View = mockk()
   private lateinit var manager: SymbolManager
+  val bitmap = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888)
   @Before
   fun setUp() {
     mockkStatic("com.mapbox.maps.extension.style.layers.LayerKt")
@@ -97,6 +99,9 @@ class SymbolManagerTest {
     manager = SymbolManager(mapView, delegateProvider)
     manager.layer = layer
     manager.source = source
+    val expected = mockk<Expected<Void, String>>(relaxUnitFun = true, relaxed = true)
+    every { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) } returns expected
+    every { expected.error } returns null
     every { layer.iconAnchor(any<Expression>()) } answers { layer }
     every { layer.iconImage(any<Expression>()) } answers { layer }
     every { layer.iconOffset(any<Expression>()) } answers { layer }
@@ -151,6 +156,44 @@ class SymbolManagerTest {
     assertTrue(manager.longClickListeners.isEmpty())
   }
 
+  @Test
+  fun iconImageBitmapWithIconImage() {
+    every { style.styleSourceExists(any()) } returns true
+    val annotation = manager.create(
+      SymbolOptions()
+        .withIconImage("car-15")
+        .withIconImage(bitmap)
+        .withPoint(Point.fromLngLat(0.0, 0.0))
+    )
+    assertEquals("car-15", annotation.iconImage)
+    verify(exactly = 0) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
+  }
+
+  @Test
+  fun iconImageBitmapWithoutIconImage() {
+    every { style.styleSourceExists(any()) } returns true
+    val annotation = manager.create(
+      SymbolOptions()
+        .withIconImage(bitmap)
+        .withPoint(Point.fromLngLat(0.0, 0.0))
+    )
+    assertEquals(Symbol.ICON_DEFAULT_NAME_PREFIX + annotation.id, annotation.iconImage)
+
+    verify(exactly = 1) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
+  }
+
+  @Test
+  fun updateIconImageBitmap() {
+    every { style.styleSourceExists(any()) } returns true
+    val annotation = manager.create(
+      SymbolOptions()
+        .withPoint(Point.fromLngLat(0.0, 0.0))
+    )
+    verify(exactly = 0) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
+    annotation.iconImageBitmap = bitmap
+    manager.update(annotation)
+    verify(exactly = 1) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
+  }
   @Test
   fun create() {
     val annotation = manager.create(

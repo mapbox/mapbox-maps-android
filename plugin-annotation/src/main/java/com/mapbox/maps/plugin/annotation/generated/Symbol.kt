@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.plugin.annotation.generated
 
+import android.graphics.Bitmap
 import androidx.annotation.ColorInt
 import com.google.gson.*
 import com.mapbox.android.gestures.MoveDistancesObject
@@ -22,7 +23,7 @@ import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
 class Symbol(
   id: Long,
   /** The annotation manger that manipulate this annotation */
-  val annotationManager: AnnotationManager<Point, Symbol, *, *, *, *>,
+  private val annotationManager: AnnotationManager<Point, Symbol, *, *, *, *>,
   jsonObject: JsonObject,
   geometry: Point
 ) : Annotation<Point>(id, jsonObject, geometry) {
@@ -53,6 +54,25 @@ class Symbol(
       geometry = value
     }
 
+  /**
+   * The bitmap image for this Symbol
+   *
+   * Will not take effect if [iconImage] has been set.
+   */
+  var iconImageBitmap: Bitmap? = null
+    /**
+     * Set the iconImageBitmap property
+     *
+     * @param value the iconBitmap
+     */
+    set(value) {
+      value?.let {
+        field = it
+        if (iconImage == null) {
+          iconImage = ICON_DEFAULT_NAME_PREFIX + id
+        }
+      }
+    }
   // Property accessors
   /**
    * The iconAnchor property
@@ -680,7 +700,7 @@ class Symbol(
      * @param color value for String
      */
     set(value) {
-      jsonObject.addProperty("icon-color", value)
+      jsonObject.addProperty(SymbolOptions.PROPERTY_ICON_COLOR, value)
     }
 
   /**
@@ -780,7 +800,7 @@ class Symbol(
      * @param color value for String
      */
     set(value) {
-      jsonObject.addProperty("icon-halo-color", value)
+      jsonObject.addProperty(SymbolOptions.PROPERTY_ICON_HALO_COLOR, value)
     }
 
   /**
@@ -913,7 +933,7 @@ class Symbol(
      * @param color value for String
      */
     set(value) {
-      jsonObject.addProperty("text-color", value)
+      jsonObject.addProperty(SymbolOptions.PROPERTY_TEXT_COLOR, value)
     }
 
   /**
@@ -1013,7 +1033,7 @@ class Symbol(
      * @param color value for String
      */
     set(value) {
-      jsonObject.addProperty("text-halo-color", value)
+      jsonObject.addProperty(SymbolOptions.PROPERTY_TEXT_HALO_COLOR, value)
     }
 
   /**
@@ -1196,5 +1216,7 @@ class Symbol(
   companion object {
     /** the Id key for annotation */
     const val ID_KEY: String = "Symbol"
+    /** the default name for icon */
+    const val ICON_DEFAULT_NAME_PREFIX = "icon_default_name_"
   }
 }

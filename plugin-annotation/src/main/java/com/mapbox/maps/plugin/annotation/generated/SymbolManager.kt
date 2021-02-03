@@ -33,8 +33,8 @@ class SymbolManager(
 
   init {
     val id = ID_GENERATOR.incrementAndGet()
-    layerId = annotationConfig?.layerId ?: "mapbox-android-fill-layer-$id"
-    sourceId = annotationConfig?.sourceId ?: "mapbox-android-fill-source-$id"
+    layerId = annotationConfig?.layerId ?: "mapbox-android-symbol-layer-$id"
+    sourceId = annotationConfig?.sourceId ?: "mapbox-android-symbol-source-$id"
     delegateProvider.getStyle {
       style = it
       initLayerAndSource()

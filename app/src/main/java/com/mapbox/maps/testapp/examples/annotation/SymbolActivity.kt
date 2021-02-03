@@ -1,7 +1,6 @@
 package com.mapbox.maps.testapp.examples.annotation
 
 import android.animation.ValueAnimator
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
@@ -37,7 +36,6 @@ class SymbolActivity : AppCompatActivity() {
   private var symbolManager: SymbolManager? = null
   private var symbol: Symbol? = null
   private val animators: MutableList<ValueAnimator> = mutableListOf()
-  private var airportImage: Bitmap? = null
   private var index: Int = 0
   private val nextStyle: String
     get() {
@@ -47,19 +45,7 @@ class SymbolActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_annotation)
-    airportImage = BitmapUtils.getBitmapFromDrawable(
-      ResourcesCompat.getDrawable(
-        resources,
-        R.drawable.ic_airplanemode_active_black_24dp,
-        this@SymbolActivity.theme
-      )
-    )
-
-    mapView.getMapboxMap().loadStyleUri(nextStyle) { style ->
-      airportImage?.let {
-        style.addImage(ID_ICON_AIRPORT, it, true)
-      }
-
+    mapView.getMapboxMap().loadStyleUri(nextStyle) {
       val annotationPlugin = mapView.getAnnotationPlugin()
       symbolManager = annotationPlugin.getSymbolManager(mapView).apply {
         addClickListener(
@@ -80,29 +66,44 @@ class SymbolActivity : AppCompatActivity() {
         iconAllowOverlap = true
         textAllowOverlap = true
 
-        // create a symbol
-        val symbolOptions: SymbolOptions = SymbolOptions()
-          .withPoint(Point.fromLngLat(AIRPORT_LONGITUDE, AIRPORT_LATITUDE))
-          .withIconImage(ID_ICON_AIRPORT)
-          .withTextField(ID_ICON_AIRPORT)
-          .withTextOffset(listOf(0.0, -1.0))
-          .withTextColor(ColorUtils.colorToRgbaString(Color.RED))
-          .withIconSize(1.3)
-          .withIconOffset(listOf(5.0, 10.0))
-          .withSymbolSortKey(10.0)
-          .withDraggable(true)
-        symbol = create(symbolOptions)
+        BitmapUtils.getBitmapFromDrawable(
+          ResourcesCompat.getDrawable(
+            resources,
+            R.drawable.ic_airplanemode_active_black_24dp,
+            this@SymbolActivity.theme
+          )
+        )?.let {
+          // create a symbol
+          val symbolOptions: SymbolOptions = SymbolOptions()
+            .withPoint(Point.fromLngLat(AIRPORT_LONGITUDE, AIRPORT_LATITUDE))
+            .withIconImage(it)
+            .withTextField(ID_ICON_AIRPORT)
+            .withTextOffset(listOf(0.0, -1.0))
+            .withTextColor(ColorUtils.colorToRgbaString(Color.RED))
+            .withIconSize(1.3)
+            .withIconOffset(listOf(5.0, 10.0))
+            .withSymbolSortKey(10.0)
+            .withDraggable(true)
+          symbol = create(symbolOptions)
+        }
 
-        // create nearby symbols
-        val nearbyOptions: SymbolOptions = SymbolOptions()
-          .withPoint(Point.fromLngLat(NEARBY_LONGITUDE, NEARBY_LATITUDE))
-          .withIconImage(MAKI_ICON_CIRCLE)
-          .withIconColor(ColorUtils.colorToRgbaString(Color.YELLOW))
-          .withIconSize(2.5)
-          .withSymbolSortKey(5.0)
-          .withDraggable(true)
-        create(nearbyOptions)
-
+        BitmapUtils.getBitmapFromDrawable(
+          ResourcesCompat.getDrawable(
+            resources,
+            R.drawable.custom_user_arrow,
+            this@SymbolActivity.theme
+          )
+        )?.let {
+          // create nearby symbols
+          val nearbyOptions: SymbolOptions = SymbolOptions()
+            .withPoint(Point.fromLngLat(NEARBY_LONGITUDE, NEARBY_LATITUDE))
+            .withIconImage(it)
+            .withIconColor(ColorUtils.colorToRgbaString(Color.YELLOW))
+            .withIconSize(2.5)
+            .withSymbolSortKey(5.0)
+            .withDraggable(true)
+          create(nearbyOptions)
+        }
         // random add symbols across the globe
         val symbolOptionsList: MutableList<SymbolOptions> = ArrayList()
         for (i in 0..20) {
@@ -126,11 +127,7 @@ class SymbolActivity : AppCompatActivity() {
 
     deleteAll.setOnClickListener { symbolManager?.deleteAll() }
     changeStyle.setOnClickListener {
-      mapView.getMapboxMap().loadStyleUri(nextStyle) { style ->
-        airportImage?.let { bitMap ->
-          style.addImage(ID_ICON_AIRPORT, bitMap, true)
-        }
-      }
+      mapView.getMapboxMap().loadStyleUri(nextStyle)
     }
   }
 

@@ -13,6 +13,8 @@ import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression
+import com.mapbox.maps.extension.style.image.addImage
+import com.mapbox.maps.extension.style.image.image
 import com.mapbox.maps.extension.style.layers.Layer
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.addLayerBelow
@@ -21,6 +23,7 @@ import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.PLUGIN_GESTURE_CLASS_NAME
+import com.mapbox.maps.plugin.annotation.generated.Symbol
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate
 import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
@@ -215,18 +218,34 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
       Logger.e(TAG, "Can't update source: style is not fully loaded.")
       return
     }
-    source?.let {
-      if (!style.styleSourceExists(it.sourceId)) {
+    source?.let { geoJsonSource ->
+      if (!style.styleSourceExists(geoJsonSource.sourceId)) {
         Logger.e(TAG, "Can't update source: source has not been added to style.")
         return
       }
+      annotations
+        .filter { it.value.getType() == AnnotationType.Symbol }
+        .forEach {
+          val symbol = it.value as Symbol
+          symbol.iconImage?.let { image ->
+            if (image.startsWith(Symbol.ICON_DEFAULT_NAME_PREFIX)) {
+              // User set the bitmap icon, add the icon to style
+              symbol.iconImageBitmap?.let { bitmap ->
+                val imagePlugin = image(image) {
+                  bitmap(bitmap)
+                }
+                style.addImage(imagePlugin)
+              }
+            }
+          }
+        }
       val features = annotations.map {
         val annotation = Feature.fromGeometry(it.value.geometry, it.value.jsonObject)
         it.value.setUsedDataDrivenProperties()
         annotation
       }
 
-      it.featureCollection(FeatureCollection.fromFeatures(features))
+      geoJsonSource.featureCollection(FeatureCollection.fromFeatures(features))
     }
   }
 
