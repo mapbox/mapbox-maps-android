@@ -3,6 +3,7 @@ package com.mapbox.maps.testapp.examples
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.hardware.display.DisplayManager
 import android.os.Build
 import android.os.Bundle
@@ -11,6 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.Style
+import com.mapbox.maps.extension.style.image.image
+import com.mapbox.maps.extension.style.layers.generated.symbolLayer
+import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
+import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.testapp.R
@@ -28,7 +33,21 @@ class MultiDisplayActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_multi_display)
-    mapView.getMapboxMap().loadStyleUri(Style.DARK)
+    mapView.getMapboxMap().loadStyle(
+      style(Style.DARK) {
+        +image(IMAGE_ID) {
+          bitmap(BitmapFactory.decodeResource(resources, R.drawable.red_marker))
+        }
+        +geoJsonSource(SOURCE_ID) {
+          geometry(HELSINKI)
+        }
+        +symbolLayer(LAYER_ID, SOURCE_ID) {
+          iconImage(IMAGE_ID)
+          iconAllowOverlap(true)
+        }
+      }
+    )
+
     displayOnSecondDisplayButton.setOnClickListener {
       displayMapInSecondaryScreen()
     }
@@ -94,5 +113,8 @@ class MultiDisplayActivity : AppCompatActivity() {
     private val HELSINKI = Point.fromLngLat(24.9384, 60.1699)
     private const val ZOOM = 14.0
     private const val DURATION = 3000L
+    private const val IMAGE_ID = "test-image"
+    private const val LAYER_ID = "symbol-layer-id"
+    private const val SOURCE_ID = "source-id"
   }
 }
