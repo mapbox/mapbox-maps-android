@@ -2,12 +2,14 @@
 
 package com.mapbox.maps.plugin.annotation.generated
 
+import androidx.annotation.ColorInt
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.layers.properties.generated.LineJoin
+import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.AnnotationManager
 import com.mapbox.maps.plugin.annotation.AnnotationOptions
 
@@ -88,6 +90,19 @@ class LineOptions : AnnotationOptions<LineString, Line> {
    */
   fun withLineColor(lineColor: String): LineOptions {
     this.lineColor = lineColor
+    return this
+  }
+
+  /**
+   * Set line-color to initialise the line with.
+   * <p>
+   * The color with which the line will be drawn.
+   * </p>
+   * @param lineColor the line-color value with ColorInt format
+   * @return this
+   */
+  fun withLineColor(@ColorInt lineColor: Int): LineOptions {
+    this.lineColor = ColorUtils.colorToRgbaString(lineColor)
     return this
   }
 

@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.layers.getLayer
-import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
@@ -60,7 +59,7 @@ class LineActivity : AppCompatActivity() {
 
         val lineOptions: LineOptions = LineOptions()
           .withPoints(points)
-          .withLineColor(ColorUtils.colorToRgbaString(Color.RED))
+          .withLineColor(Color.RED)
           .withLineWidth(5.0)
         create(lineOptions)
 
@@ -73,7 +72,7 @@ class LineActivity : AppCompatActivity() {
           val color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
           LineOptions()
             .withPoints(it)
-            .withLineColor(ColorUtils.colorToRgbaString(color))
+            .withLineColor(color)
         }
 
         create(lineOptionsList)

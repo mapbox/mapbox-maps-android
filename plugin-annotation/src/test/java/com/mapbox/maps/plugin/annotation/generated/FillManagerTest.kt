@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.plugin.annotation.generated
 
+import android.graphics.Color
 import android.graphics.PointF
 import android.view.View
 import com.mapbox.android.gestures.MoveDistancesObject
@@ -377,6 +378,19 @@ class FillManagerTest {
   }
 
   @Test
+  fun testFillColorIntLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.fillColor(Expression.get(FillOptions.PROPERTY_FILL_COLOR)) }
+    val options = FillOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+      .withFillColor(Color.YELLOW)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.fillColor(Expression.get(FillOptions.PROPERTY_FILL_COLOR)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.fillColor(Expression.get(FillOptions.PROPERTY_FILL_COLOR)) }
+  }
+
+  @Test
   fun testFillColorLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.fillColor(Expression.get(FillOptions.PROPERTY_FILL_COLOR)) }
@@ -400,6 +414,19 @@ class FillManagerTest {
     verify(exactly = 1) { manager.layer?.fillOpacity(Expression.get(FillOptions.PROPERTY_FILL_OPACITY)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.fillOpacity(Expression.get(FillOptions.PROPERTY_FILL_OPACITY)) }
+  }
+
+  @Test
+  fun testFillOutlineColorIntLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.fillOutlineColor(Expression.get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
+    val options = FillOptions()
+      .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+      .withFillOutlineColor(Color.YELLOW)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.fillOutlineColor(Expression.get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.fillOutlineColor(Expression.get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
   }
 
   @Test

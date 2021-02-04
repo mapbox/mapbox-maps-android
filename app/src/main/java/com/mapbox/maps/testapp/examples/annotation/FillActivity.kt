@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.JsonPrimitive
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
-import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
 import com.mapbox.maps.testapp.R
@@ -52,7 +51,7 @@ class FillActivity : AppCompatActivity() {
         val fillOptions: FillOptions = FillOptions()
           .withPoints(points)
           .withData(JsonPrimitive("Foobar"))
-          .withFillColor(ColorUtils.colorToRgbaString(Color.RED))
+          .withFillColor(Color.RED)
         create(fillOptions)
 
         // random add fills across the globe
@@ -62,7 +61,7 @@ class FillActivity : AppCompatActivity() {
           fillOptionsList.add(
             FillOptions()
               .withPoints(AnnotationUtils.createRandomPointsList())
-              .withFillColor(ColorUtils.colorToRgbaString(color))
+              .withFillColor(color)
           )
         }
         create(fillOptionsList)

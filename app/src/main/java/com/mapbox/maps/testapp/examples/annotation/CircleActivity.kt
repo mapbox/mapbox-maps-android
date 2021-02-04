@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
-import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
 import com.mapbox.maps.testapp.R
@@ -42,7 +41,7 @@ class CircleActivity : AppCompatActivity() {
 
         val circleOptions: CircleOptions = CircleOptions()
           .withPoint(Point.fromLngLat(CIRCLE_LONGITUDE, CIRCLE_LATITUDE))
-          .withCircleColor(ColorUtils.colorToRgbaString(Color.YELLOW))
+          .withCircleColor(Color.YELLOW)
           .withCircleRadius(12.0)
           .withDraggable(true)
         create(circleOptions)
@@ -54,7 +53,7 @@ class CircleActivity : AppCompatActivity() {
           circleOptionsList.add(
             CircleOptions()
               .withPoint(AnnotationUtils.createRandomPoint())
-              .withCircleColor(ColorUtils.colorToRgbaString(color))
+              .withCircleColor(color)
               .withCircleRadius(8.0)
               .withDraggable(true)
           )
