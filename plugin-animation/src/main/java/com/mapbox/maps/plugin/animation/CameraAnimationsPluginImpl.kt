@@ -12,7 +12,6 @@ import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.animation.animator.*
 import com.mapbox.maps.plugin.delegates.*
-import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.properties.Delegates
 
@@ -127,13 +126,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   }
 
   /**
-   * Called when the plugin is first added to the map.
-   */
-  override fun initialize() {
-    pluginRegistry[mapTransformDelegate] = WeakReference(this)
-  }
-
-  /**
    * Called when the map is destroyed. Should be used to cleanup plugin resources for that map.
    * Cancel all running animations and cleanup all resources (registered animations, listeners).
    */
@@ -148,9 +140,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     paddingListeners.clear()
     lifecycleListener.clear()
     animators.clear()
-    pluginRegistry.remove(mapTransformDelegate).also { weakRef ->
-      weakRef?.clear()
-    }
   }
 
   private fun performMapJump(cameraOptions: CameraOptions) {
@@ -817,8 +806,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
    */
   companion object {
     private const val TAG = "Mbgl-CameraManager"
-    internal var pluginRegistry: HashMap<MapTransformDelegate, WeakReference<CameraAnimationsPluginImpl>> =
-      HashMap()
   }
 }
 
@@ -832,78 +819,77 @@ fun MapPluginProviderDelegate.getCameraAnimationsPlugin(): CameraAnimationsPlugi
 }
 
 /**
- * Extension easeTo() for [MapTransformDelegate]
+ * Extension easeTo() for [MapPluginExtensionsDelegate]
  * Ease the map camera to a given camera options and animation options.
  *
  * @param cameraOptions The camera options to ease to
  * @param animationOptions Transition options (animation duration, listeners etc)
  */
-fun MapTransformDelegate.easeTo(
+fun MapPluginExtensionsDelegate.easeTo(
   cameraOptions: CameraOptions,
   animationOptions: MapAnimationOptions? = null
-) = CameraAnimationsPluginImpl.pluginRegistry[this]?.get()?.easeTo(cameraOptions, animationOptions)
+) = cameraAnimationsPlugin { easeTo(cameraOptions, animationOptions) }
 
 /**
- * Extension flyTo() function for [MapTransformDelegate]
+ * Extension flyTo() function for [MapPluginExtensionsDelegate]
  * Fly the map camera to a given camera options.
  *
  * @param cameraOptions The camera options to fly to
  * @param animationOptions Transition options (animation duration, listeners etc)
  */
-fun MapTransformDelegate.flyTo(
+fun MapPluginExtensionsDelegate.flyTo(
   cameraOptions: CameraOptions,
   animationOptions: MapAnimationOptions? = null
-) = CameraAnimationsPluginImpl.pluginRegistry[this]?.get()?.flyTo(cameraOptions, animationOptions)
+) = cameraAnimationsPlugin { flyTo(cameraOptions, animationOptions) }
 
 /**
- * Extension pitchBy() function for [MapTransformDelegate]
+ * Extension pitchBy() function for [MapPluginExtensionsDelegate]
  * Pitch the map by with optional animation.
  *
  * @param pitch The amount to pitch by
  * @param animationOptions Transition options (animation duration, listeners etc)
  */
-fun MapTransformDelegate.pitchBy(
+fun MapPluginExtensionsDelegate.pitchBy(
   pitch: Double,
   animationOptions: MapAnimationOptions? = null
-) = CameraAnimationsPluginImpl.pluginRegistry[this]?.get()?.pitchBy(pitch, animationOptions)
+) = cameraAnimationsPlugin { pitchBy(pitch, animationOptions) }
 
 /**
- * Extension scaleBy() function for [MapTransformDelegate]
+ * Extension scaleBy() function for [MapPluginExtensionsDelegate]
  * Scale the map by with optional animation.
  *
  * @param amount The amount to scale by
  * @param screenCoordinate The optional focal point to scale on
  * @param animationOptions Transition options (animation duration, listeners etc)
  */
-fun MapTransformDelegate.scaleBy(
+fun MapPluginExtensionsDelegate.scaleBy(
   amount: Double,
   screenCoordinate: ScreenCoordinate?,
   animationOptions: MapAnimationOptions? = null
-) = CameraAnimationsPluginImpl.pluginRegistry[this]?.get()
-  ?.scaleBy(amount, screenCoordinate, animationOptions)
+) = cameraAnimationsPlugin { scaleBy(amount, screenCoordinate, animationOptions) }
 
 /**
- * Extension moveBy() function for [MapTransformDelegate]
+ * Extension moveBy() function for [MapPluginExtensionsDelegate]
  * Move the map by a given screen coordinate with optional animation.
  *
  * @param screenCoordinate The screen coordinate distance to move by
  * @param animationOptions Transition options (animation duration, listeners etc)
  */
-fun MapTransformDelegate.moveBy(
+fun MapPluginExtensionsDelegate.moveBy(
   screenCoordinate: ScreenCoordinate,
   animationOptions: MapAnimationOptions? = null
-) = CameraAnimationsPluginImpl.pluginRegistry[this]?.get()?.moveBy(screenCoordinate, animationOptions)
+) = cameraAnimationsPlugin { moveBy(screenCoordinate, animationOptions) }
 
 /**
- * Extension rotateBy() function for [MapTransformDelegate]
+ * Extension rotateBy() function for [MapPluginExtensionsDelegate]
  * Rotate the map by with optional animation.
  *
  * @param first The first pointer to rotate on
  * @param second The second pointer to rotate on
  * @param animationOptions Transition options (animation duration, listeners etc)
  */
-fun MapTransformDelegate.rotateBy(
+fun MapPluginExtensionsDelegate.rotateBy(
   first: ScreenCoordinate,
   second: ScreenCoordinate,
   animationOptions: MapAnimationOptions? = null
-) = CameraAnimationsPluginImpl.pluginRegistry[this]?.get()?.rotateBy(first, second, animationOptions)
+) = cameraAnimationsPlugin { rotateBy(first, second, animationOptions) }

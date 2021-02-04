@@ -134,6 +134,11 @@ interface GesturesPlugin : MapPlugin, ContextBinder, MapSizePlugin, GesturesSett
   fun addOnScaleListener(onScaleListener: OnScaleListener)
 
   /**
+   * Remove a callback that is invoked when the map is scaled.
+   */
+  fun removeOnScaleListener(listener: OnScaleListener)
+
+  /**
    * Add a shove gesture listener tha is invoked when a map is shoved
    *
    * @param onShoveListener The shove listener to be added

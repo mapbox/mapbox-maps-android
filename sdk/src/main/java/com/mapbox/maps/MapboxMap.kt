@@ -1,12 +1,18 @@
 package com.mapbox.maps
 
+import androidx.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
+import com.mapbox.maps.plugin.PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
+import com.mapbox.maps.plugin.PLUGIN_GESTURE_CLASS_NAME
+import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.delegates.listeners.*
+import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -32,12 +38,18 @@ class MapboxMap internal constructor(
   MapFeatureQueryDelegate,
   ObservableInterface,
   MapListenerDelegate,
+  MapPluginExtensionsDelegate,
   MapStyleStateDelegate {
 
   private val nativeMapWeakRef = WeakReference(nativeMap)
   internal lateinit var style: Style
 
   private var terrainEnabled = false
+
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal var cameraAnimationsPlugin: WeakReference<CameraAnimationsPlugin>? = null
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal var gesturesPlugin: WeakReference<GesturesPlugin>? = null
 
   /**
    * Will load a new map style asynchronous from the specified URI.
@@ -1057,4 +1069,40 @@ class MapboxMap internal constructor(
    * @return True if terrain is enabled for given style and false otherwise.
    */
   override fun terrainEnabled() = terrainEnabled
+
+  internal fun setCameraAnimationPlugin(cameraAnimationsPlugin: CameraAnimationsPlugin?) {
+    cameraAnimationsPlugin?.let {
+      if (it.javaClass.canonicalName == PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME)
+        this.cameraAnimationsPlugin = WeakReference(it)
+    }
+  }
+
+  /**
+   * Call extension function on [CameraAnimationsPlugin].
+   * In most cases should not be called directly.
+   */
+  override fun cameraAnimationsPlugin(function: (CameraAnimationsPlugin.() -> Any?)): Any? {
+    cameraAnimationsPlugin?.get()?.let {
+      return function.invoke(it)
+    }
+    return null
+  }
+
+  internal fun setGesturesAnimationPlugin(gesturesPlugin: GesturesPlugin?) {
+    gesturesPlugin?.let {
+      if (it.javaClass.canonicalName == PLUGIN_GESTURE_CLASS_NAME)
+        this.gesturesPlugin = WeakReference(it)
+    }
+  }
+
+  /**
+   * Call extension function on [GesturesPlugin].
+   * In most cases should not be called directly.
+   */
+  override fun gesturesPlugin(function: (GesturesPlugin.() -> Any?)): Any? {
+    gesturesPlugin?.get()?.let {
+      return function.invoke(it)
+    }
+    return null
+  }
 }

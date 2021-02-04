@@ -222,7 +222,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     try {
       val cameraAnimationsPluginClass =
         Class.forName(PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME) as Class<CameraAnimationsPlugin>
-      createPlugin(mapView, cameraAnimationsPluginClass)
+      mapboxMap.setCameraAnimationPlugin(createPlugin(mapView, cameraAnimationsPluginClass))
     } catch (ex: ClassNotFoundException) {
       Logger.d(
         TAG,
@@ -262,7 +262,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
         Class.forName(PLUGIN_GESTURE_CLASS_NAME) as Class<GesturesPlugin>
 
       // TODO Cleanup
-      if (attrs != null) {
+      val plugin = if (attrs != null) {
         createPlugin(
           mapView,
           gesturePluginClass,
@@ -278,6 +278,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
           Pair(Float::class.java, pixelRatio)
         )
       }
+      mapboxMap.setGesturesAnimationPlugin(plugin)
     } catch (ex: ClassNotFoundException) {
       Logger.d(
         TAG,

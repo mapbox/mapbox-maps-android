@@ -23,11 +23,9 @@ import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
 import com.mapbox.maps.plugin.delegates.*
-import com.mapbox.maps.plugin.gestures.GesturesPluginImpl.Companion.gesturesPlugin
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettingsBase
-import java.lang.ref.WeakReference
 import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.math.*
@@ -1460,7 +1458,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   /**
    * Remove a callback that is invoked when the map is scaled.
    */
-  fun removeOnScaleListener(listener: OnScaleListener) {
+  override fun removeOnScaleListener(listener: OnScaleListener) {
     onScaleListenerList.remove(listener)
   }
 
@@ -1537,8 +1535,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
    */
   override fun cleanup() {
     protectedCameraAnimatorOwnerList.clear()
-    gesturesPluginWeakRef?.clear()
-    gesturesPluginWeakRef = null
   }
 
   /**
@@ -1587,7 +1583,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
    * Called when the plugin is first added to the map.
    */
   override fun initialize() {
-    gesturesPluginWeakRef = WeakReference(this)
     initializeGesturesManager(gesturesManager, true)
     initializeGestureListeners(context, true)
   }
@@ -1600,9 +1595,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       duration = 0
       owner = MapAnimationOwnerRegistry.GESTURES
     }
-    private var gesturesPluginWeakRef: WeakReference<GesturesPluginImpl>? = null
-    internal val gesturesPlugin: GesturesPluginImpl?
-      get() = gesturesPluginWeakRef?.get()
   }
 }
 
@@ -1618,124 +1610,126 @@ fun MapPluginProviderDelegate.getGesturesPlugin(): GesturesPlugin {
 /**
  * Add a callback that is invoked when the map is clicked.
  */
-fun MapListenerDelegate.addOnMapClickListener(onMapClickListener: OnMapClickListener) {
-  gesturesPlugin?.addOnMapClickListener(onMapClickListener)
+fun MapPluginExtensionsDelegate.addOnMapClickListener(onMapClickListener: OnMapClickListener) {
+  gesturesPlugin { addOnMapClickListener(onMapClickListener) }
 }
 
 /**
  * Remove a callback that is invoked when the map is clicked.
  */
-fun MapListenerDelegate.removeOnMapClickListener(onMapClickListener: OnMapClickListener) {
-  gesturesPlugin?.removeOnMapClickListener(onMapClickListener)
+fun MapPluginExtensionsDelegate.removeOnMapClickListener(onMapClickListener: OnMapClickListener) {
+  gesturesPlugin { removeOnMapClickListener(onMapClickListener) }
 }
 
 /**
  * Add a callback that is invoked when the map is long clicked.
  */
-fun MapListenerDelegate.addOnMapLongClickListener(onMapLongClickListener: OnMapLongClickListener) {
-  gesturesPlugin?.addOnMapLongClickListener(onMapLongClickListener)
+fun MapPluginExtensionsDelegate.addOnMapLongClickListener(onMapLongClickListener: OnMapLongClickListener) {
+  gesturesPlugin { addOnMapLongClickListener(onMapLongClickListener) }
 }
 
 /**
  * Remove a callback that is invoked when the map is long clicked.
  */
-fun MapListenerDelegate.removeOnMapLongClickListener(onMapLongClickListener: OnMapLongClickListener) {
-  gesturesPlugin?.removeOnMapLongClickListener(onMapLongClickListener)
+fun MapPluginExtensionsDelegate.removeOnMapLongClickListener(onMapLongClickListener: OnMapLongClickListener) {
+  gesturesPlugin { removeOnMapLongClickListener(onMapLongClickListener) }
 }
 
 /**
  * Add a callback that is invoked when the map is has received a fling gesture.
  */
-fun MapListenerDelegate.addOnFlingListener(onFlingListener: OnFlingListener) {
-  gesturesPlugin?.addOnFlingListener(onFlingListener)
+fun MapPluginExtensionsDelegate.addOnFlingListener(onFlingListener: OnFlingListener) {
+  gesturesPlugin { addOnFlingListener(onFlingListener) }
 }
 
 /**
  * Remove a callback that is invoked when the map is has received a fling gesture.
  */
-fun MapListenerDelegate.removeOnFlingListener(onFlingListener: OnFlingListener) {
-  gesturesPlugin?.removeOnFlingListener(onFlingListener)
+fun MapPluginExtensionsDelegate.removeOnFlingListener(onFlingListener: OnFlingListener) {
+  gesturesPlugin { removeOnFlingListener(onFlingListener) }
 }
 
 /**
  * Add a callback that is invoked when the map is moved.
  */
-fun MapListenerDelegate.addOnMoveListener(listener: OnMoveListener) {
-  gesturesPlugin?.addOnMoveListener(listener)
+fun MapPluginExtensionsDelegate.addOnMoveListener(listener: OnMoveListener) {
+  gesturesPlugin { addOnMoveListener(listener) }
 }
 
 /**
  * Remove a callback that is invoked when the map is moved.
  */
-fun MapListenerDelegate.removeOnMoveListener(listener: OnMoveListener) {
-  gesturesPlugin?.removeOnMoveListener(listener)
+fun MapPluginExtensionsDelegate.removeOnMoveListener(listener: OnMoveListener) {
+  gesturesPlugin { removeOnMoveListener(listener) }
 }
 
 /**
  * Add a callback that is invoked when the map is rotated.
  */
-fun MapListenerDelegate.addOnRotateListener(listener: OnRotateListener) {
-  gesturesPlugin?.addOnRotateListener(listener)
+fun MapPluginExtensionsDelegate.addOnRotateListener(listener: OnRotateListener) {
+  gesturesPlugin { addOnRotateListener(listener) }
 }
 
 /**
  * Remove a callback that is invoked when the map is rotated.
  */
-fun MapListenerDelegate.removeOnRotateListener(listener: OnRotateListener) {
-  gesturesPlugin?.removeOnRotateListener(listener)
+fun MapPluginExtensionsDelegate.removeOnRotateListener(listener: OnRotateListener) {
+  gesturesPlugin { removeOnRotateListener(listener) }
 }
 
 /**
  * Add a callback that is invoked when the map is scaled.
  */
-fun MapListenerDelegate.addOnScaleListener(listener: OnScaleListener) {
-  gesturesPlugin?.addOnScaleListener(listener)
+fun MapPluginExtensionsDelegate.addOnScaleListener(listener: OnScaleListener) {
+  gesturesPlugin { addOnScaleListener(listener) }
 }
 
 /**
  * Remove a callback that is invoked when the map is scaled.
  */
-fun MapListenerDelegate.removeOnScaleListener(listener: OnScaleListener) {
-  gesturesPlugin?.removeOnScaleListener(listener)
+fun MapPluginExtensionsDelegate.removeOnScaleListener(listener: OnScaleListener) {
+  gesturesPlugin { removeOnScaleListener(listener) }
 }
 
 /**
  * Add a callback that is invoked when the map is shoved.
  */
-fun MapListenerDelegate.addOnShoveListener(listener: OnShoveListener) {
-  gesturesPlugin?.addOnShoveListener(listener)
+fun MapPluginExtensionsDelegate.addOnShoveListener(listener: OnShoveListener) {
+  gesturesPlugin { addOnShoveListener(listener) }
 }
 
 /**
  * Remove a callback that is invoked when the map is shoved.
  */
-fun MapListenerDelegate.removeOnShoveListener(listener: OnShoveListener) {
-  gesturesPlugin?.removeOnShoveListener(listener)
+fun MapPluginExtensionsDelegate.removeOnShoveListener(listener: OnShoveListener) {
+  gesturesPlugin { removeOnShoveListener(listener) }
 }
 
 /**
  * Get the current configured AndroidGesturesManager.
  */
-fun MapListenerDelegate.getGesturesManager(): AndroidGesturesManager? {
-  return gesturesPlugin?.getGesturesManager()
+fun MapPluginExtensionsDelegate.getGesturesManager(): AndroidGesturesManager? {
+  return gesturesPlugin { getGesturesManager() } as AndroidGesturesManager?
 }
 
 /**
  * Set the AndroidGesturesManager instance.
  */
-fun MapListenerDelegate.setGesturesManager(
+fun MapPluginExtensionsDelegate.setGesturesManager(
   androidGesturesManager: AndroidGesturesManager,
   attachDefaultListeners: Boolean,
   setDefaultMutuallyExclusives: Boolean
 ) {
-  gesturesPlugin?.setGesturesManager(
-    androidGesturesManager,
-    attachDefaultListeners,
-    setDefaultMutuallyExclusives
-  )
+  gesturesPlugin {
+    setGesturesManager(
+      androidGesturesManager,
+      attachDefaultListeners,
+      setDefaultMutuallyExclusives
+    )
+  }
 }
 
 /**
  * The gesture configuration object.
  */
-fun MapListenerDelegate.getGesturesSettings() = gesturesPlugin?.getSettings()
+fun MapPluginExtensionsDelegate.getGesturesSettings() = gesturesPlugin { getSettings() } as GesturesSettings?
