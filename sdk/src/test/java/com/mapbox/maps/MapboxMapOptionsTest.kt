@@ -79,4 +79,12 @@ class MapboxMapOptionsTest {
 
     assertEquals("token", mapboxMapOptions.resourceOptions.accessToken)
   }
+
+  @Test
+  fun cacheResourceOptions() {
+    val resourceOptions = MapboxOptions.createResourceOptions(context, "token")
+    MapboxOptions.setDefaultResourceOptions(resourceOptions)
+    val mapboxMapOptions = MapboxMapOptions(context, 1.0f, attrs)
+    assertEquals(resourceOptions, mapboxMapOptions.resourceOptions)
+  }
 }
