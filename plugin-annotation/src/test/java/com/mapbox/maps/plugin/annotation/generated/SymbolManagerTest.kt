@@ -3,6 +3,7 @@
 package com.mapbox.maps.plugin.annotation.generated
 
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.PointF
 import android.view.View
 import com.mapbox.android.gestures.MoveDistancesObject
@@ -650,6 +651,19 @@ class SymbolManagerTest {
   }
 
   @Test
+  fun testIconColorIntLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.iconColor(Expression.get(SymbolOptions.PROPERTY_ICON_COLOR)) }
+    val options = SymbolOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+      .withIconColor(Color.YELLOW)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.iconColor(Expression.get(SymbolOptions.PROPERTY_ICON_COLOR)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.iconColor(Expression.get(SymbolOptions.PROPERTY_ICON_COLOR)) }
+  }
+
+  @Test
   fun testIconColorLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.iconColor(Expression.get(SymbolOptions.PROPERTY_ICON_COLOR)) }
@@ -673,6 +687,19 @@ class SymbolManagerTest {
     verify(exactly = 1) { manager.layer?.iconHaloBlur(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_BLUR)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.iconHaloBlur(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_BLUR)) }
+  }
+
+  @Test
+  fun testIconHaloColorIntLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.iconHaloColor(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_COLOR)) }
+    val options = SymbolOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+      .withIconHaloColor(Color.YELLOW)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.iconHaloColor(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_COLOR)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.iconHaloColor(Expression.get(SymbolOptions.PROPERTY_ICON_HALO_COLOR)) }
   }
 
   @Test
@@ -715,6 +742,19 @@ class SymbolManagerTest {
   }
 
   @Test
+  fun testTextColorIntLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.textColor(Expression.get(SymbolOptions.PROPERTY_TEXT_COLOR)) }
+    val options = SymbolOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+      .withTextColor(Color.YELLOW)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.textColor(Expression.get(SymbolOptions.PROPERTY_TEXT_COLOR)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.textColor(Expression.get(SymbolOptions.PROPERTY_TEXT_COLOR)) }
+  }
+
+  @Test
   fun testTextColorLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.textColor(Expression.get(SymbolOptions.PROPERTY_TEXT_COLOR)) }
@@ -738,6 +778,19 @@ class SymbolManagerTest {
     verify(exactly = 1) { manager.layer?.textHaloBlur(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_BLUR)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textHaloBlur(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_BLUR)) }
+  }
+
+  @Test
+  fun testTextHaloColorIntLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.textHaloColor(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_COLOR)) }
+    val options = SymbolOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+      .withTextHaloColor(Color.YELLOW)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.textHaloColor(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_COLOR)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.textHaloColor(Expression.get(SymbolOptions.PROPERTY_TEXT_HALO_COLOR)) }
   }
 
   @Test

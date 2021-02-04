@@ -19,7 +19,6 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression.Companio
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.toNumber
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
-import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
 import com.mapbox.maps.plugin.location.utils.BitmapUtils
@@ -79,7 +78,7 @@ class SymbolActivity : AppCompatActivity() {
             .withIconImage(it)
             .withTextField(ID_ICON_AIRPORT)
             .withTextOffset(listOf(0.0, -1.0))
-            .withTextColor(ColorUtils.colorToRgbaString(Color.RED))
+            .withTextColor(Color.RED)
             .withIconSize(1.3)
             .withIconOffset(listOf(5.0, 10.0))
             .withSymbolSortKey(10.0)
@@ -98,7 +97,7 @@ class SymbolActivity : AppCompatActivity() {
           val nearbyOptions: SymbolOptions = SymbolOptions()
             .withPoint(Point.fromLngLat(NEARBY_LONGITUDE, NEARBY_LATITUDE))
             .withIconImage(it)
-            .withIconColor(ColorUtils.colorToRgbaString(Color.YELLOW))
+            .withIconColor(Color.YELLOW)
             .withIconSize(2.5)
             .withSymbolSortKey(5.0)
             .withDraggable(true)

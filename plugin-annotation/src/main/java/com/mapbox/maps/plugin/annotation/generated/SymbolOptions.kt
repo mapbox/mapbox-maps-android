@@ -3,6 +3,7 @@
 package com.mapbox.maps.plugin.annotation.generated
 
 import android.graphics.Bitmap
+import androidx.annotation.ColorInt
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.mapbox.geojson.Feature
@@ -11,6 +12,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.TextJustify
 import com.mapbox.maps.extension.style.layers.properties.generated.TextTransform
+import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.AnnotationManager
 import com.mapbox.maps.plugin.annotation.AnnotationOptions
 import com.mapbox.maps.plugin.annotation.ConvertUtils.convertDoubleArray
@@ -365,6 +367,19 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   }
 
   /**
+   * Set icon-color to initialise the symbol with.
+   * <p>
+   * The color of the icon. This can only be used with sdf icons.
+   * </p>
+   * @param iconColor the icon-color value with ColorInt format
+   * @return this
+   */
+  fun withIconColor(@ColorInt iconColor: Int): SymbolOptions {
+    this.iconColor = ColorUtils.colorToRgbaString(iconColor)
+    return this
+  }
+
+  /**
    * Fade out the halo towards the outside.
    */
   var iconHaloBlur: Double = 0.0
@@ -397,6 +412,19 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
    */
   fun withIconHaloColor(iconHaloColor: String): SymbolOptions {
     this.iconHaloColor = iconHaloColor
+    return this
+  }
+
+  /**
+   * Set icon-halo-color to initialise the symbol with.
+   * <p>
+   * The color of the icon's halo. Icon halos can only be used with SDF icons.
+   * </p>
+   * @param iconHaloColor the icon-halo-color value with ColorInt format
+   * @return this
+   */
+  fun withIconHaloColor(@ColorInt iconHaloColor: Int): SymbolOptions {
+    this.iconHaloColor = ColorUtils.colorToRgbaString(iconHaloColor)
     return this
   }
 
@@ -455,6 +483,19 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   }
 
   /**
+   * Set text-color to initialise the symbol with.
+   * <p>
+   * The color with which the text will be drawn.
+   * </p>
+   * @param textColor the text-color value with ColorInt format
+   * @return this
+   */
+  fun withTextColor(@ColorInt textColor: Int): SymbolOptions {
+    this.textColor = ColorUtils.colorToRgbaString(textColor)
+    return this
+  }
+
+  /**
    * The halo's fadeout distance towards the outside.
    */
   var textHaloBlur: Double = 0.0
@@ -487,6 +528,19 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
    */
   fun withTextHaloColor(textHaloColor: String): SymbolOptions {
     this.textHaloColor = textHaloColor
+    return this
+  }
+
+  /**
+   * Set text-halo-color to initialise the symbol with.
+   * <p>
+   * The color of the text's halo, which helps it stand out from backgrounds.
+   * </p>
+   * @param textHaloColor the text-halo-color value with ColorInt format
+   * @return this
+   */
+  fun withTextHaloColor(@ColorInt textHaloColor: Int): SymbolOptions {
+    this.textHaloColor = ColorUtils.colorToRgbaString(textHaloColor)
     return this
   }
 

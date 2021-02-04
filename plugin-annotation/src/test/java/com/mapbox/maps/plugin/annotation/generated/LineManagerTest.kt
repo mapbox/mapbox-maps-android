@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.plugin.annotation.generated
 
+import android.graphics.Color
 import android.graphics.PointF
 import android.view.View
 import com.mapbox.android.gestures.MoveDistancesObject
@@ -405,6 +406,19 @@ class LineManagerTest {
     verify(exactly = 1) { manager.layer?.lineBlur(Expression.get(LineOptions.PROPERTY_LINE_BLUR)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.lineBlur(Expression.get(LineOptions.PROPERTY_LINE_BLUR)) }
+  }
+
+  @Test
+  fun testLineColorIntLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.lineColor(Expression.get(LineOptions.PROPERTY_LINE_COLOR)) }
+    val options = LineOptions()
+      .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
+      .withLineColor(Color.YELLOW)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.lineColor(Expression.get(LineOptions.PROPERTY_LINE_COLOR)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.lineColor(Expression.get(LineOptions.PROPERTY_LINE_COLOR)) }
   }
 
   @Test

@@ -2,11 +2,13 @@
 
 package com.mapbox.maps.plugin.annotation.generated
 
+import androidx.annotation.ColorInt
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.geojson.Polygon
+import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.AnnotationManager
 import com.mapbox.maps.plugin.annotation.AnnotationOptions
 
@@ -55,6 +57,19 @@ class FillOptions : AnnotationOptions<Polygon, Fill> {
   }
 
   /**
+   * Set fill-color to initialise the fill with.
+   * <p>
+   * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
+   * </p>
+   * @param fillColor the fill-color value with ColorInt format
+   * @return this
+   */
+  fun withFillColor(@ColorInt fillColor: Int): FillOptions {
+    this.fillColor = ColorUtils.colorToRgbaString(fillColor)
+    return this
+  }
+
+  /**
    * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
    */
   var fillOpacity: Double = 1.0
@@ -87,6 +102,19 @@ class FillOptions : AnnotationOptions<Polygon, Fill> {
    */
   fun withFillOutlineColor(fillOutlineColor: String): FillOptions {
     this.fillOutlineColor = fillOutlineColor
+    return this
+  }
+
+  /**
+   * Set fill-outline-color to initialise the fill with.
+   * <p>
+   * The outline color of the fill. Matches the value of {@link PropertyFactory#fillColor} if unspecified.
+   * </p>
+   * @param fillOutlineColor the fill-outline-color value with ColorInt format
+   * @return this
+   */
+  fun withFillOutlineColor(@ColorInt fillOutlineColor: Int): FillOptions {
+    this.fillOutlineColor = ColorUtils.colorToRgbaString(fillOutlineColor)
     return this
   }
 

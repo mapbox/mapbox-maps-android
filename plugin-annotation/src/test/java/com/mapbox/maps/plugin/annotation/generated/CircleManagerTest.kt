@@ -2,6 +2,7 @@
 
 package com.mapbox.maps.plugin.annotation.generated
 
+import android.graphics.Color
 import android.graphics.PointF
 import android.view.View
 import com.mapbox.android.gestures.MoveDistancesObject
@@ -392,6 +393,19 @@ class CircleManagerTest {
   }
 
   @Test
+  fun testCircleColorIntLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.circleColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_COLOR)) }
+    val options = CircleOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+      .withCircleColor(Color.YELLOW)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.circleColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_COLOR)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.circleColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_COLOR)) }
+  }
+
+  @Test
   fun testCircleColorLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.circleColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_COLOR)) }
@@ -428,6 +442,19 @@ class CircleManagerTest {
     verify(exactly = 1) { manager.layer?.circleRadius(Expression.get(CircleOptions.PROPERTY_CIRCLE_RADIUS)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.circleRadius(Expression.get(CircleOptions.PROPERTY_CIRCLE_RADIUS)) }
+  }
+
+  @Test
+  fun testCircleStrokeColorIntLayerProperty() {
+    every { style.styleSourceExists(any()) } returns true
+    verify(exactly = 0) { manager.layer?.circleStrokeColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
+    val options = CircleOptions()
+      .withPoint(Point.fromLngLat(0.0, 0.0))
+      .withCircleStrokeColor(Color.YELLOW)
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.circleStrokeColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
+    manager.create(options)
+    verify(exactly = 1) { manager.layer?.circleStrokeColor(Expression.get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
   }
 
   @Test

@@ -2,10 +2,12 @@
 
 package com.mapbox.maps.plugin.annotation.generated
 
+import androidx.annotation.ColorInt
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
+import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.AnnotationManager
 import com.mapbox.maps.plugin.annotation.AnnotationOptions
 
@@ -72,6 +74,19 @@ class CircleOptions : AnnotationOptions<Point, Circle> {
   }
 
   /**
+   * Set circle-color to initialise the circle with.
+   * <p>
+   * The fill color of the circle.
+   * </p>
+   * @param circleColor the circle-color value with ColorInt format
+   * @return this
+   */
+  fun withCircleColor(@ColorInt circleColor: Int): CircleOptions {
+    this.circleColor = ColorUtils.colorToRgbaString(circleColor)
+    return this
+  }
+
+  /**
    * The opacity at which the circle will be drawn.
    */
   var circleOpacity: Double = 1.0
@@ -122,6 +137,19 @@ class CircleOptions : AnnotationOptions<Point, Circle> {
    */
   fun withCircleStrokeColor(circleStrokeColor: String): CircleOptions {
     this.circleStrokeColor = circleStrokeColor
+    return this
+  }
+
+  /**
+   * Set circle-stroke-color to initialise the circle with.
+   * <p>
+   * The stroke color of the circle.
+   * </p>
+   * @param circleStrokeColor the circle-stroke-color value with ColorInt format
+   * @return this
+   */
+  fun withCircleStrokeColor(@ColorInt circleStrokeColor: Int): CircleOptions {
+    this.circleStrokeColor = ColorUtils.colorToRgbaString(circleStrokeColor)
     return this
   }
 
