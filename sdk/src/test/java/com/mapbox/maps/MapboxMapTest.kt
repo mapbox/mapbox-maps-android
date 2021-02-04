@@ -4,13 +4,17 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
+import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.listeners.*
+import com.mapbox.maps.plugin.gestures.GesturesPlugin
+import com.mapbox.maps.plugin.gestures.OnMoveListener
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import junit.framework.Assert.*
 import org.junit.Before
 import org.junit.Test
+import java.lang.ref.WeakReference
 
 class MapboxMapTest {
 
@@ -612,5 +616,63 @@ class MapboxMapTest {
     val point = mockk<Point>()
     mapboxMap.getElevation(point)
     verify { nativeMap.getElevation(point) }
+  }
+
+  @Test
+  fun setCameraAnimationsPluginInvalid() {
+    mapboxMap.setCameraAnimationPlugin(mockk())
+    assertNull(mapboxMap.cameraAnimationsPlugin)
+  }
+
+  @Test
+  fun setGesturesPluginInvalid() {
+    mapboxMap.setGesturesAnimationPlugin(mockk())
+    assertNull(mapboxMap.gesturesPlugin)
+  }
+
+  @Test
+  fun cameraAnimationsPluginValid() {
+    val animations = mockk<CameraAnimationsPlugin>(relaxed = true)
+    mapboxMap.cameraAnimationsPlugin = WeakReference(animations)
+    val options = CameraOptions.Builder().build()
+    mapboxMap.cameraAnimationsPlugin { easeTo(options) }
+    verify {
+      animations.easeTo(options, null)
+    }
+  }
+
+  @Test
+  fun cameraAnimationsPluginInvalid() {
+    val animations = mockk<CameraAnimationsPlugin>(relaxed = true)
+    mapboxMap.cameraAnimationsPlugin = WeakReference(animations)
+    val options = CameraOptions.Builder().build()
+    mapboxMap.cameraAnimationsPlugin?.clear()
+    mapboxMap.cameraAnimationsPlugin { easeTo(options) }
+    verify(exactly = 0) {
+      animations.easeTo(options, null)
+    }
+  }
+
+  @Test
+  fun gesturesPluginValid() {
+    val gestures = mockk<GesturesPlugin>(relaxed = true)
+    mapboxMap.gesturesPlugin = WeakReference(gestures)
+    val moveListener = mockk<OnMoveListener>(relaxed = true)
+    mapboxMap.gesturesPlugin { addOnMoveListener(moveListener) }
+    verify {
+      gestures.addOnMoveListener(moveListener)
+    }
+  }
+
+  @Test
+  fun gesturesPluginInvalid() {
+    val gestures = mockk<GesturesPlugin>(relaxed = true)
+    mapboxMap.gesturesPlugin = WeakReference(gestures)
+    val moveListener = mockk<OnMoveListener>(relaxed = true)
+    mapboxMap.gesturesPlugin?.clear()
+    mapboxMap.gesturesPlugin { addOnMoveListener(moveListener) }
+    verify(exactly = 0) {
+      gestures.addOnMoveListener(moveListener)
+    }
   }
 }

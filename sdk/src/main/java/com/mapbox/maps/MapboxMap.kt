@@ -1,5 +1,7 @@
 package com.mapbox.maps
 
+import androidx.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
@@ -44,8 +46,10 @@ class MapboxMap internal constructor(
 
   private var terrainEnabled = false
 
-  private var cameraAnimationsPlugin: WeakReference<CameraAnimationsPlugin>? = null
-  private var gesturesPlugin: WeakReference<GesturesPlugin>? = null
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal var cameraAnimationsPlugin: WeakReference<CameraAnimationsPlugin>? = null
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal var gesturesPlugin: WeakReference<GesturesPlugin>? = null
 
   /**
    * Will load a new map style asynchronous from the specified URI.
