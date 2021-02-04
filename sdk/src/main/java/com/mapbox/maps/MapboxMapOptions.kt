@@ -61,7 +61,11 @@ data class MapboxMapOptions constructor(
   init {
     val typedArray = context.obtainStyledAttributes(attrs, R.styleable.mapbox_MapView, 0, 0)
     try {
-      internalResourceOptions = ResourcesAttributeParser.parseResourcesOptions(context, typedArray)
+      internalResourceOptions = if (MapboxOptions.isInitialized()) {
+        MapboxOptions.getDefaultResourceOptions(context)
+      } else {
+        ResourcesAttributeParser.parseResourcesOptions(context, typedArray)
+      }
       mapOptions = MapAttributeParser.parseMapOptions(typedArray, pixelRatio)
       cameraOptions = CameraAttributeParser.parseCameraOptions(typedArray)
       textureView = typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapSurface, 0) != 0

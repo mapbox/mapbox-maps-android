@@ -36,12 +36,7 @@ class MapboxMapIntegrationTest {
   fun testGetResourceOptions() {
     val defaultOptions = MapboxOptions.getDefaultResourceOptions(mapView.context)
     val currentOptions = mapboxMap.getResourceOptions()
-    // TODO use assertEquals(defaultOptions, currentOptions) when equals() is supported on records
-    assertEquals(defaultOptions.accessToken, currentOptions.accessToken)
-    assertEquals(defaultOptions.baseURL, currentOptions.baseURL)
-    assertEquals(defaultOptions.assetPath, currentOptions.assetPath)
-    assertEquals(defaultOptions.cachePath, currentOptions.cachePath)
-    assertEquals(defaultOptions.cacheSize, currentOptions.cacheSize)
+    assertEquals(defaultOptions, currentOptions)
   }
 
   @UiThreadTest

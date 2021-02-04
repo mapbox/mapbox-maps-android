@@ -14,9 +14,9 @@ object MapboxOptions {
    */
   fun getDefaultResourceOptions(context: Context, accessToken: String? = null): ResourceOptions {
     if (!::defaultOptions.isInitialized) {
-      val accessToken = accessToken ?: context.getMapboxAccessTokenFromResources()
+      val token = accessToken ?: context.getMapboxAccessTokenFromResources()
         ?: throw MapboxConfigurationException()
-      defaultOptions = createResourceOptions(accessToken, context.filesDir.absolutePath)
+      defaultOptions = createResourceOptions(token, context.filesDir.absolutePath)
     }
     return defaultOptions
   }
