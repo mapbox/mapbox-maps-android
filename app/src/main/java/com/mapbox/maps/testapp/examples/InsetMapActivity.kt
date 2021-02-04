@@ -19,9 +19,9 @@ import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
+import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.plugin.attribution.getAttributionPlugin
 import com.mapbox.maps.plugin.compass.getCompassPlugin
-import com.mapbox.maps.plugin.delegates.extensions.flyTo
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.plugin.gestures.getGesturesPlugin
 import com.mapbox.maps.plugin.logo.getLogoPlugin

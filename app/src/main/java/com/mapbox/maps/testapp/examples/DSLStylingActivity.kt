@@ -14,8 +14,8 @@ import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.imageSource
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.plugin.delegates.extensions.addOnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
+import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_simple_map.*
 import java.text.DateFormat.getDateTimeInstance

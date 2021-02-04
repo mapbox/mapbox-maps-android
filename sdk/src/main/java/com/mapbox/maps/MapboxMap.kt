@@ -5,9 +5,10 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
+import com.mapbox.maps.plugin.PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
+import com.mapbox.maps.plugin.PLUGIN_GESTURE_CLASS_NAME
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.*
-import com.mapbox.maps.plugin.delegates.extensions.MapPluginExtensionsDelegate
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import java.lang.ref.WeakReference
@@ -1067,25 +1068,37 @@ class MapboxMap internal constructor(
 
   internal fun setCameraAnimationPlugin(cameraAnimationsPlugin: CameraAnimationsPlugin?) {
     cameraAnimationsPlugin?.let {
-      this.cameraAnimationsPlugin = WeakReference(it)
+      if (it.javaClass.canonicalName == PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME)
+        this.cameraAnimationsPlugin = WeakReference(it)
     }
   }
 
   /**
-   * Get an instance of [CameraAnimationsPlugin].
-   * In most cases must not be called directly.
+   * Call extension function on [CameraAnimationsPlugin].
+   * In most cases should not be called directly.
    */
-  override fun getCameraAnimationPlugin() = cameraAnimationsPlugin?.get()
+  override fun cameraAnimationsPlugin(function: (CameraAnimationsPlugin.() -> Any?)): Any? {
+    cameraAnimationsPlugin?.get()?.let {
+      return function.invoke(it)
+    }
+    return null
+  }
 
   internal fun setGesturesAnimationPlugin(gesturesPlugin: GesturesPlugin?) {
     gesturesPlugin?.let {
-      this.gesturesPlugin = WeakReference(it)
+      if (it.javaClass.canonicalName == PLUGIN_GESTURE_CLASS_NAME)
+        this.gesturesPlugin = WeakReference(it)
     }
   }
 
   /**
-   * Get an instance of [GesturesPlugin].
-   * In most cases must not be called directly.
+   * Call extension function on [GesturesPlugin].
+   * In most cases should not be called directly.
    */
-  override fun getGesturesPlugin() = gesturesPlugin?.get()
+  override fun gesturesPlugin(function: (GesturesPlugin.() -> Any?)): Any? {
+    gesturesPlugin?.get()?.let {
+      return function.invoke(it)
+    }
+    return null
+  }
 }

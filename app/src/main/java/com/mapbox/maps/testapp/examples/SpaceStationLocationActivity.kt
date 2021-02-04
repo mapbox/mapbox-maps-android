@@ -19,7 +19,7 @@ import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
-import com.mapbox.maps.plugin.delegates.extensions.flyTo
+import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.model.IssModel
 import kotlinx.android.synthetic.main.activity_lab_space_station_location.*

@@ -31,7 +31,7 @@ import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
-import com.mapbox.maps.plugin.delegates.extensions.easeTo
+import com.mapbox.maps.plugin.animation.easeTo
 import com.mapbox.maps.testapp.R
 import com.mapbox.turf.TurfMeasurement
 import kotlinx.android.synthetic.main.activity_dds_moving_icon_with_trailing_line.*

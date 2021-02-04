@@ -16,8 +16,8 @@ import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.getCameraAnimationsPlugin
-import com.mapbox.maps.plugin.delegates.extensions.addOnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
+import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.overlay.MapOverlayCoordinatesProvider
 import com.mapbox.maps.plugin.overlay.MapOverlayPlugin
 import com.mapbox.maps.plugin.overlay.getMapOverlayPlugin
