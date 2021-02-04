@@ -151,6 +151,13 @@ commands:
                     fi
                   fi
 
+  validate-generated-code:
+    steps:
+      - run:
+          name: Trigger generated code validation
+          command: |
+            pip3 install requests && python3 scripts/ci-circleci-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} --origin-slug mapbox/mapbox-maps-android --target-slug mapbox/mapbox-maps-stylegen
+
   publish-sdk-registry:
     steps:
       - unless:
@@ -255,6 +262,7 @@ jobs:
     steps:
       - checkout
       - restore-gradle-cache
+      - validate-generated-code
       - run:
           name: ktlint
           command: ./gradlew ktlint
