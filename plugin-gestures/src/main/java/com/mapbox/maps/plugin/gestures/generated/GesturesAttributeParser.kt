@@ -10,7 +10,7 @@ import com.mapbox.maps.plugin.gestures.R
 /**
  * Utility class for parsing [AttributeSet] to [GesturesSettings].
  */
-object GesturesAttributeParser {
+internal object GesturesAttributeParser {
   /**
    * Parse [AttributeSet] to [GesturesSettings].
    *

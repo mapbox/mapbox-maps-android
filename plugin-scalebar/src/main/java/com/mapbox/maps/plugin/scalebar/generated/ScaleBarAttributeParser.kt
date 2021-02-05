@@ -12,7 +12,7 @@ import com.mapbox.maps.plugin.scalebar.R
 /**
  * Utility class for parsing [AttributeSet] to [ScaleBarSettings].
  */
-object ScaleBarAttributeParser {
+internal object ScaleBarAttributeParser {
   /**
    * Parse [AttributeSet] to [ScaleBarSettings].
    *
