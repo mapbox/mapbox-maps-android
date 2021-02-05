@@ -39,6 +39,7 @@ class DebugModeActivity : AppCompatActivity() {
       )
     }
   }
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_debug)
@@ -85,6 +86,11 @@ class DebugModeActivity : AppCompatActivity() {
   override fun onStart() {
     super.onStart()
     mapView.onStart()
+    mapView.setOnFpsChangedListener {
+      runOnUiThread {
+        fpsView.text = "${it.toInt()} FPS"
+      }
+    }
   }
 
   override fun onStop() {

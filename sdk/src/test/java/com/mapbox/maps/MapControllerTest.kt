@@ -7,6 +7,7 @@ import com.mapbox.maps.loader.MapboxMapStaticInitializer
 import com.mapbox.maps.plugin.MapPluginRegistry
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.renderer.MapboxRenderer
+import com.mapbox.maps.renderer.OnFpsChangedListener
 import io.mockk.*
 import org.junit.Assert
 import org.junit.Before
@@ -198,5 +199,12 @@ class MapControllerTest {
   fun setMaximumFpsInvalid() {
     mapController.setMaximumFps(-1)
     verify(exactly = 0) { renderer.setMaximumFps(any()) }
+  }
+
+  @Test
+  fun setOnFpsChangedListener() {
+    val listener = mockk<OnFpsChangedListener>()
+    mapController.setOnFpsChangedListener(listener)
+    verify { renderer.setOnFpsChangedListener(listener) }
   }
 }

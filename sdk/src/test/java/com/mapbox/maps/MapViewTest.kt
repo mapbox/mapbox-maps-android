@@ -6,6 +6,7 @@ import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.loader.MapboxMapStaticInitializer
 import com.mapbox.maps.plugin.PLUGIN_LOGO_CLASS_NAME
 import com.mapbox.maps.plugin.logo.LogoPlugin
+import com.mapbox.maps.renderer.OnFpsChangedListener
 import io.mockk.*
 import junit.framework.Assert.assertFalse
 import junit.framework.Assert.assertTrue
@@ -163,5 +164,12 @@ class MapViewTest {
     every { mapController.getPlugin(clazz) } returns mockk()
     mapView.getPlugin(clazz)
     verify { mapController.getPlugin(clazz) }
+  }
+
+  @Test
+  fun setOnFpsChangedListener() {
+    val listener = mockk<OnFpsChangedListener>()
+    mapView.setOnFpsChangedListener(listener)
+    verify { mapController.setOnFpsChangedListener(listener) }
   }
 }

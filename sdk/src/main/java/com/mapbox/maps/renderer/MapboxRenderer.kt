@@ -115,6 +115,12 @@ internal abstract class MapboxRenderer : MapClient() {
     renderThread.setMaximumFps(fps)
   }
 
+  @AnyThread
+  @Synchronized
+  fun setOnFpsChangedListener(listener: OnFpsChangedListener) {
+    renderThread.fpsChangedListener = listener
+  }
+
   @WorkerThread
   private fun performSnapshot(): Bitmap? {
     if (width == 0 && height == 0) {

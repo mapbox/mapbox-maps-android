@@ -2,6 +2,7 @@ package com.mapbox.maps
 
 import android.graphics.Bitmap
 import android.view.MotionEvent
+import com.mapbox.maps.renderer.OnFpsChangedListener
 
 /**
  * MapControllable interface is the gateway for public API to talk to the internal map controller.
@@ -66,6 +67,11 @@ interface MapControllable {
    * @param fps The maximum fps
    */
   fun setMaximumFps(fps: Int)
+
+  /**
+   * Set [OnFpsChangedListener] to get map rendering FPS.
+   */
+  fun setOnFpsChangedListener(listener: OnFpsChangedListener)
 
   /**
    * Called to start rendering

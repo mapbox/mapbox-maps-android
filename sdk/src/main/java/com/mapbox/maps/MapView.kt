@@ -19,6 +19,7 @@ import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.renderer.MapboxSurfaceHolderRenderer
 import com.mapbox.maps.renderer.MapboxTextureViewRenderer
+import com.mapbox.maps.renderer.OnFpsChangedListener
 import com.mapbox.maps.renderer.egl.EGLCore
 import java.lang.ref.WeakReference
 
@@ -284,6 +285,13 @@ class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   override fun onGenericMotionEvent(event: MotionEvent): Boolean {
     return mapController.onGenericMotionEvent(event) ||
       super.onGenericMotionEvent(event)
+  }
+
+  /**
+   * Set [OnFpsChangedListener] to get map rendering FPS.
+   */
+  override fun setOnFpsChangedListener(listener: OnFpsChangedListener) {
+    mapController.setOnFpsChangedListener(listener)
   }
 
   /**

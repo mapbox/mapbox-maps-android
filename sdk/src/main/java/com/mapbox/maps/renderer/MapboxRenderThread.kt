@@ -55,6 +55,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   private var nativeRenderCreated = false
   private var nativeRenderNotSupported = false
 
+  internal var fpsChangedListener: OnFpsChangedListener? = null
+  private var timeElapsed = 0L
+
   constructor(mapboxRenderer: MapboxRenderer, translucentSurface: Boolean) {
     this.translucentSurface = translucentSurface
     this.mapboxRenderer = mapboxRenderer
@@ -171,6 +174,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       // we need to stop swap buffers for less than time requested in order to have some time to render upcoming frame
       // before next vsync so it will be drawn, otherwise we will drop it
       expectedVsyncWakeTimeNs = expectedEndRenderTimeNs - ONE_MILLISECOND_NS
+    }
+    fpsChangedListener?.let {
+      val fps = 1E9 / (actualEndRenderTimeNs - timeElapsed)
+      it.onFpsChanged(fps)
+      timeElapsed = actualEndRenderTimeNs
     }
   }
 
