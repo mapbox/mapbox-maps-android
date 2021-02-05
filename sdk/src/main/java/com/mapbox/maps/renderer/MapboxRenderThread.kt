@@ -176,10 +176,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       expectedVsyncWakeTimeNs = expectedEndRenderTimeNs - ONE_MILLISECOND_NS
     }
     fpsChangedListener?.let {
-      val currentTime = SystemClock.elapsedRealtimeNanos()
-      val fps = 1E9 / (currentTime - timeElapsed)
+      val fps = 1E9 / (actualEndRenderTimeNs - timeElapsed)
       it.onFpsChanged(fps)
-      timeElapsed = currentTime
+      timeElapsed = actualEndRenderTimeNs
     }
   }
 

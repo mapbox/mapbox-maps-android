@@ -274,4 +274,22 @@ class MapboxRenderThreadTest {
     mapboxRenderThread.requestRender()
     assert(mapboxRenderThread.requestRender.get())
   }
+
+  @Test
+  fun fpsListenerTest() {
+    val listener = mockk<OnFpsChangedListener>(relaxUnitFun = true)
+    val surface = mockk<Surface>()
+    every { surface.isValid } returns true
+    every { eglCore.eglStatusSuccess } returns true
+    every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
+    mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
+    mapboxRenderThread.fpsChangedListener = listener
+    Shadows.shadowOf(workerThread.handler?.looper).pause()
+    mapboxRenderThread.requestRender()
+    mapboxRenderThread.requestRender()
+    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    verify(exactly = 2) {
+      listener.onFpsChanged(any())
+    }
+  }
 }
