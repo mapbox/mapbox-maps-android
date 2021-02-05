@@ -8,6 +8,7 @@ import android.view.MotionEvent
 import android.view.Surface
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.renderer.MapboxSurfaceRenderer
+import com.mapbox.maps.renderer.OnFpsChangedListener
 
 /**
  * A [MapSurface] provides an embeddable map interface.
@@ -153,6 +154,13 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
       return
     }
     renderer.setMaximumFps(fps)
+  }
+
+  /**
+   * Set [OnFpsChangedListener] to get map rendering FPS.
+   */
+  override fun setOnFpsChangedListener(listener: OnFpsChangedListener) {
+    renderer.setOnFpsChangedListener(listener)
   }
 
   /**

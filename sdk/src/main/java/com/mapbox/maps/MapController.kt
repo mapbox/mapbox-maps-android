@@ -25,6 +25,7 @@ import com.mapbox.maps.plugin.logo.LogoPlugin
 import com.mapbox.maps.plugin.overlay.MapOverlayPlugin
 import com.mapbox.maps.plugin.scalebar.ScaleBarPlugin
 import com.mapbox.maps.renderer.MapboxRenderer
+import com.mapbox.maps.renderer.OnFpsChangedListener
 
 internal class MapController : MapPluginProviderDelegate, MapControllable {
 
@@ -153,6 +154,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       return
     }
     renderer.setMaximumFps(fps)
+  }
+
+  override fun setOnFpsChangedListener(listener: OnFpsChangedListener) {
+    renderer.setOnFpsChangedListener(listener)
   }
 
   //

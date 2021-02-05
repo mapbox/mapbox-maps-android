@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:mapbox="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/container"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="2">
+    android:layout_height="match_parent">
 
     <com.mapbox.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        mapbox:layout_constraintEnd_toEndOf="parent"
+        mapbox:layout_constraintHeight_default="percent"
+        mapbox:layout_constraintHeight_percent="0.5"
+        mapbox:layout_constraintStart_toStartOf="parent"
+        mapbox:layout_constraintTop_toTopOf="parent"
         mapbox:mapbox_scaleBarBorderWidth="1dp"
         mapbox:mapbox_scaleBarHeight="3dp"
         mapbox:mapbox_scaleBarMarginLeft="5dp"
@@ -25,11 +26,27 @@
         mapbox:mapbox_scaleBarTextSize="10dp"
         tools:context=".examples.SimpleMapActivity" />
 
+    <TextView
+        android:id="@+id/fpsView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textColor="@color/green"
+        android:textSize="18sp"
+        mapbox:layout_constraintStart_toStartOf="parent"
+        mapbox:layout_constraintTop_toTopOf="parent"
+        tools:text="30 FPS" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        mapbox:layout_constraintBottom_toBottomOf="parent"
+        mapbox:layout_constraintEnd_toEndOf="parent"
+        mapbox:layout_constraintHeight_default="percent"
+        mapbox:layout_constraintHeight_percent="0.5"
+        mapbox:layout_constraintStart_toStartOf="parent">
 
         <CheckBox
             android:id="@+id/checkboxTileBorders"
@@ -81,4 +98,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
