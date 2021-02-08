@@ -342,7 +342,7 @@ archive. This zipped version contains the additional shared objects with debug s
 Replace in following command the SDK_REGISTRY_TOKEN and VERSION with the appropriate values:
 
 ```
-$ curl --user mapbox:{SDK_REGISTRY_TOKEN} https://api.mapbox.com/downloads/v2/mapbox-maps-android-core/releases/android/{VERSION}/android-core-all.zip
+$ curl --user mapbox:{SDK_REGISTRY_TOKEN} https://api.mapbox.com/downloads/v2/mobile-maps-android-core/releases/android/{VERSION}/android-core-all.zip --output android-core-all.zip
 ```
 
 ### Running NDK stack
