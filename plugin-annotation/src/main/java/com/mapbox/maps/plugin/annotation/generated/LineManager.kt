@@ -284,16 +284,7 @@ class LineManager(
    * @return the layer created
    */
   override fun createLayer(): LineLayer {
-    return lineLayer(layerId, sourceId) {
-      annotationConfig?.geoJsonOptions?.let { geoJsonOptions ->
-        geoJsonOptions.minZoom?.let {
-          minZoom(it)
-        }
-        geoJsonOptions.maxZoom?.let {
-          maxZoom(it)
-        }
-      }
-    }
+    return lineLayer(layerId, sourceId) {}
   }
 
   /**

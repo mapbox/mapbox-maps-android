@@ -232,16 +232,7 @@ class CircleManager(
    * @return the layer created
    */
   override fun createLayer(): CircleLayer {
-    return circleLayer(layerId, sourceId) {
-      annotationConfig?.geoJsonOptions?.let { geoJsonOptions ->
-        geoJsonOptions.minZoom?.let {
-          minZoom(it)
-        }
-        geoJsonOptions.maxZoom?.let {
-          maxZoom(it)
-        }
-      }
-    }
+    return circleLayer(layerId, sourceId) {}
   }
 
   /**

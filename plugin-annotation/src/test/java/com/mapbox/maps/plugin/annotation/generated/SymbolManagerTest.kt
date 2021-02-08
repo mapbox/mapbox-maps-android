@@ -27,7 +27,7 @@ import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
-import com.mapbox.maps.plugin.annotation.GeoJsonOptions
+import com.mapbox.maps.plugin.annotation.AnnotationSourceOptions
 import com.mapbox.maps.plugin.annotation.ShadowLogger
 import com.mapbox.maps.plugin.annotation.ShadowValueConverter
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
@@ -163,18 +163,15 @@ class SymbolManagerTest {
     manager = SymbolManager(
       mapView, delegateProvider,
       AnnotationConfig(
-        geoJsonOptions = GeoJsonOptions(
-          1.0, 10.0, 20L, true, 10.0, true, 10,
+        annotationSourceOptions = AnnotationSourceOptions(
+          10, 20L, true, 10.0, true, 10,
           (hashMapOf("key1" to "x", "key2" to "y") as HashMap<String, Any>)
         )
       )
     )
 
-    val layerString = manager.layer.toString()
-    assertTrue(layerString.contains("minzoom = 1.0"))
-    assertTrue(layerString.contains("maxzoom = 10.0"))
-
     val sourceString = manager.source.toString()
+    assertTrue(sourceString.contains("maxzoom = 10"))
     assertTrue(sourceString.contains("cluster = true"))
     assertTrue(sourceString.contains("clusterProperties = {key1=x, key2=y}"))
     assertTrue(sourceString.contains("lineMetrics = true"))

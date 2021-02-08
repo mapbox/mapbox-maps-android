@@ -4,18 +4,12 @@ package com.mapbox.maps.plugin.annotation
  * Configure class for composing GeoJsonSource objects that included in Annotation
  * @see <a href="https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#geojson">The online documentation</a>
  */
-data class GeoJsonOptions(
+data class AnnotationSourceOptions(
   /**
-   * The minimum zoom level for the layer. At zoom levels less than the minzoom, the layer will be hidden.
-   * Range: [0, 24]
+   * Maximum zoom level at which to create vector tiles (higher means greater detail at high zoom
+   * levels).
    */
-  val minZoom: Double? = null,
-
-  /**
-   * The maximum zoom level for the layer. At zoom levels equal to or greater than the maxzoom, the layer will be hidden.
-   * Range: [0, 24]
-   */
-  val maxZoom: Double? = null,
+  val maxZoom: Long? = null,
 
   /**
    * Size of the tile buffer on each side. A value of 0 produces no buffer. A

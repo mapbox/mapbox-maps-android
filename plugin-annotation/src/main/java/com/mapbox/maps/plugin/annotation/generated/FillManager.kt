@@ -196,16 +196,7 @@ class FillManager(
    * @return the layer created
    */
   override fun createLayer(): FillLayer {
-    return fillLayer(layerId, sourceId) {
-      annotationConfig?.geoJsonOptions?.let { geoJsonOptions ->
-        geoJsonOptions.minZoom?.let {
-          minZoom(it)
-        }
-        geoJsonOptions.maxZoom?.let {
-          maxZoom(it)
-        }
-      }
-    }
+    return fillLayer(layerId, sourceId) {}
   }
 
   /**

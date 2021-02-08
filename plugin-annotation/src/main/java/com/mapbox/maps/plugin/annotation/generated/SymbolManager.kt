@@ -860,16 +860,7 @@ class SymbolManager(
    * @return the layer created
    */
   override fun createLayer(): SymbolLayer {
-    return symbolLayer(layerId, sourceId) {
-      annotationConfig?.geoJsonOptions?.let { geoJsonOptions ->
-        geoJsonOptions.minZoom?.let {
-          minZoom(it)
-        }
-        geoJsonOptions.maxZoom?.let {
-          maxZoom(it)
-        }
-      }
-    }
+    return symbolLayer(layerId, sourceId) {}
   }
 
   /**
