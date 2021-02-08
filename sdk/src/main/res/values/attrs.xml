@@ -86,7 +86,6 @@
         <attr name="mapbox_cameraTargetLng" format="float" />
         <attr name="mapbox_cameraZoom" format="float" />
         <attr name="mapbox_cameraBearing" format="float" />
-        <attr name="mapbox_cameraTilt" format="float" />
         <attr name="mapbox_cameraPitch" format="float" />
         <attr name="mapbox_cameraAnchorX" format="float" />
         <attr name="mapbox_cameraAnchorY" format="float" />
