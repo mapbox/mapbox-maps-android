@@ -10,7 +10,7 @@ import com.mapbox.maps.plugin.compass.R
 /**
  * Utility class for parsing [AttributeSet] to [CompassSettings].
  */
-object CompassAttributeParser {
+internal object CompassAttributeParser {
   /**
    * Parse [AttributeSet] to [CompassSettings].
    *

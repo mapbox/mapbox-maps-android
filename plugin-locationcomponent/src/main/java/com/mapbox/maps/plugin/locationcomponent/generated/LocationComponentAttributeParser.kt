@@ -13,7 +13,7 @@ import com.mapbox.maps.plugin.locationcomponent.R
 /**
  * Utility class for parsing [AttributeSet] to [LocationComponentSettings].
  */
-object LocationComponentAttributeParser {
+internal object LocationComponentAttributeParser {
   /**
    * Parse [AttributeSet] to [LocationComponentSettings].
    *

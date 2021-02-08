@@ -10,7 +10,7 @@ import com.mapbox.maps.plugin.logo.R
 /**
  * Utility class for parsing [AttributeSet] to [LogoSettings].
  */
-object LogoAttributeParser {
+internal object LogoAttributeParser {
   /**
    * Parse [AttributeSet] to [LogoSettings].
    *

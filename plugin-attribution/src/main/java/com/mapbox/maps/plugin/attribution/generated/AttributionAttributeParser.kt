@@ -11,7 +11,7 @@ import com.mapbox.maps.plugin.attribution.R
 /**
  * Utility class for parsing [AttributeSet] to [AttributionSettings].
  */
-object AttributionAttributeParser {
+internal object AttributionAttributeParser {
   /**
    * Parse [AttributeSet] to [AttributionSettings].
    *
