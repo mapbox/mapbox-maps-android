@@ -55,7 +55,6 @@
     <public name="mapbox_cameraTargetLng" type="attr"/>
     <public name="mapbox_cameraZoom" type="attr"/>
     <public name="mapbox_cameraBearing" type="attr"/>
-    <public name="mapbox_cameraTilt" type="attr"/>
     <public name="mapbox_cameraPitch" type="attr"/>
     <public name="mapbox_cameraAnchorX" type="attr"/>
     <public name="mapbox_cameraAnchorY" type="attr"/>

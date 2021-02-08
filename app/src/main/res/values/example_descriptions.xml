@@ -72,4 +72,5 @@
     <string name="description_location_component_animation">Animates puck with custom location provider updates</string>
     <string name="description_santa_catalina">Santa Catalina Walking Route</string>
     <string name="description_multiple_display">Display the map on a secondary display</string>
+    <string name="description_map_view_customization">Customize your map view</string>
 </resources>
