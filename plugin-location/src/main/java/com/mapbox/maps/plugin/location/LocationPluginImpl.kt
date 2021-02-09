@@ -1153,7 +1153,7 @@ class LocationPluginImpl : LocationPlugin {
 
   @SuppressLint("MissingPermission")
   private fun onLocationLayerStart() {
-    if (!isLocationComponentActivated || !isComponentStarted) {
+    if (!isLocationComponentActivated || !isComponentStarted || !style.isStyleFullyLoaded) {
       return
     }
     delegateProvider.getStyle {

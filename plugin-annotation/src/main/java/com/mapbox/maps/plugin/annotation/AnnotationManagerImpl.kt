@@ -212,7 +212,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Trigger an update to the underlying source
    */
   private fun updateSource() {
-    if (!style.isFullyLoaded()) {
+    if (!style.isStyleFullyLoaded) {
       Logger.e(TAG, "Can't update source: style is not fully loaded.")
       return
     }
