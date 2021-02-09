@@ -59,13 +59,17 @@ class StyleLoadTest {
         mapboxMap.loadStyleUri(
           Style.MAPBOX_STREETS
         ) { style ->
-          assertNotNull("Style should but non null", style)
+          assertNotNull("Style should be not null", style)
+          assertFalse("Style should not be fully loaded", style.isStyleFullyLoaded)
+          countDownLatch.countDown()
+        }
+        mapboxMap.getStyleFullyLoaded { style ->
           assertTrue("Style should be fully loaded", style.isStyleFullyLoaded)
           countDownLatch.countDown()
         }
       }
     }
-    countDownLatch = CountDownLatch(2)
+    countDownLatch = CountDownLatch(3)
     if (!countDownLatch.await(30, TimeUnit.SECONDS)) {
       throw TimeoutException()
     }
@@ -78,8 +82,7 @@ class StyleLoadTest {
         mapboxMap.loadStyleUri(
           Style.MAPBOX_STREETS
         ) { style ->
-          assertNotNull("Style should but non null", style)
-          assertTrue("Style should be fully loaded", style.isStyleFullyLoaded)
+          assertNotNull("Style should be not null", style)
           mapboxMap.loadStyleUri(Style.DARK)
           assertFalse("Map shouldn't be fully loaded", style.isStyleFullyLoaded)
           countDownLatch.countDown()

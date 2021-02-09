@@ -4,7 +4,6 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.StyleManagerInterface
-import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -29,8 +28,7 @@ class ModelLayerWrapperTest {
     every { style.addStyleLayer(any(), any()) } returns expected
     every { style.setStyleLayerProperty(any(), any(), any()) } returns expected
     every { expected.error } returns null
-    val styleState = mockk<MapStyleStateDelegate>()
-    every { styleState.isFullyLoaded() } returns true
+    every { style.isStyleFullyLoaded } returns true
     layer.bindTo(style)
   }
 
