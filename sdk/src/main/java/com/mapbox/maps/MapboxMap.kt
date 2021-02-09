@@ -38,8 +38,7 @@ class MapboxMap internal constructor(
   MapFeatureQueryDelegate,
   ObservableInterface,
   MapListenerDelegate,
-  MapPluginExtensionsDelegate,
-  MapStyleStateDelegate {
+  MapPluginExtensionsDelegate {
 
   private val nativeMapWeakRef = WeakReference(nativeMap)
   internal lateinit var style: Style

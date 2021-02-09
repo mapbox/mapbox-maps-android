@@ -22,7 +22,7 @@ internal open class LocationLayerWrapper(val layerId: String) {
 
   protected fun updateProperty(propertyName: String, value: Value) {
     mapStyleDelegate?.let {
-      if (it.isStyleFullyLoaded) {
+      if (!it.isStyleFullyLoaded) {
         return
       }
     }
