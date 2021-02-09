@@ -18,7 +18,6 @@ internal class NativeMapObserver(private val mainHandler: Handler) : MapObserver
   val onDidFinishRenderingMapListeners =
     CopyOnWriteArrayList<OnDidFinishRenderingMapListener>()
   val awaitingStyleGetters = mutableListOf<Style.OnStyleLoaded>()
-  val awaitingFullStyleGetters = mutableListOf<Style.OnStyleFullyLoaded>()
 
   //
   // Internal callbacks
@@ -181,7 +180,6 @@ internal class NativeMapObserver(private val mainHandler: Handler) : MapObserver
     onStyleImageChangeListeners.clear()
     onDidFinishRenderingMapListeners.clear()
     awaitingStyleGetters.clear()
-    awaitingFullStyleGetters.clear()
   }
 
   companion object {

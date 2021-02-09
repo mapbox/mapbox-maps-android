@@ -820,7 +820,7 @@ class Style internal constructor(
 
   /**
    * Callback to be invoked when a style has finished loading
-   * not including the style specified sprite and sources.
+   * including the style specified sprite and sources.
    */
   fun interface OnStyleLoaded {
     /**
@@ -829,18 +829,5 @@ class Style internal constructor(
      * @param style the style that has finished loading
      */
     fun onStyleLoaded(style: Style)
-  }
-
-  /**
-   * Callback to be invoked when a style has been fully loaded
-   * including the style specified sprite and sources.
-   */
-  fun interface OnStyleFullyLoaded {
-    /**
-     * Invoked when a style is fully loaded.
-     *
-     * @param style the style that is fully loaded.
-     */
-    fun onStyleFullyLoaded(style: Style)
   }
 }

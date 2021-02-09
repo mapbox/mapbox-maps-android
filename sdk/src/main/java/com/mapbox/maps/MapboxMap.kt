@@ -178,22 +178,8 @@ class MapboxMap internal constructor(
     addOnMapChangedListener(
       object : OnMapChangedListener {
         override fun onMapChange(mapChange: MapChange) {
-          if (mapChange == MapChange.DID_FINISH_LOADING_STYLE) {
-            onFinishLoadingStyle(onStyleLoaded, onMapLoadErrorListener)
-            removeOnMapChangedListener(this)
-          }
-        }
-      }
-    )
-    addOnMapChangedListener(
-      object : OnMapChangedListener {
-        override fun onMapChange(mapChange: MapChange) {
           if (mapChange == MapChange.DID_FULLY_LOAD_STYLE) {
-            // notify style getters
-            for (styleGetter in mapObserver.awaitingFullStyleGetters) {
-              styleGetter.onStyleFullyLoaded(style)
-            }
-            mapObserver.awaitingFullStyleGetters.clear()
+            onFinishLoadingStyle(onStyleLoaded, onMapLoadErrorListener)
             removeOnMapChangedListener(this)
           }
         }
@@ -241,26 +227,6 @@ class MapboxMap internal constructor(
     } else {
       // no style has loaded yet, add callback
       mapObserver.awaitingStyleGetters.add(onStyleLoaded)
-    }
-  }
-
-  /**
-   * Get the Style of the map asynchronously.
-   *
-   * @param onFullStyleLoaded the callback to be invoked when the style is loaded including the style specified sprite and sources.
-   */
-  fun getStyleFullyLoaded(onFullStyleLoaded: Style.OnStyleFullyLoaded) {
-    if (::style.isInitialized) {
-      if (style.isStyleFullyLoaded) {
-        // style has loaded, notify callback immediately
-        onFullStyleLoaded.onStyleFullyLoaded(style)
-      } else {
-        // style load is occurring now, add callback
-        mapObserver.awaitingFullStyleGetters.add(onFullStyleLoaded)
-      }
-    } else {
-      // no style has loaded yet, add callback
-      mapObserver.awaitingFullStyleGetters.add(onFullStyleLoaded)
     }
   }
 
