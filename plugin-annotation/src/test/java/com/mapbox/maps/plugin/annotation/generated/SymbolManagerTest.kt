@@ -32,7 +32,6 @@ import com.mapbox.maps.plugin.annotation.ShadowValueConverter
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate
 import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
-import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
@@ -72,9 +71,7 @@ class SymbolManagerTest {
     every { delegateProvider.getStyle(capture(captureCallback)) } answers {
       captureCallback.captured.invoke(style)
     }
-    val styleStateDelegate = mockk<MapStyleStateDelegate>()
-    every { delegateProvider.styleStateDelegate } returns styleStateDelegate
-    every { styleStateDelegate.isFullyLoaded() } returns true
+    every { style.isStyleFullyLoaded } returns true
     every { style.addSource(any()) } just Runs
     every { style.addLayer(any()) } just Runs
     every { style.addLayerBelow(any(), any()) } just Runs
