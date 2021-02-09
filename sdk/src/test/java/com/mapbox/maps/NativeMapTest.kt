@@ -707,10 +707,17 @@ class NativeMapTest {
   }
 
   @Test
-  fun isFullyLoaded() {
+  fun isMapFullyLoaded() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.isFullyLoaded
-    verify { map.isFullyLoaded }
+    nativeMap.isMapFullyLoaded
+    verify { map.isMapFullyLoaded }
+  }
+
+  @Test
+  fun isStyleFullyLoaded() {
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.isStyleFullyLoaded
+    verify { map.isStyleFullyLoaded }
   }
 
   @Test
@@ -766,7 +773,16 @@ class NativeMapTest {
     val hashMap = mockk<HashMap<String, Value>>()
     val nativeMap = NativeMapImpl(map)
     nativeMap.queryFeatureExtensions("id", value, "extension", "extensionField", hashMap, callback)
-    verify { map.queryFeatureExtensions("id", value, "extension", "extensionField", hashMap, callback) }
+    verify {
+      map.queryFeatureExtensions(
+        "id",
+        value,
+        "extension",
+        "extensionField",
+        hashMap,
+        callback
+      )
+    }
   }
 
   @Test

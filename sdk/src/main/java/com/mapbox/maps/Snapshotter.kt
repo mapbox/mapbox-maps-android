@@ -58,6 +58,13 @@ class Snapshotter : MapSnapshotterObserver {
   }
 
   /**
+   * Notifies the client when style loading completed, including the style specified sprite and sources.
+   */
+  override fun onDidFullyLoadStyle() {
+    Logger.e(TAG, "Style fully loaded.")
+  }
+
+  /**
    * Notifies the client about a missing style image.
    *
    * @param imageId The id of the image that is missing.
