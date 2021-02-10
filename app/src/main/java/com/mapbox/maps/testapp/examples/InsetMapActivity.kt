@@ -18,8 +18,6 @@ import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
-import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
-import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.plugin.attribution.getAttributionPlugin
 import com.mapbox.maps.plugin.compass.getCompassPlugin
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
@@ -29,6 +27,10 @@ import com.mapbox.maps.plugin.scalebar.getScaleBarPlugin
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.examples.fragment.MapFragment
 
+/**
+ * Example demonstrating displaying two maps: main map and small map with lower zoom
+ * in bottom-right corner with optional bounds showing what area is covered by main map.
+ */
 class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
 
   private lateinit var mainMapView: MapView
@@ -101,18 +103,14 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
   }
 
   override fun onCameraChanged() {
-    val mainCameraPosition = mainMapboxMap.getCameraOptions(null)
+    val mainCameraPosition = mainMapboxMap.getCameraOptions()
     val insetCameraPosition = CameraOptions.Builder()
       .zoom(mainCameraPosition.zoom?.minus(ZOOM_DISTANCE_BETWEEN_MAIN_AND_INSET_MAPS))
+      .pitch(mainCameraPosition.pitch)
       .bearing(mainCameraPosition.bearing)
       .center(mainCameraPosition.center)
       .build()
-    mainMapboxMap.flyTo(
-      insetCameraPosition,
-      mapAnimationOptions {
-        duration = DURATION_MS
-      }
-    )
+    insetMapboxMap.jumpTo(insetCameraPosition)
     insetMapboxMap.getStyle { style -> updateInsetMapLineLayerBounds(style) }
   }
 
@@ -123,7 +121,7 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
   }
 
   private fun getRectanglePoints(): List<Point> {
-    val bounds = mainMapboxMap.coordinateBoundsForCamera(mainMapboxMap.getCameraOptions(null))
+    val bounds = mainMapboxMap.coordinateBoundsForCamera(mainMapboxMap.getCameraOptions())
     return listOf(
       Point.fromLngLat(bounds.northeast.longitude(), bounds.northeast.latitude()),
       Point.fromLngLat(bounds.northeast.longitude(), bounds.southwest.latitude()),
@@ -160,6 +158,5 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
     private const val BOUNDS_LINE_LAYER_SOURCE_ID = "BOUNDS_LINE_LAYER_SOURCE_ID"
     private const val BOUNDS_LINE_LAYER_LAYER_ID = "BOUNDS_LINE_LAYER_LAYER_ID"
     private const val ZOOM_DISTANCE_BETWEEN_MAIN_AND_INSET_MAPS = 3
-    private const val DURATION_MS = 100L
   }
 }
