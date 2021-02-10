@@ -40,7 +40,7 @@ class ImageSourceActivity : AppCompatActivity() {
       }
     ) {
       getBitmap(R.drawable.miami_beach)?.let { bitmap ->
-        val imageSource: ImageSource = it.getSourceAs(ID_IMAGE_SOURCE)
+        val imageSource: ImageSource = it.getSourceAs(ID_IMAGE_SOURCE)!!
         val byteBuffer = ByteBuffer.allocate(bitmap.byteCount)
         bitmap.copyPixelsToBuffer(byteBuffer)
         imageSource.updateImage(Image(bitmap.width, bitmap.height, byteBuffer.array()))
