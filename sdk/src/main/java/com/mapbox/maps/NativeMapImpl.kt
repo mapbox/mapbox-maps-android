@@ -244,8 +244,12 @@ internal class NativeMapImpl(private val map: MapInterface) :
     map.setDebug(list, debugActive)
   }
 
-  override fun isFullyLoaded(): Boolean {
-    return map.isFullyLoaded
+  override fun isMapFullyLoaded(): Boolean {
+    return map.isMapFullyLoaded
+  }
+
+  override fun isStyleFullyLoaded(): Boolean {
+    return map.isStyleFullyLoaded
   }
 
   override fun dumpDebugLogs() {

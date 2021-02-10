@@ -750,6 +750,15 @@ class Style internal constructor(
   }
 
   /**
+   * Check if the style is completely loaded.
+   *
+   * @return TRUE if and only if the style JSON contents, the style specified sprite and sources are all loaded, otherwise returns FALSE.
+   */
+  override fun isStyleFullyLoaded(): Boolean {
+    return styleManagerRef.call { this.isStyleFullyLoaded }
+  }
+
+  /**
    * Return if the map is fully loaded
    */
   fun isFullyLoaded(): Boolean = fullyLoaded
