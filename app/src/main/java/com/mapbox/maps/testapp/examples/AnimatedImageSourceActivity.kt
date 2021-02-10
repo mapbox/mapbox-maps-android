@@ -47,7 +47,7 @@ class AnimatedImageSourceActivity : AppCompatActivity() {
         +rasterLayer(ID_IMAGE_LAYER, ID_IMAGE_SOURCE) { }
       }
     ) {
-      val imageSource: ImageSource = it.getSourceAs(ID_IMAGE_SOURCE)
+      val imageSource: ImageSource = it.getSourceAs(ID_IMAGE_SOURCE)!!
       runnable = RefreshImageRunnable(applicationContext, imageSource, handler)
       handler.postDelayed(runnable, 100)
     }

@@ -81,7 +81,7 @@ class MapOverlayActivity : AppCompatActivity(), OnMapClickListener {
 
   override fun onMapClick(point: Point): Boolean {
     markerCoordinates.add(point)
-    mapboxMap.getStyle()?.getSourceAs<GeoJsonSource>(sourceId)?.featureCollection(
+    mapboxMap.getStyle()?.getSourceAs<GeoJsonSource>(sourceId)!!.featureCollection(
       FeatureCollection.fromFeatures(
         markerCoordinates.map {
           Feature.fromGeometry(it)

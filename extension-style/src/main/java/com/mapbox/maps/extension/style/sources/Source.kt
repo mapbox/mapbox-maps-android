@@ -162,14 +162,18 @@ fun StyleManagerInterface.getSource(sourceId: String): Source? {
 }
 
 /**
- * Tries to cast the Source to T, throws ClassCastException if it's another type.
+ * Tries to cast the Source to T.
  *
  * @param sourceId the layer id
- * @return T
+ * @return T if Source is T and null otherwise
  */
-fun <T : Source> StyleManagerInterface.getSourceAs(sourceId: String): T {
-  @Suppress("UNCHECKED_CAST")
-  return getSource(sourceId) as T
+inline fun <reified T : Source> StyleManagerInterface.getSourceAs(sourceId: String): T? {
+  val source = getSource(sourceId)
+  if (source !is T) {
+    Logger.w("StyleSourcePlugin", "Given sourceId = $sourceId is not requested type in getSourceAs.")
+    return null
+  }
+  return source
 }
 
 /**
