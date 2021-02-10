@@ -45,7 +45,7 @@ class AnimateMapCameraActivity : AppCompatActivity(), OnMapClickListener {
         pitch(30.0) // Set the camera pitch
       },
       mapAnimationOptions {
-        duration = 7000
+        duration(7000)
       }
     )
     return true

@@ -708,8 +708,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     val bearingAnimator = cameraAnimationsPlugin.createBearingAnimator(
       options = cameraAnimatorOptions(bearingTarget) {
-        owner = MapAnimationOwnerRegistry.GESTURES
-        startValue = bearingCurrent
+        owner(MapAnimationOwnerRegistry.GESTURES)
+        startValue(bearingCurrent)
       },
     ) {
       interpolator = rotateInterpolator
@@ -719,8 +719,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     val screenCoordinate = ScreenCoordinate(animationFocalPoint.x, animationFocalPoint.y)
     val anchorAnimator = cameraAnimationsPlugin.createAnchorAnimator(
       options = cameraAnimatorOptions(screenCoordinate) {
-        owner = MapAnimationOwnerRegistry.GESTURES
-        startValue = screenCoordinate
+        owner(MapAnimationOwnerRegistry.GESTURES)
+        startValue(screenCoordinate)
       },
     ) {
       interpolator = rotateInterpolator
@@ -970,8 +970,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     val scaleInterpolator = gesturesInterpolator
     val zoomAnimator = cameraAnimationsPlugin.createZoomAnimator(
       options = cameraAnimatorOptions(currentZoom + zoomAddition) {
-        owner = MapAnimationOwnerRegistry.GESTURES
-        startValue = currentZoom
+        owner(MapAnimationOwnerRegistry.GESTURES)
+        startValue(currentZoom)
       }
     ) {
       interpolator = scaleInterpolator
@@ -980,8 +980,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     val anchorAnimator = cameraAnimationsPlugin.createAnchorAnimator(
       options = cameraAnimatorOptions(animationFocalPoint) {
-        owner = MapAnimationOwnerRegistry.GESTURES
-        startValue = animationFocalPoint
+        owner(MapAnimationOwnerRegistry.GESTURES)
+        startValue(animationFocalPoint)
       },
     ) {
       interpolator = scaleInterpolator
@@ -1199,9 +1199,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         cameraAnimationsPlugin.moveBy(
           ScreenCoordinate(offsetX, offsetY),
           mapAnimationOptions {
-            owner = MapAnimationOwnerRegistry.GESTURES
-            duration = animationTime
-            interpolator = gesturesInterpolator
+            owner(MapAnimationOwnerRegistry.GESTURES)
+            duration(animationTime)
+            interpolator(gesturesInterpolator)
           }
         )
       }
@@ -1592,8 +1592,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
    */
   companion object {
     private val immediateCameraJumpOptions = mapAnimationOptions {
-      duration = 0
-      owner = MapAnimationOwnerRegistry.GESTURES
+      duration(0)
+      owner(MapAnimationOwnerRegistry.GESTURES)
     }
   }
 }

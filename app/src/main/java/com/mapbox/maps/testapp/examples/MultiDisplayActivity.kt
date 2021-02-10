@@ -65,7 +65,7 @@ class MultiDisplayActivity : AppCompatActivity() {
     mapView.getMapboxMap().flyTo(
       cameraOption,
       mapAnimationOptions {
-        duration = DURATION
+        duration(DURATION)
       }
     )
   }

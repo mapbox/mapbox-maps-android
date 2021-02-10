@@ -2,7 +2,7 @@
 <resources>
     <string-array name="interpolators_array">
         <item>FastOutSlowInInterpolator</item>
-        <item>Hydrogen CubicBezier [0, 0, 0.25, 1]</item>
+        <item>CubicBezier [0, 0, 0.25, 1]</item>
         <item>FastOutLinearInInterpolator</item>
         <item>LinearOutSlowInInterpolator</item>
         <item>BounceInterpolator</item>

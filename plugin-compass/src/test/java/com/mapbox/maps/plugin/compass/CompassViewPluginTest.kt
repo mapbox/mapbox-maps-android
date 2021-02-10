@@ -363,8 +363,8 @@ class CompassViewPluginTest {
       animatePlugin.flyTo(
         any(),
         mapAnimationOptions {
-          owner = MapAnimationOwnerRegistry.COMPASS
-          duration = 300L
+          owner(MapAnimationOwnerRegistry.COMPASS)
+          duration(300L)
         }
       )
     }

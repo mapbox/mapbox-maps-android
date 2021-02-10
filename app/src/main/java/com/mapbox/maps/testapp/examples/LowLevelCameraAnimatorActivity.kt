@@ -47,7 +47,7 @@ class LowLevelCameraAnimatorActivity : AppCompatActivity() {
       }
       val zoom = createZoomAnimator(
         cameraAnimatorOptions(18.0) {
-          startValue = 15.0
+          startValue(15.0)
         }
       ) {
         duration = 5000
@@ -55,7 +55,7 @@ class LowLevelCameraAnimatorActivity : AppCompatActivity() {
       }
       val pitch = createPitchAnimator(
         cameraAnimatorOptions(55.0) {
-          startValue = 0.0
+          startValue(0.0)
         }
       ) {
         duration = 7000

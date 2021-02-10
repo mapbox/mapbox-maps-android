@@ -139,39 +139,39 @@ class CameraPredefinedAnimatorsActivity : AppCompatActivity() {
       R.id.menu_action_ease_to -> mapboxMap.easeTo(
         EASE_TO_TARGET_CAMERA_POSITION,
         mapAnimationOptions {
-          duration = 2000
+          duration(2000)
         }
       )
       R.id.menu_action_fly_to -> mapboxMap.flyTo(
         EASE_TO_TARGET_CAMERA_POSITION,
         mapAnimationOptions {
-          duration = 2000
+          duration(2000)
         }
       )
       R.id.menu_action_pitch_by -> mapboxMap.pitchBy(
         70.0,
         mapAnimationOptions {
-          duration = 2000
+          duration(2000)
         }
       )
       R.id.menu_action_scale_by -> mapboxMap.scaleBy(
         15.0,
         ScreenCoordinate(10.0, 10.0),
         mapAnimationOptions {
-          duration = 2000
+          duration(2000)
         }
       )
       R.id.menu_action_move_by -> mapboxMap.moveBy(
         ScreenCoordinate(500.0, 500.0),
         mapAnimationOptions {
-          duration = 3000
+          duration(3000)
         }
       )
       R.id.menu_action_rotate_by -> mapboxMap.rotateBy(
         ScreenCoordinate(0.0, 0.0),
         ScreenCoordinate(500.0, 500.0),
         mapAnimationOptions {
-          duration = 7000
+          duration(7000)
         }
       )
     }
