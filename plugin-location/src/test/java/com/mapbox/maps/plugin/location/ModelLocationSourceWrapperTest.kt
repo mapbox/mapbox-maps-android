@@ -3,7 +3,6 @@ package com.mapbox.maps.plugin.location
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.StyleManagerInterface
-import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -20,6 +19,7 @@ class ModelLocationSourceWrapperTest {
   fun setup() {
     every { style.addStyleSource(any(), any()) } returns expected
     every { style.setStyleSourceProperty(any(), any(), any()) } returns expected
+    every { style.isStyleFullyLoaded } returns true
     every { expected.error } returns null
   }
 
@@ -32,10 +32,8 @@ class ModelLocationSourceWrapperTest {
 
   @Test
   fun testSetPosition() {
-    val styleState = mockk<MapStyleStateDelegate>()
-    every { styleState.isFullyLoaded() } returns true
     val modelSource = ModelLocationSourceWrapper(SOURCE_ID, "uri", listOf(1.0, 2.0))
-    modelSource.bindTo(style, styleState)
+    modelSource.bindTo(style)
 
     val position = arrayListOf(5.0)
     modelSource.setPosition(position)

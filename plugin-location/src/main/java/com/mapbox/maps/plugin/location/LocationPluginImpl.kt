@@ -515,7 +515,7 @@ class LocationPluginImpl : LocationPlugin {
     checkActivationState()
     this.options = options
     delegateProvider.getStyle {
-      if (delegateProvider.styleStateDelegate.isFullyLoaded()) {
+      if (it.isStyleFullyLoaded) {
         locationLayerController.applyStyle(options)
         locationCameraController.initializeOptions(options)
         staleStateManager.setEnabled(options.enableStaleState())
@@ -1153,37 +1153,41 @@ class LocationPluginImpl : LocationPlugin {
 
   @SuppressLint("MissingPermission")
   private fun onLocationLayerStart() {
-    if (!isLocationComponentActivated || !isComponentStarted || !delegateProvider.styleStateDelegate.isFullyLoaded()) {
+    if (!isLocationComponentActivated || !isComponentStarted || !style.isStyleFullyLoaded) {
       return
     }
-    if (!isLayerReady) {
-      isLayerReady = true
-      // Add camera listeners here
-      if (options.enableStaleState()) {
-        staleStateManager.onStart()
-      }
-    }
-    if (isLocationComponentEnabled) {
-      locationEngine?.let {
-        try {
-          it.requestLocationUpdates(
-            locationEngineRequest, currentLocationEngineListener, Looper.getMainLooper()
-          )
-        } catch (se: SecurityException) {
-          Logger.e(
-            TAG, "Unable to request location updates, $se"
-          )
+    delegateProvider.getStyle {
+      if (it.isStyleFullyLoaded) {
+        if (!isLayerReady) {
+          isLayerReady = true
+          // Add camera listeners here
+          if (options.enableStaleState()) {
+            staleStateManager.onStart()
+          }
+        }
+        if (isLocationComponentEnabled) {
+          locationEngine?.let {
+            try {
+              it.requestLocationUpdates(
+                locationEngineRequest, currentLocationEngineListener, Looper.getMainLooper()
+              )
+            } catch (se: SecurityException) {
+              Logger.e(
+                TAG, "Unable to request location updates, $se"
+              )
+            }
+          }
+          cameraMode = locationCameraController.cameraMode
+          if (options.pulseEnabled()) {
+            startPulsingLocationCircle()
+          } else {
+            stopPulsingLocationCircle()
+          }
+          setLastLocation()
+          updateCompassListenerState(true)
+          setLastCompassHeading()
         }
       }
-      cameraMode = locationCameraController.cameraMode
-      if (options.pulseEnabled()) {
-        startPulsingLocationCircle()
-      } else {
-        stopPulsingLocationCircle()
-      }
-      setLastLocation()
-      updateCompassListenerState(true)
-      setLastCompassHeading()
     }
   }
 
@@ -1212,68 +1216,72 @@ class LocationPluginImpl : LocationPlugin {
     }
     isLocationComponentActivated = true
 
-    check(delegateProvider.styleStateDelegate.isFullyLoaded()) { "Style is invalid, provide the most recently loaded one." }
+    delegateProvider.getStyle {
+      if (it.isStyleFullyLoaded) {
+        this.style = style
+        this.options = options
 
-    this.style = style
-    this.options = options
+        val gesturePlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
+          Class.forName(
+            PLUGIN_GESTURE_CLASS_NAME
+          ) as Class<GesturesPlugin>
+        )
+          ?: throw InvalidPluginConfigurationException(
+            "Can't look up an instance of plugin, " +
+              "is it available on the clazz path and loaded through the map?"
+          )
+        val animationPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
+          Class.forName(
+            PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
+          ) as Class<CameraAnimationsPlugin>
+        )
+          ?: throw InvalidPluginConfigurationException(
+            "Can't look up an instance of plugin, " +
+              "is it available on the clazz path and loaded through the map?"
+          )
 
-    val gesturePlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
-      Class.forName(
-        PLUGIN_GESTURE_CLASS_NAME
-      ) as Class<GesturesPlugin>
-    )
-      ?: throw InvalidPluginConfigurationException(
-        "Can't look up an instance of plugin, " +
-          "is it available on the clazz path and loaded through the map?"
-      )
-    val animationPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
-      Class.forName(
-        PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
-      ) as Class<CameraAnimationsPlugin>
-    )
-      ?: throw InvalidPluginConfigurationException(
-        "Can't look up an instance of plugin, " +
-          "is it available on the clazz path and loaded through the map?"
-      )
+        gesturePlugin.addOnMapClickListener(onMapClickListener)
+        gesturePlugin.addOnMapLongClickListener(onMapLongClickListener)
 
-    gesturePlugin.addOnMapClickListener(onMapClickListener)
-    gesturePlugin.addOnMapLongClickListener(onMapLongClickListener)
+        val sourceProvider = LayerSourceProvider()
+        val bitmapProvider = LayerBitmapProvider(context)
 
-    val sourceProvider = LayerSourceProvider()
-    val bitmapProvider = LayerBitmapProvider(context)
+        locationLayerController = LocationLayerController(
+          delegateProvider, style, sourceProvider, locationModelLayerOptions,
+          bitmapProvider, options, indicatorPositionChangedListener, renderModeChangedListener
+        )
+        locationCameraController = LocationCameraController(
+          context,
+          delegateProvider,
+          gesturePlugin,
+          animationPlugin,
+          cameraTrackingChangedListener,
+          options
+        )
+        locationAnimatorCoordinator = LocationLayerAnimatorCoordinator(
+          delegateProvider.mapProjectionDelegate,
+          MapboxAnimatorSetProvider.instance,
+          MapboxAnimatorProvider.INSTANCE
+        )
+        val windowManager =
+          context.getSystemService(Context.WINDOW_SERVICE) as? WindowManager
+        val sensorManager =
+          context.getSystemService(Context.SENSOR_SERVICE) as? SensorManager
+        if (windowManager != null && sensorManager != null) {
+          compassEngine = LocationComponentCompassEngine(windowManager, sensorManager)
+        }
+        staleStateManager = StaleStateManager(onLocationStaleListener, options)
 
-    locationLayerController = LocationLayerController(
-      delegateProvider, style, sourceProvider, locationModelLayerOptions,
-      bitmapProvider, options, indicatorPositionChangedListener, renderModeChangedListener
-    )
-    locationCameraController = LocationCameraController(
-      context,
-      delegateProvider,
-      gesturePlugin,
-      animationPlugin,
-      cameraTrackingChangedListener,
-      options
-    )
-    locationAnimatorCoordinator = LocationLayerAnimatorCoordinator(
-      delegateProvider.mapProjectionDelegate,
-      MapboxAnimatorSetProvider.instance,
-      MapboxAnimatorProvider.INSTANCE
-    )
-    val windowManager =
-      context.getSystemService(Context.WINDOW_SERVICE) as? WindowManager
-    val sensorManager =
-      context.getSystemService(Context.SENSOR_SERVICE) as? SensorManager
-    if (windowManager != null && sensorManager != null) {
-      compassEngine = LocationComponentCompassEngine(windowManager, sensorManager)
+        updateMapWithOptions(options)
+
+        renderMode = RenderMode.NORMAL
+        cameraMode = CameraMode.NONE
+        updateAnimatorListenerHolders()
+        onLocationLayerStart()
+      } else {
+        Logger.e(TAG, "Style is invalid, provide the most recently loaded one.")
+      }
     }
-    staleStateManager = StaleStateManager(onLocationStaleListener, options)
-
-    updateMapWithOptions(options)
-
-    renderMode = RenderMode.NORMAL
-    cameraMode = CameraMode.NONE
-    updateAnimatorListenerHolders()
-    onLocationLayerStart()
   }
 
   private fun initializeLocationEngine(context: Context) {

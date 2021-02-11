@@ -40,7 +40,7 @@ class IndicatorLocationLayerRendererTest {
     every { layerWrapper.layerId } returns "id"
 
     locationLayerRenderer = IndicatorLocationLayerRenderer(layerSourceProvider)
-    locationLayerRenderer.initializeComponents(style, mockk(relaxed = true))
+    locationLayerRenderer.initializeComponents(style)
   }
 
   @Test
@@ -57,7 +57,7 @@ class IndicatorLocationLayerRendererTest {
     locationLayerRenderer.setGpsBearing(bearing)
     locationLayerRenderer.setAccuracyRadius(accuracy)
 
-    locationLayerRenderer.initializeComponents(style, mockk(relaxed = true))
+    locationLayerRenderer.initializeComponents(style)
 
     verify { layerWrapper.location(capture(doubleListSlot)) }
     assertEquals(latLng.toLocationList(), doubleListSlot.captured)

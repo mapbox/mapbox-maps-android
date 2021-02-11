@@ -4,11 +4,10 @@ import android.graphics.Bitmap
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.StyleManagerInterface
-import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
 import com.mapbox.maps.plugin.location.modes.RenderMode
 
 internal interface LocationLayerRenderer {
-  fun initializeComponents(style: StyleManagerInterface, styleStateDelegate: MapStyleStateDelegate)
+  fun initializeComponents(style: StyleManagerInterface)
 
   fun addLayers(positionManager: LocationComponentPositionManager)
 

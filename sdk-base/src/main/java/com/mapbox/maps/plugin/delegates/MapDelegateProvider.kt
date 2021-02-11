@@ -46,11 +46,4 @@ interface MapDelegateProvider {
    * Delegate used to manager listeners.
    */
   val mapListenerDelegate: MapListenerDelegate
-
-  /**
-   * Delegate used for style state.
-   */
-  // TODO replace with style.isFullyLoaded
-  // https://github.com/mapbox/mapbox-maps-android/issues/219
-  val styleStateDelegate: MapStyleStateDelegate
 }

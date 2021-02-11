@@ -17,7 +17,6 @@ import java.nio.ByteBuffer
  * from the main thread.
  * </p>
  *
- * @property fullyLoaded true is style is fully loaded, false if a new style is being loaded
  * @property pixelRatio the scale ratio of the style, default the device pixel ratio
  */
 class Style internal constructor(
@@ -25,7 +24,6 @@ class Style internal constructor(
   private val pixelRatio: Float
 ) : StyleManagerInterface {
   private val styleManagerRef = WeakReference(styleManager)
-  var fullyLoaded = true
 
   /**
    * Subscribes an Observer to a provided list of event types.
@@ -759,11 +757,6 @@ class Style internal constructor(
   }
 
   /**
-   * Return if the map is fully loaded
-   */
-  fun isFullyLoaded(): Boolean = fullyLoaded
-
-  /**
    * A convenience object to access [the style ID](https://docs.mapbox.com/help/glossary/style-id/) strings of the professionally-designed
    * map styles made by Mapbox.
    */
@@ -826,7 +819,8 @@ class Style internal constructor(
   }
 
   /**
-   * Callback to be invoked when a style has finished loading.
+   * Callback to be invoked when a style has finished loading
+   * including the style specified sprite and sources.
    */
   fun interface OnStyleLoaded {
     /**

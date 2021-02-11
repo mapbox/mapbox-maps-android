@@ -445,13 +445,13 @@ internal class NativeMapImpl(private val map: MapInterface) :
   }
 
   override fun getFreeCameraOptions(): FreeCameraOptions {
-    return map.getFreeCameraOptions()
+    return map.freeCameraOptions
   }
 
   override fun setFreeCameraOptions(
     options: FreeCameraOptions
   ) {
-    map.setFreeCameraOptions(options)
+    map.freeCameraOptions = options
   }
 
   override fun invalidateStyleCustomGeometrySourceTile(

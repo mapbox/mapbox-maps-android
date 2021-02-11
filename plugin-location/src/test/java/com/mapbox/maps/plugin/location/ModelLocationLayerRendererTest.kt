@@ -31,7 +31,7 @@ class ModelLocationLayerRendererTest {
     every { layerWrapper.layerId } returns "id"
     every { option.modelRotation } returns listOf(0.0, 0.0, 0.0)
     locationLayerRenderer = ModelLocationLayerRenderer(layerSourceProvider, option)
-    locationLayerRenderer.initializeComponents(style, mockk(relaxed = true))
+    locationLayerRenderer.initializeComponents(style)
   }
 
   @Test
@@ -41,7 +41,7 @@ class ModelLocationLayerRendererTest {
     locationLayerRenderer.setLatLng(latLng)
     locationLayerRenderer.setGpsBearing(bearing)
 
-    locationLayerRenderer.initializeComponents(style, mockk(relaxed = true))
+    locationLayerRenderer.initializeComponents(style)
 
     verify { sourceWrapper.setPosition(listOf(10.0, 20.0)) }
     verify { layerWrapper.modelRotation(listOf(0.0, 0.0, 0.0)) }

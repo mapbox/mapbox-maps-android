@@ -59,8 +59,8 @@ class StyleLoadTest {
         mapboxMap.loadStyleUri(
           Style.MAPBOX_STREETS
         ) { style ->
-          assertNotNull("Style should but non null", style)
-          assertTrue("Style should be fully loaded", style.fullyLoaded)
+          assertNotNull("Style should be not null", style)
+          assertTrue("Style should be fully loaded", style.isStyleFullyLoaded)
           countDownLatch.countDown()
         }
       }
@@ -78,10 +78,9 @@ class StyleLoadTest {
         mapboxMap.loadStyleUri(
           Style.MAPBOX_STREETS
         ) { style ->
-          assertNotNull("Style should but non null", style)
-          assertTrue("Style should be fully loaded", style.fullyLoaded)
+          assertNotNull("Style should be not null", style)
           mapboxMap.loadStyleUri(Style.DARK)
-          assertFalse("Map shouldn't be fully loaded", style.fullyLoaded)
+          assertFalse("Map shouldn't be fully loaded", style.isStyleFullyLoaded)
           countDownLatch.countDown()
         }
       }

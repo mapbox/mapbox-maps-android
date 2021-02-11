@@ -3,7 +3,6 @@ package com.mapbox.maps.plugin.location
 import android.util.Log
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.StyleManagerInterface
-import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
 
 internal class ModelLocationSourceWrapper(
   private val sourceId: String,
@@ -13,7 +12,6 @@ internal class ModelLocationSourceWrapper(
 
   private var sourceProperties = HashMap<String, Value>()
   private var styleDelegate: StyleManagerInterface? = null
-  private var styleStateDelegate: MapStyleStateDelegate? = null
 
   init {
     val modelProperties = HashMap<String, Value>()
@@ -28,9 +26,8 @@ internal class ModelLocationSourceWrapper(
     sourceProperties[MODELS] = Value(models)
   }
 
-  fun bindTo(delegate: StyleManagerInterface, styleStateDelegate: MapStyleStateDelegate) {
+  fun bindTo(delegate: StyleManagerInterface) {
     this.styleDelegate = delegate
-    this.styleStateDelegate = styleStateDelegate
     val expected = delegate.addStyleSource(sourceId, toValue())
     expected.error?.let {
       Log.e(TAG, sourceProperties.toString())
@@ -47,8 +44,8 @@ internal class ModelLocationSourceWrapper(
   fun toValue() = Value(sourceProperties)
 
   private fun updateProperty(propertyName: String, value: Value) {
-    styleStateDelegate?.let {
-      if (!it.isFullyLoaded()) {
+    styleDelegate?.let {
+      if (!it.isStyleFullyLoaded) {
         return
       }
     }

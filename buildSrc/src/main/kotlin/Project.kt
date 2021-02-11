@@ -11,11 +11,7 @@ object Plugins {
   const val license = "com.jaredsburrows:gradle-license-plugin:${Versions.pluginLicense}"
   const val androidPublish = "digital.wup:android-maven-publish:${Versions.pluginMavenPublish}"
   const val mapboxAccessToken = "com.mapbox.gradle.plugins:access-token:${Versions.mapboxAccessToken}"
-  const val mapboxBindgen = "com.mapbox.gradle.plugins:bindgen:${Versions.mapboxBindgen}"
-  const val mapboxNative = "com.mapbox.gradle.plugins:native-build:${Versions.mapboxNative}"
   const val mapboxSdkRegistry = "com.mapbox.gradle.plugins:sdk-registry:${Versions.mapboxSdkRegistry}"
-  // for building from source
-  const val bintray = "com.jfrog.bintray.gradle:gradle-bintray-plugin:${Versions.pluginBintray}"
 }
 
 object Dependencies {
@@ -56,17 +52,6 @@ object Dependencies {
   const val mockk = "io.mockk:mockk:${Versions.mockk}"
   const val robolectric = "org.robolectric:robolectric:${Versions.robolectric}"
   const val robolectricEgl = "org.khronos:opengl-api:${Versions.robolectricEgl}"
-  // for building maps from source
-  const val annotations = androidxAnnotations
-  // for building common from source
-  const val mapboxLogger = "com.mapbox.common:logger:${Versions.mapboxBase}"
-  const val mapboxLoader = "com.mapbox.common:loader:${Versions.mapboxBase}"
-  const val androidXTestRunner = androidxTestRunner
-  const val androidTestOrchestrator = androidxOrchestrator
-  const val mapboxBaseAndroid = mapboxBase
-  const val kotlinLib = kotlin
-  const val androidXTestCore = androidxTestCore
-  const val androidXStartupRuntime = "androidx.startup:startup-runtime:1.0.0"
 }
 
 object Versions {
@@ -74,12 +59,9 @@ object Versions {
   const val pluginKotlin = "1.4.0"
   const val pluginLicense = "0.8.5"
   const val pluginDokka =  "1.4.10"
-  const val pluginBintray = "1.8.4"
   const val pluginJacoco = "0.2"
   const val pluginMavenPublish = "3.6.2"
   const val mapboxAccessToken="0.2.1"
-  const val mapboxBindgen="0.2.1"
-  const val mapboxNative="0.2.1"
   const val mapboxSdkRegistry="0.4.0"
   const val mapboxGestures = "0.7.0"
   const val mapboxJavaServices = "5.4.1"

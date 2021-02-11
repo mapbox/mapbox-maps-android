@@ -10,7 +10,6 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
 import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.location.LocationComponentConstants.TRANSITION_ANIMATION_DURATION_MS
@@ -79,9 +78,7 @@ class LocationComponentTest {
     every { delegateProvider.getStyle(any()) } answers {
       firstArg<(StyleManagerInterface) -> Unit>().invoke(style)
     }
-    val styleStateDelegate = mockk<MapStyleStateDelegate>()
-    every { delegateProvider.styleStateDelegate } returns styleStateDelegate
-    every { styleStateDelegate.isFullyLoaded() } returns true
+    every { style.isStyleFullyLoaded } returns true
 
     locationImpl = LocationPluginImpl(
       delegateProvider = delegateProvider,
