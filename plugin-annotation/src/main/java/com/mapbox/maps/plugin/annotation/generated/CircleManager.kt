@@ -278,11 +278,11 @@ class CircleManager(
 }
 
 /**
- * Extension function to get CircleManager instance
+ * Extension function to create a CircleManager instance.
  */
-fun AnnotationPlugin.getCircleManager(
+fun AnnotationPlugin.createCircleManager(
   mapView: View,
   annotationConfig: AnnotationConfig? = null
 ): CircleManager {
-  return getAnnotationManager(mapView, AnnotationType.Circle, annotationConfig) as CircleManager
+  return createAnnotationManager(mapView, AnnotationType.Circle, annotationConfig) as CircleManager
 }

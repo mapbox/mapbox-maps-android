@@ -10,7 +10,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.R
 import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.plugin.annotation.generated.CircleOptions
-import com.mapbox.maps.plugin.annotation.generated.getCircleManager
+import com.mapbox.maps.plugin.annotation.generated.createCircleManager
 import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
 import com.mapbox.maps.testapp.BaseMapTest
 import org.junit.Assert.assertEquals
@@ -36,7 +36,7 @@ class CircleManagerAndroidTest : BaseMapTest() {
   @Test
   fun testCirclePitchAlignment() {
     val testValue = CirclePitchAlignment.MAP
-    val circleManager = mapView.getAnnotationPlugin().getCircleManager(mapView)
+    val circleManager = mapView.getAnnotationPlugin().createCircleManager(mapView)
     circleManager.circlePitchAlignment = testValue
     assertEquals(testValue, circleManager.circlePitchAlignment)
   }
@@ -44,7 +44,7 @@ class CircleManagerAndroidTest : BaseMapTest() {
   @Test
   fun testCirclePitchScale() {
     val testValue = CirclePitchScale.MAP
-    val circleManager = mapView.getAnnotationPlugin().getCircleManager(mapView)
+    val circleManager = mapView.getAnnotationPlugin().createCircleManager(mapView)
     circleManager.circlePitchScale = testValue
     assertEquals(testValue, circleManager.circlePitchScale)
   }
@@ -52,7 +52,7 @@ class CircleManagerAndroidTest : BaseMapTest() {
   @Test
   fun testCircleTranslate() {
     val testValue = listOf(0.0, 1.0)
-    val circleManager = mapView.getAnnotationPlugin().getCircleManager(mapView)
+    val circleManager = mapView.getAnnotationPlugin().createCircleManager(mapView)
     circleManager.circleTranslate = testValue
     assertEquals(testValue, circleManager.circleTranslate)
   }
@@ -60,14 +60,14 @@ class CircleManagerAndroidTest : BaseMapTest() {
   @Test
   fun testCircleTranslateAnchor() {
     val testValue = CircleTranslateAnchor.MAP
-    val circleManager = mapView.getAnnotationPlugin().getCircleManager(mapView)
+    val circleManager = mapView.getAnnotationPlugin().createCircleManager(mapView)
     circleManager.circleTranslateAnchor = testValue
     assertEquals(testValue, circleManager.circleTranslateAnchor)
   }
 
   @Test
   fun create() {
-    val circleManager = mapView.getAnnotationPlugin().getCircleManager(mapView)
+    val circleManager = mapView.getAnnotationPlugin().createCircleManager(mapView)
     val annotation = circleManager.create(
       CircleOptions()
         .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -77,7 +77,7 @@ class CircleManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun createFromFeature() {
-    val circleManager = mapView.getAnnotationPlugin().getCircleManager(mapView)
+    val circleManager = mapView.getAnnotationPlugin().createCircleManager(mapView)
     val featureCollection =
       FeatureCollection.fromFeature(Feature.fromGeometry(Point.fromLngLat(0.0, 0.0)))
     val annotations = circleManager.create(featureCollection.toJson())
@@ -88,7 +88,7 @@ class CircleManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun createList() {
-    val circleManager = mapView.getAnnotationPlugin().getCircleManager(mapView)
+    val circleManager = mapView.getAnnotationPlugin().createCircleManager(mapView)
     val list = listOf(
       CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0)),
       CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0))
@@ -100,7 +100,7 @@ class CircleManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun update() {
-    val circleManager = mapView.getAnnotationPlugin().getCircleManager(mapView)
+    val circleManager = mapView.getAnnotationPlugin().createCircleManager(mapView)
     val annotation = circleManager.create(CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0)))
     assertEquals(annotation, circleManager.annotations[0])
     annotation.point = Point.fromLngLat(1.0, 1.0)
@@ -110,7 +110,7 @@ class CircleManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun updateList() {
-    val circleManager = mapView.getAnnotationPlugin().getCircleManager(mapView)
+    val circleManager = mapView.getAnnotationPlugin().createCircleManager(mapView)
     val list = listOf(
       CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0)),
       CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0))
@@ -127,7 +127,7 @@ class CircleManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun delete() {
-    val circleManager = mapView.getAnnotationPlugin().getCircleManager(mapView)
+    val circleManager = mapView.getAnnotationPlugin().createCircleManager(mapView)
     val annotation = circleManager.create(
       CircleOptions()
         .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -139,7 +139,7 @@ class CircleManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun deleteList() {
-    val circleManager = mapView.getAnnotationPlugin().getCircleManager(mapView)
+    val circleManager = mapView.getAnnotationPlugin().createCircleManager(mapView)
     val list = listOf(
       CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0)),
       CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0))
@@ -154,7 +154,7 @@ class CircleManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun deleteAll() {
-    val circleManager = mapView.getAnnotationPlugin().getCircleManager(mapView)
+    val circleManager = mapView.getAnnotationPlugin().createCircleManager(mapView)
     val list = listOf(
       CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0)),
       CircleOptions().withPoint(Point.fromLngLat(0.0, 0.0))

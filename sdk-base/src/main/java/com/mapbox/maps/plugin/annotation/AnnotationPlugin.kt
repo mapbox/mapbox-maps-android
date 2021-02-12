@@ -16,7 +16,7 @@ fun interface AnnotationPlugin : MapPlugin, MapSizePlugin {
    * @param annotationConfig the configuration for AnnotationManager
    * @return the annotation manger
    */
-  fun getAnnotationManager(
+  fun createAnnotationManager(
     mapView: View,
     type: AnnotationType,
     annotationConfig: AnnotationConfig?

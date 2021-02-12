@@ -31,7 +31,7 @@ class CircleActivity : AppCompatActivity() {
     setContentView(R.layout.activity_annotation)
     mapView.getMapboxMap().loadStyleUri(nextStyle) {
       val annotationPlugin = mapView.getAnnotationPlugin()
-      circleManager = annotationPlugin.getCircleManager(mapView).apply {
+      circleManager = annotationPlugin.createCircleManager(mapView).apply {
         addClickListener(
           OnCircleClickListener {
             Toast.makeText(this@CircleActivity, "click", Toast.LENGTH_LONG).show()

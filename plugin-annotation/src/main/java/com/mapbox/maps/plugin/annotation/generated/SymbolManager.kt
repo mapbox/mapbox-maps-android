@@ -906,11 +906,11 @@ class SymbolManager(
 }
 
 /**
- * Extension function to get SymbolManager instance
+ * Extension function to create a SymbolManager instance.
  */
-fun AnnotationPlugin.getSymbolManager(
+fun AnnotationPlugin.createSymbolManager(
   mapView: View,
   annotationConfig: AnnotationConfig? = null
 ): SymbolManager {
-  return getAnnotationManager(mapView, AnnotationType.Symbol, annotationConfig) as SymbolManager
+  return createAnnotationManager(mapView, AnnotationType.Symbol, annotationConfig) as SymbolManager
 }

@@ -11,7 +11,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.R
 import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.plugin.annotation.generated.LineOptions
-import com.mapbox.maps.plugin.annotation.generated.getLineManager
+import com.mapbox.maps.plugin.annotation.generated.createLineManager
 import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
 import com.mapbox.maps.testapp.BaseMapTest
 import org.junit.Assert.assertEquals
@@ -37,7 +37,7 @@ class LineManagerAndroidTest : BaseMapTest() {
   @Test
   fun testLineCap() {
     val testValue = LineCap.BUTT
-    val lineManager = mapView.getAnnotationPlugin().getLineManager(mapView)
+    val lineManager = mapView.getAnnotationPlugin().createLineManager(mapView)
     lineManager.lineCap = testValue
     assertEquals(testValue, lineManager.lineCap)
   }
@@ -45,7 +45,7 @@ class LineManagerAndroidTest : BaseMapTest() {
   @Test
   fun testLineMiterLimit() {
     val testValue = 1.0
-    val lineManager = mapView.getAnnotationPlugin().getLineManager(mapView)
+    val lineManager = mapView.getAnnotationPlugin().createLineManager(mapView)
     lineManager.lineMiterLimit = testValue
     assertEquals(testValue, lineManager.lineMiterLimit)
   }
@@ -53,7 +53,7 @@ class LineManagerAndroidTest : BaseMapTest() {
   @Test
   fun testLineRoundLimit() {
     val testValue = 1.0
-    val lineManager = mapView.getAnnotationPlugin().getLineManager(mapView)
+    val lineManager = mapView.getAnnotationPlugin().createLineManager(mapView)
     lineManager.lineRoundLimit = testValue
     assertEquals(testValue, lineManager.lineRoundLimit)
   }
@@ -61,7 +61,7 @@ class LineManagerAndroidTest : BaseMapTest() {
   @Test
   fun testLineDasharray() {
     val testValue = listOf(1.0, 2.0)
-    val lineManager = mapView.getAnnotationPlugin().getLineManager(mapView)
+    val lineManager = mapView.getAnnotationPlugin().createLineManager(mapView)
     lineManager.lineDasharray = testValue
     assertEquals(testValue, lineManager.lineDasharray)
   }
@@ -69,7 +69,7 @@ class LineManagerAndroidTest : BaseMapTest() {
   @Test
   fun testLineTranslate() {
     val testValue = listOf(0.0, 1.0)
-    val lineManager = mapView.getAnnotationPlugin().getLineManager(mapView)
+    val lineManager = mapView.getAnnotationPlugin().createLineManager(mapView)
     lineManager.lineTranslate = testValue
     assertEquals(testValue, lineManager.lineTranslate)
   }
@@ -77,14 +77,14 @@ class LineManagerAndroidTest : BaseMapTest() {
   @Test
   fun testLineTranslateAnchor() {
     val testValue = LineTranslateAnchor.MAP
-    val lineManager = mapView.getAnnotationPlugin().getLineManager(mapView)
+    val lineManager = mapView.getAnnotationPlugin().createLineManager(mapView)
     lineManager.lineTranslateAnchor = testValue
     assertEquals(testValue, lineManager.lineTranslateAnchor)
   }
 
   @Test
   fun create() {
-    val lineManager = mapView.getAnnotationPlugin().getLineManager(mapView)
+    val lineManager = mapView.getAnnotationPlugin().createLineManager(mapView)
     val annotation = lineManager.create(
       LineOptions()
         .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -94,7 +94,7 @@ class LineManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun createFromFeature() {
-    val lineManager = mapView.getAnnotationPlugin().getLineManager(mapView)
+    val lineManager = mapView.getAnnotationPlugin().createLineManager(mapView)
     val featureCollection =
       FeatureCollection.fromFeature(Feature.fromGeometry(LineString.fromLngLats(listOf(Point.fromLngLat(0.0, 0.0)))))
     val annotations = lineManager.create(featureCollection.toJson())
@@ -105,7 +105,7 @@ class LineManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun createList() {
-    val lineManager = mapView.getAnnotationPlugin().getLineManager(mapView)
+    val lineManager = mapView.getAnnotationPlugin().createLineManager(mapView)
     val list = listOf(
       LineOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))),
       LineOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -117,7 +117,7 @@ class LineManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun update() {
-    val lineManager = mapView.getAnnotationPlugin().getLineManager(mapView)
+    val lineManager = mapView.getAnnotationPlugin().createLineManager(mapView)
     val annotation = lineManager.create(LineOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))))
     assertEquals(annotation, lineManager.annotations[0])
     annotation.points = listOf(Point.fromLngLat(1.0, 1.0), Point.fromLngLat(1.0, 1.0))
@@ -127,7 +127,7 @@ class LineManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun updateList() {
-    val lineManager = mapView.getAnnotationPlugin().getLineManager(mapView)
+    val lineManager = mapView.getAnnotationPlugin().createLineManager(mapView)
     val list = listOf(
       LineOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))),
       LineOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -144,7 +144,7 @@ class LineManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun delete() {
-    val lineManager = mapView.getAnnotationPlugin().getLineManager(mapView)
+    val lineManager = mapView.getAnnotationPlugin().createLineManager(mapView)
     val annotation = lineManager.create(
       LineOptions()
         .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -156,7 +156,7 @@ class LineManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun deleteList() {
-    val lineManager = mapView.getAnnotationPlugin().getLineManager(mapView)
+    val lineManager = mapView.getAnnotationPlugin().createLineManager(mapView)
     val list = listOf(
       LineOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))),
       LineOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -171,7 +171,7 @@ class LineManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun deleteAll() {
-    val lineManager = mapView.getAnnotationPlugin().getLineManager(mapView)
+    val lineManager = mapView.getAnnotationPlugin().createLineManager(mapView)
     val list = listOf(
       LineOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))),
       LineOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))

@@ -46,7 +46,7 @@ class SymbolActivity : AppCompatActivity() {
     setContentView(R.layout.activity_annotation)
     mapView.getMapboxMap().loadStyleUri(nextStyle) {
       val annotationPlugin = mapView.getAnnotationPlugin()
-      symbolManager = annotationPlugin.getSymbolManager(mapView).apply {
+      symbolManager = annotationPlugin.createSymbolManager(mapView).apply {
         addClickListener(
           OnSymbolClickListener {
             Toast.makeText(this@SymbolActivity, "Click: $it", Toast.LENGTH_LONG).show()
