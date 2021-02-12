@@ -9,7 +9,7 @@ import android.os.Handler
 import android.util.AttributeSet
 import android.view.InputDevice
 import android.view.MotionEvent
-import android.view.animation.DecelerateInterpolator
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.android.gestures.*
 import com.mapbox.maps.AnimationOptions
 import com.mapbox.maps.CameraOptions
@@ -80,7 +80,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   private var scaleAnimators: Array<ValueAnimator>? = null
   private var rotateAnimators: Array<ValueAnimator>? = null
   private val scheduledAnimators = ArrayList<ValueAnimator>()
-  private val gesturesInterpolator = DecelerateInterpolator()
+  private val gesturesInterpolator = LinearOutSlowInInterpolator()
 
   /**
    * Cancels scheduled velocity animations if user doesn't lift fingers within [SCHEDULED_ANIMATION_TIMEOUT]
