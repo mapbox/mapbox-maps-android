@@ -455,26 +455,10 @@ class MapboxMapTest {
   }
 
   @Test
-  fun renderStill() {
-    val callback: StillImageCallback = mockk()
-    mapboxMap.renderStill(callback)
-    verify { nativeMap.renderStill(callback) }
-  }
-
-  @Test
   fun setDefaultFramebufferObject() {
     val id = 1
     mapboxMap.setDefaultFramebufferObject(id)
     verify { nativeMap.setDefaultFramebufferObject(id) }
-  }
-
-  @Test
-  fun renderStillTwo() {
-    val cameraOptions: CameraOptions = mockk()
-    val callback: StillImageCallback = mockk()
-    val debugOptions: List<MapDebugOptions> = mockk()
-    mapboxMap.renderStill(cameraOptions, debugOptions, callback)
-    verify { nativeMap.renderStill(cameraOptions, debugOptions, callback) }
   }
 
   @Test

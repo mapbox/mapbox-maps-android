@@ -819,32 +819,6 @@ class MapboxMap internal constructor(
   }
 
   /**
-   * Render the map to an image asynchronously, resulting image will be provided
-   * through a callback interface.
-   *
-   * @param stillImageCallback the callback to be invoked when the map image has been created
-   */
-  fun renderStill(stillImageCallback: StillImageCallback) {
-    nativeMapWeakRef.call { this.renderStill(stillImageCallback) }
-  }
-
-  /**
-   * Render an image of the map based on camera options and debug options asynchronously,
-   * resulting image will be provided through a callback interface.
-   *
-   * @param cameraOptions the camera options to use when rendering the map image
-   * @param debugOptions the debug options to enable when rendering the map image
-   * @param stillImageCallback the callback to be invoked when the map image has been created
-   */
-  fun renderStill(
-    cameraOptions: CameraOptions,
-    debugOptions: List<MapDebugOptions>,
-    stillImageCallback: StillImageCallback
-  ) {
-    nativeMapWeakRef.call { this.renderStill(cameraOptions, debugOptions, stillImageCallback) }
-  }
-
-  /**
    * @brief Rebinds the default frame buffer object
    *
    * @param framebufferId ID of the new frame buffer object

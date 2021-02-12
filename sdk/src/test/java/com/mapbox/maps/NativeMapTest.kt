@@ -401,24 +401,6 @@ class NativeMapTest {
   }
 
   @Test
-  fun renderStill() {
-    val value = mockk<StillImageCallback>()
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.renderStill(value)
-    verify { map.renderStill(value) }
-  }
-
-  @Test
-  fun renderStillOptions() {
-    val cameraOptions = mockk<CameraOptions>()
-    val debugOptions = mockk<MutableList<MapDebugOptions>>()
-    val value = mockk<StillImageCallback>()
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.renderStill(cameraOptions, debugOptions, value)
-    verify { map.renderStill(cameraOptions, debugOptions, value) }
-  }
-
-  @Test
   fun triggerRepaint() {
     val nativeMap = NativeMapImpl(map)
     nativeMap.triggerRepaint()
