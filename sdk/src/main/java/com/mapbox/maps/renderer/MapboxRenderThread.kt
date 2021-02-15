@@ -44,6 +44,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val renderTimeNs = AtomicLong(0)
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  private var needRenderOnResume = false
   private var previousVsyncFrameStartTimeNs = 0L
   private var expectedVsyncWakeTimeNs = 0L
   private var sizeChanged = false
@@ -146,7 +147,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   private fun draw() {
     val renderTimeNsCopy = renderTimeNs.get()
     val currentTimeNs = SystemClock.elapsedRealtimeNanos()
-    Logger.e("Mbx-Benchmark", "Time draw start $currentTimeNs")
     val expectedEndRenderTimeNs = currentTimeNs + renderTimeNsCopy
     if (expectedVsyncWakeTimeNs > currentTimeNs) {
       return
@@ -177,8 +177,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
     fpsChangedListener?.let {
       val fps = 1E9 / (actualEndRenderTimeNs - timeElapsed)
-      Logger.e("Mbx-Benchmark", "Time draw end $actualEndRenderTimeNs, time draw end prev $timeElapsed")
-      it.onFpsChanged(fps)
+      if (timeElapsed != 0L) {
+        it.onFpsChanged(fps)
+      }
       timeElapsed = actualEndRenderTimeNs
     }
   }
@@ -189,6 +190,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     // After that check MapView could be actually rendered on this device (has valid EGL config).
     // After that we check if activity / fragment is paused.
     if (shouldExit || nativeRenderNotSupported || paused) {
+      if (paused) {
+        needRenderOnResume = true
+      }
       return
     }
     if (!checkSurfaceReady()) {
@@ -202,13 +206,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       Choreographer.getInstance().postFrameCallback(this)
       return
     }
-    // We could draw frame if `requestRender = true`.
-    counter++
-    Logger.e("Mbx-Benchmark", "Post VSYNC event to Choreographer, count = $counter")
+    // listen to next VSYNC event
     Choreographer.getInstance().postFrameCallback(this)
   }
-
-  private var counter = 0L
 
   @UiThread
   fun onSurfaceSizeChanged(width: Int, height: Int) {
@@ -217,7 +217,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         this.width = width
         this.height = height
         sizeChanged = true
-//        requestRender.set(true)
         render()
       }
     }
@@ -260,7 +259,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         this.width = width
         this.height = height
         shouldExit = false
-//        requestRender.set(true)
         render()
       }
       createCondition.await()
@@ -274,13 +272,14 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @WorkerThread
   override fun doFrame(frameTimeNanos: Long) {
+    // if frame started being rendered time is less or equal to previous one
+    // it means we did not have time to render everything on previous frame
+    // we do no drawing in order not to overload render thread
     if (frameTimeNanos <= previousVsyncFrameStartTimeNs) {
-      Logger.e("Mbx-Benchmark", "doFrame, junk frame, time $frameTimeNanos, previous frame time $previousVsyncFrameStartTimeNs, do no drawing")
       return
     }
     if (eglPrepared && !paused && !shouldExit) {
       previousVsyncFrameStartTimeNs = frameTimeNanos
-      Logger.e("Mbx-Benchmark", "doFrame VSYNC $frameTimeNanos")
       draw()
     }
   }
@@ -289,9 +288,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @AnyThread
   fun requestRender() {
-    // It is important not to blow queue up with render requests
-    // so we set post { requestRender = true } only if it is false.
-    Logger.e("Mbx-Benchmark", "requestRender from core")
     postRender()
   }
 
@@ -314,7 +310,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   fun resume() {
     handlerThread.post {
       paused = false
-      render()
+      if (needRenderOnResume) {
+        render()
+        needRenderOnResume = false
+      }
     }
   }
 
