@@ -10,7 +10,6 @@ import androidx.annotation.WorkerThread
 import com.mapbox.common.Logger
 import com.mapbox.maps.renderer.egl.EGLCore
 import java.util.LinkedList
-import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicLong
 import java.util.concurrent.locks.ReentrantLock
 import javax.microedition.khronos.egl.EGL10
@@ -45,7 +44,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val renderTimeNs = AtomicLong(0)
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal val requestRender = AtomicBoolean(false)
+  private var previousVsyncFrameStartTimeNs = 0L
   private var expectedVsyncWakeTimeNs = 0L
   private var sizeChanged = false
   private var paused = false
@@ -147,6 +146,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   private fun draw() {
     val renderTimeNsCopy = renderTimeNs.get()
     val currentTimeNs = SystemClock.elapsedRealtimeNanos()
+    Logger.e("Mbx-Benchmark", "Time draw start $currentTimeNs")
     val expectedEndRenderTimeNs = currentTimeNs + renderTimeNsCopy
     if (expectedVsyncWakeTimeNs > currentTimeNs) {
       return
@@ -177,6 +177,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
     fpsChangedListener?.let {
       val fps = 1E9 / (actualEndRenderTimeNs - timeElapsed)
+      Logger.e("Mbx-Benchmark", "Time draw end $actualEndRenderTimeNs, time draw end prev $timeElapsed")
       it.onFpsChanged(fps)
       timeElapsed = actualEndRenderTimeNs
     }
@@ -202,11 +203,12 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       return
     }
     // We could draw frame if `requestRender = true`.
-    // At the same time we set `requestRender = false` to catch any upcoming render events
-    if (requestRender.compareAndSet(true, false)) {
-      Choreographer.getInstance().postFrameCallback(this)
-    }
+    counter++
+    Logger.e("Mbx-Benchmark", "Post VSYNC event to Choreographer, count = $counter")
+    Choreographer.getInstance().postFrameCallback(this)
   }
+
+  private var counter = 0L
 
   @UiThread
   fun onSurfaceSizeChanged(width: Int, height: Int) {
@@ -215,7 +217,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         this.width = width
         this.height = height
         sizeChanged = true
-        requestRender.set(true)
+//        requestRender.set(true)
         render()
       }
     }
@@ -258,7 +260,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         this.width = width
         this.height = height
         shouldExit = false
-        requestRender.set(true)
+//        requestRender.set(true)
         render()
       }
       createCondition.await()
@@ -272,7 +274,13 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @WorkerThread
   override fun doFrame(frameTimeNanos: Long) {
+    if (frameTimeNanos <= previousVsyncFrameStartTimeNs) {
+      Logger.e("Mbx-Benchmark", "doFrame, junk frame, time $frameTimeNanos, previous frame time $previousVsyncFrameStartTimeNs, do no drawing")
+      return
+    }
     if (eglPrepared && !paused && !shouldExit) {
+      previousVsyncFrameStartTimeNs = frameTimeNanos
+      Logger.e("Mbx-Benchmark", "doFrame VSYNC $frameTimeNanos")
       draw()
     }
   }
@@ -283,9 +291,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   fun requestRender() {
     // It is important not to blow queue up with render requests
     // so we set post { requestRender = true } only if it is false.
-    if (requestRender.compareAndSet(false, true)) {
-      postRender()
-    }
+    Logger.e("Mbx-Benchmark", "requestRender from core")
+    postRender()
   }
 
   @AnyThread
@@ -307,9 +314,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   fun resume() {
     handlerThread.post {
       paused = false
-      if (requestRender.get()) {
-        render()
-      }
+      render()
     }
   }
 
