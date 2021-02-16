@@ -309,6 +309,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
           // Scale the map by the appropriate power of two factor
           val currentZoom = mapTransformDelegate.getCameraOptions(null).zoom
+          val cachedAnchor = cameraAnimationsPlugin.anchor
           currentZoom?.let {
             val anchor = ScreenCoordinate(event.x.toDouble(), event.y.toDouble())
             val zoom =
@@ -317,6 +318,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
               CameraOptions.Builder().anchor(anchor).zoom(zoom).build(),
               immediateCameraJumpOptions
             )
+            cameraAnimationsPlugin.anchor = cachedAnchor
           }
 
           return true
@@ -537,6 +539,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     // cameraChangeDispatcher.onCameraMoveStarted(CameraChangeDispatcher.REASON_API_GESTURE);
 
     val focalPoint = getScaleFocalPoint(detector)
+    val cachedAnchor = cameraAnimationsPlugin.anchor
     if (quickZoom) {
       internalSettings.zoomRate
       val pixelDeltaChange = abs(detector.currentEvent.y - doubleTapFocalPoint.y)
@@ -561,6 +564,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
           .build(),
         immediateCameraJumpOptions
       )
+      cameraAnimationsPlugin.anchor = cachedAnchor
     } else {
       val zoomBy =
         ln(detector.scaleFactor.toDouble()) / ln(PI / 2) * ZOOM_RATE.toDouble() * internalSettings.zoomRate.toDouble()
@@ -572,6 +576,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
             .build(),
           immediateCameraJumpOptions
         )
+        cameraAnimationsPlugin.anchor = cachedAnchor
       }
     }
 
@@ -717,6 +722,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     }
 
     val screenCoordinate = ScreenCoordinate(animationFocalPoint.x, animationFocalPoint.y)
+    val cachedAnchor = cameraAnimationsPlugin.anchor
     val anchorAnimator = cameraAnimationsPlugin.createAnchorAnimator(
       options = cameraAnimatorOptions(screenCoordinate) {
         owner(MapAnimationOwnerRegistry.GESTURES)
@@ -727,11 +733,12 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       duration = animationTime
     }
 
-    bearingAnimator.addUpdateListener {
+    anchorAnimator.addUpdateListener {
       object : AnimatorListenerAdapter() {
         override fun onAnimationStart(animation: Animator) {}
         override fun onAnimationCancel(animation: Animator) {}
         override fun onAnimationEnd(animation: Animator) {
+          cameraAnimationsPlugin.anchor = cachedAnchor
           dispatchCameraIdle()
         }
       }
@@ -793,6 +800,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     // Calculate map bearing value
     val currentBearing = mapTransformDelegate.getCameraOptions(null).bearing
+    val cachedAnchor = cameraAnimationsPlugin.anchor
     currentBearing?.let {
       val bearing = it + rotationDegreesSinceLast
 
@@ -805,7 +813,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
           .build(),
         immediateCameraJumpOptions
       )
-
+      cameraAnimationsPlugin.anchor = cachedAnchor
       notifyOnRotateListeners(detector)
     }
 
@@ -978,6 +986,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       duration = animationTime
     }
 
+    val cachedAnchor = cameraAnimationsPlugin.anchor
     val anchorAnimator = cameraAnimationsPlugin.createAnchorAnimator(
       options = cameraAnimatorOptions(animationFocalPoint) {
         owner(MapAnimationOwnerRegistry.GESTURES)
@@ -988,13 +997,14 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       duration = animationTime
     }
 
-    zoomAnimator.addListener(object : AnimatorListenerAdapter() {
+    anchorAnimator.addListener(object : AnimatorListenerAdapter() {
 
       override fun onAnimationStart(animation: Animator) {}
 
       override fun onAnimationCancel(animation: Animator) {}
 
       override fun onAnimationEnd(animation: Animator) {
+        cameraAnimationsPlugin.anchor = cachedAnchor
         dispatchCameraIdle()
       }
     })
