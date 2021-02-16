@@ -8,7 +8,7 @@ parameters:
     default: "owner/repo"
   mapbox_hash:
     type: string
-    default: "000000"
+    default: "maps-v10.0.0-beta.14"
 
 workflows:
   version: 2
@@ -75,7 +75,7 @@ commands:
     steps:
       - run:
           name: Setup build from source
-          command: make build-source-init-maps-v10.0.0-beta.14
+          command: make build-source-init-<< pipeline.parameters.mapbox_hash >>
 
   jvm-unit-tests:
     steps:
