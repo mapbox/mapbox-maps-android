@@ -102,17 +102,6 @@ interface CameraAnimationsPlugin : MapPlugin {
   ): ValueAnimator
 
   /**
-   * Create CameraAnchorAnimator
-   *
-   * @param options animator options object to set targets and other non mandatory options
-   * @param block optional block to apply any [ValueAnimator] parameters
-   */
-  fun createAnchorAnimator(
-    options: CameraAnimatorOptions<ScreenCoordinate>,
-    block: (ValueAnimator.() -> Unit)? = null
-  ): ValueAnimator
-
-  /**
    * Create CameraBearingAnimator. Current map camera option will be applied on animation start.
    *
    * @param options animator options object to set targets and other non mandatory options

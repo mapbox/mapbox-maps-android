@@ -31,6 +31,11 @@ abstract class CameraAnimator<out T> (
    * Start animation value, will use current map value option from [CameraOptions] if null.
    */
   val startValue = cameraAnimatorOptions.startValue
+
+  /**
+   * Anchor to be used with current animator.
+   */
+  val anchor = cameraAnimatorOptions.anchor
   /**
    * Sets the values to animate between for this animation (except start value).
    */

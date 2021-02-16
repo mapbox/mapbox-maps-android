@@ -3,7 +3,6 @@ package com.mapbox.maps.plugin.animation.animator
 import android.animation.TypeEvaluator
 import com.mapbox.geojson.Point
 import com.mapbox.maps.EdgeInsets
-import com.mapbox.maps.ScreenCoordinate
 
 /**
  * Contains custom animator evaluators related to animating camera properties
@@ -36,16 +35,6 @@ object Evaluators {
       startValue.left + fraction * (endValue.left - startValue.left),
       startValue.bottom + fraction * (endValue.bottom - startValue.bottom),
       startValue.right + fraction * (endValue.right - startValue.right)
-    )
-  }
-
-  /**
-   * Type evaluator for ScreenCoordinate data
-   */
-  val SCREEN_COORDINATE = TypeEvaluator<ScreenCoordinate> { fraction, startValue, endValue ->
-    ScreenCoordinate(
-      startValue.x + fraction * (endValue.x - startValue.x),
-      startValue.y + fraction * (endValue.y - startValue.y)
     )
   }
 

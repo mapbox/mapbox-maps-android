@@ -155,7 +155,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     val startValue = cameraAnimator.startValue ?: when (cameraAnimator.type) {
       CameraAnimatorType.CENTER -> mapCameraDelegate.getCameraOptions().center
       CameraAnimatorType.ZOOM -> mapCameraDelegate.getCameraOptions().zoom
-      CameraAnimatorType.ANCHOR -> cameraAnimator.startValue
       CameraAnimatorType.PADDING -> mapCameraDelegate.getCameraOptions().padding
       CameraAnimatorType.BEARING -> mapCameraDelegate.getCameraOptions().bearing
       CameraAnimatorType.PITCH -> mapCameraDelegate.getCameraOptions().pitch
@@ -204,7 +203,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     when (cameraAnimator) {
       is CameraCenterAnimator -> cameraOptionsBuilder.center(cameraAnimator.animatedValue as? Point)
       is CameraZoomAnimator -> cameraOptionsBuilder.zoom(cameraAnimator.animatedValue as? Double)
-      is CameraAnchorAnimator -> cameraOptionsBuilder.anchor(cameraAnimator.animatedValue as? ScreenCoordinate)
       is CameraPaddingAnimator -> cameraOptionsBuilder.padding(cameraAnimator.animatedValue as? EdgeInsets)
       is CameraBearingAnimator -> cameraOptionsBuilder.bearing(cameraAnimator.animatedValue as? Double)
       is CameraPitchAnimator -> cameraOptionsBuilder.pitch(cameraAnimator.animatedValue as? Double)
@@ -278,6 +276,9 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
             unregisterAnimators(this, cancelAnimators = false)
           }
           if (runningAnimatorsQueue.isEmpty()) {
+            anchor?.let {
+              cameraOptionsBuilder.anchor(it)
+            }
             performMapJump(cameraOptionsBuilder.build())
             mapTransformDelegate.setUserAnimationInProgress(false)
           }
@@ -313,6 +314,10 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         }
       }
       cameraOptions?.let { camera ->
+        // add anchor if was specified for given animator
+        animator.anchor?.let { anchor ->
+          camera.anchor = anchor
+        }
         // move map camera
         performMapJump(camera)
         // reset values
@@ -703,11 +708,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     options: CameraAnimatorOptions<Double>,
     block: (ValueAnimator.() -> Unit)?
   ) = CameraZoomAnimator(options, block)
-
-  override fun createAnchorAnimator(
-    options: CameraAnimatorOptions<ScreenCoordinate>,
-    block: (ValueAnimator.() -> Unit)?
-  ) = CameraAnchorAnimator(options, block)
 
   override fun createBearingAnimator(
     options: CameraAnimatorOptions<Double>,

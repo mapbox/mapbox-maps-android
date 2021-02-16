@@ -23,10 +23,6 @@ enum class CameraAnimatorType {
    */
   PITCH,
   /**
-   * Animator responsible for [CameraOptions.anchor]
-   */
-  ANCHOR,
-  /**
    * Animator responsible for [CameraOptions.padding]
    */
   PADDING

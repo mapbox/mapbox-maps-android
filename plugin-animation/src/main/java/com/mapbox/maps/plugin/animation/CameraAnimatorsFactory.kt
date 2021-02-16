@@ -39,16 +39,6 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
     val animationList = mutableListOf<ValueAnimator>()
     val currentCameraOptions = mapCameraDelegate.getCameraOptions()
 
-    cameraOptions.anchor?.let {
-      animationList.add(
-        CameraAnchorAnimator(
-          options = cameraAnimatorOptions(it) {
-            startValue = it
-          },
-          block = defaultAnimationParameters[CameraAnimatorType.ANCHOR]
-        )
-      )
-    }
     cameraOptions.bearing?.let {
       var startBearing = currentCameraOptions.bearing ?: it
       var endBearing = it
@@ -65,6 +55,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
         CameraBearingAnimator(
           options = cameraAnimatorOptions(endBearing) {
             startValue = startBearing
+            anchor = cameraOptions.anchor
           },
           block = defaultAnimationParameters[CameraAnimatorType.BEARING]
         )
@@ -76,6 +67,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           CameraPaddingAnimator(
             options = cameraAnimatorOptions(target) {
               startValue = start
+              anchor = cameraOptions.anchor
             },
             block = defaultAnimationParameters[CameraAnimatorType.PADDING]
           )
@@ -89,6 +81,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           CameraPitchAnimator(
             options = cameraAnimatorOptions(target) {
               startValue = start
+              anchor = cameraOptions.anchor
             },
             block = defaultAnimationParameters[CameraAnimatorType.PITCH]
           )
@@ -102,6 +95,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           CameraCenterAnimator(
             options = cameraAnimatorOptions(target) {
               startValue = start
+              anchor = cameraOptions.anchor
             },
             block = defaultAnimationParameters[CameraAnimatorType.CENTER]
           )
@@ -115,6 +109,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           CameraZoomAnimator(
             options = cameraAnimatorOptions(target) {
               startValue = start
+              anchor = cameraOptions.anchor
             },
             block = defaultAnimationParameters[CameraAnimatorType.ZOOM]
           )
@@ -150,21 +145,11 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
    * Add scale value to current camera scale
    *
    * @param amount The amount to scale by
-   * @param anchor The optional focal point to scale on
+   * @param scaleAnchor The optional focal point to scale on
    * @return Array of the created animators
    */
-  internal fun getScaleBy(amount: Double, anchor: ScreenCoordinate? = null): Array<CameraAnimator<*>> {
+  internal fun getScaleBy(amount: Double, scaleAnchor: ScreenCoordinate? = null): Array<CameraAnimator<*>> {
     val animationList = mutableListOf<ValueAnimator>()
-    anchor?.let {
-      animationList.add(
-        CameraAnchorAnimator(
-          options = cameraAnimatorOptions(it) {
-            startValue = it
-          },
-          block = defaultAnimationParameters[CameraAnimatorType.ANCHOR]
-        )
-      )
-    }
     val currentZoom = mapCameraDelegate.getCameraOptions().zoom
     currentZoom?.let {
       val newScale = CameraTransform.calculateScaleBy(amount, currentZoom)
@@ -172,6 +157,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
         CameraZoomAnimator(
           options = cameraAnimatorOptions(newScale) {
             startValue = currentZoom
+            anchor = scaleAnchor
           },
           block = defaultAnimationParameters[CameraAnimatorType.ZOOM]
         )
@@ -198,15 +184,13 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
       mapProjectionDelegate
     )
     cameraOptions.center?.let { start ->
-      centerTarget?.let { target ->
-        return Array(1) {
-          CameraCenterAnimator(
-            options = cameraAnimatorOptions(target) {
-              startValue = start
-            },
-            block = defaultAnimationParameters[CameraAnimatorType.CENTER]
-          )
-        }
+      return Array(1) {
+        CameraCenterAnimator(
+          options = cameraAnimatorOptions(centerTarget) {
+            startValue = start
+          },
+          block = defaultAnimationParameters[CameraAnimatorType.CENTER]
+        )
       }
     }
     return emptyArray()
@@ -463,10 +447,6 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
 
     private val defaultAnimationParameters =
       hashMapOf<CameraAnimatorType, ValueAnimator.() -> Unit>().apply {
-        put(CameraAnimatorType.ANCHOR) {
-          duration = DEFAULT_ANIMATION_DURATION_MS
-          interpolator = DEFAULT_INTERPOLATOR
-        }
         put(CameraAnimatorType.BEARING) {
           duration = DEFAULT_ANIMATION_DURATION_MS
           interpolator = DEFAULT_INTERPOLATOR
@@ -513,7 +493,6 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
       defaultAnimationParameters[CameraAnimatorType.ZOOM] = block
       defaultAnimationParameters[CameraAnimatorType.BEARING] = block
       defaultAnimationParameters[CameraAnimatorType.PITCH] = block
-      defaultAnimationParameters[CameraAnimatorType.ANCHOR] = block
       defaultAnimationParameters[CameraAnimatorType.PADDING] = block
     }
   }

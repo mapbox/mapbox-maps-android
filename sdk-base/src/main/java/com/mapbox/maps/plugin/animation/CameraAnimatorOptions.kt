@@ -1,5 +1,7 @@
 package com.mapbox.maps.plugin.animation
 
+import com.mapbox.maps.ScreenCoordinate
+
 /**
  * Class responsible for storing options used by all CameraAnimator's from [CameraAnimationsPlugin].
  * [CameraAnimatorOptions.Builder] should be used to create options object via DSL function [cameraAnimatorOptions].
@@ -14,6 +16,10 @@ class CameraAnimatorOptions<T> private constructor(
    * Otherwise current camera option on animation start will be taken.
    */
   val startValue: T?,
+  /**
+   * Anchor to be used with current animator.
+   */
+  val anchor: ScreenCoordinate?,
   /**
    * Optional field indicating who created animator.
    * Defaults to NULL if not specified explicitly.
@@ -45,9 +51,14 @@ class CameraAnimatorOptions<T> private constructor(
     var owner: String? = null
 
     /**
+     * Anchor to be used with current animator.
+     */
+    var anchor: ScreenCoordinate? = null
+
+    /**
      * Build an actual [CameraAnimatorOptions] object.
      */
-    fun build() = CameraAnimatorOptions(targets = targets, startValue = startValue, owner = owner)
+    fun build() = CameraAnimatorOptions(targets = targets, startValue = startValue, owner = owner, anchor = anchor)
   }
 
   /**
@@ -57,6 +68,7 @@ class CameraAnimatorOptions<T> private constructor(
     var result = targets.hashCode()
     result = 31 * result + (owner?.hashCode() ?: 0)
     result = 31 * result + (startValue?.hashCode() ?: 0)
+    result = 31 * result + (anchor?.hashCode() ?: 0)
     return result
   }
 
@@ -78,6 +90,9 @@ class CameraAnimatorOptions<T> private constructor(
       return false
     }
     if (that.startValue != startValue) {
+      return false
+    }
+    if (that.anchor != anchor) {
       return false
     }
     return true

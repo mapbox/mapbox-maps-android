@@ -16,12 +16,9 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
-import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
-import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
+import com.mapbox.maps.plugin.animation.*
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
-import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
-import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
@@ -525,8 +522,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         ) * SCALE_VELOCITY_ANIMATION_DURATION_MULTIPLIER
       ).toLong()
     currentZoom?.let {
-      val animators =
-        createScaleAnimators(it, zoomAddition, focalPoint, animationTime)
+      val animators = createScaleAnimator(it, zoomAddition, focalPoint, animationTime)
       scaleAnimators = animators
       scheduleAnimators(animators)
     }
@@ -685,7 +681,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     return ScreenCoordinate(pointF.x.toDouble(), pointF.y.toDouble())
   }
 
-  private fun createRotateAnimators(
+  private fun createRotateAnimator(
     angularVelocity: Float,
     animationTime: Long,
     animationFocalPoint: ScreenCoordinate
@@ -706,21 +702,12 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     val bearingCurrent = mapTransformDelegate.getCameraOptions(null).bearing ?: return arrayOf()
     val bearingTarget = bearingCurrent + bearingDistance
 
+    val screenCoordinate = ScreenCoordinate(animationFocalPoint.x, animationFocalPoint.y)
     val bearingAnimator = cameraAnimationsPlugin.createBearingAnimator(
       options = cameraAnimatorOptions(bearingTarget) {
         owner = MapAnimationOwnerRegistry.GESTURES
         startValue = bearingCurrent
-      },
-    ) {
-      interpolator = rotateInterpolator
-      duration = animationTime
-    }
-
-    val screenCoordinate = ScreenCoordinate(animationFocalPoint.x, animationFocalPoint.y)
-    val anchorAnimator = cameraAnimationsPlugin.createAnchorAnimator(
-      options = cameraAnimatorOptions(screenCoordinate) {
-        owner = MapAnimationOwnerRegistry.GESTURES
-        startValue = screenCoordinate
+        anchor = screenCoordinate
       },
     ) {
       interpolator = rotateInterpolator
@@ -736,7 +723,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         }
       }
     }
-    return arrayOf(bearingAnimator, anchorAnimator)
+    return arrayOf(bearingAnimator)
   }
 
   internal fun handleRotateEnd(
@@ -780,7 +767,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       ).toLong()
 
     val focalPoint = getRotateFocalPoint(detector)
-    rotateAnimators = createRotateAnimators(angularVelocity, animationTime, focalPoint)
+    rotateAnimators = createRotateAnimator(angularVelocity, animationTime, focalPoint)
     scheduleAnimators(rotateAnimators)
   }
 
@@ -960,7 +947,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     }
   }
 
-  private fun createScaleAnimators(
+  private fun createScaleAnimator(
     currentZoom: Double,
     zoomAddition: Double,
     animationFocalPoint: ScreenCoordinate,
@@ -972,17 +959,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       options = cameraAnimatorOptions(currentZoom + zoomAddition) {
         owner = MapAnimationOwnerRegistry.GESTURES
         startValue = currentZoom
+        anchor = animationFocalPoint
       }
-    ) {
-      interpolator = scaleInterpolator
-      duration = animationTime
-    }
-
-    val anchorAnimator = cameraAnimationsPlugin.createAnchorAnimator(
-      options = cameraAnimatorOptions(animationFocalPoint) {
-        owner = MapAnimationOwnerRegistry.GESTURES
-        startValue = animationFocalPoint
-      },
     ) {
       interpolator = scaleInterpolator
       duration = animationTime
@@ -998,7 +976,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         dispatchCameraIdle()
       }
     })
-    return arrayOf(zoomAnimator, anchorAnimator)
+    return arrayOf(zoomAnimator)
   }
 
   /**
@@ -1033,7 +1011,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     val currentZoom = mapTransformDelegate.getCameraOptions(null).zoom
     currentZoom?.let {
-      val animators = createScaleAnimators(
+      val animators = createScaleAnimator(
         currentZoom,
         (if (zoomIn) 1 else -1).toDouble(),
         zoomFocalPoint,
