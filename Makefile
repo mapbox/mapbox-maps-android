@@ -76,10 +76,11 @@ instrumentation-clean:
 generate-sanity-test:
 	node scripts/sanity-test/generate-sanity-test.js
 
+.PHONY: build-source-init
+build-source-init: build-source-init-main
+
 # Setup building from source with including a specific commit SHA
-.PHONY: build-source-init-%
-build-source-init:
-	python scripts/build-from-source/builder/build-from-source.py;
+build-source-init-%: build-source-update
 	git clone git@github.com:mapbox/mapbox-gl-native-internal.git;
 	cd mapbox-gl-native-internal && git checkout $* && git submodule update --init --recursive
 
