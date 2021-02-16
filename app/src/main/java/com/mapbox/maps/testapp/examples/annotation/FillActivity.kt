@@ -32,7 +32,7 @@ class FillActivity : AppCompatActivity() {
     setContentView(R.layout.activity_annotation)
     mapView.getMapboxMap().loadStyleUri(nextStyle) {
       val annotationPlugin = mapView.getAnnotationPlugin()
-      fillManager = annotationPlugin.getFillManager(mapView).apply {
+      fillManager = annotationPlugin.createFillManager(mapView).apply {
         addClickListener(
           OnFillClickListener {
             Toast.makeText(this@FillActivity, "click", Toast.LENGTH_LONG).show()

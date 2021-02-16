@@ -330,11 +330,11 @@ class LineManager(
 }
 
 /**
- * Extension function to get LineManager instance
+ * Extension function to create a LineManager instance.
  */
-fun AnnotationPlugin.getLineManager(
+fun AnnotationPlugin.createLineManager(
   mapView: View,
   annotationConfig: AnnotationConfig? = null
 ): LineManager {
-  return getAnnotationManager(mapView, AnnotationType.Line, annotationConfig) as LineManager
+  return createAnnotationManager(mapView, AnnotationType.Line, annotationConfig) as LineManager
 }

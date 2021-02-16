@@ -10,7 +10,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.R
 import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.plugin.annotation.generated.SymbolOptions
-import com.mapbox.maps.plugin.annotation.generated.getSymbolManager
+import com.mapbox.maps.plugin.annotation.generated.createSymbolManager
 import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
 import com.mapbox.maps.testapp.BaseMapTest
 import org.junit.Assert.assertEquals
@@ -36,7 +36,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconAllowOverlap() {
     val testValue = true
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.iconAllowOverlap = testValue
     assertEquals(testValue, symbolManager.iconAllowOverlap)
   }
@@ -44,7 +44,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconIgnorePlacement() {
     val testValue = true
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.iconIgnorePlacement = testValue
     assertEquals(testValue, symbolManager.iconIgnorePlacement)
   }
@@ -52,7 +52,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconKeepUpright() {
     val testValue = true
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.iconKeepUpright = testValue
     assertEquals(testValue, symbolManager.iconKeepUpright)
   }
@@ -60,7 +60,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconOptional() {
     val testValue = true
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.iconOptional = testValue
     assertEquals(testValue, symbolManager.iconOptional)
   }
@@ -68,7 +68,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconPadding() {
     val testValue = 1.0
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.iconPadding = testValue
     assertEquals(testValue, symbolManager.iconPadding)
   }
@@ -76,7 +76,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconPitchAlignment() {
     val testValue = IconPitchAlignment.MAP
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.iconPitchAlignment = testValue
     assertEquals(testValue, symbolManager.iconPitchAlignment)
   }
@@ -84,7 +84,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconRotationAlignment() {
     val testValue = IconRotationAlignment.MAP
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.iconRotationAlignment = testValue
     assertEquals(testValue, symbolManager.iconRotationAlignment)
   }
@@ -92,7 +92,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconTextFit() {
     val testValue = IconTextFit.NONE
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.iconTextFit = testValue
     assertEquals(testValue, symbolManager.iconTextFit)
   }
@@ -100,7 +100,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconTextFitPadding() {
     val testValue = listOf(0.0, 1.0, 2.0, 3.0)
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.iconTextFitPadding = testValue
     assertEquals(testValue, symbolManager.iconTextFitPadding)
   }
@@ -108,7 +108,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testSymbolAvoidEdges() {
     val testValue = true
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.symbolAvoidEdges = testValue
     assertEquals(testValue, symbolManager.symbolAvoidEdges)
   }
@@ -116,7 +116,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testSymbolPlacement() {
     val testValue = SymbolPlacement.POINT
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.symbolPlacement = testValue
     assertEquals(testValue, symbolManager.symbolPlacement)
   }
@@ -124,7 +124,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testSymbolSpacing() {
     val testValue = 1.0
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.symbolSpacing = testValue
     assertEquals(testValue, symbolManager.symbolSpacing)
   }
@@ -132,7 +132,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextAllowOverlap() {
     val testValue = true
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.textAllowOverlap = testValue
     assertEquals(testValue, symbolManager.textAllowOverlap)
   }
@@ -140,7 +140,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextIgnorePlacement() {
     val testValue = true
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.textIgnorePlacement = testValue
     assertEquals(testValue, symbolManager.textIgnorePlacement)
   }
@@ -148,7 +148,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextKeepUpright() {
     val testValue = true
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.textKeepUpright = testValue
     assertEquals(testValue, symbolManager.textKeepUpright)
   }
@@ -156,7 +156,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextLineHeight() {
     val testValue = 1.0
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.textLineHeight = testValue
     assertEquals(testValue, symbolManager.textLineHeight)
   }
@@ -164,7 +164,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextMaxAngle() {
     val testValue = 1.0
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.textMaxAngle = testValue
     assertEquals(testValue, symbolManager.textMaxAngle)
   }
@@ -172,7 +172,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextOptional() {
     val testValue = true
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.textOptional = testValue
     assertEquals(testValue, symbolManager.textOptional)
   }
@@ -180,7 +180,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextPadding() {
     val testValue = 1.0
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.textPadding = testValue
     assertEquals(testValue, symbolManager.textPadding)
   }
@@ -188,7 +188,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextPitchAlignment() {
     val testValue = TextPitchAlignment.MAP
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.textPitchAlignment = testValue
     assertEquals(testValue, symbolManager.textPitchAlignment)
   }
@@ -196,7 +196,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextRotationAlignment() {
     val testValue = TextRotationAlignment.MAP
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.textRotationAlignment = testValue
     assertEquals(testValue, symbolManager.textRotationAlignment)
   }
@@ -204,7 +204,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextVariableAnchor() {
     val testValue = listOf("center", "left")
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.textVariableAnchor = testValue
     assertEquals(testValue, symbolManager.textVariableAnchor)
   }
@@ -212,7 +212,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextWritingMode() {
     val testValue = listOf("horizontal", "vertical")
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.textWritingMode = testValue
     assertEquals(testValue, symbolManager.textWritingMode)
   }
@@ -220,7 +220,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconTranslate() {
     val testValue = listOf(0.0, 1.0)
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.iconTranslate = testValue
     assertEquals(testValue, symbolManager.iconTranslate)
   }
@@ -228,7 +228,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconTranslateAnchor() {
     val testValue = IconTranslateAnchor.MAP
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.iconTranslateAnchor = testValue
     assertEquals(testValue, symbolManager.iconTranslateAnchor)
   }
@@ -236,7 +236,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextTranslate() {
     val testValue = listOf(0.0, 1.0)
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.textTranslate = testValue
     assertEquals(testValue, symbolManager.textTranslate)
   }
@@ -244,14 +244,14 @@ class SymbolManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextTranslateAnchor() {
     val testValue = TextTranslateAnchor.MAP
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     symbolManager.textTranslateAnchor = testValue
     assertEquals(testValue, symbolManager.textTranslateAnchor)
   }
 
   @Test
   fun create() {
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     val annotation = symbolManager.create(
       SymbolOptions()
         .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -261,7 +261,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun createFromFeature() {
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     val featureCollection =
       FeatureCollection.fromFeature(Feature.fromGeometry(Point.fromLngLat(0.0, 0.0)))
     val annotations = symbolManager.create(featureCollection.toJson())
@@ -272,7 +272,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun createList() {
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     val list = listOf(
       SymbolOptions().withPoint(Point.fromLngLat(0.0, 0.0)),
       SymbolOptions().withPoint(Point.fromLngLat(0.0, 0.0))
@@ -284,7 +284,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun update() {
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     val annotation = symbolManager.create(SymbolOptions().withPoint(Point.fromLngLat(0.0, 0.0)))
     assertEquals(annotation, symbolManager.annotations[0])
     annotation.point = Point.fromLngLat(1.0, 1.0)
@@ -294,7 +294,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun updateList() {
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     val list = listOf(
       SymbolOptions().withPoint(Point.fromLngLat(0.0, 0.0)),
       SymbolOptions().withPoint(Point.fromLngLat(0.0, 0.0))
@@ -311,7 +311,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun delete() {
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     val annotation = symbolManager.create(
       SymbolOptions()
         .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -323,7 +323,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun deleteList() {
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     val list = listOf(
       SymbolOptions().withPoint(Point.fromLngLat(0.0, 0.0)),
       SymbolOptions().withPoint(Point.fromLngLat(0.0, 0.0))
@@ -338,7 +338,7 @@ class SymbolManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun deleteAll() {
-    val symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+    val symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
     val list = listOf(
       SymbolOptions().withPoint(Point.fromLngLat(0.0, 0.0)),
       SymbolOptions().withPoint(Point.fromLngLat(0.0, 0.0))

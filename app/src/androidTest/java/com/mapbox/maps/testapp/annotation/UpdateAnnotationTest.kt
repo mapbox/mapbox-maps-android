@@ -14,7 +14,7 @@ import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.generated.Symbol
 import com.mapbox.maps.plugin.annotation.generated.SymbolManager
 import com.mapbox.maps.plugin.annotation.generated.SymbolOptions
-import com.mapbox.maps.plugin.annotation.generated.getSymbolManager
+import com.mapbox.maps.plugin.annotation.generated.createSymbolManager
 import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
 import com.mapbox.maps.plugin.delegates.listeners.OnDidFinishRenderingMapListener
 import com.mapbox.maps.testapp.BaseMapTest
@@ -47,7 +47,7 @@ class UpdateAnnotationTest : BaseMapTest(), OnDidFinishRenderingMapListener {
 
       it.runOnUiThread {
         mapboxMap.loadStyleUri(AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]) {
-          symbolManager = mapView.getAnnotationPlugin().getSymbolManager(mapView)
+          symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
           symbol = symbolManager.create(
             SymbolOptions()
               .withIconColor(ColorUtils.colorToRgbaString(Color.RED))

@@ -19,14 +19,14 @@ class AnnotationPluginImpl : AnnotationPlugin {
   private var height = 0
 
   /**
-   * Get an annotation manger
+   * Create an annotation manger instance.
    *
    * @param mapView the mapView
    * @param type The type of he type of annotation manger
    * @param annotationConfig the configuration for AnnotationManager
    * @return the annotation manger
    */
-  override fun getAnnotationManager(
+  override fun createAnnotationManager(
     mapView: View,
     type: AnnotationType,
     annotationConfig: AnnotationConfig?

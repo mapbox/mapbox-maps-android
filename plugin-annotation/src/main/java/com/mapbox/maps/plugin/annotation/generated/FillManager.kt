@@ -242,11 +242,11 @@ class FillManager(
 }
 
 /**
- * Extension function to get FillManager instance
+ * Extension function to create a FillManager instance.
  */
-fun AnnotationPlugin.getFillManager(
+fun AnnotationPlugin.createFillManager(
   mapView: View,
   annotationConfig: AnnotationConfig? = null
 ): FillManager {
-  return getAnnotationManager(mapView, AnnotationType.Fill, annotationConfig) as FillManager
+  return createAnnotationManager(mapView, AnnotationType.Fill, annotationConfig) as FillManager
 }

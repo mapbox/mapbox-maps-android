@@ -11,7 +11,7 @@ import com.mapbox.geojson.Polygon
 import com.mapbox.maps.R
 import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.plugin.annotation.generated.FillOptions
-import com.mapbox.maps.plugin.annotation.generated.getFillManager
+import com.mapbox.maps.plugin.annotation.generated.createFillManager
 import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
 import com.mapbox.maps.testapp.BaseMapTest
 import org.junit.Assert.assertEquals
@@ -37,7 +37,7 @@ class FillManagerAndroidTest : BaseMapTest() {
   @Test
   fun testFillAntialias() {
     val testValue = true
-    val fillManager = mapView.getAnnotationPlugin().getFillManager(mapView)
+    val fillManager = mapView.getAnnotationPlugin().createFillManager(mapView)
     fillManager.fillAntialias = testValue
     assertEquals(testValue, fillManager.fillAntialias)
   }
@@ -45,7 +45,7 @@ class FillManagerAndroidTest : BaseMapTest() {
   @Test
   fun testFillTranslate() {
     val testValue = listOf(0.0, 1.0)
-    val fillManager = mapView.getAnnotationPlugin().getFillManager(mapView)
+    val fillManager = mapView.getAnnotationPlugin().createFillManager(mapView)
     fillManager.fillTranslate = testValue
     assertEquals(testValue, fillManager.fillTranslate)
   }
@@ -53,14 +53,14 @@ class FillManagerAndroidTest : BaseMapTest() {
   @Test
   fun testFillTranslateAnchor() {
     val testValue = FillTranslateAnchor.MAP
-    val fillManager = mapView.getAnnotationPlugin().getFillManager(mapView)
+    val fillManager = mapView.getAnnotationPlugin().createFillManager(mapView)
     fillManager.fillTranslateAnchor = testValue
     assertEquals(testValue, fillManager.fillTranslateAnchor)
   }
 
   @Test
   fun create() {
-    val fillManager = mapView.getAnnotationPlugin().getFillManager(mapView)
+    val fillManager = mapView.getAnnotationPlugin().createFillManager(mapView)
     val annotation = fillManager.create(
       FillOptions()
         .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -70,7 +70,7 @@ class FillManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun createFromFeature() {
-    val fillManager = mapView.getAnnotationPlugin().getFillManager(mapView)
+    val fillManager = mapView.getAnnotationPlugin().createFillManager(mapView)
     val featureCollection =
       FeatureCollection.fromFeature(Feature.fromGeometry(Polygon.fromLngLats(listOf(listOf(Point.fromLngLat(0.0, 0.0))))))
     val annotations = fillManager.create(featureCollection.toJson())
@@ -81,7 +81,7 @@ class FillManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun createList() {
-    val fillManager = mapView.getAnnotationPlugin().getFillManager(mapView)
+    val fillManager = mapView.getAnnotationPlugin().createFillManager(mapView)
     val list = listOf(
       FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))),
       FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -93,7 +93,7 @@ class FillManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun update() {
-    val fillManager = mapView.getAnnotationPlugin().getFillManager(mapView)
+    val fillManager = mapView.getAnnotationPlugin().createFillManager(mapView)
     val annotation = fillManager.create(FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))))
     assertEquals(annotation, fillManager.annotations[0])
     annotation.points = listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))
@@ -103,7 +103,7 @@ class FillManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun updateList() {
-    val fillManager = mapView.getAnnotationPlugin().getFillManager(mapView)
+    val fillManager = mapView.getAnnotationPlugin().createFillManager(mapView)
     val list = listOf(
       FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))),
       FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -120,7 +120,7 @@ class FillManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun delete() {
-    val fillManager = mapView.getAnnotationPlugin().getFillManager(mapView)
+    val fillManager = mapView.getAnnotationPlugin().createFillManager(mapView)
     val annotation = fillManager.create(
       FillOptions()
         .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -132,7 +132,7 @@ class FillManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun deleteList() {
-    val fillManager = mapView.getAnnotationPlugin().getFillManager(mapView)
+    val fillManager = mapView.getAnnotationPlugin().createFillManager(mapView)
     val list = listOf(
       FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))),
       FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -147,7 +147,7 @@ class FillManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun deleteAll() {
-    val fillManager = mapView.getAnnotationPlugin().getFillManager(mapView)
+    val fillManager = mapView.getAnnotationPlugin().createFillManager(mapView)
     val list = listOf(
       FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))),
       FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))

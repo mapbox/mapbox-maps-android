@@ -33,7 +33,7 @@ class LineActivity : AppCompatActivity() {
     setContentView(R.layout.activity_annotation)
     mapView.getMapboxMap().loadStyleUri(nextStyle) {
       val annotationPlugin = mapView.getAnnotationPlugin()
-      lineManager = annotationPlugin.getLineManager(
+      lineManager = annotationPlugin.createLineManager(
         mapView,
         AnnotationConfig(COUNTRY_LABEL, LAYER_ID, SOURCE_ID)
       ).apply {
