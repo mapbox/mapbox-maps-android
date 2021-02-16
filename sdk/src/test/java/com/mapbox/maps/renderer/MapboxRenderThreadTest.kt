@@ -270,12 +270,6 @@ class MapboxRenderThreadTest {
   }
 
   @Test
-  fun requestRenderTest() {
-    mapboxRenderThread.requestRender()
-    assert(mapboxRenderThread.requestRender.get())
-  }
-
-  @Test
   fun fpsListenerTest() {
     val listener = mockk<OnFpsChangedListener>(relaxUnitFun = true)
     val surface = mockk<Surface>()
@@ -286,6 +280,8 @@ class MapboxRenderThreadTest {
     mapboxRenderThread.fpsChangedListener = listener
     Shadows.shadowOf(workerThread.handler?.looper).pause()
     mapboxRenderThread.requestRender()
+    mapboxRenderThread.requestRender()
+    Shadows.shadowOf(workerThread.handler?.looper).idle()
     mapboxRenderThread.requestRender()
     Shadows.shadowOf(workerThread.handler?.looper).idle()
     verify(exactly = 2) {
