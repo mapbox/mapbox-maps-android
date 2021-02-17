@@ -161,7 +161,7 @@ class SpaceStationLocationActivity : AppCompatActivity() {
     // wont have to search for the marker and then return.
     mapboxMap.flyTo(
       CameraOptions.Builder().center(geoPoint).build(),
-      mapAnimationOptions { duration = 300 }
+      mapAnimationOptions { duration(300) }
     )
   }
 

@@ -47,7 +47,7 @@ class TextureViewAnimateActivity : AppCompatActivity() {
               .center(places[i])
               .zoom(14.0 - i)
               .build(),
-            mapAnimationOptions { duration = DURATION_MS }
+            mapAnimationOptions { duration(DURATION_MS) }
           )
         },
         i * DURATION_MS

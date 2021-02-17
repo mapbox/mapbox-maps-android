@@ -319,7 +319,7 @@ class CameraAnimationsListenersTest {
   fun testRemoveAllUpdateListeners() {
     val bearingAnimator = CameraBearingAnimator(
       cameraAnimatorOptions(100.0) {
-        startValue = 0.0
+        startValue(0.0)
       }
     ) {
       duration = 50

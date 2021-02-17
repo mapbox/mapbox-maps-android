@@ -92,7 +92,7 @@ class WithinExpressionActivity : AppCompatActivity() {
           .bearing(80.68015859462369)
           .pitch(55.0)
           .build(),
-        mapAnimationOptions { duration = 1750 }
+        mapAnimationOptions { duration(1750) }
       )
 
       // Show only POI labels inside geometry using within expression

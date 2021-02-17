@@ -158,7 +158,7 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
                   null
                 ),
                 mapAnimationOptions {
-                  duration = 5000L
+                  duration(5000L)
                 }
               )
             }

@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
@@ -36,17 +37,15 @@ class AnimateMapCameraActivity : AppCompatActivity(), OnMapClickListener {
   }
 
   override fun onMapClick(point: Point): Boolean {
-    val position = CameraOptions.Builder()
-      .center(Point.fromLngLat(-0.07520, 51.50550)) // Sets the new camera position
-      .zoom(17.0) // Sets the zoom
-      .bearing(180.0) // Rotate the camera
-      .pitch(30.0) // Set the camera pitch
-      .build() // Creates a CameraPosition from the builder
-
     mapboxMap.flyTo(
-      position,
+      cameraOptions {
+        center(Point.fromLngLat(-0.07520, 51.50550)) // Sets the new camera position
+        zoom(17.0) // Sets the zoom
+        bearing(180.0) // Rotate the camera
+        pitch(30.0) // Set the camera pitch
+      },
       mapAnimationOptions {
-        duration = 7000
+        duration(7000)
       }
     )
     return true

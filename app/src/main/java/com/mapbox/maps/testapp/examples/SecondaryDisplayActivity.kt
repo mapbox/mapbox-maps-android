@@ -55,7 +55,7 @@ class SecondaryDisplayActivity : AppCompatActivity() {
     mapView.getMapboxMap().flyTo(
       cameraOption,
       MapAnimationOptions.mapAnimationOptions {
-        duration = DURATION
+        duration(DURATION)
       }
     )
   }

@@ -60,7 +60,10 @@ internal class LocationCameraAnimatorCoordinator(
     }
 
     updateCameraBearingAnimators(previousCameraBearing.toDouble(), bearingCameraValues)
-    updateCameraCenterAnimators(previousCameraLatLng, getCameraLatLngValues(newLocations).toTypedArray())
+    updateCameraCenterAnimators(
+      previousCameraLatLng,
+      getCameraLatLngValues(newLocations).toTypedArray()
+    )
 
     val newLocation = newLocations[newLocations.size - 1]
     val targetLatLng = Point.fromLngLat(newLocation.longitude, newLocation.latitude)
@@ -112,7 +115,11 @@ internal class LocationCameraAnimatorCoordinator(
     animatorTypes.forEach { animatorType ->
       cameraAnimators[animatorType]?.let { animators.add(it.animator) }
     }
-    animatorSetProvider.startAnimation(animators, MapboxAnimatorSetProvider.animatorInstance, duration)
+    animatorSetProvider.startAnimation(
+      animators,
+      MapboxAnimatorSetProvider.animatorInstance,
+      duration
+    )
   }
 
   fun resetAllCameraAnimations(currentCameraPosition: CameraOptions, isGpsNorth: Boolean) {
@@ -174,8 +181,8 @@ internal class LocationCameraAnimatorCoordinator(
     unregisterCameraAnimator(CENTER)
     val centerAnimator = cameraAnimationsPlugin.createCenterAnimator(
       options = cameraAnimatorOptions(*targetLatLng) {
-        owner = MapAnimationOwnerRegistry.LOCATION
-        startValue = startLatLng
+        owner(MapAnimationOwnerRegistry.LOCATION)
+        startValue(startLatLng)
       }
     )
     centerAnimator.addUpdateListener { lastLocation = it.animatedValue as Point }
@@ -187,8 +194,8 @@ internal class LocationCameraAnimatorCoordinator(
     unregisterCameraAnimator(BEARING)
     val bearingAnimator = cameraAnimationsPlugin.createBearingAnimator(
       options = cameraAnimatorOptions(*targetBearings.toTypedArray()) {
-        owner = MapAnimationOwnerRegistry.LOCATION
-        startValue = startBearing
+        owner(MapAnimationOwnerRegistry.LOCATION)
+        startValue(startBearing)
       }
     )
     cameraAnimators[BEARING] = ValueAnimatorHolder(bearingAnimator, targetBearings.toTypedArray())
@@ -211,8 +218,12 @@ internal class LocationCameraAnimatorCoordinator(
     targetCompassBearing: Float,
     previousCameraBearing: Float
   ) {
-    val normalizedCameraBearing = Utils.shortestRotation(targetCompassBearing, previousCameraBearing)
-    updateCameraBearingAnimators(previousCameraBearing.toDouble(), doubleArrayOf(normalizedCameraBearing.toDouble()))
+    val normalizedCameraBearing =
+      Utils.shortestRotation(targetCompassBearing, previousCameraBearing)
+    updateCameraBearingAnimators(
+      previousCameraBearing.toDouble(),
+      doubleArrayOf(normalizedCameraBearing.toDouble())
+    )
   }
 
   private fun updateZoomCameraAnimator(
@@ -224,14 +235,20 @@ internal class LocationCameraAnimatorCoordinator(
     unregisterCameraAnimator(ZOOM)
     val zoomAnimator = cameraAnimationsPlugin.createZoomAnimator(
       options = cameraAnimatorOptions(targetZoomLevel) {
-        owner = MapAnimationOwnerRegistry.LOCATION
-        startValue = previousZoomLevel
+        owner(MapAnimationOwnerRegistry.LOCATION)
+        startValue(previousZoomLevel)
       }
     )
     zoomAnimator.addListener(object : Animator.AnimatorListener {
       override fun onAnimationStart(animation: Animator?) {}
-      override fun onAnimationEnd(animation: Animator?) { cancelableCallback?.onFinish() }
-      override fun onAnimationCancel(animation: Animator?) { cancelableCallback?.onCancel() }
+      override fun onAnimationEnd(animation: Animator?) {
+        cancelableCallback?.onFinish()
+      }
+
+      override fun onAnimationCancel(animation: Animator?) {
+        cancelableCallback?.onCancel()
+      }
+
       override fun onAnimationRepeat(animation: Animator?) {}
     })
     cameraAnimators[ZOOM] = ValueAnimatorHolder(zoomAnimator, Array(1) { targetZoomLevel })
@@ -246,14 +263,20 @@ internal class LocationCameraAnimatorCoordinator(
     unregisterCameraAnimator(PADDING)
     val paddingAnimator = cameraAnimationsPlugin.createPaddingAnimator(
       options = cameraAnimatorOptions(target) {
-        owner = MapAnimationOwnerRegistry.LOCATION
-        startValue = current
+        owner(MapAnimationOwnerRegistry.LOCATION)
+        startValue(current)
       }
     )
     paddingAnimator.addListener(object : Animator.AnimatorListener {
       override fun onAnimationStart(animation: Animator?) {}
-      override fun onAnimationEnd(animation: Animator?) { cancelableCallback?.onFinish() }
-      override fun onAnimationCancel(animation: Animator?) { cancelableCallback?.onCancel() }
+      override fun onAnimationEnd(animation: Animator?) {
+        cancelableCallback?.onFinish()
+      }
+
+      override fun onAnimationCancel(animation: Animator?) {
+        cancelableCallback?.onCancel()
+      }
+
       override fun onAnimationRepeat(animation: Animator?) {}
     })
     cameraAnimators[PADDING] = ValueAnimatorHolder(paddingAnimator, Array(1) { target })
@@ -268,30 +291,40 @@ internal class LocationCameraAnimatorCoordinator(
     unregisterCameraAnimator(PITCH)
     val pitchAnimator = cameraAnimationsPlugin.createPitchAnimator(
       options = cameraAnimatorOptions(targetPitch) {
-        owner = MapAnimationOwnerRegistry.LOCATION
-        startValue = previousPitch
+        owner(MapAnimationOwnerRegistry.LOCATION)
+        startValue(previousPitch)
       }
     )
     pitchAnimator.addListener(object : Animator.AnimatorListener {
       override fun onAnimationStart(animation: Animator?) {}
-      override fun onAnimationEnd(animation: Animator?) { cancelableCallback?.onFinish() }
-      override fun onAnimationCancel(animation: Animator?) { cancelableCallback?.onCancel() }
+      override fun onAnimationEnd(animation: Animator?) {
+        cancelableCallback?.onFinish()
+      }
+
+      override fun onAnimationCancel(animation: Animator?) {
+        cancelableCallback?.onCancel()
+      }
+
       override fun onAnimationRepeat(animation: Animator?) {}
     })
     cameraAnimators[PITCH] = ValueAnimatorHolder(pitchAnimator, Array(1) { targetPitch })
     cameraAnimationsPlugin.registerAnimators(pitchAnimator)
   }
 
-  private fun checkGpsNorth(isGpsNorth: Boolean, targetCameraBearing: Double) = if (isGpsNorth) 0.0 else targetCameraBearing
+  private fun checkGpsNorth(isGpsNorth: Boolean, targetCameraBearing: Double) =
+    if (isGpsNorth) 0.0 else targetCameraBearing
 
   fun feedNewCameraZoomLevel(
     targetZoomLevel: Double,
-    currentCameraPosition:
-      CameraOptions,
+    currentCameraPosition: CameraOptions,
     animationDuration: Long,
     callback: CancelableCallback?
   ) {
-    updateZoomCameraAnimator(targetZoomLevel, currentCameraPosition.zoom ?: targetZoomLevel, callback)
+    updateZoomCameraAnimator(
+      targetZoomLevel,
+      currentCameraPosition.zoom ?: targetZoomLevel,
+      callback
+    )
     playCameraAnimators(animationDuration, ZOOM)
   }
 
@@ -347,9 +380,9 @@ internal class LocationCameraAnimatorCoordinator(
     cameraAnimationsPlugin.flyTo(
       cameraOptions,
       mapAnimationOptions {
-        owner = MapAnimationOwnerRegistry.LOCATION
-        duration = animationDuration
-        animatorListener = object : Animator.AnimatorListener {
+        owner(MapAnimationOwnerRegistry.LOCATION)
+        duration(animationDuration)
+        animatorListener(object : Animator.AnimatorListener {
           override fun onAnimationEnd(animation: Animator?) {
             callback.onFinish()
           }
@@ -360,7 +393,7 @@ internal class LocationCameraAnimatorCoordinator(
 
           override fun onAnimationRepeat(animation: Animator?) {}
           override fun onAnimationStart(animation: Animator?) {}
-        }
+        })
       }
     )
   }

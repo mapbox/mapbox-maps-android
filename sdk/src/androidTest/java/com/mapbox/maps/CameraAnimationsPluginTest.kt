@@ -238,7 +238,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
       latch.countDown()
     }
 
-    mainHandler.post { cameraAnimationPlugin.easeTo(cameraOptions, mapAnimationOptions { duration = 0 }) }
+    mainHandler.post { cameraAnimationPlugin.easeTo(cameraOptions, mapAnimationOptions { duration(0) }) }
 
     if (latch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
       assertArrayEquals(expectedValues.toDoubleArray(), updatedValues.toDoubleArray(), EPS)
@@ -262,7 +262,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
       latch.countDown()
     }
 
-    mainHandler.post { cameraAnimationPlugin.easeTo(cameraOptions, mapAnimationOptions { duration = 1 }) }
+    mainHandler.post { cameraAnimationPlugin.easeTo(cameraOptions, mapAnimationOptions { duration(1) }) }
 
     if (latch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
       assertArrayEquals(expectedValues.toDoubleArray(), updatedValues.toDoubleArray(), EPS)
@@ -290,9 +290,9 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
       updatedValues.add(it)
       latch.countDown()
     }
-    mainHandler.post { cameraAnimationPlugin.easeTo(cameraOptions1, mapAnimationOptions { duration = 0 }) }
-    mainHandler.postDelayed({ cameraAnimationPlugin.easeTo(cameraOptions2, mapAnimationOptions { duration = 0 }) }, 500)
-    mainHandler.postDelayed({ cameraAnimationPlugin.easeTo(cameraOptions3, mapAnimationOptions { duration = 0 }) }, 1000)
+    mainHandler.post { cameraAnimationPlugin.easeTo(cameraOptions1, mapAnimationOptions { duration(0) }) }
+    mainHandler.postDelayed({ cameraAnimationPlugin.easeTo(cameraOptions2, mapAnimationOptions { duration(0) }) }, 500)
+    mainHandler.postDelayed({ cameraAnimationPlugin.easeTo(cameraOptions3, mapAnimationOptions { duration(0) }) }, 1000)
 
     if (latch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
       assertArrayEquals(expectedValues.toDoubleArray(), updatedValues.toDoubleArray(), EPS)
@@ -320,9 +320,9 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
       updatedValues.add(it)
       latch.countDown()
     }
-    mainHandler.post { cameraAnimationPlugin.easeTo(cameraOptions1, mapAnimationOptions { duration = 1 }) }
-    mainHandler.postDelayed({ cameraAnimationPlugin.easeTo(cameraOptions2, mapAnimationOptions { duration = 1 }) }, 500)
-    mainHandler.postDelayed({ cameraAnimationPlugin.easeTo(cameraOptions3, mapAnimationOptions { duration = 1 }) }, 1000)
+    mainHandler.post { cameraAnimationPlugin.easeTo(cameraOptions1, mapAnimationOptions { duration(1) }) }
+    mainHandler.postDelayed({ cameraAnimationPlugin.easeTo(cameraOptions2, mapAnimationOptions { duration(1) }) }, 500)
+    mainHandler.postDelayed({ cameraAnimationPlugin.easeTo(cameraOptions3, mapAnimationOptions { duration(1) }) }, 1000)
 
     if (latch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
       assertArrayEquals(expectedValues.toDoubleArray(), updatedValues.toDoubleArray(), EPS)
@@ -351,9 +351,9 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
       latch.countDown()
     }
     // assuming frame update time as 16 ms, putting delays less than it
-    mainHandler.post { cameraAnimationPlugin.easeTo(cameraOptions1, mapAnimationOptions { duration = 1 }) }
-    mainHandler.postDelayed({ cameraAnimationPlugin.easeTo(cameraOptions2, mapAnimationOptions { duration = 1 }) }, 4)
-    mainHandler.postDelayed({ cameraAnimationPlugin.easeTo(cameraOptions3, mapAnimationOptions { duration = 1 }) }, 7)
+    mainHandler.post { cameraAnimationPlugin.easeTo(cameraOptions1, mapAnimationOptions { duration(1) }) }
+    mainHandler.postDelayed({ cameraAnimationPlugin.easeTo(cameraOptions2, mapAnimationOptions { duration(1) }) }, 4)
+    mainHandler.postDelayed({ cameraAnimationPlugin.easeTo(cameraOptions3, mapAnimationOptions { duration(1) }) }, 7)
 
     if (latch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
       assertArrayEquals(expectedValues.toDoubleArray(), updatedValues.toDoubleArray(), EPS)
@@ -482,7 +482,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
   ) =
     cameraPlugin.createBearingAnimator(
       cameraAnimatorOptions(target) {
-        startValue = 0.0
+        startValue(0.0)
       }
     ) {
       duration = animatorDuration
@@ -497,7 +497,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
   ) =
     cameraPlugin.createPitchAnimator(
       cameraAnimatorOptions(target) {
-        startValue = 0.0
+        startValue(0.0)
       }
     ) {
       duration = animatorDuration

@@ -15,10 +15,10 @@ import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.Style
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.animation.*
 import com.mapbox.maps.plugin.animation.CameraAnimatorsFactory.Companion.DEFAULT_ANIMATION_DURATION_MS
@@ -139,39 +139,39 @@ class CameraPredefinedAnimatorsActivity : AppCompatActivity() {
       R.id.menu_action_ease_to -> mapboxMap.easeTo(
         EASE_TO_TARGET_CAMERA_POSITION,
         mapAnimationOptions {
-          duration = 2000
+          duration(2000)
         }
       )
       R.id.menu_action_fly_to -> mapboxMap.flyTo(
         EASE_TO_TARGET_CAMERA_POSITION,
         mapAnimationOptions {
-          duration = 2000
+          duration(2000)
         }
       )
       R.id.menu_action_pitch_by -> mapboxMap.pitchBy(
         70.0,
         mapAnimationOptions {
-          duration = 2000
+          duration(2000)
         }
       )
       R.id.menu_action_scale_by -> mapboxMap.scaleBy(
         15.0,
         ScreenCoordinate(10.0, 10.0),
         mapAnimationOptions {
-          duration = 2000
+          duration(2000)
         }
       )
       R.id.menu_action_move_by -> mapboxMap.moveBy(
         ScreenCoordinate(500.0, 500.0),
         mapAnimationOptions {
-          duration = 3000
+          duration(3000)
         }
       )
       R.id.menu_action_rotate_by -> mapboxMap.rotateBy(
         ScreenCoordinate(0.0, 0.0),
         ScreenCoordinate(500.0, 500.0),
         mapAnimationOptions {
-          duration = 7000
+          duration(7000)
         }
       )
     }
@@ -199,18 +199,18 @@ class CameraPredefinedAnimatorsActivity : AppCompatActivity() {
 
   companion object {
 
-    private val START_CAMERA_POSITION = CameraOptions.Builder()
-      .center(Point.fromLngLat(-0.11968, 51.50325)) // Sets the new camera position
-      .zoom(15.0) // Sets the zoom
-      .bearing(0.0) // Rotate the camera
-      .pitch(0.0) // Set the camera pitch
-      .build() // Creates a CameraPosition from the builder
+    private val START_CAMERA_POSITION = cameraOptions {
+      center(Point.fromLngLat(-0.11968, 51.50325)) // Sets the new camera position
+      zoom(15.0) // Sets the zoom
+      bearing(0.0) // Rotate the camera
+      pitch(0.0) // Set the camera pitch
+    }
 
-    private val EASE_TO_TARGET_CAMERA_POSITION = CameraOptions.Builder()
-      .center(Point.fromLngLat(-0.07520, 51.50550))
-      .zoom(17.0)
-      .bearing(180.0)
-      .pitch(30.0)
-      .build()
+    private val EASE_TO_TARGET_CAMERA_POSITION = cameraOptions {
+      center(Point.fromLngLat(-0.07520, 51.50550))
+      zoom(17.0)
+      bearing(180.0)
+      pitch(30.0)
+    }
   }
 }

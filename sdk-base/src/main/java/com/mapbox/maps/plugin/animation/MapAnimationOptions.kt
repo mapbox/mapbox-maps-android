@@ -36,22 +36,42 @@ class MapAnimationOptions private constructor(
     /**
      * Owner or creator this animation.
      */
-    var owner: String? = null
+    private var owner: String? = null
 
     /**
      * The duration of the animation in milliseconds.
      */
-    var duration: Long? = null
+    private var duration: Long? = null
 
     /**
      * The animation interpolator.
      */
-    var interpolator: TimeInterpolator? = null
+    private var interpolator: TimeInterpolator? = null
 
     /**
      * Animator start / cancel / end listener.
      */
-    var animatorListener: Animator.AnimatorListener? = null
+    private var animatorListener: Animator.AnimatorListener? = null
+
+    /**
+     * Set the owner or creator this animation.
+     */
+    fun owner(owner: String) = apply { this.owner = owner }
+
+    /**
+     * Set the duration of the animation in milliseconds.
+     */
+    fun duration(duration: Long) = apply { this.duration = duration }
+
+    /**
+     * Set the animation interpolator.
+     */
+    fun interpolator(interpolator: TimeInterpolator) = apply { this.interpolator = interpolator }
+
+    /**
+     * Set the animator start / cancel / end listener.
+     */
+    fun animatorListener(animatorListener: Animator.AnimatorListener) = apply { this.animatorListener = animatorListener }
 
     /**
      * Build an actual [MapAnimationOptions] object.

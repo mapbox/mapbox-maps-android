@@ -27,7 +27,8 @@ import kotlin.math.*
 class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelegateProvider) {
 
   private val mapTransformDelegate: MapTransformDelegate = mapDelegateProvider.mapTransformDelegate
-  private val mapProjectionDelegate: MapProjectionDelegate = mapDelegateProvider.mapProjectionDelegate
+  private val mapProjectionDelegate: MapProjectionDelegate =
+    mapDelegateProvider.mapProjectionDelegate
   private val mapCameraDelegate: MapCameraDelegate = mapDelegateProvider.mapCameraDelegate
 
   /**
@@ -43,7 +44,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
       animationList.add(
         CameraAnchorAnimator(
           options = cameraAnimatorOptions(it) {
-            startValue = it
+            startValue(it)
           },
           block = defaultAnimationParameters[CameraAnimatorType.ANCHOR]
         )
@@ -64,7 +65,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
       animationList.add(
         CameraBearingAnimator(
           options = cameraAnimatorOptions(endBearing) {
-            startValue = startBearing
+            startValue(startBearing)
           },
           block = defaultAnimationParameters[CameraAnimatorType.BEARING]
         )
@@ -75,7 +76,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
         animationList.add(
           CameraPaddingAnimator(
             options = cameraAnimatorOptions(target) {
-              startValue = start
+              startValue(start)
             },
             block = defaultAnimationParameters[CameraAnimatorType.PADDING]
           )
@@ -88,7 +89,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
         animationList.add(
           CameraPitchAnimator(
             options = cameraAnimatorOptions(target) {
-              startValue = start
+              startValue(start)
             },
             block = defaultAnimationParameters[CameraAnimatorType.PITCH]
           )
@@ -101,7 +102,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
         animationList.add(
           CameraCenterAnimator(
             options = cameraAnimatorOptions(target) {
-              startValue = start
+              startValue(start)
             },
             block = defaultAnimationParameters[CameraAnimatorType.CENTER]
           )
@@ -114,7 +115,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
         animationList.add(
           CameraZoomAnimator(
             options = cameraAnimatorOptions(target) {
-              startValue = start
+              startValue(start)
             },
             block = defaultAnimationParameters[CameraAnimatorType.ZOOM]
           )
@@ -136,7 +137,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
       return Array(1) {
         CameraPitchAnimator(
           options = cameraAnimatorOptions(startPitch + pitch) {
-            startValue = startPitch
+            startValue(startPitch)
           },
           block = defaultAnimationParameters[CameraAnimatorType.PITCH]
         )
@@ -153,13 +154,16 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
    * @param anchor The optional focal point to scale on
    * @return Array of the created animators
    */
-  internal fun getScaleBy(amount: Double, anchor: ScreenCoordinate? = null): Array<CameraAnimator<*>> {
+  internal fun getScaleBy(
+    amount: Double,
+    anchor: ScreenCoordinate? = null
+  ): Array<CameraAnimator<*>> {
     val animationList = mutableListOf<ValueAnimator>()
     anchor?.let {
       animationList.add(
         CameraAnchorAnimator(
           options = cameraAnimatorOptions(it) {
-            startValue = it
+            startValue(it)
           },
           block = defaultAnimationParameters[CameraAnimatorType.ANCHOR]
         )
@@ -171,7 +175,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
       animationList.add(
         CameraZoomAnimator(
           options = cameraAnimatorOptions(newScale) {
-            startValue = currentZoom
+            startValue(currentZoom)
           },
           block = defaultAnimationParameters[CameraAnimatorType.ZOOM]
         )
@@ -198,11 +202,11 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
       mapProjectionDelegate
     )
     cameraOptions.center?.let { start ->
-      centerTarget?.let { target ->
+      centerTarget.let { target ->
         return Array(1) {
           CameraCenterAnimator(
             options = cameraAnimatorOptions(target) {
-              startValue = start
+              startValue(start)
             },
             block = defaultAnimationParameters[CameraAnimatorType.CENTER]
           )
@@ -255,7 +259,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
       return Array(1) {
         CameraBearingAnimator(
           options = cameraAnimatorOptions(bearing) {
-            startValue = cameraBearingDegrees
+            startValue(cameraBearingDegrees)
           },
           block = defaultAnimationParameters[CameraAnimatorType.BEARING]
         )
@@ -305,8 +309,11 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
 
     // Minimize rotation by taking the shorter path around the circle.
 
-    endBearing = -CameraTransform.normalizeAngleRadians(-endBearing.deg2rad(), startBearing.deg2rad()).rad2deg()
-    startBearing = CameraTransform.normalizeAngleRadians(startBearing.deg2rad(), endBearing.deg2rad()).rad2deg()
+    endBearing =
+      -CameraTransform.normalizeAngleRadians(-endBearing.deg2rad(), startBearing.deg2rad())
+        .rad2deg()
+    startBearing =
+      CameraTransform.normalizeAngleRadians(startBearing.deg2rad(), endBearing.deg2rad()).rad2deg()
 
     // w₀: Initial visible span, measured in pixels at the initial scale.
     // Known henceforth as a <i>screenful</i>.
@@ -378,7 +385,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
     val animators = mutableListOf(
       CameraBearingAnimator(
         options = cameraAnimatorOptions(endBearing) {
-          startValue = startBearing
+          startValue(startBearing)
         },
         block = defaultAnimationParameters[CameraAnimatorType.BEARING]
       ),
@@ -395,7 +402,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           mapProjectionDelegate.unproject(interpolated, startScale)
         },
         options = cameraAnimatorOptions(endPointRaw) {
-          startValue = startPointRaw
+          startValue(startPointRaw)
         },
         block = defaultAnimationParameters[CameraAnimatorType.CENTER]
       ),
@@ -407,7 +414,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           startZoom + (1 / w(s)).scaleZoom()
         },
         options = cameraAnimatorOptions(endZoom) {
-          startValue = startZoom
+          startValue(startZoom)
         },
         block = defaultAnimationParameters[CameraAnimatorType.ZOOM]
       )
@@ -417,7 +424,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
       animators.add(
         CameraPitchAnimator(
           options = cameraAnimatorOptions(endPitch) {
-            startValue = startPitch
+            startValue(startPitch)
           },
           block = defaultAnimationParameters[CameraAnimatorType.PITCH]
         )
@@ -428,7 +435,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
       animators.add(
         CameraPaddingAnimator(
           options = cameraAnimatorOptions(endPadding) {
-            startValue = startPadding
+            startValue(startPadding)
           },
           block = defaultAnimationParameters[CameraAnimatorType.PADDING]
         )
@@ -449,7 +456,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
     const val DEFAULT_ANIMATION_DURATION_MS = 300L
 
     /**
-     Interpolator based on Bezier Curve which is default in Hydrogen SDK
+     * Interpolator based on Bezier Curve which is default in v9 version of the SDK
      */
     @JvmField
     val CUBIC_BEZIER_INTERPOLATOR: Interpolator = PathInterpolatorCompat.create(

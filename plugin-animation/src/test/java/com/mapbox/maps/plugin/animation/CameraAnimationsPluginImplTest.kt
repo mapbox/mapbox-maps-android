@@ -128,7 +128,7 @@ class CameraAnimationsPluginImplTest {
   fun startRegisteredAnimation() {
     val bearingAnimator = CameraBearingAnimator(
       cameraAnimatorOptions(10.0) {
-        startValue = 0.0
+        startValue(0.0)
       }
     )
     val animators = arrayOf(
@@ -148,7 +148,7 @@ class CameraAnimationsPluginImplTest {
     cameraAnimationsPluginImpl.unregisterAllAnimators()
     val bearingAnimator = CameraBearingAnimator(
       cameraAnimatorOptions(10.0) {
-        startValue = 0.0
+        startValue(0.0)
       }
     )
     val animators = arrayOf(
@@ -165,7 +165,7 @@ class CameraAnimationsPluginImplTest {
   @Test
   fun testEaseToRegister() {
     cameraAnimationsPluginImpl.cameraAnimationsFactory = cameraAnimatorsFactory
-    cameraAnimationsPluginImpl.easeTo(cameraOptions, mapAnimationOptions { duration = DURATION })
+    cameraAnimationsPluginImpl.easeTo(cameraOptions, mapAnimationOptions { duration(DURATION) })
     verify {
       centerAnimator.addInternalListener(any())
       bearingAnimator.addInternalListener(any())
@@ -175,7 +175,7 @@ class CameraAnimationsPluginImplTest {
   @Test
   fun testMoveToRegister() {
     cameraAnimationsPluginImpl.cameraAnimationsFactory = cameraAnimatorsFactory
-    cameraAnimationsPluginImpl.moveBy(ScreenCoordinate(VALUE, VALUE), mapAnimationOptions { duration = DURATION })
+    cameraAnimationsPluginImpl.moveBy(ScreenCoordinate(VALUE, VALUE), mapAnimationOptions { duration(DURATION) })
     verify {
       centerAnimator.addInternalListener(any())
       bearingAnimator.addInternalListener(any())
@@ -185,7 +185,7 @@ class CameraAnimationsPluginImplTest {
   @Test
   fun testScaleByRegister() {
     cameraAnimationsPluginImpl.cameraAnimationsFactory = cameraAnimatorsFactory
-    cameraAnimationsPluginImpl.scaleBy(VALUE, ScreenCoordinate(VALUE, VALUE), mapAnimationOptions { duration = DURATION })
+    cameraAnimationsPluginImpl.scaleBy(VALUE, ScreenCoordinate(VALUE, VALUE), mapAnimationOptions { duration(DURATION) })
     verify {
       centerAnimator.addInternalListener(any())
       bearingAnimator.addInternalListener(any())
@@ -198,7 +198,7 @@ class CameraAnimationsPluginImplTest {
     cameraAnimationsPluginImpl.rotateBy(
       ScreenCoordinate(VALUE, VALUE),
       ScreenCoordinate(VALUE, VALUE),
-      mapAnimationOptions { duration = DURATION }
+      mapAnimationOptions { duration(DURATION) }
     )
     verify {
       centerAnimator.addInternalListener(any())
@@ -209,7 +209,7 @@ class CameraAnimationsPluginImplTest {
   @Test
   fun testPitchByRegister() {
     cameraAnimationsPluginImpl.cameraAnimationsFactory = cameraAnimatorsFactory
-    cameraAnimationsPluginImpl.pitchBy(VALUE, mapAnimationOptions { duration = DURATION })
+    cameraAnimationsPluginImpl.pitchBy(VALUE, mapAnimationOptions { duration(DURATION) })
     verify {
       centerAnimator.addInternalListener(any())
       bearingAnimator.addInternalListener(any())
@@ -298,16 +298,15 @@ class CameraAnimationsPluginImplTest {
     val expectedValues = mutableSetOf(0.0, targetPitch)
     val updatedValues = mutableListOf<Double>()
 
-    cameraAnimationsPluginImpl.addCameraPitchChangeListener(object :
-        CameraAnimatorChangeListener<Double> {
-        override fun onChanged(updatedValue: Double) {
-          updatedValues.add(updatedValue)
-        }
-      })
+    cameraAnimationsPluginImpl.addCameraPitchChangeListener { updatedValue ->
+      updatedValues.add(
+        updatedValue
+      )
+    }
 
     shadowOf(getMainLooper()).pause()
 
-    cameraAnimationsPluginImpl.easeTo(cameraOptions, mapAnimationOptions { duration = 0 })
+    cameraAnimationsPluginImpl.easeTo(cameraOptions, mapAnimationOptions { duration(0) })
 
     shadowOf(getMainLooper()).idle()
 
@@ -328,16 +327,15 @@ class CameraAnimationsPluginImplTest {
     val expectedValues = mutableSetOf(0.0, targetPitch)
     val updatedValues = mutableListOf<Double>()
 
-    cameraAnimationsPluginImpl.addCameraPitchChangeListener(object :
-        CameraAnimatorChangeListener<Double> {
-        override fun onChanged(updatedValue: Double) {
-          updatedValues.add(updatedValue)
-        }
-      })
+    cameraAnimationsPluginImpl.addCameraPitchChangeListener { updatedValue ->
+      updatedValues.add(
+        updatedValue
+      )
+    }
 
     shadowOf(getMainLooper()).pause()
 
-    cameraAnimationsPluginImpl.easeTo(cameraOptions, mapAnimationOptions { duration = 1L })
+    cameraAnimationsPluginImpl.easeTo(cameraOptions, mapAnimationOptions { duration(1L) })
 
     shadowOf(getMainLooper()).idle()
 
@@ -364,20 +362,19 @@ class CameraAnimationsPluginImplTest {
     val expectedValues = mutableSetOf(0.0, targetPitchFirst, targetPitchSecond, targetPitchThird)
     val updatedValues = mutableListOf<Double>()
 
-    cameraAnimationsPluginImpl.addCameraPitchChangeListener(object :
-        CameraAnimatorChangeListener<Double> {
-        override fun onChanged(updatedValue: Double) {
-          updatedValues.add(updatedValue)
-        }
-      })
+    cameraAnimationsPluginImpl.addCameraPitchChangeListener { updatedValue ->
+      updatedValues.add(
+        updatedValue
+      )
+    }
 
     shadowOf(getMainLooper()).pause()
 
     val handler = Handler(getMainLooper())
-    cameraAnimationsPluginImpl.easeTo(cameraOptions1, mapAnimationOptions { duration = 0 })
+    cameraAnimationsPluginImpl.easeTo(cameraOptions1, mapAnimationOptions { duration(0) })
 
-    handler.postDelayed({ cameraAnimationsPluginImpl.easeTo(cameraOptions2, mapAnimationOptions { duration = 0 }) }, 1)
-    handler.postDelayed({ cameraAnimationsPluginImpl.easeTo(cameraOptions3, mapAnimationOptions { duration = 0 }) }, 2)
+    handler.postDelayed({ cameraAnimationsPluginImpl.easeTo(cameraOptions2, mapAnimationOptions { duration(0) }) }, 1)
+    handler.postDelayed({ cameraAnimationsPluginImpl.easeTo(cameraOptions3, mapAnimationOptions { duration(0) }) }, 2)
 
     shadowOf(getMainLooper()).idleFor(Duration.ofMillis(2))
 
@@ -404,19 +401,18 @@ class CameraAnimationsPluginImplTest {
     val expectedValues = mutableSetOf(0.0, targetPitchFirst, targetPitchSecond, targetPitchThird)
     val updatedValues = mutableListOf<Double>()
 
-    cameraAnimationsPluginImpl.addCameraPitchChangeListener(object :
-        CameraAnimatorChangeListener<Double> {
-        override fun onChanged(updatedValue: Double) {
-          updatedValues.add(updatedValue)
-        }
-      })
+    cameraAnimationsPluginImpl.addCameraPitchChangeListener { updatedValue ->
+      updatedValues.add(
+        updatedValue
+      )
+    }
 
     shadowOf(getMainLooper()).pause()
 
     val handler = Handler(getMainLooper())
-    cameraAnimationsPluginImpl.easeTo(cameraOptions1, mapAnimationOptions { duration = 1 })
-    handler.postDelayed({ cameraAnimationsPluginImpl.easeTo(cameraOptions2, mapAnimationOptions { duration = 1 }) }, 2)
-    handler.postDelayed({ cameraAnimationsPluginImpl.easeTo(cameraOptions3, mapAnimationOptions { duration = 1 }) }, 8)
+    cameraAnimationsPluginImpl.easeTo(cameraOptions1, mapAnimationOptions { duration(1) })
+    handler.postDelayed({ cameraAnimationsPluginImpl.easeTo(cameraOptions2, mapAnimationOptions { duration(1) }) }, 2)
+    handler.postDelayed({ cameraAnimationsPluginImpl.easeTo(cameraOptions3, mapAnimationOptions { duration(1) }) }, 8)
 
     shadowOf(getMainLooper()).idleFor(Duration.ofMillis(10))
 
@@ -447,12 +443,9 @@ class CameraAnimationsPluginImplTest {
     pitchAnimatorThree.addListener(pitchListenerThree)
 
     var currentPitch = 0.0
-    cameraAnimationsPluginImpl.addCameraPitchChangeListener(object :
-        CameraAnimatorChangeListener<Double> {
-        override fun onChanged(updatedValue: Double) {
-          currentPitch = updatedValue
-        }
-      })
+    cameraAnimationsPluginImpl.addCameraPitchChangeListener { updatedValue ->
+      currentPitch = updatedValue
+    }
 
     cameraAnimationsPluginImpl.registerAnimators(
       pitchAnimatorOne,
@@ -525,7 +518,7 @@ class CameraAnimationsPluginImplTest {
     val targetBearing = 12.0
     val bearingAnimator = CameraBearingAnimator(
       cameraAnimatorOptions(targetBearing) {
-        startValue = 0.0
+        startValue(0.0)
       }
     ) {
       duration = DURATION
@@ -636,8 +629,8 @@ class CameraAnimationsPluginImplTest {
     cameraAnimationsPluginImpl.easeTo(
       cameraOptions,
       mapAnimationOptions {
-        duration = 100L
-        animatorListener = listener
+        duration(100L)
+        animatorListener(listener)
       }
     )
     shadowOf(getMainLooper()).idle()
@@ -656,8 +649,8 @@ class CameraAnimationsPluginImplTest {
     cameraAnimationsPluginImpl.easeTo(
       cameraOptions,
       mapAnimationOptions {
-        duration = 10L
-        animatorListener = listener
+        duration(10L)
+        animatorListener(listener)
       }
     )
     handler.postDelayed(
@@ -684,7 +677,7 @@ class CameraAnimationsPluginImplTest {
 
     val animatorOne = cameraAnimationsPluginImpl.createBearingAnimator(
       cameraAnimatorOptions(2.0) {
-        owner = "Owner_1"
+        owner("Owner_1")
       }
     ) {
       duration = 200L
@@ -692,7 +685,7 @@ class CameraAnimationsPluginImplTest {
     }
     val animatorTwo = cameraAnimationsPluginImpl.createZoomAnimator(
       cameraAnimatorOptions(3.0) {
-        owner = "Owner_2"
+        owner("Owner_2")
       }
     ) {
       duration = 200L
@@ -700,7 +693,7 @@ class CameraAnimationsPluginImplTest {
     }
     val animatorThree = cameraAnimationsPluginImpl.createPitchAnimator(
       cameraAnimatorOptions(4.0) {
-        owner = "Owner_3"
+        owner("Owner_3")
       }
     ) {
       duration = 200L
@@ -738,8 +731,8 @@ class CameraAnimationsPluginImplTest {
     cameraAnimationsPluginImpl.easeTo(
       cameraOptions,
       mapAnimationOptions {
-        duration = 10L
-        animatorListener = listenerOne
+        duration(10L)
+        animatorListener(listenerOne)
       }
     )
     handler.postDelayed(
@@ -747,8 +740,8 @@ class CameraAnimationsPluginImplTest {
         cameraAnimationsPluginImpl.easeTo(
           cameraOptions,
           mapAnimationOptions {
-            duration = 10L
-            animatorListener = listenerTwo
+            duration(10L)
+            animatorListener(listenerTwo)
           }
         )
       },
@@ -774,7 +767,7 @@ class CameraAnimationsPluginImplTest {
     cameraAnimationsPluginImpl.addCameraAnimationsLifecycleListener(listenerOne)
     val bearingAnimatorOne = cameraAnimationsPluginImpl.createBearingAnimator(
       cameraAnimatorOptions(60.0) {
-        startValue = 10.0
+        startValue(10.0)
       }
     ) {
       duration = 10L
@@ -792,7 +785,7 @@ class CameraAnimationsPluginImplTest {
 
     val bearingAnimatorTwo = cameraAnimationsPluginImpl.createBearingAnimator(
       cameraAnimatorOptions(90.0) {
-        startValue = 10.0
+        startValue(10.0)
       }
     ) {
       duration = 50L
@@ -893,7 +886,7 @@ class CameraAnimationsPluginImplTest {
   private fun createBearingAnimator(target: Double, animatorDelay: Long, animatorDuration: Long) =
     CameraBearingAnimator(
       cameraAnimatorOptions(target) {
-        startValue = 0.0
+        startValue(0.0)
       }
     ) {
       startDelay = animatorDelay
@@ -903,7 +896,7 @@ class CameraAnimationsPluginImplTest {
   private fun createPitchAnimator(target: Double, animatorDelay: Long, animatorDuration: Long) =
     CameraPitchAnimator(
       cameraAnimatorOptions(target) {
-        startValue = 0.0
+        startValue(0.0)
       }
     ) {
       startDelay = animatorDelay

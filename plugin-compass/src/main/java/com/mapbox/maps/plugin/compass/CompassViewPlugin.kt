@@ -204,8 +204,8 @@ open class CompassViewPlugin(
       animationPlugin?.flyTo(
         CameraOptions.Builder().bearing(0.0).build(),
         mapAnimationOptions {
-          owner = MapAnimationOwnerRegistry.COMPASS
-          duration = BEARING_NORTH_ANIMATION_DURATION
+          owner(MapAnimationOwnerRegistry.COMPASS)
+          duration(BEARING_NORTH_ANIMATION_DURATION)
         }
       ) ?: mapCameraDelegate.setBearing(0.0)
       compassClickListeners.forEach { it.onCompassClick() }
