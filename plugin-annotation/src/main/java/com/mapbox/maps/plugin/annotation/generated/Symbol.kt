@@ -1133,7 +1133,7 @@ class Symbol(
     if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_IMAGE).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_IMAGE)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_OFFSET).isJsonNull)) {
+    if ((jsonObject.get(SymbolOptions.PROPERTY_ICON_OFFSET) as JsonArray).size() > 0) {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_OFFSET)
     }
     if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_ROTATE).isJsonNull)) {
@@ -1151,7 +1151,7 @@ class Symbol(
     if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_FIELD).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_FIELD)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_FONT).isJsonNull)) {
+    if ((jsonObject.get(SymbolOptions.PROPERTY_TEXT_FONT) as JsonArray).size() > 0) {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_FONT)
     }
     if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_JUSTIFY).isJsonNull)) {
@@ -1163,7 +1163,7 @@ class Symbol(
     if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_MAX_WIDTH).isJsonNull)) {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_MAX_WIDTH)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_OFFSET).isJsonNull)) {
+    if ((jsonObject.get(SymbolOptions.PROPERTY_TEXT_OFFSET) as JsonArray).size() > 0) {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_OFFSET)
     }
     if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_RADIAL_OFFSET).isJsonNull)) {
