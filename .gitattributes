@@ -1,1 +1,8 @@
+# Merge strategies
+app/src/main/AndroidManifest.xml merge=union
+app/src/main/res/values/example_categories.xml merge=union
+app/src/main/res/values/example_descriptions.xml merge=union
+app/src/main/res/values/example_titles.xml merge=union
+
+# Mark files as generated in Github PRs
 **/generated/* linguist-generated=true
