@@ -279,7 +279,7 @@ jobs:
       - checkout
       - restore-gradle-cache
       - run:
-          no_output_timeout: 20m
+          no_output_timeout: 30m
           name: docs
           command: sh scripts/kdoc-validate.sh
 
