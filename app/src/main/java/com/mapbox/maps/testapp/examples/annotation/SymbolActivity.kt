@@ -61,10 +61,6 @@ class SymbolActivity : AppCompatActivity() {
           }
         )
 
-        // set non data driven properties
-        iconAllowOverlap = true
-        textAllowOverlap = true
-
         BitmapUtils.getBitmapFromDrawable(
           ResourcesCompat.getDrawable(
             resources,
@@ -77,10 +73,10 @@ class SymbolActivity : AppCompatActivity() {
             .withPoint(Point.fromLngLat(AIRPORT_LONGITUDE, AIRPORT_LATITUDE))
             .withIconImage(it)
             .withTextField(ID_ICON_AIRPORT)
-            .withTextOffset(listOf(0.0, -1.0))
+            .withTextOffset(listOf(0.0, -2.0))
             .withTextColor(Color.RED)
             .withIconSize(1.3)
-            .withIconOffset(listOf(5.0, 10.0))
+            .withIconOffset(listOf(0.0, -5.0))
             .withSymbolSortKey(10.0)
             .withDraggable(true)
           symbol = create(symbolOptions)
@@ -89,7 +85,7 @@ class SymbolActivity : AppCompatActivity() {
         BitmapUtils.getBitmapFromDrawable(
           ResourcesCompat.getDrawable(
             resources,
-            R.drawable.custom_user_arrow,
+            R.drawable.mapbox_user_icon,
             this@SymbolActivity.theme
           )
         )?.let {
@@ -97,8 +93,8 @@ class SymbolActivity : AppCompatActivity() {
           val nearbyOptions: SymbolOptions = SymbolOptions()
             .withPoint(Point.fromLngLat(NEARBY_LONGITUDE, NEARBY_LATITUDE))
             .withIconImage(it)
-            .withIconColor(Color.YELLOW)
             .withIconSize(2.5)
+            .withTextField(ID_ICON_AIRPORT)
             .withSymbolSortKey(5.0)
             .withDraggable(true)
           create(nearbyOptions)
