@@ -8,6 +8,7 @@ import com.mapbox.maps.*
 import com.mapbox.maps.extension.observable.getEventData
 import com.mapbox.maps.extension.observable.subscribeResourceRequest
 import com.mapbox.maps.extension.observable.unsubscribeResourceRequest
+import com.mapbox.maps.plugin.compass.getCompassPlugin
 import com.mapbox.maps.plugin.scalebar.ScaleBarPlugin
 import com.mapbox.maps.plugin.scalebar.getScaleBarPlugin
 import com.mapbox.maps.testapp.R
@@ -49,6 +50,7 @@ class DebugModeActivity : AppCompatActivity() {
     // Using the extension method
     mapboxMap.subscribeResourceRequest(extensionObservable)
     mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
+    mapView.getCompassPlugin().opacity = 0.5f
     scaleBarPlugin = mapView.getScaleBarPlugin()
     scaleBarPlugin.enabled = false
     scaleBarPlugin.textColor = ContextCompat.getColor(this@DebugModeActivity, R.color.primary)

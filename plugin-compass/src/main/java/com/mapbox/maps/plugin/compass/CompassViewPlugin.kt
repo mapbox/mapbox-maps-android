@@ -51,11 +51,15 @@ open class CompassViewPlugin(
         compassView.isCompassVisible = false
       }
     )
-    fadeAnimator.addUpdateListener { compassView.setCompassAlpha(it.animatedValue as Float) }
+    fadeAnimator.addUpdateListener {
+      val value = it.animatedValue as Float
+      if (value < internalSettings.opacity) {
+        compassView.setCompassAlpha(value)
+      }
+    }
   }
 
   override fun applySettings() {
-    compassView.isCompassVisible = internalSettings.visibility
     compassView.compassGravity = internalSettings.position
     internalSettings.image?.let {
       compassView.compassImage = it
@@ -70,7 +74,6 @@ open class CompassViewPlugin(
       internalSettings.marginBottom.toInt()
     )
     update(mapCameraDelegate.getBearing())
-    updateVisibility()
   }
 
   /**
@@ -115,6 +118,7 @@ open class CompassViewPlugin(
   override fun onPluginView(view: View) {
     compassView = view as? CompassView
       ?: throw IllegalArgumentException("The provided view needs to implement CompassContract.CompassView")
+    updateVisibility(false)
   }
 
   /**
@@ -217,7 +221,7 @@ open class CompassViewPlugin(
     updateVisibility()
   }
 
-  private fun updateVisibility() {
+  private fun updateVisibility(withAnimator: Boolean = true) {
     if (!compassView.isCompassEnabled) {
       return
     }
@@ -227,12 +231,17 @@ open class CompassViewPlugin(
         return
       }
       isHidden = true
-      fadeAnimator.start()
+      if (withAnimator) {
+        fadeAnimator.start()
+      } else {
+        compassView.isCompassVisible = false
+        compassView.setCompassAlpha(0.0f)
+      }
     } else {
       isHidden = false
       fadeAnimator.cancel()
       compassView.isCompassVisible = true
-      compassView.setCompassAlpha(1.0f)
+      compassView.setCompassAlpha(internalSettings.opacity)
     }
   }
 
