@@ -66,6 +66,26 @@ class CompassViewPluginTest {
   }
 
   @Test
+  fun fadeAnimatorValue() {
+    compassPlugin.opacity = 0.5f
+    every { fadeAnimator.animatedValue } returns 1.0f
+    fadeAnimatorUpdateListener.onAnimationUpdate(fadeAnimator)
+    verify(exactly = 0) { compassView.setCompassAlpha(1.0f) }
+
+    every { fadeAnimator.animatedValue } returns 0.6f
+    fadeAnimatorUpdateListener.onAnimationUpdate(fadeAnimator)
+    verify(exactly = 0) { compassView.setCompassAlpha(0.6f) }
+
+    every { fadeAnimator.animatedValue } returns 0.4f
+    fadeAnimatorUpdateListener.onAnimationUpdate(fadeAnimator)
+    verify(exactly = 1) { compassView.setCompassAlpha(0.4f) }
+
+    every { fadeAnimator.animatedValue } returns 0.1f
+    fadeAnimatorUpdateListener.onAnimationUpdate(fadeAnimator)
+    verify(exactly = 1) { compassView.setCompassAlpha(0.1f) }
+  }
+
+  @Test
   fun fadeAnimatorUpdateListener() {
     every { fadeAnimator.animatedValue } returns 0.78f
     fadeAnimatorUpdateListener.onAnimationUpdate(fadeAnimator)
@@ -191,6 +211,7 @@ class CompassViewPluginTest {
     every { mapView.context } returns mockk(relaxed = true)
     assertEquals(compassView, compassPlugin.bind(mapView, mockk(relaxUnitFun = true), 1.0f))
     verify { compassView.injectPresenter(compassPlugin) }
+    verify { compassView.isCompassVisible = false }
   }
 
   @Test
