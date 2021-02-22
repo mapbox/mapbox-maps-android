@@ -7,9 +7,8 @@ import com.mapbox.geojson.*
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
+import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
-import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
-import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationManagerImpl
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
@@ -28,13 +27,11 @@ class SymbolManager(
   AnnotationManagerImpl<Point, Symbol, SymbolOptions, OnSymbolDragListener, OnSymbolClickListener, OnSymbolLongClickListener, SymbolLayer>(
     mapView, delegateProvider, annotationConfig
   ) {
-  private val layerId: String
-  private val sourceId: String
+  private val id = ID_GENERATOR.incrementAndGet()
+  override val layerId = annotationConfig?.layerId ?: "mapbox-android-symbol-layer-$id"
+  override val sourceId = annotationConfig?.sourceId ?: "mapbox-android-symbol-source-$id"
 
   init {
-    val id = ID_GENERATOR.incrementAndGet()
-    layerId = annotationConfig?.layerId ?: "mapbox-android-symbol-layer-$id"
-    sourceId = annotationConfig?.sourceId ?: "mapbox-android-symbol-source-$id"
     delegateProvider.getStyle {
       style = it
       initLayerAndSource()
@@ -863,21 +860,12 @@ class SymbolManager(
     }
 
   /**
-   * Create the source for managed annotations
-   *
-   * @return the GeoJsonSource created
-   */
-  override fun createSource(): GeoJsonSource {
-    return geoJsonSource(sourceId) { data("") }
-  }
-
-  /**
    * Create the layer for managed annotations
    *
    * @return the layer created
    */
   override fun createLayer(): SymbolLayer {
-    return SymbolLayer(layerId, sourceId)
+    return symbolLayer(layerId, sourceId) {}
   }
 
   /**

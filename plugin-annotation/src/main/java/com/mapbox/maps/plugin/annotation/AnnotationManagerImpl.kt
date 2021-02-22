@@ -21,6 +21,7 @@ import com.mapbox.maps.extension.style.layers.addLayerBelow
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
+import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.PLUGIN_GESTURE_CLASS_NAME
 import com.mapbox.maps.plugin.annotation.generated.Symbol
@@ -41,7 +42,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   mapView: View,
   /** The delegateProvider */
   final override val delegateProvider: MapDelegateProvider,
-  private val annotationConfig: AnnotationConfig?
+  protected val annotationConfig: AnnotationConfig?
 ) : AnnotationManager<G, T, S, D, U, V> {
   protected lateinit var style: StyleManagerInterface
   private var mapProjectionDelegate: MapProjectionDelegate = delegateProvider.mapProjectionDelegate
@@ -59,7 +60,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   private var draggedAnnotation: T? = null
   protected var touchAreaShiftX: Int = mapView.scrollX
   protected var touchAreaShiftY: Int = mapView.scrollY
-
+  protected abstract val layerId: String
+  protected abstract val sourceId: String
   private var gesturesPlugin: GesturesPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
     Class.forName(
       PLUGIN_GESTURE_CLASS_NAME
@@ -116,13 +118,6 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   abstract fun getAnnotationIdKey(): String
 
   /**
-   * Create the source for managed annotations
-   *
-   * @return the GeoJsonSource created
-   */
-  protected abstract fun createSource(): GeoJsonSource
-
-  /**
    * Create the layer for managed annotations
    *
    * @return the layer created
@@ -133,6 +128,35 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Set filter on the managed annotations.
    */
   abstract var layerFilter: Expression?
+
+  private fun createSource(): GeoJsonSource {
+    return geoJsonSource(sourceId) {
+      data("")
+      annotationConfig?.annotationSourceOptions?.let { options ->
+        options.maxZoom?.let {
+          maxzoom(it)
+        }
+        options.buffer?.let {
+          buffer(it)
+        }
+        options.cluster?.let {
+          cluster(it)
+        }
+        options.clusterMaxZoom?.let {
+          clusterMaxZoom(it)
+        }
+        options.lineMetrics?.let {
+          lineMetrics(it)
+        }
+        options.tolerance?.let {
+          tolerance(it)
+        }
+        options.clusterProperties?.let {
+          clusterProperties(it)
+        }
+      }
+    }
+  }
 
   protected fun initLayerAndSource() {
     if (layer == null || source == null) {

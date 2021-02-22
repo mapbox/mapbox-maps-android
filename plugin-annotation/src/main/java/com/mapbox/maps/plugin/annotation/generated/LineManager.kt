@@ -7,9 +7,8 @@ import com.mapbox.geojson.*
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
 import com.mapbox.maps.extension.style.layers.generated.LineLayer
+import com.mapbox.maps.extension.style.layers.generated.lineLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
-import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
-import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationManagerImpl
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
@@ -28,13 +27,11 @@ class LineManager(
   AnnotationManagerImpl<LineString, Line, LineOptions, OnLineDragListener, OnLineClickListener, OnLineLongClickListener, LineLayer>(
     mapView, delegateProvider, annotationConfig
   ) {
-  private val layerId: String
-  private val sourceId: String
+  private val id = ID_GENERATOR.incrementAndGet()
+  override val layerId = annotationConfig?.layerId ?: "mapbox-android-line-layer-$id"
+  override val sourceId = annotationConfig?.sourceId ?: "mapbox-android-line-source-$id"
 
   init {
-    val id = ID_GENERATOR.incrementAndGet()
-    layerId = annotationConfig?.layerId ?: "mapbox-android-line-layer-$id"
-    sourceId = annotationConfig?.sourceId ?: "mapbox-android-line-source-$id"
     delegateProvider.getStyle {
       style = it
       initLayerAndSource()
@@ -282,21 +279,12 @@ class LineManager(
     }
 
   /**
-   * Create the source for managed annotations
-   *
-   * @return the GeoJsonSource created
-   */
-  override fun createSource(): GeoJsonSource {
-    return geoJsonSource(sourceId) { data("") }
-  }
-
-  /**
    * Create the layer for managed annotations
    *
    * @return the layer created
    */
   override fun createLayer(): LineLayer {
-    return LineLayer(layerId, sourceId)
+    return lineLayer(layerId, sourceId) {}
   }
 
   /**

@@ -157,6 +157,15 @@ abstract class Layer : StyleContract.StyleLayerExtension {
   }
 
   /**
+   * Returns a human readable string that includes the cached properties of the layer.
+   *
+   * @return String
+   */
+  override fun toString(): String {
+    return "[${layerProperties.values.joinToString { propertyValue -> "${propertyValue.propertyName} = ${propertyValue.value}" }}}]"
+  }
+
+  /**
    * Static variables and methods.
    */
   companion object {
