@@ -38,6 +38,11 @@ class SymbolManager(
     delegateProvider.getStyle {
       style = it
       initLayerAndSource()
+      // Show all icons and texts by default. 
+      iconAllowOverlap = true
+      textAllowOverlap = true
+      iconIgnorePlacement = true
+      textIgnorePlacement = true
     }
   }
 
