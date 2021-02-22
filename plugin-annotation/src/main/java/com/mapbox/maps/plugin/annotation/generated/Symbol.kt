@@ -69,7 +69,7 @@ class Symbol(
       value?.let {
         field = it
         if (iconImage == null) {
-          iconImage = ICON_DEFAULT_NAME_PREFIX + id
+          iconImage = ICON_DEFAULT_NAME_PREFIX + it.generationId
         }
       }
     }

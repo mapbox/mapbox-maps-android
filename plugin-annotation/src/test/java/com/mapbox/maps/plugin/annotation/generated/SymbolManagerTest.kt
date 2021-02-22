@@ -82,6 +82,7 @@ class SymbolManagerTest {
     every { style.getSource(any()) } returns null
     every { style.styleSourceExists(any()) } returns false
     every { style.styleLayerExists(any()) } returns false
+    every { style.getStyleImage(any()) } returns null
     every { gesturesPlugin.addOnMapClickListener(any()) } just Runs
     every { gesturesPlugin.addOnMapLongClickListener(any()) } just Runs
     every { gesturesPlugin.addOnMoveListener(any()) } just Runs
@@ -201,7 +202,30 @@ class SymbolManagerTest {
         .withIconImage(bitmap)
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
-    assertEquals(Symbol.ICON_DEFAULT_NAME_PREFIX + annotation.id, annotation.iconImage)
+    assertEquals(Symbol.ICON_DEFAULT_NAME_PREFIX + bitmap.generationId, annotation.iconImage)
+
+    verify(exactly = 1) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
+  }
+
+  @Test
+  fun iconImageBitmapWithSameImage() {
+    every { style.styleSourceExists(any()) } returns true
+    val annotation = manager.create(
+      SymbolOptions()
+        .withIconImage(bitmap)
+        .withPoint(Point.fromLngLat(0.0, 0.0))
+    )
+    assertEquals(Symbol.ICON_DEFAULT_NAME_PREFIX + bitmap.generationId, annotation.iconImage)
+
+    verify(exactly = 1) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
+
+    every { style.getStyleImage(Symbol.ICON_DEFAULT_NAME_PREFIX + bitmap.generationId) } returns mockk()
+    val annotation2 = manager.create(
+      SymbolOptions()
+        .withIconImage(bitmap)
+        .withPoint(Point.fromLngLat(0.0, 0.0))
+    )
+    assertEquals(Symbol.ICON_DEFAULT_NAME_PREFIX + bitmap.generationId, annotation2.iconImage)
 
     verify(exactly = 1) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
   }

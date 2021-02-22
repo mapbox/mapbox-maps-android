@@ -80,6 +80,7 @@ class FillManagerTest {
     every { style.getSource(any()) } returns null
     every { style.styleSourceExists(any()) } returns false
     every { style.styleLayerExists(any()) } returns false
+    every { style.getStyleImage(any()) } returns null
     every { gesturesPlugin.addOnMapClickListener(any()) } just Runs
     every { gesturesPlugin.addOnMapLongClickListener(any()) } just Runs
     every { gesturesPlugin.addOnMoveListener(any()) } just Runs
