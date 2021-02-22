@@ -135,7 +135,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
 
   private fun createSource(): GeoJsonSource {
     return geoJsonSource(sourceId) {
-      data("")
+      featureCollection(FeatureCollection.fromFeatures(listOf()))
       annotationConfig?.annotationSourceOptions?.let { options ->
         options.maxZoom?.let {
           maxzoom(it)
