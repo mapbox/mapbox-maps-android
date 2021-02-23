@@ -153,7 +153,8 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     val startValue = cameraAnimator.startValue ?: when (cameraAnimator.type) {
       CameraAnimatorType.CENTER -> mapCameraDelegate.getCameraOptions().center
       CameraAnimatorType.ZOOM -> mapCameraDelegate.getCameraOptions().zoom
-      CameraAnimatorType.ANCHOR -> anchor
+      // TODO revisit after https://github.com/mapbox/mapbox-maps-android/issues/119
+      CameraAnimatorType.ANCHOR -> anchor ?: ScreenCoordinate(0.0, 0.0)
       CameraAnimatorType.PADDING -> mapCameraDelegate.getCameraOptions().padding
       CameraAnimatorType.BEARING -> mapCameraDelegate.getCameraOptions().bearing
       CameraAnimatorType.PITCH -> mapCameraDelegate.getCameraOptions().pitch
