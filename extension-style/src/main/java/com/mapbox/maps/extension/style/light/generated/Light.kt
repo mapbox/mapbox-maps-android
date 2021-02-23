@@ -24,7 +24,7 @@ import kotlin.collections.HashMap
 /**
  * The global light source.
  *
- * @see <a href="https://www.mapbox.com/mapbox-gl-style-spec/#light">The online documentation</a>
+ * Check the [online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#light).
  */
 @UiThread
 class Light : LightDslReceiver, StyleContract.StyleLightExtension {
@@ -560,7 +560,7 @@ interface LightDslReceiver {
 fun light(block: LightDslReceiver.() -> Unit): Light = Light().apply(block)
 
 /**
- * Extension function to get the light provided by the Style Plugin.
+ * Extension function to get the light provided by the Style Extension.
  *
  * @return Light
  */
@@ -569,7 +569,7 @@ fun StyleManagerInterface.getLight(): Light {
 }
 
 /**
- * Extension function to add a Light provided by the Style Plugin to the Style.
+ * Extension function to add a Light provided by the Style Extension to the Style.
  *
  * @param light The light to be added
  */

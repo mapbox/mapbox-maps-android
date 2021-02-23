@@ -159,7 +159,7 @@ fun image(imageId: String, block: ImageExtensionImpl.Builder.() -> Unit): ImageE
   ImageExtensionImpl.Builder(imageId).apply(block).build()
 
 /**
- * Extension function to add an image provided by the Style Plugin to the Style.
+ * Extension function to add an image provided by the Style Extension to the Style.
  *
  * @param image The image to be added
  */

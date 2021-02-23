@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.activity_simple_map.*
 import java.nio.ByteBuffer
 
 /**
- * Example showcasing usage of style-plugin.
+ * Example showcasing usage of style extension.
  */
 class RuntimeStylingActivity : AppCompatActivity() {
 
@@ -55,7 +55,7 @@ class RuntimeStylingActivity : AppCompatActivity() {
     addImageSource(style)
     addRasterLayer(style)
 
-    addLayerWithoutStylePlugin(style)
+    addLayerWithoutStyleExtension(style)
 
     val source = style.getSource("composite") as VectorSource
     Logger.e(TAG, "getSource: $source")
@@ -333,7 +333,7 @@ class RuntimeStylingActivity : AppCompatActivity() {
     style.addLayer(raster)
   }
 
-  private fun addLayerWithoutStylePlugin(style: Style) {
+  private fun addLayerWithoutStyleExtension(style: Style) {
     val bitmap = ContextCompat.getDrawable(this, R.drawable.android_symbol)?.toBitmap(64, 64)
     val byteBuffer = ByteBuffer.allocate(bitmap!!.byteCount)
     bitmap.copyPixelsToBuffer(byteBuffer)

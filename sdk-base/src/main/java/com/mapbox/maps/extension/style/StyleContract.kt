@@ -13,7 +13,7 @@ import java.nio.ByteBuffer
  */
 interface StyleContract {
   /**
-   * Define the interfaces for the Style plugin.
+   * Define the interfaces for the Style Extension.
    */
   interface StyleExtension {
     /**

@@ -132,7 +132,7 @@ abstract class Source(
 }
 
 /**
- * Extension function to get a Source provided by the Style Plugin by source id.
+ * Extension function to get a Source provided by the Style Extension by source id.
  *
  * @param sourceId the source id
  * @return StyleSourcePlugin
@@ -177,7 +177,7 @@ inline fun <reified T : Source> StyleManagerInterface.getSourceAs(sourceId: Stri
 }
 
 /**
- * Extension function to add a Source provided by the Style Plugin to the Style.
+ * Extension function to add a Source provided by the Style Extension to the Style.
  *
  * @param source The light to be added
  */

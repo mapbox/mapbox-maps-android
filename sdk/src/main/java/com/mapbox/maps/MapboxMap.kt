@@ -112,7 +112,7 @@ class MapboxMap internal constructor(
   }
 
   /**
-   * Load style JSON
+   * Load style JSON.
    */
   fun loadStyleJSON(
     json: String,
@@ -120,7 +120,7 @@ class MapboxMap internal constructor(
   ) = loadStyleJSON(json, onStyleLoaded, null)
 
   /**
-   * Load the style from Style plugin.
+   * Load the style from Style Extension.
    */
   fun loadStyle(
     styleExtension: StyleContract.StyleExtension,
@@ -130,13 +130,13 @@ class MapboxMap internal constructor(
     terrainEnabled = false
     this.loadStyleUri(
       styleExtension.styleUri,
-      { style -> onFinishLoadingStylePlugin(style, styleExtension, onStyleLoaded) },
+      { style -> onFinishLoadingStyleExtension(style, styleExtension, onStyleLoaded) },
       onMapLoadErrorListener
     )
   }
 
   /**
-   * Load the style from Style plugin.
+   * Load the style from Style Extension.
    */
   fun loadStyle(
     styleExtension: StyleContract.StyleExtension,
@@ -144,9 +144,9 @@ class MapboxMap internal constructor(
   ) = loadStyle(styleExtension, onStyleLoaded, null)
 
   /**
-   * Handle the style loading from Style plugin.
+   * Handle the style loading from Style Extension.
    */
-  internal fun onFinishLoadingStylePlugin(
+  internal fun onFinishLoadingStyleExtension(
     style: Style,
     styleExtension: StyleContract.StyleExtension,
     onStyleLoaded: Style.OnStyleLoaded? = null

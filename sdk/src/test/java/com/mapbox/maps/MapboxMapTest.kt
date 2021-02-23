@@ -58,19 +58,19 @@ class MapboxMapTest {
 
   @Test
   fun loadStyle() {
-    val stylePlugin = mockk<StyleContract.StyleExtension>()
-    every { stylePlugin.styleUri } returns "foobar"
+    val styleExtension = mockk<StyleContract.StyleExtension>()
+    every { styleExtension.styleUri } returns "foobar"
     val onMapLoadError = mockk<OnMapLoadErrorListener>()
     val onStyleLoadError = mockk<Style.OnStyleLoaded>()
-    mapboxMap.loadStyle(stylePlugin, onStyleLoadError, onMapLoadError)
+    mapboxMap.loadStyle(styleExtension, onStyleLoadError, onMapLoadError)
     verify { nativeMap.styleURI = "foobar" }
   }
 
   @Test
   fun loadStyleLambda() {
-    val stylePlugin = mockk<StyleContract.StyleExtension>()
-    every { stylePlugin.styleUri } returns "foobar"
-    mapboxMap.loadStyle(stylePlugin) {}
+    val styleExtension = mockk<StyleContract.StyleExtension>()
+    every { styleExtension.styleUri } returns "foobar"
+    mapboxMap.loadStyle(styleExtension) {}
     verify { nativeMap.styleURI = "foobar" }
   }
 
@@ -84,30 +84,30 @@ class MapboxMapTest {
   }
 
   @Test
-  fun finishLoadingStylePlugin() {
+  fun finishLoadingStyleExtension() {
     val style = mockk<Style>()
-    val stylePlugin = mockk<StyleContract.StyleExtension>()
+    val styleExtension = mockk<StyleContract.StyleExtension>()
 
     val source = mockk<StyleContract.StyleSourceExtension>(relaxed = true)
-    every { stylePlugin.sources } returns listOf(source)
+    every { styleExtension.sources } returns listOf(source)
 
     val image = mockk<StyleContract.StyleImageExtension>(relaxed = true)
-    every { stylePlugin.images } returns listOf(image)
+    every { styleExtension.images } returns listOf(image)
 
     val layer = mockk<StyleContract.StyleLayerExtension>(relaxed = true)
     val layerPosition = LayerPosition(null, null, 0)
-    every { stylePlugin.layers } returns listOf(
+    every { styleExtension.layers } returns listOf(
       Pair(layer, layerPosition)
     )
 
     val light = mockk<StyleContract.StyleLightExtension>(relaxed = true)
-    every { stylePlugin.light } returns light
+    every { styleExtension.light } returns light
 
     val terrain = mockk<StyleContract.StyleTerrainExtension>(relaxed = true)
-    every { stylePlugin.terrain } returns terrain
+    every { styleExtension.terrain } returns terrain
 
     val styleLoadCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
-    mapboxMap.onFinishLoadingStylePlugin(style, stylePlugin, styleLoadCallback)
+    mapboxMap.onFinishLoadingStyleExtension(style, styleExtension, styleLoadCallback)
 
     assertEquals(mapboxMap.style, style)
     verify { source.bindTo(style) }

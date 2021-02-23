@@ -168,7 +168,7 @@ fun terrain(sourceId: String, block: (TerrainDslReceiver.() -> Unit)? = null): T
 }
 
 /**
- * Extension function to get the terrain provided by the Style Plugin.
+ * Extension function to get the terrain provided by the Style Extension.
  *
  * @return Terrain
  */
@@ -177,7 +177,7 @@ fun StyleManagerInterface.getTerrain(sourceId: String): Terrain {
 }
 
 /**
- * Extension function to add a Terrain provided by the Style Plugin to the Style.
+ * Extension function to add a Terrain provided by the Style Extension to the Style.
  *
  * @param terrain The terrain to be added
  */
