@@ -43,7 +43,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   private val zoomListeners = CopyOnWriteArraySet<CameraAnimatorChangeListener<Double>>()
   private val paddingListeners = CopyOnWriteArraySet<CameraAnimatorChangeListener<EdgeInsets>>()
   private val anchorListeners =
-    CopyOnWriteArraySet<CameraAnimatorChangeListener<ScreenCoordinate>>()
+    CopyOnWriteArraySet<CameraAnimatorNullableChangeListener<ScreenCoordinate?>>()
   private val bearingListeners = CopyOnWriteArraySet<CameraAnimatorChangeListener<Double>>()
   private val pitchListeners = CopyOnWriteArraySet<CameraAnimatorChangeListener<Double>>()
 
@@ -73,11 +73,9 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     }
   }
 
-  private var anchor by Delegates.observable<ScreenCoordinate?>(null) { _, old, new ->
-    new?.let {
-      if (old != it) {
-        anchorListeners.forEach { listener -> listener.onChanged(it) }
-      }
+  override var anchor by Delegates.observable<ScreenCoordinate?>(null) { _, old, new ->
+    if (old != new) {
+      anchorListeners.forEach { listener -> listener.onChanged(new) }
     }
   }
 
@@ -155,7 +153,8 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     val startValue = cameraAnimator.startValue ?: when (cameraAnimator.type) {
       CameraAnimatorType.CENTER -> mapCameraDelegate.getCameraOptions().center
       CameraAnimatorType.ZOOM -> mapCameraDelegate.getCameraOptions().zoom
-      CameraAnimatorType.ANCHOR -> cameraAnimator.startValue
+      // TODO revisit after https://github.com/mapbox/mapbox-maps-android/issues/119
+      CameraAnimatorType.ANCHOR -> anchor ?: ScreenCoordinate(0.0, 0.0)
       CameraAnimatorType.PADDING -> mapCameraDelegate.getCameraOptions().padding
       CameraAnimatorType.BEARING -> mapCameraDelegate.getCameraOptions().bearing
       CameraAnimatorType.PITCH -> mapCameraDelegate.getCameraOptions().pitch
@@ -191,7 +190,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
   internal fun notifyListeners(cameraOptions: CameraOptions) {
     cameraOptions.also {
-      anchor = it.anchor
       bearing = it.bearing
       center = it.center
       padding = it.padding
@@ -278,7 +276,11 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
             unregisterAnimators(this, cancelAnimators = false)
           }
           if (runningAnimatorsQueue.isEmpty()) {
-            performMapJump(cameraOptionsBuilder.build())
+            // TODO revisit after https://github.com/mapbox/mapbox-maps-android/issues/119
+            if (animator.type == CameraAnimatorType.ANCHOR) {
+              anchor = animatedValue as ScreenCoordinate
+            }
+            performMapJump(cameraOptionsBuilder.anchor(anchor).build())
             mapTransformDelegate.setUserAnimationInProgress(false)
           }
         } ?: throw RuntimeException(
@@ -312,7 +314,12 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
           null
         }
       }
+      // TODO revisit after https://github.com/mapbox/mapbox-maps-android/issues/119
+      if (animator.type == CameraAnimatorType.ANCHOR) {
+        anchor = it.animatedValue as ScreenCoordinate
+      }
       cameraOptions?.let { camera ->
+        camera.anchor = anchor
         // move map camera
         performMapJump(camera)
         // reset values
@@ -471,20 +478,20 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   }
 
   /**
-   * Add [CameraAnimatorChangeListener] to receive map anchor updates.
+   * Add [CameraAnimatorNullableChangeListener] to receive map anchor updates.
    *
-   * @param listener Instance of [CameraAnimatorChangeListener]
+   * @param listener Instance of [CameraAnimatorNullableChangeListener]
    */
-  override fun addCameraAnchorChangeListener(listener: CameraAnimatorChangeListener<ScreenCoordinate>) {
+  override fun addCameraAnchorChangeListener(listener: CameraAnimatorNullableChangeListener<ScreenCoordinate?>) {
     anchorListeners.add(listener)
   }
 
   /**
-   * Remove [CameraAnimatorChangeListener]. No updates will arrive after that.
+   * Remove [CameraAnimatorNullableChangeListener]. No updates will arrive after that.
    *
-   * @param listener Instance of [CameraAnimatorChangeListener]
+   * @param listener Instance of [CameraAnimatorNullableChangeListener]
    */
-  override fun removeCameraAnchorChangeListener(listener: CameraAnimatorChangeListener<ScreenCoordinate>) {
+  override fun removeCameraAnchorChangeListener(listener: CameraAnimatorNullableChangeListener<ScreenCoordinate?>) {
     anchorListeners.remove(listener)
   }
 

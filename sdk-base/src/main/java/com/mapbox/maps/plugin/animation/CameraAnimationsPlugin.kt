@@ -11,6 +11,21 @@ import com.mapbox.maps.plugin.MapPlugin
  * Interface to interact with Camera Animations plugin
  */
 interface CameraAnimationsPlugin : MapPlugin {
+
+  /**
+   * Map camera anchor value.
+   * Default value is NULL meaning center of given map view.
+   * Left-top corner is represented as [ScreenCoordinate] (0.0, 0.0).
+   *
+   * If [anchor] is set to some specific value (set directly or by some running anchor animation)
+   * it will be used as anchor for all upcoming animations even if they do not animate anchor directly.
+   *
+   * **Note**: If anchor animator is started and no start value is specified explicitly
+   * and [anchor] = NULL - then start value will be set to ScreenCoordinate(0.0, 0.0) automatically
+   * and it will be start point for interpolation.
+   */
+  var anchor: ScreenCoordinate?
+
   /**
    * Ease the map camera to a given camera options.
    *
@@ -245,14 +260,14 @@ interface CameraAnimationsPlugin : MapPlugin {
    *
    * @param listener to be invoked when camera bearing value changes
    */
-  fun addCameraAnchorChangeListener(listener: CameraAnimatorChangeListener<ScreenCoordinate>)
+  fun addCameraAnchorChangeListener(listener: CameraAnimatorNullableChangeListener<ScreenCoordinate?>)
 
   /**
    * Remove camera anchor change listener
    *
    * @param listener to be invoked when camera anchor value changes
    */
-  fun removeCameraAnchorChangeListener(listener: CameraAnimatorChangeListener<ScreenCoordinate>)
+  fun removeCameraAnchorChangeListener(listener: CameraAnimatorNullableChangeListener<ScreenCoordinate?>)
 
   /**
    * Add camera bearing change listener

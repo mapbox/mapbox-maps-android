@@ -123,7 +123,7 @@ class CameraAnimationsChangeListenersTest {
   @Test
   fun addCameraAnchorChangeListener() {
     val cameraAnimationsPluginImpl = CameraAnimationsPluginImpl()
-    val listener = CameraAnimatorChangeListener<ScreenCoordinate> { updatedValue ->
+    val listener = CameraAnimatorNullableChangeListener<ScreenCoordinate?> { updatedValue ->
       Assert.assertEquals(
         ScreenCoordinate(
           CameraAnimationsPluginImplTest.VALUE,
@@ -139,7 +139,7 @@ class CameraAnimationsChangeListenersTest {
   @Test
   fun removeCameraAnchorChangeListener() {
     val cameraAnimationsPluginImpl = CameraAnimationsPluginImpl()
-    val listener = CameraAnimatorChangeListener<ScreenCoordinate> { assert(false) }
+    val listener = CameraAnimatorNullableChangeListener<ScreenCoordinate?> { assert(false) }
     cameraAnimationsPluginImpl.addCameraAnchorChangeListener(listener)
     cameraAnimationsPluginImpl.removeCameraAnchorChangeListener(listener)
     cameraAnimationsPluginImpl.notifyListeners(cameraOptions)

@@ -806,6 +806,28 @@ class CameraAnimationsPluginImplTest {
     assertEquals(true, listenerTwo.interrupting)
   }
 
+  @Test
+  fun anchorTest() {
+    shadowOf(getMainLooper()).pause()
+    val anchor = ScreenCoordinate(7.0, 7.0)
+    val anchorAnimator = cameraAnimationsPluginImpl.createAnchorAnimator(
+      cameraAnimatorOptions(anchor) {
+        startValue(anchor)
+      }
+    ) {
+      duration = 10L
+    }
+    cameraAnimationsPluginImpl.registerAnimators(anchorAnimator)
+    anchorAnimator.start()
+    shadowOf(getMainLooper()).idle()
+    assertEquals(anchor, cameraAnimationsPluginImpl.anchor)
+    var counter = 0
+    cameraAnimationsPluginImpl.addCameraAnchorChangeListener { counter++ }
+    cameraAnimationsPluginImpl.anchor = null
+    assertEquals(null, cameraAnimationsPluginImpl.anchor)
+    assertEquals(1, counter)
+  }
+
   class LifecycleListener : CameraAnimationsLifecycleListener {
     var starting = false
     var interrupting = false
