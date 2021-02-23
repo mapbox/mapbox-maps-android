@@ -4,8 +4,6 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.bindgen.Expected
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
@@ -68,6 +66,14 @@ class SkyLayerSnapshotterActivity : AppCompatActivity() {
       .build()
 
     snapshotter = Snapshotter(this, snapshotMapOptions).apply {
+      setStyleListener(object : SnapshotStyleListener {
+        override fun onDidFinishLoadingStyle(style: Style) {
+          val skyLayer = SkyLayer("sky_snapshotter")
+          skyLayer.skyType(SkyType.ATMOSPHERE)
+          skyLayer.skyAtmosphereSun(listOf(0.0, 90.0))
+          style.addLayer(skyLayer)
+        }
+      })
       setCameraOptions(
         CameraOptions.Builder()
           .center(Point.fromLngLat(24.81958807097479, 60.56524768721757))
@@ -77,28 +83,17 @@ class SkyLayerSnapshotterActivity : AppCompatActivity() {
           .build()
       )
       setUri(Style.MAPBOX_STREETS)
-      start(object : Snapshotter.SnapshotReadyCallback {
-        override fun onStyleLoaded(style: Style) {
-          val skyLayer = SkyLayer("sky_snapshotter")
-          skyLayer.skyType(SkyType.ATMOSPHERE)
-          skyLayer.skyAtmosphereSun(listOf(0.0, 90.0))
-          style.addLayer(skyLayer)
+      start {
+        it?.let { snapshot ->
+          val image = snapshot.image()
+          val configBmp: Bitmap.Config = Bitmap.Config.ARGB_8888
+          val bitmap: Bitmap = Bitmap.createBitmap(image.width, image.height, configBmp)
+          val buffer: ByteBuffer = ByteBuffer.wrap(image.data)
+          bitmap.copyPixelsFromBuffer(buffer)
+          maneuverView.setImageBitmap(bitmap)
+          maneuverCaption.visibility = View.VISIBLE
         }
-
-        override fun onSnapshotCreated(snapshot: Expected<MapSnapshotInterface?, String?>) {
-          if (snapshot.isError) {
-            Logger.e(TAG, "${snapshot.error}")
-          } else {
-            val image = snapshot.value!!.image()
-            val configBmp: Bitmap.Config = Bitmap.Config.ARGB_8888
-            val bitmap: Bitmap = Bitmap.createBitmap(image.width, image.height, configBmp)
-            val buffer: ByteBuffer = ByteBuffer.wrap(image.data)
-            bitmap.copyPixelsFromBuffer(buffer)
-            maneuverView.setImageBitmap(bitmap)
-            maneuverCaption.visibility = View.VISIBLE
-          }
-        }
-      })
+      }
     }
   }
 
@@ -121,9 +116,5 @@ class SkyLayerSnapshotterActivity : AppCompatActivity() {
     super.onDestroy()
     snapshotter?.cancel()
     mapView.onDestroy()
-  }
-
-  companion object {
-    private const val TAG = "SkySnapshootter"
   }
 }

@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.bindgen.Expected
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
@@ -14,7 +13,7 @@ import java.nio.ByteBuffer
 /**
  * Activity to validate creating a snapshot from a configuration not using style URI or JSON
  */
-class LocalStyleMapSnapshotterActivity : AppCompatActivity(), Snapshotter.SnapshotReadyCallback {
+class LocalStyleMapSnapshotterActivity : AppCompatActivity() {
   private lateinit var mapSnapshotter: Snapshotter
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,30 +62,21 @@ class LocalStyleMapSnapshotterActivity : AppCompatActivity(), Snapshotter.Snapsh
         }
       """.trimIndent()
     )
-    mapSnapshotter.start(this)
-  }
+    mapSnapshotter.start {
+      it?.let { mapSnapshot ->
+        Logger.e(TAG, "Result: ${mapSnapshot.image().data.size}")
 
-  override fun onStyleLoaded(style: Style) {
-    Logger.i(TAG, "OnStyleLoaded: ${style.styleURI}")
-  }
+        val image = mapSnapshot.image()
 
-  override fun onSnapshotCreated(snapshot: Expected<MapSnapshotInterface?, String?>) {
-    if (snapshot.isValue) {
-      val mapSnapshot = snapshot.value as MapSnapshotInterface
-      Logger.e(TAG, "Result: ${mapSnapshot.image().data.size}")
+        val configBmp: Bitmap.Config = Bitmap.Config.ARGB_8888
+        val bitmap: Bitmap = Bitmap.createBitmap(image.width, image.height, configBmp)
+        val buffer: ByteBuffer = ByteBuffer.wrap(image.data)
+        bitmap.copyPixelsFromBuffer(buffer)
 
-      val image = mapSnapshot.image()
-
-      val configBmp: Bitmap.Config = Bitmap.Config.ARGB_8888
-      val bitmap: Bitmap = Bitmap.createBitmap(image.width, image.height, configBmp)
-      val buffer: ByteBuffer = ByteBuffer.wrap(image.data)
-      bitmap.copyPixelsFromBuffer(buffer)
-
-      val imageView = ImageView(this)
-      imageView.setImageBitmap(bitmap)
-      setContentView(imageView)
-    } else {
-      Logger.e(TAG, "Error: ${snapshot.error}")
+        val imageView = ImageView(this)
+        imageView.setImageBitmap(bitmap)
+        setContentView(imageView)
+      }
     }
   }
 
