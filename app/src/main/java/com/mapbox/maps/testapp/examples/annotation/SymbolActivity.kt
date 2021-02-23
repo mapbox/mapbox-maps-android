@@ -135,7 +135,7 @@ class SymbolActivity : AppCompatActivity() {
     when (item.itemId) {
       R.id.menu_action_draggable -> {
         symbolManager?.annotations?.forEach {
-          it.value.isDraggable = !it.value.isDraggable
+          it.isDraggable = !it.isDraggable
         }
       }
       R.id.menu_action_filter -> {
@@ -193,7 +193,7 @@ class SymbolActivity : AppCompatActivity() {
     moveSymbol.interpolator = LinearInterpolator()
     moveSymbol.addUpdateListener { animation: ValueAnimator ->
       symbolManager?.let {
-        if (it.annotations.values.indexOf(symbol) < 0) {
+        if (!it.annotations.contains(symbol)) {
           return@addUpdateListener
         }
         val fraction = animation.animatedValue as Float

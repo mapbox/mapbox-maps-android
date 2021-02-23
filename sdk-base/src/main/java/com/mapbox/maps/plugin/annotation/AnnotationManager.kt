@@ -69,7 +69,7 @@ interface AnnotationManager<
   /**
    * The added annotations
    */
-  val annotations: MutableMap<Long, T>
+  val annotations: List<T>
 
   /**
    * The added dragListensers
