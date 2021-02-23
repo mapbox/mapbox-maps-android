@@ -1,11 +1,9 @@
 package com.mapbox.maps.testapp.examples.snapshotter
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
@@ -20,7 +18,6 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression.Companio
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.rgba
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.HeatmapLayer
-import java.nio.ByteBuffer
 
 /**
  * Example that showcases using Snapshotter with data driven styling.
@@ -38,48 +35,44 @@ class DataDrivenMapSnapshotterActivity : AppCompatActivity() {
       .resourceOptions(MapboxOptions.getDefaultResourceOptions(this))
       .build()
 
-    snapshotter = Snapshotter(this, snapshotMapOptions)
-    snapshotter.setCameraOptions(
-      CameraOptions.Builder()
-        .center(Point.fromLngLat(-94.0, 15.0))
-        .zoom(5.0)
-        .padding(EdgeInsets(1.0, 1.0, 1.0, 1.0))
-        .build()
-    )
-    snapshotter.setUri(Style.OUTDOORS)
-    snapshotter.start(object : Snapshotter.SnapshotReadyCallback {
-      override fun onStyleLoaded(style: Style) {
-        showToast("Map load style success!")
+    snapshotter = Snapshotter(this, snapshotMapOptions).apply {
+      setStyleListener(object : SnapshotStyleListener {
+        override fun onDidFinishLoadingStyle(style: Style) {
+          Toast.makeText(
+            this@DataDrivenMapSnapshotterActivity,
+            "Map load style success!",
+            Toast.LENGTH_LONG
+          ).show()
 
-        // GeoJSON earthquake source using low level style API
-        val properties = HashMap<String, Value>()
-        properties["type"] = Value.valueOf("geojson")
-        properties["data"] = Value.valueOf(EARTHQUAKE_SOURCE_URL)
-        val sourceResult = style.addStyleSource(EARTHQUAKE_SOURCE_ID, Value.valueOf(properties))
-        if (sourceResult.isError) {
-          throw RuntimeException(sourceResult.error)
+          // GeoJSON earthquake source using low level style API
+          val properties = HashMap<String, Value>()
+          properties["type"] = Value.valueOf("geojson")
+          properties["data"] = Value.valueOf(EARTHQUAKE_SOURCE_URL)
+          val sourceResult = style.addStyleSource(EARTHQUAKE_SOURCE_ID, Value.valueOf(properties))
+          if (sourceResult.isError) {
+            throw RuntimeException(sourceResult.error)
+          }
+
+          // Heatmap layer using high level style PI
+          style.addLayer(getHeatmapLayer())
         }
-
-        // Heatmap layer using high level style PI
-        style.addLayer(getHeatmapLayer())
+      })
+      setCameraOptions(
+        CameraOptions.Builder()
+          .center(Point.fromLngLat(-94.0, 15.0))
+          .zoom(5.0)
+          .padding(EdgeInsets(1.0, 1.0, 1.0, 1.0))
+          .build()
+      )
+      setUri(Style.OUTDOORS)
+    }
+    snapshotter.start {
+      it?.let { snapshot ->
+        val imageView = ImageView(this@DataDrivenMapSnapshotterActivity)
+        imageView.setImageBitmap(snapshot.bitmap())
+        setContentView(imageView)
       }
-
-      override fun onSnapshotCreated(snapshot: Expected<MapSnapshotInterface?, String?>) {
-        if (snapshot.isError) {
-          showToast("ERROR! ${snapshot.error}")
-        } else {
-          val image = snapshot.value!!.image()
-          val configBmp: Bitmap.Config = Bitmap.Config.ARGB_8888
-          val bitmap: Bitmap = Bitmap.createBitmap(image.width, image.height, configBmp)
-          val buffer: ByteBuffer = ByteBuffer.wrap(image.data)
-          bitmap.copyPixelsFromBuffer(buffer)
-
-          val imageView = ImageView(this@DataDrivenMapSnapshotterActivity)
-          imageView.setImageBitmap(bitmap)
-          setContentView(imageView)
-        }
-      }
-    })
+    }
   }
 
   private fun getHeatmapLayer(): HeatmapLayer {
@@ -142,10 +135,6 @@ class DataDrivenMapSnapshotterActivity : AppCompatActivity() {
   override fun onDestroy() {
     super.onDestroy()
     snapshotter.cancel()
-  }
-
-  private fun showToast(message: String) {
-    Toast.makeText(this, message, Toast.LENGTH_LONG).show()
   }
 
   companion object {

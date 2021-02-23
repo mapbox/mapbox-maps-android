@@ -120,7 +120,7 @@ class SnapshotterDelegateTest {
 
   @Test
   fun start() {
-    val callback = mockk<Snapshotter.SnapshotReadyCallback>()
+    val callback = mockk<SnapshotCreatedListener>()
     every { coreSnapshotter.styleJSON } returns "foobar"
     snapshotter.start(callback)
     verify { coreSnapshotter.start(any()) }
@@ -128,7 +128,7 @@ class SnapshotterDelegateTest {
 
   @Test(expected = IllegalStateException::class)
   fun startException() {
-    val callback = mockk<Snapshotter.SnapshotReadyCallback>()
+    val callback = mockk<SnapshotCreatedListener>()
     snapshotter.start(callback)
     verify { coreSnapshotter.start(any()) }
   }

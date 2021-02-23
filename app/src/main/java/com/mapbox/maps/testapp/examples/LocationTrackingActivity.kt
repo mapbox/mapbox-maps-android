@@ -14,9 +14,9 @@ import com.mapbox.maps.plugin.gestures.getGesturesPlugin
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.getLocationComponentPlugin
-import com.mapbox.maps.plugin.toJson
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
+import com.mapbox.maps.toJson
 import kotlinx.android.synthetic.main.activity_location_layer_mode.*
 
 /**

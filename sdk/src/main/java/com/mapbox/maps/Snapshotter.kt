@@ -9,14 +9,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.res.ResourcesCompat
-import com.mapbox.bindgen.Expected
-import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.attribution.AttributionLayout
 import com.mapbox.maps.attribution.AttributionMeasure
 import com.mapbox.maps.attribution.AttributionParser
 import java.lang.ref.WeakReference
+import kotlin.math.min
 
 /**
  * [Snapshotter] is high-level component responsible for taking map snapshot with given [MapSnapshotOptions].
@@ -25,8 +24,10 @@ class Snapshotter : MapSnapshotterObserver {
 
   private val context: WeakReference<Context>
   private val coreSnapshotter: MapSnapshotterInterface
-  private var snapshotReadyCallback: SnapshotReadyCallback? = null
   private val pixelRatio: Float
+
+  private var snapshotCreatedCallback: SnapshotCreatedListener? = null
+  private var snapshotStyleCallback: SnapshotStyleListener? = null
 
   constructor(context: Context, options: MapSnapshotOptions) {
     this.context = WeakReference(context)
@@ -47,21 +48,21 @@ class Snapshotter : MapSnapshotterObserver {
    * @param message Error message associated with the error.
    */
   override fun onDidFailLoadingStyle(message: String) {
-    Logger.e(TAG, message)
+    snapshotStyleCallback?.onDidFailLoadingStyle(message)
   }
 
   /**
-   * Notifies the client when style loading finished.
+   * Notifies the client when style loading completed, not including the style specified sprite and sources.
    */
   override fun onDidFinishLoadingStyle() {
-    snapshotReadyCallback?.onStyleLoaded(Style(coreSnapshotter, pixelRatio))
+    snapshotStyleCallback?.onDidFinishLoadingStyle(Style(coreSnapshotter, pixelRatio))
   }
 
   /**
    * Notifies the client when style loading completed, including the style specified sprite and sources.
    */
   override fun onDidFullyLoadStyle() {
-    Logger.e(TAG, "Style fully loaded.")
+    snapshotStyleCallback?.onDidFullyLoadStyle(Style(coreSnapshotter, pixelRatio))
   }
 
   /**
@@ -70,33 +71,40 @@ class Snapshotter : MapSnapshotterObserver {
    * @param imageId The id of the image that is missing.
    */
   override fun onStyleImageMissing(imageId: String) {
-    Logger.e(TAG, "Style image missing: $imageId")
+    snapshotStyleCallback?.onStyleImageMissing(imageId)
+  }
+
+  /**
+   * Set [SnapshotStyleListener] to listen to all events style related.
+   */
+  fun setStyleListener(listener: SnapshotStyleListener) {
+    snapshotStyleCallback = listener
   }
 
   /**
    * Start taking a snapshot.
    *
-   * @param callback that will be triggered when snapshot will be ready.
+   * @param callback instance of [SnapshotCreatedListener] that will be triggered
+   *  when snapshot will be ready or will error out.
    */
-  fun start(callback: SnapshotReadyCallback) {
-    snapshotReadyCallback = callback
+  fun start(callback: SnapshotCreatedListener) {
+    snapshotCreatedCallback = callback
     if (getJson().isEmpty() && getUri().isEmpty()) {
       throw IllegalStateException("It's required to call setUri or setJson to provide a style definition before calling start.")
     }
 
     coreSnapshotter.start { result ->
-      lateinit var interceptedResult: Expected<MapSnapshotInterface?, String?>
       if (result.isValue) {
         result.value?.let {
-          interceptedResult =
-            ExpectedFactory.createValue(addOverlay(Snapshot(it)) as MapSnapshotInterface)
+          snapshotCreatedCallback?.onSnapshotResult(addOverlay(Snapshot(it)) as MapSnapshotInterface)
         } ?: run {
-          interceptedResult = ExpectedFactory.createError("snapshot is empty")
+          Logger.e(TAG, result.error ?: "Snapshot is empty.")
+          snapshotCreatedCallback?.onSnapshotResult(null)
         }
       } else {
-        interceptedResult = ExpectedFactory.createError(result.error ?: "")
+        Logger.e(TAG, result.error ?: "Undefined error happened.")
+        snapshotCreatedCallback?.onSnapshotResult(null)
       }
-      snapshotReadyCallback?.onSnapshotCreated(interceptedResult)
     }
   }
 
@@ -105,7 +113,7 @@ class Snapshotter : MapSnapshotterObserver {
    */
   fun cancel() {
     coreSnapshotter.cancel()
-    snapshotReadyCallback = null
+    snapshotCreatedCallback = null
   }
 
   /**
@@ -199,7 +207,7 @@ class Snapshotter : MapSnapshotterObserver {
    *
    * This method should be called on the same thread where @see Map object is initialized.
    *
-   * @param json A JSON string containing a serialized Mapbox Style.
+   * @param styleJson A JSON string containing a serialized Mapbox Style.
    */
   fun setJson(styleJson: String) {
     coreSnapshotter.styleJSON = styleJson
@@ -408,7 +416,7 @@ class Snapshotter : MapSnapshotterObserver {
     val heightRatio = displayMetrics.heightPixels / snapshot.height.toFloat()
     val prefWidth = logo.width / widthRatio
     val prefHeight = logo.height / heightRatio
-    var calculatedScale = Math.min(prefWidth / logo.width, prefHeight / logo.height) * 2
+    var calculatedScale = min(prefWidth / logo.width, prefHeight / logo.height) * 2
     if (calculatedScale > 1) {
       // don't allow over-scaling
       calculatedScale = 1.0f
@@ -424,21 +432,6 @@ class Snapshotter : MapSnapshotterObserver {
     val small: Bitmap,
     val scale: Float
   )
-
-  /**
-   * Callback for getting snapshot when it's finished.
-   */
-  interface SnapshotReadyCallback {
-    /**
-     * @param mapStyleDelegate The style delegate
-     */
-    fun onStyleLoaded(style: Style)
-
-    /**
-     * @param snapshot An image snapshot of a map rendered by MapSnapshotter.
-     */
-    fun onSnapshotCreated(snapshot: Expected<MapSnapshotInterface?, String?>)
-  }
 
   /**
    * Static variables and methods.
