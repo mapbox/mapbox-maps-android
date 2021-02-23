@@ -13,11 +13,21 @@ import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression
+import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.all
+import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
+import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.gt
+import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.gte
+import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.has
+import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.lt
 import com.mapbox.maps.extension.style.image.addImage
 import com.mapbox.maps.extension.style.image.image
 import com.mapbox.maps.extension.style.layers.Layer
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.addLayerBelow
+import com.mapbox.maps.extension.style.layers.generated.CircleLayer
+import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
+import com.mapbox.maps.extension.style.layers.generated.circleLayer
+import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
@@ -143,20 +153,22 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         options.buffer?.let {
           buffer(it)
         }
-        options.cluster?.let {
-          cluster(it)
-        }
-        options.clusterMaxZoom?.let {
-          clusterMaxZoom(it)
-        }
         options.lineMetrics?.let {
           lineMetrics(it)
         }
         options.tolerance?.let {
           tolerance(it)
         }
-        options.clusterProperties?.let {
-          clusterProperties(it)
+        options.clusterOptions?.let { clusterOptions ->
+          clusterOptions.cluster?.let {
+            cluster(it)
+          }
+          clusterOptions.clusterMaxZoom?.let {
+            clusterMaxZoom(it)
+          }
+          clusterOptions.clusterProperties?.let {
+            clusterProperties(it)
+          }
         }
       }
     }
@@ -183,8 +195,49 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         }
       }
     }
-
+    initClusterLayers()
     updateSource()
+  }
+
+  private fun initClusterLayers() {
+    annotationConfig?.annotationSourceOptions?.clusterOptions?.let {
+      it.colorLevels.forEachIndexed { level, _ ->
+        style.addLayer(createClusterLevelLayer(level, it.colorLevels))
+      }
+      style.addLayer(createClusterTextLayer())
+    }
+  }
+
+  private fun createClusterLevelLayer(level: Int, colorLevels: List<Pair<Int, Int>>): CircleLayer {
+    return circleLayer("mapbox-android-cluster-circle-$level", sourceId) {
+      circleColor(colorLevels[level].second)
+      annotationConfig?.annotationSourceOptions?.clusterOptions?.circleRadius?.let {
+        circleRadius(it)
+      }
+      val pointCount = Expression.toNumber(get("point_count"))
+      filter(
+        if (level == 0) all(
+          has("point_count"),
+          gte(pointCount, literal(colorLevels[level].first.toLong()))
+        ) else all(
+          has("point_count"),
+          gt(pointCount, literal(colorLevels[level].first.toLong())),
+          lt(pointCount, literal(colorLevels[level - 1].first.toLong()))
+        )
+      )
+    }
+  }
+
+  private fun createClusterTextLayer(): SymbolLayer {
+    return symbolLayer("mapbox-android-cluster-text", sourceId) {
+      annotationConfig?.annotationSourceOptions?.clusterOptions?.let {
+        textField(it.textField)
+        textSize(it.textSize)
+        textColor(it.textColor)
+        textIgnorePlacement(true)
+        textAllowOverlap(true)
+      }
+    }
   }
 
   /**
