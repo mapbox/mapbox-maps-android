@@ -1,6 +1,5 @@
 package com.mapbox.maps.testapp.examples.snapshotter
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -8,9 +7,12 @@ import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.Snapshotter
+import com.mapbox.maps.bitmap
 import com.mapbox.maps.testapp.R
-import java.nio.ByteBuffer
 
+/**
+ * Example demonstrating taking simple snapshot using [Snapshotter].
+ */
 class MapSnapshotterActivity : AppCompatActivity(), SnapshotStyleListener {
 
   private lateinit var mapSnapshotter: Snapshotter
@@ -42,17 +44,8 @@ class MapSnapshotterActivity : AppCompatActivity(), SnapshotStyleListener {
       )
       start {
         it?.let { mapSnapshot ->
-          Logger.i(TAG, "Result: ${mapSnapshot.image().data.size}")
-
-          val image = mapSnapshot.image()
-
-          val configBmp: Bitmap.Config = Bitmap.Config.ARGB_8888
-          val bitmap: Bitmap = Bitmap.createBitmap(image.width, image.height, configBmp)
-          val buffer: ByteBuffer = ByteBuffer.wrap(image.data)
-          bitmap.copyPixelsFromBuffer(buffer)
-
           val imageView = ImageView(this@MapSnapshotterActivity)
-          imageView.setImageBitmap(bitmap)
+          imageView.setImageBitmap(mapSnapshot.bitmap())
           setContentView(imageView)
         }
       }

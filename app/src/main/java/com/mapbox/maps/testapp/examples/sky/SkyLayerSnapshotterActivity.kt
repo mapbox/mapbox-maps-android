@@ -1,6 +1,5 @@
 package com.mapbox.maps.testapp.examples.sky
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +7,6 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.extension.style.layers.addLayer
-import com.mapbox.maps.extension.style.layers.generated.SkyLayer
 import com.mapbox.maps.extension.style.layers.generated.skyLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.SkyType
 import com.mapbox.maps.extension.style.style
@@ -16,7 +14,6 @@ import com.mapbox.maps.plugin.compass.getCompassPlugin
 import com.mapbox.maps.plugin.scalebar.getScaleBarPlugin
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_sky_snapshotter.*
-import java.nio.ByteBuffer
 
 /**
  * Prototype for Junction view showing upcoming maneuver.
@@ -68,10 +65,12 @@ class SkyLayerSnapshotterActivity : AppCompatActivity() {
     snapshotter = Snapshotter(this, snapshotMapOptions).apply {
       setStyleListener(object : SnapshotStyleListener {
         override fun onDidFinishLoadingStyle(style: Style) {
-          val skyLayer = SkyLayer("sky_snapshotter")
-          skyLayer.skyType(SkyType.ATMOSPHERE)
-          skyLayer.skyAtmosphereSun(listOf(0.0, 90.0))
-          style.addLayer(skyLayer)
+          style.addLayer(
+            skyLayer("sky_snapshotter") {
+              skyType(SkyType.ATMOSPHERE)
+              skyAtmosphereSun(listOf(0.0, 90.0))
+            }
+          )
         }
       })
       setCameraOptions(
@@ -85,12 +84,7 @@ class SkyLayerSnapshotterActivity : AppCompatActivity() {
       setUri(Style.MAPBOX_STREETS)
       start {
         it?.let { snapshot ->
-          val image = snapshot.image()
-          val configBmp: Bitmap.Config = Bitmap.Config.ARGB_8888
-          val bitmap: Bitmap = Bitmap.createBitmap(image.width, image.height, configBmp)
-          val buffer: ByteBuffer = ByteBuffer.wrap(image.data)
-          bitmap.copyPixelsFromBuffer(buffer)
-          maneuverView.setImageBitmap(bitmap)
+          maneuverView.setImageBitmap(snapshot.bitmap())
           maneuverCaption.visibility = View.VISIBLE
         }
       }

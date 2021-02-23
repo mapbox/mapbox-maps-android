@@ -26,7 +26,7 @@ class Snapshotter : MapSnapshotterObserver {
   private val coreSnapshotter: MapSnapshotterInterface
   private val pixelRatio: Float
 
-  private var snapshotReadyCallback: SnapshotCreatedListener? = null
+  private var snapshotCreatedCallback: SnapshotCreatedListener? = null
   private var snapshotStyleCallback: SnapshotStyleListener? = null
 
   constructor(context: Context, options: MapSnapshotOptions) {
@@ -88,7 +88,7 @@ class Snapshotter : MapSnapshotterObserver {
    *  when snapshot will be ready or will error out.
    */
   fun start(callback: SnapshotCreatedListener) {
-    snapshotReadyCallback = callback
+    snapshotCreatedCallback = callback
     if (getJson().isEmpty() && getUri().isEmpty()) {
       throw IllegalStateException("It's required to call setUri or setJson to provide a style definition before calling start.")
     }
@@ -96,14 +96,14 @@ class Snapshotter : MapSnapshotterObserver {
     coreSnapshotter.start { result ->
       if (result.isValue) {
         result.value?.let {
-          snapshotReadyCallback?.onSnapshotResult(addOverlay(Snapshot(it)) as MapSnapshotInterface)
+          snapshotCreatedCallback?.onSnapshotResult(addOverlay(Snapshot(it)) as MapSnapshotInterface)
         } ?: run {
           Logger.e(TAG, result.error ?: "Snapshot is empty.")
-          snapshotReadyCallback?.onSnapshotResult(null)
+          snapshotCreatedCallback?.onSnapshotResult(null)
         }
       } else {
         Logger.e(TAG, result.error ?: "Undefined error happened.")
-        snapshotReadyCallback?.onSnapshotResult(null)
+        snapshotCreatedCallback?.onSnapshotResult(null)
       }
     }
   }
@@ -113,7 +113,7 @@ class Snapshotter : MapSnapshotterObserver {
    */
   fun cancel() {
     coreSnapshotter.cancel()
-    snapshotReadyCallback = null
+    snapshotCreatedCallback = null
   }
 
   /**

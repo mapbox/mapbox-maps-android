@@ -1,6 +1,5 @@
 package com.mapbox.maps.testapp.examples.snapshotter
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.Toast
@@ -19,7 +18,6 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression.Companio
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.rgba
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.HeatmapLayer
-import java.nio.ByteBuffer
 
 /**
  * Example that showcases using Snapshotter with data driven styling.
@@ -70,14 +68,8 @@ class DataDrivenMapSnapshotterActivity : AppCompatActivity() {
     }
     snapshotter.start {
       it?.let { snapshot ->
-        val image = snapshot.image()
-        val configBmp: Bitmap.Config = Bitmap.Config.ARGB_8888
-        val bitmap: Bitmap = Bitmap.createBitmap(image.width, image.height, configBmp)
-        val buffer: ByteBuffer = ByteBuffer.wrap(image.data)
-        bitmap.copyPixelsFromBuffer(buffer)
-
         val imageView = ImageView(this@DataDrivenMapSnapshotterActivity)
-        imageView.setImageBitmap(bitmap)
+        imageView.setImageBitmap(snapshot.bitmap())
         setContentView(imageView)
       }
     }

@@ -1,7 +1,9 @@
-package com.mapbox.maps.plugin
+package com.mapbox.maps
 
+import android.graphics.Bitmap
 import com.mapbox.bindgen.Value
 import com.mapbox.common.ValueConverter
+import java.nio.ByteBuffer
 import kotlin.math.abs
 
 /**
@@ -23,4 +25,16 @@ fun Double.roughlyEquals(other: Double): Boolean {
  */
 fun Value.toJson(): String {
   return ValueConverter.toJson(this)
+}
+
+/**
+ * Extension function to obtain [Bitmap] from snapshotter converted from [Image].
+ */
+fun MapSnapshotInterface.bitmap(): Bitmap {
+  val image = image()
+  val configBmp: Bitmap.Config = Bitmap.Config.ARGB_8888
+  val bitmap: Bitmap = Bitmap.createBitmap(image.width, image.height, configBmp)
+  val buffer: ByteBuffer = ByteBuffer.wrap(image.data)
+  bitmap.copyPixelsFromBuffer(buffer)
+  return bitmap
 }

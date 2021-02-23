@@ -1,14 +1,11 @@
 package com.mapbox.maps.testapp.examples.snapshotter
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.testapp.R
-import java.nio.ByteBuffer
 
 /**
  * Activity to validate creating a snapshot from a configuration not using style URI or JSON
@@ -64,17 +61,8 @@ class LocalStyleMapSnapshotterActivity : AppCompatActivity() {
     )
     mapSnapshotter.start {
       it?.let { mapSnapshot ->
-        Logger.e(TAG, "Result: ${mapSnapshot.image().data.size}")
-
-        val image = mapSnapshot.image()
-
-        val configBmp: Bitmap.Config = Bitmap.Config.ARGB_8888
-        val bitmap: Bitmap = Bitmap.createBitmap(image.width, image.height, configBmp)
-        val buffer: ByteBuffer = ByteBuffer.wrap(image.data)
-        bitmap.copyPixelsFromBuffer(buffer)
-
         val imageView = ImageView(this)
-        imageView.setImageBitmap(bitmap)
+        imageView.setImageBitmap(mapSnapshot.bitmap())
         setContentView(imageView)
       }
     }
