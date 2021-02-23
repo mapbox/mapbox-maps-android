@@ -2,7 +2,6 @@ package com.mapbox.maps.plugin.animation
 
 import android.animation.Animator
 import android.animation.AnimatorSet
-import android.animation.TimeInterpolator
 import android.animation.ValueAnimator
 import android.os.Build
 import com.mapbox.common.Logger
@@ -12,6 +11,7 @@ import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.animation.animator.*
 import com.mapbox.maps.plugin.delegates.*
+import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.properties.Delegates
 
@@ -38,6 +38,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
    * Consists of set owner + animator set itself.
    */
   private var highLevelAnimatorSet: HighLevelAnimatorSet? = null
+  private var highLevelListener: Animator.AnimatorListener? = null
 
   private val centerListeners = CopyOnWriteArraySet<CameraAnimatorChangeListener<Point>>()
   private val zoomListeners = CopyOnWriteArraySet<CameraAnimatorChangeListener<Double>>()
@@ -47,7 +48,8 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   private val bearingListeners = CopyOnWriteArraySet<CameraAnimatorChangeListener<Double>>()
   private val pitchListeners = CopyOnWriteArraySet<CameraAnimatorChangeListener<Double>>()
 
-  private val lifecycleListener = CopyOnWriteArraySet<CameraAnimationsLifecycleListener>()
+  private val lifecycleListeners = CopyOnWriteArraySet<CameraAnimationsLifecycleListener>()
+  private val cameraChangeListeners = CopyOnWriteArraySet<OnCameraChangeListener>()
 
   private var center by Delegates.observable<Point?>(null) { _, old, new ->
     new?.let {
@@ -95,6 +97,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     }
   }
 
+  private var lastCameraOptions: CameraOptions? = null
   private var cameraOptionsBuilder = CameraOptions.Builder()
 
   private lateinit var mapDelegateProvider: MapDelegateProvider
@@ -136,15 +139,22 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     pitchListeners.clear()
     anchorListeners.clear()
     paddingListeners.clear()
-    lifecycleListener.clear()
+    lifecycleListeners.clear()
+    cameraChangeListeners.clear()
     animators.clear()
   }
 
   private fun performMapJump(cameraOptions: CameraOptions) {
+    if (lastCameraOptions == cameraOptions) {
+      return
+    }
     // move native map to new position
     mapTransformDelegate.jumpTo(cameraOptions)
     // notify listeners with actual values
     notifyListeners(cameraOptions)
+    cameraChangeListeners.forEach { it.onCameraChanged() }
+
+    lastCameraOptions = cameraOptions
   }
 
   private fun updateAnimatorValues(cameraAnimator: CameraAnimator<*>): Boolean {
@@ -215,7 +225,11 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       override fun onAnimationStart(animation: Animator?) {
         (animation as? CameraAnimator<*>)?.apply {
 
-          lifecycleListener.forEach {
+          if (runningAnimatorsQueue.isEmpty()) {
+            highLevelListener?.onAnimationStart(animation)
+          }
+
+          lifecycleListeners.forEach {
             it.onAnimatorStarting(type, this, owner)
           }
           mapTransformDelegate.setUserAnimationInProgress(true)
@@ -226,7 +240,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
           // Safely iterate over new set because of the possible changes of "this.animators" in Animator callbacks
           HashSet(animators).forEach {
             if (it.type == type && it.isRunning && it != this) {
-              lifecycleListener.forEach { listener ->
+              lifecycleListeners.forEach { listener ->
                 listener.onAnimatorInterrupting(type, it, it.owner, this, this.owner)
               }
               it.cancel()
@@ -259,12 +273,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
       private fun finishAnimation(animation: Animator?, finishStatus: AnimationFinishStatus) {
         (animation as? CameraAnimator<*>)?.apply {
-          lifecycleListener.forEach {
-            when (finishStatus) {
-              AnimationFinishStatus.CANCELED -> it.onAnimatorCancelling(type, this, owner)
-              AnimationFinishStatus.ENDED -> it.onAnimatorEnding(type, this, owner)
-            }
-          }
           runningAnimatorsQueue.remove(animation)
           val logText = when (finishStatus) {
             AnimationFinishStatus.CANCELED -> "was canceled."
@@ -282,6 +290,22 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
             }
             performMapJump(cameraOptionsBuilder.anchor(anchor).build())
             mapTransformDelegate.setUserAnimationInProgress(false)
+          }
+          lifecycleListeners.forEach {
+            when (finishStatus) {
+              AnimationFinishStatus.CANCELED -> it.onAnimatorCancelling(type, this, owner)
+              AnimationFinishStatus.ENDED -> it.onAnimatorEnding(type, this, owner)
+            }
+          }
+          if (runningAnimatorsQueue.isEmpty()) {
+            when (finishStatus) {
+              AnimationFinishStatus.CANCELED -> {
+                highLevelListener?.onAnimationCancel(animation)
+                highLevelListener?.onAnimationEnd(animation)
+              }
+              AnimationFinishStatus.ENDED -> highLevelListener?.onAnimationEnd(animation)
+            }
+            highLevelListener = null
           }
         } ?: throw RuntimeException(
           "Could not finish animation in CameraManager! " +
@@ -329,20 +353,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       updateCameraValue(animator)
       // add current animator to queue-set if was not present
       runningAnimatorsQueue.add(it)
-    }
-  }
-
-  private fun startAnimatorSet(
-    animatorSet: AnimatorSet,
-    animatorOwner: String?,
-    animatorListener: Animator.AnimatorListener?
-  ) {
-    cancelAnimatorSet()
-    animatorListener?.let {
-      animatorSet.addListener(it)
-    }
-    highLevelAnimatorSet = HighLevelAnimatorSet(animatorOwner, animatorSet).also {
-      it.animatorSet.start()
     }
   }
 
@@ -536,7 +546,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
    *
    */
   override fun addCameraAnimationsLifecycleListener(listener: CameraAnimationsLifecycleListener) {
-    lifecycleListener.add(listener)
+    lifecycleListeners.add(listener)
   }
 
   /**
@@ -544,7 +554,21 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
    *
    */
   override fun removeCameraAnimationsLifecycleListener(listener: CameraAnimationsLifecycleListener) {
-    lifecycleListener.remove(listener)
+    lifecycleListeners.remove(listener)
+  }
+
+  /**
+   * Add a listener that's going to be invoked whenever the camera position changes.
+   */
+  override fun addOnCameraChangeListener(listener: OnCameraChangeListener) {
+    cameraChangeListeners.add(listener)
+  }
+
+  /**
+   * Remove a listener that's going to be invoked whenever the camera position changes.
+   */
+  override fun removeOnCameraChangeListener(listener: OnCameraChangeListener) {
+    cameraChangeListeners.remove(listener)
   }
 
   /**
@@ -557,15 +581,10 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     cameraOptions: CameraOptions,
     animationOptions: MapAnimationOptions?
   ) {
-    val animators = cameraAnimationsFactory.getEaseTo(cameraOptions)
-    val animatorSet = registerInternalAnimators(
-      animators,
-      animationOptions?.owner,
-      animationOptions?.duration,
-      animationOptions?.interpolator,
-      true
+    startHighLevelAnimation(
+      cameraAnimationsFactory.getEaseTo(cameraOptions),
+      animationOptions
     )
-    startAnimatorSet(animatorSet, animationOptions?.owner, animationOptions?.animatorListener)
   }
 
   /**
@@ -578,15 +597,10 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     screenCoordinate: ScreenCoordinate,
     animationOptions: MapAnimationOptions?
   ) {
-    val animators = cameraAnimationsFactory.getMoveBy(screenCoordinate)
-    val animatorSet = registerInternalAnimators(
-      animators,
-      animationOptions?.owner,
-      animationOptions?.duration,
-      animationOptions?.interpolator,
-      true
+    startHighLevelAnimation(
+      cameraAnimationsFactory.getMoveBy(screenCoordinate),
+      animationOptions
     )
-    startAnimatorSet(animatorSet, animationOptions?.owner, animationOptions?.animatorListener)
   }
 
   /**
@@ -614,15 +628,10 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     screenCoordinate: ScreenCoordinate?,
     animationOptions: MapAnimationOptions?
   ) {
-    val animators = cameraAnimationsFactory.getScaleBy(amount, screenCoordinate)
-    val animatorSet = registerInternalAnimators(
-      animators,
-      animationOptions?.owner,
-      animationOptions?.duration,
-      animationOptions?.interpolator,
-      true
+    startHighLevelAnimation(
+      cameraAnimationsFactory.getScaleBy(amount, screenCoordinate),
+      animationOptions
     )
-    startAnimatorSet(animatorSet, animationOptions?.owner, animationOptions?.animatorListener)
   }
 
   /**
@@ -646,15 +655,10 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     second: ScreenCoordinate,
     animationOptions: MapAnimationOptions?
   ) {
-    val animators = cameraAnimationsFactory.getRotateBy(first, second)
-    val animatorSet = registerInternalAnimators(
-      animators,
-      animationOptions?.owner,
-      animationOptions?.duration,
-      animationOptions?.interpolator,
-      true
+    startHighLevelAnimation(
+      cameraAnimationsFactory.getRotateBy(first, second),
+      animationOptions
     )
-    startAnimatorSet(animatorSet, animationOptions?.owner, animationOptions?.animatorListener)
   }
 
   /**
@@ -667,15 +671,10 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     pitch: Double,
     animationOptions: MapAnimationOptions?
   ) {
-    val animators = cameraAnimationsFactory.getPitchBy(pitch)
-    val animatorSet = registerInternalAnimators(
-      animators,
-      animationOptions?.owner,
-      animationOptions?.duration,
-      animationOptions?.interpolator,
-      true
+    startHighLevelAnimation(
+      cameraAnimationsFactory.getPitchBy(pitch),
+      animationOptions
     )
-    startAnimatorSet(animatorSet, animationOptions?.owner, animationOptions?.animatorListener)
   }
 
   /**
@@ -695,15 +694,10 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     cameraOptions: CameraOptions,
     animationOptions: MapAnimationOptions?
   ) {
-    val animators = cameraAnimationsFactory.getFlyTo(cameraOptions)
-    val animatorSet = registerInternalAnimators(
-      animators,
-      animationOptions?.owner,
-      animationOptions?.duration,
-      animationOptions?.interpolator,
-      true
+    startHighLevelAnimation(
+      cameraAnimationsFactory.getFlyTo(cameraOptions),
+      animationOptions
     )
-    startAnimatorSet(animatorSet, animationOptions?.owner, animationOptions?.animatorListener)
   }
 
   override fun createZoomAnimator(
@@ -745,19 +739,18 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     val cameraAnimators = mutableListOf<CameraAnimator<*>>()
     for (cameraAnimator in animators) {
       if (cameraAnimator is CameraAnimator<*>) {
+        cameraAnimator.isInternal = true
+        cameraAnimator.owner = MapAnimationOwnerRegistry.INTERNAL
         cameraAnimators.add(cameraAnimator)
       } else {
         Logger.e(TAG, "All animators must be CameraAnimator's to be played together!")
       }
     }
-    val animatorSet = registerInternalAnimators(
-      cameraAnimators.toTypedArray(),
-      MapAnimationOwnerRegistry.INTERNAL,
-      null,
-      null,
-      true
-    )
-    animatorSet.start()
+    registerAnimators(*animators)
+    AnimatorSet().apply {
+      playTogether(*animators)
+      start()
+    }
   }
 
   /**
@@ -769,42 +762,44 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     val cameraAnimators = mutableListOf<CameraAnimator<*>>()
     for (cameraAnimator in animators) {
       if (cameraAnimator is CameraAnimator<*>) {
+        cameraAnimator.isInternal = true
+        cameraAnimator.owner = MapAnimationOwnerRegistry.INTERNAL
         cameraAnimators.add(cameraAnimator)
       } else {
         Logger.e(TAG, "All animators must be CameraAnimator's to be played sequentially!")
       }
     }
-    val animatorSet =
-      registerInternalAnimators(
-        cameraAnimators.toTypedArray(),
-        MapAnimationOwnerRegistry.INTERNAL,
-        null,
-        null,
-        false
-      )
-    animatorSet.start()
+    registerAnimators(*animators)
+    AnimatorSet().apply {
+      playSequentially(*animators)
+      start()
+    }
   }
 
-  private fun registerInternalAnimators(
-    animators: Array<out CameraAnimator<*>>,
-    owner: String?,
-    durationNew: Long?,
-    interpolatorNew: TimeInterpolator?,
-    together: Boolean
-  ): AnimatorSet {
+  private fun startHighLevelAnimation(
+    animators: Array<CameraAnimator<*>>,
+    animationOptions: MapAnimationOptions?
+  ) {
     animators.forEach {
       it.isInternal = true
-      it.owner = owner
+      it.owner = animationOptions?.owner
     }
+    cancelAnimatorSet()
     registerAnimators(*animators)
-    return AnimatorSet().apply {
-      durationNew?.let {
-        this.duration = it
+    val animatorSet = AnimatorSet().apply {
+      animationOptions?.duration?.let {
+        duration = it
       }
-      interpolatorNew?.let {
-        this.interpolator = it
+      animationOptions?.interpolator?.let {
+        interpolator = it
       }
-      if (together) playTogether(*animators) else playSequentially(*animators)
+      animationOptions?.animatorListener?.let {
+        highLevelListener = it
+      }
+      playTogether(*animators)
+    }
+    highLevelAnimatorSet = HighLevelAnimatorSet(animationOptions?.owner, animatorSet).also {
+      it.animatorSet.start()
     }
   }
 

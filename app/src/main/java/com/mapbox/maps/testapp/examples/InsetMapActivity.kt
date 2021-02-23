@@ -18,6 +18,7 @@ import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
+import com.mapbox.maps.plugin.animation.getCameraAnimationsPlugin
 import com.mapbox.maps.plugin.attribution.getAttributionPlugin
 import com.mapbox.maps.plugin.compass.getCompassPlugin
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
@@ -44,7 +45,7 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
     mainMapboxMap = mainMapView.getMapboxMap()
     mainMapboxMap.loadStyleUri(
       styleUri = STYLE_URL
-    ) { mainMapboxMap.addOnCameraChangeListener(this@InsetMapActivity) }
+    ) { mainMapView.getCameraAnimationsPlugin().addOnCameraChangeListener(this@InsetMapActivity) }
 
     var insetMapFragment: MapFragment? =
       supportFragmentManager.findFragmentByTag(INSET_FRAGMENT_TAG) as? MapFragment
@@ -148,7 +149,7 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
 
   override fun onDestroy() {
     super.onDestroy()
-    mainMapboxMap.removeOnCameraChangeListener(this)
+    mainMapView.getCameraAnimationsPlugin().removeOnCameraChangeListener(this)
     mainMapView.onDestroy()
   }
 

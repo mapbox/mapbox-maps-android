@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.mapbox.maps.Projection.getMetersPerPixelAtLatitude
+import com.mapbox.maps.plugin.InvalidPluginConfigurationException
+import com.mapbox.maps.plugin.PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
+import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarAttributeParser
@@ -23,6 +26,7 @@ open class ScaleBarPluginImpl(
   private lateinit var mapCameraDelegate: MapCameraDelegate
   private lateinit var mapListenerDelegate: MapListenerDelegate
   private lateinit var mapTransformDelegate: MapTransformDelegate
+  private lateinit var cameraAnimationsPlugin: CameraAnimationsPlugin
 
   override var internalSettings: ScaleBarSettings = ScaleBarSettings()
 
@@ -63,7 +67,7 @@ open class ScaleBarPluginImpl(
    * Called when the map is destroyed. Should be used to cleanup plugin resources for that map.
    */
   override fun cleanup() {
-    mapListenerDelegate.removeOnCameraChangeListener(cameraChangeListener)
+    cameraAnimationsPlugin.removeOnCameraChangeListener(cameraChangeListener)
   }
 
   /**
@@ -71,13 +75,13 @@ open class ScaleBarPluginImpl(
    */
   override fun initialize() {
     applySettings()
-    mapListenerDelegate.addOnCameraChangeListener(cameraChangeListener)
+    cameraAnimationsPlugin.addOnCameraChangeListener(cameraChangeListener)
   }
 
   /**
    * Invalid scale bar
    */
-  internal fun invalidateScaleBar() {
+  private fun invalidateScaleBar() {
     val metersPerPixelAtLatitude = getMetersPerPixelAtLatitude(
       mapCameraDelegate.getLat(),
       mapCameraDelegate.getZoom()
@@ -93,6 +97,16 @@ open class ScaleBarPluginImpl(
     mapCameraDelegate = delegateProvider.mapCameraDelegate
     mapListenerDelegate = delegateProvider.mapListenerDelegate
     mapTransformDelegate = delegateProvider.mapTransformDelegate
+    @Suppress("UNCHECKED_CAST")
+    cameraAnimationsPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
+      Class.forName(
+        PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
+      ) as Class<CameraAnimationsPlugin>
+    )
+      ?: throw InvalidPluginConfigurationException(
+        "Can't look up an instance of plugin, " +
+          "is it available on the clazz path and loaded through the map?"
+      )
   }
 
   /**
@@ -112,10 +126,10 @@ open class ScaleBarPluginImpl(
     get() = internalSettings.enabled
     set(value) {
       if (value) {
-        mapListenerDelegate.addOnCameraChangeListener(cameraChangeListener)
+        cameraAnimationsPlugin.addOnCameraChangeListener(cameraChangeListener)
         invalidateScaleBar()
       } else {
-        mapListenerDelegate.removeOnCameraChangeListener(cameraChangeListener)
+        cameraAnimationsPlugin.removeOnCameraChangeListener(cameraChangeListener)
       }
       internalSettings.enabled = value
       scaleBar.enable = value

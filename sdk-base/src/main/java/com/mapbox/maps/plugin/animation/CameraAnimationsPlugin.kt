@@ -6,6 +6,7 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.MapPlugin
+import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 
 /**
  * Interface to interact with Camera Animations plugin
@@ -294,6 +295,16 @@ interface CameraAnimationsPlugin : MapPlugin {
    *
    */
   fun removeCameraAnimationsLifecycleListener(listener: CameraAnimationsLifecycleListener)
+
+  /**
+   * Add a listener that's going to be invoked whenever the camera position changes.
+   */
+  fun addOnCameraChangeListener(listener: OnCameraChangeListener)
+
+  /**
+   * Remove a listener that's going to be invoked whenever the camera position changes.
+   */
+  fun removeOnCameraChangeListener(listener: OnCameraChangeListener)
 
   /**
    * Play given [ValueAnimator]'s together
