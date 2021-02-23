@@ -9,7 +9,7 @@ import com.mapbox.maps.extension.style.sources.*
 import com.mapbox.maps.extension.style.terrain.generated.Terrain
 
 /**
- * The concrete implementation of style plugin.
+ * The concrete implementation of style extension.
  */
 class StyleExtensionImpl private constructor(builder: Builder) : StyleContract.StyleExtension {
 
@@ -44,7 +44,7 @@ class StyleExtensionImpl private constructor(builder: Builder) : StyleContract.S
   override val terrain: Terrain? = builder.terrain
 
   /**
-   * The builder for style plugin.
+   * The builder for style extension.
    */
   class Builder(
     /**
@@ -138,7 +138,7 @@ class StyleExtensionImpl private constructor(builder: Builder) : StyleContract.S
 }
 
 /**
- * DSL function to construct a style plugin.
+ * DSL function to construct a style extension.
  */
 fun style(styleUri: String, block: Builder.() -> Unit) =
   Builder(styleUri).apply(block).build()

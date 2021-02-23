@@ -22,7 +22,7 @@ import java.text.DateFormat.getDateTimeInstance
 import java.util.*
 
 /**
- * Example showcasing usage of style-plugin.
+ * Example showcasing usage of style extension.
  */
 class DSLStylingActivity : AppCompatActivity(), OnMapClickListener {
 

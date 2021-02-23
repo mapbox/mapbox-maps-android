@@ -174,7 +174,7 @@ abstract class Layer : StyleContract.StyleLayerExtension {
 }
 
 /**
- * Extension function to get a Layer provided by the Style Plugin by layer id.
+ * Extension function to get a Layer provided by the Style Extension by layer id.
  *
  * @param layerId the layer id
  * @return StyleLayerPlugin
@@ -223,7 +223,7 @@ fun <T : Layer> StyleManagerInterface.getLayerAs(layerId: String): T {
 }
 
 /**
- * Extension function to add a Layer provided by the Style Plugin to the Style.
+ * Extension function to add a Layer provided by the Style Extension to the Style.
  *
  * @param layer The layer to be added
  * @param below the layer id that the current layer is added below
@@ -233,7 +233,7 @@ fun StyleManagerInterface.addLayerBelow(layer: StyleContract.StyleLayerExtension
 }
 
 /**
- * Extension function to add a Layer provided by the Style Plugin to the Style.
+ * Extension function to add a Layer provided by the Style Extension to the Style.
  *
  * @param layer The layer to be added
  * @param above the layer id that the current layer is added above
@@ -243,7 +243,7 @@ fun StyleManagerInterface.addLayerAbove(layer: StyleContract.StyleLayerExtension
 }
 
 /**
- * Extension function to add a Layer provided by the Style Plugin to the Style.
+ * Extension function to add a Layer provided by the Style Extension to the Style.
  *
  * @param layer The layer to be added
  * @param index the index that the current layer is added on
@@ -253,7 +253,7 @@ fun StyleManagerInterface.addLayerAt(layer: StyleContract.StyleLayerExtension, i
 }
 
 /**
- * Extension function to add a Layer provided by the Style Plugin to the Style.
+ * Extension function to add a Layer provided by the Style Extension to the Style.
  *
  * @param layer The layer to be added
  */
