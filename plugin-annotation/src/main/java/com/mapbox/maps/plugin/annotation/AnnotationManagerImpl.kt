@@ -42,7 +42,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   mapView: View,
   /** The delegateProvider */
   final override val delegateProvider: MapDelegateProvider,
-  protected val annotationConfig: AnnotationConfig?
+  private val annotationConfig: AnnotationConfig?
 ) : AnnotationManager<G, T, S, D, U, V> {
   protected lateinit var style: StyleManagerInterface
   private var mapProjectionDelegate: MapProjectionDelegate = delegateProvider.mapProjectionDelegate
@@ -58,6 +58,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   private val mapLongClickResolver = MapLongClick()
   private val mapMoveResolver = MapMove()
   private var draggedAnnotation: T? = null
+  private val annotationMap = mutableMapOf<Long, T>()
   protected var touchAreaShiftX: Int = mapView.scrollX
   protected var touchAreaShiftY: Int = mapView.scrollY
   protected abstract val layerId: String
@@ -81,7 +82,10 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   /**
    * The added annotations
    */
-  override val annotations = mutableMapOf<Long, T>()
+  override val annotations: List<T>
+    get() {
+      return annotationMap.values.toList()
+    }
 
   /**
    * The added dragListeners
@@ -188,7 +192,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    */
   override fun create(option: S): T {
     return option.build(currentId, this).also {
-      annotations.put(it.id, it)
+      annotationMap[it.id] = it
       currentId++
       updateSource()
     }
@@ -200,7 +204,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   override fun create(options: List<S>): List<T> {
     val list = options.map { option ->
       option.build(currentId, this).also {
-        annotations.put(it.id, it)
+        annotationMap[it.id] = it
         currentId++
       }
     }
@@ -212,7 +216,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Delete the annotation
    */
   override fun delete(annotation: T) {
-    annotations.remove(annotation.id)
+    annotationMap.remove(annotation.id)
     updateSource()
   }
 
@@ -221,7 +225,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    */
   override fun delete(annotations: List<T>) {
     annotations.forEach {
-      this.annotations.remove(it.id)
+      this.annotationMap.remove(it.id)
     }
     updateSource()
   }
@@ -230,7 +234,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Delete all the added annotations
    */
   override fun deleteAll() {
-    annotations.clear()
+    annotationMap.clear()
     updateSource()
   }
 
@@ -248,9 +252,9 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         return
       }
       annotations
-        .filter { it.value.getType() == AnnotationType.Symbol }
+        .filter { it.getType() == AnnotationType.Symbol }
         .forEach {
-          val symbol = it.value as Symbol
+          val symbol = it as Symbol
           symbol.iconImage?.let { image ->
             if (image.startsWith(Symbol.ICON_DEFAULT_NAME_PREFIX)) {
               // User set the bitmap icon, add the icon to style
@@ -266,8 +270,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
           }
         }
       val features = annotations.map {
-        val annotation = Feature.fromGeometry(it.value.geometry, it.value.jsonObject)
-        it.value.setUsedDataDrivenProperties()
+        val annotation = Feature.fromGeometry(it.geometry, it.jsonObject)
+        it.setUsedDataDrivenProperties()
         annotation
       }
 
@@ -279,8 +283,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Update the annotation
    */
   override fun update(annotation: T) {
-    if (annotations.containsKey(annotation.id)) {
-      annotations[annotation.id] = annotation
+    if (annotationMap.containsKey(annotation.id)) {
+      annotationMap[annotation.id] = annotation
       updateSource()
     } else {
       Logger.e(
@@ -295,8 +299,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    */
   override fun update(annotations: List<T>) {
     annotations.forEach {
-      if (this.annotations.containsValue(it)) {
-        this.annotations[it.id] = it
+      if (annotationMap.containsKey(it.id)) {
+        annotationMap[it.id] = it
       } else {
         Logger.e(
           TAG,
@@ -511,7 +515,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         features.value?.let { featureList ->
           if (featureList.isNotEmpty()) {
             val id = featureList.first().getProperty(getAnnotationIdKey()).asLong
-            annotations[id]?.let { annotation -> callback.onQueryAnnotation(annotation) }
+            annotationMap[id]?.let { annotation -> callback.onQueryAnnotation(annotation) }
           }
         }
       }
