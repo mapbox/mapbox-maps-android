@@ -88,12 +88,12 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
   }
 
   /**
-   * Check is a given point is on the rendered location puck.
+   * Check whether the rendered location puck is on the given point.
    *
    * @param point the point to validate
    * @param listener Listener that gets invoked when the validation finished.
    */
-  override fun isPointOnLocationPuck(point: Point, listener: IsPointOnLocationPuckListener) {
+  override fun isLocatedAt(point: Point, listener: PuckLocatedAtPointListener) {
     delegateProvider.mapFeatureQueryDelegate.queryRenderedFeatures(
       delegateProvider.mapProjectionDelegate.pixelForCoordinate(point),
       RenderedQueryOptions(
@@ -106,9 +106,9 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
     ) { expected ->
       expected.value?.let {
         if (it.isNotEmpty()) {
-          listener.isPointOnLocationPuck(true)
+          listener.onResult(true)
         } else {
-          listener.isPointOnLocationPuck(false)
+          listener.onResult(false)
         }
       }
       expected.error?.let {

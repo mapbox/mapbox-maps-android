@@ -40,8 +40,8 @@ class LocationComponentActivity : AppCompatActivity() {
         mapView.getGesturesPlugin().scrollEnabled = false
         mapView.getGesturesPlugin().addOnMapClickListener { point ->
           mapView.getLocationComponentPlugin()
-            .isPointOnLocationPuck(point) { isPointOnLocationPuck ->
-              if (isPointOnLocationPuck) {
+            .isLocatedAt(point) { isPuckLocatedAtPoint ->
+              if (isPuckLocatedAtPoint) {
                 Toast.makeText(this, "Clicked on location puck", Toast.LENGTH_SHORT).show()
               }
             }
@@ -49,8 +49,8 @@ class LocationComponentActivity : AppCompatActivity() {
         }
         mapView.getGesturesPlugin().addOnMapLongClickListener { point ->
           mapView.getLocationComponentPlugin()
-            .isPointOnLocationPuck(point) { isPointOnLocationPuck ->
-              if (isPointOnLocationPuck) {
+            .isLocatedAt(point) { isPuckLocatedAtPoint ->
+              if (isPuckLocatedAtPoint) {
                 Toast.makeText(this, "Long-clicked on location puck", Toast.LENGTH_SHORT).show()
               }
             }

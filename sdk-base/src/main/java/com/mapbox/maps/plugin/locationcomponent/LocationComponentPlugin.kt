@@ -54,10 +54,10 @@ interface LocationComponentPlugin :
   fun removeOnIndicatorBearingChangedListener(listener: OnIndicatorBearingChangedListener)
 
   /**
-   * Check is a given point is on the rendered location puck.
+   * Check whether the rendered location puck is on the given point.
    *
    * @param point the point to validate
    * @param listener Listener that gets invoked when the validation finished.
    */
-  fun isPointOnLocationPuck(point: Point, listener: IsPointOnLocationPuckListener)
+  fun isLocatedAt(point: Point, listener: PuckLocatedAtPointListener)
 }
