@@ -95,7 +95,6 @@ class SymbolClusterActivity : AppCompatActivity(), CoroutineScope {
     options?.let {
       symbolManager?.create(it)
     }
-
   }
 
   override fun onStart() {

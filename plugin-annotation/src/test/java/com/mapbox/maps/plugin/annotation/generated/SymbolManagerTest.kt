@@ -26,10 +26,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
-import com.mapbox.maps.plugin.annotation.AnnotationConfig
-import com.mapbox.maps.plugin.annotation.AnnotationSourceOptions
-import com.mapbox.maps.plugin.annotation.ShadowLogger
-import com.mapbox.maps.plugin.annotation.ShadowValueConverter
+import com.mapbox.maps.plugin.annotation.*
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate
 import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
@@ -165,8 +162,36 @@ class SymbolManagerTest {
       mapView, delegateProvider,
       AnnotationConfig(
         annotationSourceOptions = AnnotationSourceOptions(
-          10, 20L, true, 10.0, true, 10,
-          (hashMapOf("key1" to "x", "key2" to "y") as HashMap<String, Any>)
+          10, 20L, true, 10.0
+        )
+      )
+    )
+
+    val sourceString = manager.source.toString()
+    assertTrue(sourceString.contains("maxzoom = 10"))
+    assertTrue(sourceString.contains("lineMetrics = true"))
+    assertTrue(sourceString.contains("buffer = 20"))
+    assertTrue(sourceString.contains("tolerance = 10.0"))
+  }
+
+  @Test
+  fun createWithClusterOptions() {
+    manager = SymbolManager(
+      mapView, delegateProvider,
+      AnnotationConfig(
+        annotationSourceOptions = AnnotationSourceOptions(
+          10, 20L, true, 10.0,
+          ClusterOptions(
+            true,
+            10,
+            10.0,
+            Color.BLACK,
+            15.0,
+            "text",
+            15,
+            listOf(Pair(0, Color.RED)),
+            hashMapOf("key1" to "x", "key2" to "y") as HashMap<String, Any>
+          )
         )
       )
     )
@@ -174,10 +199,10 @@ class SymbolManagerTest {
     val sourceString = manager.source.toString()
     assertTrue(sourceString.contains("maxzoom = 10"))
     assertTrue(sourceString.contains("cluster = true"))
+    assertTrue(sourceString.contains("clusterMaxZoom = 15"))
     assertTrue(sourceString.contains("clusterProperties = {key1=x, key2=y}"))
     assertTrue(sourceString.contains("lineMetrics = true"))
     assertTrue(sourceString.contains("buffer = 20"))
-    assertTrue(sourceString.contains("clusterMaxZoom = 10"))
     assertTrue(sourceString.contains("tolerance = 10.0"))
   }
 

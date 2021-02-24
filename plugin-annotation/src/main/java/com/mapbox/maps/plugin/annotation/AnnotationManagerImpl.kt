@@ -44,6 +44,7 @@ import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.OnMoveListener
 import java.util.*
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * Base class for annotation managers
@@ -68,7 +69,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   private val mapLongClickResolver = MapLongClick()
   private val mapMoveResolver = MapMove()
   private var draggedAnnotation: T? = null
-  private val annotationMap = mutableMapOf<Long, T>()
+  private val annotationMap = ConcurrentHashMap<Long, T>()
   protected var touchAreaShiftX: Int = mapView.scrollX
   protected var touchAreaShiftY: Int = mapView.scrollY
   protected abstract val layerId: String
@@ -191,7 +192,10 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         }
       }
     }
-    initClusterLayers()
+    if (layer is SymbolLayer) {
+      // Only apply cluster for SymbolManager
+      initClusterLayers()
+    }
     updateSource()
   }
 
