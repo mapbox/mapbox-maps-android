@@ -160,12 +160,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
           tolerance(it)
         }
         options.clusterOptions?.let { clusterOptions ->
-          clusterOptions.cluster?.let {
-            cluster(it)
-          }
-          clusterOptions.clusterMaxZoom?.let {
-            clusterMaxZoom(it)
-          }
+          cluster(clusterOptions.cluster)
+          clusterMaxZoom(clusterOptions.clusterMaxZoom)
           clusterOptions.clusterProperties?.let {
             clusterProperties(it)
           }
@@ -202,9 +198,15 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   private fun initClusterLayers() {
     annotationConfig?.annotationSourceOptions?.clusterOptions?.let {
       it.colorLevels.forEachIndexed { level, _ ->
-        style.addLayer(createClusterLevelLayer(level, it.colorLevels))
+        val clusterLevelLayer = createClusterLevelLayer(level, it.colorLevels)
+        if (!style.styleLayerExists(clusterLevelLayer.layerId)) {
+          style.addLayer(clusterLevelLayer)
+        }
       }
-      style.addLayer(createClusterTextLayer())
+      val clusterTextLayer = createClusterTextLayer()
+      if (!style.styleLayerExists(clusterTextLayer.layerId)) {
+        style.addLayer(clusterTextLayer)
+      }
     }
   }
 
@@ -231,7 +233,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   private fun createClusterTextLayer(): SymbolLayer {
     return symbolLayer("mapbox-android-cluster-text", sourceId) {
       annotationConfig?.annotationSourceOptions?.clusterOptions?.let {
-        textField(it.textField)
+        textField(get(it.textField))
         textSize(it.textSize)
         textColor(it.textColor)
         textIgnorePlacement(true)

@@ -28,5 +28,8 @@ data class AnnotationSourceOptions(
    */
   val tolerance: Double? = null,
 
+  /**
+   * Options to show and configure symbol clustering with using SymbolManager.
+   */
   val clusterOptions: ClusterOptions? = null
 )

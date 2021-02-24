@@ -2,6 +2,13 @@ package com.mapbox.maps.plugin.annotation
 
 import android.graphics.Color
 
+/**
+ * Options to show and configure symbol clustering with using SymbolManager.
+ * <p>
+ * It exposes a minimal of configuration options, a more advanced setup can be created manually with
+ * using CircleLayer and SymbolLayers directly.
+ * </p>
+ */
 data class ClusterOptions(
 
   /**
@@ -13,24 +20,38 @@ data class ClusterOptions(
    * - `point_count` Number of original points grouped into this cluster
    * - `point_count_abbreviated` An abbreviated point count
    */
-  val cluster: Boolean? = null,
+  val cluster: Boolean = true,
 
   /**
    * Radius of each cluster if clustering is enabled. A value of 512 indicates a radius equal
-   * to the width of a tile.
+   * to the width of a tile, 50 by default.
    */
   val clusterRadius: Long = 50,
+  /**
+   * The circle radius of the cluster items, 18 by default
+   */
   val circleRadius: Double = 18.0,
+  /**
+   * The text color of cluster item. White by default
+   */
   val textColor: Int = Color.WHITE,
+  /**
+   * The text size of cluster item. 12 by default.
+   */
   val textSize: Double = 12.0,
-  val textField:String ="get(\"point_count\")",
+  /**
+   *  The text field of a cluster item. toNumber(get("point_count")) by default.
+   */
+  val textField: String = "point_count",
   /**
    * Max zoom on which to cluster points if clustering is enabled. Defaults to one zoom less
    * than maxzoom (so that last zoom features are not clustered). Clusters are re-evaluated at integer zoom
    * levels so setting clusterMaxZoom to 14 means the clusters will be displayed until z15.
    */
   val clusterMaxZoom: Long = 14,
-
+  /**
+   * The cluster color levels, which a pair constructed with amount of point and a int color value.
+   */
   val colorLevels: List<Pair<Int, Int>> = listOf(Pair(0, Color.BLUE)),
   /**
    * An object defining custom properties on the generated clusters if clustering is enabled, aggregating values from
