@@ -24,7 +24,6 @@ import com.mapbox.maps.extension.style.image.image
 import com.mapbox.maps.extension.style.layers.Layer
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.addLayerBelow
-import com.mapbox.maps.extension.style.layers.generated.CircleLayer
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
 import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
@@ -214,8 +213,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     }
   }
 
-  private fun createClusterLevelLayer(level: Int, colorLevels: List<Pair<Int, Int>>): CircleLayer {
-    return circleLayer("mapbox-android-cluster-circle-$level", sourceId) {
+  private fun createClusterLevelLayer(level: Int, colorLevels: List<Pair<Int, Int>>) =
+    circleLayer("mapbox-android-cluster-circle-$level", sourceId) {
       circleColor(colorLevels[level].second)
       annotationConfig?.annotationSourceOptions?.clusterOptions?.circleRadius?.let {
         circleRadius(it)
@@ -232,17 +231,14 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         )
       )
     }
-  }
 
-  private fun createClusterTextLayer(): SymbolLayer {
-    return symbolLayer("mapbox-android-cluster-text", sourceId) {
-      annotationConfig?.annotationSourceOptions?.clusterOptions?.let {
-        textField(get(it.textField))
-        textSize(it.textSize)
-        textColor(it.textColor)
-        textIgnorePlacement(true)
-        textAllowOverlap(true)
-      }
+  private fun createClusterTextLayer() = symbolLayer("mapbox-android-cluster-text", sourceId) {
+    annotationConfig?.annotationSourceOptions?.clusterOptions?.let {
+      textField(get(it.textField))
+      textSize(it.textSize)
+      textColor(it.textColor)
+      textIgnorePlacement(true)
+      textAllowOverlap(true)
     }
   }
 
