@@ -140,7 +140,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.cameraForGeometry(geometry, edgeInsets, zoom, pitch)
   }
 
-  override fun getElevation(point: Point): Float? {
+  override fun getElevation(point: Point): Double? {
     return map.getElevation(point)
   }
 

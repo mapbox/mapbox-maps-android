@@ -836,6 +836,7 @@ class FillExtrusionLayerTest {
     verify { style.setStyleLayerProperty("id", "fill-extrusion-translate-transition", capture(valueSlot)) }
     assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
   }
+
   @Test
   fun fillExtrusionTranslateAnchorSet() {
     val layer = fillExtrusionLayer("id", "source") {}

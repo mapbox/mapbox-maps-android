@@ -51,35 +51,49 @@ class Formatted : ArrayList<FormattedSection>() {
    * Static variables and methods.
    */
   companion object {
-    /**
-     * Construct a [Formatted] object from a HashMap (Returned from the Core SDK).
-     */
-    fun fromProperty(map: HashMap<*, *>): Formatted {
-      val formatted = Formatted()
-      val property = map["sections"] as List<*>
 
-      property.forEach { section ->
-        val sectionMap = section as HashMap<*, *>
-        val text = sectionMap["text"] as String
-        val formattedSection = FormattedSection(text)
-        sectionMap.keys.forEach { key ->
-          when (key) {
-            "textColor" -> {
-              val colorMap = sectionMap[key] as HashMap<String, Double>
-              formattedSection.textColor = ColorUtils.rgbaExpressionToColorString(
-                rgba {
-                  literal(colorMap["r"]!! * 255)
-                  literal(colorMap["g"]!! * 255)
-                  literal(colorMap["b"]!! * 255)
-                  literal(colorMap["a"]!!)
+    /**
+     * Construct a [Formatted] object from a Formatted List (Returned from the Core).
+     */
+    fun fromProperty(list: ArrayList<*>): Formatted {
+      val formatted = Formatted()
+
+      if (list.removeFirst() == "format") {
+        list.forEachIndexed { index, element ->
+          when (element) {
+            is String -> {
+              val formattedSection = FormattedSection(element)
+              val optionsMap = list[index + 1] as HashMap<*, *>
+              optionsMap.keys.forEach { key ->
+                when (key) {
+                  "text-color" -> {
+                    val colorExpressionList = optionsMap[key] as ArrayList<*>
+                    if (colorExpressionList.removeFirst() == "rgba") {
+                      formattedSection.textColor = ColorUtils.rgbaExpressionToColorString(
+                        rgba {
+                          literal(colorExpressionList[0] as Double)
+                          literal(colorExpressionList[1] as Double)
+                          literal(colorExpressionList[2] as Double)
+                          literal(colorExpressionList[3] as Double)
+                        }
+                      )
+                    }
+                  }
+                  "font-scale" -> formattedSection.fontScale = optionsMap[key] as Double
+                  "text-font" -> {
+                    val textFontExpressionList = optionsMap[key] as ArrayList<*>
+                    if (textFontExpressionList.removeFirst() == "literal") {
+                      formattedSection.fontStack =
+                        textFontExpressionList.last() as ArrayList<String>
+                    }
+                  }
                 }
-              )
+              }
+              formatted.add(formattedSection)
             }
-            "scale" -> formattedSection.fontScale = sectionMap[key] as Double
-            "fontStack" -> formattedSection.fontStack = (sectionMap[key] as String).split(',')
+            else -> Unit
           }
         }
-        formatted.add(formattedSection)
       }
       return formatted
     }

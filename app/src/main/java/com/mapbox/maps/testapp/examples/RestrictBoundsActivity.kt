@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.geojson.Polygon
 import com.mapbox.maps.BoundOptions
@@ -37,7 +38,7 @@ class RestrictBoundsActivity : AppCompatActivity() {
     mapboxMap.loadStyle(
       style(Style.SATELLITE_STREETS) {
         +geoJsonSource(BOUNDS_ID) {
-          data("")
+          featureCollection(FeatureCollection.fromFeatures(listOf()))
         }
         +fillLayer(BOUNDS_ID, BOUNDS_ID) {
           fillColor(Color.RED)

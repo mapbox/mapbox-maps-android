@@ -119,7 +119,6 @@ class RasterLayerTest {
       valueSlot.captured.toString()
     )
   }
-
   // Property getters and setters
 
   @Test
@@ -723,6 +722,7 @@ class RasterLayerTest {
     verify { style.setStyleLayerProperty("id", "raster-opacity-transition", capture(valueSlot)) }
     assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
   }
+
   @Test
   fun rasterResamplingSet() {
     val layer = rasterLayer("id", "source") {}
