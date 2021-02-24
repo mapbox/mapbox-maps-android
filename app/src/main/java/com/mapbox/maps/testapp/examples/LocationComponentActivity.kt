@@ -3,6 +3,7 @@ package com.mapbox.maps.testapp.examples
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import com.mapbox.maps.CameraOptions
@@ -34,9 +35,27 @@ class LocationComponentActivity : AppCompatActivity() {
     setContentView(R.layout.activity_location_component)
     locationPermissionHelper = LocationPermissionHelper(this)
     locationPermissionHelper.checkPermissions {
-      mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
+      mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) { _ ->
         // Disable scroll gesture, since we are updating the camera position based on the indicator location.
         mapView.getGesturesPlugin().scrollEnabled = false
+        mapView.getGesturesPlugin().addOnMapClickListener { point ->
+          mapView.getLocationComponentPlugin()
+            .isLocatedAt(point) { isPuckLocatedAtPoint ->
+              if (isPuckLocatedAtPoint) {
+                Toast.makeText(this, "Clicked on location puck", Toast.LENGTH_SHORT).show()
+              }
+            }
+          true
+        }
+        mapView.getGesturesPlugin().addOnMapLongClickListener { point ->
+          mapView.getLocationComponentPlugin()
+            .isLocatedAt(point) { isPuckLocatedAtPoint ->
+              if (isPuckLocatedAtPoint) {
+                Toast.makeText(this, "Long-clicked on location puck", Toast.LENGTH_SHORT).show()
+              }
+            }
+          true
+        }
       }
     }
   }

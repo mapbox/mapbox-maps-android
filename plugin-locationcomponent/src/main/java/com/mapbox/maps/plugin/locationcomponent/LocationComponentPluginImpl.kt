@@ -6,9 +6,12 @@ import android.util.AttributeSet
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.geojson.Point
+import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
+import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.LOCATION_INDICATOR_LAYER
+import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_LAYER
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttributeParser
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
@@ -82,6 +85,36 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
    */
   override fun removeOnIndicatorBearingChangedListener(listener: OnIndicatorBearingChangedListener) {
     onIndicatorBearingChangedListener.remove(listener)
+  }
+
+  /**
+   * Check whether the rendered location puck is on the given point.
+   *
+   * @param point the point to validate
+   * @param listener Listener that gets invoked when the validation finished.
+   */
+  override fun isLocatedAt(point: Point, listener: PuckLocatedAtPointListener) {
+    delegateProvider.mapFeatureQueryDelegate.queryRenderedFeatures(
+      delegateProvider.mapProjectionDelegate.pixelForCoordinate(point),
+      RenderedQueryOptions(
+        listOf(
+          LOCATION_INDICATOR_LAYER,
+          MODEL_LAYER
+        ),
+        null
+      )
+    ) { expected ->
+      expected.value?.let {
+        if (it.isNotEmpty()) {
+          listener.onResult(true)
+        } else {
+          listener.onResult(false)
+        }
+      }
+      expected.error?.let {
+        throw RuntimeException(it)
+      }
+    }
   }
 
   @VisibleForTesting(otherwise = PRIVATE)

@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.locationcomponent
 
+import com.mapbox.geojson.Point
 import com.mapbox.maps.plugin.*
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettingsInterface
 
@@ -51,4 +52,12 @@ interface LocationComponentPlugin :
    * @param listener Listener that gets invoked when indicator bearing changes.
    */
   fun removeOnIndicatorBearingChangedListener(listener: OnIndicatorBearingChangedListener)
+
+  /**
+   * Check whether the rendered location puck is on the given point.
+   *
+   * @param point the point to validate
+   * @param listener Listener that gets invoked when the validation finished.
+   */
+  fun isLocatedAt(point: Point, listener: PuckLocatedAtPointListener)
 }
