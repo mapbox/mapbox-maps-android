@@ -909,16 +909,16 @@ class MapboxMap internal constructor(
 
   /**
    * Add a listener that's going to be invoked whenever the camera position changes.
+   * [OnCameraChangeListener.onCameraChanged] is not guaranteed to run on UI thread.
    */
-  @Deprecated(message = "MapboxMap may produce camera updates in incorrect order, use CameraAnimationsPlugin.addOnCameraChangeListener instead.")
   override fun addOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener) {
     mapObserver.addOnCameraChangeListener(onCameraChangeListener)
   }
 
   /**
    * Remove the camera change listener.
+   * [OnCameraChangeListener.onCameraChanged] is not guaranteed to run on UI thread.
    */
-  @Deprecated(message = "MapboxMap may produce camera updates in incorrect order, use CameraAnimationsPlugin.removeOnCameraChangeListener instead.")
   override fun removeOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener) {
     mapObserver.removeOnCameraChangeListener(onCameraChangeListener)
   }

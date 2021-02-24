@@ -11,7 +11,6 @@ import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.animation.animator.*
 import com.mapbox.maps.plugin.delegates.*
-import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.properties.Delegates
 
@@ -49,7 +48,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   private val pitchListeners = CopyOnWriteArraySet<CameraAnimatorChangeListener<Double>>()
 
   private val lifecycleListeners = CopyOnWriteArraySet<CameraAnimationsLifecycleListener>()
-  private val cameraChangeListeners = CopyOnWriteArraySet<OnCameraChangeListener>()
 
   private var center by Delegates.observable<Point?>(null) { _, old, new ->
     new?.let {
@@ -140,7 +138,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     anchorListeners.clear()
     paddingListeners.clear()
     lifecycleListeners.clear()
-    cameraChangeListeners.clear()
     animators.clear()
   }
 
@@ -152,8 +149,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     mapTransformDelegate.jumpTo(cameraOptions)
     // notify listeners with actual values
     notifyListeners(cameraOptions)
-    cameraChangeListeners.forEach { it.onCameraChanged() }
-
     lastCameraOptions = cameraOptions
   }
 
@@ -555,20 +550,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
    */
   override fun removeCameraAnimationsLifecycleListener(listener: CameraAnimationsLifecycleListener) {
     lifecycleListeners.remove(listener)
-  }
-
-  /**
-   * Add a listener that's going to be invoked whenever the camera position changes.
-   */
-  override fun addOnCameraChangeListener(listener: OnCameraChangeListener) {
-    cameraChangeListeners.add(listener)
-  }
-
-  /**
-   * Remove a listener that's going to be invoked whenever the camera position changes.
-   */
-  override fun removeOnCameraChangeListener(listener: OnCameraChangeListener) {
-    cameraChangeListeners.remove(listener)
   }
 
   /**

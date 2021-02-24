@@ -19,11 +19,8 @@ import com.mapbox.maps.plugin.animation.animator.CameraPitchAnimator
 import com.mapbox.maps.plugin.delegates.MapCameraDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapTransformDelegate
-import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import io.mockk.*
 import io.mockk.verify
-import org.hamcrest.MatcherAssert
-import org.hamcrest.Matchers
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -829,33 +826,6 @@ class CameraAnimationsPluginImplTest {
     cameraAnimationsPluginImpl.anchor = null
     assertEquals(null, cameraAnimationsPluginImpl.anchor)
     assertEquals(1, counter)
-  }
-
-  @Test
-  fun onCameraChangeListenerTest() {
-    var counter = 0
-    val listener = OnCameraChangeListener {
-      counter++
-    }
-    cameraAnimationsPluginImpl.addOnCameraChangeListener(listener)
-    shadowOf(getMainLooper()).pause()
-    val bearingAnimatorOne = cameraAnimationsPluginImpl.createBearingAnimator(
-      cameraAnimatorOptions(60.0) {
-        startValue(10.0)
-      }
-    ) {
-      duration = 10L
-    }
-    cameraAnimationsPluginImpl.registerAnimators(bearingAnimatorOne)
-    bearingAnimatorOne.start()
-    shadowOf(getMainLooper()).idle()
-    val totalCount = counter
-    MatcherAssert.assertThat(counter, Matchers.greaterThan(0))
-    cameraAnimationsPluginImpl.removeOnCameraChangeListener(listener)
-    shadowOf(getMainLooper()).pause()
-    bearingAnimatorOne.start()
-    shadowOf(getMainLooper()).idle()
-    assertEquals(totalCount, counter)
   }
 
   class LifecycleListener : CameraAnimationsLifecycleListener {
