@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 /**
- * Example showing how to add Symbol annotations
+ * Example showing how to add Symbol cluster annotations
  */
 class SymbolClusterActivity : AppCompatActivity(), CoroutineScope {
   private var mapboxMap: MapboxMap? = null
