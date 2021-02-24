@@ -15,6 +15,7 @@ import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorInt
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorString
 import com.mapbox.maps.extension.style.utils.silentUnwrap
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * An icon or a text label.
@@ -1322,7 +1323,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
      * @return Formatted
      */
     get() {
-      val property = getPropertyValue<HashMap<*, *>>("text-field")
+      val property = getPropertyValue<ArrayList<*>>("text-field")
       property?.let {
         return Formatted.fromProperty(it)
       }
@@ -4475,7 +4476,7 @@ class SymbolLayer(override val layerId: String, val sourceId: String) : SymbolLa
        * @return Formatted
        */
       get() {
-        val property = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-field").silentUnwrap<HashMap<*, *>>()
+        val property = StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-field").silentUnwrap<ArrayList<*>>()
         property?.let {
           return Formatted.fromProperty(it)
         }

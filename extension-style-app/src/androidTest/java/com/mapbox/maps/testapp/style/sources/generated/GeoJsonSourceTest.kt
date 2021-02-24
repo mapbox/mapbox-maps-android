@@ -26,10 +26,10 @@ class GeoJsonSourceTest : BaseStyleTest() {
   fun dataTest() {
     val testSource = geoJsonSource("testId") {
       url(TEST_URI)
-      data("testData")
+      data(TEST_GEOJSON)
     }
     setupSource(testSource)
-    assertEquals("testData", testSource.data)
+    assertEquals(null, testSource.data)
   }
 
   @Test
@@ -39,14 +39,14 @@ class GeoJsonSourceTest : BaseStyleTest() {
       url(TEST_URI)
     }
     setupSource(testSource)
-    testSource.data("testData")
-    assertEquals("testData", testSource.data)
+    testSource.data(TEST_GEOJSON)
+    assertEquals(null, testSource.data)
   }
 
   @Test
   @UiThreadTest
   fun dataAsExpressionTest() {
-    val expression = literal("testUrl")
+    val expression = literal(TEST_URI)
     val testSource = geoJsonSource("testId") {
       url(TEST_URI)
       data(expression)
@@ -79,7 +79,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun urlAsExpressionTest() {
-    val expression = literal("testUrl")
+    val expression = literal(TEST_URI)
     val testSource = geoJsonSource("testId") {
       url(expression)
     }
@@ -592,6 +592,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
 
   companion object {
     private const val TEST_URI = "https://raw.githubusercontent.com/mapbox/mapbox-gl-native-android/master/MapboxGLAndroidSDKTestApp/src/main/assets/earthquakes.geojson"
+    private val TEST_GEOJSON = FeatureCollection.fromFeatures(listOf()).toJson()
   }
 }
 

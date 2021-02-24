@@ -153,6 +153,7 @@ class LineLayerTest {
     verify { style.getStyleLayerProperty("id", "filter") }
   }
   // Property getters and setters
+
   @Test
   fun lineCapSet() {
     val layer = lineLayer("id", "source") {}
@@ -220,6 +221,7 @@ class LineLayerTest {
     assertEquals(LineCap.BUTT, layer.lineCap)
     verify { style.getStyleLayerProperty("id", "line-cap") }
   }
+
   @Test
   fun lineJoinSet() {
     val layer = lineLayer("id", "source") {}
@@ -1471,6 +1473,7 @@ class LineLayerTest {
     verify { style.setStyleLayerProperty("id", "line-translate-transition", capture(valueSlot)) }
     assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
   }
+
   @Test
   fun lineTranslateAnchorSet() {
     val layer = lineLayer("id", "source") {}

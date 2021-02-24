@@ -60,12 +60,12 @@ class GeoJsonSourceTest {
   @Test
   fun dataSet() {
     val testSource = geoJsonSource("testId") {
-      data("testData")
+      data(TEST_GEOJSON)
     }
     testSource.bindTo(style)
 
     verify { style.addStyleSource("testId", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("data=testData"))
+    assertTrue(valueSlot.captured.toString().contains("data={\"type\":\"FeatureCollection\",\"features\":[]}"))
   }
 
   @Test
@@ -87,10 +87,10 @@ class GeoJsonSourceTest {
   fun dataSetAfterBind() {
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
-    testSource.data("testData")
+    testSource.data(TEST_GEOJSON)
 
     verify { style.setStyleSourceProperty("testId", "data", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "testData")
+    assertEquals(valueSlot.captured.toString(), "{\"type\":\"FeatureCollection\",\"features\":[]}")
   }
 
   @Test
@@ -109,11 +109,11 @@ class GeoJsonSourceTest {
 
   @Test
   fun dataGet() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue("testData")
+    every { styleProperty.value } returns TypeUtils.wrapToValue(TEST_GEOJSON)
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
 
-    assertEquals("testData".toString(), testSource.data?.toString())
+    assertEquals(TEST_GEOJSON.toString(), testSource.data?.toString())
     verify { style.getStyleSourceProperty("testId", "data") }
   }
 
@@ -770,6 +770,7 @@ class GeoJsonSourceTest {
     assertEquals(expression.toString(), testSource.prefetchZoomDeltaAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "prefetch-zoom-delta") }
   }
+
   @Test
   fun featureAfterBindTest() {
     val feature = Feature.fromJson(
@@ -1103,6 +1104,10 @@ class GeoJsonSourceTest {
 
     assertEquals(expression.toString(), GeoJsonSource.defaultPrefetchZoomDeltaAsExpression?.toString())
     verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "prefetch-zoom-delta") }
+  }
+
+  companion object {
+    private val TEST_GEOJSON = FeatureCollection.fromFeatures(listOf()).toJson()
   }
 }
 

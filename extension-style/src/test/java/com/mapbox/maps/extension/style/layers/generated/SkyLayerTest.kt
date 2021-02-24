@@ -51,6 +51,7 @@ class SkyLayerTest {
   fun cleanup() {
     unmockkAll()
   }
+
   @Test
   fun filterSet() {
     val expression = eq {
@@ -762,6 +763,7 @@ class SkyLayerTest {
     verify { style.setStyleLayerProperty("id", "sky-opacity-transition", capture(valueSlot)) }
     assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
   }
+
   @Test
   fun skyTypeSet() {
     val layer = skyLayer("id") {}

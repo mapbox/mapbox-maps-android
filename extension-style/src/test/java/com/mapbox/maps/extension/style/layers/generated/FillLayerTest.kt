@@ -906,6 +906,7 @@ class FillLayerTest {
     verify { style.setStyleLayerProperty("id", "fill-translate-transition", capture(valueSlot)) }
     assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
   }
+
   @Test
   fun fillTranslateAnchorSet() {
     val layer = fillLayer("id", "source") {}

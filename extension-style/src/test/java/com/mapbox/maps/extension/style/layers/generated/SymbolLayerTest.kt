@@ -221,6 +221,7 @@ class SymbolLayerTest {
     assertEquals(expectedValue, layer.iconAllowOverlap)
     verify { style.getStyleLayerProperty("id", "icon-allow-overlap") }
   }
+
   @Test
   fun iconAnchorSet() {
     val layer = symbolLayer("id", "source") {}
@@ -692,6 +693,7 @@ class SymbolLayerTest {
     assertEquals(1.0, layer.iconPadding!!, 1E-5)
     verify { style.getStyleLayerProperty("id", "icon-padding") }
   }
+
   @Test
   fun iconPitchAlignmentSet() {
     val layer = symbolLayer("id", "source") {}
@@ -826,6 +828,7 @@ class SymbolLayerTest {
     assertEquals(1.0, layer.iconRotate!!, 1E-5)
     verify { style.getStyleLayerProperty("id", "icon-rotate") }
   }
+
   @Test
   fun iconRotationAlignmentSet() {
     val layer = symbolLayer("id", "source") {}
@@ -960,6 +963,7 @@ class SymbolLayerTest {
     assertEquals(1.0, layer.iconSize!!, 1E-5)
     verify { style.getStyleLayerProperty("id", "icon-size") }
   }
+
   @Test
   fun iconTextFitSet() {
     val layer = symbolLayer("id", "source") {}
@@ -1162,6 +1166,7 @@ class SymbolLayerTest {
     assertEquals(expectedValue, layer.symbolAvoidEdges)
     verify { style.getStyleLayerProperty("id", "symbol-avoid-edges") }
   }
+
   @Test
   fun symbolPlacementSet() {
     val layer = symbolLayer("id", "source") {}
@@ -1363,6 +1368,7 @@ class SymbolLayerTest {
     assertEquals(1.0, layer.symbolSpacing!!, 1E-5)
     verify { style.getStyleLayerProperty("id", "symbol-spacing") }
   }
+
   @Test
   fun symbolZOrderSet() {
     val layer = symbolLayer("id", "source") {}
@@ -1498,6 +1504,7 @@ class SymbolLayerTest {
     assertEquals(expectedValue, layer.textAllowOverlap)
     verify { style.getStyleLayerProperty("id", "text-allow-overlap") }
   }
+
   @Test
   fun textAnchorSet() {
     val layer = symbolLayer("id", "source") {}
@@ -1595,37 +1602,29 @@ class SymbolLayerTest {
 
   @Test
   fun textFieldGet() {
-    val hashmap = HashMap<String, Value>()
-    val list = ArrayList<Value>()
-
-    val section1 = HashMap<String, Value>()
-    section1["image"] = Value("null")
-    section1["scale"] = Value(0.9)
-    section1["text"] = Value("cyan")
-    val color1 = HashMap<String, Value>()
-    color1["a"] = Value(1.0)
-    color1["b"] = Value(1.0)
-    color1["r"] = Value(0.0)
-    color1["g"] = Value(1.0)
-    section1["textColor"] = Value(color1)
-    section1["fontStack"] = Value("Open Sans Regular,Arial Unicode MS Regular")
-    list.add(Value(section1))
-
-    val section2 = HashMap<String, Value>()
-    section2["image"] = Value("null")
-    section2["scale"] = Value(2.0)
-    section2["text"] = Value("black")
-    val color2 = HashMap<String, Value>()
-    color2["a"] = Value(1.0)
-    color2["b"] = Value(0.0)
-    color2["r"] = Value(0.0)
-    color2["g"] = Value(0.0)
-    section2["textColor"] = Value(color2)
-    section2["fontStack"] = Value("Open Sans Regular,Arial Unicode MS Regular")
-    list.add(Value(section2))
-
-    hashmap["sections"] = Value(list)
-    every { styleProperty.value } returns Value(hashmap)
+    val formatExpression = format {
+      formatSection("cyan") {
+        fontScale(0.9)
+        textFont(
+          listOf(
+            "Open Sans Regular",
+            "Arial Unicode MS Regular"
+          )
+        )
+        textColor(Color.CYAN)
+      }
+      formatSection("black") {
+        fontScale(2.0)
+        textFont(
+          listOf(
+            "Open Sans Regular",
+            "Arial Unicode MS Regular"
+          )
+        )
+        textColor(rgba(0.0, 0.0, 0.0, 1.0))
+      }
+    }
+    every { styleProperty.value } returns formatExpression
 
     val layer = symbolLayer("id", "source") { }
     layer.bindTo(style)
@@ -1689,37 +1688,29 @@ class SymbolLayerTest {
 
   @Test
   fun textFieldAsExpressionGetFromLiteral() {
-    val hashmap = HashMap<String, Value>()
-    val list = ArrayList<Value>()
-
-    val section1 = HashMap<String, Value>()
-    section1["image"] = Value("null")
-    section1["scale"] = Value(0.9)
-    section1["text"] = Value("cyan")
-    val color1 = HashMap<String, Value>()
-    color1["a"] = Value(1.0)
-    color1["b"] = Value(1.0)
-    color1["r"] = Value(0.0)
-    color1["g"] = Value(1.0)
-    section1["textColor"] = Value(color1)
-    section1["fontStack"] = Value("Open Sans Regular,Arial Unicode MS Regular")
-    list.add(Value(section1))
-
-    val section2 = HashMap<String, Value>()
-    section2["image"] = Value("null")
-    section2["scale"] = Value(2.0)
-    section2["text"] = Value("black")
-    val color2 = HashMap<String, Value>()
-    color2["a"] = Value(1.0)
-    color2["b"] = Value(0.0)
-    color2["r"] = Value(0.0)
-    color2["g"] = Value(0.0)
-    section2["textColor"] = Value(color2)
-    section2["fontStack"] = Value("Open Sans Regular,Arial Unicode MS Regular")
-    list.add(Value(section2))
-
-    hashmap["sections"] = Value(list)
-    every { styleProperty.value } returns Value(hashmap)
+    val formatExpression = format {
+      formatSection("cyan") {
+        fontScale(0.9)
+        textFont(
+          listOf(
+            "Open Sans Regular",
+            "Arial Unicode MS Regular"
+          )
+        )
+        textColor(Color.CYAN)
+      }
+      formatSection("black") {
+        fontScale(2.0)
+        textFont(
+          listOf(
+            "Open Sans Regular",
+            "Arial Unicode MS Regular"
+          )
+        )
+        textColor(rgba(0.0, 0.0, 0.0, 1.0))
+      }
+    }
+    every { styleProperty.value } returns formatExpression
 
     val layer = symbolLayer("id", "source") { }
     layer.bindTo(style)
@@ -1757,14 +1748,10 @@ class SymbolLayerTest {
 
   @Test
   fun textFieldAsStringGet() {
-    val hashmap = HashMap<String, Value>()
-    val list = ArrayList<Value>()
-
-    val section1 = HashMap<String, Value>()
-    section1["text"] = Value("abc")
-    list.add(Value(section1))
-    hashmap["sections"] = Value(list)
-    every { styleProperty.value } returns Value(hashmap)
+    val formatExpression = format {
+      formatSection("abc")
+    }
+    every { styleProperty.value } returns formatExpression
 
     val layer = symbolLayer("id", "source") { }
     layer.bindTo(style)
@@ -1932,6 +1919,7 @@ class SymbolLayerTest {
     assertEquals(expectedValue, layer.textIgnorePlacement)
     verify { style.getStyleLayerProperty("id", "text-ignore-placement") }
   }
+
   @Test
   fun textJustifySet() {
     val layer = symbolLayer("id", "source") {}
@@ -2537,6 +2525,7 @@ class SymbolLayerTest {
     assertEquals(1.0, layer.textPadding!!, 1E-5)
     verify { style.getStyleLayerProperty("id", "text-padding") }
   }
+
   @Test
   fun textPitchAlignmentSet() {
     val layer = symbolLayer("id", "source") {}
@@ -2738,6 +2727,7 @@ class SymbolLayerTest {
     assertEquals(1.0, layer.textRotate!!, 1E-5)
     verify { style.getStyleLayerProperty("id", "text-rotate") }
   }
+
   @Test
   fun textRotationAlignmentSet() {
     val layer = symbolLayer("id", "source") {}
@@ -2872,6 +2862,7 @@ class SymbolLayerTest {
     assertEquals(1.0, layer.textSize!!, 1E-5)
     verify { style.getStyleLayerProperty("id", "text-size") }
   }
+
   @Test
   fun textTransformSet() {
     val layer = symbolLayer("id", "source") {}
@@ -3799,6 +3790,7 @@ class SymbolLayerTest {
     verify { style.setStyleLayerProperty("id", "icon-translate-transition", capture(valueSlot)) }
     assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
   }
+
   @Test
   fun iconTranslateAnchorSet() {
     val layer = symbolLayer("id", "source") {}
@@ -4592,6 +4584,7 @@ class SymbolLayerTest {
     verify { style.setStyleLayerProperty("id", "text-translate-transition", capture(valueSlot)) }
     assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
   }
+
   @Test
   fun textTranslateAnchorSet() {
     val layer = symbolLayer("id", "source") {}
@@ -5379,37 +5372,29 @@ class SymbolLayerTest {
 
   @Test
   fun defaultTextFieldTest() {
-    val hashmap = HashMap<String, Value>()
-    val list = ArrayList<Value>()
-
-    val section1 = HashMap<String, Value>()
-    section1["image"] = Value("null")
-    section1["scale"] = Value(0.9)
-    section1["text"] = Value("cyan")
-    val color1 = HashMap<String, Value>()
-    color1["a"] = Value(1.0)
-    color1["b"] = Value(1.0)
-    color1["r"] = Value(0.0)
-    color1["g"] = Value(1.0)
-    section1["textColor"] = Value(color1)
-    section1["fontStack"] = Value("Open Sans Regular,Arial Unicode MS Regular")
-    list.add(Value(section1))
-
-    val section2 = HashMap<String, Value>()
-    section2["image"] = Value("null")
-    section2["scale"] = Value(2.0)
-    section2["text"] = Value("black")
-    val color2 = HashMap<String, Value>()
-    color2["a"] = Value(1.0)
-    color2["b"] = Value(0.0)
-    color2["r"] = Value(0.0)
-    color2["g"] = Value(0.0)
-    section2["textColor"] = Value(color2)
-    section2["fontStack"] = Value("Open Sans Regular,Arial Unicode MS Regular")
-    list.add(Value(section2))
-
-    hashmap["sections"] = Value(list)
-    every { styleProperty.value } returns Value(hashmap)
+    val formatExpression = format {
+      formatSection("cyan") {
+        fontScale(0.9)
+        textFont(
+          listOf(
+            "Open Sans Regular",
+            "Arial Unicode MS Regular"
+          )
+        )
+        textColor(Color.CYAN)
+      }
+      formatSection("black") {
+        fontScale(2.0)
+        textFont(
+          listOf(
+            "Open Sans Regular",
+            "Arial Unicode MS Regular"
+          )
+        )
+        textColor(rgba(0.0, 0.0, 0.0, 1.0))
+      }
+    }
+    every { styleProperty.value } returns formatExpression
 
     val expectedValue = formatted {
       formattedSection("cyan") {
@@ -5449,37 +5434,29 @@ class SymbolLayerTest {
 
   @Test
   fun defaultTextFieldAsExpressionGetFromLiteral() {
-    val hashmap = HashMap<String, Value>()
-    val list = ArrayList<Value>()
-
-    val section1 = HashMap<String, Value>()
-    section1["image"] = Value("null")
-    section1["scale"] = Value(0.9)
-    section1["text"] = Value("cyan")
-    val color1 = HashMap<String, Value>()
-    color1["a"] = Value(1.0)
-    color1["b"] = Value(1.0)
-    color1["r"] = Value(0.0)
-    color1["g"] = Value(1.0)
-    section1["textColor"] = Value(color1)
-    section1["fontStack"] = Value("Open Sans Regular,Arial Unicode MS Regular")
-    list.add(Value(section1))
-
-    val section2 = HashMap<String, Value>()
-    section2["image"] = Value("null")
-    section2["scale"] = Value(2.0)
-    section2["text"] = Value("black")
-    val color2 = HashMap<String, Value>()
-    color2["a"] = Value(1.0)
-    color2["b"] = Value(0.0)
-    color2["r"] = Value(0.0)
-    color2["g"] = Value(0.0)
-    section2["textColor"] = Value(color2)
-    section2["fontStack"] = Value("Open Sans Regular,Arial Unicode MS Regular")
-    list.add(Value(section2))
-
-    hashmap["sections"] = Value(list)
-    every { styleProperty.value } returns Value(hashmap)
+    val formatExpression = format {
+      formatSection("cyan") {
+        fontScale(0.9)
+        textFont(
+          listOf(
+            "Open Sans Regular",
+            "Arial Unicode MS Regular"
+          )
+        )
+        textColor(Color.CYAN)
+      }
+      formatSection("black") {
+        fontScale(2.0)
+        textFont(
+          listOf(
+            "Open Sans Regular",
+            "Arial Unicode MS Regular"
+          )
+        )
+        textColor(rgba(0.0, 0.0, 0.0, 1.0))
+      }
+    }
+    every { styleProperty.value } returns formatExpression
 
     assertEquals("[[cyan, {text-color=rgba(0, 255, 255, 1), font-scale=0.9, text-font=[Open Sans Regular, Arial Unicode MS Regular]}], [black, {text-color=rgba(0, 0, 0, 1), font-scale=2.0, text-font=[Open Sans Regular, Arial Unicode MS Regular]}]]", SymbolLayer.defaultTextFieldAsExpression.toString())
     val expectedValue = formatted {
@@ -5506,14 +5483,10 @@ class SymbolLayerTest {
 
   @Test
   fun defaultTextFieldAsStringTest() {
-    val hashmap = HashMap<String, Value>()
-    val list = ArrayList<Value>()
-
-    val section1 = HashMap<String, Value>()
-    section1["text"] = Value("abc")
-    list.add(Value(section1))
-    hashmap["sections"] = Value(list)
-    every { styleProperty.value } returns Value(hashmap)
+    val formatExpression = format {
+      formatSection("abc")
+    }
+    every { styleProperty.value } returns formatExpression
 
     assertEquals("abc", SymbolLayer.defaultTextFieldAsString)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-field") }

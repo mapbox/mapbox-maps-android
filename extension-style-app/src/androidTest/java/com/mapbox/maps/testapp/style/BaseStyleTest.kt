@@ -48,7 +48,7 @@ abstract class BaseStyleTest {
 
         mapboxMap = mapView.getMapboxMap()
         mapboxMap.loadStyleUri(
-          Style.DARK
+          "mapbox://styles/mapbox/empty-v9"
         ) {
           this@BaseStyleTest.style = it
           latch.countDown()

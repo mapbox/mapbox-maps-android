@@ -583,6 +583,7 @@ class CircleLayerTest {
     verify { style.setStyleLayerProperty("id", "circle-opacity-transition", capture(valueSlot)) }
     assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
   }
+
   @Test
   fun circlePitchAlignmentSet() {
     val layer = circleLayer("id", "source") {}
@@ -650,6 +651,7 @@ class CircleLayerTest {
     assertEquals(CirclePitchAlignment.MAP, layer.circlePitchAlignment)
     verify { style.getStyleLayerProperty("id", "circle-pitch-alignment") }
   }
+
   @Test
   fun circlePitchScaleSet() {
     val layer = circleLayer("id", "source") {}
@@ -1294,6 +1296,7 @@ class CircleLayerTest {
     verify { style.setStyleLayerProperty("id", "circle-translate-transition", capture(valueSlot)) }
     assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
   }
+
   @Test
   fun circleTranslateAnchorSet() {
     val layer = circleLayer("id", "source") {}

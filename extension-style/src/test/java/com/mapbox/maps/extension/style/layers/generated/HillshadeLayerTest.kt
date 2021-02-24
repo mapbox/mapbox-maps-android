@@ -120,7 +120,6 @@ class HillshadeLayerTest {
       valueSlot.captured.toString()
     )
   }
-
   // Property getters and setters
 
   @Test
@@ -527,6 +526,7 @@ class HillshadeLayerTest {
     verify { style.setStyleLayerProperty("id", "hillshade-highlight-color-transition", capture(valueSlot)) }
     assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
   }
+
   @Test
   fun hillshadeIlluminationAnchorSet() {
     val layer = hillshadeLayer("id", "source") {}
