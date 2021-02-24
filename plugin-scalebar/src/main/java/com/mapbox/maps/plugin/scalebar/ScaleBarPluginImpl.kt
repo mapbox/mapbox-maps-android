@@ -77,7 +77,7 @@ open class ScaleBarPluginImpl(
   /**
    * Invalid scale bar
    */
-  internal fun invalidateScaleBar() {
+  private fun invalidateScaleBar() {
     val metersPerPixelAtLatitude = getMetersPerPixelAtLatitude(
       mapCameraDelegate.getLat(),
       mapCameraDelegate.getZoom()

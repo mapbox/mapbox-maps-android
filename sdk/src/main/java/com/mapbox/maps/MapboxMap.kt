@@ -909,6 +909,7 @@ class MapboxMap internal constructor(
 
   /**
    * Add a listener that's going to be invoked whenever the camera position changes.
+   * [OnCameraChangeListener.onCameraChanged] is not guaranteed to run on UI thread.
    */
   override fun addOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener) {
     mapObserver.addOnCameraChangeListener(onCameraChangeListener)
@@ -916,6 +917,7 @@ class MapboxMap internal constructor(
 
   /**
    * Remove the camera change listener.
+   * [OnCameraChangeListener.onCameraChanged] is not guaranteed to run on UI thread.
    */
   override fun removeOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener) {
     mapObserver.removeOnCameraChangeListener(onCameraChangeListener)
