@@ -51,6 +51,7 @@
     <string name="activity_styles_dds_geojson_circle_layer_clusters_title">CircleLayer clusters</string>
     <string name="activity_style_change_icon_size_title">Change icon size</string>
     <string name="activity_basic_add_marker_title">Add markers to map</string>
+    <string name="activity_basic_add_one_marker_title">Add a marker to map</string>
     <string name="activity_style_image_source_title">Use an image source</string>
     <string name="activity_offline">Offline Map</string>
     <string name="activity_sky_layer">Sky Layer</string>

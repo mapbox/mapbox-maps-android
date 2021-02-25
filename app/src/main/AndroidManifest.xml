@@ -656,6 +656,18 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
+            android:name=".examples.AddOneMarkerSymbolActivity"
+            android:description="@string/description_add_one_marker_symbol"
+            android:exported="true"
+            android:label="@string/activity_basic_add_one_marker_title">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_basic" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
+        <activity
             android:name=".examples.ImageSourceActivity"
             android:description="@string/description_style_image_source"
             android:exported="true"
