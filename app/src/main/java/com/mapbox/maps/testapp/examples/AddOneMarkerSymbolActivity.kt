@@ -21,12 +21,12 @@ class AddOneMarkerSymbolActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_add_marker_symbol)
+    setContentView(R.layout.activity_simple_map)
 
     mapView.getMapboxMap().also {
       it.jumpTo(
         CameraOptions.Builder()
-          .center(Point.fromLngLat(12.550343, 55.665957))
+          .center(Point.fromLngLat(LONGITUDE, LATITUDE))
           .zoom(8.0)
           .build()
       )
@@ -37,9 +37,8 @@ class AddOneMarkerSymbolActivity : AppCompatActivity() {
           bitmap(BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view))
         }
         +geoJsonSource(SOURCE_ID) {
-          geometry(Point.fromLngLat(12.550343, 55.665957))
+          geometry(Point.fromLngLat(LONGITUDE, LATITUDE))
         }
-
         +symbolLayer(LAYER_ID, SOURCE_ID) {
           iconImage(BLUE_ICON_ID)
           iconAnchor(IconAnchor.BOTTOM)
@@ -72,5 +71,7 @@ class AddOneMarkerSymbolActivity : AppCompatActivity() {
     private const val BLUE_ICON_ID = "blue"
     private const val SOURCE_ID = "source_id"
     private const val LAYER_ID = "layer_id"
+    private const val LATITUDE = 55.665957
+    private const val LONGITUDE = 12.550343
   }
 }
