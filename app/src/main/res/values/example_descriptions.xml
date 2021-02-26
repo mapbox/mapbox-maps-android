@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="description_simple_map">Shows a simple map</string>
+    <string name="description_studio_style_map">Shows a custom Mapbox-hosted style</string>
     <string name="description_runtime_styling">Shows runtime styling</string>
     <string name="description_tint_fill">Tint a fill layer with a pattern</string>
     <string name="description_model">Shows 3D model on map</string>
