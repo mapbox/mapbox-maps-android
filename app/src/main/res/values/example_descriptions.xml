@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="description_simple_map">Shows a simple map</string>
-    <string name="description_studio_style_map">Shows a custom Mapbox-hosted style</string>
+    <string name="description_simple_map">Create and display a simple map view.</string>
+    <string name="description_studio_style_map">Use a custom style designed in Mapbox Studio.</string>
     <string name="description_runtime_styling">Shows runtime styling</string>
     <string name="description_tint_fill">Tint a fill layer with a pattern</string>
     <string name="description_model">Shows 3D model on map</string>
@@ -52,7 +52,7 @@
     <string name="description_styles_dds_geojson_circle_layer_clusters_description">Use GeoJSON and circle layers to visualize point data in clusters.</string>
     <string name="description_change_icon_size">Symbol layer icon size change</string>
     <string name="description_add_marker_symbol">Add simple marker symbols</string>
-    <string name="description_add_one_marker_symbol">Add a marker symbol</string>
+    <string name="description_add_one_marker_symbol">Add the default point marker symbol to a map.</string>
     <string name="description_style_image_source">Use an image source to easily display images on the map.</string>
     <string name="description_offline">Use OfflineManager to download tiles</string>
     <string name="description_sky_layer">Sky Layer showcase</string>

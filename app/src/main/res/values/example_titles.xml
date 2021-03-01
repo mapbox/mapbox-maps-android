@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="activity_simple_map">Simple map</string>
+    <string name="activity_simple_map">Create a Simple Map view</string>
     <string name="activity_studio_style">Mapbox Studio style</string>
     <string name="activity_runtime_styling">Runtime styling</string>
     <string name="activity_tint_fill">Tint Fill Layer</string>
@@ -52,7 +52,7 @@
     <string name="activity_styles_dds_geojson_circle_layer_clusters_title">CircleLayer clusters</string>
     <string name="activity_style_change_icon_size_title">Change icon size</string>
     <string name="activity_basic_add_marker_title">Add markers to map</string>
-    <string name="activity_basic_add_one_marker_title">Add a marker to map</string>
+    <string name="activity_basic_add_one_marker_title">Add a Marker Symbol</string>
     <string name="activity_style_image_source_title">Use an image source</string>
     <string name="activity_offline">Offline Map</string>
     <string name="activity_sky_layer">Sky Layer</string>
