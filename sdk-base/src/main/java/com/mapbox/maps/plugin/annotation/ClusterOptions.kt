@@ -40,9 +40,10 @@ data class ClusterOptions(
    */
   val textSize: Double = 12.0,
   /**
-   *  The text field of a cluster item. toNumber(get("point_count")) by default.
+   *  The text field of a cluster item. get("point_count") by default.
+   *  Could use [Value.toJson()] to generate the desired json of Expression.
    */
-  val textField: String = "point_count",
+  val textField: String = "[\"get\",\"point_count\"]",
   /**
    * Max zoom on which to cluster points if clustering is enabled. Defaults to one zoom less
    * than maxzoom (so that last zoom features are not clustered). Clusters are re-evaluated at integer zoom

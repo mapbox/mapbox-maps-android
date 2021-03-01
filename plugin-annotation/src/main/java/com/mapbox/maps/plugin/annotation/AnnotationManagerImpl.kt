@@ -214,27 +214,27 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   }
 
   private fun createClusterLevelLayer(level: Int, colorLevels: List<Pair<Int, Int>>) =
-    circleLayer("mapbox-android-cluster-circle-$level", sourceId) {
+    circleLayer("mapbox-android-cluster-circle-layer-$level", sourceId) {
       circleColor(colorLevels[level].second)
       annotationConfig?.annotationSourceOptions?.clusterOptions?.circleRadius?.let {
         circleRadius(it)
       }
-      val pointCount = Expression.toNumber(get("point_count"))
+      val pointCount = Expression.toNumber(get(POINT_COUNT))
       filter(
         if (level == 0) all(
-          has("point_count"),
+          has(POINT_COUNT),
           gte(pointCount, literal(colorLevels[level].first.toLong()))
         ) else all(
-          has("point_count"),
+          has(POINT_COUNT),
           gt(pointCount, literal(colorLevels[level].first.toLong())),
           lt(pointCount, literal(colorLevels[level - 1].first.toLong()))
         )
       )
     }
 
-  private fun createClusterTextLayer() = symbolLayer("mapbox-android-cluster-text", sourceId) {
+  private fun createClusterTextLayer() = symbolLayer(CLUSTER_TEXT_LAYER_ID, sourceId) {
     annotationConfig?.annotationSourceOptions?.clusterOptions?.let {
-      textField(get(it.textField))
+      textField(Expression.fromRaw(it.textField))
       textSize(it.textSize)
       textColor(it.textColor)
       textIgnorePlacement(true)
@@ -585,5 +585,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
      * Tag for log
      */
     private const val TAG = "AnnotationManagerImpl"
+    private const val POINT_COUNT = "point_count"
+    private const val CLUSTER_TEXT_LAYER_ID = "mapbox-android-cluster-text-layer"
   }
 }
