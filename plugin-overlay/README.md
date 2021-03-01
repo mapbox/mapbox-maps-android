@@ -6,7 +6,7 @@ The Mapbox MapOverlay Plugin for Android is an public library for adding overlay
 
 A full overview of classes and interfaces can be found in our [API documentation](https://docs.mapbox.com/android/beta/maps/guides/).
 
-![MapOverlay-plugin](![](https://user-images.githubusercontent.com/8577318/98535135-8f68b000-22c0-11eb-9b09-c4f4f8664745.gif)
+![MapOverlay-plugin](https://user-images.githubusercontent.com/8577318/98535135-8f68b000-22c0-11eb-9b09-c4f4f8664745.gif)
 
 ### Getting Started
 
