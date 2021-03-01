@@ -57,7 +57,6 @@ androidExtensions {
 dependencies {
   implementation(project(":sdk"))
   implementation(project(":plugin-location"))
-  implementation(project(":extension-observable"))
   implementation(Dependencies.kotlin)
   implementation(Dependencies.mapboxJavaTurf)
   implementation(Dependencies.mapboxJavaGeoJSON)
