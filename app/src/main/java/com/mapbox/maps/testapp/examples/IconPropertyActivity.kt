@@ -47,7 +47,7 @@ class IconPropertyActivity : AppCompatActivity() {
           // Expression that adds conditions to the source to determine styling.
           // `POITYPE` refers to a key in the data source. The values tell us which icon to use from the sprite sheet
           iconImage(
-            Expression.switchCase {
+           switchCase {
               eq {
                 get {
                   literal(ICON_KEY)
