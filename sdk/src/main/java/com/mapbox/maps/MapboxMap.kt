@@ -1041,6 +1041,21 @@ class MapboxMap internal constructor(
   }
 
   /**
+   * Calculates target point where camera should move after drag. The method should be called after `dragStart` and before `dragEnd`.
+   *
+   * @param fromPoint The point to drag the map from, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
+   * @param toPoint The point to drag the map to, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
+   *
+   * @return Returns the camera options object showing end point
+   */
+  override fun dragGetCameraOptions(
+    fromPoint: ScreenCoordinate,
+    toPoint: ScreenCoordinate,
+  ): CameraOptions {
+    return nativeMapWeakRef.call { this.dragGetCameraOptions(fromPoint, toPoint) }
+  }
+
+  /**
    * Is terrain enabled for loaded style of the map.
    * @return True if terrain is enabled for given style and false otherwise.
    */

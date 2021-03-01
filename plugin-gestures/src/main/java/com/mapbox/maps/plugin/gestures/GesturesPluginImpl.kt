@@ -11,6 +11,7 @@ import android.view.InputDevice
 import android.view.MotionEvent
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.android.gestures.*
+import com.mapbox.common.Logger
 import com.mapbox.maps.AnimationOptions
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
@@ -1199,11 +1200,21 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         (velocityXY / 7.0 / pitchFactor + ANIMATION_DURATION_FLING_BASE).toLong()
 
       if (mapTransformDelegate.terrainEnabled()) {
-        mapTransformDelegate.drag(
+        val options = mapTransformDelegate.dragGetCameraOptions(
           centerScreen,
-          ScreenCoordinate(centerScreen.x + offsetX, centerScreen.y + offsetY),
-          AnimationOptions.Builder().duration(animationTime).build()
+          ScreenCoordinate(centerScreen.x + offsetX, centerScreen.y + offsetY)
         )
+        cameraAnimationsPlugin.easeTo(
+          options,
+          mapAnimationOptions {
+            duration(animationTime)
+          }
+        )
+//        mapTransformDelegate.drag(
+//          centerScreen,
+//          ScreenCoordinate(centerScreen.x + offsetX, centerScreen.y + offsetY),
+//          AnimationOptions.Builder().duration(animationTime).build()
+//        )
       } else {
         // update transformation
         cameraAnimationsPlugin.moveBy(
@@ -1253,11 +1264,19 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         ScreenCoordinate((-distanceX).toDouble(), (-distanceY).toDouble())
       }
       if (mapTransformDelegate.terrainEnabled()) {
-        mapTransformDelegate.drag(
+        val options = mapTransformDelegate.dragGetCameraOptions(
           centerScreen,
-          ScreenCoordinate(centerScreen.x + offset.x, centerScreen.y + offset.y),
-          null
+          ScreenCoordinate(centerScreen.x + offset.x, centerScreen.y + offset.y)
         )
+        cameraAnimationsPlugin.easeTo(
+          options,
+          immediateCameraJumpOptions
+        )
+//        mapTransformDelegate.drag(
+//          centerScreen,
+//          ScreenCoordinate(centerScreen.x + offset.x, centerScreen.y + offset.y),
+//          null
+//        )
       } else {
         val target = cameraAnimationsPlugin.calculateMoveBy(offset)
         target?.let {

@@ -153,4 +153,17 @@ interface MapTransformDelegate {
     toPoint: ScreenCoordinate,
     animation: AnimationOptions?
   )
+
+  /**
+   * Calculates target point where camera should move after drag. The method should be called after `dragStart` and before `dragEnd`.
+   *
+   * @param fromPoint The point to drag the map from, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
+   * @param toPoint The point to drag the map to, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
+   *
+   * @return Returns the camera options object showing end point
+   */
+  fun dragGetCameraOptions(
+    fromPoint: ScreenCoordinate,
+    toPoint: ScreenCoordinate,
+  ): CameraOptions
 }

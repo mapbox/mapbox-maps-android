@@ -54,6 +54,13 @@ internal class NativeMapImpl(private val map: MapInterface) :
     map.dragEnd()
   }
 
+  override fun dragGetCameraOptions(
+    fromPoint: ScreenCoordinate,
+    toPoint: ScreenCoordinate,
+  ): CameraOptions {
+    return map.dragGetCameraOptions(fromPoint, toPoint)
+  }
+
   override fun drag(
     fromPoint: ScreenCoordinate,
     toPoint: ScreenCoordinate,
