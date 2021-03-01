@@ -31,10 +31,8 @@ object MapAttributeParser {
     if (glyphsMode != NO_GLYPHS_RASTERIZED_LOCALLY) {
       fontFamily = FontUtils.extractValidFont(attrs.getString(R.styleable.mapbox_MapView_mapbox_mapFontFamily))
     }
-    val mapMode = attrs.getInt(R.styleable.mapbox_MapView_mapbox_mapMapMode, 0)
     val viewportMode = attrs.getInt(R.styleable.mapbox_MapView_mapbox_mapViewportMode, 0)
     return MapOptions.Builder()
-      .mapMode(MapMode.values()[mapMode])
       .contextMode(ContextMode.values()[contextMode])
       .constrainMode(ConstrainMode.values()[constrain])
       .viewportMode(ViewportMode.values()[viewportMode])

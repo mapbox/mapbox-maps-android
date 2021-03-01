@@ -46,7 +46,6 @@ class MapAttributeParserTest {
       GlyphsRasterizationMode.IDEOGRAPHS_RASTERIZED_LOCALLY,
       mapOptions.glyphsRasterizationOptions!!.rasterizationMode,
     )
-    assertEquals(MapMode.CONTINUOUS, mapOptions.mapMode)
     assertEquals(NorthOrientation.UPWARDS, mapOptions.orientation)
     assertEquals(99.0f, mapOptions.pixelRatio)
     assertEquals(null, mapOptions.size)
@@ -142,24 +141,6 @@ class MapAttributeParserTest {
     assertEquals(
       false,
       MapAttributeParser.parseMapOptions(typedArray, 99.0f).crossSourceCollisions
-    )
-  }
-
-  @Test
-  fun mapModeContinuous() {
-    every { typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapMapMode, 0) } returns 0
-    assertEquals(
-      MapMode.CONTINUOUS,
-      MapAttributeParser.parseMapOptions(typedArray, 99.0f).mapMode
-    )
-  }
-
-  @Test
-  fun mapModeStatic() {
-    every { typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapMapMode, 0) } returns 1
-    assertEquals(
-      MapMode.STATIC,
-      MapAttributeParser.parseMapOptions(typedArray, 99.0f).mapMode
     )
   }
 

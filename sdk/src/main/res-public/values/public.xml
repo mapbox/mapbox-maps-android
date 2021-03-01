@@ -18,9 +18,6 @@
     <!-- The size of the cache. -->
     <public name="mapbox_resourcesCacheSize" type="attr" />
 
-    <!-- The map rendering mode. By default, it is set to Continuous so the map will render as data arrives from the network and react immediately to state changes. -->
-    <public name="mapbox_mapMapMode" type="attr" />
-
     <!-- The map context mode. This can be used to optimizations if we know that the drawing context is not shared with other code. -->
     <public name="mapbox_mapContextMode" type="attr" />
 
