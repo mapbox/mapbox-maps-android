@@ -41,6 +41,9 @@ class IconPropertyActivity : AppCompatActivity() {
         }
         // Create a symbol layer and access the layer contained.
         +symbolLayer(LAYER_ID, SOURCE_ID) {
+          // Access the layer that contains the Point of Interest (POI) data.
+          // The source layer property is a unique identifier for a layer within a vector tile source.
+          sourceLayer("Yosemite_POI-38jhes")
           // Expression that adds conditions to the source to determine styling.
           // `POITYPE` refers to a key in the data source. The values tell us which icon to use from the sprite sheet
           iconImage(
