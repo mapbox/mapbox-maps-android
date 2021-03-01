@@ -43,6 +43,18 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
+            android:name=".examples.MapboxStudioStyleActivity"
+            android:description="@string/description_studio_style_map"
+            android:exported="true"
+            android:label="@string/activity_studio_style">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_basic" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
+        <activity
             android:name=".examples.MapOverlayActivity"
             android:description="@string/description_map_overlay"
             android:exported="true"

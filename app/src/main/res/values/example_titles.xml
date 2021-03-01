@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="activity_simple_map">Simple map</string>
+    <string name="activity_studio_style">Mapbox Studio style</string>
     <string name="activity_runtime_styling">Runtime styling</string>
     <string name="activity_tint_fill">Tint Fill Layer</string>
     <string name="activity_model_layer">Model Layer</string>
