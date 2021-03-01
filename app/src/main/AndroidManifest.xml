@@ -308,6 +308,18 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
+            android:name=".examples.IconPropertyActivity"
+            android:description="@string/description_icon_property"
+            android:exported="true"
+            android:label="@string/activity_icon_property">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_styles" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
+        <activity
             android:name=".examples.LocationModesActivity"
             android:description="@string/description_location_modes"
             android:exported="true"
