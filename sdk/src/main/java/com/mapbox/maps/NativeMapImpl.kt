@@ -484,18 +484,6 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.addStyleCustomGeometrySource(sourceId, options)
   }
 
-  override fun renderStill(stillImageCallback: StillImageCallback) {
-    map.renderStill(stillImageCallback)
-  }
-
-  override fun renderStill(
-    cameraOptions: CameraOptions,
-    debugOptions: MutableList<MapDebugOptions>,
-    stillImageCallback: StillImageCallback
-  ) {
-    map.renderStill(cameraOptions, debugOptions, stillImageCallback)
-  }
-
   override fun addStyleImage(
     imageId: String,
     scale: Float,

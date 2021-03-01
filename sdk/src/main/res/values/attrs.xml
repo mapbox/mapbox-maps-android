@@ -1,12 +1,5 @@
 <resources>
     <declare-styleable name="mapbox_MapView">
-        <!-- The map rendering mode. By default, it is set to Continuous so the map will render as data arrives from the network and react immediately to state changes. -->
-        <attr name="mapbox_mapMapMode" format="enum">
-            <!-- Continuously updating map. -->
-            <enum name="continuous_mode" value="0" />
-            <!-- A once-off still image of an arbitrary viewport. -->
-            <enum name="static_mode" value="1" />
-        </attr>
         <!-- The map context mode. This can be used to optimizations if we know that the drawing context is not shared with other code. -->
         <attr name="mapbox_mapContextMode" format="enum">
             <!-- Unique context mode: in OpenGL, the GL context is not shared, thus we can retain knowledge about the GL state from a previous render pass. It also enables clearing the screen using glClear for the bottommost background layer when no pattern is applied to that layer. -->
