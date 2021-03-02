@@ -20,6 +20,7 @@
     <string name="activity_map_multi">Multi map fragments</string>
     <string name="activity_debug_mode">Debug mode</string>
     <string name="activity_fill_extrusion">Building layer with FillExtrusions</string>
+    <string name="activity_icon_property">Setting Icon using a Property</string>
     <string name="activity_snapshotter">Basic MapSnapshotter</string>
     <string name="activity_snapshotter_dds">DDS MapSnapshotter</string>
     <string name="activity_snapshotter_local">Local Style MapSnapshotter</string>
