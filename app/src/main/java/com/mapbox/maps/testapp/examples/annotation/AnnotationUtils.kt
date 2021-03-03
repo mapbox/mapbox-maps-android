@@ -4,9 +4,12 @@ import android.content.Context
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.Style
+import java.io.BufferedInputStream
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
 import java.nio.charset.Charset
 import java.util.*
 
@@ -93,6 +96,29 @@ object AnnotationUtils {
     } catch (e: IOException) {
       Logger.e(TAG, "Unable to parse $fileName")
       null
+    }
+  }
+
+  /**
+   * Load the string content from net
+   *
+   * @param url the url of the file to load
+   */
+  fun loadStringFromNet(url: String): String? {
+    val urlConnection: HttpURLConnection = URL(url).openConnection() as HttpURLConnection
+    return try {
+      val inputStream = BufferedInputStream(urlConnection.inputStream)
+      val rd = BufferedReader(InputStreamReader(inputStream, Charset.forName("UTF-8")))
+      val sb = StringBuilder()
+      rd.forEachLine {
+        sb.append(it)
+      }
+      sb.toString()
+    } catch (e: IOException) {
+      Logger.e(TAG, "Unable to download $url")
+      null
+    } finally {
+      urlConnection.disconnect()
     }
   }
 }

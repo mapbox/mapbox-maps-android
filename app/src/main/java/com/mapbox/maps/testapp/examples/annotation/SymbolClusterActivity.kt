@@ -2,7 +2,9 @@ package com.mapbox.maps.testapp.examples.annotation
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxMap
@@ -41,6 +43,7 @@ class SymbolClusterActivity : AppCompatActivity(), CoroutineScope {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_annotation)
+    progress.visibility = View.VISIBLE
     mapboxMap = mapView.getMapboxMap()
       .apply {
         jumpTo(
@@ -78,15 +81,23 @@ class SymbolClusterActivity : AppCompatActivity(), CoroutineScope {
 
   private fun loadData() {
     if (options == null) {
-      options = createRandomPoints().map {
-        SymbolOptions()
-          .withGeometry(it)
-          .withIconImage(ICON_FIRE_STATION)
+      AnnotationUtils.loadStringFromNet(POINTS_URL)?.let {
+        FeatureCollection.fromJson(it).features()?.let { features ->
+          features.shuffle()
+          options = features.take(AMOUNT).map { feature ->
+            SymbolOptions()
+              .withGeometry((feature.geometry() as Point))
+              .withIconImage(ICON_FIRE_STATION)
+          }
+        }
       }
     }
     symbolManager?.deleteAll()
-    options?.let {
-      symbolManager?.create(it)
+    runOnUiThread {
+      options?.let {
+        symbolManager?.create(it)
+      }
+      progress.visibility = View.GONE
     }
   }
 
@@ -138,5 +149,7 @@ class SymbolClusterActivity : AppCompatActivity(), CoroutineScope {
     private const val LONGITUDE_BOUND = -76.90841674804688
     private const val LATITUDE_ORIGIN = 38.799584013897054
     private const val LATITUDE_BOUND = 38.992237864985896
+    private const val POINTS_URL =
+      "https://opendata.arcgis.com/datasets/01d0ff375695466d93d1fa2a976e2bdd_5.geojson"
   }
 }
