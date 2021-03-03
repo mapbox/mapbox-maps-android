@@ -3,6 +3,7 @@ package com.mapbox.maps.testapp.examples
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.Style
@@ -30,7 +31,9 @@ class SecondaryDisplayActivity : AppCompatActivity() {
           bitmap(BitmapFactory.decodeResource(resources, R.drawable.red_marker))
           // Note: The default scale doesn't work with secondary displays.
           // we need to manually set the scale to the pixel for the current context
-          scale(this@SecondaryDisplayActivity.resources.displayMetrics.density)
+          scale(1.0f / this@SecondaryDisplayActivity.resources.displayMetrics.density)
+          Logger.e("testtest", "SecondaryDisplayActivity, scale: ${this@SecondaryDisplayActivity.resources.displayMetrics.density}")
+          Logger.e("testtest", "SecondaryDisplayActivity, scale: ${1.0f / this@SecondaryDisplayActivity.resources.displayMetrics.density}")
         }
         +geoJsonSource(SOURCE_ID) {
           geometry(HELSINKI)

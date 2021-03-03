@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.Style
@@ -37,6 +38,7 @@ class MultiDisplayActivity : AppCompatActivity() {
       style(Style.DARK) {
         +image(IMAGE_ID) {
           bitmap(BitmapFactory.decodeResource(resources, R.drawable.red_marker))
+          Logger.e("testtest", "MultiDisplayActivity, scale: ${this@MultiDisplayActivity.resources.displayMetrics.density}")
         }
         +geoJsonSource(SOURCE_ID) {
           geometry(HELSINKI)
