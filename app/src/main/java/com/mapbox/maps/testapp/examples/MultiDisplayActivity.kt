@@ -15,6 +15,7 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.image.image
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
+import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
@@ -45,6 +46,8 @@ class MultiDisplayActivity : AppCompatActivity() {
         }
         +symbolLayer(LAYER_ID, SOURCE_ID) {
           iconImage(IMAGE_ID)
+          iconAnchor(IconAnchor.BOTTOM)
+          textField("Helsinki")
           iconAllowOverlap(true)
         }
       }
@@ -62,6 +65,7 @@ class MultiDisplayActivity : AppCompatActivity() {
     val cameraOption = CameraOptions.Builder()
       .center(HELSINKI)
       .zoom(ZOOM)
+      .pitch(60.0)
       .build()
 
     mapView.getMapboxMap().flyTo(

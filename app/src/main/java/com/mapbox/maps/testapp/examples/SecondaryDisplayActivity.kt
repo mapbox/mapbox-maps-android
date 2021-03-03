@@ -9,6 +9,7 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.image.image
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
+import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
@@ -31,15 +32,16 @@ class SecondaryDisplayActivity : AppCompatActivity() {
           bitmap(BitmapFactory.decodeResource(resources, R.drawable.red_marker))
           // Note: The default scale doesn't work with secondary displays.
           // we need to manually set the scale to the pixel for the current context
-          scale(1.0f / this@SecondaryDisplayActivity.resources.displayMetrics.density)
+          scale(this@SecondaryDisplayActivity.resources.displayMetrics.density)
           Logger.e("testtest", "SecondaryDisplayActivity, scale: ${this@SecondaryDisplayActivity.resources.displayMetrics.density}")
-          Logger.e("testtest", "SecondaryDisplayActivity, scale: ${1.0f / this@SecondaryDisplayActivity.resources.displayMetrics.density}")
         }
         +geoJsonSource(SOURCE_ID) {
           geometry(HELSINKI)
         }
         +symbolLayer(LAYER_ID, SOURCE_ID) {
           iconImage(IMAGE_ID)
+          iconAnchor(IconAnchor.BOTTOM)
+          textField("Helsinki")
           iconAllowOverlap(true)
         }
       }
@@ -53,6 +55,7 @@ class SecondaryDisplayActivity : AppCompatActivity() {
     val cameraOption = CameraOptions.Builder()
       .center(HELSINKI)
       .zoom(ZOOM)
+      .pitch(60.0)
       .build()
 
     mapView.getMapboxMap().flyTo(
