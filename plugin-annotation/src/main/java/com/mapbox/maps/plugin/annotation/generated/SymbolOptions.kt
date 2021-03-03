@@ -189,7 +189,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * Font stack to use for displaying text.
    */
-  var textFont: List<String>? = null
+  var textFont: List<String> = listOf("Open Sans Regular", "Arial Unicode MS Regular")
 
   /**
    * Set text-font to initialise the symbol with.
