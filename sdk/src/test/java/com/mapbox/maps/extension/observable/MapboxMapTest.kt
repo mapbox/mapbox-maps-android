@@ -50,7 +50,7 @@ class MapboxMapTest {
       Error("not-found", "error message")
     )
 
-    val eventData = event.getEventData()
+    val eventData = event.getResourceEventData()
     assertEquals("network", eventData.dataSource)
     assertEquals(false, eventData.cancelled)
     assertEquals(request, eventData.request)

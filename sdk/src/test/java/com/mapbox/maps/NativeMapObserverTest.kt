@@ -16,13 +16,13 @@ import org.robolectric.annotation.Config
 class NativeMapObserverTest {
 
   private val mainHandler = mockk<Handler>()
-  private lateinit var mapObserver: NativeMapObserver
+  private lateinit var mapObserver: NativeObserver
   private val runnableSlot = slot<Runnable>()
 
   @Before
   fun setUp() {
     every { mainHandler.post(capture(runnableSlot)) } returns true
-    mapObserver = NativeMapObserver(mainHandler)
+    mapObserver = NativeObserver(mainHandler)
   }
 
   @Test

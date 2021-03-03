@@ -31,7 +31,7 @@ import java.util.*
  */
 class MapboxMap internal constructor(
   nativeMap: MapInterface,
-  private val mapObserver: NativeMapObserver,
+  private val nativeObserver: NativeObserver,
   private val pixelRatio: Float
 ) : MapTransformDelegate,
   MapProjectionDelegate,
@@ -179,13 +179,11 @@ class MapboxMap internal constructor(
     onMapLoadErrorListener?.let {
       addOnMapLoadErrorListener(it)
     }
-    addOnMapChangedListener(
-      object : OnMapChangedListener {
-        override fun onMapChange(mapChange: MapChange) {
-          if (mapChange == MapChange.DID_FINISH_LOADING_STYLE) {
-            onFinishLoadingStyle(onStyleLoaded, onMapLoadErrorListener)
-            removeOnMapChangedListener(this)
-          }
+    addOnStyleLoadingFinishedListener(
+      object : OnStyleLoadingFinishedListener {
+        override fun onStyleLoadingFinished() {
+          onFinishLoadingStyle(onStyleLoaded, onMapLoadErrorListener)
+          removeOnStyleLoadingFinishedListener(this)
         }
       }
     )
@@ -204,10 +202,10 @@ class MapboxMap internal constructor(
       onStyleLoaded?.onStyleLoaded(style)
 
       // notify style getters
-      for (styleGetter in mapObserver.awaitingStyleGetters) {
+      for (styleGetter in nativeObserver.awaitingStyleGetters) {
         styleGetter.onStyleLoaded(style)
       }
-      mapObserver.awaitingStyleGetters.clear()
+      nativeObserver.awaitingStyleGetters.clear()
     }
     onMapLoadErrorListener?.let {
       addOnMapLoadErrorListener(it)
@@ -226,11 +224,11 @@ class MapboxMap internal constructor(
         onStyleLoaded.onStyleLoaded(style)
       } else {
         // style load is occurring now, add callback
-        mapObserver.awaitingStyleGetters.add(onStyleLoaded)
+        nativeObserver.awaitingStyleGetters.add(onStyleLoaded)
       }
     } else {
       // no style has loaded yet, add callback
-      mapObserver.awaitingStyleGetters.add(onStyleLoaded)
+      nativeObserver.awaitingStyleGetters.add(onStyleLoaded)
     }
   }
 
@@ -866,103 +864,208 @@ class MapboxMap internal constructor(
   }
 
   /**
-   * Add a listener that's going to be invoked whenever map state changes.
-   */
-  override fun addOnMapChangedListener(onMapChangeListener: OnMapChangedListener) {
-    mapObserver.addOnMapChangedListener(onMapChangeListener)
-  }
-
-  /**
-   * Remove the map change listener.
-   */
-  override fun removeOnMapChangedListener(onMapChangedListener: OnMapChangedListener) {
-    mapObserver.removeOnMapChangedListener(onMapChangedListener)
-  }
-
-  /**
-   * Add a listener that's going to be invoked whenever a map load error occurs.
-   */
-  override fun addOnMapLoadErrorListener(onMapLoadErrorListener: OnMapLoadErrorListener) {
-    mapObserver.addOnMapLoadErrorListener(onMapLoadErrorListener)
-  }
-
-  /**
-   * Remove the map load error listener.
-   */
-  override fun removeOnMapLoadErrorListener(onMapLoadErrorListener: OnMapLoadErrorListener) {
-    mapObserver.removeOnMapLoadErrorListener(onMapLoadErrorListener)
-  }
-
-  /**
-   * Add a listener that's going to be invoked whenever frame finished rendering.
-   */
-  override fun addOnDidFinishRenderingFrameListener(onDidFinishRenderingFrameListener: OnDidFinishRenderingFrameListener) {
-    mapObserver.addOnDidFinishRenderingFrameListener(onDidFinishRenderingFrameListener)
-  }
-
-  /**
-   * Remove the finish rendering frame listener.
-   */
-  override fun removeOnDidFinishRenderingFrameListener(onDidFinishRenderingFrameListener: OnDidFinishRenderingFrameListener) {
-    mapObserver.removeOnDidFinishRenderingFrameListener(onDidFinishRenderingFrameListener)
-  }
-
-  /**
-   * Add a listener that's going to be invoked whenever the camera position changes.
-   * [OnCameraChangeListener.onCameraChanged] is not guaranteed to run on UI thread.
+   * Add a listener that's going to be invoked whenever map camera changes.
    */
   override fun addOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener) {
-    mapObserver.addOnCameraChangeListener(onCameraChangeListener)
+    nativeObserver.addOnCameraChangeListener(onCameraChangeListener)
   }
 
   /**
    * Remove the camera change listener.
-   * [OnCameraChangeListener.onCameraChanged] is not guaranteed to run on UI thread.
    */
   override fun removeOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener) {
-    mapObserver.removeOnCameraChangeListener(onCameraChangeListener)
+    nativeObserver.removeOnCameraChangeListener(onCameraChangeListener)
+  }
+
+  // Map events
+  /**
+   * Add a listener that's going to be invoked whenever map has entered the idle state.
+   *
+   * The Map is in the idle state when there are no ongoing transitions and the Map has rendered all
+   * available tiles.
+   */
+  override fun addOnMapIdleListener(onMapIdleListener: OnMapIdleListener) {
+    nativeObserver.addOnMapIdleListener(onMapIdleListener)
   }
 
   /**
-   * Add a listener that's going to be invoked whenever a source changes.
+   * Remove the map idle listener.
+   */
+  override fun removeOnMapIdleListener(onMapIdleListener: OnMapIdleListener) {
+    nativeObserver.removeOnMapIdleListener(onMapIdleListener)
+  }
+
+  /**
+   * Add a listener that's going to be invoked whenever there's a map load error.
+   */
+  override fun addOnMapLoadErrorListener(onMapLoadErrorListener: OnMapLoadErrorListener) {
+    nativeObserver.addOnMapLoadErrorListener(onMapLoadErrorListener)
+  }
+
+  /**
+   * Remove the map error listener.
+   */
+  override fun removeOnMapLoadErrorListener(onMapLoadErrorListener: OnMapLoadErrorListener) {
+    nativeObserver.removeOnMapLoadErrorListener(onMapLoadErrorListener)
+  }
+
+  /**
+   * Add a listener that's going to be invoked whenever the Map's style has been fully loaded, and
+   * the Map has rendered all visible tiles.
+   */
+  override fun addOnMapLoadingFinishedListener(onMapLoadingFinishedListener: OnMapLoadingFinishedListener) {
+    nativeObserver.addOnMapLoadingFinishedListener(onMapLoadingFinishedListener)
+  }
+
+  /**
+   * Remove the map loading finished listener.
+   */
+  override fun removeOnMapLoadingFinishedListener(onMapLoadingFinishedListener: OnMapLoadingFinishedListener) {
+    nativeObserver.removeOnMapLoadingFinishedListener(onMapLoadingFinishedListener)
+  }
+
+  // Render frame events
+  /**
+   * Add a listener that's going to be invoked whenever the Map started rendering a frame.
+   */
+  override fun addOnRenderFrameStartedListener(onRenderFrameStartedListener: OnRenderFrameStartedListener) {
+    nativeObserver.addOnRenderFrameStartedListener(onRenderFrameStartedListener)
+  }
+
+  /**
+   * Remove the render frame started listener.
+   */
+  override fun removeOnRenderFrameStartedListener(onRenderFrameStartedListener: OnRenderFrameStartedListener) {
+    nativeObserver.removeOnRenderFrameStartedListener(onRenderFrameStartedListener)
+  }
+
+  /**
+   * Add a listener that's going to be invoked whenever the Map finished rendering a frame.
+   *
+   * The render-mode value tells whether the Map has all data ("full") required to render the visible viewport.
+   * The needs-repaint value provides information about ongoing transitions that trigger Map repaint.
+   * The placement-changed value tells if the symbol placement has been changed in the visible viewport.
+   */
+  override fun addOnRenderFrameFinishedListener(onRenderFrameFinishedListener: OnRenderFrameFinishedListener) {
+    nativeObserver.addOnRenderFrameFinishedListener(onRenderFrameFinishedListener)
+  }
+
+  /**
+   * Remove the render frame finished listener.
+   */
+  override fun removeOnRenderFrameFinishedListener(onRenderFrameFinishedListener: OnRenderFrameFinishedListener) {
+    nativeObserver.removeOnRenderFrameFinishedListener(onRenderFrameFinishedListener)
+  }
+
+  // Source events
+  /**
+   * Add a listener that's going to be invoked whenever a source has been added with StyleManager#addStyleSource
+   * runtime API.
+   */
+  override fun addOnSourceAddedListener(onSourceAddedListener: OnSourceAddedListener) {
+    nativeObserver.addOnSourceAddedListener(onSourceAddedListener)
+  }
+
+  /**
+   * Remove the source added listener.
+   */
+  override fun removeOnSourceAddedListener(onSourceAddedListener: OnSourceAddedListener) {
+    nativeObserver.removeOnSourceAddedListener(onSourceAddedListener)
+  }
+
+  /**
+   * Add a listener that's going to be invoked whenever a source has been changed.
    */
   override fun addOnSourceChangeListener(onSourceChangeListener: OnSourceChangeListener) {
-    mapObserver.addOnSourceChangeListener(onSourceChangeListener)
+    nativeObserver.addOnSourceChangeListener(onSourceChangeListener)
   }
 
   /**
    * Remove the source change listener.
    */
   override fun removeOnSourceChangeListener(onSourceChangeListener: OnSourceChangeListener) {
-    mapObserver.removeOnSourceChangeListener(onSourceChangeListener)
+    nativeObserver.removeOnSourceChangeListener(onSourceChangeListener)
   }
 
   /**
-   * Add a listener that's going to be invoked whenever style image state changes.
+   * Add a listener that's going to be invoked whenever a source has been removed with StyleManager#removeStyleSource
+   * runtime API.
    */
-  override fun addOnStyleImageChangeListener(onStyleImageChangeListener: OnStyleImageChangeListener) {
-    mapObserver.addOnStyleImageChangeListener(onStyleImageChangeListener)
+  override fun addOnSourceRemovedListener(onSourceRemovedListener: OnSourceRemovedListener) {
+    nativeObserver.addOnSourceRemovedListener(onSourceRemovedListener)
   }
 
   /**
-   * Remove the style image change listener.
+   * Remove the source removed listener.
    */
-  override fun removeOnStyleImageChangeListener(onStyleImageChangeListener: OnStyleImageChangeListener) {
-    mapObserver.removeOnStyleImageChangeListener(onStyleImageChangeListener)
+  override fun removeOnSourceRemovedListener(onSourceRemovedListener: OnSourceRemovedListener) {
+    nativeObserver.removeOnSourceRemovedListener(onSourceRemovedListener)
+  }
+
+  // Style events
+  /**
+   * Add a listener that's going to be invoked whenever the requested style has been loaded, not
+   * including the style specified sprite sheet and sources' descriptions.
+   *
+   * This event may be useful when application needs to modify style layers and add or remove sources
+   * before style is fully loaded.
+   */
+  override fun addOnStyleLoadingFinishedListener(onStyleLoadingFinishedListener: OnStyleLoadingFinishedListener) {
+    nativeObserver.addOnStyleLoadingFinishedListener(onStyleLoadingFinishedListener)
   }
 
   /**
-   * Add a listener that's going to be invoked whenever the map finished rendering.
+   * Remove the style loading finished listener
    */
-  override fun addOnDidFinishRenderingMapListener(onDidFinishRenderingMapListener: OnDidFinishRenderingMapListener) {
-    mapObserver.addOnDidFinishRenderingMapListener(onDidFinishRenderingMapListener)
+  override fun removeOnStyleLoadingFinishedListener(onStyleLoadingFinishedListener: OnStyleLoadingFinishedListener) {
+    nativeObserver.removeOnStyleLoadingFinishedListener(onStyleLoadingFinishedListener)
   }
 
   /**
-   * Remove the did finish rendering map listener.
+   * Add a listener that's going to be invoked whenever the requested style has been fully loaded,
+   * including the style specified sprite and sources.
    */
-  override fun removeOnDidFinishRenderingMapListener(onDidFinishRenderingMapListener: OnDidFinishRenderingMapListener) {
-    mapObserver.removeOnDidFinishRenderingMapListener(onDidFinishRenderingMapListener)
+  override fun addOnStyleFullyLoadedListener(onStyleFullyLoadedListener: OnStyleFullyLoadedListener) {
+    nativeObserver.addOnStyleFullyLoadedListener(onStyleFullyLoadedListener)
+  }
+
+  /**
+   * Remove the style fully loaded listener.
+   */
+  override fun removeOnStyleFullyLoadedListener(onStyleFullyLoadedListener: OnStyleFullyLoadedListener) {
+    nativeObserver.removeOnStyleFullyLoadedListener(onStyleFullyLoadedListener)
+  }
+
+  /**
+   * Add a listener that's going to be invoked whenever a style has a missing image.
+   *
+   * This event is emitted when the Map renders visible tiles and one of the required images is
+   * missing in the sprite sheet.
+   */
+  override fun addOnStyleImageMissingListener(onStyleImageMissingListener: OnStyleImageMissingListener) {
+    nativeObserver.addOnStyleImageMissingListener(onStyleImageMissingListener)
+  }
+
+  /**
+   * Remove the style image missing listener.
+   */
+  override fun removeOnStyleImageMissingListener(onStyleImageMissingListener: OnStyleImageMissingListener) {
+    nativeObserver.removeOnStyleImageMissingListener(onStyleImageMissingListener)
+  }
+
+  /**
+   * Add a listener that's going to be invoked whenever an image added to the Style is no longer
+   * needed and can be removed using StyleManager#removeStyleImage method.
+   */
+  override fun addOnStyleImageUnusedListener(onStyleImageUnusedListener: OnStyleImageUnusedListener) {
+    nativeObserver.addOnStyleImageUnusedListener(onStyleImageUnusedListener)
+  }
+
+  /**
+   * Remove the style image unused listener.
+   */
+  override fun removeOnStyleImageUnusedListener(onStyleImageUnusedListener: OnStyleImageUnusedListener) {
+    nativeObserver.removeOnStyleImageUnusedListener(onStyleImageUnusedListener)
   }
 
   /**

@@ -19,7 +19,7 @@ import java.lang.ref.WeakReference
 class MapboxMapTest {
 
   private val nativeMap: CustomMapInterface = mockk(relaxed = true)
-  private val mapObserver: NativeMapObserver = mockk(relaxed = true)
+  private val mapObserver: NativeObserver = mockk(relaxed = true)
 
   private lateinit var mapboxMap: MapboxMap
 

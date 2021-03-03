@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.mapbox.common.Logger
 import com.mapbox.maps.*
-import com.mapbox.maps.extension.observable.getEventData
+import com.mapbox.maps.extension.observable.getResourceEventData
 import com.mapbox.maps.extension.observable.subscribeResourceRequest
 import com.mapbox.maps.extension.observable.unsubscribeResourceRequest
 import com.mapbox.maps.plugin.compass.getCompassPlugin
@@ -24,7 +24,7 @@ class DebugModeActivity : AppCompatActivity() {
   private val debugOptions: MutableList<MapDebugOptions> = mutableListOf()
   private val extensionObservable = object : Observer() {
     override fun notify(event: Event) {
-      val data = event.getEventData()
+      val data = event.getResourceEventData()
       Logger.i(
         TAG,
         "extensionObservable DataSource: ${data.dataSource}\nRequest: ${data.request}\nResponse: ${data.response}\nCancelled: ${data.cancelled}"

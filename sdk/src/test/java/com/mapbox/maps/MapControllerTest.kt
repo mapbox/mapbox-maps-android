@@ -22,7 +22,7 @@ class MapControllerTest {
 
   private val renderer: MapboxRenderer = mockk(relaxUnitFun = true)
 
-  private val mapObserver: NativeMapObserver = mockk(relaxUnitFun = true)
+  private val mapObserver: NativeObserver = mockk(relaxUnitFun = true)
 
   private val nativeMap: CustomMapInterface = mockk(relaxUnitFun = true)
 

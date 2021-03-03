@@ -1632,7 +1632,6 @@ class LocationPluginImpl : LocationPlugin {
    */
   override fun onStyleLoading() {
     Logger.d(TAG, "onStartLoadingMap")
-    onStartLoadingMap()
   }
 
   /**
@@ -1640,6 +1639,7 @@ class LocationPluginImpl : LocationPlugin {
    */
   override fun onStyleChanged(styleDelegate: StyleManagerInterface) {
     Logger.d(TAG, "onStyleChanged")
+    onStartLoadingMap()
     onFinishLoadingStyle()
   }
 
