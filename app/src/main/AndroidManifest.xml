@@ -967,5 +967,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
         </activity>
+        <activity
+            android:name=".examples.compose.JetpackComposeExampleActivity"
+            android:description="@string/description_jetpack_compose"
+            android:exported="true"
+            android:label="@string/activity_jetpack_compose">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_lab" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
     </application>
 </manifest>
