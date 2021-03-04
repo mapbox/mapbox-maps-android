@@ -72,6 +72,12 @@ class SymbolActivity : AppCompatActivity() {
           val symbolOptions: SymbolOptions = SymbolOptions()
             .withPoint(Point.fromLngLat(AIRPORT_LONGITUDE, AIRPORT_LATITUDE))
             .withIconImage(it)
+            .withTextFont(
+              listOf(
+                "Arial Unicode MS Bold",
+                "Open Sans Regular"
+              )
+            )
             .withTextField(ID_ICON_AIRPORT)
             .withTextOffset(listOf(0.0, -2.0))
             .withTextColor(Color.RED)
