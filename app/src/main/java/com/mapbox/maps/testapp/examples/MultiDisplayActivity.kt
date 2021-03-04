@@ -3,12 +3,20 @@ package com.mapbox.maps.testapp.examples
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Color
 import android.hardware.display.DisplayManager
 import android.os.Build
 import android.os.Bundle
+import android.util.DisplayMetrics
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
@@ -18,9 +26,12 @@ import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
+import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.flyTo
+import com.mapbox.maps.plugin.locationcomponent.getLocationComponentPlugin
 import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.examples.SymbolBitmapGenerator.inflateStreetNameRootView
 import kotlinx.android.synthetic.main.activity_multi_display.*
 import kotlinx.android.synthetic.main.activity_simple_map.mapView
 
@@ -35,10 +46,32 @@ class MultiDisplayActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_multi_display)
+    val rootView = inflateStreetNameRootView(
+      this,
+      "Street Name",
+    )
+
+    SymbolBitmapGenerator.bitmap = SymbolBitmapGenerator.generate(rootView)
+
+    mapView.getLocationComponentPlugin().updateSettings {
+      enabled = true
+      locationPuck = LocationPuck2D(
+        bearingImage = AppCompatResources.getDrawable(
+          this@MultiDisplayActivity,
+          R.drawable.mapbox_user_puck_icon,
+        ),
+        shadowImage = AppCompatResources.getDrawable(
+          this@MultiDisplayActivity,
+          R.drawable.mapbox_user_icon_shadow,
+        )
+      )
+    }
+
     mapView.getMapboxMap().loadStyle(
       style(Style.DARK) {
         +image(IMAGE_ID) {
-          bitmap(BitmapFactory.decodeResource(resources, R.drawable.red_marker))
+          bitmap(SymbolBitmapGenerator.bitmap!!)
+          scale(this@MultiDisplayActivity.resources.displayMetrics.density)
           Logger.e("testtest", "MultiDisplayActivity, scale: ${this@MultiDisplayActivity.resources.displayMetrics.density}")
         }
         +geoJsonSource(SOURCE_ID) {
@@ -52,6 +85,10 @@ class MultiDisplayActivity : AppCompatActivity() {
         }
       }
     )
+
+    mapView.getLocationComponentPlugin().addOnIndicatorPositionChangedListener {
+      mapView.getMapboxMap().jumpTo(CameraOptions.Builder().center(it).build())
+    }
 
     displayOnSecondDisplayButton.setOnClickListener {
       displayMapInSecondaryScreen()
@@ -79,6 +116,11 @@ class MultiDisplayActivity : AppCompatActivity() {
   private fun displayMapInSecondaryScreen() {
     val displayManager = getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
     val displays = displayManager.displays
+    displays.forEach {
+      var metrics = DisplayMetrics()
+      it.getMetrics(metrics)
+      Logger.e("testtest", metrics.toString())
+    }
     if (displays.size > 1) {
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         // Use activity options to select the display screen.
@@ -123,4 +165,48 @@ class MultiDisplayActivity : AppCompatActivity() {
     private const val LAYER_ID = "symbol-layer-id"
     private const val SOURCE_ID = "source-id"
   }
+}
+
+object SymbolBitmapGenerator {
+  fun generate(view: View): Bitmap {
+    val measureSpec: Int = View.MeasureSpec.makeMeasureSpec(
+      0,
+      View.MeasureSpec.UNSPECIFIED
+    )
+    view.measure(measureSpec, measureSpec)
+    val measuredWidth: Int = view.measuredWidth
+    val measuredHeight: Int = view.measuredHeight
+    view.layout(0, 0, measuredWidth, measuredHeight)
+
+    val bitmap = Bitmap.createBitmap(
+      measuredWidth,
+      measuredHeight,
+      Bitmap.Config.ARGB_8888
+    )
+    bitmap.eraseColor(Color.TRANSPARENT)
+
+    val canvas = Canvas(bitmap)
+    view.draw(canvas)
+
+    return bitmap
+  }
+
+  fun inflateStreetNameRootView(
+    context: Context,
+    streetName: String?
+  ): View {
+
+    val rootView =
+      LayoutInflater.from(context).inflate(
+        R.layout.label_street_name_ic_view, null, false
+      )
+
+    val instructionStreetNameView =
+      rootView.findViewById<TextView>(R.id.label_street_name_view)
+    instructionStreetNameView.text = streetName
+
+    return rootView
+  }
+
+  var bitmap: Bitmap? = null
 }
