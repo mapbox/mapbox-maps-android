@@ -1,6 +1,7 @@
 package com.mapbox.maps
 
 import android.content.Context
+import android.os.Build
 import android.util.DisplayMetrics
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.plugin.*
@@ -16,7 +17,7 @@ import org.robolectric.annotation.Config
 import java.io.File
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
+@Config(shadows = [ShadowLogger::class], sdk = [Build.VERSION_CODES.O])
 class MapInitOptionsTest {
 
   private val context: Context = mockk(relaxUnitFun = true)

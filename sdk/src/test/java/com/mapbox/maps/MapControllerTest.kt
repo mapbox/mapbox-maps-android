@@ -1,6 +1,7 @@
 package com.mapbox.maps
 
 import android.graphics.Bitmap
+import android.os.Build
 import android.view.MotionEvent
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.loader.MapboxMapStaticInitializer
@@ -18,7 +19,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
+@Config(shadows = [ShadowLogger::class], sdk = [Build.VERSION_CODES.O])
 class MapControllerTest {
 
   private val renderer: MapboxRenderer = mockk(relaxUnitFun = true)

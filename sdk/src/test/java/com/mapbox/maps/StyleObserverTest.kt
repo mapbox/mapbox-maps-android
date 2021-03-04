@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import android.os.Build
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
 import com.mapbox.maps.plugin.delegates.listeners.eventdata.MapLoadErrorType
@@ -13,7 +14,7 @@ import org.robolectric.annotation.Config
 import java.lang.ref.WeakReference
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
+@Config(shadows = [ShadowLogger::class], sdk = [Build.VERSION_CODES.O])
 class StyleObserverTest {
 
   lateinit var map: WeakReference<MapInterface>

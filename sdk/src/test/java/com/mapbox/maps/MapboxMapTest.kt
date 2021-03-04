@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import android.os.Build
 import android.os.Looper
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
@@ -18,11 +19,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
+import org.robolectric.annotation.Config
 import org.robolectric.annotation.LooperMode
 import java.lang.ref.WeakReference
 
 @RunWith(RobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
+@Config(sdk = [Build.VERSION_CODES.O])
 class MapboxMapTest {
 
   private val nativeMap: MapInterface = mockk(relaxed = true)

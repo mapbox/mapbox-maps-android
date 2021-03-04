@@ -16,15 +16,22 @@ android {
     targetSdkVersion(AndroidVersions.targetSdkVersion)
     consumerProguardFiles("proguard-rules.pro")
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    testInstrumentationRunnerArguments = mapOf(
-      "clearPackageData" to "true"
-    )
+    testInstrumentationRunnerArguments["clearPackageData"] = "true"
 
     if (project.hasProperty("android.injected.invoked.from.ide")) {
       buildConfigField("boolean", "RUN_FROM_IDE", "true")
     } else {
       buildConfigField("boolean", "RUN_FROM_IDE", "false")
     }
+  }
+
+  compileOptions {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+  }
+
+  kotlinOptions {
+    jvmTarget = JavaVersion.VERSION_1_8.toString()
   }
 
   testOptions {

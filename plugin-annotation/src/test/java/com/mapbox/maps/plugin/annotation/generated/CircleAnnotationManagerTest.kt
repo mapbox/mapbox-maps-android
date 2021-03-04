@@ -4,6 +4,7 @@ package com.mapbox.maps.plugin.annotation.generated
 
 import android.graphics.Color
 import android.graphics.PointF
+import android.os.Build
 import android.view.View
 import com.mapbox.android.gestures.MoveDistancesObject
 import com.mapbox.android.gestures.MoveGestureDetector
@@ -19,12 +20,8 @@ import com.mapbox.maps.QueryFeaturesCallback
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
-import com.mapbox.maps.extension.style.layers.addLayer
-import com.mapbox.maps.extension.style.layers.addLayerBelow
 import com.mapbox.maps.extension.style.layers.generated.CircleLayer
-import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
-import com.mapbox.maps.extension.style.sources.getSource
 import com.mapbox.maps.plugin.annotation.*
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
@@ -41,10 +38,10 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowValueConverter::class, ShadowLogger::class])
+@Config(sdk = [Build.VERSION_CODES.O], shadows = [ShadowValueConverter::class, ShadowLogger::class])
 class CircleAnnotationManagerTest {
   private val delegateProvider: MapDelegateProvider = mockk()
-  private val style: StyleInterface = mockk()
+  private val style: StyleInterface = mockk(relaxed = true)
   private val mapCameraManagerDelegate: MapCameraManagerDelegate = mockk()
   private val mapFeatureQueryDelegate: MapFeatureQueryDelegate = mockk()
   private val gesturesPlugin: GesturesPlugin = mockk()
@@ -73,13 +70,16 @@ class CircleAnnotationManagerTest {
     val styleStateDelegate = mockk<MapStyleStateDelegate>()
     every { delegateProvider.styleStateDelegate } returns styleStateDelegate
     every { styleStateDelegate.isFullyLoaded() } returns true
-    every { style.addSource(any()) } just Runs
-    every { style.addLayer(any()) } just Runs
-    every { style.addLayerBelow(any(), any()) } just Runs
-    every { style.getSource(any()) } returns null
-    every { style.styleSourceExists(any()) } returns false
-    every { style.styleLayerExists(any()) } returns false
-    every { style.pixelRatio } returns 1.0f
+    val returnExpected = mockk<Expected<Void, String>>()
+    every { returnExpected.error } returns null
+    every { style.addStyleSource(any(), any()) } returns returnExpected
+    every { style.addStyleLayer(any(), any()) } returns returnExpected
+    val valueExpected = mockk<Expected<Value, String>>()
+    every { valueExpected.error } returns null
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
+    every { style.getStyleSourceProperties(any()) } returns valueExpected
+    every { style.setStyleLayerProperty(any(), any(), any()) } returns returnExpected
     every { style.getStyleImage(any()) } returns null
     every { gesturesPlugin.addOnMapClickListener(any()) } just Runs
     every { gesturesPlugin.addOnMapLongClickListener(any()) } just Runs
@@ -130,9 +130,7 @@ class CircleAnnotationManagerTest {
     verify { gesturesPlugin.addOnMapLongClickListener(any()) }
     verify { gesturesPlugin.addOnMoveListener(any()) }
     assertEquals(CircleAnnotation.ID_KEY, manager.getAnnotationIdKey())
-    verify { style.addLayer(any()) }
     manager = CircleAnnotationManager(mapView, delegateProvider, AnnotationConfig("test_layer"))
-    verify { style.addLayerBelow(any(), "test_layer") }
 
     manager.addClickListener(mockk())
     manager.addDragListener(mockk())

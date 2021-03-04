@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.attribution
 
 import android.graphics.Color
+import android.os.Build
 import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
@@ -15,7 +16,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
+@Config(sdk = [Build.VERSION_CODES.O], shadows = [ShadowLogger::class])
 class AttributionViewImplTest {
 
   private lateinit var attributionView: AttributionViewImpl
@@ -63,7 +64,7 @@ class AttributionViewImplTest {
   @Test
   fun setOnClickListener() {
     assertFalse(attributionView.hasOnClickListeners())
-    attributionView.setOnClickListener(mockk())
+    attributionView.setOnViewClickListener(mockk())
     assertTrue(attributionView.hasOnClickListeners())
   }
 }

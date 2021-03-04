@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin
 
+import android.os.Build
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.MapController
 import com.mapbox.maps.MapView
@@ -16,7 +17,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
+@Config(shadows = [ShadowLogger::class], sdk = [Build.VERSION_CODES.O])
 class MapDelegateProviderTest {
 
   private lateinit var mapView: MapView

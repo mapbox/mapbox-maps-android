@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import android.os.Build
 import com.mapbox.common.ShadowLogger
 import com.mapbox.geojson.Point
 import io.mockk.every
@@ -13,7 +14,7 @@ import org.robolectric.annotation.Config
 import java.lang.IllegalStateException
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
+@Config(shadows = [ShadowLogger::class], sdk = [Build.VERSION_CODES.O])
 class SnapshotterDelegateTest {
 
   private lateinit var snapshotter: Snapshotter

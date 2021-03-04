@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
+import android.os.Build
 import android.os.Handler
 import android.os.Looper.getMainLooper
 import androidx.core.animation.addListener
@@ -35,7 +36,7 @@ import org.robolectric.shadows.ShadowLog
 import java.time.Duration
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
+@Config(shadows = [ShadowLogger::class], sdk = [Build.VERSION_CODES.O])
 @LooperMode(LooperMode.Mode.PAUSED)
 class CameraAnimationsPluginImplTest {
 

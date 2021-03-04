@@ -1,7 +1,9 @@
 package com.mapbox.maps
 
+import android.os.Build
 import android.os.Handler
 import com.mapbox.bindgen.Value
+import com.mapbox.common.ShadowLogger
 import com.mapbox.common.ShadowValueConverter
 import com.mapbox.maps.plugin.delegates.listeners.*
 import io.mockk.*
@@ -14,7 +16,7 @@ import org.robolectric.annotation.Config
 import java.lang.ref.WeakReference
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowValueConverter::class])
+@Config(shadows = [ShadowLogger::class, ShadowValueConverter::class], sdk = [Build.VERSION_CODES.O])
 class NativeObserverTest {
 
   private val mainHandler = mockk<Handler>()

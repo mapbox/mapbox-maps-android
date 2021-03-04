@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.locationcomponent
 
+import android.os.Build
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
 import com.mapbox.common.ShadowLogger
@@ -16,7 +17,7 @@ import org.robolectric.annotation.Config
 import java.lang.RuntimeException
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
+@Config(shadows = [ShadowLogger::class], sdk = [Build.VERSION_CODES.O])
 class LocationLayerWrapperTest {
   private lateinit var locationLayerWrapper: LocationLayerWrapper
   private val layerId = "testLayerId"

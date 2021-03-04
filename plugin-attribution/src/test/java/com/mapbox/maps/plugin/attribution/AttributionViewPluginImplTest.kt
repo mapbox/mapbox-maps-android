@@ -3,6 +3,7 @@ package com.mapbox.maps.plugin.attribution
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
+import android.os.Build
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
@@ -16,8 +17,10 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
+@Config(sdk = [Build.VERSION_CODES.O])
 class AttributionViewPluginImplTest {
 
   private lateinit var attributionPlugin: AttributionPlugin
@@ -47,7 +50,7 @@ class AttributionViewPluginImplTest {
     attributionPlugin.bind(mapView, attrs, 1f)
     attributionPlugin.onPluginView(attributionView)
     verify {
-      attributionView.setOnClickListener(capture(clickSot))
+      attributionView.setOnViewClickListener(capture(clickSot))
     }
     attributionPlugin.initialize()
   }

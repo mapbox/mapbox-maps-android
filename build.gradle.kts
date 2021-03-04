@@ -1,7 +1,8 @@
 buildscript {
   repositories {
     google()
-    jcenter()
+    jcenter() // Remove, see mapbox-maps-android#92
+    mavenCentral()
     maven {
       url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
       credentials {
@@ -30,7 +31,8 @@ buildscript {
 allprojects {
   repositories {
     google()
-    jcenter()
+    jcenter() // Remove, see mapbox-maps-android#92
+    mavenCentral()
     maven {
       url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
       credentials {
@@ -41,18 +43,13 @@ allprojects {
         create<BasicAuthentication>("basic")
       }
     }
-    maven {
-      url = uri("https://oss.jfrog.org/artifactory/oss-snapshot-local/")
-    }
   }
 }
 
 plugins {
   id("org.jetbrains.dokka") version Versions.pluginDokka
 }
-repositories {
-  maven(url = "https://dl.bintray.com/kotlin/dokka")
-}
+
 tasks.withType<org.jetbrains.dokka.gradle.DokkaTask>().configureEach {
   outputDirectory.set(buildDir.resolve(this.name))
 }

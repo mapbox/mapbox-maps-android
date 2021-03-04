@@ -20,6 +20,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_layers"
         android:tint="@color/primary"
+        android:contentDescription="@null"
         app:backgroundTint="@android:color/white"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

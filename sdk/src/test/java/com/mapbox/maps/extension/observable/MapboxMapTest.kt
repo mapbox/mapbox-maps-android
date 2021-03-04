@@ -1,6 +1,8 @@
 package com.mapbox.maps.extension.observable
 
+import android.os.Build
 import com.mapbox.bindgen.Value
+import com.mapbox.common.ShadowLogger
 import com.mapbox.common.ShadowValueConverter
 import com.mapbox.maps.Event
 import com.mapbox.maps.ObservableInterface
@@ -16,7 +18,7 @@ import org.robolectric.annotation.Config
 import java.util.*
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowValueConverter::class])
+@Config(shadows = [ShadowLogger::class, ShadowValueConverter::class], sdk = [Build.VERSION_CODES.O])
 class MapboxMapTest {
 
   private val observableInterface: ObservableInterface = mockk(relaxed = true)

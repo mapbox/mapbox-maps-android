@@ -1,7 +1,7 @@
 object AndroidVersions {
   const val minSdkVersion = 21
-  const val targetSdkVersion = 28
-  const val compileSdkVersion = 28
+  const val targetSdkVersion = 30
+  const val compileSdkVersion = 30
 }
 
 object Plugins {
@@ -56,22 +56,22 @@ object Dependencies {
 }
 
 object Versions {
-  const val pluginAndroidGradle = "4.0.1"
-  const val pluginKotlin = "1.4.0"
+  const val pluginAndroidGradle = "4.1.2"
+  const val pluginKotlin = "1.4.31"
   const val pluginLicense = "0.8.5"
-  const val pluginDokka =  "1.4.10"
+  const val pluginDokka =  "1.4.20"
   const val pluginJacoco = "0.2"
   const val pluginMavenPublish = "3.6.2"
   const val mapboxAccessToken="0.2.1"
   const val mapboxSdkRegistry="0.4.0"
   const val mapboxGestures = "0.7.0"
-  const val mapboxJavaServices = "5.4.1"
+  const val mapboxJavaServices = "5.6.0"
   const val mapboxBase = "0.5.0"
   const val mapboxGlNative = "10.0.0-beta.21"
   const val mapboxCommon = "11.0.2"
   const val mapboxAndroidCore = "3.1.1"
-  const val mapboxAndroidTelemetry = "6.2.2"
-  const val androidxCore = "1.3.1"
+  const val mapboxAndroidTelemetry = "6.3.0"
+  const val androidxCore = "1.3.2"
   const val androidxAnnotation = "1.1.0"
   const val androidxAppcompat = "1.2.0"
   const val androidxTest = "1.3.0"
@@ -83,11 +83,11 @@ object Versions {
   const val androidxInterpolator="1.0.0"
   const val androidxMultidex = "2.0.1"
   const val squareRetrofit="2.9.0"
-  const val squareLeakCanary = "2.4"
-  const val materialDesign = "1.2.0"
-  const val kotlinCoroutines = "1.3.9"
-  const val junit = "4.12"
-  const val mockk = "1.9.3"
-  const val robolectric = "4.3.1"
+  const val squareLeakCanary = "2.6"
+  const val materialDesign = "1.3.0"
+  const val kotlinCoroutines = "1.4.3"
+  const val junit = "4.13.2"
+  const val mockk = "1.10.6"
+  const val robolectric = "4.5.1"
   const val robolectricEgl = "gl1.1-android-2.1_r1"
 }

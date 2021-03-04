@@ -7,6 +7,7 @@ plugins {
 
 android {
   compileSdkVersion(AndroidVersions.compileSdkVersion)
+  buildToolsVersion = "30.0.3"
   defaultConfig {
     applicationId = "com.mapbox.maps.testapp.style"
     minSdkVersion(AndroidVersions.minSdkVersion)
@@ -15,14 +16,16 @@ android {
     versionName = "0.1.0"
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    testInstrumentationRunnerArguments = mapOf(
-      "clearPackageData" to "true"
-    )
+    testInstrumentationRunnerArguments["clearPackageData"] = "true"
   }
 
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+  }
+
+  kotlinOptions {
+    jvmTarget = JavaVersion.VERSION_1_8.toString()
   }
 
   testOptions {

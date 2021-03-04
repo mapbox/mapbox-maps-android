@@ -26,7 +26,45 @@ workflows:
       - run-lint:
           requires:
             - verify-code
-      - run-unit-test
+      - run-unit-test-sdk-base:
+          requires:
+            - verify-code
+      - run-unit-test-sdk:
+          requires:
+            - verify-code
+      - run-unit-test-style-extension:
+          requires:
+            - verify-code
+      - run-unit-test-module-telemetry:
+          requires:
+            - verify-code
+      - run-unit-test-plugin-animation:
+          requires:
+            - verify-code
+      - run-unit-test-plugin-annotation:
+          requires:
+            - verify-code
+      - run-unit-test-plugin-attribution:
+          requires:
+            - verify-code
+      - run-unit-test-plugin-compass:
+          requires:
+            - verify-code
+      - run-unit-test-plugin-gestures:
+          requires:
+            - verify-code
+      - run-unit-test-plugin-locationcomponent:
+          requires:
+            - verify-code
+      - run-unit-test-plugin-logo:
+          requires:
+            - verify-code
+      - run-unit-test-plugin-overlay:
+          requires:
+            - verify-code
+      - run-unit-test-plugin-scalebar:
+          requires:
+            - verify-code
       - run-robo-test:
           requires:
             - verify-code
@@ -71,12 +109,98 @@ commands:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle.kts" }}-{{ checksum "app/build.gradle.kts" }}-{{ checksum "sdk/build.gradle.kts" }}-{{ checksum "buildSrc/src/main/kotlin/Project.kt" }}
 
-  jvm-unit-tests:
+  jvm-sdk-base-unit-tests:
     steps:
       - run:
-          name: Run JVM unit tests & create jacoco code coverage report
+          name: Run SDK-base unit tests
           no_output_timeout: 30m
-          command: ./gradlew jacocoTestDebugUnitTestReport
+          command: ./gradlew  sdk-base:testDebug
+
+  jvm-sdk-unit-tests:
+    steps:
+      - run:
+          name: Run SDK unit tests
+          no_output_timeout: 30m
+          command: ./gradlew sdk:testDebug
+
+  jvm-style-extension-unit-tests:
+    steps:
+      - run:
+          name: Run extension-style unit tests
+          no_output_timeout: 30m
+          command: ./gradlew extension-style:testDebug
+
+  jvm-module-telemetry-unit-tests:
+    steps:
+      - run:
+          name: Run module-telemetry unit tests
+          no_output_timeout: 30m
+          command: ./gradlew module-telemetry:testDebug
+
+  jvm-plugin-animation-unit-tests:
+    steps:
+      - run:
+          name: Run plugin-animation unit tests
+          no_output_timeout: 30m
+          command: ./gradlew plugin-animation:testDebug
+
+  jvm-plugin-annotation-unit-tests:
+    steps:
+      - run:
+          name: Run plugin-annotation unit tests
+          no_output_timeout: 30m
+          command: ./gradlew plugin-annotation:testDebug
+
+  jvm-plugin-attribution-unit-tests:
+    steps:
+      - run:
+          name: Run plugin-attribution unit tests
+          no_output_timeout: 30m
+          command: ./gradlew plugin-attribution:testDebug
+
+  jvm-plugin-compass-unit-tests:
+    steps:
+      - run:
+          name: Run plugin-compass unit tests
+          no_output_timeout: 30m
+          command: ./gradlew plugin-compass:testDebug
+
+  jvm-plugin-gestures-unit-tests:
+    steps:
+      - run:
+          name: Run plugin-gestures unit tests
+          no_output_timeout: 30m
+          command: ./gradlew plugin-gestures:testDebug
+
+  jvm-plugin-locationcomponent-unit-tests:
+    steps:
+      - run:
+          name: Run plugin-locationcomponent unit tests
+          no_output_timeout: 30m
+          command: ./gradlew plugin-locationcomponent:testDebug
+
+  jvm-plugin-logo-tests:
+    steps:
+      - run:
+          name: Run plugin-logo unit tests
+          no_output_timeout: 30m
+          command: ./gradlew plugin-logo:testDebug
+
+  jvm-plugin-overlay-unit-tests:
+    steps:
+      - run:
+          name: Run plugin-overlay unit tests
+          no_output_timeout: 30m
+          command: ./gradlew plugin-overlay:testDebug
+
+  jvm-plugin-scalebar-unit-tests:
+    steps:
+      - run:
+          name: Run plugin-scalebar unit tests
+          no_output_timeout: 30m
+          command: ./gradlew plugin-scalebar:testDebug
+
+#          command: ./gradlew jacocoTestDebugUnitTestReport
 #      - run:
 #          name: Upload codecov
 #          command: bash <(curl -sSfL https://codecov.io/bash)
@@ -268,7 +392,7 @@ commands:
 jobs:
   verify-code:
     docker:
-      - image: mbgl/android-ndk-r21e:latest
+      - image: mbgl/android-ndk-r21e:49c1a38685
 
     steps:
       - checkout
@@ -284,7 +408,7 @@ jobs:
 
   verify-docs:
     docker:
-      - image: mbgl/android-ndk-r21e:latest
+      - image: mbgl/android-ndk-r21e:49c1a38685
 
     steps:
       - checkout
@@ -296,16 +420,135 @@ jobs:
 
   run-unit-test:
     docker:
-      - image: mbgl/android-ndk-r21e:latest
-
+      - image: mbgl/android-ndk-r21e:49c1a38685
+    resource_class: xlarge
     steps:
       - checkout
       - restore-gradle-cache
       - jvm-unit-tests
 
+  run-unit-test-sdk-base:
+    docker:
+      - image: mbgl/android-ndk-r21e:49c1a38685
+    resource_class: xlarge
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - jvm-sdk-base-unit-tests
+
+  run-unit-test-sdk:
+    docker:
+      - image: mbgl/android-ndk-r21e:49c1a38685
+    resource_class: xlarge
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - jvm-sdk-unit-tests
+
+  run-unit-test-style-extension:
+    docker:
+      - image: mbgl/android-ndk-r21e:49c1a38685
+    resource_class: xlarge
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - jvm-style-extension-unit-tests
+
+  run-unit-test-module-telemetry:
+    docker:
+      - image: mbgl/android-ndk-r21e:49c1a38685
+    resource_class: xlarge
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - jvm-module-telemetry-unit-tests
+
+  run-unit-test-plugin-animation:
+    docker:
+      - image: mbgl/android-ndk-r21e:49c1a38685
+    resource_class: xlarge
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - jvm-plugin-animation-unit-tests
+
+  run-unit-test-plugin-annotation:
+    docker:
+      - image: mbgl/android-ndk-r21e:49c1a38685
+    resource_class: xlarge
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - jvm-plugin-annotation-unit-tests
+
+  run-unit-test-plugin-attribution:
+    docker:
+      - image: mbgl/android-ndk-r21e:49c1a38685
+    resource_class: xlarge
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - jvm-plugin-attribution-unit-tests
+
+
+  run-unit-test-plugin-compass:
+    docker:
+      - image: mbgl/android-ndk-r21e:49c1a38685
+    resource_class: xlarge
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - jvm-plugin-compass-unit-tests
+
+  run-unit-test-plugin-gestures:
+    docker:
+      - image: mbgl/android-ndk-r21e:49c1a38685
+    resource_class: xlarge
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - jvm-plugin-gestures-unit-tests
+
+  run-unit-test-plugin-locationcomponent:
+    docker:
+      - image: mbgl/android-ndk-r21e:49c1a38685
+    resource_class: xlarge
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - jvm-plugin-locationcomponent-unit-tests
+
+  run-unit-test-plugin-logo:
+    docker:
+      - image: mbgl/android-ndk-r21e:49c1a38685
+    resource_class: xlarge
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - jvm-plugin-logo-tests
+
+  run-unit-test-plugin-overlay:
+    docker:
+      - image: mbgl/android-ndk-r21e:49c1a38685
+    resource_class: xlarge
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - jvm-plugin-overlay-unit-tests
+  
+  run-unit-test-plugin-scalebar:
+    docker:
+      - image: mbgl/android-ndk-r21e:49c1a38685
+    resource_class: xlarge
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - jvm-plugin-scalebar-unit-tests
+
   run-lint:
     docker:
-      - image: mbgl/android-ndk-r21e:latest
+      - image: mbgl/android-ndk-r21e:49c1a38685
+    resource_class: xlarge
 
     steps:
       - checkout
@@ -316,7 +559,7 @@ jobs:
 
   run-robo-test:
     docker:
-      - image: mbgl/android-ndk-r21e:latest
+      - image: mbgl/android-ndk-r21e:49c1a38685
 
     steps:
       - checkout
@@ -329,7 +572,7 @@ jobs:
 
   run-app-test:
     docker:
-      - image: mbgl/android-ndk-r21e:latest
+      - image: mbgl/android-ndk-r21e:49c1a38685
 
     steps:
       - checkout
@@ -349,7 +592,7 @@ jobs:
 
   run-sdk-test:
     docker:
-      - image: mbgl/android-ndk-r21e:latest
+      - image: mbgl/android-ndk-r21e:49c1a38685
 
     steps:
       - checkout
@@ -367,7 +610,7 @@ jobs:
 
   run-style-test:
     docker:
-      - image: mbgl/android-ndk-r21e:latest
+      - image: mbgl/android-ndk-r21e:49c1a38685
 
     steps:
       - checkout
@@ -387,7 +630,7 @@ jobs:
 
   build-sdk-from-source:
     docker:
-      - image: mbgl/android-ndk-r21e:latest
+      - image: mbgl/android-ndk-r21e:49c1a38685
 
     steps:
       - checkout
@@ -398,7 +641,7 @@ jobs:
 
   build-sdk-release:
     docker:
-      - image: mbgl/android-ndk-r21e:latest
+      - image: mbgl/android-ndk-r21e:49c1a38685
 
     steps:
       - checkout

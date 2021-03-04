@@ -16,6 +16,7 @@
         android:layout_marginBottom="82dp"
         android:src="@drawable/ic_clear"
         app:backgroundTint="@color/accent"
+        android:contentDescription="@null"
         app:layout_anchorGravity="top" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -25,6 +26,7 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:src="@drawable/ic_paint"
+        android:contentDescription="@null"
         app:backgroundTint="@color/primary" />
 
 </merge>

@@ -2,6 +2,7 @@ package com.mapbox.maps.plugin.gestures
 
 import android.content.Context
 import android.content.res.TypedArray
+import android.os.Build
 import android.os.Handler
 import android.util.AttributeSet
 import com.mapbox.android.gestures.AndroidGesturesManager
@@ -18,7 +19,12 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
+@RunWith(RobolectricTestRunner::class)
+@Config(sdk = [Build.VERSION_CODES.O])
 class GestureOptionsTest {
 
   private val context: Context = mockk(relaxed = true)
