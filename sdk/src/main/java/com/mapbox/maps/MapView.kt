@@ -35,7 +35,7 @@ import java.lang.ref.WeakReference
  * <strong>Warning:</strong> Please note that you are responsible for getting permission to use the map data,
  * and for ensuring your use adheres to the relevant terms of use.
  */
-class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
+open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   private var mapController: MapController
 
   /**

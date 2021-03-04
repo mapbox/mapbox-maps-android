@@ -20,7 +20,7 @@ import kotlin.math.min
 /**
  * [Snapshotter] is high-level component responsible for taking map snapshot with given [MapSnapshotOptions].
  */
-class Snapshotter : MapSnapshotterObserver {
+open class Snapshotter : MapSnapshotterObserver {
 
   private val context: WeakReference<Context>
   private val coreSnapshotter: MapSnapshotterInterface
