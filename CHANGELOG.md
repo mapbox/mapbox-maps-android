@@ -2,6 +2,12 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.0.0-beta.15 - March 5, 2021
+## Bugs
+* [annotation] Fix text-font issue in annotation plugin. ([#144](https://github.com/mapbox/mapbox-maps-android/pull/144))
+## Dependencies
+* [gl-native] Update to v10.0.0-beta.16, common to beta.12 ([#137](https://github.com/mapbox/mapbox-maps-android/pull/137))
+
 # 10.0.0-beta.14 - February 24, 2021
 
 ## Breaking changes
