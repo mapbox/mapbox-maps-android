@@ -177,8 +177,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       return false
     }
 
-    Logger.e("KIRYLDD", "platform easeTo start options for ${cameraAnimator.type.name}: $startValue")
-
     val targets = cameraAnimator.targets
     if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
       cameraAnimator.applyEvaluator()

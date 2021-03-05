@@ -205,14 +205,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     if (motionEvent.actionMasked == MotionEvent.ACTION_DOWN) {
       unregisterScheduledAnimators()
       mapTransformDelegate.setGestureInProgress(true)
-      if (mapTransformDelegate.terrainEnabled()) {
-        mapTransformDelegate.dragStart(
-          ScreenCoordinate(
-            motionEvent.x.toDouble(),
-            motionEvent.y.toDouble()
-          )
-        )
-      }
     }
 
     val result = gesturesManager.onTouchEvent(motionEvent)
@@ -223,9 +215,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       MotionEvent.ACTION_UP -> {
         doubleTapFinished()
         mapTransformDelegate.setGestureInProgress(false)
-        if (mapTransformDelegate.terrainEnabled()) {
-          mapTransformDelegate.dragEnd()
-        }
+
 
         if (scheduledAnimators.isNotEmpty()) {
           // Start all awaiting velocity animations
@@ -241,9 +231,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       MotionEvent.ACTION_CANCEL -> {
         scheduledAnimators.clear()
         mapTransformDelegate.setGestureInProgress(false)
-        if (mapTransformDelegate.terrainEnabled()) {
-          mapTransformDelegate.dragEnd()
-        }
         doubleTapFinished()
       }
     }
@@ -1200,24 +1187,34 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         (velocityXY / 7.0 / pitchFactor + ANIMATION_DURATION_FLING_BASE).toLong()
 
       if (mapTransformDelegate.terrainEnabled()) {
+        mapTransformDelegate.dragStart(
+          ScreenCoordinate(
+            e1.x.toDouble(),
+            e1.y.toDouble()
+          )
+        )
         val options = mapTransformDelegate.getDragCameraOptions(
           centerScreen,
           ScreenCoordinate(centerScreen.x + offsetX, centerScreen.y + offsetY)
         )
-        Logger.e("KIRYLDD", "platform easeTo target options: $options")
         cameraAnimationsPlugin.easeTo(
           options,
           mapAnimationOptions {
             owner(MapAnimationOwnerRegistry.GESTURES)
             duration(animationTime)
             interpolator(gesturesInterpolator)
+            animatorListener(object : AnimatorListenerAdapter() {
+
+              override fun onAnimationEnd(animation: Animator?, isReverse: Boolean) {
+                mapTransformDelegate.dragEnd()
+              }
+
+              override fun onAnimationCancel(animation: Animator?) {
+                mapTransformDelegate.dragEnd()
+              }
+            })
           }
         )
-//        mapTransformDelegate.drag(
-//          centerScreen,
-//          ScreenCoordinate(centerScreen.x + offsetX, centerScreen.y + offsetY),
-//          AnimationOptions.Builder().duration(animationTime).build()
-//        )
       } else {
         // update transformation
         cameraAnimationsPlugin.moveBy(
@@ -1267,20 +1264,33 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         ScreenCoordinate((-distanceX).toDouble(), (-distanceY).toDouble())
       }
       if (mapTransformDelegate.terrainEnabled()) {
+        mapTransformDelegate.dragStart(
+          ScreenCoordinate(
+            detector.focalPoint.x.toDouble(),
+            detector.focalPoint.y.toDouble()
+          )
+        )
         val options = mapTransformDelegate.getDragCameraOptions(
           centerScreen,
           ScreenCoordinate(centerScreen.x + offset.x, centerScreen.y + offset.y)
         )
-        Logger.e("KIRYLDD", "platform IMMEDIATE easeTo target options: $options")
         cameraAnimationsPlugin.easeTo(
           options,
-          immediateCameraJumpOptions
+          mapAnimationOptions {
+            duration(0)
+            owner(MapAnimationOwnerRegistry.GESTURES)
+            animatorListener(object : AnimatorListenerAdapter() {
+
+              override fun onAnimationEnd(animation: Animator?, isReverse: Boolean) {
+                mapTransformDelegate.dragEnd()
+              }
+
+              override fun onAnimationCancel(animation: Animator?) {
+                mapTransformDelegate.dragEnd()
+              }
+            })
+          }
         )
-//        mapTransformDelegate.drag(
-//          centerScreen,
-//          ScreenCoordinate(centerScreen.x + offset.x, centerScreen.y + offset.y),
-//          null
-//        )
       } else {
         val target = cameraAnimationsPlugin.calculateMoveBy(offset)
         target?.let {
