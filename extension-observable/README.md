@@ -53,7 +53,7 @@ allprojects {
 
 // In the app build.gradle file
 dependencies {
-  implementation 'com.mapbox.extension:maps-observable:10.0.0-beta.12'
+  implementation 'com.mapbox.extension:maps-observable:10.0.0-beta.15'
 }
 ```
 
