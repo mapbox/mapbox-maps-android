@@ -57,7 +57,7 @@ class DataDrivenMapSnapshotterActivity : AppCompatActivity() {
           style.addLayer(getHeatmapLayer())
         }
       })
-      setCameraOptions(
+      setCamera(
         CameraOptions.Builder()
           .center(Point.fromLngLat(-94.0, 15.0))
           .zoom(5.0)

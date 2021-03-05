@@ -27,11 +27,11 @@ class LocationTrackingActivity : AppCompatActivity() {
   private lateinit var locationPermissionHelper: LocationPermissionHelper
 
   private val onIndicatorBearingChangedListener = OnIndicatorBearingChangedListener {
-    mapView.getMapboxMap().jumpTo(CameraOptions.Builder().bearing(it).build())
+    mapView.getMapboxMap().setCamera(CameraOptions.Builder().bearing(it).build())
   }
 
   private val onIndicatorPositionChangedListener = OnIndicatorPositionChangedListener {
-    mapView.getMapboxMap().jumpTo(CameraOptions.Builder().center(it).build())
+    mapView.getMapboxMap().setCamera(CameraOptions.Builder().center(it).build())
     mapView.getGesturesPlugin().focalPoint = mapView.getMapboxMap().pixelForCoordinate(it)
   }
 
@@ -57,7 +57,7 @@ class LocationTrackingActivity : AppCompatActivity() {
   }
 
   private fun onMapReady() {
-    mapView.getMapboxMap().jumpTo(
+    mapView.getMapboxMap().setCamera(
       CameraOptions.Builder()
         .zoom(14.0)
         .build()

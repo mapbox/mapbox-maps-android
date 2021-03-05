@@ -121,8 +121,8 @@ class Snapshotter : MapSnapshotterObserver {
    *
    * @param cameraOptions the camera options of the snapshot.
    */
-  fun setCameraOptions(cameraOptions: CameraOptions) {
-    coreSnapshotter.cameraOptions = cameraOptions
+  fun setCamera(cameraOptions: CameraOptions) {
+    coreSnapshotter.setCamera(cameraOptions)
   }
 
   /**
@@ -150,8 +150,8 @@ class Snapshotter : MapSnapshotterObserver {
    *
    * @return CoordinateBounds
    */
-  fun getRegion(): CoordinateBounds {
-    return coreSnapshotter.region
+  fun coordinatesForCamera(options: CameraOptions): CoordinateBounds {
+    return coreSnapshotter.coordinateBoundsForCamera(options)
   }
 
   /**
@@ -180,8 +180,8 @@ class Snapshotter : MapSnapshotterObserver {
    *
    * @return CameraOptions.
    */
-  fun getCameraOptions(): CameraOptions {
-    return coreSnapshotter.cameraOptions
+  fun getCameraOptions(padding: EdgeInsets? = null): CameraOptions {
+    return coreSnapshotter.getCameraOptions(padding)
   }
 
   /**

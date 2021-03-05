@@ -11,7 +11,7 @@ interface MapTransformDelegate {
    *
    * @param cameraOptions The camera options to jump to
    */
-  fun jumpTo(cameraOptions: CameraOptions)
+  fun setCamera(cameraOptions: CameraOptions)
 
   /**
    * Get the current camera options given an optional padding.
@@ -71,7 +71,7 @@ interface MapTransformDelegate {
 
   /**
    * Tells the map rendering engine that the animation is currently performed by the
-   * user (e.g. with a `jumpTo()` calls series). It adjusts the engine for the animation use case.
+   * user (e.g. with a `setCamera()` calls series). It adjusts the engine for the animation use case.
    * In particular, it brings more stability to symbol placement and rendering.
    *
    * @param inProgress Bool representing if user animation is in progress
@@ -162,7 +162,7 @@ interface MapTransformDelegate {
    *
    * @return Returns the camera options object showing end point
    */
-  fun dragGetCameraOptions(
+  fun getDragCameraOptions(
     fromPoint: ScreenCoordinate,
     toPoint: ScreenCoordinate,
   ): CameraOptions

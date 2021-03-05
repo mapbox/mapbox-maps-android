@@ -1323,7 +1323,7 @@ class LocationPluginImpl : LocationPlugin {
     val padding = options.padding()
     if (padding != null && padding.isNotEmpty()) {
       // fixme https://github.com/mapbox/mapbox-maps-android/issues/280
-      delegateProvider.mapTransformDelegate.jumpTo(
+      delegateProvider.mapTransformDelegate.setCamera(
         CameraOptions.Builder().padding(
           EdgeInsets(
             padding[0].toDouble(),

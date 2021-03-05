@@ -54,7 +54,7 @@ class SpaceStationLocationActivity : AppCompatActivity() {
       showHintToast()
     }
 
-    mapboxMap.jumpTo(CameraOptions.Builder().zoom(2.0).build())
+    mapboxMap.setCamera(CameraOptions.Builder().zoom(2.0).build())
   }
 
   private fun showHintToast() = Toast.makeText(

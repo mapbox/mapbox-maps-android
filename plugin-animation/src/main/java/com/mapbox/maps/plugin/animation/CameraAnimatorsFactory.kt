@@ -102,7 +102,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
         animationList.add(
           CameraCenterAnimator(
             options = cameraAnimatorOptions(target) {
-              startValue(start)
+//              startValue(start)
             },
             block = defaultAnimationParameters[CameraAnimatorType.CENTER]
           )

@@ -146,7 +146,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       return
     }
     // move native map to new position
-    mapTransformDelegate.jumpTo(cameraOptions)
+    mapTransformDelegate.setCamera(cameraOptions)
     // notify listeners with actual values
     notifyListeners(cameraOptions)
     lastCameraOptions = cameraOptions
@@ -176,6 +176,8 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       )
       return false
     }
+
+    Logger.e("KIRYLDD", "platform easeTo start options for ${cameraAnimator.type.name}: $startValue")
 
     val targets = cameraAnimator.targets
     if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {

@@ -1200,14 +1200,17 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         (velocityXY / 7.0 / pitchFactor + ANIMATION_DURATION_FLING_BASE).toLong()
 
       if (mapTransformDelegate.terrainEnabled()) {
-        val options = mapTransformDelegate.dragGetCameraOptions(
+        val options = mapTransformDelegate.getDragCameraOptions(
           centerScreen,
           ScreenCoordinate(centerScreen.x + offsetX, centerScreen.y + offsetY)
         )
+        Logger.e("KIRYLDD", "platform easeTo target options: $options")
         cameraAnimationsPlugin.easeTo(
           options,
           mapAnimationOptions {
+            owner(MapAnimationOwnerRegistry.GESTURES)
             duration(animationTime)
+            interpolator(gesturesInterpolator)
           }
         )
 //        mapTransformDelegate.drag(
@@ -1264,10 +1267,11 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         ScreenCoordinate((-distanceX).toDouble(), (-distanceY).toDouble())
       }
       if (mapTransformDelegate.terrainEnabled()) {
-        val options = mapTransformDelegate.dragGetCameraOptions(
+        val options = mapTransformDelegate.getDragCameraOptions(
           centerScreen,
           ScreenCoordinate(centerScreen.x + offset.x, centerScreen.y + offset.y)
         )
+        Logger.e("KIRYLDD", "platform IMMEDIATE easeTo target options: $options")
         cameraAnimationsPlugin.easeTo(
           options,
           immediateCameraJumpOptions

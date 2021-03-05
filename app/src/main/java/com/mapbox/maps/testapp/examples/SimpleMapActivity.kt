@@ -18,7 +18,7 @@ class SimpleMapActivity : AppCompatActivity() {
     setContentView(R.layout.activity_simple_map)
     mapView.getMapboxMap()
       .apply {
-        jumpTo(
+        setCamera(
           CameraOptions.Builder().center(Point.fromLngLat(LONGITUDE, LATITUDE)).zoom(9.0).build()
         )
       }

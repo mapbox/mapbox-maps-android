@@ -24,7 +24,7 @@ class AddOneMarkerSymbolActivity : AppCompatActivity() {
     setContentView(R.layout.activity_simple_map)
 
     mapView.getMapboxMap().also {
-      it.jumpTo(
+      it.setCamera(
         CameraOptions.Builder()
           .center(Point.fromLngLat(LONGITUDE, LATITUDE))
           .zoom(8.0)

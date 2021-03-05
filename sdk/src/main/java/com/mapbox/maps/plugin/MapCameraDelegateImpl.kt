@@ -29,6 +29,6 @@ internal class MapCameraDelegateImpl constructor(private val mapboxMap: MapboxMa
   override fun getCameraOptions(edgeInsets: EdgeInsets?) = mapboxMap.getCameraOptions(edgeInsets)
 
   override fun setBearing(bearing: Double) {
-    mapboxMap.jumpTo(CameraOptions.Builder().bearing(bearing).build())
+    mapboxMap.setCamera(CameraOptions.Builder().bearing(bearing).build())
   }
 }

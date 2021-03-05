@@ -53,7 +53,7 @@ class GestureActivityTest : BaseMapTest() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         // zoom in so we can move vertically
-        mapboxMap.jumpTo(CameraOptions.Builder().zoom(4.0).build())
+        mapboxMap.setCamera(CameraOptions.Builder().zoom(4.0).build())
         initialCameraPosition = mapboxMap.getCameraOptions(null)
         mapView.getGesturesPlugin().quickZoomEnabled = false
       }
@@ -128,7 +128,7 @@ class GestureActivityTest : BaseMapTest() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         // zoom in so we can move vertically
-        mapboxMap.jumpTo(CameraOptions.Builder().zoom(4.0).build())
+        mapboxMap.setCamera(CameraOptions.Builder().zoom(4.0).build())
         initialCameraPosition = mapboxMap.getCameraOptions(null)
         mapView.getGesturesPlugin().quickZoomEnabled = false
       }
@@ -164,7 +164,7 @@ class GestureActivityTest : BaseMapTest() {
     var initialZoom: Double? = null
     rule.scenario.onActivity {
       it.runOnUiThread {
-        mapboxMap.jumpTo(CameraOptions.Builder().zoom(4.0).build())
+        mapboxMap.setCamera(CameraOptions.Builder().zoom(4.0).build())
         initialZoom = mapboxMap.getCameraOptions(null).zoom
       }
     }
@@ -235,7 +235,7 @@ class GestureActivityTest : BaseMapTest() {
   fun doubleTap_interrupted_moveStillEnabled() {
     rule.scenario.onActivity {
       it.runOnUiThread {
-        mapboxMap.jumpTo(CameraOptions.Builder().zoom(4.0).build())
+        mapboxMap.setCamera(CameraOptions.Builder().zoom(4.0).build())
       }
     }
 
@@ -252,7 +252,7 @@ class GestureActivityTest : BaseMapTest() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         // zoom in so we can move vertically
-        mapboxMap.jumpTo(CameraOptions.Builder().zoom(4.0).build())
+        mapboxMap.setCamera(CameraOptions.Builder().zoom(4.0).build())
         initialCameraPosition = mapboxMap.getCameraOptions(null)
         mapView.getGesturesPlugin().quickZoomEnabled = false
       }
@@ -286,7 +286,7 @@ class GestureActivityTest : BaseMapTest() {
   fun quickZoom_roundTripping() {
     rule.scenario.onActivity {
       it.runOnUiThread {
-        mapboxMap.jumpTo(CameraOptions.Builder().zoom(3.0).build())
+        mapboxMap.setCamera(CameraOptions.Builder().zoom(3.0).build())
       }
     }
     onView(withId(R.id.mapView)).perform(quickScale(300f, withVelocity = false, duration = 750L))

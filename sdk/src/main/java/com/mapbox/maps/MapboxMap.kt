@@ -259,8 +259,8 @@ class MapboxMap internal constructor(
    *
    * @param cameraOptions The camera options to jump to
    */
-  override fun jumpTo(cameraOptions: CameraOptions) =
-    nativeMapWeakRef.call { this.jumpTo(cameraOptions) }
+  override fun setCamera(cameraOptions: CameraOptions) =
+    nativeMapWeakRef.call { this.setCamera(cameraOptions) }
 
   /**
    * Get the current camera options given an optional padding.
@@ -326,7 +326,7 @@ class MapboxMap internal constructor(
 
   /**
    * Tells the map rendering engine that the animation is currently performed by the
-   * user (e.g. with a `jumpTo()` calls series). It adjusts the engine for the animation use case.
+   * user (e.g. with a `setCamera()` calls series). It adjusts the engine for the animation use case.
    * In particular, it brings more stability to symbol placement and rendering.
    *
    * @param inProgress Bool representing if user animation is in progress
@@ -986,8 +986,8 @@ class MapboxMap internal constructor(
    * can be invalid if it leads to the camera being upside down or the quaternion has zero length.
    * @param options The free camera options to set.
    */
-  fun setFreeCameraOptions(options: FreeCameraOptions) {
-    nativeMapWeakRef.call { this.freeCameraOptions = options }
+  fun setCamera(options: FreeCameraOptions) {
+    nativeMapWeakRef.call { this.setCamera(options) }
   }
 
   /**
@@ -1048,11 +1048,11 @@ class MapboxMap internal constructor(
    *
    * @return Returns the camera options object showing end point
    */
-  override fun dragGetCameraOptions(
+  override fun getDragCameraOptions(
     fromPoint: ScreenCoordinate,
     toPoint: ScreenCoordinate,
   ): CameraOptions {
-    return nativeMapWeakRef.call { this.dragGetCameraOptions(fromPoint, toPoint) }
+    return nativeMapWeakRef.call { this.getDragCameraOptions(fromPoint, toPoint) }
   }
 
   /**

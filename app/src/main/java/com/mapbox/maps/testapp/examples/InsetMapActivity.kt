@@ -110,7 +110,7 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
       .bearing(mainCameraPosition.bearing)
       .center(mainCameraPosition.center)
       .build()
-    insetMapboxMap.jumpTo(insetCameraPosition)
+    insetMapboxMap.setCamera(insetCameraPosition)
     insetMapboxMap.getStyle { style -> updateInsetMapLineLayerBounds(style) }
   }
 

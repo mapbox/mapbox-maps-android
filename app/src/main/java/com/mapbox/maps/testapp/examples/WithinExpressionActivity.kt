@@ -32,7 +32,7 @@ class WithinExpressionActivity : AppCompatActivity() {
     val center = Point.fromLngLat(LON, LAT)
 
     // Setup camera position above Georgetown
-    mapView.getMapboxMap().jumpTo(CameraOptions.Builder().center(center).zoom(15.5).build())
+    mapView.getMapboxMap().setCamera(CameraOptions.Builder().center(center).zoom(15.5).build())
 
     // Assume the route is represented by an array of coordinates.
     val coordinates = listOf<Point>(

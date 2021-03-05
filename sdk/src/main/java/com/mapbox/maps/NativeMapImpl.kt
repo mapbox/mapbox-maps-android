@@ -30,20 +30,12 @@ internal class NativeMapImpl(private val map: MapInterface) :
     map.render()
   }
 
-  override fun jumpTo(cameraOptions: CameraOptions) {
-    map.jumpTo(cameraOptions)
+  override fun setCamera(cameraOptions: CameraOptions) {
+    map.setCamera(cameraOptions)
   }
 
   override fun getCameraOptions(edgeInsets: EdgeInsets?): CameraOptions {
     return map.getCameraOptions(edgeInsets)
-  }
-
-  override fun easeTo(cameraOptions: CameraOptions, animationOptions: AnimationOptions) {
-    map.easeTo(cameraOptions, animationOptions)
-  }
-
-  override fun flyTo(cameraOptions: CameraOptions, animationOptions: AnimationOptions) {
-    map.flyTo(cameraOptions, animationOptions)
   }
 
   override fun dragStart(point: ScreenCoordinate) {
@@ -54,11 +46,11 @@ internal class NativeMapImpl(private val map: MapInterface) :
     map.dragEnd()
   }
 
-  override fun dragGetCameraOptions(
+  override fun getDragCameraOptions(
     fromPoint: ScreenCoordinate,
     toPoint: ScreenCoordinate,
   ): CameraOptions {
-    return map.dragGetCameraOptions(fromPoint, toPoint)
+    return map.getDragCameraOptions(fromPoint, toPoint)
   }
 
   override fun drag(
@@ -69,32 +61,8 @@ internal class NativeMapImpl(private val map: MapInterface) :
     map.drag(fromPoint, toPoint, animation)
   }
 
-  override fun moveBy(screenCoordinate: ScreenCoordinate, animationOptions: AnimationOptions?) {
-    map.moveBy(screenCoordinate, animationOptions)
-  }
-
-  override fun scaleBy(
-    amount: Double,
-    screenCoordinate: ScreenCoordinate?,
-    animationOptions: AnimationOptions?
-  ) {
-    map.scaleBy(amount, screenCoordinate, animationOptions)
-  }
-
   override fun coordinatesForPixels(pixels: MutableList<ScreenCoordinate>): MutableList<Point> {
     return map.coordinatesForPixels(pixels)
-  }
-
-  override fun pitchBy(pitchBy: Double, animationOptions: AnimationOptions?) {
-    map.pitchBy(pitchBy, animationOptions)
-  }
-
-  override fun rotateBy(
-    first: ScreenCoordinate,
-    second: ScreenCoordinate,
-    animationOptions: AnimationOptions?
-  ) {
-    map.rotateBy(first, second, animationOptions)
   }
 
   override fun cameraForCoordinateBounds(
@@ -455,10 +423,10 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.getFreeCameraOptions()
   }
 
-  override fun setFreeCameraOptions(
+  override fun setCamera(
     options: FreeCameraOptions
   ) {
-    map.setFreeCameraOptions(options)
+    map.setCamera(options)
   }
 
   override fun invalidateStyleCustomGeometrySourceTile(

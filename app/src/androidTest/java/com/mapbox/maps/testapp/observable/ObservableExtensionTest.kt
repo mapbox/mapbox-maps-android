@@ -45,7 +45,7 @@ class ObservableExtensionTest : BaseMapTest() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.subscribeResourceRequest(observer)
-        mapboxMap.jumpTo(
+        mapboxMap.setCamera(
           CameraOptions.Builder().center(Point.fromLngLat(0.0, 0.0)).zoom(16.0).build()
         )
       }

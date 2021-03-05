@@ -30,7 +30,7 @@ class MapWallpaper : WallpaperService() {
 
       // Custom configuration
       mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
-      mapboxMap.jumpTo(
+      mapboxMap.setCamera(
         CameraOptions.Builder()
           .center(TARGET)
           .zoom(ZOOM_START)
@@ -79,7 +79,7 @@ class MapWallpaper : WallpaperService() {
       val zoom = ZOOM_START + (screenAmount * xOffset)
       val pitch = (PITCH_START * screenAmount * xOffset).toDouble()
       val bearing = BEARING_START * screenAmount * xOffset
-      mapboxMap.jumpTo(
+      mapboxMap.setCamera(
         CameraOptions.Builder()
           .center(TARGET)
           .zoom(zoom)

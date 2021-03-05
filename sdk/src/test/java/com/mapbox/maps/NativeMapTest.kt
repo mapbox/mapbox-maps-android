@@ -408,11 +408,11 @@ class NativeMapTest {
   }
 
   @Test
-  fun jumpTo() {
+  fun setCamera() {
     val value = mockk<CameraOptions>()
     val nativeMap = NativeMapImpl(map)
-    nativeMap.jumpTo(value)
-    verify { map.jumpTo(value) }
+    nativeMap.setCamera(value)
+    verify { map.setCamera(value) }
   }
 
   @Test

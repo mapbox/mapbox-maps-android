@@ -312,10 +312,10 @@ class MapboxMapTest {
   }
 
   @Test
-  fun jumpTo() {
+  fun setCamera() {
     val cameraOptions = CameraOptions.Builder().build()
-    mapboxMap.jumpTo(cameraOptions)
-    verify { nativeMap.jumpTo(cameraOptions) }
+    mapboxMap.setCamera(cameraOptions)
+    verify { nativeMap.setCamera(cameraOptions) }
   }
 
   @Test

@@ -27,7 +27,7 @@ class SkyLayerSnapshotterActivity : AppCompatActivity() {
     setContentView(R.layout.activity_sky_snapshotter)
     mapView.getScaleBarPlugin().enabled = false
     mapView.getCompassPlugin().enabled = false
-    mapView.getMapboxMap().jumpTo(
+    mapView.getMapboxMap().setCamera(
       CameraOptions.Builder()
         .center(Point.fromLngLat(24.827187523937795, 60.55932732152849))
         .zoom(16.0)
@@ -73,7 +73,7 @@ class SkyLayerSnapshotterActivity : AppCompatActivity() {
           )
         }
       })
-      setCameraOptions(
+      setCamera(
         CameraOptions.Builder()
           .center(Point.fromLngLat(24.81958807097479, 60.56524768721757))
           .zoom(16.0)
