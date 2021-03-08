@@ -60,6 +60,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   private val mapMoveResolver = MapMove()
   private var draggedAnnotation: T? = null
   private val annotationMap = mutableMapOf<Long, T>()
+  private var mapChangeListenerAdded = false
   protected var touchAreaShiftX: Int = mapView.scrollX
   protected var touchAreaShiftY: Int = mapView.scrollY
   protected abstract val layerId: String
@@ -107,14 +108,6 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     gesturesPlugin.addOnMapClickListener(mapClickResolver)
     gesturesPlugin.addOnMapLongClickListener(mapLongClickResolver)
     gesturesPlugin.addOnMoveListener(mapMoveResolver)
-    delegateProvider.mapListenerDelegate.addOnMapChangedListener {
-      if (it == MapChange.DID_FULLY_LOAD_STYLE) {
-        delegateProvider.getStyle {
-          style = it
-          initLayerAndSource()
-        }
-      }
-    }
   }
 
   /**
@@ -165,7 +158,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     }
   }
 
-  @Synchronized protected fun initLayerAndSource() {
+  protected fun initLayerAndSource() {
     if (layer == null || source == null) {
       initializeDataDrivenPropertyMap()
       source = createSource()
@@ -188,6 +181,19 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     }
 
     updateSource()
+
+    // Listen to map change event to reload layer and source in the first init
+    if (!mapChangeListenerAdded) {
+      mapChangeListenerAdded = true
+      delegateProvider.mapListenerDelegate.addOnMapChangedListener {
+        if (it == MapChange.DID_FULLY_LOAD_STYLE) {
+          delegateProvider.getStyle {
+            style = it
+            initLayerAndSource()
+          }
+        }
+      }
+    }
   }
 
   /**
