@@ -106,12 +106,6 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     gesturesPlugin.addOnMapClickListener(mapClickResolver)
     gesturesPlugin.addOnMapLongClickListener(mapLongClickResolver)
     gesturesPlugin.addOnMoveListener(mapMoveResolver)
-    delegateProvider.mapListenerDelegate.addOnDidFinishRenderingMapListener {
-      delegateProvider.getStyle {
-        style = it
-        initLayerAndSource()
-      }
-    }
   }
 
   /**
@@ -185,6 +179,14 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     }
 
     updateSource()
+  }
+
+  /**
+   * Invoked when the style is loaded
+   */
+  override fun onStyleLoaded(styleDelegate: StyleManagerInterface) {
+    style = styleDelegate
+    initLayerAndSource()
   }
 
   /**
