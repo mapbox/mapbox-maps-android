@@ -165,7 +165,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     }
   }
 
-  protected fun initLayerAndSource() {
+  @Synchronized protected fun initLayerAndSource() {
     if (layer == null || source == null) {
       initializeDataDrivenPropertyMap()
       source = createSource()
