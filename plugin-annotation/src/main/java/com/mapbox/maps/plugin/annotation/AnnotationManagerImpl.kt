@@ -181,6 +181,9 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     updateSource()
   }
 
+  /**
+   * Invoked when the style is loaded
+   */
   override fun onStyleLoaded(styleDelegate: StyleManagerInterface) {
     style = styleDelegate
     initLayerAndSource()
