@@ -8,7 +8,6 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
-import com.mapbox.maps.MapChange
 import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.StyleManagerInterface
@@ -60,7 +59,6 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   private val mapMoveResolver = MapMove()
   private var draggedAnnotation: T? = null
   private val annotationMap = mutableMapOf<Long, T>()
-  private var mapChangeListenerAdded = false
   protected var touchAreaShiftX: Int = mapView.scrollX
   protected var touchAreaShiftY: Int = mapView.scrollY
   protected abstract val layerId: String
@@ -181,19 +179,11 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     }
 
     updateSource()
+  }
 
-    // Listen to map change event to reload layer and source in the first init
-    if (!mapChangeListenerAdded) {
-      mapChangeListenerAdded = true
-      delegateProvider.mapListenerDelegate.addOnMapChangedListener {
-        if (it == MapChange.DID_FULLY_LOAD_STYLE) {
-          delegateProvider.getStyle {
-            style = it
-            initLayerAndSource()
-          }
-        }
-      }
-    }
+  override fun onStyleLoaded(styleDelegate: StyleManagerInterface) {
+    style = styleDelegate
+    initLayerAndSource()
   }
 
   /**

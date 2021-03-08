@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.annotation
 
 import android.view.View
+import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.plugin.annotation.generated.CircleManager
 import com.mapbox.maps.plugin.annotation.generated.FillManager
 import com.mapbox.maps.plugin.annotation.generated.LineManager
@@ -51,6 +52,20 @@ class AnnotationPluginImpl : AnnotationPlugin {
     this.width = width
     this.height = height
     managerList.forEach { it.get()?.onSizeChanged(width, height) }
+  }
+
+  /**
+   * Called when a new Style is being loaded.
+   */
+  override fun onStyleLoading() {
+    // no-op
+  }
+
+  /**
+   * Called when a new Style is loaded.
+   */
+  override fun onStyleChanged(styleDelegate: StyleManagerInterface) {
+    managerList.forEach { it.get()?.onStyleLoaded(styleDelegate) }
   }
 
   /**
