@@ -8,6 +8,7 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapChange
 import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.StyleManagerInterface
@@ -106,10 +107,12 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     gesturesPlugin.addOnMapClickListener(mapClickResolver)
     gesturesPlugin.addOnMapLongClickListener(mapLongClickResolver)
     gesturesPlugin.addOnMoveListener(mapMoveResolver)
-    delegateProvider.mapListenerDelegate.addOnDidFinishRenderingMapListener {
-      delegateProvider.getStyle {
-        style = it
-        initLayerAndSource()
+    delegateProvider.mapListenerDelegate.addOnMapChangedListener {
+      if (it == MapChange.DID_FULLY_LOAD_STYLE) {
+        delegateProvider.getStyle {
+          style = it
+          initLayerAndSource()
+        }
       }
     }
   }
