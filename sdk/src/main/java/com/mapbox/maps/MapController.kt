@@ -1,6 +1,8 @@
 package com.mapbox.maps
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import android.view.MotionEvent
 import com.mapbox.annotation.module.MapboxModuleType
@@ -26,6 +28,7 @@ import com.mapbox.maps.plugin.overlay.MapOverlayPlugin
 import com.mapbox.maps.plugin.scalebar.ScaleBarPlugin
 import com.mapbox.maps.renderer.MapboxRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
+import java.lang.ref.WeakReference
 
 internal class MapController : MapPluginProviderDelegate, MapControllable {
 
@@ -43,13 +46,13 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     mapboxMapOptions: MapboxMapOptions
   ) {
     this.renderer = renderer
-    this.nativeObserver = NativeObserver()
     this.mapboxMapOptions = mapboxMapOptions
     AssetManagerProvider().initialize(mapboxMapOptions.context.assets)
     this.nativeMap = MapProvider.getNativeMap(
       mapboxMapOptions,
       renderer,
     )
+    this.nativeObserver = NativeObserver(WeakReference(nativeMap), Handler(Looper.getMainLooper()))
     this.mapboxMap = MapProvider.getMapboxMap(nativeMap, nativeObserver, mapboxMapOptions.pixelRatio)
     this.pluginRegistry = MapProvider.getMapPluginRegistry(
       mapboxMap,
@@ -96,10 +99,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun onStart() {
-    this.nativeMap.subscribe(
-      nativeObserver,
-      NativeObserver.OBSERVED_EVENTS
-    )
+    this.nativeObserver.onStart()
     this.nativeObserver.addOnCameraChangeListener(this.onCameraChangedListener)
     this.nativeObserver.addOnStyleLoadingFinishedListener(this.onStyleLoadingFinishedListener)
     renderer.onStart()
@@ -111,7 +111,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun onStop() {
-    this.nativeMap.unsubscribe(nativeObserver)
+    this.nativeObserver.onStop()
     this.nativeObserver.removeOnCameraChangeListener(this.onCameraChangedListener)
     this.nativeObserver.removeOnStyleLoadingFinishedListener(this.onStyleLoadingFinishedListener)
     renderer.onStop()
