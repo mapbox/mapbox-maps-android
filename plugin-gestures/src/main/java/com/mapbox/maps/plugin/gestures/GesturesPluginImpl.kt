@@ -1186,46 +1186,28 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       val animationTime =
         (velocityXY / 7.0 / pitchFactor + ANIMATION_DURATION_FLING_BASE).toLong()
 
-      if (mapTransformDelegate.terrainEnabled()) {
-        mapTransformDelegate.dragStart(
-          ScreenCoordinate(
-            e1.x.toDouble(),
-            e1.y.toDouble()
-          )
-        )
-        val options = mapTransformDelegate.getDragCameraOptions(
+      mapTransformDelegate.dragStart(centerScreen)
+      cameraAnimationsPlugin.easeTo(
+        mapTransformDelegate.getDragCameraOptions(
           centerScreen,
           ScreenCoordinate(centerScreen.x + offsetX, centerScreen.y + offsetY)
-        )
-        cameraAnimationsPlugin.easeTo(
-          options,
-          mapAnimationOptions {
-            owner(MapAnimationOwnerRegistry.GESTURES)
-            duration(animationTime)
-            interpolator(gesturesInterpolator)
-            animatorListener(object : AnimatorListenerAdapter() {
+        ),
+        mapAnimationOptions {
+          owner(MapAnimationOwnerRegistry.GESTURES)
+          duration(animationTime)
+          interpolator(gesturesInterpolator)
+          animatorListener(object : AnimatorListenerAdapter() {
 
-              override fun onAnimationEnd(animation: Animator?, isReverse: Boolean) {
-                mapTransformDelegate.dragEnd()
-              }
+            override fun onAnimationEnd(animation: Animator?, isReverse: Boolean) {
+              mapTransformDelegate.dragEnd()
+            }
 
-              override fun onAnimationCancel(animation: Animator?) {
-                mapTransformDelegate.dragEnd()
-              }
-            })
-          }
-        )
-      } else {
-        // update transformation
-        cameraAnimationsPlugin.moveBy(
-          ScreenCoordinate(offsetX, offsetY),
-          mapAnimationOptions {
-            owner(MapAnimationOwnerRegistry.GESTURES)
-            duration(animationTime)
-            interpolator(gesturesInterpolator)
-          }
-        )
-      }
+            override fun onAnimationCancel(animation: Animator?) {
+              mapTransformDelegate.dragEnd()
+            }
+          })
+        }
+      )
     }
     return true
   }
@@ -1234,7 +1216,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     if (!internalSettings.scrollEnabled) {
       return false
     }
-
     cancelTransitionsIfRequired()
     notifyOnMoveBeginListeners(detector)
     return true
@@ -1263,43 +1244,26 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       } else {
         ScreenCoordinate((-distanceX).toDouble(), (-distanceY).toDouble())
       }
-      if (mapTransformDelegate.terrainEnabled()) {
-        mapTransformDelegate.dragStart(
-          ScreenCoordinate(
-            detector.focalPoint.x.toDouble(),
-            detector.focalPoint.y.toDouble()
-          )
-        )
-        val options = mapTransformDelegate.getDragCameraOptions(
+      mapTransformDelegate.dragStart(centerScreen)
+      cameraAnimationsPlugin.easeTo(
+        mapTransformDelegate.getDragCameraOptions(
           centerScreen,
           ScreenCoordinate(centerScreen.x + offset.x, centerScreen.y + offset.y)
-        )
-        cameraAnimationsPlugin.easeTo(
-          options,
-          mapAnimationOptions {
-            duration(0)
-            owner(MapAnimationOwnerRegistry.GESTURES)
-            animatorListener(object : AnimatorListenerAdapter() {
+        ),
+        mapAnimationOptions {
+          duration(0)
+          owner(MapAnimationOwnerRegistry.GESTURES)
+          animatorListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator?) {
+              mapTransformDelegate.dragEnd()
+            }
 
-              override fun onAnimationEnd(animation: Animator?, isReverse: Boolean) {
-                mapTransformDelegate.dragEnd()
-              }
-
-              override fun onAnimationCancel(animation: Animator?) {
-                mapTransformDelegate.dragEnd()
-              }
-            })
-          }
-        )
-      } else {
-        val target = cameraAnimationsPlugin.calculateMoveBy(offset)
-        target?.let {
-          cameraAnimationsPlugin.easeTo(
-            CameraOptions.Builder().center(it).build(),
-            immediateCameraJumpOptions
-          )
+            override fun onAnimationCancel(animation: Animator?) {
+              mapTransformDelegate.dragEnd()
+            }
+          })
         }
-      }
+      )
     }
     return true
   }
