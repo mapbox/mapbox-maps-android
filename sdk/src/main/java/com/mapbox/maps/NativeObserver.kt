@@ -75,7 +75,7 @@ internal class NativeObserver(
         }
       }
       MapEvents.STYLE_IMAGE_REMOVE_UNUSED -> if (onStyleImageUnusedListeners.isNotEmpty()) {
-        val eventData = event.getStyleImageRemoveUnusedEventData()
+        val eventData = event.getStyleImageUnusedEventData()
         onStyleImageUnusedListeners.forEach {
           it.onStyleImageUnused(eventData.id)
         }
