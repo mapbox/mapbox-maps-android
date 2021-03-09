@@ -6,7 +6,7 @@ import com.mapbox.maps.plugin.delegates.listeners.eventdata.MapLoadError
  * Definition for listener invoked whenever the map load errors out.
  * See [MapLoadError].
  */
-fun interface OnMapLoadErrorListener {
+interface OnMapLoadErrorListener {
   /**
    * Invoked whenever the map load errors out
    *

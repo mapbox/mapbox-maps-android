@@ -9,6 +9,8 @@ import com.mapbox.maps.extension.observable.getResourceEventData
 import com.mapbox.maps.extension.observable.subscribeResourceRequest
 import com.mapbox.maps.extension.observable.unsubscribeResourceRequest
 import com.mapbox.maps.plugin.compass.getCompassPlugin
+import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
+import com.mapbox.maps.plugin.delegates.listeners.eventdata.MapLoadError
 import com.mapbox.maps.plugin.scalebar.ScaleBarPlugin
 import com.mapbox.maps.plugin.scalebar.getScaleBarPlugin
 import com.mapbox.maps.testapp.R
@@ -102,9 +104,11 @@ class DebugModeActivity : AppCompatActivity() {
     mapboxMap.addOnMapIdleListener {
       Logger.i(TAG, "OnMapIdleListener")
     }
-    mapboxMap.addOnMapLoadErrorListener { mapLoadError, description ->
-      Logger.i(TAG, "OnMapLoadErrorListener: $mapLoadError, $description")
-    }
+    mapboxMap.addOnMapLoadErrorListener(object : OnMapLoadErrorListener {
+      override fun onMapLoadError(mapLoadError: MapLoadError, description: String) {
+        Logger.i(TAG, "OnMapLoadErrorListener: $mapLoadError, $description")
+      }
+    })
     mapboxMap.addOnMapLoadingFinishedListener {
       Logger.i(TAG, "OnMapLoadingFinishedListener")
     }
