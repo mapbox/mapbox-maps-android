@@ -83,6 +83,61 @@ class DebugModeActivity : AppCompatActivity() {
       }
       mapboxMap.setDebug(debugOptions, true)
     }
+    registerListeners(mapboxMap)
+  }
+
+  private fun registerListeners(mapboxMap: MapboxMap) {
+    mapboxMap.addOnStyleLoadingFinishedListener {
+      Logger.i(TAG, "OnStyleLoadingFinishedListener")
+    }
+    mapboxMap.addOnStyleFullyLoadedListener {
+      Logger.i(TAG, "OnStyleFullyLoadedListener")
+    }
+    mapboxMap.addOnStyleImageMissingListener {
+      Logger.i(TAG, "OnStyleImageMissingListener: $it")
+    }
+    mapboxMap.addOnStyleImageUnusedListener {
+      Logger.i(TAG, "OnStyleImageUnusedListener: $it")
+    }
+    mapboxMap.addOnMapIdleListener {
+      Logger.i(TAG, "OnMapIdleListener")
+    }
+    mapboxMap.addOnMapLoadErrorListener { mapLoadError, description ->
+      Logger.i(TAG, "OnMapLoadErrorListener: $mapLoadError, $description")
+    }
+    mapboxMap.addOnMapLoadingFinishedListener {
+      Logger.i(TAG, "OnMapLoadingFinishedListener")
+    }
+    mapboxMap.addOnCameraChangeListener {
+      Logger.i(TAG, "OnCameraChangeListener")
+    }
+    mapboxMap.addOnRenderFrameStartedListener {
+      Logger.i(TAG, "OnRenderFrameStartedListener")
+    }
+    mapboxMap.addOnRenderFrameFinishedListener { renderMode, needsRepaint, placementChanged ->
+      Logger.i(
+        TAG,
+        "OnRenderFrameFinishedListener: $renderMode, $needsRepaint, $placementChanged"
+      )
+    }
+    mapboxMap.addOnSourceAddedListener {
+      Logger.i(
+        TAG,
+        "OnSourceAddedListener: $it"
+      )
+    }
+    mapboxMap.addOnSourceChangeListener {
+      Logger.i(
+        TAG,
+        "OnSourceChangeListener: $it"
+      )
+    }
+    mapboxMap.addOnSourceRemovedListener {
+      Logger.i(
+        TAG,
+        "OnSourceRemovedListener: $it"
+      )
+    }
   }
 
   override fun onStart() {
