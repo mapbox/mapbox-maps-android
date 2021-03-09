@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.annotation
 
 import android.graphics.Color
+import com.mapbox.bindgen.Value
 
 /**
  * Options to show and configure symbol clustering with using SymbolManager.
@@ -28,22 +29,21 @@ data class ClusterOptions(
    */
   val clusterRadius: Long = 50,
   /**
-   * The circle radius of the cluster items, 18 by default
+   * The circle radius of the cluster items in expression, literal(18) by default
    */
-  val circleRadius: Double = 18.0,
+  val circleRadius: Value? = null,
   /**
-   * The text color of cluster item. White by default
+   * The text color of cluster item in expression. color(Color.WHITE) by default
    */
-  val textColor: Int = Color.WHITE,
+  val textColor: Value? = null,
   /**
-   * The text size of cluster item. 12 by default.
+   * The text size of cluster item in expression. literal(12) by default.
    */
-  val textSize: Double = 12.0,
+  val textSize: Value? = null,
   /**
-   *  The text field of a cluster item. get("point_count") by default.
-   *  Could use [Value.toJson()] to generate the desired json of Expression.
+   *  The text field of a cluster item in expression. get("point_count") by default.
    */
-  val textField: String = "[\"get\",\"point_count\"]",
+  val textField: Value? = null,
   /**
    * Max zoom on which to cluster points if clustering is enabled. Defaults to one zoom less
    * than maxzoom (so that last zoom features are not clustered). Clusters are re-evaluated at integer zoom

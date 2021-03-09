@@ -8,6 +8,7 @@ import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.color
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationSourceOptions
 import com.mapbox.maps.plugin.annotation.ClusterOptions
@@ -57,6 +58,7 @@ class SymbolClusterActivity : AppCompatActivity(), CoroutineScope {
           val annotationConfig = AnnotationConfig(
             annotationSourceOptions = AnnotationSourceOptions(
               clusterOptions = ClusterOptions(
+                textColor = color(Color.YELLOW),
                 cluster = true,
                 colorLevels = listOf(
                   Pair(100, Color.RED),
@@ -81,7 +83,7 @@ class SymbolClusterActivity : AppCompatActivity(), CoroutineScope {
 
   private fun loadData() {
     if (options == null) {
-      AnnotationUtils.loadStringFromNet(POINTS_URL)?.let {
+      AnnotationUtils.loadStringFromNet(this@SymbolClusterActivity, POINTS_URL)?.let {
         FeatureCollection.fromJson(it).features()?.let { features ->
           features.shuffle()
           options = features.take(AMOUNT).map { feature ->

@@ -4,10 +4,7 @@ import android.content.Context
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.Style
-import java.io.BufferedInputStream
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
+import java.io.*
 import java.net.HttpURLConnection
 import java.net.URL
 import java.nio.charset.Charset
@@ -100,24 +97,65 @@ object AnnotationUtils {
   }
 
   /**
-   * Load the string content from net
+   * Load the string content from a assets file
    *
-   * @param url the url of the file to load
+   * @param fileName the file to load
    */
-  fun loadStringFromNet(url: String): String? {
-    val urlConnection: HttpURLConnection = URL(url).openConnection() as HttpURLConnection
+  fun loadStringFromFile(fileName: String): String? {
+    Logger.w(TAG, "load from file $fileName")
+
+    val file = File(fileName)
+    if (!file.exists()) {
+      Logger.e(TAG, "File not exist: $fileName")
+      return null
+    }
+    val inputStream = FileReader(file)
     return try {
-      val inputStream = BufferedInputStream(urlConnection.inputStream)
-      val rd = BufferedReader(InputStreamReader(inputStream, Charset.forName("UTF-8")))
+      val rd = BufferedReader(inputStream)
       val sb = StringBuilder()
       rd.forEachLine {
         sb.append(it)
       }
       sb.toString()
     } catch (e: IOException) {
+      Logger.e(TAG, "Unable to parse $fileName")
+      null
+    } finally {
+      inputStream.close()
+    }
+  }
+
+  /**
+   * Load the string content from net
+   *
+   * @param context the context
+   * @param url the url of the file to load
+   */
+  fun loadStringFromNet(context: Context, url: String): String? {
+    val dir = context.cacheDir
+    val file = File("$dir/${url.hashCode()}")
+    if (file.exists()) {
+      return loadStringFromFile(file.absolutePath)
+    }
+    file.createNewFile()
+    val urlConnection: HttpURLConnection = URL(url).openConnection() as HttpURLConnection
+    val outputStream = FileOutputStream(file)
+
+    return try {
+      val inputStream = BufferedInputStream(urlConnection.inputStream)
+      val rd = BufferedReader(InputStreamReader(inputStream, Charset.forName("UTF-8")))
+      val sb = StringBuilder()
+
+      rd.forEachLine {
+        sb.append(it)
+        outputStream.write(it.toByteArray())
+      }
+      sb.toString()
+    } catch (e: IOException) {
       Logger.e(TAG, "Unable to download $url")
       null
     } finally {
+      outputStream.close()
       urlConnection.disconnect()
     }
   }
