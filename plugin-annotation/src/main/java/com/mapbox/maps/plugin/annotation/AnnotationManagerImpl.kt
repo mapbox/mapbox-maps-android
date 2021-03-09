@@ -1,6 +1,5 @@
 package com.mapbox.maps.plugin.annotation
 
-import android.graphics.Color
 import android.graphics.PointF
 import android.view.View
 import com.mapbox.android.gestures.MoveGestureDetector
@@ -15,7 +14,6 @@ import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.all
-import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.color
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.gt
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.gte
@@ -220,7 +218,11 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     circleLayer("mapbox-android-cluster-circle-layer-$level", sourceId) {
       circleColor(colorLevels[level].second)
       annotationConfig?.annotationSourceOptions?.clusterOptions?.let {
-        circleRadius(if (it.circleRadius == null) DEFAULT_CIRCLE_RADIUS else it.circleRadius as Expression)
+        if (it.circleRadiusExpression == null) {
+          circleRadius(it.circleRadius)
+        } else {
+          circleRadius(it.circleRadiusExpression as Expression)
+        }
       }
       val pointCount = Expression.toNumber(get(POINT_COUNT))
       filter(
@@ -238,8 +240,16 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   private fun createClusterTextLayer() = symbolLayer(CLUSTER_TEXT_LAYER_ID, sourceId) {
     annotationConfig?.annotationSourceOptions?.clusterOptions?.let {
       textField(if (it.textField == null) DEFAULT_TEXT_FIELD else it.textField as Expression)
-      textSize(if (it.textSize == null) DEFAULT_TEXT_SIZE else it.textSize as Expression)
-      textColor(if (it.textColor == null) DEFAULT_TEXT_COLOR else it.textColor as Expression)
+      if (it.textSizeExpression == null) {
+        textSize(it.textSize)
+      } else {
+        textSize(it.textSizeExpression as Expression)
+      }
+      if (it.textColorExpression == null) {
+        textColor(it.textColor)
+      } else {
+        textColor(it.textColorExpression as Expression)
+      }
       textIgnorePlacement(true)
       textAllowOverlap(true)
     }
@@ -591,8 +601,5 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     private const val POINT_COUNT = "point_count"
     private const val CLUSTER_TEXT_LAYER_ID = "mapbox-android-cluster-text-layer"
     private val DEFAULT_TEXT_FIELD = get("point_count")
-    private val DEFAULT_TEXT_SIZE = literal(12)
-    private val DEFAULT_CIRCLE_RADIUS = literal(18)
-    private val DEFAULT_TEXT_COLOR = color(Color.WHITE)
   }
 }

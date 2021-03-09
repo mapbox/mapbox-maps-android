@@ -8,6 +8,7 @@ import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.color
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationSourceOptions
@@ -23,7 +24,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import java.util.*
 
 /**
  * Example showing how to add Symbol cluster annotations
@@ -35,7 +35,6 @@ class SymbolClusterActivity : AppCompatActivity(), CoroutineScope {
   private var symbolManager: SymbolManager? = null
   private var options: List<SymbolOptions>? = null
   private var index: Int = 0
-  private val random = Random()
   private val nextStyle: String
     get() {
       return AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]
@@ -58,8 +57,10 @@ class SymbolClusterActivity : AppCompatActivity(), CoroutineScope {
           val annotationConfig = AnnotationConfig(
             annotationSourceOptions = AnnotationSourceOptions(
               clusterOptions = ClusterOptions(
-                textColor = color(Color.YELLOW),
-                cluster = true,
+                textColorExpression = color(Color.YELLOW),
+                textColor = Color.BLACK, // Will not be applied as textColorExpression has been set
+                textSize = 20.0,
+                circleRadiusExpression = literal(25.0),
                 colorLevels = listOf(
                   Pair(100, Color.RED),
                   Pair(50, Color.BLUE),
@@ -82,19 +83,16 @@ class SymbolClusterActivity : AppCompatActivity(), CoroutineScope {
   }
 
   private fun loadData() {
-    if (options == null) {
-      AnnotationUtils.loadStringFromNet(this@SymbolClusterActivity, POINTS_URL)?.let {
-        FeatureCollection.fromJson(it).features()?.let { features ->
-          features.shuffle()
-          options = features.take(AMOUNT).map { feature ->
-            SymbolOptions()
-              .withGeometry((feature.geometry() as Point))
-              .withIconImage(ICON_FIRE_STATION)
-          }
+    AnnotationUtils.loadStringFromNet(this@SymbolClusterActivity, POINTS_URL)?.let {
+      FeatureCollection.fromJson(it).features()?.let { features ->
+        features.shuffle()
+        options = features.take(AMOUNT).map { feature ->
+          SymbolOptions()
+            .withGeometry((feature.geometry() as Point))
+            .withIconImage(ICON_FIRE_STATION)
         }
       }
     }
-    symbolManager?.deleteAll()
     runOnUiThread {
       options?.let {
         symbolManager?.create(it)
@@ -123,34 +121,11 @@ class SymbolClusterActivity : AppCompatActivity(), CoroutineScope {
     mapView.onDestroy()
   }
 
-  private fun createRandomPoints(): List<Point> {
-    val points: MutableList<Point> = ArrayList<Point>()
-    for (i in 0..AMOUNT) {
-      points.add(
-        Point.fromLngLat(
-          randomDouble(LONGITUDE_ORIGIN, LONGITUDE_BOUND),
-          randomDouble(LATITUDE_ORIGIN, LATITUDE_BOUND)
-        )
-      )
-    }
-    return points
-  }
-
-  private fun randomDouble(origin: Double, bound: Double): Double {
-    var r = random.nextDouble()
-    r = r * (bound - origin) + origin
-    return r
-  }
-
   companion object {
     private const val AMOUNT = 10000
     private const val ICON_FIRE_STATION = "fire-station-11"
     private const val LONGITUDE = -77.00897
     private const val LATITUDE = 38.87031
-    private const val LONGITUDE_ORIGIN = -77.1799850463867
-    private const val LONGITUDE_BOUND = -76.90841674804688
-    private const val LATITUDE_ORIGIN = 38.799584013897054
-    private const val LATITUDE_BOUND = 38.992237864985896
     private const val POINTS_URL =
       "https://opendata.arcgis.com/datasets/01d0ff375695466d93d1fa2a976e2bdd_5.geojson"
   }

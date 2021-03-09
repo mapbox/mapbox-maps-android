@@ -182,15 +182,9 @@ class SymbolManagerTest {
         annotationSourceOptions = AnnotationSourceOptions(
           10, 20L, true, 10.0,
           ClusterOptions(
-            true,
-            10,
-            10.0,
-            Color.BLACK,
-            15.0,
-            "text",
-            15,
-            listOf(Pair(0, Color.RED)),
-            hashMapOf("key1" to "x", "key2" to "y") as HashMap<String, Any>
+            clusterRadius = 30,
+            clusterMaxZoom = 15,
+            clusterProperties = hashMapOf("key1" to "x", "key2" to "y") as HashMap<String, Any>
           )
         )
       )
@@ -199,6 +193,7 @@ class SymbolManagerTest {
     val sourceString = manager.source.toString()
     assertTrue(sourceString.contains("maxzoom = 10"))
     assertTrue(sourceString.contains("cluster = true"))
+    assertTrue(sourceString.contains("clusterRadius = 30"))
     assertTrue(sourceString.contains("clusterMaxZoom = 15"))
     assertTrue(sourceString.contains("clusterProperties = {key1=x, key2=y}"))
     assertTrue(sourceString.contains("lineMetrics = true"))
