@@ -11,6 +11,7 @@ import com.mapbox.maps.extension.style.expressions.dsl.generated.match
 import com.mapbox.maps.extension.style.image.image
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
+import com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.R
@@ -34,6 +35,7 @@ class AddMarkersSymbolActivity : AppCompatActivity() {
         // prepare blue marker from resources
         +image(BLUE_ICON_ID) {
           bitmap(BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view))
+          scale(1f)
         }
         // prepare source that will hold icons and add extra string property to each of it
         // to identify what marker icon should be used
@@ -43,8 +45,8 @@ class AddMarkersSymbolActivity : AppCompatActivity() {
               arrayOf(
                 Feature.fromGeometry(
                   Point.fromLngLat(
-                    72.88055419921875,
-                    19.05822387777432
+                    77.22015380859375,
+                    28.549544699103865
                   )
                 ).apply {
                   addStringProperty(ICON_KEY, ICON_RED_PROPERTY)
@@ -69,6 +71,26 @@ class AddMarkersSymbolActivity : AppCompatActivity() {
         //    BLUE_MARKER
         //  else
         //    RED_MARKER
+
+        +symbolLayer(LAYER_ID+"1", SOURCE_ID) {
+          iconImage(
+            match {
+              get {
+                literal(ICON_KEY)
+              }
+              stop {
+                literal(ICON_BLUE_PROPERTY)
+                literal(BLUE_ICON_ID)
+              }
+              literal(BLUE_ICON_ID)
+            }
+          )
+          iconRotationAlignment(IconRotationAlignment.VIEWPORT)
+          symbolSortKey(100.0)
+//          iconAllowOverlap(true)
+//          iconIgnorePlacement(true)
+          iconAnchor(IconAnchor.BOTTOM)
+        }
         +symbolLayer(LAYER_ID, SOURCE_ID) {
           iconImage(
             match {
@@ -79,14 +101,13 @@ class AddMarkersSymbolActivity : AppCompatActivity() {
                 literal(ICON_RED_PROPERTY)
                 literal(RED_ICON_ID)
               }
-              stop {
-                literal(ICON_BLUE_PROPERTY)
-                literal(BLUE_ICON_ID)
-              }
               literal(RED_ICON_ID)
             }
           )
+          iconRotationAlignment(IconRotationAlignment.VIEWPORT)
+          symbolSortKey(10.0)
           iconAllowOverlap(true)
+          iconIgnorePlacement(true)
           iconAnchor(IconAnchor.BOTTOM)
         }
       }
