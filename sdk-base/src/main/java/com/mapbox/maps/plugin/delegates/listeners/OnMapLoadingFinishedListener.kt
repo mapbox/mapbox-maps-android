@@ -7,7 +7,6 @@ fun interface OnMapLoadingFinishedListener {
 
   /**
    * Invoked when the Map's style has been fully loaded, and the Map has rendered all visible tiles.
-
    */
   fun onMapLoadingFinished()
 }

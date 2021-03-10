@@ -99,9 +99,11 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun onStart() {
-    this.nativeObserver.onStart()
-    this.nativeObserver.addOnCameraChangeListener(this.onCameraChangedListener)
-    this.nativeObserver.addOnStyleLoadingFinishedListener(this.onStyleLoadingFinishedListener)
+    nativeObserver.apply {
+      onStart()
+      addOnCameraChangeListener(onCameraChangedListener)
+      addOnStyleLoadingFinishedListener(onStyleLoadingFinishedListener)
+    }
     renderer.onStart()
     pluginRegistry.onStart()
   }
@@ -111,15 +113,17 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun onStop() {
-    this.nativeObserver.onStop()
-    this.nativeObserver.removeOnCameraChangeListener(this.onCameraChangedListener)
-    this.nativeObserver.removeOnStyleLoadingFinishedListener(this.onStyleLoadingFinishedListener)
+    nativeObserver.apply {
+      removeOnCameraChangeListener(onCameraChangedListener)
+      removeOnStyleLoadingFinishedListener(onStyleLoadingFinishedListener)
+      onStop()
+    }
     renderer.onStop()
     pluginRegistry.onStop()
   }
 
   override fun onDestroy() {
-    this.nativeObserver.clearListeners()
+    nativeObserver.clearListeners()
     renderer.onDestroy()
     pluginRegistry.cleanup()
   }
