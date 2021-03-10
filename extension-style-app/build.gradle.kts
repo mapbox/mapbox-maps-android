@@ -15,9 +15,7 @@ android {
     versionName = "0.1.0"
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    testInstrumentationRunnerArguments = mapOf(
-      "clearPackageData" to "true"
-    )
+    testInstrumentationRunnerArguments["clearPackageData"] = "true"
   }
 
   compileOptions {
@@ -41,7 +39,7 @@ dependencies {
   implementation(project(":extension-observable"))
   implementation(Dependencies.kotlin)
   implementation(Dependencies.androidxAppCompat)
-  androidTestUtil(Dependencies.androidxOrchestrator)
+  androidTestImplementation(Dependencies.androidxOrchestrator)
   androidTestImplementation(Dependencies.androidxTestRunner)
   androidTestImplementation(Dependencies.androidxJUnitTestRules)
   androidTestImplementation(Dependencies.androidxRules)

@@ -41,9 +41,9 @@ allprojects {
         create<BasicAuthentication>("basic")
       }
     }
-    maven {
-      url = uri("https://oss.jfrog.org/artifactory/oss-snapshot-local/")
-    }
+//    maven {
+//      url = uri("https://oss.jfrog.org/artifactory/oss-snapshot-local/")
+//    }
   }
 }
 

@@ -1,6 +1,6 @@
 plugins {
   id("com.android.application")
-  kotlin("android")
+  id("kotlin-android")
   kotlin("android.extensions")
   id("com.mapbox.maps.token")
 }
@@ -15,9 +15,7 @@ android {
     versionName = "0.1.0"
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    testInstrumentationRunnerArguments = mapOf(
-      "clearPackageData" to "true"
-    )
+    testInstrumentationRunnerArguments["clearPackageData"] = "true"
   }
   buildTypes {
     getByName("release") {
@@ -42,6 +40,7 @@ android {
   }
 
   composeOptions {
+    kotlinCompilerVersion = "1.4.30"
     kotlinCompilerExtensionVersion = "1.0.0-beta01"
   }
 
@@ -104,7 +103,7 @@ dependencies {
   implementation("androidx.compose.runtime:runtime-rxjava2:1.0.0-beta01")
 
   debugImplementation(Dependencies.squareLeakCanary)
-  androidTestUtil(Dependencies.androidxOrchestrator)
+  androidTestImplementation(Dependencies.androidxOrchestrator)
   androidTestImplementation(Dependencies.androidxTestRunner)
   androidTestImplementation(Dependencies.androidxJUnitTestRules)
   androidTestImplementation(Dependencies.androidxRules)

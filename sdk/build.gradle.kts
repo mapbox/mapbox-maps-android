@@ -16,9 +16,7 @@ android {
     targetSdkVersion(AndroidVersions.targetSdkVersion)
     consumerProguardFiles("proguard-rules.pro")
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    testInstrumentationRunnerArguments = mapOf(
-      "clearPackageData" to "true"
-    )
+    testInstrumentationRunnerArguments["clearPackageData"] = "true"
 
     if (project.hasProperty("android.injected.invoked.from.ide")) {
       buildConfigField("boolean", "RUN_FROM_IDE", "true")
@@ -72,7 +70,7 @@ dependencies {
   androidTestImplementation(Dependencies.androidxRules)
   androidTestImplementation(Dependencies.androidxJUnitTestRules)
   androidTestImplementation(Dependencies.androidxEspresso)
-  androidTestUtil(Dependencies.androidxOrchestrator)
+  androidTestImplementation(Dependencies.androidxOrchestrator)
 }
 
 tasks.withType<DokkaTask>().configureEach {

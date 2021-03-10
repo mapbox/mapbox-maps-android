@@ -46,7 +46,7 @@ object Dependencies {
   const val squareLeakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.squareLeakCanary}"
   const val squareRetrofit = "com.squareup.retrofit2:retrofit:${Versions.squareRetrofit}"
   const val squareRetrofitGsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.squareRetrofit}"
-  const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.pluginKotlin}"
+  const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.pluginKotlin}"
   const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.kotlinCoroutines}"
   const val junit = "junit:junit:${Versions.junit}"
   const val mockk = "io.mockk:mockk:${Versions.mockk}"
@@ -55,8 +55,8 @@ object Dependencies {
 }
 
 object Versions {
-  const val pluginAndroidGradle = "4.0.1"
-  const val pluginKotlin = "1.4.0"
+  const val pluginAndroidGradle = "4.1.2"
+  const val pluginKotlin = "1.4.30"
   const val pluginLicense = "0.8.5"
   const val pluginDokka =  "1.4.10"
   const val pluginJacoco = "0.2"
