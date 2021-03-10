@@ -22,6 +22,7 @@ class IndicatorLocationLayerWrapperTest {
     every { style.addStyleLayer(any(), any()) } returns expected
     every { style.setStyleLayerProperty(any(), any(), any()) } returns expected
     every { expected.error } returns null
+    every { style.styleLayerExists(any()) } returns true
 
     val styleState = mockk<MapStyleStateDelegate>()
     every { styleState.isFullyLoaded() } returns true

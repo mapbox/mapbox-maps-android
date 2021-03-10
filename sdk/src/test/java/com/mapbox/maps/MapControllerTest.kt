@@ -59,8 +59,7 @@ class MapControllerTest {
     every {
       MapProvider.getNativeMap(
         mapboxMapOptions,
-        renderer,
-        mapObserver
+        renderer
       )
     } answers { nativeMap }
     every { nativeMap.getCameraOptions(any()) } returns cameraOptions

@@ -21,6 +21,7 @@ class ModelLocationLayerWrapperTest {
   fun setup() {
     every { style.addStyleLayer(any(), any()) } returns expected
     every { style.setStyleLayerProperty(any(), any(), any()) } returns expected
+    every { style.styleLayerExists(any()) } returns true
     every { expected.error } returns null
     val styleState = mockk<MapStyleStateDelegate>()
     every { styleState.isFullyLoaded() } returns true

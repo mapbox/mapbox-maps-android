@@ -331,9 +331,6 @@ class MapPluginRegistryTest {
     override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     }
 
-    override fun onStyleLoading() {
-    }
-
     override fun onStyleChanged(styleDelegate: StyleManagerInterface) {
     }
   }
