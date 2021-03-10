@@ -31,10 +31,12 @@ internal class ModelLocationSourceWrapper(
   fun bindTo(delegate: StyleManagerInterface, styleStateDelegate: MapStyleStateDelegate) {
     this.styleDelegate = delegate
     this.styleStateDelegate = styleStateDelegate
-    val expected = delegate.addStyleSource(sourceId, toValue())
-    expected.error?.let {
-      Log.e(TAG, sourceProperties.toString())
-      throw RuntimeException("Add source failed: $it")
+    if (!delegate.styleSourceExists(sourceId)) {
+      val expected = delegate.addStyleSource(sourceId, toValue())
+      expected.error?.let {
+        Log.e(TAG, sourceProperties.toString())
+        throw RuntimeException("Add source failed: $it")
+      }
     }
   }
 
@@ -54,13 +56,15 @@ internal class ModelLocationSourceWrapper(
     }
     sourceProperties[propertyName] = value
     styleDelegate?.let { styleDelegate ->
-      val expected = styleDelegate.setStyleSourceProperty(
-        sourceId,
-        propertyName,
-        value
-      )
-      expected.error?.let {
-        throw RuntimeException("Set source property \"${propertyName}\" failed:\nError: $it\nValue set: $value")
+      if (styleDelegate.styleSourceExists(sourceId)) {
+        val expected = styleDelegate.setStyleSourceProperty(
+          sourceId,
+          propertyName,
+          value
+        )
+        expected.error?.let {
+          throw RuntimeException("Set source property \"${propertyName}\" failed:\nError: $it\nValue set: $value")
+        }
       }
     }
   }

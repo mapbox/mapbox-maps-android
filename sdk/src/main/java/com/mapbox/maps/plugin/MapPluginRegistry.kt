@@ -159,12 +159,6 @@ MapPluginRegistry(private val mapDelegateProvider: MapDelegateProvider) {
     }
   }
 
-  fun onStyleLoading() {
-    styleObserverPlugins.forEach {
-      it.onStyleLoading()
-    }
-  }
-
   fun onStyleChanged(style: Style) {
     styleObserverPlugins.forEach {
       it.onStyleChanged(style)

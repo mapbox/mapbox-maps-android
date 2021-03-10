@@ -287,23 +287,6 @@ class MapPluginRegistryTest {
   }
 
   @Test
-  fun onStyleLoading() {
-    val mapView = mockk<MapView>(relaxed = true)
-    val clazz = TestStyleObserverPlugin::class.java
-    val plugin = mockk<TestStyleObserverPlugin>(relaxUnitFun = true)
-    mockkStatic("com.mapbox.maps.UtilsKt")
-    every { clazz.instantiate() } returns plugin
-
-    mapPluginRegistry.createPlugin(mapView, mapboxMapOptions, clazz)
-
-    mapPluginRegistry.onStyleLoading()
-
-    verify {
-      plugin.onStyleLoading()
-    }
-  }
-
-  @Test
   fun onStyleChanged() {
     val mapView = mockk<MapView>(relaxed = true)
     val clazz = TestStyleObserverPlugin::class.java

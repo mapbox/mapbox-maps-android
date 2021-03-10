@@ -145,13 +145,6 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
   }
 
   /**
-   * Called when a new Style is being loaded.
-   */
-  override fun onStyleLoading() {
-    // no-ops
-  }
-
-  /**
    * Called when a new Style is loaded.
    */
   override fun onStyleChanged(styleDelegate: StyleManagerInterface) {

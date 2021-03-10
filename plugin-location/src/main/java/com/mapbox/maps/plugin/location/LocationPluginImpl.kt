@@ -1628,13 +1628,6 @@ class LocationPluginImpl : LocationPlugin {
   }
 
   /**
-   * Called when a new Style is being loaded.
-   */
-  override fun onStyleLoading() {
-    Logger.d(TAG, "onStartLoadingMap")
-  }
-
-  /**
    * Called when a new Style is loaded.
    */
   override fun onStyleChanged(styleDelegate: StyleManagerInterface) {
