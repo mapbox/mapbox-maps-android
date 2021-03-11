@@ -35,7 +35,7 @@ class SymbolManager(
     delegateProvider.getStyle {
       style = it
       initLayerAndSource()
-      // Show all icons and texts by default. 
+      // Show all icons and texts by default.
       iconAllowOverlap = true
       textAllowOverlap = true
       iconIgnorePlacement = true
@@ -865,7 +865,11 @@ class SymbolManager(
    * @return the layer created
    */
   override fun createLayer(): SymbolLayer {
-    return symbolLayer(layerId, sourceId) {}
+    return symbolLayer(layerId, sourceId) {
+      textFont( listOf(
+        "Open Sans Regular", "Arial Unicode MS Regular"
+      ))
+    }
   }
 
   /**
