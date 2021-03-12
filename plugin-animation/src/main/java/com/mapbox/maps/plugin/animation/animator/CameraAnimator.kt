@@ -2,7 +2,6 @@ package com.mapbox.maps.plugin.animation.animator
 
 import android.animation.TypeEvaluator
 import android.animation.ValueAnimator
-import android.os.Build
 import com.mapbox.common.Logger
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
@@ -36,10 +35,6 @@ abstract class CameraAnimator<out T> (
    */
   val targets = cameraAnimatorOptions.targets
 
-  /**
-   * Evaluator.
-   */
-  private val evaluator: TypeEvaluator<T>
   private var registered = false
   private var internalUpdateListener: AnimatorUpdateListener? = null
   private var internalListener: AnimatorListener? = null
@@ -50,14 +45,8 @@ abstract class CameraAnimator<out T> (
   internal var isInternal = false
 
   init {
-    setObjectValues(emptyArray<Any>())
-    this.evaluator = evaluator
-    setEvaluator(
-      if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M)
-        Evaluators.OBJECT
-      else
-        evaluator
-    )
+    setObjectValues(targets[0], targets[0])
+    setEvaluator(evaluator)
   }
 
   internal abstract val type: CameraAnimatorType
@@ -166,10 +155,6 @@ abstract class CameraAnimator<out T> (
       super.addListener(internalListener)
     }
     userListeners.clear()
-  }
-
-  internal fun applyEvaluator() {
-    setEvaluator(evaluator)
   }
 
   internal fun addInternalUpdateListener(listener: AnimatorUpdateListener) {
