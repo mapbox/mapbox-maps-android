@@ -11,6 +11,7 @@
     <string name="category_config">Map configuration</string>
     <string name="category_lab">Lab</string>
     <string name="category_camera">Camera</string>
+    <string name="category_feature_state">Feature state</string>
     <string name="category_offline">Offline</string>
     <string name="category_sky">Sky</string>
     <string name="category_annotation">Annotation</string>
