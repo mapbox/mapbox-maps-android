@@ -967,5 +967,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
         </activity>
+
+        <activity
+            android:name=".examples.RenderTestOneActivity"
+            android:description="@string/description_render_test"
+            android:exported="true"
+            android:label="@string/activity_render_test">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_basic" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
+        <activity
+            android:name=".examples.RenderTestTwoActivity"
+            android:exported="false">
+        </activity>
     </application>
 </manifest>
