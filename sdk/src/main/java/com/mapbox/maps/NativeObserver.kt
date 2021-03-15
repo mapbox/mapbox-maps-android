@@ -31,7 +31,6 @@ internal class NativeObserver(
   val awaitingStyleGetters = mutableListOf<Style.OnStyleLoaded>()
 
   var observedEvents = CopyOnWriteArrayList<String>()
-
   //
   // Internal callbacks
   //
@@ -39,35 +38,19 @@ internal class NativeObserver(
   override fun notify(event: Event) {
     when (event.type) {
       // Camera events
-      MapEvents.CAMERA_CHANGED -> if (onCameraChangeListeners.isNotEmpty()) {
-        onCameraChangeListeners.forEach { it.onCameraChanged() }
-      }
+      MapEvents.CAMERA_CHANGED -> onCameraChangeListeners.forEach { it.onCameraChanged() }
       // Map events
-      MapEvents.MAP_IDLE -> if (onMapIdleListeners.isNotEmpty()) {
-        onMapIdleListeners.forEach { it.onMapIdle() }
-      }
+      MapEvents.MAP_IDLE -> onMapIdleListeners.forEach { it.onMapIdle() }
       MapEvents.MAP_LOADING_ERROR -> if (onMapLoadErrorListeners.isNotEmpty()) {
         val loadingError = event.getMapLoadingErrorEventData()
         onMapLoadErrorListeners.forEach {
           it.onMapLoadError(loadingError.error, loadingError.description)
         }
       }
-      MapEvents.MAP_LOADING_FINISHED -> if (onMapLoadingFinishedListeners.isNotEmpty()) {
-        onMapLoadingFinishedListeners.forEach {
-          it.onMapLoadingFinished()
-        }
-      }
+      MapEvents.MAP_LOADING_FINISHED -> onMapLoadingFinishedListeners.forEach { it.onMapLoadingFinished() }
       // Style events
-      MapEvents.STYLE_LOADING_FINISHED -> if (onStyleLoadingFinishedListeners.isNotEmpty()) {
-        onStyleLoadingFinishedListeners.forEach {
-          it.onStyleLoadingFinished()
-        }
-      }
-      MapEvents.STYLE_FULLY_LOADED -> if (onStyleFullyLoadedListeners.isNotEmpty()) {
-        onStyleFullyLoadedListeners.forEach {
-          it.onStyleFullyLoaded()
-        }
-      }
+      MapEvents.STYLE_LOADING_FINISHED -> onStyleLoadingFinishedListeners.forEach { it.onStyleLoadingFinished() }
+      MapEvents.STYLE_FULLY_LOADED -> onStyleFullyLoadedListeners.forEach { it.onStyleFullyLoaded() }
       MapEvents.STYLE_IMAGE_MISSING -> if (onStyleImageMissingListeners.isNotEmpty()) {
         val eventData = event.getStyleImageMissingEventData()
         onStyleImageMissingListeners.forEach {
@@ -81,11 +64,7 @@ internal class NativeObserver(
         }
       }
       // Render frame events
-      MapEvents.RENDER_FRAME_STARTED -> if (onRenderFrameStartedListeners.isNotEmpty()) {
-        onRenderFrameStartedListeners.forEach {
-          it.onRenderFrameStarted()
-        }
-      }
+      MapEvents.RENDER_FRAME_STARTED -> onRenderFrameStartedListeners.forEach { it.onRenderFrameStarted() }
       MapEvents.RENDER_FRAME_FINISHED -> if (onRenderFrameFinishedListeners.isNotEmpty()) {
         val eventData = event.getRenderFrameFinishedEventData()
         onRenderFrameFinishedListeners.forEach {
@@ -130,12 +109,23 @@ internal class NativeObserver(
   // Add / Remove
   //
 
+  private fun subscribeNewEvent(eventType: String) {
+    handler.post {
+      observable.get()?.subscribe(this, listOf(eventType))
+    }
+    observedEvents.add(eventType)
+  }
+
+  private fun unsubscribeUnusedEvent(eventType: String) {
+    handler.post {
+      observable.get()?.unsubscribe(this, listOf(eventType))
+    }
+    observedEvents.remove(eventType)
+  }
+
   fun addOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener) {
     if (onCameraChangeListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.subscribe(this, listOf(MapEvents.CAMERA_CHANGED))
-      }
-      observedEvents.add(MapEvents.CAMERA_CHANGED)
+      subscribeNewEvent(MapEvents.CAMERA_CHANGED)
     }
     onCameraChangeListeners.add(onCameraChangeListener)
   }
@@ -143,20 +133,14 @@ internal class NativeObserver(
   fun removeOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener) {
     onCameraChangeListeners.remove(onCameraChangeListener)
     if (onCameraChangeListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.unsubscribe(this, listOf(MapEvents.CAMERA_CHANGED))
-      }
-      observedEvents.remove(MapEvents.CAMERA_CHANGED)
+      unsubscribeUnusedEvent(MapEvents.CAMERA_CHANGED)
     }
   }
 
   // Map events
   fun addOnMapIdleListener(onMapIdleListener: OnMapIdleListener) {
     if (onMapIdleListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.subscribe(this, listOf(MapEvents.MAP_IDLE))
-      }
-      observedEvents.add(MapEvents.MAP_IDLE)
+      subscribeNewEvent(MapEvents.MAP_IDLE)
     }
     onMapIdleListeners.add(onMapIdleListener)
   }
@@ -164,19 +148,13 @@ internal class NativeObserver(
   fun removeOnMapIdleListener(onMapIdleListener: OnMapIdleListener) {
     onMapIdleListeners.remove(onMapIdleListener)
     if (onMapIdleListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.unsubscribe(this, listOf(MapEvents.MAP_IDLE))
-      }
-      observedEvents.remove(MapEvents.MAP_IDLE)
+      unsubscribeUnusedEvent(MapEvents.MAP_IDLE)
     }
   }
 
   fun addOnMapLoadErrorListener(onMapLoadErrorListener: OnMapLoadErrorListener) {
     if (onMapLoadErrorListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.subscribe(this, listOf(MapEvents.MAP_LOADING_ERROR))
-      }
-      observedEvents.add(MapEvents.MAP_LOADING_ERROR)
+      subscribeNewEvent(MapEvents.MAP_LOADING_ERROR)
     }
     onMapLoadErrorListeners.add(onMapLoadErrorListener)
   }
@@ -184,19 +162,13 @@ internal class NativeObserver(
   fun removeOnMapLoadErrorListener(onMapLoadErrorListener: OnMapLoadErrorListener) {
     onMapLoadErrorListeners.remove(onMapLoadErrorListener)
     if (onMapLoadErrorListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.unsubscribe(this, listOf(MapEvents.MAP_LOADING_ERROR))
-      }
-      observedEvents.remove(MapEvents.MAP_LOADING_ERROR)
+      unsubscribeUnusedEvent(MapEvents.MAP_LOADING_ERROR)
     }
   }
 
   fun addOnMapLoadingFinishedListener(onMapLoadingFinishedListener: OnMapLoadingFinishedListener) {
     if (onMapLoadingFinishedListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.subscribe(this, listOf(MapEvents.MAP_LOADING_FINISHED))
-      }
-      observedEvents.add(MapEvents.MAP_LOADING_FINISHED)
+      subscribeNewEvent(MapEvents.MAP_LOADING_FINISHED)
     }
     onMapLoadingFinishedListeners.add(onMapLoadingFinishedListener)
   }
@@ -204,20 +176,14 @@ internal class NativeObserver(
   fun removeOnMapLoadingFinishedListener(onMapLoadingFinishedListener: OnMapLoadingFinishedListener) {
     onMapLoadingFinishedListeners.remove(onMapLoadingFinishedListener)
     if (onMapLoadingFinishedListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.unsubscribe(this, listOf(MapEvents.MAP_LOADING_FINISHED))
-      }
-      observedEvents.remove(MapEvents.MAP_LOADING_FINISHED)
+      unsubscribeUnusedEvent(MapEvents.MAP_LOADING_FINISHED)
     }
   }
 
   // Render frame events
   fun addOnRenderFrameFinishedListener(onRenderFrameFinishedListener: OnRenderFrameFinishedListener) {
     if (onRenderFrameFinishedListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.subscribe(this, listOf(MapEvents.RENDER_FRAME_FINISHED))
-      }
-      observedEvents.add(MapEvents.RENDER_FRAME_FINISHED)
+      subscribeNewEvent(MapEvents.RENDER_FRAME_FINISHED)
     }
     onRenderFrameFinishedListeners.add(onRenderFrameFinishedListener)
   }
@@ -225,19 +191,13 @@ internal class NativeObserver(
   fun removeOnRenderFrameFinishedListener(onRenderFrameFinishedListener: OnRenderFrameFinishedListener) {
     onRenderFrameFinishedListeners.remove(onRenderFrameFinishedListener)
     if (onRenderFrameFinishedListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.unsubscribe(this, listOf(MapEvents.RENDER_FRAME_FINISHED))
-      }
-      observedEvents.remove(MapEvents.RENDER_FRAME_FINISHED)
+      unsubscribeUnusedEvent(MapEvents.RENDER_FRAME_FINISHED)
     }
   }
 
   fun addOnRenderFrameStartedListener(onRenderFrameStartedListener: OnRenderFrameStartedListener) {
     if (onRenderFrameStartedListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.subscribe(this, listOf(MapEvents.RENDER_FRAME_STARTED))
-      }
-      observedEvents.add(MapEvents.RENDER_FRAME_STARTED)
+      subscribeNewEvent(MapEvents.RENDER_FRAME_STARTED)
     }
     onRenderFrameStartedListeners.add(onRenderFrameStartedListener)
   }
@@ -245,20 +205,14 @@ internal class NativeObserver(
   fun removeOnRenderFrameStartedListener(onRenderFrameStartedListener: OnRenderFrameStartedListener) {
     onRenderFrameStartedListeners.remove(onRenderFrameStartedListener)
     if (onRenderFrameStartedListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.unsubscribe(this, listOf(MapEvents.RENDER_FRAME_STARTED))
-      }
-      observedEvents.remove(MapEvents.RENDER_FRAME_STARTED)
+      unsubscribeUnusedEvent(MapEvents.RENDER_FRAME_STARTED)
     }
   }
 
   // Source events
   fun addOnSourceAddedListener(onSourceAddedListener: OnSourceAddedListener) {
     if (onSourceAddedListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.subscribe(this, listOf(MapEvents.SOURCE_ADDED))
-      }
-      observedEvents.add(MapEvents.SOURCE_ADDED)
+      subscribeNewEvent(MapEvents.SOURCE_ADDED)
     }
     onSourceAddedListeners.add(onSourceAddedListener)
   }
@@ -266,19 +220,13 @@ internal class NativeObserver(
   fun removeOnSourceAddedListener(onSourceAddedListener: OnSourceAddedListener) {
     onSourceAddedListeners.remove(onSourceAddedListener)
     if (onSourceAddedListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.unsubscribe(this, listOf(MapEvents.SOURCE_ADDED))
-      }
-      observedEvents.remove(MapEvents.SOURCE_ADDED)
+      unsubscribeUnusedEvent(MapEvents.SOURCE_ADDED)
     }
   }
 
   fun addOnSourceChangeListener(onSourceChangeListener: OnSourceChangeListener) {
     if (onSourceChangeListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.subscribe(this, listOf(MapEvents.SOURCE_CHANGED))
-      }
-      observedEvents.add(MapEvents.SOURCE_CHANGED)
+      subscribeNewEvent(MapEvents.SOURCE_CHANGED)
     }
     onSourceChangeListeners.add(onSourceChangeListener)
   }
@@ -286,19 +234,13 @@ internal class NativeObserver(
   fun removeOnSourceChangeListener(onSourceChangeListener: OnSourceChangeListener) {
     onSourceChangeListeners.remove(onSourceChangeListener)
     if (onSourceChangeListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.unsubscribe(this, listOf(MapEvents.SOURCE_CHANGED))
-      }
-      observedEvents.remove(MapEvents.SOURCE_CHANGED)
+      unsubscribeUnusedEvent(MapEvents.SOURCE_CHANGED)
     }
   }
 
   fun addOnSourceRemovedListener(onSourceRemovedListener: OnSourceRemovedListener) {
     if (onSourceRemovedListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.subscribe(this, listOf(MapEvents.SOURCE_REMOVED))
-      }
-      observedEvents.add(MapEvents.SOURCE_REMOVED)
+      subscribeNewEvent(MapEvents.SOURCE_REMOVED)
     }
     onSourceRemovedListeners.add(onSourceRemovedListener)
   }
@@ -306,20 +248,14 @@ internal class NativeObserver(
   fun removeOnSourceRemovedListener(onSourceRemovedListener: OnSourceRemovedListener) {
     onSourceRemovedListeners.remove(onSourceRemovedListener)
     if (onSourceRemovedListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.unsubscribe(this, listOf(MapEvents.SOURCE_REMOVED))
-      }
-      observedEvents.remove(MapEvents.SOURCE_REMOVED)
+      unsubscribeUnusedEvent(MapEvents.SOURCE_REMOVED)
     }
   }
 
   // Style events
   fun addOnStyleFullyLoadedListener(onStyleFullyLoadedListener: OnStyleFullyLoadedListener) {
     if (onStyleFullyLoadedListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.subscribe(this, listOf(MapEvents.STYLE_FULLY_LOADED))
-      }
-      observedEvents.add(MapEvents.STYLE_FULLY_LOADED)
+      subscribeNewEvent(MapEvents.STYLE_FULLY_LOADED)
     }
     onStyleFullyLoadedListeners.add(onStyleFullyLoadedListener)
   }
@@ -327,19 +263,13 @@ internal class NativeObserver(
   fun removeOnStyleFullyLoadedListener(onStyleFullyLoadedListener: OnStyleFullyLoadedListener) {
     onStyleFullyLoadedListeners.remove(onStyleFullyLoadedListener)
     if (onStyleFullyLoadedListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.unsubscribe(this, listOf(MapEvents.STYLE_FULLY_LOADED))
-      }
-      observedEvents.remove(MapEvents.STYLE_FULLY_LOADED)
+      unsubscribeUnusedEvent(MapEvents.STYLE_FULLY_LOADED)
     }
   }
 
   fun addOnStyleImageMissingListener(onStyleImageMissingListener: OnStyleImageMissingListener) {
     if (onStyleImageMissingListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.subscribe(this, listOf(MapEvents.STYLE_IMAGE_MISSING))
-      }
-      observedEvents.add(MapEvents.STYLE_IMAGE_MISSING)
+      subscribeNewEvent(MapEvents.STYLE_IMAGE_MISSING)
     }
     onStyleImageMissingListeners.add(onStyleImageMissingListener)
   }
@@ -347,19 +277,13 @@ internal class NativeObserver(
   fun removeOnStyleImageMissingListener(onStyleImageMissingListener: OnStyleImageMissingListener) {
     onStyleImageMissingListeners.remove(onStyleImageMissingListener)
     if (onStyleImageMissingListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.unsubscribe(this, listOf(MapEvents.STYLE_IMAGE_MISSING))
-      }
-      observedEvents.remove(MapEvents.STYLE_IMAGE_MISSING)
+      unsubscribeUnusedEvent(MapEvents.STYLE_IMAGE_MISSING)
     }
   }
 
   fun addOnStyleImageUnusedListener(onStyleImageUnusedListener: OnStyleImageUnusedListener) {
     if (onStyleImageUnusedListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.subscribe(this, listOf(MapEvents.STYLE_IMAGE_REMOVE_UNUSED))
-      }
-      observedEvents.add(MapEvents.STYLE_IMAGE_REMOVE_UNUSED)
+      subscribeNewEvent(MapEvents.STYLE_IMAGE_REMOVE_UNUSED)
     }
     onStyleImageUnusedListeners.add(onStyleImageUnusedListener)
   }
@@ -367,19 +291,13 @@ internal class NativeObserver(
   fun removeOnStyleImageUnusedListener(onStyleImageUnusedListener: OnStyleImageUnusedListener) {
     onStyleImageUnusedListeners.remove(onStyleImageUnusedListener)
     if (onStyleImageUnusedListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.unsubscribe(this, listOf(MapEvents.STYLE_IMAGE_REMOVE_UNUSED))
-      }
-      observedEvents.remove(MapEvents.STYLE_IMAGE_REMOVE_UNUSED)
+      unsubscribeUnusedEvent(MapEvents.STYLE_IMAGE_REMOVE_UNUSED)
     }
   }
 
   fun addOnStyleLoadingFinishedListener(onStyleLoadingFinishedListener: OnStyleLoadingFinishedListener) {
     if (onStyleLoadingFinishedListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.subscribe(this, listOf(MapEvents.STYLE_LOADING_FINISHED))
-      }
-      observedEvents.add(MapEvents.STYLE_LOADING_FINISHED)
+      subscribeNewEvent(MapEvents.STYLE_LOADING_FINISHED)
     }
     onStyleLoadingFinishedListeners.add(onStyleLoadingFinishedListener)
   }
@@ -387,10 +305,7 @@ internal class NativeObserver(
   fun removeOnStyleLoadingFinishedListener(onStyleLoadingFinishedListener: OnStyleLoadingFinishedListener) {
     onStyleLoadingFinishedListeners.remove(onStyleLoadingFinishedListener)
     if (onStyleLoadingFinishedListeners.isEmpty()) {
-      handler.post {
-        observable.get()?.unsubscribe(this, listOf(MapEvents.STYLE_LOADING_FINISHED))
-      }
-      observedEvents.remove(MapEvents.STYLE_LOADING_FINISHED)
+      unsubscribeUnusedEvent(MapEvents.STYLE_LOADING_FINISHED)
     }
   }
 
