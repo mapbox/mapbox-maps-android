@@ -221,6 +221,7 @@ commands:
                 --app app/build/outputs/apk/release/app-release.apk \
                 --device model=sailfish,version=28,locale=en,orientation=portrait \
                 --device model=zeroflte,version=23,locale=en,orientation=portrait \
+                --device model=Pixel2,version=30,locale=en,orientation=portrait \
                 --device model=mata,version=25,locale=en,orientation=portrait \
                 --timeout 90s
             fi
