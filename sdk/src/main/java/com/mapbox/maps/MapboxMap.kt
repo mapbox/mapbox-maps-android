@@ -51,6 +51,8 @@ class MapboxMap internal constructor(
   @VisibleForTesting(otherwise = PRIVATE)
   internal var gesturesPlugin: WeakReference<GesturesPlugin>? = null
 
+  internal val awaitingStyleGetters = mutableListOf<Style.OnStyleLoaded>()
+
   /**
    * Will load a new map style asynchronous from the specified URI.
    *
@@ -202,10 +204,10 @@ class MapboxMap internal constructor(
       onStyleLoaded?.onStyleLoaded(style)
 
       // notify style getters
-      for (styleGetter in nativeObserver.awaitingStyleGetters) {
+      for (styleGetter in awaitingStyleGetters) {
         styleGetter.onStyleLoaded(style)
       }
-      nativeObserver.awaitingStyleGetters.clear()
+      awaitingStyleGetters.clear()
     }
     onMapLoadErrorListener?.let {
       addOnMapLoadErrorListener(it)
@@ -224,11 +226,11 @@ class MapboxMap internal constructor(
         onStyleLoaded.onStyleLoaded(style)
       } else {
         // style load is occurring now, add callback
-        nativeObserver.awaitingStyleGetters.add(onStyleLoaded)
+        awaitingStyleGetters.add(onStyleLoaded)
       }
     } else {
       // no style has loaded yet, add callback
-      nativeObserver.awaitingStyleGetters.add(onStyleLoaded)
+      awaitingStyleGetters.add(onStyleLoaded)
     }
   }
 
@@ -1183,5 +1185,9 @@ class MapboxMap internal constructor(
       return function.invoke(it)
     }
     return null
+  }
+
+  internal fun clearListeners() {
+    awaitingStyleGetters.clear()
   }
 }

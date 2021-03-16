@@ -325,6 +325,40 @@ class NativeMapObserverTest {
   }
 
   @Test
+  fun onMapLoadErrorAndLoadStyleAfter() {
+    // loading an initial style
+    val errorListenerOne = mockk<OnMapLoadErrorListener>(relaxUnitFun = true)
+    val loadedListenerOne = mockk<OnStyleLoadingFinishedListener>(relaxUnitFun = true)
+    nativeObserver.addOnMapLoadErrorListener(errorListenerOne)
+    nativeObserver.addOnStyleLoadingFinishedListener(loadedListenerOne)
+
+    // it fails to load
+    notifyEvents(MapEvents.MAP_LOADING_ERROR)
+    verify { errorListenerOne.onMapLoadError(any(), any()) }
+    verify(exactly = 0) { loadedListenerOne.onStyleLoadingFinished() }
+
+    // validate that listeners have been cleared
+    assertTrue(nativeObserver.onMapLoadErrorListeners.isEmpty())
+    assertTrue(nativeObserver.onStyleLoadingFinishedListeners.isEmpty())
+
+    // loading a second style
+    val errorListenerTwo = mockk<OnMapLoadErrorListener>(relaxUnitFun = true)
+    val loadedListenerTwo = mockk<OnStyleLoadingFinishedListener>(relaxUnitFun = true)
+    nativeObserver.addOnMapLoadErrorListener(errorListenerTwo)
+    nativeObserver.addOnStyleLoadingFinishedListener(loadedListenerTwo)
+
+    // it succeeds to load
+    notifyEvents(MapEvents.STYLE_LOADING_FINISHED)
+    verify(exactly = 0) { errorListenerTwo.onMapLoadError(any(), any()) }
+    verify(exactly = 0) { loadedListenerOne.onStyleLoadingFinished() }
+    verify { loadedListenerTwo.onStyleLoadingFinished() }
+
+    // validate that listeners have been cleared
+    assertTrue(nativeObserver.onMapLoadErrorListeners.isEmpty())
+    assertTrue(nativeObserver.onStyleLoadingFinishedListeners.isEmpty())
+  }
+
+  @Test
   fun clearListeners() {
     nativeObserver.onCameraChangeListeners.add(mockk(relaxed = true))
 
@@ -343,8 +377,6 @@ class NativeMapObserverTest {
     nativeObserver.onStyleImageMissingListeners.add(mockk(relaxed = true))
     nativeObserver.onStyleImageUnusedListeners.add(mockk(relaxed = true))
     nativeObserver.onStyleLoadingFinishedListeners.add(mockk(relaxed = true))
-
-    nativeObserver.awaitingStyleGetters.add(mockk(relaxed = true))
 
     nativeObserver.clearListeners()
 
@@ -365,7 +397,5 @@ class NativeMapObserverTest {
     assertTrue(nativeObserver.onStyleImageMissingListeners.isEmpty())
     assertTrue(nativeObserver.onStyleImageUnusedListeners.isEmpty())
     assertTrue(nativeObserver.onStyleLoadingFinishedListeners.isEmpty())
-
-    assertTrue(nativeObserver.awaitingStyleGetters.isEmpty())
   }
 }

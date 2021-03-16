@@ -123,6 +123,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun onDestroy() {
+    mapboxMap.clearListeners()
     nativeObserver.clearListeners()
     renderer.onDestroy()
     pluginRegistry.cleanup()

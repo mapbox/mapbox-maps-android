@@ -28,8 +28,6 @@ internal class NativeObserver(
   val onStyleImageUnusedListeners = CopyOnWriteArrayList<OnStyleImageUnusedListener>()
   val onStyleLoadingFinishedListeners = CopyOnWriteArrayList<OnStyleLoadingFinishedListener>()
 
-  val awaitingStyleGetters = mutableListOf<Style.OnStyleLoaded>()
-
   var observedEvents = CopyOnWriteArrayList<String>()
   //
   // Internal callbacks
@@ -43,13 +41,19 @@ internal class NativeObserver(
       MapEvents.MAP_IDLE -> onMapIdleListeners.forEach { it.onMapIdle() }
       MapEvents.MAP_LOADING_ERROR -> if (onMapLoadErrorListeners.isNotEmpty()) {
         val loadingError = event.getMapLoadingErrorEventData()
+        onStyleLoadingFinishedListeners.clear()
         onMapLoadErrorListeners.forEach {
           it.onMapLoadError(loadingError.error, loadingError.description)
         }
+        onMapLoadErrorListeners.clear()
       }
       MapEvents.MAP_LOADING_FINISHED -> onMapLoadingFinishedListeners.forEach { it.onMapLoadingFinished() }
       // Style events
-      MapEvents.STYLE_LOADING_FINISHED -> onStyleLoadingFinishedListeners.forEach { it.onStyleLoadingFinished() }
+      MapEvents.STYLE_LOADING_FINISHED -> {
+        onMapLoadErrorListeners.clear()
+        onStyleLoadingFinishedListeners.forEach { it.onStyleLoadingFinished() }
+        onStyleLoadingFinishedListeners.clear()
+      }
       MapEvents.STYLE_FULLY_LOADED -> onStyleFullyLoadedListeners.forEach { it.onStyleFullyLoaded() }
       MapEvents.STYLE_IMAGE_MISSING -> if (onStyleImageMissingListeners.isNotEmpty()) {
         val eventData = event.getStyleImageMissingEventData()
@@ -327,8 +331,6 @@ internal class NativeObserver(
     onStyleImageMissingListeners.clear()
     onStyleImageUnusedListeners.clear()
     onStyleLoadingFinishedListeners.clear()
-
-    awaitingStyleGetters.clear()
   }
 
   companion object {

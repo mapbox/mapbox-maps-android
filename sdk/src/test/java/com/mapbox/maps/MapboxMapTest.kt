@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
@@ -80,7 +81,7 @@ class MapboxMapTest {
     val mapLoadError = mockk<OnMapLoadErrorListener>()
     mapboxMap.onFinishLoadingStyle(styleLoadCallback, mapLoadError)
     verify { styleLoadCallback.onStyleLoaded(any()) }
-    verify { mapObserver.awaitingStyleGetters.clear() }
+    assertTrue(mapboxMap.awaitingStyleGetters.isEmpty())
   }
 
   @Test
@@ -122,7 +123,7 @@ class MapboxMapTest {
   fun getStyleWaitCallback() {
     val styleLoadCallback = mockk<Style.OnStyleLoaded>()
     mapboxMap.getStyle(styleLoadCallback)
-    verify { mapObserver.awaitingStyleGetters.add(styleLoadCallback) }
+    verify { mapboxMap.awaitingStyleGetters.add(styleLoadCallback) }
   }
 
   @Test
@@ -142,7 +143,7 @@ class MapboxMapTest {
     every { style.fullyLoaded } returns false
     val styleLoadCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     mapboxMap.getStyle(styleLoadCallback)
-    verify { mapObserver.awaitingStyleGetters.add(styleLoadCallback) }
+    verify { mapboxMap.awaitingStyleGetters.add(styleLoadCallback) }
   }
 
   @Test
@@ -745,6 +746,17 @@ class MapboxMapTest {
     mapboxMap.gesturesPlugin { addOnMoveListener(moveListener) }
     verify(exactly = 0) {
       gestures.addOnMoveListener(moveListener)
+    }
+
+    val expected = ExpectedFactory.createValue<Value, String>(Value.valueOf(1.0))
+    if (expected.isValue) {
+      expected.value!!.contents
+    }
+
+    val expected2 = ExpectedFactory.createValue<Value, String>(Value.valueOf(1.0))
+    val value = expected.value
+    if (expected.isValue) {
+      expected.value!!.contents
     }
   }
 }
