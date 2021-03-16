@@ -38,7 +38,6 @@ androidExtensions {
 
 dependencies {
   implementation(project(":sdk"))
-  implementation(project(":extension-observable"))
   implementation(Dependencies.kotlin)
   implementation(Dependencies.androidxAppCompat)
   androidTestUtil(Dependencies.androidxOrchestrator)
