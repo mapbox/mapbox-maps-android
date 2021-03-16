@@ -148,7 +148,6 @@ fun StyleManagerInterface.getSource(sourceId: String): Source? {
       "image" -> ImageSource.Builder(sourceId).build().also { it.delegate = this }
       "raster-dem" -> RasterDemSource.Builder(sourceId).build().also { it.delegate = this }
       "raster" -> RasterSource.Builder(sourceId).build().also { it.delegate = this }
-      "model" -> ModelSource.Builder(sourceId).build().also { it.delegate = this }
       else -> {
         Logger.e("StyleSourcePlugin", "Source type: $type unknown.")
         null
