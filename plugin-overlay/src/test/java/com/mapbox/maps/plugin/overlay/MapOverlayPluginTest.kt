@@ -166,7 +166,7 @@ class MapOverlayPluginTest {
     assertEquals(EdgeInsets(0.0, .00, 0.0, 0.0), paddingSlot.captured)
 
     val cameraSlot = slot<CameraOptions>()
-    every { mapTransformDelegate.jumpTo(capture(cameraSlot)) } just Runs
+    every { mapTransformDelegate.setCamera(capture(cameraSlot)) } just Runs
     mapOverlayPlugin.reframe()
     mapOverlayPlugin.reframe {
       assertEquals(it, cameraSlot.captured)

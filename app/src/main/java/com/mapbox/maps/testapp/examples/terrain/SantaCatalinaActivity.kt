@@ -53,7 +53,7 @@ class SantaCatalinaActivity : AppCompatActivity() {
 
     // get map and setup initial camera
     mapboxMap = mapView.getMapboxMap()
-    mapboxMap.jumpTo(
+    mapboxMap.setCamera(
       CameraOptions.Builder()
         .center(POINT_START)
         .zoom(14.0)
@@ -229,7 +229,7 @@ class SantaCatalinaActivity : AppCompatActivity() {
         camera.lookAtPoint(cameraLookingAt, elevation)
 
         // set the updated camera position
-        mapboxMap.setFreeCameraOptions(camera)
+        mapboxMap.setCamera(camera)
       }
       timeAnimator.duration = ANIMATION_DURATION.toLong()
       timeAnimator.start()

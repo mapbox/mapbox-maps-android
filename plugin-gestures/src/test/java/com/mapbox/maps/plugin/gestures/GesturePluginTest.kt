@@ -119,7 +119,7 @@ class GesturePluginTest {
   fun verifyOnGenericMoveEventIgnore() {
     presenter.zoomEnabled = false
     assertFalse(presenter.onGenericMotionEvent(obtainMotionEventButton(BUTTON_SECONDARY)))
-    verify(exactly = 0) { mapTransformDelegate.jumpTo(any()) }
+    verify(exactly = 0) { mapTransformDelegate.setCamera(any()) }
   }
 
   @Test

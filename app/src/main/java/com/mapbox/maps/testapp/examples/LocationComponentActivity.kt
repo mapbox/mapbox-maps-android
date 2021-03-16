@@ -25,7 +25,7 @@ class LocationComponentActivity : AppCompatActivity() {
   private lateinit var locationPermissionHelper: LocationPermissionHelper
   private val onIndicatorPositionChangedListener = OnIndicatorPositionChangedListener {
     // Jump to the current indicator position
-    mapView.getMapboxMap().jumpTo(CameraOptions.Builder().center(it).build())
+    mapView.getMapboxMap().setCamera(CameraOptions.Builder().center(it).build())
     // Set the gestures plugin's focal point to the current indicator location.
     mapView.getGesturesPlugin().focalPoint = mapView.getMapboxMap().pixelForCoordinate(it)
   }

@@ -32,11 +32,11 @@ class PolygonHolesActivity : AppCompatActivity() {
     with(mapView.getMapboxMap()) {
       // TODO attributionTintColor(RED_COLOR) missing
       // TODO compassFadesWhenFacingNorth missing
-      jumpTo(
-        CameraOptions.Builder()
-          .center(Point.fromLngLat(55.3089185, 25.255377))
-          .zoom(13.0)
-          .build()
+      setCamera(
+          CameraOptions.Builder()
+            .center(Point.fromLngLat(55.3089185, 25.255377))
+            .zoom(13.0)
+            .build()
       )
       loadStyleUri(
         Style.MAPBOX_STREETS

@@ -86,11 +86,11 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
       loadStyleUri(
         Style.MAPBOX_STREETS
       ) {
-        jumpTo(
+        setCamera(
           CameraOptions.Builder()
-            .zoom(14.0)
-            .center(Point.fromLngLat(POINT_LNG, POINT_LAT))
-            .build()
+                .zoom(14.0)
+                .center(Point.fromLngLat(POINT_LNG, POINT_LAT))
+                .build()
         )
         mapView.getLocationComponentPlugin().apply {
           setLocationProvider(FakeLocationProvider())

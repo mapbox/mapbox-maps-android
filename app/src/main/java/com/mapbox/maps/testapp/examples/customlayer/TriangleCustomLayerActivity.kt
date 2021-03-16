@@ -26,7 +26,7 @@ class TriangleCustomLayerActivity : AppCompatActivity() {
     mapboxMap.loadStyleUri(
       Style.MAPBOX_STREETS
     ) {
-      mapboxMap.jumpTo(CAMERA)
+      mapboxMap.setCamera(CAMERA)
       addCustomLayer(it)
       initFab()
     }

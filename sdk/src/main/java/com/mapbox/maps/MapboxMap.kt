@@ -253,12 +253,13 @@ class MapboxMap internal constructor(
   }
 
   /**
-   * Set the map camera to a given camera options.
+   * Changes the map view by any combination of center, zoom, bearing, and pitch, without an animated transition.
+   * The map will retain its current values for any details not passed via the camera options argument.
    *
-   * @param cameraOptions The camera options to jump to
+   * @param cameraOptions New camera options
    */
-  override fun jumpTo(cameraOptions: CameraOptions) =
-    nativeMapWeakRef.call { this.jumpTo(cameraOptions) }
+  override fun setCamera(cameraOptions: CameraOptions) =
+    nativeMapWeakRef.call { this.setCamera(cameraOptions) }
 
   /**
    * Get the current camera options given an optional padding.
@@ -324,7 +325,7 @@ class MapboxMap internal constructor(
 
   /**
    * Tells the map rendering engine that the animation is currently performed by the
-   * user (e.g. with a `jumpTo()` calls series). It adjusts the engine for the animation use case.
+   * user (e.g. with a `setCamera()` calls series). It adjusts the engine for the animation use case.
    * In particular, it brings more stability to symbol placement and rendering.
    *
    * @param inProgress Bool representing if user animation is in progress
@@ -1082,15 +1083,18 @@ class MapboxMap internal constructor(
   fun getFreeCameraOptions() = nativeMapWeakRef.call { this.freeCameraOptions }
 
   /**
+   * Sets the map view with the free camera options.
+   *
    * FreeCameraOptions provides more direct access to the underlying camera entity.
    * For backwards compatibility the state set using this API must be representable with
-   * [CameraOptions] as well. Parameters are clamped to a valid range or discarded as invalid
+   * `CameraOptions` as well. Parameters are clamped to a valid range or discarded as invalid
    * if the conversion to the pitch and bearing presentation is ambiguous. For example orientation
    * can be invalid if it leads to the camera being upside down or the quaternion has zero length.
+   *
    * @param options The free camera options to set.
    */
-  fun setFreeCameraOptions(options: FreeCameraOptions) {
-    nativeMapWeakRef.call { this.freeCameraOptions = options }
+  fun setCamera(options: FreeCameraOptions) {
+    nativeMapWeakRef.call { this.setCamera(options) }
   }
 
   /**
@@ -1141,6 +1145,13 @@ class MapboxMap internal constructor(
     animation: AnimationOptions?
   ) {
     nativeMapWeakRef.call { this.drag(fromPoint, toPoint, animation) }
+  }
+
+  override fun getDragCameraOptions(
+    fromPoint: ScreenCoordinate,
+    toPoint: ScreenCoordinate
+  ): CameraOptions {
+    return nativeMapWeakRef.call { this.getDragCameraOptions(fromPoint, toPoint) }
   }
 
   /**

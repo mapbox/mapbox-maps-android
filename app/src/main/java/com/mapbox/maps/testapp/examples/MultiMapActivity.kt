@@ -29,7 +29,7 @@ class MultiMapActivity : AppCompatActivity() {
   ) {
     val fragment = supportFragmentManager.findFragmentById(fragmentId) as MapFragment
     fragment.getMapAsync {
-      it.jumpTo(cameraOptions)
+      it.setCamera(cameraOptions)
       it.loadStyleUri(styleId)
     }
   }

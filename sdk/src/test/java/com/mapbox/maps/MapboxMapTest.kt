@@ -400,10 +400,10 @@ class MapboxMapTest {
   }
 
   @Test
-  fun jumpTo() {
+  fun setCamera() {
     val cameraOptions = CameraOptions.Builder().build()
-    mapboxMap.jumpTo(cameraOptions)
-    verify { nativeMap.jumpTo(cameraOptions) }
+    mapboxMap.setCamera(cameraOptions)
+    verify { nativeMap.setCamera(cameraOptions) }
   }
 
   @Test
@@ -679,8 +679,8 @@ class MapboxMapTest {
   @Test
   fun setFreeCameraOptions() {
     val options = mockk<FreeCameraOptions>()
-    mapboxMap.setFreeCameraOptions(options)
-    verify { nativeMap.freeCameraOptions = options }
+    mapboxMap.setCamera(options)
+    verify { nativeMap.setCamera(options) }
   }
 
   @Test

@@ -109,7 +109,7 @@ class StyleCirclesCategoricallyActivity : AppCompatActivity() {
       }
     )
 
-    mapboxMap.jumpTo(
+    mapboxMap.setCamera(
       CameraOptions.Builder()
         .center(Point.fromLngLat(-122.447303, 37.753574))
         .zoom(12.0)

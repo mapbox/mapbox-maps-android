@@ -43,7 +43,7 @@ class CameraPredefinedAnimatorsActivity : AppCompatActivity() {
     cameraAnimationsPlugin = mapView.getCameraAnimationsPlugin()
     mapboxMap.loadStyle(
       style(Style.MAPBOX_STREETS) {
-        mapboxMap.jumpTo(START_CAMERA_POSITION)
+        mapboxMap.setCamera(START_CAMERA_POSITION)
       }
     )
     initSpinner()
@@ -61,7 +61,7 @@ class CameraPredefinedAnimatorsActivity : AppCompatActivity() {
 
       override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         stopAnimation()
-        mapboxMap.jumpTo(START_CAMERA_POSITION)
+        mapboxMap.setCamera(START_CAMERA_POSITION)
         when (position) {
           0 -> {
             CameraAnimatorsFactory.setDefaultAnimatorOptions {
@@ -124,7 +124,7 @@ class CameraPredefinedAnimatorsActivity : AppCompatActivity() {
   }
 
   private fun resetCameraPosition() {
-    mapboxMap.jumpTo(START_CAMERA_POSITION)
+    mapboxMap.setCamera(START_CAMERA_POSITION)
   }
 
   private fun stopAnimation() {
@@ -135,7 +135,7 @@ class CameraPredefinedAnimatorsActivity : AppCompatActivity() {
   private fun playAnimation(itemId: Int) {
     stopAnimation()
     when (itemId) {
-      R.id.menu_action_jump_to -> mapboxMap.jumpTo(START_CAMERA_POSITION)
+      R.id.menu_action_jump_to -> mapboxMap.setCamera(START_CAMERA_POSITION)
       R.id.menu_action_ease_to -> mapboxMap.easeTo(
         EASE_TO_TARGET_CAMERA_POSITION,
         mapAnimationOptions {

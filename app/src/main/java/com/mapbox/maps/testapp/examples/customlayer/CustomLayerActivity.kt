@@ -26,7 +26,7 @@ class CustomLayerActivity : AppCompatActivity() {
     mapboxMap.loadStyleUri(
       Style.MAPBOX_STREETS
     ) {
-      mapboxMap.jumpTo(
+      mapboxMap.setCamera(
         CameraOptions.Builder().center(Point.fromLngLat(-243.60947, 39.91448)).zoom(10.0).build()
       )
       initFab()

@@ -30,7 +30,7 @@ class DistanceExpressionActivity : AppCompatActivity() {
     val circle = TurfTransformation.circle(center, RADIUS, TurfConstants.UNIT_METERS)
 
     // Setup camera position above Georgetown
-    mapView.getMapboxMap().jumpTo(CameraOptions.Builder().center(center).zoom(16.0).build())
+    mapView.getMapboxMap().setCamera(CameraOptions.Builder().center(center).zoom(16.0).build())
 
     mapView.getMapboxMap().loadStyle(
       style(Style.MAPBOX_STREETS) {
