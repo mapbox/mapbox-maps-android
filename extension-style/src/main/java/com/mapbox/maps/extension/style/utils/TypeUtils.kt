@@ -2,7 +2,6 @@ package com.mapbox.maps.extension.style.utils
 
 import com.google.gson.JsonPrimitive
 import com.mapbox.bindgen.Value
-import com.mapbox.common.ValueConverter
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Geometry
@@ -297,31 +296,19 @@ inline fun <reified T> StylePropertyValue.silentUnwrap(): T? {
  * Extension function for [Feature] to convert [Feature] to [Value].
  */
 fun Feature.toValue(): Value {
-  val expected = ValueConverter.fromJson(this.toJson())
-  expected.value?.let {
-    return it
-  }
-  throw RuntimeException(expected.error)
+  return TypeUtils.wrapToValue(this.toJson())
 }
 
 /**
  * Extension function for [FeatureCollection] to convert [FeatureCollection] to [Value].
  */
 fun FeatureCollection.toValue(): Value {
-  val expected = ValueConverter.fromJson(this.toJson())
-  expected.value?.let {
-    return it
-  }
-  throw RuntimeException(expected.error)
+  return TypeUtils.wrapToValue(this.toJson())
 }
 
 /**
  * Extension function for [Geometry] to convert [Geometry] to [Value].
  */
 fun Geometry.toValue(): Value {
-  val expected = ValueConverter.fromJson(this.toJson())
-  expected.value?.let {
-    return it
-  }
-  throw RuntimeException(expected.error)
+  return TypeUtils.wrapToValue(this.toJson())
 }

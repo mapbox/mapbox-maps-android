@@ -3,9 +3,7 @@
 package com.mapbox.maps.extension.style.sources.generated
 
 import com.mapbox.bindgen.Expected
-import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
-import com.mapbox.common.ValueConverter
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.maps.StyleManager
@@ -13,7 +11,6 @@ import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.StylePropertyValue
 import com.mapbox.maps.StylePropertyValueKind
 import com.mapbox.maps.extension.style.ShadowStyleManager
-import com.mapbox.maps.extension.style.ShadowValueConverter
 import com.mapbox.maps.extension.style.expressions.dsl.generated.get
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.dsl.generated.sum
@@ -27,7 +24,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowValueConverter::class, ShadowStyleManager::class])
+@Config(shadows = [ShadowStyleManager::class])
 class GeoJsonSourceTest {
   private val style = mockk<StyleManagerInterface>(relaxUnitFun = true, relaxed = true)
   private val valueSlot = slot<Value>()
@@ -37,8 +34,6 @@ class GeoJsonSourceTest {
 
   @Before
   fun prepareTest() {
-    mockkStatic(ValueConverter::class)
-    every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue<Value, String>(Value(1))
     every { style.addStyleSource(any(), any()) } returns expected
     every { style.setStyleSourceProperty(any(), any(), any()) } returns expected
     every { style.getStyleSourceProperty(any(), any()) } returns styleProperty
@@ -791,7 +786,6 @@ class GeoJsonSourceTest {
     testSource.bindTo(style)
     testSource.feature(feature)
     verify { style.setStyleSourceProperty("testId", "data", any()) }
-    verify { ValueConverter.fromJson(feature.toJson()) }
   }
 
   @Test
@@ -825,7 +819,6 @@ class GeoJsonSourceTest {
     testSource.bindTo(style)
     testSource.featureCollection(featureCollection)
     verify { style.setStyleSourceProperty("testId", "data", any()) }
-    verify { ValueConverter.fromJson(featureCollection.toJson()) }
   }
 
   @Test
@@ -848,7 +841,6 @@ class GeoJsonSourceTest {
     testSource.bindTo(style)
     testSource.geometry(feature.geometry()!!)
     verify { style.setStyleSourceProperty("testId", "data", any()) }
-    verify { ValueConverter.fromJson(feature.geometry()!!.toJson()) }
   }
 
   @Test
@@ -872,7 +864,6 @@ class GeoJsonSourceTest {
     }
     testSource.bindTo(style)
     verify { style.addStyleSource("testId", capture(valueSlot)) }
-    verify { ValueConverter.fromJson(feature.toJson()) }
     assertTrue(valueSlot.captured.toString().contains("type=geojson"))
   }
 
@@ -908,7 +899,6 @@ class GeoJsonSourceTest {
     }
     testSource.bindTo(style)
     verify { style.addStyleSource("testId", capture(valueSlot)) }
-    verify { ValueConverter.fromJson(featureCollection.toJson()) }
     assertTrue(valueSlot.captured.toString().contains("type=geojson"))
   }
 
@@ -933,7 +923,6 @@ class GeoJsonSourceTest {
     }
     testSource.bindTo(style)
     verify { style.addStyleSource("testId", capture(valueSlot)) }
-    verify { ValueConverter.fromJson(feature.geometry()!!.toJson()) }
     assertTrue(valueSlot.captured.toString().contains("type=geojson"))
   }
   // Default source property getters tests
