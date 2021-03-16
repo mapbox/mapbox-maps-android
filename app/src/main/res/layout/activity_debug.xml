@@ -24,7 +24,7 @@
         app:mapbox_scaleBarTextBorderWidth="1dp"
         app:mapbox_scaleBarTextColor="@color/accent"
         app:mapbox_scaleBarTextSize="10dp"
-        tools:context=".examples.SimpleMapActivity" />
+        tools:context=".examples.gettingstarted.SimpleMapActivity" />
 
     <TextView
         android:id="@+id/fpsView"

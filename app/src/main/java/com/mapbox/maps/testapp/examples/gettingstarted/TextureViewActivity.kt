@@ -1,19 +1,26 @@
-package com.mapbox.maps.testapp.examples
+package com.mapbox.maps.testapp.examples.gettingstarted
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.Style
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_simple_map.*
+import kotlinx.android.synthetic.main.activity_texture_view.*
 
 /**
- * Example of displaying a custom Mapbox-hosted style.
+ * Example of displaying a map using TextureView as render surface.
  */
-class MapboxStudioStyleActivity : AppCompatActivity() {
+class TextureViewActivity : AppCompatActivity() {
+
+  private lateinit var mapboxMap: MapboxMap
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_style_mapbox_studio)
-    mapView.getMapboxMap().loadStyleUri(STUDIO_STYLE_URL)
+    setContentView(R.layout.activity_texture_view)
+
+    mapboxMap = mapView.getMapboxMap()
+
+    mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
   }
 
   override fun onStart() {
@@ -34,9 +41,5 @@ class MapboxStudioStyleActivity : AppCompatActivity() {
   override fun onDestroy() {
     super.onDestroy()
     mapView.onDestroy()
-  }
-
-  companion object {
-    private const val STUDIO_STYLE_URL = "mapbox://styles/mapbox/cj3kbeqzo00022smj7akz3o1e"
   }
 }

@@ -8,4 +8,4 @@
     mapbox:mapbox_cameraTargetLat="41.89010"
     mapbox:mapbox_cameraTargetLng="12.49200"
     mapbox:mapbox_cameraZoom="15"
-    tools:context=".examples.MapboxStudioStyleActivity" />
+    tools:context=".examples.gettingstarted.MapboxStudioStyleActivity" />

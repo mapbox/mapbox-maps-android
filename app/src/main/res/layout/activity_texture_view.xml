@@ -6,4 +6,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     mapbox:mapbox_mapSurface="texture_view"
-    tools:context=".examples.TextureViewActivity" />
+    tools:context=".examples.gettingstarted.TextureViewActivity" />

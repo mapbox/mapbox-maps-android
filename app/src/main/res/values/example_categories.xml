@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="category">category</string>
-    <string name="category_basic">Basic</string>
+    <string name="getting_started">Getting Started</string>
     <string name="category_custom_layer">Custom layer</string>
     <string name="category_styles">Styles</string>
     <string name="category_integration">Integration</string>
