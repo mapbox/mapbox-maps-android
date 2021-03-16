@@ -3,7 +3,6 @@ package com.mapbox.maps.plugin.animation
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
-import android.os.Build
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
@@ -178,9 +177,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     }
 
     val targets = cameraAnimator.targets
-    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
-      cameraAnimator.applyEvaluator()
-    }
     cameraAnimator.setObjectValues(
       *Array(targets.size + 1) { index ->
         if (index == 0) {

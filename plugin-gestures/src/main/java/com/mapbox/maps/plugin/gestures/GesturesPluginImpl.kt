@@ -82,6 +82,37 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   private val scheduledAnimators = ArrayList<ValueAnimator>()
   private val gesturesInterpolator = LinearOutSlowInInterpolator()
 
+  // needed most likely for devices with API <= 23 only
+  // duration = 0 will still make animation end / cancel not immediately
+  // this may cause cancelling some easeTo animation without single camera update
+  private var immediateEaseInProcess = false
+  private fun easeToImmediately(
+    camera: CameraOptions,
+    actionAfter: (() -> Unit)? = null
+  ) {
+    if (!immediateEaseInProcess) {
+      immediateEaseInProcess = true
+      cameraAnimationsPlugin.easeTo(
+        camera,
+        mapAnimationOptions {
+          duration(0)
+          owner(MapAnimationOwnerRegistry.GESTURES)
+          animatorListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator?) {
+              immediateEaseInProcess = false
+              actionAfter?.invoke()
+            }
+
+            override fun onAnimationCancel(animation: Animator?) {
+              immediateEaseInProcess = false
+              actionAfter?.invoke()
+            }
+          })
+        }
+      )
+    }
+  }
+
   /**
    * Cancels scheduled velocity animations if user doesn't lift fingers within [SCHEDULED_ANIMATION_TIMEOUT]
    */
@@ -314,11 +345,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
             val anchor = ScreenCoordinate(event.x.toDouble(), event.y.toDouble())
             val zoom =
               cameraAnimationsPlugin.calculateScaleBy(scrollDist.toDouble(), currentZoom)
-            cameraAnimationsPlugin.easeTo(
+            easeToImmediately(
               CameraOptions.Builder().anchor(anchor).zoom(zoom).build(),
-              immediateCameraJumpOptions
+              actionAfter = { cameraAnimationsPlugin.anchor = cachedAnchor }
             )
-            cameraAnimationsPlugin.anchor = cachedAnchor
           }
 
           return true
@@ -557,33 +587,34 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       var targetZoom =
         if (zoomedOut) startZoom - normalizedDeltaChange else startZoom + normalizedDeltaChange
       targetZoom *= internalSettings.zoomRate.toDouble()
-      cameraAnimationsPlugin.easeTo(
+      easeToImmediately(
         CameraOptions.Builder()
           .zoom(targetZoom)
           .anchor(focalPoint)
           .build(),
-        immediateCameraJumpOptions
+        actionAfter = {
+          cameraAnimationsPlugin.anchor = cachedAnchor
+          notifyOnScaleListeners(detector)
+          spanSinceLast = abs(detector.currentSpan - detector.previousSpan)
+        }
       )
-      cameraAnimationsPlugin.anchor = cachedAnchor
     } else {
       val zoomBy =
         ln(detector.scaleFactor.toDouble()) / ln(PI / 2) * ZOOM_RATE.toDouble() * internalSettings.zoomRate.toDouble()
       mapTransformDelegate.getCameraOptions(null).zoom?.let {
-        cameraAnimationsPlugin.easeTo(
+        easeToImmediately(
           CameraOptions.Builder()
             .zoom(it + zoomBy)
             .anchor(focalPoint)
             .build(),
-          immediateCameraJumpOptions
+          actionAfter = {
+            cameraAnimationsPlugin.anchor = cachedAnchor
+            notifyOnScaleListeners(detector)
+            spanSinceLast = abs(detector.currentSpan - detector.previousSpan)
+          }
         )
-        cameraAnimationsPlugin.anchor = cachedAnchor
       }
     }
-
-    notifyOnScaleListeners(detector)
-
-    spanSinceLast = abs(detector.currentSpan - detector.previousSpan)
-
     return true
   }
 
@@ -806,15 +837,16 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
       // Rotate the map
       val focalPoint = getRotateFocalPoint(detector)
-      cameraAnimationsPlugin.easeTo(
+      easeToImmediately(
         CameraOptions.Builder()
           .anchor(focalPoint)
           .bearing(bearing)
           .build(),
-        immediateCameraJumpOptions
+        actionAfter = {
+          cameraAnimationsPlugin.anchor = cachedAnchor
+          notifyOnRotateListeners(detector)
+        }
       )
-      cameraAnimationsPlugin.anchor = cachedAnchor
-      notifyOnRotateListeners(detector)
     }
 
     return true
@@ -916,13 +948,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     pitch?.let {
       val optimizedPitch = it - (SHOVE_PIXEL_CHANGE_FACTOR * deltaPixelsSinceLast).toDouble()
       pitch = clamp(optimizedPitch, MINIMUM_PITCH, MAXIMUM_PITCH)
-
-      // Pitch the map
-      cameraAnimationsPlugin.easeTo(
+      easeToImmediately(
         CameraOptions.Builder().pitch(pitch).build(),
-        immediateCameraJumpOptions
+        actionAfter = { notifyOnShoveListeners(detector) }
       )
-      notifyOnShoveListeners(detector)
     }
     return true
   }
@@ -1259,11 +1288,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
           null
         )
       } else {
-        val target = cameraAnimationsPlugin.calculateMoveBy(offset)
-        target?.let {
-          cameraAnimationsPlugin.easeTo(
-            CameraOptions.Builder().center(it).build(),
-            immediateCameraJumpOptions
+        cameraAnimationsPlugin.calculateMoveBy(offset)?.let {
+          easeToImmediately(
+            CameraOptions.Builder().center(it).build()
           )
         }
       }
@@ -1595,16 +1622,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   override fun initialize() {
     initializeGesturesManager(gesturesManager, true)
     initializeGestureListeners(context, true)
-  }
-
-  /**
-   * Static variables and methods.
-   */
-  companion object {
-    private val immediateCameraJumpOptions = mapAnimationOptions {
-      duration(0)
-      owner(MapAnimationOwnerRegistry.GESTURES)
-    }
   }
 }
 

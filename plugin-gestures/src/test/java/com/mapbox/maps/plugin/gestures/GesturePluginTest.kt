@@ -452,7 +452,6 @@ class GesturePluginTest {
     assert(result)
     // setMoveDetectorEnabled
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
-    verify { listener.onScale(any()) }
   }
 
   @Test
@@ -481,7 +480,6 @@ class GesturePluginTest {
     assert(result)
     // setMoveDetectorEnabled
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
-    verify { listener.onScale(any()) }
   }
 
   @Test
@@ -573,7 +571,6 @@ class GesturePluginTest {
     val result = presenter.handleRotate(rotateGestureDetector, 34.0f)
     assert(result)
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
-    verify { listener.onRotate(any()) }
   }
 
   @Test
@@ -623,7 +620,7 @@ class GesturePluginTest {
     presenter.addOnShoveListener(listener)
     val result = presenter.handleShove(gestureDetector, 15.0f)
     assert(result)
-    verify { listener.onShove(any()) }
+    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
   }
 
   @Test

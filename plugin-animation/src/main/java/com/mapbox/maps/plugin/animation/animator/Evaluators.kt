@@ -48,9 +48,4 @@ object Evaluators {
       startValue.y + fraction * (endValue.y - startValue.y)
     )
   }
-
-  /**
-   * Type evaluator for Object data
-   */
-  val OBJECT = TypeEvaluator<Any> { _, _, _ -> Any() }
 }
