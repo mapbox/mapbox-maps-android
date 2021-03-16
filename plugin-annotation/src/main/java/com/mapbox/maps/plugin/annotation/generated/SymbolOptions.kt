@@ -45,7 +45,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * Part of the icon placed closest to the anchor.
    */
-  var iconAnchor: IconAnchor = IconAnchor.CENTER
+  var iconAnchor: IconAnchor? = null
 
   /**
    * Set icon-anchor to initialise the symbol with.
@@ -81,7 +81,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of `icon-size` to obtain the final offset in pixels. When combined with `icon-rotate` the offset will be as if the rotated direction was up.
    */
-  var iconOffset: List<Double> = listOf(0.0, 0.0)
+  var iconOffset: List<Double>? = null
 
   /**
    * Set icon-offset to initialise the symbol with.
@@ -99,7 +99,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * Rotates the icon clockwise.
    */
-  var iconRotate: Double = 0.0
+  var iconRotate: Double? = null
 
   /**
    * Set icon-rotate to initialise the symbol with.
@@ -117,7 +117,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by `icon-size`. 1 is the original size; 3 triples the size of the image.
    */
-  var iconSize: Double = 1.0
+  var iconSize: Double? = null
 
   /**
    * Set icon-size to initialise the symbol with.
@@ -153,7 +153,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * Part of the text placed closest to the anchor.
    */
-  var textAnchor: TextAnchor = TextAnchor.CENTER
+  var textAnchor: TextAnchor? = null
 
   /**
    * Set text-anchor to initialise the symbol with.
@@ -189,7 +189,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * Font stack to use for displaying text.
    */
-  var textFont: List<String> = listOf("Open Sans Regular", "Arial Unicode MS Regular")
+  var textFont: List<String>? = null
 
   /**
    * Set text-font to initialise the symbol with.
@@ -207,7 +207,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * Text justification options.
    */
-  var textJustify: TextJustify = TextJustify.CENTER
+  var textJustify: TextJustify? = null
 
   /**
    * Set text-justify to initialise the symbol with.
@@ -225,7 +225,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * Text tracking amount.
    */
-  var textLetterSpacing: Double = 0.0
+  var textLetterSpacing: Double? = null
 
   /**
    * Set text-letter-spacing to initialise the symbol with.
@@ -243,7 +243,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * The maximum line width for text wrapping.
    */
-  var textMaxWidth: Double = 10.0
+  var textMaxWidth: Double? = null
 
   /**
    * Set text-max-width to initialise the symbol with.
@@ -261,7 +261,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position.
    */
-  var textOffset: List<Double> = listOf(0.0, 0.0)
+  var textOffset: List<Double>? = null
 
   /**
    * Set text-offset to initialise the symbol with.
@@ -279,7 +279,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with `text-variable-anchor`, which defaults to using the two-dimensional `text-offset` if present.
    */
-  var textRadialOffset: Double = 0.0
+  var textRadialOffset: Double? = null
 
   /**
    * Set text-radial-offset to initialise the symbol with.
@@ -297,7 +297,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * Rotates the text clockwise.
    */
-  var textRotate: Double = 0.0
+  var textRotate: Double? = null
 
   /**
    * Set text-rotate to initialise the symbol with.
@@ -315,7 +315,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * Font size.
    */
-  var textSize: Double = 16.0
+  var textSize: Double? = null
 
   /**
    * Set text-size to initialise the symbol with.
@@ -333,7 +333,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * Specifies how to capitalize text, similar to the CSS `text-transform` property.
    */
-  var textTransform: TextTransform = TextTransform.NONE
+  var textTransform: TextTransform? = null
 
   /**
    * Set text-transform to initialise the symbol with.
@@ -351,7 +351,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * The color of the icon. This can only be used with sdf icons.
    */
-  var iconColor: String = "rgba(0, 0, 0, 1)"
+  var iconColor: String? = null
 
   /**
    * Set icon-color to initialise the symbol with.
@@ -382,7 +382,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * Fade out the halo towards the outside.
    */
-  var iconHaloBlur: Double = 0.0
+  var iconHaloBlur: Double? = null
 
   /**
    * Set icon-halo-blur to initialise the symbol with.
@@ -400,7 +400,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * The color of the icon's halo. Icon halos can only be used with SDF icons.
    */
-  var iconHaloColor: String = "rgba(0, 0, 0, 1)"
+  var iconHaloColor: String? = null
 
   /**
    * Set icon-halo-color to initialise the symbol with.
@@ -431,7 +431,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * Distance of halo to the icon outline.
    */
-  var iconHaloWidth: Double = 0.0
+  var iconHaloWidth: Double? = null
 
   /**
    * Set icon-halo-width to initialise the symbol with.
@@ -449,7 +449,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * The opacity at which the icon will be drawn.
    */
-  var iconOpacity: Double = 1.0
+  var iconOpacity: Double? = null
 
   /**
    * Set icon-opacity to initialise the symbol with.
@@ -467,7 +467,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * The color with which the text will be drawn.
    */
-  var textColor: String = "rgba(0, 0, 0, 1)"
+  var textColor: String? = null
 
   /**
    * Set text-color to initialise the symbol with.
@@ -498,7 +498,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * The halo's fadeout distance towards the outside.
    */
-  var textHaloBlur: Double = 0.0
+  var textHaloBlur: Double? = null
 
   /**
    * Set text-halo-blur to initialise the symbol with.
@@ -516,7 +516,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * The color of the text's halo, which helps it stand out from backgrounds.
    */
-  var textHaloColor: String = "rgba(0, 0, 0, 1)"
+  var textHaloColor: String? = null
 
   /**
    * Set text-halo-color to initialise the symbol with.
@@ -547,7 +547,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size.
    */
-  var textHaloWidth: Double = 0.0
+  var textHaloWidth: Double? = null
 
   /**
    * Set text-halo-width to initialise the symbol with.
@@ -565,7 +565,7 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
   /**
    * The opacity at which the text will be drawn.
    */
-  var textOpacity: Double = 1.0
+  var textOpacity: Double? = null
 
   /**
    * Set text-opacity to initialise the symbol with.
@@ -675,33 +675,87 @@ class SymbolOptions : AnnotationOptions<Point, Symbol> {
       throw RuntimeException("geometry field is required")
     }
     val jsonObject = JsonObject()
-    jsonObject.addProperty(PROPERTY_ICON_ANCHOR, iconAnchor.value)
-    jsonObject.addProperty(PROPERTY_ICON_IMAGE, iconImage)
-    jsonObject.add(PROPERTY_ICON_OFFSET, convertDoubleArray(iconOffset))
-    jsonObject.addProperty(PROPERTY_ICON_ROTATE, iconRotate)
-    jsonObject.addProperty(PROPERTY_ICON_SIZE, iconSize)
-    jsonObject.addProperty(PROPERTY_SYMBOL_SORT_KEY, symbolSortKey)
-    jsonObject.addProperty(PROPERTY_TEXT_ANCHOR, textAnchor.value)
-    jsonObject.addProperty(PROPERTY_TEXT_FIELD, textField)
-    jsonObject.add(PROPERTY_TEXT_FONT, convertStringArray(textFont))
-    jsonObject.addProperty(PROPERTY_TEXT_JUSTIFY, textJustify.value)
-    jsonObject.addProperty(PROPERTY_TEXT_LETTER_SPACING, textLetterSpacing)
-    jsonObject.addProperty(PROPERTY_TEXT_MAX_WIDTH, textMaxWidth)
-    jsonObject.add(PROPERTY_TEXT_OFFSET, convertDoubleArray(textOffset))
-    jsonObject.addProperty(PROPERTY_TEXT_RADIAL_OFFSET, textRadialOffset)
-    jsonObject.addProperty(PROPERTY_TEXT_ROTATE, textRotate)
-    jsonObject.addProperty(PROPERTY_TEXT_SIZE, textSize)
-    jsonObject.addProperty(PROPERTY_TEXT_TRANSFORM, textTransform.value)
-    jsonObject.addProperty(PROPERTY_ICON_COLOR, iconColor)
-    jsonObject.addProperty(PROPERTY_ICON_HALO_BLUR, iconHaloBlur)
-    jsonObject.addProperty(PROPERTY_ICON_HALO_COLOR, iconHaloColor)
-    jsonObject.addProperty(PROPERTY_ICON_HALO_WIDTH, iconHaloWidth)
-    jsonObject.addProperty(PROPERTY_ICON_OPACITY, iconOpacity)
-    jsonObject.addProperty(PROPERTY_TEXT_COLOR, textColor)
-    jsonObject.addProperty(PROPERTY_TEXT_HALO_BLUR, textHaloBlur)
-    jsonObject.addProperty(PROPERTY_TEXT_HALO_COLOR, textHaloColor)
-    jsonObject.addProperty(PROPERTY_TEXT_HALO_WIDTH, textHaloWidth)
-    jsonObject.addProperty(PROPERTY_TEXT_OPACITY, textOpacity)
+    iconAnchor?.let {
+      jsonObject.addProperty(PROPERTY_ICON_ANCHOR, it.value)
+    }
+    iconImage?.let {
+      jsonObject.addProperty(PROPERTY_ICON_IMAGE, it)
+    }
+    iconOffset?.let {
+      jsonObject.add(PROPERTY_ICON_OFFSET, convertDoubleArray(it))
+    }
+    iconRotate?.let {
+      jsonObject.addProperty(PROPERTY_ICON_ROTATE, it)
+    }
+    iconSize?.let {
+      jsonObject.addProperty(PROPERTY_ICON_SIZE, it)
+    }
+    symbolSortKey?.let {
+      jsonObject.addProperty(PROPERTY_SYMBOL_SORT_KEY, it)
+    }
+    textAnchor?.let {
+      jsonObject.addProperty(PROPERTY_TEXT_ANCHOR, it.value)
+    }
+    textField?.let {
+      jsonObject.addProperty(PROPERTY_TEXT_FIELD, it)
+    }
+    textFont?.let {
+      jsonObject.add(PROPERTY_TEXT_FONT, convertStringArray(it))
+    }
+    textJustify?.let {
+      jsonObject.addProperty(PROPERTY_TEXT_JUSTIFY, it.value)
+    }
+    textLetterSpacing?.let {
+      jsonObject.addProperty(PROPERTY_TEXT_LETTER_SPACING, it)
+    }
+    textMaxWidth?.let {
+      jsonObject.addProperty(PROPERTY_TEXT_MAX_WIDTH, it)
+    }
+    textOffset?.let {
+      jsonObject.add(PROPERTY_TEXT_OFFSET, convertDoubleArray(it))
+    }
+    textRadialOffset?.let {
+      jsonObject.addProperty(PROPERTY_TEXT_RADIAL_OFFSET, it)
+    }
+    textRotate?.let {
+      jsonObject.addProperty(PROPERTY_TEXT_ROTATE, it)
+    }
+    textSize?.let {
+      jsonObject.addProperty(PROPERTY_TEXT_SIZE, it)
+    }
+    textTransform?.let {
+      jsonObject.addProperty(PROPERTY_TEXT_TRANSFORM, it.value)
+    }
+    iconColor?.let {
+      jsonObject.addProperty(PROPERTY_ICON_COLOR, it)
+    }
+    iconHaloBlur?.let {
+      jsonObject.addProperty(PROPERTY_ICON_HALO_BLUR, it)
+    }
+    iconHaloColor?.let {
+      jsonObject.addProperty(PROPERTY_ICON_HALO_COLOR, it)
+    }
+    iconHaloWidth?.let {
+      jsonObject.addProperty(PROPERTY_ICON_HALO_WIDTH, it)
+    }
+    iconOpacity?.let {
+      jsonObject.addProperty(PROPERTY_ICON_OPACITY, it)
+    }
+    textColor?.let {
+      jsonObject.addProperty(PROPERTY_TEXT_COLOR, it)
+    }
+    textHaloBlur?.let {
+      jsonObject.addProperty(PROPERTY_TEXT_HALO_BLUR, it)
+    }
+    textHaloColor?.let {
+      jsonObject.addProperty(PROPERTY_TEXT_HALO_COLOR, it)
+    }
+    textHaloWidth?.let {
+      jsonObject.addProperty(PROPERTY_TEXT_HALO_WIDTH, it)
+    }
+    textOpacity?.let {
+      jsonObject.addProperty(PROPERTY_TEXT_OPACITY, it)
+    }
     val symbol = Symbol(id, annotationManager, jsonObject, geometry!!)
     iconImageBitmap?.let {
       symbol.iconImageBitmap = iconImageBitmap

@@ -40,7 +40,7 @@ class CircleOptions : AnnotationOptions<Point, Circle> {
   /**
    * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity.
    */
-  var circleBlur: Double = 0.0
+  var circleBlur: Double? = null
 
   /**
    * Set circle-blur to initialise the circle with.
@@ -58,7 +58,7 @@ class CircleOptions : AnnotationOptions<Point, Circle> {
   /**
    * The fill color of the circle.
    */
-  var circleColor: String = "rgba(0, 0, 0, 1)"
+  var circleColor: String? = null
 
   /**
    * Set circle-color to initialise the circle with.
@@ -89,7 +89,7 @@ class CircleOptions : AnnotationOptions<Point, Circle> {
   /**
    * The opacity at which the circle will be drawn.
    */
-  var circleOpacity: Double = 1.0
+  var circleOpacity: Double? = null
 
   /**
    * Set circle-opacity to initialise the circle with.
@@ -107,7 +107,7 @@ class CircleOptions : AnnotationOptions<Point, Circle> {
   /**
    * Circle radius.
    */
-  var circleRadius: Double = 5.0
+  var circleRadius: Double? = null
 
   /**
    * Set circle-radius to initialise the circle with.
@@ -125,7 +125,7 @@ class CircleOptions : AnnotationOptions<Point, Circle> {
   /**
    * The stroke color of the circle.
    */
-  var circleStrokeColor: String = "rgba(0, 0, 0, 1)"
+  var circleStrokeColor: String? = null
 
   /**
    * Set circle-stroke-color to initialise the circle with.
@@ -156,7 +156,7 @@ class CircleOptions : AnnotationOptions<Point, Circle> {
   /**
    * The opacity of the circle's stroke.
    */
-  var circleStrokeOpacity: Double = 1.0
+  var circleStrokeOpacity: Double? = null
 
   /**
    * Set circle-stroke-opacity to initialise the circle with.
@@ -174,7 +174,7 @@ class CircleOptions : AnnotationOptions<Point, Circle> {
   /**
    * The width of the circle's stroke. Strokes are placed outside of the `circle-radius`.
    */
-  var circleStrokeWidth: Double = 0.0
+  var circleStrokeWidth: Double? = null
 
   /**
    * Set circle-stroke-width to initialise the circle with.
@@ -284,14 +284,30 @@ class CircleOptions : AnnotationOptions<Point, Circle> {
       throw RuntimeException("geometry field is required")
     }
     val jsonObject = JsonObject()
-    jsonObject.addProperty(PROPERTY_CIRCLE_SORT_KEY, circleSortKey)
-    jsonObject.addProperty(PROPERTY_CIRCLE_BLUR, circleBlur)
-    jsonObject.addProperty(PROPERTY_CIRCLE_COLOR, circleColor)
-    jsonObject.addProperty(PROPERTY_CIRCLE_OPACITY, circleOpacity)
-    jsonObject.addProperty(PROPERTY_CIRCLE_RADIUS, circleRadius)
-    jsonObject.addProperty(PROPERTY_CIRCLE_STROKE_COLOR, circleStrokeColor)
-    jsonObject.addProperty(PROPERTY_CIRCLE_STROKE_OPACITY, circleStrokeOpacity)
-    jsonObject.addProperty(PROPERTY_CIRCLE_STROKE_WIDTH, circleStrokeWidth)
+    circleSortKey?.let {
+      jsonObject.addProperty(PROPERTY_CIRCLE_SORT_KEY, it)
+    }
+    circleBlur?.let {
+      jsonObject.addProperty(PROPERTY_CIRCLE_BLUR, it)
+    }
+    circleColor?.let {
+      jsonObject.addProperty(PROPERTY_CIRCLE_COLOR, it)
+    }
+    circleOpacity?.let {
+      jsonObject.addProperty(PROPERTY_CIRCLE_OPACITY, it)
+    }
+    circleRadius?.let {
+      jsonObject.addProperty(PROPERTY_CIRCLE_RADIUS, it)
+    }
+    circleStrokeColor?.let {
+      jsonObject.addProperty(PROPERTY_CIRCLE_STROKE_COLOR, it)
+    }
+    circleStrokeOpacity?.let {
+      jsonObject.addProperty(PROPERTY_CIRCLE_STROKE_OPACITY, it)
+    }
+    circleStrokeWidth?.let {
+      jsonObject.addProperty(PROPERTY_CIRCLE_STROKE_WIDTH, it)
+    }
     val circle = Circle(id, annotationManager, jsonObject, geometry!!)
     circle.isDraggable = isDraggable
     circle.setData(data)

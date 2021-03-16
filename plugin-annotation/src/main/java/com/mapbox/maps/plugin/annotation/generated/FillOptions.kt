@@ -41,7 +41,7 @@ class FillOptions : AnnotationOptions<Polygon, Fill> {
   /**
    * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
    */
-  var fillColor: String = "rgba(0, 0, 0, 1)"
+  var fillColor: String? = null
 
   /**
    * Set fill-color to initialise the fill with.
@@ -72,7 +72,7 @@ class FillOptions : AnnotationOptions<Polygon, Fill> {
   /**
    * The opacity of the entire fill layer. In contrast to the `fill-color`, this value will also affect the 1px stroke around the fill, if the stroke is used.
    */
-  var fillOpacity: Double = 1.0
+  var fillOpacity: Double? = null
 
   /**
    * Set fill-opacity to initialise the fill with.
@@ -231,11 +231,21 @@ class FillOptions : AnnotationOptions<Polygon, Fill> {
       throw RuntimeException("geometry field is required")
     }
     val jsonObject = JsonObject()
-    jsonObject.addProperty(PROPERTY_FILL_SORT_KEY, fillSortKey)
-    jsonObject.addProperty(PROPERTY_FILL_COLOR, fillColor)
-    jsonObject.addProperty(PROPERTY_FILL_OPACITY, fillOpacity)
-    jsonObject.addProperty(PROPERTY_FILL_OUTLINE_COLOR, fillOutlineColor)
-    jsonObject.addProperty(PROPERTY_FILL_PATTERN, fillPattern)
+    fillSortKey?.let {
+      jsonObject.addProperty(PROPERTY_FILL_SORT_KEY, it)
+    }
+    fillColor?.let {
+      jsonObject.addProperty(PROPERTY_FILL_COLOR, it)
+    }
+    fillOpacity?.let {
+      jsonObject.addProperty(PROPERTY_FILL_OPACITY, it)
+    }
+    fillOutlineColor?.let {
+      jsonObject.addProperty(PROPERTY_FILL_OUTLINE_COLOR, it)
+    }
+    fillPattern?.let {
+      jsonObject.addProperty(PROPERTY_FILL_PATTERN, it)
+    }
     val fill = Fill(id, annotationManager, jsonObject, geometry!!)
     fill.isDraggable = isDraggable
     fill.setData(data)

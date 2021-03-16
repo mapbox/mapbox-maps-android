@@ -66,8 +66,8 @@ class Line(
      */
     get() {
       val value = jsonObject.get(LineOptions.PROPERTY_LINE_JOIN)
-      if (!value.isJsonNull) {
-        return LineJoin.valueOf(value.asString)
+      value?.let {
+        return LineJoin.valueOf(it.asString)
       }
       return null
     }
@@ -99,8 +99,8 @@ class Line(
      */
     get() {
       val value = jsonObject.get(LineOptions.PROPERTY_LINE_SORT_KEY)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -132,8 +132,8 @@ class Line(
      */
     get() {
       val value = jsonObject.get(LineOptions.PROPERTY_LINE_BLUR)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -165,8 +165,8 @@ class Line(
     @ColorInt
     get() {
       val value = jsonObject.get(LineOptions.PROPERTY_LINE_COLOR)
-      if (!value.isJsonNull) {
-        ColorUtils.rgbaToColor(value.asString)?.let {
+      value?.let {
+        ColorUtils.rgbaToColor(it.asString)?.let {
           return it
         }
       }
@@ -201,8 +201,8 @@ class Line(
      */
     get() {
       val value = jsonObject.get(LineOptions.PROPERTY_LINE_COLOR)
-      if (!value.isJsonNull) {
-        return value.asString.toString()
+      value?.let {
+        return it.asString.toString()
       }
       return null
     }
@@ -232,8 +232,8 @@ class Line(
      */
     get() {
       val value = jsonObject.get(LineOptions.PROPERTY_LINE_GAP_WIDTH)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -265,8 +265,8 @@ class Line(
      */
     get() {
       val value = jsonObject.get(LineOptions.PROPERTY_LINE_OFFSET)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -298,8 +298,8 @@ class Line(
      */
     get() {
       val value = jsonObject.get(LineOptions.PROPERTY_LINE_OPACITY)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -331,8 +331,8 @@ class Line(
      */
     get() {
       val value = jsonObject.get(LineOptions.PROPERTY_LINE_PATTERN)
-      if (!value.isJsonNull) {
-        return value.asString.toString()
+      value?.let {
+        return it.asString.toString()
       }
       return null
     }
@@ -364,8 +364,8 @@ class Line(
      */
     get() {
       val value = jsonObject.get(LineOptions.PROPERTY_LINE_WIDTH)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -413,31 +413,31 @@ class Line(
    * Set the used data-driven properties
    */
   override fun setUsedDataDrivenProperties() {
-    if (!(jsonObject.get(LineOptions.PROPERTY_LINE_JOIN).isJsonNull)) {
+    jsonObject.get(LineOptions.PROPERTY_LINE_JOIN)?.let {
       annotationManager.enableDataDrivenProperty(LineOptions.PROPERTY_LINE_JOIN)
     }
-    if (!(jsonObject.get(LineOptions.PROPERTY_LINE_SORT_KEY).isJsonNull)) {
+    jsonObject.get(LineOptions.PROPERTY_LINE_SORT_KEY)?.let {
       annotationManager.enableDataDrivenProperty(LineOptions.PROPERTY_LINE_SORT_KEY)
     }
-    if (!(jsonObject.get(LineOptions.PROPERTY_LINE_BLUR).isJsonNull)) {
+    jsonObject.get(LineOptions.PROPERTY_LINE_BLUR)?.let {
       annotationManager.enableDataDrivenProperty(LineOptions.PROPERTY_LINE_BLUR)
     }
-    if (!(jsonObject.get(LineOptions.PROPERTY_LINE_COLOR).isJsonNull)) {
+    jsonObject.get(LineOptions.PROPERTY_LINE_COLOR)?.let {
       annotationManager.enableDataDrivenProperty(LineOptions.PROPERTY_LINE_COLOR)
     }
-    if (!(jsonObject.get(LineOptions.PROPERTY_LINE_GAP_WIDTH).isJsonNull)) {
+    jsonObject.get(LineOptions.PROPERTY_LINE_GAP_WIDTH)?.let {
       annotationManager.enableDataDrivenProperty(LineOptions.PROPERTY_LINE_GAP_WIDTH)
     }
-    if (!(jsonObject.get(LineOptions.PROPERTY_LINE_OFFSET).isJsonNull)) {
+    jsonObject.get(LineOptions.PROPERTY_LINE_OFFSET)?.let {
       annotationManager.enableDataDrivenProperty(LineOptions.PROPERTY_LINE_OFFSET)
     }
-    if (!(jsonObject.get(LineOptions.PROPERTY_LINE_OPACITY).isJsonNull)) {
+    jsonObject.get(LineOptions.PROPERTY_LINE_OPACITY)?.let {
       annotationManager.enableDataDrivenProperty(LineOptions.PROPERTY_LINE_OPACITY)
     }
-    if (!(jsonObject.get(LineOptions.PROPERTY_LINE_PATTERN).isJsonNull)) {
+    jsonObject.get(LineOptions.PROPERTY_LINE_PATTERN)?.let {
       annotationManager.enableDataDrivenProperty(LineOptions.PROPERTY_LINE_PATTERN)
     }
-    if (!(jsonObject.get(LineOptions.PROPERTY_LINE_WIDTH).isJsonNull)) {
+    jsonObject.get(LineOptions.PROPERTY_LINE_WIDTH)?.let {
       annotationManager.enableDataDrivenProperty(LineOptions.PROPERTY_LINE_WIDTH)
     }
   }

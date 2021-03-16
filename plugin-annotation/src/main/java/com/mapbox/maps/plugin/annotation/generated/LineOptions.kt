@@ -24,7 +24,7 @@ class LineOptions : AnnotationOptions<LineString, Line> {
   /**
    * The display of lines when joining.
    */
-  var lineJoin: LineJoin = LineJoin.MITER
+  var lineJoin: LineJoin? = null
 
   /**
    * Set line-join to initialise the line with.
@@ -60,7 +60,7 @@ class LineOptions : AnnotationOptions<LineString, Line> {
   /**
    * Blur applied to the line, in pixels.
    */
-  var lineBlur: Double = 0.0
+  var lineBlur: Double? = null
 
   /**
    * Set line-blur to initialise the line with.
@@ -78,7 +78,7 @@ class LineOptions : AnnotationOptions<LineString, Line> {
   /**
    * The color with which the line will be drawn.
    */
-  var lineColor: String = "rgba(0, 0, 0, 1)"
+  var lineColor: String? = null
 
   /**
    * Set line-color to initialise the line with.
@@ -109,7 +109,7 @@ class LineOptions : AnnotationOptions<LineString, Line> {
   /**
    * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
    */
-  var lineGapWidth: Double = 0.0
+  var lineGapWidth: Double? = null
 
   /**
    * Set line-gap-width to initialise the line with.
@@ -127,7 +127,7 @@ class LineOptions : AnnotationOptions<LineString, Line> {
   /**
    * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
    */
-  var lineOffset: Double = 0.0
+  var lineOffset: Double? = null
 
   /**
    * Set line-offset to initialise the line with.
@@ -145,7 +145,7 @@ class LineOptions : AnnotationOptions<LineString, Line> {
   /**
    * The opacity at which the line will be drawn.
    */
-  var lineOpacity: Double = 1.0
+  var lineOpacity: Double? = null
 
   /**
    * Set line-opacity to initialise the line with.
@@ -181,7 +181,7 @@ class LineOptions : AnnotationOptions<LineString, Line> {
   /**
    * Stroke thickness.
    */
-  var lineWidth: Double = 1.0
+  var lineWidth: Double? = null
 
   /**
    * Set line-width to initialise the line with.
@@ -291,15 +291,33 @@ class LineOptions : AnnotationOptions<LineString, Line> {
       throw RuntimeException("geometry field is required")
     }
     val jsonObject = JsonObject()
-    jsonObject.addProperty(PROPERTY_LINE_JOIN, lineJoin.value)
-    jsonObject.addProperty(PROPERTY_LINE_SORT_KEY, lineSortKey)
-    jsonObject.addProperty(PROPERTY_LINE_BLUR, lineBlur)
-    jsonObject.addProperty(PROPERTY_LINE_COLOR, lineColor)
-    jsonObject.addProperty(PROPERTY_LINE_GAP_WIDTH, lineGapWidth)
-    jsonObject.addProperty(PROPERTY_LINE_OFFSET, lineOffset)
-    jsonObject.addProperty(PROPERTY_LINE_OPACITY, lineOpacity)
-    jsonObject.addProperty(PROPERTY_LINE_PATTERN, linePattern)
-    jsonObject.addProperty(PROPERTY_LINE_WIDTH, lineWidth)
+    lineJoin?.let {
+      jsonObject.addProperty(PROPERTY_LINE_JOIN, it.value)
+    }
+    lineSortKey?.let {
+      jsonObject.addProperty(PROPERTY_LINE_SORT_KEY, it)
+    }
+    lineBlur?.let {
+      jsonObject.addProperty(PROPERTY_LINE_BLUR, it)
+    }
+    lineColor?.let {
+      jsonObject.addProperty(PROPERTY_LINE_COLOR, it)
+    }
+    lineGapWidth?.let {
+      jsonObject.addProperty(PROPERTY_LINE_GAP_WIDTH, it)
+    }
+    lineOffset?.let {
+      jsonObject.addProperty(PROPERTY_LINE_OFFSET, it)
+    }
+    lineOpacity?.let {
+      jsonObject.addProperty(PROPERTY_LINE_OPACITY, it)
+    }
+    linePattern?.let {
+      jsonObject.addProperty(PROPERTY_LINE_PATTERN, it)
+    }
+    lineWidth?.let {
+      jsonObject.addProperty(PROPERTY_LINE_WIDTH, it)
+    }
     val line = Line(id, annotationManager, jsonObject, geometry!!)
     line.isDraggable = isDraggable
     line.setData(data)
