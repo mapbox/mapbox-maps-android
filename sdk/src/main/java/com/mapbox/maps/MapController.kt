@@ -255,8 +255,6 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     try {
       val logoPluginClass = Class.forName(PLUGIN_LOGO_CLASS_NAME) as Class<LogoPlugin>
       createPlugin(mapView, logoPluginClass)
-    } catch (ex: ClassNotFoundException) {
-      throw PluginRequirementException("Logo plugin")
     } catch (ex: InvalidViewPluginHostException) {
       Logger.d(
         TAG,
@@ -297,8 +295,6 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       val attributionPluginClass =
         Class.forName(PLUGIN_ATTRIBUTION_CLASS_NAME) as Class<AttributionPlugin>
       createPlugin(mapView, attributionPluginClass)
-    } catch (ex: ClassNotFoundException) {
-      throw PluginRequirementException("Attribution plugin")
     } catch (ex: InvalidViewPluginHostException) {
       Logger.d(
         TAG,
