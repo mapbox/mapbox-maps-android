@@ -2,8 +2,6 @@ package com.mapbox.maps
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.os.Handler
-import android.os.Looper
 import android.view.MotionEvent
 import android.view.Surface
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
@@ -47,7 +45,6 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
     this.renderer = MapboxSurfaceRenderer()
     this.mapController = MapController(
       renderer,
-      NativeMapObserver(Handler(Looper.getMainLooper())),
       mapboxMapOptions
     )
     mapController.initializePlugins(

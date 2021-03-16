@@ -5,8 +5,6 @@ import android.annotation.TargetApi
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Build
-import android.os.Handler
-import android.os.Looper
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.SurfaceView
@@ -114,7 +112,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
         is TextureView -> MapboxTextureViewRenderer(WeakReference(view))
         else -> throw IllegalArgumentException("Provided view has to be a texture or a surface.")
       },
-      NativeMapObserver(Handler(Looper.getMainLooper())),
       options
     )
     addView(view, 0)

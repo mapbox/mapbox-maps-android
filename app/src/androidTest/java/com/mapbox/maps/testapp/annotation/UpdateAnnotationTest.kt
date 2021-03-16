@@ -5,7 +5,6 @@ import android.os.Handler
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.geojson.Point
-import com.mapbox.maps.RenderMode
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.TextJustify
@@ -16,7 +15,7 @@ import com.mapbox.maps.plugin.annotation.generated.SymbolManager
 import com.mapbox.maps.plugin.annotation.generated.SymbolOptions
 import com.mapbox.maps.plugin.annotation.generated.createSymbolManager
 import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
-import com.mapbox.maps.plugin.delegates.listeners.OnDidFinishRenderingMapListener
+import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadingFinishedListener
 import com.mapbox.maps.testapp.BaseMapTest
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import org.junit.Assert
@@ -31,7 +30,7 @@ import java.util.concurrent.TimeoutException
  */
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-class UpdateAnnotationTest : BaseMapTest(), OnDidFinishRenderingMapListener {
+class UpdateAnnotationTest : BaseMapTest(), OnMapLoadingFinishedListener {
   private lateinit var runnable: Runnable
   private var index = 0
   private val latch = CountDownLatch(AnnotationUtils.STYLES.size * 3)
@@ -40,7 +39,7 @@ class UpdateAnnotationTest : BaseMapTest(), OnDidFinishRenderingMapListener {
 
   @Test
   fun testUpdateAnnotation() {
-    mapboxMap.addOnDidFinishRenderingMapListener(this)
+    mapboxMap.addOnMapLoadingFinishedListener(this)
 
     rule.scenario.onActivity {
       val handler = Handler(it.mainLooper)
@@ -98,7 +97,7 @@ class UpdateAnnotationTest : BaseMapTest(), OnDidFinishRenderingMapListener {
     }
   }
 
-  override fun onDidFinishRenderingMap(mode: RenderMode) {
+  override fun onMapLoadingFinished() {
     latch.countDown()
     rule.scenario.onActivity {
       it.runOnUiThread {

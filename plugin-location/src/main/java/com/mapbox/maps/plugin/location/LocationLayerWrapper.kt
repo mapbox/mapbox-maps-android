@@ -18,9 +18,11 @@ internal open class LocationLayerWrapper(val layerId: String) {
   ) {
     this.mapStyleDelegate = mapStyleDelegate
     this.stateDelegate = styleStateDelegate
-    val expected = mapStyleDelegate.addStyleLayer(toValue(), position)
-    expected.error?.let {
-      throw RuntimeException("Add layer failed: $it")
+    if (!mapStyleDelegate.styleLayerExists(layerId)) {
+      val expected = mapStyleDelegate.addStyleLayer(toValue(), position)
+      expected.error?.let {
+        throw RuntimeException("Add layer failed: $it")
+      }
     }
   }
 
@@ -33,9 +35,11 @@ internal open class LocationLayerWrapper(val layerId: String) {
 
     layerProperties[propertyName] = value
     mapStyleDelegate?.let { styleDelegate ->
-      val expected = styleDelegate.setStyleLayerProperty(layerId, propertyName, value)
-      expected.error?.let {
-        throw RuntimeException("Set layer property \"${propertyName}\" failed:\n$it\n$value")
+      if (styleDelegate.styleLayerExists(layerId)) {
+        val expected = styleDelegate.setStyleLayerProperty(layerId, propertyName, value)
+        expected.error?.let {
+          throw RuntimeException("Set layer property \"${propertyName}\" failed:\n$it\n$value")
+        }
       }
     }
   }

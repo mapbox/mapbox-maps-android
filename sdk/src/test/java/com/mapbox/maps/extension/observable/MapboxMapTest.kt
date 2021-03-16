@@ -1,9 +1,11 @@
 package com.mapbox.maps.extension.observable
 
 import com.mapbox.bindgen.Value
+import com.mapbox.common.ShadowValueConverter
 import com.mapbox.maps.Event
 import com.mapbox.maps.ObservableInterface
 import com.mapbox.maps.Observer
+import com.mapbox.maps.extension.observable.resourcerequest.*
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Assert.assertEquals
@@ -48,7 +50,7 @@ class MapboxMapTest {
       Error("not-found", "error message")
     )
 
-    val eventData = event.getEventData()
+    val eventData = event.getResourceEventData()
     assertEquals("network", eventData.dataSource)
     assertEquals(false, eventData.cancelled)
     assertEquals(request, eventData.request)

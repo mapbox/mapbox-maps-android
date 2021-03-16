@@ -55,13 +55,6 @@ class AnnotationPluginImpl : AnnotationPlugin {
   }
 
   /**
-   * Called when a new Style is being loaded.
-   */
-  override fun onStyleLoading() {
-    // no-op
-  }
-
-  /**
    * Called when a new Style is loaded.
    */
   override fun onStyleChanged(styleDelegate: StyleManagerInterface) {

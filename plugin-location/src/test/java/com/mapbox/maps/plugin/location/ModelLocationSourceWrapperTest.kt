@@ -21,6 +21,7 @@ class ModelLocationSourceWrapperTest {
     every { style.addStyleSource(any(), any()) } returns expected
     every { style.setStyleSourceProperty(any(), any(), any()) } returns expected
     every { expected.error } returns null
+    every { style.styleSourceExists(any()) } returns true
   }
 
   @Test

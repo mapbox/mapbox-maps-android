@@ -19,7 +19,7 @@ import java.lang.ref.WeakReference
 class MapboxMapTest {
 
   private val nativeMap: CustomMapInterface = mockk(relaxed = true)
-  private val mapObserver: NativeMapObserver = mockk(relaxed = true)
+  private val mapObserver: NativeObserver = mockk(relaxed = true)
 
   private lateinit var mapboxMap: MapboxMap
 
@@ -31,28 +31,28 @@ class MapboxMapTest {
   @Test
   fun loadStyleUri() {
     mapboxMap.loadStyleUri("foo")
-    verify { mapObserver.addOnMapChangedListener(any()) }
+    verify { mapObserver.addOnStyleLoadingFinishedListener(any()) }
     verify { nativeMap.styleURI = "foo" }
   }
 
   @Test
   fun loadStyleUriLambda() {
     mapboxMap.loadStyleUri("foo") {}
-    verify { mapObserver.addOnMapChangedListener(any()) }
+    verify { mapObserver.addOnStyleLoadingFinishedListener(any()) }
     verify { nativeMap.styleURI = "foo" }
   }
 
   @Test
   fun loadStyleJSON() {
     mapboxMap.loadStyleJSON("foo")
-    verify { mapObserver.addOnMapChangedListener(any()) }
+    verify { mapObserver.addOnStyleLoadingFinishedListener(any()) }
     verify { nativeMap.styleJSON = "foo" }
   }
 
   @Test
   fun loadStyleJSONLambda() {
     mapboxMap.loadStyleJSON("foo") {}
-    verify { mapObserver.addOnMapChangedListener(any()) }
+    verify { mapObserver.addOnStyleLoadingFinishedListener(any()) }
     verify { nativeMap.styleJSON = "foo" }
   }
 
@@ -173,17 +173,32 @@ class MapboxMapTest {
   }
 
   @Test
-  fun addOnMapChangedListener() {
-    val listener = mockk<OnMapChangedListener>()
-    mapboxMap.addOnMapChangedListener(listener)
-    verify { mapObserver.addOnMapChangedListener(listener) }
+  fun addOnCameraChangeListener() {
+    val listener = mockk<OnCameraChangeListener>()
+    mapboxMap.addOnCameraChangeListener(listener)
+    verify { mapObserver.addOnCameraChangeListener(listener) }
   }
 
   @Test
-  fun removeOnMapChangedListener() {
-    val listener = mockk<OnMapChangedListener>()
-    mapboxMap.removeOnMapChangedListener(listener)
-    verify { mapObserver.removeOnMapChangedListener(listener) }
+  fun removeOnCameraChangeListener() {
+    val listener = mockk<OnCameraChangeListener>()
+    mapboxMap.removeOnCameraChangeListener(listener)
+    verify { mapObserver.removeOnCameraChangeListener(listener) }
+  }
+
+  // Map events
+  @Test
+  fun addOnMapIdleListener() {
+    val listener = mockk<OnMapIdleListener>()
+    mapboxMap.addOnMapIdleListener(listener)
+    verify { mapObserver.addOnMapIdleListener(listener) }
+  }
+
+  @Test
+  fun removeOnMapIdleListener() {
+    val listener = mockk<OnMapIdleListener>()
+    mapboxMap.removeOnMapIdleListener(listener)
+    verify { mapObserver.removeOnMapIdleListener(listener) }
   }
 
   @Test
@@ -201,31 +216,61 @@ class MapboxMapTest {
   }
 
   @Test
-  fun addOnDidFinishRenderingFrameListener() {
-    val listener = mockk<OnDidFinishRenderingFrameListener>()
-    mapboxMap.addOnDidFinishRenderingFrameListener(listener)
-    verify { mapObserver.addOnDidFinishRenderingFrameListener(listener) }
+  fun addOnMapLoadingFinishedListener() {
+    val listener = mockk<OnMapLoadingFinishedListener>()
+    mapboxMap.addOnMapLoadingFinishedListener(listener)
+    verify { mapObserver.addOnMapLoadingFinishedListener(listener) }
   }
 
   @Test
-  fun removeOnDidFinishRenderingFrameListener() {
-    val listener = mockk<OnDidFinishRenderingFrameListener>()
-    mapboxMap.removeOnDidFinishRenderingFrameListener(listener)
-    verify { mapObserver.removeOnDidFinishRenderingFrameListener(listener) }
+  fun removeOnMapLoadingFinishedListener() {
+    val listener = mockk<OnMapLoadingFinishedListener>()
+    mapboxMap.removeOnMapLoadingFinishedListener(listener)
+    verify { mapObserver.removeOnMapLoadingFinishedListener(listener) }
+  }
+
+  // Render frame events
+  @Test
+  fun addOnRenderFrameFinishedListener() {
+    val listener = mockk<OnRenderFrameFinishedListener>()
+    mapboxMap.addOnRenderFrameFinishedListener(listener)
+    verify { mapObserver.addOnRenderFrameFinishedListener(listener) }
   }
 
   @Test
-  fun addOnCameraChangeListener() {
-    val listener = mockk<OnCameraChangeListener>()
-    mapboxMap.addOnCameraChangeListener(listener)
-    verify { mapObserver.addOnCameraChangeListener(listener) }
+  fun removeOnRenderFrameFinishedListener() {
+    val listener = mockk<OnRenderFrameFinishedListener>()
+    mapboxMap.removeOnRenderFrameFinishedListener(listener)
+    verify { mapObserver.removeOnRenderFrameFinishedListener(listener) }
   }
 
   @Test
-  fun removeOnCameraChangeListener() {
-    val listener = mockk<OnCameraChangeListener>()
-    mapboxMap.removeOnCameraChangeListener(listener)
-    verify { mapObserver.removeOnCameraChangeListener(listener) }
+  fun addOnRenderFrameStartedListener() {
+    val listener = mockk<OnRenderFrameStartedListener>()
+    mapboxMap.addOnRenderFrameStartedListener(listener)
+    verify { mapObserver.addOnRenderFrameStartedListener(listener) }
+  }
+
+  @Test
+  fun removeOnRenderFrameStartedListener() {
+    val listener = mockk<OnRenderFrameStartedListener>()
+    mapboxMap.removeOnRenderFrameStartedListener(listener)
+    verify { mapObserver.removeOnRenderFrameStartedListener(listener) }
+  }
+
+  // Source events
+  @Test
+  fun addOnSourceAddedListener() {
+    val listener = mockk<OnSourceAddedListener>()
+    mapboxMap.addOnSourceAddedListener(listener)
+    verify { mapObserver.addOnSourceAddedListener(listener) }
+  }
+
+  @Test
+  fun removeOnSourceAddedListener() {
+    val listener = mockk<OnSourceAddedListener>()
+    mapboxMap.removeOnSourceAddedListener(listener)
+    verify { mapObserver.removeOnSourceAddedListener(listener) }
   }
 
   @Test
@@ -243,31 +288,74 @@ class MapboxMapTest {
   }
 
   @Test
-  fun addOnStyleChangeListener() {
-    val listener = mockk<OnStyleImageChangeListener>()
-    mapboxMap.addOnStyleImageChangeListener(listener)
-    verify { mapObserver.addOnStyleImageChangeListener(listener) }
+  fun addOnSourceRemovedListener() {
+    val listener = mockk<OnSourceRemovedListener>()
+    mapboxMap.addOnSourceRemovedListener(listener)
+    verify { mapObserver.addOnSourceRemovedListener(listener) }
   }
 
   @Test
-  fun removeOnStyleChangeListener() {
-    val listener = mockk<OnStyleImageChangeListener>()
-    mapboxMap.removeOnStyleImageChangeListener(listener)
-    verify { mapObserver.removeOnStyleImageChangeListener(listener) }
+  fun removeOnSourceRemovedListener() {
+    val listener = mockk<OnSourceRemovedListener>()
+    mapboxMap.removeOnSourceRemovedListener(listener)
+    verify { mapObserver.removeOnSourceRemovedListener(listener) }
+  }
+
+  // Style events
+  @Test
+  fun addOnStyleFullyLoadedListener() {
+    val listener = mockk<OnStyleFullyLoadedListener>()
+    mapboxMap.addOnStyleFullyLoadedListener(listener)
+    verify { mapObserver.addOnStyleFullyLoadedListener(listener) }
   }
 
   @Test
-  fun addOnDidFinishRenderingMapListener() {
-    val listener = mockk<OnDidFinishRenderingMapListener>()
-    mapboxMap.addOnDidFinishRenderingMapListener(listener)
-    verify { mapObserver.addOnDidFinishRenderingMapListener(listener) }
+  fun removeOnStyleFullyLoadedListener() {
+    val listener = mockk<OnStyleFullyLoadedListener>()
+    mapboxMap.removeOnStyleFullyLoadedListener(listener)
+    verify { mapObserver.removeOnStyleFullyLoadedListener(listener) }
   }
 
   @Test
-  fun removeOnDidFinishRenderingMapListener() {
-    val listener = mockk<OnDidFinishRenderingMapListener>()
-    mapboxMap.removeOnDidFinishRenderingMapListener(listener)
-    verify { mapObserver.removeOnDidFinishRenderingMapListener(listener) }
+  fun addOnStyleImageMissingListener() {
+    val listener = mockk<OnStyleImageMissingListener>()
+    mapboxMap.addOnStyleImageMissingListener(listener)
+    verify { mapObserver.addOnStyleImageMissingListener(listener) }
+  }
+
+  @Test
+  fun removeOnStyleImageMissingListener() {
+    val listener = mockk<OnStyleImageMissingListener>()
+    mapboxMap.removeOnStyleImageMissingListener(listener)
+    verify { mapObserver.removeOnStyleImageMissingListener(listener) }
+  }
+
+  @Test
+  fun addOnStyleImageUnusedListener() {
+    val listener = mockk<OnStyleImageUnusedListener>()
+    mapboxMap.addOnStyleImageUnusedListener(listener)
+    verify { mapObserver.addOnStyleImageUnusedListener(listener) }
+  }
+
+  @Test
+  fun removeOnStyleImageUnusedListener() {
+    val listener = mockk<OnStyleImageUnusedListener>()
+    mapboxMap.removeOnStyleImageUnusedListener(listener)
+    verify { mapObserver.removeOnStyleImageUnusedListener(listener) }
+  }
+
+  @Test
+  fun addOnStyleLoadingFinishedListener() {
+    val listener = mockk<OnStyleLoadingFinishedListener>()
+    mapboxMap.addOnStyleLoadingFinishedListener(listener)
+    verify { mapObserver.addOnStyleLoadingFinishedListener(listener) }
+  }
+
+  @Test
+  fun removeOnStyleLoadingFinishedListener() {
+    val listener = mockk<OnStyleLoadingFinishedListener>()
+    mapboxMap.removeOnStyleLoadingFinishedListener(listener)
+    verify { mapObserver.removeOnStyleLoadingFinishedListener(listener) }
   }
 
   @Test

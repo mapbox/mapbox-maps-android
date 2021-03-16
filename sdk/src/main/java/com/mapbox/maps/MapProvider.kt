@@ -9,11 +9,9 @@ internal object MapProvider {
   fun getNativeMap(
     mapboxMapOptions: MapboxMapOptions,
     mapClient: MapClient,
-    mapObserver: MapObserver
   ): MapInterface = NativeMapImpl(
     Map(
       mapClient,
-      mapObserver,
       mapboxMapOptions.mapOptions,
       mapboxMapOptions.resourceOptions
     )
@@ -21,10 +19,10 @@ internal object MapProvider {
 
   fun getMapboxMap(
     nativeMap: MapInterface,
-    mapObserver: NativeMapObserver,
+    nativeObserver: NativeObserver,
     pixelRatio: Float
   ) =
-    MapboxMap(nativeMap, mapObserver, pixelRatio)
+    MapboxMap(nativeMap, nativeObserver, pixelRatio)
 
   fun getMapPluginRegistry(
     mapboxMap: MapboxMap,

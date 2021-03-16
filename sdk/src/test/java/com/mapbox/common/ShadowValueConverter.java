@@ -1,11 +1,10 @@
-package com.mapbox.maps.extension.observable;
+package com.mapbox.common;
 
 import androidx.annotation.NonNull;
 
 import com.mapbox.bindgen.Expected;
 import com.mapbox.bindgen.ExpectedFactory;
 import com.mapbox.bindgen.Value;
-import com.mapbox.common.ValueConverter;
 
 import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;

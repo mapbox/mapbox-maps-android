@@ -1,11 +1,11 @@
-package com.mapbox.maps.extension.observable
+package com.mapbox.maps.extension.observable.resourcerequest
 
 import com.google.gson.annotations.SerializedName
 
 /**
  *The data class for event data in Observer
  */
-data class EventData(
+data class ResourceEventData(
   /**
    * "data-source" property
    */
