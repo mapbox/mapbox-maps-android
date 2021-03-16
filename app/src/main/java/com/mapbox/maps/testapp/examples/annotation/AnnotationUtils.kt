@@ -4,9 +4,10 @@ import android.content.Context
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.Style
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
+import okhttp3.Cache
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import java.io.*
 import java.nio.charset.Charset
 import java.util.*
 
@@ -92,6 +93,34 @@ object AnnotationUtils {
       sb.toString()
     } catch (e: IOException) {
       Logger.e(TAG, "Unable to parse $fileName")
+      null
+    }
+  }
+
+  /**
+   * Load the string content from net
+   *
+   * @param url the url of the file to load
+   */
+  fun loadStringFromNet(context: Context, url: String): String? {
+    val client = OkHttpClient.Builder()
+      .cache(Cache(File(context.externalCacheDir.toString(), "cache"), 10 * 1024 * 1024L))
+      .build()
+    val request: Request = Request.Builder()
+      .url(url)
+      .build()
+
+    return try {
+      val response = client.newCall(request).execute()
+      val inputStream = BufferedInputStream(response.body()?.byteStream())
+      val rd = BufferedReader(InputStreamReader(inputStream, Charset.forName("UTF-8")))
+      val sb = StringBuilder()
+      rd.forEachLine {
+        sb.append(it)
+      }
+      sb.toString()
+    } catch (e: IOException) {
+      Logger.e(TAG, "Unable to download $url")
       null
     }
   }

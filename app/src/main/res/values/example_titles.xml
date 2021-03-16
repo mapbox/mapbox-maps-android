@@ -69,6 +69,7 @@
     <string name="activity_fill">Annotation Fill</string>
     <string name="activity_circle">Annotation Circle</string>
     <string name="activity_symbol">Annotation Symbol</string>
+    <string name="activity_symbol_cluster">Annotation Cluster Symbols</string>
     <string name="activity_line">Annotation line</string>
     <string name="activity_terrain_showcase">3D Terrain showcase</string>
     <string name="activity_location_component">Location component</string>

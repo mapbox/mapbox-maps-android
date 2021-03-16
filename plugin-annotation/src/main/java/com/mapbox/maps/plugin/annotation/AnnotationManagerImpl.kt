@@ -13,11 +13,20 @@ import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression
+import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.all
+import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
+import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.gt
+import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.gte
+import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.has
+import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.lt
 import com.mapbox.maps.extension.style.image.addImage
 import com.mapbox.maps.extension.style.image.image
 import com.mapbox.maps.extension.style.layers.Layer
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.addLayerBelow
+import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
+import com.mapbox.maps.extension.style.layers.generated.circleLayer
+import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
@@ -34,6 +43,7 @@ import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.OnMoveListener
 import java.util.*
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * Base class for annotation managers
@@ -58,7 +68,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   private val mapLongClickResolver = MapLongClick()
   private val mapMoveResolver = MapMove()
   private var draggedAnnotation: T? = null
-  private val annotationMap = mutableMapOf<Long, T>()
+  private val annotationMap = ConcurrentHashMap<Long, T>()
   protected var touchAreaShiftX: Int = mapView.scrollX
   protected var touchAreaShiftY: Int = mapView.scrollY
   protected abstract val layerId: String
@@ -137,20 +147,19 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         options.buffer?.let {
           buffer(it)
         }
-        options.cluster?.let {
-          cluster(it)
-        }
-        options.clusterMaxZoom?.let {
-          clusterMaxZoom(it)
-        }
         options.lineMetrics?.let {
           lineMetrics(it)
         }
         options.tolerance?.let {
           tolerance(it)
         }
-        options.clusterProperties?.let {
-          clusterProperties(it)
+        options.clusterOptions?.let { clusterOptions ->
+          cluster(clusterOptions.cluster)
+          clusterMaxZoom(clusterOptions.clusterMaxZoom)
+          clusterRadius(clusterOptions.clusterRadius)
+          clusterOptions.clusterProperties?.let {
+            clusterProperties(it)
+          }
         }
       }
     }
@@ -177,8 +186,67 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         }
       }
     }
-
+    if (layer is SymbolLayer) {
+      // Only apply cluster for SymbolManager
+      initClusterLayers()
+    }
     updateSource()
+  }
+
+  private fun initClusterLayers() {
+    annotationConfig?.annotationSourceOptions?.clusterOptions?.let {
+      it.colorLevels.forEachIndexed { level, _ ->
+        val clusterLevelLayer = createClusterLevelLayer(level, it.colorLevels)
+        if (!style.styleLayerExists(clusterLevelLayer.layerId)) {
+          style.addLayer(clusterLevelLayer)
+        }
+      }
+      val clusterTextLayer = createClusterTextLayer()
+      if (!style.styleLayerExists(clusterTextLayer.layerId)) {
+        style.addLayer(clusterTextLayer)
+      }
+    }
+  }
+
+  private fun createClusterLevelLayer(level: Int, colorLevels: List<Pair<Int, Int>>) =
+    circleLayer("mapbox-android-cluster-circle-layer-$level", sourceId) {
+      circleColor(colorLevels[level].second)
+      annotationConfig?.annotationSourceOptions?.clusterOptions?.let {
+        if (it.circleRadiusExpression == null) {
+          circleRadius(it.circleRadius)
+        } else {
+          circleRadius(it.circleRadiusExpression as Expression)
+        }
+      }
+      val pointCount = Expression.toNumber(get(POINT_COUNT))
+      filter(
+        if (level == 0) all(
+          has(POINT_COUNT),
+          gte(pointCount, literal(colorLevels[level].first.toLong()))
+        ) else all(
+          has(POINT_COUNT),
+          gt(pointCount, literal(colorLevels[level].first.toLong())),
+          lt(pointCount, literal(colorLevels[level - 1].first.toLong()))
+        )
+      )
+    }
+
+  private fun createClusterTextLayer() = symbolLayer(CLUSTER_TEXT_LAYER_ID, sourceId) {
+    annotationConfig?.annotationSourceOptions?.clusterOptions?.let {
+      textField(if (it.textField == null) DEFAULT_TEXT_FIELD else it.textField as Expression)
+      if (it.textSizeExpression == null) {
+        textSize(it.textSize)
+      } else {
+        textSize(it.textSizeExpression as Expression)
+      }
+      if (it.textColorExpression == null) {
+        textColor(it.textColor)
+      } else {
+        textColor(it.textColorExpression as Expression)
+      }
+      textIgnorePlacement(true)
+      textAllowOverlap(true)
+    }
   }
 
   /**
@@ -532,5 +600,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
      * Tag for log
      */
     private const val TAG = "AnnotationManagerImpl"
+    private const val POINT_COUNT = "point_count"
+    private const val CLUSTER_TEXT_LAYER_ID = "mapbox-android-cluster-text-layer"
+    private val DEFAULT_TEXT_FIELD = get("point_count")
   }
 }
