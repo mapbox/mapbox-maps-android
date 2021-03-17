@@ -22,5 +22,5 @@ enum class StyleDataType {
    * The style data loaded event is associated with sources.
    */
   @SerializedName("sources")
-  SOURCE
+  SOURCES
 }
