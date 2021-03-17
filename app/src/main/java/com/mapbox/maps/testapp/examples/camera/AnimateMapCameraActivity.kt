@@ -1,4 +1,4 @@
-package com.mapbox.maps.testapp.examples
+package com.mapbox.maps.testapp.examples.camera
 
 import android.os.Bundle
 import android.widget.Toast
