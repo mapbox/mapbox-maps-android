@@ -121,7 +121,7 @@ open class Snapshotter : MapSnapshotterObserver {
    *
    * @param cameraOptions the camera options of the snapshot.
    */
-  fun setCameraOptions(cameraOptions: CameraOptions) {
+  fun setCamera(cameraOptions: CameraOptions) {
     coreSnapshotter.setCamera(cameraOptions)
   }
 
@@ -153,7 +153,7 @@ open class Snapshotter : MapSnapshotterObserver {
    *
    * @return CoordinateBounds
    */
-  fun coordinatesForCamera(options: CameraOptions): CoordinateBounds {
+  fun coordinateBoundsForCamera(options: CameraOptions): CoordinateBounds {
     return coreSnapshotter.coordinateBoundsForCamera(options)
   }
 

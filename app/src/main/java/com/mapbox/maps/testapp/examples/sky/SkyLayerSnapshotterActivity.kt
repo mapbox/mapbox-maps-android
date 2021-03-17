@@ -73,7 +73,7 @@ class SkyLayerSnapshotterActivity : AppCompatActivity() {
           )
         }
       })
-      setCameraOptions(
+      setCamera(
         CameraOptions.Builder()
           .center(Point.fromLngLat(24.81958807097479, 60.56524768721757))
           .zoom(16.0)
