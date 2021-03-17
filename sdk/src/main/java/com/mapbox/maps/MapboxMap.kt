@@ -3,7 +3,6 @@ package com.mapbox.maps
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.bindgen.Value
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
@@ -184,7 +183,6 @@ class MapboxMap internal constructor(
     addOnStyleDataLoadedListener(
       object : OnStyleDataLoadedListener {
         override fun onStyleDataLoaded(type: StyleDataType) {
-          Logger.e("testtest", "onStyleDataLoaded: $type")
           if (type == StyleDataType.STYLE) {
             onFinishLoadingStyle(onStyleLoaded, onMapLoadErrorListener)
             removeOnStyleDataLoadedListener(this)
@@ -1151,6 +1149,14 @@ class MapboxMap internal constructor(
     nativeMapWeakRef.call { this.drag(fromPoint, toPoint, animation) }
   }
 
+  /**
+   * Calculates target point where camera should move after drag. The method should be called after `dragStart` and before `dragEnd`.
+   *
+   * @param fromPoint The point to drag the map from, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
+   * @param toPoint The point to drag the map to, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
+   *
+   * @return Returns the camera options object showing end point
+   */
   override fun getDragCameraOptions(
     fromPoint: ScreenCoordinate,
     toPoint: ScreenCoordinate

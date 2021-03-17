@@ -4,6 +4,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
+import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
@@ -688,6 +689,44 @@ class MapboxMapTest {
     val point = mockk<Point>()
     mapboxMap.getElevation(point)
     verify { nativeMap.getElevation(point) }
+  }
+
+  @Test
+  fun isFullyLoaded() {
+    val style = mockk<Style>(relaxed = true)
+    mapboxMap.style = style
+    every { style.isFullyLoaded() } returns true
+    assertTrue(mapboxMap.isFullyLoaded())
+    verify { style.isFullyLoaded() }
+  }
+
+  @Test
+  fun dragStart() {
+    val screenCoordinate = mockk<ScreenCoordinate>()
+    mapboxMap.dragStart(screenCoordinate)
+    verify { nativeMap.dragStart(screenCoordinate) }
+  }
+
+  @Test
+  fun dragEnd() {
+    mapboxMap.dragEnd()
+    verify { nativeMap.dragEnd() }
+  }
+
+  @Test
+  fun drag() {
+    val fromPoint = mockk<ScreenCoordinate>()
+    val toPoint = mockk<ScreenCoordinate>()
+    mapboxMap.drag(fromPoint, toPoint, null)
+    verify { nativeMap.drag(fromPoint, toPoint, null) }
+  }
+
+  @Test
+  fun getDragCameraOptions() {
+    val fromPoint = mockk<ScreenCoordinate>()
+    val toPoint = mockk<ScreenCoordinate>()
+    mapboxMap.getDragCameraOptions(fromPoint, toPoint)
+    verify { nativeMap.getDragCameraOptions(fromPoint, toPoint) }
   }
 
   @Test
