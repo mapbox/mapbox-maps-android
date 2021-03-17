@@ -39,7 +39,7 @@ class UpdateAnnotationTest : BaseMapTest(), OnMapLoadedListener {
 
   @Test
   fun testUpdateAnnotation() {
-    mapboxMap.addOnMapLoadingFinishedListener(this)
+    mapboxMap.addOnMapLoadedListener(this)
 
     rule.scenario.onActivity {
       val handler = Handler(it.mainLooper)
