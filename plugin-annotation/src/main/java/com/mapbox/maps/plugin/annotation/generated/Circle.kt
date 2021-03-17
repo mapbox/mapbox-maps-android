@@ -66,8 +66,8 @@ class Circle(
      */
     get() {
       val value = jsonObject.get(CircleOptions.PROPERTY_CIRCLE_SORT_KEY)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -99,8 +99,8 @@ class Circle(
      */
     get() {
       val value = jsonObject.get(CircleOptions.PROPERTY_CIRCLE_BLUR)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -132,8 +132,8 @@ class Circle(
     @ColorInt
     get() {
       val value = jsonObject.get(CircleOptions.PROPERTY_CIRCLE_COLOR)
-      if (!value.isJsonNull) {
-        ColorUtils.rgbaToColor(value.asString)?.let {
+      value?.let {
+        ColorUtils.rgbaToColor(it.asString)?.let {
           return it
         }
       }
@@ -168,8 +168,8 @@ class Circle(
      */
     get() {
       val value = jsonObject.get(CircleOptions.PROPERTY_CIRCLE_COLOR)
-      if (!value.isJsonNull) {
-        return value.asString.toString()
+      value?.let {
+        return it.asString.toString()
       }
       return null
     }
@@ -199,8 +199,8 @@ class Circle(
      */
     get() {
       val value = jsonObject.get(CircleOptions.PROPERTY_CIRCLE_OPACITY)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -232,8 +232,8 @@ class Circle(
      */
     get() {
       val value = jsonObject.get(CircleOptions.PROPERTY_CIRCLE_RADIUS)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -265,8 +265,8 @@ class Circle(
     @ColorInt
     get() {
       val value = jsonObject.get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR)
-      if (!value.isJsonNull) {
-        ColorUtils.rgbaToColor(value.asString)?.let {
+      value?.let {
+        ColorUtils.rgbaToColor(it.asString)?.let {
           return it
         }
       }
@@ -301,8 +301,8 @@ class Circle(
      */
     get() {
       val value = jsonObject.get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR)
-      if (!value.isJsonNull) {
-        return value.asString.toString()
+      value?.let {
+        return it.asString.toString()
       }
       return null
     }
@@ -332,8 +332,8 @@ class Circle(
      */
     get() {
       val value = jsonObject.get(CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -365,8 +365,8 @@ class Circle(
      */
     get() {
       val value = jsonObject.get(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -409,28 +409,28 @@ class Circle(
    * Set the used data-driven properties
    */
   override fun setUsedDataDrivenProperties() {
-    if (!(jsonObject.get(CircleOptions.PROPERTY_CIRCLE_SORT_KEY).isJsonNull)) {
+    jsonObject.get(CircleOptions.PROPERTY_CIRCLE_SORT_KEY)?.let {
       annotationManager.enableDataDrivenProperty(CircleOptions.PROPERTY_CIRCLE_SORT_KEY)
     }
-    if (!(jsonObject.get(CircleOptions.PROPERTY_CIRCLE_BLUR).isJsonNull)) {
+    jsonObject.get(CircleOptions.PROPERTY_CIRCLE_BLUR)?.let {
       annotationManager.enableDataDrivenProperty(CircleOptions.PROPERTY_CIRCLE_BLUR)
     }
-    if (!(jsonObject.get(CircleOptions.PROPERTY_CIRCLE_COLOR).isJsonNull)) {
+    jsonObject.get(CircleOptions.PROPERTY_CIRCLE_COLOR)?.let {
       annotationManager.enableDataDrivenProperty(CircleOptions.PROPERTY_CIRCLE_COLOR)
     }
-    if (!(jsonObject.get(CircleOptions.PROPERTY_CIRCLE_OPACITY).isJsonNull)) {
+    jsonObject.get(CircleOptions.PROPERTY_CIRCLE_OPACITY)?.let {
       annotationManager.enableDataDrivenProperty(CircleOptions.PROPERTY_CIRCLE_OPACITY)
     }
-    if (!(jsonObject.get(CircleOptions.PROPERTY_CIRCLE_RADIUS).isJsonNull)) {
+    jsonObject.get(CircleOptions.PROPERTY_CIRCLE_RADIUS)?.let {
       annotationManager.enableDataDrivenProperty(CircleOptions.PROPERTY_CIRCLE_RADIUS)
     }
-    if (!(jsonObject.get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR).isJsonNull)) {
+    jsonObject.get(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR)?.let {
       annotationManager.enableDataDrivenProperty(CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR)
     }
-    if (!(jsonObject.get(CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY).isJsonNull)) {
+    jsonObject.get(CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY)?.let {
       annotationManager.enableDataDrivenProperty(CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY)
     }
-    if (!(jsonObject.get(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH).isJsonNull)) {
+    jsonObject.get(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH)?.let {
       annotationManager.enableDataDrivenProperty(CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH)
     }
   }

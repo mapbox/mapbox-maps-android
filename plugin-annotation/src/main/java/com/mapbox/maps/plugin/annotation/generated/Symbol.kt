@@ -88,8 +88,8 @@ class Symbol(
      */
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_ICON_ANCHOR)
-      if (!value.isJsonNull) {
-        return IconAnchor.valueOf(value.asString)
+      value?.let {
+        return IconAnchor.valueOf(it.asString)
       }
       return null
     }
@@ -121,8 +121,8 @@ class Symbol(
      */
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_ICON_IMAGE)
-      if (!value.isJsonNull) {
-        return value.asString.toString()
+      value?.let {
+        return it.asString.toString()
       }
       return null
     }
@@ -153,9 +153,9 @@ class Symbol(
      * @return [Point] value for List<Double>
      */
     get() {
-      val value = jsonObject.get(SymbolOptions.PROPERTY_ICON_OFFSET) as JsonArray
-      if (!value.isJsonNull) {
-        return value.map { it.toString().toDouble() }
+      val value = jsonObject.get(SymbolOptions.PROPERTY_ICON_OFFSET)
+      value?.let {
+        return (it as JsonArray).map { it.toString().toDouble() }
       }
       return null
     }
@@ -188,8 +188,8 @@ class Symbol(
      */
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_ICON_ROTATE)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -221,8 +221,8 @@ class Symbol(
      */
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_ICON_SIZE)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -254,8 +254,8 @@ class Symbol(
      */
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_SYMBOL_SORT_KEY)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -287,8 +287,8 @@ class Symbol(
      */
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_ANCHOR)
-      if (!value.isJsonNull) {
-        return TextAnchor.valueOf(value.asString)
+      value?.let {
+        return TextAnchor.valueOf(it.asString)
       }
       return null
     }
@@ -320,8 +320,8 @@ class Symbol(
      */
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_FIELD)
-      if (!value.isJsonNull) {
-        return value.asString.toString()
+      value?.let {
+        return it.asString.toString()
       }
       return null
     }
@@ -352,9 +352,9 @@ class Symbol(
      * @return property wrapper value around List<String>
      */
     get() {
-      val value = jsonObject.getAsJsonArray(SymbolOptions.PROPERTY_TEXT_FONT)
-      if (!value.isJsonNull) {
-        return toStringArray(value)
+      val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_FONT)
+      value?.let {
+        return toStringArray(it as JsonArray)
       }
       return null
     }
@@ -385,8 +385,8 @@ class Symbol(
      */
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_JUSTIFY)
-      if (!value.isJsonNull) {
-        return TextJustify.valueOf(value.asString)
+      value?.let {
+        return TextJustify.valueOf(it.asString)
       }
       return null
     }
@@ -418,8 +418,8 @@ class Symbol(
      */
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_LETTER_SPACING)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -451,8 +451,8 @@ class Symbol(
      */
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_MAX_WIDTH)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -483,9 +483,9 @@ class Symbol(
      * @return [Point] value for List<Double>
      */
     get() {
-      val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_OFFSET) as JsonArray
-      if (!value.isJsonNull) {
-        return value.map { it.toString().toDouble() }
+      val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_OFFSET)
+      value?.let {
+        return (it as JsonArray).map { it.toString().toDouble() }
       }
       return null
     }
@@ -518,8 +518,8 @@ class Symbol(
      */
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_RADIAL_OFFSET)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -551,8 +551,8 @@ class Symbol(
      */
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_ROTATE)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -584,8 +584,8 @@ class Symbol(
      */
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_SIZE)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -617,8 +617,8 @@ class Symbol(
      */
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_TRANSFORM)
-      if (!value.isJsonNull) {
-        return TextTransform.valueOf(value.asString)
+      value?.let {
+        return TextTransform.valueOf(it.asString)
       }
       return null
     }
@@ -650,8 +650,8 @@ class Symbol(
     @ColorInt
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_ICON_COLOR)
-      if (!value.isJsonNull) {
-        ColorUtils.rgbaToColor(value.asString)?.let {
+      value?.let {
+        ColorUtils.rgbaToColor(it.asString)?.let {
           return it
         }
       }
@@ -686,8 +686,8 @@ class Symbol(
      */
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_ICON_COLOR)
-      if (!value.isJsonNull) {
-        return value.asString.toString()
+      value?.let {
+        return it.asString.toString()
       }
       return null
     }
@@ -717,8 +717,8 @@ class Symbol(
      */
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_ICON_HALO_BLUR)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -750,8 +750,8 @@ class Symbol(
     @ColorInt
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_ICON_HALO_COLOR)
-      if (!value.isJsonNull) {
-        ColorUtils.rgbaToColor(value.asString)?.let {
+      value?.let {
+        ColorUtils.rgbaToColor(it.asString)?.let {
           return it
         }
       }
@@ -786,8 +786,8 @@ class Symbol(
      */
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_ICON_HALO_COLOR)
-      if (!value.isJsonNull) {
-        return value.asString.toString()
+      value?.let {
+        return it.asString.toString()
       }
       return null
     }
@@ -817,8 +817,8 @@ class Symbol(
      */
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_ICON_HALO_WIDTH)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -850,8 +850,8 @@ class Symbol(
      */
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_ICON_OPACITY)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -883,8 +883,8 @@ class Symbol(
     @ColorInt
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_COLOR)
-      if (!value.isJsonNull) {
-        ColorUtils.rgbaToColor(value.asString)?.let {
+      value?.let {
+        ColorUtils.rgbaToColor(it.asString)?.let {
           return it
         }
       }
@@ -919,8 +919,8 @@ class Symbol(
      */
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_COLOR)
-      if (!value.isJsonNull) {
-        return value.asString.toString()
+      value?.let {
+        return it.asString.toString()
       }
       return null
     }
@@ -950,8 +950,8 @@ class Symbol(
      */
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_HALO_BLUR)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -983,8 +983,8 @@ class Symbol(
     @ColorInt
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_HALO_COLOR)
-      if (!value.isJsonNull) {
-        ColorUtils.rgbaToColor(value.asString)?.let {
+      value?.let {
+        ColorUtils.rgbaToColor(it.asString)?.let {
           return it
         }
       }
@@ -1019,8 +1019,8 @@ class Symbol(
      */
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_HALO_COLOR)
-      if (!value.isJsonNull) {
-        return value.asString.toString()
+      value?.let {
+        return it.asString.toString()
       }
       return null
     }
@@ -1050,8 +1050,8 @@ class Symbol(
      */
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_HALO_WIDTH)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -1083,8 +1083,8 @@ class Symbol(
      */
     get() {
       val value = jsonObject.get(SymbolOptions.PROPERTY_TEXT_OPACITY)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -1127,85 +1127,85 @@ class Symbol(
    * Set the used data-driven properties
    */
   override fun setUsedDataDrivenProperties() {
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_ANCHOR).isJsonNull)) {
+    jsonObject.get(SymbolOptions.PROPERTY_ICON_ANCHOR)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_ANCHOR)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_IMAGE).isJsonNull)) {
+    jsonObject.get(SymbolOptions.PROPERTY_ICON_IMAGE)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_IMAGE)
     }
-    if ((jsonObject.get(SymbolOptions.PROPERTY_ICON_OFFSET) as JsonArray).size() > 0) {
+    jsonObject.get(SymbolOptions.PROPERTY_ICON_OFFSET)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_OFFSET)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_ROTATE).isJsonNull)) {
+    jsonObject.get(SymbolOptions.PROPERTY_ICON_ROTATE)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_ROTATE)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_SIZE).isJsonNull)) {
+    jsonObject.get(SymbolOptions.PROPERTY_ICON_SIZE)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_SIZE)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_SYMBOL_SORT_KEY).isJsonNull)) {
+    jsonObject.get(SymbolOptions.PROPERTY_SYMBOL_SORT_KEY)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_SYMBOL_SORT_KEY)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_ANCHOR).isJsonNull)) {
+    jsonObject.get(SymbolOptions.PROPERTY_TEXT_ANCHOR)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_ANCHOR)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_FIELD).isJsonNull)) {
+    jsonObject.get(SymbolOptions.PROPERTY_TEXT_FIELD)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_FIELD)
     }
-    if ((jsonObject.get(SymbolOptions.PROPERTY_TEXT_FONT) as JsonArray).size() > 0) {
+    jsonObject.get(SymbolOptions.PROPERTY_TEXT_FONT)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_FONT)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_JUSTIFY).isJsonNull)) {
+    jsonObject.get(SymbolOptions.PROPERTY_TEXT_JUSTIFY)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_JUSTIFY)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_LETTER_SPACING).isJsonNull)) {
+    jsonObject.get(SymbolOptions.PROPERTY_TEXT_LETTER_SPACING)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_LETTER_SPACING)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_MAX_WIDTH).isJsonNull)) {
+    jsonObject.get(SymbolOptions.PROPERTY_TEXT_MAX_WIDTH)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_MAX_WIDTH)
     }
-    if ((jsonObject.get(SymbolOptions.PROPERTY_TEXT_OFFSET) as JsonArray).size() > 0) {
+    jsonObject.get(SymbolOptions.PROPERTY_TEXT_OFFSET)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_OFFSET)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_RADIAL_OFFSET).isJsonNull)) {
+    jsonObject.get(SymbolOptions.PROPERTY_TEXT_RADIAL_OFFSET)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_RADIAL_OFFSET)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_ROTATE).isJsonNull)) {
+    jsonObject.get(SymbolOptions.PROPERTY_TEXT_ROTATE)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_ROTATE)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_SIZE).isJsonNull)) {
+    jsonObject.get(SymbolOptions.PROPERTY_TEXT_SIZE)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_SIZE)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_TRANSFORM).isJsonNull)) {
+    jsonObject.get(SymbolOptions.PROPERTY_TEXT_TRANSFORM)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_TRANSFORM)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_COLOR).isJsonNull)) {
+    jsonObject.get(SymbolOptions.PROPERTY_ICON_COLOR)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_COLOR)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_HALO_BLUR).isJsonNull)) {
+    jsonObject.get(SymbolOptions.PROPERTY_ICON_HALO_BLUR)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_HALO_BLUR)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_HALO_COLOR).isJsonNull)) {
+    jsonObject.get(SymbolOptions.PROPERTY_ICON_HALO_COLOR)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_HALO_COLOR)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_HALO_WIDTH).isJsonNull)) {
+    jsonObject.get(SymbolOptions.PROPERTY_ICON_HALO_WIDTH)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_HALO_WIDTH)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_ICON_OPACITY).isJsonNull)) {
+    jsonObject.get(SymbolOptions.PROPERTY_ICON_OPACITY)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_ICON_OPACITY)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_COLOR).isJsonNull)) {
+    jsonObject.get(SymbolOptions.PROPERTY_TEXT_COLOR)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_COLOR)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_HALO_BLUR).isJsonNull)) {
+    jsonObject.get(SymbolOptions.PROPERTY_TEXT_HALO_BLUR)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_HALO_BLUR)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_HALO_COLOR).isJsonNull)) {
+    jsonObject.get(SymbolOptions.PROPERTY_TEXT_HALO_COLOR)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_HALO_COLOR)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_HALO_WIDTH).isJsonNull)) {
+    jsonObject.get(SymbolOptions.PROPERTY_TEXT_HALO_WIDTH)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_HALO_WIDTH)
     }
-    if (!(jsonObject.get(SymbolOptions.PROPERTY_TEXT_OPACITY).isJsonNull)) {
+    jsonObject.get(SymbolOptions.PROPERTY_TEXT_OPACITY)?.let {
       annotationManager.enableDataDrivenProperty(SymbolOptions.PROPERTY_TEXT_OPACITY)
     }
   }

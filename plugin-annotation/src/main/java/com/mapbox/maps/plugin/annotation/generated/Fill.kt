@@ -66,8 +66,8 @@ class Fill(
      */
     get() {
       val value = jsonObject.get(FillOptions.PROPERTY_FILL_SORT_KEY)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -99,8 +99,8 @@ class Fill(
     @ColorInt
     get() {
       val value = jsonObject.get(FillOptions.PROPERTY_FILL_COLOR)
-      if (!value.isJsonNull) {
-        ColorUtils.rgbaToColor(value.asString)?.let {
+      value?.let {
+        ColorUtils.rgbaToColor(it.asString)?.let {
           return it
         }
       }
@@ -135,8 +135,8 @@ class Fill(
      */
     get() {
       val value = jsonObject.get(FillOptions.PROPERTY_FILL_COLOR)
-      if (!value.isJsonNull) {
-        return value.asString.toString()
+      value?.let {
+        return it.asString.toString()
       }
       return null
     }
@@ -166,8 +166,8 @@ class Fill(
      */
     get() {
       val value = jsonObject.get(FillOptions.PROPERTY_FILL_OPACITY)
-      if (!value.isJsonNull) {
-        return value.asString.toDouble()
+      value?.let {
+        return it.asString.toDouble()
       }
       return null
     }
@@ -199,8 +199,8 @@ class Fill(
     @ColorInt
     get() {
       val value = jsonObject.get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR)
-      if (!value.isJsonNull) {
-        ColorUtils.rgbaToColor(value.asString)?.let {
+      value?.let {
+        ColorUtils.rgbaToColor(it.asString)?.let {
           return it
         }
       }
@@ -235,8 +235,8 @@ class Fill(
      */
     get() {
       val value = jsonObject.get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR)
-      if (!value.isJsonNull) {
-        return value.asString.toString()
+      value?.let {
+        return it.asString.toString()
       }
       return null
     }
@@ -266,8 +266,8 @@ class Fill(
      */
     get() {
       val value = jsonObject.get(FillOptions.PROPERTY_FILL_PATTERN)
-      if (!value.isJsonNull) {
-        return value.asString.toString()
+      value?.let {
+        return it.asString.toString()
       }
       return null
     }
@@ -318,19 +318,19 @@ class Fill(
    * Set the used data-driven properties
    */
   override fun setUsedDataDrivenProperties() {
-    if (!(jsonObject.get(FillOptions.PROPERTY_FILL_SORT_KEY).isJsonNull)) {
+    jsonObject.get(FillOptions.PROPERTY_FILL_SORT_KEY)?.let {
       annotationManager.enableDataDrivenProperty(FillOptions.PROPERTY_FILL_SORT_KEY)
     }
-    if (!(jsonObject.get(FillOptions.PROPERTY_FILL_COLOR).isJsonNull)) {
+    jsonObject.get(FillOptions.PROPERTY_FILL_COLOR)?.let {
       annotationManager.enableDataDrivenProperty(FillOptions.PROPERTY_FILL_COLOR)
     }
-    if (!(jsonObject.get(FillOptions.PROPERTY_FILL_OPACITY).isJsonNull)) {
+    jsonObject.get(FillOptions.PROPERTY_FILL_OPACITY)?.let {
       annotationManager.enableDataDrivenProperty(FillOptions.PROPERTY_FILL_OPACITY)
     }
-    if (!(jsonObject.get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR).isJsonNull)) {
+    jsonObject.get(FillOptions.PROPERTY_FILL_OUTLINE_COLOR)?.let {
       annotationManager.enableDataDrivenProperty(FillOptions.PROPERTY_FILL_OUTLINE_COLOR)
     }
-    if (!(jsonObject.get(FillOptions.PROPERTY_FILL_PATTERN).isJsonNull)) {
+    jsonObject.get(FillOptions.PROPERTY_FILL_PATTERN)?.let {
       annotationManager.enableDataDrivenProperty(FillOptions.PROPERTY_FILL_PATTERN)
     }
   }
