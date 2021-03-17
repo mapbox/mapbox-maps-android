@@ -217,14 +217,14 @@ class MapboxMapTest {
 
   @Test
   fun addOnMapLoadingFinishedListener() {
-    val listener = mockk<OnMapLoadingFinishedListener>()
+    val listener = mockk<OnMapLoadedListener>()
     mapboxMap.addOnMapLoadingFinishedListener(listener)
     verify { mapObserver.addOnMapLoadingFinishedListener(listener) }
   }
 
   @Test
   fun removeOnMapLoadingFinishedListener() {
-    val listener = mockk<OnMapLoadingFinishedListener>()
+    val listener = mockk<OnMapLoadedListener>()
     mapboxMap.removeOnMapLoadingFinishedListener(listener)
     verify { mapObserver.removeOnMapLoadingFinishedListener(listener) }
   }
@@ -304,14 +304,14 @@ class MapboxMapTest {
   // Style events
   @Test
   fun addOnStyleFullyLoadedListener() {
-    val listener = mockk<OnStyleFullyLoadedListener>()
+    val listener = mockk<OnStyleLoadedListener>()
     mapboxMap.addOnStyleFullyLoadedListener(listener)
     verify { mapObserver.addOnStyleFullyLoadedListener(listener) }
   }
 
   @Test
   fun removeOnStyleFullyLoadedListener() {
-    val listener = mockk<OnStyleFullyLoadedListener>()
+    val listener = mockk<OnStyleLoadedListener>()
     mapboxMap.removeOnStyleFullyLoadedListener(listener)
     verify { mapObserver.removeOnStyleFullyLoadedListener(listener) }
   }

@@ -2,6 +2,7 @@ package com.mapbox.maps.renderer
 
 import android.view.Surface
 import androidx.annotation.VisibleForTesting
+import com.mapbox.maps.Task
 
 internal open class MapboxSurfaceRenderer : MapboxRenderer {
 
@@ -45,5 +46,11 @@ internal open class MapboxSurfaceRenderer : MapboxRenderer {
   override fun onDestroy() {
     super.onDestroy()
     renderThread.destroy()
+  }
+
+  override fun scheduleTask(task: Task) {
+    renderThread.queueEvent {
+      task.run()
+    }
   }
 }

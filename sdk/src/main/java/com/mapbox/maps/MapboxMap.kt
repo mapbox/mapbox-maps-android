@@ -3,6 +3,7 @@ package com.mapbox.maps
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.bindgen.Value
+import com.mapbox.common.Logger
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
@@ -12,6 +13,7 @@ import com.mapbox.maps.plugin.PLUGIN_GESTURE_CLASS_NAME
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.delegates.listeners.*
+import com.mapbox.maps.plugin.delegates.listeners.eventdata.StyleDataType
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import java.lang.ref.WeakReference
 import java.util.*
@@ -179,11 +181,14 @@ class MapboxMap internal constructor(
     onMapLoadErrorListener?.let {
       addOnMapLoadErrorListener(it)
     }
-    addOnStyleLoadingFinishedListener(
-      object : OnStyleLoadingFinishedListener {
-        override fun onStyleLoadingFinished() {
-          onFinishLoadingStyle(onStyleLoaded, onMapLoadErrorListener)
-          removeOnStyleLoadingFinishedListener(this)
+    addOnStyleDataLoadedListener(
+      object : OnStyleDataLoadedListener {
+        override fun onStyleDataLoaded(type: StyleDataType) {
+          Logger.e("testtest", "onStyleDataLoaded: $type")
+          if (type == StyleDataType.STYLE) {
+            onFinishLoadingStyle(onStyleLoaded, onMapLoadErrorListener)
+            removeOnStyleDataLoadedListener(this)
+          }
         }
       }
     )
@@ -914,15 +919,15 @@ class MapboxMap internal constructor(
    * Add a listener that's going to be invoked whenever the Map's style has been fully loaded, and
    * the Map has rendered all visible tiles.
    */
-  override fun addOnMapLoadingFinishedListener(onMapLoadingFinishedListener: OnMapLoadingFinishedListener) {
-    nativeObserver.addOnMapLoadingFinishedListener(onMapLoadingFinishedListener)
+  override fun addOnMapLoadedListener(onMapLoadedListener: OnMapLoadedListener) {
+    nativeObserver.addOnMapLoadedListener(onMapLoadedListener)
   }
 
   /**
-   * Remove the map loading finished listener.
+   * Remove the map loaded listener.
    */
-  override fun removeOnMapLoadingFinishedListener(onMapLoadingFinishedListener: OnMapLoadingFinishedListener) {
-    nativeObserver.removeOnMapLoadingFinishedListener(onMapLoadingFinishedListener)
+  override fun removeOnMapLoadedListener(onMapLoadedListener: OnMapLoadedListener) {
+    nativeObserver.removeOnMapLoadedListener(onMapLoadedListener)
   }
 
   // Render frame events
@@ -973,19 +978,18 @@ class MapboxMap internal constructor(
   override fun removeOnSourceAddedListener(onSourceAddedListener: OnSourceAddedListener) {
     nativeObserver.removeOnSourceAddedListener(onSourceAddedListener)
   }
-
   /**
-   * Add a listener that's going to be invoked whenever a source has been changed.
+   * Add a listener that's going to be invoked whenever the source data has been loaded.
    */
-  override fun addOnSourceChangeListener(onSourceChangeListener: OnSourceChangeListener) {
-    nativeObserver.addOnSourceChangeListener(onSourceChangeListener)
+  override fun addOnSourceDataLoadedListener(onSourceDataLoadedListener: OnSourceDataLoadedListener) {
+    nativeObserver.addOnSourceDataLoadedListener(onSourceDataLoadedListener)
   }
 
   /**
-   * Remove the source change listener.
+   * Remove the source data loaded listener.
    */
-  override fun removeOnSourceChangeListener(onSourceChangeListener: OnSourceChangeListener) {
-    nativeObserver.removeOnSourceChangeListener(onSourceChangeListener)
+  override fun removeOnSourceDataLoadedListener(onSourceDataLoadedListener: OnSourceDataLoadedListener) {
+    nativeObserver.removeOnSourceDataLoadedListener(onSourceDataLoadedListener)
   }
 
   /**
@@ -1005,36 +1009,36 @@ class MapboxMap internal constructor(
 
   // Style events
   /**
-   * Add a listener that's going to be invoked whenever the requested style has been loaded, not
-   * including the style specified sprite sheet and sources' descriptions.
-   *
-   * This event may be useful when application needs to modify style layers and add or remove sources
-   * before style is fully loaded.
-   */
-  override fun addOnStyleLoadingFinishedListener(onStyleLoadingFinishedListener: OnStyleLoadingFinishedListener) {
-    nativeObserver.addOnStyleLoadingFinishedListener(onStyleLoadingFinishedListener)
-  }
-
-  /**
-   * Remove the style loading finished listener
-   */
-  override fun removeOnStyleLoadingFinishedListener(onStyleLoadingFinishedListener: OnStyleLoadingFinishedListener) {
-    nativeObserver.removeOnStyleLoadingFinishedListener(onStyleLoadingFinishedListener)
-  }
-
-  /**
    * Add a listener that's going to be invoked whenever the requested style has been fully loaded,
    * including the style specified sprite and sources.
    */
-  override fun addOnStyleFullyLoadedListener(onStyleFullyLoadedListener: OnStyleFullyLoadedListener) {
-    nativeObserver.addOnStyleFullyLoadedListener(onStyleFullyLoadedListener)
+  override fun addOnStyleLoadedListener(onStyleLoadedListener: OnStyleLoadedListener) {
+    nativeObserver.addOnStyleLoadedListener(onStyleLoadedListener)
   }
 
   /**
-   * Remove the style fully loaded listener.
+   * Remove the style loaded listener.
    */
-  override fun removeOnStyleFullyLoadedListener(onStyleFullyLoadedListener: OnStyleFullyLoadedListener) {
-    nativeObserver.removeOnStyleFullyLoadedListener(onStyleFullyLoadedListener)
+  override fun removeOnStyleLoadedListener(onStyleLoadedListener: OnStyleLoadedListener) {
+    nativeObserver.removeOnStyleLoadedListener(onStyleLoadedListener)
+  }
+
+  /**
+   * Add a listener that's going to be invoked whenever the requested style data been loaded.
+   * The 'type' property defines what kind of style data has been loaded.
+   *
+   * This event may be useful when application needs to modify style layers or sources and add or remove sources
+   * before style is fully loaded.
+   */
+  override fun addOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener) {
+    nativeObserver.addOnStyleDataLoadedListener(onStyleDataLoadedListener)
+  }
+
+  /**
+   * Remove the style data loaded listener
+   */
+  override fun removeOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener) {
+    nativeObserver.removeOnStyleDataLoadedListener(onStyleDataLoadedListener)
   }
 
   /**

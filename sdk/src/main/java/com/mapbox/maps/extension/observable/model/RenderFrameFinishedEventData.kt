@@ -1,4 +1,4 @@
-package com.mapbox.maps.extension.observable.map
+package com.mapbox.maps.extension.observable.model
 
 import com.google.gson.annotations.SerializedName
 import com.mapbox.maps.plugin.delegates.listeners.eventdata.RenderMode

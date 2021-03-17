@@ -45,12 +45,12 @@ interface MapListenerDelegate {
    * Add a listener that's going to be invoked whenever the Map's style has been fully loaded, and
    * the Map has rendered all visible tiles.
    */
-  fun addOnMapLoadingFinishedListener(onMapLoadingFinishedListener: OnMapLoadingFinishedListener)
+  fun addOnMapLoadedListener(onMapLoadedListener: OnMapLoadedListener)
 
   /**
-   * Remove the map loading finished listener.
+   * Remove the map loaded listener.
    */
-  fun removeOnMapLoadingFinishedListener(onMapLoadingFinishedListener: OnMapLoadingFinishedListener)
+  fun removeOnMapLoadedListener(onMapLoadedListener: OnMapLoadedListener)
 
   // Render frame events
   /**
@@ -90,14 +90,14 @@ interface MapListenerDelegate {
   fun removeOnSourceAddedListener(onSourceAddedListener: OnSourceAddedListener)
 
   /**
-   * Add a listener that's going to be invoked whenever a source has been changed.
+   * Add a listener that's going to be invoked whenever the source data has been loaded.
    */
-  fun addOnSourceChangeListener(onSourceChangeListener: OnSourceChangeListener)
+  fun addOnSourceDataLoadedListener(onSourceDataLoadedListener: OnSourceDataLoadedListener)
 
   /**
-   * Remove the source change listener.
+   * Remove the source data loaded listener.
    */
-  fun removeOnSourceChangeListener(onSourceChangeListener: OnSourceChangeListener)
+  fun removeOnSourceDataLoadedListener(onSourceDataLoadedListener: OnSourceDataLoadedListener)
 
   /**
    * Add a listener that's going to be invoked whenever a source has been removed with StyleManager#removeStyleSource
@@ -112,29 +112,29 @@ interface MapListenerDelegate {
 
   // Style events
   /**
-   * Add a listener that's going to be invoked whenever the requested style has been loaded, not
-   * including the style specified sprite sheet and sources' descriptions.
+   * Add a listener that's going to be invoked whenever the requested style data been loaded.
+   * The 'type' property defines what kind of style data has been loaded.
    *
-   * This event may be useful when application needs to modify style layers and add or remove sources
+   * This event may be useful when application needs to modify style layers or sources and add or remove sources
    * before style is fully loaded.
    */
-  fun addOnStyleLoadingFinishedListener(onStyleLoadingFinishedListener: OnStyleLoadingFinishedListener)
+  fun addOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener)
 
   /**
-   * Remove the style loading finished listener
+   * Remove the style data loaded listener
    */
-  fun removeOnStyleLoadingFinishedListener(onStyleLoadingFinishedListener: OnStyleLoadingFinishedListener)
+  fun removeOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener)
 
   /**
    * Add a listener that's going to be invoked whenever the requested style has been fully loaded,
    * including the style specified sprite and sources.
    */
-  fun addOnStyleFullyLoadedListener(onStyleFullyLoadedListener: OnStyleFullyLoadedListener)
+  fun addOnStyleLoadedListener(onStyleLoadedListener: OnStyleLoadedListener)
 
   /**
-   * Remove the style fully loaded listener.
+   * Remove the style loaded listener.
    */
-  fun removeOnStyleFullyLoadedListener(onStyleFullyLoadedListener: OnStyleFullyLoadedListener)
+  fun removeOnStyleLoadedListener(onStyleLoadedListener: OnStyleLoadedListener)
 
   /**
    * Add a listener that's going to be invoked whenever a style has a missing image.
