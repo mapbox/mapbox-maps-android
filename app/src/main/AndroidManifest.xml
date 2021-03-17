@@ -362,7 +362,19 @@
             android:label="@string/activity_restrict_bounds">
             <meta-data
                 android:name="@string/category"
-                android:value="@string/category_config" />
+                android:value="@string/category_camera" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
+        <activity
+            android:name=".examples.camera.FitCameraToGeometryActivity"
+            android:description="@string/description_fit_geometry"
+            android:exported="true"
+            android:label="@string/activity_fit_geometry">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_camera" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />

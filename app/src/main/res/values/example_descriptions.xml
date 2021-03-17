@@ -26,6 +26,7 @@
     <string name="description_location_tracking">Use location tracking to simulate a navigation session</string>
     <string name="description_location_basic_pulsing_circle">Display the LocationComponent\'s default pulsing circle</string>
     <string name="description_restrict_bounds">Restrict the map\'s viewport.</string>
+    <string name="description_fit_geometry">Fit the map\'s camera on a given geometry.</string>
     <string name="description_texture_view">Use TextureView as render surface</string>
     <string name="description_texture_view_animation">Apply ViewAnimation on a TextureView</string>
     <string name="description_style_circles_categorically">Using a categorical circle-color property function for a visualization</string>
