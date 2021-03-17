@@ -10,8 +10,8 @@
         android:id="@id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        mapbox:mapbox_cameraTargetLat="64.840048"
-        mapbox:mapbox_cameraTargetLng="-18.910457"
-        mapbox:mapbox_cameraZoom="4"/>
+        mapbox:mapbox_cameraTargetLat="40.7209"
+        mapbox:mapbox_cameraTargetLng="-73.9978"
+        mapbox:mapbox_cameraZoom="13"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

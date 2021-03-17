@@ -56,12 +56,6 @@
     <string name="location_stop_pulsing">Stop pulsing</string>
     <string name="location_start_pulsing">Start pulsing</string>
 
-    <!--RestrictBounds-->
-    <string name="restrict_iceland">Restrict iceland</string>
-    <string name="restrict_almost_worldview">Restrict almost worldview</string>
-    <string name="restrict_across_idl">Restrict across IDL</string>
-    <string name="restrict_reset">Reset bounds</string>
-
     <!--Space station toast-->
     <string name="space_station_toast">Zoom in closely on the space station\nto see it moving across the map</string>
 

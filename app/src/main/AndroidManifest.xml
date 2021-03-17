@@ -356,7 +356,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.RestrictBoundsActivity"
+            android:name=".examples.camera.RestrictBoundsActivity"
             android:description="@string/description_restrict_bounds"
             android:exported="true"
             android:label="@string/activity_restrict_bounds">
@@ -500,7 +500,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.AnimateMapCameraActivity"
+            android:name=".examples.camera.AnimateMapCameraActivity"
             android:description="@string/activity_camera_animate_description"
             android:exported="true"
             android:label="@string/activity_camera_animate_title">

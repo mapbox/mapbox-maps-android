@@ -25,7 +25,7 @@
     <string name="description_location_modes">Use location component</string>
     <string name="description_location_tracking">Use location tracking to simulate a navigation session</string>
     <string name="description_location_basic_pulsing_circle">Display the LocationComponent\'s default pulsing circle</string>
-    <string name="description_restrict_bounds">Restrict end-user bounds to a geometry</string>
+    <string name="description_restrict_bounds">Restrict the map\'s viewport.</string>
     <string name="description_texture_view">Use TextureView as render surface</string>
     <string name="description_texture_view_animation">Apply ViewAnimation on a TextureView</string>
     <string name="description_style_circles_categorically">Using a categorical circle-color property function for a visualization</string>
@@ -35,7 +35,7 @@
     <string name="description_dds_polygon_holes">Show polygon layer with holes inside</string>
     <string name="description_dds_polygon">Draw a vector polygon on a map with the Mapbox Maps SDK.</string>
     <string name="description_dds_geojson_line">Draw a GeoJson line on a map with the Mapbox Maps SDK.</string>
-    <string name="activity_camera_animate_description">Use custom animation for the camera fly</string>
+    <string name="activity_camera_animate_description">Animate the map camera to a new position with the fly-to animation.</string>
     <string name="activity_camera_predefined_animators_description">Use pre-defined animators</string>
     <string name="description_camera_low_level">Use low level animator API to manipulate camera properties independently</string>
     <string name="description_fill_extrusion">Show a fill extrusion layer using OSM building data</string>
