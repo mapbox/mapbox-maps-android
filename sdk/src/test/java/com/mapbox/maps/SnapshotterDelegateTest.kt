@@ -70,7 +70,7 @@ class SnapshotterDelegateTest {
   fun setCameraOptions() {
     val options: CameraOptions = mockk()
     snapshotter.setCamera(options)
-    verify { coreSnapshotter.setCamera(options)}
+    verify { coreSnapshotter.setCamera(options) }
   }
 
   @Test
