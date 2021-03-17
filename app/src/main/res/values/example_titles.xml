@@ -40,7 +40,7 @@
     <string name="activity_camera_animate_title">Fly-to camera animation</string>
     <string name="activity_animated_image_source">Animated ImageSource</string>
     <string name="activity_camera_predefined_animators_title">Pre-defined animators</string>
-    <string name="activity_camera_low_level">Camera Animator API</string>
+    <string name="activity_camera_low_level">Animate camera changes</string>
     <string name="activity_dds_multiple_geometries_title">Draw multiple geometries</string>
     <string name="activity_wms_source">WMS Source</string>
     <string name="activity_within">Within expression</string>

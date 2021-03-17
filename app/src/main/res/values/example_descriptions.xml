@@ -37,7 +37,7 @@
     <string name="description_dds_geojson_line">Draw a GeoJson line on a map with the Mapbox Maps SDK.</string>
     <string name="activity_camera_animate_description">Animate the map camera to a new position with the fly-to animation.</string>
     <string name="activity_camera_predefined_animators_description">Use pre-defined animators</string>
-    <string name="description_camera_low_level">Use low level animator API to manipulate camera properties independently</string>
+    <string name="description_camera_low_level">Animate the map camera to a new position.</string>
     <string name="description_fill_extrusion">Show a fill extrusion layer using OSM building data</string>
     <string name="description_icon_property">Display multiple images in a symbol layer.</string>
     <string name="description_animated_image_source">Use an ImageSource and RasterLayer to animate weather data</string>
