@@ -92,16 +92,13 @@ class TriangleCustomLayerActivity : AppCompatActivity() {
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
-      R.id.action_update_layer -> {
-        updateLayer()
-        true
-      }
       R.id.action_set_color_red -> {
         TriangleCustomLayer.color = floatArrayOf(
           1.0f, 0.0f, 0.0f, 0.5f,
           0.0f, 1.0f, 0.0f, 0.5f,
           0.0f, 0.0f, 1.0f, 0.5f,
         )
+        updateLayer()
         true
       }
       R.id.action_set_color_green -> {
@@ -110,6 +107,7 @@ class TriangleCustomLayerActivity : AppCompatActivity() {
           0.0f, 0.0f, 1.0f, 0.5f,
           1.0f, 0.0f, 0.0f, 0.5f,
         )
+        updateLayer()
         true
       }
       R.id.action_set_color_blue -> {
@@ -118,6 +116,7 @@ class TriangleCustomLayerActivity : AppCompatActivity() {
           1.0f, 0.0f, 0.0f, 0.5f,
           0.0f, 1.0f, 0.0f, 0.5f,
         )
+        updateLayer()
         true
       }
       else -> super.onOptionsItemSelected(item)

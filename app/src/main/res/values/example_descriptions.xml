@@ -58,9 +58,9 @@
     <string name="description_offline">Use OfflineManager to download tiles</string>
     <string name="description_sky_layer">Sky Layer showcase</string>
     <string name="description_sky_snapshotter">Junction view showcase</string>
-    <string name="description_custom_layer">Custom Layer Example using Kotlin</string>
-    <string name="description_native_custom_layer">Custom Layer Example using C++</string>
-    <string name="description_triangle_custom_layer">Triangle Custom Layer Example</string>
+    <string name="description_custom_layer">Add a custom layer to a map.</string>
+    <string name="description_native_custom_layer">Add a C++ custom layer.</string>
+    <string name="description_triangle_custom_layer">Add a triangular custom layer to a map.</string>
     <string name="description_map_overlay">Use Map Overlay</string>
     <string name="description_transparent_bg">MapView with transparent background</string>
     <string name="description_surface">MapSurface with SurfaceView host</string>

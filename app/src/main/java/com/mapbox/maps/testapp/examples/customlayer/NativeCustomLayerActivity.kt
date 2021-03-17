@@ -91,20 +91,19 @@ class NativeCustomLayerActivity : AppCompatActivity() {
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
-      R.id.action_update_layer -> {
-        updateLayer()
-        true
-      }
       R.id.action_set_color_red -> {
         nativeCustomLayer.setColor(1.0f, 0.0f, 0.0f, 1.0f)
+        updateLayer()
         true
       }
       R.id.action_set_color_green -> {
         nativeCustomLayer.setColor(0.0f, 1.0f, 0.0f, 1.0f)
+        updateLayer()
         true
       }
       R.id.action_set_color_blue -> {
         nativeCustomLayer.setColor(0.0f, 0.0f, 1.0f, 1.0f)
+        updateLayer()
         true
       }
       else -> super.onOptionsItemSelected(item)
