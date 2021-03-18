@@ -46,7 +46,7 @@ class SymbolClusterActivity : AppCompatActivity(), CoroutineScope {
     progress.visibility = View.VISIBLE
     mapboxMap = mapView.getMapboxMap()
       .apply {
-        jumpTo(
+        setCamera(
           CameraOptions.Builder()
             .center(Point.fromLngLat(LONGITUDE, LATITUDE))
             .zoom(10.0)

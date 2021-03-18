@@ -112,7 +112,7 @@ object AnnotationUtils {
 
     return try {
       val response = client.newCall(request).execute()
-      val inputStream = BufferedInputStream(response.body()?.byteStream())
+      val inputStream = BufferedInputStream(response.body?.byteStream())
       val rd = BufferedReader(InputStreamReader(inputStream, Charset.forName("UTF-8")))
       val sb = StringBuilder()
       rd.forEachLine {
