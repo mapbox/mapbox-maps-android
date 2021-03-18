@@ -15,7 +15,7 @@ import java.util.*
 /**
  * Raster map textures such as satellite imagery.
  *
- * @see <a href="https://www.mapbox.com/mapbox-gl-style-spec/#layers-raster">The online documentation</a>
+ * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-raster)
  *
  * @param layerId the ID of the layer
  * @param sourceId the ID of the source

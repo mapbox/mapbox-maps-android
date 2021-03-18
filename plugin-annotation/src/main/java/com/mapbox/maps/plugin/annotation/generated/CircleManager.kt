@@ -76,7 +76,7 @@ class CircleManager(
    * CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR - String<br>
    * CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY - Double<br>
    * CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH - Double<br>
-   * Learn more about above properties in the <a href="https://www.mapbox.com/mapbox-gl-js/style-spec/">Style specification</a>.
+   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    * <p>
    * Out of spec properties:<br>
    * "is-draggable" - Boolean, true if the circle should be draggable, false otherwise
@@ -102,7 +102,7 @@ class CircleManager(
    * CircleOptions.PROPERTY_CIRCLE_STROKE_COLOR - String<br>
    * CircleOptions.PROPERTY_CIRCLE_STROKE_OPACITY - Double<br>
    * CircleOptions.PROPERTY_CIRCLE_STROKE_WIDTH - Double<br>
-   * Learn more about above properties in the <a href="https://www.mapbox.com/mapbox-gl-js/style-spec/">Style specification</a>.
+   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    * <p>
    * Out of spec properties:<br>
    * "is-draggable" - Boolean, true if the circle should be draggable, false otherwise

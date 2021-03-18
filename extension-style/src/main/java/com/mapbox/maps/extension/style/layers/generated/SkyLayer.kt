@@ -19,7 +19,7 @@ import java.util.*
 /**
  * A spherical dome around the map that is always rendered behind all other layers.
  *
- * @see <a href="https://www.mapbox.com/mapbox-gl-style-spec/#layers-sky">The online documentation</a>
+ * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-sky)
  *
  * @param layerId the ID of the layer
  */

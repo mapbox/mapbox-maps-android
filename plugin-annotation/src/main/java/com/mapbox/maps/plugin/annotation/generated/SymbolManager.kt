@@ -138,7 +138,7 @@ class SymbolManager(
    * SymbolOptions.PROPERTY_TEXT_HALO_COLOR - String<br>
    * SymbolOptions.PROPERTY_TEXT_HALO_WIDTH - Double<br>
    * SymbolOptions.PROPERTY_TEXT_OPACITY - Double<br>
-   * Learn more about above properties in the <a href="https://www.mapbox.com/mapbox-gl-js/style-spec/">Style specification</a>.
+   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    * <p>
    * Out of spec properties:<br>
    * "is-draggable" - Boolean, true if the symbol should be draggable, false otherwise
@@ -183,7 +183,7 @@ class SymbolManager(
    * SymbolOptions.PROPERTY_TEXT_HALO_COLOR - String<br>
    * SymbolOptions.PROPERTY_TEXT_HALO_WIDTH - Double<br>
    * SymbolOptions.PROPERTY_TEXT_OPACITY - Double<br>
-   * Learn more about above properties in the <a href="https://www.mapbox.com/mapbox-gl-js/style-spec/">Style specification</a>.
+   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    * <p>
    * Out of spec properties:<br>
    * "is-draggable" - Boolean, true if the symbol should be draggable, false otherwise

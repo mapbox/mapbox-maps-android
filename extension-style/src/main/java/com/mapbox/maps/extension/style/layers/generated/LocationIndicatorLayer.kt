@@ -19,7 +19,7 @@ import java.util.*
 /**
  * Location Indicator layer.
  *
- * @see <a href="https://www.mapbox.com/mapbox-gl-style-spec/#layers-location-indicator">The online documentation</a>
+ * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-location-indicator)
  *
  * @param layerId the ID of the layer
  */

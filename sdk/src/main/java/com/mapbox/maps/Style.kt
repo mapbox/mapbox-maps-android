@@ -62,10 +62,10 @@ class Style internal constructor(
   /**
    * Returns the map style's default camera, if any, or a default camera otherwise.
    * The map style default camera is defined as follows:
-   * - center: https://docs.mapbox.com/mapbox-gl-js/style-spec/#root-center
-   * - zoom: https://docs.mapbox.com/mapbox-gl-js/style-spec/#root-zoom
-   * - bearing: https://docs.mapbox.com/mapbox-gl-js/style-spec/#root-bearing
-   * - pitch: https://docs.mapbox.com/mapbox-gl-js/style-spec/#root-pitch
+   * - [center](https://docs.mapbox.com/mapbox-gl-js/style-spec/#root-center)
+   * - [zoom](https://docs.mapbox.com/mapbox-gl-js/style-spec/#root-zoom)
+   * - [bearing](https://docs.mapbox.com/mapbox-gl-js/style-spec/#root-bearing)
+   * - [pitch](https://docs.mapbox.com/mapbox-gl-js/style-spec/#root-pitch)
    *
    * The style default camera is re-evaluated when a new style is loaded.
    *
@@ -317,7 +317,7 @@ class Style internal constructor(
   /**
    * Sets the style global terrain source properties.
    *
-   * @see <a href=https://docs.mapbox.com/mapbox-gl-js/style-spec/#terrain>Mapbox Style Specification: Terrrain</a>
+   * @see [Mapbox Style Specification: Terrrain](https://docs.mapbox.com/mapbox-gl-js/style-spec/#terrain)
    *
    * @param properties A map of style terrain properties values, with their names as key.
    *

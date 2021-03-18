@@ -115,9 +115,11 @@ interface StyleContract {
  *
  * The image can be used in `icon-image`, `fill-pattern`, and `line-pattern`.
  *
- * https://www.mapbox.com/mapbox-gl-js/style-spec/#layout-symbol-icon-image
- * https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-line-line-pattern
- * https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-fill-fill-pattern
+ * [layout-symbol-icon-image](https://www.mapbox.com/mapbox-gl-js/style-spec/#layout-symbol-icon-image)
+ *
+ * [paint-line-line-pattern](https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-line-line-pattern)
+ *
+ * [paint-fill-fill-pattern](https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-fill-fill-pattern)
  *
  * @param imageId ID of the image.
  * @param bitmap Bitmap data of the image.

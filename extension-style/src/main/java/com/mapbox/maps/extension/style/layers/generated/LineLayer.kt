@@ -19,7 +19,7 @@ import java.util.*
 /**
  * A stroked line.
  *
- * @see <a href="https://www.mapbox.com/mapbox-gl-style-spec/#layers-line">The online documentation</a>
+ * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-line)
  *
  * @param layerId the ID of the layer
  * @param sourceId the ID of the source

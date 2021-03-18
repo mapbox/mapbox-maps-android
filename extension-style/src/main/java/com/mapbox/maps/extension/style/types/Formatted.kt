@@ -8,7 +8,7 @@ import java.lang.StringBuilder
 /**
  * Represents a string broken into sections annotated with separate formatting options.
  *
- * @see <a href="https://www.mapbox.com/mapbox-gl-js/style-spec/#types-formatted">Style specification</a>
+ * @see [Style specification](https://www.mapbox.com/mapbox-gl-js/style-spec/#types-formatted)
  *
  */
 @LayersDsl

@@ -92,7 +92,7 @@ interface CameraAnimationsPlugin : MapPlugin {
 
    * Van Wijk, Jarke J.; Nuij, Wim A. A. “Smooth and efficient zooming and
    * panning.” INFOVIS ’03. pp. 15–22.
-   * <https://www.win.tue.nl/~vanwijk/zoompan.pdf#page=5>.
+   * [The online documentation](https://www.win.tue.nl/~vanwijk/zoompan.pdf#page=5).
 
    * Where applicable, local variable documentation begins with the associated
    * variable or function in van Wijk (2003).

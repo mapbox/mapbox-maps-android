@@ -18,7 +18,7 @@ import com.mapbox.maps.extension.style.utils.toValue
 /**
  * A GeoJSON data source.
  *
- * @see <a href="https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#geojson">The online documentation</a>
+ * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#geojson)
  *
  */
 class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {

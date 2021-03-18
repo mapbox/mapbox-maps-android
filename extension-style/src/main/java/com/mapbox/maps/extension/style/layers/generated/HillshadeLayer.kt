@@ -19,7 +19,7 @@ import java.util.*
 /**
  * Client-side hillshading visualization based on DEM data. Currently, the implementation only supports Mapbox Terrain RGB and Mapzen Terrarium tiles.
  *
- * @see <a href="https://www.mapbox.com/mapbox-gl-style-spec/#layers-hillshade">The online documentation</a>
+ * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-hillshade)
  *
  * @param layerId the ID of the layer
  * @param sourceId the ID of the source

@@ -19,7 +19,7 @@ import java.util.*
 /**
  * An extruded (3D) polygon.
  *
- * @see <a href="https://www.mapbox.com/mapbox-gl-style-spec/#layers-fill-extrusion">The online documentation</a>
+ * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-fill-extrusion)
  *
  * @param layerId the ID of the layer
  * @param sourceId the ID of the source

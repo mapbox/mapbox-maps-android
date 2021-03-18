@@ -15,13 +15,13 @@ import java.lang.RuntimeException
  *                  setting null will fall back to style's default settings.
  *                  The requested font stack has to be a part of the used style.
  *                  For more information see
- *                  <a href="https://www.mapbox.com/help/define-font-stack/">the documentation</a>.
+ *                  [The online documentation]https://www.mapbox.com/help/define-font-stack/).
  * @param textColor text color, setting to null will fall back to style's default settings.
  *                  Value of red, green, blue components must range between 0 and 255,
  *                  an alpha component must range between 0 and 1.
  *                  <p>
  *                  For more information see
- *                  <a href="https://docs.mapbox.com/mapbox-gl-js/style-spec/#types-color">the documentation</a>.
+ *                  [The online documentation]https://docs.mapbox.com/mapbox-gl-js/style-spec/#types-color).
  */
 @Keep
 @LayersDsl

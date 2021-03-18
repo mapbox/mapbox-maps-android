@@ -26,7 +26,7 @@ data class FormatSection(
    * "text-font" is required to be a literal array.
    * <p>
    * The requested font stack has to be a part of the used style.
-   * For more information see <a href="https://www.mapbox.com/help/define-font-stack/">the documentation</a>.
+   * For more information see [The online documentation](https://www.mapbox.com/help/define-font-stack/).
    */
   var textFont: Expression? = null,
 
