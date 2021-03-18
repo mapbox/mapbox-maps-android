@@ -4,7 +4,6 @@
     <string name="description_studio_style_map">Use a custom style designed in Mapbox Studio.</string>
     <string name="description_runtime_styling">Shows runtime styling</string>
     <string name="description_tint_fill">Tint a fill layer with a pattern</string>
-    <string name="description_model">Shows 3D model on map</string>
     <string name="description_dsl_styling">Shows runtime styling using dsl</string>
     <string name="description_heatmap_layer">Shows heatmap layer</string>
     <string name="description_default_styles">View default Mapbox styles</string>

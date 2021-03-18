@@ -4,7 +4,6 @@
     <string name="activity_studio_style">Mapbox Studio style</string>
     <string name="activity_runtime_styling">Runtime styling</string>
     <string name="activity_tint_fill">Tint Fill Layer</string>
-    <string name="activity_model_layer">Model Layer</string>
     <string name="activity_dsl_styling">DSL styling</string>
     <string name="activity_heatmap_layer">Heatmap Layer</string>
     <string name="activity_default_styles">Default styles</string>

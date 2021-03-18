@@ -197,7 +197,6 @@ fun StyleManagerInterface.getLayer(layerId: String): Layer? {
       "raster" -> RasterLayer(layerId, source!!).also { it.delegate = this }
       "symbol" -> SymbolLayer(layerId, source!!).also { it.delegate = this }
       "location-indicator" -> LocationIndicatorLayer(layerId).also { it.delegate = this }
-      "model" -> ModelLayer(layerId, source!!).also { it.delegate = this }
       "sky" -> SkyLayer(layerId).also { it.delegate = this }
       else -> {
         Logger.e("StyleLayerPlugin", "Layer type: $type unknown.")
