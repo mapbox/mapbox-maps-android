@@ -274,7 +274,7 @@ internal class NativeObserver(
   }
 
   fun addOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener) {
-    if (onStyleLoadedListeners.isEmpty()) {
+    if (onStyleDataLoadedListeners.isEmpty()) {
       subscribeNewEvent(MapEvents.STYLE_DATA_LOADED)
     }
     onStyleDataLoadedListeners.add(onStyleDataLoadedListener)
@@ -282,7 +282,7 @@ internal class NativeObserver(
 
   fun removeOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener) {
     onStyleDataLoadedListeners.remove(onStyleDataLoadedListener)
-    if (onStyleLoadedListeners.isEmpty()) {
+    if (onStyleDataLoadedListeners.isEmpty()) {
       unsubscribeUnusedEvent(MapEvents.STYLE_DATA_LOADED)
     }
   }
