@@ -1277,7 +1277,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         // reducing distance values for high pitch values
         // based equation system
         // f(NORMAL_MAX_PITCH) = 1.0 and f(MAXIMUM_PITCH) = 4.5
-        ScreenCoordinate(-distanceX / (0.14 * pitch - 7.4), -distanceY / (0.14 * pitch - 7.4))
+        // TODO use triangulation to calculate the y distance
+        ScreenCoordinate((-distanceX).toDouble(), -distanceY / (0.14 * pitch - 7.4))
       } else {
         ScreenCoordinate((-distanceX).toDouble(), (-distanceY).toDouble())
       }
