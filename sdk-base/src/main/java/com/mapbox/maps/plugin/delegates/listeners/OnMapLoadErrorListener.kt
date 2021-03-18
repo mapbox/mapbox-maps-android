@@ -1,17 +1,17 @@
 package com.mapbox.maps.plugin.delegates.listeners
 
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.MapLoadError
+import com.mapbox.maps.plugin.delegates.listeners.eventdata.MapLoadErrorType
 
 /**
  * Definition for listener invoked whenever the map load errors out.
- * See [MapLoadError].
+ * See [MapLoadErrorType].
  */
 interface OnMapLoadErrorListener {
   /**
    * Invoked whenever the map load errors out
    *
-   * @param mapLoadError the [MapLoadError]
-   * @param description the error message string
+   * @param mapLoadErrorType the [MapLoadErrorType]
+   * @param message the error message string
    */
-  fun onMapLoadError(mapLoadError: MapLoadError, description: String)
+  fun onMapLoadError(mapLoadErrorType: MapLoadErrorType, message: String)
 }

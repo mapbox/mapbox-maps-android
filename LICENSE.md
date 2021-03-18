@@ -154,15 +154,19 @@ License: [BSD](https://opensource.org/licenses/BSD-2-Clause)
 
 ===========================================================================
 
-Mapbox Maps Android uses portions of the OkHttp.
+Mapbox Maps Android uses portions of the okhttp.
 
-License: [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+URL: [https://square.github.io/okhttp/](https://square.github.io/okhttp/)
+
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
 
 Mapbox Maps Android uses portions of the Okio.
 
-License: [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+URL: [https://github.com/square/okio/](https://github.com/square/okio/)
+
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
 

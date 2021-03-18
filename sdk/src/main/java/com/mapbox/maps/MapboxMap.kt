@@ -12,6 +12,7 @@ import com.mapbox.maps.plugin.PLUGIN_GESTURE_CLASS_NAME
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.delegates.listeners.*
+import com.mapbox.maps.plugin.delegates.listeners.eventdata.StyleDataType
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import java.lang.ref.WeakReference
 import java.util.*
@@ -179,11 +180,13 @@ class MapboxMap internal constructor(
     onMapLoadErrorListener?.let {
       addOnMapLoadErrorListener(it)
     }
-    addOnStyleLoadingFinishedListener(
-      object : OnStyleLoadingFinishedListener {
-        override fun onStyleLoadingFinished() {
-          onFinishLoadingStyle(onStyleLoaded, onMapLoadErrorListener)
-          removeOnStyleLoadingFinishedListener(this)
+    addOnStyleDataLoadedListener(
+      object : OnStyleDataLoadedListener {
+        override fun onStyleDataLoaded(type: StyleDataType) {
+          if (type == StyleDataType.STYLE) {
+            onFinishLoadingStyle(onStyleLoaded, onMapLoadErrorListener)
+            removeOnStyleDataLoadedListener(this)
+          }
         }
       }
     )
@@ -253,12 +256,13 @@ class MapboxMap internal constructor(
   }
 
   /**
-   * Set the map camera to a given camera options.
+   * Changes the map view by any combination of center, zoom, bearing, and pitch, without an animated transition.
+   * The map will retain its current values for any details not passed via the camera options argument.
    *
-   * @param cameraOptions The camera options to jump to
+   * @param cameraOptions New camera options
    */
-  override fun jumpTo(cameraOptions: CameraOptions) =
-    nativeMapWeakRef.call { this.jumpTo(cameraOptions) }
+  override fun setCamera(cameraOptions: CameraOptions) =
+    nativeMapWeakRef.call { this.setCamera(cameraOptions) }
 
   /**
    * Get the current camera options given an optional padding.
@@ -324,7 +328,7 @@ class MapboxMap internal constructor(
 
   /**
    * Tells the map rendering engine that the animation is currently performed by the
-   * user (e.g. with a `jumpTo()` calls series). It adjusts the engine for the animation use case.
+   * user (e.g. with a `setCamera()` calls series). It adjusts the engine for the animation use case.
    * In particular, it brings more stability to symbol placement and rendering.
    *
    * @param inProgress Bool representing if user animation is in progress
@@ -913,15 +917,15 @@ class MapboxMap internal constructor(
    * Add a listener that's going to be invoked whenever the Map's style has been fully loaded, and
    * the Map has rendered all visible tiles.
    */
-  override fun addOnMapLoadingFinishedListener(onMapLoadingFinishedListener: OnMapLoadingFinishedListener) {
-    nativeObserver.addOnMapLoadingFinishedListener(onMapLoadingFinishedListener)
+  override fun addOnMapLoadedListener(onMapLoadedListener: OnMapLoadedListener) {
+    nativeObserver.addOnMapLoadedListener(onMapLoadedListener)
   }
 
   /**
-   * Remove the map loading finished listener.
+   * Remove the map loaded listener.
    */
-  override fun removeOnMapLoadingFinishedListener(onMapLoadingFinishedListener: OnMapLoadingFinishedListener) {
-    nativeObserver.removeOnMapLoadingFinishedListener(onMapLoadingFinishedListener)
+  override fun removeOnMapLoadedListener(onMapLoadedListener: OnMapLoadedListener) {
+    nativeObserver.removeOnMapLoadedListener(onMapLoadedListener)
   }
 
   // Render frame events
@@ -972,19 +976,18 @@ class MapboxMap internal constructor(
   override fun removeOnSourceAddedListener(onSourceAddedListener: OnSourceAddedListener) {
     nativeObserver.removeOnSourceAddedListener(onSourceAddedListener)
   }
-
   /**
-   * Add a listener that's going to be invoked whenever a source has been changed.
+   * Add a listener that's going to be invoked whenever the source data has been loaded.
    */
-  override fun addOnSourceChangeListener(onSourceChangeListener: OnSourceChangeListener) {
-    nativeObserver.addOnSourceChangeListener(onSourceChangeListener)
+  override fun addOnSourceDataLoadedListener(onSourceDataLoadedListener: OnSourceDataLoadedListener) {
+    nativeObserver.addOnSourceDataLoadedListener(onSourceDataLoadedListener)
   }
 
   /**
-   * Remove the source change listener.
+   * Remove the source data loaded listener.
    */
-  override fun removeOnSourceChangeListener(onSourceChangeListener: OnSourceChangeListener) {
-    nativeObserver.removeOnSourceChangeListener(onSourceChangeListener)
+  override fun removeOnSourceDataLoadedListener(onSourceDataLoadedListener: OnSourceDataLoadedListener) {
+    nativeObserver.removeOnSourceDataLoadedListener(onSourceDataLoadedListener)
   }
 
   /**
@@ -1004,36 +1007,36 @@ class MapboxMap internal constructor(
 
   // Style events
   /**
-   * Add a listener that's going to be invoked whenever the requested style has been loaded, not
-   * including the style specified sprite sheet and sources' descriptions.
-   *
-   * This event may be useful when application needs to modify style layers and add or remove sources
-   * before style is fully loaded.
-   */
-  override fun addOnStyleLoadingFinishedListener(onStyleLoadingFinishedListener: OnStyleLoadingFinishedListener) {
-    nativeObserver.addOnStyleLoadingFinishedListener(onStyleLoadingFinishedListener)
-  }
-
-  /**
-   * Remove the style loading finished listener
-   */
-  override fun removeOnStyleLoadingFinishedListener(onStyleLoadingFinishedListener: OnStyleLoadingFinishedListener) {
-    nativeObserver.removeOnStyleLoadingFinishedListener(onStyleLoadingFinishedListener)
-  }
-
-  /**
    * Add a listener that's going to be invoked whenever the requested style has been fully loaded,
    * including the style specified sprite and sources.
    */
-  override fun addOnStyleFullyLoadedListener(onStyleFullyLoadedListener: OnStyleFullyLoadedListener) {
-    nativeObserver.addOnStyleFullyLoadedListener(onStyleFullyLoadedListener)
+  override fun addOnStyleLoadedListener(onStyleLoadedListener: OnStyleLoadedListener) {
+    nativeObserver.addOnStyleLoadedListener(onStyleLoadedListener)
   }
 
   /**
-   * Remove the style fully loaded listener.
+   * Remove the style loaded listener.
    */
-  override fun removeOnStyleFullyLoadedListener(onStyleFullyLoadedListener: OnStyleFullyLoadedListener) {
-    nativeObserver.removeOnStyleFullyLoadedListener(onStyleFullyLoadedListener)
+  override fun removeOnStyleLoadedListener(onStyleLoadedListener: OnStyleLoadedListener) {
+    nativeObserver.removeOnStyleLoadedListener(onStyleLoadedListener)
+  }
+
+  /**
+   * Add a listener that's going to be invoked whenever the requested style data been loaded.
+   * The 'type' property defines what kind of style data has been loaded.
+   *
+   * This event may be useful when application needs to modify style layers or sources and add or remove sources
+   * before style is fully loaded.
+   */
+  override fun addOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener) {
+    nativeObserver.addOnStyleDataLoadedListener(onStyleDataLoadedListener)
+  }
+
+  /**
+   * Remove the style data loaded listener
+   */
+  override fun removeOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener) {
+    nativeObserver.removeOnStyleDataLoadedListener(onStyleDataLoadedListener)
   }
 
   /**
@@ -1082,15 +1085,18 @@ class MapboxMap internal constructor(
   fun getFreeCameraOptions() = nativeMapWeakRef.call { this.freeCameraOptions }
 
   /**
+   * Sets the map view with the free camera options.
+   *
    * FreeCameraOptions provides more direct access to the underlying camera entity.
    * For backwards compatibility the state set using this API must be representable with
-   * [CameraOptions] as well. Parameters are clamped to a valid range or discarded as invalid
+   * `CameraOptions` as well. Parameters are clamped to a valid range or discarded as invalid
    * if the conversion to the pitch and bearing presentation is ambiguous. For example orientation
    * can be invalid if it leads to the camera being upside down or the quaternion has zero length.
+   *
    * @param options The free camera options to set.
    */
-  fun setFreeCameraOptions(options: FreeCameraOptions) {
-    nativeMapWeakRef.call { this.freeCameraOptions = options }
+  fun setCamera(options: FreeCameraOptions) {
+    nativeMapWeakRef.call { this.setCamera(options) }
   }
 
   /**
@@ -1141,6 +1147,21 @@ class MapboxMap internal constructor(
     animation: AnimationOptions?
   ) {
     nativeMapWeakRef.call { this.drag(fromPoint, toPoint, animation) }
+  }
+
+  /**
+   * Calculates target point where camera should move after drag. The method should be called after `dragStart` and before `dragEnd`.
+   *
+   * @param fromPoint The point to drag the map from, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
+   * @param toPoint The point to drag the map to, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
+   *
+   * @return Returns the camera options object showing end point
+   */
+  override fun getDragCameraOptions(
+    fromPoint: ScreenCoordinate,
+    toPoint: ScreenCoordinate
+  ): CameraOptions {
+    return nativeMapWeakRef.call { this.getDragCameraOptions(fromPoint, toPoint) }
   }
 
   /**

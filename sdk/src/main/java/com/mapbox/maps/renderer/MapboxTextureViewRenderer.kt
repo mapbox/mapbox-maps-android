@@ -4,6 +4,7 @@ import android.graphics.SurfaceTexture
 import android.view.Surface
 import android.view.TextureView
 import androidx.annotation.VisibleForTesting
+import com.mapbox.maps.Task
 import java.lang.ref.WeakReference
 
 internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTextureListener {
@@ -53,5 +54,11 @@ internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTe
     super.onDestroy()
     textureView.get()?.surfaceTextureListener = null
     renderThread.destroy()
+  }
+
+  override fun scheduleTask(task: Task) {
+    renderThread.queueEvent {
+      task.run()
+    }
   }
 }

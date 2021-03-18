@@ -38,7 +38,7 @@ class GesturesActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_gestures)
     mapboxMap = mapView.getMapboxMap()
-    mapboxMap.jumpTo(
+    mapboxMap.setCamera(
       CameraOptions.Builder()
         .center(Point.fromLngLat(-0.11968, 51.50325))
         .zoom(15.0)
@@ -239,7 +239,7 @@ class GesturesActivity : AppCompatActivity() {
       focalPointLatLng = Point.fromLngLat(-0.12968, 51.50325)
       // TODO add marker
       // marker = mapboxMap.addMarker(MarkerOptions().position(focalPointLatLng))
-      mapboxMap.jumpTo(CameraOptions.Builder().center(focalPointLatLng).zoom(16.0).build())
+      mapboxMap.setCamera(CameraOptions.Builder().center(focalPointLatLng).zoom(16.0).build())
       recalculateFocalPoint()
     } else {
       // TODO add marker

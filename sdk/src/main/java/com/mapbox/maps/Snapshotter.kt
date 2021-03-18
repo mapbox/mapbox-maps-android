@@ -121,8 +121,8 @@ open class Snapshotter : MapSnapshotterObserver {
    *
    * @param cameraOptions the camera options of the snapshot.
    */
-  fun setCameraOptions(cameraOptions: CameraOptions) {
-    coreSnapshotter.cameraOptions = cameraOptions
+  fun setCamera(cameraOptions: CameraOptions) {
+    coreSnapshotter.setCamera(cameraOptions)
   }
 
   /**
@@ -146,12 +146,15 @@ open class Snapshotter : MapSnapshotterObserver {
   }
 
   /**
-   * Get the previously set rectangular bounds.
+   * Returns the coordinate bounds for a given camera.
+   *
+   * Note that if the given camera shows the antimeridian, the returned wrapped bounds
+   * might not represent the minimum bounding box.
    *
    * @return CoordinateBounds
    */
-  fun getRegion(): CoordinateBounds {
-    return coreSnapshotter.region
+  fun coordinateBoundsForCamera(options: CameraOptions): CoordinateBounds {
+    return coreSnapshotter.coordinateBoundsForCamera(options)
   }
 
   /**
@@ -180,8 +183,8 @@ open class Snapshotter : MapSnapshotterObserver {
    *
    * @return CameraOptions.
    */
-  fun getCameraOptions(): CameraOptions {
-    return coreSnapshotter.cameraOptions
+  fun getCameraOptions(padding: EdgeInsets? = null): CameraOptions {
+    return coreSnapshotter.getCameraOptions(padding)
   }
 
   /**

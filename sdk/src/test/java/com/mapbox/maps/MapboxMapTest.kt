@@ -4,6 +4,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
+import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
@@ -31,28 +32,28 @@ class MapboxMapTest {
   @Test
   fun loadStyleUri() {
     mapboxMap.loadStyleUri("foo")
-    verify { mapObserver.addOnStyleLoadingFinishedListener(any()) }
+    verify { mapObserver.addOnStyleDataLoadedListener(any()) }
     verify { nativeMap.styleURI = "foo" }
   }
 
   @Test
   fun loadStyleUriLambda() {
     mapboxMap.loadStyleUri("foo") {}
-    verify { mapObserver.addOnStyleLoadingFinishedListener(any()) }
+    verify { mapObserver.addOnStyleDataLoadedListener(any()) }
     verify { nativeMap.styleURI = "foo" }
   }
 
   @Test
   fun loadStyleJSON() {
     mapboxMap.loadStyleJSON("foo")
-    verify { mapObserver.addOnStyleLoadingFinishedListener(any()) }
+    verify { mapObserver.addOnStyleDataLoadedListener(any()) }
     verify { nativeMap.styleJSON = "foo" }
   }
 
   @Test
   fun loadStyleJSONLambda() {
     mapboxMap.loadStyleJSON("foo") {}
-    verify { mapObserver.addOnStyleLoadingFinishedListener(any()) }
+    verify { mapObserver.addOnStyleDataLoadedListener(any()) }
     verify { nativeMap.styleJSON = "foo" }
   }
 
@@ -216,17 +217,17 @@ class MapboxMapTest {
   }
 
   @Test
-  fun addOnMapLoadingFinishedListener() {
-    val listener = mockk<OnMapLoadingFinishedListener>()
-    mapboxMap.addOnMapLoadingFinishedListener(listener)
-    verify { mapObserver.addOnMapLoadingFinishedListener(listener) }
+  fun addOnMapLoadedListener() {
+    val listener = mockk<OnMapLoadedListener>()
+    mapboxMap.addOnMapLoadedListener(listener)
+    verify { mapObserver.addOnMapLoadedListener(listener) }
   }
 
   @Test
-  fun removeOnMapLoadingFinishedListener() {
-    val listener = mockk<OnMapLoadingFinishedListener>()
-    mapboxMap.removeOnMapLoadingFinishedListener(listener)
-    verify { mapObserver.removeOnMapLoadingFinishedListener(listener) }
+  fun removeOnMapLoadedListener() {
+    val listener = mockk<OnMapLoadedListener>()
+    mapboxMap.removeOnMapLoadedListener(listener)
+    verify { mapObserver.removeOnMapLoadedListener(listener) }
   }
 
   // Render frame events
@@ -274,17 +275,17 @@ class MapboxMapTest {
   }
 
   @Test
-  fun addOnSourceChangeListener() {
-    val listener = mockk<OnSourceChangeListener>()
-    mapboxMap.addOnSourceChangeListener(listener)
-    verify { mapObserver.addOnSourceChangeListener(listener) }
+  fun addOnSourceDataLoadedListener() {
+    val listener = mockk<OnSourceDataLoadedListener>()
+    mapboxMap.addOnSourceDataLoadedListener(listener)
+    verify { mapObserver.addOnSourceDataLoadedListener(listener) }
   }
 
   @Test
-  fun removeOnSourceChangeListener() {
-    val listener = mockk<OnSourceChangeListener>()
-    mapboxMap.removeOnSourceChangeListener(listener)
-    verify { mapObserver.removeOnSourceChangeListener(listener) }
+  fun removeOnSourceDataLoadedListener() {
+    val listener = mockk<OnSourceDataLoadedListener>()
+    mapboxMap.removeOnSourceDataLoadedListener(listener)
+    verify { mapObserver.removeOnSourceDataLoadedListener(listener) }
   }
 
   @Test
@@ -303,17 +304,17 @@ class MapboxMapTest {
 
   // Style events
   @Test
-  fun addOnStyleFullyLoadedListener() {
-    val listener = mockk<OnStyleFullyLoadedListener>()
-    mapboxMap.addOnStyleFullyLoadedListener(listener)
-    verify { mapObserver.addOnStyleFullyLoadedListener(listener) }
+  fun addOnStyleLoadedListener() {
+    val listener = mockk<OnStyleLoadedListener>()
+    mapboxMap.addOnStyleLoadedListener(listener)
+    verify { mapObserver.addOnStyleLoadedListener(listener) }
   }
 
   @Test
-  fun removeOnStyleFullyLoadedListener() {
-    val listener = mockk<OnStyleFullyLoadedListener>()
-    mapboxMap.removeOnStyleFullyLoadedListener(listener)
-    verify { mapObserver.removeOnStyleFullyLoadedListener(listener) }
+  fun removeOnStyleLoadedListener() {
+    val listener = mockk<OnStyleLoadedListener>()
+    mapboxMap.removeOnStyleLoadedListener(listener)
+    verify { mapObserver.removeOnStyleLoadedListener(listener) }
   }
 
   @Test
@@ -345,17 +346,17 @@ class MapboxMapTest {
   }
 
   @Test
-  fun addOnStyleLoadingFinishedListener() {
-    val listener = mockk<OnStyleLoadingFinishedListener>()
-    mapboxMap.addOnStyleLoadingFinishedListener(listener)
-    verify { mapObserver.addOnStyleLoadingFinishedListener(listener) }
+  fun addOnStyleDataLoadedListener() {
+    val listener = mockk<OnStyleDataLoadedListener>()
+    mapboxMap.addOnStyleDataLoadedListener(listener)
+    verify { mapObserver.addOnStyleDataLoadedListener(listener) }
   }
 
   @Test
-  fun removeOnStyleLoadingFinishedListener() {
-    val listener = mockk<OnStyleLoadingFinishedListener>()
-    mapboxMap.removeOnStyleLoadingFinishedListener(listener)
-    verify { mapObserver.removeOnStyleLoadingFinishedListener(listener) }
+  fun removeOnStyleDataLoadedListener() {
+    val listener = mockk<OnStyleDataLoadedListener>()
+    mapboxMap.removeOnStyleDataLoadedListener(listener)
+    verify { mapObserver.removeOnStyleDataLoadedListener(listener) }
   }
 
   @Test
@@ -400,10 +401,10 @@ class MapboxMapTest {
   }
 
   @Test
-  fun jumpTo() {
+  fun setCamera() {
     val cameraOptions = CameraOptions.Builder().build()
-    mapboxMap.jumpTo(cameraOptions)
-    verify { nativeMap.jumpTo(cameraOptions) }
+    mapboxMap.setCamera(cameraOptions)
+    verify { nativeMap.setCamera(cameraOptions) }
   }
 
   @Test
@@ -679,8 +680,8 @@ class MapboxMapTest {
   @Test
   fun setFreeCameraOptions() {
     val options = mockk<FreeCameraOptions>()
-    mapboxMap.setFreeCameraOptions(options)
-    verify { nativeMap.freeCameraOptions = options }
+    mapboxMap.setCamera(options)
+    verify { nativeMap.setCamera(options) }
   }
 
   @Test
@@ -688,6 +689,44 @@ class MapboxMapTest {
     val point = mockk<Point>()
     mapboxMap.getElevation(point)
     verify { nativeMap.getElevation(point) }
+  }
+
+  @Test
+  fun isFullyLoaded() {
+    val style = mockk<Style>(relaxed = true)
+    mapboxMap.style = style
+    every { style.isFullyLoaded() } returns true
+    assertTrue(mapboxMap.isFullyLoaded())
+    verify { style.isFullyLoaded() }
+  }
+
+  @Test
+  fun dragStart() {
+    val screenCoordinate = mockk<ScreenCoordinate>()
+    mapboxMap.dragStart(screenCoordinate)
+    verify { nativeMap.dragStart(screenCoordinate) }
+  }
+
+  @Test
+  fun dragEnd() {
+    mapboxMap.dragEnd()
+    verify { nativeMap.dragEnd() }
+  }
+
+  @Test
+  fun drag() {
+    val fromPoint = mockk<ScreenCoordinate>()
+    val toPoint = mockk<ScreenCoordinate>()
+    mapboxMap.drag(fromPoint, toPoint, null)
+    verify { nativeMap.drag(fromPoint, toPoint, null) }
+  }
+
+  @Test
+  fun getDragCameraOptions() {
+    val fromPoint = mockk<ScreenCoordinate>()
+    val toPoint = mockk<ScreenCoordinate>()
+    mapboxMap.getDragCameraOptions(fromPoint, toPoint)
+    verify { nativeMap.getDragCameraOptions(fromPoint, toPoint) }
   }
 
   @Test

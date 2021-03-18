@@ -119,7 +119,7 @@ class MapOverlayPluginImpl : MapOverlayPlugin {
       onReframeFinished.onReframeFinished(reframeCameraOption)
     } else {
       reframeCameraOption?.let {
-        mapTransformDelegate.jumpTo(it)
+        mapTransformDelegate.setCamera(it)
       }
     }
   }

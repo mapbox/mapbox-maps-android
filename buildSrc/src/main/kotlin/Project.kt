@@ -1,5 +1,5 @@
 object AndroidVersions {
-  const val minSdkVersion = 19
+  const val minSdkVersion = 21
   const val targetSdkVersion = 28
   const val compileSdkVersion = 28
 }
@@ -66,8 +66,8 @@ object Versions {
   const val mapboxGestures = "0.7.0"
   const val mapboxJavaServices = "5.4.1"
   const val mapboxBase = "0.5.0"
-  const val mapboxGlNative = "10.0.0-beta.16"
-  const val mapboxCommon = "10.0.0-beta.12"
+  const val mapboxGlNative = "10.0.0-beta.17"
+  const val mapboxCommon = "10.0.2"
   const val mapboxAndroidCore = "3.1.1"
   const val mapboxAndroidTelemetry = "6.2.2"
   const val androidxCore = "1.3.1"

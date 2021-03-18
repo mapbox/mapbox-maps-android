@@ -54,11 +54,21 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
 
           // however on third emit we will emit location almost immediately using custom animator options for single location update
           if (delta >= 0.002f && delta < 0.003) {
-            locationConsumer?.onLocationUpdated(Point.fromLngLat(POINT_LNG + delta, POINT_LAT + delta)) {
+            locationConsumer?.onLocationUpdated(
+              Point.fromLngLat(
+                POINT_LNG + delta,
+                POINT_LAT + delta
+              )
+            ) {
               duration = 100
             }
           } else {
-            locationConsumer?.onLocationUpdated(Point.fromLngLat(POINT_LNG + delta, POINT_LAT + delta))
+            locationConsumer?.onLocationUpdated(
+              Point.fromLngLat(
+                POINT_LNG + delta,
+                POINT_LAT + delta
+              )
+            )
           }
           locationConsumer?.onBearingUpdated(BEARING + delta * 10000.0 * 5)
           delta += 0.001f
@@ -86,7 +96,7 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
       loadStyleUri(
         Style.MAPBOX_STREETS
       ) {
-        jumpTo(
+        setCamera(
           CameraOptions.Builder()
             .zoom(14.0)
             .center(Point.fromLngLat(POINT_LNG, POINT_LAT))

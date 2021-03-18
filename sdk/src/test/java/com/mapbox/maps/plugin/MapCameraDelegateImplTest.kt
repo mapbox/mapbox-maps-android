@@ -32,7 +32,7 @@ class MapCameraDelegateImplTest {
   fun bearingSet() {
     val mapCameraDelegate = MapCameraDelegateImpl(mapboxMap)
     mapCameraDelegate.setBearing(10.0)
-    verify { mapboxMap.jumpTo(any()) }
+    verify { mapboxMap.setCamera(any<CameraOptions>()) }
   }
 
   @Test

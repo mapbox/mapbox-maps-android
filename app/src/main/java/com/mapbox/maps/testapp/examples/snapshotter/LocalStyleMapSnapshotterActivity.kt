@@ -29,7 +29,7 @@ class LocalStyleMapSnapshotterActivity : AppCompatActivity() {
       .build()
 
     mapSnapshotter = Snapshotter(this, snapshotterOptions)
-    mapSnapshotter.setCameraOptions(
+    mapSnapshotter.setCamera(
       CameraOptions.Builder().zoom(14.0).center(
         Point.fromLngLat(
           4.895033, 52.374724

@@ -140,7 +140,7 @@ class CameraAnimationsPluginImplTest {
       playTogether(*animators)
       start()
     }
-    verify { mapTransformDelegate.jumpTo(any()) }
+    verify { mapTransformDelegate.setCamera(any()) }
   }
 
   @Test
@@ -159,7 +159,7 @@ class CameraAnimationsPluginImplTest {
       playTogether(*animators)
       start()
     }
-    verify(exactly = 0) { mapTransformDelegate.jumpTo(any()) }
+    verify(exactly = 0) { mapTransformDelegate.setCamera(any()) }
   }
 
   @Test
@@ -219,7 +219,7 @@ class CameraAnimationsPluginImplTest {
   @Test
   fun startSubsequentAnimationsWithTheSameType1() {
     var cameraPosition = CameraOptions.Builder().build()
-    every { mapTransformDelegate.jumpTo(any()) } answers {
+    every { mapTransformDelegate.setCamera(any()) } answers {
       cameraPosition = firstArg()
     }
 
@@ -253,7 +253,7 @@ class CameraAnimationsPluginImplTest {
   @Test
   fun startSubsequentAnimationsWithTheSameType2() {
     var cameraPosition = CameraOptions.Builder().build()
-    every { mapTransformDelegate.jumpTo(any()) } answers {
+    every { mapTransformDelegate.setCamera(any()) } answers {
       cameraPosition = firstArg()
     }
 
@@ -289,7 +289,7 @@ class CameraAnimationsPluginImplTest {
   fun testEaseToSingleDurationZero() {
 
     var cameraPosition = CameraOptions.Builder().build()
-    every { mapTransformDelegate.jumpTo(any()) } answers {
+    every { mapTransformDelegate.setCamera(any()) } answers {
       cameraPosition = firstArg()
     }
 
@@ -318,7 +318,7 @@ class CameraAnimationsPluginImplTest {
   fun testEaseToSingleDurationShort() {
 
     var cameraPosition = CameraOptions.Builder().build()
-    every { mapTransformDelegate.jumpTo(any()) } answers {
+    every { mapTransformDelegate.setCamera(any()) } answers {
       cameraPosition = firstArg()
     }
 
@@ -347,7 +347,7 @@ class CameraAnimationsPluginImplTest {
   fun testEaseToSequenceDurationZero() {
 
     var cameraPosition = CameraOptions.Builder().pitch(0.0).build()
-    every { mapTransformDelegate.jumpTo(any()) } answers {
+    every { mapTransformDelegate.setCamera(any()) } answers {
       cameraPosition = firstArg()
     }
 
@@ -386,7 +386,7 @@ class CameraAnimationsPluginImplTest {
   fun testEaseToSequenceQuickDuration() {
 
     var cameraPosition = CameraOptions.Builder().pitch(0.0).build()
-    every { mapTransformDelegate.jumpTo(any()) } answers {
+    every { mapTransformDelegate.setCamera(any()) } answers {
       cameraPosition = firstArg()
     }
 
@@ -423,7 +423,7 @@ class CameraAnimationsPluginImplTest {
   @Test
   fun testDelayedAnimatorsFinalStateAndCallbackResult() {
     var cameraPosition = CameraOptions.Builder().build()
-    every { mapTransformDelegate.jumpTo(any()) } answers {
+    every { mapTransformDelegate.setCamera(any()) } answers {
       cameraPosition = firstArg()
     }
 
@@ -482,7 +482,7 @@ class CameraAnimationsPluginImplTest {
 
     // Adding value 2 because of first call after Animator.start() and last in the onEnd() or onCancel()
     val countUpdates = (bearingDuration + 2).toInt()
-    verify(exactly = countUpdates) { mapTransformDelegate.jumpTo(any()) }
+    verify(exactly = countUpdates) { mapTransformDelegate.setCamera(any()) }
   }
 
   @Test
@@ -511,7 +511,7 @@ class CameraAnimationsPluginImplTest {
   @Test
   fun executeBearingAnimator() {
     var cameraPosition = CameraOptions.Builder().build()
-    every { mapTransformDelegate.jumpTo(any()) } answers {
+    every { mapTransformDelegate.setCamera(any()) } answers {
       cameraPosition = firstArg()
     }
 

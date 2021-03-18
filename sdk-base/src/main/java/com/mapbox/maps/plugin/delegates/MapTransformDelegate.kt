@@ -7,11 +7,12 @@ import com.mapbox.maps.*
  */
 interface MapTransformDelegate {
   /**
-   * Set the map camera to a given camera options.
+   * Changes the map view by any combination of center, zoom, bearing, and pitch, without an animated transition.
+   * The map will retain its current values for any details not passed via the camera options argument.
    *
-   * @param cameraOptions The camera options to jump to
+   * @param cameraOptions New camera options
    */
-  fun jumpTo(cameraOptions: CameraOptions)
+  fun setCamera(cameraOptions: CameraOptions)
 
   /**
    * Get the current camera options given an optional padding.
@@ -71,7 +72,7 @@ interface MapTransformDelegate {
 
   /**
    * Tells the map rendering engine that the animation is currently performed by the
-   * user (e.g. with a `jumpTo()` calls series). It adjusts the engine for the animation use case.
+   * user (e.g. with a `setCamera()` calls series). It adjusts the engine for the animation use case.
    * In particular, it brings more stability to symbol placement and rendering.
    *
    * @param inProgress Bool representing if user animation is in progress
@@ -153,4 +154,17 @@ interface MapTransformDelegate {
     toPoint: ScreenCoordinate,
     animation: AnimationOptions?
   )
+
+  /**
+   * Calculates target point where camera should move after drag. The method should be called after `dragStart` and before `dragEnd`.
+   *
+   * @param fromPoint The point to drag the map from, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
+   * @param toPoint The point to drag the map to, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
+   *
+   * @return Returns the camera options object showing end point
+   */
+  fun getDragCameraOptions(
+    fromPoint: ScreenCoordinate,
+    toPoint: ScreenCoordinate,
+  ): CameraOptions
 }

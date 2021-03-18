@@ -36,7 +36,7 @@ class GeoJsonLayerInStackActivity : AppCompatActivity() {
       }
     )
 
-    mapboxMap.jumpTo(
+    mapboxMap.setCamera(
       CameraOptions.Builder()
         .center(Point.fromLngLat(-84.381546, 33.749909))
         .zoom(8.471903)

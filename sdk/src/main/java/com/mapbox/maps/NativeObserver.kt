@@ -14,19 +14,20 @@ internal class NativeObserver(
 
   val onMapIdleListeners = CopyOnWriteArrayList<OnMapIdleListener>()
   val onMapLoadErrorListeners = CopyOnWriteArrayList<OnMapLoadErrorListener>()
-  val onMapLoadingFinishedListeners = CopyOnWriteArrayList<OnMapLoadingFinishedListener>()
+  val onMapLoadedListeners = CopyOnWriteArrayList<OnMapLoadedListener>()
 
   val onRenderFrameFinishedListeners = CopyOnWriteArrayList<OnRenderFrameFinishedListener>()
   val onRenderFrameStartedListeners = CopyOnWriteArrayList<OnRenderFrameStartedListener>()
 
   val onSourceAddedListeners = CopyOnWriteArrayList<OnSourceAddedListener>()
-  val onSourceChangeListeners = CopyOnWriteArrayList<OnSourceChangeListener>()
   val onSourceRemovedListeners = CopyOnWriteArrayList<OnSourceRemovedListener>()
 
-  val onStyleFullyLoadedListeners = CopyOnWriteArrayList<OnStyleFullyLoadedListener>()
+  val onSourceDataLoadedListeners = CopyOnWriteArrayList<OnSourceDataLoadedListener>()
+
+  val onStyleDataLoadedListeners = CopyOnWriteArrayList<OnStyleDataLoadedListener>()
+  val onStyleLoadedListeners = CopyOnWriteArrayList<OnStyleLoadedListener>()
   val onStyleImageMissingListeners = CopyOnWriteArrayList<OnStyleImageMissingListener>()
   val onStyleImageUnusedListeners = CopyOnWriteArrayList<OnStyleImageUnusedListener>()
-  val onStyleLoadingFinishedListeners = CopyOnWriteArrayList<OnStyleLoadingFinishedListener>()
 
   val awaitingStyleGetters = mutableListOf<Style.OnStyleLoaded>()
 
@@ -44,13 +45,18 @@ internal class NativeObserver(
       MapEvents.MAP_LOADING_ERROR -> if (onMapLoadErrorListeners.isNotEmpty()) {
         val loadingError = event.getMapLoadingErrorEventData()
         onMapLoadErrorListeners.forEach {
-          it.onMapLoadError(loadingError.error, loadingError.description)
+          it.onMapLoadError(loadingError.type, loadingError.message)
         }
       }
-      MapEvents.MAP_LOADING_FINISHED -> onMapLoadingFinishedListeners.forEach { it.onMapLoadingFinished() }
+      MapEvents.MAP_LOADED -> onMapLoadedListeners.forEach { it.onMapLoaded() }
       // Style events
-      MapEvents.STYLE_LOADING_FINISHED -> onStyleLoadingFinishedListeners.forEach { it.onStyleLoadingFinished() }
-      MapEvents.STYLE_FULLY_LOADED -> onStyleFullyLoadedListeners.forEach { it.onStyleFullyLoaded() }
+      MapEvents.STYLE_DATA_LOADED -> if (onStyleDataLoadedListeners.isNotEmpty()) {
+        val eventData = event.getStyleDataLoadedEventData()
+        onStyleDataLoadedListeners.forEach {
+          it.onStyleDataLoaded(eventData.styleDataType)
+        }
+      }
+      MapEvents.STYLE_LOADED -> onStyleLoadedListeners.forEach { it.onStyleLoaded() }
       MapEvents.STYLE_IMAGE_MISSING -> if (onStyleImageMissingListeners.isNotEmpty()) {
         val eventData = event.getStyleImageMissingEventData()
         onStyleImageMissingListeners.forEach {
@@ -82,10 +88,10 @@ internal class NativeObserver(
           it.onSourceAdded(eventData.id)
         }
       }
-      MapEvents.SOURCE_CHANGED -> if (onSourceChangeListeners.isNotEmpty()) {
-        val eventData = event.getSourceChangedEventData()
-        onSourceChangeListeners.forEach {
-          it.onSourceChanged(eventData.id)
+      MapEvents.SOURCE_DATA_LOADED -> if (onSourceDataLoadedListeners.isNotEmpty()) {
+        val eventData = event.getSourceDataLoadedEventData()
+        onSourceDataLoadedListeners.forEach {
+          it.onSourceDataLoaded(eventData.id, eventData.type, eventData.loaded, eventData.tileID)
         }
       }
       MapEvents.SOURCE_REMOVED -> if (onSourceRemovedListeners.isNotEmpty()) {
@@ -166,17 +172,17 @@ internal class NativeObserver(
     }
   }
 
-  fun addOnMapLoadingFinishedListener(onMapLoadingFinishedListener: OnMapLoadingFinishedListener) {
-    if (onMapLoadingFinishedListeners.isEmpty()) {
-      subscribeNewEvent(MapEvents.MAP_LOADING_FINISHED)
+  fun addOnMapLoadedListener(onMapLoadedListener: OnMapLoadedListener) {
+    if (onMapLoadedListeners.isEmpty()) {
+      subscribeNewEvent(MapEvents.MAP_LOADED)
     }
-    onMapLoadingFinishedListeners.add(onMapLoadingFinishedListener)
+    onMapLoadedListeners.add(onMapLoadedListener)
   }
 
-  fun removeOnMapLoadingFinishedListener(onMapLoadingFinishedListener: OnMapLoadingFinishedListener) {
-    onMapLoadingFinishedListeners.remove(onMapLoadingFinishedListener)
-    if (onMapLoadingFinishedListeners.isEmpty()) {
-      unsubscribeUnusedEvent(MapEvents.MAP_LOADING_FINISHED)
+  fun removeOnMapLoadedListener(onMapLoadedListener: OnMapLoadedListener) {
+    onMapLoadedListeners.remove(onMapLoadedListener)
+    if (onMapLoadedListeners.isEmpty()) {
+      unsubscribeUnusedEvent(MapEvents.MAP_LOADED)
     }
   }
 
@@ -224,17 +230,17 @@ internal class NativeObserver(
     }
   }
 
-  fun addOnSourceChangeListener(onSourceChangeListener: OnSourceChangeListener) {
-    if (onSourceChangeListeners.isEmpty()) {
-      subscribeNewEvent(MapEvents.SOURCE_CHANGED)
+  fun addOnSourceDataLoadedListener(onSourceDataLoadedListener: OnSourceDataLoadedListener) {
+    if (onSourceDataLoadedListeners.isEmpty()) {
+      subscribeNewEvent(MapEvents.SOURCE_DATA_LOADED)
     }
-    onSourceChangeListeners.add(onSourceChangeListener)
+    onSourceDataLoadedListeners.add(onSourceDataLoadedListener)
   }
 
-  fun removeOnSourceChangeListener(onSourceChangeListener: OnSourceChangeListener) {
-    onSourceChangeListeners.remove(onSourceChangeListener)
-    if (onSourceChangeListeners.isEmpty()) {
-      unsubscribeUnusedEvent(MapEvents.SOURCE_CHANGED)
+  fun removeOnSourceDataLoadedListener(onSourceDataLoadedListener: OnSourceDataLoadedListener) {
+    onSourceDataLoadedListeners.remove(onSourceDataLoadedListener)
+    if (onSourceDataLoadedListeners.isEmpty()) {
+      unsubscribeUnusedEvent(MapEvents.SOURCE_DATA_LOADED)
     }
   }
 
@@ -253,17 +259,31 @@ internal class NativeObserver(
   }
 
   // Style events
-  fun addOnStyleFullyLoadedListener(onStyleFullyLoadedListener: OnStyleFullyLoadedListener) {
-    if (onStyleFullyLoadedListeners.isEmpty()) {
-      subscribeNewEvent(MapEvents.STYLE_FULLY_LOADED)
+  fun addOnStyleLoadedListener(onStyleLoadedListener: OnStyleLoadedListener) {
+    if (onStyleLoadedListeners.isEmpty()) {
+      subscribeNewEvent(MapEvents.STYLE_LOADED)
     }
-    onStyleFullyLoadedListeners.add(onStyleFullyLoadedListener)
+    onStyleLoadedListeners.add(onStyleLoadedListener)
   }
 
-  fun removeOnStyleFullyLoadedListener(onStyleFullyLoadedListener: OnStyleFullyLoadedListener) {
-    onStyleFullyLoadedListeners.remove(onStyleFullyLoadedListener)
-    if (onStyleFullyLoadedListeners.isEmpty()) {
-      unsubscribeUnusedEvent(MapEvents.STYLE_FULLY_LOADED)
+  fun removeOnStyleLoadedListener(onStyleLoadedListener: OnStyleLoadedListener) {
+    onStyleLoadedListeners.remove(onStyleLoadedListener)
+    if (onStyleLoadedListeners.isEmpty()) {
+      unsubscribeUnusedEvent(MapEvents.STYLE_LOADED)
+    }
+  }
+
+  fun addOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener) {
+    if (onStyleDataLoadedListeners.isEmpty()) {
+      subscribeNewEvent(MapEvents.STYLE_DATA_LOADED)
+    }
+    onStyleDataLoadedListeners.add(onStyleDataLoadedListener)
+  }
+
+  fun removeOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener) {
+    onStyleDataLoadedListeners.remove(onStyleDataLoadedListener)
+    if (onStyleDataLoadedListeners.isEmpty()) {
+      unsubscribeUnusedEvent(MapEvents.STYLE_DATA_LOADED)
     }
   }
 
@@ -295,38 +315,24 @@ internal class NativeObserver(
     }
   }
 
-  fun addOnStyleLoadingFinishedListener(onStyleLoadingFinishedListener: OnStyleLoadingFinishedListener) {
-    if (onStyleLoadingFinishedListeners.isEmpty()) {
-      subscribeNewEvent(MapEvents.STYLE_LOADING_FINISHED)
-    }
-    onStyleLoadingFinishedListeners.add(onStyleLoadingFinishedListener)
-  }
-
-  fun removeOnStyleLoadingFinishedListener(onStyleLoadingFinishedListener: OnStyleLoadingFinishedListener) {
-    onStyleLoadingFinishedListeners.remove(onStyleLoadingFinishedListener)
-    if (onStyleLoadingFinishedListeners.isEmpty()) {
-      unsubscribeUnusedEvent(MapEvents.STYLE_LOADING_FINISHED)
-    }
-  }
-
   fun clearListeners() {
     onCameraChangeListeners.clear()
 
     onMapIdleListeners.clear()
     onMapLoadErrorListeners.clear()
-    onMapLoadingFinishedListeners.clear()
+    onMapLoadedListeners.clear()
 
     onRenderFrameFinishedListeners.clear()
     onRenderFrameStartedListeners.clear()
 
     onSourceAddedListeners.clear()
-    onSourceChangeListeners.clear()
+    onSourceDataLoadedListeners.clear()
     onSourceRemovedListeners.clear()
 
-    onStyleFullyLoadedListeners.clear()
+    onStyleLoadedListeners.clear()
+    onStyleDataLoadedListeners.clear()
     onStyleImageMissingListeners.clear()
     onStyleImageUnusedListeners.clear()
-    onStyleLoadingFinishedListeners.clear()
 
     awaitingStyleGetters.clear()
   }
@@ -339,17 +345,18 @@ internal class NativeObserver(
       // Map events
       MapEvents.MAP_IDLE,
       MapEvents.MAP_LOADING_ERROR,
-      MapEvents.MAP_LOADING_FINISHED,
+      MapEvents.MAP_LOADED,
       // Style events
-      MapEvents.STYLE_LOADING_FINISHED,
-      MapEvents.STYLE_FULLY_LOADED,
+      MapEvents.STYLE_DATA_LOADED,
+      MapEvents.STYLE_LOADED,
       MapEvents.STYLE_IMAGE_MISSING,
       MapEvents.STYLE_IMAGE_REMOVE_UNUSED,
       // Render frame events
       MapEvents.RENDER_FRAME_STARTED,
       MapEvents.RENDER_FRAME_FINISHED,
+      // Source events
       MapEvents.SOURCE_ADDED,
-      MapEvents.SOURCE_CHANGED,
+      MapEvents.SOURCE_DATA_LOADED,
       MapEvents.SOURCE_REMOVED
     )
   }

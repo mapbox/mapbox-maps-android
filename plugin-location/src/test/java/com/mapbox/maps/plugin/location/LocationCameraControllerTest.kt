@@ -677,7 +677,7 @@ internal class LocationCameraControllerTest {
       )
     ).bearing(0.0).build()
     every { projectionDelegate.getMetersPerPixelAtLatitude(any()) } returns 1.0
-    every { transformDelegate.jumpTo(any()) } returns Unit
+    every { transformDelegate.setCamera(any()) } returns Unit
     locationCameraController.initializeOptions(options)
     locationCameraController.setEnabled(true)
 
@@ -703,7 +703,7 @@ internal class LocationCameraControllerTest {
 
     val cameraOptionsSlot = slot<CameraOptions>()
     verify {
-      transformDelegate.jumpTo(capture(cameraOptionsSlot))
+      transformDelegate.setCamera(capture(cameraOptionsSlot))
     }
     assertEquals(camera.toString(), cameraOptionsSlot.captured.toString())
     assertFalse(locationCameraController.isTransitioning)
@@ -768,7 +768,7 @@ internal class LocationCameraControllerTest {
       )
     ).bearing(0.0).build()
     every { projectionDelegate.getMetersPerPixelAtLatitude(any()) } returns 1.0
-    every { transformDelegate.jumpTo(any()) } returns Unit
+    every { transformDelegate.setCamera(any()) } returns Unit
     locationCameraController.initializeOptions(options)
     locationCameraController.setEnabled(true)
 
@@ -795,7 +795,7 @@ internal class LocationCameraControllerTest {
 
     val cameraOptionsSlot = slot<CameraOptions>()
     verify {
-      transformDelegate.jumpTo(capture(cameraOptionsSlot))
+      transformDelegate.setCamera(capture(cameraOptionsSlot))
     }
     assertEquals(camera.toString(), cameraOptionsSlot.captured.toString())
   }
@@ -809,7 +809,7 @@ internal class LocationCameraControllerTest {
       )
     ).bearing(0.0).build()
     every { projectionDelegate.getMetersPerPixelAtLatitude(any()) } returns 1.0
-    every { transformDelegate.jumpTo(any()) } returns Unit
+    every { transformDelegate.setCamera(any()) } returns Unit
     locationCameraController.initializeOptions(options)
     locationCameraController.setEnabled(true)
 
@@ -835,7 +835,7 @@ internal class LocationCameraControllerTest {
         .build()
 
     val cameraOptionsSlot = slot<CameraOptions>()
-    verify { transformDelegate.jumpTo(capture(cameraOptionsSlot)) }
+    verify { transformDelegate.setCamera(capture(cameraOptionsSlot)) }
     assertEquals(camera.toString(), cameraOptionsSlot.captured.toString())
   }
 

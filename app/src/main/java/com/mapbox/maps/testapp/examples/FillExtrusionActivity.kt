@@ -29,7 +29,7 @@ class FillExtrusionActivity : AppCompatActivity() {
     setContentView(R.layout.activity_fill_extrusion)
     val mapboxMap = (mapView as MapView).getMapboxMap()
 
-    mapboxMap.jumpTo(
+    mapboxMap.setCamera(
       CameraOptions.Builder()
         .center(Point.fromLngLat(-74.0066, 40.7135))
         .pitch(45.0)

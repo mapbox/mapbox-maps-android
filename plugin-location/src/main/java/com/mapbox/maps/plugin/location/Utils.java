@@ -68,14 +68,7 @@ public final class Utils {
     try {
       drawable.draw(canvas);
     } catch (IllegalArgumentException ex) {
-      if (ex.getMessage().equals("radius must be > 0") && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-        Logger.w(TAG,
-          "Location's shadow gradient drawable has a radius <= 0px, resetting to 1px in order to avoid crashing");
-        ensureShadowGradientRadius(drawable);
-        return generateShadow(drawable, elevation);
-      } else {
-        throw ex;
-      }
+      throw ex;
     }
     bitmap = Bitmap.createScaledBitmap(bitmap,
       toEven(width + elevation), toEven(height + elevation), false);

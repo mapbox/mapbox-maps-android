@@ -15,7 +15,7 @@ import com.mapbox.maps.plugin.annotation.generated.SymbolManager
 import com.mapbox.maps.plugin.annotation.generated.SymbolOptions
 import com.mapbox.maps.plugin.annotation.generated.createSymbolManager
 import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
-import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadingFinishedListener
+import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadedListener
 import com.mapbox.maps.testapp.BaseMapTest
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import org.junit.Assert
@@ -30,7 +30,7 @@ import java.util.concurrent.TimeoutException
  */
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-class UpdateAnnotationTest : BaseMapTest(), OnMapLoadingFinishedListener {
+class UpdateAnnotationTest : BaseMapTest(), OnMapLoadedListener {
   private lateinit var runnable: Runnable
   private var index = 0
   private val latch = CountDownLatch(AnnotationUtils.STYLES.size * 3)
@@ -39,7 +39,7 @@ class UpdateAnnotationTest : BaseMapTest(), OnMapLoadingFinishedListener {
 
   @Test
   fun testUpdateAnnotation() {
-    mapboxMap.addOnMapLoadingFinishedListener(this)
+    mapboxMap.addOnMapLoadedListener(this)
 
     rule.scenario.onActivity {
       val handler = Handler(it.mainLooper)
@@ -97,7 +97,7 @@ class UpdateAnnotationTest : BaseMapTest(), OnMapLoadingFinishedListener {
     }
   }
 
-  override fun onMapLoadingFinished() {
+  override fun onMapLoaded() {
     latch.countDown()
     rule.scenario.onActivity {
       it.runOnUiThread {

@@ -85,22 +85,23 @@ class SnapshotterTest {
   }
 
   @Test
-  fun setCameraOptions() {
+  fun setCamera() {
     val options = CameraOptions.Builder().build()
-    snapshotter.setCameraOptions(options)
-    verify { coreSnapshotter.cameraOptions = options }
+    snapshotter.setCamera(options)
+    verify { coreSnapshotter.setCamera(options) }
   }
 
   @Test
   fun getCameraOptions() {
     snapshotter.getCameraOptions()
-    verify { coreSnapshotter.cameraOptions }
+    verify { coreSnapshotter.getCameraOptions(any()) }
   }
 
   @Test
-  fun getRegion() {
-    snapshotter.getRegion()
-    verify { coreSnapshotter.region }
+  fun coordinateBoundsForCamera() {
+    val camera = mockk<CameraOptions>()
+    snapshotter.coordinateBoundsForCamera(camera)
+    verify { coreSnapshotter.coordinateBoundsForCamera(any()) }
   }
 
   @Test

@@ -408,11 +408,11 @@ class NativeMapTest {
   }
 
   @Test
-  fun jumpTo() {
+  fun setCameraOptions() {
     val value = mockk<CameraOptions>()
     val nativeMap = NativeMapImpl(map)
-    nativeMap.jumpTo(value)
-    verify { map.jumpTo(value) }
+    nativeMap.setCamera(value)
+    verify { map.setCamera(value) }
   }
 
   @Test
@@ -421,60 +421,6 @@ class NativeMapTest {
     val nativeMap = NativeMapImpl(map)
     nativeMap.getCameraOptions(value)
     verify { map.getCameraOptions(value) }
-  }
-
-  @Test
-  fun easeTo() {
-    val cameraOptions = mockk<CameraOptions>()
-    val animationOptions = mockk<AnimationOptions>()
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.easeTo(cameraOptions, animationOptions)
-    verify { map.easeTo(cameraOptions, animationOptions) }
-  }
-
-  @Test
-  fun flyTo() {
-    val cameraOptions = mockk<CameraOptions>()
-    val animationOptions = mockk<AnimationOptions>()
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.flyTo(cameraOptions, animationOptions)
-    verify { map.flyTo(cameraOptions, animationOptions) }
-  }
-
-  @Test
-  fun moveBy() {
-    val screenCoordinate = mockk<ScreenCoordinate>()
-    val animationOptions = mockk<AnimationOptions>()
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.moveBy(screenCoordinate, animationOptions)
-    verify { map.moveBy(screenCoordinate, animationOptions) }
-  }
-
-  @Test
-  fun scaleBy() {
-    val screenCoordinate = mockk<ScreenCoordinate>()
-    val animationOptions = mockk<AnimationOptions>()
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.scaleBy(1.0, screenCoordinate, animationOptions)
-    verify { map.scaleBy(1.0, screenCoordinate, animationOptions) }
-  }
-
-  @Test
-  fun pitchBy() {
-    val animationOptions = mockk<AnimationOptions>()
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.pitchBy(1.0, animationOptions)
-    verify { map.pitchBy(1.0, animationOptions) }
-  }
-
-  @Test
-  fun rotateBy() {
-    val screenCoordinateOne = mockk<ScreenCoordinate>()
-    val screenCoordinateTwo = mockk<ScreenCoordinate>()
-    val animationOptions = mockk<AnimationOptions>()
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.rotateBy(screenCoordinateOne, screenCoordinateTwo, animationOptions)
-    verify { map.rotateBy(screenCoordinateOne, screenCoordinateTwo, animationOptions) }
   }
 
   @Test

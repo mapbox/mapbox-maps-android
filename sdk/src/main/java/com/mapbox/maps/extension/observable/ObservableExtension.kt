@@ -6,9 +6,7 @@ import com.mapbox.maps.Event
 import com.mapbox.maps.MapEvents
 import com.mapbox.maps.ObservableInterface
 import com.mapbox.maps.Observer
-import com.mapbox.maps.extension.observable.map.IDStringEventData
-import com.mapbox.maps.extension.observable.map.MapLoadingErrorEventData
-import com.mapbox.maps.extension.observable.map.RenderFrameFinishedEventData
+import com.mapbox.maps.extension.observable.model.*
 import com.mapbox.maps.extension.observable.resourcerequest.ResourceEventData
 
 /**
@@ -94,7 +92,7 @@ fun ObservableInterface.unsubscribeMapLoadingError(observer: Observer) =
   unsubscribe(observer, listOf(MapEvents.MAP_LOADING_ERROR))
 
 /**
- * Subscribes an Observer for of event type "map-loading-finished".
+ * Subscribes an Observer for of event type "map-loaded".
  *
  * Observable will hold a strong reference to an Observer instance, therefore,
  * in order to stop receiving notifications, caller must call unsubscribe with an
@@ -102,20 +100,20 @@ fun ObservableInterface.unsubscribeMapLoadingError(observer: Observer) =
  *
  * @param observer an Observer
  */
-fun ObservableInterface.subscribeMapLoadingFinished(observer: Observer) =
-  subscribe(observer, listOf(MapEvents.MAP_LOADING_FINISHED))
+fun ObservableInterface.subscribeMapLoaded(observer: Observer) =
+  subscribe(observer, listOf(MapEvents.MAP_LOADED))
 
 /**
- * Unsubscribe an Observer for event types "map-loading-finished".
+ * Unsubscribe an Observer for event types "map-loaded".
  *
  * @param observer an Observer
  */
-fun ObservableInterface.unsubscribeMapLoadingFinished(observer: Observer) =
-  unsubscribe(observer, listOf(MapEvents.MAP_LOADING_FINISHED))
+fun ObservableInterface.unsubscribeMapLoaded(observer: Observer) =
+  unsubscribe(observer, listOf(MapEvents.MAP_LOADED))
 
 // Style events
 /**
- * Subscribes an Observer for of event type "style-loading-finished".
+ * Subscribes an Observer for of event type "style-data-loaded".
  *
  * Observable will hold a strong reference to an Observer instance, therefore,
  * in order to stop receiving notifications, caller must call unsubscribe with an
@@ -123,19 +121,19 @@ fun ObservableInterface.unsubscribeMapLoadingFinished(observer: Observer) =
  *
  * @param observer an Observer
  */
-fun ObservableInterface.subscribeStyleLoadingFinished(observer: Observer) =
-  subscribe(observer, listOf(MapEvents.STYLE_LOADING_FINISHED))
+fun ObservableInterface.subscribeStyleDataLoaded(observer: Observer) =
+  subscribe(observer, listOf(MapEvents.STYLE_DATA_LOADED))
 
 /**
- * Unsubscribe an Observer for event types "style-loading-finished".
+ * Unsubscribe an Observer for event types "style-data-loaded".
  *
  * @param observer an Observer
  */
-fun ObservableInterface.unsubscribeStyleLoadingFinished(observer: Observer) =
-  unsubscribe(observer, listOf(MapEvents.STYLE_LOADING_FINISHED))
+fun ObservableInterface.unsubscribeStyleDataFinished(observer: Observer) =
+  unsubscribe(observer, listOf(MapEvents.STYLE_DATA_LOADED))
 
 /**
- * Subscribes an Observer for of event type "style-fully-loaded".
+ * Subscribes an Observer for of event type "style-loaded".
  *
  * Observable will hold a strong reference to an Observer instance, therefore,
  * in order to stop receiving notifications, caller must call unsubscribe with an
@@ -143,16 +141,16 @@ fun ObservableInterface.unsubscribeStyleLoadingFinished(observer: Observer) =
  *
  * @param observer an Observer
  */
-fun ObservableInterface.subscribeStyleFullyLoaded(observer: Observer) =
-  subscribe(observer, listOf(MapEvents.STYLE_FULLY_LOADED))
+fun ObservableInterface.subscribeStyleLoaded(observer: Observer) =
+  subscribe(observer, listOf(MapEvents.STYLE_LOADED))
 
 /**
- * Unsubscribe an Observer for event types "style-fully-loaded".
+ * Unsubscribe an Observer for event types "style-loaded".
  *
  * @param observer an Observer
  */
-fun ObservableInterface.unsubscribeStyleFullyLoaded(observer: Observer) =
-  unsubscribe(observer, listOf(MapEvents.STYLE_FULLY_LOADED))
+fun ObservableInterface.unsubscribeStyleLoaded(observer: Observer) =
+  unsubscribe(observer, listOf(MapEvents.STYLE_LOADED))
 
 /**
  * Subscribes an Observer for of event type "style-image-missing".
@@ -256,7 +254,7 @@ fun ObservableInterface.unsubscribeSourceAdded(observer: Observer) =
   unsubscribe(observer, listOf(MapEvents.SOURCE_ADDED))
 
 /**
- * Subscribes an Observer for of event type "source-changed".
+ * Subscribes an Observer for of event type "source-data-loaded".
  *
  * Observable will hold a strong reference to an Observer instance, therefore,
  * in order to stop receiving notifications, caller must call unsubscribe with an
@@ -264,16 +262,16 @@ fun ObservableInterface.unsubscribeSourceAdded(observer: Observer) =
  *
  * @param observer an Observer
  */
-fun ObservableInterface.subscribeSourceChanged(observer: Observer) =
-  subscribe(observer, listOf(MapEvents.SOURCE_CHANGED))
+fun ObservableInterface.subscribeSourceDataLoaded(observer: Observer) =
+  subscribe(observer, listOf(MapEvents.SOURCE_DATA_LOADED))
 
 /**
- * Unsubscribe an Observer for event types "source-changed".
+ * Unsubscribe an Observer for event types "source-data-loaded".
  *
  * @param observer an Observer
  */
-fun ObservableInterface.unsubscribeSourceChanged(observer: Observer) =
-  unsubscribe(observer, listOf(MapEvents.SOURCE_CHANGED))
+fun ObservableInterface.unsubscribeSourceDataLoaded(observer: Observer) =
+  unsubscribe(observer, listOf(MapEvents.SOURCE_DATA_LOADED))
 
 /**
  * Subscribes an Observer for of event type "source-removed".
@@ -314,6 +312,24 @@ fun Event.getMapLoadingErrorEventData(): MapLoadingErrorEventData {
   return Gson().fromJson(json, MapLoadingErrorEventData::class.java)
 }
 
+/**
+ * Get the parsed event data for style data loaded event.
+ * @return a parsed StyleDataLoadedEventData object.
+ */
+fun Event.getStyleDataLoadedEventData(): StyleDataLoadedEventData {
+  val json = ValueConverter.toJson(data)
+  return Gson().fromJson(json, StyleDataLoadedEventData::class.java)
+}
+
+/**
+ * Get the parsed event data for source data loaded event.
+ * @return a parsed SourceDataLoadedEventData object.
+ */
+fun Event.getSourceDataLoadedEventData(): SourceDataLoadedEventData {
+  val json = ValueConverter.toJson(data)
+  return Gson().fromJson(json, SourceDataLoadedEventData::class.java)
+}
+
 internal fun Event.getIDStringEventData(): IDStringEventData {
   val json = ValueConverter.toJson(data)
   return Gson().fromJson(json, IDStringEventData::class.java)
@@ -336,12 +352,6 @@ fun Event.getStyleImageUnusedEventData(): IDStringEventData = getIDStringEventDa
  * @return a parsed IDStringEventData.
  */
 fun Event.getSourceAddedEventData(): IDStringEventData = getIDStringEventData()
-
-/**
- * Get the parsed event data for source changed event.
- * @return a parsed IDStringEventData.
- */
-fun Event.getSourceChangedEventData(): IDStringEventData = getIDStringEventData()
 
 /**
  * Get the parsed event data for source removed event.

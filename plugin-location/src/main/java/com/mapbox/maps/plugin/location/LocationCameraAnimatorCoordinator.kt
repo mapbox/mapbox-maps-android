@@ -400,6 +400,6 @@ internal class LocationCameraAnimatorCoordinator(
 
   internal fun jumpCamera(cameraOptions: CameraOptions) {
     cancelAndUnregisterAllAnimators()
-    mapTransformDelegate.jumpTo(cameraOptions)
+    mapTransformDelegate.setCamera(cameraOptions)
   }
 }

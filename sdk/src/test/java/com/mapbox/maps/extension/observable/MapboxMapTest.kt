@@ -36,7 +36,7 @@ class MapboxMapTest {
 
   @Test
   fun getEventData() {
-    val event = Event("resource-request", Date(), Date(), Value.valueOf("test"))
+    val event = Event("resource-request", Value.valueOf("test"))
     val request = Request(listOf("network"), "https://api.mapbox.com", "tile", "regular")
     val response = Response(
       "d8abd8d10bee6b45b4dbf5c05496587a",

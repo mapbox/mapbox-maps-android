@@ -39,11 +39,13 @@ class MapSnapshotterTest {
         .build()
 
       mapSnapshotter = MapSnapshotter(snapshotterOptions)
-      mapSnapshotter.cameraOptions = CameraOptions.Builder().zoom(14.0).center(
-        com.mapbox.geojson.Point.fromLngLat(
-          4.895033, 52.374724
-        )
-      ).build()
+      mapSnapshotter.setCamera(
+        CameraOptions.Builder().zoom(14.0).center(
+          com.mapbox.geojson.Point.fromLngLat(
+            4.895033, 52.374724
+          )
+        ).build()
+      )
       mapSnapshotter.styleURI = Style.MAPBOX_STREETS
       mapSnapshotter.start {
         latch.countDown()
