@@ -103,14 +103,20 @@ internal class LocationPuckManager(
 
   fun updateCurrentPosition(vararg points: Point, options: (ValueAnimator.() -> Unit)? = null) {
     val targets = arrayOf(lastLocation, *points)
-    lastLocation = arrayOf(*points).last()
-    animationManager.animatePosition(*targets, options = options)
+    animationManager.animatePosition(
+      *targets,
+      onUpdate = { lastLocation = it },
+      options = options
+    )
   }
 
   fun updateCurrentBearing(vararg bearings: Double, options: (ValueAnimator.() -> Unit)? = null) {
     val targets = doubleArrayOf(lastBearing, *bearings)
-    lastBearing = doubleArrayOf(*bearings).last()
-    animationManager.animateBearing(*targets, options = options)
+    animationManager.animateBearing(
+      *targets,
+      onUpdate = { lastBearing = it },
+      options = options
+    )
   }
 
   fun updateLocationAnimator(block: ValueAnimator.() -> Unit) {

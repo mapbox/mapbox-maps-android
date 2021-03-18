@@ -127,13 +127,13 @@ class LocationPuckManagerTest {
   @Test
   fun testUpdateCurrentPosition() {
     locationPuckManager.updateCurrentPosition(Point.fromLngLat(0.0, 0.0))
-    verify { animationManager.animatePosition(targets = anyVararg(), options = null) }
+    verify { animationManager.animatePosition(targets = anyVararg(), onUpdate = any(), options = null) }
   }
 
   @Test
   fun testUpdateCurrentBearing() {
     locationPuckManager.updateCurrentBearing(0.0)
-    verify { animationManager.animateBearing(targets = anyDoubleVararg(), options = null) }
+    verify { animationManager.animateBearing(targets = anyDoubleVararg(), onUpdate = any(), options = null) }
   }
 
   @Test
