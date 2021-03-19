@@ -260,9 +260,9 @@ class MapboxRenderThreadTest {
     every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
     mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
     Shadows.shadowOf(workerThread.handler?.looper).pause()
-    mapboxRenderThread.queueEvent { }
+    mapboxRenderThread.queueRenderEvent { }
     Shadows.shadowOf(workerThread.handler?.looper).idle()
-    assert(mapboxRenderThread.eventQueue.isEmpty())
+    assert(mapboxRenderThread.renderEventQueue.isEmpty())
     // one swap buffer from surface creation, one for custom event
     verify(exactly = 2) {
       eglCore.swapBuffers(any())

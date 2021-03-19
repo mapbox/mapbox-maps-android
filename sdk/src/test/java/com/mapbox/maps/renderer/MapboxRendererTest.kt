@@ -69,7 +69,7 @@ internal abstract class MapboxRendererTest {
   @Test
   fun queueEventTest() {
     mapboxRenderer.queueEvent {}
-    verify { renderThread.queueEvent(any()) }
+    verify { renderThread.queueRenderEvent(any()) }
   }
 
   @Test
@@ -116,7 +116,7 @@ internal abstract class MapboxRendererTest {
       handler = Handler(this.looper)
     }
     val runnable = slot<Runnable>()
-    every { renderThread.queueEvent(capture(runnable)) } answers {
+    every { renderThread.queueRenderEvent(capture(runnable)) } answers {
       handler.post(runnable.captured)
     }
     mapboxRenderer.pixelReader = pixelReader
@@ -140,7 +140,7 @@ internal abstract class MapboxRendererTest {
       handler = Handler(this.looper)
     }
     val runnable = slot<Runnable>()
-    every { renderThread.queueEvent(capture(runnable)) } answers {
+    every { renderThread.queueRenderEvent(capture(runnable)) } answers {
       handler.post(runnable.captured)
     }
     mapboxRenderer.pixelReader = pixelReader

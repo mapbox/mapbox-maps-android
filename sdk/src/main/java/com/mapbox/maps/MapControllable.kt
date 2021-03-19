@@ -41,11 +41,12 @@ interface MapControllable {
   fun onSizeChanged(w: Int, h: Int)
 
   /**
-   * Called to queue an event on the render thread.
+   * Queue a runnable to be executed on the map renderer thread.
    *
-   * @param runnable the runnable to be queued
+   * @param event the runnable to queue
+   * @param needRender if we should force redraw after running event (e.g. execute some GL commands)
    */
-  fun queueEvent(runnable: Runnable)
+  fun queueEvent(event: Runnable, needRender: Boolean = true)
 
   /**
    * Called to capture a snapshot synchronously.

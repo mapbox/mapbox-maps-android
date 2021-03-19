@@ -189,10 +189,11 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   /**
    * Queue a runnable to be executed on the map renderer thread.
    *
-   * @param runnable the runnable to queue
+   * @param event the runnable to queue
+   * @param needRender if we should force redraw after running event (e.g. execute some GL commands)
    */
-  override fun queueEvent(runnable: Runnable) {
-    mapController.queueEvent(runnable)
+  override fun queueEvent(event: Runnable, needRender: Boolean) {
+    mapController.queueEvent(event, needRender)
   }
 
   /**
