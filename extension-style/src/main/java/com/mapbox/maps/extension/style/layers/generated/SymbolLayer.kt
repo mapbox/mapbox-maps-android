@@ -20,7 +20,7 @@ import kotlin.collections.ArrayList
 /**
  * An icon or a text label.
  *
- * @see <a href="https://www.mapbox.com/mapbox-gl-style-spec/#layers-symbol">The online documentation</a>
+ * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-symbol)
  *
  * @param layerId the ID of the layer
  * @param sourceId the ID of the source

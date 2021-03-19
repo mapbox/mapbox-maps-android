@@ -67,7 +67,7 @@ class FillManager(
    * FillOptions.PROPERTY_FILL_OPACITY - Double<br>
    * FillOptions.PROPERTY_FILL_OUTLINE_COLOR - String<br>
    * FillOptions.PROPERTY_FILL_PATTERN - String<br>
-   * Learn more about above properties in the <a href="https://www.mapbox.com/mapbox-gl-js/style-spec/">Style specification</a>.
+   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    * <p>
    * Out of spec properties:<br>
    * "is-draggable" - Boolean, true if the fill should be draggable, false otherwise
@@ -90,7 +90,7 @@ class FillManager(
    * FillOptions.PROPERTY_FILL_OPACITY - Double<br>
    * FillOptions.PROPERTY_FILL_OUTLINE_COLOR - String<br>
    * FillOptions.PROPERTY_FILL_PATTERN - String<br>
-   * Learn more about above properties in the <a href="https://www.mapbox.com/mapbox-gl-js/style-spec/">Style specification</a>.
+   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    * <p>
    * Out of spec properties:<br>
    * "is-draggable" - Boolean, true if the fill should be draggable, false otherwise

@@ -79,7 +79,7 @@ class LineManager(
    * LineOptions.PROPERTY_LINE_OPACITY - Double<br>
    * LineOptions.PROPERTY_LINE_PATTERN - String<br>
    * LineOptions.PROPERTY_LINE_WIDTH - Double<br>
-   * Learn more about above properties in the <a href="https://www.mapbox.com/mapbox-gl-js/style-spec/">Style specification</a>.
+   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    * <p>
    * Out of spec properties:<br>
    * "is-draggable" - Boolean, true if the line should be draggable, false otherwise
@@ -106,7 +106,7 @@ class LineManager(
    * LineOptions.PROPERTY_LINE_OPACITY - Double<br>
    * LineOptions.PROPERTY_LINE_PATTERN - String<br>
    * LineOptions.PROPERTY_LINE_WIDTH - Double<br>
-   * Learn more about above properties in the <a href="https://www.mapbox.com/mapbox-gl-js/style-spec/">Style specification</a>.
+   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    * <p>
    * Out of spec properties:<br>
    * "is-draggable" - Boolean, true if the line should be draggable, false otherwise

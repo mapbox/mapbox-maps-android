@@ -15,7 +15,7 @@ import java.util.*
 /**
  * A heatmap.
  *
- * @see <a href="https://www.mapbox.com/mapbox-gl-style-spec/#layers-heatmap">The online documentation</a>
+ * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-heatmap)
  *
  * @param layerId the ID of the layer
  * @param sourceId the ID of the source

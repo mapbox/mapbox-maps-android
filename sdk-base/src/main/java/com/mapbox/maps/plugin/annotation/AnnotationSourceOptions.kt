@@ -2,7 +2,7 @@ package com.mapbox.maps.plugin.annotation
 
 /**
  * Configure class for composing GeoJsonSource objects that included in Annotation
- * @see <a href="https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#geojson">The online documentation</a>
+ * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#geojson)
  */
 data class AnnotationSourceOptions(
   /**

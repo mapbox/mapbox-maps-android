@@ -544,12 +544,12 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   }
 
   /**
-   * Update a data-driven property to used state. Please visit https://docs.mapbox.com/android/maps/guides/data-driven-styling/ for more details about data-driven-styling
+   * Update a data-driven property to used state. Please visit [The online documentation](https://docs.mapbox.com/android/maps/guides/data-driven-styling/) for more details about data-driven-styling
    */
   protected abstract fun setDataDrivenPropertyIsUsed(property: String)
 
   /**
-   * Init data-driven properties map. please visit https://docs.mapbox.com/android/maps/guides/data-driven-styling/ for more details about data-driven-styling
+   * Init data-driven properties map. please visit [The online documentation](https://docs.mapbox.com/android/maps/guides/data-driven-styling/ for more details about data-driven-styling)
    */
   protected abstract fun initializeDataDrivenPropertyMap()
 

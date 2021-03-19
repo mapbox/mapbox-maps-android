@@ -14,7 +14,7 @@ import java.util.*
 /**
  * An image data source.
  *
- * @see <a href="https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#image">The online documentation</a>
+ * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#image)
  *
  */
 class ImageSource(builder: Builder) : Source(builder.sourceId) {

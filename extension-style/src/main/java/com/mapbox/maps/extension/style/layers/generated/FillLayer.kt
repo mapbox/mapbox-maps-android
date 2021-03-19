@@ -19,7 +19,7 @@ import java.util.*
 /**
  * A filled polygon with an optional stroked border.
  *
- * @see <a href="https://www.mapbox.com/mapbox-gl-style-spec/#layers-fill">The online documentation</a>
+ * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#layers-fill)
  *
  * @param layerId the ID of the layer
  * @param sourceId the ID of the source

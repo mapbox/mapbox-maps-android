@@ -16,7 +16,7 @@ import kotlin.collections.HashMap
 /**
  * A global modifier that elevates layers and markers based on a DEM data source.
  *
- * @see <a href="https://www.mapbox.com/mapbox-gl-style-spec/#terrain">The online documentation</a>
+ * @see [The online documentation](https://www.mapbox.com/mapbox-gl-style-spec/#terrain)
  */
 @UiThread
 class Terrain(private val sourceId: String) : TerrainDslReceiver, StyleContract.StyleTerrainExtension {

@@ -135,7 +135,7 @@ interface AnnotationManager<
   fun removeLongClickListener(v: V) = longClickListeners.remove(v)
 
   /**
-   * Enable a data-driven property. Please visit https://docs.mapbox.com/android/maps/guides/data-driven-styling/ for more details about data-driven-styling
+   * Enable a data-driven property. Please visit [The online documentation](https://docs.mapbox.com/android/maps/guides/data-driven-styling/) for more details about data-driven-styling
    */
   fun enableDataDrivenProperty(property: String)
 }
