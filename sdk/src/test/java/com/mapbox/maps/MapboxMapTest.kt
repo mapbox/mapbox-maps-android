@@ -82,6 +82,7 @@ class MapboxMapTest {
     mapboxMap.onFinishLoadingStyle(styleLoadCallback, mapLoadError)
     verify { styleLoadCallback.onStyleLoaded(any()) }
     verify { mapObserver.awaitingStyleGetters.clear() }
+    verify { mapboxMap.removeOnMapLoadErrorListener(mapLoadError) }
   }
 
   @Test

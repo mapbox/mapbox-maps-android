@@ -211,7 +211,7 @@ class MapboxMap internal constructor(
       nativeObserver.awaitingStyleGetters.clear()
     }
     onMapLoadErrorListener?.let {
-      addOnMapLoadErrorListener(it)
+      removeOnMapLoadErrorListener(it)
     }
   }
 

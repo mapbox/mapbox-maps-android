@@ -69,7 +69,7 @@ abstract class BaseMapTest {
       it.runOnUiThread {
         mapboxMap = mapView.getMapboxMap()
         mapboxMap.loadStyleUri(
-          Style.MAPBOX_STREETS
+          Style.LIGHT
         ) { style ->
           this@BaseMapTest.style = style
           latch.countDown()

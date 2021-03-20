@@ -104,11 +104,15 @@ internal class NativeObserver(
   }
 
   internal fun onStop() {
-    observable.get()?.unsubscribe(this)
+    handler.post {
+      observable.get()?.unsubscribe(this)
+    }
   }
 
   internal fun onStart() {
-    observable.get()?.subscribe(this, observedEvents)
+    handler.post {
+      observable.get()?.subscribe(this, observedEvents)
+    }
   }
 
   //
