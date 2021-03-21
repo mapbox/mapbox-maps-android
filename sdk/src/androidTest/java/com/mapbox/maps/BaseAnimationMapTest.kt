@@ -49,7 +49,7 @@ abstract class BaseAnimationMapTest {
 
         mapboxMap = mapView.getMapboxMap()
         mapboxMap.loadStyleUri(
-          Style.LIGHT
+          Style.DARK
         ) { style ->
           this@BaseAnimationMapTest.style = style
           latch.countDown()
