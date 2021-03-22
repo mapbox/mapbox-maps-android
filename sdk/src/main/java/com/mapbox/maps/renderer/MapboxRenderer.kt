@@ -96,9 +96,7 @@ internal abstract class MapboxRenderer : MapClient() {
 
   @AnyThread
   fun queueEvent(runnable: Runnable) {
-    renderThread.queueEvent {
-      runnable.run()
-    }
+    renderThread.queueEvent(runnable)
   }
 
   @AnyThread

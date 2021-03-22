@@ -36,7 +36,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val renderEventQueue = CopyOnWriteArrayList<Runnable>()
-  private val eventQueue = CopyOnWriteArrayList<Runnable>()
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal val eventQueue = CopyOnWriteArrayList<Runnable>()
 
   private var surface: Surface? = null
   private var eglSurface: EGLSurface? = EGL10.EGL_NO_SURFACE
@@ -48,7 +49,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   private var needRenderOnResume = false
   private var expectedVsyncWakeTimeNs = 0L
-  private var awaitingNextVsync = AtomicBoolean(false)
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal var awaitingNextVsync = AtomicBoolean(false)
   private var sizeChanged = false
   private var paused = false
   private var shouldExit = false
@@ -146,6 +148,17 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
+  private fun drainQueue(queue: CopyOnWriteArrayList<Runnable>) {
+    queue.apply {
+      if (isNotEmpty()) {
+        forEach {
+          it.run()
+        }
+        clear()
+      }
+    }
+  }
+
   private fun draw() {
     val renderTimeNsCopy = renderTimeNs.get()
     val currentTimeNs = SystemClock.elapsedRealtimeNanos()
@@ -201,14 +214,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       return
     }
     checkSurfaceSizeChanged()
-    renderEventQueue.apply {
-      if (isNotEmpty()) {
-        forEach {
-          it.run()
-        }
-        clear()
-      }
-    }
+    drainQueue(renderEventQueue)
     // listen to next VSYNC event if not listening already
     if (awaitingNextVsync.compareAndSet(false, true)) {
       Choreographer.getInstance().postFrameCallback(this)
@@ -233,8 +239,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       handlerThread.post {
         awaitingNextVsync.set(false)
         Choreographer.getInstance().removeFrameCallback(this)
-        eventQueue.clear()
-        renderEventQueue.clear()
         shouldExit = true
         lock.withLock {
           mapboxRenderer.onSurfaceDestroyed()
@@ -268,6 +272,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         this.width = width
         this.height = height
         shouldExit = false
+        eventQueue.clear()
+        renderEventQueue.clear()
         prepareRenderFrame()
       }
       createCondition.await()
@@ -283,22 +289,12 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   override fun doFrame(frameTimeNanos: Long) {
     try {
       awaitingNextVsync.set(false)
-      // if frame started being rendered time is less or equal to previous one
-      // it means we did not have time to render everything on previous frame
-      // we do no drawing in order not to overload render thread
       if (eglPrepared && !paused && !shouldExit) {
         draw()
       }
     } finally {
       // regardless if we did drawing or not execute all non gl relative events
-      eventQueue.apply {
-        if (isNotEmpty()) {
-          forEach {
-            it.run()
-          }
-          clear()
-        }
-      }
+      drainQueue(eventQueue)
     }
   }
 
@@ -323,7 +319,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       eventQueue.add(runnable)
     } else {
       handlerThread.post {
-        runnable.run()
+        // at the time we start executing surface may be already destroyed
+        if (!shouldExit) {
+          runnable.run()
+        }
       }
     }
   }

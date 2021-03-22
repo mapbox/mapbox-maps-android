@@ -38,12 +38,6 @@ class MapControllerTest {
 
   private val motionEvent: MotionEvent = mockk(relaxed = true)
 
-  private val pixelRatio = 1f
-
-  private val cachePath = "foo/bar"
-
-  private val resourcesPath = "foo/bar/biz"
-
   private lateinit var mapController: MapController
 
   @Before
@@ -170,8 +164,10 @@ class MapControllerTest {
   @Test
   fun queueEvent() {
     val event = mockk<Runnable>()
-    mapController.queueEvent(event)
+    mapController.queueEvent(event, false)
     verify { renderer.queueEvent(event) }
+    mapController.queueEvent(event, true)
+    verify { renderer.queueRenderEvent(event) }
   }
 
   @Test
