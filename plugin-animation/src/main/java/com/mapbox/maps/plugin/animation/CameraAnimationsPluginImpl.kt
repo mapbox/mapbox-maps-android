@@ -3,6 +3,8 @@ package com.mapbox.maps.plugin.animation
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
+import androidx.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
@@ -27,7 +29,8 @@ import kotlin.properties.Delegates
 
 internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
-  private val animators = hashSetOf<CameraAnimator<*>>()
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal val animators = hashSetOf<CameraAnimator<*>>()
   private val runningAnimatorsQueue = LinkedHashSet<ValueAnimator>()
 
   /**
@@ -36,7 +39,8 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
    * Consists of set owner + animator set itself.
    */
   private var highLevelAnimatorSet: HighLevelAnimatorSet? = null
-  private var highLevelListener: Animator.AnimatorListener? = null
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal var highLevelListener: Animator.AnimatorListener? = null
 
   private val centerListeners = CopyOnWriteArraySet<CameraAnimatorChangeListener<Point>>()
   private val zoomListeners = CopyOnWriteArraySet<CameraAnimatorChangeListener<Double>>()
@@ -723,9 +727,9 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         Logger.e(TAG, "All animators must be CameraAnimator's to be played together!")
       }
     }
-    registerAnimators(*animators)
+    registerAnimators(*cameraAnimators.toTypedArray())
     AnimatorSet().apply {
-      playTogether(*animators)
+      playTogether(*cameraAnimators.toTypedArray())
       start()
     }
   }
@@ -746,9 +750,9 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         Logger.e(TAG, "All animators must be CameraAnimator's to be played sequentially!")
       }
     }
-    registerAnimators(*animators)
+    registerAnimators(*cameraAnimators.toTypedArray())
     AnimatorSet().apply {
-      playSequentially(*animators)
+      playSequentially(*cameraAnimators.toTypedArray())
       start()
     }
   }
@@ -771,7 +775,16 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         interpolator = it
       }
       animationOptions?.animatorListener?.let {
-        highLevelListener = it
+        // duration == 0L does not behave the same as > 0 and actually
+        // our custom `highLevelListener` designed for proper notifying of lifecycle
+        // based on `runningAnimatorsQueue` is not working because animators end immediately.
+        // We use standard listener in that corner case.
+        highLevelListener = if (animationOptions.duration == 0L) {
+          addListener(it)
+          null
+        } else {
+          it
+        }
       }
       playTogether(*animators)
     }

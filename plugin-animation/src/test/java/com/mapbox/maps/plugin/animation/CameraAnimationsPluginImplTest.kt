@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.animation
 
 import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import android.os.Handler
@@ -804,6 +805,38 @@ class CameraAnimationsPluginImplTest {
     assertEquals(true, listenerTwo.cancelling)
     assertEquals(true, listenerTwo.ending)
     assertEquals(true, listenerTwo.interrupting)
+  }
+
+  @Test
+  fun easeToTestNonZeroDurationWithListener() {
+    val options = mapAnimationOptions {
+      duration(1000)
+      animatorListener(object : AnimatorListenerAdapter() {})
+    }
+    cameraAnimationsPluginImpl.easeTo(cameraOptions, options)
+    assert(cameraAnimationsPluginImpl.highLevelListener != null)
+  }
+
+  @Test
+  fun easeToTestZeroDurationWithListener() {
+    val options = mapAnimationOptions {
+      duration(0)
+      animatorListener(object : AnimatorListenerAdapter() {})
+    }
+    cameraAnimationsPluginImpl.easeTo(cameraOptions, options)
+    assert(cameraAnimationsPluginImpl.highLevelListener == null)
+  }
+
+  @Test
+  fun registerOnlyCameraAnimatorsTest() {
+    val pitch = createPitchAnimator(15.0, 0, 5)
+    val bearing = createBearingAnimator(10.0, 0, 5)
+    val animator = ValueAnimator.ofFloat(0.0f, 10.0f)
+    cameraAnimationsPluginImpl.playAnimatorsSequentially(pitch, bearing, animator)
+    assert(cameraAnimationsPluginImpl.animators.size == 2)
+    cameraAnimationsPluginImpl.unregisterAllAnimators()
+    cameraAnimationsPluginImpl.playAnimatorsTogether(pitch, bearing, animator)
+    assert(cameraAnimationsPluginImpl.animators.size == 2)
   }
 
   @Test
