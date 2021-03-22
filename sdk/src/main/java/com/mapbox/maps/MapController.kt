@@ -143,8 +143,12 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     pluginRegistry.onSizeChanged(w, h)
   }
 
-  override fun queueEvent(runnable: Runnable) {
-    renderer.queueEvent(runnable)
+  override fun queueEvent(event: Runnable, needRender: Boolean) {
+    if (needRender) {
+      renderer.queueRenderEvent(event)
+    } else {
+      renderer.queueEvent(event)
+    }
   }
 
   override fun snapshot() = renderer.snapshot()

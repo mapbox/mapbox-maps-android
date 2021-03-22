@@ -8,6 +8,7 @@ import io.mockk.mockk
 import io.mockk.unmockkAll
 import io.mockk.verify
 import org.junit.After
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -253,18 +254,63 @@ class MapboxRenderThreadTest {
   }
 
   @Test
-  fun queueEventTest() {
+  fun queueRenderEventTest() {
     val surface = mockk<Surface>()
     every { surface.isValid } returns true
     every { eglCore.eglStatusSuccess } returns true
     every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
     mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
+    val runnable = mockk<Runnable>(relaxUnitFun = true)
     Shadows.shadowOf(workerThread.handler?.looper).pause()
-    mapboxRenderThread.queueEvent { }
+    mapboxRenderThread.queueRenderEvent(runnable)
     Shadows.shadowOf(workerThread.handler?.looper).idle()
-    assert(mapboxRenderThread.eventQueue.isEmpty())
+    assert(mapboxRenderThread.renderEventQueue.isEmpty())
+    verify { runnable.run() }
     // one swap buffer from surface creation, one for custom event
     verify(exactly = 2) {
+      eglCore.swapBuffers(any())
+    }
+  }
+
+  @Test
+  fun queueEventTestWithAwaitVsync() {
+    val surface = mockk<Surface>()
+    every { surface.isValid } returns true
+    every { eglCore.eglStatusSuccess } returns true
+    every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
+    mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
+    val runnable = mockk<Runnable>(relaxUnitFun = true)
+    mapboxRenderThread.awaitingNextVsync.set(true)
+    Shadows.shadowOf(workerThread.handler?.looper).pause()
+    mapboxRenderThread.queueEvent(runnable)
+    Assert.assertEquals(1, mapboxRenderThread.eventQueue.size)
+    mapboxRenderThread.requestRender()
+    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    assert(mapboxRenderThread.eventQueue.isEmpty())
+    verify { runnable.run() }
+    // one swap buffer from surface creation, one for custom event
+    verify(exactly = 2) {
+      eglCore.swapBuffers(any())
+    }
+  }
+
+  @Test
+  fun queueEventTestWithoutAwaitVsync() {
+    val surface = mockk<Surface>()
+    every { surface.isValid } returns true
+    every { eglCore.eglStatusSuccess } returns true
+    every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
+    mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
+    val runnable = mockk<Runnable>(relaxUnitFun = true)
+    mapboxRenderThread.awaitingNextVsync.set(false)
+    Shadows.shadowOf(workerThread.handler?.looper).pause()
+    mapboxRenderThread.queueEvent(runnable)
+    Assert.assertEquals(0, mapboxRenderThread.eventQueue.size)
+    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    assert(mapboxRenderThread.eventQueue.isEmpty())
+    verify { runnable.run() }
+    // one swap buffer from surface creation and no from custom event
+    verify(exactly = 1) {
       eglCore.swapBuffers(any())
     }
   }

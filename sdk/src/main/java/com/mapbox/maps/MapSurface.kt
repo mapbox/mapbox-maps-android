@@ -117,12 +117,13 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
   }
 
   /**
-   * Called to queue an event on the render thread.
+   * Queue a runnable to be executed on the map renderer thread.
    *
-   * @param runnable the runnable to be queued
+   * @param event the runnable to queue
+   * @param needRender if we should force redraw after running event (e.g. execute some GL commands)
    */
-  override fun queueEvent(runnable: Runnable) {
-    mapController.queueEvent(runnable)
+  override fun queueEvent(event: Runnable, needRender: Boolean) {
+    mapController.queueEvent(event)
   }
 
   /**

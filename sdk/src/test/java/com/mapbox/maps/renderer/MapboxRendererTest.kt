@@ -8,6 +8,7 @@ import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.MapInterface
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Size
+import com.mapbox.maps.Task
 import com.mapbox.maps.renderer.gl.PixelReader
 import io.mockk.every
 import io.mockk.mockk
@@ -49,6 +50,13 @@ internal abstract class MapboxRendererTest {
   }
 
   @Test
+  fun scheduleTaskTest() {
+    val task = mockk<Task>(relaxUnitFun = true)
+    mapboxRenderer.scheduleTask(task)
+    verify { renderThread.queueEvent(any()) }
+  }
+
+  @Test
   fun onStartTest() {
     mapboxRenderer.onStart()
     verify { renderThread.resume() }
@@ -68,8 +76,16 @@ internal abstract class MapboxRendererTest {
 
   @Test
   fun queueEventTest() {
-    mapboxRenderer.queueEvent {}
-    verify { renderThread.queueEvent(any()) }
+    val event = mockk<Runnable>(relaxUnitFun = true)
+    mapboxRenderer.queueEvent(event)
+    verify { renderThread.queueEvent(event) }
+  }
+
+  @Test
+  fun queueRenderEventTest() {
+    val event = mockk<Runnable>(relaxUnitFun = true)
+    mapboxRenderer.queueRenderEvent(event)
+    verify { renderThread.queueRenderEvent(event) }
   }
 
   @Test
@@ -116,7 +132,7 @@ internal abstract class MapboxRendererTest {
       handler = Handler(this.looper)
     }
     val runnable = slot<Runnable>()
-    every { renderThread.queueEvent(capture(runnable)) } answers {
+    every { renderThread.queueRenderEvent(capture(runnable)) } answers {
       handler.post(runnable.captured)
     }
     mapboxRenderer.pixelReader = pixelReader
@@ -140,7 +156,7 @@ internal abstract class MapboxRendererTest {
       handler = Handler(this.looper)
     }
     val runnable = slot<Runnable>()
-    every { renderThread.queueEvent(capture(runnable)) } answers {
+    every { renderThread.queueRenderEvent(capture(runnable)) } answers {
       handler.post(runnable.captured)
     }
     mapboxRenderer.pixelReader = pixelReader

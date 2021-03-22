@@ -9,7 +9,8 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import com.mapbox.common.Logger
 import com.mapbox.maps.renderer.egl.EGLCore
-import java.util.LinkedList
+import java.util.concurrent.CopyOnWriteArrayList
+import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicLong
 import java.util.concurrent.locks.ReentrantLock
 import javax.microedition.khronos.egl.EGL10
@@ -34,7 +35,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   private val createCondition = lock.newCondition()
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal val eventQueue = LinkedList<Runnable>()
+  internal val renderEventQueue = CopyOnWriteArrayList<Runnable>()
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal val eventQueue = CopyOnWriteArrayList<Runnable>()
 
   private var surface: Surface? = null
   private var eglSurface: EGLSurface? = EGL10.EGL_NO_SURFACE
@@ -45,8 +48,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   internal val renderTimeNs = AtomicLong(0)
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   private var needRenderOnResume = false
-  private var previousVsyncFrameStartTimeNs = 0L
   private var expectedVsyncWakeTimeNs = 0L
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal var awaitingNextVsync = AtomicBoolean(false)
   private var sizeChanged = false
   private var paused = false
   private var shouldExit = false
@@ -78,8 +82,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     this.eglSurface = null
   }
 
-  private fun postRender() {
-    handlerThread.post { render() }
+  private fun postPrepareRenderFrame() {
+    handlerThread.post { prepareRenderFrame() }
   }
 
   private fun checkSurfaceReady(): Boolean {
@@ -110,14 +114,14 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
     if (!surface.isValid) {
       Logger.w(TAG, "EGL was configured but surface is not valid.")
-      postRender()
+      postPrepareRenderFrame()
       return false
     }
     eglSurface = eglCore.createWindowSurface(surface)
     if (!eglCore.eglStatusSuccess) {
       // Set EGL Surface as EGL_NO_SURFACE and try recreate it in next iteration.
       eglSurface = EGL10.EGL_NO_SURFACE
-      postRender()
+      postPrepareRenderFrame()
       return false
     }
     eglSurface?.let {
@@ -141,6 +145,17 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         height = height
       )
       sizeChanged = false
+    }
+  }
+
+  private fun drainQueue(queue: CopyOnWriteArrayList<Runnable>) {
+    queue.apply {
+      if (isNotEmpty()) {
+        forEach {
+          it.run()
+        }
+        clear()
+      }
     }
   }
 
@@ -184,7 +199,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
-  private fun render() {
+  private fun prepareRenderFrame() {
     // Check first if we have to stop rendering at all (even if there was no EGL config) and cleanup EGL.
     // We need to check it ASAP in order not to block thread that is calling `onSurfaceTextureDestroyed`.
     // After that check MapView could be actually rendered on this device (has valid EGL config).
@@ -199,15 +214,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       return
     }
     checkSurfaceSizeChanged()
-    eventQueue.poll()?.let {
-      it.run()
-      // assuming runnable will most likely contain GL commands or something else rendering related
-      // we post draw call not considering `requestRender` flag
+    drainQueue(renderEventQueue)
+    // listen to next VSYNC event if not listening already
+    if (awaitingNextVsync.compareAndSet(false, true)) {
       Choreographer.getInstance().postFrameCallback(this)
-      return
     }
-    // listen to next VSYNC event
-    Choreographer.getInstance().postFrameCallback(this)
   }
 
   @UiThread
@@ -217,7 +228,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         this.width = width
         this.height = height
         sizeChanged = true
-        render()
+        prepareRenderFrame()
       }
     }
   }
@@ -226,6 +237,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   fun onSurfaceDestroyed() {
     lock.withLock {
       handlerThread.post {
+        awaitingNextVsync.set(false)
+        Choreographer.getInstance().removeFrameCallback(this)
         shouldExit = true
         lock.withLock {
           mapboxRenderer.onSurfaceDestroyed()
@@ -259,7 +272,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         this.width = width
         this.height = height
         shouldExit = false
-        render()
+        eventQueue.clear()
+        renderEventQueue.clear()
+        prepareRenderFrame()
       }
       createCondition.await()
     }
@@ -272,15 +287,14 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @WorkerThread
   override fun doFrame(frameTimeNanos: Long) {
-    // if frame started being rendered time is less or equal to previous one
-    // it means we did not have time to render everything on previous frame
-    // we do no drawing in order not to overload render thread
-    if (frameTimeNanos <= previousVsyncFrameStartTimeNs) {
-      return
-    }
-    if (eglPrepared && !paused && !shouldExit) {
-      previousVsyncFrameStartTimeNs = frameTimeNanos
-      draw()
+    try {
+      awaitingNextVsync.set(false)
+      if (eglPrepared && !paused && !shouldExit) {
+        draw()
+      }
+    } finally {
+      // regardless if we did drawing or not execute all non gl relative events
+      drainQueue(eventQueue)
     }
   }
 
@@ -288,14 +302,28 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @AnyThread
   fun requestRender() {
-    postRender()
+    postPrepareRenderFrame()
+  }
+
+  @AnyThread
+  fun queueRenderEvent(runnable: Runnable) {
+    renderEventQueue.add(runnable)
+    postPrepareRenderFrame()
   }
 
   @AnyThread
   fun queueEvent(runnable: Runnable) {
-    handlerThread.post {
+    // if we already waiting listening for next VSYNC then add runnable to queue to execute
+    // after actual drawing otherwise execute asap on render thread
+    if (awaitingNextVsync.get()) {
       eventQueue.add(runnable)
-      render()
+    } else {
+      handlerThread.post {
+        // at the time we start executing surface may be already destroyed
+        if (!shouldExit) {
+          runnable.run()
+        }
+      }
     }
   }
 
@@ -311,7 +339,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     handlerThread.post {
       paused = false
       if (needRenderOnResume) {
-        render()
+        prepareRenderFrame()
         needRenderOnResume = false
       }
     }

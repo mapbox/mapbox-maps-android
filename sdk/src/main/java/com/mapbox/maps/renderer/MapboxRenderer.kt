@@ -9,6 +9,7 @@ import com.mapbox.maps.MapClient
 import com.mapbox.maps.MapInterface
 import com.mapbox.maps.MapView.OnSnapshotReady
 import com.mapbox.maps.Size
+import com.mapbox.maps.Task
 import com.mapbox.maps.renderer.gl.PixelReader
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
@@ -42,6 +43,13 @@ internal abstract class MapboxRenderer : MapClient() {
   @AnyThread
   override fun scheduleRepaint() {
     renderThread.requestRender()
+  }
+
+  @AnyThread
+  override fun scheduleTask(task: Task) {
+    renderThread.queueEvent {
+      task.run()
+    }
   }
 
   @WorkerThread
@@ -82,6 +90,11 @@ internal abstract class MapboxRenderer : MapClient() {
   }
 
   @AnyThread
+  fun queueRenderEvent(runnable: Runnable) {
+    renderThread.queueRenderEvent(runnable)
+  }
+
+  @AnyThread
   fun queueEvent(runnable: Runnable) {
     renderThread.queueEvent(runnable)
   }
@@ -92,7 +105,7 @@ internal abstract class MapboxRenderer : MapClient() {
     val waitCondition = lock.newCondition()
     lock.withLock {
       var snapshot: Bitmap? = null
-      renderThread.queueEvent {
+      renderThread.queueRenderEvent {
         lock.withLock {
           snapshot = performSnapshot()
           waitCondition.signal()
@@ -105,7 +118,7 @@ internal abstract class MapboxRenderer : MapClient() {
 
   @AnyThread
   fun snapshot(listener: OnSnapshotReady) {
-    renderThread.queueEvent {
+    renderThread.queueRenderEvent {
       listener.onSnapshotReady(performSnapshot())
     }
   }
