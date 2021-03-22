@@ -585,19 +585,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   }
 
   /**
-   * Calculate target [Point] for moving by offset
-   *
-   * @param offset The screen coordinate distance to move by
-   */
-  override fun calculateMoveBy(offset: ScreenCoordinate): Point =
-    CameraTransform.calculateLatLngMoveBy(
-      offset,
-      mapCameraDelegate.getCameraOptions(),
-      mapTransformDelegate,
-      mapProjectionDelegate
-    )
-
-  /**
    * Scale the map by with optional animation.
    *
    * @param amount The amount to scale by

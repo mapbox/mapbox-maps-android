@@ -11,7 +11,6 @@ import android.view.InputDevice
 import android.view.MotionEvent
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.android.gestures.*
-import com.mapbox.maps.AnimationOptions
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
@@ -68,6 +67,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   private var spanSinceLast: Float = 0.0f
   private var screenHeight: Double = 0.0
   private var startZoom: Double = 0.0
+  private var flingInProcess: Boolean = false
 
   // Rotate
   private var minimumScaleSpanWhenRotating: Float = 0f
@@ -235,14 +235,12 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     if (motionEvent.actionMasked == MotionEvent.ACTION_DOWN) {
       unregisterScheduledAnimators()
       mapTransformDelegate.setGestureInProgress(true)
-      if (mapTransformDelegate.terrainEnabled()) {
-        mapTransformDelegate.dragStart(
-          ScreenCoordinate(
-            motionEvent.x.toDouble(),
-            motionEvent.y.toDouble()
-          )
+      mapTransformDelegate.dragStart(
+        ScreenCoordinate(
+          motionEvent.x.toDouble(),
+          motionEvent.y.toDouble()
         )
-      }
+      )
     }
 
     val result = gesturesManager.onTouchEvent(motionEvent)
@@ -253,7 +251,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       MotionEvent.ACTION_UP -> {
         doubleTapFinished()
         mapTransformDelegate.setGestureInProgress(false)
-        if (mapTransformDelegate.terrainEnabled()) {
+        // if fling happens after dragging then `dragEnd` will be called after fling animation is finished
+        if (!flingInProcess) {
           mapTransformDelegate.dragEnd()
         }
 
@@ -271,9 +270,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       MotionEvent.ACTION_CANCEL -> {
         scheduledAnimators.clear()
         mapTransformDelegate.setGestureInProgress(false)
-        if (mapTransformDelegate.terrainEnabled()) {
-          mapTransformDelegate.dragEnd()
-        }
+        mapTransformDelegate.dragEnd()
         doubleTapFinished()
       }
     }
@@ -1196,6 +1193,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       return false
     }
 
+    flingInProcess = true
+
     cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
     // cameraChangeDispatcher.onCameraMoveStarted(REASON_API_GESTURE);
 
@@ -1227,23 +1226,31 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       val animationTime =
         (velocityXY / 7.0 / pitchFactor + ANIMATION_DURATION_FLING_BASE).toLong()
 
-      if (mapTransformDelegate.terrainEnabled()) {
-        mapTransformDelegate.drag(
+      cameraAnimationsPlugin.easeTo(
+        mapTransformDelegate.getDragCameraOptions(
           centerScreen,
-          ScreenCoordinate(centerScreen.x + offsetX, centerScreen.y + offsetY),
-          AnimationOptions.Builder().duration(animationTime).build()
-        )
-      } else {
-        // update transformation
-        cameraAnimationsPlugin.moveBy(
-          ScreenCoordinate(offsetX, offsetY),
-          mapAnimationOptions {
-            owner(MapAnimationOwnerRegistry.GESTURES)
-            duration(animationTime)
-            interpolator(gesturesInterpolator)
-          }
-        )
-      }
+          ScreenCoordinate(centerScreen.x + offsetX, centerScreen.y + offsetY)
+        ),
+        mapAnimationOptions {
+          owner(MapAnimationOwnerRegistry.GESTURES)
+          duration(animationTime)
+          interpolator(gesturesInterpolator)
+          animatorListener(object : AnimatorListenerAdapter() {
+
+            override fun onAnimationEnd(animation: Animator?) {
+              super.onAnimationEnd(animation)
+              flingInProcess = false
+              mapTransformDelegate.dragEnd()
+            }
+
+            override fun onAnimationCancel(animation: Animator?) {
+              super.onAnimationCancel(animation)
+              flingInProcess = false
+              mapTransformDelegate.dragEnd()
+            }
+          })
+        }
+      )
     }
     return true
   }
@@ -1282,19 +1289,12 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       } else {
         ScreenCoordinate((-distanceX).toDouble(), (-distanceY).toDouble())
       }
-      if (mapTransformDelegate.terrainEnabled()) {
-        mapTransformDelegate.drag(
+      easeToImmediately(
+        mapTransformDelegate.getDragCameraOptions(
           centerScreen,
-          ScreenCoordinate(centerScreen.x + offset.x, centerScreen.y + offset.y),
-          null
+          ScreenCoordinate(centerScreen.x + offset.x, centerScreen.y + offset.y)
         )
-      } else {
-        cameraAnimationsPlugin.calculateMoveBy(offset)?.let {
-          easeToImmediately(
-            CameraOptions.Builder().center(it).build()
-          )
-        }
-      }
+      )
     }
     return true
   }

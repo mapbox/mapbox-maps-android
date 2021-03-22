@@ -122,12 +122,6 @@ interface MapTransformDelegate {
   fun getSize(): Size
 
   /**
-   * Is terrain enabled for loaded style of the map.
-   * @return True if terrain is enabled for given style and false otherwise.
-   */
-  fun terrainEnabled(): Boolean
-
-  /**
    * Prepares the drag gesture to use the provided screen coordinate as a pivot point.
    * This function should be called each time when user starts a dragging action (e.g. by clicking on the map).
    * The following dragging will be relative to the pivot.

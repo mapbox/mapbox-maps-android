@@ -195,11 +195,6 @@ interface CameraAnimationsPlugin : MapPlugin {
   fun calculateScaleBy(amount: Double, currentZoom: Double): Double
 
   /**
-   * Utility method to calculate move by based on a offset screencoordinate
-   */
-  fun calculateMoveBy(offset: ScreenCoordinate): Point?
-
-  /**
    * Add camera bearing change listener
    *
    * @param listener to be invoked when camera bearing value changes
