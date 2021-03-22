@@ -28,8 +28,14 @@ internal class LocationPuckManager(
 
   private var lastLocation: Point =
     delegateProvider.mapCameraDelegate.getCameraOptions(null).center!!
+  private val onLocationUpdated: ((Point) -> Unit) = {
+    lastLocation = it
+  }
 
   private var lastBearing: Double = delegateProvider.mapCameraDelegate.getBearing()
+  private val onBearingUpdated: ((Double) -> Unit) = {
+    lastBearing = it
+  }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var locationLayerRenderer =
@@ -43,10 +49,11 @@ internal class LocationPuckManager(
     }
 
   fun initialize(style: StyleManagerInterface) {
+    animationManager.setUpdateListeners(onLocationUpdated, onBearingUpdated)
     animationManager.setLocationLayerRenderer(locationLayerRenderer)
+    animationManager.applyPulsingAnimationSettings(settings)
     locationLayerRenderer.addLayers(positionManager)
     locationLayerRenderer.initializeComponents(style)
-    animationManager.applyPulsingAnimationSettings(settings)
     styleScaling(settings)
     updateCurrentPosition(lastLocation)
     updateCurrentBearing(lastBearing)
@@ -82,8 +89,6 @@ internal class LocationPuckManager(
         layerSourceProvider.getModelLayerRenderer(locationPuck)
       }
     }
-    animationManager.setLocationLayerRenderer(locationLayerRenderer)
-    animationManager.applyPulsingAnimationSettings(settings)
     delegateProvider.getStyle {
       initialize(it)
     }
@@ -105,7 +110,6 @@ internal class LocationPuckManager(
     val targets = arrayOf(lastLocation, *points)
     animationManager.animatePosition(
       *targets,
-      onUpdate = { lastLocation = it },
       options = options
     )
   }
@@ -114,7 +118,6 @@ internal class LocationPuckManager(
     val targets = doubleArrayOf(lastBearing, *bearings)
     animationManager.animateBearing(
       *targets,
-      onUpdate = { lastBearing = it },
       options = options
     )
   }

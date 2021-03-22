@@ -34,7 +34,7 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
 
     private fun emitFakeLocations() {
       // after several first emits we update puck animator options
-      if (emitCount == 6) {
+      if (emitCount == 5) {
         locationConsumer?.let {
           it.onPuckLocationAnimatorDefaultOptionsUpdated {
             // set same duration as our location emit frequency - it will make puck position change smooth
@@ -54,7 +54,7 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
             // set duration > location emit frequency -> location animator will interrupt running one
             // and start from last interpolated point. Because of constant change of target point
             // it will result in increasing puck speed.
-            in 1..3 -> {
+            in 1..5 -> {
               locationConsumer?.onLocationUpdated(
                 Point.fromLngLat(
                   POINT_LNG + delta,
@@ -62,17 +62,6 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
                 )
               ) {
                 duration = 4000
-              }
-            }
-            // set duration < emit frequency -> puck will quickly jump and await next location emit
-            in 4..5 -> {
-              locationConsumer?.onLocationUpdated(
-                Point.fromLngLat(
-                  POINT_LNG + delta,
-                  POINT_LAT + delta
-                )
-              ) {
-                duration = 500
               }
             }
             // set duration = emit frequency -> location animators do not interrupt each other

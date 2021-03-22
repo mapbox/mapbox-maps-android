@@ -75,6 +75,15 @@ class PuckAnimatorManagerTest {
   }
 
   @Test
+  fun setUpdateListeners() {
+    val positionUpdateListener: ((Point) -> Unit) = {}
+    val bearingUpdateListener: ((Double) -> Unit) = {}
+    puckAnimatorManager.setUpdateListeners(positionUpdateListener, bearingUpdateListener)
+    Assert.assertEquals(positionUpdateListener, positionAnimator.updateListener)
+    Assert.assertEquals(bearingUpdateListener, bearingAnimator.updateListener)
+  }
+
+  @Test
   fun animateBearing() {
     val options: (ValueAnimator.() -> Unit) = {}
     var counter = 0
@@ -84,9 +93,10 @@ class PuckAnimatorManagerTest {
       animatedValue = it
     }
     Shadows.shadowOf(Looper.getMainLooper()).pause()
-    puckAnimatorManager.animateBearing(0.0, 10.0, onUpdate = updateListener, options = options)
+    puckAnimatorManager.setUpdateListeners({}, updateListener)
+    puckAnimatorManager.animateBearing(0.0, 10.0, options = options)
     verify {
-      bearingAnimator.animate(0.0, 10.0, onUpdate = updateListener, options = options)
+      bearingAnimator.animate(0.0, 10.0, options = options)
     }
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     MatcherAssert.assertThat(counter, Matchers.greaterThan(0))
@@ -103,9 +113,10 @@ class PuckAnimatorManagerTest {
       animatedValue = it
     }
     Shadows.shadowOf(Looper.getMainLooper()).pause()
-    puckAnimatorManager.animatePosition(START_POINT, END_POINT, onUpdate = updateListener, options = options)
+    puckAnimatorManager.setUpdateListeners(updateListener, {})
+    puckAnimatorManager.animatePosition(START_POINT, END_POINT, options = options)
     verify {
-      positionAnimator.animate(START_POINT, END_POINT, onUpdate = updateListener, options = options)
+      positionAnimator.animate(START_POINT, END_POINT, options = options)
     }
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     MatcherAssert.assertThat(counter, Matchers.greaterThan(0))
