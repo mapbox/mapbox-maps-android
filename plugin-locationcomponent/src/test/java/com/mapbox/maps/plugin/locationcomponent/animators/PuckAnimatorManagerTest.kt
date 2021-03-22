@@ -1,16 +1,21 @@
 package com.mapbox.maps.plugin.locationcomponent.animators
 
 import android.animation.ValueAnimator
+import android.os.Looper
 import com.mapbox.geojson.Point
 import com.mapbox.maps.plugin.locationcomponent.LocationLayerRenderer
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import org.hamcrest.MatcherAssert
+import org.hamcrest.Matchers
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows
 import org.robolectric.annotation.LooperMode
 
 @RunWith(RobolectricTestRunner::class)
@@ -19,8 +24,8 @@ class PuckAnimatorManagerTest {
 
   private lateinit var puckAnimatorManager: PuckAnimatorManager
 
-  private val bearingAnimator: PuckBearingAnimator = mockk(relaxed = true)
-  private val positionAnimator: PuckPositionAnimator = mockk(relaxed = true)
+  private val bearingAnimator: PuckBearingAnimator = PuckBearingAnimator(mockk(relaxUnitFun = true))
+  private val positionAnimator: PuckPositionAnimator = PuckPositionAnimator(mockk(relaxUnitFun = true))
   private val pulsingAnimator: PuckPulsingAnimator = mockk(relaxed = true)
 
   @Before
@@ -70,21 +75,52 @@ class PuckAnimatorManagerTest {
   }
 
   @Test
+  fun setUpdateListeners() {
+    val positionUpdateListener: ((Point) -> Unit) = {}
+    val bearingUpdateListener: ((Double) -> Unit) = {}
+    puckAnimatorManager.setUpdateListeners(positionUpdateListener, bearingUpdateListener)
+    Assert.assertEquals(positionUpdateListener, positionAnimator.updateListener)
+    Assert.assertEquals(bearingUpdateListener, bearingAnimator.updateListener)
+  }
+
+  @Test
   fun animateBearing() {
     val options: (ValueAnimator.() -> Unit) = {}
+    var counter = 0
+    var animatedValue = 0.0
+    val updateListener: ((Double) -> Unit) = {
+      counter++
+      animatedValue = it
+    }
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    puckAnimatorManager.setUpdateListeners({}, updateListener)
     puckAnimatorManager.animateBearing(0.0, 10.0, options = options)
     verify {
       bearingAnimator.animate(0.0, 10.0, options = options)
     }
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    MatcherAssert.assertThat(counter, Matchers.greaterThan(0))
+    Assert.assertEquals(10.0, animatedValue, 0.0001)
   }
 
   @Test
   fun animatePosition() {
     val options: (ValueAnimator.() -> Unit) = {}
+    var counter = 0
+    var animatedValue = START_POINT
+    val updateListener: ((Point) -> Unit) = {
+      counter++
+      animatedValue = it
+    }
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    puckAnimatorManager.setUpdateListeners(updateListener, {})
     puckAnimatorManager.animatePosition(START_POINT, END_POINT, options = options)
     verify {
       positionAnimator.animate(START_POINT, END_POINT, options = options)
     }
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    MatcherAssert.assertThat(counter, Matchers.greaterThan(0))
+    Assert.assertEquals(END_POINT, animatedValue)
   }
 
   @Test
@@ -113,16 +149,24 @@ class PuckAnimatorManagerTest {
 
   @Test
   fun updateBearingAnimator() {
-    val options: (ValueAnimator.() -> Unit) = {}
+    val options: (ValueAnimator.() -> Unit) = {
+      duration = 5000
+    }
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
     puckAnimatorManager.updateBearingAnimator(options)
-    verify { bearingAnimator.updateOptions(options) }
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    Assert.assertEquals(5000, bearingAnimator.duration)
   }
 
   @Test
   fun updatePositionAnimator() {
-    val options: (ValueAnimator.() -> Unit) = {}
+    val options: (ValueAnimator.() -> Unit) = {
+      duration = 5000
+    }
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
     puckAnimatorManager.updatePositionAnimator(options)
-    verify { positionAnimator.updateOptions(options) }
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    Assert.assertEquals(5000, positionAnimator.duration)
   }
 
   companion object {

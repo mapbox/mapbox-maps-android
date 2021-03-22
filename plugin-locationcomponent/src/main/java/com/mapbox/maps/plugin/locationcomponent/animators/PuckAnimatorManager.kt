@@ -38,6 +38,14 @@ internal class PuckAnimatorManager(
     pulsingAnimator.setLocationLayerRenderer(renderer)
   }
 
+  fun setUpdateListeners(
+    onLocationUpdated: ((Point) -> Unit),
+    onBearingUpdated: ((Double) -> Unit)
+  ) {
+    positionAnimator.setUpdateListener(onLocationUpdated)
+    bearingAnimator.setUpdateListener(onBearingUpdated)
+  }
+
   fun onStart() {
     if (pulsingAnimator.enabled) {
       pulsingAnimator.animateInfinite()
@@ -50,7 +58,10 @@ internal class PuckAnimatorManager(
     pulsingAnimator.cancelRunning()
   }
 
-  fun animateBearing(vararg targets: Double, options: (ValueAnimator.() -> Unit)?) {
+  fun animateBearing(
+    vararg targets: Double,
+    options: (ValueAnimator.() -> Unit)?
+  ) {
     val optimized = DoubleArray(targets.size)
     targets.toTypedArray().apply {
       for (i in 0 until size) {
@@ -63,7 +74,10 @@ internal class PuckAnimatorManager(
     bearingAnimator.animate(*optimized.toTypedArray(), options = options)
   }
 
-  fun animatePosition(vararg targets: Point, options: (ValueAnimator.() -> Unit)?) {
+  fun animatePosition(
+    vararg targets: Point,
+    options: (ValueAnimator.() -> Unit)?
+  ) {
     positionAnimator.animate(*targets, options = options)
   }
 

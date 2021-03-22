@@ -28,8 +28,14 @@ internal class LocationPuckManager(
 
   private var lastLocation: Point =
     delegateProvider.mapCameraDelegate.getCameraOptions(null).center!!
+  private val onLocationUpdated: ((Point) -> Unit) = {
+    lastLocation = it
+  }
 
   private var lastBearing: Double = delegateProvider.mapCameraDelegate.getBearing()
+  private val onBearingUpdated: ((Double) -> Unit) = {
+    lastBearing = it
+  }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var locationLayerRenderer =
@@ -43,10 +49,11 @@ internal class LocationPuckManager(
     }
 
   fun initialize(style: StyleManagerInterface) {
+    animationManager.setUpdateListeners(onLocationUpdated, onBearingUpdated)
     animationManager.setLocationLayerRenderer(locationLayerRenderer)
+    animationManager.applyPulsingAnimationSettings(settings)
     locationLayerRenderer.addLayers(positionManager)
     locationLayerRenderer.initializeComponents(style)
-    animationManager.applyPulsingAnimationSettings(settings)
     styleScaling(settings)
     updateCurrentPosition(lastLocation)
     updateCurrentBearing(lastBearing)
@@ -82,8 +89,6 @@ internal class LocationPuckManager(
         layerSourceProvider.getModelLayerRenderer(locationPuck)
       }
     }
-    animationManager.setLocationLayerRenderer(locationLayerRenderer)
-    animationManager.applyPulsingAnimationSettings(settings)
     delegateProvider.getStyle {
       initialize(it)
     }
@@ -103,14 +108,18 @@ internal class LocationPuckManager(
 
   fun updateCurrentPosition(vararg points: Point, options: (ValueAnimator.() -> Unit)? = null) {
     val targets = arrayOf(lastLocation, *points)
-    lastLocation = arrayOf(*points).last()
-    animationManager.animatePosition(*targets, options = options)
+    animationManager.animatePosition(
+      *targets,
+      options = options
+    )
   }
 
   fun updateCurrentBearing(vararg bearings: Double, options: (ValueAnimator.() -> Unit)? = null) {
     val targets = doubleArrayOf(lastBearing, *bearings)
-    lastBearing = doubleArrayOf(*bearings).last()
-    animationManager.animateBearing(*targets, options = options)
+    animationManager.animateBearing(
+      *targets,
+      options = options
+    )
   }
 
   fun updateLocationAnimator(block: ValueAnimator.() -> Unit) {

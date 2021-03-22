@@ -24,6 +24,7 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
 
   private lateinit var mapboxMap: MapboxMap
 
+  private var emitCount = 0
   private var delta = 0f
   private val handler = Handler()
 
@@ -33,7 +34,7 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
 
     private fun emitFakeLocations() {
       // after several first emits we update puck animator options
-      if (delta >= 0.005f && delta < 0.006) {
+      if (emitCount == 5) {
         locationConsumer?.let {
           it.onPuckLocationAnimatorDefaultOptionsUpdated {
             // set same duration as our location emit frequency - it will make puck position change smooth
@@ -49,29 +50,33 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
       }
       handler.postDelayed(
         {
-          // default animation duration = 1000 ms while we emit updates each 2000 ms
-          // this will result in gaps between puck animations
-
-          // however on third emit we will emit location almost immediately using custom animator options for single location update
-          if (delta >= 0.002f && delta < 0.003) {
-            locationConsumer?.onLocationUpdated(
-              Point.fromLngLat(
-                POINT_LNG + delta,
-                POINT_LAT + delta
-              )
-            ) {
-              duration = 100
+          when (emitCount) {
+            // set duration > location emit frequency -> location animator will interrupt running one
+            // and start from last interpolated point. Because of constant change of target point
+            // it will result in increasing puck speed.
+            in 1..5 -> {
+              locationConsumer?.onLocationUpdated(
+                Point.fromLngLat(
+                  POINT_LNG + delta,
+                  POINT_LAT + delta
+                )
+              ) {
+                duration = 4000
+              }
             }
-          } else {
-            locationConsumer?.onLocationUpdated(
-              Point.fromLngLat(
-                POINT_LNG + delta,
-                POINT_LAT + delta
+            // set duration = emit frequency -> location animators do not interrupt each other
+            else -> {
+              locationConsumer?.onLocationUpdated(
+                Point.fromLngLat(
+                  POINT_LNG + delta,
+                  POINT_LAT + delta
+                )
               )
-            )
+            }
           }
           locationConsumer?.onBearingUpdated(BEARING + delta * 10000.0 * 5)
           delta += 0.001f
+          emitCount++
           emitFakeLocations()
         },
         2000

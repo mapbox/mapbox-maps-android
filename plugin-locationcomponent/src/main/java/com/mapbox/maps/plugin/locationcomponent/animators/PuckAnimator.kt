@@ -15,6 +15,8 @@ internal abstract class PuckAnimator<T>(
 ) : ValueAnimator() {
 
   @VisibleForTesting(otherwise = PRIVATE)
+  internal var updateListener: ((T) -> Unit)? = null
+  @VisibleForTesting(otherwise = PRIVATE)
   internal var userConfiguredAnimator: ValueAnimator
   protected var locationRenderer: LocationLayerRenderer? = null
 
@@ -25,7 +27,9 @@ internal abstract class PuckAnimator<T>(
     setEvaluator(evaluator)
     addUpdateListener {
       @Suppress("UNCHECKED_CAST")
-      updateLayer(it.animatedFraction, it.animatedValue as T)
+      val updatedValue = it.animatedValue as T
+      updateLayer(it.animatedFraction, updatedValue)
+      updateListener?.invoke(updatedValue)
     }
     duration = LocationComponentConstants.DEFAULT_INTERVAL_MILLIS
     interpolator = DEFAULT_INTERPOLATOR
@@ -65,17 +69,21 @@ internal abstract class PuckAnimator<T>(
     return super.clone()
   }
 
+  fun setUpdateListener(updateListener: ((T) -> Unit)) {
+    if (this.updateListener != updateListener) {
+      this.updateListener = updateListener
+    }
+  }
+
   fun setLocationLayerRenderer(renderer: LocationLayerRenderer) {
     locationRenderer = renderer
   }
 
-  fun animate(vararg targets: T, options: (ValueAnimator.() -> Unit)? = null) {
-    if (isRunning) {
-      cancel()
-    }
-    if (userConfiguredAnimator.isRunning) {
-      userConfiguredAnimator.cancel()
-    }
+  fun animate(
+    vararg targets: T,
+    options: (ValueAnimator.() -> Unit)? = null
+  ) {
+    cancelRunning()
     if (options == null) {
       setObjectValues(*targets)
       start()

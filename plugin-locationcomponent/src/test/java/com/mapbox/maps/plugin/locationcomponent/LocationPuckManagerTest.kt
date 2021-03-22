@@ -61,6 +61,8 @@ class LocationPuckManagerTest {
   fun testInitialise() {
     locationPuckManager.initialize(style)
     verify { animationManager.setLocationLayerRenderer(locationLayerRenderer) }
+    verify { animationManager.setUpdateListeners(any(), any()) }
+    verify { animationManager.applyPulsingAnimationSettings(settings) }
     verify { locationLayerRenderer.addLayers(positionManager) }
     verify { locationLayerRenderer.initializeComponents(style) }
     verify { locationLayerRenderer.show() }
@@ -104,7 +106,6 @@ class LocationPuckManagerTest {
     verify { positionManager.layerBelow = "layer-below" }
     verify { locationLayerRenderer.clearBitmaps() }
     verify { locationLayerRenderer.removeLayers() }
-    verify { animationManager.setLocationLayerRenderer(any()) }
     locationPuckManager.locationLayerRenderer = locationLayerRenderer
     callbackSlot.captured.invoke(style)
     verify { locationLayerRenderer.addLayers(positionManager) }
