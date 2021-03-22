@@ -1,5 +1,7 @@
 package com.mapbox.maps
 
+import android.os.Handler
+import android.os.Looper
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.bindgen.Value
@@ -46,6 +48,7 @@ class MapboxMap internal constructor(
   internal lateinit var style: Style
 
   private var terrainEnabled = false
+  private val handlerMain = Handler(Looper.getMainLooper())
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal var cameraAnimationsPlugin: WeakReference<CameraAnimationsPlugin>? = null
@@ -84,7 +87,9 @@ class MapboxMap internal constructor(
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
   ) {
     initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener)
-    nativeMapWeakRef.call { (this as StyleManagerInterface).styleURI = styleUri }
+    handlerMain.post {
+      nativeMapWeakRef.call { (this as StyleManagerInterface).styleURI = styleUri }
+    }
   }
 
   /**
@@ -107,8 +112,10 @@ class MapboxMap internal constructor(
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
   ) {
     initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener)
-    nativeMapWeakRef.call {
-      (this as StyleManagerInterface).styleJSON = json
+    handlerMain.post {
+      nativeMapWeakRef.call {
+        (this as StyleManagerInterface).styleJSON = json
+      }
     }
   }
 
@@ -211,7 +218,7 @@ class MapboxMap internal constructor(
       nativeObserver.awaitingStyleGetters.clear()
     }
     onMapLoadErrorListener?.let {
-      addOnMapLoadErrorListener(it)
+      removeOnMapLoadErrorListener(it)
     }
   }
 

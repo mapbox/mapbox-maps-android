@@ -1,10 +1,10 @@
 package com.mapbox.maps
 
+import android.os.Looper
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
-import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
@@ -15,8 +15,14 @@ import io.mockk.verify
 import junit.framework.Assert.*
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows
+import org.robolectric.annotation.LooperMode
 import java.lang.ref.WeakReference
 
+@RunWith(RobolectricTestRunner::class)
+@LooperMode(LooperMode.Mode.PAUSED)
 class MapboxMapTest {
 
   private val nativeMap: CustomMapInterface = mockk(relaxed = true)
@@ -31,28 +37,36 @@ class MapboxMapTest {
 
   @Test
   fun loadStyleUri() {
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
     mapboxMap.loadStyleUri("foo")
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { mapObserver.addOnStyleDataLoadedListener(any()) }
     verify { nativeMap.styleURI = "foo" }
   }
 
   @Test
   fun loadStyleUriLambda() {
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
     mapboxMap.loadStyleUri("foo") {}
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { mapObserver.addOnStyleDataLoadedListener(any()) }
     verify { nativeMap.styleURI = "foo" }
   }
 
   @Test
   fun loadStyleJSON() {
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
     mapboxMap.loadStyleJSON("foo")
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { mapObserver.addOnStyleDataLoadedListener(any()) }
     verify { nativeMap.styleJSON = "foo" }
   }
 
   @Test
   fun loadStyleJSONLambda() {
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
     mapboxMap.loadStyleJSON("foo") {}
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { mapObserver.addOnStyleDataLoadedListener(any()) }
     verify { nativeMap.styleJSON = "foo" }
   }
@@ -63,7 +77,9 @@ class MapboxMapTest {
     every { styleExtension.styleUri } returns "foobar"
     val onMapLoadError = mockk<OnMapLoadErrorListener>()
     val onStyleLoadError = mockk<Style.OnStyleLoaded>()
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
     mapboxMap.loadStyle(styleExtension, onStyleLoadError, onMapLoadError)
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { nativeMap.styleURI = "foobar" }
   }
 
@@ -71,7 +87,9 @@ class MapboxMapTest {
   fun loadStyleLambda() {
     val styleExtension = mockk<StyleContract.StyleExtension>()
     every { styleExtension.styleUri } returns "foobar"
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
     mapboxMap.loadStyle(styleExtension) {}
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { nativeMap.styleURI = "foobar" }
   }
 
@@ -82,6 +100,7 @@ class MapboxMapTest {
     mapboxMap.onFinishLoadingStyle(styleLoadCallback, mapLoadError)
     verify { styleLoadCallback.onStyleLoaded(any()) }
     verify { mapObserver.awaitingStyleGetters.clear() }
+    verify { mapboxMap.removeOnMapLoadErrorListener(mapLoadError) }
   }
 
   @Test
