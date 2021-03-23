@@ -37,6 +37,10 @@ android {
     targetCompatibility = JavaVersion.VERSION_1_8
   }
 
+  kotlinOptions {
+    jvmTarget = JavaVersion.VERSION_1_8.toString()
+  }
+
   testOptions {
     animationsDisabled = true
     if (!project.hasProperty("android.injected.invoked.from.ide")) {
@@ -69,6 +73,7 @@ dependencies {
   implementation(Dependencies.androidxMultidex)
   implementation(Dependencies.googleMaterialDesign)
   implementation(Dependencies.squareRetrofit)
+  implementation(Dependencies.androidxFragmentTest)
   implementation(Dependencies.squareRetrofitGsonConverter)
   debugImplementation(Dependencies.squareLeakCanary)
   androidTestUtil(Dependencies.androidxOrchestrator)

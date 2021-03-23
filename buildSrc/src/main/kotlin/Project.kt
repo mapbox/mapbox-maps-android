@@ -40,6 +40,7 @@ object Dependencies {
   const val androidxTestRunner = "androidx.test:runner:${Versions.androidxTest}"
   const val androidxTestCore = "androidx.test:core:${Versions.androidxTest}"
   const val androidxUiAutomator = "androidx.test.uiautomator:uiautomator:${Versions.androidxUiAutomator}"
+  const val androidxFragmentTest = "androidx.fragment:fragment-testing:${Versions.androidxCore}"
   const val androidxOrchestrator = "androidx.test:orchestrator:${Versions.androidxTest}"
   const val androidxMultidex = "androidx.multidex:multidex:${Versions.androidxMultidex}"
   const val googleMaterialDesign = "com.google.android.material:material:${Versions.materialDesign}"
