@@ -132,7 +132,6 @@ class GesturePluginTest {
   @Test
   fun verifyGestureInProgress() {
     every { gesturesManager.onTouchEvent(any()) }.returns(true)
-    every { mapTransformDelegate.terrainEnabled() } returns false
     presenter.onTouchEvent(obtainMotionEventAction(ACTION_DOWN))
     verify { mapTransformDelegate.setGestureInProgress(true) }
     presenter.onTouchEvent(obtainMotionEventAction(ACTION_UP))
@@ -142,7 +141,6 @@ class GesturePluginTest {
   @Test
   fun verifyMotionEvent() {
     every { gesturesManager.onTouchEvent(any()) }.returns(true)
-    every { mapTransformDelegate.terrainEnabled() } returns false
     val motionEvent: MotionEvent = obtainMotionEventAction(ACTION_DOWN)
     presenter.onTouchEvent(motionEvent)
     verify { gesturesManager.onTouchEvent(motionEvent) }
@@ -292,10 +290,15 @@ class GesturePluginTest {
   @Test
   fun verifyFling() {
     every { mapTransformDelegate.getPitch() } returns 0.0
-    every { mapTransformDelegate.terrainEnabled() } returns false
+    every { mapTransformDelegate.getDragCameraOptions(any(), any()) } returns CameraOptions.Builder().build()
     val result = presenter.handleFlingEvent(mockk(), mockk(), 10000f, 10000f)
-    // todo can't verify since both objects do not implements a correct equals
-    // verify { cameraAnimationsPluginImpl.moveBy(ScreenCoordinate(0.0, 0.0), 0) }
+    verify {
+      mapTransformDelegate.getDragCameraOptions(
+        ScreenCoordinate(0.0, 0.0),
+        ScreenCoordinate(666.6666666666667, 666.6666666666667)
+      )
+    }
+    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
     assert(result)
   }
 
@@ -330,25 +333,17 @@ class GesturePluginTest {
     val listener: OnMoveListener = mockk(relaxed = true)
     presenter.addOnMoveListener(listener)
     every { mapTransformDelegate.getCameraOptions(any()) } returns CameraOptions.Builder().build()
-    every { cameraAnimationsPlugin.calculateMoveBy(any()) } returns Point.fromLngLat(0.0, 0.0)
-    every { mapTransformDelegate.terrainEnabled() } returns false
+    every { mapTransformDelegate.getDragCameraOptions(any(), any()) } returns CameraOptions.Builder().build()
     val handled = presenter.handleMove(mockk(), 50.0f, 50.0f)
     assert(handled)
     verify { listener.onMove(any()) }
+    verify {
+      mapTransformDelegate.getDragCameraOptions(
+        ScreenCoordinate(0.0, 0.0),
+        ScreenCoordinate(-50.0, -50.0)
+      )
+    }
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
-  }
-
-  @Test
-  fun verifyMoveListenerTerrain() {
-    val listener: OnMoveListener = mockk(relaxed = true)
-    presenter.addOnMoveListener(listener)
-    every { mapTransformDelegate.getCameraOptions(any()) } returns CameraOptions.Builder().build()
-    every { cameraAnimationsPlugin.calculateMoveBy(any()) } returns Point.fromLngLat(0.0, 0.0)
-    every { mapTransformDelegate.terrainEnabled() } returns true
-    val handled = presenter.handleMove(mockk(), 50.0f, 50.0f)
-    assert(handled)
-    verify { listener.onMove(any()) }
-    verify { mapTransformDelegate.drag(any(), any(), any()) }
   }
 
   @Test

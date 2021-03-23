@@ -47,7 +47,6 @@ class MapboxMap internal constructor(
   private val nativeMapWeakRef = WeakReference(nativeMap)
   internal lateinit var style: Style
 
-  private var terrainEnabled = false
   private val handlerMain = Handler(Looper.getMainLooper())
 
   @VisibleForTesting(otherwise = PRIVATE)
@@ -135,7 +134,6 @@ class MapboxMap internal constructor(
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
   ) {
-    terrainEnabled = false
     this.loadStyleUri(
       styleExtension.styleUri,
       { style -> onFinishLoadingStyleExtension(style, styleExtension, onStyleLoaded) },
@@ -170,10 +168,7 @@ class MapboxMap internal constructor(
       it.first.bindTo(style, it.second)
     }
     styleExtension.light?.bindTo(style)
-    styleExtension.terrain?.let {
-      terrainEnabled = true
-      it.bindTo(style)
-    }
+    styleExtension.terrain?.bindTo(style)
     onStyleLoaded?.onStyleLoaded(style)
   }
 
@@ -1170,12 +1165,6 @@ class MapboxMap internal constructor(
   ): CameraOptions {
     return nativeMapWeakRef.call { this.getDragCameraOptions(fromPoint, toPoint) }
   }
-
-  /**
-   * Is terrain enabled for loaded style of the map.
-   * @return True if terrain is enabled for given style and false otherwise.
-   */
-  override fun terrainEnabled() = terrainEnabled
 
   internal fun setCameraAnimationPlugin(cameraAnimationsPlugin: CameraAnimationsPlugin?) {
     cameraAnimationsPlugin?.let {
