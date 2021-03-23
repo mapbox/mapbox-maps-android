@@ -2,7 +2,6 @@ package com.mapbox.maps.testapp.examples
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.SurfaceHolder
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.maps.*
@@ -27,8 +26,7 @@ class SurfaceActivity : AppCompatActivity(), SurfaceHolder.Callback {
     surfaceHolder.addCallback(this)
     mapSurface = MapSurface(
       this,
-      surfaceHolder.surface,
-      SurfaceObserver()
+      surfaceHolder.surface
     )
 
     // Load a map style
@@ -64,41 +62,6 @@ class SurfaceActivity : AppCompatActivity(), SurfaceHolder.Callback {
   override fun onDestroy() {
     super.onDestroy()
     mapSurface.onDestroy()
-  }
-
-  inner class SurfaceObserver : MapObserver() {
-    override fun onCameraChange(change: CameraChange, mode: CameraChangeMode) {
-      Log.i(TAG, "onMapChanged: $change: $mode")
-    }
-
-    override fun onMapChanged(change: MapChange) {
-      Log.i(TAG, "onMapChanged: $change")
-    }
-
-    override fun onMapLoadError(error: MapLoadError, message: String) {
-      Log.e(TAG, "OnMapLoadError: $error: $message")
-    }
-
-    override fun onDidFinishRenderingFrame(status: RenderFrameStatus) {
-      Log.i(TAG, "onDidFinishRenderingFrame: $status")
-    }
-
-    override fun onDidFinishRenderingMap(mode: RenderMode) {
-      Log.i(TAG, "onDidFinishRenderingMap: $mode")
-    }
-
-    override fun onSourceChanged(sourceId: String) {
-      Log.i(TAG, "onSourceChanged: $sourceId")
-    }
-
-    override fun onStyleImageMissing(imageId: String) {
-      Log.i(TAG, "onStyleImageMissing: $imageId")
-    }
-
-    override fun onCanRemoveUnusedStyleImage(imageId: String): Boolean {
-      Log.i(TAG, "onCanRemoveUnusedStyleImage: $imageId")
-      return false
-    }
   }
 
   companion object {
