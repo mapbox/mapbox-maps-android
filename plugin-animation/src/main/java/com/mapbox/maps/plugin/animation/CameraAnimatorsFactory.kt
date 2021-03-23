@@ -318,9 +318,11 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
     // w₀: Initial visible span, measured in pixels at the initial scale.
     // Known henceforth as a <i>screenful</i>.
 
+    val size = mapTransformDelegate.getSize()
+    val pixelRatio = mapTransformDelegate.getMapOptions().pixelRatio
     val w0 = max(
-      mapTransformDelegate.getSize().width - endPadding.left - endPadding.right,
-      mapTransformDelegate.getSize().height - endPadding.top - endPadding.bottom
+      (size.width - endPadding.left - endPadding.right) / pixelRatio,
+      (size.height - endPadding.top - endPadding.bottom) / pixelRatio
     )
     // w₁: Final visible span, measured in pixels with respect to the initial
     // scale.
