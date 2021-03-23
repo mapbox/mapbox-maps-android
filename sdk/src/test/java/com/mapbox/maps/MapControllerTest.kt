@@ -22,7 +22,7 @@ class MapControllerTest {
 
   private val renderer: MapboxRenderer = mockk(relaxUnitFun = true)
 
-  private val mapObserver: NativeObserver = mockk(relaxUnitFun = true)
+  private val nativeObserver: NativeObserver = mockk(relaxUnitFun = true)
 
   private val nativeMap: CustomMapInterface = mockk(relaxUnitFun = true)
 
@@ -58,13 +58,13 @@ class MapControllerTest {
     } answers { nativeMap }
     every { nativeMap.getCameraOptions(any()) } returns cameraOptions
 
-    every { MapProvider.getMapboxMap(nativeMap, mapObserver, 1.0f) } answers { mapboxMap }
+    every { MapProvider.getMapboxMap(nativeMap, nativeObserver, 1.0f) } answers { mapboxMap }
     every { MapProvider.getMapPluginRegistry(any(), any(), any()) } returns pluginRegistry
 
     mapController =
       MapController(
         renderer,
-        mapObserver,
+        nativeObserver,
         mapboxMapOptions,
         nativeMap,
         mapboxMap,
@@ -96,7 +96,7 @@ class MapControllerTest {
   @Test
   fun onDestroy() {
     mapController.onDestroy()
-    verify { mapObserver.clearListeners() }
+    verify { nativeObserver.clearListeners() }
   }
 
   @Test
@@ -125,7 +125,7 @@ class MapControllerTest {
   @Test
   fun cameraPluginNotified() {
     val onCameraChangeListenerSlot = slot<OnCameraChangeListener>()
-    every { mapObserver.addOnCameraChangeListener(capture(onCameraChangeListenerSlot)) } answers {}
+    every { nativeObserver.addOnCameraChangeListener(capture(onCameraChangeListenerSlot)) } answers {}
     mapController.onStart()
     val onCameraChangeListener = onCameraChangeListenerSlot.captured
 
