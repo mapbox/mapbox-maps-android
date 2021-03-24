@@ -43,6 +43,15 @@ interface MapProjectionDelegate {
     pitch: Double?
   ): CameraOptions
 
+  fun cameraForCoordinates(
+    coordinates: MutableList<Point>,
+    padding: EdgeInsets,
+    center: Point,
+    box: ScreenBox,
+    bearing: Double?,
+    pitch: Double?
+  ): CameraOptions
+
   /**
    * Convert to a camera options from a given geometry, padding, bearing and pitch values.
    *

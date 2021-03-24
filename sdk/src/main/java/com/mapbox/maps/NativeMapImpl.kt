@@ -106,6 +106,17 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.cameraForCoordinates(points, edgeInsets, zoom, pitch)
   }
 
+  override fun cameraForCoordinates(
+    coordinates: MutableList<Point>,
+    padding: EdgeInsets,
+    center: Point,
+    box: ScreenBox,
+    bearing: Double?,
+    pitch: Double?
+  ): CameraOptions {
+    return map.cameraForCoordinates(coordinates, padding, center, box, bearing, pitch)
+  }
+
   override fun cameraForGeometry(
     geometry: Geometry,
     edgeInsets: EdgeInsets,

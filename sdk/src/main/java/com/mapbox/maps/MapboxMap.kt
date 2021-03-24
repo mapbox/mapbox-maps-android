@@ -457,6 +457,16 @@ class MapboxMap internal constructor(
   ): CameraOptions =
     nativeMapWeakRef.call { this.cameraForCoordinates(coordinates, padding, bearing, pitch) }
 
+  override fun cameraForCoordinates(
+    coordinates: MutableList<Point>,
+    padding: EdgeInsets,
+    center: Point,
+    box: ScreenBox,
+    bearing: Double?,
+    pitch: Double?
+  ): CameraOptions =
+    nativeMapWeakRef.call { this.cameraForCoordinates(coordinates, padding, center, box, bearing, pitch) }
+
   /**
    * Convert to a camera options from a given geometry, padding, bearing and pitch values.
    *

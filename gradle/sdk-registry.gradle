@@ -16,7 +16,7 @@ publishing {
 
             afterEvaluate {
                 artifact(androidSourcesJar)
-                artifact(javadocsJar)
+//                artifact(javadocsJar)
             }
 
             pom.withXml {
@@ -59,10 +59,10 @@ task androidJavadocs(type: Javadoc) {
     failOnError = false
 }
 
-task javadocsJar(type: Jar, dependsOn: dokkaJavadoc) {
+/*task javadocsJar(type: Jar, dependsOn: dokkaJavadoc) {
     classifier = 'javadoc'
     from dokkaJavadoc.outputDirectory
-}
+}*/
 
 task androidSourcesJar(type: Jar) {
     classifier = 'sources'
