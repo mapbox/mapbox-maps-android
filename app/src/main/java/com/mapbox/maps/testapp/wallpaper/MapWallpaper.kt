@@ -25,7 +25,7 @@ class MapWallpaper : WallpaperService() {
       super.onCreate(surfaceHolder)
       surfaceHolder.addCallback(this)
 
-      mapSurface = MapSurface(context, surfaceHolder.surface, WallpaperObserver())
+      mapSurface = MapSurface(context, surfaceHolder.surface)
       mapboxMap = mapSurface.getMapboxMap()
 
       // Custom configuration
@@ -87,41 +87,6 @@ class MapWallpaper : WallpaperService() {
           .bearing(bearing)
           .build()
       )
-    }
-  }
-
-  inner class WallpaperObserver : MapObserver() {
-    override fun onCameraChange(change: CameraChange, mode: CameraChangeMode) {
-      Log.i(TAG, "onMapChanged: $change: $mode")
-    }
-
-    override fun onMapChanged(change: MapChange) {
-      Log.i(TAG, "onMapChanged: $change")
-    }
-
-    override fun onMapLoadError(error: MapLoadError, message: String) {
-      Log.e(TAG, "OnMapLoadError: $error: $message")
-    }
-
-    override fun onDidFinishRenderingFrame(status: RenderFrameStatus) {
-      Log.i(TAG, "onDidFinishRenderingFrame: $status")
-    }
-
-    override fun onDidFinishRenderingMap(mode: RenderMode) {
-      Log.i(TAG, "onDidFinishRenderingMap: $mode")
-    }
-
-    override fun onSourceChanged(sourceId: String) {
-      Log.i(TAG, "onSourceChanged: $sourceId")
-    }
-
-    override fun onStyleImageMissing(imageId: String) {
-      Log.i(TAG, "onStyleImageMissing: $imageId")
-    }
-
-    override fun onCanRemoveUnusedStyleImage(imageId: String): Boolean {
-      Log.i(TAG, "onCanRemoveUnusedStyleImage: $imageId")
-      return false
     }
   }
 

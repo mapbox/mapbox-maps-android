@@ -24,24 +24,20 @@ class MapSurface : MapPluginProviderDelegate, MapControllable {
 
   private val mapboxMapOptions: MapboxMapOptions
   private val surface: Surface
-  private val mapObserver: MapObserver
   private val mapController: MapController
   private val renderer: MapboxSurfaceRenderer
 
   constructor(
     context: Context,
     surface: Surface,
-    mapObserver: MapObserver
-  ) : this(MapboxMapOptions(context), surface, mapObserver)
+  ) : this(MapboxMapOptions(context), surface)
 
   constructor(
     mapboxMapOptions: MapboxMapOptions,
     surface: Surface,
-    mapObserver: MapObserver
   ) {
     this.mapboxMapOptions = mapboxMapOptions
     this.surface = surface
-    this.mapObserver = mapObserver
     this.renderer = MapboxSurfaceRenderer()
     this.mapController = MapController(
       renderer,
