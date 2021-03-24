@@ -134,6 +134,15 @@ commands:
               sed -i -e "s/^VERSION_NAME=.*/VERSION_NAME=${CIRCLE_TAG:9}/" gradle.properties
             fi
 
+  generate-docs:
+    steps:
+      - run:
+          name: Generate docs and create PR for review
+          command: |
+            if [[ $CIRCLE_TAG == android-v* ]]; then
+              ./scripts/update-android-docs.sh -s ${CIRCLE_TAG:9} -r $ANDROID_DOCS_REVIEWERS
+            fi
+
   track-metrics:
     steps:
       - unless:
@@ -399,3 +408,4 @@ jobs:
       - update-version-name
       - track-metrics
       - publish-sdk-registry
+      - generate-docs
