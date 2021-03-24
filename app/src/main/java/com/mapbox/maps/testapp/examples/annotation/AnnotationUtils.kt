@@ -27,7 +27,7 @@ object AnnotationUtils {
   fun createRandomPoints(): List<Point> {
     val random = Random()
     val points: MutableList<Point> = ArrayList<Point>()
-    for (i in 0 until random.nextInt(10)) {
+    for (i in 0 until random.nextInt(8) + 2) {
       points.add(
         Point.fromLngLat(
           random.nextDouble() * -360.0 + 180.0,
@@ -51,7 +51,7 @@ object AnnotationUtils {
       random.nextDouble() * -180.0 + 90.0
     )
     points.add(firstLast)
-    for (i in 0 until random.nextInt(10)) {
+    for (i in 0 until random.nextInt(6) + 4) {
       points.add(
         Point.fromLngLat(
           random.nextDouble() * -360.0 + 180.0,

@@ -7,7 +7,6 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
 import com.mapbox.common.ValueConverter
 import com.mapbox.geojson.Feature
-import com.mapbox.geojson.FeatureCollection
 import com.mapbox.maps.StylePropertyValue
 import com.mapbox.maps.StylePropertyValueKind
 import com.mapbox.maps.extension.style.ShadowValueConverter
@@ -20,7 +19,6 @@ import com.mapbox.maps.extension.style.types.transitionOptions
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
-import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -575,122 +573,10 @@ class TypeUtilsTest {
 
   @Test
   fun featureTest() {
-    val feature = Feature.fromJson(
-      """
-      {
-        "type": "Feature",
-        "bbox": [100.0, 0.0, -100.0, 105.0, 1.0, 0.0],
-        "geometry": {
-          "type": "Point",
-          "coordinates": [125.6, 10.1]
-        },
-        "properties": {
-          "name": "Dinagat Islands"
-        }
-      }
-      """.trimIndent()
-    )
-    feature.toValue()
-    verify { ValueConverter.fromJson(feature.toJson()) }
-  }
-
-  @Test(expected = RuntimeException::class)
-  fun featureExceptionTest() {
-    every { expected.value } returns null
-    every { expected.error } returns "error"
-
-    val feature = Feature.fromJson(
-      """
-      {
-        "type": "Feature",
-        "bbox": [100.0, 0.0, -100.0, 105.0, 1.0, 0.0],
-        "geometry": {
-          "type": "Point",
-          "coordinates": [125.6, 10.1]
-        },
-        "properties": {
-          "name": "Dinagat Islands"
-        }
-      }
-      """.trimIndent()
-    )
-    feature.toValue()
-    verify { ValueConverter.fromJson(feature.toJson()) }
-  }
-
-  @Test(expected = RuntimeException::class)
-  fun featureCollectionTest() {
-    every { expected.value } returns null
-    every { expected.error } returns "error"
-
-    val feature = FeatureCollection.fromJson(
-      """
-      {
-         "type": "FeatureCollection",
-         "bbox": [100.0, 0.0, -100.0, 105.0, 1.0, 0.0],
-         "features": [
-             {
-                 "type": "Feature",
-                 "id": "id0",
-                 "geometry": {
-                     "type": "LineString",
-                     "coordinates": [
-                         [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0]
-                     ]
-                 },
-                 "properties": {
-                     "prop0": "value0",
-                     "prop1": "value1"
-                 }
-             },
-             {
-                 "type": "Feature",
-                 "id": "id1",
-                 "geometry": {
-                     "type": "Polygon",
-                     "coordinates": [
-                         [
-                             [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]
-                         ]
-                     ]
-                 },
-                 "properties": {
-                     "prop0": "value0",
-                     "prop1": "value1"
-                 }
-             }
-         ]
-      }
-      """.trimIndent()
-    )
-    feature.toValue()
-    verify { ValueConverter.fromJson(feature.toJson()) }
-  }
-
-  @Test(expected = RuntimeException::class)
-  fun geometryTest() {
-    every { expected.value } returns null
-    every { expected.error } returns "error"
-
-    val feature = Feature.fromJson(
-      """
-      {
-        "type": "Feature",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-           [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ],
-           [ [100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2] ]
-          ]
-        },
-        "properties": {
-          "name": "Dinagat Islands"
-        }
-      }
-      """.trimIndent()
-    )
-    feature.geometry()?.toValue()
-    verify { ValueConverter.fromJson(feature.geometry()!!.toJson()) }
+    val featureString =
+      "{\"type\":\"Feature\",\"bbox\":[100.0,0.0,-100.0,105.0,1.0,0.0],\"geometry\":{\"type\":\"Point\",\"coordinates\":[125.6,10.1]},\"properties\":{\"name\":\"Dinagat Islands\"}}"
+    val actual = Feature.fromJson(featureString).toValue()
+    assertEquals(Value.valueOf(featureString), actual)
   }
 
   internal data class MockData(val a: Int, val b: String)

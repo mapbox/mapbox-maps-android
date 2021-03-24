@@ -96,7 +96,7 @@ class LineManagerAndroidTest : BaseMapTest() {
   fun createFromFeature() {
     val lineManager = mapView.getAnnotationPlugin().createLineManager(mapView)
     val featureCollection =
-      FeatureCollection.fromFeature(Feature.fromGeometry(LineString.fromLngLats(listOf(Point.fromLngLat(0.0, 0.0)))))
+      FeatureCollection.fromFeature(Feature.fromGeometry(LineString.fromLngLats(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))))
     val annotations = lineManager.create(featureCollection.toJson())
     assertEquals(annotations.first(), lineManager.annotations[0])
     val annotations1 = lineManager.create(featureCollection)

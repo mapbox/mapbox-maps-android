@@ -17,7 +17,7 @@ class TypeUtilsTest : BaseStyleTest() {
 
   @Test
   fun feature_toValue() {
-    val feature = Feature.fromJson(
+    val geojson =
       """
       {
         "type": "Feature",
@@ -31,9 +31,9 @@ class TypeUtilsTest : BaseStyleTest() {
         }
       }
       """.trimIndent()
-    )
+    val feature = Feature.fromJson(geojson)
     assertEquals(
-      "{geometry={coordinates=[125.6, 10.1], type=Point}, type=Feature, properties={name=Dinagat Islands}, bbox=[100.0, 0.0, -100.0, 105.0, 1.0, 0.0]}",
+      "{\"type\":\"Feature\",\"bbox\":[100.0,0.0,-100.0,105.0,1.0,0.0],\"geometry\":{\"type\":\"Point\",\"coordinates\":[125.6,10.1]},\"properties\":{\"name\":\"Dinagat Islands\"}}",
       feature.toValue().toString()
     )
   }
@@ -81,7 +81,7 @@ class TypeUtilsTest : BaseStyleTest() {
       """.trimIndent()
     )
     assertEquals(
-      "{type=FeatureCollection, features=[{geometry={coordinates=[[102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0]], type=LineString}, id=id0, type=Feature, properties={prop1=value1, prop0=value0}}, {geometry={coordinates=[[[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]]], type=Polygon}, id=id1, type=Feature, properties={prop1=value1, prop0=value0}}], bbox=[100.0, 0.0, -100.0, 105.0, 1.0, 0.0]}",
+      "{\"type\":\"FeatureCollection\",\"bbox\":[100.0,0.0,-100.0,105.0,1.0,0.0],\"features\":[{\"type\":\"Feature\",\"id\":\"id0\",\"geometry\":{\"type\":\"LineString\",\"coordinates\":[[102.0,0.0],[103.0,1.0],[104.0,0.0],[105.0,1.0]]},\"properties\":{\"prop0\":\"value0\",\"prop1\":\"value1\"}},{\"type\":\"Feature\",\"id\":\"id1\",\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[100.0,0.0],[101.0,0.0],[101.0,1.0],[100.0,1.0],[100.0,0.0]]]},\"properties\":{\"prop0\":\"value0\",\"prop1\":\"value1\"}}]}",
       feature.toValue().toString()
     )
   }
@@ -103,7 +103,7 @@ class TypeUtilsTest : BaseStyleTest() {
       """.trimIndent()
     )
     assertEquals(
-      "{type=Point, coordinates=[125.6, 10.1]}",
+      "{\"type\":\"Point\",\"coordinates\":[125.6,10.1]}",
       feature.geometry()!!.toValue().toString()
     )
   }
@@ -127,7 +127,7 @@ class TypeUtilsTest : BaseStyleTest() {
       """.trimIndent()
     )
     assertEquals(
-      "{type=LineString, coordinates=[[100.0, 0.0], [101.0, 1.0]]}",
+      "{\"type\":\"LineString\",\"coordinates\":[[100.0,0.0],[101.0,1.0]]}",
       feature.geometry()!!.toValue().toString()
     )
   }
@@ -151,7 +151,7 @@ class TypeUtilsTest : BaseStyleTest() {
       """.trimIndent()
     )
     assertEquals(
-      "{type=Polygon, coordinates=[[[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]]]}",
+      "{\"type\":\"Polygon\",\"coordinates\":[[[100.0,0.0],[101.0,0.0],[101.0,1.0],[100.0,1.0],[100.0,0.0]]]}",
       feature.geometry()!!.toValue().toString()
     )
   }
@@ -176,7 +176,7 @@ class TypeUtilsTest : BaseStyleTest() {
       """.trimIndent()
     )
     assertEquals(
-      "{type=Polygon, coordinates=[[[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]], [[100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2]]]}",
+      "{\"type\":\"Polygon\",\"coordinates\":[[[100.0,0.0],[101.0,0.0],[101.0,1.0],[100.0,1.0],[100.0,0.0]],[[100.2,0.2],[100.8,0.2],[100.8,0.8],[100.2,0.8],[100.2,0.2]]]}",
       feature.geometry()!!.toValue().toString()
     )
   }
@@ -200,7 +200,7 @@ class TypeUtilsTest : BaseStyleTest() {
       """.trimIndent()
     )
     assertEquals(
-      "{type=MultiPoint, coordinates=[[100.0, 0.0], [101.0, 1.0]]}",
+      "{\"type\":\"MultiPoint\",\"coordinates\":[[100.0,0.0],[101.0,1.0]]}",
       feature.geometry()!!.toValue().toString()
     )
   }
@@ -225,7 +225,7 @@ class TypeUtilsTest : BaseStyleTest() {
       """.trimIndent()
     )
     assertEquals(
-      "{type=MultiLineString, coordinates=[[[100.0, 0.0], [101.0, 1.0]], [[102.0, 2.0], [103.0, 3.0]]]}",
+      "{\"type\":\"MultiLineString\",\"coordinates\":[[[100.0,0.0],[101.0,1.0]],[[102.0,2.0],[103.0,3.0]]]}",
       feature.geometry()!!.toValue().toString()
     )
   }
@@ -255,7 +255,7 @@ class TypeUtilsTest : BaseStyleTest() {
       """.trimIndent()
     )
     assertEquals(
-      "{type=MultiPolygon, coordinates=[[[[102.0, 2.0], [103.0, 2.0], [103.0, 3.0], [102.0, 3.0], [102.0, 2.0]]], [[[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]], [[100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2]]]]}",
+      "{\"type\":\"MultiPolygon\",\"coordinates\":[[[[102.0,2.0],[103.0,2.0],[103.0,3.0],[102.0,3.0],[102.0,2.0]]],[[[100.0,0.0],[101.0,0.0],[101.0,1.0],[100.0,1.0],[100.0,0.0]],[[100.2,0.2],[100.8,0.2],[100.8,0.8],[100.2,0.8],[100.2,0.2]]]]}",
       feature.geometry()!!.toValue().toString()
     )
   }
@@ -288,7 +288,7 @@ class TypeUtilsTest : BaseStyleTest() {
       """.trimIndent()
     )
     assertEquals(
-      "{type=GeometryCollection, geometries=[{type=Point, coordinates=[100.0, 0.0]}, {type=LineString, coordinates=[[101.0, 0.0], [102.0, 1.0]]}]}",
+      "{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"Point\",\"coordinates\":[100.0,0.0]},{\"type\":\"LineString\",\"coordinates\":[[101.0,0.0],[102.0,1.0]]}]}",
       feature.geometry()!!.toValue().toString()
     )
   }
@@ -336,7 +336,7 @@ class TypeUtilsTest : BaseStyleTest() {
       """.trimIndent()
     )
     assertEquals(
-      "{type=GeometryCollection, geometries=[{type=Point, coordinates=[100.0, 0.0]}, {type=LineString, coordinates=[[101.0, 0.0], [102.0, 1.0]]}, {type=GeometryCollection, geometries=[{type=Point, coordinates=[100.0, 0.0]}, {type=LineString, coordinates=[[101.0, 0.0], [102.0, 1.0]]}]}]}",
+      "{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"Point\",\"coordinates\":[100.0,0.0]},{\"type\":\"LineString\",\"coordinates\":[[101.0,0.0],[102.0,1.0]]},{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"Point\",\"coordinates\":[100.0,0.0]},{\"type\":\"LineString\",\"coordinates\":[[101.0,0.0],[102.0,1.0]]}]}]}",
       feature.geometry()!!.toValue().toString()
     )
   }

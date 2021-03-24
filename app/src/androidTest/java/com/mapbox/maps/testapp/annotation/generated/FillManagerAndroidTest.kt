@@ -63,7 +63,7 @@ class FillManagerAndroidTest : BaseMapTest() {
     val fillManager = mapView.getAnnotationPlugin().createFillManager(mapView)
     val annotation = fillManager.create(
       FillOptions()
-        .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+        .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(0.0, 1.0), Point.fromLngLat(1.0, 0.0))))
     )
     assertEquals(annotation, fillManager.annotations[0])
   }
@@ -72,7 +72,7 @@ class FillManagerAndroidTest : BaseMapTest() {
   fun createFromFeature() {
     val fillManager = mapView.getAnnotationPlugin().createFillManager(mapView)
     val featureCollection =
-      FeatureCollection.fromFeature(Feature.fromGeometry(Polygon.fromLngLats(listOf(listOf(Point.fromLngLat(0.0, 0.0))))))
+      FeatureCollection.fromFeature(Feature.fromGeometry(Polygon.fromLngLats(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(0.0, 1.0), Point.fromLngLat(1.0, 0.0))))))
     val annotations = fillManager.create(featureCollection.toJson())
     assertEquals(annotations.first(), fillManager.annotations[0])
     val annotations1 = fillManager.create(featureCollection)
@@ -83,8 +83,8 @@ class FillManagerAndroidTest : BaseMapTest() {
   fun createList() {
     val fillManager = mapView.getAnnotationPlugin().createFillManager(mapView)
     val list = listOf(
-      FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))),
-      FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+      FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(1.0, 0.0), Point.fromLngLat(0.0, 1.0)))),
+      FillOptions().withPoints(listOf(listOf(Point.fromLngLat(1.0, 0.0), Point.fromLngLat(0.0, 1.0), Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
     )
     val annotations = fillManager.create(list)
     assertEquals(annotations[0], fillManager.annotations[0])
@@ -94,9 +94,9 @@ class FillManagerAndroidTest : BaseMapTest() {
   @Test
   fun update() {
     val fillManager = mapView.getAnnotationPlugin().createFillManager(mapView)
-    val annotation = fillManager.create(FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))))
+    val annotation = fillManager.create(FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(0.0, 1.0), Point.fromLngLat(1.0, 0.0)))))
     assertEquals(annotation, fillManager.annotations[0])
-    annotation.points = listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))
+    annotation.points = listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(0.0, 1.0), Point.fromLngLat(1.0, 0.0)))
     fillManager.update(annotation)
     assertEquals(annotation, fillManager.annotations[0])
   }
@@ -105,14 +105,14 @@ class FillManagerAndroidTest : BaseMapTest() {
   fun updateList() {
     val fillManager = mapView.getAnnotationPlugin().createFillManager(mapView)
     val list = listOf(
-      FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))),
-      FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+      FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(1.0, 0.0), Point.fromLngLat(0.0, 1.0)))),
+      FillOptions().withPoints(listOf(listOf(Point.fromLngLat(1.0, 0.0), Point.fromLngLat(0.0, 1.0), Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
     )
     val annotations = fillManager.create(list)
     assertEquals(annotations[0], fillManager.annotations[0])
     assertEquals(annotations[1], fillManager.annotations[1])
-    annotations[0].points = listOf(listOf(Point.fromLngLat(1.0, 0.0), Point.fromLngLat(1.0, 1.0)))
-    annotations[1].points = listOf(listOf(Point.fromLngLat(1.0, 0.0), Point.fromLngLat(1.0, 1.0)))
+    annotations[0].points = listOf(listOf(Point.fromLngLat(1.0, 0.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(1.0, 0.0), Point.fromLngLat(0.0, 1.0)))
+    annotations[1].points = listOf(listOf(Point.fromLngLat(1.0, 0.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))
     fillManager.update(annotations)
     assertEquals(annotations[0], fillManager.annotations[0])
     assertEquals(annotations[1], fillManager.annotations[1])
@@ -123,7 +123,7 @@ class FillManagerAndroidTest : BaseMapTest() {
     val fillManager = mapView.getAnnotationPlugin().createFillManager(mapView)
     val annotation = fillManager.create(
       FillOptions()
-        .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+        .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(0.0, 1.0), Point.fromLngLat(1.0, 0.0))))
     )
     assertEquals(annotation, fillManager.annotations[0])
     fillManager.delete(annotation)
@@ -134,8 +134,8 @@ class FillManagerAndroidTest : BaseMapTest() {
   fun deleteList() {
     val fillManager = mapView.getAnnotationPlugin().createFillManager(mapView)
     val list = listOf(
-      FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))),
-      FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+      FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(1.0, 0.0), Point.fromLngLat(0.0, 1.0)))),
+      FillOptions().withPoints(listOf(listOf(Point.fromLngLat(1.0, 0.0), Point.fromLngLat(0.0, 1.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(0.0, 0.0))))
     )
     val annotations = fillManager.create(list)
     assertEquals(annotations[0], fillManager.annotations[0])
@@ -149,8 +149,8 @@ class FillManagerAndroidTest : BaseMapTest() {
   fun deleteAll() {
     val fillManager = mapView.getAnnotationPlugin().createFillManager(mapView)
     val list = listOf(
-      FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))),
-      FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+      FillOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(1.0, 0.0), Point.fromLngLat(0.0, 1.0)))),
+      FillOptions().withPoints(listOf(listOf(Point.fromLngLat(1.0, 0.0), Point.fromLngLat(0.0, 1.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(0.0, 0.0))))
     )
     val annotations = fillManager.create(list)
     assertEquals(annotations[0], fillManager.annotations[0])
