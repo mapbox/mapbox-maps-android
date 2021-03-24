@@ -139,6 +139,7 @@ commands:
       - run:
           name: Generate docs and create PR for review
           command: |
+            git config --global user.email no-reply@mapbox.com && git config --global user.name MapboxCI
             ./scripts/update-android-docs.sh -s "test-tag" -r $ANDROID_DOCS_REVIEWERS
 
   track-metrics:
