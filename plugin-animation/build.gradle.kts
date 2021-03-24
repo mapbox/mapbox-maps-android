@@ -24,6 +24,7 @@ android {
 
 dependencies {
   implementation(project(":sdk-base"))
+  implementation(Dependencies.mapboxCoreCommon)
   implementation(Dependencies.androidxInterpolators)
   implementation(Dependencies.kotlin)
   implementation(Dependencies.androidxCoreKtx)

@@ -25,6 +25,7 @@ dependencies {
   implementation(Dependencies.androidxAnnotations)
   implementation(Dependencies.mapboxJavaGeoJSON)
   implementation(Dependencies.mapboxJavaTurf)
+  implementation(Dependencies.mapboxCoreCommon)
   testImplementation(Dependencies.junit)
   testImplementation(Dependencies.mockk)
   testImplementation(Dependencies.androidxTestCore)

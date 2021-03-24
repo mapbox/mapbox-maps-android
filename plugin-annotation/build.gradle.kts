@@ -24,6 +24,7 @@ android {
 dependencies {
   implementation(project(":sdk-base"))
   api(project(":extension-style"))
+  implementation(Dependencies.mapboxCoreCommon)
   implementation(Dependencies.mapboxBase)
   implementation(Dependencies.mapboxAnnotations)
   implementation(Dependencies.kotlin)

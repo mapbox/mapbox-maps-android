@@ -24,7 +24,7 @@ dependencies {
   implementation(Dependencies.androidxAnnotations)
   api(Dependencies.mapboxGestures)
   api(Dependencies.mapboxGlNative)
-  api(Dependencies.mapboxCoreCommon)
+  implementation(Dependencies.mapboxCoreCommon)
 }
 
 tasks.withType<DokkaTask>().configureEach {
