@@ -139,9 +139,7 @@ commands:
       - run:
           name: Generate docs and create PR for review
           command: |
-            if [[ $CIRCLE_TAG == android-v* ]]; then
-              ./scripts/update-android-docs.sh -s ${CIRCLE_TAG:9} -r $ANDROID_DOCS_REVIEWERS
-            fi
+            ./scripts/update-android-docs.sh -s "test-tag" -r $ANDROID_DOCS_REVIEWERS
 
   track-metrics:
     steps:
