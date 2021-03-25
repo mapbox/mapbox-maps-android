@@ -3,6 +3,8 @@ package com.mapbox.maps.plugin.location
 import android.animation.Animator
 import android.animation.ValueAnimator
 import android.location.Location
+import android.os.Handler
+import android.os.Looper
 import androidx.annotation.Size
 import androidx.annotation.VisibleForTesting
 import com.mapbox.geojson.Point
@@ -37,6 +39,7 @@ internal class LocationCameraAnimatorCoordinator(
 
   @VisibleForTesting
   internal val cameraAnimators = HashMap<CameraAnimatorType, ValueAnimatorHolder<*>>()
+  private val mainHandler = Handler(Looper.getMainLooper())
 
   var lastLocation: Point? = null
   var isTransitioning = false
@@ -384,11 +387,15 @@ internal class LocationCameraAnimatorCoordinator(
         duration(animationDuration)
         animatorListener(object : Animator.AnimatorListener {
           override fun onAnimationEnd(animation: Animator?) {
-            callback.onFinish()
+            mainHandler.post {
+              callback.onFinish()
+            }
           }
 
           override fun onAnimationCancel(animation: Animator?) {
-            callback.onCancel()
+            mainHandler.post {
+              callback.onCancel()
+            }
           }
 
           override fun onAnimationRepeat(animation: Animator?) {}
