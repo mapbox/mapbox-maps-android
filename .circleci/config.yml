@@ -397,7 +397,7 @@ jobs:
 
   build-sdk-release:
     docker:
-      - image: mbgl/android-ndk-r21:78010c4d11
+      - image: mbgl/android-ndk-r22
 
     steps:
       - checkout
