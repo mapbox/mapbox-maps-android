@@ -139,7 +139,7 @@ commands:
       - run:
           name: Generate docs and create PR for review
           command: |
-            git config --global user.email no-reply@mapbox.com && git config --global user.name MapboxCI
+            git config --global user.email no-reply@mapbox.com && git config --global user.name mapbox-ci
             ./scripts/update-android-docs.sh -s "test-tag" -r $ANDROID_DOCS_REVIEWERS
 
   track-metrics:
@@ -396,7 +396,7 @@ jobs:
 
   build-sdk-release:
     docker:
-      - image: mbgl/android-ndk-r21b:latest
+      - image: mbgl/android-ndk-r21:78010c4d11
 
     steps:
       - checkout
