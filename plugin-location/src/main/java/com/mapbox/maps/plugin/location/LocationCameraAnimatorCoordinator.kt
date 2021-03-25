@@ -3,6 +3,8 @@ package com.mapbox.maps.plugin.location
 import android.animation.Animator
 import android.animation.ValueAnimator
 import android.location.Location
+import android.os.Handler
+import android.os.Looper
 import androidx.annotation.Size
 import androidx.annotation.VisibleForTesting
 import com.mapbox.geojson.Point
@@ -23,17 +25,46 @@ import com.mapbox.maps.plugin.location.modes.CameraMode
  *  Creates, updates, and plays [ValueAnimator]s with help of low-level Camera API.
  *  Manages all low-level logic around Camera manipulations for the Location plugin
  */
-internal class LocationCameraAnimatorCoordinator(
-  private val projection: MapProjectionDelegate,
-  private val mapTransformDelegate: MapTransformDelegate,
-  private val animatorSetProvider: MapboxAnimatorSetProvider,
+internal class LocationCameraAnimatorCoordinator {
+
+  private val projection: MapProjectionDelegate
+  private val mapTransformDelegate: MapTransformDelegate
+  private val animatorSetProvider: MapboxAnimatorSetProvider
   private val cameraAnimationsPlugin: CameraAnimationsPlugin
-) {
+  private var mainHandler: Handler
 
   class ValueAnimatorHolder<T>(
     val animator: ValueAnimator,
     val targets: Array<T>
   )
+
+  constructor(
+    projection: MapProjectionDelegate,
+    mapTransformDelegate: MapTransformDelegate,
+    animatorSetProvider: MapboxAnimatorSetProvider,
+    cameraAnimationsPlugin: CameraAnimationsPlugin
+  ) {
+    this.projection = projection
+    this.mapTransformDelegate = mapTransformDelegate
+    this.animatorSetProvider = animatorSetProvider
+    this.cameraAnimationsPlugin = cameraAnimationsPlugin
+    this.mainHandler = Handler(Looper.getMainLooper())
+  }
+
+  @VisibleForTesting
+  internal constructor(
+    projection: MapProjectionDelegate,
+    mapTransformDelegate: MapTransformDelegate,
+    animatorSetProvider: MapboxAnimatorSetProvider,
+    cameraAnimationsPlugin: CameraAnimationsPlugin,
+    handler: Handler
+  ) {
+    this.projection = projection
+    this.mapTransformDelegate = mapTransformDelegate
+    this.animatorSetProvider = animatorSetProvider
+    this.cameraAnimationsPlugin = cameraAnimationsPlugin
+    mainHandler = handler
+  }
 
   @VisibleForTesting
   internal val cameraAnimators = HashMap<CameraAnimatorType, ValueAnimatorHolder<*>>()
@@ -384,11 +415,15 @@ internal class LocationCameraAnimatorCoordinator(
         duration(animationDuration)
         animatorListener(object : Animator.AnimatorListener {
           override fun onAnimationEnd(animation: Animator?) {
-            callback.onFinish()
+            mainHandler.post {
+              callback.onFinish()
+            }
           }
 
           override fun onAnimationCancel(animation: Animator?) {
-            callback.onCancel()
+            mainHandler.post {
+              callback.onCancel()
+            }
           }
 
           override fun onAnimationRepeat(animation: Animator?) {}

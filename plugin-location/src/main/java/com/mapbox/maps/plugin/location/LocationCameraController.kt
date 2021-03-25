@@ -2,6 +2,7 @@ package com.mapbox.maps.plugin.location
 
 import android.content.Context
 import android.location.Location
+import android.os.Handler
 import android.view.MotionEvent
 import androidx.annotation.Size
 import androidx.annotation.VisibleForTesting
@@ -89,7 +90,8 @@ internal class LocationCameraController {
   constructor(
     internalGesturesManager: AndroidGesturesManager,
     delegateProvider: MapDelegateProvider,
-    internalCameraTrackingChangedListener: OnCameraTrackingChangedListener
+    internalCameraTrackingChangedListener: OnCameraTrackingChangedListener,
+    handler: Handler
   ) {
     this.internalGesturesManager = internalGesturesManager
     this.delegateProvider = delegateProvider
@@ -119,7 +121,8 @@ internal class LocationCameraController {
       delegateProvider.mapProjectionDelegate,
       delegateProvider.mapTransformDelegate,
       MapboxAnimatorSetProvider.instance,
-      animationPlugin
+      animationPlugin,
+      handler
     )
   }
 
