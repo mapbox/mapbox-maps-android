@@ -113,7 +113,7 @@ function prepare_android_docs_branch() {
 }
 
 function create_pull_request() {
-  gh auth login
+  gh auth login --with-token < .gh_token.txt
   CMD="gh pr create --title \"${1}\" --body \"\""
 
   if [ ! -z "$REVIEWERS" ]; then
