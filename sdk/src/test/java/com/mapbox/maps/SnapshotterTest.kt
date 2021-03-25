@@ -21,7 +21,7 @@ class SnapshotterTest {
   @Before
   fun setUp() {
     coreSnapshotter = mockk(relaxed = true)
-    snapshotter = Snapshotter(mockk(relaxed = true), coreSnapshotter)
+    snapshotter = Snapshotter(mockk(relaxed = true), coreSnapshotter, mockk(relaxed = true), mockk(relaxed = true))
   }
 
   @Test

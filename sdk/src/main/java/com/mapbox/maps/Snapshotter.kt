@@ -2,6 +2,7 @@ package com.mapbox.maps
 
 import android.content.Context
 import android.graphics.*
+import android.os.Handler
 import android.text.Html
 import android.util.DisplayMetrics
 import android.view.View
@@ -14,13 +15,17 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.attribution.AttributionLayout
 import com.mapbox.maps.attribution.AttributionMeasure
 import com.mapbox.maps.attribution.AttributionParser
+import com.mapbox.maps.extension.observable.getMapLoadingErrorEventData
+import com.mapbox.maps.extension.observable.getStyleDataLoadedEventData
+import com.mapbox.maps.extension.observable.getStyleImageMissingEventData
+import com.mapbox.maps.plugin.delegates.listeners.eventdata.StyleDataType
 import java.lang.ref.WeakReference
 import kotlin.math.min
 
 /**
  * [Snapshotter] is high-level component responsible for taking map snapshot with given [MapSnapshotOptions].
  */
-open class Snapshotter : MapSnapshotterObserver {
+open class Snapshotter {
 
   private val context: WeakReference<Context>
   private val coreSnapshotter: MapSnapshotterInterface
@@ -29,49 +34,56 @@ open class Snapshotter : MapSnapshotterObserver {
   private var snapshotCreatedCallback: SnapshotCreatedListener? = null
   private var snapshotStyleCallback: SnapshotStyleListener? = null
 
+  private val observer: Observer
+
+  private val mainHandler: Handler
+
   constructor(context: Context, options: MapSnapshotOptions) {
     this.context = WeakReference(context)
-    coreSnapshotter = MapSnapshotter(options, this)
+    coreSnapshotter = MapSnapshotter(options)
     pixelRatio = context.resources.displayMetrics.density
+    mainHandler = Handler(context.mainLooper)
+
+    observer = object : Observer() {
+      override fun notify(event: Event) {
+        when (event.type) {
+          MapEvents.MAP_LOADING_ERROR -> {
+            snapshotStyleCallback?.onDidFailLoadingStyle(event.getMapLoadingErrorEventData().message)
+            unsubscribeEvents()
+          }
+          MapEvents.STYLE_DATA_LOADED -> if (event.getStyleDataLoadedEventData().styleDataType == StyleDataType.STYLE) {
+            snapshotStyleCallback?.onDidFinishLoadingStyle(Style(coreSnapshotter, pixelRatio))
+          }
+          MapEvents.STYLE_LOADED -> {
+            snapshotStyleCallback?.onDidFullyLoadStyle(
+              Style(coreSnapshotter, pixelRatio)
+            )
+            unsubscribeEvents()
+          }
+          MapEvents.STYLE_IMAGE_MISSING -> snapshotStyleCallback?.onStyleImageMissing(event.getStyleImageMissingEventData().id)
+          else -> Unit
+        }
+      }
+    }
+
+    coreSnapshotter.subscribe(observer, STYLE_LOAD_EVENTS_LIST)
   }
 
   @VisibleForTesting
-  internal constructor(context: Context, snapshotter: MapSnapshotterInterface) {
+  internal constructor(context: Context, snapshotter: MapSnapshotterInterface, mainHandler: Handler, observer: Observer) {
     this.context = WeakReference(context)
     coreSnapshotter = snapshotter
     pixelRatio = context.resources.displayMetrics.density
+    this.observer = observer
+    this.mainHandler = mainHandler
   }
 
-  /**
-   * Notifies the client about style load errors
-   *
-   * @param message Error message associated with the error.
-   */
-  override fun onDidFailLoadingStyle(message: String) {
-    snapshotStyleCallback?.onDidFailLoadingStyle(message)
-  }
-
-  /**
-   * Notifies the client when style loading completed, not including the style specified sprite and sources.
-   */
-  override fun onDidFinishLoadingStyle() {
-    snapshotStyleCallback?.onDidFinishLoadingStyle(Style(coreSnapshotter, pixelRatio))
-  }
-
-  /**
-   * Notifies the client when style loading completed, including the style specified sprite and sources.
-   */
-  override fun onDidFullyLoadStyle() {
-    snapshotStyleCallback?.onDidFullyLoadStyle(Style(coreSnapshotter, pixelRatio))
-  }
-
-  /**
-   * Notifies the client about a missing style image.
-   *
-   * @param imageId The id of the image that is missing.
-   */
-  override fun onStyleImageMissing(imageId: String) {
-    snapshotStyleCallback?.onStyleImageMissing(imageId)
+  // Currently the unsubscribe inside the notify events will cause deadlock, it will be fixed in the gl-native.
+  // As a workaround, the unsubscribe task is scheduled on the platform side.
+  private fun unsubscribeEvents() {
+    mainHandler.post {
+      coreSnapshotter.unsubscribe(observer)
+    }
   }
 
   /**
@@ -167,7 +179,12 @@ open class Snapshotter : MapSnapshotterObserver {
    *
    * @return Returns the camera options object representing the provided params
    */
-  fun cameraForCoordinates(coordinates: List<Point>, padding: EdgeInsets, bearing: Double, pitch: Double): CameraOptions {
+  fun cameraForCoordinates(
+    coordinates: List<Point>,
+    padding: EdgeInsets,
+    bearing: Double,
+    pitch: Double
+  ): CameraOptions {
     return coreSnapshotter.cameraForCoordinates(coordinates, padding, bearing, pitch)
   }
 
@@ -441,5 +458,12 @@ open class Snapshotter : MapSnapshotterObserver {
    */
   companion object {
     private const val TAG = "Snapshotter"
+
+    private val STYLE_LOAD_EVENTS_LIST = listOf(
+      MapEvents.MAP_LOADING_ERROR,
+      MapEvents.STYLE_DATA_LOADED,
+      MapEvents.STYLE_LOADED,
+      MapEvents.STYLE_IMAGE_MISSING
+    )
   }
 }
