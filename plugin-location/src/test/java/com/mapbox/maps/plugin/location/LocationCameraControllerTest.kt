@@ -3,6 +3,7 @@ package com.mapbox.maps.plugin.location
 import android.animation.ValueAnimator
 import android.graphics.RectF
 import android.location.Location
+import android.os.Handler
 import com.mapbox.android.gestures.AndroidGesturesManager
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.geojson.Point
@@ -26,6 +27,7 @@ import org.junit.Before
 import org.junit.Test
 
 internal class LocationCameraControllerTest {
+  private val mainHandler = mockk<Handler>()
   private val delegateProvider: MapDelegateProvider = mockk(relaxed = true)
   private val transformDelegate: MapTransformDelegate = mockk(relaxed = true)
   private val projectionDelegate: MapProjectionDelegate = mockk(relaxed = true)
@@ -42,9 +44,14 @@ internal class LocationCameraControllerTest {
   private val options: LocationComponentOptions = mockk(relaxed = true)
 
   private lateinit var locationCameraController: LocationCameraController
+  private val runnableSlot = slot<Runnable>()
 
   @Before
   fun setup() {
+    every { mainHandler.post(capture(runnableSlot)) } answers {
+      runnableSlot.captured.run()
+      true
+    }
     every { delegateProvider.mapTransformDelegate } returns transformDelegate
     every { delegateProvider.mapProjectionDelegate } returns projectionDelegate
     every { delegateProvider.mapPluginProviderDelegate } returns pluginProviderDelegate
@@ -62,7 +69,8 @@ internal class LocationCameraControllerTest {
     locationCameraController = LocationCameraController(
       internalGesturesManager = internalGesturesManager,
       delegateProvider = delegateProvider,
-      internalCameraTrackingChangedListener = onCameraTrackingChangedListener
+      internalCameraTrackingChangedListener = onCameraTrackingChangedListener,
+      handler = mainHandler
     )
   }
 

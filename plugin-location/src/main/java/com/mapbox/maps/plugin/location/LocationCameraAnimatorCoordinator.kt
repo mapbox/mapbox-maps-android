@@ -25,21 +25,49 @@ import com.mapbox.maps.plugin.location.modes.CameraMode
  *  Creates, updates, and plays [ValueAnimator]s with help of low-level Camera API.
  *  Manages all low-level logic around Camera manipulations for the Location plugin
  */
-internal class LocationCameraAnimatorCoordinator(
-  private val projection: MapProjectionDelegate,
-  private val mapTransformDelegate: MapTransformDelegate,
-  private val animatorSetProvider: MapboxAnimatorSetProvider,
+internal class LocationCameraAnimatorCoordinator {
+
+  private val projection: MapProjectionDelegate
+  private val mapTransformDelegate: MapTransformDelegate
+  private val animatorSetProvider: MapboxAnimatorSetProvider
   private val cameraAnimationsPlugin: CameraAnimationsPlugin
-) {
+  private var mainHandler: Handler
 
   class ValueAnimatorHolder<T>(
     val animator: ValueAnimator,
     val targets: Array<T>
   )
 
+  constructor(
+    projection: MapProjectionDelegate,
+    mapTransformDelegate: MapTransformDelegate,
+    animatorSetProvider: MapboxAnimatorSetProvider,
+    cameraAnimationsPlugin: CameraAnimationsPlugin
+  ) {
+    this.projection = projection
+    this.mapTransformDelegate = mapTransformDelegate
+    this.animatorSetProvider = animatorSetProvider
+    this.cameraAnimationsPlugin = cameraAnimationsPlugin
+    this.mainHandler = Handler(Looper.getMainLooper())
+  }
+
+  @VisibleForTesting
+  internal constructor(
+    projection: MapProjectionDelegate,
+    mapTransformDelegate: MapTransformDelegate,
+    animatorSetProvider: MapboxAnimatorSetProvider,
+    cameraAnimationsPlugin: CameraAnimationsPlugin,
+    handler: Handler
+  ) {
+    this.projection = projection
+    this.mapTransformDelegate = mapTransformDelegate
+    this.animatorSetProvider = animatorSetProvider
+    this.cameraAnimationsPlugin = cameraAnimationsPlugin
+    mainHandler = handler
+  }
+
   @VisibleForTesting
   internal val cameraAnimators = HashMap<CameraAnimatorType, ValueAnimatorHolder<*>>()
-  private val mainHandler = Handler(Looper.getMainLooper())
 
   var lastLocation: Point? = null
   var isTransitioning = false
