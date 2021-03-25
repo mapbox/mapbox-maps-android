@@ -5,10 +5,12 @@
 // This file is generated. Edit scripts/sanity-test/generate-sanity-test.js, then run `make generate-sanity-test`.
 package com.mapbox.maps.testapp.activity.<%- subPackage %>
 
+import android.Manifest
 import android.os.Handler
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import androidx.test.rule.GrantPermissionRule
 import com.mapbox.maps.testapp.<%- subPackage %>.<%- activity %>
 import org.junit.Rule
 import org.junit.Test
@@ -25,6 +27,9 @@ class <%- activity %>Test {
   var activityRule: ActivityScenarioRule<<%- activity %>> =
     ActivityScenarioRule(<%- activity %>::class.java)
 
+  @get:Rule
+  var permissionRule: GrantPermissionRule = GrantPermissionRule.grant(Manifest.permission.ACCESS_FINE_LOCATION)
+
   @Test
   fun sanity() {
     val latch = CountDownLatch(1)
@@ -32,7 +37,7 @@ class <%- activity %>Test {
       it.runOnUiThread {
         Handler().postDelayed({
           latch.countDown()
-        }, 1250)
+        }, 5000)
       }
     }
     if (!latch.await(2500, TimeUnit.MILLISECONDS)) {
