@@ -141,7 +141,7 @@ commands:
           command: |
             echo "$GH_LOGIN_TOKEN" > .gh_token.txt
             git config --global user.email no-reply@mapbox.com && git config --global user.name mapbox-ci
-            ./scripts/update-android-docs.sh -s "test-tag" -r $ANDROID_DOCS_REVIEWERS
+            ./scripts/update-android-docs.sh -s "test-tag"
 
   track-metrics:
     steps:

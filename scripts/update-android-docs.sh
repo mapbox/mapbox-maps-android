@@ -24,14 +24,13 @@ MAPS_SDK_VERSION=
 REVIEWERS=
 
 PROG=$(basename $0)
-SHORT_OPTS=s:a:r:h
-LONG_OPTS=sdk-version:,reviewers:,help
+SHORT_OPTS=s:h
+LONG_OPTS=sdk-version:,help
 
 function usage() {
   message="Usage: $PROG -s SDK_VERSION \
            \nParameters:\
            \n  -s | --sdk-version       [version]                      Maps SDK version.\
-           \n  -r | --reviewers         [gh_usr1,gh_usr2,org/team,...] Comma-separated list of reviewer (github logins).\
            \n  -h | --help                                             Shows this help message."
   echo -e "$message"
 }
