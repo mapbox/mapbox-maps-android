@@ -136,5 +136,5 @@ clone_android_docs_repo
 update_constants_and_map_version_numbers $MAPS_SDK_VERSION
 prepare_android_docs_branch $MAPS_SDK_VERSION
 cd $ANDROID_DOCS_DIRECTORY
-create_pull_request "Carbon Maps SDK bump to ${MAPS_SDK_VERSION}"
+create_pull_request "Carbon Maps SDK bump to ${MAPS_SDK_VERSION}" $BRANCH_WITH_DOCUMENTATION
 cd -
