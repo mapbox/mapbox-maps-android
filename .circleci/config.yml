@@ -139,10 +139,11 @@ commands:
       - run:
           name: Generate docs and create PR for review
           command: |
-            echo "$GH_LOGIN_TOKEN" > gh_token.txt
-            git config --global user.email no-reply@mapbox.com && git config --global user.name mapbox-ci
-            ./scripts/update-android-docs.sh -s "test-tag"
-
+            if [[ $CIRCLE_TAG == android-v* ]]; then
+              echo "$GH_LOGIN_TOKEN" > gh_token.txt
+              git config --global user.email no-reply@mapbox.com && git config --global user.name mapbox-ci
+              ./scripts/update-android-docs.sh -s "test-tag"
+            fi
   track-metrics:
     steps:
       - unless:
@@ -267,7 +268,7 @@ commands:
 jobs:
   verify-code:
     docker:
-      - image: mbgl/android-ndk-r21b:latest
+      - image: mbgl/android-ndk-r21:latest
 
     steps:
       - checkout
@@ -283,7 +284,7 @@ jobs:
 
   verify-docs:
     docker:
-      - image: mbgl/android-ndk-r21b:latest
+      - image: mbgl/android-ndk-r21:latest
 
     steps:
       - checkout
@@ -295,7 +296,7 @@ jobs:
 
   run-unit-test:
     docker:
-      - image: mbgl/android-ndk-r21b:latest
+      - image: mbgl/android-ndk-r21:latest
 
     steps:
       - checkout
@@ -304,7 +305,7 @@ jobs:
 
   run-lint:
     docker:
-      - image: mbgl/android-ndk-r21b:latest
+      - image: mbgl/android-ndk-r21:latest
 
     steps:
       - checkout
@@ -315,7 +316,7 @@ jobs:
 
   run-robo-test:
     docker:
-      - image: mbgl/android-ndk-r21b:latest
+      - image: mbgl/android-ndk-r21:latest
 
     steps:
       - checkout
@@ -328,7 +329,7 @@ jobs:
 
   run-app-test:
     docker:
-      - image: mbgl/android-ndk-r21b:latest
+      - image: mbgl/android-ndk-r21:latest
 
     steps:
       - checkout
@@ -348,7 +349,7 @@ jobs:
 
   run-sdk-test:
     docker:
-      - image: mbgl/android-ndk-r21b:latest
+      - image: mbgl/android-ndk-r21:latest
 
     steps:
       - checkout
@@ -366,7 +367,7 @@ jobs:
 
   run-style-test:
     docker:
-      - image: mbgl/android-ndk-r21b:latest
+      - image: mbgl/android-ndk-r21:latest
 
     steps:
       - checkout
@@ -386,7 +387,7 @@ jobs:
 
   build-sdk-from-source:
     docker:
-      - image: mbgl/android-ndk-r21b:latest
+      - image: mbgl/android-ndk-r21:latest
 
     steps:
       - checkout
