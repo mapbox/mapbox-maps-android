@@ -112,7 +112,7 @@ function prepare_android_docs_branch() {
 }
 
 function create_pull_request() {
-  CMD="gh pr create --title \"${1}\" --body \"\""
+  CMD="gh pr create --title \"${1}\" --body \"cc: @mapbox/maps-android\""
 
   if [ ! -z "$REVIEWERS" ]; then
     CMD+=" --reviewer ${REVIEWERS}"

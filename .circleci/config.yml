@@ -142,7 +142,7 @@ commands:
             if [[ $CIRCLE_TAG == android-v* ]]; then
               echo "$GH_LOGIN_TOKEN" > gh_token.txt
               git config --global user.email no-reply@mapbox.com && git config --global user.name mapbox-ci
-              ./scripts/update-android-docs.sh -s "test-tag"
+              ./scripts/update-android-docs.sh -s $CIRCLE_TAG
             fi
   track-metrics:
     steps:

@@ -48,6 +48,10 @@ dokka-html:
 dokka-javadoc:
 	./gradlew dokkaJavadocCollector
 
+.PHONY: update-android-docs
+update-android-docs:
+	sh scripts/update-android-docs.sh -s $(TAG)
+
 .PHONY: prepare-release-doc
 prepare-release-doc: dokka-html
 	mkdir -p release-docs;
