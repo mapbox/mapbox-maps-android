@@ -826,7 +826,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.annotation.FillActivity"
+            android:name=".examples.annotation.PolyfillAnnotationActivity"
             android:description="@string/description_annotation_fill"
             android:exported="true"
             android:label="@string/activity_fill">
@@ -838,7 +838,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.annotation.CircleActivity"
+            android:name=".examples.annotation.CircleAnnotationActivity"
             android:description="@string/description_annotation_circle"
             android:exported="true"
             android:label="@string/activity_circle">
@@ -850,7 +850,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.annotation.SymbolActivity"
+            android:name=".examples.annotation.PointAnnotationActivity"
             android:description="@string/description_annotation_symbol"
             android:exported="true"
             android:label="@string/activity_symbol">
@@ -862,7 +862,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.annotation.SymbolClusterActivity"
+            android:name=".examples.annotation.PointAnnotationClusterActivity"
             android:description="@string/description_annotation_symbol_cluster"
             android:exported="true"
             android:label="@string/activity_symbol_cluster">
@@ -874,7 +874,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.annotation.LineActivity"
+            android:name=".examples.annotation.PolylineAnnotationActivity"
             android:description="@string/description_annotation_line"
             android:exported="true"
             android:label="@string/activity_line">

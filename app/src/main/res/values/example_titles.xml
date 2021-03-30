@@ -65,11 +65,11 @@
     <string name="activity_mapsurface">MapSurface</string>
     <string name="activity_view_snapshot">MapView Snapshot</string>
     <string name="activity_custom_attribution">Custom Attribution</string>
-    <string name="activity_fill">Annotation Fill</string>
-    <string name="activity_circle">Annotation Circle</string>
-    <string name="activity_symbol">Annotation Symbol</string>
+    <string name="activity_fill">PolyfillAnnotation</string>
+    <string name="activity_circle">CircleAnnotation</string>
+    <string name="activity_symbol">PointAnnotation</string>
     <string name="activity_symbol_cluster">Annotation Cluster Symbols</string>
-    <string name="activity_line">Annotation line</string>
+    <string name="activity_line"> PolylineAnnotation</string>
     <string name="activity_terrain_showcase">3D Terrain showcase</string>
     <string name="activity_location_component">Location component</string>
     <string name="activity_location_component_animation">Location component animation</string>

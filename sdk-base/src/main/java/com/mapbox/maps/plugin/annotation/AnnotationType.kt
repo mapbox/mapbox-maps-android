@@ -7,15 +7,15 @@ enum class AnnotationType(
   /** The value of type */
   var value: Int
 ) {
-  /** Fill annotation type */
-  Fill(1),
+  /** PolygonAnnotation type */
+  PolygonAnnotation(1),
 
-  /** Line annotation type */
-  Line(2),
+  /** PolylineAnnotation type */
+  PolylineAnnotation(2),
 
-  /** Symbol annotation type */
-  Symbol(3),
+  /** PointAnnotation type */
+  PointAnnotation(3),
 
-  /** Circle annotation type */
-  Circle(4),
+  /** CircleAnnotation type */
+  CircleAnnotation(4),
 }

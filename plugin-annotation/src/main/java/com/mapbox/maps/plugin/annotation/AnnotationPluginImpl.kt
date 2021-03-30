@@ -2,10 +2,7 @@ package com.mapbox.maps.plugin.annotation
 
 import android.view.View
 import com.mapbox.maps.StyleManagerInterface
-import com.mapbox.maps.plugin.annotation.generated.CircleManager
-import com.mapbox.maps.plugin.annotation.generated.FillManager
-import com.mapbox.maps.plugin.annotation.generated.LineManager
-import com.mapbox.maps.plugin.annotation.generated.SymbolManager
+import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import java.lang.ref.WeakReference
@@ -33,10 +30,10 @@ class AnnotationPluginImpl : AnnotationPlugin {
     annotationConfig: AnnotationConfig?
   ): AnnotationManager<*, *, *, *, *, *> {
     val manager = when (type) {
-      AnnotationType.Fill -> FillManager(mapView, delegateProvider, annotationConfig)
-      AnnotationType.Circle -> CircleManager(mapView, delegateProvider, annotationConfig)
-      AnnotationType.Line -> LineManager(mapView, delegateProvider, annotationConfig)
-      AnnotationType.Symbol -> SymbolManager(mapView, delegateProvider, annotationConfig)
+      AnnotationType.PolygonAnnotation -> PolygonAnnotationManager(mapView, delegateProvider, annotationConfig)
+      AnnotationType.CircleAnnotation -> CircleAnnotationManager(mapView, delegateProvider, annotationConfig)
+      AnnotationType.PolylineAnnotation -> PolylineAnnotationManager(mapView, delegateProvider, annotationConfig)
+      AnnotationType.PointAnnotation -> PointAnnotationManager(mapView, delegateProvider, annotationConfig)
     }
     manager.onSizeChanged(width, height)
     managerList.add(WeakReference(manager))
