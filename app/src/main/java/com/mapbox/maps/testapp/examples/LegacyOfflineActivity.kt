@@ -25,7 +25,7 @@ class LegacyOfflineActivity : AppCompatActivity() {
     }
 
     override fun statusChanged(status: OfflineRegionStatus) {
-      Logger.d(
+      Logger.e(
         TAG,
         "${status.completedResourceCount}/${status.requiredResourceCount} resources; ${status.completedResourceSize} bytes downloaded."
       )
@@ -78,6 +78,26 @@ class LegacyOfflineActivity : AppCompatActivity() {
       // create mapView
       mapView = MapView(this@LegacyOfflineActivity).also { mapview ->
         val mapboxMap = mapview.getMapboxMap()
+        mapboxMap.subscribe(object : Observer() {
+          override fun notify(event: Event) {
+            Logger.e(TAG, "type ${event.type}, data ${event.data.toJson()}")
+          }
+        }, listOf(
+          MapEvents.CAMERA_CHANGED,
+          MapEvents.MAP_IDLE,
+          MapEvents.MAP_LOADED,
+          MapEvents.MAP_LOADING_ERROR,
+          MapEvents.RENDER_FRAME_FINISHED,
+          MapEvents.RENDER_FRAME_STARTED,
+          MapEvents.RESOURCE_REQUEST,
+          MapEvents.SOURCE_ADDED,
+          MapEvents.SOURCE_DATA_LOADED,
+          MapEvents.SOURCE_REMOVED,
+          MapEvents.STYLE_DATA_LOADED,
+          MapEvents.STYLE_IMAGE_MISSING,
+          MapEvents.STYLE_IMAGE_REMOVE_UNUSED,
+          MapEvents.STYLE_LOADED)
+        )
         mapboxMap.setCamera(CameraOptions.Builder().zoom(zoom).center(point).build())
         mapboxMap.loadStyleUri(styleUrl)
       }
@@ -104,7 +124,7 @@ class LegacyOfflineActivity : AppCompatActivity() {
   }
 
   companion object {
-    private const val TAG = "Offline"
+    private const val TAG = "MapboxOffline"
     private const val zoom = 16.0
     private val point: Point = Point.fromLngLat(57.818901, 20.071357)
     private const val styleUrl = Style.SATELLITE
