@@ -6,6 +6,7 @@ import com.mapbox.common.Logger
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleContract
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.layers.generated.*
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.layers.properties.generated.Visibility
@@ -96,7 +97,7 @@ abstract class Layer : StyleContract.StyleLayerExtension {
    *
    * @param delegate The style controller
    */
-  fun bindTo(delegate: StyleManagerInterface) {
+  fun bindTo(delegate: StyleInterface) {
     bindTo(delegate, null)
   }
 
@@ -106,7 +107,7 @@ abstract class Layer : StyleContract.StyleLayerExtension {
    * @param delegate The style controller
    * @param position the position that the current layer is added to
    */
-  override fun bindTo(delegate: StyleManagerInterface, position: LayerPosition?) {
+  override fun bindTo(delegate: StyleInterface, position: LayerPosition?) {
     this.delegate = delegate
 
     val expected = delegate.addStyleLayer(getCachedLayerProperties(), position)
@@ -227,7 +228,7 @@ fun <T : Layer> StyleManagerInterface.getLayerAs(layerId: String): T {
  * @param layer The layer to be added
  * @param below the layer id that the current layer is added below
  */
-fun StyleManagerInterface.addLayerBelow(layer: StyleContract.StyleLayerExtension, below: String?) {
+fun StyleInterface.addLayerBelow(layer: StyleContract.StyleLayerExtension, below: String?) {
   layer.bindTo(this, LayerPosition(null, below, null))
 }
 
@@ -237,7 +238,7 @@ fun StyleManagerInterface.addLayerBelow(layer: StyleContract.StyleLayerExtension
  * @param layer The layer to be added
  * @param above the layer id that the current layer is added above
  */
-fun StyleManagerInterface.addLayerAbove(layer: StyleContract.StyleLayerExtension, above: String?) {
+fun StyleInterface.addLayerAbove(layer: StyleContract.StyleLayerExtension, above: String?) {
   layer.bindTo(this, LayerPosition(above, null, null))
 }
 
@@ -247,7 +248,7 @@ fun StyleManagerInterface.addLayerAbove(layer: StyleContract.StyleLayerExtension
  * @param layer The layer to be added
  * @param index the index that the current layer is added on
  */
-fun StyleManagerInterface.addLayerAt(layer: StyleContract.StyleLayerExtension, index: Int?) {
+fun StyleInterface.addLayerAt(layer: StyleContract.StyleLayerExtension, index: Int?) {
   layer.bindTo(this, LayerPosition(null, null, index))
 }
 
@@ -256,6 +257,6 @@ fun StyleManagerInterface.addLayerAt(layer: StyleContract.StyleLayerExtension, i
  *
  * @param layer The layer to be added
  */
-fun StyleManagerInterface.addLayer(layer: StyleContract.StyleLayerExtension) {
+fun StyleInterface.addLayer(layer: StyleContract.StyleLayerExtension) {
   layer.bindTo(this)
 }

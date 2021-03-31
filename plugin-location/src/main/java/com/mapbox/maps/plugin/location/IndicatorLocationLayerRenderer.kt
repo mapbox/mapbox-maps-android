@@ -4,8 +4,7 @@ import android.graphics.Bitmap
 import androidx.annotation.ColorInt
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
-import com.mapbox.maps.StyleManagerInterface
-import com.mapbox.maps.extension.style.addStyleImage
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
 import com.mapbox.maps.plugin.location.LocationComponentConstants.*
 import com.mapbox.maps.plugin.location.modes.RenderMode
@@ -16,7 +15,7 @@ import java.util.Locale
 
 internal class IndicatorLocationLayerRenderer(layerSourceProvider: LayerSourceProvider) :
   LocationLayerRenderer {
-  private var style: StyleManagerInterface? = null
+  private var style: StyleInterface? = null
   private var styleStateDelegate: MapStyleStateDelegate? = null
   private var layer = layerSourceProvider.getIndicatorLocationLayer()
   private var lastLatLng: Point? = null
@@ -24,7 +23,7 @@ internal class IndicatorLocationLayerRenderer(layerSourceProvider: LayerSourcePr
   private var lastAccuracy = 0f
   private lateinit var locationComponentOptions: LocationComponentOptions
 
-  override fun initializeComponents(style: StyleManagerInterface, styleStateDelegate: MapStyleStateDelegate) {
+  override fun initializeComponents(style: StyleInterface, styleStateDelegate: MapStyleStateDelegate) {
     this.style = style
     this.styleStateDelegate = styleStateDelegate
     lastLatLng?.let {
@@ -109,16 +108,16 @@ internal class IndicatorLocationLayerRenderer(layerSourceProvider: LayerSourcePr
     foregroundStaleBitmap: Bitmap
   ) {
     if (shadowBitmap != null) {
-      style?.addStyleImage(SHADOW_ICON, shadowBitmap)
+      style?.addImage(SHADOW_ICON, shadowBitmap)
     } else {
       style?.removeStyleImage(SHADOW_ICON)
     }
-    style?.addStyleImage(FOREGROUND_ICON, foregroundBitmap)
-    style?.addStyleImage(FOREGROUND_STALE_ICON, foregroundStaleBitmap)
+    style?.addImage(FOREGROUND_ICON, foregroundBitmap)
+    style?.addImage(FOREGROUND_STALE_ICON, foregroundStaleBitmap)
     if (renderMode == RenderMode.COMPASS) {
       val leftOffset = (bearingBitmap.width - backgroundBitmap.width) / 2f
       val topOffset = (bearingBitmap.height - backgroundBitmap.height) / 2f
-      style?.addStyleImage(
+      style?.addImage(
         BEARING_ICON,
         BitmapUtils.mergeBitmap(bearingBitmap, backgroundBitmap, leftOffset, topOffset)
       )
@@ -126,7 +125,7 @@ internal class IndicatorLocationLayerRenderer(layerSourceProvider: LayerSourcePr
         (bearingBitmap.width - backgroundStaleBitmap.width) / 2f
       val staleTopOffset =
         (bearingBitmap.height - backgroundStaleBitmap.height) / 2f
-      style?.addStyleImage(
+      style?.addImage(
         BEARING_STALE_ICON,
         BitmapUtils.mergeBitmap(
           bearingBitmap,
@@ -136,9 +135,9 @@ internal class IndicatorLocationLayerRenderer(layerSourceProvider: LayerSourcePr
         )
       )
     } else {
-      style?.addStyleImage(BACKGROUND_ICON, backgroundBitmap)
-      style?.addStyleImage(BACKGROUND_STALE_ICON, backgroundStaleBitmap)
-      style?.addStyleImage(BEARING_ICON, bearingBitmap)
+      style?.addImage(BACKGROUND_ICON, backgroundBitmap)
+      style?.addImage(BACKGROUND_STALE_ICON, backgroundStaleBitmap)
+      style?.addImage(BEARING_ICON, bearingBitmap)
     }
   }
 

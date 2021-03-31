@@ -8,6 +8,7 @@ import android.view.View
 import com.mapbox.common.ShadowLogger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.loader.MapboxMapStaticInitializer
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
@@ -330,7 +331,7 @@ class MapPluginRegistryTest {
     override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     }
 
-    override fun onStyleChanged(styleDelegate: StyleManagerInterface) {
+    override fun onStyleChanged(styleDelegate: StyleInterface) {
     }
   }
 }

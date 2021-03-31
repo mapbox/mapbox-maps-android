@@ -5,7 +5,7 @@ import android.content.res.Resources
 import android.content.res.TypedArray
 import android.graphics.Color
 import android.view.animation.LinearInterpolator
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertNotNull
@@ -19,7 +19,7 @@ class LocationComponentActivationOptionsTest {
   private val context: Context = mockk()
   private val array: TypedArray = mockk(relaxed = true)
   private val resources: Resources = mockk(relaxed = true)
-  private val style: StyleManagerInterface = mockk()
+  private val style: StyleInterface = mockk()
 
   @Before
   fun setUp() {

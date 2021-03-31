@@ -3,8 +3,7 @@ package com.mapbox.maps.plugin.locationcomponent
 import androidx.annotation.ColorInt
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
-import com.mapbox.maps.StyleManagerInterface
-import com.mapbox.maps.extension.style.addStyleImage
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.BEARING_ICON
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.LOCATION_INDICATOR_LAYER
@@ -20,10 +19,10 @@ internal class LocationIndicatorLayerRenderer(
   layerSourceProvider: LayerSourceProvider
 ) :
   LocationLayerRenderer {
-  private var style: StyleManagerInterface? = null
+  private var style: StyleInterface? = null
   private var layer = layerSourceProvider.getLocationIndicatorLayer()
 
-  override fun initializeComponents(style: StyleManagerInterface) {
+  override fun initializeComponents(style: StyleInterface) {
     this.style = style
     setupBitmaps()
   }
@@ -76,11 +75,11 @@ internal class LocationIndicatorLayerRenderer(
 
   private fun setupBitmaps() {
     puckOptions.topImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
-      ?.let { style?.addStyleImage(TOP_ICON, it) }
+      ?.let { style?.addImage(TOP_ICON, it) }
     puckOptions.bearingImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
-      ?.let { style?.addStyleImage(BEARING_ICON, it) }
+      ?.let { style?.addImage(BEARING_ICON, it) }
     puckOptions.shadowImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
-      ?.let { style?.addStyleImage(SHADOW_ICON, it) }
+      ?.let { style?.addImage(SHADOW_ICON, it) }
     layer.topImage(TOP_ICON)
     layer.bearingImage(BEARING_ICON)
     layer.shadowImage(SHADOW_ICON)

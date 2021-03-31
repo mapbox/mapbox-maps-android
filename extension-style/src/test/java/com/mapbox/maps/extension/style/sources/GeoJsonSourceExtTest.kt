@@ -5,8 +5,8 @@ import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
 import com.mapbox.common.ValueConverter
 import com.mapbox.geojson.Feature
-import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.ShadowValueConverter
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import io.mockk.every
 import io.mockk.mockk
@@ -21,7 +21,7 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowValueConverter::class])
 class GeoJsonSourceExtTest {
-  private val style = mockk<StyleManagerInterface>(relaxUnitFun = true, relaxed = true)
+  private val style = mockk<StyleInterface>(relaxUnitFun = true, relaxed = true)
   private val expected = mockk<Expected<Void, String>>(relaxUnitFun = true, relaxed = true)
   private val expectedByte = mockk<Expected<Byte, String>>(relaxUnitFun = true, relaxed = true)
   private val expectedFeatureList =

@@ -1,7 +1,7 @@
 package com.mapbox.maps.plugin.location
 
 import android.graphics.Bitmap
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.location.LocationComponentConstants.FOREGROUND_ICON
 import com.mapbox.maps.plugin.location.LocationComponentConstants.FOREGROUND_LAYER
@@ -16,7 +16,7 @@ import org.junit.Test
 class LocationLayerControllerTest {
 
   private val delegateProvider: MapDelegateProvider = mockk(relaxed = true)
-  private val style: StyleManagerInterface = mockk(relaxed = true)
+  private val style: StyleInterface = mockk(relaxed = true)
   private val indicatorRenderer: IndicatorLocationLayerRenderer = mockk(relaxed = true)
   private val layerSourceProvider: LayerSourceProvider = mockk(relaxed = true)
 
@@ -29,7 +29,7 @@ class LocationLayerControllerTest {
   @Before
   fun before() {
     every { delegateProvider.getStyle(any()) } answers {
-      firstArg<(StyleManagerInterface) -> Unit>().invoke(style)
+      firstArg<(StyleInterface) -> Unit>().invoke(style)
     }
     every { layerSourceProvider.getIndicatorLocationLayerRenderer() } returns indicatorRenderer
 

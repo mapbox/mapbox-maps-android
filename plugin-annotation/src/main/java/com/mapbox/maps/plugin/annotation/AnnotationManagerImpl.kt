@@ -10,7 +10,7 @@ import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.ScreenCoordinate
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.all
@@ -54,7 +54,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   final override val delegateProvider: MapDelegateProvider,
   private val annotationConfig: AnnotationConfig?
 ) : AnnotationManager<G, T, S, D, U, V> {
-  protected lateinit var style: StyleManagerInterface
+  protected lateinit var style: StyleInterface
   private var mapProjectionDelegate: MapProjectionDelegate = delegateProvider.mapProjectionDelegate
   private var mapFeatureQueryDelegate: MapFeatureQueryDelegate =
     delegateProvider.mapFeatureQueryDelegate
@@ -252,7 +252,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   /**
    * Invoked when the style is loaded
    */
-  override fun onStyleLoaded(styleDelegate: StyleManagerInterface) {
+  override fun onStyleLoaded(styleDelegate: StyleInterface) {
     style = styleDelegate
     initLayerAndSource()
   }

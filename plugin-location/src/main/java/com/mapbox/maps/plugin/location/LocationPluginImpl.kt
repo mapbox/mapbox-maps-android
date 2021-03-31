@@ -16,7 +16,7 @@ import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.common.Logger
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
 import com.mapbox.maps.plugin.PLUGIN_GESTURE_CLASS_NAME
@@ -91,7 +91,7 @@ import java.util.concurrent.CopyOnWriteArrayList
  */
 @Deprecated("Use LocationComponentPlugin instead.")
 class LocationPluginImpl : LocationPlugin {
-  private lateinit var style: StyleManagerInterface
+  private lateinit var style: StyleInterface
   private lateinit var delegateProvider: MapDelegateProvider
 
   private lateinit var options: LocationComponentOptions
@@ -208,7 +208,7 @@ class LocationPluginImpl : LocationPlugin {
   @VisibleForTesting
   internal fun activateLocationComponent(
     context: Context,
-    style: StyleManagerInterface,
+    style: StyleInterface,
     locationModelLayerOptions: LocationModelLayerOptions?,
     locationEngine: LocationEngine?,
     locationEngineRequest: LocationEngineRequest,
@@ -1203,7 +1203,7 @@ class LocationPluginImpl : LocationPlugin {
 
   private fun initialize(
     context: Context,
-    style: StyleManagerInterface,
+    style: StyleInterface,
     locationModelLayerOptions: LocationModelLayerOptions?,
     options: LocationComponentOptions
   ) {
@@ -1630,7 +1630,7 @@ class LocationPluginImpl : LocationPlugin {
   /**
    * Called when a new Style is loaded.
    */
-  override fun onStyleChanged(styleDelegate: StyleManagerInterface) {
+  override fun onStyleChanged(styleDelegate: StyleInterface) {
     Logger.d(TAG, "onStyleChanged")
     onStartLoadingMap()
     onFinishLoadingStyle()

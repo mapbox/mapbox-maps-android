@@ -8,7 +8,7 @@ import com.mapbox.android.core.location.LocationEngineRequest
 import com.mapbox.common.ShadowLogger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
 import com.mapbox.maps.plugin.delegates.MapTransformDelegate
@@ -66,7 +66,7 @@ class LocationComponentTest {
   private val locationEngineProviderImpl: LocationPluginImpl.InternalLocationEngineProvider =
     mockk(relaxed = true)
 
-  private val style: StyleManagerInterface = mockk(relaxed = true)
+  private val style: StyleInterface = mockk(relaxed = true)
 
   private val gesturesPlugin: GesturesPlugin = mockk(relaxed = true)
 
@@ -77,7 +77,7 @@ class LocationComponentTest {
     every { delegateProvider.mapPluginProviderDelegate.getPlugin(any<Class<GesturesPlugin>>()) } returns gesturesPlugin
     every { locationEngineProviderImpl.getBestLocationEngine(context) } returns locationEngine
     every { delegateProvider.getStyle(any()) } answers {
-      firstArg<(StyleManagerInterface) -> Unit>().invoke(style)
+      firstArg<(StyleInterface) -> Unit>().invoke(style)
     }
     val styleStateDelegate = mockk<MapStyleStateDelegate>()
     every { delegateProvider.styleStateDelegate } returns styleStateDelegate

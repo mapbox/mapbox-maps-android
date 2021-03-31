@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
+import com.mapbox.maps.extension.style.StyleInterface
 import java.lang.ref.WeakReference
 import java.nio.ByteBuffer
 
@@ -22,8 +23,8 @@ import java.nio.ByteBuffer
  */
 class Style internal constructor(
   styleManager: StyleManagerInterface,
-  private val pixelRatio: Float
-) : StyleManagerInterface {
+  override val pixelRatio: Float
+) : StyleInterface {
   private val styleManagerRef = WeakReference(styleManager)
   var fullyLoaded = true
 
@@ -493,7 +494,7 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  fun addImage(
+  override fun addImage(
     imageId: String,
     bitmap: Bitmap
   ): Expected<Void, String> = addImage(imageId, bitmap, false)

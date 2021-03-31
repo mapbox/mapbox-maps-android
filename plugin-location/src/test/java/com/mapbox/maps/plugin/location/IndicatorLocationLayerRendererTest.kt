@@ -6,7 +6,7 @@ import android.graphics.Color
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.location.LocationComponentConstants.*
 import com.mapbox.maps.plugin.location.modes.RenderMode
 import com.mapbox.maps.plugin.location.utils.BitmapUtils
@@ -21,7 +21,7 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class IndicatorLocationLayerRendererTest {
 
-  private val style: StyleManagerInterface = mockk(relaxed = true)
+  private val style: StyleInterface = mockk(relaxed = true)
   private val layerSourceProvider: LayerSourceProvider = mockk(relaxed = true)
   private val layerWrapper: IndicatorLocationLayerWrapper = mockk(relaxed = true)
   private val expected: Expected<Void, String> = mockk(relaxed = true)

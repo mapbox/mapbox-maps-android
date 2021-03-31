@@ -3,7 +3,7 @@ package com.mapbox.maps.plugin.location
 import android.graphics.Bitmap
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
 import com.mapbox.maps.plugin.location.modes.RenderMode
 import kotlin.math.pow
@@ -13,7 +13,7 @@ internal class ModelLocationLayerRenderer(
   private val locationModelLayerOptions: LocationModelLayerOptions
 ) :
   LocationLayerRenderer {
-  private lateinit var style: StyleManagerInterface
+  private lateinit var style: StyleInterface
   private var modelLayer = layerSourceProvider.getModelLayer(locationModelLayerOptions)
   private var source = layerSourceProvider.getModelSource(locationModelLayerOptions)
   private var lastLatLng: Point? = null
@@ -21,7 +21,7 @@ internal class ModelLocationLayerRenderer(
   private var lastAccuracy = 0f
   private var renderMode = RenderMode.NORMAL
 
-  override fun initializeComponents(style: StyleManagerInterface, styleStateDelegate: MapStyleStateDelegate) {
+  override fun initializeComponents(style: StyleInterface, styleStateDelegate: MapStyleStateDelegate) {
     this.style = style
     source.bindTo(style, styleStateDelegate)
     lastLatLng?.let {

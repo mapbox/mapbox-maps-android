@@ -6,7 +6,7 @@ import com.mapbox.common.ShadowValueConverter
 import com.mapbox.common.ValueConverter
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.delegates.MapCameraDelegate
@@ -27,13 +27,13 @@ class LocationPuckManagerTest {
   private val settings = mockk<LocationComponentSettings>(relaxed = true)
   private val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
   private val mapCameraDelegate = mockk<MapCameraDelegate>(relaxed = true)
-  private val style = mockk<StyleManagerInterface>(relaxed = true)
+  private val style = mockk<StyleInterface>(relaxed = true)
   private val positionManager = mockk<LocationComponentPositionManager>(relaxed = true)
   private val layerSourceProvider = mockk<LayerSourceProvider>(relaxed = true)
   private val locationLayerRenderer = mockk<LocationLayerRenderer>(relaxed = true)
   private val animationManager = mockk<PuckAnimatorManager>(relaxed = true)
 
-  private val callbackSlot = CapturingSlot<(StyleManagerInterface) -> Unit>()
+  private val callbackSlot = CapturingSlot<(StyleInterface) -> Unit>()
   private val valueSlot = CapturingSlot<Value>()
 
   private lateinit var locationPuckManager: LocationPuckManager

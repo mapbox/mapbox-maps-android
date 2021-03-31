@@ -5,6 +5,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.common.Logger
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleContract
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.sources.generated.*
 import com.mapbox.maps.extension.style.utils.unwrap
@@ -51,7 +52,7 @@ abstract class Source(
    *
    * @param delegate The style delegate
    */
-  override fun bindTo(delegate: StyleManagerInterface) {
+  override fun bindTo(delegate: StyleInterface) {
     this.delegate = delegate
     val expected = delegate.addStyleSource(sourceId, getCachedSourceProperties())
     expected.error?.let {
@@ -180,6 +181,6 @@ inline fun <reified T : Source> StyleManagerInterface.getSourceAs(sourceId: Stri
  *
  * @param source The light to be added
  */
-fun StyleManagerInterface.addSource(source: StyleContract.StyleSourceExtension) {
+fun StyleInterface.addSource(source: StyleContract.StyleSourceExtension) {
   source.bindTo(this)
 }

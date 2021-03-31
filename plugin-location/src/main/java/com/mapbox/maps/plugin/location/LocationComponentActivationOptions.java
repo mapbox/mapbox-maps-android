@@ -7,7 +7,7 @@ import androidx.annotation.Nullable;
 
 import com.mapbox.android.core.location.LocationEngine;
 import com.mapbox.android.core.location.LocationEngineRequest;
-import com.mapbox.maps.StyleManagerInterface;
+import com.mapbox.maps.extension.style.StyleInterface;
 
 /**
  * A class which holds the various options for activating the Maps SDK's {@link LocationPluginImpl} to eventually
@@ -19,7 +19,7 @@ import com.mapbox.maps.StyleManagerInterface;
 public class LocationComponentActivationOptions {
 
   private final Context context;
-  private final StyleManagerInterface style;
+  private final StyleInterface style;
   private final LocationEngine locationEngine;
   private final LocationEngineRequest locationEngineRequest;
   private final LocationComponentOptions locationComponentOptions;
@@ -27,7 +27,7 @@ public class LocationComponentActivationOptions {
   private final boolean useDefaultLocationEngine;
   private final LocationModelLayerOptions locationModelLayerOptions;
 
-  private LocationComponentActivationOptions(@NonNull Context context, @NonNull StyleManagerInterface style,
+  private LocationComponentActivationOptions(@NonNull Context context, @NonNull StyleInterface style,
                                              @Nullable LocationEngine locationEngine,
                                              @Nullable LocationEngineRequest locationEngineRequest,
                                              @Nullable LocationComponentOptions locationComponentOptions,
@@ -50,7 +50,7 @@ public class LocationComponentActivationOptions {
    * @return a builder object
    */
   @NonNull
-  public static Builder builder(@NonNull Context context, @NonNull StyleManagerInterface fullyLoadedMapMapStyleDelegate) {
+  public static Builder builder(@NonNull Context context, @NonNull StyleInterface fullyLoadedMapMapStyleDelegate) {
     return new LocationComponentActivationOptions.Builder(context, fullyLoadedMapMapStyleDelegate);
   }
 
@@ -65,12 +65,12 @@ public class LocationComponentActivationOptions {
   }
 
   /**
-   * The proxy object for current map style. More info at {@link StyleManagerInterface}
+   * The proxy object for current map style. More info at {@link StyleInterface}
    *
    * @return the map's fully loaded MapStyleDelegate object
    */
   @NonNull
-  public StyleManagerInterface style() {
+  public StyleInterface style() {
     return style;
   }
 
@@ -133,7 +133,7 @@ public class LocationComponentActivationOptions {
    */
   public static class Builder {
     private final Context context;
-    private final StyleManagerInterface style;
+    private final StyleInterface style;
     private LocationEngine locationEngine;
     private LocationEngineRequest locationEngineRequest;
     private LocationComponentOptions locationComponentOptions;
@@ -153,10 +153,10 @@ public class LocationComponentActivationOptions {
     /**
      * Constructor for the {@link LocationComponentActivationOptions} builder class.
      * While other activation options are optional, the activation process always requires
-     * context and a fully-loaded map {@link StyleManagerInterface} object, which is why the two are in this
+     * context and a fully-loaded map {@link StyleInterface} object, which is why the two are in this
      * constructor.
      */
-    public Builder(@NonNull Context context, @NonNull StyleManagerInterface style) {
+    public Builder(@NonNull Context context, @NonNull StyleInterface style) {
       this.context = context;
       this.style = style;
     }

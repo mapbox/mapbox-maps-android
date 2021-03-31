@@ -11,7 +11,7 @@ import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.common.ShadowLogger
 import com.mapbox.geojson.Point
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttributeParser
@@ -32,7 +32,7 @@ class LocationComponentPluginImplTest {
   private val locationPuckManager = mockk<LocationPuckManager>(relaxed = true)
   private val locationProvider = mockk<LocationProvider>(relaxed = true)
 
-  private val style = mockk<StyleManagerInterface>(relaxed = true)
+  private val style = mockk<StyleInterface>(relaxed = true)
 
   private val context = mockk<Context>(relaxed = true)
   private val attrs = mockk<AttributeSet>(relaxUnitFun = true)
@@ -42,7 +42,7 @@ class LocationComponentPluginImplTest {
 
   private val locationEngine = mockk<LocationEngine>(relaxed = true)
 
-  private val styleCallbackSlot = slot<(StyleManagerInterface) -> Unit>()
+  private val styleCallbackSlot = slot<(StyleInterface) -> Unit>()
 
   private lateinit var locationComponentPlugin: LocationComponentPluginImpl
 

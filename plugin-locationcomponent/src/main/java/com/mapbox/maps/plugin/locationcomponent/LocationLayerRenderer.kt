@@ -3,10 +3,10 @@ package com.mapbox.maps.plugin.locationcomponent
 import androidx.annotation.ColorInt
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 
 internal interface LocationLayerRenderer {
-  fun initializeComponents(style: StyleManagerInterface)
+  fun initializeComponents(style: StyleInterface)
 
   fun isRendererInitialised(): Boolean
 

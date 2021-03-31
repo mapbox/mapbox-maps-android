@@ -6,6 +6,7 @@ import com.mapbox.maps.CoordinateBounds
 import com.mapbox.maps.CustomGeometrySourceOptions
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleContract
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.utils.check
 
 /**
@@ -60,7 +61,7 @@ class CustomGeometrySource(
    *
    * @param delegate The style delegate
    */
-  override fun bindTo(delegate: StyleManagerInterface) {
+  override fun bindTo(delegate: StyleInterface) {
     this.delegate = delegate
     delegate.addStyleCustomGeometrySource(id, options).check()
   }
