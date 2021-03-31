@@ -11,6 +11,7 @@ import android.view.InputDevice
 import android.view.MotionEvent
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.android.gestures.*
+import com.mapbox.common.Logger
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
@@ -92,6 +93,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   ) {
     if (!immediateEaseInProcess) {
       immediateEaseInProcess = true
+      Logger.e("KIRYLDD", "easeTo gesture")
       cameraAnimationsPlugin.easeTo(
         camera,
         mapAnimationOptions {
@@ -234,13 +236,16 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     if (motionEvent.actionMasked == MotionEvent.ACTION_DOWN) {
       unregisterScheduledAnimators()
+      Logger.e("KIRYLDD", "setGestureInProgress = true")
       mapTransformDelegate.setGestureInProgress(true)
+      Logger.e("KIRYLDD", "dragStart start")
       mapTransformDelegate.dragStart(
         ScreenCoordinate(
           motionEvent.x.toDouble(),
           motionEvent.y.toDouble()
         )
       )
+      Logger.e("KIRYLDD", "dragStart end")
     }
 
     val result = gesturesManager.onTouchEvent(motionEvent)

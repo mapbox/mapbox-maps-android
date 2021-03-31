@@ -5,6 +5,7 @@ import android.os.Looper
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.bindgen.Value
+import com.mapbox.common.Logger
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
@@ -264,7 +265,9 @@ class MapboxMap internal constructor(
    * @param cameraOptions New camera options
    */
   override fun setCamera(cameraOptions: CameraOptions) =
-    nativeMapWeakRef.call { this.setCamera(cameraOptions) }
+    nativeMapWeakRef.call { this.setCamera(cameraOptions) }.also {
+      Logger.e("KIRYLDD", "setCamera")
+    }
 
   /**
    * Get the current camera options given an optional padding.
