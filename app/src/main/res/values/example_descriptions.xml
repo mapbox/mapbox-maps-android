@@ -65,11 +65,11 @@
     <string name="description_surface">MapSurface with SurfaceView host</string>
     <string name="description_view_snapshot">Create a bitmap snapshot from a MapView</string>
     <string name="description_custom_attribution">Custom attribution showcase</string>
-    <string name="description_annotation_fill">Show fills on a map</string>
-    <string name="description_annotation_circle">Show circles on a map</string>
-    <string name="description_annotation_symbol">Show symbols on a map</string>
+    <string name="description_annotation_fill">Show PolyfillAnnotations on a map</string>
+    <string name="description_annotation_circle">Show CircleAnnotations on a map</string>
+    <string name="description_annotation_symbol">Show PointAnnotations on a map</string>
     <string name="description_annotation_symbol_cluster">Show fire hydrants in Washington DC area in a cluster</string>
-    <string name="description_annotation_line">Show lines on a map</string>
+    <string name="description_annotation_line">Show PolylineAnnotations on a map</string>
     <string name="description_terrain_showcase">Terrain 3D camera fly</string>
     <string name="description_location_component">Shows location puck on the map</string>
     <string name="description_location_component_animation">Animates puck with custom location provider updates</string>

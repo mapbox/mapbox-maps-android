@@ -33,7 +33,7 @@ import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.PLUGIN_GESTURE_CLASS_NAME
-import com.mapbox.maps.plugin.annotation.generated.Symbol
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate
 import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
@@ -322,11 +322,11 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         return
       }
       annotations
-        .filter { it.getType() == AnnotationType.Symbol }
+        .filter { it.getType() == AnnotationType.PointAnnotation }
         .forEach {
-          val symbol = it as Symbol
+          val symbol = it as PointAnnotation
           symbol.iconImage?.let { image ->
-            if (image.startsWith(Symbol.ICON_DEFAULT_NAME_PREFIX)) {
+            if (image.startsWith(PointAnnotation.ICON_DEFAULT_NAME_PREFIX)) {
               // User set the bitmap icon, add the icon to style
               symbol.iconImageBitmap?.let { bitmap ->
                 if (style.getStyleImage(image) == null) {

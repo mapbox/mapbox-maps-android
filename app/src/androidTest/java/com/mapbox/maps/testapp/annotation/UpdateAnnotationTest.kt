@@ -10,10 +10,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.TextJustify
 import com.mapbox.maps.extension.style.layers.properties.generated.TextTransform
 import com.mapbox.maps.extension.style.utils.ColorUtils
-import com.mapbox.maps.plugin.annotation.generated.Symbol
-import com.mapbox.maps.plugin.annotation.generated.SymbolManager
-import com.mapbox.maps.plugin.annotation.generated.SymbolOptions
-import com.mapbox.maps.plugin.annotation.generated.createSymbolManager
+import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadedListener
 import com.mapbox.maps.testapp.BaseMapTest
@@ -34,8 +31,8 @@ class UpdateAnnotationTest : BaseMapTest(), OnMapLoadedListener {
   private lateinit var runnable: Runnable
   private var index = 0
   private val latch = CountDownLatch(AnnotationUtils.STYLES.size * 3)
-  private lateinit var symbolManager: SymbolManager
-  private lateinit var symbol: Symbol
+  private lateinit var pointAnnotationManager: PointAnnotationManager
+  private lateinit var pointAnnotation: PointAnnotation
 
   @Test
   fun testUpdateAnnotation() {
@@ -46,9 +43,9 @@ class UpdateAnnotationTest : BaseMapTest(), OnMapLoadedListener {
 
       it.runOnUiThread {
         mapboxMap.loadStyleUri(AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]) {
-          symbolManager = mapView.getAnnotationPlugin().createSymbolManager(mapView)
-          symbol = symbolManager.create(
-            SymbolOptions()
+          pointAnnotationManager = mapView.getAnnotationPlugin().createPointAnnotationManager(mapView)
+          pointAnnotation = pointAnnotationManager.create(
+            PointAnnotationOptions()
               .withIconColor(ColorUtils.colorToRgbaString(Color.RED))
               .withIconImage("car-15")
               .withDraggable(true)
@@ -79,13 +76,13 @@ class UpdateAnnotationTest : BaseMapTest(), OnMapLoadedListener {
               .withTextFont(listOf("Open Sans Regular"))
               .withPoint(Point.fromLngLat(0.0, 0.0))
           )
-          Assert.assertEquals(symbol, symbolManager.annotations[0])
+          Assert.assertEquals(pointAnnotation, pointAnnotationManager.annotations[0])
           runnable = Runnable {
-            symbol.geometry = Point.fromLngLat(
-              symbol.geometry.longitude() + 0.1,
-              symbol.geometry.latitude()
+            pointAnnotation.geometry = Point.fromLngLat(
+              pointAnnotation.geometry.longitude() + 0.1,
+              pointAnnotation.geometry.latitude()
             )
-            symbolManager.update(symbol)
+            pointAnnotationManager.update(pointAnnotation)
             handler.postDelayed(runnable, 100L)
           }
           handler.postDelayed(runnable, 100L)
