@@ -31,7 +31,7 @@ class UpdateAnnotationTest : BaseMapTest(), OnMapLoadedListener {
   private lateinit var runnable: Runnable
   private var index = 0
   private val latch = CountDownLatch(AnnotationUtils.STYLES.size * 3)
-  private lateinit var symbolManager: PointAnnotationManager
+  private lateinit var pointAnnotationManager: PointAnnotationManager
   private lateinit var pointAnnotation: PointAnnotation
 
   @Test
@@ -43,8 +43,8 @@ class UpdateAnnotationTest : BaseMapTest(), OnMapLoadedListener {
 
       it.runOnUiThread {
         mapboxMap.loadStyleUri(AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]) {
-          symbolManager = mapView.getAnnotationPlugin().createPointAnnotationManager(mapView)
-          pointAnnotation = symbolManager.create(
+          pointAnnotationManager = mapView.getAnnotationPlugin().createPointAnnotationManager(mapView)
+          pointAnnotation = pointAnnotationManager.create(
             PointAnnotationOptions()
               .withIconColor(ColorUtils.colorToRgbaString(Color.RED))
               .withIconImage("car-15")
@@ -76,13 +76,13 @@ class UpdateAnnotationTest : BaseMapTest(), OnMapLoadedListener {
               .withTextFont(listOf("Open Sans Regular"))
               .withPoint(Point.fromLngLat(0.0, 0.0))
           )
-          Assert.assertEquals(pointAnnotation, symbolManager.annotations[0])
+          Assert.assertEquals(pointAnnotation, pointAnnotationManager.annotations[0])
           runnable = Runnable {
             pointAnnotation.geometry = Point.fromLngLat(
               pointAnnotation.geometry.longitude() + 0.1,
               pointAnnotation.geometry.latitude()
             )
-            symbolManager.update(pointAnnotation)
+            pointAnnotationManager.update(pointAnnotation)
             handler.postDelayed(runnable, 100L)
           }
           handler.postDelayed(runnable, 100L)
