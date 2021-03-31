@@ -4,7 +4,7 @@ set -Eeuxo pipefail
 
 #
 # Requirements:
-#   `export GITHUB_TOKEN=...` token to access the GitHub API [https://github.com/settings/tokens].
+#   Save github token into gh_token.txt in root directory to access the GitHub API [https://github.com/settings/tokens].
 #   Have following tools installed:
 #     - git        - if you are a developer, you've heard about it [man 1 git].
 #     - gh         - GitHub's official command line tool [https://github.com/cli/cli].
