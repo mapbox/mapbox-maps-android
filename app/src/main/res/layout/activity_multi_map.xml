@@ -14,16 +14,16 @@
         android:baselineAligned="false"
         android:orientation="horizontal">
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/map1"
-            class="com.mapbox.maps.testapp.examples.fragment.MapFragment"
+            android:name="com.mapbox.maps.testapp.examples.fragment.MapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.5" />
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/map2"
-            class="com.mapbox.maps.testapp.examples.fragment.MapFragment"
+            android:name="com.mapbox.maps.testapp.examples.fragment.MapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.5" />
@@ -36,16 +36,16 @@
         android:baselineAligned="false"
         android:orientation="horizontal">
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/map3"
-            class="com.mapbox.maps.testapp.examples.fragment.MapFragment"
+            android:name="com.mapbox.maps.testapp.examples.fragment.MapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.5" />
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/map4"
-            class="com.mapbox.maps.testapp.examples.fragment.MapFragment"
+            android:name="com.mapbox.maps.testapp.examples.fragment.MapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.5" />
