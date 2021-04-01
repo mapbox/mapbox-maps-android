@@ -756,8 +756,8 @@ class Style internal constructor(
    *
    * @return TRUE if and only if the style JSON contents, the style specified sprite and sources are all loaded, otherwise returns FALSE.
    */
-  override fun isStyleFullyLoaded(): Boolean {
-    return styleManagerRef.call { this.isStyleFullyLoaded }
+  override fun isStyleLoaded(): Boolean {
+    return styleManagerRef.call { this.isStyleLoaded() }
   }
 
   /**

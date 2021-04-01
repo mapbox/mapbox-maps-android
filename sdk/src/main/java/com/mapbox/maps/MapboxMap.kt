@@ -458,6 +458,26 @@ class MapboxMap internal constructor(
     nativeMapWeakRef.call { this.cameraForCoordinates(coordinates, padding, bearing, pitch) }
 
   /**
+   * Convenience method that returns the camera options object for given arguments
+   *
+   * Returns the camera options object for given arguments with zoom adjusted to fit \p coordinates into \p box, so that
+   * coordinates on the left, top and right of \p camera.center fit into \p box.
+   * Returns the provided camera options object unchanged upon error.
+   *
+   * @param coordinates The coordinates representing the bounds of the map
+   * @param box The box into which \p coordinates should fit
+   * @param camera The camera for which zoom should be adjusted. Note that \p camera.center is required.
+   *
+   * @return Returns the camera options object with the zoom level adjusted to fit \p coordinates into \p box.
+   */
+  override fun cameraForCoordinates(
+    coordinates: List<Point>,
+    camera: CameraOptions,
+    box: ScreenBox
+  ): CameraOptions =
+    nativeMapWeakRef.call { this.cameraForCoordinates(coordinates, camera, box) }
+
+  /**
    * Convert to a camera options from a given geometry, padding, bearing and pitch values.
    *
    * @param geometry The geometry to take in account when converting
@@ -1134,21 +1154,6 @@ class MapboxMap internal constructor(
    */
   override fun dragEnd() {
     nativeMapWeakRef.call { this.dragEnd() }
-  }
-
-  /**
-   * Drags the map from one screen point to another. The method should be called after `dragStart` and before `dragEnd`.
-   *
-   * @param fromPoint The point to drag the map from, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
-   * @param toPoint The point to drag the map to, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
-   * @param animation Optional animation
-   */
-  override fun drag(
-    fromPoint: ScreenCoordinate,
-    toPoint: ScreenCoordinate,
-    animation: AnimationOptions?
-  ) {
-    nativeMapWeakRef.call { this.drag(fromPoint, toPoint, animation) }
   }
 
   /**

@@ -137,19 +137,6 @@ interface MapTransformDelegate {
   fun dragEnd()
 
   /**
-   * Drags the map from one screen point to another. The method should be called after `dragStart` and before `dragEnd`.
-   *
-   * @param fromPoint The point to drag the map from, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
-   * @param toPoint The point to drag the map to, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
-   * @param animation Optional animation
-   */
-  fun drag(
-    fromPoint: ScreenCoordinate,
-    toPoint: ScreenCoordinate,
-    animation: AnimationOptions?
-  )
-
-  /**
    * Calculates target point where camera should move after drag. The method should be called after `dragStart` and before `dragEnd`.
    *
    * @param fromPoint The point to drag the map from, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.

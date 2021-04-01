@@ -46,14 +46,6 @@ internal class NativeMapImpl(private val map: MapInterface) :
     map.dragEnd()
   }
 
-  override fun drag(
-    fromPoint: ScreenCoordinate,
-    toPoint: ScreenCoordinate,
-    animation: AnimationOptions?
-  ) {
-    map.drag(fromPoint, toPoint, animation)
-  }
-
   override fun getDragCameraOptions(
     fromPoint: ScreenCoordinate,
     toPoint: ScreenCoordinate
@@ -104,6 +96,14 @@ internal class NativeMapImpl(private val map: MapInterface) :
     pitch: Double?
   ): CameraOptions {
     return map.cameraForCoordinates(points, edgeInsets, zoom, pitch)
+  }
+
+  override fun cameraForCoordinates(
+    points: List<Point>,
+    camera: CameraOptions,
+    box: ScreenBox
+  ): CameraOptions {
+    return map.cameraForCoordinates(points, camera, box)
   }
 
   override fun cameraForGeometry(
@@ -217,14 +217,6 @@ internal class NativeMapImpl(private val map: MapInterface) :
 
   override fun setDebug(list: List<MapDebugOptions>, debugActive: Boolean) {
     map.setDebug(list, debugActive)
-  }
-
-  override fun isMapFullyLoaded(): Boolean {
-    return map.isMapFullyLoaded
-  }
-
-  override fun isStyleFullyLoaded(): Boolean {
-    return map.isStyleFullyLoaded
   }
 
   override fun dumpDebugLogs() {
@@ -502,6 +494,14 @@ internal class NativeMapImpl(private val map: MapInterface) :
 
   override fun getStyleSourceProperty(sourceId: String, property: String): StylePropertyValue {
     return map.getStyleSourceProperty(sourceId, property)
+  }
+
+  override fun isStyleLoaded(): Boolean {
+    return map.isStyleLoaded
+  }
+
+  override fun isMapLoaded(): Boolean {
+    return map.isMapLoaded
   }
 
   override fun setStyleSourceProperty(
