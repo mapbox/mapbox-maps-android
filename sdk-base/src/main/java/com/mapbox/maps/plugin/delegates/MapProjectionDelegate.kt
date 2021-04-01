@@ -44,6 +44,25 @@ interface MapProjectionDelegate {
   ): CameraOptions
 
   /**
+   * Convenience method that returns the camera options object for given arguments
+   *
+   * Returns the camera options object for given arguments with zoom adjusted to fit \p coordinates into \p box, so that
+   * coordinates on the left, top and right of \p camera.center fit into \p box.
+   * Returns the provided camera options object unchanged upon error.
+   *
+   * @param coordinates The coordinates representing the bounds of the map
+   * @param box The box into which \p coordinates should fit
+   * @param camera The camera for which zoom should be adjusted. Note that \p camera.center is required.
+   *
+   * @return Returns the camera options object with the zoom level adjusted to fit \p coordinates into \p box.
+   */
+  fun cameraForCoordinates(
+    coordinates: List<Point>,
+    camera: CameraOptions,
+    box: ScreenBox
+  ): CameraOptions
+
+  /**
    * Convert to a camera options from a given geometry, padding, bearing and pitch values.
    *
    * @param geometry The geometry to take in account when converting

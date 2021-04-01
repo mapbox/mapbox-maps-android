@@ -637,15 +637,15 @@ class NativeMapTest {
   @Test
   fun isMapFullyLoaded() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.isMapFullyLoaded
-    verify { map.isMapFullyLoaded }
+    nativeMap.isMapLoaded
+    verify { map.isMapLoaded }
   }
 
   @Test
   fun isStyleFullyLoaded() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.isStyleFullyLoaded
-    verify { map.isStyleFullyLoaded }
+    nativeMap.isStyleLoaded
+    verify { map.isStyleLoaded }
   }
 
   @Test

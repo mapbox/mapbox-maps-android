@@ -456,7 +456,16 @@ class MapboxMapTest {
   }
 
   @Test
-  fun cameraForCoordinates() {
+  fun cameraForCoordinatesOne() {
+    val points = mockk<List<Point>>()
+    val camera = mockk<CameraOptions>()
+    val box = mockk<ScreenBox>()
+    mapboxMap.cameraForCoordinates(points, camera, box)
+    verify { nativeMap.cameraForCoordinates(points, camera, box) }
+  }
+
+  @Test
+  fun cameraForCoordinatesTwo() {
     val points = mockk<List<Point>>()
     val edgeInsets = mockk<EdgeInsets>()
     mapboxMap.cameraForCoordinates(points, edgeInsets, 0.0, 1.0)
@@ -730,14 +739,6 @@ class MapboxMapTest {
   fun dragEnd() {
     mapboxMap.dragEnd()
     verify { nativeMap.dragEnd() }
-  }
-
-  @Test
-  fun drag() {
-    val fromPoint = mockk<ScreenCoordinate>()
-    val toPoint = mockk<ScreenCoordinate>()
-    mapboxMap.drag(fromPoint, toPoint, null)
-    verify { nativeMap.drag(fromPoint, toPoint, null) }
   }
 
   @Test

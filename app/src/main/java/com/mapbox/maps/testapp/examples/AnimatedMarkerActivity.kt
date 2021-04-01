@@ -46,7 +46,6 @@ class AnimatedMarkerActivity : AppCompatActivity(), OnMapClickListener {
         +geojsonSource
         +symbolLayer(layerId = "layer-id", sourceId = "source-id") {
           iconImage("marker_icon")
-          iconSize(0.4)
           iconIgnorePlacement(true)
           iconAllowOverlap(true)
         }
