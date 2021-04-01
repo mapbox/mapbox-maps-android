@@ -6,6 +6,7 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.Resources
 import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import android.view.InputDevice
 import android.view.MotionEvent
@@ -117,6 +118,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
    * Cancels scheduled velocity animations if user doesn't lift fingers within [SCHEDULED_ANIMATION_TIMEOUT]
    */
   private val animationsTimeoutHandler = Handler()
+  private val mainHandler = Handler(Looper.getMainLooper())
   internal var doubleTapRegistered: Boolean = false
 
   override var internalSettings: GesturesSettings
@@ -250,7 +252,13 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
       MotionEvent.ACTION_UP -> {
         doubleTapFinished()
-        mapTransformDelegate.setGestureInProgress(false)
+        // TODO will be fixed upstream, needed to not fire extra IDLE event in case of fast click
+        mainHandler.postDelayed(
+          {
+            mapTransformDelegate.setGestureInProgress(false)
+          },
+          50
+        )
         // if fling happens after dragging then `dragEnd` will be called after fling animation is finished
         if (!flingInProcess) {
           mapTransformDelegate.dragEnd()
