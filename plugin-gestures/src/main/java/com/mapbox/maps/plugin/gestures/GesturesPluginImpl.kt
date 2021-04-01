@@ -10,6 +10,7 @@ import android.os.Looper
 import android.util.AttributeSet
 import android.view.InputDevice
 import android.view.MotionEvent
+import androidx.annotation.VisibleForTesting
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.android.gestures.*
 import com.mapbox.maps.CameraOptions
@@ -118,7 +119,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
    * Cancels scheduled velocity animations if user doesn't lift fingers within [SCHEDULED_ANIMATION_TIMEOUT]
    */
   private val animationsTimeoutHandler = Handler()
-  private val mainHandler = Handler(Looper.getMainLooper())
+  private var mainHandler: Handler? = null
   internal var doubleTapRegistered: Boolean = false
 
   override var internalSettings: GesturesSettings
@@ -129,6 +130,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   ) {
     this.context = context
     internalSettings = GesturesAttributeParser.parseGesturesSettings(context, null, pixelRatio)
+    mainHandler = Handler(Looper.getMainLooper())
   }
 
   constructor(
@@ -139,6 +141,20 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     this.context = context
     internalSettings =
       GesturesAttributeParser.parseGesturesSettings(context, attributeSet, pixelRatio)
+    mainHandler = Handler(Looper.getMainLooper())
+  }
+
+  @VisibleForTesting
+  internal constructor(
+    context: Context,
+    attributeSet: AttributeSet,
+    pixelRatio: Float,
+    handler: Handler
+  ) {
+    this.context = context
+    internalSettings =
+      GesturesAttributeParser.parseGesturesSettings(context, attributeSet, pixelRatio)
+    mainHandler = handler
   }
 
   override fun applySettings() {
@@ -253,7 +269,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       MotionEvent.ACTION_UP -> {
         doubleTapFinished()
         // TODO will be fixed upstream, needed to not fire extra IDLE event in case of fast click
-        mainHandler.postDelayed(
+        mainHandler?.postDelayed(
           {
             mapTransformDelegate.setGestureInProgress(false)
           },
