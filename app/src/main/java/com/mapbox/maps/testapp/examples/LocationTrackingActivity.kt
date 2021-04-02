@@ -2,7 +2,6 @@ package com.mapbox.maps.testapp.examples
 
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -15,9 +14,14 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
+import com.mapbox.maps.extension.style.expressions.dsl.generated.match
+import com.mapbox.maps.extension.style.expressions.generated.Expression
+import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
+import com.mapbox.maps.extension.style.layers.getLayerAs
 import com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
+import com.mapbox.maps.plugin.annotation.generated.Symbol
 import com.mapbox.maps.plugin.annotation.generated.SymbolManager
 import com.mapbox.maps.plugin.annotation.generated.SymbolOptions
 import com.mapbox.maps.plugin.annotation.generated.createSymbolManager
@@ -31,9 +35,6 @@ import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
 import com.mapbox.maps.toJson
 import kotlinx.android.synthetic.main.activity_location_layer_mode.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 /**
  * Tracks the user location on screen, simulates a navigation session.
@@ -47,7 +48,8 @@ class LocationTrackingActivity : AppCompatActivity() {
         "Arial Unicode MS Bold"
       )
 
-    private val ANNOTATION_TEXT_FONT_ARRAY_REGULAR = //listOf("Open Sans Regular", "Arial Unicode MS Regular")
+    private val ANNOTATION_TEXT_FONT_ARRAY_REGULAR =
+      //listOf("Open Sans Regular", "Arial Unicode MS Regular")
       listOf(
         "Caveat Regular",
         "Arial Unicode MS Regular"
@@ -176,12 +178,42 @@ class LocationTrackingActivity : AppCompatActivity() {
 
       symbolManager.create(symbolOption)
 
+      val symbolOption1: SymbolOptions = SymbolOptions()
+        .withPoint(Point.fromLngLat(it.longitude(), it.latitude() + 0.1))
+        .withTextColor("4384BD")
+//        .withTextFont(ANNOTATION_TEXT_FONT_ARRAY_REGULAR)
+        .withTextField("Test========")
+        .withTextSize(26.0)
+        .withIconSize(1.0)
+        .withIconImage("ID_SYMBOL_ONE")
+
+      symbolManager.create(symbolOption1)
+//
       Toast.makeText(this, "Adding Symbol", Toast.LENGTH_SHORT).show()
 
     } ?: run {
-      Toast.makeText(this,
+      Toast.makeText(
+        this,
         "Do not have location to place symbol, please try again", Toast.LENGTH_SHORT
       ).show()
+    }
+    mapView.getMapboxMap().getStyle()?.let { style ->
+      if (style.styleLayerExists("test-layer")) {
+        style.getLayerAs<SymbolLayer>("test-layer").apply {
+          textFont(
+            match {
+              get {
+                literal(Symbol.ID_KEY)
+              }
+              stop {
+                literal(0)
+                literal(ANNOTATION_TEXT_FONT_ARRAY_BOLD)
+              }
+              literal(ANNOTATION_TEXT_FONT_ARRAY_REGULAR)
+            }
+          )
+        }
+      }
     }
   }
 
