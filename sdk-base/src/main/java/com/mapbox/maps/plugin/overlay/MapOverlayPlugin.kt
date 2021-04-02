@@ -3,12 +3,14 @@ package com.mapbox.maps.plugin.overlay
 import android.view.View
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.MapSizePlugin
 
 /**
  * Interface for MapOverlay Container that manage MapOverlays.
  */
+@MapboxExperimental
 interface MapOverlayPlugin : MapSizePlugin, MapPlugin {
   /**
    * To register a [MapOverlayCoordinatesProvider] instance to the Container

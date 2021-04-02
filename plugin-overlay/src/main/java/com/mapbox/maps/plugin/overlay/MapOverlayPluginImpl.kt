@@ -5,6 +5,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CoordinateBounds
 import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
@@ -14,6 +15,7 @@ import java.util.*
 /**
  * Impl class for MapOverlayPlugin
  */
+@MapboxExperimental
 class MapOverlayPluginImpl : MapOverlayPlugin {
   private val mapOverlays = mutableListOf<View>()
   private var mapOverlayCoordinatesProvider: MapOverlayCoordinatesProvider? = null
@@ -288,6 +290,7 @@ class MapOverlayPluginImpl : MapOverlayPlugin {
  *
  * @return Map overlay plugin instance
  */
+@MapboxExperimental
 fun MapPluginProviderDelegate.getMapOverlayPlugin(): MapOverlayPlugin {
   return this.getPlugin(MapOverlayPluginImpl::class.java)!!
 }
