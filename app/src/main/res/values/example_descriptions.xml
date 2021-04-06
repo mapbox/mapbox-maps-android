@@ -53,6 +53,7 @@
     <string name="description_add_marker_symbol">Add simple marker symbols</string>
     <string name="description_add_one_marker_symbol">Add the default point marker symbol to a map.</string>
     <string name="description_style_image_source">Use an image source to easily display images on the map.</string>
+    <string name="description_legacy_offline">Use OfflineManager to download tiles</string>
     <string name="description_offline">Use OfflineManager to download tiles</string>
     <string name="description_sky_layer">Sky Layer showcase</string>
     <string name="description_sky_snapshotter">Junction view showcase</string>

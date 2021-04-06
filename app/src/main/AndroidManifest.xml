@@ -681,9 +681,9 @@
         </activity>
         <activity
             android:name=".examples.LegacyOfflineActivity"
-            android:description="@string/description_offline"
+            android:description="@string/description_legacy_offline"
             android:exported="true"
-            android:label="@string/activity_offline">
+            android:label="@string/activity_legacy_offline">
             <meta-data
                 android:name="@string/category"
                 android:value="@string/category_offline" />
@@ -951,6 +951,18 @@
             <meta-data
                 android:name="@string/category"
                 android:value="@string/category_basic" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
+        <activity
+            android:name=".examples.OfflineActivity"
+            android:description="@string/description_offline"
+            android:exported="true"
+            android:label="@string/activity_offline">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_offline" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />

@@ -54,6 +54,7 @@
     <string name="activity_basic_add_one_marker_title">Add a Marker Symbol</string>
     <string name="activity_style_image_source_title">Use an image source</string>
     <string name="activity_offline">Offline Map</string>
+    <string name="activity_legacy_offline">Legacy offline Map</string>
     <string name="activity_sky_layer">Sky Layer</string>
     <string name="activity_sky_snapshotter">Sky Snapshotter</string>
     <string name="activity_custom_layer">Custom Layer</string>
