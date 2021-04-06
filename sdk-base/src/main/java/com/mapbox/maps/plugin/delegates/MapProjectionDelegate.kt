@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.delegates
 
+import android.app.Activity
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
@@ -11,6 +12,10 @@ interface MapProjectionDelegate {
 
   /**
    * Convert to a camera options from a given LatLngBounds, padding, bearing and pitch values.
+   *
+   * In order for this method to produce correct results MapView must be already
+   * measured and inflated to have correct width and height values.
+   * Calling this method in [Activity.onCreate] will lead to incorrect results.
    *
    * @param coordinateBounds The LatLngBounds to take in account when converting
    * @param padding The additional padding to take in account when converting
@@ -29,6 +34,10 @@ interface MapProjectionDelegate {
   /**
    * Convert to a camera options from a given list of points, padding, bearing and pitch values.
    *
+   * In order for this method to produce correct results MapView must be already
+   * measured and inflated to have correct width and height values.
+   * Calling this method in [Activity.onCreate] will lead to incorrect results.
+   *
    * @param coordinates The List of coordinates to take in account when converting
    * @param padding The additional padding to take in account when converting
    * @param bearing The optional bearing to take in account when converting
@@ -45,6 +54,10 @@ interface MapProjectionDelegate {
 
   /**
    * Convenience method that returns the camera options object for given arguments
+   *
+   * In order for this method to produce correct results MapView must be already
+   * measured and inflated to have correct width and height values.
+   * Calling this method in [Activity.onCreate] will lead to incorrect results.
    *
    * Returns the camera options object for given arguments with zoom adjusted to fit \p coordinates into \p box, so that
    * coordinates on the left, top and right of \p camera.center fit into \p box.
@@ -65,6 +78,10 @@ interface MapProjectionDelegate {
   /**
    * Convert to a camera options from a given geometry, padding, bearing and pitch values.
    *
+   * In order for this method to produce correct results MapView must be already
+   * measured and inflated to have correct width and height values.
+   * Calling this method in [Activity.onCreate] will lead to incorrect results.
+   *
    * @param geometry The geometry to take in account when converting
    * @param padding The additional padding to take in account when converting
    * @param bearing The optional bearing to take in account when converting
@@ -82,6 +99,10 @@ interface MapProjectionDelegate {
   /**
    * Convert to a LatLngBounds from a given camera options.
    *
+   * In order for this method to produce correct results MapView must be already
+   * measured and inflated to have correct width and height values.
+   * Calling this method in [Activity.onCreate] will lead to incorrect results.
+   *
    * @param cameraOptions The camera options to take in account when converting
    *
    * @return Returns the converted LatLngBounds
@@ -90,6 +111,10 @@ interface MapProjectionDelegate {
 
   /**
    *  Returns the coordinate bounds and zoom for a given camera.
+   *
+   * In order for this method to produce correct results MapView must be already
+   * measured and inflated to have correct width and height values.
+   * Calling this method in [Activity.onCreate] will lead to incorrect results.
    *
    * Note that if the given camera shows the antimeridian, the returned wrapped bounds
    * might not represent the minimum bounding box.
@@ -102,6 +127,10 @@ interface MapProjectionDelegate {
 
   /**
    * Returns the unwrapped coordinate bounds and zoom for a given camera.
+   *
+   * In order for this method to produce correct results MapView must be already
+   * measured and inflated to have correct width and height values.
+   * Calling this method in [Activity.onCreate] will lead to incorrect results.
    *
    * This method is particularly useful, if the camera shows the antimeridian.
    *
@@ -116,6 +145,8 @@ interface MapProjectionDelegate {
    * The screen coordinate is in [MapOptions.size] platform pixels relative to the top left
    * of the map (not of the whole screen).
    *
+   * Map must be fully loaded for getting an altitude-compliant result if using 3D terrain.
+   *
    * @param point A geographical coordinate on the map to convert to a screen coordinate.
    *
    * @return Returns a screen coordinate on the screen in [MapOptions.size] platform pixels.
@@ -128,6 +159,8 @@ interface MapProjectionDelegate {
    *
    * The screen coordinates are in [MapOptions.size] platform pixels relative to the top left
    * of the map (not of the whole screen).
+   *
+   * Map must be fully loaded for getting an altitude-compliant result if using 3D terrain.
    *
    * @param coordinates A batch of geographical coordinates on the map to convert to screen coordinates.
    *
@@ -142,6 +175,8 @@ interface MapProjectionDelegate {
    * The screen coordinate is in [MapOptions.size] platform pixels relative to the top left
    * of the map (not of the whole screen).
    *
+   * Map must be fully loaded for getting an altitude-compliant result if using 3D terrain.
+   *
    * @param screenCoordinate A screen coordinate represented by x y coordinates.
    *
    * @return Returns a geographical coordinate corresponding to the x y coordinates
@@ -155,6 +190,8 @@ interface MapProjectionDelegate {
    *
    * The screen coordinates are in [MapOptions.size] platform pixels relative to the top left
    * of the map (not of the whole screen).
+   *
+   * Map must be fully loaded for getting an altitude-compliant result if using 3D terrain.
    *
    * @param pixels A batch of screen coordinates on the screen in [MapOptions.size] platform pixels.
    *
