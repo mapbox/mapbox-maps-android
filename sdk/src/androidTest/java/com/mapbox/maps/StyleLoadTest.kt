@@ -38,23 +38,28 @@ class StyleLoadTest {
 
   @Test
   fun testStyleNull() {
+    countDownLatch = CountDownLatch(1)
     var callbackInvoked = false
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.getStyle { callbackInvoked = true }
       }
     }
-    countDownLatch = CountDownLatch(1)
     if (!countDownLatch.await(3, TimeUnit.SECONDS)) {
-      assertFalse(callbackInvoked)
+      assertTrue(callbackInvoked)
     }
   }
 
   @Test
   fun testStyleAsyncGetter() {
+    countDownLatch = CountDownLatch(2)
     rule.scenario.onActivity {
       it.runOnUiThread {
-        mapboxMap.getStyle { countDownLatch.countDown() }
+        mapboxMap.getStyle { style ->
+          assertNotNull("Style should but non null", style)
+          assertTrue("Style should be fully loaded", style.fullyLoaded)
+          countDownLatch.countDown()
+        }
 
         mapboxMap.loadStyleUri(
           Style.MAPBOX_STREETS
@@ -65,7 +70,6 @@ class StyleLoadTest {
         }
       }
     }
-    countDownLatch = CountDownLatch(2)
     if (!countDownLatch.await(30, TimeUnit.SECONDS)) {
       throw TimeoutException()
     }

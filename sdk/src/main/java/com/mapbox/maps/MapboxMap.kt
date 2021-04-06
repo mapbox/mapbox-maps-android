@@ -46,7 +46,7 @@ class MapboxMap internal constructor(
 
   private val nativeMapWeakRef = WeakReference(nativeMap)
   internal lateinit var style: Style
-
+  internal var isStyleLoadInited = false
   private val handlerMain = Handler(Looper.getMainLooper())
 
   @VisibleForTesting(otherwise = PRIVATE)
@@ -176,6 +176,7 @@ class MapboxMap internal constructor(
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
   ) {
+    isStyleLoadInited = true
     if (::style.isInitialized) {
       style.fullyLoaded = false
     }

@@ -60,7 +60,7 @@ class MapControllerTest {
 
     every { MapProvider.getMapboxMap(nativeMap, nativeObserver, 1.0f) } answers { mapboxMap }
     every { MapProvider.getMapPluginRegistry(any(), any(), any()) } returns pluginRegistry
-
+    every { mapboxMap.isStyleLoadInited } returns false
     mapController =
       MapController(
         renderer,
@@ -78,6 +78,14 @@ class MapControllerTest {
     mapController.onStart()
     verify { renderer.onStart() }
     verify { pluginRegistry.onStart() }
+    verify { mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) }
+  }
+
+  @Test
+  fun onStartWithStyleLoaded() {
+    every { mapboxMap.isStyleLoadInited } returns true
+    mapController.onStart()
+    verify(exactly = 0) { mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) }
   }
 
   @Test
