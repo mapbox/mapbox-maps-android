@@ -132,6 +132,7 @@ abstract class Layer : StyleContract.StyleLayerExtension {
 
   private fun updateProperty(property: PropertyValue<*>) {
     delegate?.let { styleDelegate ->
+      Logger.e("KIRYLDD", "${property.value}")
       val expected = styleDelegate.setStyleLayerProperty(
         layerId,
         property.propertyName,

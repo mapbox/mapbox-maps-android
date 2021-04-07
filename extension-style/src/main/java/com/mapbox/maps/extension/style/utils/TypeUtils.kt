@@ -2,6 +2,7 @@ package com.mapbox.maps.extension.style.utils
 
 import com.google.gson.JsonPrimitive
 import com.mapbox.bindgen.Value
+import com.mapbox.common.Logger
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Geometry
@@ -296,6 +297,7 @@ inline fun <reified T> StylePropertyValue.silentUnwrap(): T? {
  * Extension function for [Feature] to convert [Feature] to [Value].
  */
 fun Feature.toValue(): Value {
+  Logger.e("KIRYLDD", "Feature.toValue")
   return TypeUtils.wrapToValue(this.toJson())
 }
 
@@ -303,6 +305,7 @@ fun Feature.toValue(): Value {
  * Extension function for [FeatureCollection] to convert [FeatureCollection] to [Value].
  */
 fun FeatureCollection.toValue(): Value {
+  Logger.e("KIRYLDD", "FeatureCollection.toValue")
   return TypeUtils.wrapToValue(this.toJson())
 }
 
@@ -310,5 +313,6 @@ fun FeatureCollection.toValue(): Value {
  * Extension function for [Geometry] to convert [Geometry] to [Value].
  */
 fun Geometry.toValue(): Value {
+  Logger.e("KIRYLDD", "Geometry.toValue")
   return TypeUtils.wrapToValue(this.toJson())
 }
