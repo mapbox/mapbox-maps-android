@@ -141,7 +141,7 @@ commands:
           command: |
             echo "$GH_LOGIN_TOKEN" > gh_token.txt
             git config --global user.email no-reply@mapbox.com && git config --global user.name mapbox-ci
-            ./scripts/update-android-docs.sh -s $CIRCLE_TAG
+            ./scripts/update-android-docs.sh -s $CIRCLE_BUILD_NUM
   track-metrics:
     steps:
       - unless:
