@@ -24,10 +24,10 @@ class CredentialsManagerTest {
   }
 
   @Test
-  fun default() {
+  fun noToken() {
     val credentialsManager = CredentialsManager()
-    assertEquals("", credentialsManager.getAccessToken(context))
-    assertEquals("", CredentialsManager.shared.getAccessToken(context))
+    assertEquals(CredentialsManager.EMPTY_TOKEN, credentialsManager.getAccessToken(context))
+    assertEquals(CredentialsManager.EMPTY_TOKEN, CredentialsManager.shared.getAccessToken(context))
   }
 
   @Test
