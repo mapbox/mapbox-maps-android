@@ -31,7 +31,8 @@ class ResourceAttributeParserTest {
 
   @Test
   fun default() {
-    val resourceOptions = ResourcesAttributeParser.parseResourcesOptions(context, typedArray)
+    val resourceOptions =
+      ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.shared)
     assertEquals("pk.foobar", resourceOptions.accessToken)
     assertEquals("/sdcard/data", resourceOptions.assetPath)
     assertEquals(null, resourceOptions.baseURL)
@@ -39,24 +40,27 @@ class ResourceAttributeParserTest {
     assertEquals(99L, resourceOptions.cacheSize)
   }
 
-  @Test
+  @Test(expected = MapboxConfigurationException::class)
   fun noAccessTokenResource() {
-    every { context.getString(-1) } returns null
-    val options = ResourcesAttributeParser.parseResourcesOptions(context, typedArray)
+    every { resources.getIdentifier("mapbox_access_token", "string", "foobar") } returns 0
+    val options =
+      ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.shared)
     assertEquals("", options.accessToken)
   }
 
   @Test
   fun assetPath() {
     every { context.filesDir } returns File("/foobar")
-    val resourceOptions = ResourcesAttributeParser.parseResourcesOptions(context, typedArray)
+    val resourceOptions =
+      ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.shared)
     assertEquals("/foobar", resourceOptions.assetPath)
   }
 
   @Test
   fun cachePath() {
     every { context.filesDir } returns File("/foobar")
-    val resourceOptions = ResourcesAttributeParser.parseResourcesOptions(context, typedArray)
+    val resourceOptions =
+      ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.shared)
     assertEquals("/foobar/mbx.db", resourceOptions.cachePath)
   }
 
@@ -64,19 +68,39 @@ class ResourceAttributeParserTest {
   @Test
   fun tileStorePath() {
     every { context.filesDir } returns File("/foobar")
-    val resourceOptions = ResourcesAttributeParser.parseResourcesOptions(context, typedArray)
+    val resourceOptions =
+      ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.shared)
     assertEquals("/foobar/maps_tile_store/", resourceOptions.tileStorePath)
   }
 
   @Test
   fun cacheSize() {
-    every { typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_resourcesCacheSize, any()) } returns 1234F
-    assertEquals(1234L, ResourcesAttributeParser.parseResourcesOptions(context, typedArray).cacheSize)
+    every {
+      typedArray.getFloat(
+        R.styleable.mapbox_MapView_mapbox_resourcesCacheSize,
+        any()
+      )
+    } returns 1234F
+    assertEquals(
+      1234L,
+      ResourcesAttributeParser.parseResourcesOptions(
+        context,
+        typedArray,
+        CredentialsManager.shared
+      ).cacheSize
+    )
   }
 
   @Test
   fun baseUrl() {
     every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesBaseUrl) } returns "mapbox.be"
-    assertEquals("mapbox.be", ResourcesAttributeParser.parseResourcesOptions(context, typedArray).baseURL)
+    assertEquals(
+      "mapbox.be",
+      ResourcesAttributeParser.parseResourcesOptions(
+        context,
+        typedArray,
+        CredentialsManager.shared
+      ).baseURL
+    )
   }
 }

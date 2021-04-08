@@ -30,17 +30,10 @@ class MapboxMapOptionsTest {
     every { context.filesDir } returns File("foobar")
     every { typedArray.getBoolean(any(), any()) } returns true
     every { typedArray.getFloat(any(), any()) } returns 0.0f
+    every { typedArray.getString(any()) } returns null
 
     mockkObject(MapAttributeParser)
     every { MapAttributeParser.parseMapOptions(any(), any()) } returns mockk()
-
-    mockkObject(ResourcesAttributeParser)
-    every {
-      ResourcesAttributeParser.parseResourcesOptions(
-        any(),
-        any()
-      )
-    } returns mockk()
 
     mockkObject(CameraAttributeParser)
     every {
@@ -49,6 +42,7 @@ class MapboxMapOptionsTest {
         any()
       )
     } returns mockk()
+    CredentialsManager.shared = CredentialsManager("token")
   }
 
   @Test
@@ -66,8 +60,8 @@ class MapboxMapOptionsTest {
 
   @Test(expected = MapboxConfigurationException::class)
   fun setInvalidToken() {
+    CredentialsManager.shared = CredentialsManager("")
     val mapboxMapOptions = MapboxMapOptions(context, 1.0f, attrs)
-    mapboxMapOptions.resourceOptions = MapboxOptions.createResourceOptions(context, "")
 
     assertEquals("", mapboxMapOptions.resourceOptions.accessToken)
   }
@@ -75,16 +69,7 @@ class MapboxMapOptionsTest {
   @Test
   fun setValidToken() {
     val mapboxMapOptions = MapboxMapOptions(context, 1.0f, attrs)
-    mapboxMapOptions.resourceOptions = MapboxOptions.createResourceOptions(context, "token")
 
     assertEquals("token", mapboxMapOptions.resourceOptions.accessToken)
-  }
-
-  @Test
-  fun cacheResourceOptions() {
-    val resourceOptions = MapboxOptions.createResourceOptions(context, "token")
-    MapboxOptions.setDefaultResourceOptions(resourceOptions)
-    val mapboxMapOptions = MapboxMapOptions(context, 1.0f, attrs)
-    assertEquals(resourceOptions, mapboxMapOptions.resourceOptions)
   }
 }

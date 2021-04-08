@@ -1,7 +1,6 @@
 package com.mapbox.maps
 
 import android.content.Context
-import android.text.TextUtils
 import android.util.AttributeSet
 
 /**
@@ -15,14 +14,14 @@ import android.util.AttributeSet
  * @property context the context hosting the [MapView].
  * @property pixelRatio the pixel ratio for the map to be rendered on.
  * @property attrs the optional [AttributeSet] to derive configurations from.
+ * @property credentialsManager the [CredentialsManager] to get access token from.
  */
 data class MapboxMapOptions constructor(
   val context: Context,
   val pixelRatio: Float = context.resources.displayMetrics.density,
-  val attrs: AttributeSet? = null
+  val attrs: AttributeSet? = null,
+  val credentialsManager: CredentialsManager = CredentialsManager.shared
 ) {
-  private var internalResourceOptions: ResourceOptions
-
   /**
    * Resource options when using a MapView.
    *
@@ -33,15 +32,6 @@ data class MapboxMapOptions constructor(
    * More information in this guide [https://www.mapbox.com/help/first-steps-android-sdk/#access-tokens](https://www.mapbox.com/help/first-steps-android-sdk/#access-tokens).
    */
   var resourceOptions: ResourceOptions
-    get() {
-      if (TextUtils.isEmpty(internalResourceOptions.accessToken)) {
-        throw MapboxConfigurationException()
-      }
-      return internalResourceOptions
-    }
-    set(value) {
-      internalResourceOptions = value
-    }
 
   /**
    * Describes the map options value when using a MapView.
@@ -61,21 +51,13 @@ data class MapboxMapOptions constructor(
   init {
     val typedArray = context.obtainStyledAttributes(attrs, R.styleable.mapbox_MapView, 0, 0)
     try {
-      internalResourceOptions = if (MapboxOptions.isInitialized()) {
-        MapboxOptions.getDefaultResourceOptions(context)
-      } else {
-        ResourcesAttributeParser.parseResourcesOptions(context, typedArray)
-      }
+      resourceOptions =
+        ResourcesAttributeParser.parseResourcesOptions(context, typedArray, credentialsManager)
       mapOptions = MapAttributeParser.parseMapOptions(typedArray, pixelRatio)
       cameraOptions = CameraAttributeParser.parseCameraOptions(typedArray)
       textureView = typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapSurface, 0) != 0
     } finally {
       typedArray.recycle()
-    }
-
-    // Store resource options as default if it wasn't initialized yet
-    if (!MapboxOptions.isInitialized()) {
-      MapboxOptions.setDefaultResourceOptions(internalResourceOptions)
     }
   }
 }
