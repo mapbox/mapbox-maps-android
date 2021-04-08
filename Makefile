@@ -48,6 +48,11 @@ dokka-html:
 dokka-javadoc:
 	./gradlew dokkaJavadocCollector
 
+# Use `make update-android-docs TAG=YourReleaseTag` while running locally.
+.PHONY: update-android-docs
+update-android-docs:
+	sh scripts/update-android-docs.sh -s $(TAG)
+
 .PHONY: prepare-release-doc
 prepare-release-doc: dokka-html
 	mkdir -p release-docs;

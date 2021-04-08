@@ -19,3 +19,5 @@ sdk/src/androidTest/res/values/developer-config.xml
 extension-style-app/src/main/res/values/developer-config.xml
 sdk/src/main/res/values/developer-config.xml
 node_modules/
+gh_token.txt
+android-docs-repo
