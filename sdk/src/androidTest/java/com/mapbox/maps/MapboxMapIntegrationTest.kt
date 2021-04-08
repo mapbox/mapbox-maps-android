@@ -34,7 +34,11 @@ class MapboxMapIntegrationTest {
   @UiThreadTest
   @Test
   fun testGetResourceOptions() {
-    val defaultOptions = MapboxOptions.getDefaultResourceOptions(mapView.context)
+    val defaultOptions = MapboxMapOptions(
+      mapView.context,
+      mapView.context.resources.displayMetrics.density,
+      null
+    ).resourceOptions
     val currentOptions = mapboxMap.getResourceOptions()
     assertEquals(defaultOptions, currentOptions)
   }

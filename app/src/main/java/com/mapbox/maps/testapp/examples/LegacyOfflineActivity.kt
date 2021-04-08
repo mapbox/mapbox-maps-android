@@ -56,7 +56,7 @@ class LegacyOfflineActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_offline)
-    offlineManager = OfflineRegionManager(MapboxOptions.getDefaultResourceOptions((this)))
+    offlineManager = OfflineRegionManager(MapboxMapOptions(this, resources.displayMetrics.density, null).resourceOptions)
     offlineManager.createOfflineRegion(
       OfflineRegionGeometryDefinition.Builder()
         .geometry(point)

@@ -62,7 +62,7 @@ class MapViewCustomizationActivity : AppCompatActivity() {
 
   private fun configureMapViewFromXml() {
     // let's set `custom` token to MapView from code (however it will be same token from resources so that map will work)
-    MapboxOptions.setDefaultResourceOptions(this, getString(R.string.mapbox_access_token))
+    CredentialsManager.shared = CredentialsManager(getString(R.string.mapbox_access_token))
     // all options provided in xml file - so we just load style
     mapView.getMapboxMap().loadStyleUri(Style.DARK)
   }
