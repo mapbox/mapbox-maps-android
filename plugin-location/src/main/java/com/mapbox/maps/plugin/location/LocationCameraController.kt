@@ -26,6 +26,7 @@ import com.mapbox.maps.plugin.location.listeneres.CancelableCallback
 import com.mapbox.maps.plugin.location.listeneres.OnCameraTrackingChangedListener
 import com.mapbox.maps.plugin.location.listeneres.OnLocationCameraTransitionListener
 import com.mapbox.maps.plugin.location.modes.CameraMode
+import com.mapbox.maps.toCameraOptions
 
 /**
  * [LocationCameraAnimatorCoordinator] wraps all Camera logic inside and acts as external Camera interface for the other Location plugin components.
@@ -234,11 +235,11 @@ internal class LocationCameraController {
           internalTransitionListener?.onLocationCameraTransitionFinished(cameraMode)
         }
       }
-      val currentPosition = mapTransformDelegate.getCameraOptions(null)
+      val currentPosition = mapTransformDelegate.getCameraState()
       locationCameraAnimatorCoordinator.cancelAndUnregisterAllAnimators()
       if (Utils.immediateAnimation(
           this.delegateProvider.mapProjectionDelegate,
-          currentPosition.center!!,
+          currentPosition.center,
           target
         )
       ) {
@@ -415,7 +416,7 @@ internal class LocationCameraController {
   }
 
   internal fun resetAllCameraAnimations() {
-    val cameraOptions = delegateProvider.mapTransformDelegate.getCameraOptions(null)
+    val cameraOptions = delegateProvider.mapTransformDelegate.getCameraState().toCameraOptions()
     val isGpsNorth = cameraMode == CameraMode.TRACKING_GPS_NORTH
     locationCameraAnimatorCoordinator.resetAllCameraAnimations(cameraOptions, isGpsNorth)
   }
@@ -432,7 +433,7 @@ internal class LocationCameraController {
     callback: CancelableCallback?
   ) = locationCameraAnimatorCoordinator.feedNewCameraZoomLevel(
     target,
-    mapTransformDelegate.getCameraOptions(null),
+    mapTransformDelegate.getCameraState(),
     animationDuration,
     callback
   )
@@ -443,7 +444,7 @@ internal class LocationCameraController {
     callback: CancelableCallback?
   ) = locationCameraAnimatorCoordinator.feedNewCameraPadding(
     target,
-    mapTransformDelegate.getCameraOptions(null),
+    mapTransformDelegate.getCameraState(),
     animationDuration,
     callback
   )
@@ -454,7 +455,7 @@ internal class LocationCameraController {
     callback: CancelableCallback?
   ) = locationCameraAnimatorCoordinator.feedNewCameraPitch(
     target,
-    mapTransformDelegate.getCameraOptions(null),
+    mapTransformDelegate.getCameraState(),
     animationDuration,
     callback
   )
@@ -462,7 +463,7 @@ internal class LocationCameraController {
   fun feedNewCameraCompassBearing(target: Float, animationDuration: Long) =
     locationCameraAnimatorCoordinator.feedNewCompassCameraBearing(
       target,
-      mapTransformDelegate.getCameraOptions(null),
+      mapTransformDelegate.getCameraState(),
       animationDuration,
       cameraMode
     )
@@ -470,7 +471,7 @@ internal class LocationCameraController {
   fun feedNewCameraLocation(@Size(min = 1) newLocations: Array<Location>, animationDuration: Long) =
     locationCameraAnimatorCoordinator.feedNewCameraLocation(
       newLocations,
-      mapTransformDelegate.getCameraOptions(null),
+      mapTransformDelegate.getCameraState(),
       animationDuration,
       cameraMode
     )

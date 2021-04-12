@@ -8,25 +8,21 @@ import com.mapbox.maps.plugin.delegates.MapCameraDelegate
 internal class MapCameraDelegateImpl constructor(private val mapboxMap: MapboxMap) :
   MapCameraDelegate {
 
-  override fun getLat() = mapboxMap.getCameraOptions(null).center?.latitude() ?: 0.0
+  override fun getLat() = mapboxMap.getCameraState().center.latitude()
 
-  override fun getLon() = mapboxMap.getCameraOptions(null).center?.longitude() ?: 0.0
+  override fun getLon() = mapboxMap.getCameraState().center.longitude()
 
-  override fun getZoom() = mapboxMap.getCameraOptions(null).zoom ?: 0.0
+  override fun getZoom() = mapboxMap.getCameraState().zoom
 
-  override fun getPitch() = mapboxMap.getCameraOptions(null).pitch ?: 0.0
+  override fun getPitch() = mapboxMap.getCameraState().pitch
 
-  override fun getBearing() = mapboxMap.getCameraOptions(null).bearing ?: 0.0
+  override fun getBearing() = mapboxMap.getCameraState().bearing
 
-  override fun getPadding() = mapboxMap.getCameraOptions(null).padding?.let { insets ->
+  override fun getPadding() = mapboxMap.getCameraState().padding.let { insets ->
     arrayOf(insets.left, insets.top, insets.right, insets.bottom)
   }
 
-  override fun getAnchor() = mapboxMap.getCameraOptions(null).anchor?.let { screenCoordinate ->
-    Pair(screenCoordinate.x, screenCoordinate.y)
-  }
-
-  override fun getCameraOptions(edgeInsets: EdgeInsets?) = mapboxMap.getCameraOptions(edgeInsets)
+  override fun getCameraState() = mapboxMap.getCameraState()
 
   override fun setBearing(bearing: Double) {
     mapboxMap.setCamera(CameraOptions.Builder().bearing(bearing).build())

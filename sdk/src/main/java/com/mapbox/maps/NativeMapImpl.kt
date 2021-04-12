@@ -34,8 +34,8 @@ internal class NativeMapImpl(private val map: MapInterface) :
     map.setCamera(cameraOptions)
   }
 
-  override fun getCameraOptions(edgeInsets: EdgeInsets?): CameraOptions {
-    return map.getCameraOptions(edgeInsets)
+  override fun getCameraState(): CameraState {
+    return map.cameraState
   }
 
   override fun dragStart(point: ScreenCoordinate) {

@@ -61,7 +61,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       dispatchTelemetryTurnstileEvent()
     )
     this.onCameraChangedListener = OnCameraChangeListener {
-      pluginRegistry.onCameraMove(nativeMap.getCameraOptions(null))
+      pluginRegistry.onCameraMove(nativeMap.cameraState)
     }
     this.onStyleDataLoadedListener = OnStyleDataLoadedListener { type ->
       if (type == StyleDataType.STYLE) {
@@ -92,7 +92,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.mapboxMap = mapboxMap
     this.pluginRegistry = pluginRegistry
     this.onCameraChangedListener = OnCameraChangeListener {
-      pluginRegistry.onCameraMove(nativeMap.getCameraOptions(null))
+      pluginRegistry.onCameraMove(nativeMap.cameraState)
     }
     this.onStyleDataLoadedListener = onStyleLoadingFinishedListener
   }

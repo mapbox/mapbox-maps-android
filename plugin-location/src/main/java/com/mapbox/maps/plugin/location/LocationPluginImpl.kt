@@ -1616,8 +1616,7 @@ class LocationPluginImpl : LocationPlugin {
     zoom: Double,
     pitch: Double,
     bearing: Double,
-    padding: Array<Double>?,
-    anchor: Pair<Double, Double>?
+    padding: Array<Double>
   ) {
     if (this::locationCameraController.isInitialized) {
       locationCameraController.onCameraMove()

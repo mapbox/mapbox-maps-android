@@ -141,20 +141,20 @@ MapPluginRegistry(private val mapDelegateProvider: MapDelegateProvider) {
     }
   }
 
-  fun onCameraMove(cameraOptions: CameraOptions) {
+  fun onCameraMove(cameraState: CameraState) {
     cameraPlugins.forEach {
       it.onCameraMove(
-        cameraOptions.center?.latitude() ?: 0.0,
-        cameraOptions.center?.longitude() ?: 0.0,
-        cameraOptions.zoom ?: 0.0,
-        cameraOptions.pitch ?: 0.0,
-        cameraOptions.bearing ?: 0.0,
-        cameraOptions.padding?.let { insets ->
-          arrayOf(insets.left, insets.top, insets.right, insets.bottom)
-        },
-        cameraOptions.anchor?.let { screenCoordinate ->
-          Pair(screenCoordinate.x, screenCoordinate.y)
-        }
+        cameraState.center.latitude(),
+        cameraState.center.longitude(),
+        cameraState.zoom,
+        cameraState.pitch,
+        cameraState.bearing,
+        arrayOf(
+          cameraState.padding.left,
+          cameraState.padding.top,
+          cameraState.padding.right,
+          cameraState.padding.bottom
+        )
       )
     }
   }

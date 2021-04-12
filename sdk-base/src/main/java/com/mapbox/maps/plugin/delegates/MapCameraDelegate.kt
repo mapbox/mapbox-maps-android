@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.delegates
 
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 
 /**
@@ -42,13 +43,7 @@ interface MapCameraDelegate {
    * Get current padding.
    * @return padding
    */
-  fun getPadding(): Array<Double>?
-
-  /**
-   * Get current anchor.
-   * @return anchor
-   */
-  fun getAnchor(): Pair<Double, Double>?
+  fun getPadding(): Array<Double>
 
   /**
    * Set camera's bearing.
@@ -56,8 +51,8 @@ interface MapCameraDelegate {
   fun setBearing(bearing: Double)
 
   /**
-   * Get camera options.
-   * @return camera options
+   * Get camera state.
+   * @return camera state
    */
-  fun getCameraOptions(edgeInsets: EdgeInsets? = null): CameraOptions
+  fun getCameraState(): CameraState
 }

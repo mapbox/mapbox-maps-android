@@ -12,6 +12,7 @@ import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.animation.animator.*
 import com.mapbox.maps.plugin.delegates.*
+import com.mapbox.maps.toCameraOptions
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.properties.Delegates
 
@@ -159,25 +160,18 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     @Suppress("IMPLICIT_CAST_TO_ANY")
 
     val startValue = cameraAnimator.startValue ?: when (cameraAnimator.type) {
-      CameraAnimatorType.CENTER -> mapCameraDelegate.getCameraOptions().center
-      CameraAnimatorType.ZOOM -> mapCameraDelegate.getCameraOptions().zoom
+      CameraAnimatorType.CENTER -> mapCameraDelegate.getCameraState().center
+      CameraAnimatorType.ZOOM -> mapCameraDelegate.getCameraState().zoom
       // TODO revisit after https://github.com/mapbox/mapbox-maps-android/issues/119
       CameraAnimatorType.ANCHOR -> anchor ?: ScreenCoordinate(0.0, 0.0)
-      CameraAnimatorType.PADDING -> mapCameraDelegate.getCameraOptions().padding
-      CameraAnimatorType.BEARING -> mapCameraDelegate.getCameraOptions().bearing
-      CameraAnimatorType.PITCH -> mapCameraDelegate.getCameraOptions().pitch
+      CameraAnimatorType.PADDING -> mapCameraDelegate.getCameraState().padding
+      CameraAnimatorType.BEARING -> mapCameraDelegate.getCameraState().bearing
+      CameraAnimatorType.PITCH -> mapCameraDelegate.getCameraState().pitch
     }.also {
       Logger.i(
         TAG,
         "Animation ${cameraAnimator.type.name}(${cameraAnimator.hashCode()}): automatically setting start value $it."
       )
-    }
-    if (startValue == null) {
-      Logger.e(
-        TAG,
-        "Ignoring animation ${cameraAnimator.type.name}(${cameraAnimator.hashCode()}) because startValue = null."
-      )
-      return false
     }
 
     val targets = cameraAnimator.targets
@@ -322,7 +316,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       val cameraOptions = when {
         // if no running animators in queue - get current map camera
         firstAnimator == null -> {
-          mapCameraDelegate.getCameraOptions()
+          mapCameraDelegate.getCameraState().toCameraOptions()
         }
         // if update is triggered for first (oldest) animator - build options and jump
         it == firstAnimator -> {

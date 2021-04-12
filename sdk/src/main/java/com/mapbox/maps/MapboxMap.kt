@@ -268,12 +268,11 @@ class MapboxMap internal constructor(
     nativeMapWeakRef.call { this.setCamera(cameraOptions) }
 
   /**
-   * Get the current camera options given an optional padding.
-   *
-   * @param edgeInsets The optional padding
+   * Returns the current camera state.
    */
-  override fun getCameraOptions(edgeInsets: EdgeInsets?): CameraOptions =
-    nativeMapWeakRef.call { this.getCameraOptions(edgeInsets) }
+  override fun getCameraState(): CameraState {
+    return nativeMapWeakRef.call { this.cameraState }
+  }
 
   /**
    * Notify map about gesture being in progress.
@@ -644,7 +643,7 @@ class MapboxMap internal constructor(
    * @return Returns the distance measured in meters.
    */
   override fun getMetersPerPixelAtLatitude(latitude: Double): Double =
-    Projection.getMetersPerPixelAtLatitude(latitude, getCameraOptions(null).zoom ?: 0.0)
+    Projection.getMetersPerPixelAtLatitude(latitude, getCameraState().zoom)
 
   /**
    * Calculate Spherical Mercator ProjectedMeters coordinates.

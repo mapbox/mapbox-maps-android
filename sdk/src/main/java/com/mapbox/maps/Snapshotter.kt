@@ -196,12 +196,12 @@ open class Snapshotter {
   }
 
   /**
-   * Get the current camera options
+   * Get the current camera state.
    *
-   * @return CameraOptions.
+   * @return CameraState.
    */
-  fun getCameraOptions(padding: EdgeInsets? = null): CameraOptions {
-    return coreSnapshotter.getCameraOptions(padding)
+  fun getCameraState(): CameraState {
+    return coreSnapshotter.cameraState
   }
 
   /**

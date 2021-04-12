@@ -91,7 +91,7 @@ class IconSizeChangeOnClickActivity : AppCompatActivity(), OnMapClickListener {
           }
 
           it.getSourceAs<GeoJsonSource>("selected-marker")!!.apply {
-            queriedFeatures[0].feature.geometry()?.let { value ->
+            queriedFeatures[0].geometry()?.let { value ->
               geometry(value)
             }
           }

@@ -9,6 +9,7 @@ import androidx.annotation.Size
 import androidx.annotation.VisibleForTesting
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
@@ -20,6 +21,7 @@ import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
 import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import com.mapbox.maps.plugin.location.listeneres.CancelableCallback
 import com.mapbox.maps.plugin.location.modes.CameraMode
+import com.mapbox.maps.toCameraOptions
 
 /**
  *  Creates, updates, and plays [ValueAnimator]s with help of low-level Camera API.
@@ -74,14 +76,13 @@ internal class LocationCameraAnimatorCoordinator {
 
   fun feedNewCameraLocation(
     @Size(min = 1) newLocations: Array<Location>,
-    currentCameraPosition: CameraOptions,
+    currentCameraPosition: CameraState,
     animationDuration: Long,
     cameraMode: CameraMode
   ) {
 
     val previousCameraLatLng = currentCameraPosition.center
     val previousCameraBearingRaw = currentCameraPosition.bearing
-    if (previousCameraLatLng == null || previousCameraBearingRaw == null) return
 
     val previousCameraBearing = Utils.normalize(previousCameraBearingRaw.toFloat())
     var bearingCameraValues = getCameraBearingValues(previousCameraBearing.toDouble(), newLocations)
@@ -347,13 +348,13 @@ internal class LocationCameraAnimatorCoordinator {
 
   fun feedNewCameraZoomLevel(
     targetZoomLevel: Double,
-    currentCameraPosition: CameraOptions,
+    currentCameraPosition: CameraState,
     animationDuration: Long,
     callback: CancelableCallback?
   ) {
     updateZoomCameraAnimator(
       targetZoomLevel,
-      currentCameraPosition.zoom ?: targetZoomLevel,
+      currentCameraPosition.zoom,
       callback
     )
     playCameraAnimators(animationDuration, ZOOM)
@@ -361,33 +362,33 @@ internal class LocationCameraAnimatorCoordinator {
 
   fun feedNewCameraPadding(
     target: EdgeInsets,
-    currentCameraPosition: CameraOptions,
+    currentCameraPosition: CameraState,
     animationDuration: Long,
     callback: CancelableCallback?
   ) {
-    val current = currentCameraPosition.padding ?: EdgeInsets(0.0, 0.0, 0.0, 0.0)
+    val current = currentCameraPosition.padding
     updatePaddingCameraAnimator(target, current, callback)
     playCameraAnimators(animationDuration, PADDING)
   }
 
   fun feedNewCameraPitch(
     targetPitch: Double,
-    currentCameraPosition: CameraOptions,
+    currentCameraPosition: CameraState,
     animationDuration: Long,
     callback: CancelableCallback?
   ) {
-    val previousPitch = currentCameraPosition.pitch ?: targetPitch
+    val previousPitch = currentCameraPosition.pitch
     updatePitchCameraAnimator(targetPitch, previousPitch, callback)
     playCameraAnimators(animationDuration, PITCH)
   }
 
   fun feedNewCompassCameraBearing(
     targetCompassBearing: Float,
-    currentCameraPosition: CameraOptions,
+    currentCameraPosition: CameraState,
     animationDuration: Long,
     cameraMode: CameraMode
   ) {
-    val previousCameraBearingRaw = currentCameraPosition.bearing ?: return
+    val previousCameraBearingRaw = currentCameraPosition.bearing
     val previousCameraBearing = previousCameraBearingRaw.toFloat()
     updateCompassCameraBearing(targetCompassBearing, previousCameraBearing)
     if (LocationCameraController.isConsumingCompass(cameraMode) && !isTransitioning) {
