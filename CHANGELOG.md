@@ -6,10 +6,30 @@ Mapbox welcomes participation and contributions from everyone.
 ## Breaking changes ⚠️
 * [Annotation plugin] Rename annotation classes ([#227](https://github.com/mapbox/mapbox-maps-android/pull/227))
 * [deps] mapboxMap.queryRenderedFeatures will return a new data class QueriedFeature which will contains additional properties(source (id of the source), sourceLayer (id of the source's layer) ,state (feature's state)) ([#247](https://github.com/mapbox/mapbox-maps-android/pull/247))
+* [core] Deprecate MapObserver, MapSnapshotterObserver interfaces and align sync method naming, Map#isMapLoaded, StyleManager#isStyleLoaded
+* [core] Remove old map#drag API and the AnimationOptions API
+* [core] Move camera related methods to CameraManager
+* [core] Don't emit MapIdle event when there is gesture and / or user animation in progress
+
+## Features ✨ and improvements 🏁
+* [core] Added new CameraManager.cameraForCoordinates overload
+* [core] Query rendered features for Circle Layer on Terrain
 
 ## Bug fixes 🐞
 * Fix runtime crash if logo / attribution not enabled ([#240](https://github.com/mapbox/mapbox-maps-android/pull/240))
-* Fix distance expression parsing for geometries containing over 20k points
+* [core] Fix distance expression parsing for geometries containing over 20k points
+* [core] Fixed holes in the ground for terrain with negative elevation
+* [core] Make StyleImageMissing callback a no-op after ImageManager destruction
+* [core] Reset unprocessed event queue for destructed renderer
+* [core] Fix clipping of fill-extrusions on near plane
+* [core] Set 'clusterMaxZoom' to be 'maxZoom-1' when it is not provided
+* [core] Fix crash for the case when MapSnapshotter object is destructed from within user provided callback
+* [core] Terrain render cache now disabled during property transitions
+* [core] Tile store: handle sparse tilesets and empty tile packs
+* [core] Tile store: handle immutable tile packs
+* [core] Fix missing terrain tiles when camera is on mountain peak
+* [core] Black screen not used during loading anymore, prefering platform background
+* [core] Emit CameraChanged, SourceAdded(Removed) and StyleImageMissing events synchronously
 
 ## Dependencies
 * [deps] Bump gl-native to v10.0.0-beta.19, common to v11.0.0 ([#247](https://github.com/mapbox/mapbox-maps-android/pull/247))
