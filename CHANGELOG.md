@@ -5,7 +5,7 @@ Mapbox welcomes participation and contributions from everyone.
 # 10.0.0-beta.17 - April 12, 2021
 ## Breaking changes ⚠️
 * [Annotation plugin] Rename annotation classes(Symbol -> PointAnnotation, Circle -> CircleAnnotation,Line -> PolylineAnnotation,Fill -> PolygonAnnotation) ([#227](https://github.com/mapbox/mapbox-maps-android/pull/227))
-* [deps] mapboxMap.queryRenderedFeatures will return a new data class QueriedFeature which will contains additional properties(source (id of the source), sourceLayer (id of the source's layer) ,state (feature's state)) ([#247](https://github.com/mapbox/mapbox-maps-android/pull/247))
+* [deps] mapboxMap.queryRenderedFeatures will return a new data class QueriedFeature which will contain additional properties: source (id of the source), sourceLayer (id of the source's layer), state (feature's state) ([#247](https://github.com/mapbox/mapbox-maps-android/pull/247))
 * [core] Deprecate MapObserver, MapSnapshotterObserver interfaces and align sync method naming, Map#isMapLoaded, StyleManager#isStyleLoaded
 * [core] Remove old map#drag API and the AnimationOptions API
 * [core] Don't emit MapIdle event when there is gesture and / or user animation in progress
@@ -167,4 +167,3 @@ To get started with v10, please refer to our [migration guide](https://docs.mapb
 * An invalid LatLng conversion can occur and produce a native crash
 * Native crash when resuming the map in specific situations
 * Native crash when performing a camera transition using Map#jumpTo
-
