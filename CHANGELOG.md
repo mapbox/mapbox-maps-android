@@ -2,6 +2,18 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.0.0-beta.17 - April 12, 2021
+## Breaking changes ⚠️
+* [Annotation plugin] Rename annotation classes ([#227](https://github.com/mapbox/mapbox-maps-android/pull/227))
+* [deps] mapboxMap.queryRenderedFeatures will return a new data class QueriedFeature which will contains additional properties(source (id of the source), sourceLayer (id of the source's layer) ,state (feature's state)) ([#247](https://github.com/mapbox/mapbox-maps-android/pull/247))
+
+## Bug fixes 🐞
+* Fix runtime crash if logo / attribution not enabled ([#240](https://github.com/mapbox/mapbox-maps-android/pull/240))
+* Fix distance expression parsing for geometries containing over 20k points
+
+## Dependencies
+* [deps] Bump gl-native to v10.0.0-beta.19, common to v11.0.0 ([#247](https://github.com/mapbox/mapbox-maps-android/pull/247))
+
 # 10.0.0-beta.16 - March 25, 2021
 
 ## Breaking changes ⚠️
