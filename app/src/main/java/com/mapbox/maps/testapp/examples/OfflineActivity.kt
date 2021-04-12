@@ -21,22 +21,19 @@ class OfflineActivity : AppCompatActivity() {
   private lateinit var offlineManager: OfflineManager
   private var mapView: MapView? = null
   private lateinit var handler: Handler
-  private lateinit var tileStorePath: String
-  private val tileStore = TileStore.getInstance()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_offline)
     handler = Handler()
-    tileStorePath = this.filesDir.absolutePath
     offlineManager = OfflineManager(MapboxOptions.getDefaultResourceOptions((this)))
 
     // 1. Create style package with loadStylePack() call.
     offlineManager.loadStylePack(
       Style.MAPBOX_STREETS,
-      StylePackLoadOptions.Builder().build()
-//      { progress -> Logger.d(TAG, "StylePackLoadProgress: $progress") }
-    ) { expected ->
+      StylePackLoadOptions.Builder().build(),
+      { progress -> Logger.d(TAG, "StylePackLoadProgress: $progress") },
+      { expected ->
       if (expected.isValue) {
         expected.value?.let { stylePack ->
           val loadingCompleted = stylePack.completedResourceCount == stylePack.requiredResourceCount
@@ -45,34 +42,34 @@ class OfflineActivity : AppCompatActivity() {
       } else {
         Logger.e(TAG, expected.error!!.toString())
       }
-    }
+    })
 
     // 2. Create an offline region with tiles for Streets and Satellite styles.
     val streetsTilesetOptions = TilesetDescriptorOptions.Builder()
-      .styleURL(Style.MAPBOX_STREETS)
+      .styleURI(Style.MAPBOX_STREETS)
       .minZoom(0)
       .maxZoom(20)
+      .build()
+    // Resolving of this tileset descriptor WILL NOT implicitly create a style package
+    // (and it won't contain any fonts).
+    val streetsDescriptor = offlineManager.createTilesetDescriptor(streetsTilesetOptions)
+
+    val satelliteTilesetOptions = TilesetDescriptorOptions.Builder()
+      .styleURI(Style.SATELLITE)
+      .minZoom(0)
+      .maxZoom(5)
       .stylePackOptions(
         StylePackLoadOptions.Builder()
           .glyphsRasterizationMode(GlyphsRasterizationMode.ALL_GLYPHS_RASTERIZED_LOCALLY).build()
       )
       .build()
-    // Resolving of this tileset descriptor WILL implicitly create a style package
-    // (and it won't contain any fonts).
-    val streetsDescriptor = offlineManager.createTilesetDescriptor(streetsTilesetOptions)
 
-    val satelliteTilesetOptions = TilesetDescriptorOptions.Builder()
-      .styleURL(Style.SATELLITE)
-      .minZoom(0)
-      .maxZoom(5)
-      .build()
-
-    // Resolving of this tileset descriptor WILL NOT create a style package.
+    // Resolving of this tileset descriptor WILL create a style package.
     val satelliteDescriptor = offlineManager.createTilesetDescriptor(satelliteTilesetOptions)
 
     val offlineRegionLoadOptions = TileRegionLoadOptions.Builder()
       .geometry(point)
-      .descriptors(listOf(streetsDescriptor))
+      .descriptors(listOf(streetsDescriptor, satelliteDescriptor))
       .tileLoadOptions(
         TileLoadOptions.Builder()
           .criticalPriority(true)
@@ -82,7 +79,7 @@ class OfflineActivity : AppCompatActivity() {
       )
       .build()
 
-    tileStore.loadTileRegion(
+    TileStore.getInstance().loadTileRegion(
       OFFLINE_REGION_ID,
       offlineRegionLoadOptions,
       { progress -> Logger.e(TAG, "OfflineRegionLoadProgressCallback: $progress") }) { expected ->
@@ -134,7 +131,7 @@ class OfflineActivity : AppCompatActivity() {
 
   override fun onDestroy() {
     super.onDestroy()
-    tileStore.removeTileRegion(OFFLINE_REGION_ID)
+    TileStore.getInstance().removeTileRegion(OFFLINE_REGION_ID)
     mapView?.onDestroy()
   }
 
