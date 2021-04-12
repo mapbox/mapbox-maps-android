@@ -25,7 +25,23 @@ class MapViewCustomizationActivity : AppCompatActivity() {
   }
 
   private fun configureMapViewFromCode() {
-    val mapboxMapOptions = MapboxMapOptions(this).apply {
+    // set map options
+    val mapOptions = MapOptions.Builder()
+      .constrainMode(ConstrainMode.HEIGHT_ONLY)
+      .glyphsRasterizationOptions(
+        GlyphsRasterizationOptions.Builder()
+          .rasterizationMode(GlyphsRasterizationMode.IDEOGRAPHS_RASTERIZED_LOCALLY)
+          .build()
+      )
+      .build()
+
+    // set token and cache size for this particular map view
+    val resourceOptions = ResourceOptions.Builder()
+      .accessToken(getString(R.string.mapbox_access_token))
+      .cacheSize(75_000L)
+      .build()
+
+    val mapboxMapOptions = MapInitOptions(this, resourceOptions, mapOptions).apply {
       // set initial camera position
       cameraOptions = CameraOptions.Builder()
         .center(Point.fromLngLat(-122.4194, 37.7749))
@@ -33,20 +49,6 @@ class MapViewCustomizationActivity : AppCompatActivity() {
         .build()
       // use texture view renderer
       textureView = true
-      // set other map options
-      mapOptions = MapOptions.Builder()
-        .constrainMode(ConstrainMode.HEIGHT_ONLY)
-        .glyphsRasterizationOptions(
-          GlyphsRasterizationOptions.Builder()
-            .rasterizationMode(GlyphsRasterizationMode.IDEOGRAPHS_RASTERIZED_LOCALLY)
-            .build()
-        )
-        .build()
-      // set token and cache size for this particular map view
-      resourceOptions = ResourceOptions.Builder()
-        .accessToken(getString(R.string.mapbox_access_token))
-        .cacheSize(75_000L)
-        .build()
     }
     // create view programmatically and add to root layout
     customMapView = MapView(this, mapboxMapOptions)

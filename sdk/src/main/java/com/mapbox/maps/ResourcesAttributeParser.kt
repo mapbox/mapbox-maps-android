@@ -23,10 +23,6 @@ internal object ResourcesAttributeParser {
       typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesAccessToken)
         ?: credentialsManager.getAccessToken(context)
 
-    if (accessTokenString.isEmpty()) {
-      throw MapboxConfigurationException()
-    }
-
     val cachePathString =
       typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesCachePath)
         ?: "${context.filesDir.absolutePath}/$DATABASE_NAME"

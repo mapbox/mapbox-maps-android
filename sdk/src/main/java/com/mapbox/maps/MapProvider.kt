@@ -7,13 +7,13 @@ import com.mapbox.maps.plugin.MapPluginRegistry
 internal object MapProvider {
 
   fun getNativeMap(
-    mapboxMapOptions: MapboxMapOptions,
+    mapInitOptions: MapInitOptions,
     mapClient: MapClient,
   ): MapInterface = NativeMapImpl(
     Map(
       mapClient,
-      mapboxMapOptions.mapOptions,
-      mapboxMapOptions.resourceOptions
+      mapInitOptions.mapOptions,
+      mapInitOptions.resourceOptions
     )
   )
 

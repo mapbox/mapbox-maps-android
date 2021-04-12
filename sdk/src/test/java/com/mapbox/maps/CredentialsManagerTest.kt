@@ -23,11 +23,15 @@ class CredentialsManagerTest {
     every { resources.getIdentifier(any(), any(), any()) } returns 0
   }
 
-  @Test
+  @Test(expected = MapboxConfigurationException::class)
   fun noToken() {
     val credentialsManager = CredentialsManager()
-    assertEquals(CredentialsManager.EMPTY_TOKEN, credentialsManager.getAccessToken(context))
-    assertEquals(CredentialsManager.EMPTY_TOKEN, CredentialsManager.shared.getAccessToken(context))
+    assertEquals("", credentialsManager.getAccessToken(context))
+  }
+
+  @Test(expected = MapboxConfigurationException::class)
+  fun noTokenInDefault() {
+    assertEquals("", CredentialsManager.shared.getAccessToken(context))
   }
 
   @Test

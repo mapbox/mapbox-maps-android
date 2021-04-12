@@ -28,7 +28,7 @@ data class CredentialsManager(val accessToken: String? = null) {
       context.packageName
     )
 
-    return if (tokenResId != 0) context.getString(tokenResId) else EMPTY_TOKEN
+    return if (tokenResId != 0) context.getString(tokenResId) else throw MapboxConfigurationException()
   }
 
   /**
@@ -39,7 +39,6 @@ data class CredentialsManager(val accessToken: String? = null) {
      * The default shared instance with empty assess token, will search for an access token in the application resources.
      */
     var shared: CredentialsManager = CredentialsManager()
-    internal const val EMPTY_TOKEN = ""
     private const val STRING_DEF_TYPE = "string"
   }
 }

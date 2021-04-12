@@ -143,11 +143,11 @@ class MapViewTest {
 
   @Test
   fun createPlugin() {
-    every { mapController.createPlugin<LogoPlugin>(any(), any(), any()) } returns mockk()
+    every { mapController.createPlugin<LogoPlugin>(any(), any(), any(), any()) } returns mockk()
     val clazz = Class.forName(PLUGIN_LOGO_CLASS_NAME) as Class<LogoPlugin>
     val args = mockk<Pair<Class<*>, Any>>()
-    mapView.createPlugin(clazz, args)
-    verify { mapController.createPlugin(mapView, clazz, args) }
+    mapView.createPlugin(clazz, null, args)
+    verify { mapController.createPlugin(mapView, clazz, null, args) }
   }
 
   @Test

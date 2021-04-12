@@ -32,7 +32,7 @@ class MapControllerTest {
 
   private val pluginRegistry: MapPluginRegistry = mockk(relaxed = true)
 
-  private val mapboxMapOptions: MapboxMapOptions = mockk(relaxed = true)
+  private val mapInitOptions: MapInitOptions = mockk(relaxed = true)
 
   private val cameraOptions: CameraOptions = mockk(relaxed = true)
 
@@ -48,11 +48,11 @@ class MapControllerTest {
     val token = "pk.123"
     val resourceOptions = mockk<ResourceOptions>()
     mockkObject(MapProvider)
-    every { mapboxMapOptions.resourceOptions } answers { resourceOptions }
+    every { mapInitOptions.resourceOptions } answers { resourceOptions }
     every { resourceOptions.accessToken } answers { token }
     every {
       MapProvider.getNativeMap(
-        mapboxMapOptions,
+        mapInitOptions,
         renderer
       )
     } answers { nativeMap }
@@ -65,7 +65,7 @@ class MapControllerTest {
       MapController(
         renderer,
         nativeObserver,
-        mapboxMapOptions,
+        mapInitOptions,
         nativeMap,
         mapboxMap,
         pluginRegistry,
@@ -139,7 +139,7 @@ class MapControllerTest {
     val mapView = mockk<MapView>()
     val clazz = mockkClass(Any::class)::class.java
     mapController.createPlugin(mapView, clazz)
-    verify { pluginRegistry.createPlugin(mapView, mapboxMapOptions, clazz) }
+    verify { pluginRegistry.createPlugin(mapView, mapInitOptions, clazz) }
   }
 
   @Test
@@ -148,8 +148,8 @@ class MapControllerTest {
     val clazz = mockkClass(Any::class)::class.java
     val pair1 = Any::class.java to Any()
     val pair2 = Any::class.java to Any()
-    mapController.createPlugin(mapView, clazz, pair1, pair2)
-    verify { pluginRegistry.createPlugin(mapView, mapboxMapOptions, clazz, pair1, pair2) }
+    mapController.createPlugin(mapView, clazz, null, pair1, pair2)
+    verify { pluginRegistry.createPlugin(mapView, mapInitOptions, clazz, null, pair1, pair2) }
   }
 
   @Test

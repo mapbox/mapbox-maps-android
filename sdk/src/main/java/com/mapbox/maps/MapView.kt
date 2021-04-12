@@ -37,11 +37,11 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   private var mapController: MapController
 
   /**
-   * Build a [MapView] with [Context] and [MapboxMapOptions] objects.
+   * Build a [MapView] with [Context] and [MapInitOptions] objects.
    */
-  constructor(context: Context, mapboxMapOptions: MapboxMapOptions) : this(
+  constructor(context: Context, mapInitOptions: MapInitOptions) : this(
     context,
-    mapboxMapOptions,
+    mapInitOptions,
     null,
     0,
     0
@@ -63,32 +63,14 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    */
   constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : this(
     context,
+    null,
     attrs,
     defStyleAttr,
     0
   )
 
   /**
-   * Build a [MapView] with a [Context] object, a [AttributeSet] object, an
-   * [Int] which represents a style attribute file, and an [Int] which represents a
-   * style resource file.
-   */
-  @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-  constructor(
-    context: Context,
-    attrs: AttributeSet?,
-    defStyleAttr: Int,
-    defStyleRes: Int
-  ) : this(
-    context,
-    MapboxMapOptions(context, context.resources.displayMetrics.density, attrs),
-    attrs,
-    defStyleAttr,
-    defStyleRes
-  )
-
-  /**
-   * Build a [MapView] with a [Context] object, a [MapboxMapOptions] object,
+   * Build a [MapView] with a [Context] object, a [MapInitOptions] object,
    * a [AttributeSet] object, an [Int] which represents a style attribute file,
    * and an [Int] which represents a style resource file.
    */
@@ -96,12 +78,17 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
   constructor(
     context: Context,
-    options: MapboxMapOptions,
+    initOptions: MapInitOptions?,
     attrs: AttributeSet?,
     defStyleAttr: Int,
     defStyleRes: Int
   ) : super(context, attrs, defStyleAttr, defStyleRes) {
-    val view = if (options.textureView) {
+    val resolvedMapInitOptions = if (attrs != null) {
+      parseTypedArray(context, attrs)
+    } else {
+      initOptions ?: MapInitOptions(context)
+    }
+    val view = if (resolvedMapInitOptions.textureView) {
       TextureView(context, attrs)
     } else {
       SurfaceView(context, attrs)
@@ -112,11 +99,40 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
         is TextureView -> MapboxTextureViewRenderer(WeakReference(view))
         else -> throw IllegalArgumentException("Provided view has to be a texture or a surface.")
       },
-      options
+      resolvedMapInitOptions,
+      attrs
     )
     addView(view, 0)
 
-    mapController.initializePlugins(this, context, attrs, options.pixelRatio)
+    mapController.initializePlugins(
+      this,
+      context,
+      attrs,
+      resolvedMapInitOptions.mapOptions.pixelRatio
+    )
+  }
+
+  @SuppressLint("CustomViewStyleable")
+  private fun parseTypedArray(context: Context, attrs: AttributeSet?): MapInitOptions {
+    val typedArray = context.obtainStyledAttributes(attrs, R.styleable.mapbox_MapView, 0, 0)
+    try {
+      val resourceOptions =
+        ResourcesAttributeParser.parseResourcesOptions(
+          context,
+          typedArray,
+          CredentialsManager.shared
+        )
+      val mapOptions =
+        MapAttributeParser.parseMapOptions(typedArray, context.resources.displayMetrics.density)
+      val cameraOptions = CameraAttributeParser.parseCameraOptions(typedArray)
+      val textureView = typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapSurface, 0) != 0
+      return MapInitOptions(context, resourceOptions, mapOptions).also {
+        it.cameraOptions = cameraOptions
+        it.textureView = textureView
+      }
+    } finally {
+      typedArray.recycle()
+    }
   }
 
   @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -239,8 +255,9 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    */
   fun <T : MapPlugin> createPlugin(
     clazz: Class<T>,
+    attrs: AttributeSet? = null,
     vararg constructorArguments: Pair<Class<*>, Any>
-  ): T? = mapController.createPlugin(this, clazz, *constructorArguments)
+  ): T? = mapController.createPlugin(this, clazz, attrs, *constructorArguments)
 
   /**
    * Get the plugin instance.

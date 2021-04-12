@@ -32,7 +32,7 @@ class DataDrivenMapSnapshotterActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val snapshotMapOptions = MapSnapshotOptions.Builder()
       .size(Size(512.0f, 512.0f))
-      .resourceOptions(MapboxMapOptions(this, resources.displayMetrics.density, null).resourceOptions)
+      .resourceOptions(MapInitOptions.getDefaultResourceOptions(this))
       .build()
 
     snapshotter = Snapshotter(this, snapshotMapOptions).apply {
