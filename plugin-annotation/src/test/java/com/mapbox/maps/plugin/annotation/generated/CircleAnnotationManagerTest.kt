@@ -14,6 +14,7 @@ import com.mapbox.common.ValueConverter
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
+import com.mapbox.maps.QueriedFeature
 import com.mapbox.maps.QueryFeaturesCallback
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.StyleManagerInterface
@@ -53,6 +54,12 @@ class CircleAnnotationManagerTest {
   private val layer: CircleLayer = mockk()
   private val source: GeoJsonSource = mockk()
   private val mapView: View = mockk()
+  private val queriedFeatures = mockk<Expected<List<QueriedFeature>, String>>()
+  private val queriedFeature = mockk<QueriedFeature>()
+  private val feature = mockk<Feature>()
+  private val queriedFeatureList = listOf(queriedFeature)
+  private val querySlot = slot<QueryFeaturesCallback>()
+
   private lateinit var manager: CircleAnnotationManager
   @Before
   fun setUp() {
@@ -92,6 +99,20 @@ class CircleAnnotationManagerTest {
     every { layer.layerId } returns "layer0"
     every { source.sourceId } returns "source0"
     every { source.featureCollection(any()) } answers { source }
+
+    every { queriedFeature.feature } returns feature
+    every { queriedFeatures.value } returns queriedFeatureList
+    every { feature.getProperty(any()).asLong } returns 0L
+    every {
+      mapFeatureQueryDelegate.queryRenderedFeatures(
+        any<ScreenCoordinate>(),
+        any(),
+        capture(querySlot)
+      )
+    } answers {
+      querySlot.captured.run(queriedFeatures)
+    }
+
     manager = CircleAnnotationManager(mapView, delegateProvider)
     manager.layer = layer
     manager.source = source
@@ -253,24 +274,6 @@ class CircleAnnotationManagerTest {
     )
     assertEquals(annotation, manager.annotations[0])
 
-    val features = mockk<Expected<List<Feature>, String>>()
-    val feature = mockk<Feature>()
-    val featureList = listOf(feature)
-
-    every { features.value } returns featureList
-    every { feature.getProperty(any()).asLong } returns 0L
-
-    val querySlot = slot<QueryFeaturesCallback>()
-    every {
-      mapFeatureQueryDelegate.queryRenderedFeatures(
-        any<ScreenCoordinate>(),
-        any(),
-        capture(querySlot)
-      )
-    } answers {
-      querySlot.captured.run(features)
-    }
-
     val listener = mockk<OnCircleAnnotationClickListener>()
     every { listener.onAnnotationClick(any()) } returns false
     manager.addClickListener(listener)
@@ -292,24 +295,6 @@ class CircleAnnotationManagerTest {
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
     assertEquals(annotation, manager.annotations[0])
-
-    val features = mockk<Expected<List<Feature>, String>>()
-    val feature = mockk<Feature>()
-    val featureList = listOf(feature)
-
-    every { features.value } returns featureList
-    every { feature.getProperty(any()).asLong } returns 0L
-
-    val querySlot = slot<QueryFeaturesCallback>()
-    every {
-      mapFeatureQueryDelegate.queryRenderedFeatures(
-        any<ScreenCoordinate>(),
-        any(),
-        capture(querySlot)
-      )
-    } answers {
-      querySlot.captured.run(features)
-    }
 
     val listener = mockk<OnCircleAnnotationLongClickListener>()
     every { listener.onAnnotationLongClick(any()) } returns false
@@ -333,23 +318,7 @@ class CircleAnnotationManagerTest {
     )
     assertEquals(annotation, manager.annotations[0])
 
-    val features = mockk<Expected<List<Feature>, String>>()
-    val feature = mockk<Feature>()
-    val featureList = listOf(feature)
-
-    every { features.value } returns featureList
     every { feature.getProperty(any()).asLong } returns 0L
-
-    val querySlot = slot<QueryFeaturesCallback>()
-    every {
-      mapFeatureQueryDelegate.queryRenderedFeatures(
-        any<ScreenCoordinate>(),
-        any(),
-        capture(querySlot)
-      )
-    } answers {
-      querySlot.captured.run(features)
-    }
 
     val listener = mockk<OnCircleAnnotationDragListener>()
     every { listener.onAnnotationDragStarted(any()) } just Runs

@@ -15,6 +15,7 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
+import com.mapbox.maps.QueriedFeature
 import com.mapbox.maps.QueryFeaturesCallback
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.StyleManagerInterface
@@ -55,6 +56,12 @@ class PolylineAnnotationManagerTest {
   private val layer: LineLayer = mockk()
   private val source: GeoJsonSource = mockk()
   private val mapView: View = mockk()
+  private val queriedFeatures = mockk<Expected<List<QueriedFeature>, String>>()
+  private val queriedFeature = mockk<QueriedFeature>()
+  private val feature = mockk<Feature>()
+  private val queriedFeatureList = listOf(queriedFeature)
+  private val querySlot = slot<QueryFeaturesCallback>()
+
   private lateinit var manager: PolylineAnnotationManager
   @Before
   fun setUp() {
@@ -94,6 +101,20 @@ class PolylineAnnotationManagerTest {
     every { layer.layerId } returns "layer0"
     every { source.sourceId } returns "source0"
     every { source.featureCollection(any()) } answers { source }
+
+    every { queriedFeature.feature } returns feature
+    every { queriedFeatures.value } returns queriedFeatureList
+    every { feature.getProperty(any()).asLong } returns 0L
+    every {
+      mapFeatureQueryDelegate.queryRenderedFeatures(
+        any<ScreenCoordinate>(),
+        any(),
+        capture(querySlot)
+      )
+    } answers {
+      querySlot.captured.run(queriedFeatures)
+    }
+
     manager = PolylineAnnotationManager(mapView, delegateProvider)
     manager.layer = layer
     manager.source = source
@@ -256,24 +277,6 @@ class PolylineAnnotationManagerTest {
     )
     assertEquals(annotation, manager.annotations[0])
 
-    val features = mockk<Expected<List<Feature>, String>>()
-    val feature = mockk<Feature>()
-    val featureList = listOf(feature)
-
-    every { features.value } returns featureList
-    every { feature.getProperty(any()).asLong } returns 0L
-
-    val querySlot = slot<QueryFeaturesCallback>()
-    every {
-      mapFeatureQueryDelegate.queryRenderedFeatures(
-        any<ScreenCoordinate>(),
-        any(),
-        capture(querySlot)
-      )
-    } answers {
-      querySlot.captured.run(features)
-    }
-
     val listener = mockk<OnPolylineAnnotationClickListener>()
     every { listener.onAnnotationClick(any()) } returns false
     manager.addClickListener(listener)
@@ -295,24 +298,6 @@ class PolylineAnnotationManagerTest {
         .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
     )
     assertEquals(annotation, manager.annotations[0])
-
-    val features = mockk<Expected<List<Feature>, String>>()
-    val feature = mockk<Feature>()
-    val featureList = listOf(feature)
-
-    every { features.value } returns featureList
-    every { feature.getProperty(any()).asLong } returns 0L
-
-    val querySlot = slot<QueryFeaturesCallback>()
-    every {
-      mapFeatureQueryDelegate.queryRenderedFeatures(
-        any<ScreenCoordinate>(),
-        any(),
-        capture(querySlot)
-      )
-    } answers {
-      querySlot.captured.run(features)
-    }
 
     val listener = mockk<OnPolylineAnnotationLongClickListener>()
     every { listener.onAnnotationLongClick(any()) } returns false
@@ -336,23 +321,7 @@ class PolylineAnnotationManagerTest {
     )
     assertEquals(annotation, manager.annotations[0])
 
-    val features = mockk<Expected<List<Feature>, String>>()
-    val feature = mockk<Feature>()
-    val featureList = listOf(feature)
-
-    every { features.value } returns featureList
     every { feature.getProperty(any()).asLong } returns 0L
-
-    val querySlot = slot<QueryFeaturesCallback>()
-    every {
-      mapFeatureQueryDelegate.queryRenderedFeatures(
-        any<ScreenCoordinate>(),
-        any(),
-        capture(querySlot)
-      )
-    } answers {
-      querySlot.captured.run(features)
-    }
 
     val listener = mockk<OnPolylineAnnotationDragListener>()
     every { listener.onAnnotationDragStarted(any()) } just Runs

@@ -82,8 +82,8 @@ class IconSizeChangeOnClickActivity : AppCompatActivity(), OnMapClickListener {
           screenBoxFromPixel(pixel),
           RenderedQueryOptions(listOf("marker-layer"), null)
         ) InnerRenderedQueryOptions@{ expectedFeatures ->
-          val features = expectedFeatures.value!!
-          if (features.isEmpty()) {
+          val queriedFeatures = expectedFeatures.value!!
+          if (queriedFeatures.isEmpty()) {
             if (markerSelected) {
               updateMarker(selectedMarkerSymbolLayer, false)
             }
@@ -91,7 +91,7 @@ class IconSizeChangeOnClickActivity : AppCompatActivity(), OnMapClickListener {
           }
 
           it.getSourceAs<GeoJsonSource>("selected-marker")!!.apply {
-            features[0].geometry()?.let { value ->
+            queriedFeatures[0].feature.geometry()?.let { value ->
               geometry(value)
             }
           }
@@ -99,7 +99,7 @@ class IconSizeChangeOnClickActivity : AppCompatActivity(), OnMapClickListener {
           if (markerSelected) {
             updateMarker(selectedMarkerSymbolLayer, false)
           }
-          if (features.isNotEmpty()) {
+          if (queriedFeatures.isNotEmpty()) {
             updateMarker(selectedMarkerSymbolLayer, true)
           }
         }

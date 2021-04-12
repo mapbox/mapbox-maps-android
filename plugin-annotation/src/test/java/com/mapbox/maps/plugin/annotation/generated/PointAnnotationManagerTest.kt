@@ -15,6 +15,7 @@ import com.mapbox.common.ValueConverter
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
+import com.mapbox.maps.QueriedFeature
 import com.mapbox.maps.QueryFeaturesCallback
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.StyleManagerInterface
@@ -55,6 +56,12 @@ class PointAnnotationManagerTest {
   private val layer: SymbolLayer = mockk()
   private val source: GeoJsonSource = mockk()
   private val mapView: View = mockk()
+  private val queriedFeatures = mockk<Expected<List<QueriedFeature>, String>>()
+  private val queriedFeature = mockk<QueriedFeature>()
+  private val feature = mockk<Feature>()
+  private val queriedFeatureList = listOf(queriedFeature)
+  private val querySlot = slot<QueryFeaturesCallback>()
+
   private lateinit var manager: PointAnnotationManager
   val bitmap = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888)
   @Before
@@ -95,6 +102,20 @@ class PointAnnotationManagerTest {
     every { layer.layerId } returns "layer0"
     every { source.sourceId } returns "source0"
     every { source.featureCollection(any()) } answers { source }
+
+    every { queriedFeature.feature } returns feature
+    every { queriedFeatures.value } returns queriedFeatureList
+    every { feature.getProperty(any()).asLong } returns 0L
+    every {
+      mapFeatureQueryDelegate.queryRenderedFeatures(
+        any<ScreenCoordinate>(),
+        any(),
+        capture(querySlot)
+      )
+    } answers {
+      querySlot.captured.run(queriedFeatures)
+    }
+
     manager = PointAnnotationManager(mapView, delegateProvider)
     manager.layer = layer
     manager.source = source
@@ -366,24 +387,6 @@ class PointAnnotationManagerTest {
     )
     assertEquals(annotation, manager.annotations[0])
 
-    val features = mockk<Expected<List<Feature>, String>>()
-    val feature = mockk<Feature>()
-    val featureList = listOf(feature)
-
-    every { features.value } returns featureList
-    every { feature.getProperty(any()).asLong } returns 0L
-
-    val querySlot = slot<QueryFeaturesCallback>()
-    every {
-      mapFeatureQueryDelegate.queryRenderedFeatures(
-        any<ScreenCoordinate>(),
-        any(),
-        capture(querySlot)
-      )
-    } answers {
-      querySlot.captured.run(features)
-    }
-
     val listener = mockk<OnPointAnnotationClickListener>()
     every { listener.onAnnotationClick(any()) } returns false
     manager.addClickListener(listener)
@@ -405,24 +408,6 @@ class PointAnnotationManagerTest {
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
     assertEquals(annotation, manager.annotations[0])
-
-    val features = mockk<Expected<List<Feature>, String>>()
-    val feature = mockk<Feature>()
-    val featureList = listOf(feature)
-
-    every { features.value } returns featureList
-    every { feature.getProperty(any()).asLong } returns 0L
-
-    val querySlot = slot<QueryFeaturesCallback>()
-    every {
-      mapFeatureQueryDelegate.queryRenderedFeatures(
-        any<ScreenCoordinate>(),
-        any(),
-        capture(querySlot)
-      )
-    } answers {
-      querySlot.captured.run(features)
-    }
 
     val listener = mockk<OnPointAnnotationLongClickListener>()
     every { listener.onAnnotationLongClick(any()) } returns false
@@ -446,23 +431,7 @@ class PointAnnotationManagerTest {
     )
     assertEquals(annotation, manager.annotations[0])
 
-    val features = mockk<Expected<List<Feature>, String>>()
-    val feature = mockk<Feature>()
-    val featureList = listOf(feature)
-
-    every { features.value } returns featureList
     every { feature.getProperty(any()).asLong } returns 0L
-
-    val querySlot = slot<QueryFeaturesCallback>()
-    every {
-      mapFeatureQueryDelegate.queryRenderedFeatures(
-        any<ScreenCoordinate>(),
-        any(),
-        capture(querySlot)
-      )
-    } answers {
-      querySlot.captured.run(features)
-    }
 
     val listener = mockk<OnPointAnnotationDragListener>()
     every { listener.onAnnotationDragStarted(any()) } just Runs
