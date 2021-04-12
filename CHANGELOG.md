@@ -4,16 +4,19 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 10.0.0-beta.17 - April 12, 2021
 ## Breaking changes ⚠️
-* [Annotation plugin] Rename annotation classes ([#227](https://github.com/mapbox/mapbox-maps-android/pull/227))
+* [Annotation plugin] Rename annotation classes(Symbol -> PointAnnotation, Circle -> CircleAnnotation,Line -> PolylineAnnotation,Fill -> PolygonAnnotation) ([#227](https://github.com/mapbox/mapbox-maps-android/pull/227))
 * [deps] mapboxMap.queryRenderedFeatures will return a new data class QueriedFeature which will contains additional properties(source (id of the source), sourceLayer (id of the source's layer) ,state (feature's state)) ([#247](https://github.com/mapbox/mapbox-maps-android/pull/247))
 * [core] Deprecate MapObserver, MapSnapshotterObserver interfaces and align sync method naming, Map#isMapLoaded, StyleManager#isStyleLoaded
 * [core] Remove old map#drag API and the AnimationOptions API
-* [core] Move camera related methods to CameraManager
 * [core] Don't emit MapIdle event when there is gesture and / or user animation in progress
 
 ## Features ✨ and improvements 🏁
+* [core] Integrate map engine with NetworkConnectivity API. Map will respect setMapboxStackConnected setting and decide whether http requests can be made.
+* [core] Introducing NetworkConnectivity (offline switch).
+* [core] Adding NetworkStatus ReachableViaEthernet.
 * [core] Added new CameraManager.cameraForCoordinates overload
 * [core] Query rendered features for Circle Layer on Terrain
+* [core] Reduce binary size of native map shared library
 
 ## Bug fixes 🐞
 * Fix runtime crash if logo / attribution not enabled ([#240](https://github.com/mapbox/mapbox-maps-android/pull/240))
