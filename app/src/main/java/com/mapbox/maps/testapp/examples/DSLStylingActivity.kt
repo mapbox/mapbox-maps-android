@@ -48,7 +48,7 @@ class DSLStylingActivity : AppCompatActivity(), OnMapClickListener {
     ) { expected ->
       val features = expected.value!!
       features.takeIf { it.isNotEmpty() }?.let {
-        val time = it.first().getNumberProperty("time")
+        val time = it.first().feature.getNumberProperty("time")
         Toast.makeText(this, getDateTime(time.toLong()), Toast.LENGTH_SHORT).show()
       }
     }

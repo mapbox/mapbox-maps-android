@@ -582,9 +582,9 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
           literal(true)
         )
       ) { features ->
-        features.value?.let { featureList ->
-          if (featureList.isNotEmpty()) {
-            val id = featureList.first().getProperty(getAnnotationIdKey()).asLong
+        features.value?.let { queriedFeatureList ->
+          if (queriedFeatureList.isNotEmpty()) {
+            val id = queriedFeatureList.first().feature.getProperty(getAnnotationIdKey()).asLong
             annotationMap[id]?.let { annotation -> callback.onQueryAnnotation(annotation) }
           }
         }
