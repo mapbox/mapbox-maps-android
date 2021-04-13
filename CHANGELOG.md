@@ -13,7 +13,7 @@ Mapbox welcomes participation and contributions from everyone.
     - source (id of the source)
     - sourceLayer (id of the source's layer)
     - state (feature's state) 
-* Deprecate MapObserver, MapSnapshotterObserver interfaces and align sync method naming, Map#isMapLoaded, StyleManager#isStyleLoaded
+* Rename Style#isStyleFullyLoaded to Style#isStyleLoaded
 * Remove old map#drag API and the AnimationOptions API
 * Don't emit MapIdle event when there is gesture and / or user animation in progress
 * Make overlay plugin experimental ([#233](https://github.com/mapbox/mapbox-maps-android/pull/233))
