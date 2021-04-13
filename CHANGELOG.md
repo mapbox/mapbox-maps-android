@@ -19,8 +19,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Make overlay plugin experimental ([#233](https://github.com/mapbox/mapbox-maps-android/pull/233))
 
 ## Features ✨ and improvements 🏁
-* Integrate map engine with NetworkConnectivity API. Map will respect setMapboxStackConnected setting and decide whether http requests can be made.
-* Introducing NetworkConnectivity (offline switch).
+* Introducing NetworkConnectivity API (offline switch). If setting setMapboxStackConnected(false), the Reachability API will report NotReachable, http requests are being blocked and if running, cancelled.
 * Added new CameraManager.cameraForCoordinates overload
 * Added support for query rendered features for Circle Layer on Terrain
 * Enable identical code folding and -lto-O3 optimizations to reduce binary size of native map shared library
