@@ -23,7 +23,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Introducing NetworkConnectivity (offline switch).
 * Added new CameraManager.cameraForCoordinates overload
 * Added support for query rendered features for Circle Layer on Terrain
-* Reduce binary size of native map shared library
+* Enable identical code folding and -lto-O3 optimizations to reduce binary size of native map shared library
 
 ## Bug fixes 🐞
 * Fix runtime crash if logo / attribution not enabled ([#240](https://github.com/mapbox/mapbox-maps-android/pull/240))
