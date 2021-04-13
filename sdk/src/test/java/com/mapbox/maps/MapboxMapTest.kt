@@ -38,37 +38,45 @@ class MapboxMapTest {
   @Test
   fun loadStyleUri() {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
+    assertFalse(mapboxMap.isStyleLoadInited)
     mapboxMap.loadStyleUri("foo")
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { nativeObserver.addOnStyleDataLoadedListener(any()) }
     verify { nativeMap.styleURI = "foo" }
+    assertTrue(mapboxMap.isStyleLoadInited)
   }
 
   @Test
   fun loadStyleUriLambda() {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
+    assertFalse(mapboxMap.isStyleLoadInited)
     mapboxMap.loadStyleUri("foo") {}
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { nativeObserver.addOnStyleDataLoadedListener(any()) }
     verify { nativeMap.styleURI = "foo" }
+    assertTrue(mapboxMap.isStyleLoadInited)
   }
 
   @Test
   fun loadStyleJSON() {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
+    assertFalse(mapboxMap.isStyleLoadInited)
     mapboxMap.loadStyleJSON("foo")
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { nativeObserver.addOnStyleDataLoadedListener(any()) }
     verify { nativeMap.styleJSON = "foo" }
+    assertTrue(mapboxMap.isStyleLoadInited)
   }
 
   @Test
   fun loadStyleJSONLambda() {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
+    assertFalse(mapboxMap.isStyleLoadInited)
     mapboxMap.loadStyleJSON("foo") {}
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { nativeObserver.addOnStyleDataLoadedListener(any()) }
     verify { nativeMap.styleJSON = "foo" }
+    assertTrue(mapboxMap.isStyleLoadInited)
   }
 
   @Test
@@ -78,9 +86,11 @@ class MapboxMapTest {
     val onMapLoadError = mockk<OnMapLoadErrorListener>()
     val onStyleLoadError = mockk<Style.OnStyleLoaded>()
     Shadows.shadowOf(Looper.getMainLooper()).pause()
+    assertFalse(mapboxMap.isStyleLoadInited)
     mapboxMap.loadStyle(styleExtension, onStyleLoadError, onMapLoadError)
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { nativeMap.styleURI = "foobar" }
+    assertTrue(mapboxMap.isStyleLoadInited)
   }
 
   @Test
@@ -88,9 +98,11 @@ class MapboxMapTest {
     val styleExtension = mockk<StyleContract.StyleExtension>()
     every { styleExtension.styleUri } returns "foobar"
     Shadows.shadowOf(Looper.getMainLooper()).pause()
+    assertFalse(mapboxMap.isStyleLoadInited)
     mapboxMap.loadStyle(styleExtension) {}
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { nativeMap.styleURI = "foobar" }
+    assertTrue(mapboxMap.isStyleLoadInited)
   }
 
   @Test

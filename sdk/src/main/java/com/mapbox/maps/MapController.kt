@@ -109,6 +109,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     }
     renderer.onStart()
     pluginRegistry.onStart()
+    if (!mapboxMap.isStyleLoadInited) {
+      // Load the default style if no style has loaded yet.
+      mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
+    }
   }
 
   fun reduceMemoryUse() {
