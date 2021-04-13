@@ -2,6 +2,46 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.0.0-beta.17 - April 14, 2021
+## Breaking changes ⚠️
+* [Annotation plugin] Rename annotation classes, the rules are as follows and applied for Annotations/Options/Managers ([#227](https://github.com/mapbox/mapbox-maps-android/pull/227))
+    - Symbol -> PointAnnotation
+    - Circle -> CircleAnnotation
+    - Line -> PolylineAnnotation
+    - Fill -> PolygonAnnotation
+* mapboxMap.queryRenderedFeatures will return a new data class QueriedFeature which will contain additional properties ([#247](https://github.com/mapbox/mapbox-maps-android/pull/247)): 
+    - source (id of the source)
+    - sourceLayer (id of the source's layer)
+    - state (feature's state) 
+* Rename Style#isStyleFullyLoaded to Style#isStyleLoaded
+* Remove old map#drag API and the AnimationOptions API
+* Don't emit MapIdle event when there is gesture and / or user animation in progress
+* Make overlay plugin experimental ([#233](https://github.com/mapbox/mapbox-maps-android/pull/233))
+
+## Features ✨ and improvements 🏁
+* Introducing NetworkConnectivity API (offline switch). If setting setMapboxStackConnected(false), the Reachability API will report NotReachable, http requests are being blocked and if running, cancelled.
+* Added new CameraManager.cameraForCoordinates overload
+* Added support for query rendered features for Circle Layer on Terrain
+* Enable identical code folding and -lto-O3 optimizations to reduce binary size of native map shared library
+
+## Bug fixes 🐞
+* Fix runtime crash if logo / attribution not enabled ([#240](https://github.com/mapbox/mapbox-maps-android/pull/240))
+* Fixed a bug that causes map not loading when connected through ethernet.
+* Fix distance expression parsing for geometries containing over 20k points
+* Fixed holes in the ground for terrain with negative elevation
+* Make StyleImageMissing callback a no-op after ImageManager destruction
+* Reset unprocessed event queue for destructed renderer
+* Fix clipping of fill-extrusions on near plane
+* Set 'clusterMaxZoom' to be 'maxZoom-1' when it is not provided
+* Fix crash for the case when MapSnapshotter object is destructed from within user provided callback
+* Terrain render cache now disabled during property transitions
+* Fix missing terrain tiles when camera is on mountain peak
+* Black screen not used during loading anymore, prefering platform background
+* Emit CameraChanged, SourceAdded(Removed) and StyleImageMissing events synchronously
+
+## Dependencies
+* [deps] Bump gl-native to v10.0.0-beta.19, common to v11.0.0 ([#247](https://github.com/mapbox/mapbox-maps-android/pull/247))
+
 # 10.0.0-beta.16 - March 25, 2021
 
 ## Breaking changes ⚠️
@@ -132,4 +172,3 @@ To get started with v10, please refer to our [migration guide](https://docs.mapb
 * An invalid LatLng conversion can occur and produce a native crash
 * Native crash when resuming the map in specific situations
 * Native crash when performing a camera transition using Map#jumpTo
-
