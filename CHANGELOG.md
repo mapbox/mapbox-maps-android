@@ -27,6 +27,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Fix runtime crash if logo / attribution not enabled ([#240](https://github.com/mapbox/mapbox-maps-android/pull/240))
+* Fixed a bug that causes map not loading when connected through ethernet.
 * Fix distance expression parsing for geometries containing over 20k points
 * Fixed holes in the ground for terrain with negative elevation
 * Make StyleImageMissing callback a no-op after ImageManager destruction
