@@ -2,37 +2,42 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 10.0.0-beta.17 - April 12, 2021
+# 10.0.0-beta.17 - April 14, 2021
 ## Breaking changes ⚠️
-* [Annotation plugin] Rename annotation classes(Symbol -> PointAnnotation, Circle -> CircleAnnotation,Line -> PolylineAnnotation,Fill -> PolygonAnnotation) ([#227](https://github.com/mapbox/mapbox-maps-android/pull/227))
-* [deps] mapboxMap.queryRenderedFeatures will return a new data class QueriedFeature which will contain additional properties: source (id of the source), sourceLayer (id of the source's layer), state (feature's state) ([#247](https://github.com/mapbox/mapbox-maps-android/pull/247))
-* [core] Deprecate MapObserver, MapSnapshotterObserver interfaces and align sync method naming, Map#isMapLoaded, StyleManager#isStyleLoaded
-* [core] Remove old map#drag API and the AnimationOptions API
-* [core] Don't emit MapIdle event when there is gesture and / or user animation in progress
+* [Annotation plugin] Rename annotation classes, the rules are as follows and applied for Annotations/Options/Managers ([#227](https://github.com/mapbox/mapbox-maps-android/pull/227))
+    - Symbol -> PointAnnotation
+    - Circle -> CircleAnnotation
+    - Line -> PolylineAnnotation
+    - Fill -> PolygonAnnotation
+* mapboxMap.queryRenderedFeatures will return a new data class QueriedFeature which will contain additional properties: source (id of the source), sourceLayer (id of the source's layer), state (feature's state) ([#247](https://github.com/mapbox/mapbox-maps-android/pull/247))
+* Deprecate MapObserver, MapSnapshotterObserver interfaces and align sync method naming, Map#isMapLoaded, StyleManager#isStyleLoaded
+* Remove old map#drag API and the AnimationOptions API
+* Don't emit MapIdle event when there is gesture and / or user animation in progress
+* Make overlay plugin experimental ([#233](https://github.com/mapbox/mapbox-maps-android/pull/233))
 
 ## Features ✨ and improvements 🏁
-* [core] Integrate map engine with NetworkConnectivity API. Map will respect setMapboxStackConnected setting and decide whether http requests can be made.
-* [core] Introducing NetworkConnectivity (offline switch).
-* [core] Adding NetworkStatus ReachableViaEthernet.
-* [core] Added new CameraManager.cameraForCoordinates overload
-* [core] Query rendered features for Circle Layer on Terrain
-* [core] Reduce binary size of native map shared library
+* Integrate map engine with NetworkConnectivity API. Map will respect setMapboxStackConnected setting and decide whether http requests can be made.
+* Introducing NetworkConnectivity (offline switch).
+* Adding NetworkStatus ReachableViaEthernet.
+* Added new CameraManager.cameraForCoordinates overload
+* Query rendered features for Circle Layer on Terrain
+* Reduce binary size of native map shared library
 
 ## Bug fixes 🐞
 * Fix runtime crash if logo / attribution not enabled ([#240](https://github.com/mapbox/mapbox-maps-android/pull/240))
-* [core] Fix distance expression parsing for geometries containing over 20k points
-* [core] Fixed holes in the ground for terrain with negative elevation
-* [core] Make StyleImageMissing callback a no-op after ImageManager destruction
-* [core] Reset unprocessed event queue for destructed renderer
-* [core] Fix clipping of fill-extrusions on near plane
-* [core] Set 'clusterMaxZoom' to be 'maxZoom-1' when it is not provided
-* [core] Fix crash for the case when MapSnapshotter object is destructed from within user provided callback
-* [core] Terrain render cache now disabled during property transitions
-* [core] Tile store: handle sparse tilesets and empty tile packs
-* [core] Tile store: handle immutable tile packs
-* [core] Fix missing terrain tiles when camera is on mountain peak
-* [core] Black screen not used during loading anymore, prefering platform background
-* [core] Emit CameraChanged, SourceAdded(Removed) and StyleImageMissing events synchronously
+* Fix distance expression parsing for geometries containing over 20k points
+* Fixed holes in the ground for terrain with negative elevation
+* Make StyleImageMissing callback a no-op after ImageManager destruction
+* Reset unprocessed event queue for destructed renderer
+* Fix clipping of fill-extrusions on near plane
+* Set 'clusterMaxZoom' to be 'maxZoom-1' when it is not provided
+* Fix crash for the case when MapSnapshotter object is destructed from within user provided callback
+* Terrain render cache now disabled during property transitions
+* Tile store: handle sparse tilesets and empty tile packs
+* Tile store: handle immutable tile packs
+* Fix missing terrain tiles when camera is on mountain peak
+* Black screen not used during loading anymore, prefering platform background
+* Emit CameraChanged, SourceAdded(Removed) and StyleImageMissing events synchronously
 
 ## Dependencies
 * [deps] Bump gl-native to v10.0.0-beta.19, common to v11.0.0 ([#247](https://github.com/mapbox/mapbox-maps-android/pull/247))
