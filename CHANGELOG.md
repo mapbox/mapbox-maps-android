@@ -22,7 +22,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Integrate map engine with NetworkConnectivity API. Map will respect setMapboxStackConnected setting and decide whether http requests can be made.
 * Introducing NetworkConnectivity (offline switch).
 * Added new CameraManager.cameraForCoordinates overload
-* Query rendered features for Circle Layer on Terrain
+* Added support for query rendered features for Circle Layer on Terrain
 * Reduce binary size of native map shared library
 
 ## Bug fixes 🐞
