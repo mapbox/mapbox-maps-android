@@ -33,8 +33,6 @@ Mapbox welcomes participation and contributions from everyone.
 * Set 'clusterMaxZoom' to be 'maxZoom-1' when it is not provided
 * Fix crash for the case when MapSnapshotter object is destructed from within user provided callback
 * Terrain render cache now disabled during property transitions
-* Tile store: handle sparse tilesets and empty tile packs
-* Tile store: handle immutable tile packs
 * Fix missing terrain tiles when camera is on mountain peak
 * Black screen not used during loading anymore, prefering platform background
 * Emit CameraChanged, SourceAdded(Removed) and StyleImageMissing events synchronously
