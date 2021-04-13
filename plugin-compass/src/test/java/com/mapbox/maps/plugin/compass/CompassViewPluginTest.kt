@@ -206,6 +206,19 @@ class CompassViewPluginTest {
   }
 
   @Test
+  fun setEnabledWithMarginUpdate_false() {
+    every { mapCameraDelegate.getBearing() } returns 0.0
+    val enabledSlot = slot<Boolean>()
+    every { compassView.isCompassEnabled = capture(enabledSlot) } answers { }
+    compassPlugin.enabled = false
+    verify { compassView.isCompassEnabled = false }
+    verify { compassView.compassRotation = (-0.0).toFloat() }
+    verify { compassView.setCompassAlpha(0.0f) }
+    compassPlugin.marginLeft = 1f
+    assertEquals(false, enabledSlot.captured)
+  }
+
+  @Test
   fun bind() {
     val mapView = mockk<FrameLayout>()
     every { mapView.context } returns mockk(relaxed = true)
