@@ -56,9 +56,9 @@ class ExampleOverviewActivity : AppCompatActivity(), CoroutineScope {
           if (!sectionAdapter.isSectionHeaderPosition(position)) {
             val itemPosition = sectionAdapter.getConvertedPosition(position)
             if (currentlyDisplayedExampleList.isNotEmpty()) {
-              startExample(currentlyDisplayedExampleList[itemPosition])
+              startExample(currentlyDisplayedExampleList.elementAtOrNull(itemPosition))
             } else {
-              startExample(allExampleList[itemPosition])
+              startExample(allExampleList.elementAtOrNull(itemPosition))
             }
           }
         }
@@ -100,7 +100,8 @@ class ExampleOverviewActivity : AppCompatActivity(), CoroutineScope {
           if (clear_search_imageview.visibility == View.INVISIBLE) {
             clear_search_imageview.visibility = View.VISIBLE
           }
-          val lowercaseSearchText = currentTextInEditText.toString().toLowerCase(Locale.getDefault())
+          val lowercaseSearchText =
+            currentTextInEditText.toString().toLowerCase(Locale.getDefault())
           val filteredList = allExampleList.filter {
             // Set search criteria
             it.getSimpleName().toLowerCase(Locale.getDefault()).contains(lowercaseSearchText) ||
@@ -110,7 +111,6 @@ class ExampleOverviewActivity : AppCompatActivity(), CoroutineScope {
           }
           if (filteredList.isNotEmpty()) {
             displayExampleList(filteredList)
-            currentlyDisplayedExampleList = filteredList
           } else {
             Snackbar.make(
               root_layout,
@@ -151,10 +151,13 @@ class ExampleOverviewActivity : AppCompatActivity(), CoroutineScope {
       sectionAdapter.setSections(sections.toTypedArray())
       recyclerView.adapter = sectionAdapter
     }
+    currentlyDisplayedExampleList = specificExamplesList
   }
 
-  private fun startExample(specificExample: SpecificExample) {
-    startActivity(Intent().withComponent(packageName, specificExample.name))
+  private fun startExample(specificExample: SpecificExample?) {
+    specificExample?.let {
+      startActivity(Intent().withComponent(packageName, it.name))
+    }
   }
 
   private fun Intent.withComponent(packageName: String, exampleName: String): Intent {
