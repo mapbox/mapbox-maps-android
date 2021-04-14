@@ -82,6 +82,7 @@ open class CompassViewPlugin(
   override var enabled: Boolean
     get() = compassView.isCompassEnabled
     set(value) {
+      internalSettings.enabled = value
       compassView.isCompassEnabled = value
       update(mapCameraDelegate.getBearing())
       if (value && !shouldHideCompass()) {
