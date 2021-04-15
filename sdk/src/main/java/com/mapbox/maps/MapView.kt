@@ -41,10 +41,10 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    */
   constructor(context: Context, mapInitOptions: MapInitOptions) : this(
     context,
-    mapInitOptions,
     null,
     0,
-    0
+    0,
+    mapInitOptions
   )
 
   /**
@@ -63,7 +63,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    */
   constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : this(
     context,
-    null,
     attrs,
     defStyleAttr,
     0
@@ -78,15 +77,15 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
   constructor(
     context: Context,
-    initOptions: MapInitOptions?,
     attrs: AttributeSet?,
     defStyleAttr: Int,
-    defStyleRes: Int
+    defStyleRes: Int,
+    initOptions: MapInitOptions = MapInitOptions(context),
   ) : super(context, attrs, defStyleAttr, defStyleRes) {
     val resolvedMapInitOptions = if (attrs != null) {
       parseTypedArray(context, attrs)
     } else {
-      initOptions ?: MapInitOptions(context)
+      initOptions
     }
     val view = if (resolvedMapInitOptions.textureView) {
       TextureView(context, attrs)
@@ -127,7 +126,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       val cameraOptions = CameraAttributeParser.parseCameraOptions(typedArray)
       val textureView = typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapSurface, 0) != 0
       return MapInitOptions(context, resourceOptions, mapOptions).also {
-        it.cameraOptions = cameraOptions
+        it.initialCameraOptions = cameraOptions
         it.textureView = textureView
       }
     } finally {

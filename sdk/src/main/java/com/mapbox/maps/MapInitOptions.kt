@@ -13,22 +13,16 @@ import android.content.Context
  * @property context the context of the application.
  * @property resourceOptions Resource options when using a MapView. Access token required when using a Mapbox service. Please see [https://www.mapbox.com/help/create-api-access-token/](https://www.mapbox.com/help/create-api-access-token/) to learn how to create one.More information in this guide [https://www.mapbox.com/help/first-steps-android-sdk/#access-tokens](https://www.mapbox.com/help/first-steps-android-sdk/#access-tokens).
  * @property mapOptions Describes the map options value when using a MapView.
+ * @property initialCameraOptions The Initial Camera options when creating a MapView.
+ * @property textureView Flag indicating to use a TextureView as render surface for the MapView. Default is false.
  */
 data class MapInitOptions constructor(
   val context: Context,
   var resourceOptions: ResourceOptions = getDefaultResourceOptions(context),
-  var mapOptions: MapOptions = getDefaultMapOptions(context)
-) {
-
-  /**
-   * Camera options when using a MapView.
-   */
-  var cameraOptions: CameraOptions? = null
-
-  /**
-   * Flag indicating to use a TextureView as render surface for the MapView. Default is false.
-   */
+  var mapOptions: MapOptions = getDefaultMapOptions(context),
+  var initialCameraOptions: CameraOptions? = null,
   var textureView: Boolean = false
+) {
 
   /**
    * Static methods

@@ -73,7 +73,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       }
     }
     renderer.setMap(nativeMap)
-    this.mapInitOptions.cameraOptions?.let {
+    this.mapInitOptions.initialCameraOptions?.let {
       mapboxMap.setCamera(it)
     }
   }

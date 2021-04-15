@@ -34,6 +34,7 @@ class MapInitOptionsTest {
   @Test
   fun surfaceView() {
     assertEquals(false, MapInitOptions(context).textureView)
+    assertEquals(true, MapInitOptions(context, textureView = true).textureView)
   }
 
   fun setInvalidToken() {
@@ -55,5 +56,7 @@ class MapInitOptionsTest {
       GlyphsRasterizationMode.ALL_GLYPHS_RASTERIZED_LOCALLY,
       mapboxMapOptions.mapOptions.glyphsRasterizationOptions!!.rasterizationMode
     )
+
+    assertEquals(1f, mapboxMapOptions.mapOptions.pixelRatio)
   }
 }

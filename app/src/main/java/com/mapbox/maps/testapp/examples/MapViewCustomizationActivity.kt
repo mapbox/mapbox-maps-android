@@ -41,15 +41,14 @@ class MapViewCustomizationActivity : AppCompatActivity() {
       .cacheSize(75_000L)
       .build()
 
-    val mapboxMapOptions = MapInitOptions(this, resourceOptions, mapOptions).apply {
-      // set initial camera position
-      cameraOptions = CameraOptions.Builder()
-        .center(Point.fromLngLat(-122.4194, 37.7749))
-        .zoom(9.0)
-        .build()
-      // use texture view renderer
-      textureView = true
-    }
+    // set initial camera position
+    val initialCameraOptions = CameraOptions.Builder()
+      .center(Point.fromLngLat(-122.4194, 37.7749))
+      .zoom(9.0)
+      .build()
+
+    val mapboxMapOptions =
+      MapInitOptions(this, resourceOptions, mapOptions, initialCameraOptions, true)
     // create view programmatically and add to root layout
     customMapView = MapView(this, mapboxMapOptions)
     val params = LinearLayout.LayoutParams(
