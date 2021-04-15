@@ -75,7 +75,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    */
   @Suppress("UNCHECKED_CAST")
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-  constructor(
+  internal constructor(
     context: Context,
     attrs: AttributeSet?,
     defStyleAttr: Int,
