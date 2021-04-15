@@ -19,8 +19,11 @@ class MapViewCustomizationActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    // Create  a custom CredentialsManager with a token and set it to CredentialsManager.shared, so that all MapViews created with default config will apply this token.
+    CredentialsManager.shared = CredentialsManager(getString(R.string.mapbox_access_token))
     setContentView(R.layout.activity_map_view_customization)
-    configureMapViewFromXml()
+    // all options provided in xml file - so we just load style
+    mapView.getMapboxMap().loadStyleUri(Style.DARK)
     configureMapViewFromCode()
   }
 
@@ -59,13 +62,6 @@ class MapViewCustomizationActivity : AppCompatActivity() {
     root.addView(customMapView, params)
     // load style to map view
     customMapView.getMapboxMap().loadStyleUri(Style.SATELLITE)
-  }
-
-  private fun configureMapViewFromXml() {
-    // let's set `custom` token to MapView from code (however it will be same token from resources so that map will work)
-    CredentialsManager.shared = CredentialsManager(getString(R.string.mapbox_access_token))
-    // all options provided in xml file - so we just load style
-    mapView.getMapboxMap().loadStyleUri(Style.DARK)
   }
 
   override fun onStart() {

@@ -32,11 +32,9 @@ data class MapInitOptions constructor(
      * Get a default [ResourceOptions] with token from default [CredentialsManager]
      * @property context the context of the application.
      */
-    fun getDefaultResourceOptions(context: Context): ResourceOptions {
-      return ResourceOptions.Builder()
-        .accessToken(CredentialsManager.shared.getAccessToken(context))
-        .build()
-    }
+    fun getDefaultResourceOptions(context: Context): ResourceOptions = ResourceOptions.Builder()
+      .accessToken(CredentialsManager.shared.getAccessToken(context))
+      .build()
 
     /**
      * Get a default [MapOptions] with reasterization mode [GlyphsRasterizationMode#ALL_GLYPHS_RASTERIZED_LOCALLY]
