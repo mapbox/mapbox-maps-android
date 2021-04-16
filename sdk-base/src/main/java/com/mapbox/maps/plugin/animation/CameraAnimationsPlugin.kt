@@ -31,11 +31,13 @@ interface CameraAnimationsPlugin : MapPlugin {
    *
    * @param cameraOptions The camera options to ease to
    * @param animationOptions Transition options (animation duration, listeners etc)
+   *
+   * @return [Cancelable] animator set object.
    */
   fun easeTo(
     cameraOptions: CameraOptions,
     animationOptions: MapAnimationOptions? = null
-  )
+  ): Cancelable
 
   /**
    * Scale the map by with optional animation.
@@ -43,23 +45,27 @@ interface CameraAnimationsPlugin : MapPlugin {
    * @param amount The amount to scale by
    * @param screenCoordinate The optional focal point to scale on
    * @param animationOptions Transition options (animation duration, listeners etc)
+   *
+   * @return [Cancelable] animator set object.
    */
   fun scaleBy(
     amount: Double,
     screenCoordinate: ScreenCoordinate?,
     animationOptions: MapAnimationOptions? = null
-  )
+  ): Cancelable
 
   /**
    * Move the map by a given screen coordinate with optional animation.
    *
    * @param screenCoordinate The screen coordinate distance to move by
    * @param animationOptions Transition options (animation duration, listeners etc)
+   *
+   * @return [Cancelable] animator set object.
    */
   fun moveBy(
     screenCoordinate: ScreenCoordinate,
     animationOptions: MapAnimationOptions? = null
-  )
+  ): Cancelable
 
   /**
    * Rotate the map by with optional animation.
@@ -67,23 +73,27 @@ interface CameraAnimationsPlugin : MapPlugin {
    * @param first The first pointer to rotate on
    * @param second The second pointer to rotate on
    * @param animationOptions Transition options (animation duration, listeners etc)
+   *
+   * @return [Cancelable] animator set object.
    */
   fun rotateBy(
     first: ScreenCoordinate,
     second: ScreenCoordinate,
     animationOptions: MapAnimationOptions? = null
-  )
+  ): Cancelable
 
   /**
    * Pitch the map by with optional animation.
    *
    * @param pitch The amount to pitch by
    * @param animationOptions Transition options (animation duration, listeners etc)
+   *
+   * @return [Cancelable] animator set object.
    */
   fun pitchBy(
     pitch: Double,
     animationOptions: MapAnimationOptions? = null
-  )
+  ): Cancelable
 
   /**
    * Fly the map camera to a given camera options.
@@ -99,11 +109,13 @@ interface CameraAnimationsPlugin : MapPlugin {
    *
    * @param cameraOptions The camera options to fly to
    * @param animationOptions Transition options (animation duration, listeners etc)
+   *
+   * @return [Cancelable] animator set object.
    */
   fun flyTo(
     cameraOptions: CameraOptions,
     animationOptions: MapAnimationOptions? = null
-  )
+  ): Cancelable
 
   /**
    * Create CameraZoomAnimator
