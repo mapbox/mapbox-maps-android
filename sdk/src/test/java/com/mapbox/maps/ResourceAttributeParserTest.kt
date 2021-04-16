@@ -32,7 +32,7 @@ class ResourceAttributeParserTest {
   @Test
   fun default() {
     val resourceOptions =
-      ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.shared)
+      ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.default)
     assertEquals("pk.foobar", resourceOptions.accessToken)
     assertEquals("/sdcard/data", resourceOptions.assetPath)
     assertEquals(null, resourceOptions.baseURL)
@@ -44,7 +44,7 @@ class ResourceAttributeParserTest {
   fun noAccessTokenResource() {
     every { resources.getIdentifier("mapbox_access_token", "string", "foobar") } returns 0
     val options =
-      ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.shared)
+      ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.default)
     assertEquals("", options.accessToken)
   }
 
@@ -52,7 +52,7 @@ class ResourceAttributeParserTest {
   fun assetPath() {
     every { context.filesDir } returns File("/foobar")
     val resourceOptions =
-      ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.shared)
+      ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.default)
     assertEquals("/foobar", resourceOptions.assetPath)
   }
 
@@ -60,7 +60,7 @@ class ResourceAttributeParserTest {
   fun cachePath() {
     every { context.filesDir } returns File("/foobar")
     val resourceOptions =
-      ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.shared)
+      ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.default)
     assertEquals("/foobar/mbx.db", resourceOptions.cachePath)
   }
 
@@ -69,7 +69,7 @@ class ResourceAttributeParserTest {
   fun tileStorePath() {
     every { context.filesDir } returns File("/foobar")
     val resourceOptions =
-      ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.shared)
+      ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.default)
     assertEquals("/foobar/maps_tile_store/", resourceOptions.tileStorePath)
   }
 
@@ -86,7 +86,7 @@ class ResourceAttributeParserTest {
       ResourcesAttributeParser.parseResourcesOptions(
         context,
         typedArray,
-        CredentialsManager.shared
+        CredentialsManager.default
       ).cacheSize
     )
   }
@@ -99,7 +99,7 @@ class ResourceAttributeParserTest {
       ResourcesAttributeParser.parseResourcesOptions(
         context,
         typedArray,
-        CredentialsManager.shared
+        CredentialsManager.default
       ).baseURL
     )
   }

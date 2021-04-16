@@ -9,7 +9,14 @@ import android.content.Context
  *
  * @property accessToken the token will be applied.
  */
-data class CredentialsManager(val accessToken: String? = null) {
+data class CredentialsManager(private var accessToken: String? = null) {
+  /**
+   * Set a token as the default one.
+   */
+  fun setAccessToken(token: String?) {
+    accessToken = token
+  }
+
   /**
    * Get the access token.
    * If the supplied token is null (which is the use-case for the `shared`),
@@ -38,7 +45,7 @@ data class CredentialsManager(val accessToken: String? = null) {
     /**
      * The default shared instance with empty assess token, will search for an access token in the application resources.
      */
-    var shared: CredentialsManager = CredentialsManager()
+    val default: CredentialsManager = CredentialsManager()
     private const val STRING_DEF_TYPE = "string"
   }
 }

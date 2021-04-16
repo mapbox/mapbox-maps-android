@@ -39,18 +39,13 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   /**
    * Build a [MapView] with [Context] and [MapInitOptions] objects.
    */
-  constructor(context: Context, mapInitOptions: MapInitOptions) : this(
+  constructor(context: Context, mapInitOptions: MapInitOptions = MapInitOptions(context)) : this(
     context,
     null,
     0,
     0,
     mapInitOptions
   )
-
-  /**
-   * Build a [MapView] with a [Context] object.
-   */
-  constructor(context: Context) : this(context, null)
 
   /**
    * Build a [MapView] with [Context] and [AttributeSet] objects.
@@ -65,7 +60,8 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     context,
     attrs,
     defStyleAttr,
-    0
+    0,
+    null
   )
 
   /**
@@ -80,12 +76,12 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     attrs: AttributeSet?,
     defStyleAttr: Int,
     defStyleRes: Int,
-    initOptions: MapInitOptions = MapInitOptions(context),
+    initOptions: MapInitOptions?,
   ) : super(context, attrs, defStyleAttr, defStyleRes) {
     val resolvedMapInitOptions = if (attrs != null) {
       parseTypedArray(context, attrs)
     } else {
-      initOptions
+      initOptions ?: MapInitOptions(context)
     }
     val view = if (resolvedMapInitOptions.textureView) {
       TextureView(context, attrs)
@@ -119,7 +115,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
         ResourcesAttributeParser.parseResourcesOptions(
           context,
           typedArray,
-          CredentialsManager.shared
+          CredentialsManager.default
         )
       val mapOptions =
         MapAttributeParser.parseMapOptions(typedArray, context.resources.displayMetrics.density)

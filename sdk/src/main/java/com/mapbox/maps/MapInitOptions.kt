@@ -33,7 +33,7 @@ data class MapInitOptions constructor(
      * @property context the context of the application.
      */
     fun getDefaultResourceOptions(context: Context): ResourceOptions = ResourceOptions.Builder()
-      .accessToken(CredentialsManager.shared.getAccessToken(context))
+      .accessToken(CredentialsManager.default.getAccessToken(context))
       .build()
 
     /**

@@ -19,16 +19,14 @@ class MapInitOptionsTest {
 
   private val context: Context = mockk(relaxUnitFun = true)
   private val displayMetrics: DisplayMetrics = mockk(relaxUnitFun = true)
-  private val credentialsManager: CredentialsManager = mockk(relaxUnitFun = true)
 
   @Before
   fun setUp() {
+    CredentialsManager.default.setAccessToken("token")
     every { context.packageName } returns "com.mapbox.maps"
     every { context.filesDir } returns File("foobar")
     every { context.resources.displayMetrics } returns displayMetrics
     displayMetrics.density = 1f
-    every { credentialsManager.getAccessToken(any()) } returns "token"
-    CredentialsManager.shared = credentialsManager
   }
 
   @Test
@@ -38,7 +36,8 @@ class MapInitOptionsTest {
   }
 
   fun setInvalidToken() {
-    every { credentialsManager.getAccessToken(any()) } returns ""
+    CredentialsManager.default.setAccessToken("")
+
     val mapboxMapOptions = MapInitOptions(context)
     assertEquals("", mapboxMapOptions.resourceOptions.accessToken)
   }

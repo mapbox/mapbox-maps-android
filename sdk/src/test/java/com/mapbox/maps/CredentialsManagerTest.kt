@@ -31,7 +31,7 @@ class CredentialsManagerTest {
 
   @Test(expected = MapboxConfigurationException::class)
   fun noTokenInDefault() {
-    assertEquals("", CredentialsManager.shared.getAccessToken(context))
+    assertEquals("", CredentialsManager.default.getAccessToken(context))
   }
 
   @Test
