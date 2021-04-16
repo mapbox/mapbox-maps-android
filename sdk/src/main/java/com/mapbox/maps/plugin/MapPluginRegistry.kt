@@ -1,10 +1,8 @@
 package com.mapbox.maps.plugin
 
-import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import com.mapbox.maps.*
-import com.mapbox.maps.instantiate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import java.util.concurrent.CopyOnWriteArrayList
@@ -48,7 +46,6 @@ MapPluginRegistry(private val mapDelegateProvider: MapDelegateProvider) {
     mapView: MapView?,
     mapInitOptions: MapInitOptions,
     pluginImplementationClazz: Class<T>,
-    attrs: AttributeSet? = null,
     vararg constructorArguments: Pair<Class<*>, Any>
   ): T {
     if (!plugins.containsKey(pluginImplementationClazz)) {
@@ -65,7 +62,7 @@ MapPluginRegistry(private val mapDelegateProvider: MapDelegateProvider) {
       if (instance is ViewPlugin) {
         val pluginView = instance.bind(
           mapView!!,
-          attrs,
+          mapInitOptions.attrs,
           mapInitOptions.mapOptions.pixelRatio
         )
         mapView.addView(pluginView)
@@ -74,7 +71,11 @@ MapPluginRegistry(private val mapDelegateProvider: MapDelegateProvider) {
       }
 
       if (instance is ContextBinder) {
-        instance.bind(mapInitOptions.context, attrs, mapInitOptions.mapOptions.pixelRatio)
+        instance.bind(
+          mapInitOptions.context,
+          mapInitOptions.attrs,
+          mapInitOptions.mapOptions.pixelRatio
+        )
       }
 
       if (instance is MapSizePlugin) {

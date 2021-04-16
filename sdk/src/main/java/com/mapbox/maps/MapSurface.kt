@@ -38,12 +38,7 @@ class MapSurface(
       renderer,
       mapInitOptions
     )
-    mapController.initializePlugins(
-      null,
-      mapInitOptions.context,
-      null,
-      mapInitOptions.mapOptions.pixelRatio
-    )
+    mapController.initializePlugins(null)
   }
 
   /**

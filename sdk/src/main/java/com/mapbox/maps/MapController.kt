@@ -45,7 +45,6 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   constructor(
     renderer: MapboxRenderer,
     mapInitOptions: MapInitOptions,
-    attrs: AttributeSet? = null
   ) {
     this.renderer = renderer
     this.mapInitOptions = mapInitOptions
@@ -226,20 +225,16 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   fun <T> createPlugin(
     mapView: MapView?,
     clazz: Class<T>,
-    attrs: AttributeSet? = null,
     vararg constructorArguments: Pair<Class<*>, Any>
-  ): T? = pluginRegistry.createPlugin(mapView, mapInitOptions, clazz, attrs, *constructorArguments)
+  ): T? = pluginRegistry.createPlugin(mapView, mapInitOptions, clazz, *constructorArguments)
 
   fun initializePlugins(
-    mapView: MapView?,
-    context: Context,
-    attrs: AttributeSet? = null,
-    pixelRatio: Float
+    mapView: MapView?
   ) {
     try {
       val cameraAnimationsPluginClass =
         Class.forName(PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME) as Class<CameraAnimationsPlugin>
-      mapboxMap.setCameraAnimationPlugin(createPlugin(mapView, cameraAnimationsPluginClass, attrs))
+      mapboxMap.setCameraAnimationPlugin(createPlugin(mapView, cameraAnimationsPluginClass))
     } catch (ex: ClassNotFoundException) {
       Logger.d(
         TAG,
@@ -249,7 +244,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
 
     try {
       val compassPluginClass = Class.forName(PLUGIN_COMPASS_CLASS_NAME) as Class<CompassPlugin>
-      createPlugin(mapView, compassPluginClass, attrs)
+      createPlugin(mapView, compassPluginClass)
     } catch (ex: ClassNotFoundException) {
       Logger.i(
         TAG,
@@ -264,7 +259,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
 
     try {
       val logoPluginClass = Class.forName(PLUGIN_LOGO_CLASS_NAME) as Class<LogoPlugin>
-      createPlugin(mapView, logoPluginClass, attrs)
+      createPlugin(mapView, logoPluginClass)
     } catch (ex: ClassNotFoundException) {
       Logger.d(
         TAG,
@@ -282,20 +277,20 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
         Class.forName(PLUGIN_GESTURE_CLASS_NAME) as Class<GesturesPlugin>
 
       // TODO Cleanup
-      val plugin = if (attrs != null) {
+      val plugin = if (mapInitOptions.attrs != null) {
         createPlugin(
           mapView,
-          gesturePluginClass, attrs,
-          Pair(Context::class.java, context),
-          Pair(AttributeSet::class.java, attrs),
-          Pair(Float::class.java, pixelRatio)
+          gesturePluginClass,
+          Pair(Context::class.java, mapInitOptions.context),
+          Pair(AttributeSet::class.java, mapInitOptions.attrs!!),
+          Pair(Float::class.java, mapInitOptions.mapOptions.pixelRatio)
         )
       } else {
         createPlugin(
           mapView,
-          gesturePluginClass, attrs,
-          Pair(Context::class.java, context),
-          Pair(Float::class.java, pixelRatio)
+          gesturePluginClass,
+          Pair(Context::class.java, mapInitOptions.context),
+          Pair(Float::class.java, mapInitOptions.mapOptions.pixelRatio)
         )
       }
       mapboxMap.setGesturesAnimationPlugin(plugin)
@@ -309,7 +304,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     try {
       val attributionPluginClass =
         Class.forName(PLUGIN_ATTRIBUTION_CLASS_NAME) as Class<AttributionPlugin>
-      createPlugin(mapView, attributionPluginClass, attrs)
+      createPlugin(mapView, attributionPluginClass)
     } catch (ex: ClassNotFoundException) {
       Logger.d(
         TAG,
@@ -324,7 +319,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
 
     try {
       val locationPluginClass = Class.forName(PLUGIN_LOCATION_CLASS_NAME) as Class<LocationPlugin>
-      createPlugin(mapView, locationPluginClass, attrs)
+      createPlugin(mapView, locationPluginClass)
     } catch (ex: ClassNotFoundException) {
       Logger.d(
         TAG,
@@ -335,7 +330,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     try {
       val locationComponentPluginClass =
         Class.forName(PLUGIN_LOCATION_COMPONENT_CLASS_NAME) as Class<LocationComponentPlugin>
-      createPlugin(mapView, locationComponentPluginClass, attrs)
+      createPlugin(mapView, locationComponentPluginClass)
     } catch (ex: ClassNotFoundException) {
       Logger.d(
         TAG,
@@ -346,7 +341,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     try {
       val scaleBarPluginClass =
         Class.forName(PLUGIN_SCALE_BAR_CLASS_NAME) as Class<ScaleBarPlugin>
-      createPlugin(mapView, scaleBarPluginClass, attrs)
+      createPlugin(mapView, scaleBarPluginClass)
     } catch (ex: ClassNotFoundException) {
       Logger.d(
         TAG,
@@ -362,7 +357,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     try {
       val mapOverlayPlugin =
         Class.forName(PLUGIN_MAPOVERLAY_CLASS_NAME) as Class<MapOverlayPlugin>
-      createPlugin(mapView, mapOverlayPlugin, attrs)
+      createPlugin(mapView, mapOverlayPlugin)
     } catch (ex: ClassNotFoundException) {
       Logger.d(
         TAG,
@@ -373,7 +368,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     try {
       val annotationPlugin =
         Class.forName(PLUGIN_ANNOTATION_CLASS_NAME) as Class<AnnotationPluginImpl>
-      createPlugin(mapView, annotationPlugin, attrs)
+      createPlugin(mapView, annotationPlugin)
     } catch (ex: ClassNotFoundException) {
       Logger.d(
         TAG,

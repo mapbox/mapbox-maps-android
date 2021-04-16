@@ -94,17 +94,11 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
         is TextureView -> MapboxTextureViewRenderer(WeakReference(view))
         else -> throw IllegalArgumentException("Provided view has to be a texture or a surface.")
       },
-      resolvedMapInitOptions,
-      attrs
+      resolvedMapInitOptions
     )
     addView(view, 0)
 
-    mapController.initializePlugins(
-      this,
-      context,
-      attrs,
-      resolvedMapInitOptions.mapOptions.pixelRatio
-    )
+    mapController.initializePlugins(this)
   }
 
   @SuppressLint("CustomViewStyleable")
@@ -121,7 +115,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
         MapAttributeParser.parseMapOptions(typedArray, context.resources.displayMetrics.density)
       val cameraOptions = CameraAttributeParser.parseCameraOptions(typedArray)
       val textureView = typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapSurface, 0) != 0
-      return MapInitOptions(context, resourceOptions, mapOptions).also {
+      return MapInitOptions(context, resourceOptions, mapOptions, attrs = attrs).also {
         it.initialCameraOptions = cameraOptions
         it.textureView = textureView
       }
@@ -250,9 +244,8 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    */
   fun <T : MapPlugin> createPlugin(
     clazz: Class<T>,
-    attrs: AttributeSet? = null,
     vararg constructorArguments: Pair<Class<*>, Any>
-  ): T? = mapController.createPlugin(this, clazz, attrs, *constructorArguments)
+  ): T? = mapController.createPlugin(this, clazz, *constructorArguments)
 
   /**
    * Get the plugin instance.

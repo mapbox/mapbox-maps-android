@@ -148,8 +148,8 @@ class MapControllerTest {
     val clazz = mockkClass(Any::class)::class.java
     val pair1 = Any::class.java to Any()
     val pair2 = Any::class.java to Any()
-    mapController.createPlugin(mapView, clazz, null, pair1, pair2)
-    verify { pluginRegistry.createPlugin(mapView, mapInitOptions, clazz, null, pair1, pair2) }
+    mapController.createPlugin(mapView, clazz, pair1, pair2)
+    verify { pluginRegistry.createPlugin(mapView, mapInitOptions, clazz, pair1, pair2) }
   }
 
   @Test

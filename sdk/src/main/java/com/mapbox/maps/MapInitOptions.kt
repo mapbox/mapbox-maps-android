@@ -1,6 +1,7 @@
 package com.mapbox.maps
 
 import android.content.Context
+import android.util.AttributeSet
 
 /**
  * Defines configuration [MapInitOptions] for a [MapboxMap]. These options can be used when adding a
@@ -15,13 +16,15 @@ import android.content.Context
  * @property mapOptions Describes the map options value when using a MapView.
  * @property initialCameraOptions The Initial Camera options when creating a MapView.
  * @property textureView Flag indicating to use a TextureView as render surface for the MapView. Default is false.
+ * @property attrs The [AttributeSet] object that init the MapView.
  */
 data class MapInitOptions constructor(
   val context: Context,
   var resourceOptions: ResourceOptions = getDefaultResourceOptions(context),
   var mapOptions: MapOptions = getDefaultMapOptions(context),
   var initialCameraOptions: CameraOptions? = null,
-  var textureView: Boolean = false
+  var textureView: Boolean = false,
+  var attrs: AttributeSet? = null
 ) {
 
   /**

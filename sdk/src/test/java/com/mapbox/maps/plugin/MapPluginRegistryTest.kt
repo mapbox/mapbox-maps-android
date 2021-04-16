@@ -38,6 +38,7 @@ class MapPluginRegistryTest {
     mapPluginRegistry = MapPluginRegistry(delegateProvider)
     every { mapInitOptions.mapOptions } returns mapOptions
     every { mapInitOptions.resourceOptions } returns resourceOptions
+    every { mapInitOptions.attrs } returns null
   }
 
   @Test
