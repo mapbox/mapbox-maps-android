@@ -77,9 +77,9 @@ commands:
           name: Run JVM unit tests & create jacoco code coverage report
           no_output_timeout: 30m
           command: ./gradlew jacocoTestDebugUnitTestReport
-      - run:
-          name: Upload codecov
-          command: bash <(curl -sSfL https://codecov.io/bash)
+#      - run:
+#          name: Upload codecov
+#          command: bash <(curl -sSfL https://codecov.io/bash)
 
   store-results:
     steps:
