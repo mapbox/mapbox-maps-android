@@ -178,25 +178,6 @@ Unit tests, for all modules, can be run locally with:
 $ make unit-tests
 ```
 
-#### Code coverage
-
-All the unit tests will generate coverage information. Ideally a change will never
-bring the test code coverage down and any change adding more tests to bring it
-up is welcome. The CI will make sure to collect the test coverage and let you
-know if your PR is worsening or improving coverage.
-
-We only collect code coverage on unit tests as these test verify the business logic of the SDK.
-Including instrumented integration tests as part of the input will skew the results in making
-the metric unreliable to make any quantified decisions on.
-
-You can collect coverage locally by running the following command:
-
-```
-$ make code-coverage
-```
-
-The code coverage of the project can be tracked on [codecov](https://codecov.io/gh/mapbox/mapbox-maps-android).
-
 ### Instrumentation tests
 
 Instrumentation tests are integration test that validate the integration with the Android OS and
