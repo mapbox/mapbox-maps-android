@@ -54,7 +54,7 @@ class CameraPredefinedAnimatorsActivity : AppCompatActivity() {
     val adapter = ArrayAdapter.createFromResource(
       this, R.array.interpolators_array, R.layout.item_spinner_view
     )
-    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
     spinner.adapter = adapter
     spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
       override fun onNothingSelected(parent: AdapterView<*>?) {}
