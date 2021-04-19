@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
-import com.mapbox.maps.MapboxMapOptions
 
 class MapFragment : Fragment() {
 
@@ -22,7 +22,7 @@ class MapFragment : Fragment() {
   ): View? {
     mapView = MapView(
       inflater.context,
-      MapboxMapOptions(inflater.context)
+      MapInitOptions(inflater.context)
     )
     return mapView
   }

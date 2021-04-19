@@ -37,20 +37,15 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   private var mapController: MapController
 
   /**
-   * Build a [MapView] with [Context] and [MapboxMapOptions] objects.
+   * Build a [MapView] with [Context] and [MapInitOptions] objects.
    */
-  constructor(context: Context, mapboxMapOptions: MapboxMapOptions) : this(
+  constructor(context: Context, mapInitOptions: MapInitOptions = MapInitOptions(context)) : this(
     context,
-    mapboxMapOptions,
     null,
     0,
-    0
+    0,
+    mapInitOptions
   )
-
-  /**
-   * Build a [MapView] with a [Context] object.
-   */
-  constructor(context: Context) : this(context, null)
 
   /**
    * Build a [MapView] with [Context] and [AttributeSet] objects.
@@ -65,43 +60,30 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     context,
     attrs,
     defStyleAttr,
-    0
+    0,
+    null
   )
 
   /**
-   * Build a [MapView] with a [Context] object, a [AttributeSet] object, an
-   * [Int] which represents a style attribute file, and an [Int] which represents a
-   * style resource file.
-   */
-  @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-  constructor(
-    context: Context,
-    attrs: AttributeSet?,
-    defStyleAttr: Int,
-    defStyleRes: Int
-  ) : this(
-    context,
-    MapboxMapOptions(context, context.resources.displayMetrics.density, attrs),
-    attrs,
-    defStyleAttr,
-    defStyleRes
-  )
-
-  /**
-   * Build a [MapView] with a [Context] object, a [MapboxMapOptions] object,
+   * Build a [MapView] with a [Context] object, a [MapInitOptions] object,
    * a [AttributeSet] object, an [Int] which represents a style attribute file,
    * and an [Int] which represents a style resource file.
    */
   @Suppress("UNCHECKED_CAST")
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-  constructor(
+  internal constructor(
     context: Context,
-    options: MapboxMapOptions,
     attrs: AttributeSet?,
     defStyleAttr: Int,
-    defStyleRes: Int
+    defStyleRes: Int,
+    initOptions: MapInitOptions?,
   ) : super(context, attrs, defStyleAttr, defStyleRes) {
-    val view = if (options.textureView) {
+    val resolvedMapInitOptions = if (attrs != null) {
+      parseTypedArray(context, attrs)
+    } else {
+      initOptions ?: MapInitOptions(context)
+    }
+    val view = if (resolvedMapInitOptions.textureView) {
       TextureView(context, attrs)
     } else {
       SurfaceView(context, attrs)
@@ -112,11 +94,34 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
         is TextureView -> MapboxTextureViewRenderer(WeakReference(view))
         else -> throw IllegalArgumentException("Provided view has to be a texture or a surface.")
       },
-      options
+      resolvedMapInitOptions
     )
     addView(view, 0)
 
-    mapController.initializePlugins(this, context, attrs, options.pixelRatio)
+    mapController.initializePlugins(this)
+  }
+
+  @SuppressLint("CustomViewStyleable")
+  private fun parseTypedArray(context: Context, attrs: AttributeSet?): MapInitOptions {
+    val typedArray = context.obtainStyledAttributes(attrs, R.styleable.mapbox_MapView, 0, 0)
+    try {
+      val resourceOptions =
+        ResourcesAttributeParser.parseResourcesOptions(
+          context,
+          typedArray,
+          CredentialsManager.default
+        )
+      val mapOptions =
+        MapAttributeParser.parseMapOptions(typedArray, context.resources.displayMetrics.density)
+      val cameraOptions = CameraAttributeParser.parseCameraOptions(typedArray)
+      val textureView = typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapSurface, 0) != 0
+      return MapInitOptions(context, resourceOptions, mapOptions, attrs = attrs).also {
+        it.initialCameraOptions = cameraOptions
+        it.textureView = textureView
+      }
+    } finally {
+      typedArray.recycle()
+    }
   }
 
   @RequiresApi(Build.VERSION_CODES.LOLLIPOP)

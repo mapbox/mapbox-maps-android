@@ -35,7 +35,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
 
   private val renderer: MapboxRenderer
   private val nativeObserver: NativeObserver
-  private val mapboxMapOptions: MapboxMapOptions
+  private val mapInitOptions: MapInitOptions
   private val nativeMap: MapInterface
   private val mapboxMap: MapboxMap
   private val pluginRegistry: MapPluginRegistry
@@ -44,17 +44,18 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
 
   constructor(
     renderer: MapboxRenderer,
-    mapboxMapOptions: MapboxMapOptions
+    mapInitOptions: MapInitOptions,
   ) {
     this.renderer = renderer
-    this.mapboxMapOptions = mapboxMapOptions
-    AssetManagerProvider().initialize(mapboxMapOptions.context.assets)
+    this.mapInitOptions = mapInitOptions
+    AssetManagerProvider().initialize(mapInitOptions.context.assets)
     this.nativeMap = MapProvider.getNativeMap(
-      mapboxMapOptions,
+      mapInitOptions,
       renderer,
     )
     this.nativeObserver = NativeObserver(WeakReference(nativeMap), Handler(Looper.getMainLooper()))
-    this.mapboxMap = MapProvider.getMapboxMap(nativeMap, nativeObserver, mapboxMapOptions.pixelRatio)
+    this.mapboxMap =
+      MapProvider.getMapboxMap(nativeMap, nativeObserver, mapInitOptions.mapOptions.pixelRatio)
     this.pluginRegistry = MapProvider.getMapPluginRegistry(
       mapboxMap,
       this,
@@ -71,7 +72,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       }
     }
     renderer.setMap(nativeMap)
-    this.mapboxMapOptions.cameraOptions?.let {
+    this.mapInitOptions.initialCameraOptions?.let {
       mapboxMap.setCamera(it)
     }
   }
@@ -79,7 +80,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   constructor(
     renderer: MapboxRenderer,
     nativeObserver: NativeObserver,
-    mapboxMapOptions: MapboxMapOptions,
+    mapInitOptions: MapInitOptions,
     nativeMap: MapInterface,
     mapboxMap: MapboxMap,
     pluginRegistry: MapPluginRegistry,
@@ -87,7 +88,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   ) {
     this.renderer = renderer
     this.nativeObserver = nativeObserver
-    this.mapboxMapOptions = mapboxMapOptions
+    this.mapInitOptions = mapInitOptions
     this.nativeMap = nativeMap
     this.mapboxMap = mapboxMap
     this.pluginRegistry = pluginRegistry
@@ -109,6 +110,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     }
     renderer.onStart()
     pluginRegistry.onStart()
+    if (!mapboxMap.isStyleLoadInited) {
+      // Load the default style if no style has loaded yet.
+      mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
+    }
   }
 
   fun reduceMemoryUse() {
@@ -185,7 +190,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
    * Provides parameters for Mapbox default modules, recursively if a module depends on other Mapbox modules.
    */
   private fun paramsProvider(type: MapboxModuleType): Array<ModuleProviderArgument> {
-    val context = mapboxMapOptions.context
+    val context = mapInitOptions.context
     return when (type) {
       MapboxModuleType.CommonLibraryLoader -> arrayOf(
         ModuleProviderArgument(
@@ -200,7 +205,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
           Context::class.java,
           context.applicationContext
         ),
-        ModuleProviderArgument(String::class.java, mapboxMapOptions.resourceOptions.accessToken)
+        ModuleProviderArgument(String::class.java, mapInitOptions.resourceOptions.accessToken)
       )
       else -> throw IllegalArgumentException("${type.name} module is not supported by the Maps SDK")
     }
@@ -225,13 +230,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     mapView: MapView?,
     clazz: Class<T>,
     vararg constructorArguments: Pair<Class<*>, Any>
-  ): T? = pluginRegistry.createPlugin(mapView, mapboxMapOptions, clazz, *constructorArguments)
+  ): T? = pluginRegistry.createPlugin(mapView, mapInitOptions, clazz, *constructorArguments)
 
   fun initializePlugins(
-    mapView: MapView?,
-    context: Context,
-    attrs: AttributeSet?,
-    pixelRatio: Float
+    mapView: MapView?
   ) {
     try {
       val cameraAnimationsPluginClass =
@@ -278,24 +280,24 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       val gesturePluginClass =
         Class.forName(PLUGIN_GESTURE_CLASS_NAME) as Class<GesturesPlugin>
 
-      // TODO Cleanup
-      val plugin = if (attrs != null) {
-        createPlugin(
+      mapInitOptions.attrs?.let {
+        val plugin = createPlugin(
           mapView,
           gesturePluginClass,
-          Pair(Context::class.java, context),
-          Pair(AttributeSet::class.java, attrs),
-          Pair(Float::class.java, pixelRatio)
+          Pair(Context::class.java, mapInitOptions.context),
+          Pair(AttributeSet::class.java, it),
+          Pair(Float::class.java, mapInitOptions.mapOptions.pixelRatio)
         )
-      } else {
-        createPlugin(
+        mapboxMap.setGesturesAnimationPlugin(plugin)
+      } ?: run {
+        val plugin = createPlugin(
           mapView,
           gesturePluginClass,
-          Pair(Context::class.java, context),
-          Pair(Float::class.java, pixelRatio)
+          Pair(Context::class.java, mapInitOptions.context),
+          Pair(Float::class.java, mapInitOptions.mapOptions.pixelRatio)
         )
+        mapboxMap.setGesturesAnimationPlugin(plugin)
       }
-      mapboxMap.setGesturesAnimationPlugin(plugin)
     } catch (ex: ClassNotFoundException) {
       Logger.d(
         TAG,

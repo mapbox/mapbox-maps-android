@@ -32,7 +32,7 @@ class MapControllerTest {
 
   private val pluginRegistry: MapPluginRegistry = mockk(relaxed = true)
 
-  private val mapboxMapOptions: MapboxMapOptions = mockk(relaxed = true)
+  private val mapInitOptions: MapInitOptions = mockk(relaxed = true)
 
   private val cameraOptions: CameraOptions = mockk(relaxed = true)
 
@@ -48,11 +48,11 @@ class MapControllerTest {
     val token = "pk.123"
     val resourceOptions = mockk<ResourceOptions>()
     mockkObject(MapProvider)
-    every { mapboxMapOptions.resourceOptions } answers { resourceOptions }
+    every { mapInitOptions.resourceOptions } answers { resourceOptions }
     every { resourceOptions.accessToken } answers { token }
     every {
       MapProvider.getNativeMap(
-        mapboxMapOptions,
+        mapInitOptions,
         renderer
       )
     } answers { nativeMap }
@@ -60,12 +60,12 @@ class MapControllerTest {
 
     every { MapProvider.getMapboxMap(nativeMap, nativeObserver, 1.0f) } answers { mapboxMap }
     every { MapProvider.getMapPluginRegistry(any(), any(), any()) } returns pluginRegistry
-
+    every { mapboxMap.isStyleLoadInited } returns false
     mapController =
       MapController(
         renderer,
         nativeObserver,
-        mapboxMapOptions,
+        mapInitOptions,
         nativeMap,
         mapboxMap,
         pluginRegistry,
@@ -78,6 +78,14 @@ class MapControllerTest {
     mapController.onStart()
     verify { renderer.onStart() }
     verify { pluginRegistry.onStart() }
+    verify { mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) }
+  }
+
+  @Test
+  fun onStartWithStyleLoaded() {
+    every { mapboxMap.isStyleLoadInited } returns true
+    mapController.onStart()
+    verify(exactly = 0) { mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) }
   }
 
   @Test
@@ -139,7 +147,7 @@ class MapControllerTest {
     val mapView = mockk<MapView>()
     val clazz = mockkClass(Any::class)::class.java
     mapController.createPlugin(mapView, clazz)
-    verify { pluginRegistry.createPlugin(mapView, mapboxMapOptions, clazz) }
+    verify { pluginRegistry.createPlugin(mapView, mapInitOptions, clazz) }
   }
 
   @Test
@@ -149,7 +157,7 @@ class MapControllerTest {
     val pair1 = Any::class.java to Any()
     val pair2 = Any::class.java to Any()
     mapController.createPlugin(mapView, clazz, pair1, pair2)
-    verify { pluginRegistry.createPlugin(mapView, mapboxMapOptions, clazz, pair1, pair2) }
+    verify { pluginRegistry.createPlugin(mapView, mapInitOptions, clazz, pair1, pair2) }
   }
 
   @Test
