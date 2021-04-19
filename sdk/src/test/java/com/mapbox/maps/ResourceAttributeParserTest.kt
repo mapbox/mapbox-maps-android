@@ -7,7 +7,6 @@ import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import java.io.File
 
@@ -58,14 +57,6 @@ class ResourceAttributeParserTest {
     every { context.filesDir } returns File("/foobar")
     val resourceOptions = ResourcesAttributeParser.parseResourcesOptions(context, typedArray)
     assertEquals("/foobar/mbx.db", resourceOptions.cachePath)
-  }
-
-  @Ignore("https://github.com/mapbox/mapbox-maps-android/issues/939")
-  @Test
-  fun tileStorePath() {
-    every { context.filesDir } returns File("/foobar")
-    val resourceOptions = ResourcesAttributeParser.parseResourcesOptions(context, typedArray)
-    assertEquals("/foobar/maps_tile_store/", resourceOptions.tileStorePath)
   }
 
   @Test
