@@ -19,36 +19,26 @@ import com.mapbox.maps.renderer.OnFpsChangedListener
  *
  * <strong>Warning:</strong> Please note that you are responsible for getting permission to use the map data,
  * and for ensuring your use adheres to the relevant terms of use.
+ *
+ * @param context the application context to init the default [MapInitOptions]
+ * @param surface the surface that will display map
+ * @param mapInitOptions the init options to for map
  */
-class MapSurface : MapPluginProviderDelegate, MapControllable {
+class MapSurface(
+  context: Context,
+  private val surface: Surface,
+  mapInitOptions: MapInitOptions = MapInitOptions(context)
+) : MapPluginProviderDelegate, MapControllable {
 
-  private val mapboxMapOptions: MapboxMapOptions
-  private val surface: Surface
   private val mapController: MapController
-  private val renderer: MapboxSurfaceRenderer
+  private val renderer: MapboxSurfaceRenderer = MapboxSurfaceRenderer()
 
-  constructor(
-    context: Context,
-    surface: Surface,
-  ) : this(MapboxMapOptions(context), surface)
-
-  constructor(
-    mapboxMapOptions: MapboxMapOptions,
-    surface: Surface,
-  ) {
-    this.mapboxMapOptions = mapboxMapOptions
-    this.surface = surface
-    this.renderer = MapboxSurfaceRenderer()
+  init {
     this.mapController = MapController(
       renderer,
-      mapboxMapOptions
+      mapInitOptions
     )
-    mapController.initializePlugins(
-      null,
-      mapboxMapOptions.context,
-      mapboxMapOptions.attrs,
-      mapboxMapOptions.pixelRatio
-    )
+    mapController.initializePlugins(null)
   }
 
   /**

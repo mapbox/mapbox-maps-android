@@ -27,13 +27,18 @@ class MapPluginRegistryTest {
 
   private val delegateProvider = mockk<MapDelegateProvider>()
   private lateinit var mapPluginRegistry: MapPluginRegistry
-  private val mapboxMapOptions = mockk<MapboxMapOptions>()
+  private val mapInitOptions = mockk<MapInitOptions>()
+  private val mapOptions = mockk<MapOptions>()
+  private val resourceOptions = mockk<ResourceOptions>()
 
   @Before
   fun setUp() {
     mockkStatic(MapboxMapStaticInitializer::class)
     every { MapboxMapStaticInitializer.loadMapboxMapNativeLib() } just Runs
     mapPluginRegistry = MapPluginRegistry(delegateProvider)
+    every { mapInitOptions.mapOptions } returns mapOptions
+    every { mapInitOptions.resourceOptions } returns resourceOptions
+    every { mapInitOptions.attrs } returns null
   }
 
   @Test
@@ -44,7 +49,7 @@ class MapPluginRegistryTest {
     mockkStatic("com.mapbox.maps.UtilsKt")
     every { clazz.instantiate() } returns plugin
 
-    val createdPlugin = mapPluginRegistry.createPlugin(mapView, mapboxMapOptions, clazz)
+    val createdPlugin = mapPluginRegistry.createPlugin(mapView, mapInitOptions, clazz)
     Assert.assertEquals(plugin, createdPlugin)
     verify { createdPlugin.onDelegateProvider(delegateProvider) }
     verify { createdPlugin.initialize() }
@@ -57,11 +62,11 @@ class MapPluginRegistryTest {
     mockkStatic("com.mapbox.maps.UtilsKt")
     val plugin = mockk<MapPlugin>(relaxUnitFun = true)
     every { clazz.instantiate() } returns plugin
-    val createdPlugin = mapPluginRegistry.createPlugin(mapView, mapboxMapOptions, clazz)
+    val createdPlugin = mapPluginRegistry.createPlugin(mapView, mapInitOptions, clazz)
 
     val plugin2 = mockk<MapPlugin>(relaxUnitFun = true)
     every { clazz.instantiate() } returns plugin2
-    val createdPlugin2 = mapPluginRegistry.createPlugin(mapView, mapboxMapOptions, clazz)
+    val createdPlugin2 = mapPluginRegistry.createPlugin(mapView, mapInitOptions, clazz)
 
     Assert.assertEquals(plugin, createdPlugin)
     Assert.assertEquals(plugin, createdPlugin2)
@@ -79,7 +84,7 @@ class MapPluginRegistryTest {
     every { clazz.instantiate() } returns plugin
 
     mapPluginRegistry.onStart()
-    mapPluginRegistry.createPlugin(mapView, mapboxMapOptions, clazz)
+    mapPluginRegistry.createPlugin(mapView, mapInitOptions, clazz)
     verify { plugin.onStart() }
   }
 
@@ -91,11 +96,10 @@ class MapPluginRegistryTest {
     mockkStatic("com.mapbox.maps.UtilsKt")
     every { clazz.instantiate() } returns plugin
     val view = mockk<View>()
-    every { mapboxMapOptions.context } returns mockk()
-    every { mapboxMapOptions.attrs } returns mockk()
-    every { mapboxMapOptions.pixelRatio } returns 1f
+    every { mapInitOptions.context } returns mockk()
+    every { mapOptions.pixelRatio } returns 1f
     every { plugin.bind(mapView, any(), any()) } returns view
-    mapPluginRegistry.createPlugin(mapView, mapboxMapOptions, clazz)
+    mapPluginRegistry.createPlugin(mapView, mapInitOptions, clazz)
     verify { plugin.bind(mapView, any(), any()) }
     verify { mapView.addView(view) }
     verify { plugin.onPluginView(view) }
@@ -109,10 +113,9 @@ class MapPluginRegistryTest {
     mockkStatic("com.mapbox.maps.UtilsKt")
     every { clazz.instantiate() } returns plugin
     every { plugin.bind(any(), any(), any()) } returns mockk()
-    every { mapboxMapOptions.context } returns mockk()
-    every { mapboxMapOptions.attrs } returns mockk()
-    every { mapboxMapOptions.pixelRatio } returns 1f
-    mapPluginRegistry.createPlugin(mapView, mapboxMapOptions, clazz)
+    every { mapInitOptions.context } returns mockk()
+    every { mapOptions.pixelRatio } returns 1f
+    mapPluginRegistry.createPlugin(mapView, mapInitOptions, clazz)
     verify { plugin.bind(any(), any(), any()) }
 
     verify { plugin.onDelegateProvider(any()) }
@@ -127,7 +130,7 @@ class MapPluginRegistryTest {
     mockkStatic("com.mapbox.maps.UtilsKt")
     every { clazz.instantiate() } returns plugin
 
-    mapPluginRegistry.createPlugin(mapView, mapboxMapOptions, clazz)
+    mapPluginRegistry.createPlugin(mapView, mapInitOptions, clazz)
     Assert.assertEquals(plugin, mapPluginRegistry.getPlugin(clazz))
   }
 
@@ -149,7 +152,7 @@ class MapPluginRegistryTest {
     mockkStatic("com.mapbox.maps.UtilsKt")
     every { clazz.instantiate() } returns plugin
 
-    mapPluginRegistry.createPlugin(mapView, mapboxMapOptions, clazz)
+    mapPluginRegistry.createPlugin(mapView, mapInitOptions, clazz)
     mapPluginRegistry.onStart()
     verify { plugin.onStart() }
   }
@@ -162,7 +165,7 @@ class MapPluginRegistryTest {
     mockkStatic("com.mapbox.maps.UtilsKt")
     every { clazz.instantiate() } returns plugin
 
-    mapPluginRegistry.createPlugin(mapView, mapboxMapOptions, clazz)
+    mapPluginRegistry.createPlugin(mapView, mapInitOptions, clazz)
     mapPluginRegistry.onStart()
     mapPluginRegistry.onStop()
     verify { plugin.onStop() }
@@ -190,7 +193,7 @@ class MapPluginRegistryTest {
     val anchor = ScreenCoordinate(1.0, 2.0)
     every { cameraOptions.anchor } returns anchor
 
-    mapPluginRegistry.createPlugin(mapView, mapboxMapOptions, clazz)
+    mapPluginRegistry.createPlugin(mapView, mapInitOptions, clazz)
     mapPluginRegistry.onCameraMove(cameraOptions)
     verify {
       plugin.onCameraMove(
@@ -208,7 +211,6 @@ class MapPluginRegistryTest {
   @Test
   fun onTouch() {
     val mapView = mockk<MapView>(relaxUnitFun = true)
-    val attributeSet = mockk<AttributeSet>(relaxUnitFun = true)
     val context = mockk<Context>(relaxUnitFun = true)
     val displayMetrics = DisplayMetrics().also { it.density = 1f }
     val motionEvent = mockk<MotionEvent>(relaxUnitFun = true)
@@ -218,14 +220,13 @@ class MapPluginRegistryTest {
     every { clazz.instantiate() } returns plugin
 
     every { mapView.context.applicationContext } returns context
-    every { mapboxMapOptions.context } returns context
-    every { mapboxMapOptions.attrs } returns attributeSet
-    every { mapboxMapOptions.pixelRatio } returns 1f
+    every { mapInitOptions.context } returns context
+    every { mapOptions.pixelRatio } returns 1f
     every { mapView.resources.displayMetrics } returns displayMetrics
     every { plugin.onTouchEvent(motionEvent) } returns true
 
     assertFalse(mapPluginRegistry.onTouch(motionEvent))
-    mapPluginRegistry.createPlugin(mapView, mapboxMapOptions, clazz)
+    mapPluginRegistry.createPlugin(mapView, mapInitOptions, clazz)
     assertTrue(mapPluginRegistry.onTouch(motionEvent))
 
     verify {
@@ -246,14 +247,13 @@ class MapPluginRegistryTest {
     every { clazz.instantiate() } returns plugin
 
     every { mapView.context.applicationContext } returns context
-    every { mapboxMapOptions.context } returns context
-    every { mapboxMapOptions.attrs } returns attributeSet
-    every { mapboxMapOptions.pixelRatio } returns 1f
+    every { mapInitOptions.context } returns context
+    every { mapOptions.pixelRatio } returns 1f
     every { mapView.resources.displayMetrics } returns displayMetrics
     every { plugin.onGenericMotionEvent(motionEvent) } returns true
 
     assertFalse(mapPluginRegistry.onGenericMotionEvent(motionEvent))
-    mapPluginRegistry.createPlugin(mapView, mapboxMapOptions, clazz)
+    mapPluginRegistry.createPlugin(mapView, mapInitOptions, clazz)
     assertTrue(mapPluginRegistry.onGenericMotionEvent(motionEvent))
 
     verify {
@@ -273,12 +273,11 @@ class MapPluginRegistryTest {
     every { clazz.instantiate() } returns plugin
 
     every { mapView.context.applicationContext } returns context
-    every { mapboxMapOptions.context } returns context
-    every { mapboxMapOptions.attrs } returns attributeSet
-    every { mapboxMapOptions.pixelRatio } returns 1f
+    every { mapInitOptions.context } returns context
+    every { mapOptions.pixelRatio } returns 1f
     every { mapView.resources.displayMetrics } returns displayMetrics
 
-    mapPluginRegistry.createPlugin(mapView, mapboxMapOptions, clazz)
+    mapPluginRegistry.createPlugin(mapView, mapInitOptions, clazz)
     mapPluginRegistry.onSizeChanged(1, 2)
 
     verify {
@@ -295,7 +294,7 @@ class MapPluginRegistryTest {
     mockkStatic("com.mapbox.maps.UtilsKt")
     every { clazz.instantiate() } returns plugin
 
-    mapPluginRegistry.createPlugin(mapView, mapboxMapOptions, clazz)
+    mapPluginRegistry.createPlugin(mapView, mapInitOptions, clazz)
 
     mapPluginRegistry.onStyleChanged(style)
 

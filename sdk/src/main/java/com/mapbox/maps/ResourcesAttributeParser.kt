@@ -3,7 +3,6 @@ package com.mapbox.maps
 import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
-import com.mapbox.maps.MapboxOptions.getMapboxAccessTokenFromResources
 
 /**
  * Utility class for parsing [AttributeSet] to [ResourcesSettings].
@@ -17,12 +16,12 @@ internal object ResourcesAttributeParser {
    */
   fun parseResourcesOptions(
     context: Context,
-    typedArray: TypedArray
+    typedArray: TypedArray,
+    credentialsManager: CredentialsManager
   ): ResourceOptions {
     val accessTokenString: String =
       typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesAccessToken)
-        ?: context.getMapboxAccessTokenFromResources()
-        ?: ""
+        ?: credentialsManager.getAccessToken(context)
 
     val cachePathString =
       typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesCachePath)
