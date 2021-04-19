@@ -276,24 +276,24 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       val gesturePluginClass =
         Class.forName(PLUGIN_GESTURE_CLASS_NAME) as Class<GesturesPlugin>
 
-      // TODO Cleanup
-      val plugin = if (mapInitOptions.attrs != null) {
-        createPlugin(
+      mapInitOptions.attrs?.let {
+        val plugin = createPlugin(
           mapView,
           gesturePluginClass,
           Pair(Context::class.java, mapInitOptions.context),
-          Pair(AttributeSet::class.java, mapInitOptions.attrs!!),
+          Pair(AttributeSet::class.java, it),
           Pair(Float::class.java, mapInitOptions.mapOptions.pixelRatio)
         )
-      } else {
-        createPlugin(
+        mapboxMap.setGesturesAnimationPlugin(plugin)
+      } ?: run {
+        val plugin = createPlugin(
           mapView,
           gesturePluginClass,
           Pair(Context::class.java, mapInitOptions.context),
           Pair(Float::class.java, mapInitOptions.mapOptions.pixelRatio)
         )
+        mapboxMap.setGesturesAnimationPlugin(plugin)
       }
-      mapboxMap.setGesturesAnimationPlugin(plugin)
     } catch (ex: ClassNotFoundException) {
       Logger.d(
         TAG,
