@@ -563,12 +563,10 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   override fun easeTo(
     cameraOptions: CameraOptions,
     animationOptions: MapAnimationOptions?
-  ): Cancelable {
-    return startHighLevelAnimation(
-      cameraAnimationsFactory.getEaseTo(cameraOptions),
-      animationOptions
-    )
-  }
+  ) = startHighLevelAnimation(
+    cameraAnimationsFactory.getEaseTo(cameraOptions),
+    animationOptions
+  )
 
   /**
    * Move the map by a given screen coordinate with optional animation.
@@ -581,12 +579,10 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   override fun moveBy(
     screenCoordinate: ScreenCoordinate,
     animationOptions: MapAnimationOptions?
-  ): Cancelable {
-    return startHighLevelAnimation(
-      cameraAnimationsFactory.getMoveBy(screenCoordinate),
-      animationOptions
-    )
-  }
+  ) = startHighLevelAnimation(
+    cameraAnimationsFactory.getMoveBy(screenCoordinate),
+    animationOptions
+  )
 
   /**
    * Scale the map by with optional animation.
@@ -601,12 +597,10 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     amount: Double,
     screenCoordinate: ScreenCoordinate?,
     animationOptions: MapAnimationOptions?
-  ): Cancelable {
-    return startHighLevelAnimation(
-      cameraAnimationsFactory.getScaleBy(amount, screenCoordinate),
-      animationOptions
-    )
-  }
+  ) = startHighLevelAnimation(
+    cameraAnimationsFactory.getScaleBy(amount, screenCoordinate),
+    animationOptions
+  )
 
   /**
    * Calculate target zoom by applying scale
@@ -632,12 +626,10 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     first: ScreenCoordinate,
     second: ScreenCoordinate,
     animationOptions: MapAnimationOptions?
-  ): Cancelable {
-    return startHighLevelAnimation(
-      cameraAnimationsFactory.getRotateBy(first, second),
-      animationOptions
-    )
-  }
+  ) = startHighLevelAnimation(
+    cameraAnimationsFactory.getRotateBy(first, second),
+    animationOptions
+  )
 
   /**
    * Pitch the map by with optional animation.
@@ -650,12 +642,10 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   override fun pitchBy(
     pitch: Double,
     animationOptions: MapAnimationOptions?
-  ): Cancelable {
-    return startHighLevelAnimation(
-      cameraAnimationsFactory.getPitchBy(pitch),
-      animationOptions
-    )
-  }
+  ) = startHighLevelAnimation(
+    cameraAnimationsFactory.getPitchBy(pitch),
+    animationOptions
+  )
 
   /**
    * Fly the map camera to a given camera options.
@@ -675,12 +665,10 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   override fun flyTo(
     cameraOptions: CameraOptions,
     animationOptions: MapAnimationOptions?
-  ): Cancelable {
-    return startHighLevelAnimation(
-      cameraAnimationsFactory.getFlyTo(cameraOptions),
-      animationOptions
-    )
-  }
+  ) = startHighLevelAnimation(
+    cameraAnimationsFactory.getFlyTo(cameraOptions),
+    animationOptions
+  )
 
   override fun createZoomAnimator(
     options: CameraAnimatorOptions<Double>,
@@ -824,7 +812,7 @@ fun MapPluginProviderDelegate.getCameraAnimationsPlugin(): CameraAnimationsPlugi
 fun MapPluginExtensionsDelegate.easeTo(
   cameraOptions: CameraOptions,
   animationOptions: MapAnimationOptions? = null
-) = cameraAnimationsPlugin { easeTo(cameraOptions, animationOptions) } as Cancelable?
+) = cameraAnimationsPlugin { easeTo(cameraOptions, animationOptions) } as Cancelable
 
 /**
  * Extension flyTo() function for [MapPluginExtensionsDelegate]
@@ -838,7 +826,7 @@ fun MapPluginExtensionsDelegate.easeTo(
 fun MapPluginExtensionsDelegate.flyTo(
   cameraOptions: CameraOptions,
   animationOptions: MapAnimationOptions? = null
-) = cameraAnimationsPlugin { flyTo(cameraOptions, animationOptions) } as Cancelable?
+) = cameraAnimationsPlugin { flyTo(cameraOptions, animationOptions) } as Cancelable
 
 /**
  * Extension pitchBy() function for [MapPluginExtensionsDelegate]
@@ -852,7 +840,7 @@ fun MapPluginExtensionsDelegate.flyTo(
 fun MapPluginExtensionsDelegate.pitchBy(
   pitch: Double,
   animationOptions: MapAnimationOptions? = null
-) = cameraAnimationsPlugin { pitchBy(pitch, animationOptions) } as Cancelable?
+) = cameraAnimationsPlugin { pitchBy(pitch, animationOptions) } as Cancelable
 
 /**
  * Extension scaleBy() function for [MapPluginExtensionsDelegate]
@@ -868,7 +856,7 @@ fun MapPluginExtensionsDelegate.scaleBy(
   amount: Double,
   screenCoordinate: ScreenCoordinate?,
   animationOptions: MapAnimationOptions? = null
-) = cameraAnimationsPlugin { scaleBy(amount, screenCoordinate, animationOptions) } as Cancelable?
+) = cameraAnimationsPlugin { scaleBy(amount, screenCoordinate, animationOptions) } as Cancelable
 
 /**
  * Extension moveBy() function for [MapPluginExtensionsDelegate]
@@ -882,7 +870,7 @@ fun MapPluginExtensionsDelegate.scaleBy(
 fun MapPluginExtensionsDelegate.moveBy(
   screenCoordinate: ScreenCoordinate,
   animationOptions: MapAnimationOptions? = null
-) = cameraAnimationsPlugin { moveBy(screenCoordinate, animationOptions) } as Cancelable?
+) = cameraAnimationsPlugin { moveBy(screenCoordinate, animationOptions) } as Cancelable
 
 /**
  * Extension rotateBy() function for [MapPluginExtensionsDelegate]
@@ -898,4 +886,4 @@ fun MapPluginExtensionsDelegate.rotateBy(
   first: ScreenCoordinate,
   second: ScreenCoordinate,
   animationOptions: MapAnimationOptions? = null
-) = cameraAnimationsPlugin { rotateBy(first, second, animationOptions) } as Cancelable?
+) = cameraAnimationsPlugin { rotateBy(first, second, animationOptions) } as Cancelable

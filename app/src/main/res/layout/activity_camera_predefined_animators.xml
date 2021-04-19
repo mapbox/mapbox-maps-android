@@ -32,7 +32,7 @@
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="20dp"
         android:padding="10dp"
-        android:text="Cancel animation"
+        android:text="@string/cancel_animation"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@id/spinnerView"
         app:layout_constraintEnd_toEndOf="parent" />

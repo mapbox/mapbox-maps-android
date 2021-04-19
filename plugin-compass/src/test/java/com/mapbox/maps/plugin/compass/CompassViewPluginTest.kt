@@ -26,7 +26,7 @@ class CompassViewPluginTest {
   private val fadeAnimator = mockk<ValueAnimator>(relaxUnitFun = true)
   private val delegateProvider = mockk<MapDelegateProvider>()
   private val mapCameraDelegate = mockk<MapCameraDelegate>(relaxUnitFun = true)
-  private val animatePlugin = mockk<CameraAnimationsPlugin>(relaxUnitFun = true)
+  private val animatePlugin = mockk<CameraAnimationsPlugin>(relaxed = true)
   private lateinit var fadeAnimatorEndListener: Animator.AnimatorListener
   private lateinit var fadeAnimatorUpdateListener: ValueAnimator.AnimatorUpdateListener
 
