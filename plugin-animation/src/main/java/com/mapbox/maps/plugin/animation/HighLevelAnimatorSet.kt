@@ -5,4 +5,9 @@ import android.animation.AnimatorSet
 internal data class HighLevelAnimatorSet(
   val owner: String?,
   val animatorSet: AnimatorSet
-)
+) : Cancelable {
+
+  override fun cancel() {
+    animatorSet.cancel()
+  }
+}

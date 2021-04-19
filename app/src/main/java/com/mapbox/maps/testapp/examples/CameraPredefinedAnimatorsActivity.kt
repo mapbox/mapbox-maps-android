@@ -1,5 +1,7 @@
 package com.mapbox.maps.testapp.examples
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -25,7 +27,7 @@ import com.mapbox.maps.plugin.animation.CameraAnimatorsFactory.Companion.DEFAULT
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.animator.CameraAnimator
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_dds_style_circles_categorically.*
+import kotlinx.android.synthetic.main.activity_camera_predefined_animators.*
 
 /**
  * Example of using predefined animators with camera animation system.
@@ -34,7 +36,9 @@ class CameraPredefinedAnimatorsActivity : AppCompatActivity() {
 
   private lateinit var mapboxMap: MapboxMap
   private lateinit var cameraAnimationsPlugin: CameraAnimationsPlugin
+
   private var currentAnimators: Array<CameraAnimator<Any>> = arrayOf()
+  private var runningCancelableAnimator: Cancelable? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -46,6 +50,9 @@ class CameraPredefinedAnimatorsActivity : AppCompatActivity() {
         mapboxMap.setCamera(START_CAMERA_POSITION)
       }
     )
+    buttonCancel.setOnClickListener {
+      runningCancelableAnimator?.cancel()
+    }
     initSpinner()
   }
 
@@ -132,48 +139,73 @@ class CameraPredefinedAnimatorsActivity : AppCompatActivity() {
     cameraAnimationsPlugin.unregisterAnimators(*currentAnimators)
   }
 
+  private fun prepareAnimationOptions(duration: Long) = mapAnimationOptions {
+    duration(duration)
+    animatorListener(object : AnimatorListenerAdapter() {
+
+      override fun onAnimationStart(animation: Animator?) {
+        super.onAnimationStart(animation)
+        runOnUiThread {
+          buttonCancel.visibility = View.VISIBLE
+        }
+      }
+
+      override fun onAnimationEnd(animation: Animator?) {
+        super.onAnimationEnd(animation)
+        runOnUiThread {
+          buttonCancel.visibility = View.INVISIBLE
+        }
+      }
+
+      override fun onAnimationCancel(animation: Animator?) {
+        super.onAnimationCancel(animation)
+        runOnUiThread {
+          buttonCancel.visibility = View.INVISIBLE
+        }
+      }
+    })
+  }
+
   private fun playAnimation(itemId: Int) {
     stopAnimation()
-    when (itemId) {
-      R.id.menu_action_jump_to -> mapboxMap.setCamera(START_CAMERA_POSITION)
-      R.id.menu_action_ease_to -> mapboxMap.easeTo(
-        EASE_TO_TARGET_CAMERA_POSITION,
-        mapAnimationOptions {
-          duration(2000)
-        }
-      )
-      R.id.menu_action_fly_to -> mapboxMap.flyTo(
-        EASE_TO_TARGET_CAMERA_POSITION,
-        mapAnimationOptions {
-          duration(2000)
-        }
-      )
-      R.id.menu_action_pitch_by -> mapboxMap.pitchBy(
-        70.0,
-        mapAnimationOptions {
-          duration(2000)
-        }
-      )
-      R.id.menu_action_scale_by -> mapboxMap.scaleBy(
-        15.0,
-        ScreenCoordinate(10.0, 10.0),
-        mapAnimationOptions {
-          duration(2000)
-        }
-      )
-      R.id.menu_action_move_by -> mapboxMap.moveBy(
-        ScreenCoordinate(500.0, 500.0),
-        mapAnimationOptions {
-          duration(3000)
-        }
-      )
-      R.id.menu_action_rotate_by -> mapboxMap.rotateBy(
-        ScreenCoordinate(0.0, 0.0),
-        ScreenCoordinate(500.0, 500.0),
-        mapAnimationOptions {
-          duration(7000)
-        }
-      )
+    runningCancelableAnimator = when (itemId) {
+      R.id.menu_action_jump_to -> {
+        mapboxMap.setCamera(START_CAMERA_POSITION)
+        null
+      }
+      R.id.menu_action_ease_to ->
+        mapboxMap.easeTo(
+          EASE_TO_TARGET_CAMERA_POSITION,
+          prepareAnimationOptions(2000)
+        )
+      R.id.menu_action_fly_to ->
+        mapboxMap.flyTo(
+          EASE_TO_TARGET_CAMERA_POSITION,
+          prepareAnimationOptions(2000)
+        )
+      R.id.menu_action_pitch_by ->
+        mapboxMap.pitchBy(
+          70.0,
+          prepareAnimationOptions(2000)
+        )
+      R.id.menu_action_scale_by ->
+        mapboxMap.scaleBy(
+          15.0,
+          ScreenCoordinate(10.0, 10.0),
+          prepareAnimationOptions(2000)
+        )
+      R.id.menu_action_move_by ->
+        mapboxMap.moveBy(
+          ScreenCoordinate(500.0, 500.0),
+          prepareAnimationOptions(3000)
+        )
+      R.id.menu_action_rotate_by ->
+        mapboxMap.rotateBy(
+          ScreenCoordinate(0.0, 0.0),
+          ScreenCoordinate(500.0, 500.0),
+          prepareAnimationOptions(7000)
+        )
+      else -> null
     }
   }
 

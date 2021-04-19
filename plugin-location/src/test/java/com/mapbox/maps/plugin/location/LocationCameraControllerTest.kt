@@ -11,6 +11,7 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.plugin.PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
 import com.mapbox.maps.plugin.PLUGIN_GESTURE_CLASS_NAME
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
+import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
@@ -492,8 +493,10 @@ internal class LocationCameraControllerTest {
 
     val listener: OnLocationCameraTransitionListener = mockk(relaxed = true)
     val location: Location = mockk(relaxed = true)
+    val cancelable = mockk<Cancelable>()
     every { animationPlugin.flyTo(any(), any()) } answers {
       listener.onLocationCameraTransitionFinished(CameraMode.TRACKING)
+      cancelable
     }
     locationCameraController.setCameraMode(
       CameraMode.TRACKING,
@@ -532,10 +535,12 @@ internal class LocationCameraControllerTest {
       null,
       listener
     )
+    val cancelable = mockk<Cancelable>()
     every {
       animationPlugin.flyTo(any(), any())
     } answers {
       listener.onLocationCameraTransitionFinished(CameraMode.TRACKING_GPS_NORTH)
+      cancelable
     }
     locationCameraController.setCameraMode(
       CameraMode.TRACKING_GPS_NORTH,
@@ -574,10 +579,12 @@ internal class LocationCameraControllerTest {
       null,
       listener
     )
+    val cancelable = mockk<Cancelable>()
     every {
       animationPlugin.flyTo(any(), any())
     } answers {
       listener.onLocationCameraTransitionFinished(CameraMode.TRACKING)
+      cancelable
     }
     assertEquals(CameraMode.TRACKING, locationCameraController.cameraMode)
     locationCameraController.setCameraMode(
@@ -610,8 +617,10 @@ internal class LocationCameraControllerTest {
     val listener: OnLocationCameraTransitionListener = mockk(relaxed = true)
     val location: Location = mockk(relaxed = true)
 
+    val cancelable = mockk<Cancelable>()
     every { animationPlugin.flyTo(any(), any()) } answers {
       listener.onLocationCameraTransitionCanceled(CameraMode.TRACKING)
+      cancelable
     }
 
     locationCameraController.setCameraMode(
@@ -635,8 +644,9 @@ internal class LocationCameraControllerTest {
         0.0
       )
     ).bearing(0.0).build()
+    val cancelable = mockk<Cancelable>()
     every { projectionDelegate.getMetersPerPixelAtLatitude(any()) } returns 1000.0
-    every { animationPlugin.flyTo(any(), any()) } returns Unit
+    every { animationPlugin.flyTo(any(), any()) } returns cancelable
     locationCameraController.initializeOptions(options)
     locationCameraController.setEnabled(true)
 
@@ -727,7 +737,8 @@ internal class LocationCameraControllerTest {
       )
     ).bearing(0.0).build()
     every { projectionDelegate.getMetersPerPixelAtLatitude(any()) } returns 1000.0
-    every { animationPlugin.flyTo(any(), any()) } returns Unit
+    val cancelable = mockk<Cancelable>()
+    every { animationPlugin.flyTo(any(), any()) } returns cancelable
     locationCameraController.initializeOptions(options)
     locationCameraController.setEnabled(true)
 
@@ -856,9 +867,10 @@ internal class LocationCameraControllerTest {
       )
     ).bearing(0.0).build()
     every { projectionDelegate.getMetersPerPixelAtLatitude(any()) } returns 1000.0
+    val cancelable = mockk<Cancelable>()
     every {
       animationPlugin.flyTo(any(), any())
-    } returns Unit
+    } returns cancelable
     locationCameraController.initializeOptions(options)
     locationCameraController.setEnabled(true)
 

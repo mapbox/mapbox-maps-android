@@ -76,6 +76,7 @@
     <string name="menu_animator_pitch_by">Pitch By</string>
     <string name="menu_animator_scale_by">Scale By</string>
     <string name="menu_animator_rotate_by">Rotate By</string>
+    <string name="cancel_animation">Cancel animation</string>
 
     <!--Marker strings for DirectionsActivity activity-->
     <string name="snaking_directions_activity_error">Direction route retrieval failed</string>

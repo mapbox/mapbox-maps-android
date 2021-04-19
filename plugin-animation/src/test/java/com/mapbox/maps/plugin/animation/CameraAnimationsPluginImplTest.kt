@@ -840,6 +840,27 @@ class CameraAnimationsPluginImplTest {
   }
 
   @Test
+  fun cancelStartedHighLevelAnimation() {
+    val listener = CameraAnimatorListener()
+    shadowOf(getMainLooper()).pause()
+    val cancelable = cameraAnimationsPluginImpl.flyTo(
+      CameraOptions.Builder()
+        .center(Point.fromLngLat(VALUE, VALUE))
+        .bearing(VALUE)
+        .build(),
+      mapAnimationOptions {
+        duration(50L)
+        animatorListener(listener)
+      }
+    )
+    cancelable.cancel()
+    shadowOf(getMainLooper()).idle()
+    // expecting 1 (and not 2) because we register 1 high-level animator listener
+    assertEquals(1, listener.startedCount)
+    assertEquals(1, listener.canceledCount)
+  }
+
+  @Test
   fun anchorTest() {
     shadowOf(getMainLooper()).pause()
     val anchor = ScreenCoordinate(7.0, 7.0)
