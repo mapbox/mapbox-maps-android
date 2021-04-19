@@ -57,6 +57,10 @@ if [ -z "$MAPS_SDK_VERSION" ]; then
   exit 1
 fi
 
+#Split version name to remove the "android-v" prefix
+array=(`echo $MAPS_SDK_VERSION | tr 'v' ' '` )
+MAPS_SDK_VERSION=${array[1]}
+
 function generate_docs() {
   make dokka-html || dokka_result=1
 
