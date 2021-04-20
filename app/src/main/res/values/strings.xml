@@ -111,5 +111,7 @@
     <string name="animate_symbol">Animate symbol</string>
     <string name="display_the_second_screen">Display map in the second screen</string>
     <string name="move_camera">Move Camera</string>
+    <string name="style_pack">Style pack</string>
+    <string name="tile_region">Tile region</string>
 
 </resources>
