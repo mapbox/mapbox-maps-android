@@ -49,9 +49,11 @@ data class MapInitOptions constructor(
     fun getDefaultMapOptions(context: Context): MapOptions = MapOptions.Builder()
       .glyphsRasterizationOptions(
         GlyphsRasterizationOptions.Builder()
-          .rasterizationMode(GlyphsRasterizationMode.ALL_GLYPHS_RASTERIZED_LOCALLY)
+          .rasterizationMode(GlyphsRasterizationMode.IDEOGRAPHS_RASTERIZED_LOCALLY)
           .build()
-      ).pixelRatio(context.resources.displayMetrics.density)
+      )
+      .pixelRatio(context.resources.displayMetrics.density)
+      .constrainMode(ConstrainMode.HEIGHT_ONLY)
       .build()
   }
 }

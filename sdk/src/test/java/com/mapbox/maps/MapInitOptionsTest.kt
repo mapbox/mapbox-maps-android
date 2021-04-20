@@ -52,10 +52,13 @@ class MapInitOptionsTest {
   fun defaultMapOption() {
     val mapboxMapOptions = MapInitOptions(context)
     assertEquals(
-      GlyphsRasterizationMode.ALL_GLYPHS_RASTERIZED_LOCALLY,
+      GlyphsRasterizationMode.IDEOGRAPHS_RASTERIZED_LOCALLY,
       mapboxMapOptions.mapOptions.glyphsRasterizationOptions!!.rasterizationMode
     )
-
+    assertEquals(
+      ConstrainMode.HEIGHT_ONLY,
+      mapboxMapOptions.mapOptions.constrainMode
+    )
     assertEquals(1f, mapboxMapOptions.mapOptions.pixelRatio)
   }
 }
