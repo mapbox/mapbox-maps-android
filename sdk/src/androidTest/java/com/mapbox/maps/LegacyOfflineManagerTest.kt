@@ -15,7 +15,7 @@ import java.util.concurrent.TimeoutException
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-class OfflineManagerTest {
+class LegacyOfflineManagerTest {
 
   private lateinit var offlineManager: OfflineRegionManagerInterface
 

@@ -45,9 +45,8 @@ class StyleLoadTest {
         mapboxMap.getStyle { callbackInvoked = true }
       }
     }
-    if (!countDownLatch.await(3, TimeUnit.SECONDS)) {
-      assertTrue(callbackInvoked)
-    }
+    countDownLatch.await(5, TimeUnit.SECONDS)
+    assertTrue(callbackInvoked)
   }
 
   @Test
