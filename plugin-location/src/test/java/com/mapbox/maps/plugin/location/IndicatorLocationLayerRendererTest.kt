@@ -1,6 +1,5 @@
 package com.mapbox.maps.plugin.location
 
-import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Color
 import com.mapbox.bindgen.Expected
@@ -29,11 +28,13 @@ class IndicatorLocationLayerRendererTest {
   private val expressionSlot = CapturingSlot<List<Value>>()
   private val doubleListSlot = CapturingSlot<List<Double>>()
 
+  private val defaultPixelRatio = mockk<Float>(relaxed = true)
+
   private lateinit var locationLayerRenderer: IndicatorLocationLayerRenderer
 
   @Before
   fun setup() {
-
+    every { style.pixelRatio } returns defaultPixelRatio
     every { style.removeStyleLayer(any()) } returns expected
     every { expected.error } returns null
     every { layerSourceProvider.getIndicatorLocationLayer() } returns layerWrapper
@@ -365,58 +366,33 @@ class IndicatorLocationLayerRendererTest {
   fun addBitmaps_gps() {
     addBitmaps(withShadow = true, renderMode = RenderMode.GPS)
     verify {
-      style.addStyleImage(
+      style.addImage(
         FOREGROUND_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
     verify {
       style.addStyleImage(
         FOREGROUND_STALE_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
     verify {
       style.addStyleImage(
         BACKGROUND_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
     verify {
       style.addStyleImage(
         BACKGROUND_STALE_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
     verify {
       style.addStyleImage(
         BEARING_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
   }
@@ -441,6 +417,4 @@ class IndicatorLocationLayerRendererTest {
   }
 
   private fun Point.toLocationList() = listOf(latitude(), longitude(), 0.0)
-
-  private val defaultPixelRatio = Resources.getSystem().displayMetrics.density
 }
