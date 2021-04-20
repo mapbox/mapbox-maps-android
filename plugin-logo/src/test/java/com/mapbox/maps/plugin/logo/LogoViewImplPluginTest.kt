@@ -67,7 +67,7 @@ class LogoViewImplPluginTest {
   }
 
   @Test
-  fun setLogoMargins() {
+  fun setLogoMarginsViaSettings() {
     logoPlugin.updateSettings {
       marginLeft = 0f
       marginTop = 5f
@@ -75,5 +75,21 @@ class LogoViewImplPluginTest {
       marginBottom = 0f
     }
     verify { logoView.setLogoMargins(0, 5, 0, 0) }
+  }
+
+  @Test
+  fun setEnabledViaSettings() {
+    logoPlugin.updateSettings {
+      enabled = false
+    }
+    verify { logoView.logoEnabled = false }
+  }
+
+  @Test
+  fun setLogoGravityViaSettings() {
+    logoPlugin.updateSettings {
+      position = Gravity.BOTTOM
+    }
+    verify { logoView.logoGravity = Gravity.BOTTOM }
   }
 }

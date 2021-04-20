@@ -5,14 +5,17 @@ import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import androidx.test.core.app.ApplicationProvider
+import com.mapbox.common.ShadowLogger
 import io.mockk.mockk
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
+@Config(shadows = [ShadowLogger::class])
 class AttributionViewImplTest {
 
   private lateinit var attributionView: AttributionViewImpl

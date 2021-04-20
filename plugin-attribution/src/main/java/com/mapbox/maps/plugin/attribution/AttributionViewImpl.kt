@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.ImageViewCompat
+import com.mapbox.common.Logger
 
 /**
  * Concrete implementation of AttributionView from AttributionContract.
@@ -33,7 +34,10 @@ class AttributionViewImpl @JvmOverloads constructor(
    * @param enabled: the enable state
    */
   override fun setEnable(enabled: Boolean) {
-    visibility = if (enabled) View.VISIBLE else View.GONE
+    visibility = if (enabled) View.VISIBLE else {
+      Logger.w("MbxAttribution", context.getString(R.string.mapbox_warning_attribution_disabled))
+      View.GONE
+    }
   }
 
   /**
