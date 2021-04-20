@@ -136,6 +136,6 @@ open class ScaleBarPluginImpl(
  *
  * @return ScaleBar plugin instance
  */
-fun MapPluginProviderDelegate.getScaleBarPlugin(): ScaleBarPluginImpl {
+fun MapPluginProviderDelegate.scalebar(): ScaleBarPluginImpl {
   return this.getPlugin(ScaleBarPluginImpl::class.java)!!
 }

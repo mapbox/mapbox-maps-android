@@ -69,8 +69,8 @@ class AnnotationPluginImpl : AnnotationPlugin {
 /**
  * Extension function for MapView to get the Annotation plugin instance.
  *
- * @return Compass plugin instance
+ * @return Annotations plugin instance
  */
-fun MapPluginProviderDelegate.getAnnotationPlugin(): AnnotationPlugin {
+fun MapPluginProviderDelegate.annotations(): AnnotationPlugin {
   return this.getPlugin(AnnotationPluginImpl::class.java)!!
 }

@@ -796,7 +796,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
  *
  * @return Camera Animations plugin instance
  */
-fun MapPluginProviderDelegate.getCameraAnimationsPlugin(): CameraAnimationsPlugin {
+fun MapPluginProviderDelegate.camera(): CameraAnimationsPlugin {
   return this.getPlugin(CameraAnimationsPluginImpl::class.java)!!
 }
 

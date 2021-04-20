@@ -84,6 +84,6 @@ open class LogoViewPlugin(
  *
  * @return Logo plugin instance
  */
-fun MapPluginProviderDelegate.getLogoPlugin(): LogoPlugin {
+fun MapPluginProviderDelegate.logo(): LogoPlugin {
   return this.getPlugin(LogoViewPlugin::class.java)!!
 }

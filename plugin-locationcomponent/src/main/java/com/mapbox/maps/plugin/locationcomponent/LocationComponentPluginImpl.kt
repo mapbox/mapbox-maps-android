@@ -315,6 +315,6 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
 /**
  * Extension function to the the LocationComponentPlugin instance.
  */
-fun MapPluginProviderDelegate.getLocationComponentPlugin(): LocationComponentPlugin {
+fun MapPluginProviderDelegate.location(): LocationComponentPlugin {
   return this.getPlugin(LocationComponentPluginImpl::class.java)!!
 }

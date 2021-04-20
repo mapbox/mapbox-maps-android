@@ -1655,7 +1655,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
  *
  * @return Gesture plugin instance
  */
-fun MapPluginProviderDelegate.getGesturesPlugin(): GesturesPlugin {
+fun MapPluginProviderDelegate.gestures(): GesturesPlugin {
   return this.getPlugin(GesturesPluginImpl::class.java)!!
 }
 

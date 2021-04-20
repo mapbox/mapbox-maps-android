@@ -121,6 +121,6 @@ open class AttributionViewPlugin(
  *
  * @return Compass plugin instance
  */
-fun MapPluginProviderDelegate.getAttributionPlugin(): AttributionPlugin {
+fun MapPluginProviderDelegate.attribution(): AttributionPlugin {
   return this.getPlugin(AttributionViewPlugin::class.java)!!
 }

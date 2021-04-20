@@ -16,7 +16,7 @@ import com.mapbox.maps.plugin.annotation.ClusterOptions
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
-import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
+import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.mapView
 import kotlinx.android.synthetic.main.activity_annotation.*
@@ -53,7 +53,7 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
             .build()
         )
         loadStyleUri(nextStyle) {
-          val annotationPlugin = mapView.getAnnotationPlugin()
+          val annotationPlugin = mapView.annotations()
           val annotationConfig = AnnotationConfig(
             annotationSourceOptions = AnnotationSourceOptions(
               clusterOptions = ClusterOptions(

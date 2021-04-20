@@ -291,6 +291,6 @@ class MapOverlayPluginImpl : MapOverlayPlugin {
  * @return Map overlay plugin instance
  */
 @MapboxExperimental
-fun MapPluginProviderDelegate.getMapOverlayPlugin(): MapOverlayPlugin {
+fun MapPluginProviderDelegate.overlay(): MapOverlayPlugin {
   return this.getPlugin(MapOverlayPluginImpl::class.java)!!
 }

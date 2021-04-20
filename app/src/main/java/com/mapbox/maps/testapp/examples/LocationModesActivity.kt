@@ -91,7 +91,7 @@ class LocationModesActivity :
   }
 
   private fun initLocationComponent(style: Style) {
-    locationPlugin = mapView.getLocationPlugin()
+    locationPlugin = mapView.locationLegacy()
     // Activate with a built LocationComponentActivationOptions object
     locationPlugin?.let {
       it.activateLocationComponent(

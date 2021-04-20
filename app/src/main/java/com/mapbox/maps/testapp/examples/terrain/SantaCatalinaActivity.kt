@@ -24,10 +24,10 @@ import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.rasterDemSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.extension.style.terrain.generated.terrain
-import com.mapbox.maps.plugin.compass.getCompassPlugin
-import com.mapbox.maps.plugin.gestures.getGesturesPlugin
+import com.mapbox.maps.plugin.compass.compass
+import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.location.utils.BitmapUtils
-import com.mapbox.maps.plugin.scalebar.getScaleBarPlugin
+import com.mapbox.maps.plugin.scalebar.scalebar
 import com.mapbox.maps.testapp.R
 import com.mapbox.turf.TurfConstants
 import com.mapbox.turf.TurfMeasurement
@@ -281,13 +281,13 @@ class SantaCatalinaActivity : AppCompatActivity() {
 }
 
 fun MapView.disablePlugins() {
-  val scaleBarPlugin = getScaleBarPlugin()
+  val scaleBarPlugin = scalebar()
   scaleBarPlugin.enabled = false
 
-  val compassPlugin = getCompassPlugin()
+  val compassPlugin = compass()
   compassPlugin.enabled = false
 
-  val gesturesPlugin = getGesturesPlugin()
+  val gesturesPlugin = gestures()
   gesturesPlugin.pitchEnabled = false
   gesturesPlugin.rotateEnabled = false
   gesturesPlugin.zoomEnabled = false

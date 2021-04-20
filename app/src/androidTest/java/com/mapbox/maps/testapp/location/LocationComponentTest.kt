@@ -54,7 +54,7 @@ class LocationComponentTest {
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
         mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) {
-          val locationComponent = mapView.getLocationPlugin()
+          val locationComponent = mapView.locationLegacy()
           locationComponent.activateLocationComponent(
             LocationComponentActivationOptions
               .builder(activity, it)
@@ -97,7 +97,7 @@ class LocationComponentTest {
     rule.scenario.onActivity { activity ->
       activity.runOnUiThread {
         mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) {
-          val locationComponent = mapView.getLocationPlugin()
+          val locationComponent = mapView.locationLegacy()
           locationComponent.activateLocationComponent(
             LocationComponentActivationOptions
               .builder(activity, it)

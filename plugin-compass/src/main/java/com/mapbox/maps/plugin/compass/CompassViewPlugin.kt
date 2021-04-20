@@ -270,6 +270,6 @@ open class CompassViewPlugin(
  *
  * @return Compass plugin instance
  */
-fun MapPluginProviderDelegate.getCompassPlugin(): CompassPlugin {
+fun MapPluginProviderDelegate.compass(): CompassPlugin {
   return this.getPlugin(CompassViewPlugin::class.java)!!
 }
