@@ -21,7 +21,6 @@
     <string name="description_snapshotter">Generate a static map image</string>
     <string name="description_snapshotter_dds">Use data driven styling with static map image generation</string>
     <string name="description_snapshotter_local">Use an local style with static map image generation</string>
-    <string name="description_location_modes">Use location component</string>
     <string name="description_location_tracking">Use location tracking to simulate a navigation session</string>
     <string name="description_location_basic_pulsing_circle">Display the LocationComponent\'s default pulsing circle</string>
     <string name="description_restrict_bounds">Restrict end-user bounds to a geometry</string>

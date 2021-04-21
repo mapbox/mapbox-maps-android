@@ -20,8 +20,6 @@ import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
-import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
-import com.mapbox.maps.plugin.location.utils.BitmapUtils
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.*

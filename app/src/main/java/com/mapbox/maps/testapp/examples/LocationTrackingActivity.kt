@@ -17,7 +17,7 @@ import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
 import com.mapbox.maps.toJson
-import kotlinx.android.synthetic.main.activity_location_layer_mode.*
+import kotlinx.android.synthetic.main.activity_simple_map.*
 
 /**
  * Tracks the user location on screen, simulates a navigation session.
