@@ -66,7 +66,14 @@ class OfflineActivity : AppCompatActivity() {
     logInfoMessage("Mapbox network stack disabled.")
     handler.post {
       updateButton("VIEW MAP") {
-        // create mapView
+        // create a Mapbox MapView
+
+        // Note that the MapView must be initialised with the same TileStore that is used to create
+        // the tile regions. (i.e. the tileStorePath must be consistent).
+
+        // If user did not assign the tile store path specifically during the tile region download
+        // and the map initialisation period, the default tile store path will be used and
+        // no extra action is needed.
         mapView = MapView(this@OfflineActivity).also { mapview ->
           val mapboxMap = mapview.getMapboxMap()
           mapboxMap.setCamera(CameraOptions.Builder().zoom(ZOOM).center(TOKYO).build())
@@ -92,9 +99,9 @@ class OfflineActivity : AppCompatActivity() {
       showDownloadedRegions()
       container.removeAllViews()
 
-      logInfoMessage("Mapbox network stack enabled.")
       // Re-enable the Mapbox network stack, so that the new offline region download can succeed.
       NetworkConnectivity.getInstance().setMapboxStackConnected(true)
+      logInfoMessage("Mapbox network stack enabled.")
 
       prepareDownloadButton()
     }
@@ -109,13 +116,21 @@ class OfflineActivity : AppCompatActivity() {
     offlineManager = OfflineManager(MapInitOptions.getDefaultResourceOptions(this))
 
     // 1. Create style package with loadStylePack() call.
+
+    // A style pack (a Style offline package) contains the loaded style and its resources: loaded
+    // sources, fonts, sprites. Style packs are identified with their style URI.
+
+    // Style packs are stored in the ambient cache database, but their resources are not subject to
+    // the data eviction algorithm and are not considered when calculating the ambient cache size.
     val stylePackCancelable = offlineManager.loadStylePack(
       Style.OUTDOORS,
+      // Build Style pack load options
       StylePackLoadOptions.Builder()
         .glyphsRasterizationMode(GlyphsRasterizationMode.IDEOGRAPHS_RASTERIZED_LOCALLY)
         .metadata(Value(STYLE_PACK_METADATA))
         .build(),
       { progress ->
+        // Update the download progress to UI
         updateStylePackDownloadProgress(
           progress.completedResourceCount,
           progress.requiredResourceCount,
@@ -125,6 +140,7 @@ class OfflineActivity : AppCompatActivity() {
       { expected ->
         if (expected.isValue) {
           expected.value?.let { stylePack ->
+            // Style pack download finishes successfully
             logSuccessMessage("StylePack downloaded: $stylePack")
             if (tile_pack_download_progress.progress == tile_pack_download_progress.max) {
               prepareViewMapButton()
@@ -134,36 +150,49 @@ class OfflineActivity : AppCompatActivity() {
           }
         }
         expected.error?.let {
+          // Handle error occurred during the style pack download.
           logErrorMessage("StylePackError: $it")
         }
       }
     )
 
-    // 2. Create an offline region with tiles for the outdoors style
-    val outdoorTilesetOptions = TilesetDescriptorOptions.Builder()
-      .styleURI(Style.OUTDOORS)
-      .minZoom(0)
-      .maxZoom(16)
-      .build()
-    // Resolving of this tileset descriptor WILL create a style package..
-    val outdoorDescriptor = offlineManager.createTilesetDescriptor(outdoorTilesetOptions)
+    // 2. Create a tile region with tiles for the outdoors style
 
-    val tileRegionLoadOptions = TileRegionLoadOptions.Builder()
-      .geometry(TOKYO)
-      .descriptors(listOf(outdoorDescriptor))
-      .metadata(Value(TILE_REGION_METADATA))
-      .tileLoadOptions(
-        TileLoadOptions.Builder()
-          .criticalPriority(false)
-          .acceptExpired(true)
-          .networkRestriction(NetworkRestriction.NONE)
-          .build()
-      )
-      .build()
+    // A Tile Region represents an identifiable geographic tile region with metadata, consisting of
+    // a set of tiles packs that cover a given area (a polygon). Tile Regions allow caching tiles
+    // packs in an explicit way: By creating a Tile Region, developers can ensure that all tiles in
+    // that region will be downloaded and remain cached until explicitly deleted.
 
+    // The tileset descriptor encapsulates the tile-specific data, such as which tilesets, zoom ranges,
+    // pixel ratio etc. the cached tile packs should have. It is passed to the Tile Store along with
+    // the region area geometry to load a new Tile Region.
+
+    // The OfflineManager is responsible for creating tileset descriptors for the given style and zoom range.
+    val tilesetDescriptor = offlineManager.createTilesetDescriptor(
+      TilesetDescriptorOptions.Builder()
+        .styleURI(Style.OUTDOORS)
+        .minZoom(0)
+        .maxZoom(16)
+        .build()
+    )
+
+    // The TileStore is used to manage TileRegions.
+    // Creating a Tile Region requires supplying a description of the area geometry, the tilesets
+    // and zoom ranges of the tiles within the region.
     val tilePackCancelable = TileStore.getInstance().loadTileRegion(
       TILE_REGION_ID,
-      tileRegionLoadOptions,
+      TileRegionLoadOptions.Builder()
+        .geometry(TOKYO)
+        .descriptors(listOf(tilesetDescriptor))
+        .metadata(Value(TILE_REGION_METADATA))
+        .tileLoadOptions(
+          TileLoadOptions.Builder()
+            .criticalPriority(false)
+            .acceptExpired(true)
+            .networkRestriction(NetworkRestriction.NONE)
+            .build()
+        )
+        .build(),
       { progress ->
         updateTileRegionDownloadProgress(
           progress.completedResourceCount,
@@ -190,6 +219,7 @@ class OfflineActivity : AppCompatActivity() {
   }
 
   private fun showDownloadedRegions() {
+    // Get a list of tile regions that are currently available.
     TileStore.getInstance().getAllTileRegions { expected ->
       if (expected.isValue) {
         expected.value?.let { tileRegionList ->
@@ -200,6 +230,7 @@ class OfflineActivity : AppCompatActivity() {
         logErrorMessage("TileRegionError: $tileRegionError")
       }
     }
+    // Get a list of style packs that are currently available.
     offlineManager.getAllStylePacks { expected ->
       if (expected.isValue) {
         expected.value?.let { stylePackList ->
@@ -281,6 +312,7 @@ class OfflineActivity : AppCompatActivity() {
 
   override fun onDestroy() {
     super.onDestroy()
+    // Remove downloaded style packs and tile regions.
     removeOfflineRegions()
     // Bring back the network connectivity when exiting the OfflineActivity.
     NetworkConnectivity.getInstance().setMapboxStackConnected(true)
