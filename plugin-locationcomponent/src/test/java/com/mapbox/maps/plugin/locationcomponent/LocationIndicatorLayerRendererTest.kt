@@ -1,6 +1,5 @@
 package com.mapbox.maps.plugin.locationcomponent
 
-import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.Drawable
@@ -158,41 +157,24 @@ class LocationIndicatorLayerRendererTest {
   @Test
   fun testAddBitmaps() {
     verify {
-      style.addStyleImage(
+      style.addImage(
         TOP_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
     verify {
-      style.addStyleImage(
+      style.addImage(
         BEARING_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
     verify {
-      style.addStyleImage(
+      style.addImage(
         SHADOW_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
   }
 
   private fun Point.toLocationList() = listOf(latitude(), longitude(), 0.0)
-
-  private val defaultPixelRatio = Resources.getSystem().displayMetrics.density
 }
