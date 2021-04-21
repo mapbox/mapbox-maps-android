@@ -5,7 +5,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.QueryFeaturesCallback
 import com.mapbox.maps.RenderedQueryOptions
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.location.LocationComponentConstants.*
 import com.mapbox.maps.plugin.location.MapboxAnimator.AnimationsValueChangeListener
@@ -14,7 +14,7 @@ import com.mapbox.maps.plugin.location.modes.RenderMode
 
 internal class LocationLayerController(
   private val delegateProvider: MapDelegateProvider,
-  style: StyleManagerInterface,
+  style: StyleInterface,
   layerSourceProvider: LayerSourceProvider,
   locationModelLayerOptions: LocationModelLayerOptions?,
   private val bitmapProvider: LayerBitmapProvider,
@@ -39,7 +39,7 @@ internal class LocationLayerController(
     initializeComponents(style, options)
   }
 
-  fun initializeComponents(style: StyleManagerInterface, options: LocationComponentOptions) {
+  fun initializeComponents(style: StyleInterface, options: LocationComponentOptions) {
     locationLayerRenderer.addLayers(positionManager)
     locationLayerRenderer.initializeComponents(style, delegateProvider.styleStateDelegate)
     applyStyle(options)

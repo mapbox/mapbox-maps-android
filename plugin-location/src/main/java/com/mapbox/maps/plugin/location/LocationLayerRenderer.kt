@@ -3,12 +3,12 @@ package com.mapbox.maps.plugin.location
 import android.graphics.Bitmap
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
 import com.mapbox.maps.plugin.location.modes.RenderMode
 
 internal interface LocationLayerRenderer {
-  fun initializeComponents(style: StyleManagerInterface, styleStateDelegate: MapStyleStateDelegate)
+  fun initializeComponents(style: StyleInterface, styleStateDelegate: MapStyleStateDelegate)
 
   fun addLayers(positionManager: LocationComponentPositionManager)
 

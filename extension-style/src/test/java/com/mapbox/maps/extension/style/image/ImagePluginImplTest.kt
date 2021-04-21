@@ -1,12 +1,11 @@
 package com.mapbox.maps.extension.style.image
 
-import android.content.res.Resources
 import android.graphics.Bitmap
 import com.mapbox.bindgen.Expected
 import com.mapbox.maps.Image
 import com.mapbox.maps.ImageContent
 import com.mapbox.maps.ImageStretches
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -17,12 +16,13 @@ import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
 class ImagePluginImplTest {
-  private val style = mockk<StyleManagerInterface>(relaxUnitFun = true, relaxed = true)
+  private val style = mockk<StyleInterface>(relaxUnitFun = true, relaxed = true)
+  private val pixelRatio = mockk<Float>(relaxUnitFun = true, relaxed = true)
   private val expected = mockk<Expected<Void, String>>(relaxUnitFun = true, relaxed = true)
-  private val defaultScale = Resources.getSystem().displayMetrics.density
 
   @Before
   fun prepareTest() {
+    every { style.pixelRatio } returns pixelRatio
     every { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) } returns expected
     every { expected.error } returns null
   }
@@ -39,7 +39,7 @@ class ImagePluginImplTest {
       image(image)
     }
     style.addImage(imagePlugin)
-    verify { style.addStyleImage("imageId", defaultScale, image, false, listOf(), listOf(), null) }
+    verify { style.addStyleImage("imageId", pixelRatio, image, false, listOf(), listOf(), null) }
   }
 
   @Test
@@ -68,7 +68,7 @@ class ImagePluginImplTest {
     verify {
       style.addStyleImage(
         "imageId",
-        defaultScale,
+        pixelRatio,
         capture(imageSlot),
         false,
         listOf(),
@@ -151,7 +151,7 @@ class ImagePluginImplTest {
       sdf(true)
     }
     style.addImage(imagePlugin)
-    verify { style.addStyleImage("imageId", defaultScale, image, true, listOf(), listOf(), null) }
+    verify { style.addStyleImage("imageId", pixelRatio, image, true, listOf(), listOf(), null) }
   }
 
   /**
@@ -167,7 +167,7 @@ class ImagePluginImplTest {
       stretchX(stretchX)
     }
     style.addImage(imagePlugin)
-    verify { style.addStyleImage("imageId", defaultScale, image, false, stretchX, listOf(), null) }
+    verify { style.addStyleImage("imageId", pixelRatio, image, false, stretchX, listOf(), null) }
   }
 
   /**
@@ -183,7 +183,7 @@ class ImagePluginImplTest {
       stretchY(stretchY)
     }
     style.addImage(imagePlugin)
-    verify { style.addStyleImage("imageId", defaultScale, image, false, listOf(), stretchY, null) }
+    verify { style.addStyleImage("imageId", pixelRatio, image, false, listOf(), stretchY, null) }
   }
 
   /**
@@ -200,6 +200,6 @@ class ImagePluginImplTest {
       content(content)
     }
     style.addImage(imagePlugin)
-    verify { style.addStyleImage("imageId", defaultScale, image, false, listOf(), listOf(), content) }
+    verify { style.addStyleImage("imageId", pixelRatio, image, false, listOf(), listOf(), content) }
   }
 }

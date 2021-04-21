@@ -1,13 +1,12 @@
 package com.mapbox.maps.plugin.locationcomponent
 
-import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.BEARING_ICON
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.SHADOW_ICON
@@ -24,7 +23,7 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class LocationIndicatorLayerRendererTest {
 
-  private val style: StyleManagerInterface = mockk(relaxed = true)
+  private val style: StyleInterface = mockk(relaxed = true)
   private val layerSourceProvider: LayerSourceProvider = mockk(relaxed = true)
   private val layerWrapper: LocationIndicatorLayerWrapper = mockk(relaxed = true)
   private val expected: Expected<Void, String> = mockk(relaxed = true)
@@ -158,41 +157,24 @@ class LocationIndicatorLayerRendererTest {
   @Test
   fun testAddBitmaps() {
     verify {
-      style.addStyleImage(
+      style.addImage(
         TOP_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
     verify {
-      style.addStyleImage(
+      style.addImage(
         BEARING_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
     verify {
-      style.addStyleImage(
+      style.addImage(
         SHADOW_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
   }
 
   private fun Point.toLocationList() = listOf(latitude(), longitude(), 0.0)
-
-  private val defaultPixelRatio = Resources.getSystem().displayMetrics.density
 }

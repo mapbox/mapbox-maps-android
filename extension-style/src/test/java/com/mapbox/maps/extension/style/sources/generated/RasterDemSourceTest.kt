@@ -5,10 +5,10 @@ package com.mapbox.maps.extension.style.sources.generated
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.StyleManager
-import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.StylePropertyValue
 import com.mapbox.maps.StylePropertyValueKind
 import com.mapbox.maps.extension.style.ShadowStyleManager
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.dsl.generated.sum
 import com.mapbox.maps.extension.style.sources.TileSet
 import com.mapbox.maps.extension.style.utils.TypeUtils
@@ -23,7 +23,7 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowStyleManager::class])
 class RasterDemSourceTest {
-  private val style = mockk<StyleManagerInterface>(relaxUnitFun = true, relaxed = true)
+  private val style = mockk<StyleInterface>(relaxUnitFun = true, relaxed = true)
   private val valueSlot = slot<Value>()
   private val expected = mockk<Expected<Void, String>>(relaxUnitFun = true, relaxed = true)
   private val expectedDelta = mockk<Expected<Byte, String>>(relaxUnitFun = true, relaxed = true)

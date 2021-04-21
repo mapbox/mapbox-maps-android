@@ -1,12 +1,6 @@
 package com.mapbox.maps.extension.style
 
-import android.content.res.Resources
-import android.graphics.Bitmap
-import com.mapbox.bindgen.Expected
-import com.mapbox.maps.Image
 import com.mapbox.maps.LayerPosition
-import com.mapbox.maps.StyleManagerInterface
-import java.nio.ByteBuffer
 
 /**
  * Define the common interfaces for the Style component.
@@ -57,7 +51,7 @@ interface StyleContract {
      * @param delegate The style delegate
      * @param position the layer position
      */
-    fun bindTo(delegate: StyleManagerInterface, position: LayerPosition? = null)
+    fun bindTo(delegate: StyleInterface, position: LayerPosition? = null)
   }
 
   /**
@@ -69,7 +63,7 @@ interface StyleContract {
      *
      * @param delegate The style delegate
      */
-    fun bindTo(delegate: StyleManagerInterface)
+    fun bindTo(delegate: StyleInterface)
   }
 
   /**
@@ -81,7 +75,7 @@ interface StyleContract {
      *
      * @param delegate The style delegate
      */
-    fun bindTo(delegate: StyleManagerInterface)
+    fun bindTo(delegate: StyleInterface)
   }
 
   /**
@@ -93,7 +87,7 @@ interface StyleContract {
      *
      * @param delegate The style delegate
      */
-    fun bindTo(delegate: StyleManagerInterface)
+    fun bindTo(delegate: StyleInterface)
   }
 
   /**
@@ -105,30 +99,6 @@ interface StyleContract {
      *
      * @param delegate The style delegate
      */
-    fun bindTo(delegate: StyleManagerInterface)
+    fun bindTo(delegate: StyleInterface)
   }
-}
-
-/**
- * Adds an image to be used in the style. This API can also be used for updating
- * an image. If the image \a id was already added, it gets replaced by the new image.
- *
- * The image can be used in `icon-image`, `fill-pattern`, and `line-pattern`.
- *
- * [layout-symbol-icon-image](https://www.mapbox.com/mapbox-gl-js/style-spec/#layout-symbol-icon-image)
- *
- * [paint-line-line-pattern](https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-line-line-pattern)
- *
- * [paint-fill-fill-pattern](https://www.mapbox.com/mapbox-gl-js/style-spec/#paint-fill-fill-pattern)
- *
- * @param imageId ID of the image.
- * @param bitmap Bitmap data of the image.
- *
- * @return A string describing an error if the operation was not successful, empty otherwise.
- */
-fun StyleManagerInterface.addStyleImage(imageId: String, bitmap: Bitmap): Expected<Void, String> {
-  val byteBuffer = ByteBuffer.allocate(bitmap.byteCount)
-  bitmap.copyPixelsToBuffer(byteBuffer)
-  val image = Image(bitmap.width, bitmap.height, byteBuffer.array())
-  return this.addStyleImage(imageId, Resources.getSystem().displayMetrics.density, image, false, listOf(), listOf(), null)
 }

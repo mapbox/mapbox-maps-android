@@ -2,7 +2,7 @@ package com.mapbox.maps.plugin.location
 
 import com.mapbox.bindgen.Expected
 import com.mapbox.geojson.Point
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.location.modes.RenderMode
 import io.mockk.*
 import org.junit.Before
@@ -10,7 +10,7 @@ import org.junit.Test
 
 class ModelLocationLayerRendererTest {
 
-  private val style: StyleManagerInterface = mockk(relaxed = true)
+  private val style: StyleInterface = mockk(relaxed = true)
   private val layerSourceProvider: LayerSourceProvider = mockk(relaxed = true)
   private val layerWrapper: ModelLocationLayerWrapper = mockk(relaxed = true)
   private val sourceWrapper: ModelLocationSourceWrapper = mockk(relaxUnitFun = true, relaxed = true)

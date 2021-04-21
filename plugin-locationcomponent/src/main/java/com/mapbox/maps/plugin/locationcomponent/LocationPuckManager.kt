@@ -6,7 +6,7 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
 import com.mapbox.common.ValueConverter
 import com.mapbox.geojson.Point
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
@@ -48,7 +48,7 @@ internal class LocationPuckManager(
       }
     }
 
-  fun initialize(style: StyleManagerInterface) {
+  fun initialize(style: StyleInterface) {
     animationManager.setUpdateListeners(onLocationUpdated, onBearingUpdated)
     animationManager.setLocationLayerRenderer(locationLayerRenderer)
     animationManager.applyPulsingAnimationSettings(settings)

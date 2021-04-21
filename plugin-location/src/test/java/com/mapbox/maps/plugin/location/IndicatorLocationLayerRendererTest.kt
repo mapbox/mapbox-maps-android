@@ -1,12 +1,11 @@
 package com.mapbox.maps.plugin.location
 
-import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Color
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.location.LocationComponentConstants.*
 import com.mapbox.maps.plugin.location.modes.RenderMode
 import com.mapbox.maps.plugin.location.utils.BitmapUtils
@@ -21,7 +20,7 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class IndicatorLocationLayerRendererTest {
 
-  private val style: StyleManagerInterface = mockk(relaxed = true)
+  private val style: StyleInterface = mockk(relaxed = true)
   private val layerSourceProvider: LayerSourceProvider = mockk(relaxed = true)
   private val layerWrapper: IndicatorLocationLayerWrapper = mockk(relaxed = true)
   private val expected: Expected<Void, String> = mockk(relaxed = true)
@@ -29,11 +28,13 @@ class IndicatorLocationLayerRendererTest {
   private val expressionSlot = CapturingSlot<List<Value>>()
   private val doubleListSlot = CapturingSlot<List<Double>>()
 
+  private val defaultPixelRatio = mockk<Float>(relaxed = true)
+
   private lateinit var locationLayerRenderer: IndicatorLocationLayerRenderer
 
   @Before
   fun setup() {
-
+    every { style.pixelRatio } returns defaultPixelRatio
     every { style.removeStyleLayer(any()) } returns expected
     every { expected.error } returns null
     every { layerSourceProvider.getIndicatorLocationLayer() } returns layerWrapper
@@ -222,14 +223,9 @@ class IndicatorLocationLayerRendererTest {
   fun addBitmaps_shadow() {
     addBitmaps(withShadow = true, renderMode = RenderMode.NORMAL)
     verify {
-      style.addStyleImage(
+      style.addImage(
         SHADOW_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
   }
@@ -244,58 +240,33 @@ class IndicatorLocationLayerRendererTest {
   fun addBitmaps_normal() {
     addBitmaps(withShadow = true, renderMode = RenderMode.NORMAL)
     verify {
-      style.addStyleImage(
+      style.addImage(
         FOREGROUND_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
     verify {
-      style.addStyleImage(
+      style.addImage(
         FOREGROUND_STALE_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
     verify {
-      style.addStyleImage(
+      style.addImage(
         BACKGROUND_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
     verify {
-      style.addStyleImage(
+      style.addImage(
         BACKGROUND_STALE_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
     verify {
-      style.addStyleImage(
+      style.addImage(
         BEARING_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
   }
@@ -336,25 +307,15 @@ class IndicatorLocationLayerRendererTest {
     addBitmaps(withShadow = true, renderMode = RenderMode.COMPASS)
 
     verify {
-      style.addStyleImage(
+      style.addImage(
         BEARING_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
     verify {
-      style.addStyleImage(
+      style.addImage(
         BEARING_STALE_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
 
@@ -365,58 +326,33 @@ class IndicatorLocationLayerRendererTest {
   fun addBitmaps_gps() {
     addBitmaps(withShadow = true, renderMode = RenderMode.GPS)
     verify {
-      style.addStyleImage(
+      style.addImage(
         FOREGROUND_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
     verify {
-      style.addStyleImage(
+      style.addImage(
         FOREGROUND_STALE_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
     verify {
-      style.addStyleImage(
+      style.addImage(
         BACKGROUND_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
     verify {
-      style.addStyleImage(
+      style.addImage(
         BACKGROUND_STALE_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
     verify {
-      style.addStyleImage(
+      style.addImage(
         BEARING_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
   }
@@ -441,6 +377,4 @@ class IndicatorLocationLayerRendererTest {
   }
 
   private fun Point.toLocationList() = listOf(latitude(), longitude(), 0.0)
-
-  private val defaultPixelRatio = Resources.getSystem().displayMetrics.density
 }

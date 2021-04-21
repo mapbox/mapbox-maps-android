@@ -2,7 +2,7 @@ package com.mapbox.maps.plugin.locationcomponent
 
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_LAYER
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_SOURCE
@@ -12,11 +12,11 @@ internal class ModelLayerRenderer(
   private val locationModelLayerOptions: LocationPuck3D
 ) :
   LocationLayerRenderer {
-  private var style: StyleManagerInterface? = null
+  private var style: StyleInterface? = null
   private var modelLayer = layerSourceProvider.getModelLayer(locationModelLayerOptions)
   private var source = layerSourceProvider.getModelSource(locationModelLayerOptions)
 
-  override fun initializeComponents(style: StyleManagerInterface) {
+  override fun initializeComponents(style: StyleInterface) {
     this.style = style
     source.bindTo(style)
   }

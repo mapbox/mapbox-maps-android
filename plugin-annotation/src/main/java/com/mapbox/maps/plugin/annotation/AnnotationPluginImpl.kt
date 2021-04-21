@@ -1,7 +1,7 @@
 package com.mapbox.maps.plugin.annotation
 
 import android.view.View
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
@@ -54,7 +54,7 @@ class AnnotationPluginImpl : AnnotationPlugin {
   /**
    * Called when a new Style is loaded.
    */
-  override fun onStyleChanged(styleDelegate: StyleManagerInterface) {
+  override fun onStyleChanged(styleDelegate: StyleInterface) {
     managerList.forEach { it.get()?.onStyleLoaded(styleDelegate) }
   }
 

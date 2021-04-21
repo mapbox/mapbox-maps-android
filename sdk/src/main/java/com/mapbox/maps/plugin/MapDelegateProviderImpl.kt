@@ -2,6 +2,7 @@ package com.mapbox.maps.plugin
 
 import com.mapbox.maps.*
 import com.mapbox.maps.MapController
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.delegates.MapAttributionDelegate
@@ -16,7 +17,7 @@ internal class MapDelegateProviderImpl constructor(val mapboxMap: MapboxMap, map
   override val mapListenerDelegate: MapListenerDelegate by lazy { mapboxMap }
   override val styleStateDelegate: MapStyleStateDelegate by lazy { mapboxMap }
 
-  override fun getStyle(callback: (StyleManagerInterface) -> Unit) {
+  override fun getStyle(callback: (StyleInterface) -> Unit) {
     mapboxMap.getStyle { style -> callback(style) }
   }
 }

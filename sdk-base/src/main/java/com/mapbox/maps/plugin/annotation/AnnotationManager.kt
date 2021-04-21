@@ -1,7 +1,7 @@
 package com.mapbox.maps.plugin.annotation
 
 import com.mapbox.geojson.Geometry
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 
 /**
@@ -65,7 +65,7 @@ interface AnnotationManager<
   /**
    * Invoked when the style is loaded
    */
-  fun onStyleLoaded(styleDelegate: StyleManagerInterface)
+  fun onStyleLoaded(styleDelegate: StyleInterface)
 
   /**
    * The delegateProvider

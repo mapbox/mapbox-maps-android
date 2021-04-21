@@ -1,12 +1,11 @@
 package com.mapbox.maps.extension.style.image
 
-import android.content.res.Resources
 import android.graphics.Bitmap
 import com.mapbox.maps.Image
 import com.mapbox.maps.ImageContent
 import com.mapbox.maps.ImageStretches
-import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleContract
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.utils.check
 import java.nio.ByteBuffer
 
@@ -25,10 +24,10 @@ class ImageExtensionImpl(private val builder: Builder) : StyleContract.StyleImag
   /**
    * Add the image to the style.
    */
-  override fun bindTo(delegate: StyleManagerInterface) {
+  override fun bindTo(delegate: StyleInterface) {
     delegate.addStyleImage(
       builder.imageId,
-      builder.scale,
+      builder.scale ?: delegate.pixelRatio,
       builder.internalImage,
       builder.sdf,
       builder.stretchX,
@@ -54,7 +53,7 @@ class ImageExtensionImpl(private val builder: Builder) : StyleContract.StyleImag
     /**
      * Scale factor for the image.
      */
-    internal var scale: Float = Resources.getSystem().displayMetrics.density
+    internal var scale: Float? = null
 
     /**
      * Option to treat whether image is SDF(signed distance field) or not.
@@ -163,6 +162,6 @@ fun image(imageId: String, block: ImageExtensionImpl.Builder.() -> Unit): ImageE
  *
  * @param image The image to be added
  */
-fun StyleManagerInterface.addImage(image: StyleContract.StyleImageExtension) {
+fun StyleInterface.addImage(image: StyleContract.StyleImageExtension) {
   image.bindTo(this)
 }

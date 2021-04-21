@@ -5,8 +5,8 @@ package com.mapbox.maps.extension.style.terrain.generated
 import android.util.Log
 import androidx.annotation.UiThread
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleContract
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.types.TerrainDsl
@@ -20,7 +20,7 @@ import kotlin.collections.HashMap
  */
 @UiThread
 class Terrain(private val sourceId: String) : TerrainDslReceiver, StyleContract.StyleTerrainExtension {
-  private var delegate: StyleManagerInterface? = null
+  private var delegate: StyleInterface? = null
   private val properties = HashMap<String, PropertyValue<*>>()
 
   /**
@@ -82,7 +82,7 @@ class Terrain(private val sourceId: String) : TerrainDslReceiver, StyleContract.
    *
    * @param delegate The map controller
    */
-  override fun bindTo(delegate: StyleManagerInterface) {
+  override fun bindTo(delegate: StyleInterface) {
     this.delegate = delegate
     val terrainParams = HashMap<String, Value>()
     terrainParams["source"] = Value(sourceId)
@@ -172,7 +172,7 @@ fun terrain(sourceId: String, block: (TerrainDslReceiver.() -> Unit)? = null): T
  *
  * @return Terrain
  */
-fun StyleManagerInterface.getTerrain(sourceId: String): Terrain {
+fun StyleInterface.getTerrain(sourceId: String): Terrain {
   return Terrain(sourceId).also { it.bindTo(this) }
 }
 
@@ -181,7 +181,7 @@ fun StyleManagerInterface.getTerrain(sourceId: String): Terrain {
  *
  * @param terrain The terrain to be added
  */
-fun StyleManagerInterface.addTerrain(terrain: StyleContract.StyleTerrainExtension) {
+fun StyleInterface.addTerrain(terrain: StyleContract.StyleTerrainExtension) {
   terrain.bindTo(this)
 }
 

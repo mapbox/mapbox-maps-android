@@ -6,8 +6,8 @@ import android.util.Log
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
 import com.mapbox.bindgen.Value
-import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleContract
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.layers.properties.generated.Anchor
@@ -28,7 +28,7 @@ import kotlin.collections.HashMap
  */
 @UiThread
 class Light : LightDslReceiver, StyleContract.StyleLightExtension {
-  private var delegate: StyleManagerInterface? = null
+  private var delegate: StyleInterface? = null
   private val properties = HashMap<String, PropertyValue<*>>()
 
   /**
@@ -367,7 +367,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
    *
    * @param delegate The map controller
    */
-  override fun bindTo(delegate: StyleManagerInterface) {
+  override fun bindTo(delegate: StyleInterface) {
     this.delegate = delegate
     val lightParams = HashMap<String, Value>()
     properties.forEach {
@@ -564,7 +564,7 @@ fun light(block: LightDslReceiver.() -> Unit): Light = Light().apply(block)
  *
  * @return Light
  */
-fun StyleManagerInterface.getLight(): Light {
+fun StyleInterface.getLight(): Light {
   return Light().also { it.bindTo(this) }
 }
 
@@ -573,7 +573,7 @@ fun StyleManagerInterface.getLight(): Light {
  *
  * @param light The light to be added
  */
-fun StyleManagerInterface.addLight(light: StyleContract.StyleLightExtension) {
+fun StyleInterface.addLight(light: StyleContract.StyleLightExtension) {
   light.bindTo(this)
 }
 

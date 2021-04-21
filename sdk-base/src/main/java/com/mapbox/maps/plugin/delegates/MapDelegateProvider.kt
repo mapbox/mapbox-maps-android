@@ -1,6 +1,6 @@
 package com.mapbox.maps.plugin.delegates
 
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 
 /**
  * Definition of map delegate transporter. Provides hooks to all map delegate instances.
@@ -30,7 +30,7 @@ interface MapDelegateProvider {
   /**
    * Delegate used to interact with map's plugins.
    */
-  fun getStyle(callback: (StyleManagerInterface) -> Unit)
+  fun getStyle(callback: (StyleInterface) -> Unit)
 
   /**
    * Delegate used to interact with map's plugins.

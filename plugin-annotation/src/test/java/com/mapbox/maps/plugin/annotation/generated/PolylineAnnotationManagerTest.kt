@@ -18,7 +18,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.QueriedFeature
 import com.mapbox.maps.QueryFeaturesCallback
 import com.mapbox.maps.ScreenCoordinate
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.addLayerBelow
@@ -49,7 +49,7 @@ import org.robolectric.annotation.Config
 @Config(shadows = [ShadowValueConverter::class, ShadowLogger::class])
 class PolylineAnnotationManagerTest {
   private val delegateProvider: MapDelegateProvider = mockk()
-  private val style: StyleManagerInterface = mockk()
+  private val style: StyleInterface = mockk()
   private val mapProjectionDelegate: MapProjectionDelegate = mockk()
   private val mapFeatureQueryDelegate: MapFeatureQueryDelegate = mockk()
   private val gesturesPlugin: GesturesPlugin = mockk()
@@ -71,7 +71,7 @@ class PolylineAnnotationManagerTest {
     every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue(
       Value(1)
     )
-    val captureCallback = slot<(StyleManagerInterface) -> Unit>()
+    val captureCallback = slot<(StyleInterface) -> Unit>()
     every { delegateProvider.getStyle(capture(captureCallback)) } answers {
       captureCallback.captured.invoke(style)
     }
@@ -84,6 +84,7 @@ class PolylineAnnotationManagerTest {
     every { style.getSource(any()) } returns null
     every { style.styleSourceExists(any()) } returns false
     every { style.styleLayerExists(any()) } returns false
+    every { style.pixelRatio } returns 1.0f
     every { style.getStyleImage(any()) } returns null
     every { gesturesPlugin.addOnMapClickListener(any()) } just Runs
     every { gesturesPlugin.addOnMapLongClickListener(any()) } just Runs
