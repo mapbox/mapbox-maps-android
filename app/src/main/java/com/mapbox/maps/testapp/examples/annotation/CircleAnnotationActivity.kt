@@ -6,8 +6,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
-import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.annotation.annotations
+import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.mapView

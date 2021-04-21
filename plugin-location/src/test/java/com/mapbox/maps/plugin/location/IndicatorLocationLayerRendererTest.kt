@@ -301,7 +301,7 @@ class IndicatorLocationLayerRendererTest {
   }
 
   @Test
-  fun addBitmaps_.compass {
+  fun addBitmaps_compass() {
     every { bearingBitmap.width } returns 40
     every { bearingBitmap.height } returns 40
     every { backgroundBitmap.width } returns 20

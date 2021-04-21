@@ -10,9 +10,9 @@ import com.mapbox.geojson.Point
 import com.mapbox.geojson.Polygon
 import com.mapbox.maps.R
 import com.mapbox.maps.extension.style.layers.properties.generated.*
+import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPolygonAnnotationManager
-import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.testapp.BaseMapTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue

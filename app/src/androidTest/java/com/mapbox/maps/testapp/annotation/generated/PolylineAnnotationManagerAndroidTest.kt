@@ -10,9 +10,9 @@ import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.R
 import com.mapbox.maps.extension.style.layers.properties.generated.*
+import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPolylineAnnotationManager
-import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.testapp.BaseMapTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue

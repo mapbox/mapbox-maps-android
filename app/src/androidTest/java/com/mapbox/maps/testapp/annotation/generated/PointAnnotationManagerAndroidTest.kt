@@ -9,9 +9,9 @@ import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.maps.R
 import com.mapbox.maps.extension.style.layers.properties.generated.*
+import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
-import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.testapp.BaseMapTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
