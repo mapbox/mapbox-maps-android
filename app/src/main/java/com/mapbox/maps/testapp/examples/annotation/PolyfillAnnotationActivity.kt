@@ -7,8 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.JsonPrimitive
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
+import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
-import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.mapView
@@ -31,7 +31,7 @@ class PolyfillAnnotationActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_annotation)
     mapView.getMapboxMap().loadStyleUri(nextStyle) {
-      val annotationPlugin = mapView.getAnnotationPlugin()
+      val annotationPlugin = mapView.annotations
       fillManager = annotationPlugin.createPolygonAnnotationManager(mapView).apply {
         addClickListener(
           OnPolygonAnnotationClickListener {

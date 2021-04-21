@@ -11,7 +11,7 @@ import com.mapbox.maps.extension.style.layers.generated.skyLayer
 import com.mapbox.maps.extension.style.layers.getLayerAs
 import com.mapbox.maps.extension.style.layers.properties.generated.SkyType
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.plugin.scalebar.getScaleBarPlugin
+import com.mapbox.maps.plugin.scalebar.scalebar
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_sky_layer.*
 
@@ -74,7 +74,7 @@ class SkyLayerShowcaseActivity : AppCompatActivity() {
         }
       }
     ) {
-      mapView.getScaleBarPlugin().enabled = false
+      mapView.scalebar.enabled = false
       skyLayer = it.getLayerAs(SKY_LAYER)
     }
   }

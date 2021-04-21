@@ -53,7 +53,7 @@ import java.util.concurrent.CopyOnWriteArrayList
  *
  *
  * **
- * To get the component object use [MapPluginProviderDelegate.getLocationPlugin] and activate it with
+ * To get the component object use [MapPluginProviderDelegate.locationLegacy] and activate it with
  * [.activateLocationComponent] or one of the overloads.
  * Then, manage its visibility with [.setLocationComponentEnabled].
  * The component will not process location updates right after activation, but only after being enabled.
@@ -1658,6 +1658,6 @@ class LocationPluginImpl : LocationPlugin {
   "Use getLocationComponentPlugin instead.",
   ReplaceWith("getLocationComponentPlugin")
 )
-fun MapPluginProviderDelegate.getLocationPlugin(): LocationPluginImpl {
+fun MapPluginProviderDelegate.locationLegacy(): LocationPluginImpl {
   return this.getPlugin(LocationPluginImpl::class.java)!!
 }

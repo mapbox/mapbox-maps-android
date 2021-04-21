@@ -7,7 +7,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
-import com.mapbox.maps.plugin.locationcomponent.getLocationComponentPlugin
+import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
 import kotlinx.android.synthetic.main.activity_location_layer_basic_pulsing_circle.*
@@ -53,19 +53,19 @@ class BasicLocationPulsingCircleActivity : AppCompatActivity() {
         return true
       }
       R.id.action_component_disable -> {
-        mapView.getLocationComponentPlugin().enabled = false
+        mapView.location.enabled = false
         return true
       }
       R.id.action_component_enabled -> {
-        mapView.getLocationComponentPlugin().enabled = true
+        mapView.location.enabled = true
         return true
       }
       R.id.action_stop_pulsing -> {
-        mapView.getLocationComponentPlugin().pulsingEnabled = false
+        mapView.location.pulsingEnabled = false
         return true
       }
       R.id.action_start_pulsing -> {
-        mapView.getLocationComponentPlugin().pulsingEnabled = true
+        mapView.location.pulsingEnabled = true
         return true
       }
       else -> return super.onOptionsItemSelected(item)

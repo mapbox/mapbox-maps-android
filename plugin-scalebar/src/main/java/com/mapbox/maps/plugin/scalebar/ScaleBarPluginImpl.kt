@@ -132,10 +132,7 @@ open class ScaleBarPluginImpl(
 }
 
 /**
- * Extension function for MapView to get the ScaleBar plugin instance.
- *
- * @return ScaleBar plugin instance
+ * Extension val for MapView to get the ScaleBar plugin instance.
  */
-fun MapPluginProviderDelegate.getScaleBarPlugin(): ScaleBarPluginImpl {
-  return this.getPlugin(ScaleBarPluginImpl::class.java)!!
-}
+val MapPluginProviderDelegate.scalebar: ScaleBarPluginImpl
+  get() = this.getPlugin(ScaleBarPluginImpl::class.java)!!

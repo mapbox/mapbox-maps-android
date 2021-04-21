@@ -10,9 +10,9 @@ import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.R
 import com.mapbox.maps.extension.style.layers.properties.generated.*
+import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPolylineAnnotationManager
-import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
 import com.mapbox.maps.testapp.BaseMapTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -37,7 +37,7 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testLineCap() {
     val testValue = LineCap.BUTT
-    val polylineAnnotationManager = mapView.getAnnotationPlugin().createPolylineAnnotationManager(mapView)
+    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
     polylineAnnotationManager.lineCap = testValue
     assertEquals(testValue, polylineAnnotationManager.lineCap)
   }
@@ -45,7 +45,7 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testLineMiterLimit() {
     val testValue = 1.0
-    val polylineAnnotationManager = mapView.getAnnotationPlugin().createPolylineAnnotationManager(mapView)
+    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
     polylineAnnotationManager.lineMiterLimit = testValue
     assertEquals(testValue, polylineAnnotationManager.lineMiterLimit)
   }
@@ -53,7 +53,7 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testLineRoundLimit() {
     val testValue = 1.0
-    val polylineAnnotationManager = mapView.getAnnotationPlugin().createPolylineAnnotationManager(mapView)
+    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
     polylineAnnotationManager.lineRoundLimit = testValue
     assertEquals(testValue, polylineAnnotationManager.lineRoundLimit)
   }
@@ -61,7 +61,7 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testLineDasharray() {
     val testValue = listOf(1.0, 2.0)
-    val polylineAnnotationManager = mapView.getAnnotationPlugin().createPolylineAnnotationManager(mapView)
+    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
     polylineAnnotationManager.lineDasharray = testValue
     assertEquals(testValue, polylineAnnotationManager.lineDasharray)
   }
@@ -69,7 +69,7 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testLineTranslate() {
     val testValue = listOf(0.0, 1.0)
-    val polylineAnnotationManager = mapView.getAnnotationPlugin().createPolylineAnnotationManager(mapView)
+    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
     polylineAnnotationManager.lineTranslate = testValue
     assertEquals(testValue, polylineAnnotationManager.lineTranslate)
   }
@@ -77,14 +77,14 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testLineTranslateAnchor() {
     val testValue = LineTranslateAnchor.MAP
-    val polylineAnnotationManager = mapView.getAnnotationPlugin().createPolylineAnnotationManager(mapView)
+    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
     polylineAnnotationManager.lineTranslateAnchor = testValue
     assertEquals(testValue, polylineAnnotationManager.lineTranslateAnchor)
   }
 
   @Test
   fun create() {
-    val polylineAnnotationManager = mapView.getAnnotationPlugin().createPolylineAnnotationManager(mapView)
+    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
     val annotation = polylineAnnotationManager.create(
       PolylineAnnotationOptions()
         .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -94,7 +94,7 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun createFromFeature() {
-    val polylineAnnotationManager = mapView.getAnnotationPlugin().createPolylineAnnotationManager(mapView)
+    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
     val featureCollection =
       FeatureCollection.fromFeature(Feature.fromGeometry(LineString.fromLngLats(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))))
     val annotations = polylineAnnotationManager.create(featureCollection.toJson())
@@ -105,7 +105,7 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun createList() {
-    val polylineAnnotationManager = mapView.getAnnotationPlugin().createPolylineAnnotationManager(mapView)
+    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
     val list = listOf(
       PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))),
       PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -117,7 +117,7 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun update() {
-    val polylineAnnotationManager = mapView.getAnnotationPlugin().createPolylineAnnotationManager(mapView)
+    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
     val annotation = polylineAnnotationManager.create(PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))))
     assertEquals(annotation, polylineAnnotationManager.annotations[0])
     annotation.points = listOf(Point.fromLngLat(1.0, 1.0), Point.fromLngLat(1.0, 1.0))
@@ -127,7 +127,7 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun updateList() {
-    val polylineAnnotationManager = mapView.getAnnotationPlugin().createPolylineAnnotationManager(mapView)
+    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
     val list = listOf(
       PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))),
       PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -144,7 +144,7 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun delete() {
-    val polylineAnnotationManager = mapView.getAnnotationPlugin().createPolylineAnnotationManager(mapView)
+    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
     val annotation = polylineAnnotationManager.create(
       PolylineAnnotationOptions()
         .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -156,7 +156,7 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun deleteList() {
-    val polylineAnnotationManager = mapView.getAnnotationPlugin().createPolylineAnnotationManager(mapView)
+    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
     val list = listOf(
       PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))),
       PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -171,7 +171,7 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun deleteAll() {
-    val polylineAnnotationManager = mapView.getAnnotationPlugin().createPolylineAnnotationManager(mapView)
+    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
     val list = listOf(
       PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))),
       PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))

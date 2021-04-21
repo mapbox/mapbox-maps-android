@@ -6,7 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
-import com.mapbox.maps.plugin.animation.getCameraAnimationsPlugin
+import com.mapbox.maps.plugin.animation.camera
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -44,7 +44,7 @@ abstract class BaseAnimationMapTest {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         mapView = MapView(context)
         mapView.id = R.id.mapView
-        cameraAnimationPlugin = mapView.getCameraAnimationsPlugin()
+        cameraAnimationPlugin = mapView.camera
         it.setContentView(mapView)
 
         mapboxMap = mapView.getMapboxMap()

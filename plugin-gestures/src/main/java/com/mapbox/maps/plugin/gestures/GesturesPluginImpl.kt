@@ -1651,13 +1651,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 }
 
 /**
- * Extension function for MapView to get the Gestures plugin instance.
- *
- * @return Gesture plugin instance
+ * Extension val for MapView to get the Gestures plugin instance.
  */
-fun MapPluginProviderDelegate.getGesturesPlugin(): GesturesPlugin {
-  return this.getPlugin(GesturesPluginImpl::class.java)!!
-}
+val MapPluginProviderDelegate.gestures: GesturesPlugin
+  get() = this.getPlugin(GesturesPluginImpl::class.java)!!
 
 /**
  * Add a callback that is invoked when the map is clicked.

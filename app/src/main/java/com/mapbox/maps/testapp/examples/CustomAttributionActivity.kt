@@ -17,7 +17,7 @@ import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.attribution.Attribution
 import com.mapbox.maps.plugin.attribution.AttributionDialogManager
 import com.mapbox.maps.plugin.attribution.AttributionParserConfig
-import com.mapbox.maps.plugin.attribution.getAttributionPlugin
+import com.mapbox.maps.plugin.attribution.attribution
 import com.mapbox.maps.plugin.delegates.MapAttributionDelegate
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_custom_attribution.*
@@ -39,7 +39,7 @@ class CustomAttributionActivity : AppCompatActivity() {
     checkBoxes.forEach { checkedTextView ->
       checkedTextView.setOnClickListener { checkedTextView.toggle() }
     }
-    val attributionPlugin = mapView.getAttributionPlugin()
+    val attributionPlugin = mapView.attribution
     custom_attribution_fab.setOnClickListener {
       Toast.makeText(this, R.string.custom_attribution_custom, Toast.LENGTH_LONG).show()
       val config = AttributionParserConfig(

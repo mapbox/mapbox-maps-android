@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
-import com.mapbox.maps.plugin.gestures.getGesturesPlugin
+import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_recycler.*
 
@@ -149,7 +149,7 @@ class SurfaceRecyclerViewActivity : AppCompatActivity() {
       }
 
       fun bind(mapItem: MapItem) {
-        mapView.getGesturesPlugin().scrollEnabled = false
+        mapView.gestures.scrollEnabled = false
         mapView.getMapboxMap().loadStyleUri(mapItem.style)
       }
     }

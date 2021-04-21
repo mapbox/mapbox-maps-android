@@ -16,12 +16,12 @@ import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
-import com.mapbox.maps.plugin.animation.getCameraAnimationsPlugin
+import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.overlay.MapOverlayCoordinatesProvider
 import com.mapbox.maps.plugin.overlay.MapOverlayPlugin
-import com.mapbox.maps.plugin.overlay.getMapOverlayPlugin
+import com.mapbox.maps.plugin.overlay.overlay
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_map_overlay.*
 
@@ -64,7 +64,7 @@ class MapOverlayActivity : AppCompatActivity(), OnMapClickListener {
         }
       }
     ) { mapboxMap.addOnMapClickListener(this@MapOverlayActivity) }
-    mapOverlayPlugin = mapView.getMapOverlayPlugin()
+    mapOverlayPlugin = mapView.overlay()
       .apply {
         registerMapOverlayCoordinatesProvider(provider)
         registerOverlay(location_top_left)
@@ -75,7 +75,7 @@ class MapOverlayActivity : AppCompatActivity(), OnMapClickListener {
         setDisplayingAreaMargins(100, 50, 50, 50)
       }
 
-    val cameraAnimationsPlugin = mapView.getCameraAnimationsPlugin()
+    val cameraAnimationsPlugin = mapView.camera
     reframe_button.setOnClickListener {
       mapOverlayPlugin.reframe { it?.let { cameraAnimationsPlugin.flyTo(it, mapAnimationOptions { duration(1000L) }) } }
     }

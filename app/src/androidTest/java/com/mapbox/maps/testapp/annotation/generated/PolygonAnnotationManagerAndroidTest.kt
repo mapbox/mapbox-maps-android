@@ -10,9 +10,9 @@ import com.mapbox.geojson.Point
 import com.mapbox.geojson.Polygon
 import com.mapbox.maps.R
 import com.mapbox.maps.extension.style.layers.properties.generated.*
+import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPolygonAnnotationManager
-import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
 import com.mapbox.maps.testapp.BaseMapTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -37,7 +37,7 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testFillAntialias() {
     val testValue = true
-    val polygonAnnotationManager = mapView.getAnnotationPlugin().createPolygonAnnotationManager(mapView)
+    val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager(mapView)
     polygonAnnotationManager.fillAntialias = testValue
     assertEquals(testValue, polygonAnnotationManager.fillAntialias)
   }
@@ -45,7 +45,7 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testFillTranslate() {
     val testValue = listOf(0.0, 1.0)
-    val polygonAnnotationManager = mapView.getAnnotationPlugin().createPolygonAnnotationManager(mapView)
+    val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager(mapView)
     polygonAnnotationManager.fillTranslate = testValue
     assertEquals(testValue, polygonAnnotationManager.fillTranslate)
   }
@@ -53,14 +53,14 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testFillTranslateAnchor() {
     val testValue = FillTranslateAnchor.MAP
-    val polygonAnnotationManager = mapView.getAnnotationPlugin().createPolygonAnnotationManager(mapView)
+    val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager(mapView)
     polygonAnnotationManager.fillTranslateAnchor = testValue
     assertEquals(testValue, polygonAnnotationManager.fillTranslateAnchor)
   }
 
   @Test
   fun create() {
-    val polygonAnnotationManager = mapView.getAnnotationPlugin().createPolygonAnnotationManager(mapView)
+    val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager(mapView)
     val annotation = polygonAnnotationManager.create(
       PolygonAnnotationOptions()
         .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(0.0, 1.0), Point.fromLngLat(1.0, 0.0))))
@@ -70,7 +70,7 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun createFromFeature() {
-    val polygonAnnotationManager = mapView.getAnnotationPlugin().createPolygonAnnotationManager(mapView)
+    val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager(mapView)
     val featureCollection =
       FeatureCollection.fromFeature(Feature.fromGeometry(Polygon.fromLngLats(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(0.0, 1.0), Point.fromLngLat(1.0, 0.0))))))
     val annotations = polygonAnnotationManager.create(featureCollection.toJson())
@@ -81,7 +81,7 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun createList() {
-    val polygonAnnotationManager = mapView.getAnnotationPlugin().createPolygonAnnotationManager(mapView)
+    val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager(mapView)
     val list = listOf(
       PolygonAnnotationOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(1.0, 0.0), Point.fromLngLat(0.0, 1.0)))),
       PolygonAnnotationOptions().withPoints(listOf(listOf(Point.fromLngLat(1.0, 0.0), Point.fromLngLat(0.0, 1.0), Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -93,7 +93,7 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun update() {
-    val polygonAnnotationManager = mapView.getAnnotationPlugin().createPolygonAnnotationManager(mapView)
+    val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager(mapView)
     val annotation = polygonAnnotationManager.create(PolygonAnnotationOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(0.0, 1.0), Point.fromLngLat(1.0, 0.0)))))
     assertEquals(annotation, polygonAnnotationManager.annotations[0])
     annotation.points = listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(0.0, 1.0), Point.fromLngLat(1.0, 0.0)))
@@ -103,7 +103,7 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun updateList() {
-    val polygonAnnotationManager = mapView.getAnnotationPlugin().createPolygonAnnotationManager(mapView)
+    val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager(mapView)
     val list = listOf(
       PolygonAnnotationOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(1.0, 0.0), Point.fromLngLat(0.0, 1.0)))),
       PolygonAnnotationOptions().withPoints(listOf(listOf(Point.fromLngLat(1.0, 0.0), Point.fromLngLat(0.0, 1.0), Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -120,7 +120,7 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun delete() {
-    val polygonAnnotationManager = mapView.getAnnotationPlugin().createPolygonAnnotationManager(mapView)
+    val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager(mapView)
     val annotation = polygonAnnotationManager.create(
       PolygonAnnotationOptions()
         .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(0.0, 1.0), Point.fromLngLat(1.0, 0.0))))
@@ -132,7 +132,7 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun deleteList() {
-    val polygonAnnotationManager = mapView.getAnnotationPlugin().createPolygonAnnotationManager(mapView)
+    val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager(mapView)
     val list = listOf(
       PolygonAnnotationOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(1.0, 0.0), Point.fromLngLat(0.0, 1.0)))),
       PolygonAnnotationOptions().withPoints(listOf(listOf(Point.fromLngLat(1.0, 0.0), Point.fromLngLat(0.0, 1.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(0.0, 0.0))))
@@ -147,7 +147,7 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun deleteAll() {
-    val polygonAnnotationManager = mapView.getAnnotationPlugin().createPolygonAnnotationManager(mapView)
+    val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager(mapView)
     val list = listOf(
       PolygonAnnotationOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(1.0, 0.0), Point.fromLngLat(0.0, 1.0)))),
       PolygonAnnotationOptions().withPoints(listOf(listOf(Point.fromLngLat(1.0, 0.0), Point.fromLngLat(0.0, 1.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(0.0, 0.0))))

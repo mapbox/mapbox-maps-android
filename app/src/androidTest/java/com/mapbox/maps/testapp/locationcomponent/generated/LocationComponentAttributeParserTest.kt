@@ -6,7 +6,7 @@ import android.graphics.Color
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.maps.R
-import com.mapbox.maps.plugin.locationcomponent.getLocationComponentPlugin
+import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.BaseMapTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -34,32 +34,32 @@ class LocationComponentAttributeParserTest : BaseMapTest() {
     assertEquals(
       "enabled test failed..",
       false,
-      mapView.getLocationComponentPlugin().getSettings().enabled
+      mapView.location.getSettings().enabled
     )
     assertEquals(
       "pulsingEnabled test failed..",
       false,
-      mapView.getLocationComponentPlugin().getSettings().pulsingEnabled
+      mapView.location.getSettings().pulsingEnabled
     )
     assertEquals(
       "pulsingColor test failed..",
       Color.BLACK,
-      mapView.getLocationComponentPlugin().getSettings().pulsingColor
+      mapView.location.getSettings().pulsingColor
     )
     assertEquals(
       "pulsingMaxRadius test failed..",
       10.0f * pixelRatio,
-      mapView.getLocationComponentPlugin().getSettings().pulsingMaxRadius
+      mapView.location.getSettings().pulsingMaxRadius
     )
     assertEquals(
       "layerAbove test failed..",
       "testString",
-      mapView.getLocationComponentPlugin().getSettings().layerAbove
+      mapView.location.getSettings().layerAbove
     )
     assertEquals(
       "layerBelow test failed..",
       "testString",
-      mapView.getLocationComponentPlugin().getSettings().layerBelow
+      mapView.location.getSettings().layerBelow
     )
     // TODO, test for location puck.
   }

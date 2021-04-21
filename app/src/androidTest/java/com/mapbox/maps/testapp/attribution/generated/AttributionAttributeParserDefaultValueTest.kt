@@ -6,7 +6,7 @@ import android.graphics.Color
 import android.view.Gravity
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import com.mapbox.maps.plugin.attribution.getAttributionPlugin
+import com.mapbox.maps.plugin.attribution.attribution
 import com.mapbox.maps.testapp.BaseMapTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -25,42 +25,42 @@ class AttributionAttributeParserDefaultValueTest : BaseMapTest() {
     assertEquals(
       "enabled test failed..",
       true,
-      mapView.getAttributionPlugin().getSettings().enabled
+      mapView.attribution.getSettings().enabled
     )
     assertEquals(
       "iconColor test failed..",
       Color.parseColor("#FF1E8CAB"),
-      mapView.getAttributionPlugin().getSettings().iconColor
+      mapView.attribution.getSettings().iconColor
     )
     assertEquals(
       "position test failed..",
       Gravity.BOTTOM or Gravity.START,
-      mapView.getAttributionPlugin().getSettings().position
+      mapView.attribution.getSettings().position
     )
     assertEquals(
       "marginLeft test failed..",
       92f * pixelRatio,
-      mapView.getAttributionPlugin().getSettings().marginLeft
+      mapView.attribution.getSettings().marginLeft
     )
     assertEquals(
       "marginTop test failed..",
       4f * pixelRatio,
-      mapView.getAttributionPlugin().getSettings().marginTop
+      mapView.attribution.getSettings().marginTop
     )
     assertEquals(
       "marginRight test failed..",
       4f * pixelRatio,
-      mapView.getAttributionPlugin().getSettings().marginRight
+      mapView.attribution.getSettings().marginRight
     )
     assertEquals(
       "marginBottom test failed..",
       4f * pixelRatio,
-      mapView.getAttributionPlugin().getSettings().marginBottom
+      mapView.attribution.getSettings().marginBottom
     )
     assertEquals(
       "clickable test failed..",
       true,
-      mapView.getAttributionPlugin().getSettings().clickable
+      mapView.attribution.getSettings().clickable
     )
   }
 }

@@ -6,7 +6,7 @@ import android.os.Handler
 import android.util.AttributeSet
 import com.mapbox.android.gestures.AndroidGesturesManager
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
-import com.mapbox.maps.plugin.animation.getCameraAnimationsPlugin
+import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
@@ -59,7 +59,7 @@ class GestureOptionsTest {
     every { typedArray.getFloat(any(), any()) } returns 10.0f
     every { typedArray.hasValue(any()) } returns true
     every { mapDelegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
-    every { mapPluginProviderDelegate.getCameraAnimationsPlugin() } returns cameraAnimationsPlugin
+    every { mapPluginProviderDelegate.camera } returns cameraAnimationsPlugin
     every { mapDelegateProvider.mapTransformDelegate } returns mapTransformDelegate
     every { mapDelegateProvider.mapProjectionDelegate } returns mapProjectionDelegate
     every { mainHandler.post(capture(runnableSlot)) } answers {

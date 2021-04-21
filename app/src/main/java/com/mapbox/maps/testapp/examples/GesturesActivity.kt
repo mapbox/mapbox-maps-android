@@ -81,7 +81,7 @@ class GesturesActivity : AppCompatActivity() {
   }
 
   private fun initializeMap() {
-    gesturesPlugin = mapView.getGesturesPlugin()
+    gesturesPlugin = mapView.gestures
     gesturesManager = gesturesPlugin.getGesturesManager()
 
     val layoutParams = recycler.layoutParams as RelativeLayout.LayoutParams

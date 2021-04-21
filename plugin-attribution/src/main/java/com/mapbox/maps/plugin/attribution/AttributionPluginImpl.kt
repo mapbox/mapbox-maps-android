@@ -117,10 +117,7 @@ open class AttributionViewPlugin(
 }
 
 /**
- * Extension function for MapView to get the Compass View plugin instance.
- *
- * @return Compass plugin instance
+ * Extension val for MapView to get the Compass View plugin instance.
  */
-fun MapPluginProviderDelegate.getAttributionPlugin(): AttributionPlugin {
-  return this.getPlugin(AttributionViewPlugin::class.java)!!
-}
+val MapPluginProviderDelegate.attribution: AttributionPlugin
+  get() = this.getPlugin(AttributionViewPlugin::class.java)!!

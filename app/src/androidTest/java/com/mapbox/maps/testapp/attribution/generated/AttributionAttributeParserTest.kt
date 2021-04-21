@@ -7,7 +7,7 @@ import android.view.Gravity
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.maps.R
-import com.mapbox.maps.plugin.attribution.getAttributionPlugin
+import com.mapbox.maps.plugin.attribution.attribution
 import com.mapbox.maps.testapp.BaseMapTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -35,42 +35,42 @@ class AttributionAttributeParserTest : BaseMapTest() {
     assertEquals(
       "enabled test failed..",
       false,
-      mapView.getAttributionPlugin().getSettings().enabled
+      mapView.attribution.getSettings().enabled
     )
     assertEquals(
       "iconColor test failed..",
       Color.BLACK,
-      mapView.getAttributionPlugin().getSettings().iconColor
+      mapView.attribution.getSettings().iconColor
     )
     assertEquals(
       "position test failed..",
       Gravity.BOTTOM or Gravity.END,
-      mapView.getAttributionPlugin().getSettings().position
+      mapView.attribution.getSettings().position
     )
     assertEquals(
       "marginLeft test failed..",
       10.0f * pixelRatio,
-      mapView.getAttributionPlugin().getSettings().marginLeft
+      mapView.attribution.getSettings().marginLeft
     )
     assertEquals(
       "marginTop test failed..",
       10.0f * pixelRatio,
-      mapView.getAttributionPlugin().getSettings().marginTop
+      mapView.attribution.getSettings().marginTop
     )
     assertEquals(
       "marginRight test failed..",
       10.0f * pixelRatio,
-      mapView.getAttributionPlugin().getSettings().marginRight
+      mapView.attribution.getSettings().marginRight
     )
     assertEquals(
       "marginBottom test failed..",
       10.0f * pixelRatio,
-      mapView.getAttributionPlugin().getSettings().marginBottom
+      mapView.attribution.getSettings().marginBottom
     )
     assertEquals(
       "clickable test failed..",
       false,
-      mapView.getAttributionPlugin().getSettings().clickable
+      mapView.attribution.getSettings().clickable
     )
   }
 }

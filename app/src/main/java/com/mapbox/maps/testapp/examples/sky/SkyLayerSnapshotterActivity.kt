@@ -10,8 +10,8 @@ import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.skyLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.SkyType
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.plugin.compass.getCompassPlugin
-import com.mapbox.maps.plugin.scalebar.getScaleBarPlugin
+import com.mapbox.maps.plugin.compass.compass
+import com.mapbox.maps.plugin.scalebar.scalebar
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_sky_snapshotter.*
 
@@ -25,8 +25,8 @@ class SkyLayerSnapshotterActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_sky_snapshotter)
-    mapView.getScaleBarPlugin().enabled = false
-    mapView.getCompassPlugin().enabled = false
+    mapView.scalebar.enabled = false
+    mapView.compass.enabled = false
     mapView.getMapboxMap().setCamera(
       CameraOptions.Builder()
         .center(Point.fromLngLat(24.827187523937795, 60.55932732152849))

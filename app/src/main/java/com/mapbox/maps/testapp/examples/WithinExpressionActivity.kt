@@ -16,7 +16,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.Visibility
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
-import com.mapbox.maps.plugin.animation.getCameraAnimationsPlugin
+import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_within_expression.*
 
@@ -85,7 +85,7 @@ class WithinExpressionActivity : AppCompatActivity() {
       )
 
       // Move to a new camera position
-      mapView.getCameraAnimationsPlugin().easeTo(
+      mapView.camera.easeTo(
         CameraOptions.Builder()
           .zoom(16.0)
           .center(Point.fromLngLat(-77.06535338052844, 38.905156245642814))

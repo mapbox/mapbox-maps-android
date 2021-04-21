@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
-import com.mapbox.maps.plugin.animation.getCameraAnimationsPlugin
+import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_texture_view.*
 
@@ -37,7 +37,7 @@ class TextureViewAnimateActivity : AppCompatActivity() {
     setContentView(R.layout.activity_texture_view)
 
     mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS)
-    val cameraPlugin = mapView.getCameraAnimationsPlugin()
+    val cameraPlugin = mapView.camera
 
     for (i in places.indices) {
       handler.postDelayed(

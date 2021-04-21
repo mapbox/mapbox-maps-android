@@ -72,7 +72,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     val animatorListener2 = CameraAnimatorListener()
     val bearingAnimator = createBearingAnimator(cameraAnimationPlugin, 180.0, delay, duration)
     val bearingAnimator2 = createBearingAnimator(cameraAnimationPlugin, 90.0, 0, duration)
-    val cameraAnimationPlugin = mapView.getCameraAnimationsPlugin()
+    val cameraAnimationPlugin = mapView.camera
     bearingAnimator.addListener(animatorListener)
     bearingAnimator2.addListener(animatorListener2)
 
@@ -107,7 +107,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     val delay = 2000L
     val animatorListener = CameraAnimatorListener()
     val bearingAnimator = createBearingAnimator(cameraAnimationPlugin, 180.0, 0, duration)
-    val cameraAnimationPlugin = mapView.getCameraAnimationsPlugin()
+    val cameraAnimationPlugin = mapView.camera
     bearingAnimator.addListener(animatorListener)
 
     val latchHalfDelay = CountDownLatch(1)
@@ -159,7 +159,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     val bearingAnimator = createBearingAnimator(cameraAnimationPlugin, 180.0, 0, duration)
     bearingAnimator.addListener(animatorListener)
 
-    val cameraAnimationPlugin = mapView.getCameraAnimationsPlugin()
+    val cameraAnimationPlugin = mapView.camera
     cameraAnimationPlugin.addCameraBearingChangeListener {
       Logger.i(TAG, "onChanged $it")
       actualUpdates += 1
@@ -189,7 +189,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     val bearingAnimator2 = createBearingAnimator(cameraAnimationPlugin, 170.0, 0, duration)
     bearingAnimator2.addListener(animatorListener2)
 
-    val cameraAnimationPlugin = mapView.getCameraAnimationsPlugin()
+    val cameraAnimationPlugin = mapView.camera
 
     mainHandler.post {
       cameraAnimationPlugin.registerAnimators(bearingAnimator1)
@@ -231,7 +231,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     val updatedValues = mutableListOf<Double>()
 
     val latch = CountDownLatch(2)
-    val cameraAnimationPlugin = mapView.getCameraAnimationsPlugin()
+    val cameraAnimationPlugin = mapView.camera
     cameraAnimationPlugin.addCameraBearingChangeListener {
       Logger.i(TAG, "onChanged $it")
       updatedValues.add(it)
@@ -255,7 +255,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     val updatedValues = mutableListOf<Double>()
 
     val latch = CountDownLatch(2)
-    val cameraAnimationPlugin = mapView.getCameraAnimationsPlugin()
+    val cameraAnimationPlugin = mapView.camera
     cameraAnimationPlugin.addCameraBearingChangeListener {
       Logger.i(TAG, "onChanged $it")
       updatedValues.add(it)
@@ -284,7 +284,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     val updatedValues = mutableListOf<Double>()
 
     val latch = CountDownLatch(4)
-    val cameraAnimationPlugin = mapView.getCameraAnimationsPlugin()
+    val cameraAnimationPlugin = mapView.camera
     cameraAnimationPlugin.addCameraBearingChangeListener {
       Logger.i(TAG, "onChanged $it")
       updatedValues.add(it)
@@ -314,7 +314,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     val updatedValues = mutableListOf<Double>()
 
     val latch = CountDownLatch(4)
-    val cameraAnimationPlugin = mapView.getCameraAnimationsPlugin()
+    val cameraAnimationPlugin = mapView.camera
     cameraAnimationPlugin.addCameraBearingChangeListener {
       Logger.i(TAG, "onChanged $it")
       updatedValues.add(it)
@@ -344,7 +344,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     val updatedValues = mutableListOf<Double>()
 
     val latch = CountDownLatch(2)
-    val cameraAnimationPlugin = mapView.getCameraAnimationsPlugin()
+    val cameraAnimationPlugin = mapView.camera
     cameraAnimationPlugin.addCameraBearingChangeListener {
       Logger.i(TAG, "onChanged $it")
       updatedValues.add(it)
@@ -373,7 +373,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     val pitchAnimator = createPitchAnimator(cameraAnimationPlugin, 50.0, 0, 2000L)
     pitchAnimator.addListener(pithListener)
 
-    val cameraAnimationPlugin = mapView.getCameraAnimationsPlugin()
+    val cameraAnimationPlugin = mapView.camera
     mainHandler.post {
       cameraAnimationPlugin.registerAnimators(bearingAnimator, pitchAnimator)
       bearingAnimator.start()
@@ -404,7 +404,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     pitchAnimatorThree.addListener(pitchListenerThree)
 
     var currentPitch = 0.0
-    val cameraAnimationPlugin = mapView.getCameraAnimationsPlugin()
+    val cameraAnimationPlugin = mapView.camera
     cameraAnimationPlugin.addCameraPitchChangeListener {
       Logger.i(TAG, "onChanged $it")
       currentPitch = it

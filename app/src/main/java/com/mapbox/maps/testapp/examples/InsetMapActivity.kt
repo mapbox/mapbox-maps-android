@@ -18,12 +18,12 @@ import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
-import com.mapbox.maps.plugin.attribution.getAttributionPlugin
-import com.mapbox.maps.plugin.compass.getCompassPlugin
+import com.mapbox.maps.plugin.attribution.attribution
+import com.mapbox.maps.plugin.compass.compass
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
-import com.mapbox.maps.plugin.gestures.getGesturesPlugin
-import com.mapbox.maps.plugin.logo.getLogoPlugin
-import com.mapbox.maps.plugin.scalebar.getScaleBarPlugin
+import com.mapbox.maps.plugin.gestures.gestures
+import com.mapbox.maps.plugin.logo.logo
+import com.mapbox.maps.plugin.scalebar.scalebar
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.examples.fragment.MapFragment
 
@@ -75,12 +75,12 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
           updateInsetMapLineLayerBounds(style)
         }
         insetMapFragment.getMapView()?.apply {
-          getLogoPlugin().enabled = false
-          getScaleBarPlugin().enabled = false
-          getAttributionPlugin().enabled = false
-          getCompassPlugin().enabled = false
+          logo.enabled = false
+          scalebar.enabled = false
+          attribution.enabled = false
+          compass.enabled = false
 
-          getGesturesPlugin().updateSettings {
+          gestures.updateSettings {
             scrollEnabled = false
             zoomEnabled = false
           }

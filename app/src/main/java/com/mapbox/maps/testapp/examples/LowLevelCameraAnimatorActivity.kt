@@ -19,7 +19,7 @@ import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer
 import com.mapbox.maps.extension.style.light.generated.getLight
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
-import com.mapbox.maps.plugin.animation.getCameraAnimationsPlugin
+import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_camera_animate.*
 
@@ -40,7 +40,7 @@ class LowLevelCameraAnimatorActivity : AppCompatActivity() {
   }
 
   private fun animateCameraDelayed() {
-    mapView.getCameraAnimationsPlugin().apply {
+    mapView.camera.apply {
       val bearing = createBearingAnimator(cameraAnimatorOptions(0.0, 160.0)) {
         duration = 8500
         interpolator = AnticipateOvershootInterpolator()

@@ -10,10 +10,10 @@ import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.gestures.OnMoveListener
-import com.mapbox.maps.plugin.gestures.getGesturesPlugin
+import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
-import com.mapbox.maps.plugin.locationcomponent.getLocationComponentPlugin
+import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
 import com.mapbox.maps.toJson
@@ -32,7 +32,7 @@ class LocationTrackingActivity : AppCompatActivity() {
 
   private val onIndicatorPositionChangedListener = OnIndicatorPositionChangedListener {
     mapView.getMapboxMap().setCamera(CameraOptions.Builder().center(it).build())
-    mapView.getGesturesPlugin().focalPoint = mapView.getMapboxMap().pixelForCoordinate(it)
+    mapView.gestures.focalPoint = mapView.getMapboxMap().pixelForCoordinate(it)
   }
 
   private val onMoveListener = object : OnMoveListener {
@@ -71,11 +71,11 @@ class LocationTrackingActivity : AppCompatActivity() {
   }
 
   private fun setupGesturesListener() {
-    mapView.getGesturesPlugin().addOnMoveListener(onMoveListener)
+    mapView.gestures.addOnMoveListener(onMoveListener)
   }
 
   private fun initLocationComponent() {
-    val locationComponentPlugin = mapView.getLocationComponentPlugin()
+    val locationComponentPlugin = mapView.location
     locationComponentPlugin.updateSettings {
       this.enabled = true
       this.locationPuck = LocationPuck2D(
@@ -107,11 +107,11 @@ class LocationTrackingActivity : AppCompatActivity() {
 
   private fun onCameraTrackingDismissed() {
     Toast.makeText(this, "onCameraTrackingDismissed", Toast.LENGTH_SHORT).show()
-    mapView.getLocationComponentPlugin()
+    mapView.location
       .removeOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
-    mapView.getLocationComponentPlugin()
+    mapView.location
       .removeOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener)
-    mapView.getGesturesPlugin().removeOnMoveListener(onMoveListener)
+    mapView.gestures.removeOnMoveListener(onMoveListener)
   }
 
   override fun onStart() {
@@ -132,11 +132,11 @@ class LocationTrackingActivity : AppCompatActivity() {
   override fun onDestroy() {
     super.onDestroy()
     mapView.onDestroy()
-    mapView.getLocationComponentPlugin()
+    mapView.location
       .removeOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener)
-    mapView.getLocationComponentPlugin()
+    mapView.location
       .removeOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
-    mapView.getGesturesPlugin().removeOnMoveListener(onMoveListener)
+    mapView.gestures.removeOnMoveListener(onMoveListener)
   }
 
   override fun onRequestPermissionsResult(

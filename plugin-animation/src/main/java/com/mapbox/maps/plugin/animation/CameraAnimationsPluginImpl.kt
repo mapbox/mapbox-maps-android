@@ -792,13 +792,10 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 }
 
 /**
- * Extension function for MapView to get the Camera Animations plugin instance.
- *
- * @return Camera Animations plugin instance
+ * Extension val for MapView to get the Camera Animations plugin instance.
  */
-fun MapPluginProviderDelegate.getCameraAnimationsPlugin(): CameraAnimationsPlugin {
-  return this.getPlugin(CameraAnimationsPluginImpl::class.java)!!
-}
+val MapPluginProviderDelegate.camera: CameraAnimationsPlugin
+  get() = this.getPlugin(CameraAnimationsPluginImpl::class.java)!!
 
 /**
  * Extension easeTo() for [MapPluginExtensionsDelegate]

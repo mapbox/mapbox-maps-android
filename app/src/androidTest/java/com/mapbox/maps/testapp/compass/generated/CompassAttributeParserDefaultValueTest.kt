@@ -5,7 +5,7 @@ package com.mapbox.maps.testapp.compass.generated
 import android.view.Gravity
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import com.mapbox.maps.plugin.compass.getCompassPlugin
+import com.mapbox.maps.plugin.compass.compass
 import com.mapbox.maps.testapp.BaseMapTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -24,62 +24,62 @@ class CompassAttributeParserDefaultValueTest : BaseMapTest() {
     assertEquals(
       "enabled test failed..",
       true,
-      mapView.getCompassPlugin().getSettings().enabled
+      mapView.compass.getSettings().enabled
     )
     assertEquals(
       "position test failed..",
       Gravity.TOP or Gravity.END,
-      mapView.getCompassPlugin().getSettings().position
+      mapView.compass.getSettings().position
     )
     assertEquals(
       "marginLeft test failed..",
       4f * pixelRatio,
-      mapView.getCompassPlugin().getSettings().marginLeft
+      mapView.compass.getSettings().marginLeft
     )
     assertEquals(
       "marginTop test failed..",
       4f * pixelRatio,
-      mapView.getCompassPlugin().getSettings().marginTop
+      mapView.compass.getSettings().marginTop
     )
     assertEquals(
       "marginRight test failed..",
       4f * pixelRatio,
-      mapView.getCompassPlugin().getSettings().marginRight
+      mapView.compass.getSettings().marginRight
     )
     assertEquals(
       "marginBottom test failed..",
       4f * pixelRatio,
-      mapView.getCompassPlugin().getSettings().marginBottom
+      mapView.compass.getSettings().marginBottom
     )
     assertEquals(
       "opacity test failed..",
       1f,
-      mapView.getCompassPlugin().getSettings().opacity
+      mapView.compass.getSettings().opacity
     )
     assertEquals(
       "rotation test failed..",
       0f,
-      mapView.getCompassPlugin().getSettings().rotation
+      mapView.compass.getSettings().rotation
     )
     assertEquals(
       "visibility test failed..",
       true,
-      mapView.getCompassPlugin().getSettings().visibility
+      mapView.compass.getSettings().visibility
     )
     assertEquals(
       "fadeWhenFacingNorth test failed..",
       true,
-      mapView.getCompassPlugin().getSettings().fadeWhenFacingNorth
+      mapView.compass.getSettings().fadeWhenFacingNorth
     )
     assertEquals(
       "clickable test failed..",
       true,
-      mapView.getCompassPlugin().getSettings().clickable
+      mapView.compass.getSettings().clickable
     )
     assertEquals(
       "image test failed..",
       null,
-      mapView.getCompassPlugin().getSettings().image
+      mapView.compass.getSettings().image
     )
   }
 }

@@ -6,7 +6,7 @@ import android.view.Gravity
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.maps.R
-import com.mapbox.maps.plugin.logo.getLogoPlugin
+import com.mapbox.maps.plugin.logo.logo
 import com.mapbox.maps.testapp.BaseMapTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -34,32 +34,32 @@ class LogoAttributeParserTest : BaseMapTest() {
     assertEquals(
       "enabled test failed..",
       false,
-      mapView.getLogoPlugin().getSettings().enabled
+      mapView.logo.getSettings().enabled
     )
     assertEquals(
       "position test failed..",
       Gravity.BOTTOM or Gravity.END,
-      mapView.getLogoPlugin().getSettings().position
+      mapView.logo.getSettings().position
     )
     assertEquals(
       "marginLeft test failed..",
       10.0f * pixelRatio,
-      mapView.getLogoPlugin().getSettings().marginLeft
+      mapView.logo.getSettings().marginLeft
     )
     assertEquals(
       "marginTop test failed..",
       10.0f * pixelRatio,
-      mapView.getLogoPlugin().getSettings().marginTop
+      mapView.logo.getSettings().marginTop
     )
     assertEquals(
       "marginRight test failed..",
       10.0f * pixelRatio,
-      mapView.getLogoPlugin().getSettings().marginRight
+      mapView.logo.getSettings().marginRight
     )
     assertEquals(
       "marginBottom test failed..",
       10.0f * pixelRatio,
-      mapView.getLogoPlugin().getSettings().marginBottom
+      mapView.logo.getSettings().marginBottom
     )
   }
 }

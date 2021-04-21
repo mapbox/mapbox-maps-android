@@ -266,10 +266,7 @@ open class CompassViewPlugin(
 }
 
 /**
- * Extension function for MapView to get the Compass View plugin instance.
- *
- * @return Compass plugin instance
+ * Extension val for MapView to get the Compass View plugin instance.
  */
-fun MapPluginProviderDelegate.getCompassPlugin(): CompassPlugin {
-  return this.getPlugin(CompassViewPlugin::class.java)!!
-}
+val MapPluginProviderDelegate.compass: CompassPlugin
+  get() = this.getPlugin(CompassViewPlugin::class.java)!!

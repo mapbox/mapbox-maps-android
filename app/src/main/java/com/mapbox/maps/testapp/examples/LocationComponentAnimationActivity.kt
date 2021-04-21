@@ -12,7 +12,7 @@ import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.locationcomponent.LocationConsumer
 import com.mapbox.maps.plugin.locationcomponent.LocationProvider
-import com.mapbox.maps.plugin.locationcomponent.getLocationComponentPlugin
+import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_simple_map.*
 
@@ -107,7 +107,7 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
             .center(Point.fromLngLat(POINT_LNG, POINT_LAT))
             .build()
         )
-        mapView.getLocationComponentPlugin().apply {
+        mapView.location.apply {
           setLocationProvider(FakeLocationProvider())
           updateSettings {
             locationPuck = LocationPuck2D(

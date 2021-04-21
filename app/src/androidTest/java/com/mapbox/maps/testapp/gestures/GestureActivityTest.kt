@@ -7,7 +7,7 @@ import androidx.test.filters.LargeTest
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.R
-import com.mapbox.maps.plugin.gestures.getGesturesPlugin
+import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.testapp.BaseMapTest
 import com.mapbox.maps.testapp.gestures.GesturesUiTestUtils.move
 import com.mapbox.maps.testapp.gestures.GesturesUiTestUtils.quickScale
@@ -55,7 +55,7 @@ class GestureActivityTest : BaseMapTest() {
         // zoom in so we can move vertically
         mapboxMap.setCamera(CameraOptions.Builder().zoom(4.0).build())
         initialCameraPosition = mapboxMap.getCameraOptions(null)
-        mapView.getGesturesPlugin().quickZoomEnabled = false
+        mapView.gestures.quickZoomEnabled = false
       }
     }
 
@@ -130,7 +130,7 @@ class GestureActivityTest : BaseMapTest() {
         // zoom in so we can move vertically
         mapboxMap.setCamera(CameraOptions.Builder().zoom(4.0).build())
         initialCameraPosition = mapboxMap.getCameraOptions(null)
-        mapView.getGesturesPlugin().quickZoomEnabled = false
+        mapView.gestures.quickZoomEnabled = false
       }
     }
 
@@ -213,7 +213,7 @@ class GestureActivityTest : BaseMapTest() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         initialZoom = mapboxMap.getCameraOptions(null).zoom
-        mapView.getGesturesPlugin().quickZoomEnabled = false
+        mapView.gestures.quickZoomEnabled = false
       }
     }
     onView(withId(R.id.mapView)).perform(
@@ -254,7 +254,7 @@ class GestureActivityTest : BaseMapTest() {
         // zoom in so we can move vertically
         mapboxMap.setCamera(CameraOptions.Builder().zoom(4.0).build())
         initialCameraPosition = mapboxMap.getCameraOptions(null)
-        mapView.getGesturesPlugin().quickZoomEnabled = false
+        mapView.gestures.quickZoomEnabled = false
       }
     }
 

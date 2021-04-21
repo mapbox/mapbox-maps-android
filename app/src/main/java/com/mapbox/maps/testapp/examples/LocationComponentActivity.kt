@@ -11,9 +11,9 @@ import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
-import com.mapbox.maps.plugin.gestures.getGesturesPlugin
+import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
-import com.mapbox.maps.plugin.locationcomponent.getLocationComponentPlugin
+import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
 import com.mapbox.maps.toJson
@@ -27,7 +27,7 @@ class LocationComponentActivity : AppCompatActivity() {
     // Jump to the current indicator position
     mapView.getMapboxMap().setCamera(CameraOptions.Builder().center(it).build())
     // Set the gestures plugin's focal point to the current indicator location.
-    mapView.getGesturesPlugin().focalPoint = mapView.getMapboxMap().pixelForCoordinate(it)
+    mapView.gestures.focalPoint = mapView.getMapboxMap().pixelForCoordinate(it)
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,9 +37,9 @@ class LocationComponentActivity : AppCompatActivity() {
     locationPermissionHelper.checkPermissions {
       mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) { _ ->
         // Disable scroll gesture, since we are updating the camera position based on the indicator location.
-        mapView.getGesturesPlugin().scrollEnabled = false
-        mapView.getGesturesPlugin().addOnMapClickListener { point ->
-          mapView.getLocationComponentPlugin()
+        mapView.gestures.scrollEnabled = false
+        mapView.gestures.addOnMapClickListener { point ->
+          mapView.location
             .isLocatedAt(point) { isPuckLocatedAtPoint ->
               if (isPuckLocatedAtPoint) {
                 Toast.makeText(this, "Clicked on location puck", Toast.LENGTH_SHORT).show()
@@ -47,8 +47,8 @@ class LocationComponentActivity : AppCompatActivity() {
             }
           true
         }
-        mapView.getGesturesPlugin().addOnMapLongClickListener { point ->
-          mapView.getLocationComponentPlugin()
+        mapView.gestures.addOnMapLongClickListener { point ->
+          mapView.location
             .isLocatedAt(point) { isPuckLocatedAtPoint ->
               if (isPuckLocatedAtPoint) {
                 Toast.makeText(this, "Long-clicked on location puck", Toast.LENGTH_SHORT).show()
@@ -76,11 +76,11 @@ class LocationComponentActivity : AppCompatActivity() {
         return true
       }
       R.id.action_component_disable -> {
-        mapView.getLocationComponentPlugin().enabled = false
+        mapView.location.enabled = false
         return true
       }
       R.id.action_component_enabled -> {
-        mapView.getLocationComponentPlugin().enabled = true
+        mapView.location.enabled = true
         return true
       }
       else -> return super.onOptionsItemSelected(item)
@@ -88,7 +88,7 @@ class LocationComponentActivity : AppCompatActivity() {
   }
 
   private fun toggleCustomisedPuck() {
-    mapView.getLocationComponentPlugin().let {
+    mapView.location.let {
       when (it.locationPuck) {
         is LocationPuck3D -> it.locationPuck = LocationPuck2D(
           topImage = AppCompatResources.getDrawable(
@@ -143,14 +143,14 @@ class LocationComponentActivity : AppCompatActivity() {
   override fun onStart() {
     super.onStart()
     mapView.onStart()
-    mapView.getLocationComponentPlugin()
+    mapView.location
       .addOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
   }
 
   override fun onStop() {
     super.onStop()
     mapView.onStop()
-    mapView.getLocationComponentPlugin()
+    mapView.location
       .removeOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
   }
 

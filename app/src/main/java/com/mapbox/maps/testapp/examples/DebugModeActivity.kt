@@ -8,11 +8,11 @@ import com.mapbox.maps.*
 import com.mapbox.maps.extension.observable.getResourceEventData
 import com.mapbox.maps.extension.observable.subscribeResourceRequest
 import com.mapbox.maps.extension.observable.unsubscribeResourceRequest
-import com.mapbox.maps.plugin.compass.getCompassPlugin
+import com.mapbox.maps.plugin.compass.compass
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
 import com.mapbox.maps.plugin.delegates.listeners.eventdata.MapLoadErrorType
 import com.mapbox.maps.plugin.scalebar.ScaleBarPlugin
-import com.mapbox.maps.plugin.scalebar.getScaleBarPlugin
+import com.mapbox.maps.plugin.scalebar.scalebar
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_debug.*
 
@@ -52,8 +52,8 @@ class DebugModeActivity : AppCompatActivity() {
     // Using the extension method
     mapboxMap.subscribeResourceRequest(extensionObservable)
     mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
-    mapView.getCompassPlugin().opacity = 0.5f
-    scaleBarPlugin = mapView.getScaleBarPlugin()
+    mapView.compass.opacity = 0.5f
+    scaleBarPlugin = mapView.scalebar
     scaleBarPlugin.enabled = false
     scaleBarPlugin.textColor = ContextCompat.getColor(this@DebugModeActivity, R.color.primary)
     displayOnSecondDisplayButton.setOnClickListener {

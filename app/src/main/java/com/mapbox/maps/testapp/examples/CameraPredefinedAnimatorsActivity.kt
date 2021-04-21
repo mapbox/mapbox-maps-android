@@ -44,7 +44,7 @@ class CameraPredefinedAnimatorsActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_camera_predefined_animators)
     mapboxMap = mapView.getMapboxMap()
-    cameraAnimationsPlugin = mapView.getCameraAnimationsPlugin()
+    cameraAnimationsPlugin = mapView.camera
     mapboxMap.loadStyle(
       style(Style.MAPBOX_STREETS) {
         mapboxMap.setCamera(START_CAMERA_POSITION)

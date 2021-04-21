@@ -80,10 +80,7 @@ open class LogoViewPlugin(
 }
 
 /**
- * Extension function for MapView to get the Logo View plugin instance.
- *
- * @return Logo plugin instance
+ * Extension val for MapView to get the Logo View plugin instance.
  */
-fun MapPluginProviderDelegate.getLogoPlugin(): LogoPlugin {
-  return this.getPlugin(LogoViewPlugin::class.java)!!
-}
+val MapPluginProviderDelegate.logo: LogoPlugin
+  get() = this.getPlugin(LogoViewPlugin::class.java)!!

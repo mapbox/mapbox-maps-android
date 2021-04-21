@@ -10,11 +10,11 @@ import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.TextJustify
 import com.mapbox.maps.extension.style.layers.properties.generated.TextTransform
 import com.mapbox.maps.extension.style.utils.ColorUtils
+import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
-import com.mapbox.maps.plugin.annotation.getAnnotationPlugin
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadedListener
 import com.mapbox.maps.testapp.BaseMapTest
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
@@ -47,7 +47,7 @@ class UpdateAnnotationTest : BaseMapTest(), OnMapLoadedListener {
       it.runOnUiThread {
         mapboxMap.loadStyleUri(AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]) {
           pointAnnotationManager =
-            mapView.getAnnotationPlugin().createPointAnnotationManager(mapView)
+            mapView.annotations.createPointAnnotationManager(mapView)
           pointAnnotation = pointAnnotationManager.create(
             PointAnnotationOptions()
               .withIconColor(ColorUtils.colorToRgbaString(Color.RED))
