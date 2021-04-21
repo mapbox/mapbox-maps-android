@@ -6,6 +6,7 @@ import com.mapbox.common.ShadowLogger
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -49,13 +50,33 @@ class MapInitOptionsTest {
   }
 
   @Test
-  fun defaultMapOption() {
+  fun defaultMapOptions() {
     val mapboxMapOptions = MapInitOptions(context)
     assertEquals(
-      GlyphsRasterizationMode.ALL_GLYPHS_RASTERIZED_LOCALLY,
+      GlyphsRasterizationMode.IDEOGRAPHS_RASTERIZED_LOCALLY,
       mapboxMapOptions.mapOptions.glyphsRasterizationOptions!!.rasterizationMode
     )
-
+    assertEquals(
+      FontUtils.extractValidFont(null),
+      mapboxMapOptions.mapOptions.glyphsRasterizationOptions!!.fontFamily
+    )
     assertEquals(1f, mapboxMapOptions.mapOptions.pixelRatio)
+    assertEquals(
+      ConstrainMode.HEIGHT_ONLY,
+      mapboxMapOptions.mapOptions.constrainMode
+    )
+    assertEquals(ContextMode.UNIQUE, mapboxMapOptions.mapOptions.contextMode)
+    assertEquals(NorthOrientation.UPWARDS, mapboxMapOptions.mapOptions.orientation)
+    assertEquals(ViewportMode.DEFAULT, mapboxMapOptions.mapOptions.viewportMode)
+    assertEquals(true, mapboxMapOptions.mapOptions.crossSourceCollisions)
+  }
+
+  @Test
+  fun defaultResourceOptions() {
+    val mapboxMapOptions = MapInitOptions(context)
+    assertEquals("token", mapboxMapOptions.resourceOptions.accessToken)
+    assertTrue(mapboxMapOptions.resourceOptions.cachePath!!.endsWith("foobar/mbx.db"))
+    assertTrue(mapboxMapOptions.resourceOptions.assetPath!!.endsWith("foobar"))
+    assertEquals(50_000_000L, mapboxMapOptions.resourceOptions.cacheSize)
   }
 }

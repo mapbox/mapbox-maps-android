@@ -39,7 +39,7 @@ data class MapInitOptions constructor(
       .accessToken(CredentialsManager.default.getAccessToken(context))
       .cachePath("${context.filesDir.absolutePath}/$DATABASE_NAME")
       .assetPath(context.filesDir.absolutePath)
-      .cacheSize(50_000_000) // 50 mb
+      .cacheSize(50_000_000L) // 50 mb
       .build()
 
     /**
@@ -49,9 +49,16 @@ data class MapInitOptions constructor(
     fun getDefaultMapOptions(context: Context): MapOptions = MapOptions.Builder()
       .glyphsRasterizationOptions(
         GlyphsRasterizationOptions.Builder()
-          .rasterizationMode(GlyphsRasterizationMode.ALL_GLYPHS_RASTERIZED_LOCALLY)
+          .rasterizationMode(GlyphsRasterizationMode.IDEOGRAPHS_RASTERIZED_LOCALLY)
+          .fontFamily(FontUtils.extractValidFont(null))
           .build()
-      ).pixelRatio(context.resources.displayMetrics.density)
+      )
+      .pixelRatio(context.resources.displayMetrics.density)
+      .constrainMode(ConstrainMode.HEIGHT_ONLY)
+      .contextMode(ContextMode.UNIQUE)
+      .orientation(NorthOrientation.UPWARDS)
+      .viewportMode(ViewportMode.DEFAULT)
+      .crossSourceCollisions(true)
       .build()
   }
 }

@@ -3,6 +3,7 @@ package com.mapbox.maps
 import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
+import com.mapbox.common.TileStore
 
 /**
  * Utility class for parsing [AttributeSet] to [ResourcesSettings].
@@ -33,20 +34,20 @@ internal object ResourcesAttributeParser {
 
     val tileStorePathString =
       typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesTileStorePath)
-        ?: "${context.filesDir.absolutePath}/maps_tile_store/"
 
-    return ResourceOptions.Builder()
+    val builder = ResourceOptions.Builder()
       .accessToken(accessTokenString)
       .baseURL(typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesBaseUrl))
       .cachePath(cachePathString)
       .assetPath(assetPathString)
-      // https://github.com/mapbox/mapbox-maps-android/issues/939
-      // .tileStorePath(tileStorePathString)
       .cacheSize(
         typedArray.getFloat(
           R.styleable.mapbox_MapView_mapbox_resourcesCacheSize, 50_000_000f // 50 mb
         ).toLong()
       )
-      .build()
+    tileStorePathString?.let {
+      builder.tileStore(TileStore.getInstance(it))
+    }
+    return builder.build()
   }
 }
