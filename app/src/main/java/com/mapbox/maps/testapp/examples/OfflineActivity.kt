@@ -2,6 +2,7 @@ package com.mapbox.maps.testapp.examples
 
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -320,6 +321,10 @@ class OfflineActivity : AppCompatActivity() {
     }
 
     fun addLog(alert: OfflineLog) {
+      when (alert) {
+        is OfflineLog.Error -> Log.e(TAG, alert.message)
+        else -> Log.d(TAG, alert.message)
+      }
       logs.add(0, alert)
       if (!isUpdating) {
         isUpdating = true
@@ -337,6 +342,7 @@ class OfflineActivity : AppCompatActivity() {
   }
 
   companion object {
+    private const val TAG = "OfflineActivity"
     private const val ZOOM = 12.0
     private val TOKYO: Point = Point.fromLngLat(139.769305, 35.682027)
     private const val TILE_REGION_ID = "myTileRegion"
