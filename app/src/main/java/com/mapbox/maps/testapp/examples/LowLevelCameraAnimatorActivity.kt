@@ -40,7 +40,7 @@ class LowLevelCameraAnimatorActivity : AppCompatActivity() {
   }
 
   private fun animateCameraDelayed() {
-    mapView.camera().apply {
+    mapView.camera.apply {
       val bearing = createBearingAnimator(cameraAnimatorOptions(0.0, 160.0)) {
         duration = 8500
         interpolator = AnticipateOvershootInterpolator()

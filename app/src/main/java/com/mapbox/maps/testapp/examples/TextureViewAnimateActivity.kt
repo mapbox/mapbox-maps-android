@@ -37,7 +37,7 @@ class TextureViewAnimateActivity : AppCompatActivity() {
     setContentView(R.layout.activity_texture_view)
 
     mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS)
-    val cameraPlugin = mapView.camera()
+    val cameraPlugin = mapView.camera
 
     for (i in places.indices) {
       handler.postDelayed(

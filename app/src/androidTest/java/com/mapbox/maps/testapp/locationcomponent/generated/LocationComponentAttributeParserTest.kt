@@ -34,32 +34,32 @@ class LocationComponentAttributeParserTest : BaseMapTest() {
     assertEquals(
       "enabled test failed..",
       false,
-      mapView.location().getSettings().enabled
+      mapView.location.getSettings().enabled
     )
     assertEquals(
       "pulsingEnabled test failed..",
       false,
-      mapView.location().getSettings().pulsingEnabled
+      mapView.location.getSettings().pulsingEnabled
     )
     assertEquals(
       "pulsingColor test failed..",
       Color.BLACK,
-      mapView.location().getSettings().pulsingColor
+      mapView.location.getSettings().pulsingColor
     )
     assertEquals(
       "pulsingMaxRadius test failed..",
       10.0f * pixelRatio,
-      mapView.location().getSettings().pulsingMaxRadius
+      mapView.location.getSettings().pulsingMaxRadius
     )
     assertEquals(
       "layerAbove test failed..",
       "testString",
-      mapView.location().getSettings().layerAbove
+      mapView.location.getSettings().layerAbove
     )
     assertEquals(
       "layerBelow test failed..",
       "testString",
-      mapView.location().getSettings().layerBelow
+      mapView.location.getSettings().layerBelow
     )
     // TODO, test for location puck.
   }

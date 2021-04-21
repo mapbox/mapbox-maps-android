@@ -107,7 +107,7 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
             .center(Point.fromLngLat(POINT_LNG, POINT_LAT))
             .build()
         )
-        mapView.location().apply {
+        mapView.location.apply {
           setLocationProvider(FakeLocationProvider())
           updateSettings {
             locationPuck = LocationPuck2D(

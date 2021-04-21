@@ -149,7 +149,7 @@ class SurfaceRecyclerViewActivity : AppCompatActivity() {
       }
 
       fun bind(mapItem: MapItem) {
-        mapView.gestures().scrollEnabled = false
+        mapView.gestures.scrollEnabled = false
         mapView.getMapboxMap().loadStyleUri(mapItem.style)
       }
     }

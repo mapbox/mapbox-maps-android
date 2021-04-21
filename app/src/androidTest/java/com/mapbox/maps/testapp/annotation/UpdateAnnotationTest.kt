@@ -47,7 +47,7 @@ class UpdateAnnotationTest : BaseMapTest(), OnMapLoadedListener {
       it.runOnUiThread {
         mapboxMap.loadStyleUri(AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]) {
           pointAnnotationManager =
-            mapView.annotations().createPointAnnotationManager(mapView)
+            mapView.annotations.createPointAnnotationManager(mapView)
           pointAnnotation = pointAnnotationManager.create(
             PointAnnotationOptions()
               .withIconColor(ColorUtils.colorToRgbaString(Color.RED))

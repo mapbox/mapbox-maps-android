@@ -52,8 +52,8 @@ class DebugModeActivity : AppCompatActivity() {
     // Using the extension method
     mapboxMap.subscribeResourceRequest(extensionObservable)
     mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
-    mapView.compass().opacity = 0.5f
-    scaleBarPlugin = mapView.scalebar()
+    mapView.compass.opacity = 0.5f
+    scaleBarPlugin = mapView.scalebar
     scaleBarPlugin.enabled = false
     scaleBarPlugin.textColor = ContextCompat.getColor(this@DebugModeActivity, R.color.primary)
     displayOnSecondDisplayButton.setOnClickListener {

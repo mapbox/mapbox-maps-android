@@ -85,7 +85,7 @@ class WithinExpressionActivity : AppCompatActivity() {
       )
 
       // Move to a new camera position
-      mapView.camera().easeTo(
+      mapView.camera.easeTo(
         CameraOptions.Builder()
           .zoom(16.0)
           .center(Point.fromLngLat(-77.06535338052844, 38.905156245642814))

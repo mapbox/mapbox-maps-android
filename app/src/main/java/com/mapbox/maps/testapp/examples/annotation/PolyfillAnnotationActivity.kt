@@ -31,7 +31,7 @@ class PolyfillAnnotationActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_annotation)
     mapView.getMapboxMap().loadStyleUri(nextStyle) {
-      val annotationPlugin = mapView.annotations()
+      val annotationPlugin = mapView.annotations
       fillManager = annotationPlugin.createPolygonAnnotationManager(mapView).apply {
         addClickListener(
           OnPolygonAnnotationClickListener {

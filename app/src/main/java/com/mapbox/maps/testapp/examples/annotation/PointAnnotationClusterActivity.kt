@@ -53,7 +53,7 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
             .build()
         )
         loadStyleUri(nextStyle) {
-          val annotationPlugin = mapView.annotations()
+          val annotationPlugin = mapView.annotations
           val annotationConfig = AnnotationConfig(
             annotationSourceOptions = AnnotationSourceOptions(
               clusterOptions = ClusterOptions(

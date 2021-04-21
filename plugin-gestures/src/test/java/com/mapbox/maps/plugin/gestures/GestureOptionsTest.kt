@@ -59,7 +59,7 @@ class GestureOptionsTest {
     every { typedArray.getFloat(any(), any()) } returns 10.0f
     every { typedArray.hasValue(any()) } returns true
     every { mapDelegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
-    every { mapPluginProviderDelegate.camera() } returns cameraAnimationsPlugin
+    every { mapPluginProviderDelegate.camera } returns cameraAnimationsPlugin
     every { mapDelegateProvider.mapTransformDelegate } returns mapTransformDelegate
     every { mapDelegateProvider.mapProjectionDelegate } returns mapProjectionDelegate
     every { mainHandler.post(capture(runnableSlot)) } answers {

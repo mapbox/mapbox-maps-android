@@ -30,7 +30,7 @@ class CircleAnnotationActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_annotation)
     mapView.getMapboxMap().loadStyleUri(nextStyle) {
-      val annotationPlugin = mapView.annotations()
+      val annotationPlugin = mapView.annotations
       circleManager = annotationPlugin.createCircleAnnotationManager(mapView).apply {
         addClickListener(
           OnCircleAnnotationClickListener {

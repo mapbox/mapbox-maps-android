@@ -24,32 +24,32 @@ class LocationComponentAttributeParserDefaultValueTest : BaseMapTest() {
     assertEquals(
       "enabled test failed..",
       false,
-      mapView.location().getSettings().enabled
+      mapView.location.getSettings().enabled
     )
     assertEquals(
       "pulsingEnabled test failed..",
       false,
-      mapView.location().getSettings().pulsingEnabled
+      mapView.location.getSettings().pulsingEnabled
     )
     assertEquals(
       "pulsingColor test failed..",
       Color.parseColor("#4A90E2"),
-      mapView.location().getSettings().pulsingColor
+      mapView.location.getSettings().pulsingColor
     )
     assertEquals(
       "pulsingMaxRadius test failed..",
       10f * pixelRatio,
-      mapView.location().getSettings().pulsingMaxRadius
+      mapView.location.getSettings().pulsingMaxRadius
     )
     assertEquals(
       "layerAbove test failed..",
       null,
-      mapView.location().getSettings().layerAbove
+      mapView.location.getSettings().layerAbove
     )
     assertEquals(
       "layerBelow test failed..",
       null,
-      mapView.location().getSettings().layerBelow
+      mapView.location.getSettings().layerBelow
     )
   }
 }

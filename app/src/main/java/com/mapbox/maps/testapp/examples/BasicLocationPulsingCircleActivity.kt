@@ -53,19 +53,19 @@ class BasicLocationPulsingCircleActivity : AppCompatActivity() {
         return true
       }
       R.id.action_component_disable -> {
-        mapView.location().enabled = false
+        mapView.location.enabled = false
         return true
       }
       R.id.action_component_enabled -> {
-        mapView.location().enabled = true
+        mapView.location.enabled = true
         return true
       }
       R.id.action_stop_pulsing -> {
-        mapView.location().pulsingEnabled = false
+        mapView.location.pulsingEnabled = false
         return true
       }
       R.id.action_start_pulsing -> {
-        mapView.location().pulsingEnabled = true
+        mapView.location.pulsingEnabled = true
         return true
       }
       else -> return super.onOptionsItemSelected(item)

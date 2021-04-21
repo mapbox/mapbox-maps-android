@@ -75,7 +75,7 @@ class MapOverlayActivity : AppCompatActivity(), OnMapClickListener {
         setDisplayingAreaMargins(100, 50, 50, 50)
       }
 
-    val cameraAnimationsPlugin = mapView.camera()
+    val cameraAnimationsPlugin = mapView.camera
     reframe_button.setOnClickListener {
       mapOverlayPlugin.reframe { it?.let { cameraAnimationsPlugin.flyTo(it, mapAnimationOptions { duration(1000L) }) } }
     }

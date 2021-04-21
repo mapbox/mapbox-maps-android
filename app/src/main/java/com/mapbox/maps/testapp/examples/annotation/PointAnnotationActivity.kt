@@ -45,7 +45,7 @@ class PointAnnotationActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_annotation)
     mapView.getMapboxMap().loadStyleUri(nextStyle) {
-      val annotationPlugin = mapView.annotations()
+      val annotationPlugin = mapView.annotations
       symbolManager = annotationPlugin.createPointAnnotationManager(mapView).apply {
         addClickListener(
           OnPointAnnotationClickListener {

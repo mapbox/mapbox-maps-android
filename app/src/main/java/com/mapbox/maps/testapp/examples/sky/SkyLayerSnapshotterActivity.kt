@@ -25,8 +25,8 @@ class SkyLayerSnapshotterActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_sky_snapshotter)
-    mapView.scalebar().enabled = false
-    mapView.compass().enabled = false
+    mapView.scalebar.enabled = false
+    mapView.compass.enabled = false
     mapView.getMapboxMap().setCamera(
       CameraOptions.Builder()
         .center(Point.fromLngLat(24.827187523937795, 60.55932732152849))

@@ -27,7 +27,7 @@ class LocationComponentActivity : AppCompatActivity() {
     // Jump to the current indicator position
     mapView.getMapboxMap().setCamera(CameraOptions.Builder().center(it).build())
     // Set the gestures plugin's focal point to the current indicator location.
-    mapView.gestures().focalPoint = mapView.getMapboxMap().pixelForCoordinate(it)
+    mapView.gestures.focalPoint = mapView.getMapboxMap().pixelForCoordinate(it)
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,9 +37,9 @@ class LocationComponentActivity : AppCompatActivity() {
     locationPermissionHelper.checkPermissions {
       mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) { _ ->
         // Disable scroll gesture, since we are updating the camera position based on the indicator location.
-        mapView.gestures().scrollEnabled = false
-        mapView.gestures().addOnMapClickListener { point ->
-          mapView.location()
+        mapView.gestures.scrollEnabled = false
+        mapView.gestures.addOnMapClickListener { point ->
+          mapView.location
             .isLocatedAt(point) { isPuckLocatedAtPoint ->
               if (isPuckLocatedAtPoint) {
                 Toast.makeText(this, "Clicked on location puck", Toast.LENGTH_SHORT).show()
@@ -47,8 +47,8 @@ class LocationComponentActivity : AppCompatActivity() {
             }
           true
         }
-        mapView.gestures().addOnMapLongClickListener { point ->
-          mapView.location()
+        mapView.gestures.addOnMapLongClickListener { point ->
+          mapView.location
             .isLocatedAt(point) { isPuckLocatedAtPoint ->
               if (isPuckLocatedAtPoint) {
                 Toast.makeText(this, "Long-clicked on location puck", Toast.LENGTH_SHORT).show()
@@ -76,11 +76,11 @@ class LocationComponentActivity : AppCompatActivity() {
         return true
       }
       R.id.action_component_disable -> {
-        mapView.location().enabled = false
+        mapView.location.enabled = false
         return true
       }
       R.id.action_component_enabled -> {
-        mapView.location().enabled = true
+        mapView.location.enabled = true
         return true
       }
       else -> return super.onOptionsItemSelected(item)
@@ -88,7 +88,7 @@ class LocationComponentActivity : AppCompatActivity() {
   }
 
   private fun toggleCustomisedPuck() {
-    mapView.location().let {
+    mapView.location.let {
       when (it.locationPuck) {
         is LocationPuck3D -> it.locationPuck = LocationPuck2D(
           topImage = AppCompatResources.getDrawable(
@@ -143,14 +143,14 @@ class LocationComponentActivity : AppCompatActivity() {
   override fun onStart() {
     super.onStart()
     mapView.onStart()
-    mapView.location()
+    mapView.location
       .addOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
   }
 
   override fun onStop() {
     super.onStop()
     mapView.onStop()
-    mapView.location()
+    mapView.location
       .removeOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
   }
 

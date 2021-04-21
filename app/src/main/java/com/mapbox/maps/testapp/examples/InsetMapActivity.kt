@@ -75,12 +75,12 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
           updateInsetMapLineLayerBounds(style)
         }
         insetMapFragment.getMapView()?.apply {
-          logo().enabled = false
-          scalebar().enabled = false
-          attribution().enabled = false
-          compass().enabled = false
+          logo.enabled = false
+          scalebar.enabled = false
+          attribution.enabled = false
+          compass.enabled = false
 
-          gestures().updateSettings {
+          gestures.updateSettings {
             scrollEnabled = false
             zoomEnabled = false
           }

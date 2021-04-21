@@ -35,63 +35,63 @@ class CompassAttributeParserTest : BaseMapTest() {
     assertEquals(
       "enabled test failed..",
       false,
-      mapView.compass().getSettings().enabled
+      mapView.compass.getSettings().enabled
     )
     assertEquals(
       "position test failed..",
       Gravity.BOTTOM or Gravity.END,
-      mapView.compass().getSettings().position
+      mapView.compass.getSettings().position
     )
     assertEquals(
       "marginLeft test failed..",
       10.0f * pixelRatio,
-      mapView.compass().getSettings().marginLeft
+      mapView.compass.getSettings().marginLeft
     )
     assertEquals(
       "marginTop test failed..",
       10.0f * pixelRatio,
-      mapView.compass().getSettings().marginTop
+      mapView.compass.getSettings().marginTop
     )
     assertEquals(
       "marginRight test failed..",
       10.0f * pixelRatio,
-      mapView.compass().getSettings().marginRight
+      mapView.compass.getSettings().marginRight
     )
     assertEquals(
       "marginBottom test failed..",
       10.0f * pixelRatio,
-      mapView.compass().getSettings().marginBottom
+      mapView.compass.getSettings().marginBottom
     )
     assertEquals(
       "opacity test failed..",
       0.9f,
-      mapView.compass().getSettings().opacity
+      mapView.compass.getSettings().opacity
     )
     assertEquals(
       "rotation test failed..",
       0.9f,
-      mapView.compass().getSettings().rotation
+      mapView.compass.getSettings().rotation
     )
     assertEquals(
       "visibility test failed..",
       false,
-      mapView.compass().getSettings().visibility
+      mapView.compass.getSettings().visibility
     )
     assertEquals(
       "fadeWhenFacingNorth test failed..",
       false,
-      mapView.compass().getSettings().fadeWhenFacingNorth
+      mapView.compass.getSettings().fadeWhenFacingNorth
     )
     assertEquals(
       "clickable test failed..",
       false,
-      mapView.compass().getSettings().clickable
+      mapView.compass.getSettings().clickable
     )
     assertEquals(
       "image test failed..",
       true,
       context.resources.getDrawable(R.drawable.mapbox_logo_icon, null).toBitmap()
-        .sameAs(mapView.compass().getSettings().image?.toBitmap())
+        .sameAs(mapView.compass.getSettings().image?.toBitmap())
     )
   }
 }

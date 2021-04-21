@@ -35,92 +35,92 @@ class ScaleBarAttributeParserTest : BaseMapTest() {
     assertEquals(
       "enabled test failed..",
       false,
-      mapView.scalebar().getSettings().enabled
+      mapView.scalebar.getSettings().enabled
     )
     assertEquals(
       "position test failed..",
       Gravity.BOTTOM or Gravity.END,
-      mapView.scalebar().getSettings().position
+      mapView.scalebar.getSettings().position
     )
     assertEquals(
       "marginLeft test failed..",
       10.0f * pixelRatio,
-      mapView.scalebar().getSettings().marginLeft
+      mapView.scalebar.getSettings().marginLeft
     )
     assertEquals(
       "marginTop test failed..",
       10.0f * pixelRatio,
-      mapView.scalebar().getSettings().marginTop
+      mapView.scalebar.getSettings().marginTop
     )
     assertEquals(
       "marginRight test failed..",
       10.0f * pixelRatio,
-      mapView.scalebar().getSettings().marginRight
+      mapView.scalebar.getSettings().marginRight
     )
     assertEquals(
       "marginBottom test failed..",
       10.0f * pixelRatio,
-      mapView.scalebar().getSettings().marginBottom
+      mapView.scalebar.getSettings().marginBottom
     )
     assertEquals(
       "textColor test failed..",
       Color.BLACK,
-      mapView.scalebar().getSettings().textColor
+      mapView.scalebar.getSettings().textColor
     )
     assertEquals(
       "primaryColor test failed..",
       Color.BLACK,
-      mapView.scalebar().getSettings().primaryColor
+      mapView.scalebar.getSettings().primaryColor
     )
     assertEquals(
       "secondaryColor test failed..",
       Color.BLACK,
-      mapView.scalebar().getSettings().secondaryColor
+      mapView.scalebar.getSettings().secondaryColor
     )
     assertEquals(
       "borderWidth test failed..",
       10.0f * pixelRatio,
-      mapView.scalebar().getSettings().borderWidth
+      mapView.scalebar.getSettings().borderWidth
     )
     assertEquals(
       "height test failed..",
       10.0f * pixelRatio,
-      mapView.scalebar().getSettings().height
+      mapView.scalebar.getSettings().height
     )
     assertEquals(
       "textBarMargin test failed..",
       10.0f * pixelRatio,
-      mapView.scalebar().getSettings().textBarMargin
+      mapView.scalebar.getSettings().textBarMargin
     )
     assertEquals(
       "textBorderWidth test failed..",
       10.0f * pixelRatio,
-      mapView.scalebar().getSettings().textBorderWidth
+      mapView.scalebar.getSettings().textBorderWidth
     )
     assertEquals(
       "textSize test failed..",
       10.0f * pixelRatio,
-      mapView.scalebar().getSettings().textSize
+      mapView.scalebar.getSettings().textSize
     )
     assertEquals(
       "isMetricUnits test failed..",
       false,
-      mapView.scalebar().getSettings().isMetricUnits
+      mapView.scalebar.getSettings().isMetricUnits
     )
     assertEquals(
       "refreshInterval test failed..",
       1000000L,
-      mapView.scalebar().getSettings().refreshInterval
+      mapView.scalebar.getSettings().refreshInterval
     )
     assertEquals(
       "showTextBorder test failed..",
       false,
-      mapView.scalebar().getSettings().showTextBorder
+      mapView.scalebar.getSettings().showTextBorder
     )
     assertEquals(
       "ratio test failed..",
       0.9f,
-      mapView.scalebar().getSettings().ratio
+      mapView.scalebar.getSettings().ratio
     )
   }
 }

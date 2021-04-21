@@ -39,7 +39,7 @@ class CustomAttributionActivity : AppCompatActivity() {
     checkBoxes.forEach { checkedTextView ->
       checkedTextView.setOnClickListener { checkedTextView.toggle() }
     }
-    val attributionPlugin = mapView.attribution()
+    val attributionPlugin = mapView.attribution
     custom_attribution_fab.setOnClickListener {
       Toast.makeText(this, R.string.custom_attribution_custom, Toast.LENGTH_LONG).show()
       val config = AttributionParserConfig(

@@ -32,7 +32,7 @@ class LocationTrackingActivity : AppCompatActivity() {
 
   private val onIndicatorPositionChangedListener = OnIndicatorPositionChangedListener {
     mapView.getMapboxMap().setCamera(CameraOptions.Builder().center(it).build())
-    mapView.gestures().focalPoint = mapView.getMapboxMap().pixelForCoordinate(it)
+    mapView.gestures.focalPoint = mapView.getMapboxMap().pixelForCoordinate(it)
   }
 
   private val onMoveListener = object : OnMoveListener {
@@ -71,11 +71,11 @@ class LocationTrackingActivity : AppCompatActivity() {
   }
 
   private fun setupGesturesListener() {
-    mapView.gestures().addOnMoveListener(onMoveListener)
+    mapView.gestures.addOnMoveListener(onMoveListener)
   }
 
   private fun initLocationComponent() {
-    val locationComponentPlugin = mapView.location()
+    val locationComponentPlugin = mapView.location
     locationComponentPlugin.updateSettings {
       this.enabled = true
       this.locationPuck = LocationPuck2D(
@@ -107,11 +107,11 @@ class LocationTrackingActivity : AppCompatActivity() {
 
   private fun onCameraTrackingDismissed() {
     Toast.makeText(this, "onCameraTrackingDismissed", Toast.LENGTH_SHORT).show()
-    mapView.location()
+    mapView.location
       .removeOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
-    mapView.location()
+    mapView.location
       .removeOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener)
-    mapView.gestures().removeOnMoveListener(onMoveListener)
+    mapView.gestures.removeOnMoveListener(onMoveListener)
   }
 
   override fun onStart() {
@@ -132,11 +132,11 @@ class LocationTrackingActivity : AppCompatActivity() {
   override fun onDestroy() {
     super.onDestroy()
     mapView.onDestroy()
-    mapView.location()
+    mapView.location
       .removeOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener)
-    mapView.location()
+    mapView.location
       .removeOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
-    mapView.gestures().removeOnMoveListener(onMoveListener)
+    mapView.gestures.removeOnMoveListener(onMoveListener)
   }
 
   override fun onRequestPermissionsResult(

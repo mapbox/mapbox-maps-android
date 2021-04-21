@@ -44,7 +44,7 @@ abstract class BaseAnimationMapTest {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         mapView = MapView(context)
         mapView.id = R.id.mapView
-        cameraAnimationPlugin = mapView.camera()
+        cameraAnimationPlugin = mapView.camera
         it.setContentView(mapView)
 
         mapboxMap = mapView.getMapboxMap()

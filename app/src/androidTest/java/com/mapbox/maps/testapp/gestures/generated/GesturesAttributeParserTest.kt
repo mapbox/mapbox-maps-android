@@ -34,77 +34,77 @@ class GesturesAttributeParserTest : BaseMapTest() {
     assertEquals(
       "rotateEnabled test failed..",
       false,
-      mapView.gestures().getSettings().rotateEnabled
+      mapView.gestures.getSettings().rotateEnabled
     )
     assertEquals(
       "zoomEnabled test failed..",
       false,
-      mapView.gestures().getSettings().zoomEnabled
+      mapView.gestures.getSettings().zoomEnabled
     )
     assertEquals(
       "scrollEnabled test failed..",
       false,
-      mapView.gestures().getSettings().scrollEnabled
+      mapView.gestures.getSettings().scrollEnabled
     )
     assertEquals(
       "pitchEnabled test failed..",
       false,
-      mapView.gestures().getSettings().pitchEnabled
+      mapView.gestures.getSettings().pitchEnabled
     )
     assertEquals(
       "doubleTapToZoomEnabled test failed..",
       false,
-      mapView.gestures().getSettings().doubleTapToZoomEnabled
+      mapView.gestures.getSettings().doubleTapToZoomEnabled
     )
     assertEquals(
       "quickZoomEnabled test failed..",
       false,
-      mapView.gestures().getSettings().quickZoomEnabled
+      mapView.gestures.getSettings().quickZoomEnabled
     )
     assertEquals(
       "focalPoint test failed..",
       ScreenCoordinate(10.0, 20.0),
-      mapView.gestures().getSettings().focalPoint
+      mapView.gestures.getSettings().focalPoint
     )
     assertEquals(
       "scaleVelocityAnimationEnabled test failed..",
       false,
-      mapView.gestures().getSettings().scaleVelocityAnimationEnabled
+      mapView.gestures.getSettings().scaleVelocityAnimationEnabled
     )
     assertEquals(
       "rotateVelocityAnimationEnabled test failed..",
       false,
-      mapView.gestures().getSettings().rotateVelocityAnimationEnabled
+      mapView.gestures.getSettings().rotateVelocityAnimationEnabled
     )
     assertEquals(
       "flingVelocityAnimationEnabled test failed..",
       false,
-      mapView.gestures().getSettings().flingVelocityAnimationEnabled
+      mapView.gestures.getSettings().flingVelocityAnimationEnabled
     )
     assertEquals(
       "increaseRotateThresholdWhenScaling test failed..",
       false,
-      mapView.gestures().getSettings().increaseRotateThresholdWhenScaling
+      mapView.gestures.getSettings().increaseRotateThresholdWhenScaling
     )
     assertEquals(
       "disableRotateWhenScaling test failed..",
       false,
-      mapView.gestures().getSettings().disableRotateWhenScaling
+      mapView.gestures.getSettings().disableRotateWhenScaling
     )
     assertEquals(
       "increaseScaleThresholdWhenRotating test failed..",
       false,
-      mapView.gestures().getSettings().increaseScaleThresholdWhenRotating
+      mapView.gestures.getSettings().increaseScaleThresholdWhenRotating
     )
     assertEquals(
       "zoomRate test failed..",
       0.9f,
-      mapView.gestures().getSettings().zoomRate
+      mapView.gestures.getSettings().zoomRate
     )
     assertEquals(
       "pixelRatio test failed..",
       0.9f,
-      mapView.gestures().getSettings().pixelRatio
+      mapView.gestures.getSettings().pixelRatio
     )
   }
 }

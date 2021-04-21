@@ -74,7 +74,7 @@ class SkyLayerShowcaseActivity : AppCompatActivity() {
         }
       }
     ) {
-      mapView.scalebar().enabled = false
+      mapView.scalebar.enabled = false
       skyLayer = it.getLayerAs(SKY_LAYER)
     }
   }

@@ -281,17 +281,13 @@ class SantaCatalinaActivity : AppCompatActivity() {
 }
 
 fun MapView.disablePlugins() {
-  val scaleBarPlugin = scalebar()
-  scaleBarPlugin.enabled = false
+  scalebar.enabled = false
+  compass.enabled = false
 
-  val compassPlugin = compass()
-  compassPlugin.enabled = false
-
-  val gesturesPlugin = gestures()
-  gesturesPlugin.pitchEnabled = false
-  gesturesPlugin.rotateEnabled = false
-  gesturesPlugin.zoomEnabled = false
-  gesturesPlugin.scrollEnabled = false
+  gestures.pitchEnabled = false
+  gestures.rotateEnabled = false
+  gestures.zoomEnabled = false
+  gestures.scrollEnabled = false
 }
 
 fun generateBitmap(

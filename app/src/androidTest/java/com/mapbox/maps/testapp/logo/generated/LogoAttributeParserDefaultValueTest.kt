@@ -24,32 +24,32 @@ class LogoAttributeParserDefaultValueTest : BaseMapTest() {
     assertEquals(
       "enabled test failed..",
       true,
-      mapView.logo().getSettings().enabled
+      mapView.logo.getSettings().enabled
     )
     assertEquals(
       "position test failed..",
       Gravity.BOTTOM or Gravity.START,
-      mapView.logo().getSettings().position
+      mapView.logo.getSettings().position
     )
     assertEquals(
       "marginLeft test failed..",
       4f * pixelRatio,
-      mapView.logo().getSettings().marginLeft
+      mapView.logo.getSettings().marginLeft
     )
     assertEquals(
       "marginTop test failed..",
       4f * pixelRatio,
-      mapView.logo().getSettings().marginTop
+      mapView.logo.getSettings().marginTop
     )
     assertEquals(
       "marginRight test failed..",
       4f * pixelRatio,
-      mapView.logo().getSettings().marginRight
+      mapView.logo.getSettings().marginRight
     )
     assertEquals(
       "marginBottom test failed..",
       4f * pixelRatio,
-      mapView.logo().getSettings().marginBottom
+      mapView.logo.getSettings().marginBottom
     )
   }
 }

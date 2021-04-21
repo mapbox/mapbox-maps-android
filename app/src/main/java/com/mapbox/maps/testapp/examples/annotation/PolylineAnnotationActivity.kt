@@ -32,7 +32,7 @@ class PolylineAnnotationActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_annotation)
     mapView.getMapboxMap().loadStyleUri(nextStyle) {
-      val annotationPlugin = mapView.annotations()
+      val annotationPlugin = mapView.annotations
       lineManager = annotationPlugin.createPolylineAnnotationManager(
         mapView,
         AnnotationConfig(COUNTRY_LABEL, LAYER_ID, SOURCE_ID)
