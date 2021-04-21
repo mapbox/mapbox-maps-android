@@ -60,6 +60,9 @@ class OfflineActivity : AppCompatActivity() {
   }
 
   private fun prepareViewMapButton() {
+    // Disable network stack, so that the map can only load from downloaded region.
+    NetworkConnectivity.getInstance().setMapboxStackConnected(false)
+    logInfoMessage("Mapbox network stack disabled.")
     handler.post {
       updateButton("VIEW MAP") {
         // create mapView
@@ -69,7 +72,6 @@ class OfflineActivity : AppCompatActivity() {
           mapboxMap.loadStyleUri(Style.OUTDOORS)
         }
         container.addView(mapView)
-
         mapView?.onStart()
         prepareShowDownloadedRegionButton()
       }
@@ -88,6 +90,11 @@ class OfflineActivity : AppCompatActivity() {
       removeOfflineRegions()
       showDownloadedRegions()
       container.removeAllViews()
+
+      logInfoMessage("Mapbox network stack enabled.")
+      // Re-enable the Mapbox network stack, so that the new offline region download can succeed.
+      NetworkConnectivity.getInstance().setMapboxStackConnected(true)
+
       prepareDownloadButton()
     }
   }
@@ -112,14 +119,16 @@ class OfflineActivity : AppCompatActivity() {
           (progress.completedResourceCount * 100 / progress.requiredResourceCount).toInt(),
           "StylePackLoadProgress: $progress"
         )
-        if (tile_pack_download_progress.progress == tile_pack_download_progress.max) {
-          prepareViewMapButton()
-        }
       },
       { expected ->
         if (expected.isValue) {
           expected.value?.let { stylePack ->
-            logSuccessMessage("StylePack: $stylePack")
+            logSuccessMessage("StylePack downloaded: $stylePack")
+            if (tile_pack_download_progress.progress == tile_pack_download_progress.max) {
+              prepareViewMapButton()
+            } else {
+              logInfoMessage("Waiting for tile region download to be finished.")
+            }
           }
         }
         expected.error?.let {
@@ -162,9 +171,11 @@ class OfflineActivity : AppCompatActivity() {
     ) { expected ->
       if (expected.isValue) {
         expected.value?.let { region ->
-          logSuccessMessage("TileRegion: $region")
+          logSuccessMessage("TileRegion downloaded: $region")
           if (style_pack_download_progress.progress == style_pack_download_progress.max) {
             prepareViewMapButton()
+          } else {
+            logInfoMessage("Waiting for style pack download to be finished.")
           }
         }
       }
@@ -266,6 +277,8 @@ class OfflineActivity : AppCompatActivity() {
   override fun onDestroy() {
     super.onDestroy()
     removeOfflineRegions()
+    // Bring back the network connectivity when exiting the OfflineActivity.
+    NetworkConnectivity.getInstance().setMapboxStackConnected(true)
     mapView?.onDestroy()
   }
 
