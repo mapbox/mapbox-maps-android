@@ -34,6 +34,8 @@ class MapViewCustomizationActivity : AppCompatActivity() {
       .glyphsRasterizationOptions(
         GlyphsRasterizationOptions.Builder()
           .rasterizationMode(GlyphsRasterizationMode.IDEOGRAPHS_RASTERIZED_LOCALLY)
+          // Font family is required when the GlyphsRasterizationMode is set to IDEOGRAPHS_RASTERIZED_LOCALLY or ALL_GLYPHS_RASTERIZED_LOCALLY
+          .fontFamily("sans-serif")
           .build()
       )
       .build()
