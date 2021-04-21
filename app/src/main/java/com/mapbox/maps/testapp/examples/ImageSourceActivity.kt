@@ -1,7 +1,5 @@
 package com.mapbox.maps.testapp.examples
 
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.maps.Image
@@ -12,8 +10,8 @@ import com.mapbox.maps.extension.style.sources.generated.imageSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.extension.style.sources.updateImage
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.plugin.location.utils.BitmapUtils
 import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
 import kotlinx.android.synthetic.main.activity_animated_imagesource.*
 import java.nio.ByteBuffer
 
@@ -39,21 +37,13 @@ class ImageSourceActivity : AppCompatActivity() {
         +rasterLayer(ID_IMAGE_LAYER, ID_IMAGE_SOURCE) {}
       }
     ) {
-      getBitmap(R.drawable.miami_beach)?.let { bitmap ->
+      bitmapFromDrawableRes(this, R.drawable.miami_beach)?.let { bitmap ->
         val imageSource: ImageSource = it.getSourceAs(ID_IMAGE_SOURCE)!!
         val byteBuffer = ByteBuffer.allocate(bitmap.byteCount)
         bitmap.copyPixelsToBuffer(byteBuffer)
         imageSource.updateImage(Image(bitmap.width, bitmap.height, byteBuffer.array()))
       }
     }
-  }
-
-  private fun getBitmap(resourceId: Int): Bitmap? {
-    val drawable = BitmapUtils.getDrawableFromRes(this, resourceId)
-    if (drawable is BitmapDrawable) {
-      return drawable.bitmap
-    }
-    return null
   }
 
   override fun onStart() {

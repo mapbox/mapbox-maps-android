@@ -2,7 +2,6 @@ package com.mapbox.maps.testapp.examples
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
@@ -14,8 +13,8 @@ import com.mapbox.maps.extension.style.sources.generated.imageSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.extension.style.sources.updateImage
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.plugin.location.utils.BitmapUtils
 import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
 import kotlinx.android.synthetic.main.activity_animated_imagesource.*
 import java.nio.ByteBuffer
 
@@ -83,14 +82,6 @@ class AnimatedImageSourceActivity : AppCompatActivity() {
     private val drawables: Array<Bitmap?> = arrayOfNulls(4)
     private var drawableIndex: Int
 
-    fun getBitmap(resourceId: Int): Bitmap? {
-      val drawable = BitmapUtils.getDrawableFromRes(appContext, resourceId)
-      if (drawable is BitmapDrawable) {
-        return drawable.bitmap
-      }
-      return null
-    }
-
     override fun run() {
       drawables[drawableIndex++]?.let { bitmap ->
         val byteBuffer = ByteBuffer.allocate(bitmap.byteCount)
@@ -104,10 +95,10 @@ class AnimatedImageSourceActivity : AppCompatActivity() {
     }
 
     init {
-      drawables[0] = getBitmap(R.drawable.southeast_radar_0)
-      drawables[1] = getBitmap(R.drawable.southeast_radar_1)
-      drawables[2] = getBitmap(R.drawable.southeast_radar_2)
-      drawables[3] = getBitmap(R.drawable.southeast_radar_3)
+      drawables[0] = bitmapFromDrawableRes(appContext, R.drawable.southeast_radar_0)
+      drawables[1] = bitmapFromDrawableRes(appContext, R.drawable.southeast_radar_1)
+      drawables[2] = bitmapFromDrawableRes(appContext, R.drawable.southeast_radar_2)
+      drawables[3] = bitmapFromDrawableRes(appContext, R.drawable.southeast_radar_3)
       drawableIndex = 1
     }
   }

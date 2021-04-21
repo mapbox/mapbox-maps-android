@@ -308,18 +308,6 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.LocationModesActivity"
-            android:description="@string/description_location_modes"
-            android:exported="true"
-            android:label="@string/activity_location_modes">
-            <meta-data
-                android:name="@string/category"
-                android:value="@string/category_location" />
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ExampleOverviewActivity" />
-        </activity>
-        <activity
             android:name=".examples.LocationTrackingActivity"
             android:description="@string/description_location_tracking"
             android:exported="true"
