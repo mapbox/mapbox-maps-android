@@ -85,6 +85,7 @@ class PointAnnotationManagerTest {
     every { style.getSource(any()) } returns null
     every { style.styleSourceExists(any()) } returns false
     every { style.styleLayerExists(any()) } returns false
+    every { style.pixelRatio } returns 1.0f
     every { style.getStyleImage(any()) } returns null
     every { gesturesPlugin.addOnMapClickListener(any()) } just Runs
     every { gesturesPlugin.addOnMapLongClickListener(any()) } just Runs
