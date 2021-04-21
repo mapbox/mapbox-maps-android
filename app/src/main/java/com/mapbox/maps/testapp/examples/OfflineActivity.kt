@@ -116,7 +116,8 @@ class OfflineActivity : AppCompatActivity() {
         .build(),
       { progress ->
         updateStylePackDownloadProgress(
-          (progress.completedResourceCount * 100 / progress.requiredResourceCount).toInt(),
+          progress.completedResourceCount,
+          progress.requiredResourceCount,
           "StylePackLoadProgress: $progress"
         )
       },
@@ -164,7 +165,8 @@ class OfflineActivity : AppCompatActivity() {
       tileRegionLoadOptions,
       { progress ->
         updateTileRegionDownloadProgress(
-          (progress.completedResourceCount * 100 / progress.requiredResourceCount).toInt(),
+          progress.completedResourceCount,
+          progress.requiredResourceCount,
           "TileRegionLoadProgress: $progress"
         )
       }
@@ -234,19 +236,21 @@ class OfflineActivity : AppCompatActivity() {
     cacheManager.clearAmbientCache {}
 
     // Reset progressbar.
-    updateStylePackDownloadProgress(0)
-    updateTileRegionDownloadProgress(0)
+    updateStylePackDownloadProgress(0, 0)
+    updateTileRegionDownloadProgress(0, 0)
   }
 
-  private fun updateStylePackDownloadProgress(progress: Int, message: String? = null) {
-    style_pack_download_progress.progress = progress
+  private fun updateStylePackDownloadProgress(progress: Long, max: Long, message: String? = null) {
+    style_pack_download_progress.max = max.toInt()
+    style_pack_download_progress.progress = progress.toInt()
     message?.let {
       offlineLogsAdapter.addLog(OfflineLog.StylePackProgress(it))
     }
   }
 
-  private fun updateTileRegionDownloadProgress(progress: Int, message: String? = null) {
-    tile_pack_download_progress.progress = progress
+  private fun updateTileRegionDownloadProgress(progress: Long, max: Long, message: String? = null) {
+    tile_pack_download_progress.max = max.toInt()
+    tile_pack_download_progress.progress = progress.toInt()
     message?.let {
       offlineLogsAdapter.addLog(OfflineLog.TilePackProgress(it))
     }
