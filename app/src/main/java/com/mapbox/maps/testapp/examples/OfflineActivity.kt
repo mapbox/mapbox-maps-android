@@ -1,5 +1,6 @@
 package com.mapbox.maps.testapp.examples
 
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -16,11 +17,13 @@ import com.mapbox.bindgen.Value
 import com.mapbox.common.*
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.plugin.annotation.annotations
+import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
+import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_gestures.*
 import kotlinx.android.synthetic.main.activity_offline.*
 import kotlinx.android.synthetic.main.activity_offline.recycler
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Example app that downloads an offline region and when succeeded
@@ -28,10 +31,14 @@ import java.util.ArrayList
  */
 class OfflineActivity : AppCompatActivity() {
 
-  private lateinit var offlineManager: OfflineManager
+  private val offlineManager: OfflineManager by lazy {
+    OfflineManager(MapInitOptions.getDefaultResourceOptions(this))
+  }
+  private val offlineLogsAdapter: OfflineLogsAdapter by lazy {
+    OfflineLogsAdapter()
+  }
   private var mapView: MapView? = null
   private lateinit var handler: Handler
-  private lateinit var offlineLogsAdapter: OfflineLogsAdapter
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -39,7 +46,6 @@ class OfflineActivity : AppCompatActivity() {
     handler = Handler()
 
     recycler.layoutManager = LinearLayoutManager(this)
-    offlineLogsAdapter = OfflineLogsAdapter()
     recycler.adapter = offlineLogsAdapter
 
     prepareDownloadButton()
@@ -77,7 +83,14 @@ class OfflineActivity : AppCompatActivity() {
         mapView = MapView(this@OfflineActivity).also { mapview ->
           val mapboxMap = mapview.getMapboxMap()
           mapboxMap.setCamera(CameraOptions.Builder().zoom(ZOOM).center(TOKYO).build())
-          mapboxMap.loadStyleUri(Style.OUTDOORS)
+          mapboxMap.loadStyleUri(Style.OUTDOORS) {
+            // Add a circle annotation to the offline geometry.
+            mapview.annotations.createCircleAnnotationManager(mapview).create(
+              CircleAnnotationOptions()
+                .withPoint(TOKYO)
+                .withCircleColor(Color.RED)
+            )
+          }
         }
         container.addView(mapView)
         mapView?.onStart()
@@ -113,8 +126,6 @@ class OfflineActivity : AppCompatActivity() {
   }
 
   private fun downloadOfflineRegion() {
-    offlineManager = OfflineManager(MapInitOptions.getDefaultResourceOptions(this))
-
     // 1. Create style package with loadStylePack() call.
 
     // A style pack (a Style offline package) contains the loaded style and its resources: loaded
@@ -258,9 +269,8 @@ class OfflineActivity : AppCompatActivity() {
     // Remove the style pack with the style url.
     // Note this will not remove the downloaded style pack, instead, it will just mark the resources
     // not a part of the existing style pack. The resources still exists as ambient cache.
-    if (this::offlineManager.isInitialized) {
-      offlineManager.removeStylePack(Style.OUTDOORS)
-    }
+    offlineManager.removeStylePack(Style.OUTDOORS)
+
     // Remove the existing style resources from ambient cache using cache manager.
     val cacheManager = CacheManager(
       MapInitOptions.getDefaultResourceOptions(this)
