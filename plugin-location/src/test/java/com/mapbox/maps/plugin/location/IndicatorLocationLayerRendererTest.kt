@@ -223,14 +223,9 @@ class IndicatorLocationLayerRendererTest {
   fun addBitmaps_shadow() {
     addBitmaps(withShadow = true, renderMode = RenderMode.NORMAL)
     verify {
-      style.addStyleImage(
+      style.addImage(
         SHADOW_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
   }
@@ -245,58 +240,33 @@ class IndicatorLocationLayerRendererTest {
   fun addBitmaps_normal() {
     addBitmaps(withShadow = true, renderMode = RenderMode.NORMAL)
     verify {
-      style.addStyleImage(
+      style.addImage(
         FOREGROUND_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
     verify {
-      style.addStyleImage(
+      style.addImage(
         FOREGROUND_STALE_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
     verify {
-      style.addStyleImage(
+      style.addImage(
         BACKGROUND_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
     verify {
-      style.addStyleImage(
+      style.addImage(
         BACKGROUND_STALE_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
     verify {
-      style.addStyleImage(
+      style.addImage(
         BEARING_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
   }
@@ -337,25 +307,15 @@ class IndicatorLocationLayerRendererTest {
     addBitmaps(withShadow = true, renderMode = RenderMode.COMPASS)
 
     verify {
-      style.addStyleImage(
+      style.addImage(
         BEARING_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
     verify {
-      style.addStyleImage(
+      style.addImage(
         BEARING_STALE_ICON,
-        defaultPixelRatio,
-        any(),
-        false,
-        listOf(),
-        listOf(),
-        null
+        any()
       )
     }
 
@@ -372,25 +332,25 @@ class IndicatorLocationLayerRendererTest {
       )
     }
     verify {
-      style.addStyleImage(
+      style.addImage(
         FOREGROUND_STALE_ICON,
         any()
       )
     }
     verify {
-      style.addStyleImage(
+      style.addImage(
         BACKGROUND_ICON,
         any()
       )
     }
     verify {
-      style.addStyleImage(
+      style.addImage(
         BACKGROUND_STALE_ICON,
         any()
       )
     }
     verify {
-      style.addStyleImage(
+      style.addImage(
         BEARING_ICON,
         any()
       )
