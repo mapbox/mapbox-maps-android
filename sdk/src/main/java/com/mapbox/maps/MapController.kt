@@ -265,10 +265,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       val logoPluginClass = Class.forName(PLUGIN_LOGO_CLASS_NAME) as Class<LogoPlugin>
       createPlugin(mapView, logoPluginClass)
     } catch (ex: ClassNotFoundException) {
-      Logger.d(
-        TAG,
-        "The Mapbox logo wordmark must remain enabled in accordance with our Terms of Service. See https://www.mapbox.com/legal/tos for more details."
-      )
+      Logger.w(TAG, mapInitOptions.context.getString(R.string.mapbox_warning_logo_disabled))
     } catch (ex: InvalidViewPluginHostException) {
       Logger.d(
         TAG,
@@ -310,10 +307,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
         Class.forName(PLUGIN_ATTRIBUTION_CLASS_NAME) as Class<AttributionPlugin>
       createPlugin(mapView, attributionPluginClass)
     } catch (ex: ClassNotFoundException) {
-      Logger.d(
-        TAG,
-        "Attribution must be enabled if you use data from sources that require it. See https://docs.mapbox.com/help/getting-started/attribution/ for more details."
-      )
+      Logger.w(TAG, mapInitOptions.context.getString(R.string.mapbox_warning_attribution_disabled))
     } catch (ex: InvalidViewPluginHostException) {
       Logger.d(
         TAG,

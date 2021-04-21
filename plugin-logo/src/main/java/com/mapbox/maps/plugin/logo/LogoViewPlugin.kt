@@ -29,6 +29,7 @@ open class LogoViewPlugin(
       internalSettings.marginBottom.toInt()
     )
     logoView.logoGravity = internalSettings.position
+    logoView.logoEnabled = internalSettings.enabled
   }
 
   /**

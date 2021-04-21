@@ -1,4 +1,7 @@
 <resources>
     <string name="mapbox_telemetryImproveMap">Improve This Map</string>
     <string name="mapbox_telemetrySettings">Telemetry Settings</string>
+
+    <string name="mapbox_warning_logo_disabled">The Mapbox logo wordmark must remain enabled in accordance with our Terms of Service. See https://www.mapbox.com/legal/tos for more details.</string>
+    <string name="mapbox_warning_attribution_disabled">Attribution must be enabled if you use data from sources that require it. See https://docs.mapbox.com/help/getting-started/attribution/ for more details.</string>
 </resources>
