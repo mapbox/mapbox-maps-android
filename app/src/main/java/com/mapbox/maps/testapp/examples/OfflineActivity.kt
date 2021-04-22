@@ -26,8 +26,12 @@ import kotlinx.android.synthetic.main.activity_offline.recycler
 import java.util.*
 
 /**
- * Example app that downloads an offline region and when succeeded
- * shows a button to load a map at the offline region definition.
+ * Example app that shows how to use OfflineManager and TileStore to
+ * download regions for offline use.
+ *
+ * By default, users may download up to 250MB of data for offline
+ * use without incurring additional charges. This limit is subject
+ * to change during the beta.
  */
 class OfflineActivity : AppCompatActivity() {
 
@@ -127,6 +131,9 @@ class OfflineActivity : AppCompatActivity() {
   }
 
   private fun downloadOfflineRegion() {
+    // By default, users may download up to 250MB of data for offline use without incurring
+    // additional charges. This limit is subject to change during the beta.
+
     // - - - - - - - -
 
     // 1. Create style package with loadStylePack() call.
@@ -274,7 +281,7 @@ class OfflineActivity : AppCompatActivity() {
     // Set the disk quota to zero, so that tile regions are fully evicted
     // when removed. The TileStore is also used when `ResourceOptions.isLoadTilePacksFromNetwork`
     // is `true`, and also by the Navigation SDK.
-    // This removes the tiles from the predictive cache.
+    // This removes the tiles that do not belong to any tile regions.
     TileStore.getInstance().setOption(TileStoreOptions.DISK_QUOTA, Value(0))
 
     // Remove the style pack with the style url.
