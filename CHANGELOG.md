@@ -4,7 +4,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 10.0.0-beta.18 - April 22, 2021
 ## Breaking changes ⚠️
-* ResourceOptions contains tile store instance (TileStore API). Tile store usage is enabled by default, 'ResourceOptions.tileStoreEnabled' flag is introduced to disable it.
 * Rename MapView plugin extension functions. ([#272](https://github.com/mapbox/mapbox-maps-android/pull/272))
   - mapView.getAnnotationPlugin() -> mapView.annotations
   - mapView.getGesturesPlugin() -> mapView.gestures
