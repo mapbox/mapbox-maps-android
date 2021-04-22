@@ -23,37 +23,7 @@ Mapbox welcomes participation and contributions from everyone.
 * High-level animations return cancelable interface ([#262](https://github.com/mapbox/mapbox-maps-android/pull/262))
 * Introduce OfflineManager API that manages style packs and produces tileset descriptors for the tile store.
   - By default, users may download up to 250MB of data for offline use without incurring additional charges. This limit is subject to change during the beta.
-  - The new API replaces the deprecated OfflineRegionManager API. The OfflineManager API can be used to create offline style packs that contain style data, such as: style definition, sprites, fonts and other resources. Tileset descriptors created by the OfflineManager API are used to create tile packs via TileStore API. Mobile maps SDKs use tile packs for rendering map content. Example of how to use API is presented in a following snippet (pseudocode):
- ```
-  // 1. Get an instance of OfflineManager.
-  val offlineManager = OfflineManager(map.getResourceOptions())
-
-  // 2. Create a tile region with tiles for Streets
-  TilesetDescriptorOptions tilesetOptions(
-      "mapbox://styles/mapbox/streets-v11",
-      0, // min zoom
-      5, // max zoom
-  );
-
-  // Creation of a tileset descriptor WILL implicitly create a style package for provided StylePackLoadOptions.
-  tilesetOptions.stylePackOptions = StylePackLoadOptions(GlyphsRasterizationMode.AllGlyphsRasterizedLocally);
-  val descriptor = offlineManager.createTilesetDescriptor(tilesetOptions);
-
-  val tileStore = TileStore.getInstance();
-  TileRegionLoadOptions tileRegionLoadOptions(geometry, [descriptor]);
-  tileStore.loadTileRegion("my_region", tileRegionLoadOptions,
-    onProgressCallback(result) {
-      // Handle TileRegionLoadProgress result
-    },
-    onFinishedCallback(result) {
-      if (result) {
-        // Handle TileRegion result
-      } else {
-        // Handle TileRegionError
-      }
-    }
-  );
-  ```
+  - The new API replaces the deprecated OfflineRegionManager API. The OfflineManager API can be used to create offline style packs that contain style data, such as: style definition, sprites, fonts and other resources. Tileset descriptors created by the OfflineManager API are used to create tile packs via TileStore API. Mobile maps SDKs use tile packs for rendering map content. 
 * Add offline activity example. ([#259](https://github.com/mapbox/mapbox-maps-android/pull/259))
 * Load the Mapbox Street style by default if user doesn't load any style before the onStart lifecycle event([#248](https://github.com/mapbox/mapbox-maps-android/pull/248))
 
