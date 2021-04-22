@@ -45,6 +45,7 @@ class OfflineActivity : AppCompatActivity() {
     setContentView(R.layout.activity_offline)
     handler = Handler()
 
+    // Initialize a logger that writes into the recycler view
     recycler.layoutManager = LinearLayoutManager(this)
     recycler.adapter = offlineLogsAdapter
 
@@ -126,6 +127,8 @@ class OfflineActivity : AppCompatActivity() {
   }
 
   private fun downloadOfflineRegion() {
+    // - - - - - - - -
+
     // 1. Create style package with loadStylePack() call.
 
     // A style pack (a Style offline package) contains the loaded style and its resources: loaded
@@ -167,12 +170,17 @@ class OfflineActivity : AppCompatActivity() {
       }
     )
 
+    // - - - - - - - -
+
     // 2. Create a tile region with tiles for the outdoors style
 
     // A Tile Region represents an identifiable geographic tile region with metadata, consisting of
     // a set of tiles packs that cover a given area (a polygon). Tile Regions allow caching tiles
     // packs in an explicit way: By creating a Tile Region, developers can ensure that all tiles in
     // that region will be downloaded and remain cached until explicitly deleted.
+
+    // Creating a Tile Region requires supplying a description of the area geometry, the tilesets
+    // and zoom ranges of the tiles within the region.
 
     // The tileset descriptor encapsulates the tile-specific data, such as which tilesets, zoom ranges,
     // pixel ratio etc. the cached tile packs should have. It is passed to the Tile Store along with
@@ -187,9 +195,10 @@ class OfflineActivity : AppCompatActivity() {
         .build()
     )
 
-    // The TileStore is used to manage TileRegions.
-    // Creating a Tile Region requires supplying a description of the area geometry, the tilesets
-    // and zoom ranges of the tiles within the region.
+    // Use the the default TileStore to load this region. You can create custom TileStores are are
+    // unique for a particular file path, i.e. there is only ever one TileStore per unique path.
+
+    // Note that the TileStore path must be the same with the TileStore used when initialise the MapView.
     val tilePackCancelable = TileStore.getInstance().loadTileRegion(
       TILE_REGION_ID,
       TileRegionLoadOptions.Builder()
@@ -213,6 +222,7 @@ class OfflineActivity : AppCompatActivity() {
       }
     ) { expected ->
       if (expected.isValue) {
+        // Tile pack download finishes successfully
         expected.value?.let { region ->
           logSuccessMessage("TileRegion downloaded: $region")
           if (style_pack_download_progress.progress == style_pack_download_progress.max) {
@@ -223,6 +233,7 @@ class OfflineActivity : AppCompatActivity() {
         }
       }
       expected.error?.let {
+        // Handle error occurred during the tile region download.
         logErrorMessage("TileRegionError: $it")
       }
     }
