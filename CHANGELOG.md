@@ -18,35 +18,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Add feature sdk initialisation ([#269](https://github.com/mapbox/mapbox-maps-android/pull/269))
   - Load the Mapbox Street style by default if user doesn't load any style before the onStart lifecycle event.
   - Introduce `CredentialsManager` to manage mapbox access token, when all `MapView`s should use same token could be handled by using `CredentialsManager.shared` static object.
-  - Introduce `MapInitOptions` to replace MapboxMapOptions. When adding a map programmatically, client codes can be written in a following way
-  ```
-   // set map options
-    val mapOptions = MapOptions.Builder()
-      .constrainMode(ConstrainMode.HEIGHT_ONLY)
-      .glyphsRasterizationOptions(
-        GlyphsRasterizationOptions.Builder()
-          .rasterizationMode(GlyphsRasterizationMode.IDEOGRAPHS_RASTERIZED_LOCALLY)
-          .build()
-      )
-      .build()
-
-    // set token and cache size for this particular map view
-    val resourceOptions = ResourceOptions.Builder()
-      .accessToken(getString(R.string.mapbox_access_token))
-      .cacheSize(75_000L)
-      .build()
-
-    // set initial camera position
-    val initialCameraOptions = CameraOptions.Builder()
-      .center(Point.fromLngLat(-122.4194, 37.7749))
-      .zoom(9.0)
-      .build()
-
-    val mapboxMapOptions =
-      MapInitOptions(this, resourceOptions, mapOptions, initialCameraOptions, true)
-    // create view programmatically
-    customMapView = MapView(this, mapboxMapOptions)
-  ```
+  - Introduce `MapInitOptions` to replace MapboxMapOptions. 
 ## Features ✨ and improvements 🏁
 * High-level animations return cancelable interface ([#262](https://github.com/mapbox/mapbox-maps-android/pull/262))
 * Introduce OfflineManager API that manages style packs and produces tileset descriptors for the tile store.
