@@ -2,6 +2,41 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.0.0-beta.18 - April 22, 2021
+## Breaking changes ⚠️
+* Rename MapView plugin extension functions. ([#272](https://github.com/mapbox/mapbox-maps-android/pull/272))
+  - mapView.getAnnotationPlugin() -> mapView.annotations
+  - mapView.getGesturesPlugin() -> mapView.gestures
+  - mapView.getOverlayPlugin() -> mapView.overlay() // using function here because of experimental annotation
+  - mapView.getLocationComponentPlugin() -> mapView.location
+  - mapView.getCameraAnimationsPlugin() -> mapView.camera
+  - mapView.getAttributionPlugin() -> mapView.attribution
+  - mapView.getCompassPlugin() -> mapView.compass
+  - mapView.getLogoPlugin() -> mapView.logo
+  - mapView.getScaleBarPlugin() -> mapView.scalebar
+* Remove deprecated location plugin ([#276](https://github.com/mapbox/mapbox-maps-android/pull/276))
+* Add feature sdk initialisation ([#269](https://github.com/mapbox/mapbox-maps-android/pull/269))
+  - Load the Mapbox Street style by default if user doesn't load any style before the onStart lifecycle event.
+  - Introduce `CredentialsManager` to manage mapbox access token, when all `MapView`s should use same token could be handled by using `CredentialsManager.shared` static object.
+  - Introduce `MapInitOptions` to replace MapboxMapOptions. 
+## Features ✨ and improvements 🏁
+* High-level animations return cancelable interface ([#262](https://github.com/mapbox/mapbox-maps-android/pull/262))
+* Introduce OfflineManager API that manages style packs and produces tileset descriptors for the tile store.
+  - By default, users may download up to 250MB of data for offline use without incurring additional charges. This limit is subject to change during the beta.
+  - The new API replaces the deprecated OfflineRegionManager API. The OfflineManager API can be used to create offline style packs that contain style data, such as: style definition, sprites, fonts and other resources. Tileset descriptors created by the OfflineManager API are used to create tile packs via TileStore API. Mobile maps SDKs use tile packs for rendering map content. 
+* Add offline activity example. ([#259](https://github.com/mapbox/mapbox-maps-android/pull/259))
+* Load the Mapbox Street style by default if user doesn't load any style before the onStart lifecycle event([#248](https://github.com/mapbox/mapbox-maps-android/pull/248))
+
+## Bug fixes 🐞
+* Keep CompassPlugin enabled/disabled state after other properties update ([#252](https://github.com/mapbox/mapbox-maps-android/pull/252))
+* Fix disabling logo in xml. ([#273](https://github.com/mapbox/mapbox-maps-android/pull/273))
+* Introduce StyleInterface that include the current display's pixel ratio, and fix Style#addImage to take the correct pixel ratio from display.  ([#228](https://github.com/mapbox/mapbox-maps-android/pull/228))
+* Properly reset anchor after some gestures。 ([#279](https://github.com/mapbox/mapbox-maps-android/pull/279))
+* Remove animator cancel listeners logic duplicating end listeners logic. ([#280](https://github.com/mapbox/mapbox-maps-android/pull/280))
+
+## Dependencies
+* Bump gl-native to v10.0.0-beta.20, common to v11.0.1 ([#261](https://github.com/mapbox/mapbox-maps-android/pull/261))
+
 # 10.0.0-beta.17 - April 14, 2021
 ## Breaking changes ⚠️
 * [Annotation plugin] Rename annotation classes, the rules are as follows and applied for Annotations/Options/Managers ([#227](https://github.com/mapbox/mapbox-maps-android/pull/227))
