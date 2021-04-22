@@ -18,8 +18,8 @@ import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.plugin.animation.flyTo
-import com.mapbox.maps.plugin.location.utils.BitmapUtils
 import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
 import kotlinx.android.synthetic.main.activity_dds_style_circles_categorically.*
 
 /**
@@ -54,11 +54,7 @@ class CircleLayerClusteringActivity : AppCompatActivity() {
 
       addClusteredGeoJsonSource(it)
 
-      val drawable = ContextCompat.getDrawable(
-        this@CircleLayerClusteringActivity,
-        R.drawable.ic_cross
-      )
-      BitmapUtils.getBitmapFromDrawable(drawable)?.let { bitmap ->
+      bitmapFromDrawableRes(this, R.drawable.ic_cross)?.let { bitmap ->
         it.addImage(CROSS_ICON_ID, bitmap, true)
       }
 

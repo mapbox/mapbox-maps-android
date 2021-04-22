@@ -38,21 +38,10 @@
     <string name="debug_button">Apply debug modes</string>
 
     <!--Location-->
-    <string name="location_mode">Mode:</string>
-    <string name="location_normal">Normal</string>
-    <string name="location_tracking">Tracking:</string>
-    <string name="location_none">None</string>
     <string name="toggle_customised_puck">Toggle customised puck style</string>
-    <string name="toggle_custom_locationlayer_style">Toggle custom LocationLayer style</string>
     <string name="toggle_custom_map_style">Toggle custom Map style</string>
     <string name="location_disable_component">Disable Component</string>
     <string name="location_enable_component">Enable Component</string>
-    <string name="location_enable_gestures_management">Enable Gestures Management</string>
-    <string name="location_disable_gestures_management">Disable Gestures Management</string>
-    <string name="location_enable_animation_throttling_5_fps">Enable animation throttling (5 FPS)</string>
-    <string name="location_disable_animation_throttling">Disable animation throttling</string>
-    <string name="location_animate_while_tracking">Animate while tracking</string>
-    <string name="location_padding_while_tracking">PaddingAnimation while tracking</string>
     <string name="location_stop_pulsing">Stop pulsing</string>
     <string name="location_start_pulsing">Start pulsing</string>
 

@@ -60,7 +60,6 @@ androidExtensions {
 
 dependencies {
   implementation(project(":sdk"))
-  implementation(project(":plugin-location"))
   implementation(Dependencies.kotlin)
   implementation(Dependencies.mapboxJavaTurf)
   implementation(Dependencies.mapboxJavaGeoJSON)

@@ -8,7 +8,6 @@ import android.view.MenuItem
 import android.view.animation.LinearInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -21,8 +20,8 @@ import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
-import com.mapbox.maps.plugin.location.utils.BitmapUtils
 import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.mapView
 import kotlinx.android.synthetic.main.activity_annotation.*
@@ -61,12 +60,9 @@ class PointAnnotationActivity : AppCompatActivity() {
           }
         )
 
-        BitmapUtils.getBitmapFromDrawable(
-          ResourcesCompat.getDrawable(
-            resources,
-            R.drawable.ic_airplanemode_active_black_24dp,
-            this@PointAnnotationActivity.theme
-          )
+        bitmapFromDrawableRes(
+          this@PointAnnotationActivity,
+          R.drawable.ic_airplanemode_active_black_24dp
         )?.let {
           // create a symbol
           val pointAnnotationOptions: PointAnnotationOptions = PointAnnotationOptions()
@@ -88,12 +84,9 @@ class PointAnnotationActivity : AppCompatActivity() {
           pointAnnotation = create(pointAnnotationOptions)
         }
 
-        BitmapUtils.getBitmapFromDrawable(
-          ResourcesCompat.getDrawable(
-            resources,
-            R.drawable.mapbox_user_icon,
-            this@PointAnnotationActivity.theme
-          )
+        bitmapFromDrawableRes(
+          this@PointAnnotationActivity,
+          R.drawable.mapbox_user_icon
         )?.let {
           // create nearby symbols
           val nearbyOptions: PointAnnotationOptions = PointAnnotationOptions()
@@ -245,7 +238,6 @@ class PointAnnotationActivity : AppCompatActivity() {
     private const val ID_ICON_AIRPORT = "airport"
     private const val MAKI_ICON_CAR = "car-15"
     private const val MAKI_ICON_CAFE = "cafe-15"
-    private const val MAKI_ICON_CIRCLE = "fire-station-15"
     private const val AIRPORT_LONGITUDE = 0.381457
     private const val AIRPORT_LATITUDE = 6.687337
     private const val NEARBY_LONGITUDE = 0.367099

@@ -1,12 +1,9 @@
 package com.mapbox.maps.testapp.examples.terrain
 
 import android.animation.*
-import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.Color.rgb
 import android.os.Bundle
 import android.view.Window
-import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.api.directions.v5.DirectionsCriteria
 import com.mapbox.api.directions.v5.MapboxDirections
@@ -26,16 +23,15 @@ import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.extension.style.terrain.generated.terrain
 import com.mapbox.maps.plugin.compass.compass
 import com.mapbox.maps.plugin.gestures.gestures
-import com.mapbox.maps.plugin.location.utils.BitmapUtils
 import com.mapbox.maps.plugin.scalebar.scalebar
 import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
 import com.mapbox.turf.TurfConstants
 import com.mapbox.turf.TurfMeasurement
 import kotlinx.android.synthetic.main.activity_simple_map.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.RuntimeException
 
 /**
  * Example showcasing terrain with animating the free camera with a line string.
@@ -43,7 +39,6 @@ import java.lang.RuntimeException
 class SantaCatalinaActivity : AppCompatActivity() {
 
   private lateinit var mapboxMap: MapboxMap
-  private var loadOnce: Boolean = true
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -87,18 +82,18 @@ class SantaCatalinaActivity : AppCompatActivity() {
         }
         +image(FOREGROUND_ICON) {
           bitmap(
-            generateBitmap(
+            bitmapFromDrawableRes(
               this@SantaCatalinaActivity,
               R.drawable.mapbox_mylocation_icon_default
-            )
+            )!!
           )
         }
         +image(BACKGROUND_ICON) {
           bitmap(
-            generateBitmap(
+            bitmapFromDrawableRes(
               this@SantaCatalinaActivity,
               R.drawable.mapbox_mylocation_bg_shape
-            )
+            )!!
           )
         }
       }
@@ -288,17 +283,4 @@ fun MapView.disablePlugins() {
   gestures.rotateEnabled = false
   gestures.zoomEnabled = false
   gestures.scrollEnabled = false
-}
-
-fun generateBitmap(
-  context: Context,
-  @DrawableRes drawableRes: Int,
-): Bitmap {
-  return BitmapUtils.getBitmapFromDrawable(
-    BitmapUtils.getDrawableFromRes(
-      context,
-      drawableRes,
-      null
-    )
-  )!!
 }
