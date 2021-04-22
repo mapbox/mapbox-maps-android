@@ -106,11 +106,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
               actionAfter?.invoke()
               immediateEaseInProcess = false
             }
-
-            override fun onAnimationCancel(animation: Animator?) {
-              actionAfter?.invoke()
-              immediateEaseInProcess = false
-            }
           })
         }
       )
@@ -792,11 +787,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     anchorAnimator.addListener(
       object : AnimatorListenerAdapter() {
-        override fun onAnimationStart(animation: Animator) {}
-        override fun onAnimationCancel(animation: Animator) {
-          cameraAnimationsPlugin.anchor = rotateCachedAnchor
-          dispatchCameraIdle()
-        }
         override fun onAnimationEnd(animation: Animator) {
           cameraAnimationsPlugin.anchor = rotateCachedAnchor
           dispatchCameraIdle()
@@ -1060,13 +1050,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     anchorAnimator.addListener(object : AnimatorListenerAdapter() {
 
-      override fun onAnimationStart(animation: Animator) {}
-
-      override fun onAnimationCancel(animation: Animator) {
-        cameraAnimationsPlugin.anchor = scaleCachedAnchor
-        dispatchCameraIdle()
-      }
-
       override fun onAnimationEnd(animation: Animator) {
         cameraAnimationsPlugin.anchor = scaleCachedAnchor
         dispatchCameraIdle()
@@ -1277,12 +1260,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
             override fun onAnimationEnd(animation: Animator?) {
               super.onAnimationEnd(animation)
-              flingInProcess = false
-              mapTransformDelegate.dragEnd()
-            }
-
-            override fun onAnimationCancel(animation: Animator?) {
-              super.onAnimationCancel(animation)
               flingInProcess = false
               mapTransformDelegate.dragEnd()
             }
