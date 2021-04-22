@@ -7,7 +7,7 @@ import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_offline.*
+import kotlinx.android.synthetic.main.activity_legacy_offline.*
 
 /**
  * Example app that downloads an offline region and when succeeded
@@ -55,7 +55,7 @@ class LegacyOfflineActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_offline)
+    setContentView(R.layout.activity_legacy_offline)
     offlineManager = OfflineRegionManager(MapInitOptions.getDefaultResourceOptions(this))
     offlineManager.createOfflineRegion(
       OfflineRegionGeometryDefinition.Builder()
