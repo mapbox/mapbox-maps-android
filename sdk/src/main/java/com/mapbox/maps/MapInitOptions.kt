@@ -16,6 +16,7 @@ import android.util.AttributeSet
  * @property mapOptions Describes the map options value when using a MapView.
  * @property initialCameraOptions The Initial Camera options when creating a MapView.
  * @property textureView Flag indicating to use a TextureView as render surface for the MapView. Default is false.
+ * @property styleUri The styleUri will applied for the MapView in the onStart lifecycle event if no style is set. Default is [Style.MAPBOX_STREETS].
  * @property attrs The [AttributeSet] object that init the MapView.
  */
 data class MapInitOptions constructor(
@@ -24,6 +25,7 @@ data class MapInitOptions constructor(
   var mapOptions: MapOptions = getDefaultMapOptions(context),
   var initialCameraOptions: CameraOptions? = null,
   var textureView: Boolean = false,
+  val styleUri: String? = Style.MAPBOX_STREETS,
   var attrs: AttributeSet? = null
 ) {
 

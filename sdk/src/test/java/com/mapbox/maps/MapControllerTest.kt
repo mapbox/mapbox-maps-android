@@ -49,6 +49,7 @@ class MapControllerTest {
     val resourceOptions = mockk<ResourceOptions>()
     mockkObject(MapProvider)
     every { mapInitOptions.resourceOptions } answers { resourceOptions }
+    every { mapInitOptions.styleUri } answers { Style.MAPBOX_STREETS }
     every { resourceOptions.accessToken } answers { token }
     every {
       MapProvider.getNativeMap(
