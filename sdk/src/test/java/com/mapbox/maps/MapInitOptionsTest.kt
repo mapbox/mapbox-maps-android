@@ -69,6 +69,7 @@ class MapInitOptionsTest {
     assertEquals(NorthOrientation.UPWARDS, mapboxMapOptions.mapOptions.orientation)
     assertEquals(ViewportMode.DEFAULT, mapboxMapOptions.mapOptions.viewportMode)
     assertEquals(true, mapboxMapOptions.mapOptions.crossSourceCollisions)
+    assertEquals(Style.MAPBOX_STREETS, mapboxMapOptions.styleUri)
   }
 
   @Test

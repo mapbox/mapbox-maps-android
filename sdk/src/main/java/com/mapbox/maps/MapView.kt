@@ -102,7 +102,8 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   }
 
   @SuppressLint("CustomViewStyleable")
-  private fun parseTypedArray(context: Context, attrs: AttributeSet?): MapInitOptions {
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal fun parseTypedArray(context: Context, attrs: AttributeSet?): MapInitOptions {
     val typedArray = context.obtainStyledAttributes(attrs, R.styleable.mapbox_MapView, 0, 0)
     try {
       val resourceOptions =
@@ -115,7 +116,8 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
         MapAttributeParser.parseMapOptions(typedArray, context.resources.displayMetrics.density)
       val cameraOptions = CameraAttributeParser.parseCameraOptions(typedArray)
       val textureView = typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapSurface, 0) != 0
-      return MapInitOptions(context, resourceOptions, mapOptions, attrs = attrs).also {
+      val styleUri = typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri)
+      return MapInitOptions(context, resourceOptions, mapOptions, attrs = attrs, styleUri = styleUri).also {
         it.initialCameraOptions = cameraOptions
         it.textureView = textureView
       }

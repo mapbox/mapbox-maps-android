@@ -86,5 +86,8 @@
         <attr name="mapbox_cameraPaddingLeft" format="float" />
         <attr name="mapbox_cameraPaddingBottom" format="float" />
         <attr name="mapbox_cameraPaddingRight" format="float" />
+
+        <!-- The default style uri to load when no style is set. -->
+        <attr name="mapbox_styleUri" format="string" />
     </declare-styleable>
 </resources>
