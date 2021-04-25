@@ -6,10 +6,9 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CoordinateBounds
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.plugin.delegates.CameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
-import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
-import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import java.util.*
 
 /**
@@ -25,8 +24,7 @@ class MapOverlayPluginImpl : MapOverlayPlugin {
   private var marginTop: Int = 0
   private var marginRight: Int = 0
   private var marginBottom: Int = 0
-  private lateinit var mapProjectionDelegate: MapProjectionDelegate
-  private lateinit var mapTransformDelegate: MapTransformDelegate
+  private lateinit var cameraManagerDelegate: CameraManagerDelegate
 
   /**
    * Invoked when MapView's width and height have changed.
@@ -121,7 +119,7 @@ class MapOverlayPluginImpl : MapOverlayPlugin {
       onReframeFinished.onReframeFinished(reframeCameraOption)
     } else {
       reframeCameraOption?.let {
-        mapTransformDelegate.setCamera(it)
+        cameraManagerDelegate.setCamera(it)
       }
     }
   }
@@ -150,7 +148,7 @@ class MapOverlayPluginImpl : MapOverlayPlugin {
 
       val bounds = CoordinateBounds(Point.fromLngLat(west, south), Point.fromLngLat(east, north))
       val edgeInsets = getEdgeInsets()
-      return mapProjectionDelegate.cameraForCoordinateBounds(bounds, edgeInsets, null, null)
+      return cameraManagerDelegate.cameraForCoordinateBounds(bounds, edgeInsets, null, null)
     }
     return null
   }
@@ -280,8 +278,7 @@ class MapOverlayPluginImpl : MapOverlayPlugin {
    * Provides all map delegate instances.
    */
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
-    mapProjectionDelegate = delegateProvider.mapProjectionDelegate
-    mapTransformDelegate = delegateProvider.mapTransformDelegate
+    cameraManagerDelegate = delegateProvider.cameraManagerDelegate
   }
 }
 

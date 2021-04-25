@@ -17,11 +17,10 @@ import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimati
 import com.mapbox.maps.plugin.animation.animator.CameraBearingAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraCenterAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraPitchAnimator
+import com.mapbox.maps.plugin.delegates.CameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapCameraDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import io.mockk.*
-import io.mockk.verify
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -39,7 +38,7 @@ import java.time.Duration
 class CameraAnimationsPluginImplTest {
 
   private lateinit var cameraAnimationsPluginImpl: CameraAnimationsPluginImpl
-  private lateinit var mapTransformDelegate: MapTransformDelegate
+  private lateinit var cameraManagerDelegate: CameraManagerDelegate
   private lateinit var mapCameraDelegate: MapCameraDelegate
   private lateinit var cameraAnimatorsFactory: CameraAnimatorsFactory
   private lateinit var bearingAnimator: CameraBearingAnimator
@@ -74,10 +73,10 @@ class CameraAnimationsPluginImplTest {
 
     val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
     mapCameraDelegate = mockk(relaxed = true)
-    mapTransformDelegate = mockk(relaxed = true)
+    cameraManagerDelegate = mockk(relaxed = true)
     mockkObject(CameraTransform)
     every { delegateProvider.mapCameraDelegate } returns mapCameraDelegate
-    every { delegateProvider.mapTransformDelegate } returns mapTransformDelegate
+    every { delegateProvider.cameraManagerDelegate } returns cameraManagerDelegate
     every { CameraTransform.normalizeAngleRadians(any(), any()) } answers { secondArg() }
     cameraAnimationsPluginImpl = CameraAnimationsPluginImpl().apply {
       onDelegateProvider(delegateProvider)
@@ -141,7 +140,7 @@ class CameraAnimationsPluginImplTest {
       playTogether(*animators)
       start()
     }
-    verify { mapTransformDelegate.setCamera(any()) }
+    verify { cameraManagerDelegate.setCamera(any()) }
   }
 
   @Test
@@ -160,7 +159,7 @@ class CameraAnimationsPluginImplTest {
       playTogether(*animators)
       start()
     }
-    verify(exactly = 0) { mapTransformDelegate.setCamera(any()) }
+    verify(exactly = 0) { cameraManagerDelegate.setCamera(any()) }
   }
 
   @Test
@@ -176,7 +175,10 @@ class CameraAnimationsPluginImplTest {
   @Test
   fun testMoveToRegister() {
     cameraAnimationsPluginImpl.cameraAnimationsFactory = cameraAnimatorsFactory
-    cameraAnimationsPluginImpl.moveBy(ScreenCoordinate(VALUE, VALUE), mapAnimationOptions { duration(DURATION) })
+    cameraAnimationsPluginImpl.moveBy(
+      ScreenCoordinate(VALUE, VALUE),
+      mapAnimationOptions { duration(DURATION) }
+    )
     verify {
       centerAnimator.addInternalListener(any())
       bearingAnimator.addInternalListener(any())
@@ -186,7 +188,11 @@ class CameraAnimationsPluginImplTest {
   @Test
   fun testScaleByRegister() {
     cameraAnimationsPluginImpl.cameraAnimationsFactory = cameraAnimatorsFactory
-    cameraAnimationsPluginImpl.scaleBy(VALUE, ScreenCoordinate(VALUE, VALUE), mapAnimationOptions { duration(DURATION) })
+    cameraAnimationsPluginImpl.scaleBy(
+      VALUE,
+      ScreenCoordinate(VALUE, VALUE),
+      mapAnimationOptions { duration(DURATION) }
+    )
     verify {
       centerAnimator.addInternalListener(any())
       bearingAnimator.addInternalListener(any())
@@ -220,7 +226,7 @@ class CameraAnimationsPluginImplTest {
   @Test
   fun startSubsequentAnimationsWithTheSameType1() {
     var cameraPosition = CameraOptions.Builder().build()
-    every { mapTransformDelegate.setCamera(any()) } answers {
+    every { cameraManagerDelegate.setCamera(any()) } answers {
       cameraPosition = firstArg()
     }
 
@@ -254,7 +260,7 @@ class CameraAnimationsPluginImplTest {
   @Test
   fun startSubsequentAnimationsWithTheSameType2() {
     var cameraPosition = CameraOptions.Builder().build()
-    every { mapTransformDelegate.setCamera(any()) } answers {
+    every { cameraManagerDelegate.setCamera(any()) } answers {
       cameraPosition = firstArg()
     }
 
@@ -290,7 +296,7 @@ class CameraAnimationsPluginImplTest {
   fun testEaseToSingleDurationZero() {
 
     var cameraPosition = CameraOptions.Builder().build()
-    every { mapTransformDelegate.setCamera(any()) } answers {
+    every { cameraManagerDelegate.setCamera(any()) } answers {
       cameraPosition = firstArg()
     }
 
@@ -319,7 +325,7 @@ class CameraAnimationsPluginImplTest {
   fun testEaseToSingleDurationShort() {
 
     var cameraPosition = CameraOptions.Builder().build()
-    every { mapTransformDelegate.setCamera(any()) } answers {
+    every { cameraManagerDelegate.setCamera(any()) } answers {
       cameraPosition = firstArg()
     }
 
@@ -348,7 +354,7 @@ class CameraAnimationsPluginImplTest {
   fun testEaseToSequenceDurationZero() {
 
     var cameraPosition = CameraOptions.Builder().pitch(0.0).build()
-    every { mapTransformDelegate.setCamera(any()) } answers {
+    every { cameraManagerDelegate.setCamera(any()) } answers {
       cameraPosition = firstArg()
     }
 
@@ -374,8 +380,24 @@ class CameraAnimationsPluginImplTest {
     val handler = Handler(getMainLooper())
     cameraAnimationsPluginImpl.easeTo(cameraOptions1, mapAnimationOptions { duration(0) })
 
-    handler.postDelayed({ cameraAnimationsPluginImpl.easeTo(cameraOptions2, mapAnimationOptions { duration(0) }) }, 1)
-    handler.postDelayed({ cameraAnimationsPluginImpl.easeTo(cameraOptions3, mapAnimationOptions { duration(0) }) }, 2)
+    handler.postDelayed(
+      {
+        cameraAnimationsPluginImpl.easeTo(
+          cameraOptions2,
+          mapAnimationOptions { duration(0) }
+        )
+      },
+      1
+    )
+    handler.postDelayed(
+      {
+        cameraAnimationsPluginImpl.easeTo(
+          cameraOptions3,
+          mapAnimationOptions { duration(0) }
+        )
+      },
+      2
+    )
 
     shadowOf(getMainLooper()).idleFor(Duration.ofMillis(2))
 
@@ -387,7 +409,7 @@ class CameraAnimationsPluginImplTest {
   fun testEaseToSequenceQuickDuration() {
 
     var cameraPosition = CameraOptions.Builder().pitch(0.0).build()
-    every { mapTransformDelegate.setCamera(any()) } answers {
+    every { cameraManagerDelegate.setCamera(any()) } answers {
       cameraPosition = firstArg()
     }
 
@@ -412,8 +434,24 @@ class CameraAnimationsPluginImplTest {
 
     val handler = Handler(getMainLooper())
     cameraAnimationsPluginImpl.easeTo(cameraOptions1, mapAnimationOptions { duration(1) })
-    handler.postDelayed({ cameraAnimationsPluginImpl.easeTo(cameraOptions2, mapAnimationOptions { duration(1) }) }, 2)
-    handler.postDelayed({ cameraAnimationsPluginImpl.easeTo(cameraOptions3, mapAnimationOptions { duration(1) }) }, 8)
+    handler.postDelayed(
+      {
+        cameraAnimationsPluginImpl.easeTo(
+          cameraOptions2,
+          mapAnimationOptions { duration(1) }
+        )
+      },
+      2
+    )
+    handler.postDelayed(
+      {
+        cameraAnimationsPluginImpl.easeTo(
+          cameraOptions3,
+          mapAnimationOptions { duration(1) }
+        )
+      },
+      8
+    )
 
     shadowOf(getMainLooper()).idleFor(Duration.ofMillis(10))
 
@@ -424,7 +462,7 @@ class CameraAnimationsPluginImplTest {
   @Test
   fun testDelayedAnimatorsFinalStateAndCallbackResult() {
     var cameraPosition = CameraOptions.Builder().build()
-    every { mapTransformDelegate.setCamera(any()) } answers {
+    every { cameraManagerDelegate.setCamera(any()) } answers {
       cameraPosition = firstArg()
     }
 
@@ -483,7 +521,7 @@ class CameraAnimationsPluginImplTest {
 
     // Adding value 2 because of first call after Animator.start() and last in the onEnd() or onCancel()
     val countUpdates = (bearingDuration + 2).toInt()
-    verify(exactly = countUpdates) { mapTransformDelegate.setCamera(any()) }
+    verify(exactly = countUpdates) { cameraManagerDelegate.setCamera(any()) }
   }
 
   @Test
@@ -512,7 +550,7 @@ class CameraAnimationsPluginImplTest {
   @Test
   fun executeBearingAnimator() {
     var cameraPosition = CameraOptions.Builder().build()
-    every { mapTransformDelegate.setCamera(any()) } answers {
+    every { cameraManagerDelegate.setCamera(any()) } answers {
       cameraPosition = firstArg()
     }
 
@@ -550,10 +588,10 @@ class CameraAnimationsPluginImplTest {
     shadowOf(getMainLooper()).idle()
 
     verifyOrder {
-      mapTransformDelegate.setUserAnimationInProgress(true)
-      mapTransformDelegate.setUserAnimationInProgress(false)
-      mapTransformDelegate.setUserAnimationInProgress(true)
-      mapTransformDelegate.setUserAnimationInProgress(false)
+      cameraManagerDelegate.setUserAnimationInProgress(true)
+      cameraManagerDelegate.setUserAnimationInProgress(false)
+      cameraManagerDelegate.setUserAnimationInProgress(true)
+      cameraManagerDelegate.setUserAnimationInProgress(false)
     }
   }
 
@@ -572,9 +610,9 @@ class CameraAnimationsPluginImplTest {
     shadowOf(getMainLooper()).idle()
 
     verifyOrder {
-      mapTransformDelegate.setUserAnimationInProgress(true)
-      mapTransformDelegate.setUserAnimationInProgress(true)
-      mapTransformDelegate.setUserAnimationInProgress(false)
+      cameraManagerDelegate.setUserAnimationInProgress(true)
+      cameraManagerDelegate.setUserAnimationInProgress(true)
+      cameraManagerDelegate.setUserAnimationInProgress(false)
     }
   }
 

@@ -14,10 +14,9 @@ import com.mapbox.maps.plugin.animation.CameraTransform.rad2deg
 import com.mapbox.maps.plugin.animation.CameraTransform.scaleZoom
 import com.mapbox.maps.plugin.animation.CameraTransform.zoomScale
 import com.mapbox.maps.plugin.animation.animator.*
+import com.mapbox.maps.plugin.delegates.CameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapCameraDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
-import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import kotlin.math.*
 
 /**
@@ -26,9 +25,8 @@ import kotlin.math.*
  */
 class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelegateProvider) {
 
-  private val mapTransformDelegate: MapTransformDelegate = mapDelegateProvider.mapTransformDelegate
-  private val mapProjectionDelegate: MapProjectionDelegate =
-    mapDelegateProvider.mapProjectionDelegate
+  private val cameraManagerDelegate: CameraManagerDelegate =
+    mapDelegateProvider.cameraManagerDelegate
   private val mapCameraDelegate: MapCameraDelegate = mapDelegateProvider.mapCameraDelegate
 
   /**
@@ -198,8 +196,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
     val centerTarget = CameraTransform.calculateLatLngMoveBy(
       offset,
       cameraOptions,
-      mapTransformDelegate,
-      mapProjectionDelegate
+      cameraManagerDelegate
     )
     cameraOptions.center?.let { start ->
       centerTarget.let { target ->
@@ -228,7 +225,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
     second: ScreenCoordinate
   ): Array<CameraAnimator<*>> {
     val cameraOptions = mapCameraDelegate.getCameraOptions()
-    val mapSizePixels = mapTransformDelegate.getMapOptions().size
+    val mapSizePixels = cameraManagerDelegate.getMapOptions().size
     val cameraBearingDegrees = cameraOptions.bearing
     if (cameraBearingDegrees != null && mapSizePixels != null) {
       var mapCenter = CameraTransform.getMapCenter(
@@ -295,17 +292,18 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
 
     var startBearing = currentCameraOptions.bearing
       ?: return emptyArray()
-    val startScale = mapTransformDelegate.getScale()
+    val startScale = cameraManagerDelegate.getScale()
     val startZoom = startScale.scaleZoom()
-    endZoom = endZoom.coerceIn(mapTransformDelegate.getMinZoom(), mapTransformDelegate.getMaxZoom())
+    endZoom =
+      endZoom.coerceIn(cameraManagerDelegate.getMinZoom(), cameraManagerDelegate.getMaxZoom())
 
     // Determine endpoints
     var startPointRaw = currentCameraOptions.center
       ?: return emptyArray()
     startPointRaw = CameraTransform.unwrapForShortestPath(startPointRaw, endPointRaw)
 
-    val startPoint = mapProjectionDelegate.project(startPointRaw, startScale)
-    val endPoint = mapProjectionDelegate.project(endPointRaw, startScale)
+    val startPoint = cameraManagerDelegate.project(startPointRaw, startScale)
+    val endPoint = cameraManagerDelegate.project(endPointRaw, startScale)
 
     // Minimize rotation by taking the shorter path around the circle.
 
@@ -318,8 +316,8 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
     // w₀: Initial visible span, measured in pixels at the initial scale.
     // Known henceforth as a <i>screenful</i>.
 
-    val size = mapTransformDelegate.getSize()
-    val pixelRatio = mapTransformDelegate.getMapOptions().pixelRatio
+    val size = cameraManagerDelegate.getSize()
+    val pixelRatio = cameraManagerDelegate.getMapOptions().pixelRatio
     val w0 = max(
       (size.width - endPadding.left - endPadding.right) / pixelRatio,
       (size.height - endPadding.top - endPadding.bottom) / pixelRatio
@@ -401,7 +399,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
             startPoint.x + us * (endPoint.x - startPoint.x),
             startPoint.y + us * (endPoint.y - startPoint.y)
           )
-          mapProjectionDelegate.unproject(interpolated, startScale)
+          cameraManagerDelegate.unproject(interpolated, startScale)
         },
         options = cameraAnimatorOptions(endPointRaw) {
           startValue(startPointRaw)

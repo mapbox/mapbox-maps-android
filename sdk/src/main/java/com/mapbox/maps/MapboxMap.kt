@@ -37,8 +37,7 @@ class MapboxMap internal constructor(
   nativeMap: MapInterface,
   private val nativeObserver: NativeObserver,
   private val pixelRatio: Float
-) : MapTransformDelegate,
-  MapProjectionDelegate,
+) : CameraManagerDelegate,
   MapFeatureQueryDelegate,
   ObservableInterface,
   MapListenerDelegate,

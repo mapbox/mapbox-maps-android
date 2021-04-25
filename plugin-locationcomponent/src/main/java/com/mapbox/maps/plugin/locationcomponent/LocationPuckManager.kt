@@ -146,8 +146,8 @@ internal class LocationPuckManager(
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal fun styleScaling(settings: LocationComponentSettings) {
     val puck = settings.locationPuck
-    val minZoom = delegateProvider.mapTransformDelegate.getBounds().minZoom ?: 0.0
-    val maxZoom = delegateProvider.mapTransformDelegate.getBounds().maxZoom ?: 19.0
+    val minZoom = delegateProvider.cameraManagerDelegate.getBounds().minZoom ?: 0.0
+    val maxZoom = delegateProvider.cameraManagerDelegate.getBounds().maxZoom ?: 19.0
     when (puck) {
       is LocationPuck2D -> {
         val scaleExpression = puck.scaleExpression

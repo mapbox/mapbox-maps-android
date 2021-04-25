@@ -34,9 +34,9 @@ import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.PLUGIN_GESTURE_CLASS_NAME
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
+import com.mapbox.maps.plugin.delegates.CameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate
-import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
 import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
@@ -55,7 +55,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   private val annotationConfig: AnnotationConfig?
 ) : AnnotationManager<G, T, S, D, U, V> {
   protected lateinit var style: StyleInterface
-  private var mapProjectionDelegate: MapProjectionDelegate = delegateProvider.mapProjectionDelegate
+  private var cameraManagerDelegate: CameraManagerDelegate = delegateProvider.cameraManagerDelegate
   private var mapFeatureQueryDelegate: MapFeatureQueryDelegate =
     delegateProvider.mapFeatureQueryDelegate
   private var styleStateDelegate: MapStyleStateDelegate = delegateProvider.styleStateDelegate
@@ -483,7 +483,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         }
         val shiftedGeometry: G? = delegateProvider.let {
           annotation.getOffsetGeometry(
-            it.mapProjectionDelegate, moveObject, touchAreaShiftX, touchAreaShiftY
+            it.cameraManagerDelegate, moveObject, touchAreaShiftX, touchAreaShiftY
           )
         }
         shiftedGeometry?.let { geometry ->
@@ -560,7 +560,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * @param callback query callback
    */
   fun queryMapForFeatures(point: Point, callback: QueryAnnotationCallback<T>) {
-    val screenCoordinate = mapProjectionDelegate.pixelForCoordinate(point)
+    val screenCoordinate = cameraManagerDelegate.pixelForCoordinate(point)
     queryMapForFeatures(screenCoordinate, callback)
   }
 

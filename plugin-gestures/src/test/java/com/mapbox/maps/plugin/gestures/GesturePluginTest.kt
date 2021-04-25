@@ -15,10 +15,9 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
+import com.mapbox.maps.plugin.delegates.CameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
-import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
-import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import io.mockk.*
@@ -41,8 +40,7 @@ class GesturePluginTest {
 
   private val mapDelegateProvider: MapDelegateProvider = mockk(relaxUnitFun = true)
 
-  private val mapTransformDelegate: MapTransformDelegate = mockk(relaxUnitFun = true)
-  private val mapProjectionDelegate: MapProjectionDelegate = mockk(relaxUnitFun = true)
+  private val cameraManagerDelegate: CameraManagerDelegate = mockk(relaxUnitFun = true)
   private val mapPluginProviderDelegate: MapPluginProviderDelegate = mockk(relaxUnitFun = true)
   private val cameraAnimationsPlugin: CameraAnimationsPlugin = mockk(relaxed = true)
 
@@ -70,8 +68,7 @@ class GesturePluginTest {
     every { typedArray.getFloat(any(), any()) } returns 10.0f
     every { typedArray.hasValue(any()) } returns true
 
-    every { mapDelegateProvider.mapTransformDelegate } returns mapTransformDelegate
-    every { mapDelegateProvider.mapProjectionDelegate } returns mapProjectionDelegate
+    every { mapDelegateProvider.cameraManagerDelegate } returns cameraManagerDelegate
     every { mapDelegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
     every { mapPluginProviderDelegate.getPlugin(any<Class<CameraAnimationsPlugin>>()) } returns cameraAnimationsPlugin
 
@@ -95,7 +92,7 @@ class GesturePluginTest {
   @Test
   fun verifyIgnoreEvent() {
     val touchHandled = presenter.onTouchEvent(null)
-    verify(exactly = 0) { mapTransformDelegate.setGestureInProgress(true) }
+    verify(exactly = 0) { cameraManagerDelegate.setGestureInProgress(true) }
     assertFalse(touchHandled)
   }
 
@@ -106,7 +103,7 @@ class GesturePluginTest {
 
   @Test
   fun verifyOnGenericMoveEvent() {
-    every { mapTransformDelegate.getCameraOptions(null) } returns CameraOptions.Builder().zoom(1.0).build()
+    every { cameraManagerDelegate.getCameraOptions(null) } returns CameraOptions.Builder().zoom(1.0).build()
     every { cameraAnimationsPlugin.calculateScaleBy(any(), any()) } returns 2.0
     assert(presenter.onGenericMotionEvent(obtainMotionEventButton(BUTTON_SECONDARY)))
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
@@ -124,13 +121,13 @@ class GesturePluginTest {
   fun verifyOnGenericMoveEventIgnore() {
     presenter.zoomEnabled = false
     assertFalse(presenter.onGenericMotionEvent(obtainMotionEventButton(BUTTON_SECONDARY)))
-    verify(exactly = 0) { mapTransformDelegate.setCamera(any()) }
+    verify(exactly = 0) { cameraManagerDelegate.setCamera(any()) }
   }
 
   @Test
   fun ignoreNonZeroButtonState() {
     val touchHandled = presenter.onTouchEvent(obtainMotionEventButton(BUTTON_SECONDARY))
-    verify(exactly = 0) { mapTransformDelegate.setGestureInProgress(true) }
+    verify(exactly = 0) { cameraManagerDelegate.setGestureInProgress(true) }
     assertFalse(touchHandled)
   }
 
@@ -138,7 +135,7 @@ class GesturePluginTest {
   fun verifyGestureInProgressActionDown() {
     every { gesturesManager.onTouchEvent(any()) }.returns(true)
     presenter.onTouchEvent(obtainMotionEventAction(ACTION_DOWN))
-    verify { mapTransformDelegate.setGestureInProgress(true) }
+    verify { cameraManagerDelegate.setGestureInProgress(true) }
   }
 
   @Test
@@ -147,7 +144,7 @@ class GesturePluginTest {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     presenter.onTouchEvent(obtainMotionEventAction(ACTION_UP))
     Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(50))
-    verify { mapTransformDelegate.setGestureInProgress(false) }
+    verify { cameraManagerDelegate.setGestureInProgress(false) }
   }
 
   @Test
@@ -164,7 +161,7 @@ class GesturePluginTest {
     every { listener.onMapLongClick(any()) } returns true
     val screenCoordinate = ScreenCoordinate(1.0, 1.0)
     val point = Point.fromLngLat(0.0, 0.0)
-    every { mapProjectionDelegate.coordinateForPixel(screenCoordinate) } returns point
+    every { cameraManagerDelegate.coordinateForPixel(screenCoordinate) } returns point
 
     presenter.addOnMapLongClickListener(listener)
     presenter.handleLongPressEvent(screenCoordinate)
@@ -181,7 +178,7 @@ class GesturePluginTest {
     val screenCoordinate = ScreenCoordinate(1.0, 1.0)
     val point = Point.fromLngLat(0.0, 0.0)
 
-    every { mapProjectionDelegate.coordinateForPixel(screenCoordinate) } returns point
+    every { cameraManagerDelegate.coordinateForPixel(screenCoordinate) } returns point
     presenter.addOnMapClickListener(listener)
     presenter.handleClickEvent(screenCoordinate)
     verify { listener.onMapClick(point) }
@@ -206,7 +203,7 @@ class GesturePluginTest {
 
     // verify second tap
     val upEvent = obtainMotionEventAction(ACTION_UP)
-    every { mapTransformDelegate.getZoom() } returns 5.0
+    every { cameraManagerDelegate.getZoom() } returns 5.0
     assert(presenter.handleDoubleTapEvent(upEvent, 0.0f))
   }
 
@@ -220,7 +217,7 @@ class GesturePluginTest {
 
     // verify second tap
     val upEvent = obtainMotionEventActionDistant(ACTION_UP)
-    every { mapTransformDelegate.getZoom() } returns 5.0
+    every { cameraManagerDelegate.getZoom() } returns 5.0
     assertFalse(presenter.handleDoubleTapEvent(upEvent, 0.0f))
   }
 
@@ -236,7 +233,7 @@ class GesturePluginTest {
 
     // verify second tap
     val upEvent = obtainMotionEventAction(ACTION_UP)
-    every { mapTransformDelegate.getZoom() } returns 5.0
+    every { cameraManagerDelegate.getZoom() } returns 5.0
     assertFalse(presenter.handleDoubleTapEvent(upEvent, 0.0f))
   }
 
@@ -252,7 +249,7 @@ class GesturePluginTest {
 
     // verify second tap
     val upEvent = obtainMotionEventAction(ACTION_UP)
-    every { mapTransformDelegate.getZoom() } returns 5.0
+    every { cameraManagerDelegate.getZoom() } returns 5.0
     assertFalse(presenter.handleDoubleTapEvent(upEvent, 0.0f))
   }
 
@@ -268,7 +265,7 @@ class GesturePluginTest {
 
     // verify second tap
     val upEvent = obtainMotionEventAction(ACTION_UP)
-    every { mapTransformDelegate.getZoom() } returns 5.0
+    every { cameraManagerDelegate.getZoom() } returns 5.0
     assert(presenter.handleDoubleTapEvent(upEvent, 0.0f))
   }
 
@@ -301,11 +298,11 @@ class GesturePluginTest {
 
   @Test
   fun verifyFling() {
-    every { mapTransformDelegate.getPitch() } returns 0.0
-    every { mapTransformDelegate.getDragCameraOptions(any(), any()) } returns CameraOptions.Builder().build()
+    every { cameraManagerDelegate.getPitch() } returns 0.0
+    every { cameraManagerDelegate.getDragCameraOptions(any(), any()) } returns CameraOptions.Builder().build()
     val result = presenter.handleFlingEvent(mockk(), mockk(), 10000f, 10000f)
     verify {
-      mapTransformDelegate.getDragCameraOptions(
+      cameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),
         ScreenCoordinate(666.6666666666667, 666.6666666666667)
       )
@@ -344,13 +341,13 @@ class GesturePluginTest {
   fun verifyMoveListener() {
     val listener: OnMoveListener = mockk(relaxed = true)
     presenter.addOnMoveListener(listener)
-    every { mapTransformDelegate.getCameraOptions(any()) } returns CameraOptions.Builder().build()
-    every { mapTransformDelegate.getDragCameraOptions(any(), any()) } returns CameraOptions.Builder().build()
+    every { cameraManagerDelegate.getCameraOptions(any()) } returns CameraOptions.Builder().build()
+    every { cameraManagerDelegate.getDragCameraOptions(any(), any()) } returns CameraOptions.Builder().build()
     val handled = presenter.handleMove(mockk(), 50.0f, 50.0f)
     assert(handled)
     verify { listener.onMove(any()) }
     verify {
-      mapTransformDelegate.getDragCameraOptions(
+      cameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),
         ScreenCoordinate(-50.0, -50.0)
       )
@@ -374,7 +371,7 @@ class GesturePluginTest {
     every { scaleDetector.pointersCount } returns 1
     every { scaleDetector.currentSpan } returns 100.0f
     every { scaleDetector.previousSpan } returns 80.0f
-    every { mapTransformDelegate.getZoom() } returns 1.0
+    every { cameraManagerDelegate.getZoom() } returns 1.0
 
     val listener: OnScaleListener = mockk(relaxed = true)
     presenter.addOnScaleListener(listener)
@@ -390,7 +387,7 @@ class GesturePluginTest {
     every { scaleDetector.currentSpan } returns 80.0f
     every { scaleDetector.previousSpan } returns 5000.0f
     every { rotateGestureDetector.deltaSinceLast } returns 50.0f
-    every { mapTransformDelegate.getZoom() } returns 1.0
+    every { cameraManagerDelegate.getZoom() } returns 1.0
     every { scaleGestureDetector.isInProgress } returns true
     every { moveGestureDetector.isInProgress } returns false
     every { rotateGestureDetector.isInProgress } returns false
@@ -413,7 +410,7 @@ class GesturePluginTest {
     every { scaleDetector.currentSpan } returns 80.0f
     every { scaleDetector.previousSpan } returns 5000.0f
     every { rotateGestureDetector.deltaSinceLast } returns 50.0f
-    every { mapTransformDelegate.getZoom() } returns 1.0
+    every { cameraManagerDelegate.getZoom() } returns 1.0
     every { scaleGestureDetector.isInProgress } returns true
     every { moveGestureDetector.isInProgress } returns false
     every { rotateGestureDetector.isInProgress } returns false
@@ -432,7 +429,7 @@ class GesturePluginTest {
     every { scaleDetector.currentSpan } returns 80.0f
     every { scaleDetector.previousSpan } returns 5000.0f
     every { rotateGestureDetector.deltaSinceLast } returns 50.0f
-    every { mapTransformDelegate.getZoom() } returns 1.0
+    every { cameraManagerDelegate.getZoom() } returns 1.0
     every { scaleGestureDetector.isInProgress } returns true
     every { moveGestureDetector.isInProgress } returns false
     every { rotateGestureDetector.isInProgress } returns false
@@ -451,7 +448,7 @@ class GesturePluginTest {
     every { scaleDetector.previousSpan } returns 80.0f
     every { scaleDetector.focalPoint } returns PointF(1.0f, 1.0f)
     every { scaleDetector.scaleFactor } returns 2.0f
-    every { mapTransformDelegate.getZoom() } returns 1.0
+    every { cameraManagerDelegate.getZoom() } returns 1.0
 
     val listener: OnScaleListener = mockk(relaxed = true)
     presenter.addOnScaleListener(listener)
@@ -472,14 +469,14 @@ class GesturePluginTest {
     every { scaleDetector.currentSpan } returns 100.0f
     every { scaleDetector.previousSpan } returns 80.0f
     every { scaleDetector.currentEvent } returns obtainMotionEventAction(ACTION_MOVE)
-    every { mapTransformDelegate.getZoom() } returns 1.0
+    every { cameraManagerDelegate.getZoom() } returns 1.0
     presenter.handleScaleBegin(scaleDetector)
 
     every { scaleDetector.currentSpan } returns 100.0f
     every { scaleDetector.previousSpan } returns 80.0f
     every { scaleDetector.focalPoint } returns PointF(1.0f, 1.0f)
     every { scaleDetector.scaleFactor } returns 2.0f
-    every { mapTransformDelegate.getZoom() } returns 1.0
+    every { cameraManagerDelegate.getZoom() } returns 1.0
 
     val listener: OnScaleListener = mockk(relaxed = true)
     presenter.addOnScaleListener(listener)
@@ -497,7 +494,7 @@ class GesturePluginTest {
     every { scaleDetector.previousSpan } returns 80.0f
     every { scaleDetector.focalPoint } returns PointF(1.0f, 1.0f)
     every { scaleDetector.scaleFactor } returns 2.0f
-    every { mapTransformDelegate.getZoom() } returns 1.0
+    every { cameraManagerDelegate.getZoom() } returns 1.0
 
     val listener: OnScaleListener = mockk(relaxed = true)
     presenter.addOnScaleListener(listener)
@@ -573,7 +570,7 @@ class GesturePluginTest {
     val rotateGestureDetector = mockk<RotateGestureDetector>()
     val listener: OnRotateListener = mockk(relaxed = true)
     presenter.addOnRotateListener(listener)
-    every { mapTransformDelegate.getBearing() } returns 0.0
+    every { cameraManagerDelegate.getBearing() } returns 0.0
     every { rotateGestureDetector.focalPoint } returns PointF(0.0f, 0.0f)
     val result = presenter.handleRotate(rotateGestureDetector, 34.0f)
     assert(result)
@@ -585,7 +582,7 @@ class GesturePluginTest {
     val rotateGestureDetector = mockk<RotateGestureDetector>()
     every { rotateGestureDetector.focalPoint } returns PointF(0.0f, 0.0f)
     every { rotateGestureDetector.deltaSinceLast } returns 500.0f
-    every { mapTransformDelegate.getBearing() } returns 0.0
+    every { cameraManagerDelegate.getBearing() } returns 0.0
     every { rotateGestureDetector.isInProgress } returns true
     every { scaleGestureDetector.isInProgress } returns false
     val listener: OnRotateListener = mockk(relaxed = true)
@@ -621,7 +618,7 @@ class GesturePluginTest {
 
   @Test
   fun verifyShove() {
-    every { mapTransformDelegate.getPitch() } returns 5.0
+    every { cameraManagerDelegate.getPitch() } returns 5.0
     val listener: OnShoveListener = mockk(relaxed = true)
     val gestureDetector = mockk<ShoveGestureDetector>(relaxUnitFun = true)
     presenter.addOnShoveListener(listener)
@@ -632,7 +629,7 @@ class GesturePluginTest {
 
   @Test
   fun verifyShoveEnd() {
-    every { mapTransformDelegate.getPitch() } returns 5.0
+    every { cameraManagerDelegate.getPitch() } returns 5.0
     val listener: OnShoveListener = mockk(relaxed = true)
     val gestureDetector = mockk<ShoveGestureDetector>(relaxUnitFun = true)
     presenter.addOnShoveListener(listener)
@@ -653,7 +650,7 @@ class GesturePluginTest {
 
   @Test
   fun verifyAddProtectedAnimationOwner() {
-    every { mapTransformDelegate.getCameraOptions(null) } returns CameraOptions.Builder().zoom(1.0).build()
+    every { cameraManagerDelegate.getCameraOptions(null) } returns CameraOptions.Builder().zoom(1.0).build()
     every { cameraAnimationsPlugin.calculateScaleBy(any(), any()) } returns 2.0
     presenter.addProtectedAnimationOwner("Owner")
     assert(presenter.onGenericMotionEvent(obtainMotionEventButton(BUTTON_SECONDARY)))
@@ -662,7 +659,7 @@ class GesturePluginTest {
 
   @Test
   fun verifyRemoveProtectedAnimationOwner() {
-    every { mapTransformDelegate.getCameraOptions(null) } returns CameraOptions.Builder().zoom(1.0).build()
+    every { cameraManagerDelegate.getCameraOptions(null) } returns CameraOptions.Builder().zoom(1.0).build()
     every { cameraAnimationsPlugin.calculateScaleBy(any(), any()) } returns 2.0
     presenter.addProtectedAnimationOwner("OwnerOne")
     presenter.addProtectedAnimationOwner("OwnerTwo")
@@ -706,14 +703,14 @@ class GesturePluginTest {
   }
 }
 
-private fun MapTransformDelegate.getZoom(): Double {
+private fun CameraManagerDelegate.getZoom(): Double {
   return getCameraOptions(null).zoom!!
 }
 
-private fun MapTransformDelegate.getPitch(): Double {
+private fun CameraManagerDelegate.getPitch(): Double {
   return getCameraOptions(null).pitch!!
 }
 
-private fun MapTransformDelegate.getBearing(): Double {
+private fun CameraManagerDelegate.getBearing(): Double {
   return getCameraOptions(null).bearing!!
 }

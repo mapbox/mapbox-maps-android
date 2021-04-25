@@ -103,8 +103,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
   private lateinit var mapDelegateProvider: MapDelegateProvider
   private lateinit var mapCameraDelegate: MapCameraDelegate
-  private lateinit var mapTransformDelegate: MapTransformDelegate
-  private lateinit var mapProjectionDelegate: MapProjectionDelegate
+  private lateinit var cameraManagerDelegate: CameraManagerDelegate
 
   /**
    * Factory to provide animators for the default animations like easeTo, scaleBy, moveBy, rotateBy, pitchBy
@@ -122,8 +121,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     mapDelegateProvider = delegateProvider
     mapCameraDelegate = mapDelegateProvider.mapCameraDelegate
-    mapTransformDelegate = mapDelegateProvider.mapTransformDelegate
-    mapProjectionDelegate = mapDelegateProvider.mapProjectionDelegate
+    cameraManagerDelegate = mapDelegateProvider.cameraManagerDelegate
     cameraAnimationsFactory = CameraAnimatorsFactory(mapDelegateProvider)
   }
 
@@ -149,7 +147,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       return
     }
     // move native map to new position
-    mapTransformDelegate.setCamera(cameraOptions)
+    cameraManagerDelegate.setCamera(cameraOptions)
     // notify listeners with actual values
     notifyListeners(cameraOptions)
     lastCameraOptions = cameraOptions
@@ -227,7 +225,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
           lifecycleListeners.forEach {
             it.onAnimatorStarting(type, this, owner)
           }
-          mapTransformDelegate.setUserAnimationInProgress(true)
+          cameraManagerDelegate.setUserAnimationInProgress(true)
 
           // check if such animation is not running already
           // if it is - then cancel it
@@ -284,7 +282,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
               anchor = animatedValue as ScreenCoordinate
             }
             performMapJump(cameraOptionsBuilder.anchor(anchor).build())
-            mapTransformDelegate.setUserAnimationInProgress(false)
+            cameraManagerDelegate.setUserAnimationInProgress(false)
           }
           lifecycleListeners.forEach {
             when (finishStatus) {

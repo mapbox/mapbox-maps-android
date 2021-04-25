@@ -2,8 +2,7 @@ package com.mapbox.maps.plugin.animation
 
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
-import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
-import com.mapbox.maps.plugin.delegates.MapTransformDelegate
+import com.mapbox.maps.plugin.delegates.CameraManagerDelegate
 import kotlin.math.*
 
 internal object CameraTransform {
@@ -49,10 +48,9 @@ internal object CameraTransform {
   fun calculateLatLngMoveBy(
     offset: ScreenCoordinate,
     cameraOptions: CameraOptions,
-    mapTransformDelegate: MapTransformDelegate,
-    mapProjectionDelegate: MapProjectionDelegate
+    cameraManagerDelegate: CameraManagerDelegate
   ): Point {
-    val mapOptions = mapTransformDelegate.getMapOptions()
+    val mapOptions = cameraManagerDelegate.getMapOptions()
     val mapCenter = getMapCenter(
       cameraOptions.padding,
       mapOptions.size!!
@@ -60,7 +58,7 @@ internal object CameraTransform {
     val pointOnScreenX = mapCenter.x - offset.x
     val pointOnScreenY = mapCenter.y - offset.y
     val pointOnScreen = ScreenCoordinate(pointOnScreenX, pointOnScreenY)
-    return mapProjectionDelegate.coordinateForPixel(pointOnScreen)
+    return cameraManagerDelegate.coordinateForPixel(pointOnScreen)
   }
 
   fun calculateScaleBy(amount: Double, currentZoom: Double) = log2(amount) + currentZoom

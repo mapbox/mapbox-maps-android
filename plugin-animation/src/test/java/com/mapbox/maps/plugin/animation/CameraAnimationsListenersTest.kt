@@ -6,10 +6,12 @@ import android.os.Looper
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.animator.CameraBearingAnimator
+import com.mapbox.maps.plugin.delegates.CameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapCameraDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.delegates.MapTransformDelegate
-import io.mockk.*
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkObject
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -26,7 +28,7 @@ import org.robolectric.shadows.ShadowLog
 class CameraAnimationsListenersTest {
 
   private lateinit var cameraAnimationsPluginImpl: CameraAnimationsPluginImpl
-  private lateinit var mapTransformDelegate: MapTransformDelegate
+  private lateinit var cameraManagerDelegate: CameraManagerDelegate
   private lateinit var mapCameraDelegate: MapCameraDelegate
 
   private class Listener : Animator.AnimatorListener {
@@ -44,10 +46,10 @@ class CameraAnimationsListenersTest {
     ShadowLog.stream = System.out
     val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
     mapCameraDelegate = mockk(relaxed = true)
-    mapTransformDelegate = mockk(relaxed = true)
+    cameraManagerDelegate = mockk(relaxed = true)
     mockkObject(CameraTransform)
     every { delegateProvider.mapCameraDelegate } returns mapCameraDelegate
-    every { delegateProvider.mapTransformDelegate } returns mapTransformDelegate
+    every { delegateProvider.cameraManagerDelegate } returns cameraManagerDelegate
     every { CameraTransform.normalizeAngleRadians(any(), any()) } answers { secondArg() }
     cameraAnimationsPluginImpl = CameraAnimationsPluginImpl().apply {
       onDelegateProvider(delegateProvider)

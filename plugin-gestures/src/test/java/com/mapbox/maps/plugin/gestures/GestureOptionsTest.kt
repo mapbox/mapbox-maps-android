@@ -7,10 +7,9 @@ import android.util.AttributeSet
 import com.mapbox.android.gestures.AndroidGesturesManager
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.camera
+import com.mapbox.maps.plugin.delegates.CameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
-import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
-import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import io.mockk.*
 import org.junit.After
@@ -29,9 +28,7 @@ class GestureOptionsTest {
 
   private val gestureManager: AndroidGesturesManager = mockk(relaxed = true)
 
-  private val mapTransformDelegate: MapTransformDelegate = mockk(relaxUnitFun = true)
-
-  private val mapProjectionDelegate: MapProjectionDelegate = mockk(relaxUnitFun = true)
+  private val cameraManagerDelegate: CameraManagerDelegate = mockk(relaxUnitFun = true)
 
   private val mapDelegateProvider: MapDelegateProvider = mockk(relaxUnitFun = true)
 
@@ -60,8 +57,7 @@ class GestureOptionsTest {
     every { typedArray.hasValue(any()) } returns true
     every { mapDelegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
     every { mapPluginProviderDelegate.camera } returns cameraAnimationsPlugin
-    every { mapDelegateProvider.mapTransformDelegate } returns mapTransformDelegate
-    every { mapDelegateProvider.mapProjectionDelegate } returns mapProjectionDelegate
+    every { mapDelegateProvider.cameraManagerDelegate } returns cameraManagerDelegate
     every { mainHandler.post(capture(runnableSlot)) } answers {
       runnableSlot.captured.run()
       true

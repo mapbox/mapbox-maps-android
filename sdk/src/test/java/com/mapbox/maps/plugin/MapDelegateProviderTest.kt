@@ -49,12 +49,6 @@ class MapDelegateProviderTest {
   }
 
   @Test
-  fun mapTransformDelegate() {
-    val mapDelegateProvider = MapDelegateProviderImpl(mapboxMap, mockk(), mockk())
-    assertEquals(mapboxMap, mapDelegateProvider.mapTransformDelegate)
-  }
-
-  @Test
   fun mapPluginProviderDelegate() {
     val expected = mockk<MapController>()
     val mapDelegateProvider = MapDelegateProviderImpl(mapboxMap, expected, mockk())

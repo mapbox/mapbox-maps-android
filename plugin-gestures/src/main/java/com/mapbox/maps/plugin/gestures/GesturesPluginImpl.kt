@@ -40,8 +40,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
   private lateinit var gesturesManager: AndroidGesturesManager
 
-  private lateinit var mapProjectionDelegate: MapProjectionDelegate
-  private lateinit var mapTransformDelegate: MapTransformDelegate
+  private lateinit var cameraManagerDelegate: CameraManagerDelegate
   private lateinit var mapPluginProviderDelegate: MapPluginProviderDelegate
   private lateinit var cameraAnimationsPlugin: CameraAnimationsPlugin
 
@@ -249,8 +248,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     if (motionEvent.actionMasked == MotionEvent.ACTION_DOWN) {
       unregisterScheduledAnimators()
-      mapTransformDelegate.setGestureInProgress(true)
-      mapTransformDelegate.dragStart(
+      cameraManagerDelegate.setGestureInProgress(true)
+      cameraManagerDelegate.dragStart(
         ScreenCoordinate(
           motionEvent.x.toDouble(),
           motionEvent.y.toDouble()
@@ -268,13 +267,13 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         // TODO will be fixed upstream, needed to not fire extra IDLE event in case of fast click
         mainHandler?.postDelayed(
           {
-            mapTransformDelegate.setGestureInProgress(false)
+            cameraManagerDelegate.setGestureInProgress(false)
           },
           50
         )
         // if fling happens after dragging then `dragEnd` will be called after fling animation is finished
         if (!flingInProcess) {
-          mapTransformDelegate.dragEnd()
+          cameraManagerDelegate.dragEnd()
         }
 
         if (scheduledAnimators.isNotEmpty()) {
@@ -290,8 +289,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
       MotionEvent.ACTION_CANCEL -> {
         scheduledAnimators.clear()
-        mapTransformDelegate.setGestureInProgress(false)
-        mapTransformDelegate.dragEnd()
+        cameraManagerDelegate.setGestureInProgress(false)
+        cameraManagerDelegate.dragEnd()
         doubleTapFinished()
       }
     }
@@ -357,7 +356,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
           val scrollDist = event.getAxisValue(MotionEvent.AXIS_VSCROLL)
 
           // Scale the map by the appropriate power of two factor
-          val currentZoom = mapTransformDelegate.getCameraOptions(null).zoom
+          val currentZoom = cameraManagerDelegate.getCameraOptions(null).zoom
           val cachedAnchor = cameraAnimationsPlugin.anchor
           currentZoom?.let {
             val anchor = ScreenCoordinate(event.x.toDouble(), event.y.toDouble())
@@ -564,7 +563,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     }
 
     val zoomAddition = calculateScale(velocityXY.toDouble(), detector.isScalingOut)
-    val currentZoom = mapTransformDelegate.getCameraOptions(null).zoom
+    val currentZoom = cameraManagerDelegate.getCameraOptions(null).zoom
     val focalPoint = getScaleFocalPoint(detector)
     // (log(x + 1 / e^2) + 2) * 150, x=0 to 2.5 (MapboxConstants#MAX_ABSOLUTE_SCALE_VELOCITY_CHANGE)
     val animationTime = (
@@ -623,7 +622,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     } else {
       val zoomBy =
         ln(detector.scaleFactor.toDouble()) / ln(PI / 2) * ZOOM_RATE.toDouble() * internalSettings.zoomRate.toDouble()
-      mapTransformDelegate.getCameraOptions(null).zoom?.let {
+      cameraManagerDelegate.getCameraOptions(null).zoom?.let {
         easeToImmediately(
           CameraOptions.Builder()
             .zoom(it + zoomBy)
@@ -684,7 +683,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     }
 
     screenHeight = Resources.getSystem().displayMetrics.heightPixels.toDouble()
-    startZoom = mapTransformDelegate.getCameraOptions(null).zoom!!
+    startZoom = cameraManagerDelegate.getCameraOptions(null).zoom!!
 
     cancelTransitionsIfRequired()
 
@@ -761,7 +760,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       bearingDistance += stepVelocity
     }
 
-    val bearingCurrent = mapTransformDelegate.getCameraOptions(null).bearing ?: return arrayOf()
+    val bearingCurrent = cameraManagerDelegate.getCameraOptions(null).bearing ?: return arrayOf()
     val bearingTarget = bearingCurrent + bearingDistance
 
     val bearingAnimator = cameraAnimationsPlugin.createBearingAnimator(
@@ -853,7 +852,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     // cameraChangeDispatcher.onCameraMoveStarted(CameraChangeDispatcher.REASON_API_GESTURE);
 
     // Calculate map bearing value
-    val currentBearing = mapTransformDelegate.getCameraOptions(null).bearing
+    val currentBearing = cameraManagerDelegate.getCameraOptions(null).bearing
     rotateCachedAnchor = cameraAnimationsPlugin.anchor
     currentBearing?.let {
       val bearing = it + rotationDegreesSinceLast
@@ -967,7 +966,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     // cameraChangeDispatcher.onCameraMoveStarted(CameraChangeDispatcher.REASON_API_GESTURE);
 
     // Get pitch value (scale and clamp)
-    var pitch = mapTransformDelegate.getCameraOptions(null).pitch
+    var pitch = cameraManagerDelegate.getCameraOptions(null).pitch
     pitch?.let {
       val optimizedPitch = it - (SHOVE_PIXEL_CHANGE_FACTOR * deltaPixelsSinceLast).toDouble()
       pitch = clamp(optimizedPitch, MINIMUM_PITCH, MAXIMUM_PITCH)
@@ -1088,7 +1087,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     // canceling here as well, because when using a button it will not be canceled automatically by onDown()
     unregisterScheduledAnimators(scaleAnimators)
 
-    val currentZoom = mapTransformDelegate.getCameraOptions(null).zoom
+    val currentZoom = cameraManagerDelegate.getCameraOptions(null).zoom
     currentZoom?.let {
       val animators = createScaleAnimators(
         currentZoom,
@@ -1112,7 +1111,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     //    if (noGesturesInProgress()) {
     //      // invalidate the camera position, so that it's valid when fetched from the #onIdle event
     //      // and doesn't rely on the last frame being rendered
-    //      mapTransformDelegate.invalidateCameraPosition();
+    //      cameraManagerDelegate.invalidateCameraPosition();
     //      cameraChangeDispatcher.onCameraIdle();
     //    }
   }
@@ -1135,7 +1134,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
   internal fun handleLongPressEvent(screenCoordinate: ScreenCoordinate) {
     if (!onMapLongClickListenerList.isEmpty()) {
-      val clickedPoint = mapProjectionDelegate.coordinateForPixel(screenCoordinate)
+      val clickedPoint = cameraManagerDelegate.coordinateForPixel(screenCoordinate)
       for (listener in onMapLongClickListenerList) {
         if (listener.onMapLongClick(clickedPoint)) {
           return
@@ -1146,7 +1145,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
   internal fun handleClickEvent(screenCoordinate: ScreenCoordinate): Boolean {
     if (!onMapClickListenerList.isEmpty()) {
-      val clickedPoint = mapProjectionDelegate.coordinateForPixel(screenCoordinate)
+      val clickedPoint = cameraManagerDelegate.coordinateForPixel(screenCoordinate)
       for (listener in onMapClickListenerList) {
         if (listener.onMapClick(clickedPoint)) {
           return true
@@ -1220,7 +1219,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     // cameraChangeDispatcher.onCameraMoveStarted(REASON_API_GESTURE);
 
     // pitch results in a bigger translation, limiting input for #5281
-    val pitch = mapTransformDelegate.getCameraOptions(null).pitch
+    val pitch = cameraManagerDelegate.getCameraOptions(null).pitch
     pitch?.let {
       val pitchFactorAdditionalComponent = when {
         it == MINIMUM_PITCH -> {
@@ -1248,7 +1247,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         (velocityXY / 7.0 / pitchFactor + ANIMATION_DURATION_FLING_BASE).toLong()
 
       cameraAnimationsPlugin.easeTo(
-        mapTransformDelegate.getDragCameraOptions(
+        cameraManagerDelegate.getDragCameraOptions(
           centerScreen,
           ScreenCoordinate(centerScreen.x + offsetX, centerScreen.y + offsetY)
         ),
@@ -1261,7 +1260,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
             override fun onAnimationEnd(animation: Animator?) {
               super.onAnimationEnd(animation)
               flingInProcess = false
-              mapTransformDelegate.dragEnd()
+              cameraManagerDelegate.dragEnd()
             }
           })
         }
@@ -1292,7 +1291,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       if (notifyOnMoveListeners(detector)) {
         return true
       }
-      val pitch = mapTransformDelegate.getCameraOptions(null).pitch
+      val pitch = cameraManagerDelegate.getCameraOptions(null).pitch
 
       // Scroll the map
       val offset = if (pitch != null && pitch in NORMAL_MAX_PITCH..MAXIMUM_PITCH) {
@@ -1305,7 +1304,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         ScreenCoordinate((-distanceX).toDouble(), (-distanceY).toDouble())
       }
       easeToImmediately(
-        mapTransformDelegate.getDragCameraOptions(
+        cameraManagerDelegate.getDragCameraOptions(
           centerScreen,
           ScreenCoordinate(centerScreen.x + offset.x, centerScreen.y + offset.y)
         )
@@ -1617,8 +1616,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
    * Provides all map delegate instances.
    */
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
-    this.mapProjectionDelegate = delegateProvider.mapProjectionDelegate
-    this.mapTransformDelegate = delegateProvider.mapTransformDelegate
+    this.cameraManagerDelegate = delegateProvider.cameraManagerDelegate
     this.mapPluginProviderDelegate = delegateProvider.mapPluginProviderDelegate
     @Suppress("UNCHECKED_CAST")
     this.cameraAnimationsPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
