@@ -61,9 +61,17 @@ class MapViewTest {
     every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) } returns Style.SATELLITE
     every { typedArray.recycle() } just Runs
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
-    val mapInitOptions = mapView.parseTypedArray(context, attrs)
+    var mapInitOptions = mapView.parseTypedArray(context, attrs)
     assertEquals(true, mapInitOptions.textureView)
     assertEquals(Style.SATELLITE, mapInitOptions.styleUri)
+
+    every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) } returns null
+    mapInitOptions = mapView.parseTypedArray(context, attrs)
+    assertEquals(Style.MAPBOX_STREETS, mapInitOptions.styleUri)
+
+    every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) } returns ""
+    mapInitOptions = mapView.parseTypedArray(context, attrs)
+    assertEquals(null, mapInitOptions.styleUri)
   }
 
   @Test

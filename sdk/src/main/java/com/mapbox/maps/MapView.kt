@@ -116,8 +116,20 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
         MapAttributeParser.parseMapOptions(typedArray, context.resources.displayMetrics.density)
       val cameraOptions = CameraAttributeParser.parseCameraOptions(typedArray)
       val textureView = typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapSurface, 0) != 0
-      val styleUri = typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri)
-      return MapInitOptions(context, resourceOptions, mapOptions, attrs = attrs, styleUri = styleUri).also {
+      val styleUri =
+        typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) ?: Style.MAPBOX_STREETS
+
+      return MapInitOptions(
+        context,
+        resourceOptions,
+        mapOptions,
+        attrs = attrs,
+        styleUri = if (styleUri.isEmpty()) {
+          null
+        } else {
+          styleUri
+        }
+      ).also {
         it.initialCameraOptions = cameraOptions
         it.textureView = textureView
       }

@@ -13,7 +13,6 @@ class MapboxStudioStyleActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_style_mapbox_studio)
-    mapView.getMapboxMap().loadStyleUri(STUDIO_STYLE_URL)
   }
 
   override fun onStart() {
@@ -34,9 +33,5 @@ class MapboxStudioStyleActivity : AppCompatActivity() {
   override fun onDestroy() {
     super.onDestroy()
     mapView.onDestroy()
-  }
-
-  companion object {
-    private const val STUDIO_STYLE_URL = "mapbox://styles/mapbox/cj3kbeqzo00022smj7akz3o1e"
   }
 }
