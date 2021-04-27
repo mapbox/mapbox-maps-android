@@ -28,10 +28,7 @@ import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
 import com.mapbox.maps.plugin.annotation.*
-import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate
-import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
-import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
+import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
@@ -50,7 +47,7 @@ import org.robolectric.annotation.Config
 class PolylineAnnotationManagerTest {
   private val delegateProvider: MapDelegateProvider = mockk()
   private val style: StyleInterface = mockk()
-  private val mapProjectionDelegate: MapProjectionDelegate = mockk()
+  private val mapCameraManagerDelegate: MapCameraManagerDelegate = mockk()
   private val mapFeatureQueryDelegate: MapFeatureQueryDelegate = mockk()
   private val gesturesPlugin: GesturesPlugin = mockk()
   private val layer: LineLayer = mockk()
@@ -93,10 +90,10 @@ class PolylineAnnotationManagerTest {
     every { gesturesPlugin.removeOnMapClickListener(any()) } just Runs
     every { gesturesPlugin.removeOnMapLongClickListener(any()) } just Runs
     every { delegateProvider.mapPluginProviderDelegate.getPlugin(any<Class<GesturesPlugin>>()) } returns gesturesPlugin
-    every { delegateProvider.mapProjectionDelegate } returns mapProjectionDelegate
+    every { delegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
     every { delegateProvider.mapFeatureQueryDelegate } returns mapFeatureQueryDelegate
-    every { mapProjectionDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
-    every { mapProjectionDelegate.pixelForCoordinate(any()) } returns ScreenCoordinate(1.0, 1.0)
+    every { mapCameraManagerDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
+    every { mapCameraManagerDelegate.pixelForCoordinate(any()) } returns ScreenCoordinate(1.0, 1.0)
     every { mapView.scrollX } returns 0
     every { mapView.scrollY } returns 0
     every { layer.layerId } returns "layer0"

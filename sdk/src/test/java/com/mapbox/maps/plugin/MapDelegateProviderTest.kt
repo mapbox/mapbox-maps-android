@@ -33,7 +33,7 @@ class MapDelegateProviderTest {
   @Test
   fun mapCameraDelegate() {
     val mapDelegateProvider = MapDelegateProviderImpl(mapboxMap, mockk(), mockk())
-    assertNotNull(mapDelegateProvider.mapCameraDelegate)
+    assertNotNull(mapDelegateProvider.mapCameraManagerDelegate)
   }
 
   @Test

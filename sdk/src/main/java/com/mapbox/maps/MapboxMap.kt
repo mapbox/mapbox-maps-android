@@ -43,6 +43,7 @@ class MapboxMap internal constructor(
   ObservableInterface,
   MapListenerDelegate,
   MapPluginExtensionsDelegate,
+  MapCameraManagerDelegate,
   MapStyleStateDelegate {
 
   private val nativeMapWeakRef = WeakReference(nativeMap)
@@ -52,6 +53,7 @@ class MapboxMap internal constructor(
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal var cameraAnimationsPlugin: WeakReference<CameraAnimationsPlugin>? = null
+
   @VisibleForTesting(otherwise = PRIVATE)
   internal var gesturesPlugin: WeakReference<GesturesPlugin>? = null
 
@@ -460,7 +462,7 @@ class MapboxMap internal constructor(
    * @return Returns the converted camera options
    */
   override fun cameraForCoordinates(
-    coordinates: List<Point>,
+    coordinates: List<Point?>,
     padding: EdgeInsets,
     bearing: Double?,
     pitch: Double?
@@ -485,7 +487,7 @@ class MapboxMap internal constructor(
    * @return Returns the camera options object with the zoom level adjusted to fit \p coordinates into \p box.
    */
   override fun cameraForCoordinates(
-    coordinates: List<Point>,
+    coordinates: List<Point?>,
     camera: CameraOptions,
     box: ScreenBox
   ): CameraOptions =
@@ -587,7 +589,7 @@ class MapboxMap internal constructor(
    *
    * @return Returns a batch of screen coordinates on the screen in [MapOptions.size] platform pixels.
    */
-  override fun pixelsForCoordinates(coordinates: List<Point>): List<ScreenCoordinate> =
+  override fun pixelsForCoordinates(coordinates: List<Point?>): List<ScreenCoordinate> =
     nativeMapWeakRef.call { this.pixelsForCoordinates(coordinates) }
 
   /**
@@ -621,7 +623,7 @@ class MapboxMap internal constructor(
    * @return Returns a batch of geographical coordinates corresponding to the screen coordinates
    * on the screen.
    */
-  override fun coordinatesForPixels(pixels: List<ScreenCoordinate>): List<Point> =
+  override fun coordinatesForPixels(pixels: List<ScreenCoordinate?>): List<Point> =
     nativeMapWeakRef.call { this.coordinatesForPixels(pixels) }
 
   /**
@@ -1036,6 +1038,7 @@ class MapboxMap internal constructor(
   override fun removeOnSourceAddedListener(onSourceAddedListener: OnSourceAddedListener) {
     nativeObserver.removeOnSourceAddedListener(onSourceAddedListener)
   }
+
   /**
    * Add a listener that's going to be invoked whenever the source data has been loaded.
    */
@@ -1142,7 +1145,7 @@ class MapboxMap internal constructor(
    * Get the map's current free camera options. After mutation, it should be set back to the map.
    * @return The current free camera options.
    */
-  fun getFreeCameraOptions() = nativeMapWeakRef.call { this.freeCameraOptions }
+  override fun getFreeCameraOptions() = nativeMapWeakRef.call { this.freeCameraOptions }
 
   /**
    * Sets the map view with the free camera options.
@@ -1155,7 +1158,7 @@ class MapboxMap internal constructor(
    *
    * @param options The free camera options to set.
    */
-  fun setCamera(options: FreeCameraOptions) {
+  override fun setCamera(options: FreeCameraOptions) {
     nativeMapWeakRef.call { this.setCamera(options) }
   }
 
@@ -1243,5 +1246,58 @@ class MapboxMap internal constructor(
       return function.invoke(it)
     }
     return null
+  }
+
+  /**
+   * Get current latitude.
+   * @return latitude
+   */
+  override fun getLat() = getCameraOptions(null).center?.latitude() ?: 0.0
+
+  /**
+   * Get current longitude.
+   * @return longitude
+   */
+  override fun getLon() = getCameraOptions(null).center?.longitude() ?: 0.0
+
+  /**
+   * Get current zoom.
+   * @return zoom
+   */
+  override fun getZoom() = getCameraOptions(null).zoom ?: 0.0
+
+  /**
+   * Get current pitch.
+   * @return pitch
+   */
+  override fun getPitch() = getCameraOptions(null).pitch ?: 0.0
+
+  /**
+   * Get current bearing.
+   * @return bearing
+   */
+  override fun getBearing() = getCameraOptions(null).bearing ?: 0.0
+
+  /**
+   * Get current padding.
+   * @return padding
+   */
+  override fun getPadding() = getCameraOptions(null).padding?.let { insets ->
+    arrayOf(insets.left, insets.top, insets.right, insets.bottom)
+  }
+
+  /**
+   * Get current anchor.
+   * @return anchor
+   */
+  override fun getAnchor() = getCameraOptions(null).anchor?.let { screenCoordinate ->
+    Pair(screenCoordinate.x, screenCoordinate.y)
+  }
+
+  /**
+   * Set camera's bearing.
+   */
+  override fun setBearing(bearing: Double) {
+    setCamera(CameraOptions.Builder().bearing(bearing).build())
   }
 }

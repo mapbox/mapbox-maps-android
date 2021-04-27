@@ -93,7 +93,7 @@ class SnapshotterTest {
 
   @Test
   fun getCameraOptions() {
-    snapshotter.getCameraOptions()
+    snapshotter.getCameraOptions(null)
     verify { coreSnapshotter.getCameraOptions(any()) }
   }
 

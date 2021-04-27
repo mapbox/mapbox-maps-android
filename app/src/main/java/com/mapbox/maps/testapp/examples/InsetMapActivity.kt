@@ -103,7 +103,7 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
   }
 
   override fun onCameraChanged() {
-    val mainCameraPosition = mainMapboxMap.getCameraOptions()
+    val mainCameraPosition = mainMapboxMap.getCameraOptions(null)
     val insetCameraPosition = CameraOptions.Builder()
       .zoom(mainCameraPosition.zoom?.minus(ZOOM_DISTANCE_BETWEEN_MAIN_AND_INSET_MAPS))
       .pitch(mainCameraPosition.pitch)
@@ -121,7 +121,7 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
   }
 
   private fun getRectanglePoints(): List<Point> {
-    val bounds = mainMapboxMap.coordinateBoundsForCamera(mainMapboxMap.getCameraOptions())
+    val bounds = mainMapboxMap.coordinateBoundsForCamera(mainMapboxMap.getCameraOptions(null))
     return listOf(
       Point.fromLngLat(bounds.northeast.longitude(), bounds.northeast.latitude()),
       Point.fromLngLat(bounds.northeast.longitude(), bounds.southwest.latitude()),

@@ -17,7 +17,7 @@ import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimati
 import com.mapbox.maps.plugin.animation.animator.CameraBearingAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraCenterAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraPitchAnimator
-import com.mapbox.maps.plugin.delegates.MapCameraDelegate
+import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import io.mockk.*
@@ -40,7 +40,7 @@ class CameraAnimationsPluginImplTest {
 
   private lateinit var cameraAnimationsPluginImpl: CameraAnimationsPluginImpl
   private lateinit var mapTransformDelegate: MapTransformDelegate
-  private lateinit var mapCameraDelegate: MapCameraDelegate
+  private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
   private lateinit var cameraAnimatorsFactory: CameraAnimatorsFactory
   private lateinit var bearingAnimator: CameraBearingAnimator
   private lateinit var centerAnimator: CameraCenterAnimator
@@ -73,10 +73,10 @@ class CameraAnimationsPluginImplTest {
     )
 
     val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
-    mapCameraDelegate = mockk(relaxed = true)
+    mapCameraManagerDelegate = mockk(relaxed = true)
     mapTransformDelegate = mockk(relaxed = true)
     mockkObject(CameraTransform)
-    every { delegateProvider.mapCameraDelegate } returns mapCameraDelegate
+    every { delegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
     every { delegateProvider.mapTransformDelegate } returns mapTransformDelegate
     every { CameraTransform.normalizeAngleRadians(any(), any()) } answers { secondArg() }
     cameraAnimationsPluginImpl = CameraAnimationsPluginImpl().apply {
@@ -141,7 +141,7 @@ class CameraAnimationsPluginImplTest {
       playTogether(*animators)
       start()
     }
-    verify { mapTransformDelegate.setCamera(any()) }
+    verify { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) }
   }
 
   @Test
@@ -160,7 +160,7 @@ class CameraAnimationsPluginImplTest {
       playTogether(*animators)
       start()
     }
-    verify(exactly = 0) { mapTransformDelegate.setCamera(any()) }
+    verify(exactly = 0) { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) }
   }
 
   @Test
@@ -220,7 +220,7 @@ class CameraAnimationsPluginImplTest {
   @Test
   fun startSubsequentAnimationsWithTheSameType1() {
     var cameraPosition = CameraOptions.Builder().build()
-    every { mapTransformDelegate.setCamera(any()) } answers {
+    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
       cameraPosition = firstArg()
     }
 
@@ -254,7 +254,7 @@ class CameraAnimationsPluginImplTest {
   @Test
   fun startSubsequentAnimationsWithTheSameType2() {
     var cameraPosition = CameraOptions.Builder().build()
-    every { mapTransformDelegate.setCamera(any()) } answers {
+    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
       cameraPosition = firstArg()
     }
 
@@ -290,7 +290,7 @@ class CameraAnimationsPluginImplTest {
   fun testEaseToSingleDurationZero() {
 
     var cameraPosition = CameraOptions.Builder().build()
-    every { mapTransformDelegate.setCamera(any()) } answers {
+    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
       cameraPosition = firstArg()
     }
 
@@ -319,7 +319,7 @@ class CameraAnimationsPluginImplTest {
   fun testEaseToSingleDurationShort() {
 
     var cameraPosition = CameraOptions.Builder().build()
-    every { mapTransformDelegate.setCamera(any()) } answers {
+    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
       cameraPosition = firstArg()
     }
 
@@ -348,11 +348,11 @@ class CameraAnimationsPluginImplTest {
   fun testEaseToSequenceDurationZero() {
 
     var cameraPosition = CameraOptions.Builder().pitch(0.0).build()
-    every { mapTransformDelegate.setCamera(any()) } answers {
+    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
       cameraPosition = firstArg()
     }
 
-    every { mapCameraDelegate.getCameraOptions(null) } answers { cameraPosition }
+    every { mapCameraManagerDelegate.getCameraOptions(null) } answers { cameraPosition }
 
     val targetPitchFirst = 5.0
     val targetPitchSecond = 10.0
@@ -387,11 +387,11 @@ class CameraAnimationsPluginImplTest {
   fun testEaseToSequenceQuickDuration() {
 
     var cameraPosition = CameraOptions.Builder().pitch(0.0).build()
-    every { mapTransformDelegate.setCamera(any()) } answers {
+    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
       cameraPosition = firstArg()
     }
 
-    every { mapCameraDelegate.getCameraOptions(null) } answers { cameraPosition }
+    every { mapCameraManagerDelegate.getCameraOptions(null) } answers { cameraPosition }
 
     val targetPitchFirst = 5.0
     val targetPitchSecond = 10.0
@@ -424,7 +424,7 @@ class CameraAnimationsPluginImplTest {
   @Test
   fun testDelayedAnimatorsFinalStateAndCallbackResult() {
     var cameraPosition = CameraOptions.Builder().build()
-    every { mapTransformDelegate.setCamera(any()) } answers {
+    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
       cameraPosition = firstArg()
     }
 
@@ -483,7 +483,7 @@ class CameraAnimationsPluginImplTest {
 
     // Adding value 2 because of first call after Animator.start() and last in the onEnd() or onCancel()
     val countUpdates = (bearingDuration + 2).toInt()
-    verify(exactly = countUpdates) { mapTransformDelegate.setCamera(any()) }
+    verify(exactly = countUpdates) { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) }
   }
 
   @Test
@@ -512,7 +512,7 @@ class CameraAnimationsPluginImplTest {
   @Test
   fun executeBearingAnimator() {
     var cameraPosition = CameraOptions.Builder().build()
-    every { mapTransformDelegate.setCamera(any()) } answers {
+    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
       cameraPosition = firstArg()
     }
 

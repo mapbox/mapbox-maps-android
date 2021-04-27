@@ -7,7 +7,7 @@ import com.mapbox.maps.MapOptions
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.Size
 import com.mapbox.maps.plugin.animation.animator.CameraAnimator
-import com.mapbox.maps.plugin.delegates.MapCameraDelegate
+import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
 import com.mapbox.maps.plugin.delegates.MapTransformDelegate
@@ -24,7 +24,7 @@ import org.robolectric.shadows.ShadowLog
 class CameraAnimatorsFactoryTest {
 
   private lateinit var mapTransformDelegate: MapTransformDelegate
-  private lateinit var mapCameraDelegate: MapCameraDelegate
+  private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
   private lateinit var mapProjectionDelegate: MapProjectionDelegate
   private lateinit var cameraAnimatorsFactory: CameraAnimatorsFactory
   private val initialCenter = Point.fromLngLat(-0.11968, 51.50325)
@@ -37,14 +37,14 @@ class CameraAnimatorsFactoryTest {
   fun setUp() {
     ShadowLog.stream = System.out
     val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
-    mapCameraDelegate = mockk(relaxed = true)
+    mapCameraManagerDelegate = mockk(relaxed = true)
     mapTransformDelegate = mockk(relaxed = true)
     mapProjectionDelegate = mockk(relaxed = true)
 
-    every { delegateProvider.mapCameraDelegate } returns mapCameraDelegate
+    every { delegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
     every { delegateProvider.mapTransformDelegate } returns mapTransformDelegate
     every { delegateProvider.mapProjectionDelegate } returns mapProjectionDelegate
-    every { mapCameraDelegate.getCameraOptions() } returns initialCameraPosition
+    every { mapCameraManagerDelegate.getCameraOptions(null) } returns initialCameraPosition
     cameraAnimatorsFactory = CameraAnimatorsFactory(delegateProvider)
 
     CameraAnimatorsFactory.setDefaultAnimatorOptions {
@@ -69,9 +69,9 @@ class CameraAnimatorsFactoryTest {
 
   @Test
   fun testMoveByAnimators() {
-    every { mapCameraDelegate.getCameraOptions() } returns initialCameraPosition
+    every { mapCameraManagerDelegate.getCameraOptions(null) } returns initialCameraPosition
     val targetCenter = Point.fromLngLat(-0.12376717562057138, 51.50579407417868)
-    every { mapProjectionDelegate.coordinateForPixel(any()) } returns targetCenter
+    every { mapCameraManagerDelegate.coordinateForPixel(any()) } returns targetCenter
     val offset = ScreenCoordinate(500.0, 500.0)
     val target = CameraOptions.Builder().center(targetCenter).build()
     val animators = cameraAnimatorsFactory.getMoveBy(offset)
@@ -80,7 +80,7 @@ class CameraAnimatorsFactoryTest {
 
   @Test
   fun testRotateByAnimators() {
-    every { mapCameraDelegate.getCameraOptions() } returns initialCameraPosition
+    every { mapCameraManagerDelegate.getCameraOptions(null) } returns initialCameraPosition
     every { mapTransformDelegate.getMapOptions() } returns MapOptions.Builder().size(Size(1078.875f, 1698.375f)).build()
     val target = CameraOptions.Builder().bearing(-25.981604850040434).build()
     val animators = cameraAnimatorsFactory.getRotateBy(ScreenCoordinate(0.0, 0.0), ScreenCoordinate(500.0, 500.0))
@@ -89,7 +89,7 @@ class CameraAnimatorsFactoryTest {
 
   @Test
   fun testScaleByAnimators() {
-    every { mapCameraDelegate.getCameraOptions() } returns initialCameraPosition
+    every { mapCameraManagerDelegate.getCameraOptions(null) } returns initialCameraPosition
     val scaleBy = 15.0
     val zoomTarget = CameraTransform.calculateScaleBy(scaleBy, initialCameraPosition.zoom!!)
     val target = CameraOptions.Builder().zoom(zoomTarget).anchor(ScreenCoordinate(10.0, 10.0)).build()
@@ -99,7 +99,7 @@ class CameraAnimatorsFactoryTest {
 
   @Test
   fun testPitchByAnimators() {
-    every { mapCameraDelegate.getCameraOptions() } returns initialCameraPosition
+    every { mapCameraManagerDelegate.getCameraOptions(null) } returns initialCameraPosition
     val pitchBy = 20.0
     val target = CameraOptions.Builder().pitch(initialCameraPosition.pitch!! + pitchBy).build()
     val animators = cameraAnimatorsFactory.getPitchBy(pitchBy)

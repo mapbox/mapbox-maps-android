@@ -12,7 +12,7 @@ import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.Annotation
 import com.mapbox.maps.plugin.annotation.AnnotationManager
 import com.mapbox.maps.plugin.annotation.AnnotationType
-import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
+import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 
 /**
  * Class for CircleAnnotation
@@ -388,12 +388,12 @@ class CircleAnnotation(
    * Get the offset geometry for the touch point
    */
   override fun getOffsetGeometry(
-    projectionDelegate: MapProjectionDelegate,
+    mapCameraManagerDelegate: MapCameraManagerDelegate,
     moveDistancesObject: MoveDistancesObject,
     touchAreaShiftX: Int,
     touchAreaShiftY: Int
   ): Point? {
-    val point = projectionDelegate.coordinateForPixel(
+    val point = mapCameraManagerDelegate.coordinateForPixel(
       ScreenCoordinate(
         (moveDistancesObject.currentX - touchAreaShiftX).toDouble(),
         (moveDistancesObject.currentY - touchAreaShiftY).toDouble(),

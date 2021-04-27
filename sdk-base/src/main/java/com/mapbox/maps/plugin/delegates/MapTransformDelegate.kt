@@ -7,21 +7,6 @@ import com.mapbox.maps.*
  */
 interface MapTransformDelegate {
   /**
-   * Changes the map view by any combination of center, zoom, bearing, and pitch, without an animated transition.
-   * The map will retain its current values for any details not passed via the camera options argument.
-   *
-   * @param cameraOptions New camera options
-   */
-  fun setCamera(cameraOptions: CameraOptions)
-
-  /**
-   * Get the current camera options given an optional padding.
-   *
-   * @param edgeInsets The optional padding
-   */
-  fun getCameraOptions(edgeInsets: EdgeInsets? = null): CameraOptions
-
-  /**
    * Notify map about gesture being in progress.
    *
    * @param inProgress True if gesture is in progress
@@ -55,20 +40,6 @@ interface MapTransformDelegate {
    * @param viewportMode The map viewport mode to set
    */
   fun setViewportMode(viewportMode: ViewportMode)
-
-  /**
-   * Set the map bounds.
-   *
-   * @param boundOptions the map bound options
-   */
-  fun setBounds(boundOptions: BoundOptions)
-
-  /**
-   * Get the map bounds options.
-   *
-   * @return Returns the map bounds options
-   */
-  fun getBounds(): BoundOptions
 
   /**
    * Tells the map rendering engine that the animation is currently performed by the
@@ -120,32 +91,4 @@ interface MapTransformDelegate {
    * @return size The size of the map in MapOptions#size platform pixels
    */
   fun getSize(): Size
-
-  /**
-   * Prepares the drag gesture to use the provided screen coordinate as a pivot point.
-   * This function should be called each time when user starts a dragging action (e.g. by clicking on the map).
-   * The following dragging will be relative to the pivot.
-   *
-   * @param point The pivot coordinate, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
-   */
-  fun dragStart(point: ScreenCoordinate)
-
-  /**
-   * Ends the ongoing drag gesture.
-   * This function should be called always after the user has ended a drag gesture initiated by `dragStart`.
-   */
-  fun dragEnd()
-
-  /**
-   * Calculates target point where camera should move after drag. The method should be called after `dragStart` and before `dragEnd`.
-   *
-   * @param fromPoint The point to drag the map from, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
-   * @param toPoint The point to drag the map to, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
-   *
-   * @return Returns the camera options object showing end point
-   */
-  fun getDragCameraOptions(
-    fromPoint: ScreenCoordinate,
-    toPoint: ScreenCoordinate,
-  ): CameraOptions
 }

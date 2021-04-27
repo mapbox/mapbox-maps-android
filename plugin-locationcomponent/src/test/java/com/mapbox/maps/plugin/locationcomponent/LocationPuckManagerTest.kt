@@ -9,7 +9,7 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
-import com.mapbox.maps.plugin.delegates.MapCameraDelegate
+import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
@@ -26,7 +26,7 @@ import org.robolectric.annotation.Config
 class LocationPuckManagerTest {
   private val settings = mockk<LocationComponentSettings>(relaxed = true)
   private val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
-  private val mapCameraDelegate = mockk<MapCameraDelegate>(relaxed = true)
+  private val mapCameraDelegate = mockk<MapCameraManagerDelegate>(relaxed = true)
   private val style = mockk<StyleInterface>(relaxed = true)
   private val positionManager = mockk<LocationComponentPositionManager>(relaxed = true)
   private val layerSourceProvider = mockk<LayerSourceProvider>(relaxed = true)
@@ -41,7 +41,7 @@ class LocationPuckManagerTest {
   @Before
   fun setup() {
     mockkStatic(ValueConverter::class)
-    every { delegateProvider.mapCameraDelegate } returns mapCameraDelegate
+    every { delegateProvider.mapCameraManagerDelegate } returns mapCameraDelegate
     every { mapCameraDelegate.getBearing() } returns 0.0
     every { mapCameraDelegate.getCameraOptions(null) } returns CameraOptions.Builder()
       .center(Point.fromLngLat(0.0, 0.0)).build()

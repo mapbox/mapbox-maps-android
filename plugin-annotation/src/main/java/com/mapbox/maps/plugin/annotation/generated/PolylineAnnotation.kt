@@ -12,7 +12,7 @@ import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.Annotation
 import com.mapbox.maps.plugin.annotation.AnnotationManager
 import com.mapbox.maps.plugin.annotation.AnnotationType
-import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
+import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 
 /**
  * Class for PolylineAnnotation
@@ -387,16 +387,16 @@ class PolylineAnnotation(
    * Get the offset geometry for the touch point
    */
   override fun getOffsetGeometry(
-    projectionDelegate: MapProjectionDelegate,
+    mapCameraManagerDelegate: MapCameraManagerDelegate,
     moveDistancesObject: MoveDistancesObject,
     touchAreaShiftX: Int,
     touchAreaShiftY: Int
   ): LineString? {
     val points = geometry.coordinates()
       .map {
-        projectionDelegate.pixelForCoordinate(it)
+        mapCameraManagerDelegate.pixelForCoordinate(it)
       }.map {
-        projectionDelegate.coordinateForPixel(
+        mapCameraManagerDelegate.coordinateForPixel(
           ScreenCoordinate(
             it.x - moveDistancesObject.distanceXSinceLast,
             it.y - moveDistancesObject.distanceYSinceLast

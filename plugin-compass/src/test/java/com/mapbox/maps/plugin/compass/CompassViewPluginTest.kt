@@ -9,7 +9,7 @@ import android.widget.FrameLayout
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
-import com.mapbox.maps.plugin.delegates.MapCameraDelegate
+import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import io.mockk.every
 import io.mockk.mockk
@@ -25,7 +25,7 @@ class CompassViewPluginTest {
   private val compassView = mockk<CompassViewImpl>(relaxUnitFun = true)
   private val fadeAnimator = mockk<ValueAnimator>(relaxUnitFun = true)
   private val delegateProvider = mockk<MapDelegateProvider>()
-  private val mapCameraDelegate = mockk<MapCameraDelegate>(relaxUnitFun = true)
+  private val mapCameraDelegate = mockk<MapCameraManagerDelegate>(relaxUnitFun = true)
   private val animatePlugin = mockk<CameraAnimationsPlugin>(relaxed = true)
   private lateinit var fadeAnimatorEndListener: Animator.AnimatorListener
   private lateinit var fadeAnimatorUpdateListener: ValueAnimator.AnimatorUpdateListener
@@ -37,7 +37,7 @@ class CompassViewPluginTest {
     every { fadeAnimator.addListener(capture(animatorEndListenerSlot)) } answers {}
     every { fadeAnimator.addUpdateListener(capture(updateListenerSlot)) } answers {}
     every { fadeAnimator.setDuration(any()) } returns fadeAnimator
-    every { delegateProvider.mapCameraDelegate } returns mapCameraDelegate
+    every { delegateProvider.mapCameraManagerDelegate } returns mapCameraDelegate
     every { mapCameraDelegate.getBearing() } returns 0.0
     every { compassView.isCompassEnabled } returns true
     every { compassView.compassRotation } returns 0f
