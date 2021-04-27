@@ -35,6 +35,7 @@ open class AttributionViewPlugin(
       internalSettings.marginRight.toInt(),
       internalSettings.marginBottom.toInt()
     )
+    attributionView.requestLayout()
   }
 
   /**

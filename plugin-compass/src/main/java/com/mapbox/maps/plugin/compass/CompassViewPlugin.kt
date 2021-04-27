@@ -74,6 +74,7 @@ open class CompassViewPlugin(
       internalSettings.marginBottom.toInt()
     )
     update(mapCameraDelegate.getBearing())
+    compassView.requestLayout()
   }
 
   /**

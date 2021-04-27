@@ -368,9 +368,10 @@ class CompassViewPluginTest {
   @Test
   fun setCompassMargins() {
     compassPlugin.updateSettings {
-      marginLeft = 0f; marginTop = 5f; marginRight = 0f; marginBottom = 0f
+      marginLeft = 1f; marginTop = 2f; marginRight = 3f; marginBottom = 4f
     }
-    verify { compassView.setCompassMargins(0, 5, 0, 0) }
+    verify { compassView.setCompassMargins(1, 2, 3, 4) }
+    verify { compassView.requestLayout() }
   }
 
   @Test

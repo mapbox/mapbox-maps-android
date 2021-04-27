@@ -30,6 +30,7 @@ open class LogoViewPlugin(
     )
     logoView.logoGravity = internalSettings.position
     logoView.logoEnabled = internalSettings.enabled
+    logoView.requestLayout()
   }
 
   /**

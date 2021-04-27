@@ -83,9 +83,10 @@ class AttributionViewPluginImplTest {
   @Test
   fun setAttributionMargins() {
     attributionPlugin.updateSettings {
-      marginLeft = 0f; marginTop = 5f; marginRight = 0f; marginBottom = 0f
+      marginLeft = 1f; marginTop = 2f; marginRight = 3f; marginBottom = 4f
     }
-    verify { attributionView.setAttributionMargins(0, 5, 0, 0) }
+    verify { attributionView.setAttributionMargins(1, 2, 3, 4) }
+    verify { attributionView.requestLayout() }
   }
 
   @Test
