@@ -76,4 +76,5 @@
     <string name="description_santa_catalina">Santa Catalina Walking Route</string>
     <string name="description_multiple_display">Display the map on a secondary display</string>
     <string name="description_map_view_customization">Customize your map view</string>
+    <string name="description_ornaments_margin">Update margins of ornaments when the map rotates</string>
 </resources>
