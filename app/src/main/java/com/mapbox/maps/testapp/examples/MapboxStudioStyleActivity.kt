@@ -6,7 +6,7 @@ import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_simple_map.*
 
 /**
- * Example of displaying a custom Mapbox-hosted style.
+ * Example of displaying a custom Mapbox-hosted style, the default style uri is set in layout file.
  */
 class MapboxStudioStyleActivity : AppCompatActivity() {
 

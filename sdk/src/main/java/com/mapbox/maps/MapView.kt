@@ -130,7 +130,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
           styleUri
         }
       ).also {
-        it.initialCameraOptions = cameraOptions
+        it.cameraOptions = cameraOptions
         it.textureView = textureView
       }
     } finally {
