@@ -17,10 +17,6 @@ const val PLUGIN_GESTURE_CLASS_NAME = "com.mapbox.maps.plugin.gestures.GesturesP
  */
 const val PLUGIN_ATTRIBUTION_CLASS_NAME = "com.mapbox.maps.plugin.attribution.AttributionViewPlugin"
 /**
- * Class name for location plugin.
- */
-const val PLUGIN_LOCATION_CLASS_NAME = "com.mapbox.maps.plugin.location.LocationPluginImpl"
-/**
  * Class name for location component plugin.
  */
 const val PLUGIN_LOCATION_COMPONENT_CLASS_NAME = "com.mapbox.maps.plugin.locationcomponent.LocationComponentPluginImpl"
