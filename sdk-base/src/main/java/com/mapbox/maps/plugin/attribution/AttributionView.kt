@@ -43,4 +43,11 @@ interface AttributionView {
    * Set an [View.OnClickListener] to AttributionView
    */
   fun setOnClickListener(listener: View.OnClickListener)
+
+  /**
+   * Call this when something has changed which has invalidated the
+   * layout of this view. This will schedule a layout pass of the view
+   * tree.
+   */
+  fun requestLayout()
 }

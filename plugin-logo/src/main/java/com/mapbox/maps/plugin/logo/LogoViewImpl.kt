@@ -91,7 +91,7 @@ class LogoViewImpl : LogoView, AppCompatImageView {
    * @param bottom Margin to the bottom in pixel
    */
   override fun setLogoMargins(left: Int, top: Int, right: Int, bottom: Int) {
-    (layoutParams as FrameLayout.LayoutParams).setMargins(left, top, right, left)
+    (layoutParams as FrameLayout.LayoutParams).setMargins(left, top, right, bottom)
   }
 
   internal fun injectPresenter(presenter: LogoPlugin) {

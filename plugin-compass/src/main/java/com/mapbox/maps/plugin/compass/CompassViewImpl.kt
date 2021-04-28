@@ -115,7 +115,7 @@ open class CompassViewImpl : CompassView, AppCompatImageView {
    * @param bottom Margin to the bottom in pixel
    */
   override fun setCompassMargins(left: Int, top: Int, right: Int, bottom: Int) {
-    (layoutParams as FrameLayout.LayoutParams).setMargins(left, top, right, left)
+    (layoutParams as FrameLayout.LayoutParams).setMargins(left, top, right, bottom)
   }
 
   /**

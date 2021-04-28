@@ -28,4 +28,11 @@ interface LogoView {
    * @param bottom Margin to the bottom in pixel
    */
   fun setLogoMargins(@Px left: Int, @Px top: Int, @Px right: Int, @Px bottom: Int)
+
+  /**
+   * Call this when something has changed which has invalidated the
+   * layout of this view. This will schedule a layout pass of the view
+   * tree.
+   */
+  fun requestLayout()
 }
