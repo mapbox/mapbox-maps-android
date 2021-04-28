@@ -14,7 +14,7 @@ import org.junit.Test
 class StyleTest {
 
   private lateinit var style: Style
-  private val nativeMap: CustomMapInterface = mockk(relaxed = true)
+  private val nativeMap: MapInterface = mockk(relaxed = true)
 
   @Before
   fun setUp() {

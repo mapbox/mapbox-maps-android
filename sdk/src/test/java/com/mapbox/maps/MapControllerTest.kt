@@ -24,7 +24,7 @@ class MapControllerTest {
 
   private val nativeObserver: NativeObserver = mockk(relaxUnitFun = true)
 
-  private val nativeMap: CustomMapInterface = mockk(relaxUnitFun = true)
+  private val nativeMap: MapInterface = mockk(relaxUnitFun = true)
 
   private lateinit var mapView: MapView
 
