@@ -14,18 +14,11 @@ import com.mapbox.maps.loader.MapboxMapStaticInitializer
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.*
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
-import com.mapbox.maps.plugin.annotation.AnnotationPluginImpl
-import com.mapbox.maps.plugin.attribution.AttributionPlugin
-import com.mapbox.maps.plugin.compass.CompassPlugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener
 import com.mapbox.maps.plugin.delegates.listeners.eventdata.StyleDataType
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
-import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin
-import com.mapbox.maps.plugin.logo.LogoPlugin
-import com.mapbox.maps.plugin.overlay.MapOverlayPlugin
-import com.mapbox.maps.plugin.scalebar.ScaleBarPlugin
 import com.mapbox.maps.renderer.MapboxRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import java.lang.ref.WeakReference
@@ -234,141 +227,53 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   ): T? = pluginRegistry.createPlugin(mapView, mapInitOptions, clazz, *constructorArguments)
 
   fun initializePlugins(
-    mapView: MapView?
+    options: MapInitOptions,
+    mapView: MapView? = null,
   ) {
-    try {
-      val cameraAnimationsPluginClass =
-        Class.forName(PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME) as Class<CameraAnimationsPlugin>
-      mapboxMap.setCameraAnimationPlugin(createPlugin(mapView, cameraAnimationsPluginClass))
-    } catch (ex: ClassNotFoundException) {
-      Logger.d(
-        TAG,
-        "Add camera animations plugin dependency to take advantage of the default Mapbox animations implementation."
-      )
-    }
-
-    try {
-      val compassPluginClass = Class.forName(PLUGIN_COMPASS_CLASS_NAME) as Class<CompassPlugin>
-      createPlugin(mapView, compassPluginClass)
-    } catch (ex: ClassNotFoundException) {
-      Logger.i(
-        TAG,
-        "Add compass plugin dependency to take advantage of the default Mapbox compass implementation."
-      )
-    } catch (ex: InvalidViewPluginHostException) {
-      Logger.d(
-        TAG,
-        "Compass plugin requires a View hierarchy to be injected, plugin is ignored."
-      )
-    }
-
-    try {
-      val logoPluginClass = Class.forName(PLUGIN_LOGO_CLASS_NAME) as Class<LogoPlugin>
-      createPlugin(mapView, logoPluginClass)
-    } catch (ex: ClassNotFoundException) {
-      Logger.w(TAG, mapInitOptions.context.getString(R.string.mapbox_warning_logo_disabled))
-    } catch (ex: InvalidViewPluginHostException) {
-      Logger.d(
-        TAG,
-        "Logo plugin requires a View hierarchy to be injected, plugin is ignored."
-      )
-    }
-
-    try {
-      val gesturePluginClass =
-        Class.forName(PLUGIN_GESTURE_CLASS_NAME) as Class<GesturesPlugin>
-
-      mapInitOptions.attrs?.let {
-        val plugin = createPlugin(
-          mapView,
-          gesturePluginClass,
-          Pair(Context::class.java, mapInitOptions.context),
-          Pair(AttributeSet::class.java, it),
-          Pair(Float::class.java, mapInitOptions.mapOptions.pixelRatio)
-        )
-        mapboxMap.setGesturesAnimationPlugin(plugin)
-      } ?: run {
-        val plugin = createPlugin(
-          mapView,
-          gesturePluginClass,
-          Pair(Context::class.java, mapInitOptions.context),
-          Pair(Float::class.java, mapInitOptions.mapOptions.pixelRatio)
-        )
-        mapboxMap.setGesturesAnimationPlugin(plugin)
+    for (pluginName in options.plugins) {
+      try {
+        val pluginClass = Class.forName(pluginName)
+        val plugin = if (pluginName == PLUGIN_GESTURE_CLASS_NAME) {
+          val attrs = options.attrs
+          if (attrs != null) {
+            createPlugin(
+              mapView,
+              pluginClass,
+              Pair(Context::class.java, options.context),
+              Pair(AttributeSet::class.java, attrs),
+              Pair(Float::class.java, options.mapOptions.pixelRatio)
+            )
+          } else {
+            createPlugin(
+              mapView,
+              pluginClass,
+              Pair(Context::class.java, options.context),
+              Pair(Float::class.java, options.mapOptions.pixelRatio)
+            )
+          }
+        } else {
+          createPlugin(mapView, pluginClass)
+        }
+        if (plugin is CameraAnimationsPlugin) {
+          mapboxMap.setCameraAnimationPlugin(plugin)
+        }
+        if (plugin is GesturesPlugin) {
+          mapboxMap.setGesturesAnimationPlugin(plugin)
+        }
+      } catch (ex: ClassNotFoundException) {
+        Logger.d(TAG, PLUGIN_MISSING_TEMPLATE.format(pluginName))
+      } catch (ex: InvalidViewPluginHostException) {
+        Logger.d(TAG, VIEW_HIERARCHY_MISSING_TEMPLATE.format(pluginName))
       }
-    } catch (ex: ClassNotFoundException) {
-      Logger.d(
-        TAG,
-        "Add gesture plugin dependency to take advantage of the default Mapbox gestures implementation."
-      )
-    }
-
-    try {
-      val attributionPluginClass =
-        Class.forName(PLUGIN_ATTRIBUTION_CLASS_NAME) as Class<AttributionPlugin>
-      createPlugin(mapView, attributionPluginClass)
-    } catch (ex: ClassNotFoundException) {
-      Logger.w(TAG, mapInitOptions.context.getString(R.string.mapbox_warning_attribution_disabled))
-    } catch (ex: InvalidViewPluginHostException) {
-      Logger.d(
-        TAG,
-        "Attribution plugin requires a View hierarchy to be injected, plugin is ignored."
-      )
-    }
-
-    try {
-      val locationComponentPluginClass =
-        Class.forName(PLUGIN_LOCATION_COMPONENT_CLASS_NAME) as Class<LocationComponentPlugin>
-      createPlugin(mapView, locationComponentPluginClass)
-    } catch (ex: ClassNotFoundException) {
-      Logger.d(
-        TAG,
-        "Add location component plugin dependency to take advantage of the default Mapbox location component implementation."
-      )
-    }
-
-    try {
-      val scaleBarPluginClass =
-        Class.forName(PLUGIN_SCALE_BAR_CLASS_NAME) as Class<ScaleBarPlugin>
-      createPlugin(mapView, scaleBarPluginClass)
-    } catch (ex: ClassNotFoundException) {
-      Logger.d(
-        TAG,
-        "Add scale bar plugin dependency to take advantage of the default Mapbox scale bar implementation."
-      )
-    } catch (ex: InvalidViewPluginHostException) {
-      Logger.d(
-        TAG,
-        "Compass plugin requires a View hierarchy to be injected, plugin is ignored."
-      )
-    }
-
-    try {
-      val mapOverlayPlugin =
-        Class.forName(PLUGIN_MAPOVERLAY_CLASS_NAME) as Class<MapOverlayPlugin>
-      createPlugin(mapView, mapOverlayPlugin)
-    } catch (ex: ClassNotFoundException) {
-      Logger.d(
-        TAG,
-        "Add map overlay plugin dependency to take advantage of the default Mapbox MapOverlay plugin implementation."
-      )
-    }
-
-    try {
-      val annotationPlugin =
-        Class.forName(PLUGIN_ANNOTATION_CLASS_NAME) as Class<AnnotationPluginImpl>
-      createPlugin(mapView, annotationPlugin)
-    } catch (ex: ClassNotFoundException) {
-      Logger.d(
-        TAG,
-        "Add annotation plugin dependency to take advantage of the default Mapbox Annotation plugin implementation."
-      )
     }
   }
 
   companion object {
     const val TAG = "MapController"
-
+    private const val PLUGIN_MISSING_TEMPLATE =
+      "Add %s plugin dependency to the classpath take automatically load the plugin implementation."
+    private const val VIEW_HIERARCHY_MISSING_TEMPLATE =
+      "%s plugin requires a View hierarchy to be injected, plugin is ignored."
     init {
       MapboxMapStaticInitializer.loadMapboxMapNativeLib()
     }
