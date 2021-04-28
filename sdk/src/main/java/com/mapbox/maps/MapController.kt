@@ -22,7 +22,6 @@ import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener
 import com.mapbox.maps.plugin.delegates.listeners.eventdata.StyleDataType
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
-import com.mapbox.maps.plugin.location.LocationPlugin
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin
 import com.mapbox.maps.plugin.logo.LogoPlugin
 import com.mapbox.maps.plugin.overlay.MapOverlayPlugin
@@ -312,16 +311,6 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       Logger.d(
         TAG,
         "Attribution plugin requires a View hierarchy to be injected, plugin is ignored."
-      )
-    }
-
-    try {
-      val locationPluginClass = Class.forName(PLUGIN_LOCATION_CLASS_NAME) as Class<LocationPlugin>
-      createPlugin(mapView, locationPluginClass)
-    } catch (ex: ClassNotFoundException) {
-      Logger.d(
-        TAG,
-        "Add location plugin dependency to take advantage of the default Mapbox location component implementation."
       )
     }
 
