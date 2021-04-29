@@ -3,6 +3,7 @@ package com.mapbox.maps
 import android.content.Context
 import android.util.DisplayMetrics
 import com.mapbox.common.ShadowLogger
+import com.mapbox.maps.plugin.*
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertEquals
@@ -79,5 +80,71 @@ class MapInitOptionsTest {
     assertTrue(mapboxMapOptions.resourceOptions.cachePath!!.endsWith("foobar/mbx.db"))
     assertTrue(mapboxMapOptions.resourceOptions.assetPath!!.endsWith("foobar"))
     assertEquals(MapInitOptions.DEFAULT_CACHE_SIZE, mapboxMapOptions.resourceOptions.cacheSize)
+  }
+
+  @Test
+  fun defaultPlugins() {
+    val mapboxMapOptions = MapInitOptions(context)
+    val plugins = mapboxMapOptions.plugins
+    assertTrue(
+      plugins.contains(
+        PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
+      )
+    )
+    assertTrue(
+      plugins.contains(
+        PLUGIN_COMPASS_CLASS_NAME
+      )
+    )
+    assertTrue(
+      plugins.contains(
+        PLUGIN_LOGO_CLASS_NAME
+      )
+    )
+    assertTrue(
+      plugins.contains(
+        PLUGIN_GESTURE_CLASS_NAME
+      )
+    )
+    assertTrue(
+      plugins.contains(
+        PLUGIN_ATTRIBUTION_CLASS_NAME
+      )
+    )
+    assertTrue(
+      plugins.contains(
+        PLUGIN_LOCATION_COMPONENT_CLASS_NAME
+      )
+    )
+    assertTrue(
+      plugins.contains(
+        PLUGIN_SCALE_BAR_CLASS_NAME
+      )
+    )
+    assertTrue(
+      plugins.contains(
+        PLUGIN_MAPOVERLAY_CLASS_NAME
+      )
+    )
+    assertTrue(
+      plugins.contains(
+        PLUGIN_ANNOTATION_CLASS_NAME
+      )
+    )
+  }
+
+  @Test
+  fun emptyPlugins() {
+    val mapboxMapOptions = MapInitOptions(context, plugins = listOf())
+    val plugins = mapboxMapOptions.plugins
+    assertTrue(plugins.isEmpty())
+  }
+
+  @Test
+  fun customPlugins() {
+    val mapboxMapOptions = MapInitOptions(context, plugins = listOf("foobar"))
+    val plugins = mapboxMapOptions.plugins
+    assertTrue(plugins.size == 1)
+    assertEquals("foobar", plugins[0])
   }
 }

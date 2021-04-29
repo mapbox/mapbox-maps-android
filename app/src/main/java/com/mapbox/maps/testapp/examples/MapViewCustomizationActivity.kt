@@ -5,6 +5,7 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.plugin.*
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_map_view_customization.*
 
@@ -40,6 +41,12 @@ class MapViewCustomizationActivity : AppCompatActivity() {
       )
       .build()
 
+    // plugins configuration
+    val plugins = listOf(
+      PLUGIN_LOGO_CLASS_NAME,
+      PLUGIN_ATTRIBUTION_CLASS_NAME
+    )
+
     // set token and cache size for this particular map view
     val resourceOptions = ResourceOptions.Builder()
       .accessToken(getString(R.string.mapbox_access_token))
@@ -50,10 +57,11 @@ class MapViewCustomizationActivity : AppCompatActivity() {
     val initialCameraOptions = CameraOptions.Builder()
       .center(Point.fromLngLat(-122.4194, 37.7749))
       .zoom(9.0)
+      .bearing(120.0)
       .build()
 
-    val mapInitOptions =
-      MapInitOptions(this, resourceOptions, mapOptions, initialCameraOptions, true)
+    val mapInitOptions = MapInitOptions(this, resourceOptions, mapOptions, plugins, initialCameraOptions, true)
+
     // create view programmatically and add to root layout
     customMapView = MapView(this, mapInitOptions)
     val params = LinearLayout.LayoutParams(

@@ -38,7 +38,7 @@ class MapSurface(
       renderer,
       mapInitOptions
     )
-    mapController.initializePlugins(null)
+    mapController.initializePlugins(mapInitOptions)
   }
 
   /**

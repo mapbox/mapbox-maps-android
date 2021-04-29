@@ -97,8 +97,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       resolvedMapInitOptions
     )
     addView(view, 0)
-
-    mapController.initializePlugins(this)
+    mapController.initializePlugins(resolvedMapInitOptions, this)
   }
 
   @SuppressLint("CustomViewStyleable")
