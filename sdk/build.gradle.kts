@@ -72,6 +72,7 @@ dependencies {
   androidTestImplementation(Dependencies.androidxRules)
   androidTestImplementation(Dependencies.androidxJUnitTestRules)
   androidTestImplementation(Dependencies.androidxEspresso)
+  androidTestImplementation(Dependencies.androidxUiAutomator)
   androidTestUtil(Dependencies.androidxOrchestrator)
 }
 
