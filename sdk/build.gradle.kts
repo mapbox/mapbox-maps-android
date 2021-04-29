@@ -35,11 +35,6 @@ android {
       execution = "ANDROIDX_TEST_ORCHESTRATOR"
     }
   }
-
-  // temporary config until gl-native v10.0.0-beta.5
-  packagingOptions {
-    exclude("META-INF/*.kotlin_module")
-  }
 }
 
 dependencies {
