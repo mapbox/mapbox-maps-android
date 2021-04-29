@@ -586,7 +586,7 @@ class OfflineTest {
           context = context,
           mapInitOptions = MapInitOptions(
             context = context,
-            initialCameraOptions = CameraOptions.Builder()
+            cameraOptions = CameraOptions.Builder()
               .center(TOKYO)
               .zoom(ZOOM)
               .build()
