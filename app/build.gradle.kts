@@ -27,11 +27,6 @@ android {
     }
   }
 
-  // temporary config until https://github.com/mapbox/mapbox-base-android/issues/53 is resolved
-  packagingOptions {
-    exclude("META-INF/*.kotlin_module")
-  }
-
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
