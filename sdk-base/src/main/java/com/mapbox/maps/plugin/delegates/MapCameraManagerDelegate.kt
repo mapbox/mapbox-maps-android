@@ -83,7 +83,7 @@ interface MapCameraManagerDelegate {
    * @return Returns the camera options object representing the provided params
    */
   fun cameraForCoordinates(
-    coordinates: List<Point?>,
+    coordinates: List<Point>,
     padding: EdgeInsets,
     bearing: Double?,
     pitch: Double?
@@ -105,7 +105,7 @@ interface MapCameraManagerDelegate {
    * @return Returns the camera options object with the zoom level adjusted to fit \p coordinates into \p box.
    */
   fun cameraForCoordinates(
-    coordinates: List<Point?>,
+    coordinates: List<Point>,
     camera: CameraOptions,
     box: ScreenBox
   ): CameraOptions
@@ -201,7 +201,7 @@ interface MapCameraManagerDelegate {
    *
    * @return Returns a batch of screen coordinates on the screen in \link MapOptions#size platform pixels \endlink.
    */
-  fun pixelsForCoordinates(coordinates: List<Point?>): List<ScreenCoordinate?>
+  fun pixelsForCoordinates(coordinates: List<Point>): List<ScreenCoordinate>
 
   /**
    * Calculates geographical coordinates(i.e., longitude-latitude pair) that corresponds
@@ -215,7 +215,7 @@ interface MapCameraManagerDelegate {
    * @return Returns a batch of geographical coordinates corresponding to the screen coordinates
    * on the screen.
    */
-  fun coordinatesForPixels(pixels: List<ScreenCoordinate?>): List<Point?>
+  fun coordinatesForPixels(pixels: List<ScreenCoordinate>): List<Point>
 
   /**
    * Changes the map view by any combination of center, zoom, bearing, and pitch, without an animated transition.

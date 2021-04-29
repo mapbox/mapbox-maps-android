@@ -462,7 +462,7 @@ class MapboxMap internal constructor(
    * @return Returns the converted camera options
    */
   override fun cameraForCoordinates(
-    coordinates: List<Point?>,
+    coordinates: List<Point>,
     padding: EdgeInsets,
     bearing: Double?,
     pitch: Double?
@@ -487,7 +487,7 @@ class MapboxMap internal constructor(
    * @return Returns the camera options object with the zoom level adjusted to fit \p coordinates into \p box.
    */
   override fun cameraForCoordinates(
-    coordinates: List<Point?>,
+    coordinates: List<Point>,
     camera: CameraOptions,
     box: ScreenBox
   ): CameraOptions =
@@ -589,7 +589,7 @@ class MapboxMap internal constructor(
    *
    * @return Returns a batch of screen coordinates on the screen in [MapOptions.size] platform pixels.
    */
-  override fun pixelsForCoordinates(coordinates: List<Point?>): List<ScreenCoordinate> =
+  override fun pixelsForCoordinates(coordinates: List<Point>): List<ScreenCoordinate> =
     nativeMapWeakRef.call { this.pixelsForCoordinates(coordinates) }
 
   /**
@@ -623,7 +623,7 @@ class MapboxMap internal constructor(
    * @return Returns a batch of geographical coordinates corresponding to the screen coordinates
    * on the screen.
    */
-  override fun coordinatesForPixels(pixels: List<ScreenCoordinate?>): List<Point> =
+  override fun coordinatesForPixels(pixels: List<ScreenCoordinate>): List<Point> =
     nativeMapWeakRef.call { this.coordinatesForPixels(pixels) }
 
   /**
