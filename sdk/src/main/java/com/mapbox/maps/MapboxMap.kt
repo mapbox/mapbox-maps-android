@@ -15,7 +15,6 @@ import com.mapbox.maps.plugin.PLUGIN_GESTURE_CLASS_NAME
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.delegates.listeners.*
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.StyleDataType
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import java.lang.ref.WeakReference
 import java.util.*
@@ -36,7 +35,7 @@ import java.util.*
 class MapboxMap internal constructor(
   nativeMap: MapInterface,
   private val nativeObserver: NativeObserver,
-  private val pixelRatio: Float
+  pixelRatio: Float
 ) : MapTransformDelegate,
   MapProjectionDelegate,
   MapFeatureQueryDelegate,
@@ -48,8 +47,9 @@ class MapboxMap internal constructor(
 
   private val nativeMapWeakRef = WeakReference(nativeMap)
   internal lateinit var style: Style
-  internal var isStyleLoadInited = false
+  internal var isStyleLoadInitiated = false
   private val handlerMain = Handler(Looper.getMainLooper())
+  private val styleObserver = StyleObserver(this, nativeMapWeakRef, nativeObserver, pixelRatio)
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal var cameraAnimationsPlugin: WeakReference<CameraAnimationsPlugin>? = null
@@ -179,45 +179,11 @@ class MapboxMap internal constructor(
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
   ) {
-    isStyleLoadInited = true
+    // clear listeners from previous invocation
+    styleObserver.onNewStyleLoad(onStyleLoaded, onMapLoadErrorListener)
+    isStyleLoadInitiated = true
     if (::style.isInitialized) {
       style.fullyLoaded = false
-    }
-    onMapLoadErrorListener?.let {
-      addOnMapLoadErrorListener(it)
-    }
-    addOnStyleDataLoadedListener(
-      object : OnStyleDataLoadedListener {
-        override fun onStyleDataLoaded(type: StyleDataType) {
-          if (type == StyleDataType.STYLE) {
-            onFinishLoadingStyle(onStyleLoaded, onMapLoadErrorListener)
-            removeOnStyleDataLoadedListener(this)
-          }
-        }
-      }
-    )
-  }
-
-  /**
-   * Handle the style loading through native map
-   */
-  internal fun onFinishLoadingStyle(
-    onStyleLoaded: Style.OnStyleLoaded? = null,
-    onMapLoadErrorListener: OnMapLoadErrorListener? = null
-  ) {
-    nativeMapWeakRef.get()?.let {
-      style = Style(it as StyleManagerInterface, pixelRatio)
-      // notify the listener provided with the style setter
-      onStyleLoaded?.onStyleLoaded(style)
-
-      // notify style getters
-      for (styleGetter in nativeObserver.awaitingStyleGetters) {
-        styleGetter.onStyleLoaded(style)
-      }
-      nativeObserver.awaitingStyleGetters.clear()
-    }
-    onMapLoadErrorListener?.let {
-      removeOnMapLoadErrorListener(it)
     }
   }
 
@@ -233,11 +199,11 @@ class MapboxMap internal constructor(
         onStyleLoaded.onStyleLoaded(style)
       } else {
         // style load is occurring now, add callback
-        nativeObserver.awaitingStyleGetters.add(onStyleLoaded)
+        styleObserver.addOnStyleLoadListener(onStyleLoaded)
       }
     } else {
       // no style has loaded yet, add callback
-      nativeObserver.awaitingStyleGetters.add(onStyleLoaded)
+      styleObserver.addOnStyleLoadListener(onStyleLoaded)
     }
   }
 
@@ -1299,5 +1265,9 @@ class MapboxMap internal constructor(
    */
   override fun setBearing(bearing: Double) {
     setCamera(CameraOptions.Builder().bearing(bearing).build())
+  }
+
+  internal fun onDestroy() {
+    styleObserver.onDestroy()
   }
 }

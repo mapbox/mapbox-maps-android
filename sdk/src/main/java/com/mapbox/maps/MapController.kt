@@ -102,7 +102,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     }
     renderer.onStart()
     pluginRegistry.onStart()
-    if (!mapboxMap.isStyleLoadInited) {
+    if (!mapboxMap.isStyleLoadInitiated) {
       // Load the style in mapInitOptions if no style has loaded yet.
       mapInitOptions.styleUri?.let {
         mapboxMap.loadStyleUri(it)
@@ -125,6 +125,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun onDestroy() {
+    mapboxMap.onDestroy()
     nativeObserver.clearListeners()
     renderer.onDestroy()
     pluginRegistry.cleanup()

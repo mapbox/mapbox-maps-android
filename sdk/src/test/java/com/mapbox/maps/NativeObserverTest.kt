@@ -529,8 +529,6 @@ class NativeObserverTest {
     nativeObserver.onStyleImageUnusedListeners.add(mockk(relaxed = true))
     nativeObserver.onStyleDataLoadedListeners.add(mockk(relaxed = true))
 
-    nativeObserver.awaitingStyleGetters.add(mockk(relaxed = true))
-
     nativeObserver.clearListeners()
 
     assertTrue(nativeObserver.onCameraChangeListeners.isEmpty())
@@ -550,7 +548,5 @@ class NativeObserverTest {
     assertTrue(nativeObserver.onStyleImageMissingListeners.isEmpty())
     assertTrue(nativeObserver.onStyleImageUnusedListeners.isEmpty())
     assertTrue(nativeObserver.onStyleDataLoadedListeners.isEmpty())
-
-    assertTrue(nativeObserver.awaitingStyleGetters.isEmpty())
   }
 }
