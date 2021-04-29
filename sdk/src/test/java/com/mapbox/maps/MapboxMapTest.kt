@@ -38,45 +38,40 @@ class MapboxMapTest {
   @Test
   fun loadStyleUri() {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
-    assertFalse(mapboxMap.isStyleLoadInited)
+    assertFalse(mapboxMap.isStyleLoadInitiated)
     mapboxMap.loadStyleUri("foo")
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    verify { nativeObserver.addOnStyleDataLoadedListener(any()) }
     verify { nativeMap.styleURI = "foo" }
-    assertTrue(mapboxMap.isStyleLoadInited)
+    assertTrue(mapboxMap.isStyleLoadInitiated)
   }
 
   @Test
   fun loadStyleUriLambda() {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
-    assertFalse(mapboxMap.isStyleLoadInited)
+    assertFalse(mapboxMap.isStyleLoadInitiated)
     mapboxMap.loadStyleUri("foo") {}
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    verify { nativeObserver.addOnStyleDataLoadedListener(any()) }
-    verify { nativeMap.styleURI = "foo" }
-    assertTrue(mapboxMap.isStyleLoadInited)
+    assertTrue(mapboxMap.isStyleLoadInitiated)
   }
 
   @Test
   fun loadStyleJSON() {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
-    assertFalse(mapboxMap.isStyleLoadInited)
+    assertFalse(mapboxMap.isStyleLoadInitiated)
     mapboxMap.loadStyleJSON("foo")
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    verify { nativeObserver.addOnStyleDataLoadedListener(any()) }
     verify { nativeMap.styleJSON = "foo" }
-    assertTrue(mapboxMap.isStyleLoadInited)
+    assertTrue(mapboxMap.isStyleLoadInitiated)
   }
 
   @Test
   fun loadStyleJSONLambda() {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
-    assertFalse(mapboxMap.isStyleLoadInited)
+    assertFalse(mapboxMap.isStyleLoadInitiated)
     mapboxMap.loadStyleJSON("foo") {}
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    verify { nativeObserver.addOnStyleDataLoadedListener(any()) }
     verify { nativeMap.styleJSON = "foo" }
-    assertTrue(mapboxMap.isStyleLoadInited)
+    assertTrue(mapboxMap.isStyleLoadInitiated)
   }
 
   @Test
@@ -86,11 +81,11 @@ class MapboxMapTest {
     val onMapLoadError = mockk<OnMapLoadErrorListener>()
     val onStyleLoadError = mockk<Style.OnStyleLoaded>()
     Shadows.shadowOf(Looper.getMainLooper()).pause()
-    assertFalse(mapboxMap.isStyleLoadInited)
+    assertFalse(mapboxMap.isStyleLoadInitiated)
     mapboxMap.loadStyle(styleExtension, onStyleLoadError, onMapLoadError)
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { nativeMap.styleURI = "foobar" }
-    assertTrue(mapboxMap.isStyleLoadInited)
+    assertTrue(mapboxMap.isStyleLoadInitiated)
   }
 
   @Test
@@ -98,21 +93,11 @@ class MapboxMapTest {
     val styleExtension = mockk<StyleContract.StyleExtension>()
     every { styleExtension.styleUri } returns "foobar"
     Shadows.shadowOf(Looper.getMainLooper()).pause()
-    assertFalse(mapboxMap.isStyleLoadInited)
+    assertFalse(mapboxMap.isStyleLoadInitiated)
     mapboxMap.loadStyle(styleExtension) {}
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { nativeMap.styleURI = "foobar" }
-    assertTrue(mapboxMap.isStyleLoadInited)
-  }
-
-  @Test
-  fun finishLoadingStyle() {
-    val styleLoadCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
-    val mapLoadError = mockk<OnMapLoadErrorListener>()
-    mapboxMap.onFinishLoadingStyle(styleLoadCallback, mapLoadError)
-    verify { styleLoadCallback.onStyleLoaded(any()) }
-    verify { nativeObserver.awaitingStyleGetters.clear() }
-    verify { mapboxMap.removeOnMapLoadErrorListener(mapLoadError) }
+    assertTrue(mapboxMap.isStyleLoadInitiated)
   }
 
   @Test
@@ -151,13 +136,6 @@ class MapboxMapTest {
   }
 
   @Test
-  fun getStyleWaitCallback() {
-    val styleLoadCallback = mockk<Style.OnStyleLoaded>()
-    mapboxMap.getStyle(styleLoadCallback)
-    verify { nativeObserver.awaitingStyleGetters.add(styleLoadCallback) }
-  }
-
-  @Test
   fun getStyleLoadedCallback() {
     val style = mockk<Style>()
     mapboxMap.style = style
@@ -165,16 +143,6 @@ class MapboxMapTest {
     val styleLoadCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     mapboxMap.getStyle(styleLoadCallback)
     verify { styleLoadCallback.onStyleLoaded(style) }
-  }
-
-  @Test
-  fun getStyleLoadedWaitCallback() {
-    val style = mockk<Style>()
-    mapboxMap.style = style
-    every { style.fullyLoaded } returns false
-    val styleLoadCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
-    mapboxMap.getStyle(styleLoadCallback)
-    verify { nativeObserver.awaitingStyleGetters.add(styleLoadCallback) }
   }
 
   @Test

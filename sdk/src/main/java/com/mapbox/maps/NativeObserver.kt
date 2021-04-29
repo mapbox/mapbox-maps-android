@@ -29,8 +29,6 @@ internal class NativeObserver(
   val onStyleImageMissingListeners = CopyOnWriteArrayList<OnStyleImageMissingListener>()
   val onStyleImageUnusedListeners = CopyOnWriteArrayList<OnStyleImageUnusedListener>()
 
-  val awaitingStyleGetters = mutableListOf<Style.OnStyleLoaded>()
-
   var observedEvents = CopyOnWriteArrayList<String>()
   //
   // Internal callbacks
@@ -337,8 +335,6 @@ internal class NativeObserver(
     onStyleDataLoadedListeners.clear()
     onStyleImageMissingListeners.clear()
     onStyleImageUnusedListeners.clear()
-
-    awaitingStyleGetters.clear()
   }
 
   companion object {
