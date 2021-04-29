@@ -20,7 +20,7 @@ open class ScaleBarPluginImpl(
 ) : ScaleBarPlugin, ScaleBarSettingsBase() {
 
   private lateinit var scaleBar: ScaleBar
-  private lateinit var mapCameraDelegate: MapCameraDelegate
+  private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
   private lateinit var mapListenerDelegate: MapListenerDelegate
   private lateinit var mapTransformDelegate: MapTransformDelegate
 
@@ -79,8 +79,8 @@ open class ScaleBarPluginImpl(
    */
   private fun invalidateScaleBar() {
     val metersPerPixelAtLatitude = getMetersPerPixelAtLatitude(
-      mapCameraDelegate.getLat(),
-      mapCameraDelegate.getZoom()
+      mapCameraManagerDelegate.getLat(),
+      mapCameraManagerDelegate.getZoom()
     )
     val pixelRatio = mapTransformDelegate.getMapOptions().pixelRatio
     scaleBar.distancePerPixel = (metersPerPixelAtLatitude / pixelRatio).toFloat()
@@ -90,7 +90,7 @@ open class ScaleBarPluginImpl(
    * Provides all map delegate instances.
    */
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
-    mapCameraDelegate = delegateProvider.mapCameraDelegate
+    mapCameraManagerDelegate = delegateProvider.mapCameraManagerDelegate
     mapListenerDelegate = delegateProvider.mapListenerDelegate
     mapTransformDelegate = delegateProvider.mapTransformDelegate
   }

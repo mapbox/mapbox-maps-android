@@ -7,7 +7,7 @@ import android.graphics.drawable.Drawable
 import android.widget.FrameLayout
 import com.mapbox.maps.MapOptions
 import com.mapbox.maps.Projection
-import com.mapbox.maps.plugin.delegates.MapCameraDelegate
+import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapListenerDelegate
 import com.mapbox.maps.plugin.delegates.MapTransformDelegate
@@ -28,7 +28,7 @@ class ScaleBarPluginTest {
   private lateinit var scaleBarPlugin: ScaleBarPluginImpl
   private val scaleBarView = mockk<ScaleBarImpl>(relaxUnitFun = true)
   private val delegateProvider = mockk<MapDelegateProvider>(relaxUnitFun = true)
-  private val mapCameraDelegate = mockk<MapCameraDelegate>()
+  private val mapCameraDelegate = mockk<MapCameraManagerDelegate>()
   private val mapListenerManagerDelegate = mockk<MapListenerDelegate>(relaxed = true)
   private val mapTransformDelegate = mockk<MapTransformDelegate>()
   private val mapOptions = mockk<MapOptions>()
@@ -45,7 +45,7 @@ class ScaleBarPluginTest {
     every { mapCameraDelegate.getZoom() } returns 0.0
     every { mapTransformDelegate.getMapOptions() } returns mapOptions
     every { mapOptions.pixelRatio } returns 1.0f
-    every { delegateProvider.mapCameraDelegate } returns mapCameraDelegate
+    every { delegateProvider.mapCameraManagerDelegate } returns mapCameraDelegate
     every { delegateProvider.mapListenerDelegate } returns mapListenerManagerDelegate
     every { delegateProvider.mapTransformDelegate } returns mapTransformDelegate
     every { mapView.width } returns 1024

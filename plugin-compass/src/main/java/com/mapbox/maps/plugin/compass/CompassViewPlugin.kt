@@ -16,7 +16,7 @@ import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
 import com.mapbox.maps.plugin.compass.generated.CompassAttributeParser
 import com.mapbox.maps.plugin.compass.generated.CompassSettings
 import com.mapbox.maps.plugin.compass.generated.CompassSettingsBase
-import com.mapbox.maps.plugin.delegates.MapCameraDelegate
+import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import java.util.concurrent.CopyOnWriteArrayList
@@ -32,7 +32,7 @@ open class CompassViewPlugin(
   CompassPlugin, CompassSettingsBase() {
 
   private lateinit var compassView: CompassView
-  private lateinit var mapCameraDelegate: MapCameraDelegate
+  private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
   private var animationPlugin: CameraAnimationsPlugin? = null
 
   private var isHidden = false
@@ -73,7 +73,7 @@ open class CompassViewPlugin(
       internalSettings.marginRight.toInt(),
       internalSettings.marginBottom.toInt()
     )
-    update(mapCameraDelegate.getBearing())
+    update(mapCameraManagerDelegate.getBearing())
     compassView.requestLayout()
   }
 
@@ -85,7 +85,7 @@ open class CompassViewPlugin(
     set(value) {
       internalSettings.enabled = value
       compassView.isCompassEnabled = value
-      update(mapCameraDelegate.getBearing())
+      update(mapCameraManagerDelegate.getBearing())
       if (value && !shouldHideCompass()) {
         compassView.setCompassAlpha(1.0f)
         compassView.isCompassVisible = true
@@ -143,7 +143,7 @@ open class CompassViewPlugin(
    * Provides all map delegate instances.
    */
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
-    mapCameraDelegate = delegateProvider.mapCameraDelegate
+    mapCameraManagerDelegate = delegateProvider.mapCameraManagerDelegate
     animationPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
       Class.forName(
         PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
@@ -159,7 +159,7 @@ open class CompassViewPlugin(
    * Called whenever activity's/fragment's lifecycle is entering a "started" state.
    */
   override fun onStart() {
-    update(mapCameraDelegate.getBearing())
+    update(mapCameraManagerDelegate.getBearing())
   }
 
   /**
@@ -213,7 +213,7 @@ open class CompassViewPlugin(
           owner(MapAnimationOwnerRegistry.COMPASS)
           duration(BEARING_NORTH_ANIMATION_DURATION)
         }
-      ) ?: mapCameraDelegate.setBearing(0.0)
+      ) ?: mapCameraManagerDelegate.setBearing(0.0)
       compassClickListeners.forEach { it.onCompassClick() }
     }
   }

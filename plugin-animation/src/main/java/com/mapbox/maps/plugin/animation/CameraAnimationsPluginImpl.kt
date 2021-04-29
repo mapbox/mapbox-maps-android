@@ -102,7 +102,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   private var cameraOptionsBuilder = CameraOptions.Builder()
 
   private lateinit var mapDelegateProvider: MapDelegateProvider
-  private lateinit var mapCameraDelegate: MapCameraDelegate
+  private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
   private lateinit var mapTransformDelegate: MapTransformDelegate
   private lateinit var mapProjectionDelegate: MapProjectionDelegate
 
@@ -121,7 +121,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
    */
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     mapDelegateProvider = delegateProvider
-    mapCameraDelegate = mapDelegateProvider.mapCameraDelegate
+    mapCameraManagerDelegate = mapDelegateProvider.mapCameraManagerDelegate
     mapTransformDelegate = mapDelegateProvider.mapTransformDelegate
     mapProjectionDelegate = mapDelegateProvider.mapProjectionDelegate
     cameraAnimationsFactory = CameraAnimatorsFactory(mapDelegateProvider)
@@ -149,7 +149,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       return
     }
     // move native map to new position
-    mapTransformDelegate.setCamera(cameraOptions)
+    mapCameraManagerDelegate.setCamera(cameraOptions)
     // notify listeners with actual values
     notifyListeners(cameraOptions)
     lastCameraOptions = cameraOptions
@@ -159,13 +159,13 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     @Suppress("IMPLICIT_CAST_TO_ANY")
 
     val startValue = cameraAnimator.startValue ?: when (cameraAnimator.type) {
-      CameraAnimatorType.CENTER -> mapCameraDelegate.getCameraOptions().center
-      CameraAnimatorType.ZOOM -> mapCameraDelegate.getCameraOptions().zoom
+      CameraAnimatorType.CENTER -> mapCameraManagerDelegate.getCameraOptions(null).center
+      CameraAnimatorType.ZOOM -> mapCameraManagerDelegate.getCameraOptions(null).zoom
       // TODO revisit after https://github.com/mapbox/mapbox-maps-android/issues/119
       CameraAnimatorType.ANCHOR -> anchor ?: ScreenCoordinate(0.0, 0.0)
-      CameraAnimatorType.PADDING -> mapCameraDelegate.getCameraOptions().padding
-      CameraAnimatorType.BEARING -> mapCameraDelegate.getCameraOptions().bearing
-      CameraAnimatorType.PITCH -> mapCameraDelegate.getCameraOptions().pitch
+      CameraAnimatorType.PADDING -> mapCameraManagerDelegate.getCameraOptions(null).padding
+      CameraAnimatorType.BEARING -> mapCameraManagerDelegate.getCameraOptions(null).bearing
+      CameraAnimatorType.PITCH -> mapCameraManagerDelegate.getCameraOptions(null).pitch
     }.also {
       Logger.i(
         TAG,
@@ -322,7 +322,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       val cameraOptions = when {
         // if no running animators in queue - get current map camera
         firstAnimator == null -> {
-          mapCameraDelegate.getCameraOptions()
+          mapCameraManagerDelegate.getCameraOptions(null)
         }
         // if update is triggered for first (oldest) animator - build options and jump
         it == firstAnimator -> {

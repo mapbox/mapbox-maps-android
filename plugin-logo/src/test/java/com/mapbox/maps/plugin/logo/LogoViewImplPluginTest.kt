@@ -2,7 +2,7 @@ package com.mapbox.maps.plugin.logo
 
 import android.view.Gravity
 import android.widget.FrameLayout
-import com.mapbox.maps.plugin.delegates.MapCameraDelegate
+import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import io.mockk.every
 import io.mockk.mockk
@@ -16,7 +16,7 @@ class LogoViewImplPluginTest {
   private lateinit var logoPlugin: LogoPlugin
   private val logoView = mockk<LogoViewImpl>(relaxUnitFun = true)
   private val delegateProvider = mockk<MapDelegateProvider>()
-  private val mapCameraDelegate = mockk<MapCameraDelegate>(relaxUnitFun = true)
+  private val mapCameraDelegate = mockk<MapCameraManagerDelegate>(relaxUnitFun = true)
 
   @Before
   fun setUp() {

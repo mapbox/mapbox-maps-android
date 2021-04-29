@@ -818,4 +818,58 @@ class MapboxMapTest {
       gestures.addOnMoveListener(moveListener)
     }
   }
+
+  @Test
+  fun bearing() {
+    mapboxMap.getBearing()
+    verify { mapboxMap.getCameraOptions(null).bearing }
+  }
+
+  @Test
+  fun bearingSet() {
+    mapboxMap.setBearing(10.0)
+    verify { nativeMap.setCamera(CameraOptions.Builder().bearing(10.0).build()) }
+  }
+
+  @Test
+  fun zoom() {
+    mapboxMap.getZoom()
+    verify { nativeMap.getCameraOptions(null).zoom }
+  }
+
+  @Test
+  fun anchor() {
+    mapboxMap.getAnchor()
+    verify { nativeMap.getCameraOptions(null).anchor }
+  }
+
+  @Test
+  fun latitude() {
+    mapboxMap.getLat()
+    verify { nativeMap.getCameraOptions(null).center?.latitude() }
+  }
+
+  @Test
+  fun longitude() {
+    mapboxMap.getLon()
+    verify { nativeMap.getCameraOptions(null).center?.longitude() }
+  }
+
+  @Test
+  fun padding() {
+    mapboxMap.getPadding()
+    verify { nativeMap.getCameraOptions(null).padding }
+  }
+
+  @Test
+  fun pitch() {
+    mapboxMap.getPitch()
+    verify { nativeMap.getCameraOptions(null).pitch }
+  }
+
+  @Test
+  fun cameraOptions() {
+    mapboxMap.getCameraOptions(null)
+    verify { nativeMap.getCameraOptions(null) }
+  }
 }

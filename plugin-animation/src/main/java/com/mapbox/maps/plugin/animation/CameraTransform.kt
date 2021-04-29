@@ -2,7 +2,7 @@ package com.mapbox.maps.plugin.animation
 
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
-import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
+import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import kotlin.math.*
 
@@ -50,7 +50,7 @@ internal object CameraTransform {
     offset: ScreenCoordinate,
     cameraOptions: CameraOptions,
     mapTransformDelegate: MapTransformDelegate,
-    mapProjectionDelegate: MapProjectionDelegate
+    mapCameraManagerDelegate: MapCameraManagerDelegate
   ): Point {
     val mapOptions = mapTransformDelegate.getMapOptions()
     val mapCenter = getMapCenter(
@@ -60,7 +60,7 @@ internal object CameraTransform {
     val pointOnScreenX = mapCenter.x - offset.x
     val pointOnScreenY = mapCenter.y - offset.y
     val pointOnScreen = ScreenCoordinate(pointOnScreenX, pointOnScreenY)
-    return mapProjectionDelegate.coordinateForPixel(pointOnScreen)
+    return mapCameraManagerDelegate.coordinateForPixel(pointOnScreen)
   }
 
   fun calculateScaleBy(amount: Double, currentZoom: Double) = log2(amount) + currentZoom

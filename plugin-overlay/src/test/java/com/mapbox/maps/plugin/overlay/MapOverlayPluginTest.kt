@@ -6,9 +6,8 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CoordinateBounds
 import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
-import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.*
@@ -22,14 +21,12 @@ class MapOverlayPluginTest {
 
   private lateinit var mapOverlayPlugin: MapOverlayPluginImpl
   private val delegateProvider = mockk<MapDelegateProvider>(relaxUnitFun = true)
-  private val mapProjectionDelegate = mockk<MapProjectionDelegate>()
-  private val mapTransformDelegate = mockk<MapTransformDelegate>()
+  private val mapCameraManagerDelegate = mockk<MapCameraManagerDelegate>()
   val mapView = mockk<FrameLayout>()
 
   @Before
   fun setUp() {
-    every { delegateProvider.mapProjectionDelegate } returns mapProjectionDelegate
-    every { delegateProvider.mapTransformDelegate } returns mapTransformDelegate
+    every { delegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
     mapOverlayPlugin = MapOverlayPluginImpl()
     mapOverlayPlugin.onDelegateProvider(delegateProvider)
     assertEquals(0, mapOverlayPlugin.width)
@@ -147,7 +144,7 @@ class MapOverlayPluginTest {
     val slot = slot<CoordinateBounds>()
     val paddingSlot = slot<EdgeInsets>()
     every {
-      mapProjectionDelegate.cameraForCoordinateBounds(
+      mapCameraManagerDelegate.cameraForCoordinateBounds(
         capture(slot),
         capture(paddingSlot),
         any(),
@@ -166,7 +163,7 @@ class MapOverlayPluginTest {
     assertEquals(EdgeInsets(0.0, .00, 0.0, 0.0), paddingSlot.captured)
 
     val cameraSlot = slot<CameraOptions>()
-    every { mapTransformDelegate.setCamera(capture(cameraSlot)) } just Runs
+    every { mapCameraManagerDelegate.setCamera(capture(cameraSlot)) } just Runs
     mapOverlayPlugin.reframe()
     mapOverlayPlugin.reframe {
       assertEquals(it, cameraSlot.captured)

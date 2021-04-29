@@ -4,7 +4,7 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.mapbox.android.gestures.MoveDistancesObject
 import com.mapbox.geojson.Geometry
-import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
+import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 
 /**
  * Base class for annotations
@@ -32,7 +32,7 @@ abstract class Annotation<T : Geometry>(
    * Get the offset geometry for the touch point
    */
   abstract fun getOffsetGeometry(
-    projectionDelegate: MapProjectionDelegate,
+    cameraManagerDelegate: MapCameraManagerDelegate,
     moveDistancesObject: MoveDistancesObject,
     touchAreaShiftX: Int,
     touchAreaShiftY: Int

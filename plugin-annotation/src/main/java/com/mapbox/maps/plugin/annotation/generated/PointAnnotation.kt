@@ -15,7 +15,7 @@ import com.mapbox.maps.plugin.annotation.AnnotationManager
 import com.mapbox.maps.plugin.annotation.AnnotationType
 import com.mapbox.maps.plugin.annotation.ConvertUtils.convertStringArray
 import com.mapbox.maps.plugin.annotation.ConvertUtils.toStringArray
-import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
+import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 
 /**
  * Class for PointAnnotation
@@ -1106,12 +1106,12 @@ class PointAnnotation(
    * Get the offset geometry for the touch point
    */
   override fun getOffsetGeometry(
-    projectionDelegate: MapProjectionDelegate,
+    mapCameraManagerDelegate: MapCameraManagerDelegate,
     moveDistancesObject: MoveDistancesObject,
     touchAreaShiftX: Int,
     touchAreaShiftY: Int
   ): Point? {
-    val point = projectionDelegate.coordinateForPixel(
+    val point = mapCameraManagerDelegate.coordinateForPixel(
       ScreenCoordinate(
         (moveDistancesObject.currentX - touchAreaShiftX).toDouble(),
         (moveDistancesObject.currentY - touchAreaShiftY).toDouble(),

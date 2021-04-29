@@ -10,7 +10,7 @@ interface MapDelegateProvider {
   /**
    * Delegate used to interact with map's camera.
    */
-  val mapCameraDelegate: MapCameraDelegate
+  val mapCameraManagerDelegate: MapCameraManagerDelegate
 
   /**
    * Delegate used to interact with map's projection methods.
