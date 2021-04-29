@@ -14,16 +14,18 @@ import android.util.AttributeSet
  * @property context the context of the application.
  * @property resourceOptions Resource options when using a MapView. Access token required when using a Mapbox service. Please see [https://www.mapbox.com/help/create-api-access-token/](https://www.mapbox.com/help/create-api-access-token/) to learn how to create one.More information in this guide [https://www.mapbox.com/help/first-steps-android-sdk/#access-tokens](https://www.mapbox.com/help/first-steps-android-sdk/#access-tokens).
  * @property mapOptions Describes the map options value when using a MapView.
- * @property initialCameraOptions The Initial Camera options when creating a MapView.
+ * @property cameraOptions The Initial Camera options when creating a MapView.
  * @property textureView Flag indicating to use a TextureView as render surface for the MapView. Default is false.
+ * @property styleUri The styleUri will applied for the MapView in the onStart lifecycle event if no style is set. Default is [Style.MAPBOX_STREETS]. If set to null, then there is no default style will be loaded.
  * @property attrs The [AttributeSet] object that init the MapView.
  */
 data class MapInitOptions constructor(
   val context: Context,
   var resourceOptions: ResourceOptions = getDefaultResourceOptions(context),
   var mapOptions: MapOptions = getDefaultMapOptions(context),
-  var initialCameraOptions: CameraOptions? = null,
+  var cameraOptions: CameraOptions? = null,
   var textureView: Boolean = false,
+  val styleUri: String? = Style.MAPBOX_STREETS,
   var attrs: AttributeSet? = null
 ) {
 
@@ -32,6 +34,11 @@ data class MapInitOptions constructor(
    */
   companion object {
     /**
+     * The default cache size, which is 50MB
+     */
+    const val DEFAULT_CACHE_SIZE = 1024 * 1024 * 50L
+
+    /**
      * Get a default [ResourceOptions] with token from default [CredentialsManager]
      * @property context the context of the application.
      */
@@ -39,7 +46,7 @@ data class MapInitOptions constructor(
       .accessToken(CredentialsManager.default.getAccessToken(context))
       .cachePath("${context.filesDir.absolutePath}/$DATABASE_NAME")
       .assetPath(context.filesDir.absolutePath)
-      .cacheSize(50_000_000L) // 50 mb
+      .cacheSize(DEFAULT_CACHE_SIZE) // 50 mb
       .build()
 
     /**

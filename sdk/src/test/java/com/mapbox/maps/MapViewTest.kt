@@ -1,6 +1,10 @@
 package com.mapbox.maps
 
+import android.content.Context
+import android.content.res.Resources
+import android.content.res.TypedArray
 import android.util.AttributeSet
+import android.util.DisplayMetrics
 import android.view.MotionEvent
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.loader.MapboxMapStaticInitializer
@@ -8,8 +12,7 @@ import com.mapbox.maps.plugin.PLUGIN_LOGO_CLASS_NAME
 import com.mapbox.maps.plugin.logo.LogoPlugin
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import io.mockk.*
-import junit.framework.Assert.assertFalse
-import junit.framework.Assert.assertTrue
+import junit.framework.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -38,6 +41,37 @@ class MapViewTest {
       mockk(relaxed = true),
       mapController
     )
+  }
+
+  @Test
+  fun parseTypedArray() {
+    val context: Context = mockk()
+    val resources = mockk<Resources>()
+    val typedArray: TypedArray = mockk()
+    val displayMetrics: DisplayMetrics = mockk()
+    mockkObject(ResourcesAttributeParser)
+    mockkObject(MapAttributeParser)
+    mockkObject(CameraAttributeParser)
+    every { context.resources } returns resources
+    every { resources.displayMetrics } returns displayMetrics
+    every { ResourcesAttributeParser.parseResourcesOptions(any(), any(), any()) } returns mockk()
+    every { MapAttributeParser.parseMapOptions(any(), any()) } returns mockk()
+    every { CameraAttributeParser.parseCameraOptions(any()) } returns mockk()
+    every { typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapSurface, 0) } returns 1
+    every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) } returns Style.SATELLITE
+    every { typedArray.recycle() } just Runs
+    every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
+    var mapInitOptions = mapView.parseTypedArray(context, attrs)
+    assertEquals(true, mapInitOptions.textureView)
+    assertEquals(Style.SATELLITE, mapInitOptions.styleUri)
+
+    every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) } returns null
+    mapInitOptions = mapView.parseTypedArray(context, attrs)
+    assertEquals(Style.MAPBOX_STREETS, mapInitOptions.styleUri)
+
+    every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) } returns ""
+    mapInitOptions = mapView.parseTypedArray(context, attrs)
+    assertEquals(null, mapInitOptions.styleUri)
   }
 
   @Test

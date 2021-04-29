@@ -42,7 +42,8 @@ internal object ResourcesAttributeParser {
       .assetPath(assetPathString)
       .cacheSize(
         typedArray.getFloat(
-          R.styleable.mapbox_MapView_mapbox_resourcesCacheSize, 50_000_000f // 50 mb
+          R.styleable.mapbox_MapView_mapbox_resourcesCacheSize,
+          MapInitOptions.DEFAULT_CACHE_SIZE.toFloat() // 50 mb
         ).toLong()
       )
     tileStorePathString?.let {

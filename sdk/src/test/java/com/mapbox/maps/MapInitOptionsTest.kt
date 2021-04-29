@@ -69,6 +69,7 @@ class MapInitOptionsTest {
     assertEquals(NorthOrientation.UPWARDS, mapboxMapOptions.mapOptions.orientation)
     assertEquals(ViewportMode.DEFAULT, mapboxMapOptions.mapOptions.viewportMode)
     assertEquals(true, mapboxMapOptions.mapOptions.crossSourceCollisions)
+    assertEquals(Style.MAPBOX_STREETS, mapboxMapOptions.styleUri)
   }
 
   @Test
@@ -77,6 +78,6 @@ class MapInitOptionsTest {
     assertEquals("token", mapboxMapOptions.resourceOptions.accessToken)
     assertTrue(mapboxMapOptions.resourceOptions.cachePath!!.endsWith("foobar/mbx.db"))
     assertTrue(mapboxMapOptions.resourceOptions.assetPath!!.endsWith("foobar"))
-    assertEquals(50_000_000L, mapboxMapOptions.resourceOptions.cacheSize)
+    assertEquals(MapInitOptions.DEFAULT_CACHE_SIZE, mapboxMapOptions.resourceOptions.cacheSize)
   }
 }

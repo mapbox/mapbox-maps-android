@@ -52,10 +52,10 @@ class MapViewCustomizationActivity : AppCompatActivity() {
       .zoom(9.0)
       .build()
 
-    val mapboxMapOptions =
+    val mapInitOptions =
       MapInitOptions(this, resourceOptions, mapOptions, initialCameraOptions, true)
     // create view programmatically and add to root layout
-    customMapView = MapView(this, mapboxMapOptions)
+    customMapView = MapView(this, mapInitOptions)
     val params = LinearLayout.LayoutParams(
       LinearLayout.LayoutParams.MATCH_PARENT,
       0,
