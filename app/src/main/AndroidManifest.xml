@@ -979,5 +979,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
         </activity>
+        <activity
+            android:name=".examples.LargeGeojsonPerformanceActivity"
+            android:description="@string/description_large_geojson"
+            android:exported="true"
+            android:label="@string/activity_large_geojson">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_lab" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
     </application>
 </manifest>
