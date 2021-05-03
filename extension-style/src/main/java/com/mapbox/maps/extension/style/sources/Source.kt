@@ -27,6 +27,7 @@ abstract class Source(
   /**
    * Get the type of the current source as a String.
    */
+  @SuppressWarnings("HiddenAbstractMethod")
   internal abstract fun getType(): String
 
   /**
@@ -167,6 +168,7 @@ fun StyleManagerInterface.getSource(sourceId: String): Source? {
  * @param sourceId the layer id
  * @return T if Source is T and null otherwise
  */
+@SuppressWarnings("ChangedType")
 inline fun <reified T : Source> StyleManagerInterface.getSourceAs(sourceId: String): T? {
   val source = getSource(sourceId)
   if (source !is T) {

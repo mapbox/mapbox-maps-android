@@ -44,6 +44,7 @@ abstract class Layer : StyleContract.StyleLayerExtension {
   /**
    * Get the type of current layer as a String.
    */
+  @SuppressWarnings("HiddenAbstractMethod")
   internal abstract fun getType(): String
 
   /**

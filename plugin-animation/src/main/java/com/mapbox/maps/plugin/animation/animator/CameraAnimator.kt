@@ -49,7 +49,10 @@ abstract class CameraAnimator<out T> (
     setEvaluator(evaluator)
   }
 
-  internal abstract val type: CameraAnimatorType
+  /**
+   * The type of CameraAnimator
+   */
+  abstract val type: CameraAnimatorType
 
   /**
    * Set the animator object values
