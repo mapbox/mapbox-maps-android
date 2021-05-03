@@ -36,18 +36,15 @@ class ObservableExtensionTest : BaseMapTest() {
   fun subscribeResourceRequest() {
     val latch = CountDownLatch(1)
 
-    var observer: Observer? = null
+    val observer = object : Observer() {
+      override fun notify(event: Event) {
+        assertEquals("resource-request", event.type)
+        latch.countDown()
+      }
+    }
     rule.scenario.onActivity {
       it.runOnUiThread {
-        // observer must be created from same thread where we subscribe it
-        observer = object : Observer() {
-          override fun notify(event: Event) {
-            assertEquals("resource-request", event.type)
-            latch.countDown()
-          }
-        }.apply {
-          mapboxMap.subscribeResourceRequest(this)
-        }
+        mapboxMap.subscribeResourceRequest(observer)
         mapboxMap.setCamera(
           CameraOptions.Builder().center(Point.fromLngLat(0.0, 0.0)).zoom(16.0).build()
         )
@@ -56,8 +53,6 @@ class ObservableExtensionTest : BaseMapTest() {
     if (!latch.await(20000, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
-    observer?.let {
-      mapboxMap.unsubscribeResourceRequest(it)
-    }
+    mapboxMap.unsubscribeResourceRequest(observer)
   }
 }

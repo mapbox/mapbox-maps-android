@@ -65,20 +65,6 @@ interface MapTransformDelegate {
   fun getMapOptions(): MapOptions
 
   /**
-   * Get minimum zoom.
-   *
-   * @return Zoom value.
-   */
-  fun getMinZoom(): Double
-
-  /**
-   * Get maximum zoom.
-   *
-   * @return Zoom value.
-   */
-  fun getMaxZoom(): Double
-
-  /**
    * Gets the size of the map.
    *
    * @return size The size of the map in MapOptions#size platform pixels

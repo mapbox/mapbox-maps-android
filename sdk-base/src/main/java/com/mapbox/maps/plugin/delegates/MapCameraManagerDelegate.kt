@@ -8,46 +8,11 @@ import com.mapbox.maps.*
  * Definition of a camera delegate. Any invocation will interact with the map's actual camera.
  */
 interface MapCameraManagerDelegate {
-  /**
-   * Get current latitude.
-   * @return latitude
-   */
-  fun getLat(): Double
 
   /**
-   * Get current longitude.
-   * @return longitude
+   * Represents current camera state.
    */
-  fun getLon(): Double
-
-  /**
-   * Get current zoom.
-   * @return zoom
-   */
-  fun getZoom(): Double
-
-  /**
-   * Get current pitch.
-   * @return pitch
-   */
-  fun getPitch(): Double
-
-  /**
-   * Get current bearing.
-   * @return bearing
-   */
-  fun getBearing(): Double
-
-  /**
-   * Get current padding.
-   * @return padding
-   */
-  fun getPadding(): Array<Double>?
-
-  /**
-   * Set camera's bearing.
-   */
-  fun setBearing(bearing: Double)
+  val cameraState: CameraState
 
   /**
    * Convenience method that returns the camera options object for given arguments
@@ -222,12 +187,6 @@ interface MapCameraManagerDelegate {
   fun setCamera(cameraOptions: CameraOptions)
 
   /**
-   * Returns the current camera state
-   *
-   */
-  fun getCameraState(): CameraState
-
-  /**
    * Sets the map view with the free camera options.
    *
    * FreeCameraOptions provides more direct access to the underlying camera entity.
@@ -253,7 +212,9 @@ interface MapCameraManagerDelegate {
    */
   fun setBounds(options: CameraBoundsOptions)
 
-  /** Returns the bounds of the map.  */
+  /**
+   * Returns the bounds of the map.
+   */
   fun getBounds(): CameraBounds
 
   /**
@@ -276,6 +237,9 @@ interface MapCameraManagerDelegate {
     toPoint: ScreenCoordinate
   ): CameraOptions
 
-  /** Ends the ongoing drag gesture. This function should be called always after the user has ended a drag gesture initiated by `dragStart`.  */
+  /**
+   * Ends the ongoing drag gesture.
+   * This function should be called always after the user has ended a drag gesture initiated by `dragStart`.
+   */
   fun dragEnd()
 }

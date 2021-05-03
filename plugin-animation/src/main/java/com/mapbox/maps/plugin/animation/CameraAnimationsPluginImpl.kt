@@ -160,12 +160,12 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     @Suppress("IMPLICIT_CAST_TO_ANY")
 
     val startValue = cameraAnimator.startValue ?: when (cameraAnimator.type) {
-      CameraAnimatorType.CENTER -> mapCameraManagerDelegate.getCameraState().center
-      CameraAnimatorType.ZOOM -> mapCameraManagerDelegate.getCameraState().zoom
+      CameraAnimatorType.CENTER -> mapCameraManagerDelegate.cameraState.center
+      CameraAnimatorType.ZOOM -> mapCameraManagerDelegate.cameraState.zoom
       CameraAnimatorType.ANCHOR -> anchor ?: ScreenCoordinate(0.0, 0.0)
-      CameraAnimatorType.PADDING -> mapCameraManagerDelegate.getCameraState().padding
-      CameraAnimatorType.BEARING -> mapCameraManagerDelegate.getCameraState().bearing
-      CameraAnimatorType.PITCH -> mapCameraManagerDelegate.getCameraState().pitch
+      CameraAnimatorType.PADDING -> mapCameraManagerDelegate.cameraState.padding
+      CameraAnimatorType.BEARING -> mapCameraManagerDelegate.cameraState.bearing
+      CameraAnimatorType.PITCH -> mapCameraManagerDelegate.cameraState.pitch
     }.also {
       Logger.i(
         TAG,
@@ -317,7 +317,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       val cameraOptions = when {
         // if no running animators in queue - get current map camera
         firstAnimator == null -> {
-          mapCameraManagerDelegate.getCameraState().toCameraOptions(anchor)
+          mapCameraManagerDelegate.cameraState.toCameraOptions(anchor)
         }
         // if update is triggered for first (oldest) animator - build options and jump
         it == firstAnimator -> {

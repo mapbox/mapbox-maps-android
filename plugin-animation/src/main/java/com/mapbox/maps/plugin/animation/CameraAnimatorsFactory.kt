@@ -38,7 +38,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
    */
   internal fun getEaseTo(cameraOptions: CameraOptions): Array<CameraAnimator<*>> {
     val animationList = mutableListOf<ValueAnimator>()
-    val currentCameraState = mapCameraManagerDelegate.getCameraState()
+    val currentCameraState = mapCameraManagerDelegate.cameraState
 
     cameraOptions.anchor?.let {
       animationList.add(
@@ -128,7 +128,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
    * @return Array of the created animators
    */
   internal fun getPitchBy(pitch: Double): Array<CameraAnimator<*>> {
-    val startPitch = mapCameraManagerDelegate.getCameraState().pitch
+    val startPitch = mapCameraManagerDelegate.cameraState.pitch
     return Array(1) {
       CameraPitchAnimator(
         options = cameraAnimatorOptions(startPitch + pitch) {
@@ -162,7 +162,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
         )
       )
     }
-    val currentZoom = mapCameraManagerDelegate.getCameraState().zoom
+    val currentZoom = mapCameraManagerDelegate.cameraState.zoom
     val newScale = CameraTransform.calculateScaleBy(amount, currentZoom)
     animationList.add(
       CameraZoomAnimator(
@@ -185,7 +185,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
   internal fun getMoveBy(
     offset: ScreenCoordinate
   ): Array<CameraAnimator<*>> {
-    val cameraState = mapCameraManagerDelegate.getCameraState()
+    val cameraState = mapCameraManagerDelegate.cameraState
     val centerTarget = CameraTransform.calculateLatLngMoveBy(
       offset,
       cameraState,
@@ -213,7 +213,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
     first: ScreenCoordinate,
     second: ScreenCoordinate
   ): Array<CameraAnimator<*>> {
-    val cameraOptions = mapCameraManagerDelegate.getCameraState()
+    val cameraOptions = mapCameraManagerDelegate.cameraState
     val mapSizePixels = mapTransformDelegate.getMapOptions().size
     val cameraBearingDegrees = cameraOptions.bearing
     if (mapSizePixels != null) {
@@ -261,7 +261,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
    */
   internal fun getFlyTo(cameraOptions: CameraOptions): Array<CameraAnimator<*>> {
 
-    val currentCameraState = mapCameraManagerDelegate.getCameraState()
+    val currentCameraState = mapCameraManagerDelegate.cameraState
 
     val endPadding = cameraOptions.padding ?: currentCameraState.padding
     val endPointRaw = cameraOptions.center ?: currentCameraState.center
@@ -272,7 +272,10 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
     var startBearing = currentCameraState.bearing
     val startScale = 2.0.pow(currentCameraState.zoom)
     val startZoom = startScale.scaleZoom()
-    endZoom = endZoom.coerceIn(mapTransformDelegate.getMinZoom(), mapTransformDelegate.getMaxZoom())
+    endZoom = endZoom.coerceIn(
+      mapCameraManagerDelegate.getBounds().minZoom,
+      mapCameraManagerDelegate.getBounds().maxZoom
+    )
 
     // Determine endpoints
     var startPointRaw = currentCameraState.center

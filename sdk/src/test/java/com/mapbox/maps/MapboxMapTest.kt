@@ -565,7 +565,7 @@ class MapboxMapTest {
 
   @Test
   fun getCameraState() {
-    mapboxMap.getCameraState()
+    mapboxMap.cameraState
     verify { nativeMap.cameraState }
   }
 
@@ -756,50 +756,8 @@ class MapboxMapTest {
   }
 
   @Test
-  fun bearing() {
-    mapboxMap.getBearing()
-    verify { mapboxMap.getCameraState().bearing }
-  }
-
-  @Test
-  fun bearingSet() {
-    mapboxMap.setBearing(10.0)
-    verify { nativeMap.setCamera(CameraOptions.Builder().bearing(10.0).build()) }
-  }
-
-  @Test
-  fun zoom() {
-    mapboxMap.getZoom()
-    verify { nativeMap.cameraState.zoom }
-  }
-
-  @Test
-  fun latitude() {
-    mapboxMap.getLat()
-    verify { nativeMap.cameraState.center.latitude() }
-  }
-
-  @Test
-  fun longitude() {
-    mapboxMap.getLon()
-    verify { nativeMap.cameraState.center.longitude() }
-  }
-
-  @Test
-  fun padding() {
-    mapboxMap.getPadding()
-    verify { nativeMap.cameraState.padding }
-  }
-
-  @Test
-  fun pitch() {
-    mapboxMap.getPitch()
-    verify { nativeMap.cameraState.pitch }
-  }
-
-  @Test
   fun cameraState() {
-    mapboxMap.getCameraState()
+    mapboxMap.cameraState
     verify { nativeMap.cameraState }
   }
 }

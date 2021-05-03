@@ -51,6 +51,12 @@ class MapboxMap internal constructor(
   private val handlerMain = Handler(Looper.getMainLooper())
   private val styleObserver = StyleObserver(this, nativeMapWeakRef, nativeObserver, pixelRatio)
 
+  /**
+   * Represents current camera state.
+   */
+  override val cameraState: CameraState
+    get() = nativeMapWeakRef.call { this.cameraState }
+
   @VisibleForTesting(otherwise = PRIVATE)
   internal var cameraAnimationsPlugin: WeakReference<CameraAnimationsPlugin>? = null
 
@@ -239,13 +245,6 @@ class MapboxMap internal constructor(
     nativeMapWeakRef.call { this.setCamera(cameraOptions) }
 
   /**
-   * Get the current camera state.
-   *
-   */
-  override fun getCameraState(): CameraState =
-    nativeMapWeakRef.call { this.cameraState }
-
-  /**
    * Notify map about gesture being in progress.
    *
    * @param inProgress True if gesture is in progress
@@ -340,20 +339,6 @@ class MapboxMap internal constructor(
    * @return Returns map options
    */
   override fun getMapOptions(): MapOptions = nativeMapWeakRef.call { this.mapOptions }
-
-  /**
-   * Get minimum zoom.
-   *
-   * @return Zoom value.
-   */
-  override fun getMinZoom() = nativeMapWeakRef.call { this.bounds.minZoom }
-
-  /**
-   * Get maximum zoom.
-   *
-   * @return Zoom value.
-   */
-  override fun getMaxZoom() = nativeMapWeakRef.call { this.bounds.maxZoom }
 
   /**
    * Gets the size of the map.
@@ -602,7 +587,7 @@ class MapboxMap internal constructor(
    * @return Returns the distance measured in meters.
    */
   override fun getMetersPerPixelAtLatitude(latitude: Double): Double =
-    Projection.getMetersPerPixelAtLatitude(latitude, getCameraState().zoom)
+    Projection.getMetersPerPixelAtLatitude(latitude, cameraState.zoom)
 
   /**
    * Calculate Spherical Mercator ProjectedMeters coordinates.
@@ -1192,51 +1177,6 @@ class MapboxMap internal constructor(
       return function.invoke(it)
     }
     return null
-  }
-
-  /**
-   * Get current latitude.
-   * @return latitude
-   */
-  override fun getLat() = getCameraState().center.latitude()
-
-  /**
-   * Get current longitude.
-   * @return longitude
-   */
-  override fun getLon() = getCameraState().center.longitude()
-
-  /**
-   * Get current zoom.
-   * @return zoom
-   */
-  override fun getZoom() = getCameraState().zoom
-
-  /**
-   * Get current pitch.
-   * @return pitch
-   */
-  override fun getPitch() = getCameraState().pitch
-
-  /**
-   * Get current bearing.
-   * @return bearing
-   */
-  override fun getBearing() = getCameraState().bearing
-
-  /**
-   * Get current padding.
-   * @return padding
-   */
-  override fun getPadding() = getCameraState().padding.let { insets ->
-    arrayOf(insets.left, insets.top, insets.right, insets.bottom)
-  }
-
-  /**
-   * Set camera's bearing.
-   */
-  override fun setBearing(bearing: Double) {
-    setCamera(CameraOptions.Builder().bearing(bearing).build())
   }
 
   internal fun onDestroy() {

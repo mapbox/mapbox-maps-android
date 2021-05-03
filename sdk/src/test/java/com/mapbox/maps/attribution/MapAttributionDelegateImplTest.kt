@@ -45,7 +45,7 @@ class MapAttributionDelegateImplTest {
     every { camera.zoom } returns 0.0
     every { camera.bearing } returns 0.0
     every { camera.pitch } returns 0.0
-    every { mapboxMap.getCameraState() } returns camera
+    every { mapboxMap.cameraState } returns camera
     val resourceOptions: ResourceOptions = mockk()
     every { resourceOptions.accessToken } returns TOKEN
     every { mapboxMap.getResourceOptions() } returns resourceOptions

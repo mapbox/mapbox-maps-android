@@ -159,7 +159,7 @@ class MapOverlayPluginTest : BaseMapTest() {
     mapOverlayPlugin.reframe {
       assertNotNull(it)
       mapboxMap.setCamera(it!!)
-      val currentCameraOptions = mapboxMap.getCameraState()
+      val currentCameraOptions = mapboxMap.cameraState
       assertEquals(currentCameraOptions.center.latitude(), it.center!!.latitude(), 0.01)
       assertEquals(currentCameraOptions.center.longitude(), it.center!!.longitude(), 0.01)
     }
