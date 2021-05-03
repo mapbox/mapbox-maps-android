@@ -28,7 +28,7 @@ class ScaleBarPluginTest {
   private lateinit var scaleBarPlugin: ScaleBarPluginImpl
   private val scaleBarView = mockk<ScaleBarImpl>(relaxUnitFun = true)
   private val delegateProvider = mockk<MapDelegateProvider>(relaxUnitFun = true)
-  private val mapCameraDelegate = mockk<MapCameraManagerDelegate>()
+  private val mapCameraDelegate = mockk<MapCameraManagerDelegate>(relaxed = true)
   private val mapListenerManagerDelegate = mockk<MapListenerDelegate>(relaxed = true)
   private val mapTransformDelegate = mockk<MapTransformDelegate>()
   private val mapOptions = mockk<MapOptions>()
@@ -41,8 +41,6 @@ class ScaleBarPluginTest {
   fun setUp() {
     mockkStatic(Projection::class)
     every { Projection.getMetersPerPixelAtLatitude(any(), any()) } returns 2.0
-    every { mapCameraDelegate.getLat() } returns 0.0
-    every { mapCameraDelegate.getZoom() } returns 0.0
     every { mapTransformDelegate.getMapOptions() } returns mapOptions
     every { mapOptions.pixelRatio } returns 1.0f
     every { delegateProvider.mapCameraManagerDelegate } returns mapCameraDelegate

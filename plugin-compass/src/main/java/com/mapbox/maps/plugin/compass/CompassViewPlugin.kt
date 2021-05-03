@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.animation.addListener
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraState
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
@@ -32,7 +33,8 @@ open class CompassViewPlugin(
   CompassPlugin, CompassSettingsBase() {
 
   private lateinit var compassView: CompassView
-  private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
+  private lateinit var mapCameraManager: MapCameraManagerDelegate
+  private lateinit var cameraState: CameraState
   private var animationPlugin: CameraAnimationsPlugin? = null
 
   private var isHidden = false
@@ -73,7 +75,7 @@ open class CompassViewPlugin(
       internalSettings.marginRight.toInt(),
       internalSettings.marginBottom.toInt()
     )
-    update(mapCameraManagerDelegate.getBearing())
+    update(cameraState.bearing)
     compassView.requestLayout()
   }
 
@@ -85,7 +87,7 @@ open class CompassViewPlugin(
     set(value) {
       internalSettings.enabled = value
       compassView.isCompassEnabled = value
-      update(mapCameraManagerDelegate.getBearing())
+      update(cameraState.bearing)
       if (value && !shouldHideCompass()) {
         compassView.setCompassAlpha(1.0f)
         compassView.isCompassVisible = true
@@ -143,7 +145,8 @@ open class CompassViewPlugin(
    * Provides all map delegate instances.
    */
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
-    mapCameraManagerDelegate = delegateProvider.mapCameraManagerDelegate
+    mapCameraManager = delegateProvider.mapCameraManagerDelegate
+    cameraState = delegateProvider.mapCameraManagerDelegate.cameraState
     animationPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
       Class.forName(
         PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
@@ -159,7 +162,7 @@ open class CompassViewPlugin(
    * Called whenever activity's/fragment's lifecycle is entering a "started" state.
    */
   override fun onStart() {
-    update(mapCameraManagerDelegate.getBearing())
+    update(cameraState.bearing)
   }
 
   /**
@@ -178,8 +181,7 @@ open class CompassViewPlugin(
     zoom: Double,
     pitch: Double,
     bearing: Double,
-    padding: Array<Double>?,
-    anchor: Pair<Double, Double>?
+    padding: Array<Double>
   ) {
     update(bearing)
   }
@@ -213,7 +215,7 @@ open class CompassViewPlugin(
           owner(MapAnimationOwnerRegistry.COMPASS)
           duration(BEARING_NORTH_ANIMATION_DURATION)
         }
-      ) ?: mapCameraManagerDelegate.setBearing(0.0)
+      ) ?: mapCameraManager.setCamera(CameraOptions.Builder().bearing(0.0).build())
       compassClickListeners.forEach { it.onCompassClick() }
     }
   }

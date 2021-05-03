@@ -95,7 +95,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
       assertTrue(animatorListener2.ended)
       assertTrue(animatorListener2.canceled)
 
-      assertEquals(180.0, mapView.getMapboxMap().getCameraOptions(null).bearing!!, EPS)
+      assertEquals(180.0, mapView.getMapboxMap().cameraState.bearing, EPS)
     } else {
       TimeoutException()
     }
@@ -216,7 +216,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
       // Check that new animator reset previous Camera options -
       // so camera should be definitely less than 35.0 (ideally near 0.0)
-      val cameraOptions = mapView.getMapboxMap().getCameraOptions(null)
+      val cameraOptions = mapView.getMapboxMap().cameraState
       MatcherAssert.assertThat(cameraOptions.bearing, Matchers.lessThan(35.0))
     } else {
       throw TimeoutException()
@@ -439,7 +439,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     if (pitchListenerThree.latchEnd.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
       assertFalse(pitchListenerThree.canceled)
       assertEquals(30.0, currentPitch, EPS)
-      assertEquals(30.0, mapView.getMapboxMap().getCameraOptions(null).pitch!!, EPS)
+      assertEquals(30.0, mapView.getMapboxMap().cameraState.pitch, EPS)
     } else {
       throw TimeoutException()
     }

@@ -382,12 +382,6 @@ class MapboxMapTest {
   }
 
   @Test
-  fun dumpDebugLogs() {
-    mapboxMap.dumpDebugLogs()
-    verify { nativeMap.dumpDebugLogs() }
-  }
-
-  @Test
   fun setPrefetchZoomDelta() {
     mapboxMap.setPrefetchZoomDelta(3)
     verify { nativeMap.prefetchZoomDelta = 3 }
@@ -496,9 +490,9 @@ class MapboxMapTest {
 
   @Test
   fun setBounds() {
-    val bounds = mockk<BoundOptions>()
+    val bounds = mockk<CameraBoundsOptions>()
     mapboxMap.setBounds(bounds)
-    verify { nativeMap.bounds = bounds }
+    verify { nativeMap.setBounds(bounds) }
   }
 
   @Test
@@ -552,13 +546,6 @@ class MapboxMapTest {
   }
 
   @Test
-  fun setDefaultFramebufferObject() {
-    val id = 1
-    mapboxMap.setDefaultFramebufferObject(id)
-    verify { nativeMap.setDefaultFramebufferObject(id) }
-  }
-
-  @Test
   fun queryFeatureExtensions() {
     val feature = mockk<Feature>()
     val map = mockk<HashMap<String, Value>>()
@@ -577,10 +564,9 @@ class MapboxMapTest {
   }
 
   @Test
-  fun getCameraOptions() {
-    val edgeInsets = mockk<EdgeInsets>()
-    mapboxMap.getCameraOptions(edgeInsets)
-    verify { nativeMap.getCameraOptions(edgeInsets) }
+  fun getCameraState() {
+    mapboxMap.cameraState
+    verify { nativeMap.cameraState }
   }
 
   @Test
@@ -653,24 +639,6 @@ class MapboxMapTest {
     val renderedQueryOptions = mockk<RenderedQueryOptions>()
     mapboxMap.queryRenderedFeatures(point, renderedQueryOptions, queryCallback)
     verify { nativeMap.queryRenderedFeatures(point, renderedQueryOptions, queryCallback) }
-  }
-
-  @Test
-  fun getScale() {
-    mapboxMap.getScale()
-    verify { nativeMap.scale }
-  }
-
-  @Test
-  fun getMinZoom() {
-    mapboxMap.getMinZoom()
-    verify { nativeMap.minZoom }
-  }
-
-  @Test
-  fun getMaxZoom() {
-    mapboxMap.getMaxZoom()
-    verify { nativeMap.maxZoom }
   }
 
   @Test
@@ -788,56 +756,8 @@ class MapboxMapTest {
   }
 
   @Test
-  fun bearing() {
-    mapboxMap.getBearing()
-    verify { mapboxMap.getCameraOptions(null).bearing }
-  }
-
-  @Test
-  fun bearingSet() {
-    mapboxMap.setBearing(10.0)
-    verify { nativeMap.setCamera(CameraOptions.Builder().bearing(10.0).build()) }
-  }
-
-  @Test
-  fun zoom() {
-    mapboxMap.getZoom()
-    verify { nativeMap.getCameraOptions(null).zoom }
-  }
-
-  @Test
-  fun anchor() {
-    mapboxMap.getAnchor()
-    verify { nativeMap.getCameraOptions(null).anchor }
-  }
-
-  @Test
-  fun latitude() {
-    mapboxMap.getLat()
-    verify { nativeMap.getCameraOptions(null).center?.latitude() }
-  }
-
-  @Test
-  fun longitude() {
-    mapboxMap.getLon()
-    verify { nativeMap.getCameraOptions(null).center?.longitude() }
-  }
-
-  @Test
-  fun padding() {
-    mapboxMap.getPadding()
-    verify { nativeMap.getCameraOptions(null).padding }
-  }
-
-  @Test
-  fun pitch() {
-    mapboxMap.getPitch()
-    verify { nativeMap.getCameraOptions(null).pitch }
-  }
-
-  @Test
-  fun cameraOptions() {
-    mapboxMap.getCameraOptions(null)
-    verify { nativeMap.getCameraOptions(null) }
+  fun cameraState() {
+    mapboxMap.cameraState
+    verify { nativeMap.cameraState }
   }
 }

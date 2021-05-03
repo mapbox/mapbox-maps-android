@@ -36,7 +36,7 @@ class ObservableExtensionTest : BaseMapTest() {
   fun subscribeResourceRequest() {
     val latch = CountDownLatch(1)
 
-    val observer: Observer = object : Observer() {
+    val observer = object : Observer() {
       override fun notify(event: Event) {
         assertEquals("resource-request", event.type)
         latch.countDown()

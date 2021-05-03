@@ -35,7 +35,7 @@ class MapControllerTest {
 
   private val mapInitOptions: MapInitOptions = mockk(relaxed = true)
 
-  private val cameraOptions: CameraOptions = mockk(relaxed = true)
+  private val cameraState: CameraState = mockk(relaxed = true)
 
   private val motionEvent: MotionEvent = mockk(relaxed = true)
 
@@ -61,7 +61,7 @@ class MapControllerTest {
         renderer
       )
     } answers { nativeMap }
-    every { nativeMap.getCameraOptions(any()) } returns cameraOptions
+    every { nativeMap.cameraState } returns cameraState
 
     every { MapProvider.getMapboxMap(nativeMap, nativeObserver, 1.0f) } answers { mapboxMap }
     every { MapProvider.getMapPluginRegistry(any(), any(), any()) } returns pluginRegistry
@@ -143,8 +143,8 @@ class MapControllerTest {
     val onCameraChangeListener = onCameraChangeListenerSlot.captured
 
     onCameraChangeListener.onCameraChanged()
-    verify { nativeMap.getCameraOptions(null) }
-    verify { pluginRegistry.onCameraMove(cameraOptions) }
+    verify { nativeMap.cameraState }
+    verify { pluginRegistry.onCameraMove(cameraState) }
   }
 
   @Test

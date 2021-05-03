@@ -40,8 +40,6 @@ class MapboxMapIntegrationTest {
     assertEquals(defaultOptions.assetPath, currentOptions.assetPath)
     assertEquals(defaultOptions.cachePath, currentOptions.cachePath)
     assertEquals(defaultOptions.cacheSize, currentOptions.cacheSize)
-    assertEquals(defaultOptions.loadTilePacksFromNetwork, currentOptions.loadTilePacksFromNetwork)
-    assertEquals(defaultOptions.tileStoreEnabled, currentOptions.tileStoreEnabled)
   }
 
   @UiThreadTest

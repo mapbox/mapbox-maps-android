@@ -8,52 +8,11 @@ import com.mapbox.maps.*
  * Definition of a camera delegate. Any invocation will interact with the map's actual camera.
  */
 interface MapCameraManagerDelegate {
-  /**
-   * Get current latitude.
-   * @return latitude
-   */
-  fun getLat(): Double
 
   /**
-   * Get current longitude.
-   * @return longitude
+   * Represents current camera state.
    */
-  fun getLon(): Double
-
-  /**
-   * Get current zoom.
-   * @return zoom
-   */
-  fun getZoom(): Double
-
-  /**
-   * Get current pitch.
-   * @return pitch
-   */
-  fun getPitch(): Double
-
-  /**
-   * Get current bearing.
-   * @return bearing
-   */
-  fun getBearing(): Double
-
-  /**
-   * Get current padding.
-   * @return padding
-   */
-  fun getPadding(): Array<Double>?
-
-  /**
-   * Get current anchor.
-   * @return anchor
-   */
-  fun getAnchor(): Pair<Double, Double>?
-
-  /**
-   * Set camera's bearing.
-   */
-  fun setBearing(bearing: Double)
+  val cameraState: CameraState
 
   /**
    * Convenience method that returns the camera options object for given arguments
@@ -210,7 +169,7 @@ interface MapCameraManagerDelegate {
    * The screen coordinates are in \link MapOptions#size platform pixels \endlink relative to the top left
    * of the map (not of the whole screen).
    *
-   * @param pixel A batch of screen coordinates on the screen in \link MapOptions#size platform pixels \endlink.
+   * @param pixels A batch of screen coordinates on the screen in \link MapOptions#size platform pixels \endlink.
    *
    * @return Returns a batch of geographical coordinates corresponding to the screen coordinates
    * on the screen.
@@ -220,17 +179,12 @@ interface MapCameraManagerDelegate {
   /**
    * Changes the map view by any combination of center, zoom, bearing, and pitch, without an animated transition.
    * The map will retain its current values for any details not passed via the camera options argument.
+   * It is not guaranteed that the provided CameraOptions will be set, the map may apply constraints resulting in a
+   * different CameraState.
    *
-   * @param camera New camera options
+   * @param cameraOptions New camera options
    */
   fun setCamera(cameraOptions: CameraOptions)
-
-  /**
-   * Returns the current camera options
-   *
-   * @param padding Optional edge padding
-   */
-  fun getCameraOptions(padding: EdgeInsets?): CameraOptions
 
   /**
    * Sets the map view with the free camera options.
@@ -241,7 +195,7 @@ interface MapCameraManagerDelegate {
    * if the conversion to the pitch and bearing presentation is ambiguous. For example orientation
    * can be invalid if it leads to the camera being upside down or the quaternion has zero length.
    *
-   * @param camera The free camera options to set.
+   * @param freeCameraOptions The free camera options to set.
    */
   fun setCamera(freeCameraOptions: FreeCameraOptions)
 
@@ -256,10 +210,12 @@ interface MapCameraManagerDelegate {
    *
    * @param options
    */
-  fun setBounds(options: BoundOptions)
+  fun setBounds(options: CameraBoundsOptions)
 
-  /** Returns the bounds of the map.  */
-  fun getBounds(): BoundOptions
+  /**
+   * Returns the bounds of the map.
+   */
+  fun getBounds(): CameraBounds
 
   /**
    * Prepares the drag gesture to use the provided screen coordinate as a pivot point. This function should be called each time when user starts a dragging action (e.g. by clicking on the map). The following dragging will be relative to the pivot.
@@ -281,6 +237,9 @@ interface MapCameraManagerDelegate {
     toPoint: ScreenCoordinate
   ): CameraOptions
 
-  /** Ends the ongoing drag gesture. This function should be called always after the user has ended a drag gesture initiated by `dragStart`.  */
+  /**
+   * Ends the ongoing drag gesture.
+   * This function should be called always after the user has ended a drag gesture initiated by `dragStart`.
+   */
   fun dragEnd()
 }

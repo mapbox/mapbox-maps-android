@@ -26,11 +26,9 @@ internal object CameraTransform {
 
   fun ScreenCoordinate.offset(arg: ScreenCoordinate) = ScreenCoordinate(x - arg.x, y - arg.y)
 
-  fun getMapCenter(edgeInsets: EdgeInsets?, mapSize: Size): ScreenCoordinate {
-    val centerX = (mapSize.width - (edgeInsets?.left ?: 0.0) - (edgeInsets?.right ?: 0.0)) / 2.0 +
-      (edgeInsets?.left ?: 0.0)
-    val centerY = (mapSize.height - (edgeInsets?.top ?: 0.0) - (edgeInsets?.bottom ?: 0.0)) / 2.0 +
-      (edgeInsets?.top ?: 0.0)
+  fun getMapCenter(edgeInsets: EdgeInsets, mapSize: Size): ScreenCoordinate {
+    val centerX = (mapSize.width - edgeInsets.left - edgeInsets.right) / 2.0 + edgeInsets.left
+    val centerY = (mapSize.height - edgeInsets.top - edgeInsets.bottom) / 2.0 + edgeInsets.top
     return ScreenCoordinate(centerX, centerY)
   }
 
@@ -48,13 +46,13 @@ internal object CameraTransform {
 
   fun calculateLatLngMoveBy(
     offset: ScreenCoordinate,
-    cameraOptions: CameraOptions,
+    cameraState: CameraState,
     mapTransformDelegate: MapTransformDelegate,
     mapCameraManagerDelegate: MapCameraManagerDelegate
   ): Point {
     val mapOptions = mapTransformDelegate.getMapOptions()
     val mapCenter = getMapCenter(
-      cameraOptions.padding,
+      cameraState.padding,
       mapOptions.size!!
     )
     val pointOnScreenX = mapCenter.x - offset.x

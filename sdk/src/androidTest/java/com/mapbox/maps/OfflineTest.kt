@@ -319,6 +319,7 @@ class OfflineTest {
       }
     }
     switchAirplaneMode()
+    verifyAirplaneModeEnabled()
     prepareMapView(
       observer,
       listOf(
@@ -430,6 +431,7 @@ class OfflineTest {
       }
     }
     switchAirplaneMode()
+    verifyAirplaneModeEnabled()
     prepareMapView(
       observer,
       listOf(MapEvents.MAP_IDLE)
@@ -612,6 +614,22 @@ class OfflineTest {
     // need to wait some time for pretty slow CI device
     latch.await(5, TimeUnit.SECONDS)
     device.pressBack()
+  }
+
+  private fun verifyAirplaneModeEnabled() {
+    val latch = CountDownLatch(1)
+    handler.post {
+      val airplaneModeEnabled = android.provider.Settings.Global.getInt(
+        InstrumentationRegistry.getInstrumentation().targetContext.contentResolver,
+        android.provider.Settings.Global.AIRPLANE_MODE_ON,
+        0
+      ) != 0
+      Assert.assertEquals("Airplane mode should be enabled!", true, airplaneModeEnabled)
+      latch.countDown()
+    }
+    if (!latch.await(5, TimeUnit.SECONDS)) {
+      throw TimeoutException()
+    }
   }
 
   companion object {

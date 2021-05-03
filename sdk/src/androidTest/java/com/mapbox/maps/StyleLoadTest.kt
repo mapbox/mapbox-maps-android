@@ -5,10 +5,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import junit.framework.TestCase.*
-import org.junit.After
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.*
 import org.junit.runner.RunWith
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
@@ -32,7 +29,6 @@ class StyleLoadTest {
       mapView = MapView(it)
       mapboxMap = mapView.getMapboxMap()
       it.frameLayout.addView(mapView)
-      mapView.onStart()
     }
   }
 
@@ -42,6 +38,7 @@ class StyleLoadTest {
     var callbackInvoked = false
     rule.scenario.onActivity {
       it.runOnUiThread {
+        mapView.onStart()
         mapboxMap.getStyle { callbackInvoked = true }
       }
     }
@@ -51,13 +48,14 @@ class StyleLoadTest {
 
   @Test
   fun testStyleAsyncGetter() {
-    countDownLatch = CountDownLatch(2)
+    countDownLatch = CountDownLatch(1)
+    var styleLoadedCount = 0
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.getStyle { style ->
           assertNotNull("Style should but non null", style)
           assertTrue("Style should be fully loaded", style.fullyLoaded)
-          countDownLatch.countDown()
+          styleLoadedCount++
         }
 
         mapboxMap.loadStyleUri(
@@ -65,13 +63,14 @@ class StyleLoadTest {
         ) { style ->
           assertNotNull("Style should but non null", style)
           assertTrue("Style should be fully loaded", style.fullyLoaded)
-          countDownLatch.countDown()
+          styleLoadedCount++
         }
+        mapView.onStart()
       }
     }
-    if (!countDownLatch.await(30, TimeUnit.SECONDS)) {
-      throw TimeoutException()
-    }
+    countDownLatch.await(10, TimeUnit.SECONDS)
+    // we should notify only once that style is loaded
+    Assert.assertEquals(1, styleLoadedCount)
   }
 
   @Test
@@ -87,6 +86,7 @@ class StyleLoadTest {
           assertFalse("Map shouldn't be fully loaded", style.fullyLoaded)
           countDownLatch.countDown()
         }
+        mapView.onStart()
       }
     }
     countDownLatch = CountDownLatch(1)

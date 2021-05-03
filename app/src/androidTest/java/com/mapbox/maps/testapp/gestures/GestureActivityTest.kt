@@ -6,6 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraState
 import com.mapbox.maps.R
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.testapp.BaseMapTest
@@ -37,11 +38,11 @@ class GestureActivityTest : BaseMapTest() {
 
   @Test
   fun sanity_quickZoom() {
-    val initialZoom: Double = mapboxMap.getCameraOptions(null).zoom!!
+    val initialZoom: Double = mapboxMap.cameraState.zoom
     onView(withId(R.id.mapView)).perform(quickScale(maxHeight / 2f, withVelocity = false))
     rule.scenario.onActivity {
       it.runOnUiThread {
-        Assert.assertTrue(mapboxMap.getCameraOptions(null).zoom!! > initialZoom)
+        Assert.assertTrue(mapboxMap.cameraState.zoom > initialZoom)
       }
     }
   }
@@ -49,12 +50,12 @@ class GestureActivityTest : BaseMapTest() {
   @Test
   fun quickZoomDisabled_phantomQuickZoom_moveStillEnabled_15091() {
     // regression test for https://github.com/mapbox/mapbox-gl-native/issues/15091
-    var initialCameraPosition: CameraOptions? = null
+    var initialCameraPosition: CameraState? = null
     rule.scenario.onActivity {
       it.runOnUiThread {
         // zoom in so we can move vertically
         mapboxMap.setCamera(CameraOptions.Builder().zoom(4.0).build())
-        initialCameraPosition = mapboxMap.getCameraOptions(null)
+        initialCameraPosition = mapboxMap.cameraState
         mapView.gestures.quickZoomEnabled = false
       }
     }
@@ -63,7 +64,7 @@ class GestureActivityTest : BaseMapTest() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         // camera did not move
-        Assert.assertEquals(initialCameraPosition!!.zoom, mapboxMap.getCameraOptions(null).zoom)
+        Assert.assertEquals(initialCameraPosition!!.zoom, mapboxMap.cameraState.zoom, 0.0001)
       }
     }
 
@@ -78,13 +79,13 @@ class GestureActivityTest : BaseMapTest() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         Assert.assertNotEquals(
-          initialCameraPosition!!.center!!.latitude(),
-          mapboxMap.getCameraOptions(null).center!!.latitude(),
+          initialCameraPosition!!.center.latitude(),
+          mapboxMap.cameraState.center.latitude(),
           1.0
         )
         Assert.assertNotEquals(
-          initialCameraPosition!!.center!!.longitude(),
-          mapboxMap.getCameraOptions(null).center!!.longitude(),
+          initialCameraPosition!!.center.longitude(),
+          mapboxMap.cameraState.center.longitude(),
           1.0
         )
       }
@@ -97,7 +98,7 @@ class GestureActivityTest : BaseMapTest() {
     var initialTarget: Point? = null
     rule.scenario.onActivity {
       it.runOnUiThread {
-        initialTarget = mapboxMap.getCameraOptions(null)!!.center
+        initialTarget = mapboxMap.cameraState.center
       }
     }
 
@@ -107,12 +108,12 @@ class GestureActivityTest : BaseMapTest() {
         // camera did not move
         Assert.assertEquals(
           initialTarget!!.latitude(),
-          mapboxMap.getCameraOptions(null).center!!.latitude(),
+          mapboxMap.cameraState.center.latitude(),
           1.0
         )
         Assert.assertEquals(
           initialTarget!!.longitude(),
-          mapboxMap.getCameraOptions(null).center!!.longitude(),
+          mapboxMap.cameraState.center.longitude(),
           1.0
         )
       }
@@ -124,12 +125,12 @@ class GestureActivityTest : BaseMapTest() {
     // test for https://github.com/mapbox/mapbox-gl-native/issues/14598
     onView(withId(R.id.mapView)).perform(quickScale(maxHeight / 2f, interrupt = true))
 
-    var initialCameraPosition: CameraOptions? = null
+    var initialCameraPosition: CameraState? = null
     rule.scenario.onActivity {
       it.runOnUiThread {
         // zoom in so we can move vertically
         mapboxMap.setCamera(CameraOptions.Builder().zoom(4.0).build())
-        initialCameraPosition = mapboxMap.getCameraOptions(null)
+        initialCameraPosition = mapboxMap.cameraState
         mapView.gestures.quickZoomEnabled = false
       }
     }
@@ -145,13 +146,13 @@ class GestureActivityTest : BaseMapTest() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         Assert.assertNotEquals(
-          initialCameraPosition!!.center!!.latitude(),
-          mapboxMap.getCameraOptions(null).center!!.latitude(),
+          initialCameraPosition!!.center.latitude(),
+          mapboxMap.cameraState.center.latitude(),
           1.0
         )
         Assert.assertNotEquals(
-          initialCameraPosition!!.center!!.longitude(),
-          mapboxMap.getCameraOptions(null).center!!.longitude(),
+          initialCameraPosition!!.center.longitude(),
+          mapboxMap.cameraState.center.longitude(),
           1.0
         )
       }
@@ -165,7 +166,7 @@ class GestureActivityTest : BaseMapTest() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapboxMap.setCamera(CameraOptions.Builder().zoom(4.0).build())
-        initialZoom = mapboxMap.getCameraOptions(null).zoom
+        initialZoom = mapboxMap.cameraState.zoom
       }
     }
     onView(withId(R.id.mapView)).perform(
@@ -178,7 +179,7 @@ class GestureActivityTest : BaseMapTest() {
     R.id.mapView.loopFor(3000)
     rule.scenario.onActivity {
       it.runOnUiThread {
-        Assert.assertTrue(mapboxMap.getCameraOptions(null).zoom!! < initialZoom!!)
+        Assert.assertTrue(mapboxMap.cameraState.zoom < initialZoom!!)
       }
     }
   }
@@ -188,7 +189,7 @@ class GestureActivityTest : BaseMapTest() {
     var initialZoom: Double? = null
     rule.scenario.onActivity {
       it.runOnUiThread {
-        initialZoom = mapboxMap.getCameraOptions(null).zoom
+        initialZoom = mapboxMap.cameraState.zoom
       }
     }
     onView(withId(R.id.mapView)).perform(
@@ -201,7 +202,7 @@ class GestureActivityTest : BaseMapTest() {
     R.id.mapView.loopFor(3000)
     rule.scenario.onActivity {
       it.runOnUiThread {
-        Assert.assertEquals(initialZoom!! + 1, mapboxMap.getCameraOptions(null).zoom!!, 0.1)
+        Assert.assertEquals(initialZoom!! + 1, mapboxMap.cameraState.zoom, 0.1)
       }
     }
   }
@@ -212,7 +213,7 @@ class GestureActivityTest : BaseMapTest() {
     var initialZoom: Double? = null
     rule.scenario.onActivity {
       it.runOnUiThread {
-        initialZoom = mapboxMap.getCameraOptions(null).zoom
+        initialZoom = mapboxMap.cameraState.zoom
         mapView.gestures.quickZoomEnabled = false
       }
     }
@@ -226,7 +227,7 @@ class GestureActivityTest : BaseMapTest() {
     R.id.mapView.loopFor(3000)
     rule.scenario.onActivity {
       it.runOnUiThread {
-        Assert.assertEquals(initialZoom!!, mapboxMap.getCameraOptions(null).zoom!!, 0.01)
+        Assert.assertEquals(initialZoom!!, mapboxMap.cameraState.zoom, 0.01)
       }
     }
   }
@@ -248,12 +249,12 @@ class GestureActivityTest : BaseMapTest() {
       )
     )
 
-    var initialCameraPosition: CameraOptions? = null
+    var initialCameraPosition: CameraState? = null
     rule.scenario.onActivity {
       it.runOnUiThread {
         // zoom in so we can move vertically
         mapboxMap.setCamera(CameraOptions.Builder().zoom(4.0).build())
-        initialCameraPosition = mapboxMap.getCameraOptions(null)
+        initialCameraPosition = mapboxMap.cameraState
         mapView.gestures.quickZoomEnabled = false
       }
     }
@@ -269,13 +270,13 @@ class GestureActivityTest : BaseMapTest() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         Assert.assertNotEquals(
-          initialCameraPosition!!.center!!.latitude(),
-          mapboxMap.getCameraOptions(null).center!!.latitude(),
+          initialCameraPosition!!.center.latitude(),
+          mapboxMap.cameraState.center.latitude(),
           1.0
         )
         Assert.assertNotEquals(
-          initialCameraPosition!!.center!!.longitude(),
-          mapboxMap.getCameraOptions(null).center!!.longitude(),
+          initialCameraPosition!!.center.longitude(),
+          mapboxMap.cameraState.center.longitude(),
           1.0
         )
       }
@@ -294,7 +295,7 @@ class GestureActivityTest : BaseMapTest() {
 
     rule.scenario.onActivity {
       it.runOnUiThread {
-        Assert.assertEquals(3.0, mapboxMap.getCameraOptions(null).zoom!!, 0.0001)
+        Assert.assertEquals(3.0, mapboxMap.cameraState.zoom, 0.0001)
       }
     }
   }

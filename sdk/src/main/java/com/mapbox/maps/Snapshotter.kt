@@ -196,12 +196,12 @@ open class Snapshotter {
   }
 
   /**
-   * Get the current camera options
+   * Get the current camera state.
    *
-   * @return CameraOptions.
+   * @return [CameraState] object.
    */
-  fun getCameraOptions(padding: EdgeInsets? = null): CameraOptions {
-    return coreSnapshotter.getCameraOptions(padding)
+  fun getCameraState(): CameraState {
+    return coreSnapshotter.cameraState
   }
 
   /**
@@ -260,8 +260,8 @@ open class Snapshotter {
    * @param observer an Observer
    * @param events an array of event types to be subscribed to.
    */
-  fun subscribe(observer: Observer, list: MutableList<String>) {
-    coreSnapshotter.subscribe(observer, list)
+  fun subscribe(observer: Observer, events: MutableList<String>) {
+    coreSnapshotter.subscribe(observer, events)
   }
 
   /**
@@ -270,8 +270,8 @@ open class Snapshotter {
    * @param observer an Observer
    * @param events an array of event types to be unsubscribed from.
    */
-  fun unsubscribe(observer: Observer, list: MutableList<String>) {
-    coreSnapshotter.unsubscribe(observer, list)
+  fun unsubscribe(observer: Observer, events: MutableList<String>) {
+    coreSnapshotter.unsubscribe(observer, events)
   }
 
   /**

@@ -44,7 +44,7 @@ class LogoViewImplPluginTest {
 
   @Test
   fun setEnabled_true() {
-    every { mapCameraDelegate.getBearing() } returns 10.0
+    every { mapCameraDelegate.cameraState.bearing } returns 10.0
     every { logoView.logoEnabled } returns true
     logoPlugin.enabled = true
     verify { logoView.logoEnabled = true }
@@ -52,7 +52,7 @@ class LogoViewImplPluginTest {
 
   @Test
   fun setEnabled_false() {
-    every { mapCameraDelegate.getBearing() } returns 0.0
+    every { mapCameraDelegate.cameraState.bearing } returns 0.0
     every { logoView.logoEnabled } returns false
     logoPlugin.enabled = false
     verify { logoView.logoEnabled = false }

@@ -27,12 +27,12 @@ internal class LocationPuckManager(
     private set
 
   private var lastLocation: Point =
-    delegateProvider.mapCameraManagerDelegate.getCameraOptions(null).center!!
+    delegateProvider.mapCameraManagerDelegate.cameraState.center
   private val onLocationUpdated: ((Point) -> Unit) = {
     lastLocation = it
   }
 
-  private var lastBearing: Double = delegateProvider.mapCameraManagerDelegate.getBearing()
+  private var lastBearing: Double = delegateProvider.mapCameraManagerDelegate.cameraState.bearing
   private val onBearingUpdated: ((Double) -> Unit) = {
     lastBearing = it
   }
@@ -146,8 +146,8 @@ internal class LocationPuckManager(
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal fun styleScaling(settings: LocationComponentSettings) {
     val puck = settings.locationPuck
-    val minZoom = delegateProvider.mapCameraManagerDelegate.getBounds().minZoom ?: 0.0
-    val maxZoom = delegateProvider.mapCameraManagerDelegate.getBounds().maxZoom ?: 19.0
+    val minZoom = delegateProvider.mapCameraManagerDelegate.getBounds().minZoom
+    val maxZoom = delegateProvider.mapCameraManagerDelegate.getBounds().maxZoom
     when (puck) {
       is LocationPuck2D -> {
         val scaleExpression = puck.scaleExpression

@@ -152,7 +152,7 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
             mapView.getMapboxMap().let { mapboxMap ->
               mapboxMap.easeTo(
                 mapboxMap.cameraForCoordinateBounds(
-                  CoordinateBounds(originPoint, destinationPoint),
+                  CoordinateBounds(originPoint, destinationPoint, false),
                   EdgeInsets(50.0, 50.0, 50.0, 50.0),
                   null,
                   null

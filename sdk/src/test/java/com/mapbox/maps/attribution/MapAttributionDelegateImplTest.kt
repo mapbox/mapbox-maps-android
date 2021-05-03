@@ -3,10 +3,7 @@ package com.mapbox.maps.attribution
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.MapboxMap
-import com.mapbox.maps.ResourceOptions
-import com.mapbox.maps.Style
+import com.mapbox.maps.*
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.MapAttributionDelegateImpl
 import com.mapbox.maps.plugin.attribution.AttributionParserConfig
@@ -43,12 +40,12 @@ class MapAttributionDelegateImplTest {
 
   @Test
   fun buildMapBoxFeedbackUrl() {
-    val camera: CameraOptions = mockk()
+    val camera: CameraState = mockk()
     every { camera.center } returns Point.fromLngLat(1.0, 2.0)
     every { camera.zoom } returns 0.0
     every { camera.bearing } returns 0.0
     every { camera.pitch } returns 0.0
-    every { mapboxMap.getCameraOptions(any()) } returns camera
+    every { mapboxMap.cameraState } returns camera
     val resourceOptions: ResourceOptions = mockk()
     every { resourceOptions.accessToken } returns TOKEN
     every { mapboxMap.getResourceOptions() } returns resourceOptions

@@ -29,6 +29,7 @@ class CompassViewPluginTest {
   private val animatePlugin = mockk<CameraAnimationsPlugin>(relaxed = true)
   private lateinit var fadeAnimatorEndListener: Animator.AnimatorListener
   private lateinit var fadeAnimatorUpdateListener: ValueAnimator.AnimatorUpdateListener
+  private val padding = arrayOf(0.0, 0.0, 0.0, 0.0)
 
   @Before
   fun setUp() {
@@ -38,7 +39,7 @@ class CompassViewPluginTest {
     every { fadeAnimator.addUpdateListener(capture(updateListenerSlot)) } answers {}
     every { fadeAnimator.setDuration(any()) } returns fadeAnimator
     every { delegateProvider.mapCameraManagerDelegate } returns mapCameraDelegate
-    every { mapCameraDelegate.getBearing() } returns 0.0
+    every { mapCameraDelegate.cameraState.bearing } returns 0.0
     every { compassView.isCompassEnabled } returns true
     every { compassView.compassRotation } returns 0f
     every { delegateProvider.mapPluginProviderDelegate.getPlugin(any<Class<CameraAnimationsPlugin>>()) } returns animatePlugin
@@ -114,8 +115,7 @@ class CompassViewPluginTest {
       0.0,
       0.0,
       -0.33,
-      null,
-      null
+      padding
     )
     compassPlugin.fadeWhenFacingNorth = false
     verify { compassView.setCompassAlpha(1.0f) }
@@ -134,8 +134,7 @@ class CompassViewPluginTest {
       0.0,
       0.0,
       -0.33,
-      null,
-      null
+      padding
     )
     compassPlugin.fadeWhenFacingNorth = true
     verify { fadeAnimator.start() }
@@ -172,7 +171,7 @@ class CompassViewPluginTest {
 
   @Test
   fun setEnabled_true() {
-    every { mapCameraDelegate.getBearing() } returns 10.0
+    every { mapCameraDelegate.cameraState.bearing } returns 10.0
     every { compassView.compassRotation } returns -10f
     every { compassView.isCompassEnabled } returns true
     compassPlugin.enabled = true
@@ -184,7 +183,7 @@ class CompassViewPluginTest {
 
   @Test
   fun setEnabled_true_hidden() {
-    every { mapCameraDelegate.getBearing() } returns 0.0
+    every { mapCameraDelegate.cameraState.bearing } returns 0.0
     every { compassView.compassRotation } returns 0f
     every { compassView.isCompassEnabled } returns true
     compassPlugin.enabled = true
@@ -196,7 +195,7 @@ class CompassViewPluginTest {
 
   @Test
   fun setEnabled_false() {
-    every { mapCameraDelegate.getBearing() } returns 0.0
+    every { mapCameraDelegate.cameraState.bearing } returns 0.0
     every { compassView.isCompassEnabled } returns false
     compassPlugin.enabled = false
     verify { compassView.isCompassEnabled = false }
@@ -207,7 +206,7 @@ class CompassViewPluginTest {
 
   @Test
   fun setEnabledWithMarginUpdate_false() {
-    every { mapCameraDelegate.getBearing() } returns 0.0
+    every { mapCameraDelegate.cameraState.bearing } returns 0.0
     val enabledSlot = slot<Boolean>()
     every { compassView.isCompassEnabled = capture(enabledSlot) } answers { }
     compassPlugin.enabled = false
@@ -229,7 +228,7 @@ class CompassViewPluginTest {
 
   @Test
   fun initialize() {
-    every { mapCameraDelegate.getBearing() } returns 0.0
+    every { mapCameraDelegate.cameraState.bearing } returns 0.0
     every { compassView.compassRotation } returns 0f
     every { compassView.isCompassEnabled } returns true
     val attrs = mockk<AttributeSet>()
@@ -253,7 +252,7 @@ class CompassViewPluginTest {
 
   @Test
   fun onStart() {
-    every { mapCameraDelegate.getBearing() } returns 0.0
+    every { mapCameraDelegate.cameraState.bearing } returns 0.0
     every { compassView.compassRotation } returns 0f
     every { compassView.isCompassEnabled } returns true
     compassPlugin.onStart()
@@ -276,8 +275,7 @@ class CompassViewPluginTest {
       0.0,
       0.0,
       -15.0,
-      null,
-      null
+      padding
     )
     verify { compassView.compassRotation = -(-15.0).toFloat() }
     verify { fadeAnimator.cancel() }
@@ -294,8 +292,7 @@ class CompassViewPluginTest {
       0.0,
       0.0,
       -15.0,
-      null,
-      null
+      padding
     )
     verify { compassView.compassRotation = -(-15.0).toFloat() }
     verify(exactly = 0) { fadeAnimator.cancel() }
@@ -312,8 +309,7 @@ class CompassViewPluginTest {
       0.0,
       0.0,
       -15.0,
-      null,
-      null
+      padding
     )
     every { compassView.compassRotation } returns 0.33f
     compassPlugin.onCameraMove(
@@ -322,8 +318,7 @@ class CompassViewPluginTest {
       0.0,
       0.0,
       -0.33,
-      null,
-      null
+      padding
     )
     every { compassView.compassRotation } returns 0.23f
     compassPlugin.onCameraMove(
@@ -332,8 +327,7 @@ class CompassViewPluginTest {
       0.0,
       0.0,
       -0.23,
-      null,
-      null
+      padding
     )
     verify(exactly = 1) { fadeAnimator.start() }
   }
@@ -349,8 +343,7 @@ class CompassViewPluginTest {
       0.0,
       0.0,
       -15.0,
-      null,
-      null
+      padding
     )
     every { compassView.compassRotation } returns 0.23f
     compassPlugin.onCameraMove(
@@ -359,8 +352,7 @@ class CompassViewPluginTest {
       0.0,
       0.0,
       -0.23,
-      null,
-      null
+      padding
     )
     verify(exactly = 0) { fadeAnimator.start() }
   }

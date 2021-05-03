@@ -38,7 +38,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
    */
   internal fun getEaseTo(cameraOptions: CameraOptions): Array<CameraAnimator<*>> {
     val animationList = mutableListOf<ValueAnimator>()
-    val currentCameraOptions = mapCameraManagerDelegate.getCameraOptions(null)
+    val currentCameraState = mapCameraManagerDelegate.cameraState
 
     cameraOptions.anchor?.let {
       animationList.add(
@@ -50,8 +50,9 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
         )
       )
     }
+
     cameraOptions.bearing?.let {
-      var startBearing = currentCameraOptions.bearing ?: it
+      var startBearing = currentCameraState.bearing
       var endBearing = it
       // Minimize rotation by taking the shorter path around the circle.
       endBearing = -CameraTransform.normalizeAngleRadians(
@@ -71,57 +72,51 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
         )
       )
     }
-    currentCameraOptions.padding?.let { start ->
-      cameraOptions.padding?.let { target ->
-        animationList.add(
-          CameraPaddingAnimator(
-            options = cameraAnimatorOptions(target) {
-              startValue(start)
-            },
-            block = defaultAnimationParameters[CameraAnimatorType.PADDING]
-          )
+
+    cameraOptions.padding?.let { target ->
+      animationList.add(
+        CameraPaddingAnimator(
+          options = cameraAnimatorOptions(target) {
+            startValue(currentCameraState.padding)
+          },
+          block = defaultAnimationParameters[CameraAnimatorType.PADDING]
         )
-      }
+      )
     }
 
-    currentCameraOptions.pitch?.let { start ->
-      cameraOptions.pitch?.let { target ->
-        animationList.add(
-          CameraPitchAnimator(
-            options = cameraAnimatorOptions(target) {
-              startValue(start)
-            },
-            block = defaultAnimationParameters[CameraAnimatorType.PITCH]
-          )
+    cameraOptions.pitch?.let { target ->
+      animationList.add(
+        CameraPitchAnimator(
+          options = cameraAnimatorOptions(target) {
+            startValue(currentCameraState.pitch)
+          },
+          block = defaultAnimationParameters[CameraAnimatorType.PITCH]
         )
-      }
+      )
     }
 
-    currentCameraOptions.center?.let { start ->
-      cameraOptions.center?.let { target ->
-        animationList.add(
-          CameraCenterAnimator(
-            options = cameraAnimatorOptions(target) {
-              startValue(start)
-            },
-            block = defaultAnimationParameters[CameraAnimatorType.CENTER]
-          )
+    cameraOptions.center?.let { target ->
+      animationList.add(
+        CameraCenterAnimator(
+          options = cameraAnimatorOptions(target) {
+            startValue(currentCameraState.center)
+          },
+          block = defaultAnimationParameters[CameraAnimatorType.CENTER]
         )
-      }
+      )
     }
 
-    currentCameraOptions.zoom?.let { start ->
-      cameraOptions.zoom?.let { target ->
-        animationList.add(
-          CameraZoomAnimator(
-            options = cameraAnimatorOptions(target) {
-              startValue(start)
-            },
-            block = defaultAnimationParameters[CameraAnimatorType.ZOOM]
-          )
+    cameraOptions.zoom?.let { target ->
+      animationList.add(
+        CameraZoomAnimator(
+          options = cameraAnimatorOptions(target) {
+            startValue(currentCameraState.zoom)
+          },
+          block = defaultAnimationParameters[CameraAnimatorType.ZOOM]
         )
-      }
+      )
     }
+
     return animationList.map { it as CameraAnimator<*> }.toTypedArray()
   }
 
@@ -133,17 +128,15 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
    * @return Array of the created animators
    */
   internal fun getPitchBy(pitch: Double): Array<CameraAnimator<*>> {
-    mapCameraManagerDelegate.getCameraOptions(null).pitch?.let { startPitch ->
-      return Array(1) {
-        CameraPitchAnimator(
-          options = cameraAnimatorOptions(startPitch + pitch) {
-            startValue(startPitch)
-          },
-          block = defaultAnimationParameters[CameraAnimatorType.PITCH]
-        )
-      }
+    val startPitch = mapCameraManagerDelegate.cameraState.pitch
+    return Array(1) {
+      CameraPitchAnimator(
+        options = cameraAnimatorOptions(startPitch + pitch) {
+          startValue(startPitch)
+        },
+        block = defaultAnimationParameters[CameraAnimatorType.PITCH]
+      )
     }
-    return emptyArray()
   }
 
   /**
@@ -169,18 +162,16 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
         )
       )
     }
-    val currentZoom = mapCameraManagerDelegate.getCameraOptions(null).zoom
-    currentZoom?.let {
-      val newScale = CameraTransform.calculateScaleBy(amount, currentZoom)
-      animationList.add(
-        CameraZoomAnimator(
-          options = cameraAnimatorOptions(newScale) {
-            startValue(currentZoom)
-          },
-          block = defaultAnimationParameters[CameraAnimatorType.ZOOM]
-        )
+    val currentZoom = mapCameraManagerDelegate.cameraState.zoom
+    val newScale = CameraTransform.calculateScaleBy(amount, currentZoom)
+    animationList.add(
+      CameraZoomAnimator(
+        options = cameraAnimatorOptions(newScale) {
+          startValue(currentZoom)
+        },
+        block = defaultAnimationParameters[CameraAnimatorType.ZOOM]
       )
-    }
+    )
     return animationList.map { it as CameraAnimator<*> }.toTypedArray()
   }
 
@@ -194,26 +185,21 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
   internal fun getMoveBy(
     offset: ScreenCoordinate
   ): Array<CameraAnimator<*>> {
-    val cameraOptions = mapCameraManagerDelegate.getCameraOptions(null)
+    val cameraState = mapCameraManagerDelegate.cameraState
     val centerTarget = CameraTransform.calculateLatLngMoveBy(
       offset,
-      cameraOptions,
+      cameraState,
       mapTransformDelegate,
       mapCameraManagerDelegate
     )
-    cameraOptions.center?.let { start ->
-      centerTarget.let { target ->
-        return Array(1) {
-          CameraCenterAnimator(
-            options = cameraAnimatorOptions(target) {
-              startValue(start)
-            },
-            block = defaultAnimationParameters[CameraAnimatorType.CENTER]
-          )
-        }
-      }
+    return Array(1) {
+      CameraCenterAnimator(
+        options = cameraAnimatorOptions(centerTarget) {
+          startValue(cameraState.center)
+        },
+        block = defaultAnimationParameters[CameraAnimatorType.CENTER]
+      )
     }
-    return emptyArray()
   }
 
   /**
@@ -227,10 +213,10 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
     first: ScreenCoordinate,
     second: ScreenCoordinate
   ): Array<CameraAnimator<*>> {
-    val cameraOptions = mapCameraManagerDelegate.getCameraOptions(null)
+    val cameraOptions = mapCameraManagerDelegate.cameraState
     val mapSizePixels = mapTransformDelegate.getMapOptions().size
     val cameraBearingDegrees = cameraOptions.bearing
-    if (cameraBearingDegrees != null && mapSizePixels != null) {
+    if (mapSizePixels != null) {
       var mapCenter = CameraTransform.getMapCenter(
         cameraOptions.padding,
         mapSizePixels
@@ -275,33 +261,24 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
    */
   internal fun getFlyTo(cameraOptions: CameraOptions): Array<CameraAnimator<*>> {
 
-    val currentCameraOptions = mapCameraManagerDelegate.getCameraOptions(null)
+    val currentCameraState = mapCameraManagerDelegate.cameraState
 
-    val endPadding = cameraOptions.padding
-      ?: currentCameraOptions.padding
-      ?: return emptyArray()
-    val endPointRaw = cameraOptions.center
-      ?: currentCameraOptions.center
-      ?: return emptyArray()
-    var endZoom = cameraOptions.zoom
-      ?: currentCameraOptions.zoom
-      ?: return emptyArray()
-    var endBearing = cameraOptions.bearing
-      ?: currentCameraOptions.bearing
-      ?: return emptyArray()
-    val endPitch = cameraOptions.pitch
-      ?: currentCameraOptions.pitch
-      ?: return emptyArray()
+    val endPadding = cameraOptions.padding ?: currentCameraState.padding
+    val endPointRaw = cameraOptions.center ?: currentCameraState.center
+    var endZoom = cameraOptions.zoom ?: currentCameraState.zoom
+    var endBearing = cameraOptions.bearing ?: currentCameraState.bearing
+    val endPitch = cameraOptions.pitch ?: currentCameraState.pitch
 
-    var startBearing = currentCameraOptions.bearing
-      ?: return emptyArray()
-    val startScale = mapTransformDelegate.getScale()
+    var startBearing = currentCameraState.bearing
+    val startScale = 2.0.pow(currentCameraState.zoom)
     val startZoom = startScale.scaleZoom()
-    endZoom = endZoom.coerceIn(mapTransformDelegate.getMinZoom(), mapTransformDelegate.getMaxZoom())
+    endZoom = endZoom.coerceIn(
+      mapCameraManagerDelegate.getBounds().minZoom,
+      mapCameraManagerDelegate.getBounds().maxZoom
+    )
 
     // Determine endpoints
-    var startPointRaw = currentCameraOptions.center
-      ?: return emptyArray()
+    var startPointRaw = currentCameraState.center
     startPointRaw = CameraTransform.unwrapForShortestPath(startPointRaw, endPointRaw)
 
     val startPoint = mapProjectionDelegate.project(startPointRaw, startScale)
@@ -422,27 +399,23 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
       )
     )
 
-    currentCameraOptions.pitch?.let { startPitch ->
-      animators.add(
-        CameraPitchAnimator(
-          options = cameraAnimatorOptions(endPitch) {
-            startValue(startPitch)
-          },
-          block = defaultAnimationParameters[CameraAnimatorType.PITCH]
-        )
+    animators.add(
+      CameraPitchAnimator(
+        options = cameraAnimatorOptions(endPitch) {
+          startValue(currentCameraState.pitch)
+        },
+        block = defaultAnimationParameters[CameraAnimatorType.PITCH]
       )
-    }
+    )
 
-    currentCameraOptions.padding?.let { startPadding ->
-      animators.add(
-        CameraPaddingAnimator(
-          options = cameraAnimatorOptions(endPadding) {
-            startValue(startPadding)
-          },
-          block = defaultAnimationParameters[CameraAnimatorType.PADDING]
-        )
+    animators.add(
+      CameraPaddingAnimator(
+        options = cameraAnimatorOptions(endPadding) {
+          startValue(currentCameraState.padding)
+        },
+        block = defaultAnimationParameters[CameraAnimatorType.PADDING]
       )
-    }
+    )
 
     return animators.toTypedArray()
   }

@@ -144,7 +144,7 @@ class MapOverlayPluginImpl : MapOverlayPlugin {
         east = maxOf(east, it.longitude())
       }
 
-      val bounds = CoordinateBounds(Point.fromLngLat(west, south), Point.fromLngLat(east, north))
+      val bounds = CoordinateBounds(Point.fromLngLat(west, south), Point.fromLngLat(east, north), false)
       val edgeInsets = getEdgeInsets()
       return mapCameraManagerDelegate.cameraForCoordinateBounds(bounds, edgeInsets, null, null)
     }

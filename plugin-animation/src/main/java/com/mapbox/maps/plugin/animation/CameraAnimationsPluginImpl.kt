@@ -12,6 +12,7 @@ import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.animation.animator.*
 import com.mapbox.maps.plugin.delegates.*
+import com.mapbox.maps.toCameraOptions
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.properties.Delegates
 
@@ -159,25 +160,17 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     @Suppress("IMPLICIT_CAST_TO_ANY")
 
     val startValue = cameraAnimator.startValue ?: when (cameraAnimator.type) {
-      CameraAnimatorType.CENTER -> mapCameraManagerDelegate.getCameraOptions(null).center
-      CameraAnimatorType.ZOOM -> mapCameraManagerDelegate.getCameraOptions(null).zoom
-      // TODO revisit after https://github.com/mapbox/mapbox-maps-android/issues/119
+      CameraAnimatorType.CENTER -> mapCameraManagerDelegate.cameraState.center
+      CameraAnimatorType.ZOOM -> mapCameraManagerDelegate.cameraState.zoom
       CameraAnimatorType.ANCHOR -> anchor ?: ScreenCoordinate(0.0, 0.0)
-      CameraAnimatorType.PADDING -> mapCameraManagerDelegate.getCameraOptions(null).padding
-      CameraAnimatorType.BEARING -> mapCameraManagerDelegate.getCameraOptions(null).bearing
-      CameraAnimatorType.PITCH -> mapCameraManagerDelegate.getCameraOptions(null).pitch
+      CameraAnimatorType.PADDING -> mapCameraManagerDelegate.cameraState.padding
+      CameraAnimatorType.BEARING -> mapCameraManagerDelegate.cameraState.bearing
+      CameraAnimatorType.PITCH -> mapCameraManagerDelegate.cameraState.pitch
     }.also {
       Logger.i(
         TAG,
         "Animation ${cameraAnimator.type.name}(${cameraAnimator.hashCode()}): automatically setting start value $it."
       )
-    }
-    if (startValue == null) {
-      Logger.e(
-        TAG,
-        "Ignoring animation ${cameraAnimator.type.name}(${cameraAnimator.hashCode()}) because startValue = null."
-      )
-      return false
     }
 
     val targets = cameraAnimator.targets
@@ -279,7 +272,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
             unregisterAnimators(this, cancelAnimators = false)
           }
           if (runningAnimatorsQueue.isEmpty()) {
-            // TODO revisit after https://github.com/mapbox/mapbox-maps-android/issues/119
             if (animator.type == CameraAnimatorType.ANCHOR) {
               anchor = animatedValue as ScreenCoordinate
             }
@@ -319,26 +311,24 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       } else {
         null
       }
+      if (animator.type == CameraAnimatorType.ANCHOR) {
+        anchor = it.animatedValue as ScreenCoordinate
+      }
       val cameraOptions = when {
         // if no running animators in queue - get current map camera
         firstAnimator == null -> {
-          mapCameraManagerDelegate.getCameraOptions(null)
+          mapCameraManagerDelegate.cameraState.toCameraOptions(anchor)
         }
         // if update is triggered for first (oldest) animator - build options and jump
         it == firstAnimator -> {
-          cameraOptionsBuilder.build()
+          cameraOptionsBuilder.anchor(anchor).build()
         }
         // do not perform jump if update is triggered for not first (oldest) animator
         else -> {
           null
         }
       }
-      // TODO revisit after https://github.com/mapbox/mapbox-maps-android/issues/119
-      if (animator.type == CameraAnimatorType.ANCHOR) {
-        anchor = it.animatedValue as ScreenCoordinate
-      }
       cameraOptions?.let { camera ->
-        camera.anchor = anchor
         // move map camera
         performMapJump(camera)
         // reset values

@@ -312,8 +312,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     animators?.let { cameraAnimationsPlugin.unregisterAnimators(*it) }
 
   /**
-   * Schedules a velocity animator to be executed when user lifts fingers,
-   * unless canceled by the [cancelAnimatorsRunnable].
+   * Schedules a velocity animator to be executed when user lifts fingers.
    *
    * @param animators animator ot be scheduled
    */
@@ -357,17 +356,15 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
           val scrollDist = event.getAxisValue(MotionEvent.AXIS_VSCROLL)
 
           // Scale the map by the appropriate power of two factor
-          val currentZoom = mapCameraManagerDelegate.getCameraOptions(null).zoom
+          val currentZoom = mapCameraManagerDelegate.cameraState.zoom
           val cachedAnchor = cameraAnimationsPlugin.anchor
-          currentZoom?.let {
-            val anchor = ScreenCoordinate(event.x.toDouble(), event.y.toDouble())
-            val zoom =
-              cameraAnimationsPlugin.calculateScaleBy(scrollDist.toDouble(), currentZoom)
-            easeToImmediately(
-              CameraOptions.Builder().anchor(anchor).zoom(zoom).build(),
-              actionAfter = { cameraAnimationsPlugin.anchor = cachedAnchor }
-            )
-          }
+          val anchor = ScreenCoordinate(event.x.toDouble(), event.y.toDouble())
+          val zoom =
+            cameraAnimationsPlugin.calculateScaleBy(scrollDist.toDouble(), currentZoom)
+          easeToImmediately(
+            CameraOptions.Builder().anchor(anchor).zoom(zoom).build(),
+            actionAfter = { cameraAnimationsPlugin.anchor = cachedAnchor }
+          )
 
           return true
         }
@@ -564,7 +561,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     }
 
     val zoomAddition = calculateScale(velocityXY.toDouble(), detector.isScalingOut)
-    val currentZoom = mapCameraManagerDelegate.getCameraOptions(null).zoom
+    val currentZoom = mapCameraManagerDelegate.cameraState.zoom
     val focalPoint = getScaleFocalPoint(detector)
     // (log(x + 1 / e^2) + 2) * 150, x=0 to 2.5 (MapboxConstants#MAX_ABSOLUTE_SCALE_VELOCITY_CHANGE)
     val animationTime = (
@@ -574,12 +571,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         ) + 2
         ) * SCALE_VELOCITY_ANIMATION_DURATION_MULTIPLIER
       ).toLong()
-    currentZoom?.let {
-      val animators =
-        createScaleAnimators(it, zoomAddition, focalPoint, animationTime)
-      scaleAnimators = animators
-      scheduleAnimators(animators)
-    }
+    val animators =
+      createScaleAnimators(currentZoom, zoomAddition, focalPoint, animationTime)
+    scaleAnimators = animators
+    scheduleAnimators(animators)
   }
 
   internal fun handleScale(detector: StandardScaleGestureDetector): Boolean {
@@ -623,19 +618,17 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     } else {
       val zoomBy =
         ln(detector.scaleFactor.toDouble()) / ln(PI / 2) * ZOOM_RATE.toDouble() * internalSettings.zoomRate.toDouble()
-      mapCameraManagerDelegate.getCameraOptions(null).zoom?.let {
-        easeToImmediately(
-          CameraOptions.Builder()
-            .zoom(it + zoomBy)
-            .anchor(focalPoint)
-            .build(),
-          actionAfter = {
-            cameraAnimationsPlugin.anchor = scaleCachedAnchor
-            notifyOnScaleListeners(detector)
-            spanSinceLast = abs(detector.currentSpan - detector.previousSpan)
-          }
-        )
-      }
+      easeToImmediately(
+        CameraOptions.Builder()
+          .zoom(mapCameraManagerDelegate.cameraState.zoom + zoomBy)
+          .anchor(focalPoint)
+          .build(),
+        actionAfter = {
+          cameraAnimationsPlugin.anchor = scaleCachedAnchor
+          notifyOnScaleListeners(detector)
+          spanSinceLast = abs(detector.currentSpan - detector.previousSpan)
+        }
+      )
     }
     return true
   }
@@ -684,7 +677,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     }
 
     screenHeight = Resources.getSystem().displayMetrics.heightPixels.toDouble()
-    startZoom = mapCameraManagerDelegate.getCameraOptions(null).zoom!!
+    startZoom = mapCameraManagerDelegate.cameraState.zoom
 
     cancelTransitionsIfRequired()
 
@@ -761,7 +754,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       bearingDistance += stepVelocity
     }
 
-    val bearingCurrent = mapCameraManagerDelegate.getCameraOptions(null).bearing ?: return arrayOf()
+    val bearingCurrent = mapCameraManagerDelegate.cameraState.bearing
     val bearingTarget = bearingCurrent + bearingDistance
 
     val bearingAnimator = cameraAnimationsPlugin.createBearingAnimator(
@@ -853,24 +846,22 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     // cameraChangeDispatcher.onCameraMoveStarted(CameraChangeDispatcher.REASON_API_GESTURE);
 
     // Calculate map bearing value
-    val currentBearing = mapCameraManagerDelegate.getCameraOptions(null).bearing
+    val currentBearing = mapCameraManagerDelegate.cameraState.bearing
     rotateCachedAnchor = cameraAnimationsPlugin.anchor
-    currentBearing?.let {
-      val bearing = it + rotationDegreesSinceLast
+    val bearing = currentBearing + rotationDegreesSinceLast
 
-      // Rotate the map
-      val focalPoint = getRotateFocalPoint(detector)
-      easeToImmediately(
-        CameraOptions.Builder()
-          .anchor(focalPoint)
-          .bearing(bearing)
-          .build(),
-        actionAfter = {
-          cameraAnimationsPlugin.anchor = rotateCachedAnchor
-          notifyOnRotateListeners(detector)
-        }
-      )
-    }
+    // Rotate the map
+    val focalPoint = getRotateFocalPoint(detector)
+    easeToImmediately(
+      CameraOptions.Builder()
+        .anchor(focalPoint)
+        .bearing(bearing)
+        .build(),
+      actionAfter = {
+        cameraAnimationsPlugin.anchor = rotateCachedAnchor
+        notifyOnRotateListeners(detector)
+      }
+    )
 
     return true
   }
@@ -967,15 +958,13 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     // cameraChangeDispatcher.onCameraMoveStarted(CameraChangeDispatcher.REASON_API_GESTURE);
 
     // Get pitch value (scale and clamp)
-    var pitch = mapCameraManagerDelegate.getCameraOptions(null).pitch
-    pitch?.let {
-      val optimizedPitch = it - (SHOVE_PIXEL_CHANGE_FACTOR * deltaPixelsSinceLast).toDouble()
-      pitch = clamp(optimizedPitch, MINIMUM_PITCH, MAXIMUM_PITCH)
-      easeToImmediately(
-        CameraOptions.Builder().pitch(pitch).build(),
-        actionAfter = { notifyOnShoveListeners(detector) }
-      )
-    }
+    var pitch = mapCameraManagerDelegate.cameraState.pitch
+    val optimizedPitch = pitch - (SHOVE_PIXEL_CHANGE_FACTOR * deltaPixelsSinceLast).toDouble()
+    pitch = clamp(optimizedPitch, MINIMUM_PITCH, MAXIMUM_PITCH)
+    easeToImmediately(
+      CameraOptions.Builder().pitch(pitch).build(),
+      actionAfter = { notifyOnShoveListeners(detector) }
+    )
     return true
   }
 
@@ -1088,22 +1077,20 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     // canceling here as well, because when using a button it will not be canceled automatically by onDown()
     unregisterScheduledAnimators(scaleAnimators)
 
-    val currentZoom = mapCameraManagerDelegate.getCameraOptions(null).zoom
-    currentZoom?.let {
-      val animators = createScaleAnimators(
-        currentZoom,
-        (if (zoomIn) 1 else -1).toDouble(),
-        zoomFocalPoint,
-        ANIMATION_DURATION.toLong()
-      )
-      scaleAnimators = animators
-      if (runImmediately) {
-        animators.forEach {
-          it.start()
-        }
-      } else {
-        scheduleAnimators(animators)
+    val currentZoom = mapCameraManagerDelegate.cameraState.zoom
+    val animators = createScaleAnimators(
+      currentZoom,
+      (if (zoomIn) 1 else -1).toDouble(),
+      zoomFocalPoint,
+      ANIMATION_DURATION.toLong()
+    )
+    scaleAnimators = animators
+    if (runImmediately) {
+      animators.forEach {
+        it.start()
       }
+    } else {
+      scheduleAnimators(animators)
     }
   }
 
@@ -1220,53 +1207,51 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     // cameraChangeDispatcher.onCameraMoveStarted(REASON_API_GESTURE);
 
     // pitch results in a bigger translation, limiting input for #5281
-    val pitch = mapCameraManagerDelegate.getCameraOptions(null).pitch
-    pitch?.let {
-      val pitchFactorAdditionalComponent = when {
-        it == MINIMUM_PITCH -> {
-          0.0
-        }
-        it > MINIMUM_PITCH && it < NORMAL_MAX_PITCH -> {
-          it / 10.0
-        }
-        it in NORMAL_MAX_PITCH..MAXIMUM_PITCH -> {
-          val a = ln(NORMAL_MAX_PITCH / 10.0)
-          val b = ln(MAXIMUM_PITCH)
-          // exp(a) = it / 10.0
-          // exp(b) = it
-          exp((b - a) * (it - NORMAL_MAX_PITCH) / (MAXIMUM_PITCH - NORMAL_MAX_PITCH) + a)
-        }
-        else -> 0.0
+    val pitch = mapCameraManagerDelegate.cameraState.pitch
+    val pitchFactorAdditionalComponent = when {
+      pitch == MINIMUM_PITCH -> {
+        0.0
       }
-      val pitchFactor = 1.5 + pitchFactorAdditionalComponent
-
-      val offsetX = velocityX.toDouble() / pitchFactor / screenDensity.toDouble()
-      val offsetY = velocityY.toDouble() / pitchFactor / screenDensity.toDouble()
-
-      // calculate animation time based on displacement
-      val animationTime =
-        (velocityXY / 7.0 / pitchFactor + ANIMATION_DURATION_FLING_BASE).toLong()
-
-      cameraAnimationsPlugin.easeTo(
-        mapCameraManagerDelegate.getDragCameraOptions(
-          centerScreen,
-          ScreenCoordinate(centerScreen.x + offsetX, centerScreen.y + offsetY)
-        ),
-        mapAnimationOptions {
-          owner(MapAnimationOwnerRegistry.GESTURES)
-          duration(animationTime)
-          interpolator(gesturesInterpolator)
-          animatorListener(object : AnimatorListenerAdapter() {
-
-            override fun onAnimationEnd(animation: Animator?) {
-              super.onAnimationEnd(animation)
-              flingInProcess = false
-              mapCameraManagerDelegate.dragEnd()
-            }
-          })
-        }
-      )
+      pitch > MINIMUM_PITCH && pitch < NORMAL_MAX_PITCH -> {
+        pitch / 10.0
+      }
+      pitch in NORMAL_MAX_PITCH..MAXIMUM_PITCH -> {
+        val a = ln(NORMAL_MAX_PITCH / 10.0)
+        val b = ln(MAXIMUM_PITCH)
+        // exp(a) = it / 10.0
+        // exp(b) = it
+        exp((b - a) * (pitch - NORMAL_MAX_PITCH) / (MAXIMUM_PITCH - NORMAL_MAX_PITCH) + a)
+      }
+      else -> 0.0
     }
+    val pitchFactor = 1.5 + pitchFactorAdditionalComponent
+
+    val offsetX = velocityX.toDouble() / pitchFactor / screenDensity.toDouble()
+    val offsetY = velocityY.toDouble() / pitchFactor / screenDensity.toDouble()
+
+    // calculate animation time based on displacement
+    val animationTime =
+      (velocityXY / 7.0 / pitchFactor + ANIMATION_DURATION_FLING_BASE).toLong()
+
+    cameraAnimationsPlugin.easeTo(
+      mapCameraManagerDelegate.getDragCameraOptions(
+        centerScreen,
+        ScreenCoordinate(centerScreen.x + offsetX, centerScreen.y + offsetY)
+      ),
+      mapAnimationOptions {
+        owner(MapAnimationOwnerRegistry.GESTURES)
+        duration(animationTime)
+        interpolator(gesturesInterpolator)
+        animatorListener(object : AnimatorListenerAdapter() {
+
+          override fun onAnimationEnd(animation: Animator?) {
+            super.onAnimationEnd(animation)
+            flingInProcess = false
+            mapCameraManagerDelegate.dragEnd()
+          }
+        })
+      }
+    )
     return true
   }
 
@@ -1292,10 +1277,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       if (notifyOnMoveListeners(detector)) {
         return true
       }
-      val pitch = mapCameraManagerDelegate.getCameraOptions(null).pitch
+      val pitch = mapCameraManagerDelegate.cameraState.pitch
 
       // Scroll the map
-      val offset = if (pitch != null && pitch in NORMAL_MAX_PITCH..MAXIMUM_PITCH) {
+      val offset = if (pitch in NORMAL_MAX_PITCH..MAXIMUM_PITCH) {
         // reducing distance values for high pitch values
         // based equation system
         // f(NORMAL_MAX_PITCH) = 1.0 and f(MAXIMUM_PITCH) = 4.5

@@ -10,6 +10,7 @@ import androidx.core.animation.addListener
 import com.mapbox.common.ShadowLogger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
@@ -346,13 +347,18 @@ class CameraAnimationsPluginImplTest {
 
   @Test
   fun testEaseToSequenceDurationZero() {
-
-    var cameraPosition = CameraOptions.Builder().pitch(0.0).build()
+    var cameraPosition = CameraState(
+      Point.fromLngLat(90.0, 90.0),
+      EdgeInsets(0.0, 0.0, 0.0, 0.0),
+      3.0,
+      90.0,
+      0.0
+    )
     every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
-      cameraPosition = firstArg()
+      cameraPosition = (firstArg() as CameraOptions).toCameraState()
     }
 
-    every { mapCameraManagerDelegate.getCameraOptions(null) } answers { cameraPosition }
+    every { mapCameraManagerDelegate.cameraState } answers { cameraPosition }
 
     val targetPitchFirst = 5.0
     val targetPitchSecond = 10.0
@@ -379,19 +385,24 @@ class CameraAnimationsPluginImplTest {
 
     shadowOf(getMainLooper()).idleFor(Duration.ofMillis(2))
 
-    assertEquals(targetPitchThird, cameraPosition.pitch)
+    assertEquals(targetPitchThird, cameraPosition.pitch, EPS)
     assertArrayEquals(expectedValues.toDoubleArray(), updatedValues.toDoubleArray(), EPS)
   }
 
   @Test
   fun testEaseToSequenceQuickDuration() {
-
-    var cameraPosition = CameraOptions.Builder().pitch(0.0).build()
+    var cameraPosition = CameraState(
+      Point.fromLngLat(90.0, 90.0),
+      EdgeInsets(0.0, 0.0, 0.0, 0.0),
+      3.0,
+      90.0,
+      0.0
+    )
     every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
-      cameraPosition = firstArg()
+      cameraPosition = (firstArg() as CameraOptions).toCameraState()
     }
 
-    every { mapCameraManagerDelegate.getCameraOptions(null) } answers { cameraPosition }
+    every { mapCameraManagerDelegate.cameraState } answers { cameraPosition }
 
     val targetPitchFirst = 5.0
     val targetPitchSecond = 10.0
@@ -417,7 +428,7 @@ class CameraAnimationsPluginImplTest {
 
     shadowOf(getMainLooper()).idleFor(Duration.ofMillis(10))
 
-    assertEquals(targetPitchThird, cameraPosition.pitch)
+    assertEquals(targetPitchThird, cameraPosition.pitch, EPS)
     assertArrayEquals(expectedValues.toDoubleArray(), updatedValues.toDoubleArray(), EPS)
   }
 
@@ -978,6 +989,16 @@ class CameraAnimationsPluginImplTest {
       startDelay = animatorDelay
       duration = animatorDuration
     }
+
+  private fun CameraOptions.toCameraState(): CameraState {
+    return CameraState(
+      center ?: cameraOptions.center!!,
+      padding ?: cameraOptions.padding!!,
+      zoom ?: cameraOptions.zoom!!,
+      bearing ?: cameraOptions.bearing!!,
+      pitch ?: cameraOptions.pitch!!
+    )
+  }
 
   companion object {
     private const val DURATION = 3000L

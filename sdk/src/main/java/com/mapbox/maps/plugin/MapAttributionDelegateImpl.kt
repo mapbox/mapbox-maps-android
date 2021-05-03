@@ -58,7 +58,7 @@ internal class MapAttributionDelegateImpl constructor(
    */
   override fun buildMapBoxFeedbackUrl(context: Context): String {
     val builder = Uri.parse(MAP_FEEDBACK_URL).buildUpon()
-    val cameraPosition = mapboxMap.getCameraOptions(null)
+    val cameraPosition = mapboxMap.cameraState
     cameraPosition.center?.let {
       builder.encodedFragment(
         "/${it.longitude()}/${it.latitude()}/${cameraPosition.zoom}/${cameraPosition.bearing}/${cameraPosition.pitch}"

@@ -394,13 +394,6 @@ class NativeMapTest {
   }
 
   @Test
-  fun setDefaultFramebufferObject() {
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.setDefaultFramebufferObject(1)
-    verify { map.setDefaultFramebufferObject(1) }
-  }
-
-  @Test
   fun triggerRepaint() {
     val nativeMap = NativeMapImpl(map)
     nativeMap.triggerRepaint()
@@ -416,11 +409,10 @@ class NativeMapTest {
   }
 
   @Test
-  fun getCameraOptions() {
-    val value = mockk<EdgeInsets>()
+  fun getCameraState() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.getCameraOptions(value)
-    verify { map.getCameraOptions(value) }
+    nativeMap.cameraState
+    verify { map.cameraState }
   }
 
   @Test
@@ -475,13 +467,6 @@ class NativeMapTest {
   }
 
   @Test
-  fun cancelTransitions() {
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.cancelTransitions()
-    verify { map.cancelTransitions() }
-  }
-
-  @Test
   fun setGestureInProgress() {
     val nativeMap = NativeMapImpl(map)
     nativeMap.isGestureInProgress = true
@@ -510,32 +495,11 @@ class NativeMapTest {
   }
 
   @Test
-  fun isRotating() {
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.isRotating
-    verify { map.isRotating }
-  }
-
-  @Test
-  fun isScaling() {
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.isScaling
-    verify { map.isScaling }
-  }
-
-  @Test
-  fun isPanning() {
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.isPanning
-    verify { map.isPanning }
-  }
-
-  @Test
   fun setBounds() {
-    val value = mockk<BoundOptions>()
+    val value = mockk<CameraBoundsOptions>()
     val nativeMap = NativeMapImpl(map)
-    nativeMap.bounds = value
-    verify { map.bounds = value }
+    nativeMap.setBounds(value)
+    verify { map.setBounds(value) }
   }
 
   @Test
@@ -649,13 +613,6 @@ class NativeMapTest {
   }
 
   @Test
-  fun dumpDebugLogs() {
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.dumpDebugLogs()
-    verify { map.dumpDebugLogs() }
-  }
-
-  @Test
   fun queryRenderedFeaturesGeometry() {
     val callback = mockk<QueryFeaturesCallback>()
     val value = mockk<MutableList<ScreenCoordinate>>()
@@ -748,26 +705,5 @@ class NativeMapTest {
     val nativeMap = NativeMapImpl(map)
     nativeMap.resourceOptions
     verify { map.resourceOptions }
-  }
-
-  @Test
-  fun getMinZoom() {
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.minZoom
-    verify { map.minZoom }
-  }
-
-  @Test
-  fun getMaxZoom() {
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.maxZoom
-    verify { map.maxZoom }
-  }
-
-  @Test
-  fun getScale() {
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.scale
-    verify { map.scale }
   }
 }

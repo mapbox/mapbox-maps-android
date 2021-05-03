@@ -72,13 +72,6 @@ open class LogoViewPlugin(
     logoView = view as? LogoView
       ?: throw IllegalArgumentException("The provided view needs to implement LogoContract.LogoView")
   }
-
-  /**
-   * Static variables and methods.
-   */
-  companion object {
-    internal const val FOUR_DP = 4.0f
-  }
 }
 
 /**

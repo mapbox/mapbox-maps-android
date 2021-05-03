@@ -51,6 +51,12 @@ class MapboxMap internal constructor(
   private val handlerMain = Handler(Looper.getMainLooper())
   private val styleObserver = StyleObserver(this, nativeMapWeakRef, nativeObserver, pixelRatio)
 
+  /**
+   * Represents current camera state.
+   */
+  override val cameraState: CameraState
+    get() = nativeMapWeakRef.call { this.cameraState }
+
   @VisibleForTesting(otherwise = PRIVATE)
   internal var cameraAnimationsPlugin: WeakReference<CameraAnimationsPlugin>? = null
 
@@ -230,19 +236,13 @@ class MapboxMap internal constructor(
   /**
    * Changes the map view by any combination of center, zoom, bearing, and pitch, without an animated transition.
    * The map will retain its current values for any details not passed via the camera options argument.
+   * It is not guaranteed that the provided CameraOptions will be set, the map may apply constraints resulting in a
+   * different CameraState.
    *
    * @param cameraOptions New camera options
    */
   override fun setCamera(cameraOptions: CameraOptions) =
     nativeMapWeakRef.call { this.setCamera(cameraOptions) }
-
-  /**
-   * Get the current camera options given an optional padding.
-   *
-   * @param edgeInsets The optional padding
-   */
-  override fun getCameraOptions(edgeInsets: EdgeInsets?): CameraOptions =
-    nativeMapWeakRef.call { this.getCameraOptions(edgeInsets) }
 
   /**
    * Notify map about gesture being in progress.
@@ -286,17 +286,17 @@ class MapboxMap internal constructor(
   /**
    * Set the map bounds.
    *
-   * @param boundOptions the map bound options
+   * @param options the map bound options
    */
-  override fun setBounds(boundOptions: BoundOptions) =
-    nativeMapWeakRef.call { this.bounds = boundOptions }
+  override fun setBounds(options: CameraBoundsOptions) =
+    nativeMapWeakRef.call { this.setBounds(options) }
 
   /**
    * Get the map bounds options.
    *
    * @return Returns the map bounds options
    */
-  override fun getBounds(): BoundOptions = nativeMapWeakRef.call { this.bounds }
+  override fun getBounds(): CameraBounds = nativeMapWeakRef.call { this.bounds }
 
   /**
    * Tells the map rendering engine that the animation is currently performed by the
@@ -341,27 +341,6 @@ class MapboxMap internal constructor(
   override fun getMapOptions(): MapOptions = nativeMapWeakRef.call { this.mapOptions }
 
   /**
-   * Get minimum zoom.
-   *
-   * @return Zoom value.
-   */
-  override fun getMinZoom() = nativeMapWeakRef.call { this.minZoom }
-
-  /**
-   * Get maximum zoom.
-   *
-   * @return Zoom value.
-   */
-  override fun getMaxZoom() = nativeMapWeakRef.call { this.maxZoom }
-
-  /**
-   * The current zoom factor applied on the map meaning 2 ^ Current zoom
-   *
-   * @return Scale value.
-   */
-  override fun getScale() = nativeMapWeakRef.call { this.scale }
-
-  /**
    * Gets the size of the map.
    *
    * @return size The size of the map in MapOptions#size platform pixels
@@ -380,18 +359,13 @@ class MapboxMap internal constructor(
     nativeMapWeakRef.call { this.setDebug(debugOptions, enabled) }
 
   /**
-   * Dump debug logs
-   */
-  fun dumpDebugLogs() = nativeMapWeakRef.call { this.dumpDebugLogs() }
-
-  /**
    * Convert to a camera options from a given LatLngBounds, padding, bearing and pitch values.
    *
    * In order for this method to produce correct results [MapView] must be already
    * measured and inflated to have correct width and height values.
    * Calling this method in [Activity.onCreate] will lead to incorrect results.
    *
-   * @param coordinateBounds The LatLngBounds to take in account when converting
+   * @param bounds The LatLngBounds to take in account when converting
    * @param padding The additional padding to take in account when converting
    * @param bearing The optional bearing to take in account when converting
    * @param pitch The optional pitch to take in account when converting
@@ -399,14 +373,14 @@ class MapboxMap internal constructor(
    * @return Returns the converted camera options
    */
   override fun cameraForCoordinateBounds(
-    coordinateBounds: CoordinateBounds,
+    bounds: CoordinateBounds,
     padding: EdgeInsets,
     bearing: Double?,
     pitch: Double?
   ): CameraOptions =
     nativeMapWeakRef.call {
       this.cameraForCoordinateBounds(
-        coordinateBounds,
+        bounds,
         padding,
         bearing,
         pitch
@@ -488,12 +462,12 @@ class MapboxMap internal constructor(
    * measured and inflated to have correct width and height values.
    * Calling this method in [Activity.onCreate] will lead to incorrect results.
    *
-   * @param cameraOptions The camera options to take in account when converting
+   * @param camera The camera options to take in account when converting
    *
    * @return Returns the converted LatLngBounds
    */
-  override fun coordinateBoundsForCamera(cameraOptions: CameraOptions): CoordinateBounds =
-    nativeMapWeakRef.call { this.coordinateBoundsForCamera(cameraOptions) }
+  override fun coordinateBoundsForCamera(camera: CameraOptions): CoordinateBounds =
+    nativeMapWeakRef.call { this.coordinateBoundsForCamera(camera) }
 
   /**
    *  Returns the coordinate bounds and zoom for a given camera.
@@ -509,8 +483,8 @@ class MapboxMap internal constructor(
    *
    *  @return Returns the coordinate bounds and zoom for a given camera.
    */
-  override fun coordinateBoundsZoomForCamera(cameraOptions: CameraOptions): CoordinateBoundsZoom =
-    nativeMapWeakRef.call { this.coordinateBoundsZoomForCamera(cameraOptions) }
+  override fun coordinateBoundsZoomForCamera(camera: CameraOptions): CoordinateBoundsZoom =
+    nativeMapWeakRef.call { this.coordinateBoundsZoomForCamera(camera) }
 
   /**
    * Returns the unwrapped coordinate bounds and zoom for a given camera.
@@ -523,8 +497,8 @@ class MapboxMap internal constructor(
    *
    *  @return Returns the unwrapped coordinate bounds and zoom for a given camera.
    */
-  override fun coordinateBoundsZoomForCameraUnwrapped(cameraOptions: CameraOptions): CoordinateBoundsZoom =
-    nativeMapWeakRef.call { this.coordinateBoundsZoomForCameraUnwrapped(cameraOptions) }
+  override fun coordinateBoundsZoomForCameraUnwrapped(camera: CameraOptions): CoordinateBoundsZoom =
+    nativeMapWeakRef.call { this.coordinateBoundsZoomForCameraUnwrapped(camera) }
 
   /**
    * Calculate a screen coordinate that corresponds to a geographical coordinate
@@ -535,12 +509,12 @@ class MapboxMap internal constructor(
    *
    * Map must be fully loaded for getting an altitude-compliant result if using 3D terrain.
    *
-   * @param point A geographical coordinate on the map to convert to a screen coordinate.
+   * @param coordinate A geographical coordinate on the map to convert to a screen coordinate.
    *
    * @return Returns a screen coordinate on the screen in [MapOptions.size] platform pixels.
    */
-  override fun pixelForCoordinate(point: Point): ScreenCoordinate =
-    nativeMapWeakRef.call { this.pixelForCoordinate(point) }
+  override fun pixelForCoordinate(coordinate: Point): ScreenCoordinate =
+    nativeMapWeakRef.call { this.pixelForCoordinate(coordinate) }
 
   /**
    * Calculate screen coordinates that corresponds to geographical coordinates
@@ -567,13 +541,13 @@ class MapboxMap internal constructor(
    *
    * Map must be fully loaded for getting an altitude-compliant result if using 3D terrain.
    *
-   * @param screenCoordinate A screen coordinate represented by x y coordinates.
+   * @param pixel A screen coordinate represented by x y coordinates.
    *
    * @return Returns a geographical coordinate corresponding to the x y coordinates
    * on the screen.
    */
-  override fun coordinateForPixel(screenCoordinate: ScreenCoordinate): Point =
-    nativeMapWeakRef.call { this.coordinateForPixel(screenCoordinate) }
+  override fun coordinateForPixel(pixel: ScreenCoordinate): Point =
+    nativeMapWeakRef.call { this.coordinateForPixel(pixel) }
 
   /**
    * Calculate geographical coordinates(i.e., longitude-latitude pair) that corresponds
@@ -613,7 +587,7 @@ class MapboxMap internal constructor(
    * @return Returns the distance measured in meters.
    */
   override fun getMetersPerPixelAtLatitude(latitude: Double): Double =
-    Projection.getMetersPerPixelAtLatitude(latitude, getCameraOptions(null).zoom ?: 0.0)
+    Projection.getMetersPerPixelAtLatitude(latitude, cameraState.zoom)
 
   /**
    * Calculate Spherical Mercator ProjectedMeters coordinates.
@@ -846,15 +820,6 @@ class MapboxMap internal constructor(
    */
   fun reduceMemoryUse() {
     nativeMapWeakRef.call { this.reduceMemoryUse() }
-  }
-
-  /**
-   * @brief Rebinds the default frame buffer object
-   *
-   * @param framebufferId ID of the new frame buffer object
-   */
-  fun setDefaultFramebufferObject(framebufferId: Int) {
-    nativeMapWeakRef.call { this.setDefaultFramebufferObject(framebufferId) }
   }
 
   /**
@@ -1122,10 +1087,10 @@ class MapboxMap internal constructor(
    * if the conversion to the pitch and bearing presentation is ambiguous. For example orientation
    * can be invalid if it leads to the camera being upside down or the quaternion has zero length.
    *
-   * @param options The free camera options to set.
+   * @param freeCameraOptions The free camera options to set.
    */
-  override fun setCamera(options: FreeCameraOptions) {
-    nativeMapWeakRef.call { this.setCamera(options) }
+  override fun setCamera(freeCameraOptions: FreeCameraOptions) {
+    nativeMapWeakRef.call { this.setCamera(freeCameraOptions) }
   }
 
   /**
@@ -1212,59 +1177,6 @@ class MapboxMap internal constructor(
       return function.invoke(it)
     }
     return null
-  }
-
-  /**
-   * Get current latitude.
-   * @return latitude
-   */
-  override fun getLat() = getCameraOptions(null).center?.latitude() ?: 0.0
-
-  /**
-   * Get current longitude.
-   * @return longitude
-   */
-  override fun getLon() = getCameraOptions(null).center?.longitude() ?: 0.0
-
-  /**
-   * Get current zoom.
-   * @return zoom
-   */
-  override fun getZoom() = getCameraOptions(null).zoom ?: 0.0
-
-  /**
-   * Get current pitch.
-   * @return pitch
-   */
-  override fun getPitch() = getCameraOptions(null).pitch ?: 0.0
-
-  /**
-   * Get current bearing.
-   * @return bearing
-   */
-  override fun getBearing() = getCameraOptions(null).bearing ?: 0.0
-
-  /**
-   * Get current padding.
-   * @return padding
-   */
-  override fun getPadding() = getCameraOptions(null).padding?.let { insets ->
-    arrayOf(insets.left, insets.top, insets.right, insets.bottom)
-  }
-
-  /**
-   * Get current anchor.
-   * @return anchor
-   */
-  override fun getAnchor() = getCameraOptions(null).anchor?.let { screenCoordinate ->
-    Pair(screenCoordinate.x, screenCoordinate.y)
-  }
-
-  /**
-   * Set camera's bearing.
-   */
-  override fun setBearing(bearing: Double) {
-    setCamera(CameraOptions.Builder().bearing(bearing).build())
   }
 
   internal fun onDestroy() {

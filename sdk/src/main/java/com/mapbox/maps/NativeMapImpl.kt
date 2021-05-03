@@ -34,8 +34,8 @@ internal class NativeMapImpl(private val map: MapInterface) :
     map.setCamera(cameraOptions)
   }
 
-  override fun getCameraOptions(edgeInsets: EdgeInsets?): CameraOptions {
-    return map.getCameraOptions(edgeInsets)
+  override fun getCameraState(): CameraState {
+    return map.cameraState
   }
 
   override fun dragStart(point: ScreenCoordinate) {
@@ -127,10 +127,6 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.coordinateBoundsZoomForCameraUnwrapped(cameraOptions)
   }
 
-  override fun cancelTransitions() {
-    map.cancelTransitions()
-  }
-
   override fun pixelsForCoordinates(coordinates: MutableList<Point>): MutableList<ScreenCoordinate> {
     return map.pixelsForCoordinates(coordinates)
   }
@@ -143,23 +139,11 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.isGestureInProgress
   }
 
-  override fun isRotating(): Boolean {
-    return map.isRotating
+  override fun setBounds(boundOptions: CameraBoundsOptions) {
+    map.setBounds(boundOptions)
   }
 
-  override fun isScaling(): Boolean {
-    return map.isScaling
-  }
-
-  override fun isPanning(): Boolean {
-    return map.isPanning
-  }
-
-  override fun setBounds(boundOptions: BoundOptions) {
-    map.bounds = boundOptions
-  }
-
-  override fun getBounds(): BoundOptions {
+  override fun getBounds(): CameraBounds {
     return map.bounds
   }
 
@@ -169,10 +153,6 @@ internal class NativeMapImpl(private val map: MapInterface) :
 
   override fun getPrefetchZoomDelta(): Byte {
     return map.prefetchZoomDelta
-  }
-
-  override fun setDefaultFramebufferObject(defaultFramebufferObject: Int) {
-    map.setDefaultFramebufferObject(defaultFramebufferObject)
   }
 
   override fun setNorthOrientation(northOrientation: NorthOrientation) {
@@ -219,10 +199,6 @@ internal class NativeMapImpl(private val map: MapInterface) :
     map.setDebug(list, debugActive)
   }
 
-  override fun dumpDebugLogs() {
-    map.dumpDebugLogs()
-  }
-
   override fun addStyleLayer(
     parameters: Value,
     layerPosition: LayerPosition?
@@ -240,18 +216,6 @@ internal class NativeMapImpl(private val map: MapInterface) :
 
   override fun getResourceOptions(): ResourceOptions {
     return map.resourceOptions
-  }
-
-  override fun getMinZoom(): Double {
-    return map.minZoom
-  }
-
-  override fun getMaxZoom(): Double {
-    return map.maxZoom
-  }
-
-  override fun getScale(): Double {
-    return map.scale
   }
 
   override fun setStyleJSON(json: String) {
@@ -412,7 +376,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
   }
 
   override fun getFreeCameraOptions(): FreeCameraOptions {
-    return map.getFreeCameraOptions()
+    return map.freeCameraOptions
   }
 
   override fun setCamera(options: FreeCameraOptions) {

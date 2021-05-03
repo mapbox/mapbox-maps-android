@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import com.mapbox.maps.CameraState
 import com.mapbox.maps.Projection.getMetersPerPixelAtLatitude
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
@@ -20,7 +21,7 @@ open class ScaleBarPluginImpl(
 ) : ScaleBarPlugin, ScaleBarSettingsBase() {
 
   private lateinit var scaleBar: ScaleBar
-  private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
+  private lateinit var cameraState: CameraState
   private lateinit var mapListenerDelegate: MapListenerDelegate
   private lateinit var mapTransformDelegate: MapTransformDelegate
 
@@ -79,8 +80,8 @@ open class ScaleBarPluginImpl(
    */
   private fun invalidateScaleBar() {
     val metersPerPixelAtLatitude = getMetersPerPixelAtLatitude(
-      mapCameraManagerDelegate.getLat(),
-      mapCameraManagerDelegate.getZoom()
+      cameraState.center.latitude(),
+      cameraState.zoom
     )
     val pixelRatio = mapTransformDelegate.getMapOptions().pixelRatio
     scaleBar.distancePerPixel = (metersPerPixelAtLatitude / pixelRatio).toFloat()
@@ -90,7 +91,7 @@ open class ScaleBarPluginImpl(
    * Provides all map delegate instances.
    */
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
-    mapCameraManagerDelegate = delegateProvider.mapCameraManagerDelegate
+    cameraState = delegateProvider.mapCameraManagerDelegate.cameraState
     mapListenerDelegate = delegateProvider.mapListenerDelegate
     mapTransformDelegate = delegateProvider.mapTransformDelegate
   }
