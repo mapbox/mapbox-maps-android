@@ -230,6 +230,8 @@ class MapboxMap internal constructor(
   /**
    * Changes the map view by any combination of center, zoom, bearing, and pitch, without an animated transition.
    * The map will retain its current values for any details not passed via the camera options argument.
+   * It is not guaranteed that the provided CameraOptions will be set, the map may apply constraints resulting in a
+   * different CameraState.
    *
    * @param cameraOptions New camera options
    */

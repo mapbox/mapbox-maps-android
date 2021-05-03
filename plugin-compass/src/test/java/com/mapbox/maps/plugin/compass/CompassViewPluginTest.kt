@@ -114,8 +114,7 @@ class CompassViewPluginTest {
       0.0,
       0.0,
       -0.33,
-      null,
-      null
+      arrayOf(0.0, 0.0, 0.0, 0.0)
     )
     compassPlugin.fadeWhenFacingNorth = false
     verify { compassView.setCompassAlpha(1.0f) }
@@ -134,8 +133,7 @@ class CompassViewPluginTest {
       0.0,
       0.0,
       -0.33,
-      null,
-      null
+      arrayOf(0.0, 0.0, 0.0, 0.0)
     )
     compassPlugin.fadeWhenFacingNorth = true
     verify { fadeAnimator.start() }
@@ -276,8 +274,7 @@ class CompassViewPluginTest {
       0.0,
       0.0,
       -15.0,
-      null,
-      null
+      arrayOf(0.0, 0.0, 0.0, 0.0)
     )
     verify { compassView.compassRotation = -(-15.0).toFloat() }
     verify { fadeAnimator.cancel() }
@@ -294,8 +291,7 @@ class CompassViewPluginTest {
       0.0,
       0.0,
       -15.0,
-      null,
-      null
+      arrayOf(0.0, 0.0, 0.0, 0.0)
     )
     verify { compassView.compassRotation = -(-15.0).toFloat() }
     verify(exactly = 0) { fadeAnimator.cancel() }
@@ -312,8 +308,7 @@ class CompassViewPluginTest {
       0.0,
       0.0,
       -15.0,
-      null,
-      null
+      arrayOf(0.0, 0.0, 0.0, 0.0)
     )
     every { compassView.compassRotation } returns 0.33f
     compassPlugin.onCameraMove(
@@ -322,8 +317,7 @@ class CompassViewPluginTest {
       0.0,
       0.0,
       -0.33,
-      null,
-      null
+      arrayOf(0.0, 0.0, 0.0, 0.0)
     )
     every { compassView.compassRotation } returns 0.23f
     compassPlugin.onCameraMove(
@@ -332,8 +326,7 @@ class CompassViewPluginTest {
       0.0,
       0.0,
       -0.23,
-      null,
-      null
+      arrayOf(0.0, 0.0, 0.0, 0.0)
     )
     verify(exactly = 1) { fadeAnimator.start() }
   }
@@ -349,8 +342,7 @@ class CompassViewPluginTest {
       0.0,
       0.0,
       -15.0,
-      null,
-      null
+      arrayOf(0.0, 0.0, 0.0, 0.0)
     )
     every { compassView.compassRotation } returns 0.23f
     compassPlugin.onCameraMove(
@@ -359,8 +351,7 @@ class CompassViewPluginTest {
       0.0,
       0.0,
       -0.23,
-      null,
-      null
+      arrayOf(0.0, 0.0, 0.0, 0.0)
     )
     verify(exactly = 0) { fadeAnimator.start() }
   }

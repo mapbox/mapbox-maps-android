@@ -179,23 +179,21 @@ class MapPluginRegistryTest {
     val plugin = mockk<MapCameraPlugin>(relaxUnitFun = true)
     mockkStatic("com.mapbox.maps.UtilsKt")
     every { clazz.instantiate() } returns plugin
-    val cameraOptions = mockk<CameraOptions>()
+    val cameraState = mockk<CameraState>()
 
     val center = Point.fromLngLat(1.0, 2.0)
-    every { cameraOptions.center } returns center
+    every { cameraState.center } returns center
     val zoom = 5.0
-    every { cameraOptions.zoom } returns zoom
+    every { cameraState.zoom } returns zoom
     val bearing = 15.0
-    every { cameraOptions.bearing } returns bearing
+    every { cameraState.bearing } returns bearing
     val pitch = 30.0
-    every { cameraOptions.pitch } returns pitch
+    every { cameraState.pitch } returns pitch
     val insets = EdgeInsets(1.0, 2.0, 3.0, 4.0)
-    every { cameraOptions.padding } returns insets
-    val anchor = ScreenCoordinate(1.0, 2.0)
-    every { cameraOptions.anchor } returns anchor
+    every { cameraState.padding } returns insets
 
     mapPluginRegistry.createPlugin(mapView, mapInitOptions, clazz)
-    mapPluginRegistry.onCameraMove(cameraOptions)
+    mapPluginRegistry.onCameraMove(cameraState)
     verify {
       plugin.onCameraMove(
         center.latitude(),
@@ -203,8 +201,7 @@ class MapPluginRegistryTest {
         zoom,
         pitch,
         bearing,
-        arrayOf(insets.left, insets.top, insets.right, insets.bottom),
-        Pair(anchor.x, anchor.y)
+        arrayOf(insets.left, insets.top, insets.right, insets.bottom)
       )
     }
   }

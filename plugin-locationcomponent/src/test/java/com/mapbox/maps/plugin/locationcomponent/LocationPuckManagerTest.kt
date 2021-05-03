@@ -5,7 +5,8 @@ import com.mapbox.bindgen.Value
 import com.mapbox.common.ShadowValueConverter
 import com.mapbox.common.ValueConverter
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraState
+import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
@@ -43,8 +44,13 @@ class LocationPuckManagerTest {
     mockkStatic(ValueConverter::class)
     every { delegateProvider.mapCameraManagerDelegate } returns mapCameraDelegate
     every { mapCameraDelegate.getBearing() } returns 0.0
-    every { mapCameraDelegate.getCameraState() } returns CameraOptions.Builder()
-      .center(Point.fromLngLat(0.0, 0.0)).build()
+    every { mapCameraDelegate.getCameraState() } returns CameraState(
+      Point.fromLngLat(0.0, 0.0),
+      EdgeInsets(0.0, 0.0, 0.0, 0.0),
+      0.0,
+      0.0,
+      0.0
+    )
     every { settings.locationPuck } returns LocationPuck2D()
     every { settings.enabled } returns true
     locationPuckManager = LocationPuckManager(

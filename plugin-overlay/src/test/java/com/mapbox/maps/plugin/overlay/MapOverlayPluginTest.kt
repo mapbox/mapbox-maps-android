@@ -157,7 +157,7 @@ class MapOverlayPluginTest {
     }
 
     assertEquals(
-      CoordinateBounds(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)),
+      CoordinateBounds(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0), false),
       slot.captured
     )
     assertEquals(EdgeInsets(0.0, .00, 0.0, 0.0), paddingSlot.captured)

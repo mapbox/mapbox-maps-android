@@ -204,7 +204,7 @@ interface MapCameraManagerDelegate {
    * The screen coordinates are in \link MapOptions#size platform pixels \endlink relative to the top left
    * of the map (not of the whole screen).
    *
-   * @param pixel A batch of screen coordinates on the screen in \link MapOptions#size platform pixels \endlink.
+   * @param pixels A batch of screen coordinates on the screen in \link MapOptions#size platform pixels \endlink.
    *
    * @return Returns a batch of geographical coordinates corresponding to the screen coordinates
    * on the screen.
@@ -214,8 +214,10 @@ interface MapCameraManagerDelegate {
   /**
    * Changes the map view by any combination of center, zoom, bearing, and pitch, without an animated transition.
    * The map will retain its current values for any details not passed via the camera options argument.
+   * It is not guaranteed that the provided CameraOptions will be set, the map may apply constraints resulting in a
+   * different CameraState.
    *
-   * @param camera New camera options
+   * @param cameraOptions New camera options
    */
   fun setCamera(cameraOptions: CameraOptions)
 
@@ -234,7 +236,7 @@ interface MapCameraManagerDelegate {
    * if the conversion to the pitch and bearing presentation is ambiguous. For example orientation
    * can be invalid if it leads to the camera being upside down or the quaternion has zero length.
    *
-   * @param camera The free camera options to set.
+   * @param freeCameraOptions The free camera options to set.
    */
   fun setCamera(freeCameraOptions: FreeCameraOptions)
 

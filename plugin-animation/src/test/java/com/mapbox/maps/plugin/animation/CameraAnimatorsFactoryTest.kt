@@ -2,10 +2,7 @@ package com.mapbox.maps.plugin.animation
 
 import android.view.animation.DecelerateInterpolator
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.MapOptions
-import com.mapbox.maps.ScreenCoordinate
-import com.mapbox.maps.Size
+import com.mapbox.maps.*
 import com.mapbox.maps.plugin.animation.animator.CameraAnimator
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
@@ -28,7 +25,13 @@ class CameraAnimatorsFactoryTest {
   private lateinit var mapProjectionDelegate: MapProjectionDelegate
   private lateinit var cameraAnimatorsFactory: CameraAnimatorsFactory
   private val initialCenter = Point.fromLngLat(-0.11968, 51.50325)
-  private val initialCameraPosition = CameraOptions.Builder().bearing(-0.0).pitch(15.0).zoom(0.0).center(initialCenter).build()
+  private val initialCameraPosition = CameraState(
+    initialCenter,
+    EdgeInsets(0.0, 0.0, 0.0, 0.0),
+    0.0,
+    -0.0,
+    15.0
+  )
   private val decelerateInterpolatorNew = DecelerateInterpolator()
   private val delayNew = 20L
   private val durationNew = 50L
@@ -59,11 +62,10 @@ class CameraAnimatorsFactoryTest {
     val targetEaseToPosition = CameraOptions.Builder()
       .center(Point.fromLngLat(-0.07520, 51.50550))
       .zoom(17.0)
-      .bearing(180.0)
+      .bearing(-180.0)
       .pitch(30.0)
       .build()
     val animators = cameraAnimatorsFactory.getEaseTo(targetEaseToPosition)
-    targetEaseToPosition.bearing = -targetEaseToPosition.bearing!!
     testAnimators(animators, targetEaseToPosition)
   }
 
@@ -91,7 +93,7 @@ class CameraAnimatorsFactoryTest {
   fun testScaleByAnimators() {
     every { mapCameraManagerDelegate.getCameraState() } returns initialCameraPosition
     val scaleBy = 15.0
-    val zoomTarget = CameraTransform.calculateScaleBy(scaleBy, initialCameraPosition.zoom!!)
+    val zoomTarget = CameraTransform.calculateScaleBy(scaleBy, initialCameraPosition.zoom)
     val target = CameraOptions.Builder().zoom(zoomTarget).anchor(ScreenCoordinate(10.0, 10.0)).build()
     val animators = cameraAnimatorsFactory.getScaleBy(scaleBy, target.anchor)
     testAnimators(animators, target)
@@ -101,7 +103,7 @@ class CameraAnimatorsFactoryTest {
   fun testPitchByAnimators() {
     every { mapCameraManagerDelegate.getCameraState() } returns initialCameraPosition
     val pitchBy = 20.0
-    val target = CameraOptions.Builder().pitch(initialCameraPosition.pitch!! + pitchBy).build()
+    val target = CameraOptions.Builder().pitch(initialCameraPosition.pitch + pitchBy).build()
     val animators = cameraAnimatorsFactory.getPitchBy(pitchBy)
     testAnimators(animators, target)
   }

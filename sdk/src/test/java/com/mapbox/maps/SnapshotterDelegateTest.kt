@@ -74,9 +74,9 @@ class SnapshotterDelegateTest {
   }
 
   @Test
-  fun getCameraOptions() {
+  fun getCameraState() {
     snapshotter.getCameraState()
-    verify { coreSnapshotter.getCameraOptions(any()) }
+    verify { coreSnapshotter.cameraState }
   }
 
   @Test
