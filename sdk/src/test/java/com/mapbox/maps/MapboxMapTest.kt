@@ -790,7 +790,7 @@ class MapboxMapTest {
   @Test
   fun bearing() {
     mapboxMap.getBearing()
-    verify { mapboxMap.getCameraOptions(null).bearing }
+    verify { mapboxMap.getCameraState().bearing }
   }
 
   @Test
@@ -802,42 +802,42 @@ class MapboxMapTest {
   @Test
   fun zoom() {
     mapboxMap.getZoom()
-    verify { nativeMap.getCameraOptions(null).zoom }
+    verify { nativeMap.getCameraState().zoom }
   }
 
   @Test
   fun anchor() {
     mapboxMap.getAnchor()
-    verify { nativeMap.getCameraOptions(null).anchor }
+    verify { nativeMap.getCameraState().anchor }
   }
 
   @Test
   fun latitude() {
     mapboxMap.getLat()
-    verify { nativeMap.getCameraOptions(null).center?.latitude() }
+    verify { nativeMap.getCameraState().center?.latitude() }
   }
 
   @Test
   fun longitude() {
     mapboxMap.getLon()
-    verify { nativeMap.getCameraOptions(null).center?.longitude() }
+    verify { nativeMap.getCameraState().center?.longitude() }
   }
 
   @Test
   fun padding() {
     mapboxMap.getPadding()
-    verify { nativeMap.getCameraOptions(null).padding }
+    verify { nativeMap.getCameraState().padding }
   }
 
   @Test
   fun pitch() {
     mapboxMap.getPitch()
-    verify { nativeMap.getCameraOptions(null).pitch }
+    verify { nativeMap.getCameraState().pitch }
   }
 
   @Test
   fun cameraOptions() {
-    mapboxMap.getCameraOptions(null)
-    verify { nativeMap.getCameraOptions(null) }
+    mapboxMap.getCameraState()
+    verify { nativeMap.getCameraState() }
   }
 }

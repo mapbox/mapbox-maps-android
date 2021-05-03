@@ -143,7 +143,7 @@ class MapControllerTest {
     val onCameraChangeListener = onCameraChangeListenerSlot.captured
 
     onCameraChangeListener.onCameraChanged()
-    verify { nativeMap.getCameraOptions(null) }
+    verify { nativeMap.getCameraState() }
     verify { pluginRegistry.onCameraMove(cameraOptions) }
   }
 

@@ -352,7 +352,7 @@ class CameraAnimationsPluginImplTest {
       cameraPosition = firstArg()
     }
 
-    every { mapCameraManagerDelegate.getCameraOptions(null) } answers { cameraPosition }
+    every { mapCameraManagerDelegate.getCameraState() } answers { cameraPosition }
 
     val targetPitchFirst = 5.0
     val targetPitchSecond = 10.0
@@ -391,7 +391,7 @@ class CameraAnimationsPluginImplTest {
       cameraPosition = firstArg()
     }
 
-    every { mapCameraManagerDelegate.getCameraOptions(null) } answers { cameraPosition }
+    every { mapCameraManagerDelegate.getCameraState() } answers { cameraPosition }
 
     val targetPitchFirst = 5.0
     val targetPitchSecond = 10.0

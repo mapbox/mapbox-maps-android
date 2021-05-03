@@ -48,13 +48,13 @@ internal object CameraTransform {
 
   fun calculateLatLngMoveBy(
     offset: ScreenCoordinate,
-    cameraOptions: CameraOptions,
+    cameraState: CameraState,
     mapTransformDelegate: MapTransformDelegate,
     mapCameraManagerDelegate: MapCameraManagerDelegate
   ): Point {
     val mapOptions = mapTransformDelegate.getMapOptions()
     val mapCenter = getMapCenter(
-      cameraOptions.padding,
+      cameraState.padding,
       mapOptions.size!!
     )
     val pointOnScreenX = mapCenter.x - offset.x

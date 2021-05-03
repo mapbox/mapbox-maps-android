@@ -43,7 +43,7 @@ class LocationPuckManagerTest {
     mockkStatic(ValueConverter::class)
     every { delegateProvider.mapCameraManagerDelegate } returns mapCameraDelegate
     every { mapCameraDelegate.getBearing() } returns 0.0
-    every { mapCameraDelegate.getCameraOptions(null) } returns CameraOptions.Builder()
+    every { mapCameraDelegate.getCameraState() } returns CameraOptions.Builder()
       .center(Point.fromLngLat(0.0, 0.0)).build()
     every { settings.locationPuck } returns LocationPuck2D()
     every { settings.enabled } returns true

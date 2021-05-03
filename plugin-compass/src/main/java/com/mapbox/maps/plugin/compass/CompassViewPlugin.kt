@@ -178,8 +178,7 @@ open class CompassViewPlugin(
     zoom: Double,
     pitch: Double,
     bearing: Double,
-    padding: Array<Double>?,
-    anchor: Pair<Double, Double>?
+    padding: Array<Double>
   ) {
     update(bearing)
   }

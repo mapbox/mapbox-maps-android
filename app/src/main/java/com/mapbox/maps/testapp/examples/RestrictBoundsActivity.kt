@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.geojson.Polygon
-import com.mapbox.maps.BoundOptions
+import com.mapbox.maps.CameraBoundsOptions
 import com.mapbox.maps.CoordinateBounds
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
@@ -76,23 +76,25 @@ class RestrictBoundsActivity : AppCompatActivity() {
     return super.onOptionsItemSelected(item)
   }
 
-  private fun setupBounds(bounds: BoundOptions) {
+  private fun setupBounds(bounds: CameraBoundsOptions) {
     mapboxMap.setBounds(bounds)
     showBoundsArea(bounds)
   }
 
-  private fun showBoundsArea(boundsOptions: BoundOptions) {
+  private fun showBoundsArea(boundsOptions: CameraBoundsOptions) {
     val source = mapboxMap.getStyle()!!.getSource(BOUNDS_ID) as GeoJsonSource
     val bounds = boundsOptions.bounds
     val list = mutableListOf<List<Point>>()
-    if (!boundsOptions.infiniteBounds && bounds != null) {
-      val northEast = bounds.northeast
-      val southWest = bounds.southwest
-      val northWest = Point.fromLngLat(southWest.longitude(), northEast.latitude())
-      val southEast = Point.fromLngLat(northEast.longitude(), southWest.latitude())
-      list.add(
-        mutableListOf(northEast, southEast, southWest, northWest, northEast)
-      )
+    bounds?.let {
+      if (!it.infiniteBounds) {
+        val northEast = it.northeast
+        val southWest = it.southwest
+        val northWest = Point.fromLngLat(southWest.longitude(), northEast.latitude())
+        val southEast = Point.fromLngLat(northEast.longitude(), southWest.latitude())
+        list.add(
+          mutableListOf(northEast, southEast, southWest, northWest, northEast)
+        )
+      }
     }
     source.geometry(
       Polygon.fromLngLats(
@@ -130,37 +132,48 @@ class RestrictBoundsActivity : AppCompatActivity() {
 
   companion object {
     private val BOUNDS_ID = "BOUNDS_ID"
-    private val ICELAND_BOUNDS: BoundOptions = BoundOptions.Builder()
+    private val ICELAND_BOUNDS: CameraBoundsOptions = CameraBoundsOptions.Builder()
       .bounds(
         CoordinateBounds(
           Point.fromLngLat(-25.985652, 62.985661),
-          Point.fromLngLat(-12.626277, 66.852863)
+          Point.fromLngLat(-12.626277, 66.852863),
+          false
         )
       )
       .minZoom(2.0)
       .build()
 
-    private val ALMOST_WORLD_BOUNDS: BoundOptions = BoundOptions.Builder()
+    private val ALMOST_WORLD_BOUNDS: CameraBoundsOptions = CameraBoundsOptions.Builder()
       .bounds(
         CoordinateBounds(
           Point.fromLngLat(-170.0, -20.0),
-          Point.fromLngLat(170.0, 20.0)
+          Point.fromLngLat(170.0, 20.0),
+          false
         )
       )
       .minZoom(2.0)
       .build()
 
     @SuppressLint("Range")
-    private val CROSS_IDL_BOUNDS: BoundOptions = BoundOptions.Builder()
+    private val CROSS_IDL_BOUNDS: CameraBoundsOptions = CameraBoundsOptions.Builder()
       .bounds(
         CoordinateBounds(
           Point.fromLngLat(170.0202020, -20.0),
-          Point.fromLngLat(190.0, 20.0)
+          Point.fromLngLat(190.0, 20.0),
+          false
         )
       )
       .minZoom(2.0)
       .build()
 
-    private val INFINITE_BOUNDS: BoundOptions = BoundOptions.Builder().infiniteBounds(true).build()
+    private val INFINITE_BOUNDS: CameraBoundsOptions = CameraBoundsOptions.Builder()
+      .bounds(
+        CoordinateBounds(
+          Point.fromLngLat(170.0202020, -20.0),
+          Point.fromLngLat(190.0, 20.0),
+          true
+        )
+      )
+      .build()
   }
 }

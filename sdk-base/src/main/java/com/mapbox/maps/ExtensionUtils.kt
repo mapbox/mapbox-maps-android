@@ -38,3 +38,17 @@ fun MapSnapshotInterface.bitmap(): Bitmap {
   bitmap.copyPixelsFromBuffer(buffer)
   return bitmap
 }
+
+/**
+ * Extension function to convert [CameraState] to [CameraOptions].
+ */
+fun CameraState.toCameraOptions(anchor: ScreenCoordinate? = null): CameraOptions {
+  return CameraOptions.Builder()
+    .anchor(anchor)
+    .center(center)
+    .padding(padding)
+    .zoom(zoom)
+    .pitch(pitch)
+    .bearing(bearing)
+    .build()
+}

@@ -45,12 +45,6 @@ interface MapCameraManagerDelegate {
   fun getPadding(): Array<Double>?
 
   /**
-   * Get current anchor.
-   * @return anchor
-   */
-  fun getAnchor(): Pair<Double, Double>?
-
-  /**
    * Set camera's bearing.
    */
   fun setBearing(bearing: Double)
@@ -226,11 +220,10 @@ interface MapCameraManagerDelegate {
   fun setCamera(cameraOptions: CameraOptions)
 
   /**
-   * Returns the current camera options
+   * Returns the current camera state
    *
-   * @param padding Optional edge padding
    */
-  fun getCameraOptions(padding: EdgeInsets?): CameraOptions
+  fun getCameraState(): CameraState
 
   /**
    * Sets the map view with the free camera options.
@@ -256,10 +249,10 @@ interface MapCameraManagerDelegate {
    *
    * @param options
    */
-  fun setBounds(options: BoundOptions)
+  fun setBounds(options: CameraBoundsOptions)
 
   /** Returns the bounds of the map.  */
-  fun getBounds(): BoundOptions
+  fun getBounds(): CameraBounds
 
   /**
    * Prepares the drag gesture to use the provided screen coordinate as a pivot point. This function should be called each time when user starts a dragging action (e.g. by clicking on the map). The following dragging will be relative to the pivot.

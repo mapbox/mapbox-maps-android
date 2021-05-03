@@ -27,7 +27,7 @@ internal class LocationPuckManager(
     private set
 
   private var lastLocation: Point =
-    delegateProvider.mapCameraManagerDelegate.getCameraOptions(null).center!!
+    delegateProvider.mapCameraManagerDelegate.getCameraState().center!!
   private val onLocationUpdated: ((Point) -> Unit) = {
     lastLocation = it
   }

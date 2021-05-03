@@ -79,13 +79,6 @@ interface MapTransformDelegate {
   fun getMaxZoom(): Double
 
   /**
-   * The current zoom factor applied on the map meaning 2 ^ Current zoom
-   *
-   * @return Scale value.
-   */
-  fun getScale(): Double
-
-  /**
    * Gets the size of the map.
    *
    * @return size The size of the map in MapOptions#size platform pixels
