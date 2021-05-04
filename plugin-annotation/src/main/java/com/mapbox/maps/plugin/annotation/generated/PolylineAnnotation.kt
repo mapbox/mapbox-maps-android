@@ -38,10 +38,8 @@ class PolylineAnnotation(
 
   /**
    * A list of Point for the line, which represents the locations of the line on the map
-   * <p>
-   * To update the polylineAnnotation on the map use {@link PolylineAnnotationManager#update(Annotation)}.
-   * <p>
    *
+   * To update the polylineAnnotation on the map use {@link PolylineAnnotationManager#update(Annotation)}.
    */
   var points: List<Point>
     get() {
@@ -54,9 +52,8 @@ class PolylineAnnotation(
   // Property accessors
   /**
    * The lineJoin property
-   * <p>
+   *
    * The display of lines when joining.
-   * </p>
    */
   var lineJoin: LineJoin?
     /**
@@ -73,9 +70,8 @@ class PolylineAnnotation(
     }
     /**
      * Set the lineJoin property
-     * <p>
+     *
      * To update the polylineAnnotation on the map use {@link polylineAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for LineJoin
      */
@@ -87,9 +83,8 @@ class PolylineAnnotation(
 
   /**
    * The lineSortKey property
-   * <p>
+   *
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
-   * </p>
    */
   var lineSortKey: Double?
     /**
@@ -106,9 +101,8 @@ class PolylineAnnotation(
     }
     /**
      * Set the lineSortKey property
-     * <p>
+     *
      * To update the polylineAnnotation on the map use {@link polylineAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -120,9 +114,8 @@ class PolylineAnnotation(
 
   /**
    * The lineBlur property
-   * <p>
+   *
    * Blur applied to the line, in density-independent pixels.
-   * </p>
    */
   var lineBlur: Double?
     /**
@@ -139,9 +132,8 @@ class PolylineAnnotation(
     }
     /**
      * Set the lineBlur property
-     * <p>
+     *
      * To update the polylineAnnotation on the map use {@link polylineAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -153,9 +145,7 @@ class PolylineAnnotation(
 
   /**
    * The lineColor property in Int
-   * <p>
    * The color with which the line will be drawn.
-   * </p>
    */
   var lineColorInt: Int?
     /**
@@ -174,9 +164,7 @@ class PolylineAnnotation(
     }
     /**
      * Set the lineColor property
-     * <p>
      * To update the polylineAnnotation on the map use {@link polylineAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param color value for String
      */
@@ -190,9 +178,8 @@ class PolylineAnnotation(
 
   /**
    * The lineColor property in String
-   * <p>
+   *
    * The color with which the line will be drawn.
-   * </p>
    */
   var lineColorString: String?
     /**
@@ -208,9 +195,7 @@ class PolylineAnnotation(
     }
     /**
      * Set the lineColor property
-     * <p>
      * To update the polylineAnnotation on the map use {@link polylineAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param color value for String
      */
@@ -220,9 +205,8 @@ class PolylineAnnotation(
 
   /**
    * The lineGapWidth property
-   * <p>
+   *
    * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
-   * </p>
    */
   var lineGapWidth: Double?
     /**
@@ -239,9 +223,8 @@ class PolylineAnnotation(
     }
     /**
      * Set the lineGapWidth property
-     * <p>
+     *
      * To update the polylineAnnotation on the map use {@link polylineAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -253,9 +236,8 @@ class PolylineAnnotation(
 
   /**
    * The lineOffset property
-   * <p>
+   *
    * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
-   * </p>
    */
   var lineOffset: Double?
     /**
@@ -272,9 +254,8 @@ class PolylineAnnotation(
     }
     /**
      * Set the lineOffset property
-     * <p>
+     *
      * To update the polylineAnnotation on the map use {@link polylineAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -286,9 +267,8 @@ class PolylineAnnotation(
 
   /**
    * The lineOpacity property
-   * <p>
+   *
    * The opacity at which the line will be drawn.
-   * </p>
    */
   var lineOpacity: Double?
     /**
@@ -305,9 +285,8 @@ class PolylineAnnotation(
     }
     /**
      * Set the lineOpacity property
-     * <p>
+     *
      * To update the polylineAnnotation on the map use {@link polylineAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -319,9 +298,8 @@ class PolylineAnnotation(
 
   /**
    * The linePattern property
-   * <p>
+   *
    * Name of image in sprite to use for drawing image lines. For seamless patterns, image width must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
-   * </p>
    */
   var linePattern: String?
     /**
@@ -338,9 +316,8 @@ class PolylineAnnotation(
     }
     /**
      * Set the linePattern property
-     * <p>
+     *
      * To update the polylineAnnotation on the map use {@link polylineAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for String
      */
@@ -352,9 +329,8 @@ class PolylineAnnotation(
 
   /**
    * The lineWidth property
-   * <p>
+   *
    * Stroke thickness.
-   * </p>
    */
   var lineWidth: Double?
     /**
@@ -371,9 +347,8 @@ class PolylineAnnotation(
     }
     /**
      * Set the lineWidth property
-     * <p>
+     *
      * To update the polylineAnnotation on the map use {@link polylineAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */

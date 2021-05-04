@@ -49,9 +49,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set icon-anchor to initialise the pointAnnotation with.
-   * <p>
+   *
    * Part of the icon placed closest to the anchor.
-   * </p>
+   *
    * @param iconAnchor the icon-anchor value
    * @return this
    */
@@ -67,9 +67,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set icon-image to initialise the pointAnnotation with.
-   * <p>
+   *
    * Name of image in sprite to use for drawing an image background.
-   * </p>
+   *
    * @param iconImage the icon-image value
    * @return this
    */
@@ -85,9 +85,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set icon-offset to initialise the pointAnnotation with.
-   * <p>
+   *
    * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of {@link PropertyFactory#iconSize} to obtain the final offset in density-independent pixels. When combined with {@link PropertyFactory#iconRotate} the offset will be as if the rotated direction was up.
-   * </p>
+   *
    * @param iconOffset the icon-offset value
    * @return this
    */
@@ -103,9 +103,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set icon-rotate to initialise the pointAnnotation with.
-   * <p>
+   *
    * Rotates the icon clockwise.
-   * </p>
+   *
    * @param iconRotate the icon-rotate value
    * @return this
    */
@@ -121,9 +121,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set icon-size to initialise the pointAnnotation with.
-   * <p>
+   *
    * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by {@link PropertyFactory#iconSize}. 1 is the original size; 3 triples the size of the image.
-   * </p>
+   *
    * @param iconSize the icon-size value
    * @return this
    */
@@ -139,9 +139,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set symbol-sort-key to initialise the pointAnnotation with.
-   * <p>
+   *
    * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first.  When {@link PropertyFactory#iconAllowOverlap} or {@link PropertyFactory#textAllowOverlap} is `false`, features with a lower sort key will have priority during placement. When {@link PropertyFactory#iconAllowOverlap} or {@link PropertyFactory#textAllowOverlap} is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
-   * </p>
+   *
    * @param symbolSortKey the symbol-sort-key value
    * @return this
    */
@@ -157,9 +157,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set text-anchor to initialise the pointAnnotation with.
-   * <p>
+   *
    * Part of the text placed closest to the anchor.
-   * </p>
+   *
    * @param textAnchor the text-anchor value
    * @return this
    */
@@ -175,9 +175,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set text-field to initialise the pointAnnotation with.
-   * <p>
+   *
    * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options.
-   * </p>
+   *
    * @param textField the text-field value
    * @return this
    */
@@ -193,9 +193,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set text-font to initialise the pointAnnotation with.
-   * <p>
+   *
    * Font stack to use for displaying text.
-   * </p>
+   *
    * @param textFont the text-font value
    * @return this
    */
@@ -211,9 +211,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set text-justify to initialise the pointAnnotation with.
-   * <p>
+   *
    * Text justification options.
-   * </p>
+   *
    * @param textJustify the text-justify value
    * @return this
    */
@@ -229,9 +229,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set text-letter-spacing to initialise the pointAnnotation with.
-   * <p>
+   *
    * Text tracking amount.
-   * </p>
+   *
    * @param textLetterSpacing the text-letter-spacing value
    * @return this
    */
@@ -247,9 +247,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set text-max-width to initialise the pointAnnotation with.
-   * <p>
+   *
    * The maximum line width for text wrapping.
-   * </p>
+   *
    * @param textMaxWidth the text-max-width value
    * @return this
    */
@@ -265,9 +265,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set text-offset to initialise the pointAnnotation with.
-   * <p>
+   *
    * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position.
-   * </p>
+   *
    * @param textOffset the text-offset value
    * @return this
    */
@@ -283,9 +283,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set text-radial-offset to initialise the pointAnnotation with.
-   * <p>
+   *
    * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with {@link PropertyFactory#textVariableAnchor}, which defaults to using the two-dimensional {@link PropertyFactory#textOffset} if present.
-   * </p>
+   *
    * @param textRadialOffset the text-radial-offset value
    * @return this
    */
@@ -301,9 +301,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set text-rotate to initialise the pointAnnotation with.
-   * <p>
+   *
    * Rotates the text clockwise.
-   * </p>
+   *
    * @param textRotate the text-rotate value
    * @return this
    */
@@ -319,9 +319,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set text-size to initialise the pointAnnotation with.
-   * <p>
+   *
    * Font size.
-   * </p>
+   *
    * @param textSize the text-size value
    * @return this
    */
@@ -337,9 +337,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set text-transform to initialise the pointAnnotation with.
-   * <p>
+   *
    * Specifies how to capitalize text, similar to the CSS {@link PropertyFactory#textTransform} property.
-   * </p>
+   *
    * @param textTransform the text-transform value
    * @return this
    */
@@ -355,9 +355,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set icon-color to initialise the pointAnnotation with.
-   * <p>
+   *
    * The color of the icon. This can only be used with sdf icons.
-   * </p>
+   *
    * @param iconColor the icon-color value
    * @return this
    */
@@ -368,9 +368,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set icon-color to initialise the pointAnnotation with.
-   * <p>
+   *
    * The color of the icon. This can only be used with sdf icons.
-   * </p>
+   *
    * @param iconColor the icon-color value with ColorInt format
    * @return this
    */
@@ -386,9 +386,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set icon-halo-blur to initialise the pointAnnotation with.
-   * <p>
+   *
    * Fade out the halo towards the outside.
-   * </p>
+   *
    * @param iconHaloBlur the icon-halo-blur value
    * @return this
    */
@@ -404,9 +404,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set icon-halo-color to initialise the pointAnnotation with.
-   * <p>
+   *
    * The color of the icon's halo. Icon halos can only be used with SDF icons.
-   * </p>
+   *
    * @param iconHaloColor the icon-halo-color value
    * @return this
    */
@@ -417,9 +417,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set icon-halo-color to initialise the pointAnnotation with.
-   * <p>
+   *
    * The color of the icon's halo. Icon halos can only be used with SDF icons.
-   * </p>
+   *
    * @param iconHaloColor the icon-halo-color value with ColorInt format
    * @return this
    */
@@ -435,9 +435,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set icon-halo-width to initialise the pointAnnotation with.
-   * <p>
+   *
    * Distance of halo to the icon outline.
-   * </p>
+   *
    * @param iconHaloWidth the icon-halo-width value
    * @return this
    */
@@ -453,9 +453,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set icon-opacity to initialise the pointAnnotation with.
-   * <p>
+   *
    * The opacity at which the icon will be drawn.
-   * </p>
+   *
    * @param iconOpacity the icon-opacity value
    * @return this
    */
@@ -471,9 +471,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set text-color to initialise the pointAnnotation with.
-   * <p>
+   *
    * The color with which the text will be drawn.
-   * </p>
+   *
    * @param textColor the text-color value
    * @return this
    */
@@ -484,9 +484,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set text-color to initialise the pointAnnotation with.
-   * <p>
+   *
    * The color with which the text will be drawn.
-   * </p>
+   *
    * @param textColor the text-color value with ColorInt format
    * @return this
    */
@@ -502,9 +502,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set text-halo-blur to initialise the pointAnnotation with.
-   * <p>
+   *
    * The halo's fadeout distance towards the outside.
-   * </p>
+   *
    * @param textHaloBlur the text-halo-blur value
    * @return this
    */
@@ -520,9 +520,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set text-halo-color to initialise the pointAnnotation with.
-   * <p>
+   *
    * The color of the text's halo, which helps it stand out from backgrounds.
-   * </p>
+   *
    * @param textHaloColor the text-halo-color value
    * @return this
    */
@@ -533,9 +533,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set text-halo-color to initialise the pointAnnotation with.
-   * <p>
+   *
    * The color of the text's halo, which helps it stand out from backgrounds.
-   * </p>
+   *
    * @param textHaloColor the text-halo-color value with ColorInt format
    * @return this
    */
@@ -551,9 +551,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set text-halo-width to initialise the pointAnnotation with.
-   * <p>
+   *
    * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size.
-   * </p>
+   *
    * @param textHaloWidth the text-halo-width value
    * @return this
    */
@@ -569,9 +569,9 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
   /**
    * Set text-opacity to initialise the pointAnnotation with.
-   * <p>
+   *
    * The opacity at which the text will be drawn.
-   * </p>
+   *
    * @param textOpacity the text-opacity value
    * @return this
    */

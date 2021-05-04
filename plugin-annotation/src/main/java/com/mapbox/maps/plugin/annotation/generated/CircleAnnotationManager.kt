@@ -64,21 +64,13 @@ class CircleAnnotationManager(
 
   /**
    * Create a list of circleAnnotations on the map.
-   * <p>
+   *
    * CircleAnnotations are going to be created only for features with a matching geometry.
-   * <p>
-   * All supported properties are:<br>
-   * CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY - Double<br>
-   * CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR - Double<br>
-   * CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR - String<br>
-   * CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY - Double<br>
-   * CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS - Double<br>
-   * CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR - String<br>
-   * CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY - Double<br>
-   * CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH - Double<br>
-   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
-   * <p>
-   * Out of spec properties:<br>
+   *
+   * All supported properties are:
+   * CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY - Double   * CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR - Double   * CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR - String   * CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY - Double   * CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS - Double   * CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR - String   * CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY - Double   * CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH - Double   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
+   *
+   * Out of spec properties:
    * "is-draggable" - Boolean, true if the circleAnnotation should be draggable, false otherwise
    *
    * @param json the GeoJSON defining the list of circleAnnotations to build
@@ -90,21 +82,13 @@ class CircleAnnotationManager(
 
   /**
    * Create a list of circleAnnotations on the map.
-   * <p>
+   *
    * CircleAnnotations are going to be created only for features with a matching geometry.
-   * <p>
-   * All supported properties are:<br>
-   * CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY - Double<br>
-   * CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR - Double<br>
-   * CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR - String<br>
-   * CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY - Double<br>
-   * CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS - Double<br>
-   * CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR - String<br>
-   * CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY - Double<br>
-   * CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH - Double<br>
-   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
-   * <p>
-   * Out of spec properties:<br>
+   *
+   * All supported properties are:
+   * CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY - Double   * CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR - Double   * CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR - String   * CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY - Double   * CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS - Double   * CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR - String   * CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY - Double   * CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH - Double   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
+   *
+   * Out of spec properties:
    * "is-draggable" - Boolean, true if the circleAnnotation should be draggable, false otherwise
    *
    * @param featureCollection the featureCollection defining the list of circleAnnotations to build
@@ -132,7 +116,7 @@ class CircleAnnotationManager(
   // Property accessors
   /**
    * The CirclePitchAlignment property
-   * <p>
+   *
    * Orientation of circle when map is pitched.
    */
   var circlePitchAlignment: CirclePitchAlignment?
@@ -156,7 +140,7 @@ class CircleAnnotationManager(
 
   /**
    * The CirclePitchScale property
-   * <p>
+   *
    * Controls the scaling behavior of the circle when the map is pitched.
    */
   var circlePitchScale: CirclePitchScale?
@@ -180,7 +164,7 @@ class CircleAnnotationManager(
 
   /**
    * The CircleTranslate property
-   * <p>
+   *
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
    */
   var circleTranslate: List<Double>?
@@ -204,7 +188,7 @@ class CircleAnnotationManager(
 
   /**
    * The CircleTranslateAnchor property
-   * <p>
+   *
    * Controls the frame of reference for {@link PropertyFactory#circleTranslate}.
    */
   var circleTranslateAnchor: CircleTranslateAnchor?

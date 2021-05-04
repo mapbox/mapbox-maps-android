@@ -26,9 +26,9 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
 
   /**
    * Set circle-sort-key to initialise the circleAnnotation with.
-   * <p>
+   *
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
-   * </p>
+   *
    * @param circleSortKey the circle-sort-key value
    * @return this
    */
@@ -44,9 +44,9 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
 
   /**
    * Set circle-blur to initialise the circleAnnotation with.
-   * <p>
+   *
    * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity.
-   * </p>
+   *
    * @param circleBlur the circle-blur value
    * @return this
    */
@@ -62,9 +62,9 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
 
   /**
    * Set circle-color to initialise the circleAnnotation with.
-   * <p>
+   *
    * The fill color of the circle.
-   * </p>
+   *
    * @param circleColor the circle-color value
    * @return this
    */
@@ -75,9 +75,9 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
 
   /**
    * Set circle-color to initialise the circleAnnotation with.
-   * <p>
+   *
    * The fill color of the circle.
-   * </p>
+   *
    * @param circleColor the circle-color value with ColorInt format
    * @return this
    */
@@ -93,9 +93,9 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
 
   /**
    * Set circle-opacity to initialise the circleAnnotation with.
-   * <p>
+   *
    * The opacity at which the circle will be drawn.
-   * </p>
+   *
    * @param circleOpacity the circle-opacity value
    * @return this
    */
@@ -111,9 +111,9 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
 
   /**
    * Set circle-radius to initialise the circleAnnotation with.
-   * <p>
+   *
    * Circle radius.
-   * </p>
+   *
    * @param circleRadius the circle-radius value
    * @return this
    */
@@ -129,9 +129,9 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
 
   /**
    * Set circle-stroke-color to initialise the circleAnnotation with.
-   * <p>
+   *
    * The stroke color of the circle.
-   * </p>
+   *
    * @param circleStrokeColor the circle-stroke-color value
    * @return this
    */
@@ -142,9 +142,9 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
 
   /**
    * Set circle-stroke-color to initialise the circleAnnotation with.
-   * <p>
+   *
    * The stroke color of the circle.
-   * </p>
+   *
    * @param circleStrokeColor the circle-stroke-color value with ColorInt format
    * @return this
    */
@@ -160,9 +160,9 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
 
   /**
    * Set circle-stroke-opacity to initialise the circleAnnotation with.
-   * <p>
+   *
    * The opacity of the circle's stroke.
-   * </p>
+   *
    * @param circleStrokeOpacity the circle-stroke-opacity value
    * @return this
    */
@@ -178,9 +178,9 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
 
   /**
    * Set circle-stroke-width to initialise the circleAnnotation with.
-   * <p>
+   *
    * The width of the circle's stroke. Strokes are placed outside of the {@link PropertyFactory#circleRadius}.
-   * </p>
+   *
    * @param circleStrokeWidth the circle-stroke-width value
    * @return this
    */

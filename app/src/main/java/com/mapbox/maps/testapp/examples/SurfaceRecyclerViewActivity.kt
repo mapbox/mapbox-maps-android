@@ -16,10 +16,10 @@ import kotlinx.android.synthetic.main.activity_recycler.*
 
 /**
  * TestActivity showcasing how to integrate multiple SurfaceView MapViews in a RecyclerView.
- * <p>
+ *
  * It requires calling the correct lifecycle methods when detaching and attaching the View to
  * the RecyclerView with onViewAttachedToWindow and onViewDetachedFromWindow.
- * </p>
+ *
  */
 @SuppressLint("ClickableViewAccessibility")
 class SurfaceRecyclerViewActivity : AppCompatActivity() {

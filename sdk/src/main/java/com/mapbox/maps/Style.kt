@@ -13,10 +13,10 @@ import java.nio.ByteBuffer
  * It exposes the entry point for all methods related to the Style.
  * You cannot instantiate [Style] object directly, rather, you must obtain one
  * from the getStyleAsync() method on [MapboxMap].
- * <p>
+ *
  * Note: Similar to a View object, a [Style] should only be read and modified
  * from the main thread.
- * </p>
+ *
  *
  * @property fullyLoaded true is style is fully loaded, false if a new style is being loaded
  * @property pixelRatio the scale ratio of the style, default the device pixel ratio

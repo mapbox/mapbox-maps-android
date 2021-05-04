@@ -1362,7 +1362,7 @@ class Expression : Value {
     /**
      * If set, the font-scale argument specifies a scaling factor relative to the text-size
      * specified in the root layout properties.
-     * <p>
+     *
      * "font-scale" is required to be of a resulting type number.
      *
      * @param fontScale
@@ -1374,7 +1374,7 @@ class Expression : Value {
     /**
      * If set, the font-scale argument specifies a scaling factor relative to the text-size
      * specified in the root layout properties.
-     * <p>
+     *
      * "font-scale" is required to be of a resulting type number.
      *
      * @param fontScale
@@ -1386,7 +1386,7 @@ class Expression : Value {
     /**
      * If set, the font-scale argument specifies a scaling factor relative to the text-size
      * specified in the root layout properties.
-     * <p>
+     *
      * "font-scale" is required to be of a resulting type number.
      */
     fun fontScale(block: ExpressionBuilder.() -> Unit) = apply {
@@ -1395,9 +1395,9 @@ class Expression : Value {
 
     /**
      * If set, the text-font argument overrides the font specified by the root layout properties.
-     * <p>
+     *
      * "text-font" is required to be a literal array.
-     * <p>
+     *
      * The requested font stack has to be a part of the used style.
      * For more information see [The online documentation](https://www.mapbox.com/help/define-font-stack/).
      *
@@ -1409,9 +1409,9 @@ class Expression : Value {
 
     /**
      * If set, the text-font argument overrides the font specified by the root layout properties.
-     * <p>
+     *
      * "text-font" is required to be a literal array.
-     * <p>
+     *
      * The requested font stack has to be a part of the used style.
      * For more information see [The online documentation](https://www.mapbox.com/help/define-font-stack/).
      *
@@ -1423,9 +1423,9 @@ class Expression : Value {
 
     /**
      * If set, the text-font argument overrides the font specified by the root layout properties.
-     * <p>
+     *
      * "text-font" is required to be a literal array.
-     * <p>
+     *
      * The requested font stack has to be a part of the used style.
      * For more information see [The online documentation](https://www.mapbox.com/help/define-font-stack/).
      */

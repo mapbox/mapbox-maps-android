@@ -58,18 +58,13 @@ class PolygonAnnotationManager(
 
   /**
    * Create a list of polygonAnnotations on the map.
-   * <p>
+   *
    * PolygonAnnotations are going to be created only for features with a matching geometry.
-   * <p>
-   * All supported properties are:<br>
-   * PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY - Double<br>
-   * PolygonAnnotationOptions.PROPERTY_FILL_COLOR - String<br>
-   * PolygonAnnotationOptions.PROPERTY_FILL_OPACITY - Double<br>
-   * PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR - String<br>
-   * PolygonAnnotationOptions.PROPERTY_FILL_PATTERN - String<br>
-   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
-   * <p>
-   * Out of spec properties:<br>
+   *
+   * All supported properties are:
+   * PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY - Double   * PolygonAnnotationOptions.PROPERTY_FILL_COLOR - String   * PolygonAnnotationOptions.PROPERTY_FILL_OPACITY - Double   * PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR - String   * PolygonAnnotationOptions.PROPERTY_FILL_PATTERN - String   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
+   *
+   * Out of spec properties:
    * "is-draggable" - Boolean, true if the polygonAnnotation should be draggable, false otherwise
    *
    * @param json the GeoJSON defining the list of polygonAnnotations to build
@@ -81,18 +76,13 @@ class PolygonAnnotationManager(
 
   /**
    * Create a list of polygonAnnotations on the map.
-   * <p>
+   *
    * PolygonAnnotations are going to be created only for features with a matching geometry.
-   * <p>
-   * All supported properties are:<br>
-   * PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY - Double<br>
-   * PolygonAnnotationOptions.PROPERTY_FILL_COLOR - String<br>
-   * PolygonAnnotationOptions.PROPERTY_FILL_OPACITY - Double<br>
-   * PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR - String<br>
-   * PolygonAnnotationOptions.PROPERTY_FILL_PATTERN - String<br>
-   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
-   * <p>
-   * Out of spec properties:<br>
+   *
+   * All supported properties are:
+   * PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY - Double   * PolygonAnnotationOptions.PROPERTY_FILL_COLOR - String   * PolygonAnnotationOptions.PROPERTY_FILL_OPACITY - Double   * PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR - String   * PolygonAnnotationOptions.PROPERTY_FILL_PATTERN - String   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
+   *
+   * Out of spec properties:
    * "is-draggable" - Boolean, true if the polygonAnnotation should be draggable, false otherwise
    *
    * @param featureCollection the featureCollection defining the list of polygonAnnotations to build
@@ -120,7 +110,7 @@ class PolygonAnnotationManager(
   // Property accessors
   /**
    * The FillAntialias property
-   * <p>
+   *
    * Whether or not the fill should be antialiased.
    */
   var fillAntialias: Boolean?
@@ -144,7 +134,7 @@ class PolygonAnnotationManager(
 
   /**
    * The FillTranslate property
-   * <p>
+   *
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
    */
   var fillTranslate: List<Double>?
@@ -168,7 +158,7 @@ class PolygonAnnotationManager(
 
   /**
    * The FillTranslateAnchor property
-   * <p>
+   *
    * Controls the frame of reference for {@link PropertyFactory#fillTranslate}.
    */
   var fillTranslateAnchor: FillTranslateAnchor?

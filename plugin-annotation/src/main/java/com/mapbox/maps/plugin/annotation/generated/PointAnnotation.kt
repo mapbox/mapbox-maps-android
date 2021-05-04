@@ -41,10 +41,8 @@ class PointAnnotation(
 
   /**
    * The Point of the pointAnnotation, which represents the location of the pointAnnotation on the map
-   * <p>
-   * To update the pointAnnotation on the map use {@link PointAnnotationManager#update(Annotation)}.
-   * <p>
    *
+   * To update the pointAnnotation on the map use {@link PointAnnotationManager#update(Annotation)}.
    */
   var point: Point
     get() {
@@ -76,9 +74,8 @@ class PointAnnotation(
   // Property accessors
   /**
    * The iconAnchor property
-   * <p>
+   *
    * Part of the icon placed closest to the anchor.
-   * </p>
    */
   var iconAnchor: IconAnchor?
     /**
@@ -95,9 +92,8 @@ class PointAnnotation(
     }
     /**
      * Set the iconAnchor property
-     * <p>
+     *
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for IconAnchor
      */
@@ -109,9 +105,8 @@ class PointAnnotation(
 
   /**
    * The iconImage property
-   * <p>
+   *
    * Name of image in sprite to use for drawing an image background.
-   * </p>
    */
   var iconImage: String?
     /**
@@ -128,9 +123,8 @@ class PointAnnotation(
     }
     /**
      * Set the iconImage property
-     * <p>
+     *
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for String
      */
@@ -142,9 +136,8 @@ class PointAnnotation(
 
   /**
    * The iconOffset property
-   * <p>
+   *
    * Offset distance of icon from its anchor. Positive values indicate right and down, while negative values indicate left and up. Each component is multiplied by the value of {@link PropertyFactory#iconSize} to obtain the final offset in density-independent pixels. When combined with {@link PropertyFactory#iconRotate} the offset will be as if the rotated direction was up.
-   * </p>
    */
   var iconOffset: List<Double>?
     /**
@@ -161,10 +154,7 @@ class PointAnnotation(
     }
     /**
      * Set the iconOffset property.
-     * <p>
      * To update the pointAnnotation on the map use {@link PointAnnotationManager#update(Annotation)}.
-     * <p>
-     *
      */
     set(value) {
       val jsonArray = JsonArray()
@@ -176,9 +166,8 @@ class PointAnnotation(
 
   /**
    * The iconRotate property
-   * <p>
+   *
    * Rotates the icon clockwise.
-   * </p>
    */
   var iconRotate: Double?
     /**
@@ -195,9 +184,8 @@ class PointAnnotation(
     }
     /**
      * Set the iconRotate property
-     * <p>
+     *
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -209,9 +197,8 @@ class PointAnnotation(
 
   /**
    * The iconSize property
-   * <p>
+   *
    * Scales the original size of the icon by the provided factor. The new pixel size of the image will be the original pixel size multiplied by {@link PropertyFactory#iconSize}. 1 is the original size; 3 triples the size of the image.
-   * </p>
    */
   var iconSize: Double?
     /**
@@ -228,9 +215,8 @@ class PointAnnotation(
     }
     /**
      * Set the iconSize property
-     * <p>
+     *
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -242,9 +228,8 @@ class PointAnnotation(
 
   /**
    * The symbolSortKey property
-   * <p>
+   *
    * Sorts features in ascending order based on this value. Features with lower sort keys are drawn and placed first.  When {@link PropertyFactory#iconAllowOverlap} or {@link PropertyFactory#textAllowOverlap} is `false`, features with a lower sort key will have priority during placement. When {@link PropertyFactory#iconAllowOverlap} or {@link PropertyFactory#textAllowOverlap} is set to `true`, features with a higher sort key will overlap over features with a lower sort key.
-   * </p>
    */
   var symbolSortKey: Double?
     /**
@@ -261,9 +246,8 @@ class PointAnnotation(
     }
     /**
      * Set the symbolSortKey property
-     * <p>
+     *
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -275,9 +259,8 @@ class PointAnnotation(
 
   /**
    * The textAnchor property
-   * <p>
+   *
    * Part of the text placed closest to the anchor.
-   * </p>
    */
   var textAnchor: TextAnchor?
     /**
@@ -294,9 +277,8 @@ class PointAnnotation(
     }
     /**
      * Set the textAnchor property
-     * <p>
+     *
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for TextAnchor
      */
@@ -308,9 +290,8 @@ class PointAnnotation(
 
   /**
    * The textField property
-   * <p>
+   *
    * Value to use for a text label. If a plain `string` is provided, it will be treated as a `formatted` with default/inherited formatting options.
-   * </p>
    */
   var textField: String?
     /**
@@ -327,9 +308,8 @@ class PointAnnotation(
     }
     /**
      * Set the textField property
-     * <p>
+     *
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for String
      */
@@ -341,9 +321,7 @@ class PointAnnotation(
 
   /**
    * The textFont property
-   * <p>
    * Font stack to use for displaying text.
-   * </p>
    */
   var textFont: List<String>?
     /**
@@ -360,9 +338,7 @@ class PointAnnotation(
     }
     /**
      * Set the textFont property.
-     * <p>
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for List<String>
      */
@@ -373,9 +349,8 @@ class PointAnnotation(
 
   /**
    * The textJustify property
-   * <p>
+   *
    * Text justification options.
-   * </p>
    */
   var textJustify: TextJustify?
     /**
@@ -392,9 +367,8 @@ class PointAnnotation(
     }
     /**
      * Set the textJustify property
-     * <p>
+     *
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for TextJustify
      */
@@ -406,9 +380,8 @@ class PointAnnotation(
 
   /**
    * The textLetterSpacing property
-   * <p>
+   *
    * Text tracking amount.
-   * </p>
    */
   var textLetterSpacing: Double?
     /**
@@ -425,9 +398,8 @@ class PointAnnotation(
     }
     /**
      * Set the textLetterSpacing property
-     * <p>
+     *
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -439,9 +411,8 @@ class PointAnnotation(
 
   /**
    * The textMaxWidth property
-   * <p>
+   *
    * The maximum line width for text wrapping.
-   * </p>
    */
   var textMaxWidth: Double?
     /**
@@ -458,9 +429,8 @@ class PointAnnotation(
     }
     /**
      * Set the textMaxWidth property
-     * <p>
+     *
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -472,9 +442,8 @@ class PointAnnotation(
 
   /**
    * The textOffset property
-   * <p>
+   *
    * Offset distance of text from its anchor. Positive values indicate right and down, while negative values indicate left and up. If used with text-variable-anchor, input values will be taken as absolute values. Offsets along the x- and y-axis will be applied automatically based on the anchor position.
-   * </p>
    */
   var textOffset: List<Double>?
     /**
@@ -491,10 +460,7 @@ class PointAnnotation(
     }
     /**
      * Set the textOffset property.
-     * <p>
      * To update the pointAnnotation on the map use {@link PointAnnotationManager#update(Annotation)}.
-     * <p>
-     *
      */
     set(value) {
       val jsonArray = JsonArray()
@@ -506,9 +472,8 @@ class PointAnnotation(
 
   /**
    * The textRadialOffset property
-   * <p>
+   *
    * Radial offset of text, in the direction of the symbol's anchor. Useful in combination with {@link PropertyFactory#textVariableAnchor}, which defaults to using the two-dimensional {@link PropertyFactory#textOffset} if present.
-   * </p>
    */
   var textRadialOffset: Double?
     /**
@@ -525,9 +490,8 @@ class PointAnnotation(
     }
     /**
      * Set the textRadialOffset property
-     * <p>
+     *
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -539,9 +503,8 @@ class PointAnnotation(
 
   /**
    * The textRotate property
-   * <p>
+   *
    * Rotates the text clockwise.
-   * </p>
    */
   var textRotate: Double?
     /**
@@ -558,9 +521,8 @@ class PointAnnotation(
     }
     /**
      * Set the textRotate property
-     * <p>
+     *
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -572,9 +534,8 @@ class PointAnnotation(
 
   /**
    * The textSize property
-   * <p>
+   *
    * Font size.
-   * </p>
    */
   var textSize: Double?
     /**
@@ -591,9 +552,8 @@ class PointAnnotation(
     }
     /**
      * Set the textSize property
-     * <p>
+     *
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -605,9 +565,8 @@ class PointAnnotation(
 
   /**
    * The textTransform property
-   * <p>
+   *
    * Specifies how to capitalize text, similar to the CSS {@link PropertyFactory#textTransform} property.
-   * </p>
    */
   var textTransform: TextTransform?
     /**
@@ -624,9 +583,8 @@ class PointAnnotation(
     }
     /**
      * Set the textTransform property
-     * <p>
+     *
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for TextTransform
      */
@@ -638,9 +596,7 @@ class PointAnnotation(
 
   /**
    * The iconColor property in Int
-   * <p>
    * The color of the icon. This can only be used with sdf icons.
-   * </p>
    */
   var iconColorInt: Int?
     /**
@@ -659,9 +615,7 @@ class PointAnnotation(
     }
     /**
      * Set the iconColor property
-     * <p>
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param color value for String
      */
@@ -675,9 +629,8 @@ class PointAnnotation(
 
   /**
    * The iconColor property in String
-   * <p>
+   *
    * The color of the icon. This can only be used with sdf icons.
-   * </p>
    */
   var iconColorString: String?
     /**
@@ -693,9 +646,7 @@ class PointAnnotation(
     }
     /**
      * Set the iconColor property
-     * <p>
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param color value for String
      */
@@ -705,9 +656,8 @@ class PointAnnotation(
 
   /**
    * The iconHaloBlur property
-   * <p>
+   *
    * Fade out the halo towards the outside.
-   * </p>
    */
   var iconHaloBlur: Double?
     /**
@@ -724,9 +674,8 @@ class PointAnnotation(
     }
     /**
      * Set the iconHaloBlur property
-     * <p>
+     *
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -738,9 +687,7 @@ class PointAnnotation(
 
   /**
    * The iconHaloColor property in Int
-   * <p>
    * The color of the icon's halo. Icon halos can only be used with SDF icons.
-   * </p>
    */
   var iconHaloColorInt: Int?
     /**
@@ -759,9 +706,7 @@ class PointAnnotation(
     }
     /**
      * Set the iconHaloColor property
-     * <p>
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param color value for String
      */
@@ -775,9 +720,8 @@ class PointAnnotation(
 
   /**
    * The iconHaloColor property in String
-   * <p>
+   *
    * The color of the icon's halo. Icon halos can only be used with SDF icons.
-   * </p>
    */
   var iconHaloColorString: String?
     /**
@@ -793,9 +737,7 @@ class PointAnnotation(
     }
     /**
      * Set the iconHaloColor property
-     * <p>
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param color value for String
      */
@@ -805,9 +747,8 @@ class PointAnnotation(
 
   /**
    * The iconHaloWidth property
-   * <p>
+   *
    * Distance of halo to the icon outline.
-   * </p>
    */
   var iconHaloWidth: Double?
     /**
@@ -824,9 +765,8 @@ class PointAnnotation(
     }
     /**
      * Set the iconHaloWidth property
-     * <p>
+     *
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -838,9 +778,8 @@ class PointAnnotation(
 
   /**
    * The iconOpacity property
-   * <p>
+   *
    * The opacity at which the icon will be drawn.
-   * </p>
    */
   var iconOpacity: Double?
     /**
@@ -857,9 +796,8 @@ class PointAnnotation(
     }
     /**
      * Set the iconOpacity property
-     * <p>
+     *
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -871,9 +809,7 @@ class PointAnnotation(
 
   /**
    * The textColor property in Int
-   * <p>
    * The color with which the text will be drawn.
-   * </p>
    */
   var textColorInt: Int?
     /**
@@ -892,9 +828,7 @@ class PointAnnotation(
     }
     /**
      * Set the textColor property
-     * <p>
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param color value for String
      */
@@ -908,9 +842,8 @@ class PointAnnotation(
 
   /**
    * The textColor property in String
-   * <p>
+   *
    * The color with which the text will be drawn.
-   * </p>
    */
   var textColorString: String?
     /**
@@ -926,9 +859,7 @@ class PointAnnotation(
     }
     /**
      * Set the textColor property
-     * <p>
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param color value for String
      */
@@ -938,9 +869,8 @@ class PointAnnotation(
 
   /**
    * The textHaloBlur property
-   * <p>
+   *
    * The halo's fadeout distance towards the outside.
-   * </p>
    */
   var textHaloBlur: Double?
     /**
@@ -957,9 +887,8 @@ class PointAnnotation(
     }
     /**
      * Set the textHaloBlur property
-     * <p>
+     *
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -971,9 +900,7 @@ class PointAnnotation(
 
   /**
    * The textHaloColor property in Int
-   * <p>
    * The color of the text's halo, which helps it stand out from backgrounds.
-   * </p>
    */
   var textHaloColorInt: Int?
     /**
@@ -992,9 +919,7 @@ class PointAnnotation(
     }
     /**
      * Set the textHaloColor property
-     * <p>
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param color value for String
      */
@@ -1008,9 +933,8 @@ class PointAnnotation(
 
   /**
    * The textHaloColor property in String
-   * <p>
+   *
    * The color of the text's halo, which helps it stand out from backgrounds.
-   * </p>
    */
   var textHaloColorString: String?
     /**
@@ -1026,9 +950,7 @@ class PointAnnotation(
     }
     /**
      * Set the textHaloColor property
-     * <p>
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param color value for String
      */
@@ -1038,9 +960,8 @@ class PointAnnotation(
 
   /**
    * The textHaloWidth property
-   * <p>
+   *
    * Distance of halo to the font outline. Max text halo width is 1/4 of the font-size.
-   * </p>
    */
   var textHaloWidth: Double?
     /**
@@ -1057,9 +978,8 @@ class PointAnnotation(
     }
     /**
      * Set the textHaloWidth property
-     * <p>
+     *
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -1071,9 +991,8 @@ class PointAnnotation(
 
   /**
    * The textOpacity property
-   * <p>
+   *
    * The opacity at which the text will be drawn.
-   * </p>
    */
   var textOpacity: Double?
     /**
@@ -1090,9 +1009,8 @@ class PointAnnotation(
     }
     /**
      * Set the textOpacity property
-     * <p>
+     *
      * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */

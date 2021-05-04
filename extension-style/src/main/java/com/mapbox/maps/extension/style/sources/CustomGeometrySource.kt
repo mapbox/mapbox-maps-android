@@ -11,7 +11,7 @@ import com.mapbox.maps.extension.style.utils.check
 
 /**
  * Custom Vector Source, allows using FeatureCollections.
- * <p>
+ *
  * CustomGeometrySource uses a coalescing model for frequent data updates targeting the same tile id,
  * which means, that the in-progress request as well as the last scheduled request are guaranteed to finish.
  * Any requests scheduled meanwhile can be canceled.

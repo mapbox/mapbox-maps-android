@@ -38,10 +38,8 @@ class CircleAnnotation(
 
   /**
    * The Point of the circleAnnotation, which represents the location of the circleAnnotation on the map
-   * <p>
-   * To update the circleAnnotation on the map use {@link CircleAnnotationManager#update(Annotation)}.
-   * <p>
    *
+   * To update the circleAnnotation on the map use {@link CircleAnnotationManager#update(Annotation)}.
    */
   var point: Point
     get() {
@@ -54,9 +52,8 @@ class CircleAnnotation(
   // Property accessors
   /**
    * The circleSortKey property
-   * <p>
+   *
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
-   * </p>
    */
   var circleSortKey: Double?
     /**
@@ -73,9 +70,8 @@ class CircleAnnotation(
     }
     /**
      * Set the circleSortKey property
-     * <p>
+     *
      * To update the circleAnnotation on the map use {@link circleAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -87,9 +83,8 @@ class CircleAnnotation(
 
   /**
    * The circleBlur property
-   * <p>
+   *
    * Amount to blur the circle. 1 blurs the circle such that only the centerpoint is full opacity.
-   * </p>
    */
   var circleBlur: Double?
     /**
@@ -106,9 +101,8 @@ class CircleAnnotation(
     }
     /**
      * Set the circleBlur property
-     * <p>
+     *
      * To update the circleAnnotation on the map use {@link circleAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -120,9 +114,7 @@ class CircleAnnotation(
 
   /**
    * The circleColor property in Int
-   * <p>
    * The fill color of the circle.
-   * </p>
    */
   var circleColorInt: Int?
     /**
@@ -141,9 +133,7 @@ class CircleAnnotation(
     }
     /**
      * Set the circleColor property
-     * <p>
      * To update the circleAnnotation on the map use {@link circleAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param color value for String
      */
@@ -157,9 +147,8 @@ class CircleAnnotation(
 
   /**
    * The circleColor property in String
-   * <p>
+   *
    * The fill color of the circle.
-   * </p>
    */
   var circleColorString: String?
     /**
@@ -175,9 +164,7 @@ class CircleAnnotation(
     }
     /**
      * Set the circleColor property
-     * <p>
      * To update the circleAnnotation on the map use {@link circleAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param color value for String
      */
@@ -187,9 +174,8 @@ class CircleAnnotation(
 
   /**
    * The circleOpacity property
-   * <p>
+   *
    * The opacity at which the circle will be drawn.
-   * </p>
    */
   var circleOpacity: Double?
     /**
@@ -206,9 +192,8 @@ class CircleAnnotation(
     }
     /**
      * Set the circleOpacity property
-     * <p>
+     *
      * To update the circleAnnotation on the map use {@link circleAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -220,9 +205,8 @@ class CircleAnnotation(
 
   /**
    * The circleRadius property
-   * <p>
+   *
    * Circle radius.
-   * </p>
    */
   var circleRadius: Double?
     /**
@@ -239,9 +223,8 @@ class CircleAnnotation(
     }
     /**
      * Set the circleRadius property
-     * <p>
+     *
      * To update the circleAnnotation on the map use {@link circleAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -253,9 +236,7 @@ class CircleAnnotation(
 
   /**
    * The circleStrokeColor property in Int
-   * <p>
    * The stroke color of the circle.
-   * </p>
    */
   var circleStrokeColorInt: Int?
     /**
@@ -274,9 +255,7 @@ class CircleAnnotation(
     }
     /**
      * Set the circleStrokeColor property
-     * <p>
      * To update the circleAnnotation on the map use {@link circleAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param color value for String
      */
@@ -290,9 +269,8 @@ class CircleAnnotation(
 
   /**
    * The circleStrokeColor property in String
-   * <p>
+   *
    * The stroke color of the circle.
-   * </p>
    */
   var circleStrokeColorString: String?
     /**
@@ -308,9 +286,7 @@ class CircleAnnotation(
     }
     /**
      * Set the circleStrokeColor property
-     * <p>
      * To update the circleAnnotation on the map use {@link circleAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param color value for String
      */
@@ -320,9 +296,8 @@ class CircleAnnotation(
 
   /**
    * The circleStrokeOpacity property
-   * <p>
+   *
    * The opacity of the circle's stroke.
-   * </p>
    */
   var circleStrokeOpacity: Double?
     /**
@@ -339,9 +314,8 @@ class CircleAnnotation(
     }
     /**
      * Set the circleStrokeOpacity property
-     * <p>
+     *
      * To update the circleAnnotation on the map use {@link circleAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -353,9 +327,8 @@ class CircleAnnotation(
 
   /**
    * The circleStrokeWidth property
-   * <p>
+   *
    * The width of the circle's stroke. Strokes are placed outside of the {@link PropertyFactory#circleRadius}.
-   * </p>
    */
   var circleStrokeWidth: Double?
     /**
@@ -372,9 +345,8 @@ class CircleAnnotation(
     }
     /**
      * Set the circleStrokeWidth property
-     * <p>
+     *
      * To update the circleAnnotation on the map use {@link circleAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */

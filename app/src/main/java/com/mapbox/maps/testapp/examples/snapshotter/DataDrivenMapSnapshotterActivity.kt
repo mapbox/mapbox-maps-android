@@ -21,9 +21,9 @@ import com.mapbox.maps.extension.style.layers.generated.HeatmapLayer
 
 /**
  * Example that showcases using Snapshotter with data driven styling.
- * <p>
+ *
  * In this example we highlight both the usage of the low as high level API of Style
- * </p>
+ *
  */
 class DataDrivenMapSnapshotterActivity : AppCompatActivity() {
   private lateinit var snapshotter: Snapshotter
