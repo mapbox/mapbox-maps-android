@@ -38,7 +38,7 @@ class PolylineAnnotation(
 
   /**
    * A list of Point for the line, which represents the locations of the line on the map
-   * 
+   *
    * To update the polylineAnnotation on the map use {@link PolylineAnnotationManager#update(Annotation)}.
    */
   var points: List<Point>

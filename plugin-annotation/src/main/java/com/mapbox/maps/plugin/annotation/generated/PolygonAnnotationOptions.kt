@@ -27,9 +27,9 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
 
   /**
    * Set fill-sort-key to initialise the polygonAnnotation with.
-   * 
+   *
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
-   * 
+   *
    * @param fillSortKey the fill-sort-key value
    * @return this
    */
@@ -45,9 +45,9 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
 
   /**
    * Set fill-color to initialise the polygonAnnotation with.
-   * 
+   *
    * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
-   * 
+   *
    * @param fillColor the fill-color value
    * @return this
    */
@@ -58,9 +58,9 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
 
   /**
    * Set fill-color to initialise the polygonAnnotation with.
-   * 
+   *
    * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
-   * 
+   *
    * @param fillColor the fill-color value with ColorInt format
    * @return this
    */
@@ -76,9 +76,9 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
 
   /**
    * Set fill-opacity to initialise the polygonAnnotation with.
-   * 
+   *
    * The opacity of the entire fill layer. In contrast to the {@link PropertyFactory#fillColor}, this value will also affect the 1px stroke around the fill, if the stroke is used.
-   * 
+   *
    * @param fillOpacity the fill-opacity value
    * @return this
    */
@@ -94,9 +94,9 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
 
   /**
    * Set fill-outline-color to initialise the polygonAnnotation with.
-   * 
+   *
    * The outline color of the fill. Matches the value of {@link PropertyFactory#fillColor} if unspecified.
-   * 
+   *
    * @param fillOutlineColor the fill-outline-color value
    * @return this
    */
@@ -107,9 +107,9 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
 
   /**
    * Set fill-outline-color to initialise the polygonAnnotation with.
-   * 
+   *
    * The outline color of the fill. Matches the value of {@link PropertyFactory#fillColor} if unspecified.
-   * 
+   *
    * @param fillOutlineColor the fill-outline-color value with ColorInt format
    * @return this
    */
@@ -125,9 +125,9 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
 
   /**
    * Set fill-pattern to initialise the polygonAnnotation with.
-   * 
+   *
    * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
-   * 
+   *
    * @param fillPattern the fill-pattern value
    * @return this
    */

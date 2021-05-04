@@ -107,12 +107,12 @@ class PointAnnotationManager(
 
   /**
    * Create a list of pointAnnotations on the map.
-   * 
+   *
    * PointAnnotations are going to be created only for features with a matching geometry.
-   * 
+   *
    * All supported properties are:
    * PointAnnotationOptions.PROPERTY_ICON_ANCHOR - IconAnchor   * PointAnnotationOptions.PROPERTY_ICON_IMAGE - String   * PointAnnotationOptions.PROPERTY_ICON_OFFSET - List<Double>   * PointAnnotationOptions.PROPERTY_ICON_ROTATE - Double   * PointAnnotationOptions.PROPERTY_ICON_SIZE - Double   * PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY - Double   * PointAnnotationOptions.PROPERTY_TEXT_ANCHOR - TextAnchor   * PointAnnotationOptions.PROPERTY_TEXT_FIELD - String   * PointAnnotationOptions.PROPERTY_TEXT_FONT - List<String>   * PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY - TextJustify   * PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING - Double   * PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH - Double   * PointAnnotationOptions.PROPERTY_TEXT_OFFSET - List<Double>   * PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET - Double   * PointAnnotationOptions.PROPERTY_TEXT_ROTATE - Double   * PointAnnotationOptions.PROPERTY_TEXT_SIZE - Double   * PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM - TextTransform   * PointAnnotationOptions.PROPERTY_ICON_COLOR - String   * PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR - Double   * PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR - String   * PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH - Double   * PointAnnotationOptions.PROPERTY_ICON_OPACITY - Double   * PointAnnotationOptions.PROPERTY_TEXT_COLOR - String   * PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR - Double   * PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR - String   * PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH - Double   * PointAnnotationOptions.PROPERTY_TEXT_OPACITY - Double   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
-   * 
+   *
    * Out of spec properties:
    * "is-draggable" - Boolean, true if the pointAnnotation should be draggable, false otherwise
    *
@@ -125,12 +125,12 @@ class PointAnnotationManager(
 
   /**
    * Create a list of pointAnnotations on the map.
-   * 
+   *
    * PointAnnotations are going to be created only for features with a matching geometry.
-   * 
+   *
    * All supported properties are:
    * PointAnnotationOptions.PROPERTY_ICON_ANCHOR - IconAnchor   * PointAnnotationOptions.PROPERTY_ICON_IMAGE - String   * PointAnnotationOptions.PROPERTY_ICON_OFFSET - List<Double>   * PointAnnotationOptions.PROPERTY_ICON_ROTATE - Double   * PointAnnotationOptions.PROPERTY_ICON_SIZE - Double   * PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY - Double   * PointAnnotationOptions.PROPERTY_TEXT_ANCHOR - TextAnchor   * PointAnnotationOptions.PROPERTY_TEXT_FIELD - String   * PointAnnotationOptions.PROPERTY_TEXT_FONT - List<String>   * PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY - TextJustify   * PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING - Double   * PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH - Double   * PointAnnotationOptions.PROPERTY_TEXT_OFFSET - List<Double>   * PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET - Double   * PointAnnotationOptions.PROPERTY_TEXT_ROTATE - Double   * PointAnnotationOptions.PROPERTY_TEXT_SIZE - Double   * PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM - TextTransform   * PointAnnotationOptions.PROPERTY_ICON_COLOR - String   * PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR - Double   * PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR - String   * PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH - Double   * PointAnnotationOptions.PROPERTY_ICON_OPACITY - Double   * PointAnnotationOptions.PROPERTY_TEXT_COLOR - String   * PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR - Double   * PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR - String   * PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH - Double   * PointAnnotationOptions.PROPERTY_TEXT_OPACITY - Double   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
-   * 
+   *
    * Out of spec properties:
    * "is-draggable" - Boolean, true if the pointAnnotation should be draggable, false otherwise
    *
@@ -159,7 +159,7 @@ class PointAnnotationManager(
   // Property accessors
   /**
    * The IconAllowOverlap property
-   * 
+   *
    * If true, the icon will be visible even if it collides with other previously drawn symbols.
    */
   var iconAllowOverlap: Boolean?
@@ -183,7 +183,7 @@ class PointAnnotationManager(
 
   /**
    * The IconIgnorePlacement property
-   * 
+   *
    * If true, other symbols can be visible even if they collide with the icon.
    */
   var iconIgnorePlacement: Boolean?
@@ -207,7 +207,7 @@ class PointAnnotationManager(
 
   /**
    * The IconKeepUpright property
-   * 
+   *
    * If true, the icon may be flipped to prevent it from being rendered upside-down.
    */
   var iconKeepUpright: Boolean?
@@ -231,7 +231,7 @@ class PointAnnotationManager(
 
   /**
    * The IconOptional property
-   * 
+   *
    * If true, text will display without their corresponding icons when the icon collides with other symbols and the text does not.
    */
   var iconOptional: Boolean?
@@ -255,7 +255,7 @@ class PointAnnotationManager(
 
   /**
    * The IconPadding property
-   * 
+   *
    * Size of the additional area around the icon bounding box used for detecting symbol collisions.
    */
   var iconPadding: Double?
@@ -279,7 +279,7 @@ class PointAnnotationManager(
 
   /**
    * The IconPitchAlignment property
-   * 
+   *
    * Orientation of icon when map is pitched.
    */
   var iconPitchAlignment: IconPitchAlignment?
@@ -303,7 +303,7 @@ class PointAnnotationManager(
 
   /**
    * The IconRotationAlignment property
-   * 
+   *
    * In combination with {@link Property.SYMBOL_PLACEMENT}, determines the rotation behavior of icons.
    */
   var iconRotationAlignment: IconRotationAlignment?
@@ -327,7 +327,7 @@ class PointAnnotationManager(
 
   /**
    * The IconTextFit property
-   * 
+   *
    * Scales the icon to fit around the associated text.
    */
   var iconTextFit: IconTextFit?
@@ -351,7 +351,7 @@ class PointAnnotationManager(
 
   /**
    * The IconTextFitPadding property
-   * 
+   *
    * Size of the additional area added to dimensions determined by {@link Property.ICON_TEXT_FIT}, in clockwise order: top, right, bottom, left.
    */
   var iconTextFitPadding: List<Double>?
@@ -375,7 +375,7 @@ class PointAnnotationManager(
 
   /**
    * The SymbolAvoidEdges property
-   * 
+   *
    * If true, the symbols will not cross tile edges to avoid mutual collisions. Recommended in layers that don't have enough padding in the vector tile to prevent collisions, or if it is a point symbol layer placed after a line symbol layer. When using a client that supports global collision detection, like Mapbox GL JS version 0.42.0 or greater, enabling this property is not needed to prevent clipped labels at tile boundaries.
    */
   var symbolAvoidEdges: Boolean?
@@ -399,7 +399,7 @@ class PointAnnotationManager(
 
   /**
    * The SymbolPlacement property
-   * 
+   *
    * Label placement relative to its geometry.
    */
   var symbolPlacement: SymbolPlacement?
@@ -423,7 +423,7 @@ class PointAnnotationManager(
 
   /**
    * The SymbolSpacing property
-   * 
+   *
    * Distance between two symbol anchors.
    */
   var symbolSpacing: Double?
@@ -447,7 +447,7 @@ class PointAnnotationManager(
 
   /**
    * The TextAllowOverlap property
-   * 
+   *
    * If true, the text will be visible even if it collides with other previously drawn symbols.
    */
   var textAllowOverlap: Boolean?
@@ -471,7 +471,7 @@ class PointAnnotationManager(
 
   /**
    * The TextIgnorePlacement property
-   * 
+   *
    * If true, other symbols can be visible even if they collide with the text.
    */
   var textIgnorePlacement: Boolean?
@@ -495,7 +495,7 @@ class PointAnnotationManager(
 
   /**
    * The TextKeepUpright property
-   * 
+   *
    * If true, the text may be flipped vertically to prevent it from being rendered upside-down.
    */
   var textKeepUpright: Boolean?
@@ -519,7 +519,7 @@ class PointAnnotationManager(
 
   /**
    * The TextLineHeight property
-   * 
+   *
    * Text leading value for multi-line text.
    */
   var textLineHeight: Double?
@@ -543,7 +543,7 @@ class PointAnnotationManager(
 
   /**
    * The TextMaxAngle property
-   * 
+   *
    * Maximum angle change between adjacent characters.
    */
   var textMaxAngle: Double?
@@ -567,7 +567,7 @@ class PointAnnotationManager(
 
   /**
    * The TextOptional property
-   * 
+   *
    * If true, icons will display without their corresponding text when the text collides with other symbols and the icon does not.
    */
   var textOptional: Boolean?
@@ -591,7 +591,7 @@ class PointAnnotationManager(
 
   /**
    * The TextPadding property
-   * 
+   *
    * Size of the additional area around the text bounding box used for detecting symbol collisions.
    */
   var textPadding: Double?
@@ -615,7 +615,7 @@ class PointAnnotationManager(
 
   /**
    * The TextPitchAlignment property
-   * 
+   *
    * Orientation of text when map is pitched.
    */
   var textPitchAlignment: TextPitchAlignment?
@@ -639,7 +639,7 @@ class PointAnnotationManager(
 
   /**
    * The TextRotationAlignment property
-   * 
+   *
    * In combination with {@link Property.SYMBOL_PLACEMENT}, determines the rotation behavior of the individual glyphs forming the text.
    */
   var textRotationAlignment: TextRotationAlignment?
@@ -663,7 +663,7 @@ class PointAnnotationManager(
 
   /**
    * The TextVariableAnchor property
-   * 
+   *
    * To increase the chance of placing high-priority labels on the map, you can provide an array of {@link Property.TEXT_ANCHOR} locations: the renderer will attempt to place the label at each location, in order, before moving onto the next label. Use `text-justify: auto` to choose justification based on anchor position. To apply an offset, use the {@link PropertyFactory#textRadialOffset} or the two-dimensional {@link PropertyFactory#textOffset}.
    */
   var textVariableAnchor: List<String>?
@@ -687,7 +687,7 @@ class PointAnnotationManager(
 
   /**
    * The TextWritingMode property
-   * 
+   *
    * The property allows control over a symbol's orientation. Note that the property values act as a hint, so that a symbol whose language doesn’t support the provided orientation will be laid out in its natural orientation. Example: English point symbol will be rendered horizontally even if array value contains single 'vertical' enum value. The order of elements in an array define priority order for the placement of an orientation variant.
    */
   var textWritingMode: List<String>?
@@ -711,7 +711,7 @@ class PointAnnotationManager(
 
   /**
    * The IconTranslate property
-   * 
+   *
    * Distance that the icon's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
    */
   var iconTranslate: List<Double>?
@@ -735,7 +735,7 @@ class PointAnnotationManager(
 
   /**
    * The IconTranslateAnchor property
-   * 
+   *
    * Controls the frame of reference for {@link PropertyFactory#iconTranslate}.
    */
   var iconTranslateAnchor: IconTranslateAnchor?
@@ -759,7 +759,7 @@ class PointAnnotationManager(
 
   /**
    * The TextTranslate property
-   * 
+   *
    * Distance that the text's anchor is moved from its original placement. Positive values indicate right and down, while negative values indicate left and up.
    */
   var textTranslate: List<Double>?
@@ -783,7 +783,7 @@ class PointAnnotationManager(
 
   /**
    * The TextTranslateAnchor property
-   * 
+   *
    * Controls the frame of reference for {@link PropertyFactory#textTranslate}.
    */
   var textTranslateAnchor: TextTranslateAnchor?

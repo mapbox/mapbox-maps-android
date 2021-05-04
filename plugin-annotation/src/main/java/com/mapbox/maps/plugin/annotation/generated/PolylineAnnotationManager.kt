@@ -66,12 +66,12 @@ class PolylineAnnotationManager(
 
   /**
    * Create a list of polylineAnnotations on the map.
-   * 
+   *
    * PolylineAnnotations are going to be created only for features with a matching geometry.
-   * 
+   *
    * All supported properties are:
    * PolylineAnnotationOptions.PROPERTY_LINE_JOIN - LineJoin   * PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY - Double   * PolylineAnnotationOptions.PROPERTY_LINE_BLUR - Double   * PolylineAnnotationOptions.PROPERTY_LINE_COLOR - String   * PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH - Double   * PolylineAnnotationOptions.PROPERTY_LINE_OFFSET - Double   * PolylineAnnotationOptions.PROPERTY_LINE_OPACITY - Double   * PolylineAnnotationOptions.PROPERTY_LINE_PATTERN - String   * PolylineAnnotationOptions.PROPERTY_LINE_WIDTH - Double   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
-   * 
+   *
    * Out of spec properties:
    * "is-draggable" - Boolean, true if the polylineAnnotation should be draggable, false otherwise
    *
@@ -84,12 +84,12 @@ class PolylineAnnotationManager(
 
   /**
    * Create a list of polylineAnnotations on the map.
-   * 
+   *
    * PolylineAnnotations are going to be created only for features with a matching geometry.
-   * 
+   *
    * All supported properties are:
    * PolylineAnnotationOptions.PROPERTY_LINE_JOIN - LineJoin   * PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY - Double   * PolylineAnnotationOptions.PROPERTY_LINE_BLUR - Double   * PolylineAnnotationOptions.PROPERTY_LINE_COLOR - String   * PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH - Double   * PolylineAnnotationOptions.PROPERTY_LINE_OFFSET - Double   * PolylineAnnotationOptions.PROPERTY_LINE_OPACITY - Double   * PolylineAnnotationOptions.PROPERTY_LINE_PATTERN - String   * PolylineAnnotationOptions.PROPERTY_LINE_WIDTH - Double   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
-   * 
+   *
    * Out of spec properties:
    * "is-draggable" - Boolean, true if the polylineAnnotation should be draggable, false otherwise
    *
@@ -118,7 +118,7 @@ class PolylineAnnotationManager(
   // Property accessors
   /**
    * The LineCap property
-   * 
+   *
    * The display of line endings.
    */
   var lineCap: LineCap?
@@ -142,7 +142,7 @@ class PolylineAnnotationManager(
 
   /**
    * The LineMiterLimit property
-   * 
+   *
    * Used to automatically convert miter joins to bevel joins for sharp angles.
    */
   var lineMiterLimit: Double?
@@ -166,7 +166,7 @@ class PolylineAnnotationManager(
 
   /**
    * The LineRoundLimit property
-   * 
+   *
    * Used to automatically convert round joins to miter joins for shallow angles.
    */
   var lineRoundLimit: Double?
@@ -190,7 +190,7 @@ class PolylineAnnotationManager(
 
   /**
    * The LineDasharray property
-   * 
+   *
    * Specifies the lengths of the alternating dashes and gaps that form the dash pattern. The lengths are later scaled by the line width. To convert a dash length to density-independent pixels, multiply the length by the current line width. Note that GeoJSON sources with `lineMetrics: true` specified won't render dashed lines to the expected scale. Also note that zoom-dependent expressions will be evaluated only at integer zoom levels.
    */
   var lineDasharray: List<Double>?
@@ -214,7 +214,7 @@ class PolylineAnnotationManager(
 
   /**
    * The LineTranslate property
-   * 
+   *
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
    */
   var lineTranslate: List<Double>?
@@ -238,7 +238,7 @@ class PolylineAnnotationManager(
 
   /**
    * The LineTranslateAnchor property
-   * 
+   *
    * Controls the frame of reference for {@link PropertyFactory#lineTranslate}.
    */
   var lineTranslateAnchor: LineTranslateAnchor?

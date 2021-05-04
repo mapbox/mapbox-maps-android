@@ -58,12 +58,12 @@ class PolygonAnnotationManager(
 
   /**
    * Create a list of polygonAnnotations on the map.
-   * 
+   *
    * PolygonAnnotations are going to be created only for features with a matching geometry.
-   * 
+   *
    * All supported properties are:
    * PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY - Double   * PolygonAnnotationOptions.PROPERTY_FILL_COLOR - String   * PolygonAnnotationOptions.PROPERTY_FILL_OPACITY - Double   * PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR - String   * PolygonAnnotationOptions.PROPERTY_FILL_PATTERN - String   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
-   * 
+   *
    * Out of spec properties:
    * "is-draggable" - Boolean, true if the polygonAnnotation should be draggable, false otherwise
    *
@@ -76,12 +76,12 @@ class PolygonAnnotationManager(
 
   /**
    * Create a list of polygonAnnotations on the map.
-   * 
+   *
    * PolygonAnnotations are going to be created only for features with a matching geometry.
-   * 
+   *
    * All supported properties are:
    * PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY - Double   * PolygonAnnotationOptions.PROPERTY_FILL_COLOR - String   * PolygonAnnotationOptions.PROPERTY_FILL_OPACITY - Double   * PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR - String   * PolygonAnnotationOptions.PROPERTY_FILL_PATTERN - String   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
-   * 
+   *
    * Out of spec properties:
    * "is-draggable" - Boolean, true if the polygonAnnotation should be draggable, false otherwise
    *
@@ -110,7 +110,7 @@ class PolygonAnnotationManager(
   // Property accessors
   /**
    * The FillAntialias property
-   * 
+   *
    * Whether or not the fill should be antialiased.
    */
   var fillAntialias: Boolean?
@@ -134,7 +134,7 @@ class PolygonAnnotationManager(
 
   /**
    * The FillTranslate property
-   * 
+   *
    * The geometry's offset. Values are [x, y] where negatives indicate left and up, respectively.
    */
   var fillTranslate: List<Double>?
@@ -158,7 +158,7 @@ class PolygonAnnotationManager(
 
   /**
    * The FillTranslateAnchor property
-   * 
+   *
    * Controls the frame of reference for {@link PropertyFactory#fillTranslate}.
    */
   var fillTranslateAnchor: FillTranslateAnchor?

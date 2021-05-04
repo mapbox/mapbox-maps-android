@@ -28,9 +28,9 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
 
   /**
    * Set line-join to initialise the polylineAnnotation with.
-   * 
+   *
    * The display of lines when joining.
-   * 
+   *
    * @param lineJoin the line-join value
    * @return this
    */
@@ -46,9 +46,9 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
 
   /**
    * Set line-sort-key to initialise the polylineAnnotation with.
-   * 
+   *
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
-   * 
+   *
    * @param lineSortKey the line-sort-key value
    * @return this
    */
@@ -64,9 +64,9 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
 
   /**
    * Set line-blur to initialise the polylineAnnotation with.
-   * 
+   *
    * Blur applied to the line, in density-independent pixels.
-   * 
+   *
    * @param lineBlur the line-blur value
    * @return this
    */
@@ -82,9 +82,9 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
 
   /**
    * Set line-color to initialise the polylineAnnotation with.
-   * 
+   *
    * The color with which the line will be drawn.
-   * 
+   *
    * @param lineColor the line-color value
    * @return this
    */
@@ -95,9 +95,9 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
 
   /**
    * Set line-color to initialise the polylineAnnotation with.
-   * 
+   *
    * The color with which the line will be drawn.
-   * 
+   *
    * @param lineColor the line-color value with ColorInt format
    * @return this
    */
@@ -113,9 +113,9 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
 
   /**
    * Set line-gap-width to initialise the polylineAnnotation with.
-   * 
+   *
    * Draws a line casing outside of a line's actual path. Value indicates the width of the inner gap.
-   * 
+   *
    * @param lineGapWidth the line-gap-width value
    * @return this
    */
@@ -131,9 +131,9 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
 
   /**
    * Set line-offset to initialise the polylineAnnotation with.
-   * 
+   *
    * The line's offset. For linear features, a positive value offsets the line to the right, relative to the direction of the line, and a negative value to the left. For polygon features, a positive value results in an inset, and a negative value results in an outset.
-   * 
+   *
    * @param lineOffset the line-offset value
    * @return this
    */
@@ -149,9 +149,9 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
 
   /**
    * Set line-opacity to initialise the polylineAnnotation with.
-   * 
+   *
    * The opacity at which the line will be drawn.
-   * 
+   *
    * @param lineOpacity the line-opacity value
    * @return this
    */
@@ -167,9 +167,9 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
 
   /**
    * Set line-pattern to initialise the polylineAnnotation with.
-   * 
+   *
    * Name of image in sprite to use for drawing image lines. For seamless patterns, image width must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
-   * 
+   *
    * @param linePattern the line-pattern value
    * @return this
    */
@@ -185,9 +185,9 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
 
   /**
    * Set line-width to initialise the polylineAnnotation with.
-   * 
+   *
    * Stroke thickness.
-   * 
+   *
    * @param lineWidth the line-width value
    * @return this
    */
