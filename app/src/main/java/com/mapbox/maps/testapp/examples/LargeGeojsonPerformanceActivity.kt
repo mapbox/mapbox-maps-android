@@ -2,7 +2,6 @@ package com.mapbox.maps.testapp.examples
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.geojson.Feature
@@ -37,7 +36,7 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
         LineString.fromPolyline(
           DirectionsResponse.fromJson(
             AnnotationUtils.loadStringFromAssets(
-              this@LargeGeojsonPerformanceActivity, "looong.json"
+              this@LargeGeojsonPerformanceActivity, "long_route.json"
             )
           ).routes()[0].geometry()!!,
           6
@@ -72,20 +71,40 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
 
   private fun loadGeoJson(style: Style) {
     val start = System.currentTimeMillis()
-    style.addSource(geoJsonSource(SOURCE) {
-      featureCollection(routePoints)
-    })
-    // add some extra work to parse geojson
-    for (i in 0..5) {
-      style.addSource(geoJsonSource(i.toString()) {
+
+    // SYNC METHOD
+
+//    style.addSource(geoJsonSource(SOURCE) {
+//      featureCollection(routePoints)
+//    })
+
+    // ASYNC METHOD
+
+    geoJsonSource(
+      id = SOURCE,
+      block = {
         featureCollection(routePoints)
-      })
+      },
+      result = {
+        style.addSource(it)
+        style.addLayer(lineLayer(LAYER, SOURCE) {
+          lineColor("blue")
+        })
+      }
+    )
+
+    // add some useless extra work to parse same geojson
+    for (i in 0..5) {
+      geoJsonSource(
+        id = i.toString(),
+        block = {
+          featureCollection(routePoints)
+        },
+        result = {
+          style.addSource(it)
+        }
+      )
     }
-    style.addLayer(lineLayer(LAYER, SOURCE) {
-      lineColor("blue")
-    })
-    val end = System.currentTimeMillis()
-    Toast.makeText(this, "Parsing time: ${end - start}", Toast.LENGTH_SHORT).show()
     buttonLoad.visibility = View.GONE
   }
 
