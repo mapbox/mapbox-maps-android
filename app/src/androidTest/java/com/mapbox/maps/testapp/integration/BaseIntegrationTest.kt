@@ -22,9 +22,9 @@ abstract class BaseIntegrationTest {
 
 /**
  * Launches an activity with FLAG_ACTIVITY_NEW_TASK.
- * <p>
+ *
  * To resume an activity, you need to add a single instance launchmode to your manifest configuration.
- * <p>
+ *
  */
 fun UiDevice.launchActivity(context: Context, clazz: Class<*>) {
   val applicationPackage = InstrumentationRegistry.getInstrumentation().targetContext.packageName

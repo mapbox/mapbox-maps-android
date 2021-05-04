@@ -5,10 +5,10 @@ import com.mapbox.bindgen.Value
 
 /**
  * Options to show and configure symbol clustering with using SymbolManager.
- * <p>
+ *
  * It exposes a minimal of configuration options, a more advanced setup can be created manually with
  * using CircleLayer and SymbolLayers directly.
- * </p>
+ *
  */
 data class ClusterOptions(
 

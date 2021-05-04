@@ -38,10 +38,8 @@ class PolygonAnnotation(
 
   /**
    * A list of lists of Point for the fill, which represents the locations of the fill on the map
-   * <p>
-   * To update the polygonAnnotation on the map use {@link PolygonAnnotationManager#update(Annotation)}.
-   * <p>
    *
+   * To update the polygonAnnotation on the map use {@link PolygonAnnotationManager#update(Annotation)}.
    */
   var points: List<List<Point>>
     get() {
@@ -54,9 +52,8 @@ class PolygonAnnotation(
   // Property accessors
   /**
    * The fillSortKey property
-   * <p>
+   *
    * Sorts features in ascending order based on this value. Features with a higher sort key will appear above features with a lower sort key.
-   * </p>
    */
   var fillSortKey: Double?
     /**
@@ -73,9 +70,8 @@ class PolygonAnnotation(
     }
     /**
      * Set the fillSortKey property
-     * <p>
+     *
      * To update the polygonAnnotation on the map use {@link polygonAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -87,9 +83,7 @@ class PolygonAnnotation(
 
   /**
    * The fillColor property in Int
-   * <p>
    * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
-   * </p>
    */
   var fillColorInt: Int?
     /**
@@ -108,9 +102,7 @@ class PolygonAnnotation(
     }
     /**
      * Set the fillColor property
-     * <p>
      * To update the polygonAnnotation on the map use {@link polygonAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param color value for String
      */
@@ -124,9 +116,8 @@ class PolygonAnnotation(
 
   /**
    * The fillColor property in String
-   * <p>
+   *
    * The color of the filled part of this layer. This color can be specified as `rgba` with an alpha component and the color's opacity will not affect the opacity of the 1px stroke, if it is used.
-   * </p>
    */
   var fillColorString: String?
     /**
@@ -142,9 +133,7 @@ class PolygonAnnotation(
     }
     /**
      * Set the fillColor property
-     * <p>
      * To update the polygonAnnotation on the map use {@link polygonAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param color value for String
      */
@@ -154,9 +143,8 @@ class PolygonAnnotation(
 
   /**
    * The fillOpacity property
-   * <p>
+   *
    * The opacity of the entire fill layer. In contrast to the {@link PropertyFactory#fillColor}, this value will also affect the 1px stroke around the fill, if the stroke is used.
-   * </p>
    */
   var fillOpacity: Double?
     /**
@@ -173,9 +161,8 @@ class PolygonAnnotation(
     }
     /**
      * Set the fillOpacity property
-     * <p>
+     *
      * To update the polygonAnnotation on the map use {@link polygonAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for Double
      */
@@ -187,9 +174,7 @@ class PolygonAnnotation(
 
   /**
    * The fillOutlineColor property in Int
-   * <p>
    * The outline color of the fill. Matches the value of {@link PropertyFactory#fillColor} if unspecified.
-   * </p>
    */
   var fillOutlineColorInt: Int?
     /**
@@ -208,9 +193,7 @@ class PolygonAnnotation(
     }
     /**
      * Set the fillOutlineColor property
-     * <p>
      * To update the polygonAnnotation on the map use {@link polygonAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param color value for String
      */
@@ -224,9 +207,8 @@ class PolygonAnnotation(
 
   /**
    * The fillOutlineColor property in String
-   * <p>
+   *
    * The outline color of the fill. Matches the value of {@link PropertyFactory#fillColor} if unspecified.
-   * </p>
    */
   var fillOutlineColorString: String?
     /**
@@ -242,9 +224,7 @@ class PolygonAnnotation(
     }
     /**
      * Set the fillOutlineColor property
-     * <p>
      * To update the polygonAnnotation on the map use {@link polygonAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param color value for String
      */
@@ -254,9 +234,8 @@ class PolygonAnnotation(
 
   /**
    * The fillPattern property
-   * <p>
+   *
    * Name of image in sprite to use for drawing image fills. For seamless patterns, image width and height must be a factor of two (2, 4, 8, ..., 512). Note that zoom-dependent expressions will be evaluated only at integer zoom levels.
-   * </p>
    */
   var fillPattern: String?
     /**
@@ -273,9 +252,8 @@ class PolygonAnnotation(
     }
     /**
      * Set the fillPattern property
-     * <p>
+     *
      * To update the polygonAnnotation on the map use {@link polygonAnnotationManager#update(Annotation)}.
-     * <p>
      *
      * @param value constant property value for String
      */

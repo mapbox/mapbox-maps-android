@@ -25,10 +25,10 @@ import java.util.*
  * You cannot instantiate [MapboxMap] object directly, rather, you must obtain one
  * from the getMapboxMap() method MapView that you have
  * added to your application.
- * <p>
+ *
  * Note: Similar to a View object, a MapboxMap should only be read and modified
  * from the main thread.
- * </p>
+ *
  *
  * @property style the map style.
  */

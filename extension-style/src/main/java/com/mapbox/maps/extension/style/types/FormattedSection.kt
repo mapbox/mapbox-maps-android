@@ -19,9 +19,8 @@ import java.lang.RuntimeException
  * @param textColor text color, setting to null will fall back to style's default settings.
  *                  Value of red, green, blue components must range between 0 and 255,
  *                  an alpha component must range between 0 and 1.
- *                  <p>
- *                  For more information see
- *                  [The online documentation]https://docs.mapbox.com/mapbox-gl-js/style-spec/#types-color).
+ *
+ * For more information see [The online documentation]https://docs.mapbox.com/mapbox-gl-js/style-spec/#types-color).
  */
 @Keep
 @LayersDsl
