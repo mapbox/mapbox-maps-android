@@ -2,6 +2,8 @@ package com.mapbox.maps.plugin.compass
 
 import android.animation.ValueAnimator
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +30,8 @@ import kotlin.math.abs
  */
 open class CompassViewPlugin(
   private val viewImplProvider: (Context) -> CompassViewImpl = { CompassViewImpl(it) },
-  private val fadeAnimator: ValueAnimator = ValueAnimator.ofFloat(1f, 0f)
+  private val fadeAnimator: ValueAnimator = ValueAnimator.ofFloat(1f, 0f),
+  private val mainHandler: Handler = Handler(Looper.getMainLooper())
 ) :
   CompassPlugin, CompassSettingsBase() {
 
@@ -174,6 +177,7 @@ open class CompassViewPlugin(
 
   /**
    * Called whenever camera position changes.
+   * Could be invoked from any thread when map starts rendering.
    */
   override fun onCameraMove(
     lat: Double,
@@ -183,7 +187,9 @@ open class CompassViewPlugin(
     bearing: Double,
     padding: Array<Double>
   ) {
-    update(bearing)
+    mainHandler.post {
+      update(bearing)
+    }
   }
 
   /**
