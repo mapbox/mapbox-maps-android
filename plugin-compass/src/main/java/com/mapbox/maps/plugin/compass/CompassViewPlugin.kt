@@ -183,7 +183,9 @@ open class CompassViewPlugin(
     bearing: Double,
     padding: Array<Double>
   ) {
+//    Handler(Looper.getMainLooper()).post {
     update(bearing)
+//    }
   }
 
   /**
