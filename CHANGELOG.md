@@ -2,6 +2,48 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.0.0-beta.19 - May 5, 2021
+## Breaking changes ⚠️
+* Remove temporary CustomMapInterface used for testing, obsolete with having interface inheritance from upstream. ([#296](https://github.com/mapbox/mapbox-maps-android/pull/296))
+* Align MapCameraManagerDelegate with MapCameraManagerInterface ([#293](https://github.com/mapbox/mapbox-maps-android/pull/293))
+* Refactor CameraOptions and change `MapboxMap.getCameraState` method to return non-nullable CameraState record
+* Remove `MapboxMap.getMinZoom`, `MapboxMap.getMaxZoom` and `MapboxMap.getScale` methods that are duplicate of functionality provided by `MapboxMap.getBounds`. `MapboxMap.getBounds` returns new CameraBounds type with non-nullable fields.
+* Remove `MapboxMap.setDefaultFramebufferObject`.
+* Remove `MapboxMap.dumpDebugLog`.
+* Remove `isPanning`, `isRotating`, `isScaling` and `cancelTransitions` methods from MapboxMap. Controlling map animations should be done with camera animation plugin.
+* Remove following methods from MapCameraManagerDelegate (formerly MapCameraDelegate): getLan(), getLon(), getPitch(), getBearing(), getPadding(), setBearing(double). Those properties could be accessed now from MapCameraManagerDelegate.cameraState directly.
+
+### OfflineManager and CacheManager
+* Introduce TileStoreUsageMode enum and use it in resource options. New enum allows to set tile store usage mode in an non ambiguous way.
+* Cache manager asynchronous  calls complete even after the cache manager instance gets out of scope on the client side. Fix possible crash on setDatabasePath() call
+* CacheManager::prefetchAmbientCache() semantics is updated
+
+
+## Features ✨ and improvements 🏁
+* Add styleUri property in MapInitOptions ([#287](https://github.com/mapbox/mapbox-maps-android/pull/287))
+* Refactored plugin system to have more granular control over which plugins are loaded when creating a MapView programmatically. ([#231](https://github.com/mapbox/mapbox-maps-android/pull/231))
+* Instrument tests for offline ([#290](https://github.com/mapbox/mapbox-maps-android/pull/290))
+* Cleanup kdoc documentation, remove html tags ([#305](https://github.com/mapbox/mapbox-maps-android/pull/305))
+* Reduce GPU memory usage by reusing depth stencil buffer for terrain rendering
+
+
+## Bug fixes 🐞
+* Request layout when updating ornaments margins, making updates immediate ([#292](https://github.com/mapbox/mapbox-maps-android/pull/292))
+* Remove runtime plugin dependency for legacy location plugin. ([#295](https://github.com/mapbox/mapbox-maps-android/pull/295))
+* Fix an issue that causes the extension functions not discoverable from downstream projects. ([#299](https://github.com/mapbox/mapbox-maps-android/pull/299))
+* Style and map error loading listeners are only called for the style that was associated to the listeners when style loading started. This avoid calling the wrong listeners with multiple style loads. Renamed Style#isStyleLoadInited to Style#isStyleLoadInitiated. ([#300](https://github.com/mapbox/mapbox-maps-android/pull/300))
+* Fix crash if doing setCamera during map loading ([#310](https://github.com/mapbox/mapbox-maps-android/pull/310))
+* Fix map rendering issue when `text-field`'s inline images used with complex case expressions
+* Fix erroneous font eviction when `text-field`'s formatted sections have `text-font` overrides
+* Fix Adreno specific crash that happens when terrain is enabled
+* Fix OfflineManager network errors handling
+* Fix map rendering issue when feature-state and terrain features are enabled
+* The ResourceRequest event response.offline-data field now indicates whether or not the response came from tile store
+
+
+## Dependencies
+* Bump to gl-native v10.0.0-beta.21, update common v11.0.2. ([#304](https://github.com/mapbox/mapbox-maps-android/pull/304))
+
 # 10.0.0-beta.18 - April 22, 2021
 ## Breaking changes ⚠️
 * Rename MapView plugin extension functions. ([#272](https://github.com/mapbox/mapbox-maps-android/pull/272))
