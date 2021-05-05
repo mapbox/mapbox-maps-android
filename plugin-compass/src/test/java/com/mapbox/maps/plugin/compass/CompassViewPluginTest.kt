@@ -3,6 +3,7 @@ package com.mapbox.maps.plugin.compass
 import android.animation.Animator
 import android.animation.ValueAnimator
 import android.graphics.drawable.Drawable
+import android.os.Handler
 import android.util.AttributeSet
 import android.view.Gravity
 import android.widget.FrameLayout
@@ -35,6 +36,8 @@ class CompassViewPluginTest {
   fun setUp() {
     val animatorEndListenerSlot = slot<Animator.AnimatorListener>()
     val updateListenerSlot = slot<ValueAnimator.AnimatorUpdateListener>()
+    val mainHandler = mockk<Handler>()
+    val runnableSlot = slot<Runnable>()
     every { fadeAnimator.addListener(capture(animatorEndListenerSlot)) } answers {}
     every { fadeAnimator.addUpdateListener(capture(updateListenerSlot)) } answers {}
     every { fadeAnimator.setDuration(any()) } returns fadeAnimator
@@ -43,7 +46,12 @@ class CompassViewPluginTest {
     every { compassView.isCompassEnabled } returns true
     every { compassView.compassRotation } returns 0f
     every { delegateProvider.mapPluginProviderDelegate.getPlugin(any<Class<CameraAnimationsPlugin>>()) } returns animatePlugin
-    compassPlugin = CompassViewPlugin({ compassView }, fadeAnimator)
+    every { mainHandler.post(capture(runnableSlot)) } answers {
+      runnableSlot.captured.run()
+      true
+    }
+
+    compassPlugin = CompassViewPlugin({ compassView }, fadeAnimator, mainHandler)
     compassPlugin.onPluginView(compassView)
     compassPlugin.onDelegateProvider(delegateProvider)
     fadeAnimatorEndListener = animatorEndListenerSlot.captured

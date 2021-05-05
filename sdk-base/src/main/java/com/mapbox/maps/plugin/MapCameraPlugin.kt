@@ -4,7 +4,6 @@ import androidx.annotation.AnyThread
 
 /**
  * Definition for map camera plugins. The map will constantly push current camera position values.
- *
  */
 fun interface MapCameraPlugin : MapPlugin {
 
