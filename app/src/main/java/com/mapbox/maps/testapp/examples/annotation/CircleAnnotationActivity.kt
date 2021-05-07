@@ -34,11 +34,31 @@ class CircleAnnotationActivity : AppCompatActivity() {
       circleManager = annotationPlugin.createCircleAnnotationManager(mapView).apply {
         addClickListener(
           OnCircleAnnotationClickListener {
-            Toast.makeText(this@CircleAnnotationActivity, "click", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@CircleAnnotationActivity, "click: ${it.id}", Toast.LENGTH_SHORT)
+              .show()
             false
           }
         )
 
+        addInteractionListener(
+          object : OnCircleAnnotationInteractionListener {
+            override fun onSelectAnnotation(annotation: CircleAnnotation) {
+              Toast.makeText(
+                this@CircleAnnotationActivity,
+                "onSelectAnnotation: ${annotation.id}",
+                Toast.LENGTH_SHORT
+              ).show()
+            }
+
+            override fun onDeselectAnnotation(annotation: CircleAnnotation) {
+              Toast.makeText(
+                this@CircleAnnotationActivity,
+                "onDeselectAnnotation: ${annotation.id}",
+                Toast.LENGTH_SHORT
+              ).show()
+            }
+          }
+        )
         val circleAnnotationOptions: CircleAnnotationOptions = CircleAnnotationOptions()
           .withPoint(Point.fromLngLat(CIRCLE_LONGITUDE, CIRCLE_LATITUDE))
           .withCircleColor(Color.YELLOW)

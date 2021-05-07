@@ -12,7 +12,7 @@ import java.lang.ref.WeakReference
  */
 class AnnotationPluginImpl : AnnotationPlugin {
   private lateinit var delegateProvider: MapDelegateProvider
-  private val managerList = mutableListOf<WeakReference<AnnotationManager<*, *, *, *, *, *>>>()
+  private val managerList = mutableListOf<WeakReference<AnnotationManager<*, *, *, *, *, *, *>>>()
   private var width = 0
   private var height = 0
 
@@ -28,7 +28,7 @@ class AnnotationPluginImpl : AnnotationPlugin {
     mapView: View,
     type: AnnotationType,
     annotationConfig: AnnotationConfig?
-  ): AnnotationManager<*, *, *, *, *, *> {
+  ): AnnotationManager<*, *, *, *, *, *, *> {
     val manager = when (type) {
       AnnotationType.PolygonAnnotation -> PolygonAnnotationManager(mapView, delegateProvider, annotationConfig)
       AnnotationType.CircleAnnotation -> CircleAnnotationManager(mapView, delegateProvider, annotationConfig)

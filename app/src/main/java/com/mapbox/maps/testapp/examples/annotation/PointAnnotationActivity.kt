@@ -48,17 +48,36 @@ class PointAnnotationActivity : AppCompatActivity() {
       symbolManager = annotationPlugin.createPointAnnotationManager(mapView).apply {
         addClickListener(
           OnPointAnnotationClickListener {
-            Toast.makeText(this@PointAnnotationActivity, "Click: $it", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@PointAnnotationActivity, "Click: ${it.id}", Toast.LENGTH_SHORT).show()
             false
           }
         )
 
         addLongClickListener(
           OnPointAnnotationLongClickListener {
-            Toast.makeText(this@PointAnnotationActivity, "LongClick: $it", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@PointAnnotationActivity, "LongClick: ${it.id}", Toast.LENGTH_SHORT)
+              .show()
             false
           }
         )
+
+        addInteractionListener(object : OnPointAnnotationInteractionListener {
+          override fun onSelectAnnotation(annotation: PointAnnotation) {
+            Toast.makeText(
+              this@PointAnnotationActivity,
+              "onSelectAnnotation: ${annotation.id}",
+              Toast.LENGTH_SHORT
+            ).show()
+          }
+
+          override fun onDeselectAnnotation(annotation: PointAnnotation) {
+            Toast.makeText(
+              this@PointAnnotationActivity,
+              "onDeselectAnnotation: ${annotation.id}",
+              Toast.LENGTH_SHORT
+            ).show()
+          }
+        })
 
         bitmapFromDrawableRes(
           this@PointAnnotationActivity,
@@ -140,7 +159,8 @@ class PointAnnotationActivity : AppCompatActivity() {
       R.id.menu_action_filter -> {
         if (symbolManager != null && pointAnnotation != null) {
           val idKey = symbolManager!!.getAnnotationIdKey()
-          val expression: Expression = eq(toNumber(get(idKey)), literal(pointAnnotation!!.id.toDouble()))
+          val expression: Expression =
+            eq(toNumber(get(idKey)), literal(pointAnnotation!!.id.toDouble()))
           val filter = symbolManager!!.layerFilter
           if (filter != null && filter == expression) {
             symbolManager!!.layerFilter = not(eq(toNumber(get(idKey)), literal(-1)))
@@ -167,7 +187,12 @@ class PointAnnotationActivity : AppCompatActivity() {
 
       R.id.menu_action_animate -> {
         resetSymbol()
-        pointAnnotation?.let { easeSymbol(it, Point.fromLngLat(AIRPORT_LATITUDE, AIRPORT_LONGITUDE)) }
+        pointAnnotation?.let {
+          easeSymbol(
+            it,
+            Point.fromLngLat(AIRPORT_LATITUDE, AIRPORT_LONGITUDE)
+          )
+        }
         return true
       }
       else -> return super.onOptionsItemSelected(item)
@@ -182,7 +207,11 @@ class PointAnnotationActivity : AppCompatActivity() {
     pointAnnotation?.let { symbolManager?.update(it) }
   }
 
-  private fun easeSymbol(pointAnnotation: PointAnnotation, location: Point, rotation: Double = 180.0) {
+  private fun easeSymbol(
+    pointAnnotation: PointAnnotation,
+    location: Point,
+    rotation: Double = 180.0
+  ) {
     val originalPosition: Point = pointAnnotation.point
     val originalRotation = pointAnnotation.iconRotate
     if (originalPosition == location || originalRotation == rotation) {

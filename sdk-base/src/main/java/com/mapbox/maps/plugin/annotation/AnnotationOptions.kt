@@ -14,5 +14,5 @@ fun interface AnnotationOptions<G : Geometry, T : Annotation<G>> {
    *
    * @return the annotation that is built
    */
-  fun build(id: Long, annotationManager: AnnotationManager<G, T, *, *, *, *>): T
+  fun build(id: Long, annotationManager: AnnotationManager<G, T, *, *, *, *, *>): T
 }

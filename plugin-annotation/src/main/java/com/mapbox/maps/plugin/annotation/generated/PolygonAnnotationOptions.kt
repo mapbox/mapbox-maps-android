@@ -225,7 +225,7 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
    */
   override fun build(
     id: Long,
-    annotationManager: AnnotationManager<Polygon, PolygonAnnotation, *, *, *, *>
+    annotationManager: AnnotationManager<Polygon, PolygonAnnotation, *, *, *, *, *>
   ): PolygonAnnotation {
     if (geometry == null) {
       throw RuntimeException("geometry field is required")

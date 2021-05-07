@@ -27,14 +27,16 @@ import com.mapbox.maps.extension.style.layers.addLayerBelow
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
 import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
-import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.PLUGIN_GESTURE_CLASS_NAME
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
-import com.mapbox.maps.plugin.delegates.*
+import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
+import com.mapbox.maps.plugin.delegates.MapDelegateProvider
+import com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate
+import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
@@ -45,19 +47,19 @@ import java.util.concurrent.ConcurrentHashMap
 /**
  * Base class for annotation managers
  */
-abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : AnnotationOptions<G, T>, D : OnAnnotationDragListener<T>, U : OnAnnotationClickListener<T>, V : OnAnnotationLongClickListener<T>, L : Layer>(
+abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : AnnotationOptions<G, T>, D : OnAnnotationDragListener<T>, U : OnAnnotationClickListener<T>, V : OnAnnotationLongClickListener<T>, I : OnAnnotationInteractionListener<T>, L : Layer>(
   mapView: View,
   /** The delegateProvider */
   final override val delegateProvider: MapDelegateProvider,
   private val annotationConfig: AnnotationConfig?
-) : AnnotationManager<G, T, S, D, U, V> {
+) : AnnotationManager<G, T, S, D, U, V, I> {
   protected lateinit var style: StyleInterface
-  private var mapCameraManagerDelegate: MapCameraManagerDelegate = delegateProvider.mapCameraManagerDelegate
+  private var mapCameraManagerDelegate: MapCameraManagerDelegate =
+    delegateProvider.mapCameraManagerDelegate
   private var mapFeatureQueryDelegate: MapFeatureQueryDelegate =
     delegateProvider.mapFeatureQueryDelegate
   private var styleStateDelegate: MapStyleStateDelegate = delegateProvider.styleStateDelegate
   protected val dataDrivenPropertyUsageMap: MutableMap<String, Boolean> = HashMap()
-  protected val constantPropertyUsageMap = mutableListOf<PropertyValue<*>>()
   private var currentId = 0L
   private var width = 0
   private var height = 0
@@ -70,6 +72,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   protected var touchAreaShiftY: Int = mapView.scrollY
   protected abstract val layerId: String
   protected abstract val sourceId: String
+  @Suppress("UNCHECKED_CAST")
   private var gesturesPlugin: GesturesPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
     Class.forName(
       PLUGIN_GESTURE_CLASS_NAME
@@ -108,6 +111,11 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * The added longClickListeners
    */
   override val longClickListeners = mutableListOf<V>()
+
+  /**
+   * The added interactionListener
+   */
+  override val interactionListener = mutableListOf<I>()
 
   init {
     gesturesPlugin.addOnMapClickListener(mapClickResolver)
@@ -388,6 +396,27 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     dragListeners.clear()
     clickListeners.clear()
     longClickListeners.clear()
+    interactionListener.clear()
+  }
+
+  /**
+   * Toggles the annotation's selection state.
+   * If the annotation is deselected, it becomes selected.
+   * If the annotation is selected, it becomes deselected.
+   * @param annotation: The annotation to select.
+   */
+  override fun selectAnnotation(annotation: T) {
+    if (annotationMap.containsKey(annotation.id)) {
+      annotation.isSelected = !annotation.isSelected
+      annotationMap[annotation.id] = annotation
+      interactionListener.forEach {
+        if (annotation.isSelected) {
+          it.onSelectAnnotation(annotation)
+        } else {
+          it.onDeselectAnnotation(annotation)
+        }
+      }
+    }
   }
 
   /**
@@ -402,10 +431,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
      * false otherwise.
      */
     override fun onMapClick(point: Point): Boolean {
-      if (clickListeners.isEmpty()) {
-        return false
-      }
       queryMapForFeatures(point) {
+        selectAnnotation(it)
         clickListeners.forEach { listener ->
           listener.onAnnotationClick(it)
         }

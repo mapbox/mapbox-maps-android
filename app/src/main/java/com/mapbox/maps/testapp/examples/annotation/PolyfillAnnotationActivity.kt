@@ -35,10 +35,30 @@ class PolyfillAnnotationActivity : AppCompatActivity() {
       fillManager = annotationPlugin.createPolygonAnnotationManager(mapView).apply {
         addClickListener(
           OnPolygonAnnotationClickListener {
-            Toast.makeText(this@PolyfillAnnotationActivity, "click", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@PolyfillAnnotationActivity, "click ${it.id}", Toast.LENGTH_SHORT)
+              .show()
             false
           }
         )
+
+        addInteractionListener(object : OnPolygonAnnotationInteractionListener {
+          override fun onSelectAnnotation(annotation: PolygonAnnotation) {
+            Toast.makeText(
+              this@PolyfillAnnotationActivity,
+              "onSelectAnnotation ${annotation.id}",
+              Toast.LENGTH_SHORT
+            ).show()
+          }
+
+          override fun onDeselectAnnotation(annotation: PolygonAnnotation) {
+            Toast.makeText(
+              this@PolyfillAnnotationActivity,
+              "onDeselectAnnotation ${annotation.id}",
+              Toast.LENGTH_SHORT
+            ).show()
+          }
+        })
+
         val points = listOf(
           listOf(
             Point.fromLngLat(-3.363937, -10.733102),

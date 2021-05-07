@@ -20,7 +20,7 @@ import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 class PolylineAnnotation(
   id: Long,
   /** The annotation manger that manipulate this annotation */
-  private val annotationManager: AnnotationManager<LineString, PolylineAnnotation, *, *, *, *>,
+  private val annotationManager: AnnotationManager<LineString, PolylineAnnotation, *, *, *, *, *>,
   jsonObject: JsonObject,
   geometry: LineString
 ) : Annotation<LineString>(id, jsonObject, geometry) {

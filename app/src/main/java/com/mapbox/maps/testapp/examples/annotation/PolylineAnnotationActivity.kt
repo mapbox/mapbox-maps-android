@@ -42,14 +42,29 @@ class PolylineAnnotationActivity : AppCompatActivity() {
         }
         addClickListener(
           OnPolylineAnnotationClickListener {
-            Toast.makeText(
-              this@PolylineAnnotationActivity,
-              "click",
-              Toast.LENGTH_LONG
-            ).show()
+            Toast.makeText(this@PolylineAnnotationActivity, "click ${it.id}", Toast.LENGTH_SHORT)
+              .show()
             false
           }
         )
+
+        addInteractionListener(object : OnPolylineAnnotationInteractionListener {
+          override fun onSelectAnnotation(annotation: PolylineAnnotation) {
+            Toast.makeText(
+              this@PolylineAnnotationActivity,
+              "onSelectAnnotation ${annotation.id}",
+              Toast.LENGTH_SHORT
+            ).show()
+          }
+
+          override fun onDeselectAnnotation(annotation: PolylineAnnotation) {
+            Toast.makeText(
+              this@PolylineAnnotationActivity,
+              "onDeselectAnnotation ${annotation.id}",
+              Toast.LENGTH_SHORT
+            ).show()
+          }
+        })
 
         val points = listOf(
           Point.fromLngLat(-4.375974, -2.178992),

@@ -21,5 +21,5 @@ interface AnnotationPlugin : MapPlugin, MapSizePlugin, MapStyleObserverPlugin {
     mapView: View,
     type: AnnotationType,
     annotationConfig: AnnotationConfig?
-  ): AnnotationManager<*, *, *, *, *, *>
+  ): AnnotationManager<*, *, *, *, *, *, *>
 }

@@ -669,7 +669,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
    */
   override fun build(
     id: Long,
-    annotationManager: AnnotationManager<Point, PointAnnotation, *, *, *, *>
+    annotationManager: AnnotationManager<Point, PointAnnotation, *, *, *, *, *>
   ): PointAnnotation {
     if (geometry == null) {
       throw RuntimeException("geometry field is required")
