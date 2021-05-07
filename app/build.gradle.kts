@@ -78,6 +78,10 @@ dependencies {
   androidTestImplementation(Dependencies.androidxEspresso)
   androidTestImplementation(Dependencies.androidxUiAutomator)
   testImplementation(Dependencies.junit)
+
+  implementation("org.jetbrains.anko:anko-sqlite:0.10.8")
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3")
 }
 
 project.apply {
