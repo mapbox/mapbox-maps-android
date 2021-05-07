@@ -25,6 +25,9 @@ dependencies {
   api(Dependencies.mapboxGestures)
   api(Dependencies.mapboxGlNative)
   api(Dependencies.mapboxCoreCommon)
+  testImplementation(Dependencies.junit)
+  testImplementation(Dependencies.mockk)
+  testImplementation(Dependencies.androidxTestCore)
 }
 
 tasks.withType<DokkaTask>().configureEach {
