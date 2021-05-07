@@ -31,23 +31,25 @@ import java.util.concurrent.TimeoutException
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class UpdateAnnotationTest : BaseMapTest(), OnMapLoadedListener {
-  private lateinit var runnable: Runnable
+  private val updateDelay = 100L
   private var index = 0
   private val latch = CountDownLatch(AnnotationUtils.STYLES.size * 3)
   private lateinit var pointAnnotationManager: PointAnnotationManager
   private lateinit var pointAnnotation: PointAnnotation
+  private lateinit var handler: Handler
+  private val runnable = Runnable {
+    mapboxMap.loadStyleUri(AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size])
+  }
 
   @Test
   fun testUpdateAnnotation() {
     mapboxMap.addOnMapLoadedListener(this)
 
     rule.scenario.onActivity {
-      val handler = Handler(it.mainLooper)
-
+      handler = Handler(it.mainLooper)
       it.runOnUiThread {
         mapboxMap.loadStyleUri(AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]) {
-          pointAnnotationManager =
-            mapView.annotations.createPointAnnotationManager(mapView)
+          pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
           pointAnnotation = pointAnnotationManager.create(
             PointAnnotationOptions()
               .withIconColor(ColorUtils.colorToRgbaString(Color.RED))
@@ -81,19 +83,10 @@ class UpdateAnnotationTest : BaseMapTest(), OnMapLoadedListener {
               .withPoint(Point.fromLngLat(0.0, 0.0))
           )
           Assert.assertEquals(pointAnnotation, pointAnnotationManager.annotations[0])
-          runnable = Runnable {
-            pointAnnotation.geometry = Point.fromLngLat(
-              pointAnnotation.geometry.longitude() + 0.1,
-              pointAnnotation.geometry.latitude()
-            )
-            pointAnnotationManager.update(pointAnnotation)
-            handler.postDelayed(runnable, 100L)
-          }
-          handler.postDelayed(runnable, 100L)
         }
       }
     }
-    if (!latch.await(10000, TimeUnit.MILLISECONDS)) {
+    if (!latch.await(30000, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
   }
@@ -102,7 +95,14 @@ class UpdateAnnotationTest : BaseMapTest(), OnMapLoadedListener {
     latch.countDown()
     rule.scenario.onActivity {
       it.runOnUiThread {
-        mapboxMap.loadStyleUri(AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size])
+        // Move the position of annotation and update it.
+        pointAnnotation.geometry = Point.fromLngLat(
+          pointAnnotation.geometry.longitude() + 0.1,
+          pointAnnotation.geometry.latitude()
+        )
+        pointAnnotationManager.update(pointAnnotation)
+        // Change to the next style
+        handler.postDelayed(runnable, updateDelay)
       }
     }
   }
