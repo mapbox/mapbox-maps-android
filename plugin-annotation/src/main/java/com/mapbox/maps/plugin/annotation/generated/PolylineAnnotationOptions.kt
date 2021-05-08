@@ -285,7 +285,7 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
    */
   override fun build(
     id: Long,
-    annotationManager: AnnotationManager<LineString, PolylineAnnotation, *, *, *, *>
+    annotationManager: AnnotationManager<LineString, PolylineAnnotation, *, *, *, *, *>
   ): PolylineAnnotation {
     if (geometry == null) {
       throw RuntimeException("geometry field is required")

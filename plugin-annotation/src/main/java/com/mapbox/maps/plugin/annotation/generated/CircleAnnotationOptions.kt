@@ -278,7 +278,7 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
    */
   override fun build(
     id: Long,
-    annotationManager: AnnotationManager<Point, CircleAnnotation, *, *, *, *>
+    annotationManager: AnnotationManager<Point, CircleAnnotation, *, *, *, *, *>
   ): CircleAnnotation {
     if (geometry == null) {
       throw RuntimeException("geometry field is required")

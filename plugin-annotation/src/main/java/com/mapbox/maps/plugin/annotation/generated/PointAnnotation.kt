@@ -23,7 +23,7 @@ import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 class PointAnnotation(
   id: Long,
   /** The annotation manger that manipulate this annotation */
-  private val annotationManager: AnnotationManager<Point, PointAnnotation, *, *, *, *>,
+  private val annotationManager: AnnotationManager<Point, PointAnnotation, *, *, *, *, *>,
   jsonObject: JsonObject,
   geometry: Point
 ) : Annotation<Point>(id, jsonObject, geometry) {

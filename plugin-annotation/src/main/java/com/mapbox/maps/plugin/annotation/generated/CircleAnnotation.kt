@@ -20,7 +20,7 @@ import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 class CircleAnnotation(
   id: Long,
   /** The annotation manger that manipulate this annotation */
-  private val annotationManager: AnnotationManager<Point, CircleAnnotation, *, *, *, *>,
+  private val annotationManager: AnnotationManager<Point, CircleAnnotation, *, *, *, *, *>,
   jsonObject: JsonObject,
   geometry: Point
 ) : Annotation<Point>(id, jsonObject, geometry) {

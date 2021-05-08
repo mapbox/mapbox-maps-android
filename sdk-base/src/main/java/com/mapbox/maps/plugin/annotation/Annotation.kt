@@ -32,7 +32,7 @@ abstract class Annotation<T : Geometry>(
    * Get the offset geometry for the touch point
    */
   abstract fun getOffsetGeometry(
-    cameraManagerDelegate: MapCameraManagerDelegate,
+    mapCameraManagerDelegate: MapCameraManagerDelegate,
     moveDistancesObject: MoveDistancesObject,
     touchAreaShiftX: Int,
     touchAreaShiftY: Int
@@ -60,6 +60,11 @@ abstract class Annotation<T : Geometry>(
    * Whether this annotation is draggable
    */
   var isDraggable: Boolean = false
+
+  /**
+   * Whether or not this annotation has been selected, either via a tap gesture or programmatically.
+   */
+  var isSelected: Boolean = false
 
   /**
    * Static variables and methods.

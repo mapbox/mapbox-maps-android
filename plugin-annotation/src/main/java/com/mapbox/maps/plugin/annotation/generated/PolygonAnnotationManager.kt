@@ -24,7 +24,7 @@ class PolygonAnnotationManager(
   delegateProvider: MapDelegateProvider,
   annotationConfig: AnnotationConfig? = null
 ) :
-  AnnotationManagerImpl<Polygon, PolygonAnnotation, PolygonAnnotationOptions, OnPolygonAnnotationDragListener, OnPolygonAnnotationClickListener, OnPolygonAnnotationLongClickListener, FillLayer>(
+  AnnotationManagerImpl<Polygon, PolygonAnnotation, PolygonAnnotationOptions, OnPolygonAnnotationDragListener, OnPolygonAnnotationClickListener, OnPolygonAnnotationLongClickListener, OnPolygonAnnotationInteractionListener, FillLayer>(
     mapView, delegateProvider, annotationConfig
   ) {
   private val id = ID_GENERATOR.incrementAndGet()

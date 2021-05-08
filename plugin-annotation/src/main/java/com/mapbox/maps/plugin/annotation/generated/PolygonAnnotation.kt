@@ -20,7 +20,7 @@ import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 class PolygonAnnotation(
   id: Long,
   /** The annotation manger that manipulate this annotation */
-  private val annotationManager: AnnotationManager<Polygon, PolygonAnnotation, *, *, *, *>,
+  private val annotationManager: AnnotationManager<Polygon, PolygonAnnotation, *, *, *, *, *>,
   jsonObject: JsonObject,
   geometry: Polygon
 ) : Annotation<Polygon>(id, jsonObject, geometry) {

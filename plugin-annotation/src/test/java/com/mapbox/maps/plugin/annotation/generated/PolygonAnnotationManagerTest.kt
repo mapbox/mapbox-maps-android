@@ -273,11 +273,22 @@ class PolygonAnnotationManagerTest {
     val listener = mockk<OnPolygonAnnotationClickListener>()
     every { listener.onAnnotationClick(any()) } returns false
     manager.addClickListener(listener)
+
+    val interactionListener = mockk<OnPolygonAnnotationInteractionListener>()
+    every { interactionListener.onSelectAnnotation(any()) } just Runs
+    every { interactionListener.onDeselectAnnotation(any()) } just Runs
+    manager.addInteractionListener(interactionListener)
+
     captureSlot.captured.onMapClick(Point.fromLngLat(0.0, 0.0))
     verify { listener.onAnnotationClick(annotation) }
+    verify { interactionListener.onSelectAnnotation(annotation) }
+    captureSlot.captured.onMapClick(Point.fromLngLat(0.0, 0.0))
+    verify { interactionListener.onDeselectAnnotation(annotation) }
 
     manager.removeClickListener(listener)
     assertTrue(manager.clickListeners.isEmpty())
+    manager.removeInteractionListener(interactionListener)
+    assertTrue(manager.interactionListener.isEmpty())
   }
 
   @Test
