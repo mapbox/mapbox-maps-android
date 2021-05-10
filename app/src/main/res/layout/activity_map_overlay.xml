@@ -51,6 +51,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="116dp"
         android:src="@drawable/ic_baseline_refresh_24"
+        android:contentDescription="@null"
         app:backgroundTint="@color/primary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

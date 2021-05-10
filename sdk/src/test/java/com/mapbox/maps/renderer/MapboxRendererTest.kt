@@ -1,6 +1,7 @@
 package com.mapbox.maps.renderer
 
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.Looper
@@ -24,7 +25,7 @@ import org.robolectric.annotation.LooperMode
 import java.nio.ByteBuffer
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
+@Config(shadows = [ShadowLogger::class], sdk = [Build.VERSION_CODES.O])
 @LooperMode(LooperMode.Mode.PAUSED)
 internal abstract class MapboxRendererTest {
 

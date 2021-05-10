@@ -1,14 +1,17 @@
 package com.mapbox.maps.plugin.animation
 
+import android.os.Build
 import com.mapbox.maps.plugin.animation.CameraTransform.deg2rad
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowLog
 
 @RunWith(RobolectricTestRunner::class)
+@Config(sdk = [Build.VERSION_CODES.O])
 class CameraTransformTest {
 
   @Before

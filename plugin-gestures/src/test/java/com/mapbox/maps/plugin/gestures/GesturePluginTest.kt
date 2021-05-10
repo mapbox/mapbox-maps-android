@@ -3,6 +3,7 @@ package com.mapbox.maps.plugin.gestures
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.PointF
+import android.os.Build
 import android.os.Looper
 import android.util.AttributeSet
 import android.view.InputDevice.SOURCE_CLASS_POINTER
@@ -28,11 +29,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
+import org.robolectric.annotation.Config
 import org.robolectric.annotation.LooperMode
 import java.time.Duration
 
 @RunWith(RobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
+@Config(sdk = [Build.VERSION_CODES.O])
 class GesturePluginTest {
 
   private val context: Context = mockk(relaxed = true)

@@ -3,6 +3,7 @@ package com.mapbox.maps
 import android.content.Context
 import android.content.res.Resources
 import android.content.res.TypedArray
+import android.os.Build
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.view.MotionEvent
@@ -20,7 +21,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
+@Config(shadows = [ShadowLogger::class], sdk = [Build.VERSION_CODES.O])
 class MapViewTest {
 
   private lateinit var attrs: AttributeSet

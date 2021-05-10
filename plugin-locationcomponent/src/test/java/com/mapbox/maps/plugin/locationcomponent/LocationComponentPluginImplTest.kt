@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.util.AttributeSet
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineProvider
@@ -25,7 +26,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
+@Config(shadows = [ShadowLogger::class], sdk = [Build.VERSION_CODES.O])
 class LocationComponentPluginImplTest {
 
   private val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)

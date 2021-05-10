@@ -2,6 +2,7 @@ package com.mapbox.maps
 
 import android.content.Context
 import android.content.res.Resources
+import android.os.Build
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertEquals
@@ -9,8 +10,10 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
+@Config(sdk = [Build.VERSION_CODES.O])
 class CredentialsManagerTest {
 
   private val context: Context = mockk(relaxUnitFun = true)

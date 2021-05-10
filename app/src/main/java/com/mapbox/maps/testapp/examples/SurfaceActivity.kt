@@ -37,15 +37,15 @@ class SurfaceActivity : AppCompatActivity(), SurfaceHolder.Callback {
     surface.setOnGenericMotionListener { _, event -> mapSurface.onGenericMotionEvent(event) }
   }
 
-  override fun surfaceCreated(holder: SurfaceHolder?) {
+  override fun surfaceCreated(holder: SurfaceHolder) {
     mapSurface.surfaceCreated()
   }
 
-  override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
+  override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
     mapSurface.surfaceChanged(width, height)
   }
 
-  override fun surfaceDestroyed(holder: SurfaceHolder?) {
+  override fun surfaceDestroyed(holder: SurfaceHolder) {
     mapSurface.surfaceDestroyed()
   }
 

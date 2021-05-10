@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.animation
 
+import android.os.Build
 import android.view.animation.DecelerateInterpolator
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
@@ -15,9 +16,11 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowLog
 
 @RunWith(RobolectricTestRunner::class)
+@Config(sdk = [Build.VERSION_CODES.O])
 class CameraAnimatorsFactoryTest {
 
   private lateinit var mapTransformDelegate: MapTransformDelegate

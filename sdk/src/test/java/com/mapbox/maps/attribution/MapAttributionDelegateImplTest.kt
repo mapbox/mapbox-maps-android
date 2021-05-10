@@ -1,6 +1,7 @@
 package com.mapbox.maps.attribution
 
 import android.content.Context
+import android.os.Build
 import androidx.test.core.app.ApplicationProvider
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
@@ -15,8 +16,10 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
+@Config(sdk = [Build.VERSION_CODES.O])
 class MapAttributionDelegateImplTest {
   private val mapboxMap: MapboxMap = mockk()
   private val mapTelemetry: MapTelemetry = mockk()

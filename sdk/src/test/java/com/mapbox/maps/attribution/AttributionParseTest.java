@@ -1,17 +1,21 @@
 package com.mapbox.maps.attribution;
 
+import android.os.Build;
+
 import com.mapbox.maps.plugin.attribution.Attribution;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
+import org.robolectric.annotation.Config;
 
 import java.util.Set;
 
 import static junit.framework.Assert.assertEquals;
 
 @RunWith(RobolectricTestRunner.class)
+@Config(sdk = Build.VERSION_CODES.O)
 public class AttributionParseTest {
 
   private static final String STREETS_ATTRIBUTION = "<a href=\"https://www.mapbox.com/about/maps/\" target=\"_blank\">&copy; Mapbox</a> <a href=\"http://www.openstreetmap.org/about/\" target=\"_blank\">&copy; OpenStreetMap</a> <a class=\"mapbox-improve-map\" href=\"https://apps.mapbox.com/feedback/\" target=\"_blank\">Improve this map</a>\n";

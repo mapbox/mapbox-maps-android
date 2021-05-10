@@ -8,8 +8,7 @@ import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSetti
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.hamcrest.MatcherAssert
-import org.hamcrest.Matchers
+import junit.framework.Assert.assertTrue
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -99,7 +98,7 @@ class PuckAnimatorManagerTest {
       bearingAnimator.animate(0.0, 10.0, options = options)
     }
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    MatcherAssert.assertThat(counter, Matchers.greaterThan(0))
+    assertTrue(counter > 0)
     Assert.assertEquals(10.0, animatedValue, 0.0001)
   }
 
@@ -119,7 +118,7 @@ class PuckAnimatorManagerTest {
       positionAnimator.animate(START_POINT, END_POINT, options = options)
     }
     Shadows.shadowOf(Looper.getMainLooper()).idle()
-    MatcherAssert.assertThat(counter, Matchers.greaterThan(0))
+    assertTrue(counter > 0)
     Assert.assertEquals(END_POINT, animatedValue)
   }
 

@@ -1,6 +1,8 @@
 package com.mapbox.maps.plugin.attribution
 
 import android.content.DialogInterface
+import android.os.Build
+import android.os.Looper
 import androidx.test.core.app.ApplicationProvider
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.delegates.MapAttributionDelegate
@@ -10,8 +12,13 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows
+import org.robolectric.annotation.Config
+import org.robolectric.annotation.LooperMode
 
 @RunWith(RobolectricTestRunner::class)
+@Config(sdk = [Build.VERSION_CODES.O])
+@LooperMode(LooperMode.Mode.PAUSED)
 class AttributionDialogManagerImplTest {
 
   private lateinit var attributionDialogManagerImpl: AttributionDialogManagerImpl
@@ -74,7 +81,9 @@ class AttributionDialogManagerImplTest {
     val button =
       attributionDialogManagerImpl.telemetryDialog!!.getButton(DialogInterface.BUTTON_POSITIVE)
     assertNotNull(button)
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
     button.performClick()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
     assertFalse(attributionDialogManagerImpl.telemetryDialog!!.isShowing)
     assertTrue(slot.captured)
   }
@@ -91,7 +100,9 @@ class AttributionDialogManagerImplTest {
     val button =
       attributionDialogManagerImpl.telemetryDialog!!.getButton(DialogInterface.BUTTON_NEGATIVE)
     assertNotNull(button)
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
     button.performClick()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
     assertFalse(attributionDialogManagerImpl.telemetryDialog!!.isShowing)
     assertFalse(slot.captured)
   }
@@ -106,7 +117,9 @@ class AttributionDialogManagerImplTest {
     val button =
       attributionDialogManagerImpl.telemetryDialog!!.getButton(DialogInterface.BUTTON_NEUTRAL)
     assertNotNull(button)
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
     button.performClick()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
     assertFalse(attributionDialogManagerImpl.telemetryDialog!!.isShowing)
   }
 }

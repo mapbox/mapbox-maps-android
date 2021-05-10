@@ -28,20 +28,20 @@ internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTe
     this.renderThread = renderThread
   }
 
-  override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture?, width: Int, height: Int) {
+  override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, width: Int, height: Int) {
     renderThread.onSurfaceSizeChanged(width, height)
   }
 
-  override fun onSurfaceTextureUpdated(surface: SurfaceTexture?) {
+  override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {
     // do nothing
   }
 
-  override fun onSurfaceTextureDestroyed(surface: SurfaceTexture?): Boolean {
+  override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean {
     renderThread.onSurfaceDestroyed()
     return true
   }
 
-  override fun onSurfaceTextureAvailable(surfaceTexture: SurfaceTexture?, width: Int, height: Int) {
+  override fun onSurfaceTextureAvailable(surfaceTexture: SurfaceTexture, width: Int, height: Int) {
     renderThread.onSurfaceCreated(
       surface = Surface(surfaceTexture),
       width = width,

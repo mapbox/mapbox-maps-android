@@ -2,6 +2,7 @@ package com.mapbox.maps.plugin.animation
 
 import android.animation.Animator
 import android.animation.ValueAnimator
+import android.os.Build
 import android.os.Looper
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
@@ -21,7 +22,7 @@ import org.robolectric.annotation.LooperMode
 import org.robolectric.shadows.ShadowLog
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
+@Config(sdk = [Build.VERSION_CODES.O], shadows = [ShadowLogger::class])
 @LooperMode(LooperMode.Mode.PAUSED)
 class CameraAnimationsListenersTest {
 

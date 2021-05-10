@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.locationcomponent
 
+import android.os.Build
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
 import com.mapbox.common.ShadowLogger
@@ -15,7 +16,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
+@Config(shadows = [ShadowLogger::class], sdk = [Build.VERSION_CODES.O])
 class LocationIndicatorLayerWrapperTest {
 
   private val style: StyleManagerInterface = mockk(relaxed = true)

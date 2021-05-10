@@ -18,6 +18,7 @@
         android:layout_gravity="end|bottom"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:contentDescription="@null"
         android:src="@drawable/pattern" />
     
 </merge>

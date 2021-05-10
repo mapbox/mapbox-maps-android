@@ -844,7 +844,7 @@ class HillshadeLayerTest {
     value["source"] = Value("source")
     every { style.getStyleLayerProperties("id") } returns valueExpected
     every { valueExpected.error } returns null
-    every { valueExpected.value } returns Value(value)
+    every { valueExpected.hint(Value::class).value } returns Value(value)
     val layer = style.getLayer("id") as HillshadeLayer
     assertNotNull(layer)
     assertNotNull(layer.delegate)

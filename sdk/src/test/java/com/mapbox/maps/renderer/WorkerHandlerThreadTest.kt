@@ -1,5 +1,6 @@
 package com.mapbox.maps.renderer
 
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import com.mapbox.common.ShadowLogger
@@ -15,7 +16,7 @@ import org.robolectric.annotation.LooperMode
 import java.time.Duration
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
+@Config(shadows = [ShadowLogger::class], sdk = [Build.VERSION_CODES.O])
 @LooperMode(LooperMode.Mode.PAUSED)
 class WorkerHandlerThreadTest {
 

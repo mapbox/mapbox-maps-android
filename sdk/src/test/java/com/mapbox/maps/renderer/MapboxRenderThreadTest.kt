@@ -1,5 +1,6 @@
 package com.mapbox.maps.renderer
 
+import android.os.Build
 import android.view.Surface
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.renderer.egl.EGLCore
@@ -18,7 +19,7 @@ import org.robolectric.annotation.Config
 import org.robolectric.annotation.LooperMode
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
+@Config(shadows = [ShadowLogger::class], sdk = [Build.VERSION_CODES.O])
 @LooperMode(LooperMode.Mode.PAUSED)
 class MapboxRenderThreadTest {
 

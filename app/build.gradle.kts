@@ -7,6 +7,7 @@ plugins {
 
 android {
   compileSdkVersion(AndroidVersions.compileSdkVersion)
+  buildToolsVersion = "30.0.3"
   defaultConfig {
     applicationId = "com.mapbox.maps.testapp"
     minSdkVersion(AndroidVersions.minSdkVersion)
@@ -15,9 +16,7 @@ android {
     versionName = "0.1.0"
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    testInstrumentationRunnerArguments = mapOf(
-      "clearPackageData" to "true"
-    )
+    testInstrumentationRunnerArguments["clearPackageData"] = "true"
   }
   buildTypes {
     getByName("release") {
@@ -26,6 +25,12 @@ android {
       proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
     }
   }
+
+  dexOptions {
+    javaMaxHeapSize = "4G"
+  }
+
+  ndkVersion = "21.4.7075529"
 
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_1_8

@@ -37,7 +37,7 @@ class TypeUtilsTest {
     mockkStatic(ValueConverter::class)
     every { ValueConverter.fromJson(any()) } returns expected
     every { expected.error } returns null
-    every { expected.value } returns Value(0)
+    every { expected.hint(Value::class).value } returns Value(0)
   }
 
   @Test

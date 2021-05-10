@@ -1,6 +1,7 @@
 package com.mapbox.maps
 
 import android.content.res.TypedArray
+import android.os.Build
 import com.mapbox.common.ShadowLogger
 import io.mockk.every
 import io.mockk.mockk
@@ -14,7 +15,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
+@Config(shadows = [ShadowLogger::class], sdk = [Build.VERSION_CODES.O])
 class MapAttributeParserTest {
 
   private lateinit var typedArray: TypedArray

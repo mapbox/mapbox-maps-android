@@ -24,7 +24,7 @@ import java.nio.ByteBuffer
 class AnimatedImageSourceActivity : AppCompatActivity() {
 
   private val handler: Handler = Handler()
-  private var runnable: Runnable? = null
+  private lateinit var runnable: Runnable
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
