@@ -33,6 +33,15 @@
         <attr name="mapbox_gesturesZoomRate" format="float"/>
         <!-- The pixel ratio of the device that the gestures will take in account. -->
         <attr name="mapbox_gesturesPixelRatio" format="float"/>
+        <!-- The pan scroll mode that the gestures will take in account. HorizontalAndVertical by default -->
+        <attr name="mapbox_gesturesPanScrollMode" format="enum">
+            <!-- The map allows the user to scroll both horizontally and vertically. -->
+            <enum name="HorizontalAndVertical" value="0" />
+            <!-- The map allows the user to only scroll horizontally. -->
+            <enum name="Horizontal" value="1" />
+            <!-- The map allows the user to only scroll vertically. -->
+            <enum name="Vertical" value="2" />
+        </attr>
     </declare-styleable>
 </resources>
 <!-- End of generated file. -->

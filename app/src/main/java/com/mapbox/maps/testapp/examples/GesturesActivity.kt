@@ -229,6 +229,21 @@ class GesturesActivity : AppCompatActivity() {
         gesturesPlugin.quickZoomEnabled = !gesturesPlugin.quickZoomEnabled
         item.isChecked = gesturesPlugin.quickZoomEnabled
       }
+      R.id.menu_gesture_pan_scroll_horizontal_vertical->{
+        mapView.gestures.updateSettings {
+          panScrollMode = PanScrollMode.HorizontalAndVertical
+        }
+      }
+      R.id.menu_gesture_pan_scroll_horizontal->{
+        mapView.gestures.updateSettings {
+          panScrollMode = PanScrollMode.Horizontal
+        }
+      }
+      R.id.menu_gesture_pan_scroll_vertical->{
+        mapView.gestures.updateSettings {
+          panScrollMode = PanScrollMode.Vertical
+        }
+      }
     }
     return true
   }

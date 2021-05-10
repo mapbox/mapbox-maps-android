@@ -5,6 +5,7 @@ package com.mapbox.maps.plugin.gestures.generated
 import android.content.Context
 import android.util.AttributeSet
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.plugin.gestures.PanScrollMode
 import com.mapbox.maps.plugin.gestures.R
 
 /**
@@ -43,6 +44,14 @@ internal object GesturesAttributeParser {
         increaseScaleThresholdWhenRotating = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_gesturesIncreaseScaleThresholdWhenRotating, true),
         zoomRate = typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_gesturesZoomRate, 1f),
         pixelRatio = typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_gesturesPixelRatio, pixelRatio),
+        panScrollMode = when (typedArray.getInt(
+          R.styleable.mapbox_MapView_mapbox_gesturesPanScrollMode,
+          0
+        )) {
+          0 -> PanScrollMode.HorizontalAndVertical
+          1 -> PanScrollMode.Horizontal
+          else -> PanScrollMode.Vertical
+        }
       )
     } finally {
       typedArray.recycle()

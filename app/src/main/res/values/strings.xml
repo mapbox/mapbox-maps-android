@@ -16,6 +16,9 @@
     <string name="toggle_scroll_enabled">Toggle scroll enabled</string>
     <string name="toggle_double_tap_enabled">Toggle double tap enabled</string>
     <string name="toggle_quick_zoom_enabled">Toggle quick zoom enabled</string>
+    <string name="pan_scroll_horizontal_vertical">Pan scroll horizontal and vertical</string>
+    <string name="pan_scroll_horizontal">Pan scroll horizontal</string>
+    <string name="pan_scroll_vertical">Pan scroll vertical</string>
 
     <!--Cache Manager-->
     <string name="menu_cache_clear">Clear ambient cache</string>

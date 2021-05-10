@@ -3,6 +3,8 @@
 package com.mapbox.maps.plugin.gestures.generated
 
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.plugin.gestures.PanScrollMode
+
 /**
  * Gesture configuration allows to control the user touch interaction.
  */
@@ -82,6 +84,11 @@ data class GesturesSettings(
    * The pixel ratio of the device that the gestures will take in account.
    */
   var pixelRatio: Float = 1f,
+
+  /**
+   * The pan scroll mode that the gestures will take in account. HorizontalAndVertical by default.
+   */
+  var panScrollMode: PanScrollMode = PanScrollMode.HorizontalAndVertical
 )
 
 // End of generated file.

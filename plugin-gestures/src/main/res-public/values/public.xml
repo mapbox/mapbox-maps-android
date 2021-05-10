@@ -48,5 +48,8 @@
 
     <!-- The pixel ratio of the device that the gestures will take in account. -->
     <public name="mapbox_gesturesPixelRatio" type="attr" />
+
+    <!-- The pan scroll mode that the gestures will take in account. HorizontalAndVertical by default -->
+    <public name="mapbox_gesturesPanScrollMode" type="attr" />
 </resources>
 <!-- End of generated file. -->
