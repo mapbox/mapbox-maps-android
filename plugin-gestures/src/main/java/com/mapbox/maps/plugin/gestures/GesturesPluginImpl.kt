@@ -17,6 +17,7 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
+import com.mapbox.maps.plugin.PanScrollMode
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
@@ -1226,9 +1227,14 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     }
     val pitchFactor = 1.5 + pitchFactorAdditionalComponent
 
-    val offsetX = velocityX.toDouble() / pitchFactor / screenDensity.toDouble()
-    val offsetY = velocityY.toDouble() / pitchFactor / screenDensity.toDouble()
+    var offsetX = velocityX.toDouble() / pitchFactor / screenDensity.toDouble()
+    var offsetY = velocityY.toDouble() / pitchFactor / screenDensity.toDouble()
 
+    if (internalSettings.panScrollMode == PanScrollMode.HORIZONTAL) {
+      offsetY = 0.0
+    } else if (internalSettings.panScrollMode == PanScrollMode.VERTICAL) {
+      offsetX = 0.0
+    }
     // calculate animation time based on displacement
     val animationTime =
       (velocityXY / 7.0 / pitchFactor + ANIMATION_DURATION_FLING_BASE).toLong()
@@ -1279,15 +1285,20 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       }
       val pitch = mapCameraManagerDelegate.cameraState.pitch
 
+      val resolvedDistanceX =
+        if (internalSettings.panScrollMode == PanScrollMode.VERTICAL) 0f else distanceX
+      val resolvedDistanceY =
+        if (internalSettings.panScrollMode == PanScrollMode.HORIZONTAL) 0f else distanceY
+
       // Scroll the map
       val offset = if (pitch in NORMAL_MAX_PITCH..MAXIMUM_PITCH) {
         // reducing distance values for high pitch values
         // based equation system
         // f(NORMAL_MAX_PITCH) = 1.0 and f(MAXIMUM_PITCH) = 4.5
         // TODO use triangulation to calculate the y distance
-        ScreenCoordinate((-distanceX).toDouble(), -distanceY / (0.14 * pitch - 7.4))
+        ScreenCoordinate((-resolvedDistanceX).toDouble(), -resolvedDistanceY / (0.14 * pitch - 7.4))
       } else {
-        ScreenCoordinate((-distanceX).toDouble(), (-distanceY).toDouble())
+        ScreenCoordinate((-resolvedDistanceX).toDouble(), (-resolvedDistanceY).toDouble())
       }
       easeToImmediately(
         mapCameraManagerDelegate.getDragCameraOptions(

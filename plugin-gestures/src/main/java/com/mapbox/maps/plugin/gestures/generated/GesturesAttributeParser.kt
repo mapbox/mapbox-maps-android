@@ -5,6 +5,7 @@ package com.mapbox.maps.plugin.gestures.generated
 import android.content.Context
 import android.util.AttributeSet
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.plugin.PanScrollMode
 import com.mapbox.maps.plugin.gestures.R
 
 /**
@@ -25,6 +26,7 @@ internal object GesturesAttributeParser {
         zoomEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_gesturesZoomEnabled, true),
         scrollEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_gesturesScrollEnabled, true),
         pitchEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_gesturesPitchEnabled, true),
+        panScrollMode = PanScrollMode.values()[typedArray.getInt(R.styleable.mapbox_MapView_mapbox_gesturesPanScrollMode, PanScrollMode.HORIZONTAL_AND_VERTICAL.ordinal)],
         doubleTapToZoomEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_gesturesDoubleTapToZoomEnabled, true),
         quickZoomEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_gesturesQuickZoomEnabled, true),
         focalPoint = if (typedArray.hasValue(R.styleable.mapbox_MapView_mapbox_gesturesFocalPointX) && typedArray.hasValue(R.styleable.mapbox_MapView_mapbox_gesturesFocalPointY)) {

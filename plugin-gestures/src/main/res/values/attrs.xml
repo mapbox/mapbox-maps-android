@@ -10,6 +10,15 @@
         <attr name="mapbox_gesturesScrollEnabled" format="boolean"/>
         <!-- Whether pitch gestures are enabled. -->
         <attr name="mapbox_gesturesPitchEnabled" format="boolean"/>
+        <!-- Whether the user is restricted in which direction the map is scrolled. -->
+        <attr name="mapbox_gesturesPanScrollMode" format="enum">
+          <!-- The map allows the user to only scroll horizontally. -->
+          <enum name="horizontal" value="0"/>
+          <!-- The map allows the user to only scroll vertically. -->
+          <enum name="vertical" value="1"/>
+          <!-- The map allows the user to scroll both horizontally and vertically. -->
+          <enum name="horizontal_and_vertical" value="2"/>
+        </attr>
         <!-- Whether double tapping the map results in a zoom gesture. -->
         <attr name="mapbox_gesturesDoubleTapToZoomEnabled" format="boolean"/>
         <!-- Whether quick zoom gesture is enabled. -->

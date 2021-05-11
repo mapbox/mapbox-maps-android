@@ -14,6 +14,9 @@
     <!-- Whether pitch gestures are enabled. -->
     <public name="mapbox_gesturesPitchEnabled" type="attr" />
 
+    <!-- Whether the user is restricted in which direction the map is scrolled. -->
+    <public name="mapbox_gesturesPanScrollMode" type="attr" />
+
     <!-- Whether double tapping the map results in a zoom gesture. -->
     <public name="mapbox_gesturesDoubleTapToZoomEnabled" type="attr" />
 

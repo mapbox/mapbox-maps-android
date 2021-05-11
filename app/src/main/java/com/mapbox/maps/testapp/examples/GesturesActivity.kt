@@ -17,6 +17,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
+import com.mapbox.maps.plugin.PanScrollMode
 import com.mapbox.maps.plugin.gestures.*
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_gestures.*
@@ -228,6 +229,21 @@ class GesturesActivity : AppCompatActivity() {
       R.id.menu_gesture_quick_zoom -> {
         gesturesPlugin.quickZoomEnabled = !gesturesPlugin.quickZoomEnabled
         item.isChecked = gesturesPlugin.quickZoomEnabled
+      }
+      R.id.menu_gesture_pan_scroll_horizontal_vertical -> {
+        mapView.gestures.updateSettings {
+          panScrollMode = PanScrollMode.HORIZONTAL_AND_VERTICAL
+        }
+      }
+      R.id.menu_gesture_pan_scroll_horizontal -> {
+        mapView.gestures.updateSettings {
+          panScrollMode = PanScrollMode.HORIZONTAL
+        }
+      }
+      R.id.menu_gesture_pan_scroll_vertical -> {
+        mapView.gestures.updateSettings {
+          panScrollMode = PanScrollMode.VERTICAL
+        }
       }
     }
     return true

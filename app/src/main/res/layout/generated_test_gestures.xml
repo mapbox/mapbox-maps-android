@@ -7,6 +7,7 @@
     mapbox:mapbox_gesturesZoomEnabled = "false"
     mapbox:mapbox_gesturesScrollEnabled = "false"
     mapbox:mapbox_gesturesPitchEnabled = "false"
+    mapbox:mapbox_gesturesPanScrollMode = "horizontal_and_vertical"
     mapbox:mapbox_gesturesDoubleTapToZoomEnabled = "false"
     mapbox:mapbox_gesturesQuickZoomEnabled = "false"
     mapbox:mapbox_gesturesFocalPointX = "10.0"

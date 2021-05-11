@@ -3,6 +3,7 @@
 package com.mapbox.maps.plugin.gestures.generated
 
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.plugin.PanScrollMode
 
 /**
  * Abstract settings class for GesturesPlugin.
@@ -84,6 +85,18 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
     }
     set(value) {
       this.internalSettings.pitchEnabled = value
+      applySettings()
+    }
+
+  /**
+   * Whether the user is restricted in which direction the map is scrolled.
+   */
+  override var panScrollMode: PanScrollMode
+    get() {
+      return this.internalSettings.panScrollMode
+    }
+    set(value) {
+      this.internalSettings.panScrollMode = value
       applySettings()
     }
 

@@ -4,6 +4,7 @@ package com.mapbox.maps.testapp.gestures.generated
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import com.mapbox.maps.plugin.PanScrollMode
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.testapp.BaseMapTest
 import org.junit.Assert.assertEquals
@@ -39,6 +40,11 @@ class GesturesAttributeParserDefaultValueTest : BaseMapTest() {
       "pitchEnabled test failed..",
       true,
       mapView.gestures.getSettings().pitchEnabled
+    )
+    assertEquals(
+      "panScrollMode test failed..",
+      PanScrollMode.HORIZONTAL_AND_VERTICAL,
+      mapView.gestures.getSettings().panScrollMode
     )
     assertEquals(
       "doubleTapToZoomEnabled test failed..",

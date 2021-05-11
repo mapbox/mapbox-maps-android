@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.plugin.PanScrollMode
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
@@ -102,6 +103,12 @@ class GesturesAttributeParserTest {
     every { typedArray.getBoolean(any(), any()) } returns false
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
     assertEquals(false, settings.pitchEnabled)
+  }
+  @Test
+  fun panScrollModeTest() {
+    every { typedArray.getInt(any(), any()) } returns PanScrollMode.HORIZONTAL_AND_VERTICAL.ordinal
+    val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
+    assertEquals(PanScrollMode.HORIZONTAL_AND_VERTICAL, settings.panScrollMode)
   }
 
   @Test

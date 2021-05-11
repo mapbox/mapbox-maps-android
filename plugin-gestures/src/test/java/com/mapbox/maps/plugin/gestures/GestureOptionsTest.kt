@@ -5,6 +5,7 @@ import android.content.res.TypedArray
 import android.os.Handler
 import android.util.AttributeSet
 import com.mapbox.android.gestures.AndroidGesturesManager
+import com.mapbox.maps.plugin.PanScrollMode
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
@@ -14,8 +15,7 @@ import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import io.mockk.*
 import org.junit.After
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
@@ -57,6 +57,7 @@ class GestureOptionsTest {
     every { typedArray.getBoolean(any(), any()) } returns true
     every { typedArray.getDimension(any(), any()) } returns 10.0f
     every { typedArray.getFloat(any(), any()) } returns 10.0f
+    every { typedArray.getInt(any(), any()) } returns 0
     every { typedArray.hasValue(any()) } returns true
     every { mapDelegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
     every { mapPluginProviderDelegate.camera } returns cameraAnimationsPlugin
@@ -191,5 +192,44 @@ class GestureOptionsTest {
     gesturePlugin.bind(context, gestureManager, attrs, 1f)
     gesturePlugin.initialize()
     assertFalse(gesturePlugin.getSettings().doubleTapToZoomEnabled)
+  }
+
+  @Test
+  fun getGestureSettingsPanScrollDefault() {
+    every {
+      typedArray.getInt(
+        R.styleable.mapbox_MapView_mapbox_gesturesPanScrollMode,
+        any()
+      )
+    } returns PanScrollMode.HORIZONTAL_AND_VERTICAL.ordinal
+    gesturePlugin.bind(context, gestureManager, attrs, 1f)
+    gesturePlugin.initialize()
+    assertEquals(gesturePlugin.getSettings().panScrollMode, PanScrollMode.HORIZONTAL_AND_VERTICAL)
+  }
+
+  @Test
+  fun getGestureSettingsPanScrollHorizontal() {
+    every {
+      typedArray.getInt(
+        R.styleable.mapbox_MapView_mapbox_gesturesPanScrollMode,
+        any()
+      )
+    } returns PanScrollMode.HORIZONTAL.ordinal
+    gesturePlugin.bind(context, gestureManager, attrs, 1f)
+    gesturePlugin.initialize()
+    assertEquals(gesturePlugin.getSettings().panScrollMode, PanScrollMode.HORIZONTAL)
+  }
+
+  @Test
+  fun getGestureSettingsPanScrollVertical() {
+    every {
+      typedArray.getInt(
+        R.styleable.mapbox_MapView_mapbox_gesturesPanScrollMode,
+        any()
+      )
+    } returns PanScrollMode.VERTICAL.ordinal
+    gesturePlugin.bind(context, gestureManager, attrs, 1f)
+    gesturePlugin.initialize()
+    assertEquals(gesturePlugin.getSettings().panScrollMode, PanScrollMode.VERTICAL)
   }
 }

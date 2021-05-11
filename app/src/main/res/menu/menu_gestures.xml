@@ -40,4 +40,13 @@
         android:checkable="true"
         android:checked="true"
         android:title="@string/toggle_quick_zoom_enabled" />
+    <item
+        android:id="@+id/menu_gesture_pan_scroll_horizontal_vertical"
+        android:title="@string/pan_scroll_horizontal_vertical" />
+    <item
+        android:id="@+id/menu_gesture_pan_scroll_horizontal"
+        android:title="@string/pan_scroll_horizontal" />
+    <item
+        android:id="@+id/menu_gesture_pan_scroll_vertical"
+        android:title="@string/pan_scroll_vertical" />
 </menu>
