@@ -14,6 +14,7 @@ import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
+import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.testapp.R
@@ -52,20 +53,43 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
             .zoom(START_ZOOM)
             .build()
         )
-        loadStyleUri(Style.MAPBOX_STREETS) { style ->
-          buttonLoad.setOnClickListener {
-            flyTo(
-              CameraOptions.Builder()
-                .zoom(END_ZOOM)
-                .build(),
-              MapAnimationOptions.mapAnimationOptions {
-                duration(10_000L)
-              })
-            it.postDelayed({
-              loadGeoJson(style)
-            }, 1000)
+//        loadStyleUri(Style.MAPBOX_STREETS) { style ->
+//          buttonLoad.setOnClickListener {
+//            flyTo(
+//              CameraOptions.Builder()
+//                .zoom(END_ZOOM)
+//                .build(),
+//              MapAnimationOptions.mapAnimationOptions {
+//                duration(10_000L)
+//              })
+//            it.postDelayed({
+//              loadGeoJson(style)
+//            }, 1000)
+//          }
+//        }
+
+        loadStyle(style(Style.DARK) {
+          +geoJsonSource("source") {
+            featureCollection(routePoints)
           }
-        }
+          +geoJsonSource("source2") {
+            featureCollection(routePoints)
+          }
+          +geoJsonSource("source3") {
+            featureCollection(routePoints)
+          }
+          +lineLayer("layer", "source") {
+            lineColor("blue")
+            lineWidth(10.0)
+          }
+          +lineLayer("layer2", "source2") {
+            lineColor("yellow")
+            lineWidth(5.0)
+          }
+          +lineLayer("layer3", "source3") {
+            lineColor("red")
+          }
+        })
       }
   }
 
@@ -80,31 +104,31 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
 
     // ASYNC METHOD
 
-    geoJsonSource(
-      id = SOURCE,
-      block = {
-        featureCollection(routePoints)
-      },
-      result = {
-        style.addSource(it)
-        style.addLayer(lineLayer(LAYER, SOURCE) {
-          lineColor("blue")
-        })
-      }
-    )
-
-    // add some useless extra work to parse same geojson
-    for (i in 0..5) {
-      geoJsonSource(
-        id = i.toString(),
-        block = {
-          featureCollection(routePoints)
-        },
-        result = {
-          style.addSource(it)
-        }
-      )
-    }
+//    geoJsonSource(
+//      id = SOURCE,
+//      block = {
+//        featureCollection(routePoints)
+//      },
+//      result = {
+//        style.addSource(it)
+//        style.addLayer(lineLayer(LAYER, SOURCE) {
+//          lineColor("blue")
+//        })
+//      }
+//    )
+//
+//    // add some useless extra work to parse same geojson
+//    for (i in 0..5) {
+//      geoJsonSource(
+//        id = i.toString(),
+//        block = {
+//          featureCollection(routePoints)
+//        },
+//        result = {
+//          style.addSource(it)
+//        }
+//      )
+//    }
     buttonLoad.visibility = View.GONE
   }
 

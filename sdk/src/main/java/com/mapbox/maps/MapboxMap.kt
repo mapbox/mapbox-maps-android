@@ -12,6 +12,7 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
+import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.plugin.PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
 import com.mapbox.maps.plugin.PLUGIN_GESTURE_CLASS_NAME
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
@@ -169,10 +170,34 @@ class MapboxMap internal constructor(
     onStyleLoaded: Style.OnStyleLoaded? = null
   ) {
     this.style = style
-    styleExtension.images.forEach {
-      it.bindTo(style)
-    }
+    var geojsonSourceCount = 0
+    var hasGeojsonSources = false
     styleExtension.sources.forEach {
+      if (it is GeoJsonSource) {
+        hasGeojsonSources = true
+        geojsonSourceCount++
+        it.applyDataAsync {
+          geojsonSourceCount--
+          it.bindTo(style)
+          if (geojsonSourceCount == 0) {
+            loadAllExceptGeojsonSources(style, styleExtension, onStyleLoaded)
+          }
+        }
+      } else {
+        it.bindTo(style)
+      }
+    }
+    if (!hasGeojsonSources) {
+      loadAllExceptGeojsonSources(style, styleExtension, onStyleLoaded)
+    }
+  }
+
+  private fun loadAllExceptGeojsonSources(
+    style: Style,
+    styleExtension: StyleContract.StyleExtension,
+    onStyleLoaded: Style.OnStyleLoaded?
+  ) {
+    styleExtension.images.forEach {
       it.bindTo(style)
     }
     styleExtension.layers.forEach {

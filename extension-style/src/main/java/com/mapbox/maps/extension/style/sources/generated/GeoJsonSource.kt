@@ -21,7 +21,32 @@ import com.mapbox.maps.extension.style.utils.toValue
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#geojson)
  *
  */
-class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
+class GeoJsonSource(
+  builder: Builder,
+  // must be instance of Geometry, Feature, FeatureCollection
+  private val rawData: Any? = null
+) : Source(builder.sourceId) {
+
+  fun applyDataAsync(sourceApplied: () -> Unit) {
+    if (rawData != null &&
+      (rawData is Geometry || rawData is FeatureCollection || rawData is Feature)) {
+      workerHandler.post {
+        val property = PropertyValue(
+          "data",
+          when(rawData) {
+            is Geometry -> rawData.toValue()
+            is FeatureCollection -> rawData.toValue()
+            is Feature -> rawData.toValue()
+            else -> null
+          }
+        )
+        mainHandler.post {
+          setProperty(property)
+          sourceApplied.invoke()
+        }
+      }
+    }
+  }
 
   init {
     sourceProperties.putAll(builder.properties)
@@ -513,33 +538,17 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * @param sourceId the ID of the source
    */
   @SourceDsl
-  class Builder(val sourceId: String, val result: ((GeoJsonSource) -> Unit)? = null) {
-    private var appliedPropertiesCount = 0
+  class Builder(val sourceId: String) {
+
+    internal var rawData: Any? = null
     internal val properties = HashMap<String, PropertyValue<*>>()
     // Properties that only settable after the source is added to the style.
     internal val volatileProperties = HashMap<String, PropertyValue<*>>()
 
-    private fun applyProperty(block: () -> Unit) = apply {
-      if (result == null) {
-        block.invoke()
-      } else {
-        appliedPropertiesCount++
-        workerHandler.post {
-          block.invoke()
-          mainHandler.post {
-            appliedPropertiesCount--
-            if (appliedPropertiesCount == 0) {
-              result.invoke(GeoJsonSource(this))
-            }
-          }
-        }
-      }
-    }
-
     /**
      * A URL to a GeoJSON file, or inline GeoJSON.
      */
-    fun data(value: String) = applyProperty {
+    fun data(value: String) = apply {
       val propertyValue = PropertyValue("data", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
@@ -547,7 +556,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     /**
      * A URL to a GeoJSON file, or inline GeoJSON.
      */
-    fun data(value: Expression) = applyProperty {
+    fun data(value: Expression) = apply {
       val propertyValue = PropertyValue("data", value)
       properties[propertyValue.propertyName] = propertyValue
     }
@@ -839,9 +848,8 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      *
      * @param value the feature
      */
-    fun feature(value: Feature) = applyProperty {
-      val propertyValue = PropertyValue("data", value.toValue())
-      properties[propertyValue.propertyName] = propertyValue
+    fun feature(value: Feature) = apply {
+      rawData = value
     }
 
     /**
@@ -849,9 +857,8 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      *
      * @param value the feature collection
      */
-    fun featureCollection(value: FeatureCollection) = applyProperty {
-      val propertyValue = PropertyValue("data", value.toValue())
-      properties[propertyValue.propertyName] = propertyValue
+    fun featureCollection(value: FeatureCollection) = apply {
+      rawData = value
     }
 
     /**
@@ -859,16 +866,15 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      *
      * @param value the geometry
      */
-    fun geometry(value: Geometry) = applyProperty {
-      val propertyValue = PropertyValue("data", value.toValue())
-      properties[propertyValue.propertyName] = propertyValue
+    fun geometry(value: Geometry) = apply {
+      rawData = value
     }
     /**
      * Build the GeoJsonSource.
      *
      * @return the GeoJsonSource
      */
-    fun build() = GeoJsonSource(this)
+    fun build() = GeoJsonSource(this, rawData)
   }
 
   /**
@@ -1153,9 +1159,5 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
  */
 fun geoJsonSource(id: String, block: GeoJsonSource.Builder.() -> Unit): GeoJsonSource =
   GeoJsonSource.Builder(id).apply(block).build()
-
-fun geoJsonSource(id: String, block: GeoJsonSource.Builder.() -> Unit, result: (GeoJsonSource) -> Unit) {
-  GeoJsonSource.Builder(id, result).apply(block)
-}
 
 // End of generated file.
