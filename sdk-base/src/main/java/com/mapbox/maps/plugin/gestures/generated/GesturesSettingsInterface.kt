@@ -3,6 +3,7 @@
 package com.mapbox.maps.plugin.gestures.generated
 
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.plugin.PanScrollMode
 
 /**
  * Interface that defines the public settings interface for GesturesPlugin.
@@ -41,6 +42,11 @@ interface GesturesSettingsInterface {
    * Whether pitch gestures are enabled.
    */
   var pitchEnabled: Boolean
+
+  /**
+   * Whether the user is restricted in which direction the map is scrolled.
+   */
+  var panScrollMode: PanScrollMode
 
   /**
    * Whether double tapping the map results in a zoom gesture.

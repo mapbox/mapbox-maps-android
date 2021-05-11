@@ -16,6 +16,7 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.plugin.PanScrollMode
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
@@ -42,7 +43,6 @@ class GesturePluginTest {
 
   private val mapTransformDelegate: MapTransformDelegate = mockk(relaxUnitFun = true)
   private val mapCameraManagerDelegate: MapCameraManagerDelegate = mockk(relaxUnitFun = true)
-  private val mapProjectionDelegate: MapProjectionDelegate = mockk(relaxUnitFun = true)
   private val mapPluginProviderDelegate: MapPluginProviderDelegate = mockk(relaxUnitFun = true)
   private val cameraAnimationsPlugin: CameraAnimationsPlugin = mockk(relaxed = true)
 
@@ -60,7 +60,13 @@ class GesturePluginTest {
   @Before
   fun setUp() {
     mockkObject(GesturesAttributeParser::class)
-    every { GesturesAttributeParser.parseGesturesSettings(context, attrs, any()) } returns GesturesSettings()
+    every {
+      GesturesAttributeParser.parseGesturesSettings(
+        context,
+        attrs,
+        any()
+      )
+    } returns GesturesSettings()
 
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
     every { context.packageName } returns pack
@@ -68,6 +74,7 @@ class GesturePluginTest {
     every { typedArray.getBoolean(any(), any()) } returns true
     every { typedArray.getDimension(any(), any()) } returns 10.0f
     every { typedArray.getFloat(any(), any()) } returns 10.0f
+    every { typedArray.getInt(any(), any()) } returns 2
     every { typedArray.hasValue(any()) } returns true
 
     every { mapDelegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
@@ -92,7 +99,12 @@ class GesturePluginTest {
       0.0,
       0.0
     )
-    every { mapCameraManagerDelegate.getDragCameraOptions(any(), any()) } returns CameraOptions.Builder().build()
+    every {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        any(),
+        any()
+      )
+    } returns CameraOptions.Builder().build()
   }
 
   @After
@@ -322,12 +334,71 @@ class GesturePluginTest {
       0.0,
       0.0
     )
-    every { mapCameraManagerDelegate.getDragCameraOptions(any(), any()) } returns CameraOptions.Builder().build()
+    every {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        any(),
+        any()
+      )
+    } returns CameraOptions.Builder().build()
     val result = presenter.handleFlingEvent(mockk(), mockk(), 10000f, 10000f)
     verify {
       mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),
         ScreenCoordinate(666.6666666666667, 666.6666666666667)
+      )
+    }
+    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
+    assert(result)
+  }
+
+  @Test
+  fun verifyFlingPanScrollHorizontal() {
+    every { mapCameraManagerDelegate.cameraState } returns CameraState(
+      Point.fromLngLat(0.0, 0.0),
+      EdgeInsets(0.0, 0.0, 0.0, 0.0),
+      0.0,
+      0.0,
+      0.0
+    )
+    every {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        any(),
+        any()
+      )
+    } returns CameraOptions.Builder().build()
+    presenter.updateSettings { panScrollMode = PanScrollMode.VERTICAL }
+    val result = presenter.handleFlingEvent(mockk(), mockk(), 10000f, 10000f)
+    verify {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        ScreenCoordinate(0.0, 0.0),
+        ScreenCoordinate(0.0, 666.6666666666667)
+      )
+    }
+    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
+    assert(result)
+  }
+
+  @Test
+  fun verifyFlingPanScrollVertical() {
+    every { mapCameraManagerDelegate.cameraState } returns CameraState(
+      Point.fromLngLat(0.0, 0.0),
+      EdgeInsets(0.0, 0.0, 0.0, 0.0),
+      0.0,
+      0.0,
+      0.0
+    )
+    every {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        any(),
+        any()
+      )
+    } returns CameraOptions.Builder().build()
+    presenter.updateSettings { panScrollMode = PanScrollMode.HORIZONTAL }
+    val result = presenter.handleFlingEvent(mockk(), mockk(), 10000f, 10000f)
+    verify {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        ScreenCoordinate(0.0, 0.0),
+        ScreenCoordinate(666.6666666666667, 0.0)
       )
     }
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
@@ -371,7 +442,12 @@ class GesturePluginTest {
       0.0,
       0.0
     )
-    every { mapCameraManagerDelegate.getDragCameraOptions(any(), any()) } returns CameraOptions.Builder().build()
+    every {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        any(),
+        any()
+      )
+    } returns CameraOptions.Builder().build()
     val handled = presenter.handleMove(mockk(), 50.0f, 50.0f)
     assert(handled)
     verify { listener.onMove(any()) }
