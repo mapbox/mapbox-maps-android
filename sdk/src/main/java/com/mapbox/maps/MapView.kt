@@ -165,6 +165,22 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   }
 
   /**
+   * Render cache is introduced to store intermediate rendering results of tiles into cache textures
+   * to be reused in future frames.
+   * It's considerably smaller effort from the GPU to render quads with single texture lookups
+   * rather than rendering geometries of individual layers and tiles separately.
+   *
+   * Using render cache may bring improvement to rendering performance
+   * and reduce communication between CPU and GPU.
+   *
+   * @param cache [RenderCache] to apply to given [MapView].
+   */
+  @MapboxExperimental
+  override fun setRenderCache(cache: RenderCache) {
+    mapController.setRenderCache(cache)
+  }
+
+  /**
    * You must call this method from the parent's Activity#onStart() or Fragment#onStart()
    * @see android.app.Activity.onStart
    * @see android.app.Fragment.onStart
