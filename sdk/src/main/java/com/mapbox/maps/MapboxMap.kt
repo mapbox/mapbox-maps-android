@@ -8,6 +8,7 @@ import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
+import com.mapbox.common.Logger
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
@@ -170,24 +171,33 @@ class MapboxMap internal constructor(
     onStyleLoaded: Style.OnStyleLoaded? = null
   ) {
     this.style = style
-    var geojsonSourceCount = 0
+    var geojsonNotParsedCount = 0
     var hasGeojsonSources = false
     styleExtension.sources.forEach {
       if (it is GeoJsonSource) {
         hasGeojsonSources = true
-        geojsonSourceCount++
-        it.applyDataAsync {
-          geojsonSourceCount--
+        if (it.geoJsonParsed) {
           it.bindTo(style)
-          if (geojsonSourceCount == 0) {
-            loadAllExceptGeojsonSources(style, styleExtension, onStyleLoaded)
+        } else {
+          geojsonNotParsedCount++
+          it.geoJsonParsedListener = {
+            geojsonNotParsedCount--
+            it.bindTo(style)
+            if (geojsonNotParsedCount == 0) {
+              loadAllExceptGeojsonSources(style, styleExtension, onStyleLoaded)
+            }
           }
         }
       } else {
         it.bindTo(style)
       }
     }
-    if (!hasGeojsonSources) {
+    if (hasGeojsonSources) {
+      if (geojsonNotParsedCount == 0) {
+        Logger.e("KIRYLDD", "loadAllExceptGeojsonSources 2")
+        loadAllExceptGeojsonSources(style, styleExtension, onStyleLoaded)
+      }
+    } else {
       loadAllExceptGeojsonSources(style, styleExtension, onStyleLoaded)
     }
   }

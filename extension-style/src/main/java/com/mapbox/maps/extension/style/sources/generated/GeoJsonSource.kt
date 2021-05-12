@@ -22,27 +22,34 @@ import com.mapbox.maps.extension.style.utils.toValue
  *
  */
 class GeoJsonSource(
-  builder: Builder,
-  // must be instance of Geometry, Feature, FeatureCollection
-  private val rawData: Any? = null
+  builder: Builder
 ) : Source(builder.sourceId) {
 
-  fun applyDataAsync(sourceApplied: () -> Unit) {
-    if (rawData != null &&
-      (rawData is Geometry || rawData is FeatureCollection || rawData is Feature)) {
+  var geoJsonParsed = false
+  var geoJsonParsedListener: (() -> Unit)? = null
+
+  private constructor(
+    builder: Builder,
+    // will always be instance of Geometry, Feature, FeatureCollection
+    data: Any?,
+    onGeoJsonParsed: (GeoJsonSource) -> Unit
+  ) : this(builder) {
+    if (data != null && (data is Geometry || data is FeatureCollection || data is Feature)) {
       workerHandler.post {
         val property = PropertyValue(
           "data",
-          when(rawData) {
-            is Geometry -> rawData.toValue()
-            is FeatureCollection -> rawData.toValue()
-            is Feature -> rawData.toValue()
+          when(data) {
+            is Geometry -> data.toValue()
+            is FeatureCollection -> data.toValue()
+            is Feature -> data.toValue()
             else -> null
           }
         )
         mainHandler.post {
           setProperty(property)
-          sourceApplied.invoke()
+          geoJsonParsed = true
+          onGeoJsonParsed.invoke(this)
+          geoJsonParsedListener?.invoke()
         }
       }
     }
@@ -538,9 +545,12 @@ class GeoJsonSource(
    * @param sourceId the ID of the source
    */
   @SourceDsl
-  class Builder(val sourceId: String) {
+  class Builder(
+    val sourceId: String,
+    private val onGeoJsonParsed: (GeoJsonSource) -> Unit = {}
+  ) {
 
-    internal var rawData: Any? = null
+    private var rawData: Any? = null
     internal val properties = HashMap<String, PropertyValue<*>>()
     // Properties that only settable after the source is added to the style.
     internal val volatileProperties = HashMap<String, PropertyValue<*>>()
@@ -850,6 +860,8 @@ class GeoJsonSource(
      */
     fun feature(value: Feature) = apply {
       rawData = value
+      val propertyValue = PropertyValue("data", "")
+      properties[propertyValue.propertyName] = propertyValue
     }
 
     /**
@@ -859,6 +871,8 @@ class GeoJsonSource(
      */
     fun featureCollection(value: FeatureCollection) = apply {
       rawData = value
+      val propertyValue = PropertyValue("data", "")
+      properties[propertyValue.propertyName] = propertyValue
     }
 
     /**
@@ -868,13 +882,15 @@ class GeoJsonSource(
      */
     fun geometry(value: Geometry) = apply {
       rawData = value
+      val propertyValue = PropertyValue("data", "")
+      properties[propertyValue.propertyName] = propertyValue
     }
     /**
      * Build the GeoJsonSource.
      *
      * @return the GeoJsonSource
      */
-    fun build() = GeoJsonSource(this, rawData)
+    fun build() = GeoJsonSource(this, rawData, onGeoJsonParsed)
   }
 
   /**
@@ -1155,9 +1171,38 @@ class GeoJsonSource(
 }
 
 /**
- * DSL function for [GeoJsonSource].
+ * DSL function for [GeoJsonSource] performing parsing using background thread.
+ * Immediately returns [GeoJsonSource] with no data set and starts preparing actual data
+ * using a worker thread.
+ *
+ * If using runtime styling:
+ *
+ * loadStyle(style(Style.DARK) {
+ *   +geoJsonSource(id) {
+ *    featureCollection(collection)
+ *   }
+ *   ...
+ * }
+ *
+ * compositing style will be performed correctly under the hood.
  */
-fun geoJsonSource(id: String, block: GeoJsonSource.Builder.() -> Unit): GeoJsonSource =
-  GeoJsonSource.Builder(id).apply(block).build()
+fun geoJsonSource(
+  id: String,
+  block: GeoJsonSource.Builder.() -> Unit
+): GeoJsonSource = GeoJsonSource.Builder(id, {}).apply(block).build()
+
+/**
+ * DSL function for [GeoJsonSource] performing parsing using background thread.
+ * Immediately returns [GeoJsonSource] with no data set,
+ * fully parsed [GeoJsonSource] is returned in [onGeoJsonParsed] callback.
+ *
+ * Using this method means that it is user's responsibility to proceed with adding layers or
+ * other style objects in [onGeoJsonParsed] callback.
+ */
+fun geoJsonSource(
+  id: String,
+  block: GeoJsonSource.Builder.() -> Unit,
+  onGeoJsonParsed: (GeoJsonSource) -> Unit
+): GeoJsonSource = GeoJsonSource.Builder(id, onGeoJsonParsed).apply(block).build()
 
 // End of generated file.

@@ -13,10 +13,9 @@ import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
 import com.mapbox.maps.extension.style.sources.addSource
+import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.plugin.animation.MapAnimationOptions
-import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import kotlinx.android.synthetic.main.activity_large_geojson.*
@@ -53,21 +52,6 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
             .zoom(START_ZOOM)
             .build()
         )
-//        loadStyleUri(Style.MAPBOX_STREETS) { style ->
-//          buttonLoad.setOnClickListener {
-//            flyTo(
-//              CameraOptions.Builder()
-//                .zoom(END_ZOOM)
-//                .build(),
-//              MapAnimationOptions.mapAnimationOptions {
-//                duration(10_000L)
-//              })
-//            it.postDelayed({
-//              loadGeoJson(style)
-//            }, 1000)
-//          }
-//        }
-
         loadStyle(style(Style.DARK) {
           +geoJsonSource("source") {
             featureCollection(routePoints)
@@ -80,55 +64,49 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
           }
           +lineLayer("layer", "source") {
             lineColor("blue")
-            lineWidth(10.0)
           }
           +lineLayer("layer2", "source2") {
             lineColor("yellow")
-            lineWidth(5.0)
+            lineOffset(5.0)
           }
           +lineLayer("layer3", "source3") {
             lineColor("red")
+            lineOffset(10.0)
           }
-        })
+        }) {
+          loadAdditionalGeoJsonAfter(it)
+        }
       }
   }
 
-  private fun loadGeoJson(style: Style) {
-    val start = System.currentTimeMillis()
+  private fun loadAdditionalGeoJsonAfter(style: Style) {
 
-    // SYNC METHOD
+    // async method with adding layer in callback
 
-//    style.addSource(geoJsonSource(SOURCE) {
-//      featureCollection(routePoints)
-//    })
+    geoJsonSource(
+      id = "source5",
+      block = {
+        featureCollection(routePoints)
+      },
+      onGeoJsonParsed = {
+        style.addSource(it)
+        style.addLayer(lineLayer("layer5", "source5") {
+          lineColor("green")
+          lineOffset(20.0)
+        })
+      }
+    )
 
-    // ASYNC METHOD
+    // async method with adding layer instantly
 
-//    geoJsonSource(
-//      id = SOURCE,
-//      block = {
-//        featureCollection(routePoints)
-//      },
-//      result = {
-//        style.addSource(it)
-//        style.addLayer(lineLayer(LAYER, SOURCE) {
-//          lineColor("blue")
-//        })
-//      }
-//    )
-//
-//    // add some useless extra work to parse same geojson
-//    for (i in 0..5) {
-//      geoJsonSource(
-//        id = i.toString(),
-//        block = {
-//          featureCollection(routePoints)
-//        },
-//        result = {
-//          style.addSource(it)
-//        }
-//      )
-//    }
+    style.addSource(geoJsonSource(id = "source4") {
+      featureCollection(routePoints)
+    })
+    style.addLayer(lineLayer("layer4", "source4") {
+      lineColor("pink")
+      lineOffset(30.0)
+    })
+
     buttonLoad.visibility = View.GONE
   }
 
