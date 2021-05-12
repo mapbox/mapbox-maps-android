@@ -84,6 +84,20 @@ class RenderCacheTest {
     }
   }
 
+  @Test
+  fun setInvalidRenderCache() {
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        val customSize = -1L
+        mapView.setRenderCache(RenderCache.Custom(customSize))
+        // render cache disabled by default now so checking for 0 here
+        Assert.assertEquals(
+          0L, Settings.get(RenderCache.RENDER_CACHE_SETTING).contents as Long
+        )
+      }
+    }
+  }
+
   @After
   @UiThreadTest
   fun teardown() {

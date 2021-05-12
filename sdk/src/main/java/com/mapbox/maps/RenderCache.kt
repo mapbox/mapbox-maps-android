@@ -3,7 +3,14 @@ package com.mapbox.maps
 /**
  * Describes render cache mode where [cacheSizeMb] is actual GPU render cache size in megabytes.
  */
-sealed class RenderCache(val cacheSizeMb: Long) {
+sealed class RenderCache(
+  /**
+   * Render cache size in megabytes.
+   * That value should be greater than zero and less than GPU memory.
+   * It is highly advised to use [RenderCache.Small] or [RenderCache.Large] in most cases.
+   */
+  val cacheSizeMb: Long
+) {
   /**
    * Render cache is disabled.
    */
@@ -26,6 +33,9 @@ sealed class RenderCache(val cacheSizeMb: Long) {
    */
   class Custom(cacheSizeMb: Long) : RenderCache(cacheSizeMb)
 
+  /**
+   * Static variables.
+   */
   companion object {
     internal const val RENDER_CACHE_SETTING = "mapbox_render_cache_size_mb"
     internal const val CACHE_DISABLED = 0L

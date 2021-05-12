@@ -147,7 +147,11 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
 
   @MapboxExperimental
   override fun setRenderCache(cache: RenderCache) {
-    Settings.set(RENDER_CACHE_SETTING, Value(cache.cacheSizeMb))
+    if (cache.cacheSizeMb >= 0) {
+      Settings.set(RENDER_CACHE_SETTING, Value(cache.cacheSizeMb))
+    } else {
+      Logger.e(TAG, "Render cache size must be >= 0!")
+    }
   }
 
   override fun queueEvent(event: Runnable, needRender: Boolean) {

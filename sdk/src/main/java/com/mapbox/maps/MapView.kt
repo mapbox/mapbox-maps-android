@@ -96,6 +96,8 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       },
       resolvedMapInitOptions
     )
+    // render cache disabled explicitly by default
+    mapController.setRenderCache(RenderCache.Disabled)
     addView(view, 0)
     mapController.initializePlugins(resolvedMapInitOptions, this)
   }
