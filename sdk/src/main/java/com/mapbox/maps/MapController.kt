@@ -6,10 +6,12 @@ import android.os.Looper
 import android.util.AttributeSet
 import android.view.MotionEvent
 import com.mapbox.annotation.module.MapboxModuleType
+import com.mapbox.bindgen.Value
 import com.mapbox.common.Logger
 import com.mapbox.common.module.provider.MapboxModuleProvider
 import com.mapbox.common.module.provider.ModuleProviderArgument
 import com.mapbox.mapboxsdk.assets.AssetManagerProvider
+import com.mapbox.maps.RenderCache.Companion.RENDER_CACHE_SETTING
 import com.mapbox.maps.loader.MapboxMapStaticInitializer
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.*
@@ -141,6 +143,15 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
 
   override fun onSizeChanged(w: Int, h: Int) {
     pluginRegistry.onSizeChanged(w, h)
+  }
+
+  @MapboxExperimental
+  override fun setRenderCache(cache: RenderCache) {
+    if (cache.cacheSizeMb >= 0) {
+      Settings.set(RENDER_CACHE_SETTING, Value(cache.cacheSizeMb))
+    } else {
+      Logger.e(TAG, "Render cache size must be >= 0!")
+    }
   }
 
   override fun queueEvent(event: Runnable, needRender: Boolean) {
