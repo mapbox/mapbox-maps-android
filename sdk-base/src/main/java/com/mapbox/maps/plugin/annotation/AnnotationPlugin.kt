@@ -22,4 +22,11 @@ interface AnnotationPlugin : MapPlugin, MapSizePlugin, MapStyleObserverPlugin {
     type: AnnotationType,
     annotationConfig: AnnotationConfig?
   ): AnnotationManager<*, *, *, *, *, *, *>
+
+  /**
+   * Removes an annotation manager, this will remove the underlying layer and source from the style.
+   * A removed annotation manager will not be able to reuse anymore, users need to create new annotation manger
+   * to add annotations.
+   */
+  fun removeAnnotationManager(annotationManager: AnnotationManager<*, *, *, *, *, *, *>)
 }

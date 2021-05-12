@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.annotation
 
 import android.view.View
+import androidx.annotation.VisibleForTesting
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
@@ -12,7 +13,9 @@ import java.lang.ref.WeakReference
  */
 class AnnotationPluginImpl : AnnotationPlugin {
   private lateinit var delegateProvider: MapDelegateProvider
-  private val managerList = mutableListOf<WeakReference<AnnotationManager<*, *, *, *, *, *, *>>>()
+
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal val managerList = mutableListOf<WeakReference<AnnotationManager<*, *, *, *, *, *, *>>>()
   private var width = 0
   private var height = 0
 
@@ -30,14 +33,47 @@ class AnnotationPluginImpl : AnnotationPlugin {
     annotationConfig: AnnotationConfig?
   ): AnnotationManager<*, *, *, *, *, *, *> {
     val manager = when (type) {
-      AnnotationType.PolygonAnnotation -> PolygonAnnotationManager(mapView, delegateProvider, annotationConfig)
-      AnnotationType.CircleAnnotation -> CircleAnnotationManager(mapView, delegateProvider, annotationConfig)
-      AnnotationType.PolylineAnnotation -> PolylineAnnotationManager(mapView, delegateProvider, annotationConfig)
-      AnnotationType.PointAnnotation -> PointAnnotationManager(mapView, delegateProvider, annotationConfig)
+      AnnotationType.PolygonAnnotation -> PolygonAnnotationManager(
+        mapView,
+        delegateProvider,
+        annotationConfig
+      )
+      AnnotationType.CircleAnnotation -> CircleAnnotationManager(
+        mapView,
+        delegateProvider,
+        annotationConfig
+      )
+      AnnotationType.PolylineAnnotation -> PolylineAnnotationManager(
+        mapView,
+        delegateProvider,
+        annotationConfig
+      )
+      AnnotationType.PointAnnotation -> PointAnnotationManager(
+        mapView,
+        delegateProvider,
+        annotationConfig
+      )
     }
     manager.onSizeChanged(width, height)
     managerList.add(WeakReference(manager))
     return manager
+  }
+
+  /**
+   * Removes an annotation manager, this will remove the underlying layer and source from the style.
+   * A removed annotation manager will not be able to reuse anymore, users need to create new annotation manger
+   * to add annotations.
+   */
+  override fun removeAnnotationManager(annotationManager: AnnotationManager<*, *, *, *, *, *, *>) {
+    managerList.forEachIndexed { index, weakReference ->
+      weakReference.get()?.let {
+        if (it == annotationManager) {
+          managerList.removeAt(index)
+          annotationManager.onDestroy()
+          return
+        }
+      }
+    }
   }
 
   /**
