@@ -10,6 +10,11 @@ interface StyleContract {
    * Define the interfaces for the Style Extension.
    */
   interface StyleExtension {
+
+    /**
+     * Total resource count including all sources, layers and images.
+     */
+    var resourceCount: Int
     /**
      * The style's Uri.
      */

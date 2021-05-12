@@ -134,17 +134,6 @@ abstract class Source(
    */
   companion object {
     private const val TAG = "Mbgl-Source"
-
-    private val workerThread by lazy {
-      HandlerThread("STYLE_WORKER").apply {
-        priority = Thread.MAX_PRIORITY
-        start()
-      }
-    }
-    val workerHandler by lazy {
-      Handler(workerThread.looper)
-    }
-    val mainHandler = Handler(Looper.getMainLooper())
   }
 }
 
