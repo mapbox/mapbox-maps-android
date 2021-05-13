@@ -8,6 +8,7 @@ import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.layers.getLayer
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
+import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.testapp.R
@@ -27,15 +28,16 @@ class PolylineAnnotationActivity : AppCompatActivity() {
     get() {
       return AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]
     }
+  private lateinit var annotationPlugin: AnnotationPlugin
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_annotation)
     mapView.getMapboxMap().loadStyleUri(nextStyle) {
-      val annotationPlugin = mapView.annotations
+      annotationPlugin = mapView.annotations
       lineManager = annotationPlugin.createPolylineAnnotationManager(
         mapView,
-        AnnotationConfig(COUNTRY_LABEL, LAYER_ID, SOURCE_ID)
+        AnnotationConfig(PITCH_OUTLINE, LAYER_ID, SOURCE_ID)
       ).apply {
         it.getLayer(LAYER_ID)?.let { layer ->
           Toast.makeText(this@PolylineAnnotationActivity, layer.layerId, Toast.LENGTH_LONG).show()
@@ -101,7 +103,11 @@ class PolylineAnnotationActivity : AppCompatActivity() {
       }
     }
 
-    deleteAll.setOnClickListener { lineManager?.deleteAll() }
+    deleteAll.setOnClickListener {
+      lineManager?.let {
+        annotationPlugin.removeAnnotationManager(it)
+      }
+    }
     changeStyle.setOnClickListener {
       mapView.getMapboxMap().loadStyleUri(nextStyle)
     }
@@ -130,6 +136,6 @@ class PolylineAnnotationActivity : AppCompatActivity() {
   companion object {
     private const val LAYER_ID = "line_layer"
     private const val SOURCE_ID = "line_source"
-    private const val COUNTRY_LABEL = "country-label"
+    private const val PITCH_OUTLINE = "pitch-outline"
   }
 }

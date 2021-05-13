@@ -184,10 +184,21 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     }
     layer?.let {
       if (!style.styleLayerExists(it.layerId)) {
-        if (annotationConfig?.belowLayerId == null) {
+        var layerAdded = false
+        annotationConfig?.belowLayerId?.let { belowLayerId ->
+          // Check whether the below layer exists in the current style.
+          if (style.styleLayerExists(belowLayerId)) {
+            style.addLayerBelow(it, annotationConfig.belowLayerId)
+            layerAdded = true
+          } else {
+            Logger.w(
+              TAG,
+              "Layer with id $belowLayerId doesn't exist in style ${style.styleURI}, will add annotation layer directly."
+            )
+          }
+        }
+        if (!layerAdded) {
           style.addLayer(it)
-        } else {
-          style.addLayerBelow(it, annotationConfig.belowLayerId)
         }
       }
     }
@@ -387,9 +398,20 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   }
 
   /**
-   * Invoked when Mapview is destroyed
+   * Invoked when Mapview or Annotation manager is destroyed.
    */
   override fun onDestroy() {
+    layer?.let {
+      if (style.styleLayerExists(it.layerId)) {
+        style.removeStyleLayer(it.layerId)
+      }
+    }
+    source?.let {
+      if (style.styleSourceExists(it.sourceId)) {
+        style.removeStyleSource(it.sourceId)
+      }
+    }
+
     gesturesPlugin.removeOnMapClickListener(mapClickResolver)
     gesturesPlugin.removeOnMapLongClickListener(mapLongClickResolver)
     gesturesPlugin.removeOnMoveListener(mapMoveResolver)

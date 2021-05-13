@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
+import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.testapp.R
@@ -25,12 +26,13 @@ class CircleAnnotationActivity : AppCompatActivity() {
     get() {
       return AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]
     }
+  private lateinit var annotationPlugin: AnnotationPlugin
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_annotation)
     mapView.getMapboxMap().loadStyleUri(nextStyle) {
-      val annotationPlugin = mapView.annotations
+      annotationPlugin = mapView.annotations
       circleManager = annotationPlugin.createCircleAnnotationManager(mapView).apply {
         addClickListener(
           OnCircleAnnotationClickListener {
@@ -88,7 +90,11 @@ class CircleAnnotationActivity : AppCompatActivity() {
       }
     }
 
-    deleteAll.setOnClickListener { circleManager?.deleteAll() }
+    deleteAll.setOnClickListener {
+      circleManager?.let {
+        annotationPlugin.removeAnnotationManager(it)
+      }
+    }
     changeStyle.setOnClickListener {
       mapView.getMapboxMap().loadStyleUri(nextStyle)
     }

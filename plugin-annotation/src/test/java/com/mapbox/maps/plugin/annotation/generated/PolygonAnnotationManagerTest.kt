@@ -80,6 +80,8 @@ class PolygonAnnotationManagerTest {
     every { style.getSource(any()) } returns null
     every { style.styleSourceExists(any()) } returns false
     every { style.styleLayerExists(any()) } returns false
+    every { style.removeStyleLayer(any()) } returns mockk()
+    every { style.removeStyleSource(any()) } returns mockk()
     every { style.pixelRatio } returns 1.0f
     every { style.getStyleImage(any()) } returns null
     every { gesturesPlugin.addOnMapClickListener(any()) } just Runs
@@ -129,6 +131,8 @@ class PolygonAnnotationManagerTest {
     verify { gesturesPlugin.addOnMoveListener(any()) }
     assertEquals(PolygonAnnotation.ID_KEY, manager.getAnnotationIdKey())
     verify { style.addLayer(any()) }
+    every { style.styleLayerExists("test_layer") } returns true
+
     manager = PolygonAnnotationManager(mapView, delegateProvider, AnnotationConfig("test_layer"))
     verify { style.addLayerBelow(any(), "test_layer") }
 
@@ -138,7 +142,11 @@ class PolygonAnnotationManagerTest {
     assertEquals(1, manager.dragListeners.size)
     assertEquals(1, manager.clickListeners.size)
     assertEquals(1, manager.longClickListeners.size)
+    every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
     manager.onDestroy()
+    verify { style.removeStyleLayer(any()) }
+    verify { style.removeStyleSource(any()) }
     verify { gesturesPlugin.removeOnMapClickListener(any()) }
     verify { gesturesPlugin.removeOnMapLongClickListener(any()) }
     verify { gesturesPlugin.removeOnMoveListener(any()) }

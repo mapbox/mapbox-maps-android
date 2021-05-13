@@ -18,6 +18,7 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression.Companio
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.toNumber
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
+import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.testapp.R
@@ -39,16 +40,18 @@ class PointAnnotationActivity : AppCompatActivity() {
     get() {
       return AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]
     }
+  private lateinit var annotationPlugin: AnnotationPlugin
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_annotation)
     mapView.getMapboxMap().loadStyleUri(nextStyle) {
-      val annotationPlugin = mapView.annotations
+      annotationPlugin = mapView.annotations
       symbolManager = annotationPlugin.createPointAnnotationManager(mapView).apply {
         addClickListener(
           OnPointAnnotationClickListener {
-            Toast.makeText(this@PointAnnotationActivity, "Click: ${it.id}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@PointAnnotationActivity, "Click: ${it.id}", Toast.LENGTH_SHORT)
+              .show()
             false
           }
         )
@@ -138,7 +141,11 @@ class PointAnnotationActivity : AppCompatActivity() {
       }
     }
 
-    deleteAll.setOnClickListener { symbolManager?.deleteAll() }
+    deleteAll.setOnClickListener {
+      symbolManager?.let {
+        annotationPlugin.removeAnnotationManager(it)
+      }
+    }
     changeStyle.setOnClickListener {
       mapView.getMapboxMap().loadStyleUri(nextStyle)
     }
