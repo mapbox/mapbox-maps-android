@@ -8,6 +8,7 @@ import com.mapbox.android.core.location.LocationEngineCallback
 import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.android.core.location.LocationEngineRequest
 import com.mapbox.android.core.location.LocationEngineResult
+import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import java.util.concurrent.CopyOnWriteArrayList
@@ -15,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList
 /**
  * Default Location Provider implementation, it can be overwritten by users.
  */
-internal class LocationProviderImpl(context: Context) : LocationProvider, LocationEngineCallback<LocationEngineResult> {
+internal class LocationProviderImpl(private val context: Context) : LocationProvider, LocationEngineCallback<LocationEngineResult> {
   private val locationEngine = LocationEngineProvider.getBestLocationEngine(context)
 
   private val locationEngineRequest =
@@ -28,9 +29,11 @@ internal class LocationProviderImpl(context: Context) : LocationProvider, Locati
 
   @SuppressLint("MissingPermission")
   private fun requestLocationUpdates() {
-    locationEngine.requestLocationUpdates(
-      locationEngineRequest, this, Looper.getMainLooper()
-    )
+    if (PermissionsManager.areLocationPermissionsGranted(context)) {
+      locationEngine.requestLocationUpdates(
+        locationEngineRequest, this, Looper.getMainLooper()
+      )
+    }
   }
 
   private fun notifyLocationUpdates(location: Location) {
@@ -76,7 +79,9 @@ internal class LocationProviderImpl(context: Context) : LocationProvider, Locati
       requestLocationUpdates()
     }
     locationConsumers.add(locationConsumer)
-    locationEngine.getLastLocation(this)
+    if (PermissionsManager.areLocationPermissionsGranted(context)) {
+      locationEngine.getLastLocation(this)
+    }
   }
 
   /**
