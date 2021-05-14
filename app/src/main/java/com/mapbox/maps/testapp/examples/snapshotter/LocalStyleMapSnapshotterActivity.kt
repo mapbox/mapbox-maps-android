@@ -20,7 +20,6 @@ class LocalStyleMapSnapshotterActivity : AppCompatActivity() {
         ResourceOptions.Builder()
           .accessToken(getString(R.string.mapbox_access_token))
           .cachePath(filesDir.absolutePath + "/$DATABASE_NAME")
-          .assetPath(filesDir.absolutePath)
           .cacheSize(50000L)
           .build()
       )

@@ -30,7 +30,6 @@ class MapSnapshotterTest {
           ResourceOptions.Builder()
             .accessToken(context.getString(R.string.mapbox_access_token))
             .cachePath(context.filesDir.absolutePath + "/$DATABASE_NAME")
-            .assetPath(context.filesDir.absolutePath)
             .cacheSize(50000L)
             .build()
         )

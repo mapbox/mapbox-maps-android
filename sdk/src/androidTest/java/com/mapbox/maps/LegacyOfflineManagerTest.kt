@@ -28,7 +28,6 @@ class LegacyOfflineManagerTest {
         ResourceOptions.Builder()
           .accessToken(context.getString(R.string.mapbox_access_token))
           .cachePath(InstrumentationRegistry.getInstrumentation().targetContext.filesDir.absolutePath + "/test.mbgl")
-          .assetPath(InstrumentationRegistry.getInstrumentation().targetContext.filesDir.absolutePath)
           .cacheSize(50000L)
           .build()
       )

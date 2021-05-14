@@ -28,10 +28,6 @@ internal object ResourcesAttributeParser {
       typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesCachePath)
         ?: "${context.filesDir.absolutePath}/$DATABASE_NAME"
 
-    val assetPathString =
-      typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesAssetPath)
-        ?: context.filesDir.absolutePath
-
     val tileStorePathString =
       typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesTileStorePath)
 
@@ -39,7 +35,6 @@ internal object ResourcesAttributeParser {
       .accessToken(accessTokenString)
       .baseURL(typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesBaseUrl))
       .cachePath(cachePathString)
-      .assetPath(assetPathString)
       .cacheSize(
         typedArray.getFloat(
           R.styleable.mapbox_MapView_mapbox_resourcesCacheSize,

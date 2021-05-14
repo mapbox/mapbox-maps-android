@@ -48,7 +48,6 @@ data class MapInitOptions constructor(
     fun getDefaultResourceOptions(context: Context): ResourceOptions = ResourceOptions.Builder()
       .accessToken(CredentialsManager.default.getAccessToken(context))
       .cachePath("${context.filesDir.absolutePath}/$DATABASE_NAME")
-      .assetPath(context.filesDir.absolutePath)
       .cacheSize(DEFAULT_CACHE_SIZE) // 50 mb
       .build()
 
