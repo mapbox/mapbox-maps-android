@@ -34,6 +34,7 @@ class DatabaseHelper(context: Context) : ManagedSQLiteOpenHelper(context, "test_
   override fun onUpgrade(database: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
     // No upgrades
   }
+
 }
 
 // Access property for Context
