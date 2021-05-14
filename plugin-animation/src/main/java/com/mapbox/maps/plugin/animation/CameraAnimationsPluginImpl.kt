@@ -292,7 +292,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
               }
               AnimationFinishStatus.ENDED -> highLevelListener?.onAnimationEnd(animation)
             }
-            highLevelListener = null
           }
         } ?: throw RuntimeException(
           "Could not finish animation in CameraManager! " +

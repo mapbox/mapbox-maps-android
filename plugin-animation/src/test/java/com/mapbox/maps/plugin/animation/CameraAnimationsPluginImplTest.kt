@@ -893,6 +893,39 @@ class CameraAnimationsPluginImplTest {
     assertEquals(1, counter)
   }
 
+  @Test
+  fun nestedHighLevelAnimationListeners() {
+    val listener = CameraAnimatorListener()
+    shadowOf(getMainLooper()).pause()
+    cameraAnimationsPluginImpl.flyTo(
+      CameraOptions.Builder()
+        .center(Point.fromLngLat(VALUE, VALUE))
+        .bearing(VALUE)
+        .build(),
+      mapAnimationOptions {
+        duration(50L)
+        animatorListener(object : AnimatorListenerAdapter() {
+          override fun onAnimationEnd(animation: Animator?) {
+            super.onAnimationEnd(animation)
+            cameraAnimationsPluginImpl.flyTo(
+              CameraOptions.Builder()
+                .center(Point.fromLngLat(VALUE, VALUE))
+                .bearing(VALUE)
+                .build(),
+              mapAnimationOptions {
+                duration(50L)
+                animatorListener(listener)
+              }
+            )
+          }
+        })
+      }
+    )
+    shadowOf(getMainLooper()).idle()
+    assertEquals(1, listener.startedCount)
+    assertEquals(1, listener.endedCount)
+  }
+
   class LifecycleListener : CameraAnimationsLifecycleListener {
     var starting = false
     var interrupting = false
