@@ -33,7 +33,6 @@ class ResourceAttributeParserTest {
     val resourceOptions =
       ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.default)
     assertEquals("pk.foobar", resourceOptions.accessToken)
-    assertEquals("/sdcard/data", resourceOptions.assetPath)
     assertEquals(null, resourceOptions.baseURL)
     assertEquals("/sdcard/data/mbx.db", resourceOptions.cachePath)
     assertEquals(99L, resourceOptions.cacheSize)
@@ -45,14 +44,6 @@ class ResourceAttributeParserTest {
     val options =
       ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.default)
     assertEquals("", options.accessToken)
-  }
-
-  @Test
-  fun assetPath() {
-    every { context.filesDir } returns File("/foobar")
-    val resourceOptions =
-      ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.default)
-    assertEquals("/foobar", resourceOptions.assetPath)
   }
 
   @Test

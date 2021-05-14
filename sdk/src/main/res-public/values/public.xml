@@ -9,9 +9,6 @@
     <!-- The path to the assets. -->
     <public name="mapbox_resourcesCachePath" type="attr" />
 
-    <!-- The path to the assets. -->
-    <public name="mapbox_resourcesAssetPath" type="attr" />
-
     <!-- The path to the tile store. -->
     <public name="mapbox_resourcesTileStorePath" type="attr" />
 
