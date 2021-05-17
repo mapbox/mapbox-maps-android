@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.locationcomponent
 
 import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.None
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.LocationPuck3D
@@ -15,7 +16,7 @@ class ModelLayerRendererTest {
   private val layerWrapper: ModelLayerWrapper = mockk(relaxed = true)
   private val sourceWrapper: ModelSourceWrapper = mockk(relaxUnitFun = true, relaxed = true)
   private val option: LocationPuck3D = mockk(relaxed = true)
-  private val expected: Expected<Void, String> = mockk(relaxed = true)
+  private val expected: Expected<String, None> = mockk(relaxed = true)
 
   private lateinit var locationLayerRenderer: ModelLayerRenderer
 

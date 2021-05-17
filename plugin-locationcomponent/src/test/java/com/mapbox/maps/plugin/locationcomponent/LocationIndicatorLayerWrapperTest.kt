@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.locationcomponent
 
 import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.StyleManagerInterface
@@ -20,7 +21,7 @@ class LocationIndicatorLayerWrapperTest {
 
   private val style: StyleManagerInterface = mockk(relaxed = true)
   private val layer = LocationIndicatorLayerWrapper(INDICATOR_LAYER_ID)
-  private val expected: Expected<Void, String> = mockk(relaxed = true)
+  private val expected: Expected<String, None> = mockk(relaxed = true)
 
   @Before
   fun setup() {

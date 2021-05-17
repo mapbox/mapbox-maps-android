@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleInterface
@@ -26,7 +27,7 @@ class LocationIndicatorLayerRendererTest {
   private val style: StyleInterface = mockk(relaxed = true)
   private val layerSourceProvider: LayerSourceProvider = mockk(relaxed = true)
   private val layerWrapper: LocationIndicatorLayerWrapper = mockk(relaxed = true)
-  private val expected: Expected<Void, String> = mockk(relaxed = true)
+  private val expected: Expected<String, None> = mockk(relaxed = true)
 
   private val expressionSlot = CapturingSlot<List<Value>>()
   private val doubleListSlot = CapturingSlot<List<Double>>()

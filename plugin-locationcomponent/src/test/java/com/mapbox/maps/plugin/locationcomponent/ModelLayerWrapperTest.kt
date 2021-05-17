@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.locationcomponent
 
 import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.StyleManagerInterface
@@ -21,7 +22,7 @@ class ModelLayerWrapperTest {
 
   private val style: StyleManagerInterface = mockk(relaxed = true)
   private val layer = ModelLayerWrapper(MODEL_LAYER_ID, MODEL_SOURCE_ID, INITIAL_SCALE, INITIAL_ROTATION)
-  private val expected: Expected<Void, String> = mockk(relaxed = true)
+  private val expected: Expected<String, None> = mockk(relaxed = true)
 
   @Before
   fun setup() {
