@@ -16,7 +16,8 @@ import java.util.concurrent.CopyOnWriteArrayList
 /**
  * Default Location Provider implementation, it can be overwritten by users.
  */
-internal class LocationProviderImpl(private val context: Context) : LocationProvider, LocationEngineCallback<LocationEngineResult> {
+internal class LocationProviderImpl(private val context: Context) :
+  LocationProvider, LocationEngineCallback<LocationEngineResult> {
   private val locationEngine = LocationEngineProvider.getBestLocationEngine(context)
 
   private val locationEngineRequest =
@@ -32,6 +33,11 @@ internal class LocationProviderImpl(private val context: Context) : LocationProv
     if (PermissionsManager.areLocationPermissionsGranted(context)) {
       locationEngine.requestLocationUpdates(
         locationEngineRequest, this, Looper.getMainLooper()
+      )
+    } else {
+      Logger.w(
+        TAG,
+        "Missing location permission, location component will not take effect before location permission is granted."
       )
     }
   }
@@ -81,6 +87,11 @@ internal class LocationProviderImpl(private val context: Context) : LocationProv
     locationConsumers.add(locationConsumer)
     if (PermissionsManager.areLocationPermissionsGranted(context)) {
       locationEngine.getLastLocation(this)
+    } else {
+      Logger.w(
+        TAG,
+        "Missing location permission, location component will not take effect before location permission is granted."
+      )
     }
   }
 
