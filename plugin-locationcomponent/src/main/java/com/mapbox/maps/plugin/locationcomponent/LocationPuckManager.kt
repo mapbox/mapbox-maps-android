@@ -2,6 +2,7 @@ package com.mapbox.maps.plugin.locationcomponent
 
 import android.animation.ValueAnimator
 import androidx.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
 import com.mapbox.common.ValueConverter
@@ -12,7 +13,6 @@ import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
-import java.lang.RuntimeException
 import kotlin.math.pow
 
 internal class LocationPuckManager(
@@ -26,8 +26,8 @@ internal class LocationPuckManager(
   var isHidden = true
     private set
 
-  private var lastLocation: Point =
-    delegateProvider.mapCameraManagerDelegate.cameraState.center
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal var lastLocation: Point? = null
   private val onLocationUpdated: ((Point) -> Unit) = {
     lastLocation = it
   }
@@ -55,12 +55,15 @@ internal class LocationPuckManager(
     locationLayerRenderer.addLayers(positionManager)
     locationLayerRenderer.initializeComponents(style)
     styleScaling(settings)
-    updateCurrentPosition(lastLocation)
     updateCurrentBearing(lastBearing)
-    if (settings.enabled) {
-      show()
-    } else {
+    if (lastLocation == null) {
       hide()
+    } else {
+      if (settings.enabled) {
+        show()
+      } else {
+        hide()
+      }
     }
   }
 
@@ -107,9 +110,12 @@ internal class LocationPuckManager(
   }
 
   fun updateCurrentPosition(vararg points: Point, options: (ValueAnimator.() -> Unit)? = null) {
-    val targets = arrayOf(lastLocation, *points)
+    val targets = if (lastLocation == null) arrayOf(*points, *points) else {
+      show()
+      arrayOf(lastLocation, *points)
+    }
     animationManager.animatePosition(
-      *targets,
+      *targets as Array<out Point>,
       options = options
     )
   }
