@@ -4,6 +4,7 @@ package com.mapbox.maps.extension.style.light.generated
 
 import android.graphics.Color
 import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.StylePropertyValue
 import com.mapbox.maps.StylePropertyValueKind
@@ -25,7 +26,7 @@ import org.robolectric.RobolectricTestRunner
 class LightTest {
   private val style = mockk<StyleInterface>(relaxUnitFun = true, relaxed = true)
   private val styleProperty = mockk<StylePropertyValue>()
-  private val expected = mockk<Expected<Void, String>>(relaxUnitFun = true, relaxed = true)
+  private val expected = mockk<Expected<String, None>>(relaxUnitFun = true, relaxed = true)
   private val valueSlot = slot<Value>()
 
   @Before

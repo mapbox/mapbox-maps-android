@@ -20,7 +20,7 @@ public class ShadowValueConverter {
     @Implementation
     @NonNull
     public static Expected<Value, String> fromJson(@NonNull String var0) {
-        return ExpectedFactory.createValue();
+        return ExpectedFactory.createValue(var0);
     }
 
     @Implementation
