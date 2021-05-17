@@ -10,8 +10,8 @@ import com.mapbox.bindgen.Value
 import com.mapbox.common.Logger
 import com.mapbox.common.module.provider.MapboxModuleProvider
 import com.mapbox.common.module.provider.ModuleProviderArgument
-import com.mapbox.mapboxsdk.assets.AssetManagerProvider
 import com.mapbox.maps.RenderCache.Companion.RENDER_CACHE_SETTING
+import com.mapbox.maps.assets.AssetManagerProvider
 import com.mapbox.maps.loader.MapboxMapStaticInitializer
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.*

@@ -1,5 +1,7 @@
 package com.mapbox.maps.plugin.delegates
 
+import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.None
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
@@ -210,7 +212,7 @@ interface MapCameraManagerDelegate {
    *
    * @param options
    */
-  fun setBounds(options: CameraBoundsOptions)
+  fun setBounds(options: CameraBoundsOptions): Expected<String, None>
 
   /**
    * Returns the bounds of the map.

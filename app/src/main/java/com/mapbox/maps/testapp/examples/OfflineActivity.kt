@@ -1,5 +1,6 @@
 package com.mapbox.maps.testapp.examples
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -73,7 +74,7 @@ class OfflineActivity : AppCompatActivity() {
 
   private fun prepareViewMapButton() {
     // Disable network stack, so that the map can only load from downloaded region.
-    NetworkConnectivity.getInstance().setMapboxStackConnected(false)
+    OfflineSwitch.getInstance().isMapboxStackConnected = false
     logInfoMessage("Mapbox network stack disabled.")
     handler.post {
       updateButton("VIEW MAP") {
@@ -118,7 +119,7 @@ class OfflineActivity : AppCompatActivity() {
       container.removeAllViews()
 
       // Re-enable the Mapbox network stack, so that the new offline region download can succeed.
-      NetworkConnectivity.getInstance().setMapboxStackConnected(true)
+      OfflineSwitch.getInstance().isMapboxStackConnected = true
       logInfoMessage("Mapbox network stack enabled.")
 
       prepareDownloadButton()
@@ -212,13 +213,8 @@ class OfflineActivity : AppCompatActivity() {
         .geometry(TOKYO)
         .descriptors(listOf(tilesetDescriptor))
         .metadata(Value(TILE_REGION_METADATA))
-        .tileLoadOptions(
-          TileLoadOptions.Builder()
-            .criticalPriority(false)
-            .acceptExpired(true)
-            .networkRestriction(NetworkRestriction.NONE)
-            .build()
-        )
+        .acceptExpired(true)
+        .networkRestriction(NetworkRestriction.NONE)
         .build(),
       { progress ->
         updateTileRegionDownloadProgress(
@@ -343,7 +339,7 @@ class OfflineActivity : AppCompatActivity() {
     // Remove downloaded style packs and tile regions.
     removeOfflineRegions()
     // Bring back the network connectivity when exiting the OfflineActivity.
-    NetworkConnectivity.getInstance().setMapboxStackConnected(true)
+    OfflineSwitch.getInstance().isMapboxStackConnected = true
     mapView?.onDestroy()
   }
 
@@ -352,6 +348,7 @@ class OfflineActivity : AppCompatActivity() {
     private val updateHandler = Handler()
     private val logs = ArrayList<OfflineLog>()
 
+    @SuppressLint("NotifyDataSetChanged")
     private val updateRunnable = Runnable {
       notifyDataSetChanged()
       isUpdating = false

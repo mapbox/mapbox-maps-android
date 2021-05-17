@@ -5,6 +5,8 @@ import android.os.Handler
 import android.os.Looper
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
+import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
@@ -288,7 +290,7 @@ class MapboxMap internal constructor(
    *
    * @param options the map bound options
    */
-  override fun setBounds(options: CameraBoundsOptions) =
+  override fun setBounds(options: CameraBoundsOptions): Expected<String, None> =
     nativeMapWeakRef.call { this.setBounds(options) }
 
   /**
@@ -717,11 +719,18 @@ class MapboxMap internal constructor(
    *
    * @param sourceIdentifier The identifier of the source to query.
    * @param feature to look for in the query.
-   * @param extension e.g. supercluster.
-   * @param extensionField children, leaves, or expansion-zoom.
-   * @param args
+   * @param extension, now only support keyword 'supercluster'.
+   * @param extensionField, now only support following three extensions:
+   *        'children': returns the children of a cluster (on the next zoom level).
+   *        'leaves': returns all the leaves of a cluster (given its cluster_id)
+   *        'expansion-zoom': returns the zoom on which the cluster expands into several children (useful for "click to zoom" feature).
+   * @param args used for further query specification when using 'leaves' extensionField. Now only support following two args:
+   *        'limit': the number of points to return from the query (must use type 'uint64_t', set to maximum for all points)
+   *        'offset': the amount of points to skip (for pagination, must use type 'uint64_t')
    *
-   * @return A feature extension value containing either a value or a feature collection.
+   * @return The result will be returned through the \link QueryFeatureExtensionCallback \endlink.
+   *         The result could be a feature extension value containing either a value (expansion-zoom) or a feature collection (children or leaves).
+   *         Or a string describing an error if the operation was not successful.
    */
   fun queryFeatureExtensions(
     sourceIdentifier: String,

@@ -1,6 +1,7 @@
 package com.mapbox.maps
 
 import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
@@ -73,11 +74,11 @@ internal class NativeMapImpl(private val map: MapInterface) :
   override fun invalidateStyleCustomGeometrySourceRegion(
     sourceId: String,
     coordinateBounds: CoordinateBounds
-  ): Expected<Void, String> {
+  ): Expected<String, None> {
     return map.invalidateStyleCustomGeometrySourceRegion(sourceId, coordinateBounds)
   }
 
-  override fun setStyleTerrain(properties: Value): Expected<Void, String> {
+  override fun setStyleTerrain(properties: Value): Expected<String, None> {
     return map.setStyleTerrain(properties)
   }
 
@@ -85,7 +86,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.getStyleTerrainProperty(property)
   }
 
-  override fun setStyleTerrainProperty(property: String, value: Value): Expected<Void, String> {
+  override fun setStyleTerrainProperty(property: String, value: Value): Expected<String, None> {
     return map.setStyleTerrainProperty(property, value)
   }
 
@@ -139,8 +140,8 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.isGestureInProgress
   }
 
-  override fun setBounds(boundOptions: CameraBoundsOptions) {
-    map.setBounds(boundOptions)
+  override fun setBounds(boundOptions: CameraBoundsOptions): Expected<String, None> {
+    return map.setBounds(boundOptions)
   }
 
   override fun getBounds(): CameraBounds {
@@ -179,7 +180,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     layerId: String,
     property: String,
     value: Value
-  ): Expected<Void, String> {
+  ): Expected<String, None> {
     return map.setStyleLayerProperty(layerId, property, value)
   }
 
@@ -202,7 +203,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
   override fun addStyleLayer(
     parameters: Value,
     layerPosition: LayerPosition?
-  ): Expected<Void, String> {
+  ): Expected<String, None> {
     return map.addStyleLayer(parameters, layerPosition)
   }
 
@@ -210,7 +211,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     layerId: String,
     layerHost: CustomLayerHost,
     layerPosition: LayerPosition?
-  ): Expected<Void, String> {
+  ): Expected<String, None> {
     return map.addStyleCustomLayer(layerId, layerHost, layerPosition)
   }
 
@@ -246,7 +247,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     map.styleTransition = transitionOptions
   }
 
-  override fun removeStyleLayer(layerId: String): Expected<Void, String> {
+  override fun removeStyleLayer(layerId: String): Expected<String, None> {
     return map.removeStyleLayer(layerId)
   }
 
@@ -258,27 +259,27 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.getStyleLayerProperty(layerId, property)
   }
 
-  override fun setStyleLayerProperties(layerId: String, properties: Value): Expected<Void, String> {
+  override fun setStyleLayerProperties(layerId: String, properties: Value): Expected<String, None> {
     return map.setStyleLayerProperties(layerId, properties)
   }
 
-  override fun addStyleSource(sourceId: String, source: Value): Expected<Void, String> {
+  override fun addStyleSource(sourceId: String, source: Value): Expected<String, None> {
     return map.addStyleSource(sourceId, source)
   }
 
-  override fun getStyleSourceProperties(sourceId: String): Expected<Value, String> {
+  override fun getStyleSourceProperties(sourceId: String): Expected<String, Value> {
     return map.getStyleSourceProperties(sourceId)
   }
 
-  override fun updateStyleImageSourceImage(sourceId: String, image: Image): Expected<Void, String> {
+  override fun updateStyleImageSourceImage(sourceId: String, image: Image): Expected<String, None> {
     return map.updateStyleImageSourceImage(sourceId, image)
   }
 
-  override fun getStyleLayerProperties(layerId: String): Expected<Value, String> {
+  override fun getStyleLayerProperties(layerId: String): Expected<String, Value> {
     return map.getStyleLayerProperties(layerId)
   }
 
-  override fun removeStyleSource(sourceId: String): Expected<Void, String> {
+  override fun removeStyleSource(sourceId: String): Expected<String, None> {
     return map.removeStyleSource(sourceId)
   }
 
@@ -286,7 +287,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     sourceId: String,
     tileId: CanonicalTileID,
     featureCollection: MutableList<Feature>
-  ): Expected<Void, String> {
+  ): Expected<String, None> {
     return map.setStyleCustomGeometrySourceTileData(sourceId, tileId, featureCollection)
   }
 
@@ -294,11 +295,11 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.styleSourceExists(sourceId)
   }
 
-  override fun setStyleLight(light: Value): Expected<Void, String> {
+  override fun setStyleLight(light: Value): Expected<String, None> {
     return map.setStyleLight(light)
   }
 
-  override fun setStyleLightProperty(property: String, value: Value): Expected<Void, String> {
+  override fun setStyleLightProperty(property: String, value: Value): Expected<String, None> {
     return map.setStyleLightProperty(property, value)
   }
 
@@ -310,7 +311,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.getStyleImage(imageId)
   }
 
-  override fun removeStyleImage(imageId: String): Expected<Void, String> {
+  override fun removeStyleImage(imageId: String): Expected<String, None> {
     return map.removeStyleImage(imageId)
   }
 
@@ -386,14 +387,14 @@ internal class NativeMapImpl(private val map: MapInterface) :
   override fun invalidateStyleCustomGeometrySourceTile(
     sourceId: String,
     tileId: CanonicalTileID
-  ): Expected<Void, String> {
+  ): Expected<String, None> {
     return map.invalidateStyleCustomGeometrySourceTile(sourceId, tileId)
   }
 
   override fun setStyleSourceProperties(
     sourceId: String,
     properties: Value
-  ): Expected<Void, String> {
+  ): Expected<String, None> {
     return map.setStyleSourceProperties(sourceId, properties)
   }
 
@@ -409,7 +410,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
   override fun addStyleCustomGeometrySource(
     sourceId: String,
     options: CustomGeometrySourceOptions
-  ): Expected<Void, String> {
+  ): Expected<String, None> {
     return map.addStyleCustomGeometrySource(sourceId, options)
   }
 
@@ -421,7 +422,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     stretchX: MutableList<ImageStretches>,
     stretchY: MutableList<ImageStretches>,
     content: ImageContent?
-  ): Expected<Void, String> {
+  ): Expected<String, None> {
     return map.addStyleImage(imageId, scale, float, sdf, stretchX, stretchY, content)
   }
 
@@ -431,29 +432,6 @@ internal class NativeMapImpl(private val map: MapInterface) :
 
   override fun isUserAnimationInProgress(): Boolean {
     return map.isUserAnimationInProgress
-  }
-
-  override fun getStyleGeoJSONSourceClusterLeaves(
-    sourceId: String,
-    clusterId: Int,
-    limit: Int,
-    offset: Int
-  ): Expected<MutableList<Feature>, String> {
-    return map.getStyleGeoJSONSourceClusterLeaves(sourceId, clusterId, limit, offset)
-  }
-
-  override fun getStyleGeoJSONSourceClusterExpansionZoom(
-    sourceId: String,
-    clusterId: Int
-  ): Expected<Byte, String> {
-    return map.getStyleGeoJSONSourceClusterExpansionZoom(sourceId, clusterId)
-  }
-
-  override fun getStyleGeoJSONSourceClusterChildren(
-    sourceId: String,
-    clusterId: Int
-  ): Expected<MutableList<Feature>, String> {
-    return map.getStyleGeoJSONSourceClusterChildren(sourceId, clusterId)
   }
 
   override fun getStyleSourceProperty(sourceId: String, property: String): StylePropertyValue {
@@ -472,7 +450,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     sourceId: String,
     property: String,
     value: Value
-  ): Expected<Void, String> {
+  ): Expected<String, None> {
     return map.setStyleSourceProperty(sourceId, property, value)
   }
 
