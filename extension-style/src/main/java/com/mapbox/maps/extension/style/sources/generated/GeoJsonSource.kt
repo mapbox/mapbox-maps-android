@@ -30,7 +30,8 @@ class GeoJsonSource(
 ) : Source(builder.sourceId) {
 
   var geoJsonParsed = false
-  var onGeoJsonParsedListener: ((GeoJsonSource) -> Unit)? = null
+    private set
+  private val onGeoJsonParsedListenerList = mutableListOf<(GeoJsonSource) -> Unit>()
 
   private constructor(
     builder: Builder,
@@ -38,24 +39,22 @@ class GeoJsonSource(
     onGeoJsonParsed: (GeoJsonSource) -> Unit
   ) : this(builder) {
     rawGeoJson?.let {
-      onGeoJsonParsedListener = onGeoJsonParsed
+      onGeoJsonParsedListenerList.add(onGeoJsonParsed)
       workerHandler.post {
-        val property = PropertyValue(
-          "data",
-          when (it) {
-            is Geometry -> it.toValue()
-            is FeatureCollection -> it.toValue()
-            is Feature -> it.toValue()
-            else -> ""
-          }
-        )
+        val property = it.toPropertyValue()
         mainHandler.post {
           setProperty(property)
           geoJsonParsed = true
-          onGeoJsonParsedListener?.invoke(this)
+          onGeoJsonParsedListenerList.forEach {
+            it.invoke(this)
+          }
         }
       }
     }
+  }
+
+  fun addOnGeoJsonParsedListener(listener: (GeoJsonSource) -> Unit) {
+    onGeoJsonParsedListenerList.add(listener)
   }
 
   init {
@@ -502,44 +501,66 @@ class GeoJsonSource(
 
   /**
    * Add a Feature to the GeojsonSource.
+   * If [onDataParsed] is provided and not null - data will be loaded in async mode.
+   * Otherwise method will be synchronous.
    *
-   * @param value the feature
+   * @param value the feature collection
+   * @param onDataParsed optional callback notifying when data is parsed on a worker thread
    */
-  fun feature(value: Feature) = apply {
-    workerHandler.post {
-      val property = PropertyValue("data", value.toValue())
-      mainHandler.post {
-        setProperty(property)
-      }
-    }
-  }
+  fun feature(
+    value: Feature,
+    onDataParsed: ((GeoJsonSource) -> Unit)? = null
+  ) = applyGeoJsonData(value, onDataParsed)
 
   /**
    * Add a FeatureCollection to the GeojsonSource.
+   * If [onDataParsed] is provided and not null - data will be loaded in async mode.
+   * Otherwise method will be synchronous.
    *
    * @param value the feature collection
+   * @param onDataParsed optional callback notifying when data is parsed on a worker thread
    */
-  fun featureCollection(value: FeatureCollection) = apply {
-    workerHandler.post {
-      val property = PropertyValue("data", value.toValue())
-      mainHandler.post {
-        setProperty(property)
-      }
-    }
-  }
+  fun featureCollection(
+    value: FeatureCollection,
+    onDataParsed: ((GeoJsonSource) -> Unit)? = null
+  ) = applyGeoJsonData(value, onDataParsed)
 
   /**
    * Add a Geometry to the GeojsonSource.
+   * If [onDataParsed] is provided and not null - data will be loaded in async mode.
+   * Otherwise method will be synchronous.
    *
-   * @param value the geometry
+   * @param value the feature collection
+   * @param onDataParsed optional callback notifying when data is parsed on a worker thread
    */
-  fun geometry(value: Geometry) = apply {
-    workerHandler.post {
-      val property = PropertyValue("data", value.toValue())
-      mainHandler.post {
-        setProperty(property)
-      }
+  fun geometry(
+    value: Geometry,
+    onDataParsed: ((GeoJsonSource) -> Unit)? = null
+  ) = applyGeoJsonData(value, onDataParsed)
+
+  private fun GeoJson.toPropertyValue() = PropertyValue(
+    "data",
+    when (this) {
+      is Geometry -> toValue()
+      is FeatureCollection -> toValue()
+      is Feature -> toValue()
+      else -> RuntimeException("GeoJson data must be Geometry, FeatureCollection or Feature!")
     }
+  )
+
+  private fun applyGeoJsonData(
+    data: GeoJson,
+    onDataParsed: ((GeoJsonSource) -> Unit)?
+  ): GeoJsonSource = apply {
+    onDataParsed?.let { listener ->
+      workerHandler.post {
+        val property = data.toPropertyValue()
+        mainHandler.post {
+          setProperty(property)
+          listener.invoke(this)
+        }
+      }
+    } ?: setProperty(data.toPropertyValue())
   }
 
   /**

@@ -177,7 +177,7 @@ class MapboxMap internal constructor(
           it.bindTo(style)
           resourceCount--
         } else {
-          it.onGeoJsonParsedListener = { geoJson ->
+          it.addOnGeoJsonParsedListener { geoJson ->
             geoJson.bindTo(style)
             resourceCount--
             if (resourceCount == 0) {
