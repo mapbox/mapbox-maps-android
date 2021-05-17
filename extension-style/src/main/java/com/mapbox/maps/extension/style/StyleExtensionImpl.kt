@@ -12,9 +12,17 @@ import com.mapbox.maps.extension.style.terrain.generated.Terrain
  * The concrete implementation of style extension.
  */
 class StyleExtensionImpl private constructor(
-  builder: Builder,
-  override var resourceCount: Int
+  builder: Builder
 ) : StyleContract.StyleExtension {
+
+  /**
+   * Total resource count including all sources, layers, images, terrain and light.
+   */
+  override val resourceCount: Int
+    get() = sources.size +
+      images.size +
+      layers.size +
+      if (light != null) 1 else 0 + if (terrain != null) 1 else 0
 
   /**
    * The style's Uri.
@@ -55,7 +63,6 @@ class StyleExtensionImpl private constructor(
      */
     val styleUri: String
   ) {
-    private var resourceCount = 0
     internal val layers = mutableListOf<Pair<Layer, LayerPosition>>()
     internal val sources = mutableListOf<Source>()
     internal val images = mutableListOf<ImageExtensionImpl>()
@@ -69,7 +76,6 @@ class StyleExtensionImpl private constructor(
      */
     operator fun Layer.unaryPlus() {
       layers.add(Pair(this, LayerPosition(null, null, null)))
-      resourceCount++
     }
 
     /**
@@ -79,7 +85,6 @@ class StyleExtensionImpl private constructor(
      */
     operator fun Pair<Layer, LayerPosition>.unaryPlus() {
       layers.add(this)
-      resourceCount++
     }
 
     /**
@@ -89,7 +94,6 @@ class StyleExtensionImpl private constructor(
      */
     operator fun Source.unaryPlus() {
       sources.add(this)
-      resourceCount++
     }
 
     /**
@@ -117,7 +121,6 @@ class StyleExtensionImpl private constructor(
      */
     operator fun ImageExtensionImpl.unaryPlus() {
       images.add(this)
-      resourceCount++
     }
 
     /**
@@ -140,7 +143,7 @@ class StyleExtensionImpl private constructor(
     }
 
     internal fun build(): StyleContract.StyleExtension {
-      return StyleExtensionImpl(this, resourceCount)
+      return StyleExtensionImpl(this)
     }
   }
 }

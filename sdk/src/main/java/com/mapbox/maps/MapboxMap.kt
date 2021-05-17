@@ -170,36 +170,43 @@ class MapboxMap internal constructor(
     onStyleLoaded: Style.OnStyleLoaded? = null
   ) {
     this.style = style
+    var resourceCount = styleExtension.resourceCount
     styleExtension.sources.forEach {
       if (it is GeoJsonSource) {
         if (it.geoJsonParsed) {
           it.bindTo(style)
-          styleExtension.resourceCount--
+          resourceCount--
         } else {
           it.onGeoJsonParsedListener = { geoJson ->
             geoJson.bindTo(style)
-            styleExtension.resourceCount--
-            if (styleExtension.resourceCount == 0) {
+            resourceCount--
+            if (resourceCount == 0) {
               onStyleLoaded?.onStyleLoaded(style)
             }
           }
         }
       } else {
         it.bindTo(style)
-        styleExtension.resourceCount--
+        resourceCount--
       }
     }
     styleExtension.images.forEach {
       it.bindTo(style)
-      styleExtension.resourceCount--
+      resourceCount--
     }
     styleExtension.layers.forEach {
       it.first.bindTo(style, it.second)
-      styleExtension.resourceCount--
+      resourceCount--
     }
-    styleExtension.light?.bindTo(style)
-    styleExtension.terrain?.bindTo(style)
-    if (styleExtension.resourceCount == 0) {
+    styleExtension.light?.let {
+      it.bindTo(style)
+      resourceCount--
+    }
+    styleExtension.terrain?.let {
+      it.bindTo(style)
+      resourceCount--
+    }
+    if (resourceCount == 0) {
       onStyleLoaded?.onStyleLoaded(style)
     }
   }

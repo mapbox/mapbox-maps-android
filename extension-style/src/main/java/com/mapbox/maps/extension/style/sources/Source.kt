@@ -1,8 +1,5 @@
 package com.mapbox.maps.extension.style.sources
 
-import android.os.Handler
-import android.os.HandlerThread
-import android.os.Looper
 import android.util.Log
 import com.mapbox.bindgen.Value
 import com.mapbox.common.Logger
@@ -27,7 +24,6 @@ abstract class Source(
    */
   val sourceId: String
 ) : StyleContract.StyleSourceExtension {
-
   /**
    * Get the type of the current source as a String.
    */
@@ -150,7 +146,7 @@ fun StyleManagerInterface.getSource(sourceId: String): Source? {
     val map = value.contents as HashMap<String, Value>
     return when (val type = map["type"]?.contents?.let { it as String }) {
       "vector" -> VectorSource.Builder(sourceId).build().also { it.delegate = this }
-      "geojson" -> GeoJsonSource.Builder(sourceId).build().also { it.delegate = this }
+      "geojson" -> GeoJsonSource.Builder(sourceId) {}.build().also { it.delegate = this }
       "image" -> ImageSource.Builder(sourceId).build().also { it.delegate = this }
       "raster-dem" -> RasterDemSource.Builder(sourceId).build().also { it.delegate = this }
       "raster" -> RasterSource.Builder(sourceId).build().also { it.delegate = this }

@@ -42,7 +42,7 @@ class GeoJsonSource(
       workerHandler.post {
         val property = PropertyValue(
           "data",
-          when(it) {
+          when (it) {
             is Geometry -> it.toValue()
             is FeatureCollection -> it.toValue()
             is Feature -> it.toValue()
@@ -546,11 +546,12 @@ class GeoJsonSource(
    * Builder for GeoJsonSource.
    *
    * @param sourceId the ID of the source
+   * @param onGeoJsonParsed callback invoked when data is parsed
    */
   @SourceDsl
   class Builder(
     val sourceId: String,
-    private val onGeoJsonParsed: (GeoJsonSource) -> Unit = {}
+    private val onGeoJsonParsed: (GeoJsonSource) -> Unit
   ) {
 
     private var rawGeoJson: GeoJson? = null

@@ -62,39 +62,42 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
             .build(),
           MapAnimationOptions.mapAnimationOptions {
             duration(10_000L)
-          })
-        loadStyle(style(Style.DARK) {
-          +geoJsonSource("source") {
-            featureCollection(routePoints)
           }
-          +geoJsonSource("source2") {
-            featureCollection(routePoints)
+        )
+        loadStyle(
+          style(Style.DARK) {
+            +geoJsonSource("source") {
+              featureCollection(routePoints)
+            }
+            +geoJsonSource("source2") {
+              featureCollection(routePoints)
+            }
+            +geoJsonSource("source3") {
+              featureCollection(routePoints)
+            }
+            +lineLayer("layer", "source") {
+              lineColor("blue")
+            }
+            +lineLayer("layer2", "source2") {
+              lineColor("yellow")
+              lineOffset(5.0)
+            }
+            +lineLayer("layer3", "source3") {
+              lineColor("red")
+              lineOffset(10.0)
+            }
+            +image("icon") {
+              bitmap(BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view))
+            }
+            +geoJsonSource("source_marker") {
+              geometry(Point.fromLngLat(LONGITUDE, LATITUDE))
+            }
+            +symbolLayer("layer_marker", "source_marker") {
+              iconImage("icon")
+              iconAnchor(IconAnchor.BOTTOM)
+            }
           }
-          +geoJsonSource("source3") {
-            featureCollection(routePoints)
-          }
-          +lineLayer("layer", "source") {
-            lineColor("blue")
-          }
-          +lineLayer("layer2", "source2") {
-            lineColor("yellow")
-            lineOffset(5.0)
-          }
-          +lineLayer("layer3", "source3") {
-            lineColor("red")
-            lineOffset(10.0)
-          }
-          +image("icon") {
-            bitmap(BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view))
-          }
-          +geoJsonSource("source_marker") {
-            geometry(Point.fromLngLat(LONGITUDE, LATITUDE))
-          }
-          +symbolLayer("layer_marker", "source_marker") {
-            iconImage("icon")
-            iconAnchor(IconAnchor.BOTTOM)
-          }
-        }) {
+        ) {
           loadAdditionalGeoJsonAfter(it)
         }
       }
@@ -111,22 +114,28 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
       },
       onGeoJsonParsed = {
         style.addSource(it)
-        style.addLayer(lineLayer("layer5", "source5") {
-          lineColor("green")
-          lineOffset(20.0)
-        })
+        style.addLayer(
+          lineLayer("layer5", "source5") {
+            lineColor("green")
+            lineOffset(20.0)
+          }
+        )
       }
     )
 
     // async method with adding layer instantly
 
-    style.addSource(geoJsonSource(id = "source4") {
-      featureCollection(routePoints)
-    })
-    style.addLayer(lineLayer("layer4", "source4") {
-      lineColor("pink")
-      lineOffset(30.0)
-    })
+    style.addSource(
+      geoJsonSource(id = "source4") {
+        featureCollection(routePoints)
+      }
+    )
+    style.addLayer(
+      lineLayer("layer4", "source4") {
+        lineColor("pink")
+        lineOffset(30.0)
+      }
+    )
   }
 
   override fun onStart() {

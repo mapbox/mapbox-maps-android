@@ -12,9 +12,10 @@ interface StyleContract {
   interface StyleExtension {
 
     /**
-     * Total resource count including all sources, layers and images.
+     * Total resource count including all sources, layers, images, terrain and light.
      */
-    var resourceCount: Int
+    val resourceCount: Int
+
     /**
      * The style's Uri.
      */
