@@ -37,19 +37,10 @@ data class MapInitOptions constructor(
    */
   companion object {
     /**
-     * The default cache size, which is 50MB
-     */
-    const val DEFAULT_CACHE_SIZE = 1024 * 1024 * 50L
-
-    /**
      * Get a default [ResourceOptions] with token from default [CredentialsManager]
      * @property context the context of the application.
      */
-    fun getDefaultResourceOptions(context: Context): ResourceOptions = ResourceOptions.Builder()
-      .accessToken(CredentialsManager.default.getAccessToken(context))
-      .cachePath("${context.filesDir.absolutePath}/$DATABASE_NAME")
-      .cacheSize(DEFAULT_CACHE_SIZE) // 50 mb
-      .build()
+    fun getDefaultResourceOptions(context: Context): ResourceOptions = ResourceOptionsManager.getDefault(context).resourceOptions
 
     /**
      * Get a default [MapOptions] with reasterization mode [GlyphsRasterizationMode#ALL_GLYPHS_RASTERIZED_LOCALLY]

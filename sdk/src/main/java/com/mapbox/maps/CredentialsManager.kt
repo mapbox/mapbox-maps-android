@@ -5,7 +5,7 @@ import android.content.Context
 /**
  * Convenience class that holds [MapboxMap] related token.
  * `CredentialsManager` could be created per `MapView` instance if given view should use some specific token.
- * Most common use-case when all `MapView`s should use same token could be handled by using `CredentialsManager.shared` static object.
+ * Most common use-case when all `MapView`s should use same token could be handled by using `CredentialsManager.default` static object.
  *
  * @property accessToken the token will be applied.
  */

@@ -52,10 +52,6 @@
         <attr name="mapbox_resourcesAccessToken" format="string" />
         <!-- An URL that defines the base for API requests. -->
         <attr name="mapbox_resourcesBaseUrl" format="string" />
-        <!-- The path to the assets. -->
-        <attr name="mapbox_resourcesCachePath" format="string" />
-        <!-- The path to the tile store. -->
-        <attr name="mapbox_resourcesTileStorePath" format="string" />
         <!-- The size of the cache. -->
         <attr name="mapbox_resourcesCacheSize" format="float" />
 
