@@ -180,6 +180,7 @@ class CompassViewPluginTest {
   @Test
   fun setEnabled_true() {
     every { mapCameraDelegate.cameraState.bearing } returns 10.0
+    compassPlugin.onDelegateProvider(delegateProvider)
     every { compassView.compassRotation } returns -10f
     every { compassView.isCompassEnabled } returns true
     compassPlugin.enabled = true
@@ -403,5 +404,14 @@ class CompassViewPluginTest {
         }
       )
     }
+  }
+
+  @Test
+  fun onCompassDisabledRotateMapEnabled() {
+    compassPlugin.enabled = false
+    compassPlugin.onCameraMove(0.0, 0.0, 0.0, 0.0, 40.0, arrayOf())
+    every { compassView.compassRotation } returns -40.0f
+    compassPlugin.enabled = true
+    verify { compassView.isCompassVisible = true }
   }
 }
