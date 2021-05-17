@@ -205,24 +205,6 @@ class StyleTest {
   }
 
   @Test
-  fun getGeoJSONSourceClusterChildren() {
-    style.getStyleGeoJSONSourceClusterChildren("id", 1)
-    verify { nativeMap.getStyleGeoJSONSourceClusterChildren("id", 1) }
-  }
-
-  @Test
-  fun getGeoJSONSourcClusterExpansionZoom() {
-    style.getStyleGeoJSONSourceClusterExpansionZoom("id", 1)
-    verify { nativeMap.getStyleGeoJSONSourceClusterExpansionZoom("id", 1) }
-  }
-
-  @Test
-  fun getGeoJSONSourceClusterLeaves() {
-    style.getStyleGeoJSONSourceClusterLeaves("id", 1, 2, 3)
-    verify { nativeMap.getStyleGeoJSONSourceClusterLeaves("id", 1, 2, 3) }
-  }
-
-  @Test
   fun updateImageSourceImage() {
     val image = mockk<Image>()
     style.updateStyleImageSourceImage("id", image)
