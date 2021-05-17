@@ -3,6 +3,7 @@ package com.mapbox.maps.plugin.locationcomponent
 import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
+import android.os.Handler
 import android.os.Looper
 import com.mapbox.android.core.location.LocationEngineCallback
 import com.mapbox.android.core.location.LocationEngineProvider
@@ -28,6 +29,9 @@ internal class LocationProviderImpl(private val context: Context) :
 
   private val locationConsumers = CopyOnWriteArrayList<LocationConsumer>()
 
+  private var handler: Handler? = null
+  private var runnable: Runnable? = null
+
   @SuppressLint("MissingPermission")
   private fun requestLocationUpdates() {
     if (PermissionsManager.areLocationPermissionsGranted(context)) {
@@ -35,6 +39,11 @@ internal class LocationProviderImpl(private val context: Context) :
         locationEngineRequest, this, Looper.getMainLooper()
       )
     } else {
+      if (handler == null) {
+        handler = Handler()
+        runnable = Runnable { requestLocationUpdates() }
+      }
+      handler?.postDelayed(runnable, UPDATE_DELAY)
       Logger.w(
         TAG,
         "Missing location permission, location component will not take effect before location permission is granted."
@@ -104,10 +113,12 @@ internal class LocationProviderImpl(private val context: Context) :
     locationConsumers.remove(locationConsumer)
     if (locationConsumers.isEmpty()) {
       locationEngine.removeLocationUpdates(this)
+      handler?.removeCallbacks(runnable)
     }
   }
 
   private companion object {
     private const val TAG = "MapboxLocationProvider"
+    private const val UPDATE_DELAY = 5000L
   }
 }
