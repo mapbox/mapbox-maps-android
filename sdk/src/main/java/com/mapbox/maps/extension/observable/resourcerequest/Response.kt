@@ -23,9 +23,9 @@ data class Response(
    */
   @SerializedName("modified") val modified: String,
   /**
-   * "offline-data" property
+   * "source" property
    */
-  @SerializedName("offline-data") val offlineData: Boolean,
+  @SerializedName("source") val source: String,
   /**
    * "not-modified" property
    */
