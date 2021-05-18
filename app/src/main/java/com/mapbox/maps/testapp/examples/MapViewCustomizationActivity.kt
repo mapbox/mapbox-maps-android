@@ -3,6 +3,7 @@ package com.mapbox.maps.testapp.examples
 import android.os.Bundle
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.common.TileStore
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.*
@@ -22,6 +23,13 @@ class MapViewCustomizationActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     // Create  a custom CredentialsManager with a token and set it to CredentialsManager.shared, so that all MapViews created with default config will apply this token.
     CredentialsManager.default.setAccessToken(getString(R.string.mapbox_access_token))
+
+    // Create a custom ResourceOptionsManager with customised tile store and tile size, so that all MapViews created with default config will apply these settings.
+    ResourceOptionsManager.getDefault(this).update {
+      tileStore(TileStore.getInstance())
+      cacheSize(75_000L)
+    }
+
     setContentView(R.layout.activity_map_view_customization)
     // all options provided in xml file - so we just load style
     mapView.getMapboxMap().loadStyleUri(Style.DARK)
@@ -47,10 +55,10 @@ class MapViewCustomizationActivity : AppCompatActivity() {
       PLUGIN_ATTRIBUTION_CLASS_NAME
     )
 
-    // set token and cache size for this particular map view
-    val resourceOptions = ResourceOptions.Builder()
+    // set token and cache size for this particular map view, these settings will overwrite the default value.
+    val resourceOptions = ResourceOptions.Builder().applyDefaultParams(this)
       .accessToken(getString(R.string.mapbox_access_token))
-      .cacheSize(75_000L)
+      .cacheSize(10_000L)
       .build()
 
     // set initial camera position
