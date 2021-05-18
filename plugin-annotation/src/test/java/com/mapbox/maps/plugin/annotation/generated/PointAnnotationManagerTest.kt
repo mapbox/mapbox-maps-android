@@ -10,6 +10,7 @@ import com.mapbox.android.gestures.MoveDistancesObject
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
+import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.common.ValueConverter
 import com.mapbox.geojson.Feature
@@ -53,7 +54,7 @@ class PointAnnotationManagerTest {
   private val layer: SymbolLayer = mockk()
   private val source: GeoJsonSource = mockk()
   private val mapView: View = mockk()
-  private val queriedFeatures = mockk<Expected<List<QueriedFeature>, String>>()
+  private val queriedFeatures = mockk<Expected<String, List<QueriedFeature>>>()
   private val queriedFeature = mockk<QueriedFeature>()
   private val feature = mockk<Feature>()
   private val queriedFeatureList = listOf(queriedFeature)
@@ -119,7 +120,7 @@ class PointAnnotationManagerTest {
     manager = PointAnnotationManager(mapView, delegateProvider)
     manager.layer = layer
     manager.source = source
-    val expected = mockk<Expected<Void, String>>(relaxUnitFun = true, relaxed = true)
+    val expected = mockk<Expected<String, None>>(relaxUnitFun = true, relaxed = true)
     every { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) } returns expected
     every { expected.error } returns null
     every { layer.iconAnchor(any<Expression>()) } answers { layer }

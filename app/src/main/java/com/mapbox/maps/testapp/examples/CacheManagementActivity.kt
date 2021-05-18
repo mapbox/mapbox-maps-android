@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.None
 import com.mapbox.maps.CacheManager
 import com.mapbox.maps.DATABASE_NAME
 import com.mapbox.maps.ResourceOptions
@@ -47,7 +48,7 @@ class CacheManagementActivity : AppCompatActivity() {
   }
 
   @SuppressLint("SetTextI18n")
-  private fun setResult(function: String, result: Expected<Void, String>) {
+  private fun setResult(function: String, result: Expected<String, None>) {
     if (result.isValue) {
       resultView.text = "$function: Success"
     } else {

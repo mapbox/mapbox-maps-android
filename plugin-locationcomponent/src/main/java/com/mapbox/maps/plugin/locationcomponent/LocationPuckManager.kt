@@ -203,7 +203,7 @@ internal class LocationPuckManager(
 /**
  * Internal function to check if a method invoke on ValueConverter succeeded, throws exception if not.
  */
-private inline fun <reified T> Expected<T, String>.take(): T {
+private inline fun <reified T> Expected<String, T>.take(): T {
   this.also {
     it.error?.let { err ->
       throw RuntimeException(err)

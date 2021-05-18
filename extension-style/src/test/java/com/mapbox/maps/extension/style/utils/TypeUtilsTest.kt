@@ -30,7 +30,7 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowValueConverter::class])
 class TypeUtilsTest {
-  private val expected = mockk<Expected<Value, String>>(relaxed = true)
+  private val expected = mockk<Expected<String, Value>>(relaxed = true)
 
   @Before
   fun prepare() {

@@ -2,6 +2,7 @@ package com.mapbox.maps.extension.style
 
 import android.graphics.Bitmap
 import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.None
 import com.mapbox.maps.StyleManagerInterface
 
 /**
@@ -31,5 +32,5 @@ interface StyleInterface : StyleManagerInterface {
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  fun addImage(imageId: String, bitmap: Bitmap): Expected<Void, String>
+  fun addImage(imageId: String, bitmap: Bitmap): Expected<String, None>
 }

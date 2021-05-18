@@ -1,6 +1,7 @@
 package com.mapbox.maps.extension.style.sources
 
 import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.None
 import com.mapbox.maps.Image
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.sources.generated.imageSource
@@ -12,7 +13,7 @@ import org.junit.Test
 
 class ImageSourceExtTest {
   private val style = mockk<StyleInterface>(relaxUnitFun = true, relaxed = true)
-  private val expected = mockk<Expected<Void, String>>(relaxUnitFun = true, relaxed = true)
+  private val expected = mockk<Expected<String, None>>(relaxUnitFun = true, relaxed = true)
   private val image = mockk<Image>(relaxed = true, relaxUnitFun = true)
 
   @Before

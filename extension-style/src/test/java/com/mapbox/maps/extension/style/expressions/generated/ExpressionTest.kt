@@ -31,7 +31,7 @@ class ExpressionTest {
     map["type"] = Value("Polygon")
     map["coordinates"] = Value(listOf(Value(30), Value(30)))
     mockkStatic(ValueConverter::class)
-    every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue<Value, String>(Value(map))
+    every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue<String, Value>(Value(map))
   }
 
   @Test

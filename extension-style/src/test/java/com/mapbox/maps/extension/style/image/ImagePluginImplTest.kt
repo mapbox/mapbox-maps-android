@@ -2,6 +2,7 @@ package com.mapbox.maps.extension.style.image
 
 import android.graphics.Bitmap
 import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.None
 import com.mapbox.maps.Image
 import com.mapbox.maps.ImageContent
 import com.mapbox.maps.ImageStretches
@@ -18,7 +19,7 @@ import org.robolectric.RobolectricTestRunner
 class ImagePluginImplTest {
   private val style = mockk<StyleInterface>(relaxUnitFun = true, relaxed = true)
   private val pixelRatio = mockk<Float>(relaxUnitFun = true, relaxed = true)
-  private val expected = mockk<Expected<Void, String>>(relaxUnitFun = true, relaxed = true)
+  private val expected = mockk<Expected<String, None>>(relaxUnitFun = true, relaxed = true)
 
   @Before
   fun prepareTest() {

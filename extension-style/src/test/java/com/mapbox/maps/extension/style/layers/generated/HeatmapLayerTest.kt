@@ -3,6 +3,7 @@
 package com.mapbox.maps.extension.style.layers.generated
 
 import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.StylePropertyValue
@@ -27,8 +28,8 @@ import org.robolectric.annotation.Config
 @Config(shadows = [ShadowStyleManager::class])
 class HeatmapLayerTest {
   private val style = mockk<StyleInterface>(relaxUnitFun = true, relaxed = true)
-  private val expected = mockk<Expected<Void, String>>(relaxUnitFun = true, relaxed = true)
-  private val valueExpected = mockk<Expected<Value, String>>(relaxUnitFun = true, relaxed = true)
+  private val expected = mockk<Expected<String, None>>(relaxUnitFun = true, relaxed = true)
+  private val valueExpected = mockk<Expected<String, Value>>(relaxUnitFun = true, relaxed = true)
   private val styleProperty = mockk<StylePropertyValue>()
   private val valueSlot = slot<Value>()
 

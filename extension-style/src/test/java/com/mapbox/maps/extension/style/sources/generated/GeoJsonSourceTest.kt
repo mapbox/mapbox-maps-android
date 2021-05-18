@@ -3,6 +3,7 @@
 package com.mapbox.maps.extension.style.sources.generated
 
 import com.mapbox.bindgen.Expected
+import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
@@ -28,8 +29,8 @@ import org.robolectric.annotation.Config
 class GeoJsonSourceTest {
   private val style = mockk<StyleInterface>(relaxUnitFun = true, relaxed = true)
   private val valueSlot = slot<Value>()
-  private val expected = mockk<Expected<Void, String>>(relaxUnitFun = true, relaxed = true)
-  private val expectedDelta = mockk<Expected<Byte, String>>(relaxUnitFun = true, relaxed = true)
+  private val expected = mockk<Expected<String, None>>(relaxUnitFun = true, relaxed = true)
+  private val expectedDelta = mockk<Expected<String, Byte>>(relaxUnitFun = true, relaxed = true)
   private val styleProperty = mockk<StylePropertyValue>()
 
   @Before

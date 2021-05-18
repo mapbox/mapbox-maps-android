@@ -205,27 +205,6 @@ class NativeMapTest {
   }
 
   @Test
-  fun getStyleGeoJSONSourceClusterExpansionZoom() {
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.getStyleGeoJSONSourceClusterExpansionZoom("foo", 1)
-    verify { map.getStyleGeoJSONSourceClusterExpansionZoom("foo", 1) }
-  }
-
-  @Test
-  fun getStyleGeoJSONSourceClusterChildren() {
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.getStyleGeoJSONSourceClusterChildren("foo", 1)
-    verify { map.getStyleGeoJSONSourceClusterChildren("foo", 1) }
-  }
-
-  @Test
-  fun getStyleGeoJSONSourceClusterLeaves() {
-    val nativeMap = NativeMapImpl(map)
-    nativeMap.getStyleGeoJSONSourceClusterLeaves("foo", 1, 2, 3)
-    verify { map.getStyleGeoJSONSourceClusterLeaves("foo", 1, 2, 3) }
-  }
-
-  @Test
   fun updateStyleImageSourceImage() {
     val value = mockk<Image>()
     val nativeMap = NativeMapImpl(map)

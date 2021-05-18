@@ -183,14 +183,9 @@ class OfflineTest {
               )
             )
           )
+          .acceptExpired(true)
+          .networkRestriction(NetworkRestriction.NONE)
           .metadata(Value(TILE_REGION_METADATA))
-          .tileLoadOptions(
-            TileLoadOptions.Builder()
-              .criticalPriority(false)
-              .acceptExpired(true)
-              .networkRestriction(NetworkRestriction.NONE)
-              .build()
-          )
           .build(),
         { tileRegionProgress = it }
       ) {
@@ -251,13 +246,8 @@ class OfflineTest {
             )
           )
           .metadata(Value(TILE_REGION_METADATA))
-          .tileLoadOptions(
-            TileLoadOptions.Builder()
-              .criticalPriority(false)
-              .acceptExpired(true)
-              .networkRestriction(NetworkRestriction.NONE)
-              .build()
-          )
+          .acceptExpired(true)
+          .networkRestriction(NetworkRestriction.NONE)
           .build(),
         {
           tileRegionProgress = it
@@ -364,7 +354,7 @@ class OfflineTest {
         }
       }
     }
-    NetworkConnectivity.getInstance().setMapboxStackConnected(false)
+    OfflineSwitch.getInstance().isMapboxStackConnected = false
     prepareMapView(
       observer,
       listOf(
@@ -385,7 +375,7 @@ class OfflineTest {
         throw TimeoutException()
       }
     } finally {
-      NetworkConnectivity.getInstance().setMapboxStackConnected(true)
+      OfflineSwitch.getInstance().isMapboxStackConnected = true
     }
   }
 
@@ -459,7 +449,7 @@ class OfflineTest {
         }
       }
     }
-    NetworkConnectivity.getInstance().setMapboxStackConnected(false)
+    OfflineSwitch.getInstance().isMapboxStackConnected = false
     prepareMapView(
       observer,
       listOf(MapEvents.MAP_IDLE)
@@ -469,7 +459,7 @@ class OfflineTest {
       latch.await(10, TimeUnit.SECONDS)
       Assert.assertEquals(1, idleEventCount)
     } finally {
-      NetworkConnectivity.getInstance().setMapboxStackConnected(true)
+      OfflineSwitch.getInstance().isMapboxStackConnected = true
     }
   }
 
@@ -556,13 +546,8 @@ class OfflineTest {
             )
           )
           .metadata(Value(TILE_REGION_METADATA))
-          .tileLoadOptions(
-            TileLoadOptions.Builder()
-              .networkRestriction(NetworkRestriction.NONE)
-              .criticalPriority(false)
-              .acceptExpired(true)
-              .build()
-          )
+          .acceptExpired(true)
+          .networkRestriction(NetworkRestriction.NONE)
           .build(),
         {}
       ) {

@@ -13,7 +13,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import java.util.*
 
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowValueConverter::class])
@@ -39,15 +38,15 @@ class MapboxMapTest {
     val event = Event("resource-request", Value.valueOf("test"))
     val request = Request(listOf("network"), "https://api.mapbox.com", "tile", "regular")
     val response = Response(
-      "d8abd8d10bee6b45b4dbf5c05496587a",
-      false,
-      false,
-      "Mon, 05 Oct 2020 14:23:52 GMT",
-      false,
-      false,
-      "Thu, 15 Oct 2020 14:32:23 GMT",
-      181576,
-      Error("not-found", "error message")
+      eTag = "d8abd8d10bee6b45b4dbf5c05496587a",
+      mustRevalidate = false,
+      noContent = false,
+      modified = "Mon, 05 Oct 2020 14:23:52 GMT",
+      source = "network",
+      notModified = false,
+      expires = "Thu, 15 Oct 2020 14:32:23 GMT",
+      size = 181576,
+      error = Error("not-found", "error message")
     )
 
     val eventData = event.getResourceEventData()
@@ -64,7 +63,7 @@ class MapboxMapTest {
     assertEquals("d8abd8d10bee6b45b4dbf5c05496587a", response.eTag)
     assertEquals(false, response.mustRevalidate)
     assertEquals(false, response.noContent)
-    assertEquals(false, response.offlineData)
+    assertEquals("network", response.source)
     assertEquals(false, response.notModified)
     assertEquals("Thu, 15 Oct 2020 14:32:23 GMT", response.expires)
     assertEquals(181576, response.size)

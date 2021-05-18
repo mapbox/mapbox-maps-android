@@ -53,7 +53,7 @@ class PolylineAnnotationManagerTest {
   private val layer: LineLayer = mockk()
   private val source: GeoJsonSource = mockk()
   private val mapView: View = mockk()
-  private val queriedFeatures = mockk<Expected<List<QueriedFeature>, String>>()
+  private val queriedFeatures = mockk<Expected<String, List<QueriedFeature>>>()
   private val queriedFeature = mockk<QueriedFeature>()
   private val feature = mockk<Feature>()
   private val queriedFeatureList = listOf(queriedFeature)
