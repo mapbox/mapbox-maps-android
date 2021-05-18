@@ -361,7 +361,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         annotation
       }
 
-      geoJsonSource.featureCollection(FeatureCollection.fromFeatures(features))
+      geoJsonSource.featureCollection(FeatureCollection.fromFeatures(features), onDataParsed = {})
     }
   }
 
