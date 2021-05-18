@@ -9,11 +9,8 @@ import android.content.Context
  *
  * @property context the context .
  */
-data class ResourceOptionsManager(private var context: Context) {
-  var resourceOptions = ResourceOptions.Builder()
-    .accessToken(CredentialsManager.default.getAccessToken(context))
-    .cachePath("${context.filesDir.absolutePath}/$DATABASE_NAME")
-    .cacheSize(DEFAULT_CACHE_SIZE) // 50 mb
+class ResourceOptionsManager(private var context: Context) {
+  var resourceOptions = ResourceOptions.Builder().applyDefaultParams(context)
     .build()
     private set
 
@@ -29,11 +26,6 @@ data class ResourceOptionsManager(private var context: Context) {
    */
   companion object {
     private lateinit var default: ResourceOptionsManager
-
-    /**
-     * The default cache size, which is 50MB
-     */
-    const val DEFAULT_CACHE_SIZE = 1024 * 1024 * 50L
 
     /**
      * The default shared instance with default resource options.

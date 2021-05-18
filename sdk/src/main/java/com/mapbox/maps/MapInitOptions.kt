@@ -40,26 +40,15 @@ data class MapInitOptions constructor(
      * Get a default [ResourceOptions] with token from default [CredentialsManager]
      * @property context the context of the application.
      */
-    fun getDefaultResourceOptions(context: Context): ResourceOptions = ResourceOptionsManager.getDefault(context).resourceOptions
+    fun getDefaultResourceOptions(context: Context): ResourceOptions =
+      ResourceOptionsManager.getDefault(context).resourceOptions
 
     /**
      * Get a default [MapOptions] with reasterization mode [GlyphsRasterizationMode#ALL_GLYPHS_RASTERIZED_LOCALLY]
      * @property context the context of the application.
      */
-    fun getDefaultMapOptions(context: Context): MapOptions = MapOptions.Builder()
-      .glyphsRasterizationOptions(
-        GlyphsRasterizationOptions.Builder()
-          .rasterizationMode(GlyphsRasterizationMode.IDEOGRAPHS_RASTERIZED_LOCALLY)
-          .fontFamily(FontUtils.extractValidFont(null))
-          .build()
-      )
-      .pixelRatio(context.resources.displayMetrics.density)
-      .constrainMode(ConstrainMode.HEIGHT_ONLY)
-      .contextMode(ContextMode.UNIQUE)
-      .orientation(NorthOrientation.UPWARDS)
-      .viewportMode(ViewportMode.DEFAULT)
-      .crossSourceCollisions(true)
-      .build()
+    fun getDefaultMapOptions(context: Context): MapOptions =
+      MapOptions.Builder().applyDefaultParams(context).build()
 
     /**
      * Get a default selection of Mapbox created plugins.
@@ -78,4 +67,34 @@ data class MapInitOptions constructor(
       )
     }
   }
+}
+
+/**
+ * Get a default [MapOptions.Builder] with reasterization mode [GlyphsRasterizationMode#ALL_GLYPHS_RASTERIZED_LOCALLY]
+ * @property context the context of the application.
+ * @return [MapOptions.Builder]
+ */
+fun MapOptions.Builder.applyDefaultParams(context: Context): MapOptions.Builder = also {
+  glyphsRasterizationOptions(
+    GlyphsRasterizationOptions.Builder()
+      .rasterizationMode(GlyphsRasterizationMode.IDEOGRAPHS_RASTERIZED_LOCALLY)
+      .fontFamily(FontUtils.extractValidFont(null))
+      .build()
+  )
+  pixelRatio(context.resources.displayMetrics.density)
+  constrainMode(ConstrainMode.HEIGHT_ONLY)
+  contextMode(ContextMode.UNIQUE)
+  orientation(NorthOrientation.UPWARDS)
+  viewportMode(ViewportMode.DEFAULT)
+  crossSourceCollisions(true)
+}
+
+/**
+ * Get a default [ResourceOptions.Builder] with token from default [CredentialsManager]
+ * @property context the context of the application.
+ */
+fun ResourceOptions.Builder.applyDefaultParams(context: Context): ResourceOptions.Builder = also {
+  accessToken(CredentialsManager.default.getAccessToken(context))
+  cachePath("${context.filesDir.absolutePath}/$DATABASE_NAME")
+  cacheSize(DEFAULT_CACHE_SIZE) // 50 mb
 }
