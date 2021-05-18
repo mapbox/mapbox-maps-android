@@ -31,6 +31,7 @@ internal class LocationProviderImpl(private val context: Context) :
 
   private var handler: Handler? = null
   private var runnable: Runnable? = null
+  private var updateDelay = INIT_UPDATE_DELAY
 
   @SuppressLint("MissingPermission")
   private fun requestLocationUpdates() {
@@ -43,7 +44,12 @@ internal class LocationProviderImpl(private val context: Context) :
         handler = Handler()
         runnable = Runnable { requestLocationUpdates() }
       }
-      handler?.postDelayed(runnable, UPDATE_DELAY)
+      if (updateDelay * 2 < MAX_UPDATE_DELAY) {
+        updateDelay *= 2
+      } else {
+        updateDelay = MAX_UPDATE_DELAY
+      }
+      handler?.postDelayed(runnable, updateDelay)
       Logger.w(
         TAG,
         "Missing location permission, location component will not take effect before location permission is granted."
@@ -119,6 +125,7 @@ internal class LocationProviderImpl(private val context: Context) :
 
   private companion object {
     private const val TAG = "MapboxLocationProvider"
-    private const val UPDATE_DELAY = 5000L
+    private const val INIT_UPDATE_DELAY = 100L
+    private const val MAX_UPDATE_DELAY = 5000L
   }
 }
