@@ -36,7 +36,7 @@ internal object ResourcesAttributeParser {
       builder.cacheSize(
         typedArray.getFloat(
           R.styleable.mapbox_MapView_mapbox_resourcesCacheSize,
-          ResourceOptionsManager.DEFAULT_CACHE_SIZE.toFloat() // 50 mb
+          DEFAULT_CACHE_SIZE.toFloat() // 50 mb
         ).toLong()
       )
     }
