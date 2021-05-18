@@ -29,8 +29,7 @@ class GeoJsonSource(
   builder: Builder
 ) : Source(builder.sourceId) {
 
-  var geoJsonParsed = false
-    private set
+  private var geoJsonParsed = false
   private val onGeoJsonParsedListenerList = mutableListOf<(GeoJsonSource) -> Unit>()
 
   private constructor(
@@ -55,6 +54,13 @@ class GeoJsonSource(
 
   fun addOnGeoJsonParsedListener(listener: (GeoJsonSource) -> Unit) {
     onGeoJsonParsedListenerList.add(listener)
+    if (geoJsonParsed) {
+      listener.invoke(this)
+    }
+  }
+
+  fun removeOnGeoJsonParsedListener(listener: (GeoJsonSource) -> Unit) {
+    onGeoJsonParsedListenerList.remove(listener)
   }
 
   init {
@@ -1220,8 +1226,12 @@ class GeoJsonSource(
  *   ...
  * }
  *
- * compositing style will be performed correctly under the hood.
+ * compositing style will be performed correctly under the hood and
  * [Style.OnStyleLoaded] will be emitted in correct moment of time when all sources are parsed.
+ *
+ * If creating geojson sources for already loaded Style please consider using overloaded
+ * geoJsonSource(String, GeoJsonSource.Builder.() -> Unit, onGeoJsonParsed: (GeoJsonSource) -> Unit) function
+ * and use fully prepared [GeoJsonSource] in onGeoJsonParsed callback.
  */
 fun geoJsonSource(
   id: String,
@@ -1229,7 +1239,7 @@ fun geoJsonSource(
 ): GeoJsonSource = GeoJsonSource.Builder(id) {}.apply(block).build()
 
 /**
- * DSL function for [GeoJsonSource] performing parsing using background thread.
+ * DSL function for [GeoJsonSource] performing parsing using a worker thread.
  * Immediately returns [GeoJsonSource] with no data set,
  * fully parsed [GeoJsonSource] is returned in [onGeoJsonParsed] callback.
  *
