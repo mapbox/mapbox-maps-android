@@ -27,6 +27,7 @@ class MapViewCustomizationActivity : AppCompatActivity() {
     // Create a custom ResourceOptionsManager with customised tile store and tile size, so that all MapViews created with default config will apply these settings.
     ResourceOptionsManager.getDefault(this).update {
       tileStore(TileStore.getInstance())
+      tileStoreUsageMode(TileStoreUsageMode.READ_AND_UPDATE)
       cacheSize(75_000L)
     }
 
@@ -38,7 +39,7 @@ class MapViewCustomizationActivity : AppCompatActivity() {
 
   private fun configureMapViewFromCode() {
     // set map options
-    val mapOptions = MapOptions.Builder()
+    val mapOptions = MapOptions.Builder().applyDefaultParams(this)
       .constrainMode(ConstrainMode.HEIGHT_ONLY)
       .glyphsRasterizationOptions(
         GlyphsRasterizationOptions.Builder()
@@ -59,6 +60,7 @@ class MapViewCustomizationActivity : AppCompatActivity() {
     val resourceOptions = ResourceOptions.Builder().applyDefaultParams(this)
       .accessToken(getString(R.string.mapbox_access_token))
       .cacheSize(10_000L)
+      .tileStoreUsageMode(TileStoreUsageMode.DISABLED)
       .build()
 
     // set initial camera position
