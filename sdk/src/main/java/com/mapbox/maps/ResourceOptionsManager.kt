@@ -29,6 +29,7 @@ class ResourceOptionsManager(
     /**
      * The default shared instance with default resource options.
      */
+    @Synchronized
     fun getDefault(context: Context): ResourceOptionsManager {
       if (!this::default.isInitialized) {
         default = ResourceOptionsManager(
