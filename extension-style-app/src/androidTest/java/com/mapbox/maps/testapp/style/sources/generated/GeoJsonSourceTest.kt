@@ -414,7 +414,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     }
     setupSource(testSource)
     // Plain json string data getter is not supported due to performance consideration.
-    assertEquals("", testSource.data)
+    assertEquals(null, testSource.data)
   }
 
   @Test
@@ -450,7 +450,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     }
     setupSource(testSource)
     // Plain json string data getter is not supported due to performance consideration.
-    assertEquals("", testSource.data)
+    assertEquals(null, testSource.data)
   }
 
   @Test
@@ -475,7 +475,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     }
     setupSource(testSource)
     // Plain json string data getter is not supported due to performance consideration.
-    assertEquals("", testSource.data)
+    assertEquals(null, testSource.data)
   }
 
   @Test
@@ -501,7 +501,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     setupSource(testSource)
     testSource.feature(feature)
     // Plain json string data getter is not supported due to performance consideration.
-    assertEquals("", testSource.data)
+    assertEquals(null, testSource.data)
   }
 
   @Test
@@ -538,7 +538,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     setupSource(testSource)
     testSource.featureCollection(featureCollection)
     // Plain json string data getter is not supported due to performance consideration.
-    assertEquals("", testSource.data)
+    assertEquals(null, testSource.data)
   }
 
   @Test
@@ -564,7 +564,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     setupSource(testSource)
     testSource.geometry(feature.geometry()!!)
     // Plain json string data getter is not supported due to performance consideration.
-    assertEquals("", testSource.data)
+    assertEquals(null, testSource.data)
   }
 
   // Default source properties getter tests

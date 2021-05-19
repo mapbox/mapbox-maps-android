@@ -898,7 +898,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      */
     fun feature(value: Feature) = apply {
       rawGeoJson = value
-      val propertyValue = PropertyValue("data", "")
+      val propertyValue = PropertyValue("data", "null")
       properties[propertyValue.propertyName] = propertyValue
     }
 
@@ -909,7 +909,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      */
     fun featureCollection(value: FeatureCollection) = apply {
       rawGeoJson = value
-      val propertyValue = PropertyValue("data", "")
+      val propertyValue = PropertyValue("data", "null")
       properties[propertyValue.propertyName] = propertyValue
     }
 
@@ -920,7 +920,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      */
     fun geometry(value: Geometry) = apply {
       rawGeoJson = value
-      val propertyValue = PropertyValue("data", "")
+      val propertyValue = PropertyValue("data", "null")
       properties[propertyValue.propertyName] = propertyValue
     }
 
@@ -1250,8 +1250,8 @@ fun geoJsonSource(
  * Immediately returns [GeoJsonSource] with no data set,
  * fully parsed [GeoJsonSource] is returned in [onGeoJsonParsed] callback.
  *
- * Using this method means that it is user's responsibility to proceed with adding layers or
- * other style objects in [onGeoJsonParsed] callback.
+ * Using this method means that it is user's responsibility to proceed with adding this source,
+ * layers or other style objects in [onGeoJsonParsed] callback.
  */
 fun geoJsonSource(
   id: String,
