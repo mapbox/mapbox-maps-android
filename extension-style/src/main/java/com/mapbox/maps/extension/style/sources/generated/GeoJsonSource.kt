@@ -50,9 +50,9 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   }
 
   /**
-   * Add a parse listener that gets invoked while the GeoJson is parsed.
+   * Add listener that gets invoked when feature, featureCollection or geometry data is parsed.
    *
-   * @param listener Listener that gets invoked when the GeoJson is parsed
+   * @param listener Listener returning GeoJsonSource when data is parsed.
    */
   fun addOnGeoJsonParsedListener(listener: (GeoJsonSource) -> Unit) {
     onGeoJsonParsedListenerList.add(listener)
@@ -62,9 +62,9 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   }
 
   /**
-   * Remove a previously added parser listener
+   * Remove listener that gets invoked when feature, featureCollection or geometry data is parsed.
    *
-   * @param listener the listener to be removed
+   * @param listener Listener to be removed.
    */
   fun removeOnGeoJsonParsedListener(listener: (GeoJsonSource) -> Unit) {
     onGeoJsonParsedListenerList.remove(listener)
