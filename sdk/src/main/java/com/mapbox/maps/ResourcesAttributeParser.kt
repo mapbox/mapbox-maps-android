@@ -3,7 +3,6 @@ package com.mapbox.maps
 import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
-import com.mapbox.common.TileStore
 
 /**
  * Utility class for parsing [AttributeSet] to [ResourcesSettings].
@@ -20,29 +19,26 @@ internal object ResourcesAttributeParser {
     typedArray: TypedArray,
     credentialsManager: CredentialsManager
   ): ResourceOptions {
-    val accessTokenString: String =
-      typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesAccessToken)
-        ?: credentialsManager.getAccessToken(context)
+    val builder = ResourceOptionsManager.getDefault(context).resourceOptions.toBuilder()
 
-    val cachePathString =
-      typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesCachePath)
-        ?: "${context.filesDir.absolutePath}/$DATABASE_NAME"
+    if (typedArray.hasValue(R.styleable.mapbox_MapView_mapbox_resourcesAccessToken)) {
+      builder.accessToken(
+        typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesAccessToken)
+          ?: credentialsManager.getAccessToken(context)
+      )
+    }
 
-    val tileStorePathString =
-      typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesTileStorePath)
+    if (typedArray.hasValue(R.styleable.mapbox_MapView_mapbox_resourcesBaseUrl)) {
+      builder.baseURL(typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesBaseUrl))
+    }
 
-    val builder = ResourceOptions.Builder()
-      .accessToken(accessTokenString)
-      .baseURL(typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesBaseUrl))
-      .cachePath(cachePathString)
-      .cacheSize(
+    if (typedArray.hasValue(R.styleable.mapbox_MapView_mapbox_resourcesCacheSize)) {
+      builder.cacheSize(
         typedArray.getFloat(
           R.styleable.mapbox_MapView_mapbox_resourcesCacheSize,
-          MapInitOptions.DEFAULT_CACHE_SIZE.toFloat() // 50 mb
+          DEFAULT_CACHE_SIZE.toFloat() // 50 mb
         ).toLong()
       )
-    tileStorePathString?.let {
-      builder.tileStore(TileStore.getInstance(it))
     }
     return builder.build()
   }

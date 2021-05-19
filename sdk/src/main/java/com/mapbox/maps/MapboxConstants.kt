@@ -10,6 +10,11 @@ import java.util.*
 const val DATABASE_NAME = "mbx.db"
 
 /**
+ * The default cache size, which is 50MB
+ */
+const val DEFAULT_CACHE_SIZE = 1024 * 1024 * 50L
+
+/**
  * Default Locale for data processing (ex: String.toLowerCase(com.mapbox.maps.getMAPBOX_LOCALE, "foo"))
  */
 val MAPBOX_LOCALE: Locale = Locale.US

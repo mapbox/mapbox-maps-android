@@ -6,6 +6,7 @@ import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.plugin.*
 import io.mockk.every
 import io.mockk.mockk
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -29,6 +30,13 @@ class MapInitOptionsTest {
     every { context.filesDir } returns File("foobar")
     every { context.resources.displayMetrics } returns displayMetrics
     displayMetrics.density = 1f
+  }
+
+  @After
+  fun cleanUp() {
+    ResourceOptionsManager.getDefault(context).resourceOptions =
+      ResourceOptions.Builder().applyDefaultParams(context)
+        .build()
   }
 
   @Test
@@ -78,7 +86,7 @@ class MapInitOptionsTest {
     val mapboxMapOptions = MapInitOptions(context)
     assertEquals("token", mapboxMapOptions.resourceOptions.accessToken)
     assertTrue(mapboxMapOptions.resourceOptions.cachePath!!.endsWith("foobar/mbx.db"))
-    assertEquals(MapInitOptions.DEFAULT_CACHE_SIZE, mapboxMapOptions.resourceOptions.cacheSize)
+    assertEquals(DEFAULT_CACHE_SIZE, mapboxMapOptions.resourceOptions.cacheSize)
   }
 
   @Test

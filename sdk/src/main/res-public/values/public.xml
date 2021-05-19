@@ -6,12 +6,6 @@
     <!-- An URL that defines the base for API requests. -->
     <public name="mapbox_resourcesBaseUrl" type="attr" />
 
-    <!-- The path to the assets. -->
-    <public name="mapbox_resourcesCachePath" type="attr" />
-
-    <!-- The path to the tile store. -->
-    <public name="mapbox_resourcesTileStorePath" type="attr" />
-
     <!-- The size of the cache. -->
     <public name="mapbox_resourcesCacheSize" type="attr" />
 

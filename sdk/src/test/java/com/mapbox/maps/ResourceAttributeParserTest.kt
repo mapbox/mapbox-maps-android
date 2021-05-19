@@ -22,10 +22,10 @@ class ResourceAttributeParserTest {
     every { context.packageName } returns "foobar"
     every { resources.getIdentifier("mapbox_access_token", "string", "foobar") } returns -1
     every { context.getString(-1) } returns "pk.foobar"
-    every { context.filesDir } returns File("/sdcard/data")
     every { typedArray.getString(any()) } returns null
     every { typedArray.getBoolean(any(), any()) } returns true
     every { typedArray.getFloat(any(), any()) } returns 99.0f
+    every { typedArray.hasValue(any()) } returns true
   }
 
   @Test
@@ -34,7 +34,6 @@ class ResourceAttributeParserTest {
       ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.default)
     assertEquals("pk.foobar", resourceOptions.accessToken)
     assertEquals(null, resourceOptions.baseURL)
-    assertEquals("/sdcard/data/mbx.db", resourceOptions.cachePath)
     assertEquals(99L, resourceOptions.cacheSize)
   }
 
