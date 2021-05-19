@@ -25,10 +25,7 @@ import com.mapbox.maps.extension.style.utils.toValue
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#geojson)
  *
  */
-class GeoJsonSource(
-  builder: Builder
-) : Source(builder.sourceId) {
-
+class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   private var geoJsonParsed = false
   private val onGeoJsonParsedListenerList = mutableListOf<(GeoJsonSource) -> Unit>()
 
@@ -52,6 +49,11 @@ class GeoJsonSource(
     }
   }
 
+  /**
+   * Add a parse listener that gets invoked while the GeoJson is parsed.
+   *
+   * @param listener Listener that gets invoked when the GeoJson is parsed
+   */
   fun addOnGeoJsonParsedListener(listener: (GeoJsonSource) -> Unit) {
     onGeoJsonParsedListenerList.add(listener)
     if (geoJsonParsed) {
@@ -59,6 +61,11 @@ class GeoJsonSource(
     }
   }
 
+  /**
+   * Remove a previously added parser listener
+   *
+   * @param listener the listener to be removed
+   */
   fun removeOnGeoJsonParsedListener(listener: (GeoJsonSource) -> Unit) {
     onGeoJsonParsedListenerList.remove(listener)
   }
@@ -916,6 +923,7 @@ class GeoJsonSource(
       val propertyValue = PropertyValue("data", "")
       properties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * Build the GeoJsonSource.
      *
@@ -928,7 +936,6 @@ class GeoJsonSource(
    * Static variables and methods.
    */
   companion object {
-
     private val workerThread by lazy {
       HandlerThread("STYLE_WORKER").apply {
         priority = Thread.MAX_PRIORITY
