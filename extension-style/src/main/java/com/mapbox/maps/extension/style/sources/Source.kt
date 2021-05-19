@@ -92,6 +92,9 @@ abstract class Source(
 
   private fun updateProperty(property: PropertyValue<*>) {
     delegate?.let { styleDelegate ->
+      if (styleDelegate.getSource(sourceId) == null) {
+        return
+      }
       val expected = styleDelegate.setStyleSourceProperty(
         sourceId,
         property.propertyName,
@@ -172,7 +175,10 @@ fun StyleManagerInterface.getSource(sourceId: String): Source? {
 inline fun <reified T : Source> StyleManagerInterface.getSourceAs(sourceId: String): T? {
   val source = getSource(sourceId)
   if (source !is T) {
-    Logger.w("StyleSourcePlugin", "Given sourceId = $sourceId is not requested type in getSourceAs.")
+    Logger.w(
+      "StyleSourcePlugin",
+      "Given sourceId = $sourceId is not requested type in getSourceAs."
+    )
     return null
   }
   return source
