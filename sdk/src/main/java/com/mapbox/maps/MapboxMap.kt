@@ -173,8 +173,8 @@ class MapboxMap internal constructor(
     var resourceCount = styleExtension.resourceCount
     styleExtension.sources.forEach {
       if (it is GeoJsonSource) {
-        it.addOnGeoJsonParsedListener { geoJson ->
-          geoJson.bindTo(style)
+        it.bindTo(style)
+        it.addOnGeoJsonParsedListener {
           resourceCount--
           if (resourceCount == 0) {
             onStyleLoaded?.onStyleLoaded(style)
