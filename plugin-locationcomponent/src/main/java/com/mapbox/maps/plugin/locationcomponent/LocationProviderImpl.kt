@@ -3,11 +3,13 @@ package com.mapbox.maps.plugin.locationcomponent
 import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
+import android.os.Handler
 import android.os.Looper
 import com.mapbox.android.core.location.LocationEngineCallback
 import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.android.core.location.LocationEngineRequest
 import com.mapbox.android.core.location.LocationEngineResult
+import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import java.util.concurrent.CopyOnWriteArrayList
@@ -15,7 +17,8 @@ import java.util.concurrent.CopyOnWriteArrayList
 /**
  * Default Location Provider implementation, it can be overwritten by users.
  */
-internal class LocationProviderImpl(context: Context) : LocationProvider, LocationEngineCallback<LocationEngineResult> {
+internal class LocationProviderImpl(private val context: Context) :
+  LocationProvider, LocationEngineCallback<LocationEngineResult> {
   private val locationEngine = LocationEngineProvider.getBestLocationEngine(context)
 
   private val locationEngineRequest =
@@ -26,11 +29,32 @@ internal class LocationProviderImpl(context: Context) : LocationProvider, Locati
 
   private val locationConsumers = CopyOnWriteArrayList<LocationConsumer>()
 
+  private var handler: Handler? = null
+  private var runnable: Runnable? = null
+  private var updateDelay = INIT_UPDATE_DELAY
+
   @SuppressLint("MissingPermission")
   private fun requestLocationUpdates() {
-    locationEngine.requestLocationUpdates(
-      locationEngineRequest, this, Looper.getMainLooper()
-    )
+    if (PermissionsManager.areLocationPermissionsGranted(context)) {
+      locationEngine.requestLocationUpdates(
+        locationEngineRequest, this, Looper.getMainLooper()
+      )
+    } else {
+      if (handler == null) {
+        handler = Handler()
+        runnable = Runnable { requestLocationUpdates() }
+      }
+      if (updateDelay * 2 < MAX_UPDATE_DELAY) {
+        updateDelay *= 2
+      } else {
+        updateDelay = MAX_UPDATE_DELAY
+      }
+      handler?.postDelayed(runnable, updateDelay)
+      Logger.w(
+        TAG,
+        "Missing location permission, location component will not take effect before location permission is granted."
+      )
+    }
   }
 
   private fun notifyLocationUpdates(location: Location) {
@@ -76,7 +100,14 @@ internal class LocationProviderImpl(context: Context) : LocationProvider, Locati
       requestLocationUpdates()
     }
     locationConsumers.add(locationConsumer)
-    locationEngine.getLastLocation(this)
+    if (PermissionsManager.areLocationPermissionsGranted(context)) {
+      locationEngine.getLastLocation(this)
+    } else {
+      Logger.w(
+        TAG,
+        "Missing location permission, location component will not take effect before location permission is granted."
+      )
+    }
   }
 
   /**
@@ -88,10 +119,13 @@ internal class LocationProviderImpl(context: Context) : LocationProvider, Locati
     locationConsumers.remove(locationConsumer)
     if (locationConsumers.isEmpty()) {
       locationEngine.removeLocationUpdates(this)
+      handler?.removeCallbacks(runnable)
     }
   }
 
   private companion object {
     private const val TAG = "MapboxLocationProvider"
+    private const val INIT_UPDATE_DELAY = 100L
+    private const val MAX_UPDATE_DELAY = 5000L
   }
 }

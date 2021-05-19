@@ -148,6 +148,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
    * Called when a new Style is loaded.
    */
   override fun onStyleChanged(styleDelegate: StyleInterface) {
+    applySettings()
     locationPuckManager?.let {
       if (!it.isLayerInitialised()) {
         it.initialize(styleDelegate)

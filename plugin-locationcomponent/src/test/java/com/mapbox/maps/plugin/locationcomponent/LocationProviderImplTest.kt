@@ -3,6 +3,8 @@ package com.mapbox.maps.plugin.locationcomponent
 import android.content.Context
 import android.location.Location
 import com.mapbox.android.core.location.*
+import com.mapbox.android.core.permissions.PermissionsManager
+import com.mapbox.common.ShadowLogger
 import com.mapbox.geojson.Point
 import io.mockk.*
 import org.junit.Assert.assertEquals
@@ -10,8 +12,10 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
+@Config(shadows = [ShadowLogger::class])
 class LocationProviderImplTest {
   private val context = mockk<Context>(relaxed = true)
   private val locationEngine = mockk<LocationEngine>(relaxed = true)
@@ -46,7 +50,26 @@ class LocationProviderImplTest {
   }
 
   @Test
-  fun testAddLocationConsumer() {
+  fun testAddLocationConsumerWithoutPermission() {
+    mockkStatic(PermissionsManager::class)
+    every { PermissionsManager.areLocationPermissionsGranted(any()) } returns false
+    locationProviderImpl.registerLocationConsumer(locationConsumer1)
+    verify(exactly = 0) {
+      locationEngine.requestLocationUpdates(
+        any(),
+        any(),
+        any()
+      )
+    }
+    verify(exactly = 0) {
+      locationEngine.getLastLocation(any())
+    }
+  }
+
+  @Test
+  fun testAddLocationConsumerWithPermission() {
+    mockkStatic(PermissionsManager::class)
+    every { PermissionsManager.areLocationPermissionsGranted(any()) } returns true
     locationProviderImpl.registerLocationConsumer(locationConsumer1)
     verify {
       locationEngine.requestLocationUpdates(
