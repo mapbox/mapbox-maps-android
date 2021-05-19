@@ -4,6 +4,7 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.api.directions.v5.models.DirectionsResponse
+import com.mapbox.core.constants.Constants
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.LineString
@@ -22,10 +23,11 @@ import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
-import kotlinx.android.synthetic.main.activity_large_geojson.*
+import kotlinx.android.synthetic.main.activity_simple_map.*
 
 /**
- * Example of passing large geojson to verify it does not block UI thread.
+ * Example of passing large geojson to verify it does not block UI thread
+ * for parsing before passed to core.
  */
 class LargeGeojsonPerformanceActivity : AppCompatActivity() {
 
@@ -33,17 +35,17 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_large_geojson)
+    setContentView(R.layout.activity_simple_map)
 
     routePoints = FeatureCollection.fromFeature(
       Feature.fromGeometry(
         LineString.fromPolyline(
           DirectionsResponse.fromJson(
             AnnotationUtils.loadStringFromAssets(
-              this@LargeGeojsonPerformanceActivity, "long_route.json"
+              this@LargeGeojsonPerformanceActivity, LARGE_GEOJSON_ASSET_NAME
             )
           ).routes()[0].geometry()!!,
-          6
+          Constants.PRECISION_6
         )
       )
     )
@@ -56,84 +58,73 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
             .zoom(START_ZOOM)
             .build()
         )
+        // start an animation that uses UI thread to update map camera
         flyTo(
           CameraOptions.Builder()
             .zoom(END_ZOOM)
             .build(),
           MapAnimationOptions.mapAnimationOptions {
-            duration(10_000L)
+            duration(ANIMATION_DURATION_MS)
           }
         )
+        // start loading style with multiple very heavy geojson's
         loadStyle(
-          style(Style.DARK) {
-            +geoJsonSource("source") {
-              featureCollection(routePoints)
+          style(Style.MAPBOX_STREETS) {
+            for (i in 0 until LARGE_SOURCE_COUNT) {
+              +geoJsonSource("${SOURCE}_$i") {
+                featureCollection(routePoints)
+              }
+              +lineLayer("${LAYER}_$i", "${SOURCE}_$i") {
+                lineColor("blue")
+                lineOffset(5.0 * i)
+              }
             }
-            +geoJsonSource("source2") {
-              featureCollection(routePoints)
-            }
-            +geoJsonSource("source3") {
-              featureCollection(routePoints)
-            }
-            +lineLayer("layer", "source") {
-              lineColor("blue")
-            }
-            +lineLayer("layer2", "source2") {
-              lineColor("yellow")
-              lineOffset(5.0)
-            }
-            +lineLayer("layer3", "source3") {
-              lineColor("red")
-              lineOffset(10.0)
-            }
+            // add an icon that uses very small geojson source
             +image("icon") {
               bitmap(BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view))
             }
-            +geoJsonSource("source_marker") {
+            +geoJsonSource("${SOURCE}_marker") {
               geometry(Point.fromLngLat(LONGITUDE, LATITUDE))
             }
-            +symbolLayer("layer_marker", "source_marker") {
+            +symbolLayer("${LAYER}_marker", "${SOURCE}_marker") {
               iconImage("icon")
               iconAnchor(IconAnchor.BOTTOM)
             }
           }
         ) {
+          // also add couple of additional large geojson's when style is fully loaded
           loadAdditionalGeoJsonAfter(it)
         }
       }
   }
 
   private fun loadAdditionalGeoJsonAfter(style: Style) {
-
-    // async method with adding layer in callback
-
+    // async method with adding layer in callback when geojson is completely parsed
     geoJsonSource(
-      id = "source5",
+      id = "${SOURCE}_$LARGE_SOURCE_COUNT",
       block = {
         featureCollection(routePoints)
       },
       onGeoJsonParsed = {
         style.addSource(it)
         style.addLayer(
-          lineLayer("layer5", "source5") {
+          lineLayer("${LAYER}_$LARGE_SOURCE_COUNT", "${SOURCE}_$LARGE_SOURCE_COUNT") {
             lineColor("green")
-            lineOffset(20.0)
+            lineOffset(5.0 * LARGE_SOURCE_COUNT)
           }
         )
       }
     )
-
-    // async method with adding layer instantly
-
+    // async method with adding layer instantly without waiting for geojson to actually parse
     style.addSource(
-      geoJsonSource(id = "source4") {
+      geoJsonSource(id = "${SOURCE}_${LARGE_SOURCE_COUNT + 1}") {
         featureCollection(routePoints)
       }
     )
     style.addLayer(
-      lineLayer("layer4", "source4") {
-        lineColor("pink")
-        lineOffset(30.0)
+      lineLayer("${LAYER}_${LARGE_SOURCE_COUNT + 1}", "${SOURCE}_${LARGE_SOURCE_COUNT + 1}") {
+        lineColor("red")
+        lineOffset(5.0 * (LARGE_SOURCE_COUNT + 1))
       }
     )
   }
@@ -159,6 +150,11 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
   }
 
   companion object {
+    private const val LARGE_GEOJSON_ASSET_NAME = "long_route.json"
+    private const val ANIMATION_DURATION_MS = 10_000L
+    private const val SOURCE = "source"
+    private const val LAYER = "layer"
+    private const val LARGE_SOURCE_COUNT = 5
     private const val LATITUDE = 51.1079
     private const val LONGITUDE = 17.0385
     private const val START_ZOOM = 6.0
