@@ -39,7 +39,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
       workerHandler.post {
         val property = it.toPropertyValue()
         mainHandler.post {
-          setProperty(property)
+          setProperty(property, throwRuntimeException = false)
           geoJsonParsed = true
           onGeoJsonParsedListenerList.forEach {
             it.invoke(this)
@@ -569,7 +569,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
       workerHandler.post {
         val property = data.toPropertyValue()
         mainHandler.post {
-          setProperty(property)
+          setProperty(property, throwRuntimeException = false)
           listener.invoke(this)
         }
       }

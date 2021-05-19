@@ -80,9 +80,9 @@ abstract class Source(
     return Value(properties)
   }
 
-  internal fun setProperty(property: PropertyValue<*>) {
+  internal fun setProperty(property: PropertyValue<*>, throwRuntimeException: Boolean = true) {
     sourceProperties[property.propertyName] = property
-    updateProperty(property)
+    updateProperty(property, throwRuntimeException)
   }
 
   internal fun setVolatileProperty(property: PropertyValue<*>) {
@@ -90,18 +90,21 @@ abstract class Source(
     updateProperty(property)
   }
 
-  private fun updateProperty(property: PropertyValue<*>) {
+  private fun updateProperty(property: PropertyValue<*>, throwRuntimeException: Boolean = true) {
     delegate?.let { styleDelegate ->
-      if (styleDelegate.getSource(sourceId) == null) {
-        return
-      }
       val expected = styleDelegate.setStyleSourceProperty(
         sourceId,
         property.propertyName,
         property.value
       )
-      expected.error?.let {
-        throw RuntimeException("Set source property \"${property.propertyName}\" failed:\nError: $it\nValue set: ${property.value}")
+      expected.error?.let { error ->
+        "Set source property \"${property.propertyName}\" failed:\nError: $error\nValue set: ${property.value}".let {
+          if (throwRuntimeException) {
+            throw RuntimeException(it)
+          } else {
+            Logger.e(TAG, it)
+          }
+        }
       }
     }
   }
