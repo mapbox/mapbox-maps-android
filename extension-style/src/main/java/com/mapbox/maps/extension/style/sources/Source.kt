@@ -80,9 +80,9 @@ abstract class Source(
     return Value(properties)
   }
 
-  internal fun setProperty(property: PropertyValue<*>) {
+  internal fun setProperty(property: PropertyValue<*>, throwRuntimeException: Boolean = true) {
     sourceProperties[property.propertyName] = property
-    updateProperty(property)
+    updateProperty(property, throwRuntimeException)
   }
 
   internal fun setVolatileProperty(property: PropertyValue<*>) {
@@ -90,15 +90,21 @@ abstract class Source(
     updateProperty(property)
   }
 
-  private fun updateProperty(property: PropertyValue<*>) {
+  private fun updateProperty(property: PropertyValue<*>, throwRuntimeException: Boolean = true) {
     delegate?.let { styleDelegate ->
       val expected = styleDelegate.setStyleSourceProperty(
         sourceId,
         property.propertyName,
         property.value
       )
-      expected.error?.let {
-        throw RuntimeException("Set source property \"${property.propertyName}\" failed:\nError: $it\nValue set: ${property.value}")
+      expected.error?.let { error ->
+        "Set source property \"${property.propertyName}\" failed:\nError: $error\nValue set: ${property.value}".let {
+          if (throwRuntimeException) {
+            throw RuntimeException(it)
+          } else {
+            Logger.e(TAG, it)
+          }
+        }
       }
     }
   }
@@ -146,7 +152,7 @@ fun StyleManagerInterface.getSource(sourceId: String): Source? {
     val map = value.contents as HashMap<String, Value>
     return when (val type = map["type"]?.contents?.let { it as String }) {
       "vector" -> VectorSource.Builder(sourceId).build().also { it.delegate = this }
-      "geojson" -> GeoJsonSource.Builder(sourceId).build().also { it.delegate = this }
+      "geojson" -> GeoJsonSource.Builder(sourceId) {}.build().also { it.delegate = this }
       "image" -> ImageSource.Builder(sourceId).build().also { it.delegate = this }
       "raster-dem" -> RasterDemSource.Builder(sourceId).build().also { it.delegate = this }
       "raster" -> RasterSource.Builder(sourceId).build().also { it.delegate = this }
@@ -172,7 +178,10 @@ fun StyleManagerInterface.getSource(sourceId: String): Source? {
 inline fun <reified T : Source> StyleManagerInterface.getSourceAs(sourceId: String): T? {
   val source = getSource(sourceId)
   if (source !is T) {
-    Logger.w("StyleSourcePlugin", "Given sourceId = $sourceId is not requested type in getSourceAs.")
+    Logger.w(
+      "StyleSourcePlugin",
+      "Given sourceId = $sourceId is not requested type in getSourceAs."
+    )
     return null
   }
   return source

@@ -117,12 +117,8 @@ class IconSizeChangeOnClickActivity : AppCompatActivity(), OnMapClickListener {
         setFloatValues(2.0f, 1.0f)
       }
       duration = 300
-      var counter = 0
       addUpdateListener {
-        // TODO remove after fix https://github.com/mapbox/mapbox-maps-android/issues/554
-        if (++counter % 2 == 0) {
-          iconLayer.iconSize((it.animatedValue as Float).toDouble())
-        }
+        iconLayer.iconSize((it.animatedValue as Float).toDouble())
       }
       start()
     }

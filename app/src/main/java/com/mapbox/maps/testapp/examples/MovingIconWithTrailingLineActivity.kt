@@ -116,10 +116,8 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
       addUpdateListener { animation ->
         (animation.animatedValue as? Point)?.let {
           markerLinePointList.add(it)
-          // Throttle the updates to the GeojsonSource, otherwise the dot won't animate.
-          // https://github.com/mapbox/mapbox-maps-android/issues/554
-          if (++count % 4 == 0) {
-            pointSource.geometry(it)
+          pointSource.geometry(it)
+          if (++count > 1) {
             lineSource.geometry(LineString.fromLngLats(markerLinePointList))
           }
         }

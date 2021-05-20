@@ -5,6 +5,8 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
+import com.mapbox.maps.extension.style.sources.OnGeoJsonParsed
+import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
@@ -101,7 +103,7 @@ class MapboxMapTest {
   }
 
   @Test
-  fun finishLoadingStyleExtension() {
+  fun finishLoadingStyleExtensionNoGeoJson() {
     val style = mockk<Style>()
     val styleExtension = mockk<StyleContract.StyleExtension>()
 
@@ -124,6 +126,48 @@ class MapboxMapTest {
     every { styleExtension.terrain } returns terrain
 
     val styleLoadCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
+
+    every { styleExtension.resourceCount } returns 5
+    mapboxMap.onFinishLoadingStyleExtension(style, styleExtension, styleLoadCallback)
+
+    assertEquals(mapboxMap.style, style)
+    verify { source.bindTo(style) }
+    verify { image.bindTo(style) }
+    verify { layer.bindTo(style, layerPosition) }
+    verify { light.bindTo(style) }
+    verify { terrain.bindTo(style) }
+    verify { styleLoadCallback.onStyleLoaded(style) }
+  }
+
+  @Test
+  fun finishLoadingStyleExtensionWithGeoJson() {
+    val style = mockk<Style>()
+    val styleExtension = mockk<StyleContract.StyleExtension>()
+
+    val source = mockk<GeoJsonSource>(relaxed = true)
+    every { source.addOnGeoJsonParsedListener(any()) } answers {
+      (firstArg() as OnGeoJsonParsed).onGeoJsonParsed(source)
+    }
+    every { styleExtension.sources } returns listOf(source)
+
+    val image = mockk<StyleContract.StyleImageExtension>(relaxed = true)
+    every { styleExtension.images } returns listOf(image)
+
+    val layer = mockk<StyleContract.StyleLayerExtension>(relaxed = true)
+    val layerPosition = LayerPosition(null, null, 0)
+    every { styleExtension.layers } returns listOf(
+      Pair(layer, layerPosition)
+    )
+
+    val light = mockk<StyleContract.StyleLightExtension>(relaxed = true)
+    every { styleExtension.light } returns light
+
+    val terrain = mockk<StyleContract.StyleTerrainExtension>(relaxed = true)
+    every { styleExtension.terrain } returns terrain
+
+    val styleLoadCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
+
+    every { styleExtension.resourceCount } returns 5
     mapboxMap.onFinishLoadingStyleExtension(style, styleExtension, styleLoadCallback)
 
     assertEquals(mapboxMap.style, style)

@@ -11,7 +11,18 @@ import com.mapbox.maps.extension.style.terrain.generated.Terrain
 /**
  * The concrete implementation of style extension.
  */
-class StyleExtensionImpl private constructor(builder: Builder) : StyleContract.StyleExtension {
+class StyleExtensionImpl private constructor(
+  builder: Builder
+) : StyleContract.StyleExtension {
+
+  /**
+   * Total resource count including all sources, layers, images, terrain and light.
+   */
+  override val resourceCount: Int
+    get() = sources.size +
+      images.size +
+      layers.size +
+      if (light != null) 1 else 0 + if (terrain != null) 1 else 0
 
   /**
    * The style's Uri.

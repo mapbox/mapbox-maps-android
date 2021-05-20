@@ -2,13 +2,18 @@
 
 package com.mapbox.maps.extension.style.sources.generated
 
+import android.os.Handler
+import android.os.HandlerThread
+import android.os.Looper
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
+import com.mapbox.geojson.GeoJson
 import com.mapbox.geojson.Geometry
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
+import com.mapbox.maps.extension.style.sources.OnGeoJsonParsed
 import com.mapbox.maps.extension.style.sources.Source
 import com.mapbox.maps.extension.style.types.SourceDsl
 import com.mapbox.maps.extension.style.utils.TypeUtils
@@ -22,6 +27,49 @@ import com.mapbox.maps.extension.style.utils.toValue
  *
  */
 class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
+  private var geoJsonParsed = false
+  private val onGeoJsonParsedListenerList = mutableListOf<OnGeoJsonParsed>()
+
+  private constructor(
+    builder: Builder,
+    rawGeoJson: GeoJson?,
+    onGeoJsonParsed: OnGeoJsonParsed
+  ) : this(builder) {
+    rawGeoJson?.let {
+      onGeoJsonParsedListenerList.add(onGeoJsonParsed)
+      workerHandler.post {
+        val property = it.toPropertyValue()
+        mainHandler.post {
+          setProperty(property, throwRuntimeException = false)
+          geoJsonParsed = true
+          onGeoJsonParsedListenerList.forEach {
+            it.onGeoJsonParsed(this)
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Add listener that gets invoked when feature, featureCollection or geometry data is parsed.
+   *
+   * @param listener Listener returning GeoJsonSource when data is parsed.
+   */
+  fun addOnGeoJsonParsedListener(listener: OnGeoJsonParsed) {
+    onGeoJsonParsedListenerList.add(listener)
+    if (geoJsonParsed) {
+      listener.onGeoJsonParsed(this)
+    }
+  }
+
+  /**
+   * Remove listener that gets invoked when feature, featureCollection or geometry data is parsed.
+   *
+   * @param listener Listener to be removed.
+   */
+  fun removeOnGeoJsonParsedListener(listener: OnGeoJsonParsed) {
+    onGeoJsonParsedListenerList.remove(listener)
+  }
 
   init {
     sourceProperties.putAll(builder.properties)
@@ -467,38 +515,81 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
 
   /**
    * Add a Feature to the GeojsonSource.
+   * If [onDataParsed] is provided and not null - data will be loaded in async mode.
+   * Otherwise method will be synchronous.
    *
-   * @param value the feature
+   * @param value the feature collection
+   * @param onDataParsed optional callback notifying when data is parsed on a worker thread
    */
-  fun feature(value: Feature) = apply {
-    setProperty(PropertyValue("data", value.toValue()))
-  }
+  fun feature(
+    value: Feature,
+    onDataParsed: ((GeoJsonSource) -> Unit)? = null
+  ) = applyGeoJsonData(value, onDataParsed)
 
   /**
    * Add a FeatureCollection to the GeojsonSource.
+   * If [onDataParsed] is provided and not null - data will be loaded in async mode.
+   * Otherwise method will be synchronous.
    *
    * @param value the feature collection
+   * @param onDataParsed optional callback notifying when data is parsed on a worker thread
    */
-  fun featureCollection(value: FeatureCollection) = apply {
-    setProperty(PropertyValue("data", value.toValue()))
-  }
+  fun featureCollection(
+    value: FeatureCollection,
+    onDataParsed: ((GeoJsonSource) -> Unit)? = null
+  ) = applyGeoJsonData(value, onDataParsed)
 
   /**
    * Add a Geometry to the GeojsonSource.
+   * If [onDataParsed] is provided and not null - data will be loaded in async mode.
+   * Otherwise method will be synchronous.
    *
-   * @param value the geometry
+   * @param value the feature collection
+   * @param onDataParsed optional callback notifying when data is parsed on a worker thread
    */
-  fun geometry(value: Geometry) = apply {
-    setProperty(PropertyValue("data", value.toValue()))
+  fun geometry(
+    value: Geometry,
+    onDataParsed: ((GeoJsonSource) -> Unit)? = null
+  ) = applyGeoJsonData(value, onDataParsed)
+
+  private fun GeoJson.toPropertyValue() = PropertyValue(
+    "data",
+    when (this) {
+      is Geometry -> toValue()
+      is FeatureCollection -> toValue()
+      is Feature -> toValue()
+      else -> RuntimeException("GeoJson data must be Geometry, FeatureCollection or Feature!")
+    }
+  )
+
+  private fun applyGeoJsonData(
+    data: GeoJson,
+    onDataParsed: ((GeoJsonSource) -> Unit)?
+  ): GeoJsonSource = apply {
+    onDataParsed?.let { listener ->
+      workerHandler.post {
+        val property = data.toPropertyValue()
+        mainHandler.post {
+          setProperty(property, throwRuntimeException = false)
+          listener.invoke(this)
+        }
+      }
+    } ?: setProperty(data.toPropertyValue())
   }
 
   /**
    * Builder for GeoJsonSource.
    *
    * @param sourceId the ID of the source
+   * @param onGeoJsonParsed callback invoked when data is parsed
    */
   @SourceDsl
-  class Builder(val sourceId: String) {
+  class Builder(
+    val sourceId: String,
+    private val onGeoJsonParsed: OnGeoJsonParsed
+  ) {
+
+    private var rawGeoJson: GeoJson? = null
     internal val properties = HashMap<String, PropertyValue<*>>()
     // Properties that only settable after the source is added to the style.
     internal val volatileProperties = HashMap<String, PropertyValue<*>>()
@@ -807,7 +898,8 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * @param value the feature
      */
     fun feature(value: Feature) = apply {
-      val propertyValue = PropertyValue("data", value.toValue())
+      rawGeoJson = value
+      val propertyValue = PropertyValue("data", "null")
       properties[propertyValue.propertyName] = propertyValue
     }
 
@@ -817,7 +909,8 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * @param value the feature collection
      */
     fun featureCollection(value: FeatureCollection) = apply {
-      val propertyValue = PropertyValue("data", value.toValue())
+      rawGeoJson = value
+      val propertyValue = PropertyValue("data", "null")
       properties[propertyValue.propertyName] = propertyValue
     }
 
@@ -827,21 +920,33 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * @param value the geometry
      */
     fun geometry(value: Geometry) = apply {
-      val propertyValue = PropertyValue("data", value.toValue())
+      rawGeoJson = value
+      val propertyValue = PropertyValue("data", "null")
       properties[propertyValue.propertyName] = propertyValue
     }
+
     /**
      * Build the GeoJsonSource.
      *
      * @return the GeoJsonSource
      */
-    fun build() = GeoJsonSource(this)
+    fun build() = GeoJsonSource(this, rawGeoJson, onGeoJsonParsed)
   }
 
   /**
    * Static variables and methods.
    */
   companion object {
+    private val workerThread by lazy {
+      HandlerThread("STYLE_WORKER").apply {
+        priority = Thread.MAX_PRIORITY
+        start()
+      }
+    }
+    private val workerHandler by lazy {
+      Handler(workerThread.looper)
+    }
+    private val mainHandler = Handler(Looper.getMainLooper())
 
     /**
      * Maximum zoom level at which to create vector tiles (higher means greater detail at high zoom
@@ -1116,9 +1221,43 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
 }
 
 /**
- * DSL function for [GeoJsonSource].
+ * DSL function for [GeoJsonSource] performing parsing using background thread.
+ * Immediately returns [GeoJsonSource] with no data set and starts preparing actual data
+ * using a worker thread.
+ *
+ * If using runtime styling:
+ *
+ * loadStyle(style(Style.DARK) {
+ *   +geoJsonSource(id) {
+ *    featureCollection(collection)
+ *   }
+ *   ...
+ * }
+ *
+ * compositing style will be performed correctly under the hood and
+ * [Style.OnStyleLoaded] will be emitted in correct moment of time when all sources are parsed.
+ *
+ * If creating geojson sources for already loaded Style please consider using overloaded
+ * geoJsonSource(String, GeoJsonSource.Builder.() -> Unit, onGeoJsonParsed: (GeoJsonSource) -> Unit) function
+ * and use fully prepared [GeoJsonSource] in onGeoJsonParsed callback.
  */
-fun geoJsonSource(id: String, block: GeoJsonSource.Builder.() -> Unit): GeoJsonSource =
-  GeoJsonSource.Builder(id).apply(block).build()
+fun geoJsonSource(
+  id: String,
+  block: GeoJsonSource.Builder.() -> Unit
+): GeoJsonSource = GeoJsonSource.Builder(id) {}.apply(block).build()
+
+/**
+ * DSL function for [GeoJsonSource] performing parsing using a worker thread.
+ * Immediately returns [GeoJsonSource] with no data set,
+ * fully parsed [GeoJsonSource] is returned in [onGeoJsonParsed] callback.
+ *
+ * Using this method means that it is user's responsibility to proceed with adding this source,
+ * layers or other style objects in [onGeoJsonParsed] callback.
+ */
+fun geoJsonSource(
+  id: String,
+  config: GeoJsonSource.Builder.() -> Unit,
+  onGeoJsonParsed: OnGeoJsonParsed
+): GeoJsonSource = GeoJsonSource.Builder(id, onGeoJsonParsed).apply(config).build()
 
 // End of generated file.

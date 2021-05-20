@@ -75,15 +75,11 @@ class AnimatedMarkerActivity : AppCompatActivity(), OnMapClickListener {
         startValue.latitude() + fraction * (endValue.latitude() - startValue.latitude())
       )
     }
-    var tick = 0
     animator = ValueAnimator().apply {
       setObjectValues(currentPoint, point)
       setEvaluator(pointEvaluator)
       addUpdateListener {
-        // TODO remove throttle when https://github.com/mapbox/mapbox-maps-android/issues/554 fixed
-        if (++tick % 2 == 0) {
-          geojsonSource.geometry(it.animatedValue as Point)
-        }
+        geojsonSource.geometry(it.animatedValue as Point)
       }
       duration = 2000
       start()
