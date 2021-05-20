@@ -87,7 +87,6 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce MapOptions.optimizeForTerrain option that allow style rendering optimizations for terrain rendering
 * The 'text-line-height' is now data-driven property
 * MapLoaded, StyleLoaded and StyleDataLoaded events now contain begin and end timestamps reflecting the effective duration timespan
-* Implement geojson source's generateId feature. When enabled, the feature.id property will be auto assigned based on its index in the features array
 * When line lablels are inside the flip state retaining range (+/- 5 degrees around the vertical direction), the lables' flip state will be kept the same
 * Improve rendering quality of fill outlines when using render cache
 
