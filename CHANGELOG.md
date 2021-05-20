@@ -97,7 +97,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Enable LocationComponent automatically when style loaded; fix null island location puck ([#333](https://github.com/mapbox/mapbox-maps-android/pull/333))
 * Fix crash if the belowLayerId doesn't exist on the current style ([#330](https://github.com/mapbox/mapbox-maps-android/pull/330))
 * Fix skybox cubemap sampling with metal rendering backend
-* Style pack download does not cancel pending tileset descriptor resolving
+* Fixed an issue that style pack download cancels pending tileset descriptor resolving, now tile region loading and style pack loading can work in parallel.
 * Fixed the excessive network usage during map browsing caused by losing of the expiration date and the etag for the cached files
 * Fix excessive network usage for delayed tile requests
 * On style pack update we reset only glyphs and only when the updated options require less glyphs than currently available and we make sure ambient cache size limit is never exceeded
