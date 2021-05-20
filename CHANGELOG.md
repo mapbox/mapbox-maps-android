@@ -101,7 +101,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fixed the excessive network usage during map browsing caused by losing of the expiration date and the etag for the cached files
 * Fix excessive network usage for delayed tile requests
 * On style pack update we reset only glyphs and only when the updated options require less glyphs than currently available and we make sure ambient cache size limit is never exceeded
-* Emit 'StyleDataLoaded' and 'SourceDataLoaded' synchronously if possible, so that developers could modify style and sources before map starts rendering style
+* Emit `StyleDataLoaded` and `SourceDataLoaded` synchronously if possible, so that developers could modify style and sources before map starts rendering style
 * Fix occasional Adreno 640 and 620 driver warnings and deadlock when terrain is used
 * Fix rendering order of transparent terrain proxy tiles
 
