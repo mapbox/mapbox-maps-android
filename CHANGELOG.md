@@ -5,7 +5,7 @@ Mapbox welcomes participation and contributions from everyone.
 # 10.0.0-beta.20 - May 20, 2021
 ## Breaking changes ⚠️
 * Introduce ResourceOptionsManager to configure the default resource options, and removed the xml configuration options for cache path and tile store path. ([#339](https://github.com/mapbox/mapbox-maps-android/pull/339))
-* Rename ambient cache database to ambient_cache.db  ([#314](https://github.com/mapbox/mapbox-maps-android/pull/314))
+* Rename default ambient cache database to mapbox/maps/ambient_cache.db  ([#314](https://github.com/mapbox/mapbox-maps-android/pull/314))
 * Remove usage of asset path from the codebase, as it is not used in Android SDK. ([#334](https://github.com/mapbox/mapbox-maps-android/pull/334))
 * CameraManager#setBounds return type changed from void to expected
 * Expose tileset version for sources that use TileJSON metadata
