@@ -293,7 +293,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
   }
 
   /**
-   * Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0&#xB0; north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0&#xB0; is directly above, at zenith, and 90&#xB0; at the horizon. When this property is ommitted, the sun center is directly inherited from the light position.
+   * Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0 degree is directly above, at zenith, and 90 degree at the horizon. When this property is ommitted, the sun center is directly inherited from the light position.
    */
   val skyAtmosphereSun: List<Double>?
     /**
@@ -318,7 +318,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
   /**
    * This is an Expression representation of "sky-atmosphere-sun".
    *
-   * Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0&#xB0; north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0&#xB0; is directly above, at zenith, and 90&#xB0; at the horizon. When this property is ommitted, the sun center is directly inherited from the light position.
+   * Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0 degree is directly above, at zenith, and 90 degree at the horizon. When this property is ommitted, the sun center is directly inherited from the light position.
    */
   val skyAtmosphereSunAsExpression: Expression?
     /**
@@ -424,7 +424,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
   }
 
   /**
-   * Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0&#xB0; north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0&#xB0; is directly above, at zenith, and 90&#xB0; at the horizon.
+   * Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0 degree is directly above, at zenith, and 90 degree at the horizon.
    */
   val skyGradientCenter: List<Double>?
     /**
@@ -449,7 +449,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
   /**
    * This is an Expression representation of "sky-gradient-center".
    *
-   * Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0&#xB0; north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0&#xB0; is directly above, at zenith, and 90&#xB0; at the horizon.
+   * Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0 degree is directly above, at zenith, and 90 degree at the horizon.
    */
   val skyGradientCenterAsExpression: Expression?
     /**
@@ -834,7 +834,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
       }
 
     /**
-     * Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0&#xB0; north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0&#xB0; is directly above, at zenith, and 90&#xB0; at the horizon. When this property is ommitted, the sun center is directly inherited from the light position.
+     * Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0 degree is directly above, at zenith, and 90 degree at the horizon. When this property is ommitted, the sun center is directly inherited from the light position.
      */
     val defaultSkyAtmosphereSun: List<Double>?
       /**
@@ -849,7 +849,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     /**
      * This is an Expression representation of "sky-atmosphere-sun".
      *
-     * Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0&#xB0; north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0&#xB0; is directly above, at zenith, and 90&#xB0; at the horizon. When this property is ommitted, the sun center is directly inherited from the light position.
+     * Position of the sun center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the sun relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the sun, where 0 degree is directly above, at zenith, and 90 degree at the horizon. When this property is ommitted, the sun center is directly inherited from the light position.
      */
     val defaultSkyAtmosphereSunAsExpression: Expression?
       /**
@@ -915,7 +915,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
       }
 
     /**
-     * Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0&#xB0; north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0&#xB0; is directly above, at zenith, and 90&#xB0; at the horizon.
+     * Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0 degree is directly above, at zenith, and 90 degree at the horizon.
      */
     val defaultSkyGradientCenter: List<Double>?
       /**
@@ -930,7 +930,7 @@ class SkyLayer(override val layerId: String) : SkyLayerDsl, Layer() {
     /**
      * This is an Expression representation of "sky-gradient-center".
      *
-     * Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0&#xB0; north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0&#xB0; is directly above, at zenith, and 90&#xB0; at the horizon.
+     * Position of the gradient center [a azimuthal angle, p polar angle]. The azimuthal angle indicates the position of the gradient center relative to 0 degree north, where degrees proceed clockwise. The polar angle indicates the height of the gradient center, where 0 degree is directly above, at zenith, and 90 degree at the horizon.
      */
     val defaultSkyGradientCenterAsExpression: Expression?
       /**
