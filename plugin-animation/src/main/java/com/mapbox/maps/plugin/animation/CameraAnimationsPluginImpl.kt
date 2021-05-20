@@ -303,6 +303,11 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
   private fun registerInternalUpdateListener(animator: CameraAnimator<*>) {
     animator.addInternalUpdateListener {
+      // set current animator value
+      updateCameraValue(animator)
+      // add current animator to queue-set if was not present
+      runningAnimatorsQueue.add(it)
+
       // main idea here is not to update map on each option change
       // we perform jump based on update tick of first (oldest) animation
       val firstAnimator = if (runningAnimatorsQueue.iterator().hasNext()) {
@@ -333,10 +338,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         // reset values
         cameraOptionsBuilder = CameraOptions.Builder()
       }
-      // set current animator value
-      updateCameraValue(animator)
-      // add current animator to queue-set if was not present
-      runningAnimatorsQueue.add(it)
     }
   }
 
