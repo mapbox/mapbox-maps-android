@@ -207,6 +207,21 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     }
   }
 
+  private fun correctInitialCamera(
+    currentCameraBuilder: CameraOptions.Builder,
+    cameraAnimator: CameraAnimator<*>
+  ): CameraOptions {
+    return when (cameraAnimator) {
+      is CameraCenterAnimator -> currentCameraBuilder.center(cameraAnimator.animatedValue as? Point).build()
+      is CameraZoomAnimator -> currentCameraBuilder.zoom(cameraAnimator.animatedValue as? Double).build()
+      is CameraAnchorAnimator -> currentCameraBuilder.anchor(cameraAnimator.animatedValue as? ScreenCoordinate).build()
+      is CameraPaddingAnimator -> currentCameraBuilder.padding(cameraAnimator.animatedValue as? EdgeInsets).build()
+      is CameraBearingAnimator -> currentCameraBuilder.bearing(cameraAnimator.animatedValue as? Double).build()
+      is CameraPitchAnimator -> currentCameraBuilder.pitch(cameraAnimator.animatedValue as? Double).build()
+      else -> throw RuntimeException("Unsupported animator type!")
+    }
+  }
+
   private fun registerInternalListener(animator: CameraAnimator<*>) {
     animator.addInternalListener(object : Animator.AnimatorListener {
 
@@ -303,11 +318,8 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
   private fun registerInternalUpdateListener(animator: CameraAnimator<*>) {
     animator.addInternalUpdateListener {
-      // set current animator value
+      // set current animator value in any case
       updateCameraValue(animator)
-      // add current animator to queue-set if was not present
-      runningAnimatorsQueue.add(it)
-
       // main idea here is not to update map on each option change
       // we perform jump based on update tick of first (oldest) animation
       val firstAnimator = if (runningAnimatorsQueue.iterator().hasNext()) {
@@ -319,9 +331,12 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         anchor = it.animatedValue as ScreenCoordinate
       }
       val cameraOptions = when {
-        // if no running animators in queue - get current map camera
+        // if no running animators in queue - get current map camera but apply first updated value
         firstAnimator == null -> {
-          mapCameraManagerDelegate.cameraState.toCameraOptions(anchor)
+          correctInitialCamera(
+            mapCameraManagerDelegate.cameraState.toCameraOptions(anchor).toBuilder(),
+            animator
+          )
         }
         // if update is triggered for first (oldest) animator - build options and jump
         it == firstAnimator -> {
@@ -338,6 +353,8 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         // reset values
         cameraOptionsBuilder = CameraOptions.Builder()
       }
+      // add current animator to queue-set if was not present
+      runningAnimatorsQueue.add(it)
     }
   }
 
