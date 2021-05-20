@@ -36,7 +36,7 @@ class ResourceOptionsManagerTest {
   fun getDefaultResourceOptionsManagerTest() {
     val defaultResourceOptionsManager = ResourceOptionsManager.getDefault(context)
     assertEquals("token", defaultResourceOptionsManager.resourceOptions.accessToken)
-    Assert.assertTrue(defaultResourceOptionsManager.resourceOptions.cachePath!!.endsWith("foobar/mbx.db"))
+    Assert.assertTrue(defaultResourceOptionsManager.resourceOptions.cachePath!!.endsWith("/mapbox/maps/ambient_cache.db"))
     assertEquals(DEFAULT_CACHE_SIZE, defaultResourceOptionsManager.resourceOptions.cacheSize)
   }
 

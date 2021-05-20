@@ -20,6 +20,7 @@ class ResourceAttributeParserTest {
   fun setUp() {
     every { context.resources } returns resources
     every { context.packageName } returns "foobar"
+    every { context.filesDir } returns File("/foobar")
     every { resources.getIdentifier("mapbox_access_token", "string", "foobar") } returns -1
     every { context.getString(-1) } returns "pk.foobar"
     every { typedArray.getString(any()) } returns null
@@ -34,6 +35,7 @@ class ResourceAttributeParserTest {
       ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.default)
     assertEquals("pk.foobar", resourceOptions.accessToken)
     assertEquals(null, resourceOptions.baseURL)
+    assertEquals("/foobar/mapbox/maps/ambient_cache.db", resourceOptions.cachePath)
     assertEquals(99L, resourceOptions.cacheSize)
   }
 
@@ -47,10 +49,9 @@ class ResourceAttributeParserTest {
 
   @Test
   fun cachePath() {
-    every { context.filesDir } returns File("/foobar")
     val resourceOptions =
       ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.default)
-    assertEquals("/foobar/mbx.db", resourceOptions.cachePath)
+    assertEquals("/foobar/mapbox/maps/ambient_cache.db", resourceOptions.cachePath)
   }
 
   @Test
