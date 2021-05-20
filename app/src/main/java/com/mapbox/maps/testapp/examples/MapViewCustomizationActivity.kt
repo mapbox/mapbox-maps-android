@@ -70,7 +70,8 @@ class MapViewCustomizationActivity : AppCompatActivity() {
       .bearing(120.0)
       .build()
 
-    val mapInitOptions = MapInitOptions(this, resourceOptions, mapOptions, plugins, initialCameraOptions, true)
+    val mapInitOptions =
+      MapInitOptions(this, resourceOptions, mapOptions, plugins, initialCameraOptions, true)
 
     // create view programmatically and add to root layout
     customMapView = MapView(this, mapInitOptions)
@@ -106,5 +107,8 @@ class MapViewCustomizationActivity : AppCompatActivity() {
     super.onDestroy()
     mapView.onDestroy()
     customMapView.onDestroy()
+    // Restore the default resource settings, otherwise it will affect other activities
+    ResourceOptionsManager.getDefault(this).resourceOptions =
+      ResourceOptions.Builder().applyDefaultParams(this).build()
   }
 }
