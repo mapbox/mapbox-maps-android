@@ -175,17 +175,15 @@ class MapboxMap internal constructor(
     styleExtension.sources.forEach {
       if (it is GeoJsonSource) {
         it.bindTo(style)
-        var callback: OnGeoJsonParsed? = null
-        callback = OnGeoJsonParsed { _ ->
-          resourceCount--
-          if (resourceCount == 0) {
-            onStyleLoaded?.onStyleLoaded(style)
+        it.addOnGeoJsonParsedListener(object : OnGeoJsonParsed {
+          override fun onGeoJsonParsed(source: GeoJsonSource) {
+            resourceCount--
+            if (resourceCount == 0) {
+              onStyleLoaded?.onStyleLoaded(style)
+            }
+            it.removeOnGeoJsonParsedListener(this)
           }
-          callback?.let { callback ->
-            it.removeOnGeoJsonParsedListener(callback)
-          }
-        }
-        it.addOnGeoJsonParsedListener(callback)
+        })
       } else {
         it.bindTo(style)
         resourceCount--

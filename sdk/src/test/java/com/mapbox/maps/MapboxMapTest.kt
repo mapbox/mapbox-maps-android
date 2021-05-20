@@ -5,6 +5,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
+import com.mapbox.maps.extension.style.sources.OnGeoJsonParsed
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.listeners.*
@@ -145,7 +146,7 @@ class MapboxMapTest {
 
     val source = mockk<GeoJsonSource>(relaxed = true)
     every { source.addOnGeoJsonParsedListener(any()) } answers {
-      ((firstArg()) as ((GeoJsonSource) -> Unit)).invoke(source)
+      (firstArg() as OnGeoJsonParsed).onGeoJsonParsed(source)
     }
     every { styleExtension.sources } returns listOf(source)
 
