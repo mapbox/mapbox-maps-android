@@ -81,8 +81,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Add API for disabling vertical/horizontal scroll gestures ([#319](https://github.com/mapbox/mapbox-maps-android/pull/319))
 * Introduce API to enable render cache feature that could bring up rendering performance improvement. ([#326](https://github.com/mapbox/mapbox-maps-android/pull/326))
 * Add `removeAnnotationManager` API. ([#330](https://github.com/mapbox/mapbox-maps-android/pull/330))
-* Improve terrain's rendering performance by reusing framebuffer and reducing framebuffer switches
-* Improve terrain's rendering performance by rendering largest drapeable batches first to the render-cache
+* Improve terrain's rendering performance 
 * Set 'begin' and 'end' timestamps for StyleLoaded and MapLoaded events, so that developers could check how much time it takes to load style and map, respectively
 * Added "tile-requests-delay" and "tile-network-requests-delay" runtime source properties - an API for tile requests delay
 * Introduce MapOptions.optimizeForTerrain option that allow style rendering optimizations for terrain rendering
