@@ -7,10 +7,13 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce ResourceOptionsManager to configure the default resource options, and removed the xml configuration options for cache path and tile store path. ([#339](https://github.com/mapbox/mapbox-maps-android/pull/339))
 * Rename default ambient cache database to mapbox/maps/ambient_cache.db  ([#314](https://github.com/mapbox/mapbox-maps-android/pull/314))
 * Remove the usage of asset path from the codebase, as it is not useful in Android Maps SDK. ([#334](https://github.com/mapbox/mapbox-maps-android/pull/334))
-* CameraManager#setBounds return type changed from void to expected
-* Expose tileset version for sources that use TileJSON metadata
-* ResourceRequest offline-data boolean field is replaced with the source string field, which whether the response came from network, cache or tile store
-* Remove GeoJSON specific methods from `StyleManager`. `Map#queryFeatureExtensions` provides the same functionality
+* Rename `NetworkConnectivity` to `OfflineSwitch`.
+* Remove `TileLoadOptions` from `TileRegionLoadOptions`. `networkRestriction` and `acceptExpired` can now be specified directly in `TileRegionLoadOptions`.
+* Add `totalBytes` and `transferredBytes` to TileStoreLoadResult.
+* `MapboxMap.setBounds` return type changed from Void to Expected.
+* Expose tileset version for sources that use TileJSON metadata.
+* ResourceRequest `offline-data` boolean field is replaced with the `source` string field, which whether the response came from network, cache or tile store.
+* Remove `Style.getStyleGeoJSONSourceClusterLeaves`, `Style.getStyleGeoJSONSourceClusterExpansionZoom`, `Style.getStyleGeoJSONSourceClusterChildren`. All those can be fully replaced by `MapboxMap.queryFeatureExtensions`.
 * Parsing geojson on a worker thread. Using DSL GeoJsonSource builders with the following functions `GeoJsonSource.Builder#feature`, `GeoJsonSource.Builder#featureCollection`, `GeoJsonSource.Builder#geometry` will immediately returns GeoJsonSource with no data set and starts preparing actual data using a worker thread. The data will be set to the GeoJsonSource once parsed. ([#327](https://github.com/mapbox/mapbox-maps-android/pull/327))
 
 ## Features ✨ and improvements 🏁
