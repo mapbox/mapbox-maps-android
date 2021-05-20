@@ -11,7 +11,6 @@ Mapbox welcomes participation and contributions from everyone.
 * Expose tileset version for sources that use TileJSON metadata
 * ResourceRequest offline-data boolean field is replaced with the source string field, which whether the response came from network, cache or tile store
 * Remove GeoJSON specific methods from `StyleManager`. `Map#queryFeatureExtensions` provides the same functionality
-
 * Parsing geojson on a worker thread. Using DSL GeoJsonSource builders with the following functions `GeoJsonSource.Builder#feature`, `GeoJsonSource.Builder#featureCollection`, `GeoJsonSource.Builder#geometry` will immediately returns GeoJsonSource with no data set and starts preparing actual data using a worker thread. The data will be set to the GeoJsonSource once parsed. ([#327](https://github.com/mapbox/mapbox-maps-android/pull/327))
 
 ## Features ✨ and improvements 🏁
