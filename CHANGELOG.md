@@ -85,7 +85,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Set `begin` and `end` timestamps for StyleLoaded and MapLoaded events, so that developers could check how much time it takes to load style and map, respectively
 * Added `tile-requests-delay` and `tile-network-requests-delay` runtime source properties - an API for tile requests delay
 * Introduce MapOptions.optimizeForTerrain option that allow style rendering optimizations for terrain rendering
-* The 'text-line-height' is now data-driven property
+* The `text-line-height` is now data-driven property
 * MapLoaded, StyleLoaded and StyleDataLoaded events now contain begin and end timestamps reflecting the effective duration timespan
 * When line lablels are inside the flip state retaining range (+/- 5 degrees around the vertical direction), the lables' flip state will be kept the same
 * Improve rendering quality of fill outlines when using render cache
