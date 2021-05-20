@@ -12,68 +12,7 @@ Mapbox welcomes participation and contributions from everyone.
 * ResourceRequest offline-data boolean field is replaced with the source string field, which whether the response came from network, cache or tile store
 * Remove GeoJSON specific methods from `StyleManager`. `Map#queryFeatureExtensions` provides the same functionality
 
-### Parsing geojson on a worker thread. ([#327](https://github.com/mapbox/mapbox-maps-android/pull/327))
-   If preparing geojson with DSL functions new logic is introduced.
-   
-   ```
-   /**
-    * DSL function for [GeoJsonSource] performing parsing using background thread.
-    * Immediately returns [GeoJsonSource] with no data set and starts preparing actual data
-    * using a worker thread.
-    *
-    * If using runtime styling:
-    *
-    * loadStyle(style(Style.DARK) {
-    *   +geoJsonSource(id) {
-    *    featureCollection(collection)
-    *   }
-    *   ...
-    * }
-    *
-    * compositing style will be performed correctly under the hood and
-    * [Style.OnStyleLoaded] will be emitted in correct moment of time when all sources are parsed.
-    *
-    * If creating geojson sources for already loaded Style please consider using overloaded
-    * geoJsonSource(String, GeoJsonSource.Builder.() -> Unit, onGeoJsonParsed: (GeoJsonSource) -> Unit) function
-    * and use fully prepared [GeoJsonSource] in onGeoJsonParsed callback.
-    */
-   fun geoJsonSource(
-     id: String,
-     block: GeoJsonSource.Builder.() -> Unit
-   ): GeoJsonSource
-   
-   /**
-    * DSL function for [GeoJsonSource] performing parsing using a worker thread.
-    * Immediately returns [GeoJsonSource] with no data set,
-    * fully parsed [GeoJsonSource] is returned in [onGeoJsonParsed] callback.
-    *
-    * Using this method means that it is user's responsibility to proceed with adding this source,
-    * layers or other style objects in [onGeoJsonParsed] callback.
-    */
-   fun geoJsonSource(
-     id: String,
-     block: GeoJsonSource.Builder.() -> Unit,
-     onGeoJsonParsed: (GeoJsonSource) -> Unit
-   ): GeoJsonSource
-   ```
-   
-   If updating existing `GeoJsonSource` from some `Style` overloaded functions are introduced:
-   
-   ```
-   /**
-      * Add a FeatureCollection to the GeojsonSource.
-      * If [onDataParsed] is provided and not null - data will be loaded in async mode.
-      * Otherwise method will be synchronous.
-      *
-      * @param value the feature collection
-      * @param onDataParsed optional callback notifying when data is parsed on a worker thread
-      */
-     fun featureCollection(
-       value: FeatureCollection,
-       onDataParsed: ((GeoJsonSource) -> Unit)? = null
-     )
-   ```
-   Similar functions are introduced for `feature` and `geometry`.
+* Parsing geojson on a worker thread. Using DSL GeoJsonSource builders with the following functions `GeoJsonSource.Builder#feature`, `GeoJsonSource.Builder#featureCollection`, `GeoJsonSource.Builder#geometry` will immediately returns GeoJsonSource with no data set and starts preparing actual data using a worker thread. The data will be set to the GeoJsonSource once parsed. ([#327](https://github.com/mapbox/mapbox-maps-android/pull/327))
 
 ## Features ✨ and improvements 🏁
 * Add a `cameraOptions(cameraState, builderBlock)` inline method that helps mutate an existing `CameraState` object. ([#317](https://github.com/mapbox/mapbox-maps-android/pull/317))
