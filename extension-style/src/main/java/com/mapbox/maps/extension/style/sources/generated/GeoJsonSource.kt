@@ -13,6 +13,7 @@ import com.mapbox.geojson.Geometry
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
+import com.mapbox.maps.extension.style.sources.OnGeoJsonParsed
 import com.mapbox.maps.extension.style.sources.Source
 import com.mapbox.maps.extension.style.types.SourceDsl
 import com.mapbox.maps.extension.style.utils.TypeUtils
@@ -27,12 +28,12 @@ import com.mapbox.maps.extension.style.utils.toValue
  */
 class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   private var geoJsonParsed = false
-  private val onGeoJsonParsedListenerList = mutableListOf<(GeoJsonSource) -> Unit>()
+  private val onGeoJsonParsedListenerList = mutableListOf<OnGeoJsonParsed>()
 
   private constructor(
     builder: Builder,
     rawGeoJson: GeoJson?,
-    onGeoJsonParsed: (GeoJsonSource) -> Unit
+    onGeoJsonParsed: OnGeoJsonParsed
   ) : this(builder) {
     rawGeoJson?.let {
       onGeoJsonParsedListenerList.add(onGeoJsonParsed)
@@ -42,7 +43,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
           setProperty(property, throwRuntimeException = false)
           geoJsonParsed = true
           onGeoJsonParsedListenerList.forEach {
-            it.invoke(this)
+            it.onGeoJsonParsed(this)
           }
         }
       }
@@ -54,10 +55,10 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    *
    * @param listener Listener returning GeoJsonSource when data is parsed.
    */
-  fun addOnGeoJsonParsedListener(listener: (GeoJsonSource) -> Unit) {
+  fun addOnGeoJsonParsedListener(listener: OnGeoJsonParsed) {
     onGeoJsonParsedListenerList.add(listener)
     if (geoJsonParsed) {
-      listener.invoke(this)
+      listener.onGeoJsonParsed(this)
     }
   }
 
@@ -66,7 +67,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    *
    * @param listener Listener to be removed.
    */
-  fun removeOnGeoJsonParsedListener(listener: (GeoJsonSource) -> Unit) {
+  fun removeOnGeoJsonParsedListener(listener: OnGeoJsonParsed) {
     onGeoJsonParsedListenerList.remove(listener)
   }
 
@@ -585,7 +586,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   @SourceDsl
   class Builder(
     val sourceId: String,
-    private val onGeoJsonParsed: (GeoJsonSource) -> Unit
+    private val onGeoJsonParsed: OnGeoJsonParsed
   ) {
 
     private var rawGeoJson: GeoJson? = null
@@ -1255,8 +1256,8 @@ fun geoJsonSource(
  */
 fun geoJsonSource(
   id: String,
-  block: GeoJsonSource.Builder.() -> Unit,
-  onGeoJsonParsed: (GeoJsonSource) -> Unit
-): GeoJsonSource = GeoJsonSource.Builder(id, onGeoJsonParsed).apply(block).build()
+  config: GeoJsonSource.Builder.() -> Unit,
+  onGeoJsonParsed: OnGeoJsonParsed
+): GeoJsonSource = GeoJsonSource.Builder(id, onGeoJsonParsed).apply(config).build()
 
 // End of generated file.

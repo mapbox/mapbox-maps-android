@@ -102,7 +102,7 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
     // async method with adding layer in callback when geojson is completely parsed
     geoJsonSource(
       id = "${SOURCE}_$LARGE_SOURCE_COUNT",
-      block = {
+      config = {
         featureCollection(routePoints)
       },
       onGeoJsonParsed = {

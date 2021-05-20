@@ -12,6 +12,7 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
+import com.mapbox.maps.extension.style.sources.OnGeoJsonParsed
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.plugin.PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
 import com.mapbox.maps.plugin.PLUGIN_GESTURE_CLASS_NAME
@@ -174,12 +175,17 @@ class MapboxMap internal constructor(
     styleExtension.sources.forEach {
       if (it is GeoJsonSource) {
         it.bindTo(style)
-        it.addOnGeoJsonParsedListener {
+        var callback: OnGeoJsonParsed? = null
+        callback = OnGeoJsonParsed { _ ->
           resourceCount--
           if (resourceCount == 0) {
             onStyleLoaded?.onStyleLoaded(style)
           }
+          callback?.let { callback ->
+            it.removeOnGeoJsonParsedListener(callback)
+          }
         }
+        it.addOnGeoJsonParsedListener(callback)
       } else {
         it.bindTo(style)
         resourceCount--
