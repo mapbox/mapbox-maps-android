@@ -82,7 +82,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce API to enable render cache feature that could bring up rendering performance improvement. ([#326](https://github.com/mapbox/mapbox-maps-android/pull/326))
 * Add `removeAnnotationManager` API. ([#330](https://github.com/mapbox/mapbox-maps-android/pull/330))
 * Improve terrain's rendering performance 
-* Set 'begin' and 'end' timestamps for StyleLoaded and MapLoaded events, so that developers could check how much time it takes to load style and map, respectively
+* Set `begin` and `end` timestamps for StyleLoaded and MapLoaded events, so that developers could check how much time it takes to load style and map, respectively
 * Added `tile-requests-delay` and `tile-network-requests-delay` runtime source properties - an API for tile requests delay
 * Introduce MapOptions.optimizeForTerrain option that allow style rendering optimizations for terrain rendering
 * The 'text-line-height' is now data-driven property
