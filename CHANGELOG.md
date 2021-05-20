@@ -6,7 +6,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Breaking changes ⚠️
 * Introduce ResourceOptionsManager to configure the default resource options, and removed the xml configuration options for cache path and tile store path. ([#339](https://github.com/mapbox/mapbox-maps-android/pull/339))
 * Rename default ambient cache database to mapbox/maps/ambient_cache.db  ([#314](https://github.com/mapbox/mapbox-maps-android/pull/314))
-* Remove usage of asset path from the codebase, as it is not used in Android SDK. ([#334](https://github.com/mapbox/mapbox-maps-android/pull/334))
+* Remove the usage of asset path from the codebase, as it is not useful in Android Maps SDK. ([#334](https://github.com/mapbox/mapbox-maps-android/pull/334))
 * CameraManager#setBounds return type changed from void to expected
 * Expose tileset version for sources that use TileJSON metadata
 * ResourceRequest offline-data boolean field is replaced with the source string field, which whether the response came from network, cache or tile store
