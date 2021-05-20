@@ -10,7 +10,7 @@ Mapbox welcomes participation and contributions from everyone.
 * CameraManager#setBounds return type changed from void to expected
 * Expose tileset version for sources that use TileJSON metadata
 * ResourceRequest offline-data boolean field is replaced with the source string field, which whether the response came from network, cache or tile store
-* Remove GeoJSON specific methods from 'StyleManager'. Map#queryFeatureExtensions provides the same functionality
+* Remove GeoJSON specific methods from `StyleManager`. `Map#queryFeatureExtensions` provides the same functionality
 
 ### Parsing geojson on a worker thread. ([#327](https://github.com/mapbox/mapbox-maps-android/pull/327))
    If preparing geojson with DSL functions new logic is introduced.
