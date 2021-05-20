@@ -34,7 +34,6 @@ Mapbox welcomes participation and contributions from everyone.
 * Make compass visible when camera was mutated while compass was disabled. ([#322](https://github.com/mapbox/mapbox-maps-android/pull/322))
 * Enable LocationComponent automatically when style loaded; fix null island location puck ([#333](https://github.com/mapbox/mapbox-maps-android/pull/333))
 * Fix crash if the belowLayerId doesn't exist on the current style ([#330](https://github.com/mapbox/mapbox-maps-android/pull/330))
-* Fix skybox cubemap sampling with metal rendering backend
 * Fixed an issue that style pack download cancels pending tileset descriptor resolving, now tile region loading and style pack loading can work in parallel.
 * Fixed the excessive network usage during map browsing caused by losing of the expiration date and the etag for the cached files
 * Fix excessive network usage for delayed tile requests
