@@ -30,16 +30,6 @@
     <string name="clear_search_imageview_content_description">Clear example search button</string>
     <string name="no_results_for_search_query">No results for that search query</string>
 
-    <!--Debug-->
-    <string name="debug_tile_borders">TILE_BORDERS</string>
-    <string name="debug_parse_status">PARSE_STATUS</string>
-    <string name="debug_timestamps">TIMESTAMPS</string>
-    <string name="debug_collision">COLLISION</string>
-    <string name="debug_overdraw">OVERDRAW</string>
-    <string name="debug_stencil_clip">STENCIL_CLIP</string>
-    <string name="debug_depth_buffer">DEPTH_BUFFER</string>
-    <string name="debug_button">Apply debug modes</string>
-
     <!--Location-->
     <string name="toggle_customised_puck">Toggle customised puck style</string>
     <string name="toggle_custom_map_style">Toggle custom Map style</string>
@@ -116,5 +106,14 @@
     <string name="move_camera">Move Camera</string>
     <string name="style_pack">Style pack</string>
     <string name="tile_region">Tile region</string>
+
+    <!--Debug Mode Activity-->
+    <string name="toggle_tile_borders">Tile Borders</string>
+    <string name="toggle_parse_status">Parse Status</string>
+    <string name="toggle_timestamps">Timestamps</string>
+    <string name="toggle_collision">Collision</string>
+    <string name="toggle_overdraw">Overdraw</string>
+    <string name="toggle_stencil_clip">Stencil Clip</string>
+    <string name="toggle_depth_buffer">Depth Buffer</string>
 
 </resources>

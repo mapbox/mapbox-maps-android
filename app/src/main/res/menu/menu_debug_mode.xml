@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_debug_mode_tile_borders"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/toggle_tile_borders" />
+    <item
+        android:id="@+id/menu_debug_mode_parse_status"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/toggle_parse_status" />
+    <item
+        android:id="@+id/menu_debug_mode_timestamps"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/toggle_timestamps" />
+    <item
+        android:id="@+id/menu_debug_mode_collision"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/toggle_collision" />
+    <item
+        android:id="@+id/menu_debug_mode_overdraw"
+        android:checkable="true"
+        android:checked="false"
+        android:title="@string/toggle_overdraw" />
+    <item
+        android:id="@+id/menu_debug_mode_stencil_clip"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/toggle_stencil_clip" />
+    <item
+        android:id="@+id/menu_debug_mode_depth_buffer"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/toggle_depth_buffer" />
+</menu>

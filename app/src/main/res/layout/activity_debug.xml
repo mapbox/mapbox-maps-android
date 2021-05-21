@@ -8,7 +8,7 @@
     <com.mapbox.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_default="percent"
         app:layout_constraintHeight_percent="0.5"
@@ -37,65 +37,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="30 FPS" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.5"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <CheckBox
-            android:id="@+id/checkboxTileBorders"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/debug_tile_borders" />
-
-        <CheckBox
-            android:id="@+id/checkboxParseStatus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/debug_parse_status" />
-
-        <CheckBox
-            android:id="@+id/checkboxTimestamps"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/debug_timestamps" />
-
-        <CheckBox
-            android:id="@+id/checkboxCollision"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/debug_collision" />
-
-        <CheckBox
-            android:id="@+id/checkboxOverdraw"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/debug_overdraw" />
-
-        <CheckBox
-            android:id="@+id/checkboxStencilClip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/debug_stencil_clip" />
-
-        <CheckBox
-            android:id="@+id/checkboxDepthBuffer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/debug_depth_buffer" />
-
-        <Button
-            android:id="@+id/displayOnSecondDisplayButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/debug_button" />
-
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
