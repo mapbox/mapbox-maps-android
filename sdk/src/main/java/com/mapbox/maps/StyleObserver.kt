@@ -56,13 +56,11 @@ internal class StyleObserver(
       }
       awaitingStyleLoadListeners.clear()
     }
-    awaitingStyleErrorListener = null
   }
 
   override fun onMapLoadError(mapLoadErrorType: MapLoadErrorType, message: String) {
     Logger.e(TAG, "OnMapLoadError: $mapLoadErrorType: $message")
     awaitingStyleErrorListener?.onMapLoadError(mapLoadErrorType, message)
-    awaitingStyleLoadListeners.clear()
   }
 
   fun onDestroy() {
