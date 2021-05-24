@@ -94,7 +94,10 @@ fun MapOptions.Builder.applyDefaultParams(context: Context): MapOptions.Builder 
  * Get a default [ResourceOptions.Builder] with token from default [CredentialsManager]
  * @property context the context of the application.
  */
-fun ResourceOptions.Builder.applyDefaultParams(context: Context): ResourceOptions.Builder = also {
+fun ResourceOptions.Builder.applyDefaultParams(
+  context: Context,
+  token: String? = null
+): ResourceOptions.Builder = also {
   // make sure that directory `/mapbox/maps` exists
   val databaseDirectoryPath = "${context.filesDir.absolutePath}/$DATABASE_PATH"
   val databaseDirectory = File(databaseDirectoryPath)
@@ -104,7 +107,7 @@ fun ResourceOptions.Builder.applyDefaultParams(context: Context): ResourceOption
     }
   }
 
-  accessToken(CredentialsManager.default.getAccessToken(context))
+  accessToken(token ?: CredentialsManager.default.getAccessToken(context))
   cachePath("$databaseDirectoryPath/$DATABASE_NAME")
   cacheSize(DEFAULT_CACHE_SIZE) // 50 mb
 }

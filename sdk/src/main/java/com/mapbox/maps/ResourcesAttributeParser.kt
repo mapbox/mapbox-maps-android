@@ -19,14 +19,9 @@ internal object ResourcesAttributeParser {
     typedArray: TypedArray,
     credentialsManager: CredentialsManager
   ): ResourceOptions {
-    val builder = ResourceOptionsManager.getDefault(context).resourceOptions.toBuilder()
 
-    if (typedArray.hasValue(R.styleable.mapbox_MapView_mapbox_resourcesAccessToken)) {
-      builder.accessToken(
-        typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesAccessToken)
-          ?: credentialsManager.getAccessToken(context)
-      )
-    }
+    val token = typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesAccessToken)
+    val builder = ResourceOptionsManager.getDefault(context, token).resourceOptions.toBuilder()
 
     if (typedArray.hasValue(R.styleable.mapbox_MapView_mapbox_resourcesBaseUrl)) {
       builder.baseURL(typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesBaseUrl))
