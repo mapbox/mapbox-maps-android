@@ -227,10 +227,10 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
   fun testEaseToSingleDurationZero() {
     val targetBearing = 5.0
     val cameraOptions = CameraOptions.Builder().bearing(targetBearing).build()
-    val expectedValues = mutableSetOf(-0.0, targetBearing)
+    val expectedValues = mutableSetOf(targetBearing)
     val updatedValues = mutableListOf<Double>()
 
-    val latch = CountDownLatch(2)
+    val latch = CountDownLatch(1)
     val cameraAnimationPlugin = mapView.camera
     cameraAnimationPlugin.addCameraBearingChangeListener {
       Logger.i(TAG, "onChanged $it")
@@ -280,10 +280,10 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     val cameraOptions1 = CameraOptions.Builder().bearing(targetBearing1).build()
     val cameraOptions2 = CameraOptions.Builder().bearing(targetBearing2).build()
     val cameraOptions3 = CameraOptions.Builder().bearing(targetBearing3).build()
-    val expectedValues = mutableSetOf(-0.0, targetBearing1, targetBearing2, targetBearing3)
+    val expectedValues = mutableSetOf(targetBearing1, targetBearing2, targetBearing3)
     val updatedValues = mutableListOf<Double>()
 
-    val latch = CountDownLatch(4)
+    val latch = CountDownLatch(3)
     val cameraAnimationPlugin = mapView.camera
     cameraAnimationPlugin.addCameraBearingChangeListener {
       Logger.i(TAG, "onChanged $it")

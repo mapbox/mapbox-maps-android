@@ -287,10 +287,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
             unregisterAnimators(this, cancelAnimators = false)
           }
           if (runningAnimatorsQueue.isEmpty()) {
-            if (animator.type == CameraAnimatorType.ANCHOR) {
-              anchor = animatedValue as ScreenCoordinate
-            }
-            performMapJump(cameraOptionsBuilder.anchor(anchor).build())
             mapTransformDelegate.setUserAnimationInProgress(false)
           }
           lifecycleListeners.forEach {
