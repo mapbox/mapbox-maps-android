@@ -18,7 +18,6 @@ class CustomGeometrySourceTest {
 
   private val fetchTileFunctionCallback: FetchTileFunctionCallback = mockk()
   private val cancelTileFunctionCallback: CancelTileFunctionCallback = mockk()
-  private val zoomRange: List<Byte> = mockk()
   private val tileOptions: TileOptions = mockk()
 
   @Before
@@ -36,7 +35,8 @@ class CustomGeometrySourceTest {
     val testSource = customGeometrySource("testId") {
       fetchTileFunction(fetchTileFunctionCallback)
       cancelTileFunction(cancelTileFunctionCallback)
-      zoomRange(zoomRange)
+      minZoom(0)
+      maxZoom(20)
       tileOptions(tileOptions)
     }
     testSource.bindTo(style)
@@ -49,7 +49,8 @@ class CustomGeometrySourceTest {
     val testSource = customGeometrySource("testId") {
       fetchTileFunction(fetchTileFunctionCallback)
       cancelTileFunction(cancelTileFunctionCallback)
-      zoomRange(zoomRange)
+      minZoom(0)
+      maxZoom(20)
       tileOptions(tileOptions)
     }
     val tileID: CanonicalTileID = mockk()
@@ -64,7 +65,8 @@ class CustomGeometrySourceTest {
     val testSource = customGeometrySource("testId") {
       fetchTileFunction(fetchTileFunctionCallback)
       cancelTileFunction(cancelTileFunctionCallback)
-      zoomRange(zoomRange)
+      minZoom(0)
+      maxZoom(20)
       tileOptions(tileOptions)
     }
     val tileID: CanonicalTileID = mockk()
@@ -77,7 +79,8 @@ class CustomGeometrySourceTest {
     val testSource = customGeometrySource("testId") {
       fetchTileFunction(fetchTileFunctionCallback)
       cancelTileFunction(cancelTileFunctionCallback)
-      zoomRange(zoomRange)
+      minZoom(0)
+      maxZoom(20)
       tileOptions(tileOptions)
     }
     val coordinateBounds: CoordinateBounds = mockk()
@@ -91,7 +94,8 @@ class CustomGeometrySourceTest {
     val testSource = customGeometrySource("testId") {
       fetchTileFunction(fetchTileFunctionCallback)
       cancelTileFunction(cancelTileFunctionCallback)
-      zoomRange(zoomRange)
+      minZoom(0)
+      maxZoom(20)
       tileOptions(tileOptions)
     }
     val coordinateBounds: CoordinateBounds = mockk()
@@ -104,7 +108,8 @@ class CustomGeometrySourceTest {
     val testSource = customGeometrySource("testId") {
       fetchTileFunction(fetchTileFunctionCallback)
       cancelTileFunction(cancelTileFunctionCallback)
-      zoomRange(zoomRange)
+      minZoom(0)
+      maxZoom(20)
       tileOptions(tileOptions)
     }
     val tileID: CanonicalTileID = mockk()
@@ -118,7 +123,8 @@ class CustomGeometrySourceTest {
     val testSource = customGeometrySource("testId") {
       fetchTileFunction(fetchTileFunctionCallback)
       cancelTileFunction(cancelTileFunctionCallback)
-      zoomRange(zoomRange)
+      minZoom(0)
+      maxZoom(20)
       tileOptions(tileOptions)
     }
     val tileID: CanonicalTileID = mockk()
