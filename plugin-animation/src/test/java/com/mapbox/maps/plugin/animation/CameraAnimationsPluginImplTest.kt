@@ -492,8 +492,8 @@ class CameraAnimationsPluginImplTest {
     bearingAnimator.start()
     shadowOf(getMainLooper()).idle()
 
-    // Adding value 2 because of first call after Animator.start() and last in the onEnd() or onCancel()
-    val countUpdates = (bearingDuration + 2).toInt()
+    // Adding value 2 because of first call after Animator.start()
+    val countUpdates = (bearingDuration + 1).toInt()
     verify(exactly = countUpdates) { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) }
   }
 

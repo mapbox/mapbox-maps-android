@@ -21,8 +21,12 @@ import kotlin.properties.Delegates
  * It is responsible for:
  *   - Storing all the [ValueAnimator]'s that could be run. Only specific camera animators could be used in this plugin.
  *   - Controlling animation execution - only one [ValueAnimator] of certain type could be run at a time.
- *   If some another animation with same [CameraAnimator.type] is about to start previous one will be cancelled.
+ *     If some another animation with same [CameraAnimator.type] is about to start previous one will be cancelled.
  *   - Giving possibility to listen to [CameraOptions] values changes during animations via listeners.
+ *   - If several animations of different [CameraAnimator.type] are running simultaneously map camera
+ *     will be updated only on oldest animation update (the oldest is the one that was started first).
+ *     That actually means that animation start order matters. High-level animations [flyTo] and [easeTo]
+ *     will always trigger camera center animator first.
  *
  * [CameraAnimationsPluginImpl] is NOT thread-safe meaning all animations must be started from one thread.
  * However, it doesn't have to be the UI thread.

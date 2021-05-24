@@ -41,14 +41,25 @@ fun MapSnapshotInterface.bitmap(): Bitmap {
 
 /**
  * Extension function to convert [CameraState] to [CameraOptions].
+ *
+ * If [anchor] is specified - [CameraOptions.center] will be explicitly set to NULL
+ * in order for the anchor to apply to the map camera.
  */
-fun CameraState.toCameraOptions(anchor: ScreenCoordinate? = null): CameraOptions {
-  return CameraOptions.Builder()
-    .anchor(anchor)
-    .center(center)
-    .padding(padding)
-    .zoom(zoom)
-    .pitch(pitch)
-    .bearing(bearing)
-    .build()
-}
+fun CameraState.toCameraOptions(anchor: ScreenCoordinate? = null): CameraOptions =
+  if (anchor != null) {
+    CameraOptions.Builder()
+      .anchor(anchor)
+      .padding(padding)
+      .zoom(zoom)
+      .pitch(pitch)
+      .bearing(bearing)
+      .build()
+  } else {
+    CameraOptions.Builder()
+      .center(center)
+      .padding(padding)
+      .zoom(zoom)
+      .pitch(pitch)
+      .bearing(bearing)
+      .build()
+  }
