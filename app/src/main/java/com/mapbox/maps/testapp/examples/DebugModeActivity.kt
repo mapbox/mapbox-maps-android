@@ -1,8 +1,9 @@
 package com.mapbox.maps.testapp.examples
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.mapbox.common.Logger
 import com.mapbox.maps.*
 import com.mapbox.maps.extension.observable.getResourceEventData
@@ -11,10 +12,9 @@ import com.mapbox.maps.extension.observable.unsubscribeResourceRequest
 import com.mapbox.maps.plugin.compass.compass
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
 import com.mapbox.maps.plugin.delegates.listeners.eventdata.MapLoadErrorType
-import com.mapbox.maps.plugin.scalebar.ScaleBarPlugin
-import com.mapbox.maps.plugin.scalebar.scalebar
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_debug.*
+import kotlinx.android.synthetic.main.activity_debug.mapView
 
 /**
  * Example of enabling and visualizing some debug information for a map.
@@ -22,8 +22,14 @@ import kotlinx.android.synthetic.main.activity_debug.*
 class DebugModeActivity : AppCompatActivity() {
 
   private lateinit var mapboxMap: MapboxMap
-  private lateinit var scaleBarPlugin: ScaleBarPlugin
-  private val debugOptions: MutableList<MapDebugOptions> = mutableListOf()
+  private val debugOptions: MutableList<MapDebugOptions> = mutableListOf(
+    MapDebugOptions.TILE_BORDERS,
+    MapDebugOptions.PARSE_STATUS,
+    MapDebugOptions.TIMESTAMPS,
+    MapDebugOptions.COLLISION,
+    MapDebugOptions.STENCIL_CLIP,
+    MapDebugOptions.DEPTH_BUFFER
+  )
   private val extensionObservable = object : Observer() {
     override fun notify(event: Event) {
       val data = event.getResourceEventData()
@@ -53,38 +59,7 @@ class DebugModeActivity : AppCompatActivity() {
     mapboxMap.subscribeResourceRequest(extensionObservable)
     mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
     mapView.compass.opacity = 0.5f
-    scaleBarPlugin = mapView.scalebar
-    scaleBarPlugin.enabled = false
-    scaleBarPlugin.textColor = ContextCompat.getColor(this@DebugModeActivity, R.color.primary)
-    displayOnSecondDisplayButton.setOnClickListener {
-      scaleBarPlugin.enabled = true
-
-      mapboxMap.setDebug(debugOptions, false)
-      debugOptions.clear()
-
-      if (checkboxTileBorders.isChecked) {
-        debugOptions.add(MapDebugOptions.TILE_BORDERS)
-      }
-      if (checkboxCollision.isChecked) {
-        debugOptions.add(MapDebugOptions.COLLISION)
-      }
-      if (checkboxDepthBuffer.isChecked) {
-        debugOptions.add(MapDebugOptions.DEPTH_BUFFER)
-      }
-      if (checkboxOverdraw.isChecked) {
-        debugOptions.add(MapDebugOptions.OVERDRAW)
-      }
-      if (checkboxParseStatus.isChecked) {
-        debugOptions.add(MapDebugOptions.PARSE_STATUS)
-      }
-      if (checkboxStencilClip.isChecked) {
-        debugOptions.add(MapDebugOptions.STENCIL_CLIP)
-      }
-      if (checkboxTimestamps.isChecked) {
-        debugOptions.add(MapDebugOptions.TIMESTAMPS)
-      }
-      mapboxMap.setDebug(debugOptions, true)
-    }
+    mapboxMap.setDebug(debugOptions, true)
     registerListeners(mapboxMap)
   }
 
@@ -141,6 +116,52 @@ class DebugModeActivity : AppCompatActivity() {
         TAG,
         "OnSourceRemovedListener: $it"
       )
+    }
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    menuInflater.inflate(R.menu.menu_debug_mode, menu)
+    return true
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    when (item.itemId) {
+      R.id.menu_debug_mode_tile_borders -> {
+        item.isChecked = toggleDebugOptions(MapDebugOptions.TILE_BORDERS)
+      }
+      R.id.menu_debug_mode_parse_status -> {
+        item.isChecked = toggleDebugOptions(MapDebugOptions.PARSE_STATUS)
+      }
+      R.id.menu_debug_mode_timestamps -> {
+        item.isChecked = toggleDebugOptions(MapDebugOptions.TIMESTAMPS)
+      }
+      R.id.menu_debug_mode_collision -> {
+        item.isChecked = toggleDebugOptions(MapDebugOptions.COLLISION)
+      }
+      R.id.menu_debug_mode_overdraw -> {
+        item.isChecked = toggleDebugOptions(MapDebugOptions.OVERDRAW)
+      }
+      R.id.menu_debug_mode_stencil_clip -> {
+        item.isChecked = toggleDebugOptions(MapDebugOptions.STENCIL_CLIP)
+      }
+      R.id.menu_debug_mode_depth_buffer -> {
+        item.isChecked = toggleDebugOptions(MapDebugOptions.DEPTH_BUFFER)
+      }
+    }
+    return true
+  }
+
+  private fun toggleDebugOptions(option: MapDebugOptions): Boolean {
+    return if (debugOptions.contains(option)) {
+      mapboxMap.setDebug(debugOptions, false)
+      debugOptions.remove(option)
+      mapboxMap.setDebug(debugOptions, true)
+      false
+    } else {
+      mapboxMap.setDebug(debugOptions, false)
+      debugOptions.add(option)
+      mapboxMap.setDebug(debugOptions, true)
+      true
     }
   }
 
