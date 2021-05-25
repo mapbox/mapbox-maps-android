@@ -27,30 +27,32 @@ class ResourceAttributeParserTest {
     every { typedArray.getBoolean(any(), any()) } returns true
     every { typedArray.getFloat(any(), any()) } returns 99.0f
     every { typedArray.hasValue(any()) } returns true
+    ResourceOptionsManager.getDefault(context).reset(context)
   }
 
   @Test
   fun default() {
     val resourceOptions =
-      ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.default)
+      ResourcesAttributeParser.parseResourcesOptions(context, typedArray)
     assertEquals("pk.foobar", resourceOptions.accessToken)
     assertEquals(null, resourceOptions.baseURL)
     assertEquals("/foobar/.mapbox/maps/ambient_cache.db", resourceOptions.cachePath)
     assertEquals(99L, resourceOptions.cacheSize)
   }
 
-  @Test(expected = MapboxConfigurationException::class)
-  fun noAccessTokenResource() {
+  @Test
+  fun noAccessTokenResourceHasTokenFromAttr() {
     every { resources.getIdentifier("mapbox_access_token", "string", "foobar") } returns 0
+    every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesAccessToken) } returns "token"
     val options =
-      ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.default)
-    assertEquals("", options.accessToken)
+      ResourcesAttributeParser.parseResourcesOptions(context, typedArray)
+    assertEquals("token", options.accessToken)
   }
 
   @Test
   fun cachePath() {
     val resourceOptions =
-      ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.default)
+      ResourcesAttributeParser.parseResourcesOptions(context, typedArray)
     assertEquals("/foobar/.mapbox/maps/ambient_cache.db", resourceOptions.cachePath)
   }
 
@@ -66,8 +68,7 @@ class ResourceAttributeParserTest {
       1234L,
       ResourcesAttributeParser.parseResourcesOptions(
         context,
-        typedArray,
-        CredentialsManager.default
+        typedArray
       ).cacheSize
     )
   }
@@ -79,8 +80,7 @@ class ResourceAttributeParserTest {
       "mapbox.be",
       ResourcesAttributeParser.parseResourcesOptions(
         context,
-        typedArray,
-        CredentialsManager.default
+        typedArray
       ).baseURL
     )
   }

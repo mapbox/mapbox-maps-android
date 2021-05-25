@@ -21,21 +21,39 @@ class ResourceOptionsManager(
   }
 
   /**
+   * Reset all the properties of the inside resourceOptions to default
+   *
+   * @param context the application context
+   * @param defaultToken the token will applied as default during reset
+   */
+  fun reset(context: Context, defaultToken: String? = null) {
+    resourceOptions = ResourceOptions.Builder().applyDefaultParams(context, defaultToken).build()
+  }
+
+  /**
    * Static variables and methods.
    */
   companion object {
-    private lateinit var default: ResourceOptionsManager
+    internal lateinit var default: ResourceOptionsManager
 
     /**
      * The default shared instance with default resource options.
+     *
+     * @param context the application context
+     * @defaultToken the default token will be set to the default [ResourceOptionsManager] instance.
+     * If set to null, will reuse the previously set one or search for an access token in the application resources for the first time of init.
      */
     @Synchronized
-    fun getDefault(context: Context, token: String? = null): ResourceOptionsManager {
+    fun getDefault(context: Context, defaultToken: String? = null): ResourceOptionsManager {
       if (!this::default.isInitialized) {
         default = ResourceOptionsManager(
-          ResourceOptions.Builder().applyDefaultParams(context, token)
+          ResourceOptions.Builder().applyDefaultParams(context, defaultToken)
             .build()
         )
+      }
+      // A new default token is applied, update it.
+      if (defaultToken != null) {
+        default.update { accessToken(defaultToken) }
       }
       return default
     }

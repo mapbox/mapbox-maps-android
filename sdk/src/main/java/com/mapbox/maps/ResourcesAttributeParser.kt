@@ -16,8 +16,7 @@ internal object ResourcesAttributeParser {
    */
   fun parseResourcesOptions(
     context: Context,
-    typedArray: TypedArray,
-    credentialsManager: CredentialsManager
+    typedArray: TypedArray
   ): ResourceOptions {
 
     val token = typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesAccessToken)

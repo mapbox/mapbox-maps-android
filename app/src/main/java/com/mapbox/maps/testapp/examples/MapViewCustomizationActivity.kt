@@ -21,11 +21,10 @@ class MapViewCustomizationActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    // Create  a custom CredentialsManager with a token and set it to CredentialsManager.shared, so that all MapViews created with default config will apply this token.
-    CredentialsManager.default.setAccessToken(getString(R.string.mapbox_access_token))
 
-    // Create a custom ResourceOptionsManager with customised tile store and tile size, so that all MapViews created with default config will apply these settings.
+    // Create a custom ResourceOptionsManager with customised token, tile store and tile size, so that all MapViews created with default config will apply these settings.
     ResourceOptionsManager.getDefault(this).update {
+      accessToken(getString(R.string.mapbox_access_token))
       tileStore(TileStore.getInstance())
       tileStoreUsageMode(TileStoreUsageMode.READ_AND_UPDATE)
       cacheSize(75_000L)

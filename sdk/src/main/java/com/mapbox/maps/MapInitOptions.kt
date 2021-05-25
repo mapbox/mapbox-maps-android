@@ -107,7 +107,21 @@ fun ResourceOptions.Builder.applyDefaultParams(
     }
   }
 
-  accessToken(token ?: CredentialsManager.default.getAccessToken(context))
+  if (token != null) {
+    // Apply the user setting token as the default token
+    accessToken(token)
+  } else {
+    // Otherwise check in the resources
+    val tokenResId = context.resources.getIdentifier(
+      MAPBOX_ACCESS_TOKEN_RESOURCE_NAME,
+      "string",
+      context.packageName
+    )
+    // Throw exception as no token could be found as default token.
+    if (tokenResId == 0) throw MapboxConfigurationException()
+    accessToken(context.getString(tokenResId))
+  }
+
   cachePath("$databaseDirectoryPath/$DATABASE_NAME")
   cacheSize(DEFAULT_CACHE_SIZE) // 50 mb
 }

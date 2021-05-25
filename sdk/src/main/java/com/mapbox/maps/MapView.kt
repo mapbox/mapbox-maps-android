@@ -110,8 +110,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       val resourceOptions =
         ResourcesAttributeParser.parseResourcesOptions(
           context,
-          typedArray,
-          CredentialsManager.default
+          typedArray
         )
       val mapOptions =
         MapAttributeParser.parseMapOptions(typedArray, context.resources.displayMetrics.density)
