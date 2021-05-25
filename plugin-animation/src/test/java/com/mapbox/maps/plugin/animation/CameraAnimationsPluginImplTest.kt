@@ -297,7 +297,7 @@ class CameraAnimationsPluginImplTest {
 
     val targetPitch = 5.0
     val cameraOptions = CameraOptions.Builder().pitch(targetPitch).build()
-    val expectedValues = mutableSetOf(0.0, targetPitch)
+    val expectedValues = mutableSetOf(targetPitch)
     val updatedValues = mutableListOf<Double>()
 
     cameraAnimationsPluginImpl.addCameraPitchChangeListener { updatedValue ->
@@ -366,7 +366,7 @@ class CameraAnimationsPluginImplTest {
     val cameraOptions1 = CameraOptions.Builder().pitch(targetPitchFirst).build()
     val cameraOptions2 = CameraOptions.Builder().pitch(targetPitchSecond).build()
     val cameraOptions3 = CameraOptions.Builder().pitch(targetPitchThird).build()
-    val expectedValues = mutableSetOf(0.0, targetPitchFirst, targetPitchSecond, targetPitchThird)
+    val expectedValues = mutableSetOf(targetPitchFirst, targetPitchSecond, targetPitchThird)
     val updatedValues = mutableListOf<Double>()
 
     cameraAnimationsPluginImpl.addCameraPitchChangeListener { updatedValue ->
@@ -492,8 +492,8 @@ class CameraAnimationsPluginImplTest {
     bearingAnimator.start()
     shadowOf(getMainLooper()).idle()
 
-    // Adding value 2 because of first call after Animator.start() and last in the onEnd() or onCancel()
-    val countUpdates = (bearingDuration + 2).toInt()
+    // Adding value 2 because of first call after Animator.start()
+    val countUpdates = (bearingDuration + 1).toInt()
     verify(exactly = countUpdates) { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) }
   }
 
@@ -924,6 +924,42 @@ class CameraAnimationsPluginImplTest {
     shadowOf(getMainLooper()).idle()
     assertEquals(1, listener.startedCount)
     assertEquals(1, listener.endedCount)
+  }
+
+  @Test
+  fun firstUpdateTickTest() {
+    val updateList = mutableListOf<CameraOptions>()
+    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
+      updateList.add(firstArg())
+    }
+    shadowOf(getMainLooper()).pause()
+    val bearingAnimator = cameraAnimationsPluginImpl.createBearingAnimator(
+      cameraAnimatorOptions(60.0) {
+        startValue(20.0)
+      }
+    ) {
+      duration = 50
+    }
+    val pitchAnimator = cameraAnimationsPluginImpl.createPitchAnimator(
+      cameraAnimatorOptions(40.0) {
+        startValue(10.0)
+      }
+    ) {
+      duration = 50
+    }
+    cameraAnimationsPluginImpl.registerAnimators(
+      bearingAnimator, pitchAnimator
+    )
+    bearingAnimator.start()
+    pitchAnimator.start()
+    shadowOf(getMainLooper()).idle()
+    // first bearing tick as first animation -
+    // bearing updated to start value and pitch is not updated
+    assertEquals(20.0, updateList[0].bearing!!, EPS)
+    assertEquals(0.0, updateList[0].pitch!!, EPS)
+    // second bearing tick as first animation -
+    // pitch is updated to start value
+    assertEquals(10.0, updateList[1].pitch!!, EPS)
   }
 
   class LifecycleListener : CameraAnimationsLifecycleListener {

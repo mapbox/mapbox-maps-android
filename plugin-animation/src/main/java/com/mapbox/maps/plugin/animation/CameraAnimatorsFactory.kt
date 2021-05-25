@@ -40,6 +40,17 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
     val animationList = mutableListOf<ValueAnimator>()
     val currentCameraState = mapCameraManagerDelegate.cameraState
 
+    cameraOptions.center?.let { target ->
+      animationList.add(
+        CameraCenterAnimator(
+          options = cameraAnimatorOptions(target) {
+            startValue(currentCameraState.center)
+          },
+          block = defaultAnimationParameters[CameraAnimatorType.CENTER]
+        )
+      )
+    }
+
     cameraOptions.anchor?.let {
       animationList.add(
         CameraAnchorAnimator(
@@ -91,17 +102,6 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
             startValue(currentCameraState.pitch)
           },
           block = defaultAnimationParameters[CameraAnimatorType.PITCH]
-        )
-      )
-    }
-
-    cameraOptions.center?.let { target ->
-      animationList.add(
-        CameraCenterAnimator(
-          options = cameraAnimatorOptions(target) {
-            startValue(currentCameraState.center)
-          },
-          block = defaultAnimationParameters[CameraAnimatorType.CENTER]
         )
       )
     }
@@ -362,12 +362,6 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
       (r1 - r0) / rho
 
     val animators = mutableListOf(
-      CameraBearingAnimator(
-        options = cameraAnimatorOptions(endBearing) {
-          startValue(startBearing)
-        },
-        block = defaultAnimationParameters[CameraAnimatorType.BEARING]
-      ),
       CameraCenterAnimator(
         evaluator = { fraction, _, _ ->
           // s: The distance traveled along the flight path, measured in
@@ -384,6 +378,12 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           startValue(startPointRaw)
         },
         block = defaultAnimationParameters[CameraAnimatorType.CENTER]
+      ),
+      CameraBearingAnimator(
+        options = cameraAnimatorOptions(endBearing) {
+          startValue(startBearing)
+        },
+        block = defaultAnimationParameters[CameraAnimatorType.BEARING]
       ),
       CameraZoomAnimator(
         evaluator = { fraction, _, _ ->

@@ -184,7 +184,7 @@ class CameraAnimationsListenersTest {
     bearingAnimator.start()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
 
-    Assert.assertEquals(6, valuesList.size)
+    Assert.assertEquals(5, valuesList.size)
     Assert.assertArrayEquals(intArrayOf(0, 1, 2), valuesList.slice(0..2).toIntArray())
   }
 
@@ -209,7 +209,7 @@ class CameraAnimationsListenersTest {
     bearingAnimator.start()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
 
-    Assert.assertEquals(6, valuesList.size)
+    Assert.assertEquals(5, valuesList.size)
     Assert.assertArrayEquals(intArrayOf(0, 1, 2), valuesList.slice(0..2).toIntArray())
   }
 
@@ -231,7 +231,7 @@ class CameraAnimationsListenersTest {
     bearingAnimator.start()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
 
-    Assert.assertArrayEquals(intArrayOf(0, 0), valuesList.toIntArray())
+    Assert.assertArrayEquals(intArrayOf(0), valuesList.toIntArray())
   }
 
   @Test
@@ -253,7 +253,7 @@ class CameraAnimationsListenersTest {
     bearingAnimator.start()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
 
-    Assert.assertEquals(6, valuesList.size)
+    Assert.assertEquals(5, valuesList.size)
     Assert.assertArrayEquals(intArrayOf(0, 1, 1), valuesList.slice(0..2).toIntArray())
   }
 
@@ -287,7 +287,7 @@ class CameraAnimationsListenersTest {
     bearingAnimator.start()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
 
-    Assert.assertEquals(6, valuesList.size)
+    Assert.assertEquals(5, valuesList.size)
     Assert.assertArrayEquals(intArrayOf(0, 1, 2), valuesList.slice(0..2).toIntArray())
     valuesList.clear()
 

@@ -21,8 +21,12 @@ import kotlin.properties.Delegates
  * It is responsible for:
  *   - Storing all the [ValueAnimator]'s that could be run. Only specific camera animators could be used in this plugin.
  *   - Controlling animation execution - only one [ValueAnimator] of certain type could be run at a time.
- *   If some another animation with same [CameraAnimator.type] is about to start previous one will be cancelled.
+ *     If some another animation with same [CameraAnimator.type] is about to start previous one will be cancelled.
  *   - Giving possibility to listen to [CameraOptions] values changes during animations via listeners.
+ *   - If several animations of different [CameraAnimator.type] are running simultaneously map camera
+ *     will be updated only on oldest animation update (the oldest is the one that was started first).
+ *     That actually means that animation start order matters. High-level animations [flyTo] and [easeTo]
+ *     will always trigger camera center animator first.
  *
  * [CameraAnimationsPluginImpl] is NOT thread-safe meaning all animations must be started from one thread.
  * However, it doesn't have to be the UI thread.
@@ -207,6 +211,21 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     }
   }
 
+  private fun correctInitialCamera(
+    currentCameraBuilder: CameraOptions.Builder,
+    cameraAnimator: CameraAnimator<*>
+  ): CameraOptions {
+    return when (cameraAnimator) {
+      is CameraCenterAnimator -> currentCameraBuilder.center(cameraAnimator.animatedValue as? Point).build()
+      is CameraZoomAnimator -> currentCameraBuilder.zoom(cameraAnimator.animatedValue as? Double).build()
+      is CameraAnchorAnimator -> currentCameraBuilder.anchor(cameraAnimator.animatedValue as? ScreenCoordinate).build()
+      is CameraPaddingAnimator -> currentCameraBuilder.padding(cameraAnimator.animatedValue as? EdgeInsets).build()
+      is CameraBearingAnimator -> currentCameraBuilder.bearing(cameraAnimator.animatedValue as? Double).build()
+      is CameraPitchAnimator -> currentCameraBuilder.pitch(cameraAnimator.animatedValue as? Double).build()
+      else -> throw RuntimeException("Unsupported animator type!")
+    }
+  }
+
   private fun registerInternalListener(animator: CameraAnimator<*>) {
     animator.addInternalListener(object : Animator.AnimatorListener {
 
@@ -272,10 +291,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
             unregisterAnimators(this, cancelAnimators = false)
           }
           if (runningAnimatorsQueue.isEmpty()) {
-            if (animator.type == CameraAnimatorType.ANCHOR) {
-              anchor = animatedValue as ScreenCoordinate
-            }
-            performMapJump(cameraOptionsBuilder.anchor(anchor).build())
             mapTransformDelegate.setUserAnimationInProgress(false)
           }
           lifecycleListeners.forEach {
@@ -303,6 +318,8 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
   private fun registerInternalUpdateListener(animator: CameraAnimator<*>) {
     animator.addInternalUpdateListener {
+      // set current animator value in any case
+      updateCameraValue(animator)
       // main idea here is not to update map on each option change
       // we perform jump based on update tick of first (oldest) animation
       val firstAnimator = if (runningAnimatorsQueue.iterator().hasNext()) {
@@ -314,9 +331,12 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         anchor = it.animatedValue as ScreenCoordinate
       }
       val cameraOptions = when {
-        // if no running animators in queue - get current map camera
+        // if no running animators in queue - get current map camera but apply first updated value
         firstAnimator == null -> {
-          mapCameraManagerDelegate.cameraState.toCameraOptions(anchor)
+          correctInitialCamera(
+            mapCameraManagerDelegate.cameraState.toCameraOptions(anchor).toBuilder(),
+            animator
+          )
         }
         // if update is triggered for first (oldest) animator - build options and jump
         it == firstAnimator -> {
@@ -333,8 +353,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         // reset values
         cameraOptionsBuilder = CameraOptions.Builder()
       }
-      // set current animator value
-      updateCameraValue(animator)
       // add current animator to queue-set if was not present
       runningAnimatorsQueue.add(it)
     }
