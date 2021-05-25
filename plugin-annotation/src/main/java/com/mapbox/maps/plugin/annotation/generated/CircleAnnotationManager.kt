@@ -33,8 +33,7 @@ class CircleAnnotationManager(
 
   init {
     delegateProvider.getStyle {
-      style = it
-      initLayerAndSource()
+      initLayerAndSource(it)
     }
   }
 

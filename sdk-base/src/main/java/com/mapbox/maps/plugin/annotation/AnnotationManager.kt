@@ -1,7 +1,6 @@
 package com.mapbox.maps.plugin.annotation
 
 import com.mapbox.geojson.Geometry
-import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 
 /**
@@ -70,11 +69,6 @@ interface AnnotationManager<
    * @param height the height of mapView
    */
   fun onSizeChanged(width: Int, height: Int)
-
-  /**
-   * Invoked when the style is loaded
-   */
-  fun onStyleLoaded(styleDelegate: StyleInterface)
 
   /**
    * The delegateProvider

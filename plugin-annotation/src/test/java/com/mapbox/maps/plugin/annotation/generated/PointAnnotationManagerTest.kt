@@ -78,9 +78,9 @@ class PointAnnotationManagerTest {
     every { delegateProvider.styleStateDelegate } returns styleStateDelegate
     every { styleStateDelegate.isFullyLoaded() } returns true
     every { style.addSource(any()) } just Runs
-    every { style.addLayer(any()) } just Runs
     every { style.addLayerBelow(any(), any()) } just Runs
     every { style.getSource(any()) } returns null
+    every { style.addPersistentStyleLayer(any(), any()) } returns ExpectedFactory.createNone()
     every { style.styleSourceExists(any()) } returns false
     every { style.styleLayerExists(any()) } returns false
     every { style.removeStyleLayer(any()) } returns mockk()

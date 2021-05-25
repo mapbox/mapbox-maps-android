@@ -33,8 +33,7 @@ class PointAnnotationManager(
 
   init {
     delegateProvider.getStyle {
-      style = it
-      initLayerAndSource()
+      initLayerAndSource(it)
       // Show all icons and texts by default. 
       iconAllowOverlap = true
       textAllowOverlap = true

@@ -33,8 +33,7 @@ class PolylineAnnotationManager(
 
   init {
     delegateProvider.getStyle {
-      style = it
-      initLayerAndSource()
+      initLayerAndSource(it)
     }
   }
 

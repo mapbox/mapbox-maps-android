@@ -203,9 +203,6 @@ class LocationComponentPluginImplTest {
     preparePluginInitialisationWithEnabled()
     verify(exactly = 2) { locationPuckManager.isLayerInitialised() }
     verify(exactly = 1) { locationPuckManager.initialize(style) }
-    locationComponentPlugin.onStyleChanged(style)
-    verify(exactly = 3) { locationPuckManager.isLayerInitialised() }
-    verify(exactly = 2) { locationPuckManager.initialize(style) }
   }
 
   @Test
@@ -213,9 +210,6 @@ class LocationComponentPluginImplTest {
     every { locationPuckManager.isLayerInitialised() } returns true
     preparePluginInitialisationWithEnabled()
     verify(exactly = 2) { locationPuckManager.isLayerInitialised() }
-    verify(exactly = 0) { locationPuckManager.initialize(style) }
-    locationComponentPlugin.onStyleChanged(style)
-    verify(exactly = 3) { locationPuckManager.isLayerInitialised() }
     verify(exactly = 0) { locationPuckManager.initialize(style) }
   }
 

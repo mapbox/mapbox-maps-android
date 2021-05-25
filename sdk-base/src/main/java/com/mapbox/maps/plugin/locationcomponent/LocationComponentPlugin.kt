@@ -9,7 +9,6 @@ import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSetti
  */
 interface LocationComponentPlugin :
   MapPlugin,
-  MapStyleObserverPlugin,
   LifecyclePlugin,
   ContextBinder,
   LocationComponentSettingsInterface {
