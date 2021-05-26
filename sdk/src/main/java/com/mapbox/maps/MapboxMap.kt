@@ -119,14 +119,14 @@ class MapboxMap internal constructor(
    * Load style JSON
    */
   fun loadStyleJSON(
-    json: String,
+    styleJson: String,
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
   ) {
     initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener)
     handlerMain.post {
       nativeMapWeakRef.call {
-        (this as StyleManagerInterface).styleJSON = json
+        (this as StyleManagerInterface).styleJSON = styleJson
       }
     }
   }
@@ -135,9 +135,9 @@ class MapboxMap internal constructor(
    * Load style JSON.
    */
   fun loadStyleJSON(
-    json: String,
+    styleJson: String,
     onStyleLoaded: Style.OnStyleLoaded
-  ) = loadStyleJSON(json, onStyleLoaded, null)
+  ) = loadStyleJSON(styleJson, onStyleLoaded, null)
 
   /**
    * Load the style from Style Extension.
