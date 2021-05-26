@@ -9,7 +9,7 @@ import android.content.Context
  *
  * @property resourceOptions the initial resource options.
  */
-class ResourceOptionsManager(
+data class ResourceOptionsManager(
   var resourceOptions: ResourceOptions
 ) {
 
