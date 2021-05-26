@@ -60,7 +60,7 @@ class MapboxMapTest {
   fun loadStyleJSON() {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     assertFalse(mapboxMap.isStyleLoadInitiated)
-    mapboxMap.loadStyleJSON("foo")
+    mapboxMap.loadStyleJson("foo")
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { nativeMap.styleJSON = "foo" }
     assertTrue(mapboxMap.isStyleLoadInitiated)
@@ -70,7 +70,7 @@ class MapboxMapTest {
   fun loadStyleJSONLambda() {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     assertFalse(mapboxMap.isStyleLoadInitiated)
-    mapboxMap.loadStyleJSON("foo") {}
+    mapboxMap.loadStyleJson("foo") {}
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { nativeMap.styleJSON = "foo" }
     assertTrue(mapboxMap.isStyleLoadInitiated)

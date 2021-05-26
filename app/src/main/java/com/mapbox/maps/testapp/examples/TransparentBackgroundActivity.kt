@@ -25,7 +25,7 @@ class TransparentBackgroundActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_transparent_background)
 
-    mapView.getMapboxMap().loadStyleJSON(
+    mapView.getMapboxMap().loadStyleJson(
       """
       {
         "version": 8,

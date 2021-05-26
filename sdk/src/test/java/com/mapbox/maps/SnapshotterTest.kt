@@ -49,7 +49,7 @@ class SnapshotterTest {
 
   @Test
   fun getStyleURI() {
-    snapshotter.setStyleURI("foo")
+    snapshotter.setStyleUri("foo")
     verify { coreSnapshotter.styleURI = "foo" }
   }
 

@@ -142,7 +142,7 @@ open class Snapshotter {
    *
    * @param styleUri string containing a Mapbox style URI.
    */
-  fun setStyleURI(styleUri: String) {
+  fun setStyleUri(styleUri: String) {
     coreSnapshotter.styleURI = styleUri
   }
 

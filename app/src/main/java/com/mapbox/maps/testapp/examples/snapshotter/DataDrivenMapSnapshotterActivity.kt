@@ -64,7 +64,7 @@ class DataDrivenMapSnapshotterActivity : AppCompatActivity() {
           .padding(EdgeInsets(1.0, 1.0, 1.0, 1.0))
           .build()
       )
-      setStyleURI(Style.OUTDOORS)
+      setStyleUri(Style.OUTDOORS)
     }
     snapshotter.start {
       it?.let { snapshot ->

@@ -118,7 +118,7 @@ class MapboxMap internal constructor(
   /**
    * Load style JSON
    */
-  fun loadStyleJSON(
+  fun loadStyleJson(
     styleJson: String,
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
@@ -134,10 +134,10 @@ class MapboxMap internal constructor(
   /**
    * Load style JSON.
    */
-  fun loadStyleJSON(
+  fun loadStyleJson(
     styleJson: String,
     onStyleLoaded: Style.OnStyleLoaded
-  ) = loadStyleJSON(styleJson, onStyleLoaded, null)
+  ) = loadStyleJson(styleJson, onStyleLoaded, null)
 
   /**
    * Load the style from Style Extension.
