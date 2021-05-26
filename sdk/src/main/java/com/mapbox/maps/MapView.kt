@@ -39,6 +39,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   /**
    * Build a [MapView] with [Context] and [MapInitOptions] objects.
    */
+  @JvmOverloads
   constructor(context: Context, mapInitOptions: MapInitOptions = MapInitOptions(context)) : this(
     context,
     null,
