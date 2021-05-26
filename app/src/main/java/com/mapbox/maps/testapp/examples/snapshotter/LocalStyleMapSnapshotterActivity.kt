@@ -35,7 +35,7 @@ class LocalStyleMapSnapshotterActivity : AppCompatActivity() {
         )
       ).build()
     )
-    mapSnapshotter.setJson(
+    mapSnapshotter.setStyleJson(
       """
         {
           "version": 8,

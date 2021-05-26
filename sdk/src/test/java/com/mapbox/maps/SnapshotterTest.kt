@@ -49,25 +49,25 @@ class SnapshotterTest {
 
   @Test
   fun getStyleURI() {
-    snapshotter.setUri("foo")
+    snapshotter.setStyleUri("foo")
     verify { coreSnapshotter.styleURI = "foo" }
   }
 
   @Test
   fun setStyleURI() {
-    snapshotter.getUri()
+    snapshotter.getStyleUri()
     verify { coreSnapshotter.styleURI }
   }
 
   @Test
   fun getStyleJSON() {
-    snapshotter.getJson()
+    snapshotter.getStyleJson()
     verify { coreSnapshotter.styleJSON }
   }
 
   @Test
   fun setStyleJSON() {
-    snapshotter.setJson("foo")
+    snapshotter.setStyleJson("foo")
     verify { coreSnapshotter.styleJSON = "foo" }
   }
 

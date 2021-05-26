@@ -46,7 +46,7 @@ class StyleLoadedEventTest {
   fun testStyleLoadedEventWhenSpritesLoadFails() {
     countDownLatch = CountDownLatch(1)
     rule.scenario.onActivity {
-      mapView.getMapboxMap().loadStyleJSON(
+      mapView.getMapboxMap().loadStyleJson(
         """
       {
         "version": 8,

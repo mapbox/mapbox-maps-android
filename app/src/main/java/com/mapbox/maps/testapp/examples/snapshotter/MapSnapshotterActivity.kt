@@ -33,7 +33,7 @@ class MapSnapshotterActivity : AppCompatActivity(), SnapshotStyleListener {
 
     mapSnapshotter = Snapshotter(this, snapshotterOptions).apply {
       setStyleListener(this@MapSnapshotterActivity)
-      setUri(Style.MAPBOX_STREETS)
+      setStyleUri(Style.MAPBOX_STREETS)
       setCamera(
         CameraOptions.Builder().zoom(14.0).center(
           Point.fromLngLat(

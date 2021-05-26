@@ -101,7 +101,7 @@ open class Snapshotter {
    */
   fun start(callback: SnapshotCreatedListener) {
     snapshotCreatedCallback = callback
-    if (getJson().isEmpty() && getUri().isEmpty()) {
+    if (getStyleJson().isEmpty() && getStyleUri().isEmpty()) {
       throw IllegalStateException("It's required to call setUri or setJson to provide a style definition before calling start.")
     }
 
@@ -140,10 +140,10 @@ open class Snapshotter {
   /**
    * Set the URI of the current Mapbox Style in use.
    *
-   * @param uri string containing a Mapbox style URI.
+   * @param styleUri string containing a Mapbox style URI.
    */
-  fun setUri(uri: String) {
-    coreSnapshotter.styleURI = uri
+  fun setStyleUri(styleUri: String) {
+    coreSnapshotter.styleURI = styleUri
   }
 
   /**
@@ -229,7 +229,7 @@ open class Snapshotter {
    *
    * @param styleJson A JSON string containing a serialized Mapbox Style.
    */
-  fun setJson(styleJson: String) {
+  fun setStyleJson(styleJson: String) {
     coreSnapshotter.styleJSON = styleJson
   }
 
@@ -238,7 +238,7 @@ open class Snapshotter {
    *
    * @return A JSON string containing a serialized Mapbox Style.
    */
-  fun getJson(): String {
+  fun getStyleJson(): String {
     return coreSnapshotter.styleJSON
   }
 
@@ -247,7 +247,7 @@ open class Snapshotter {
    *
    * @return A string containing a Mapbox style URI.
    */
-  fun getUri(): String {
+  fun getStyleUri(): String {
     return coreSnapshotter.styleURI
   }
 
