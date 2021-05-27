@@ -91,8 +91,11 @@ fun MapOptions.Builder.applyDefaultParams(context: Context): MapOptions.Builder 
 }
 
 /**
- * Get a default [ResourceOptions.Builder] with token from default [CredentialsManager]
- * @property context the context of the application.
+ * Get a default [ResourceOptions.Builder] with token from the token parameter or from the
+ * Android resources. If no token found, it will throw [MapboxConfigurationException].
+ *
+ * @param context the context of the application.
+ * @param token the default token for the builder, if not specified, the token will be fetched from Android resources. Will throw [MapboxConfigurationException] if there's no token found.
  */
 fun ResourceOptions.Builder.applyDefaultParams(
   context: Context,

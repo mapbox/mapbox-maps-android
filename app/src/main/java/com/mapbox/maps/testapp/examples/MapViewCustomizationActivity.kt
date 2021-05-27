@@ -22,15 +22,17 @@ class MapViewCustomizationActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    // Create a custom ResourceOptionsManager with customised token, tile store and tile size, so that all MapViews created with default config will apply these settings.
+    // Set the application-scoped ResourceOptionsManager with customised token, tile store and tile size
+    // so that all MapViews created with default config will apply these settings.
     ResourceOptionsManager.getDefault(this).update {
       accessToken(getString(R.string.mapbox_access_token))
       tileStore(TileStore.getInstance())
-      tileStoreUsageMode(TileStoreUsageMode.READ_AND_UPDATE)
+      tileStoreUsageMode(TileStoreUsageMode.READ_ONLY)
       cacheSize(75_000L)
     }
 
     setContentView(R.layout.activity_map_view_customization)
+
     // all options provided in xml file - so we just load style
     mapView.getMapboxMap().loadStyleUri(Style.DARK)
     configureMapViewFromCode()
@@ -106,8 +108,7 @@ class MapViewCustomizationActivity : AppCompatActivity() {
     super.onDestroy()
     mapView.onDestroy()
     customMapView.onDestroy()
-    // Restore the default resource settings, otherwise it will affect other activities
-    ResourceOptionsManager.getDefault(this).resourceOptions =
-      ResourceOptions.Builder().applyDefaultParams(this).build()
+    // Restore the default application-scoped resource settings, otherwise it will affect other activities
+    ResourceOptionsManager.getDefault(this).reset(this)
   }
 }
