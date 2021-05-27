@@ -38,7 +38,7 @@ data class MapInitOptions constructor(
    */
   companion object {
     /**
-     * Get a default [ResourceOptions] with token from default [CredentialsManager]
+     * Get a default [ResourceOptions] instance.
      * @property context the context of the application.
      */
     fun getDefaultResourceOptions(context: Context): ResourceOptions =
