@@ -1,3 +1,5 @@
+@file:JvmName("MapPluginExtensionsDelegate")
+
 package com.mapbox.maps.plugin.gestures
 
 import android.animation.Animator

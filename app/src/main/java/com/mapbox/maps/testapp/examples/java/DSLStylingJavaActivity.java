@@ -15,16 +15,15 @@ import com.mapbox.maps.ScreenBox;
 import com.mapbox.maps.ScreenCoordinate;
 import com.mapbox.maps.Style;
 import com.mapbox.maps.extension.style.StyleContract;
-import com.mapbox.maps.extension.style.StyleExtension;
+import com.mapbox.maps.extension.style.StyleExtensionImpl;
 import com.mapbox.maps.extension.style.expressions.generated.Expression;
-import com.mapbox.maps.extension.style.layers.generated.CircleLayerKt;
-import com.mapbox.maps.extension.style.layers.generated.RasterLayerKt;
-import com.mapbox.maps.extension.style.layers.generated.SymbolLayerKt;
+import com.mapbox.maps.extension.style.layers.generated.CircleLayer;
+import com.mapbox.maps.extension.style.layers.generated.RasterLayer;
+import com.mapbox.maps.extension.style.layers.generated.SymbolLayer;
 import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor;
-import com.mapbox.maps.extension.style.sources.generated.GeoJsonSourceKt;
-import com.mapbox.maps.extension.style.sources.generated.ImageSourceKt;
-import com.mapbox.maps.extension.style.types.Formatted;
-import com.mapbox.maps.plugin.gestures.GesturesPluginImplKt;
+import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource;
+import com.mapbox.maps.extension.style.sources.generated.ImageSource;
+import com.mapbox.maps.plugin.gestures.MapPluginExtensionsDelegate;
 import com.mapbox.maps.plugin.gestures.OnMapClickListener;
 import com.mapbox.maps.testapp.R;
 
@@ -34,9 +33,6 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
 
 import static com.mapbox.maps.extension.style.expressions.generated.Expression.concat;
 import static com.mapbox.maps.extension.style.expressions.generated.Expression.get;
@@ -79,11 +75,11 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
     private static final String IMAGE_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Mapbox_logo_2019.svg/2560px-Mapbox_logo_2019.svg.png";
     private static final String GEOJSON_URL = "https://www.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson";
     private static final String SOURCE_ID = "earthquakes";
-    private static final String IMAGE_SOURCE_ID = "imag";
+    private static final String IMAGE_SOURCE_ID = "image";
     private static final String CIRCLE_LAYER_ID = "earthquakeCircle";
     private static final String SYMBOL_LAYER_ID = "earthquakeText";
     private static final String RASTER_LAYER_ID = "raster";
-    private static final String MAG_KEY = "mag";
+    private static final Expression MAG_KEY = literal("mag");
     private static final List<String> QUERY_LIST = new ArrayList() {
         {
             add(CIRCLE_LAYER_ID);
@@ -106,7 +102,7 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
         mapView = findViewById(R.id.mapView);
         mapboxMap = mapView.getMapboxMap();
         mapboxMap.loadStyle(createStyle(), null, null);
-        GesturesPluginImplKt.addOnMapClickListener(mapboxMap, this);
+        MapPluginExtensionsDelegate.addOnMapClickListener(mapboxMap, this);
     }
 
     @Override
@@ -140,53 +136,46 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
     }
 
     private StyleContract.StyleExtension createStyle() {
-        return StyleExtension.style(Style.TRAFFIC_DAY, builder -> {
-            builder.unaryPlus(
-                    ImageSourceKt.imageSource(IMAGE_SOURCE_ID, imageBuilder -> {
-                        imageBuilder.url(IMAGE_URL).coordinates(POINT_LIST);
-                        return null;
-                    }));
-            builder.unaryPlus(
-                    GeoJsonSourceKt.geoJsonSource(SOURCE_ID, geoJsonSourceBuilder -> {
-                        geoJsonSourceBuilder.url(GEOJSON_URL).cluster(false);
-                        return null;
-                    }));
-            builder.unaryPlus(
-                    CircleLayerKt.circleLayer(CIRCLE_LAYER_ID, SOURCE_ID, circleLayerDsl -> {
-                        circleLayerDsl.circleRadius(get(MAG_KEY));
-                        circleLayerDsl.circleColor(rgb(255.0, 0.0, 0.0));
-                        circleLayerDsl.circleOpacity(0.3);
-                        circleLayerDsl.circleStrokeColor(Color.WHITE);
-                        return null;
-                    }));
-            builder.layerAtPosition(SymbolLayerKt.symbolLayer(SYMBOL_LAYER_ID, SOURCE_ID, symbolLayerDsl -> {
-                symbolLayerDsl.filter(gt(get(MAG_KEY), literal(5.0)));
-                symbolLayerDsl.textField(
-                        new Expression.FormatBuilder()
-                                .formatSection(concat(literal(MAG_KEY), Expression.toString(get(MAG_KEY))))
-                                .build());
-                symbolLayerDsl.textFont(TEXT_FONT);
-                symbolLayerDsl.textColor(Color.BLACK);
-                symbolLayerDsl.textHaloColor(Color.WHITE);
-                symbolLayerDsl.textHaloWidth(1.0);
-                symbolLayerDsl.textAnchor(TextAnchor.TOP);
-                symbolLayerDsl.textOffset(new ArrayList<Double>() {
-                    {
-                        add(0.0);
-                        add(1.0);
-                    }
-                });
-                symbolLayerDsl.textSize(10.0);
-                symbolLayerDsl.textIgnorePlacement(false);
-                symbolLayerDsl.symbolSortKey(subtract(toNumber(get(MAG_KEY))));
-                return null;
-            }), CIRCLE_LAYER_ID);
-            builder.unaryPlus(RasterLayerKt.rasterLayer(RASTER_LAYER_ID, IMAGE_SOURCE_ID, rasterLayerDsl -> {
-                rasterLayerDsl.rasterOpacity(0.8);
-                return null;
-            }));
-            return null;
-        });
+        StyleExtensionImpl.Builder builder = new StyleExtensionImpl.Builder(Style.TRAFFIC_DAY);
+
+        // Add a image source
+        builder.addSource(new ImageSource.Builder(IMAGE_URL).coordinates(POINT_LIST).build());
+        // Add the earthquake source
+        builder.addSource(new GeoJsonSource.Builder(SOURCE_ID, source -> {
+        }).url(GEOJSON_URL).cluster(false).build());
+
+        // Add circleLayer which will show the earthquake locations
+        CircleLayer circleLayer = new CircleLayer(CIRCLE_LAYER_ID, SOURCE_ID);
+        circleLayer.circleRadius(get(MAG_KEY));
+        circleLayer.circleColor(rgb(255.0, 0.0, 0.0));
+        circleLayer.circleOpacity(0.3);
+        circleLayer.circleStrokeColor(Color.WHITE);
+        builder.addLayer(circleLayer);
+
+        // Add symbolLayer show earthquakes those greater than mag 5.0
+        SymbolLayer symbolLayer = new SymbolLayer(SYMBOL_LAYER_ID, SOURCE_ID);
+        symbolLayer.filter(gt(get(MAG_KEY), literal(5.0)));
+        Expression concat = concat(MAG_KEY, Expression.toString(get(MAG_KEY)));
+        symbolLayer.textField(concat);
+        symbolLayer.textFont(TEXT_FONT);
+        symbolLayer.textColor(Color.BLACK);
+        symbolLayer.textHaloColor(Color.WHITE);
+        symbolLayer.textHaloWidth(1.0);
+        symbolLayer.textAnchor(TextAnchor.TOP);
+        symbolLayer.textOffset(new ArrayList<Double>() {{
+            add(0.0);
+            add(1.0);
+        }});
+        symbolLayer.textSize(10.0);
+        symbolLayer.textIgnorePlacement(false);
+        symbolLayer.symbolSortKey(subtract(toNumber(get(MAG_KEY))));
+        builder.addLayer(builder.layerAtPosition(symbolLayer, CIRCLE_LAYER_ID));
+
+        // Add a rasterLayer show the image
+        RasterLayer rasterLayer = new RasterLayer(RASTER_LAYER_ID, IMAGE_SOURCE_ID);
+        rasterLayer.rasterOpacity(0.8);
+        builder.addLayer(rasterLayer);
+        return builder.build();
     }
 
     @Override
