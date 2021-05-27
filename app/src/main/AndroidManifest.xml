@@ -104,6 +104,12 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
+            android:name=".examples.java.DSLStylingJavaActivity"
+            android:description="@string/description_dsl_styling"
+            android:exported="true"
+            android:label="@string/activity_dsl_styling">
+        </activity>
+        <activity
             android:name=".examples.HeatmapLayerActivity"
             android:description="@string/description_heatmap_layer"
             android:exported="true"

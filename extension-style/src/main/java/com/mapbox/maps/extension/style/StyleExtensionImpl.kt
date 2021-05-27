@@ -1,3 +1,4 @@
+@file:JvmName("StyleExtension")
 package com.mapbox.maps.extension.style
 
 import com.mapbox.maps.LayerPosition
@@ -133,6 +134,7 @@ class StyleExtensionImpl private constructor(
      *
      * @return [Pair]<[Layer], [LayerPosition]>
      */
+    @JvmOverloads
     fun layerAtPosition(
       layer: Layer,
       above: String? = null,
