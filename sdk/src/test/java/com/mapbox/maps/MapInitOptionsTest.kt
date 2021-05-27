@@ -85,7 +85,7 @@ class MapInitOptionsTest {
   fun defaultResourceOptions() {
     val mapboxMapOptions = MapInitOptions(context)
     assertEquals("token", mapboxMapOptions.resourceOptions.accessToken)
-    assertTrue(mapboxMapOptions.resourceOptions.cachePath!!.endsWith("foobar/mapbox/maps/ambient_cache.db"))
+    assertTrue(mapboxMapOptions.resourceOptions.cachePath!!.endsWith("foobar/.mapbox/maps/ambient_cache.db"))
     assertEquals(DEFAULT_CACHE_SIZE, mapboxMapOptions.resourceOptions.cacheSize)
   }
 
