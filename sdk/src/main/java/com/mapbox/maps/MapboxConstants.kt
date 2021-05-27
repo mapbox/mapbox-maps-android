@@ -12,7 +12,7 @@ const val DATABASE_NAME = "ambient_cache.db"
 /**
  * Path of the database file.
  */
-const val DATABASE_PATH = "mapbox/maps"
+const val DATABASE_PATH = ".mapbox/maps"
 
 /**
  * The default cache size, which is 50MB
