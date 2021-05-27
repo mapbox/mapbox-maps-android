@@ -5,6 +5,7 @@ import android.content.res.Resources
 import android.content.res.TypedArray
 import io.mockk.every
 import io.mockk.mockk
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -27,7 +28,11 @@ class ResourceAttributeParserTest {
     every { typedArray.getBoolean(any(), any()) } returns true
     every { typedArray.getFloat(any(), any()) } returns 99.0f
     every { typedArray.hasValue(any()) } returns true
-    ResourceOptionsManager.getDefault(context).reset(context)
+  }
+
+  @After
+  fun cleanUp() {
+    ResourceOptionsManager.destroyDefault()
   }
 
   @Test

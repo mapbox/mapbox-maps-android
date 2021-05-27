@@ -95,11 +95,9 @@ fun MapOptions.Builder.applyDefaultParams(context: Context): MapOptions.Builder 
  * Android resources. If no token found, it will throw [MapboxConfigurationException].
  *
  * @param context the context of the application.
- * @param token the default token for the builder, if not specified, the token will be fetched from Android resources. Will throw [MapboxConfigurationException] if there's no token found.
  */
 fun ResourceOptions.Builder.applyDefaultParams(
-  context: Context,
-  token: String? = null
+  context: Context
 ): ResourceOptions.Builder = also {
   // make sure that directory `/mapbox/maps` exists
   val databaseDirectoryPath = "${context.filesDir.absolutePath}/$DATABASE_PATH"
@@ -110,18 +108,10 @@ fun ResourceOptions.Builder.applyDefaultParams(
     }
   }
 
-  if (token != null) {
-    // Apply the user setting token as the default token
-    accessToken(token)
-  } else {
-    // Otherwise check in the resources
-    val tokenResId = context.resources.getIdentifier(
-      MAPBOX_ACCESS_TOKEN_RESOURCE_NAME,
-      "string",
-      context.packageName
-    )
-    // Throw exception as no token could be found as default token.
-    if (tokenResId == 0) throw MapboxConfigurationException()
+  // check in the resources
+  val tokenResId = ResourceOptionsManager.getTokenResId(context)
+  // Apply the token from resources.
+  if (tokenResId != 0) {
     accessToken(context.getString(tokenResId))
   }
 

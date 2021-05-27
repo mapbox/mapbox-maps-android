@@ -4,6 +4,7 @@ import android.content.Context
 import com.mapbox.common.TileStore
 import io.mockk.every
 import io.mockk.mockk
+import org.junit.After
 import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -30,11 +31,15 @@ class ResourceOptionsManagerTest {
     } returns -1
     every { context.packageName } returns "com.mapbox.maps"
     every { context.filesDir } returns File("foobar")
-    ResourceOptionsManager.getDefault(context).reset(context)
+  }
+
+  @After
+  fun cleanUp() {
+    ResourceOptionsManager.destroyDefault()
   }
 
   @Test(expected = MapboxConfigurationException::class)
-  fun noToken() {
+  fun getDefaultWithoutTokenInResource() {
     every {
       context.resources.getIdentifier(
         "mapbox_access_token",
@@ -42,19 +47,35 @@ class ResourceOptionsManagerTest {
         "com.mapbox.maps"
       )
     } returns 0
-    ResourceOptionsManager.getDefault(context).reset(context)
+    ResourceOptionsManager.getDefault(context)
+  }
+
+  fun getDefaultWithoutTokenInResourceWithUserToken() {
+    every {
+      context.resources.getIdentifier(
+        "mapbox_access_token",
+        "string",
+        "com.mapbox.maps"
+      )
+    } returns 0
+    var defaultResourceOptionsManager = ResourceOptionsManager.getDefault(context, "newToken")
+    assertEquals("newToken", defaultResourceOptionsManager.resourceOptions.accessToken)
   }
 
   @Test
-  fun getDefaultResourceOptionsManagerTest() {
+  fun getDefaultTest() {
     var defaultResourceOptionsManager = ResourceOptionsManager.getDefault(context)
     assertEquals("token", defaultResourceOptionsManager.resourceOptions.accessToken)
     Assert.assertTrue(defaultResourceOptionsManager.resourceOptions.cachePath!!.endsWith("/.mapbox/maps/ambient_cache.db"))
     assertEquals(DEFAULT_CACHE_SIZE, defaultResourceOptionsManager.resourceOptions.cacheSize)
+    defaultResourceOptionsManager = ResourceOptionsManager.getDefault(context)
+    assertEquals("token", defaultResourceOptionsManager.resourceOptions.accessToken)
+  }
 
-    defaultResourceOptionsManager = ResourceOptionsManager.getDefault(context, "newToken")
+  @Test
+  fun getDefaultWithUserTokenTest() {
+    var defaultResourceOptionsManager = ResourceOptionsManager.getDefault(context, "newToken")
     assertEquals("newToken", defaultResourceOptionsManager.resourceOptions.accessToken)
-
     defaultResourceOptionsManager = ResourceOptionsManager.getDefault(context)
     assertEquals("newToken", defaultResourceOptionsManager.resourceOptions.accessToken)
   }
@@ -80,14 +101,14 @@ class ResourceOptionsManagerTest {
     )
     assertEquals("baseUrl", ResourceOptionsManager.getDefault(context).resourceOptions.baseURL)
 
-    defaultResourceOptionsManager.reset(context)
+    ResourceOptionsManager.destroyDefault()
     defaultResourceOptionsManager = ResourceOptionsManager.getDefault(context)
     assertEquals("token", defaultResourceOptionsManager.resourceOptions.accessToken)
     Assert.assertTrue(defaultResourceOptionsManager.resourceOptions.cachePath!!.endsWith("/mapbox/maps/ambient_cache.db"))
     assertEquals(DEFAULT_CACHE_SIZE, defaultResourceOptionsManager.resourceOptions.cacheSize)
 
-    defaultResourceOptionsManager.reset(context, "newToken")
+    ResourceOptionsManager.destroyDefault()
     defaultResourceOptionsManager = ResourceOptionsManager.getDefault(context)
-    assertEquals("newToken", defaultResourceOptionsManager.resourceOptions.accessToken)
+    assertEquals("token", defaultResourceOptionsManager.resourceOptions.accessToken)
   }
 }

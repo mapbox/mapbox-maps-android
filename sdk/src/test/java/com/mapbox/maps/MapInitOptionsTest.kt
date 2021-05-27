@@ -41,7 +41,7 @@ class MapInitOptionsTest {
 
   @After
   fun cleanUp() {
-    ResourceOptionsManager.getDefault(context).reset(context)
+    ResourceOptionsManager.destroyDefault()
   }
 
   @Test
