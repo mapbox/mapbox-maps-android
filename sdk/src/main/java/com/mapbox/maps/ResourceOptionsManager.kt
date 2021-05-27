@@ -42,6 +42,7 @@ data class ResourceOptionsManager(
      * @param context the application context
      * @defaultToken the default token will be set to the default [ResourceOptionsManager] instance.
      * If set to null, will reuse the previously set one or search for an access token in the application resources for the first time of init.
+     * It will throw [MapboxConfigurationException] if there's no token found.
      */
     @Synchronized
     fun getDefault(context: Context, defaultToken: String? = null): ResourceOptionsManager {
