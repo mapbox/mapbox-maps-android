@@ -24,8 +24,7 @@ class MapViewCustomizationActivity : AppCompatActivity() {
 
     // Set the application-scoped ResourceOptionsManager with customised token, tile store and tile size
     // so that all MapViews created with default config will apply these settings.
-    ResourceOptionsManager.getDefault(this).update {
-      accessToken(getString(R.string.mapbox_access_token))
+    ResourceOptionsManager.getDefault(this, getString(R.string.mapbox_access_token)).update {
       tileStore(TileStore.getInstance())
       tileStoreUsageMode(TileStoreUsageMode.READ_ONLY)
       cacheSize(75_000L)
@@ -109,6 +108,6 @@ class MapViewCustomizationActivity : AppCompatActivity() {
     mapView.onDestroy()
     customMapView.onDestroy()
     // Restore the default application-scoped resource settings, otherwise it will affect other activities
-    ResourceOptionsManager.getDefault(this).reset(this)
+    ResourceOptionsManager.destroyDefault()
   }
 }

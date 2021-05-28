@@ -24,7 +24,7 @@ data class ResourceOptionsManager(
    * Static variables and methods.
    */
   companion object {
-    internal var default: ResourceOptionsManager? = null
+    private var default: ResourceOptionsManager? = null
     internal fun getTokenResId(context: Context): Int = context.resources.getIdentifier(
       MAPBOX_ACCESS_TOKEN_RESOURCE_NAME,
       "string",
@@ -34,7 +34,7 @@ data class ResourceOptionsManager(
     /**
      * Convenience function to remove the default instance. Calling `getDefault` again will re-create the default instance.
      */
-    internal fun destroyDefault() {
+    fun destroyDefault() {
       default = null
     }
 
@@ -50,6 +50,12 @@ data class ResourceOptionsManager(
     fun getDefault(context: Context, defaultToken: String? = null): ResourceOptionsManager {
       // Apply the user setting token as the default token.
       defaultToken?.let { token ->
+        default?.let {
+          // Reuse the config from previous default and only update the token
+          val builder = it.resourceOptions.toBuilder().accessToken(token)
+          return ResourceOptionsManager(builder.build()).also { default = it }
+        }
+        // Build a new ResourceOptionsManager with the provided token.
         val builder = ResourceOptions.Builder().applyDefaultParams(context).accessToken(token)
         return ResourceOptionsManager(builder.build()).also { default = it }
       }
@@ -60,14 +66,13 @@ data class ResourceOptionsManager(
       }
 
       // No defaultToken provided, search in the resources to init default instance.
-      val tokenResId = getTokenResId(context).also {
+      getTokenResId(context).also {
         // Throw exception as no token could be found as default token.
         if (it == 0) throw MapboxConfigurationException()
       }
 
       // Build a new ResourceOptions with token from the resources.
       val builder = ResourceOptions.Builder().applyDefaultParams(context)
-        .accessToken(context.getString(tokenResId))
       return ResourceOptionsManager(builder.build()).also { default = it }
     }
   }

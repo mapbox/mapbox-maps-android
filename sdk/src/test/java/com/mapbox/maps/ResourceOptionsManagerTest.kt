@@ -65,11 +65,16 @@ class ResourceOptionsManagerTest {
   @Test
   fun getDefaultTest() {
     var defaultResourceOptionsManager = ResourceOptionsManager.getDefault(context)
+    defaultResourceOptionsManager.update {
+      cacheSize(1000L)
+    }
     assertEquals("token", defaultResourceOptionsManager.resourceOptions.accessToken)
     Assert.assertTrue(defaultResourceOptionsManager.resourceOptions.cachePath!!.endsWith("/.mapbox/maps/ambient_cache.db"))
-    assertEquals(DEFAULT_CACHE_SIZE, defaultResourceOptionsManager.resourceOptions.cacheSize)
-    defaultResourceOptionsManager = ResourceOptionsManager.getDefault(context)
-    assertEquals("token", defaultResourceOptionsManager.resourceOptions.accessToken)
+    assertEquals(1000L, ResourceOptionsManager.getDefault(context).resourceOptions.cacheSize)
+
+    defaultResourceOptionsManager = ResourceOptionsManager.getDefault(context, "newToken")
+    assertEquals("newToken", defaultResourceOptionsManager.resourceOptions.accessToken)
+    assertEquals(1000L, ResourceOptionsManager.getDefault(context).resourceOptions.cacheSize)
   }
 
   @Test
@@ -104,7 +109,7 @@ class ResourceOptionsManagerTest {
     ResourceOptionsManager.destroyDefault()
     defaultResourceOptionsManager = ResourceOptionsManager.getDefault(context)
     assertEquals("token", defaultResourceOptionsManager.resourceOptions.accessToken)
-    Assert.assertTrue(defaultResourceOptionsManager.resourceOptions.cachePath!!.endsWith("/mapbox/maps/ambient_cache.db"))
+    Assert.assertTrue(defaultResourceOptionsManager.resourceOptions.cachePath!!.endsWith("/.mapbox/maps/ambient_cache.db"))
     assertEquals(DEFAULT_CACHE_SIZE, defaultResourceOptionsManager.resourceOptions.cacheSize)
 
     ResourceOptionsManager.destroyDefault()
