@@ -5,6 +5,7 @@ import android.content.res.Resources
 import android.content.res.TypedArray
 import io.mockk.every
 import io.mockk.mockk
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -29,28 +30,57 @@ class ResourceAttributeParserTest {
     every { typedArray.hasValue(any()) } returns true
   }
 
+  @After
+  fun cleanUp() {
+    ResourceOptionsManager.destroyDefault()
+  }
+
   @Test
   fun default() {
     val resourceOptions =
-      ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.default)
+      ResourcesAttributeParser.parseResourcesOptions(context, typedArray)
     assertEquals("pk.foobar", resourceOptions.accessToken)
     assertEquals(null, resourceOptions.baseURL)
     assertEquals("/foobar/.mapbox/maps/ambient_cache.db", resourceOptions.cachePath)
     assertEquals(99L, resourceOptions.cacheSize)
   }
 
-  @Test(expected = MapboxConfigurationException::class)
-  fun noAccessTokenResource() {
+  @Test
+  fun noAccessTokenResourceHasTokenFromAttr() {
     every { resources.getIdentifier("mapbox_access_token", "string", "foobar") } returns 0
-    val options =
-      ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.default)
-    assertEquals("", options.accessToken)
+    every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesAccessToken) } returns "token"
+    val options = ResourcesAttributeParser.parseResourcesOptions(context, typedArray)
+    assertEquals("token", options.accessToken)
+  }
+
+  @Test(expected = MapboxConfigurationException::class)
+  fun noAccessTokenResourceNoTokenFromAttr() {
+    every { resources.getIdentifier("mapbox_access_token", "string", "foobar") } returns 0
+    every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesAccessToken) } returns null
+    val options = ResourcesAttributeParser.parseResourcesOptions(context, typedArray)
+    assertEquals("token", options.accessToken)
+  }
+
+  @Test
+  fun hasAccessTokenResourceHasTokenFromAttr() {
+    every { resources.getIdentifier("mapbox_access_token", "string", "foobar") } returns -1
+    every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesAccessToken) } returns "token"
+    val options = ResourcesAttributeParser.parseResourcesOptions(context, typedArray)
+    assertEquals("token", options.accessToken)
+  }
+
+  @Test
+  fun hasAccessTokenResourceNoTokenFromAttr() {
+    every { resources.getIdentifier("mapbox_access_token", "string", "foobar") } returns -1
+    every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesAccessToken) } returns null
+    val options = ResourcesAttributeParser.parseResourcesOptions(context, typedArray)
+    assertEquals("pk.foobar", options.accessToken)
   }
 
   @Test
   fun cachePath() {
     val resourceOptions =
-      ResourcesAttributeParser.parseResourcesOptions(context, typedArray, CredentialsManager.default)
+      ResourcesAttributeParser.parseResourcesOptions(context, typedArray)
     assertEquals("/foobar/.mapbox/maps/ambient_cache.db", resourceOptions.cachePath)
   }
 
@@ -66,8 +96,7 @@ class ResourceAttributeParserTest {
       1234L,
       ResourcesAttributeParser.parseResourcesOptions(
         context,
-        typedArray,
-        CredentialsManager.default
+        typedArray
       ).cacheSize
     )
   }
@@ -79,8 +108,7 @@ class ResourceAttributeParserTest {
       "mapbox.be",
       ResourcesAttributeParser.parseResourcesOptions(
         context,
-        typedArray,
-        CredentialsManager.default
+        typedArray
       ).baseURL
     )
   }

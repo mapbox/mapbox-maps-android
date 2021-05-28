@@ -25,7 +25,14 @@ class MapInitOptionsTest {
 
   @Before
   fun setUp() {
-    CredentialsManager.default.setAccessToken("token")
+    every { context.getString(-1) } returns "token"
+    every {
+      context.resources.getIdentifier(
+        "mapbox_access_token",
+        "string",
+        "com.mapbox.maps"
+      )
+    } returns -1
     every { context.packageName } returns "com.mapbox.maps"
     every { context.filesDir } returns File("foobar")
     every { context.resources.displayMetrics } returns displayMetrics
@@ -34,9 +41,7 @@ class MapInitOptionsTest {
 
   @After
   fun cleanUp() {
-    ResourceOptionsManager.getDefault(context).resourceOptions =
-      ResourceOptions.Builder().applyDefaultParams(context)
-        .build()
+    ResourceOptionsManager.destroyDefault()
   }
 
   @Test
@@ -45,15 +50,16 @@ class MapInitOptionsTest {
     assertEquals(true, MapInitOptions(context, textureView = true).textureView)
   }
 
+  @Test
   fun setInvalidToken() {
-    CredentialsManager.default.setAccessToken("")
-
+    ResourceOptionsManager.getDefault(context).update { accessToken("") }
     val mapboxMapOptions = MapInitOptions(context)
     assertEquals("", mapboxMapOptions.resourceOptions.accessToken)
   }
 
   @Test
   fun setValidToken() {
+    ResourceOptionsManager.getDefault(context).update { accessToken("token") }
     val mapboxMapOptions = MapInitOptions(context)
     assertEquals("token", mapboxMapOptions.resourceOptions.accessToken)
   }

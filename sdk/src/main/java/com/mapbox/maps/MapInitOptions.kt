@@ -38,7 +38,7 @@ data class MapInitOptions constructor(
    */
   companion object {
     /**
-     * Get a default [ResourceOptions] with token from default [CredentialsManager]
+     * Get a default [ResourceOptions] instance.
      * @property context the context of the application.
      */
     fun getDefaultResourceOptions(context: Context): ResourceOptions =
@@ -91,10 +91,14 @@ fun MapOptions.Builder.applyDefaultParams(context: Context): MapOptions.Builder 
 }
 
 /**
- * Get a default [ResourceOptions.Builder] with token from default [CredentialsManager]
- * @property context the context of the application.
+ * Get a default [ResourceOptions.Builder] with Mapbox pre-defined options, and
+ * with the access token taken from the Android resources(if available).
+ *
+ * @param context the context of the application.
  */
-fun ResourceOptions.Builder.applyDefaultParams(context: Context): ResourceOptions.Builder = also {
+fun ResourceOptions.Builder.applyDefaultParams(
+  context: Context
+): ResourceOptions.Builder = also {
   // make sure that directory `/mapbox/maps` exists
   val databaseDirectoryPath = "${context.filesDir.absolutePath}/$DATABASE_PATH"
   val databaseDirectory = File(databaseDirectoryPath)
@@ -104,7 +108,13 @@ fun ResourceOptions.Builder.applyDefaultParams(context: Context): ResourceOption
     }
   }
 
-  accessToken(CredentialsManager.default.getAccessToken(context))
+  // check in the resources
+  val tokenResId = ResourceOptionsManager.getTokenResId(context)
+  // Apply the token from resources.
+  if (tokenResId != 0) {
+    accessToken(context.getString(tokenResId))
+  }
+
   cachePath("$databaseDirectoryPath/$DATABASE_NAME")
   cacheSize(DEFAULT_CACHE_SIZE) // 50 mb
 }

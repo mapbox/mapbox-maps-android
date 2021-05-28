@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.view.MotionEvent
 import com.mapbox.common.ShadowLogger
@@ -16,6 +17,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import java.io.File
 
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowLogger::class])
@@ -41,13 +43,23 @@ class MapControllerTest {
 
   private lateinit var mapController: MapController
 
+  private val context: Context = mockk(relaxUnitFun = true)
+
   @Before
   fun setUp() {
     mockkStatic(MapboxMapStaticInitializer::class)
     every { MapboxMapStaticInitializer.loadMapboxMapNativeLib() } just Runs
-
-    CredentialsManager.default.setAccessToken("foobar")
-
+    every { context.getString(-1) } returns "token"
+    every {
+      context.resources.getIdentifier(
+        "mapbox_access_token",
+        "string",
+        "com.mapbox.maps"
+      )
+    } returns -1
+    every { context.packageName } returns "com.mapbox.maps"
+    every { context.filesDir } returns File("foobar")
+    ResourceOptionsManager.getDefault(context).update { accessToken("foobar") }
     mapView = mockk(relaxUnitFun = true)
     val token = "pk.123"
     val resourceOptions = mockk<ResourceOptions>()

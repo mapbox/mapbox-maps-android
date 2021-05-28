@@ -54,7 +54,7 @@ class MapViewTest {
     mockkObject(CameraAttributeParser)
     every { context.resources } returns resources
     every { resources.displayMetrics } returns displayMetrics
-    every { ResourcesAttributeParser.parseResourcesOptions(any(), any(), any()) } returns mockk()
+    every { ResourcesAttributeParser.parseResourcesOptions(any(), any()) } returns mockk()
     every { MapAttributeParser.parseMapOptions(any(), any()) } returns mockk()
     every { CameraAttributeParser.parseCameraOptions(any()) } returns mockk()
     every { typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapSurface, 0) } returns 1
