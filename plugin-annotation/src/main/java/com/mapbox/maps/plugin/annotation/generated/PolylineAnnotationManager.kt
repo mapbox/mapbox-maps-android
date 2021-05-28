@@ -70,7 +70,16 @@ class PolylineAnnotationManager(
    * PolylineAnnotations are going to be created only for features with a matching geometry.
    *
    * All supported properties are:
-   * PolylineAnnotationOptions.PROPERTY_LINE_JOIN - LineJoin   * PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY - Double   * PolylineAnnotationOptions.PROPERTY_LINE_BLUR - Double   * PolylineAnnotationOptions.PROPERTY_LINE_COLOR - String   * PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH - Double   * PolylineAnnotationOptions.PROPERTY_LINE_OFFSET - Double   * PolylineAnnotationOptions.PROPERTY_LINE_OPACITY - Double   * PolylineAnnotationOptions.PROPERTY_LINE_PATTERN - String   * PolylineAnnotationOptions.PROPERTY_LINE_WIDTH - Double   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
+   * PolylineAnnotationOptions.PROPERTY_LINE_JOIN - LineJoin
+   * PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY - Double
+   * PolylineAnnotationOptions.PROPERTY_LINE_BLUR - Double
+   * PolylineAnnotationOptions.PROPERTY_LINE_COLOR - String
+   * PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH - Double
+   * PolylineAnnotationOptions.PROPERTY_LINE_OFFSET - Double
+   * PolylineAnnotationOptions.PROPERTY_LINE_OPACITY - Double
+   * PolylineAnnotationOptions.PROPERTY_LINE_PATTERN - String
+   * PolylineAnnotationOptions.PROPERTY_LINE_WIDTH - Double
+   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    *
    * Out of spec properties:
    * "is-draggable" - Boolean, true if the polylineAnnotation should be draggable, false otherwise
@@ -88,7 +97,16 @@ class PolylineAnnotationManager(
    * PolylineAnnotations are going to be created only for features with a matching geometry.
    *
    * All supported properties are:
-   * PolylineAnnotationOptions.PROPERTY_LINE_JOIN - LineJoin   * PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY - Double   * PolylineAnnotationOptions.PROPERTY_LINE_BLUR - Double   * PolylineAnnotationOptions.PROPERTY_LINE_COLOR - String   * PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH - Double   * PolylineAnnotationOptions.PROPERTY_LINE_OFFSET - Double   * PolylineAnnotationOptions.PROPERTY_LINE_OPACITY - Double   * PolylineAnnotationOptions.PROPERTY_LINE_PATTERN - String   * PolylineAnnotationOptions.PROPERTY_LINE_WIDTH - Double   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
+   * PolylineAnnotationOptions.PROPERTY_LINE_JOIN - LineJoin
+   * PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY - Double
+   * PolylineAnnotationOptions.PROPERTY_LINE_BLUR - Double
+   * PolylineAnnotationOptions.PROPERTY_LINE_COLOR - String
+   * PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH - Double
+   * PolylineAnnotationOptions.PROPERTY_LINE_OFFSET - Double
+   * PolylineAnnotationOptions.PROPERTY_LINE_OPACITY - Double
+   * PolylineAnnotationOptions.PROPERTY_LINE_PATTERN - String
+   * PolylineAnnotationOptions.PROPERTY_LINE_WIDTH - Double
+   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    *
    * Out of spec properties:
    * "is-draggable" - Boolean, true if the polylineAnnotation should be draggable, false otherwise

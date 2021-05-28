@@ -62,7 +62,12 @@ class PolygonAnnotationManager(
    * PolygonAnnotations are going to be created only for features with a matching geometry.
    *
    * All supported properties are:
-   * PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY - Double   * PolygonAnnotationOptions.PROPERTY_FILL_COLOR - String   * PolygonAnnotationOptions.PROPERTY_FILL_OPACITY - Double   * PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR - String   * PolygonAnnotationOptions.PROPERTY_FILL_PATTERN - String   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
+   * PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY - Double
+   * PolygonAnnotationOptions.PROPERTY_FILL_COLOR - String
+   * PolygonAnnotationOptions.PROPERTY_FILL_OPACITY - Double
+   * PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR - String
+   * PolygonAnnotationOptions.PROPERTY_FILL_PATTERN - String
+   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    *
    * Out of spec properties:
    * "is-draggable" - Boolean, true if the polygonAnnotation should be draggable, false otherwise
@@ -80,7 +85,12 @@ class PolygonAnnotationManager(
    * PolygonAnnotations are going to be created only for features with a matching geometry.
    *
    * All supported properties are:
-   * PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY - Double   * PolygonAnnotationOptions.PROPERTY_FILL_COLOR - String   * PolygonAnnotationOptions.PROPERTY_FILL_OPACITY - Double   * PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR - String   * PolygonAnnotationOptions.PROPERTY_FILL_PATTERN - String   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
+   * PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY - Double
+   * PolygonAnnotationOptions.PROPERTY_FILL_COLOR - String
+   * PolygonAnnotationOptions.PROPERTY_FILL_OPACITY - Double
+   * PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR - String
+   * PolygonAnnotationOptions.PROPERTY_FILL_PATTERN - String
+   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    *
    * Out of spec properties:
    * "is-draggable" - Boolean, true if the polygonAnnotation should be draggable, false otherwise

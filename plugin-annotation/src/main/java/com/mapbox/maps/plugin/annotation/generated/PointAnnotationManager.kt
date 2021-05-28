@@ -109,7 +109,33 @@ class PointAnnotationManager(
    * PointAnnotations are going to be created only for features with a matching geometry.
    *
    * All supported properties are:
-   * PointAnnotationOptions.PROPERTY_ICON_ANCHOR - IconAnchor   * PointAnnotationOptions.PROPERTY_ICON_IMAGE - String   * PointAnnotationOptions.PROPERTY_ICON_OFFSET - List<Double>   * PointAnnotationOptions.PROPERTY_ICON_ROTATE - Double   * PointAnnotationOptions.PROPERTY_ICON_SIZE - Double   * PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY - Double   * PointAnnotationOptions.PROPERTY_TEXT_ANCHOR - TextAnchor   * PointAnnotationOptions.PROPERTY_TEXT_FIELD - String   * PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY - TextJustify   * PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING - Double   * PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH - Double   * PointAnnotationOptions.PROPERTY_TEXT_OFFSET - List<Double>   * PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET - Double   * PointAnnotationOptions.PROPERTY_TEXT_ROTATE - Double   * PointAnnotationOptions.PROPERTY_TEXT_SIZE - Double   * PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM - TextTransform   * PointAnnotationOptions.PROPERTY_ICON_COLOR - String   * PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR - Double   * PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR - String   * PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH - Double   * PointAnnotationOptions.PROPERTY_ICON_OPACITY - Double   * PointAnnotationOptions.PROPERTY_TEXT_COLOR - String   * PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR - Double   * PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR - String   * PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH - Double   * PointAnnotationOptions.PROPERTY_TEXT_OPACITY - Double   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
+   * PointAnnotationOptions.PROPERTY_ICON_ANCHOR - IconAnchor
+   * PointAnnotationOptions.PROPERTY_ICON_IMAGE - String
+   * PointAnnotationOptions.PROPERTY_ICON_OFFSET - List<Double>
+   * PointAnnotationOptions.PROPERTY_ICON_ROTATE - Double
+   * PointAnnotationOptions.PROPERTY_ICON_SIZE - Double
+   * PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY - Double
+   * PointAnnotationOptions.PROPERTY_TEXT_ANCHOR - TextAnchor
+   * PointAnnotationOptions.PROPERTY_TEXT_FIELD - String
+   * PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY - TextJustify
+   * PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING - Double
+   * PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH - Double
+   * PointAnnotationOptions.PROPERTY_TEXT_OFFSET - List<Double>
+   * PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET - Double
+   * PointAnnotationOptions.PROPERTY_TEXT_ROTATE - Double
+   * PointAnnotationOptions.PROPERTY_TEXT_SIZE - Double
+   * PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM - TextTransform
+   * PointAnnotationOptions.PROPERTY_ICON_COLOR - String
+   * PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR - Double
+   * PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR - String
+   * PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH - Double
+   * PointAnnotationOptions.PROPERTY_ICON_OPACITY - Double
+   * PointAnnotationOptions.PROPERTY_TEXT_COLOR - String
+   * PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR - Double
+   * PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR - String
+   * PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH - Double
+   * PointAnnotationOptions.PROPERTY_TEXT_OPACITY - Double
+   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    *
    * Out of spec properties:
    * "is-draggable" - Boolean, true if the pointAnnotation should be draggable, false otherwise
@@ -127,7 +153,33 @@ class PointAnnotationManager(
    * PointAnnotations are going to be created only for features with a matching geometry.
    *
    * All supported properties are:
-   * PointAnnotationOptions.PROPERTY_ICON_ANCHOR - IconAnchor   * PointAnnotationOptions.PROPERTY_ICON_IMAGE - String   * PointAnnotationOptions.PROPERTY_ICON_OFFSET - List<Double>   * PointAnnotationOptions.PROPERTY_ICON_ROTATE - Double   * PointAnnotationOptions.PROPERTY_ICON_SIZE - Double   * PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY - Double   * PointAnnotationOptions.PROPERTY_TEXT_ANCHOR - TextAnchor   * PointAnnotationOptions.PROPERTY_TEXT_FIELD - String   * PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY - TextJustify   * PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING - Double   * PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH - Double   * PointAnnotationOptions.PROPERTY_TEXT_OFFSET - List<Double>   * PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET - Double   * PointAnnotationOptions.PROPERTY_TEXT_ROTATE - Double   * PointAnnotationOptions.PROPERTY_TEXT_SIZE - Double   * PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM - TextTransform   * PointAnnotationOptions.PROPERTY_ICON_COLOR - String   * PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR - Double   * PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR - String   * PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH - Double   * PointAnnotationOptions.PROPERTY_ICON_OPACITY - Double   * PointAnnotationOptions.PROPERTY_TEXT_COLOR - String   * PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR - Double   * PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR - String   * PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH - Double   * PointAnnotationOptions.PROPERTY_TEXT_OPACITY - Double   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
+   * PointAnnotationOptions.PROPERTY_ICON_ANCHOR - IconAnchor
+   * PointAnnotationOptions.PROPERTY_ICON_IMAGE - String
+   * PointAnnotationOptions.PROPERTY_ICON_OFFSET - List<Double>
+   * PointAnnotationOptions.PROPERTY_ICON_ROTATE - Double
+   * PointAnnotationOptions.PROPERTY_ICON_SIZE - Double
+   * PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY - Double
+   * PointAnnotationOptions.PROPERTY_TEXT_ANCHOR - TextAnchor
+   * PointAnnotationOptions.PROPERTY_TEXT_FIELD - String
+   * PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY - TextJustify
+   * PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING - Double
+   * PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH - Double
+   * PointAnnotationOptions.PROPERTY_TEXT_OFFSET - List<Double>
+   * PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET - Double
+   * PointAnnotationOptions.PROPERTY_TEXT_ROTATE - Double
+   * PointAnnotationOptions.PROPERTY_TEXT_SIZE - Double
+   * PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM - TextTransform
+   * PointAnnotationOptions.PROPERTY_ICON_COLOR - String
+   * PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR - Double
+   * PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR - String
+   * PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH - Double
+   * PointAnnotationOptions.PROPERTY_ICON_OPACITY - Double
+   * PointAnnotationOptions.PROPERTY_TEXT_COLOR - String
+   * PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR - Double
+   * PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR - String
+   * PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH - Double
+   * PointAnnotationOptions.PROPERTY_TEXT_OPACITY - Double
+   * Learn more about above properties in the )[The online documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/).
    *
    * Out of spec properties:
    * "is-draggable" - Boolean, true if the pointAnnotation should be draggable, false otherwise
