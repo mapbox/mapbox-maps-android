@@ -47,7 +47,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
           }
         }
       }
-    }
+    } ?: run { geoJsonParsed = true }
   }
 
   /**
