@@ -13,8 +13,6 @@ import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.Annotation
 import com.mapbox.maps.plugin.annotation.AnnotationManager
 import com.mapbox.maps.plugin.annotation.AnnotationType
-import com.mapbox.maps.plugin.annotation.ConvertUtils.convertStringArray
-import com.mapbox.maps.plugin.annotation.ConvertUtils.toStringArray
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 
 /**
@@ -317,34 +315,6 @@ class PointAnnotation(
       value?.let {
         jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_FIELD, it)
       }
-    }
-
-  /**
-   * The textFont property
-   * Font stack to use for displaying text.
-   */
-  var textFont: List<String>?
-    /**
-     * Get the textFont property
-     *
-     * @return property wrapper value around List<String>
-     */
-    get() {
-      val value = jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_FONT)
-      value?.let {
-        return toStringArray(it as JsonArray)
-      }
-      return null
-    }
-    /**
-     * Set the textFont property.
-     * To update the pointAnnotation on the map use {@link pointAnnotationManager#update(Annotation)}.
-     *
-     * @param value constant property value for List<String>
-     */
-    set(value) {
-      val jsonArray = convertStringArray(value)
-      jsonObject.add(PointAnnotationOptions.PROPERTY_TEXT_FONT, jsonArray)
     }
 
   /**
@@ -1068,9 +1038,6 @@ class PointAnnotation(
     }
     jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_FIELD)?.let {
       annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_FIELD)
-    }
-    jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_FONT)?.let {
-      annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_FONT)
     }
     jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY)?.let {
       annotationManager.enableDataDrivenProperty(PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY)

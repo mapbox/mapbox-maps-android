@@ -138,6 +138,14 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testTextFont() {
+    val testValue = listOf("a", "b", "c")
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    pointAnnotationManager.textFont = testValue
+    assertEquals(testValue, pointAnnotationManager.textFont)
+  }
+
+  @Test
   fun testTextIgnorePlacement() {
     val testValue = true
     val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)

@@ -50,6 +50,8 @@ class UpdateAnnotationTest : BaseMapTest(), OnMapLoadedListener {
       it.runOnUiThread {
         mapboxMap.loadStyleUri(AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]) {
           pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+          pointAnnotationManager.textFont = listOf("Open Sans Regular")
+
           pointAnnotation = pointAnnotationManager.create(
             PointAnnotationOptions()
               .withIconColor(ColorUtils.colorToRgbaString(Color.RED))
@@ -79,7 +81,6 @@ class UpdateAnnotationTest : BaseMapTest(), OnMapLoadedListener {
               .withTextOpacity(0.8)
               .withTextOffset(listOf(1.0, 2.0))
               .withTextMaxWidth(10.0)
-              .withTextFont(listOf("Open Sans Regular"))
               .withPoint(Point.fromLngLat(0.0, 0.0))
           )
           Assert.assertEquals(pointAnnotation, pointAnnotationManager.annotations[0])
