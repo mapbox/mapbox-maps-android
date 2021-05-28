@@ -5,6 +5,9 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.geojson.Point
+import com.mapbox.maps.extension.style.layers.generated.circleLayer
+import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
+import com.mapbox.maps.extension.style.style
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -49,6 +52,35 @@ class MapIntegrationTest {
             .build()
         )
         countDownLatch.countDown()
+      }
+    }
+    if (!countDownLatch.await(5, TimeUnit.SECONDS)) {
+      throw TimeoutException()
+    }
+  }
+
+  @Test
+  fun testApplyDataToGeoJson() {
+    countDownLatch = CountDownLatch(1)
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        mapView = MapView(it)
+        mapboxMap = mapView.getMapboxMap()
+        it.frameLayout.addView(mapView)
+        mapboxMap.loadStyle(
+          style(Style.MAPBOX_STREETS) {
+            +geoJsonSource("source") {
+              data("")
+            }
+            +circleLayer("layer", "source") {
+              circleColor("red")
+              circleRadius(1.0)
+            }
+          }
+        ) {
+          countDownLatch.countDown()
+        }
+        mapView.onStart()
       }
     }
     if (!countDownLatch.await(5, TimeUnit.SECONDS)) {
