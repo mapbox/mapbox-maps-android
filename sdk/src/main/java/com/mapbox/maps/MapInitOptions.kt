@@ -92,7 +92,7 @@ fun MapOptions.Builder.applyDefaultParams(context: Context): MapOptions.Builder 
 
 /**
  * Get a default [ResourceOptions.Builder] with Mapbox pre-defined options, and
- * with the access token taken from the Android resources.
+ * with the access token taken from the Android resources(if available).
  *
  * @param context the context of the application.
  */
