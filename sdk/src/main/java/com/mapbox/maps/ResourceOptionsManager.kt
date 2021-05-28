@@ -52,8 +52,8 @@ data class ResourceOptionsManager(
       defaultToken?.let { token ->
         default?.let {
           // Reuse the config from previous default and only update the token
-          val builder = it.resourceOptions.toBuilder().accessToken(token)
-          return ResourceOptionsManager(builder.build()).also { default = it }
+          it.update { accessToken(token) }
+          return it
         }
         // Build a new ResourceOptionsManager with the provided token.
         val builder = ResourceOptions.Builder().applyDefaultParams(context).accessToken(token)
