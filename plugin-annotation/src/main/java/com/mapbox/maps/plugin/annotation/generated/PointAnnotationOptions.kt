@@ -16,9 +16,7 @@ import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.AnnotationManager
 import com.mapbox.maps.plugin.annotation.AnnotationOptions
 import com.mapbox.maps.plugin.annotation.ConvertUtils.convertDoubleArray
-import com.mapbox.maps.plugin.annotation.ConvertUtils.convertStringArray
 import com.mapbox.maps.plugin.annotation.ConvertUtils.toDoubleArray
-import com.mapbox.maps.plugin.annotation.ConvertUtils.toStringArray
 
 /**
  * Builder class from which a pointAnnotation is created.
@@ -183,24 +181,6 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
    */
   fun withTextField(textField: String): PointAnnotationOptions {
     this.textField = textField
-    return this
-  }
-
-  /**
-   * Font stack to use for displaying text.
-   */
-  var textFont: List<String>? = null
-
-  /**
-   * Set text-font to initialise the pointAnnotation with.
-   *
-   * Font stack to use for displaying text.
-   *
-   * @param textFont the text-font value
-   * @return this
-   */
-  fun withTextFont(textFont: List<String>): PointAnnotationOptions {
-    this.textFont = textFont
     return this
   }
 
@@ -699,9 +679,6 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
     textField?.let {
       jsonObject.addProperty(PROPERTY_TEXT_FIELD, it)
     }
-    textFont?.let {
-      jsonObject.add(PROPERTY_TEXT_FONT, convertStringArray(it))
-    }
     textJustify?.let {
       jsonObject.addProperty(PROPERTY_TEXT_JUSTIFY, it.value)
     }
@@ -793,9 +770,6 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
 
     /** The property for text-field */
     const val PROPERTY_TEXT_FIELD = "text-field"
-
-    /** The property for text-font */
-    const val PROPERTY_TEXT_FONT = "text-font"
 
     /** The property for text-justify */
     const val PROPERTY_TEXT_JUSTIFY = "text-justify"
@@ -893,9 +867,6 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
       }
       if (feature.hasProperty(PROPERTY_TEXT_FIELD)) {
         options.textField = feature.getProperty(PROPERTY_TEXT_FIELD).asString
-      }
-      if (feature.hasProperty(PROPERTY_TEXT_FONT)) {
-        options.textFont = toStringArray(feature.getProperty(PROPERTY_TEXT_FONT).asJsonArray)
       }
       if (feature.hasProperty(PROPERTY_TEXT_JUSTIFY)) {
         options.textJustify = TextJustify.valueOf(feature.getProperty(PROPERTY_TEXT_JUSTIFY).asString)

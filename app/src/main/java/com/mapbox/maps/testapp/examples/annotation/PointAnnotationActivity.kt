@@ -48,6 +48,8 @@ class PointAnnotationActivity : AppCompatActivity() {
     mapView.getMapboxMap().loadStyleUri(nextStyle) {
       annotationPlugin = mapView.annotations
       symbolManager = annotationPlugin.createPointAnnotationManager(mapView).apply {
+        textFont = listOf("Arial Unicode MS Bold", "Open Sans Regular")
+
         addClickListener(
           OnPointAnnotationClickListener {
             Toast.makeText(this@PointAnnotationActivity, "Click: ${it.id}", Toast.LENGTH_SHORT)
@@ -90,12 +92,6 @@ class PointAnnotationActivity : AppCompatActivity() {
           val pointAnnotationOptions: PointAnnotationOptions = PointAnnotationOptions()
             .withPoint(Point.fromLngLat(AIRPORT_LONGITUDE, AIRPORT_LATITUDE))
             .withIconImage(it)
-            .withTextFont(
-              listOf(
-                "Arial Unicode MS Bold",
-                "Open Sans Regular"
-              )
-            )
             .withTextField(ID_ICON_AIRPORT)
             .withTextOffset(listOf(0.0, -2.0))
             .withTextColor(Color.RED)

@@ -131,7 +131,6 @@ class PointAnnotationManagerTest {
     every { layer.symbolSortKey(any<Expression>()) } answers { layer }
     every { layer.textAnchor(any<Expression>()) } answers { layer }
     every { layer.textField(any<Expression>()) } answers { layer }
-    every { layer.textFont(any<Expression>()) } answers { layer }
     every { layer.textJustify(any<Expression>()) } answers { layer }
     every { layer.textLetterSpacing(any<Expression>()) } answers { layer }
     every { layer.textMaxWidth(any<Expression>()) } answers { layer }
@@ -584,19 +583,6 @@ class PointAnnotationManagerTest {
     verify(exactly = 1) { manager.layer?.textField(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_FIELD)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textField(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_FIELD)) }
-  }
-
-  @Test
-  fun testTextFontLayerProperty() {
-    every { style.styleSourceExists(any()) } returns true
-    verify(exactly = 0) { manager.layer?.textFont(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_FONT)) }
-    val options = PointAnnotationOptions()
-      .withPoint(Point.fromLngLat(0.0, 0.0))
-      .withTextFont(listOf("Open Sans Regular", "Arial Unicode MS Regular"))
-    manager.create(options)
-    verify(exactly = 1) { manager.layer?.textFont(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_FONT)) }
-    manager.create(options)
-    verify(exactly = 1) { manager.layer?.textFont(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_FONT)) }
   }
 
   @Test
