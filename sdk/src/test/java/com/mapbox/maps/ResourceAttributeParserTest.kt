@@ -54,7 +54,7 @@ class ResourceAttributeParserTest {
   }
 
   @Test(expected = MapboxConfigurationException::class)
-  fun noAccessTokenResourceNosTokenFromAttr() {
+  fun noAccessTokenResourceNoTokenFromAttr() {
     every { resources.getIdentifier("mapbox_access_token", "string", "foobar") } returns 0
     every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesAccessToken) } returns null
     val options = ResourcesAttributeParser.parseResourcesOptions(context, typedArray)
