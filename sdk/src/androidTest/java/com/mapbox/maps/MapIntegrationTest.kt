@@ -93,6 +93,80 @@ class MapIntegrationTest {
   }
 
   @Test
+  fun testApplyDataWithFeatureGeojsonBuilder() {
+    countDownLatch = CountDownLatch(1)
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        mapView = MapView(it)
+        mapboxMap = mapView.getMapboxMap()
+        it.frameLayout.addView(mapView)
+        mapboxMap.setCamera(
+          CameraOptions.Builder()
+            .center(Point.fromLngLat(0.1, 0.1))
+            .zoom(9.0)
+            .build()
+        )
+        mapboxMap.loadStyle(
+          style(Style.MAPBOX_STREETS) {
+            // prepare layer
+            +circleLayer("layer", "source") {
+              circleColor("red")
+              circleRadius(10.0)
+            }
+            // async loading
+            +geoJsonSource("source") {
+              // set geometry
+              geometry(Point.fromLngLat(0.0, 0.0))
+              // and then set data - data must overwrite geometry despite geometry being async
+              data(
+                """
+            {
+              "type": "FeatureCollection",
+              "features": [
+                {
+                  "type": "Feature",
+                  "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                      0.1,
+                      0.1
+                    ]
+                  },
+                  "properties": {
+                    "icon-image": "cafe-15",
+                    "is-draggable": true
+                  }
+                }
+              ]
+            }
+                """.trimIndent()
+              )
+            }
+          }
+        ) {
+          mapView.postDelayed(
+            {
+              mapboxMap.queryRenderedFeatures(
+                ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0),
+                RenderedQueryOptions(listOf("layer"), null)
+              ) { result ->
+                if (result.value?.size == 1) {
+                  countDownLatch.countDown()
+                }
+              }
+            },
+            1_000L
+          )
+        }
+        mapView.onStart()
+      }
+    }
+    if (!countDownLatch.await(5, TimeUnit.SECONDS)) {
+      throw TimeoutException()
+    }
+  }
+
+  @Test
   fun testApplySyncDataToGeoJson1() {
     countDownLatch = CountDownLatch(1)
     rule.scenario.onActivity {
