@@ -29,6 +29,7 @@ import com.mapbox.maps.extension.style.utils.toValue
 class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   private var geoJsonParsed = false
   private val onGeoJsonParsedListenerList = mutableListOf<OnGeoJsonParsed>()
+  private var ignoreParsedGeoJson = false
 
   private constructor(
     builder: Builder,
@@ -42,7 +43,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
         mainHandler.post {
           geoJsonParsed = true
           // we set parsed data when sync setter was not called during background work
-          if (!taskCancelled) {
+          if (!ignoreParsedGeoJson) {
             setProperty(property, throwRuntimeException = false)
             onGeoJsonParsedListenerList.forEach {
               it.onGeoJsonParsed(this)
@@ -90,7 +91,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * A URL to a GeoJSON file, or inline GeoJSON.
    */
   fun data(value: String) = apply {
-    taskCancelled = true
+    ignoreParsedGeoJson = true
     workerHandler.removeCallbacksAndMessages(null)
     setProperty(PropertyValue("data", TypeUtils.wrapToValue(value)))
   }
@@ -99,7 +100,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * A URL to a GeoJSON file, or inline GeoJSON.
    */
   fun data(value: Expression) = apply {
-    taskCancelled = true
+    ignoreParsedGeoJson = true
     workerHandler.removeCallbacksAndMessages(null)
     setProperty(PropertyValue("data", value))
   }
@@ -574,14 +575,14 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     onDataParsed: ((GeoJsonSource) -> Unit)?
   ): GeoJsonSource = apply {
     onDataParsed?.let { listener ->
-      taskCancelled = false
+      ignoreParsedGeoJson = false
       // remove any events from queue before posting this task
       workerHandler.removeCallbacksAndMessages(null)
       workerHandler.post {
         val property = data.toPropertyValue()
         mainHandler.post {
           // we set parsed data when sync setter was not called during background work
-          if (!taskCancelled) {
+          if (!ignoreParsedGeoJson) {
             setProperty(property, throwRuntimeException = false)
             listener.invoke(this)
           }
@@ -589,7 +590,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
       }
     } ?: run {
       // if any task is running - set flag to skip it when it is finished
-      taskCancelled = true
+      ignoreParsedGeoJson = true
       // remove any events from queue - they should not overwrite data set synchronously
       workerHandler.removeCallbacksAndMessages(null)
       setProperty(data.toPropertyValue())
@@ -968,7 +969,6 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
       Handler(workerThread.looper)
     }
     private val mainHandler = Handler(Looper.getMainLooper())
-    private var taskCancelled = false
 
     /**
      * Maximum zoom level at which to create vector tiles (higher means greater detail at high zoom
