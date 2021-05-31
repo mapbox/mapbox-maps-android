@@ -40,10 +40,13 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
       workerHandler.post {
         val property = it.toPropertyValue()
         mainHandler.post {
-          setProperty(property, throwRuntimeException = false)
           geoJsonParsed = true
-          onGeoJsonParsedListenerList.forEach {
-            it.onGeoJsonParsed(this)
+          // we set parsed data when sync setter was not called during background work
+          if (!taskCancelled) {
+            setProperty(property, throwRuntimeException = false)
+            onGeoJsonParsedListenerList.forEach {
+              it.onGeoJsonParsed(this)
+            }
           }
         }
       }
@@ -87,6 +90,8 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * A URL to a GeoJSON file, or inline GeoJSON.
    */
   fun data(value: String) = apply {
+    taskCancelled = true
+    workerHandler.removeCallbacksAndMessages(null)
     setProperty(PropertyValue("data", TypeUtils.wrapToValue(value)))
   }
 
@@ -94,6 +99,8 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * A URL to a GeoJSON file, or inline GeoJSON.
    */
   fun data(value: Expression) = apply {
+    taskCancelled = true
+    workerHandler.removeCallbacksAndMessages(null)
     setProperty(PropertyValue("data", value))
   }
 
@@ -567,14 +574,26 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     onDataParsed: ((GeoJsonSource) -> Unit)?
   ): GeoJsonSource = apply {
     onDataParsed?.let { listener ->
+      taskCancelled = false
+      // remove any events from queue before posting this task
+      workerHandler.removeCallbacksAndMessages(null)
       workerHandler.post {
         val property = data.toPropertyValue()
         mainHandler.post {
-          setProperty(property, throwRuntimeException = false)
-          listener.invoke(this)
+          // we set parsed data when sync setter was not called during background work
+          if (!taskCancelled) {
+            setProperty(property, throwRuntimeException = false)
+            listener.invoke(this)
+          }
         }
       }
-    } ?: setProperty(data.toPropertyValue())
+    } ?: run {
+      // if any task is running - set flag to skip it when it is finished
+      taskCancelled = true
+      // remove any events from queue - they should not overwrite data set synchronously
+      workerHandler.removeCallbacksAndMessages(null)
+      setProperty(data.toPropertyValue())
+    }
   }
 
   /**
@@ -598,6 +617,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * A URL to a GeoJSON file, or inline GeoJSON.
      */
     fun data(value: String) = apply {
+      rawGeoJson = null
       val propertyValue = PropertyValue("data", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
@@ -606,6 +626,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * A URL to a GeoJSON file, or inline GeoJSON.
      */
     fun data(value: Expression) = apply {
+      rawGeoJson = null
       val propertyValue = PropertyValue("data", value)
       properties[propertyValue.propertyName] = propertyValue
     }
@@ -947,6 +968,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
       Handler(workerThread.looper)
     }
     private val mainHandler = Handler(Looper.getMainLooper())
+    private var taskCancelled = false
 
     /**
      * Maximum zoom level at which to create vector tiles (higher means greater detail at high zoom
