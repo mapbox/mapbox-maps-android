@@ -29,6 +29,7 @@ import com.mapbox.maps.extension.style.utils.toValue
 class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   private var geoJsonParsed = false
   private val onGeoJsonParsedListenerList = mutableListOf<OnGeoJsonParsed>()
+  private var ignoreParsedGeoJson = false
 
   private constructor(
     builder: Builder,
@@ -40,10 +41,13 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
       workerHandler.post {
         val property = it.toPropertyValue()
         mainHandler.post {
-          setProperty(property, throwRuntimeException = false)
           geoJsonParsed = true
-          onGeoJsonParsedListenerList.forEach {
-            it.onGeoJsonParsed(this)
+          // we set parsed data when sync setter was not called during background work
+          if (!ignoreParsedGeoJson) {
+            setProperty(property, throwRuntimeException = false)
+            onGeoJsonParsedListenerList.forEach {
+              it.onGeoJsonParsed(this)
+            }
           }
         }
       }
@@ -85,15 +89,25 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
 
   /**
    * A URL to a GeoJSON file, or inline GeoJSON.
+   *
+   * If method is called while another asynchronous method is parsing data - asynchronous method will not
+   * apply when data is parsed.
    */
   fun data(value: String) = apply {
+    ignoreParsedGeoJson = true
+    workerHandler.removeCallbacksAndMessages(null)
     setProperty(PropertyValue("data", TypeUtils.wrapToValue(value)))
   }
 
   /**
    * A URL to a GeoJSON file, or inline GeoJSON.
+   *
+   * If method is called while another asynchronous method is parsing data - asynchronous method will not
+   * apply when data is parsed.
    */
   fun data(value: Expression) = apply {
+    ignoreParsedGeoJson = true
+    workerHandler.removeCallbacksAndMessages(null)
     setProperty(PropertyValue("data", value))
   }
 
@@ -518,6 +532,9 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * If [onDataParsed] is provided and not null - data will be loaded in async mode.
    * Otherwise method will be synchronous.
    *
+   * If synchronous method is called while another asynchronous method is parsing data -
+   * asynchronous method will not apply when data is parsed.
+   *
    * @param value the feature collection
    * @param onDataParsed optional callback notifying when data is parsed on a worker thread
    */
@@ -531,6 +548,9 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * If [onDataParsed] is provided and not null - data will be loaded in async mode.
    * Otherwise method will be synchronous.
    *
+   * If synchronous method is called while another asynchronous method is parsing data -
+   * asynchronous method will not apply when data is parsed.
+   *
    * @param value the feature collection
    * @param onDataParsed optional callback notifying when data is parsed on a worker thread
    */
@@ -543,6 +563,9 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * Add a Geometry to the GeojsonSource.
    * If [onDataParsed] is provided and not null - data will be loaded in async mode.
    * Otherwise method will be synchronous.
+   *
+   * If synchronous method is called while another asynchronous method is parsing data -
+   * asynchronous method will not apply when data is parsed.
    *
    * @param value the feature collection
    * @param onDataParsed optional callback notifying when data is parsed on a worker thread
@@ -567,14 +590,26 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     onDataParsed: ((GeoJsonSource) -> Unit)?
   ): GeoJsonSource = apply {
     onDataParsed?.let { listener ->
+      ignoreParsedGeoJson = false
+      // remove any events from queue before posting this task
+      workerHandler.removeCallbacksAndMessages(null)
       workerHandler.post {
         val property = data.toPropertyValue()
         mainHandler.post {
-          setProperty(property, throwRuntimeException = false)
-          listener.invoke(this)
+          // we set parsed data when sync setter was not called during background work
+          if (!ignoreParsedGeoJson) {
+            setProperty(property, throwRuntimeException = false)
+            listener.invoke(this)
+          }
         }
       }
-    } ?: setProperty(data.toPropertyValue())
+    } ?: run {
+      // if any task is running - set flag to skip it when it is finished
+      ignoreParsedGeoJson = true
+      // remove any events from queue - they should not overwrite data set synchronously
+      workerHandler.removeCallbacksAndMessages(null)
+      setProperty(data.toPropertyValue())
+    }
   }
 
   /**
@@ -598,6 +633,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * A URL to a GeoJSON file, or inline GeoJSON.
      */
     fun data(value: String) = apply {
+      rawGeoJson = null
       val propertyValue = PropertyValue("data", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
@@ -606,6 +642,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * A URL to a GeoJSON file, or inline GeoJSON.
      */
     fun data(value: Expression) = apply {
+      rawGeoJson = null
       val propertyValue = PropertyValue("data", value)
       properties[propertyValue.propertyName] = propertyValue
     }
