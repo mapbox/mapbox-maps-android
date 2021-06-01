@@ -89,6 +89,9 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
 
   /**
    * A URL to a GeoJSON file, or inline GeoJSON.
+   *
+   * If method is called while another asynchronous method is parsing data - asynchronous method will not
+   * apply when data is parsed.
    */
   fun data(value: String) = apply {
     ignoreParsedGeoJson = true
@@ -98,6 +101,9 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
 
   /**
    * A URL to a GeoJSON file, or inline GeoJSON.
+   *
+   * If method is called while another asynchronous method is parsing data - asynchronous method will not
+   * apply when data is parsed.
    */
   fun data(value: Expression) = apply {
     ignoreParsedGeoJson = true
@@ -526,6 +532,9 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * If [onDataParsed] is provided and not null - data will be loaded in async mode.
    * Otherwise method will be synchronous.
    *
+   * If synchronous method is called while another asynchronous method is parsing data -
+   * asynchronous method will not apply when data is parsed.
+   *
    * @param value the feature collection
    * @param onDataParsed optional callback notifying when data is parsed on a worker thread
    */
@@ -539,6 +548,9 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * If [onDataParsed] is provided and not null - data will be loaded in async mode.
    * Otherwise method will be synchronous.
    *
+   * If synchronous method is called while another asynchronous method is parsing data -
+   * asynchronous method will not apply when data is parsed.
+   *
    * @param value the feature collection
    * @param onDataParsed optional callback notifying when data is parsed on a worker thread
    */
@@ -551,6 +563,9 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * Add a Geometry to the GeojsonSource.
    * If [onDataParsed] is provided and not null - data will be loaded in async mode.
    * Otherwise method will be synchronous.
+   *
+   * If synchronous method is called while another asynchronous method is parsing data -
+   * asynchronous method will not apply when data is parsed.
    *
    * @param value the feature collection
    * @param onDataParsed optional callback notifying when data is parsed on a worker thread
