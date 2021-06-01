@@ -3,6 +3,7 @@ package com.mapbox.maps.plugin.localization
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CoordinateBounds
 import com.mapbox.maps.plugin.MapPlugin
+import com.mapbox.maps.plugin.MapStyleObserverPlugin
 import java.util.*
 
 /**
@@ -23,7 +24,7 @@ import java.util.*
  * </ul>
  *
  */
-interface LocalizationPlugin : MapPlugin {
+interface LocalizationPlugin : MapPlugin, MapStyleObserverPlugin {
 
   /**
    * Initializing this plugin and then calling this method oftentimes will be the only thing you'll
