@@ -190,7 +190,9 @@ class ExampleOverviewActivity : AppCompatActivity(), CoroutineScope {
         val label = getString(info.labelRes)
         val description = resolveString(info.descriptionRes)
         val category = resolveMetaData(info.metaData, metaDataKey)
-        exampleListFromManifest.add(SpecificExample(info.name, label, description, category!!))
+        category?.let {
+          exampleListFromManifest.add(SpecificExample(info.name, label, description, it))
+        }
       }
     }
 

@@ -23,7 +23,7 @@ import com.mapbox.maps.extension.style.layers.generated.SymbolLayer;
 import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor;
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource;
 import com.mapbox.maps.extension.style.sources.generated.ImageSource;
-import com.mapbox.maps.plugin.gestures.MapboxPluginUtils;
+import com.mapbox.maps.plugin.gestures.MapboxBoxUtils;
 import com.mapbox.maps.plugin.gestures.OnMapClickListener;
 import com.mapbox.maps.testapp.R;
 
@@ -43,6 +43,9 @@ import static com.mapbox.maps.extension.style.expressions.generated.Expression.s
 import static com.mapbox.maps.extension.style.expressions.generated.Expression.toNumber;
 import static java.text.DateFormat.getDateTimeInstance;
 
+/**
+ * Example showcasing usage of creating style with java codes.
+ */
 public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapClickListener {
     public static final ArrayList<ArrayList<Double>> POINT_LIST = new ArrayList<ArrayList<Double>>() {
         {
@@ -102,7 +105,7 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
         mapView = findViewById(R.id.mapView);
         mapboxMap = mapView.getMapboxMap();
         mapboxMap.loadStyle(createStyle(), null, null);
-        MapboxPluginUtils.addOnMapClickListener(mapboxMap, this);
+        MapboxBoxUtils.addOnMapClickListener(mapboxMap, this);
     }
 
     @Override
@@ -169,7 +172,7 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
         symbolLayer.textSize(10.0);
         symbolLayer.textIgnorePlacement(false);
         symbolLayer.symbolSortKey(subtract(toNumber(get(MAG_KEY))));
-        builder.addLayer(builder.layerAtPosition(symbolLayer, CIRCLE_LAYER_ID));
+        builder.addLayerAtPosition(builder.layerAtPosition(symbolLayer, CIRCLE_LAYER_ID));
 
         // Add a rasterLayer show the image
         RasterLayer rasterLayer = new RasterLayer(RASTER_LAYER_ID, IMAGE_SOURCE_ID);

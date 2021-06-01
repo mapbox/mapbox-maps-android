@@ -84,7 +84,7 @@ class StyleExtensionImpl private constructor(
      *
      * Apply +[Pair]<[Layer], [LayerPosition]> will add the layer to the [StyleExtensionImpl] at given [LayerPosition].
      */
-    @JvmName("addLayer")
+    @JvmName("addLayerAtPosition")
     operator fun Pair<Layer, LayerPosition>.unaryPlus() {
       layers.add(this)
     }
