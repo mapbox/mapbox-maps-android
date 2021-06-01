@@ -1,7 +1,6 @@
 package com.mapbox.maps.plugin.localization
 
 import android.os.Build
-import com.mapbox.geojson.Point
 import com.mapbox.maps.CoordinateBounds
 import java.util.*
 
@@ -13,9 +12,6 @@ import java.util.*
  * The [MapLocale] object can be used to acquire the matching Locale's map language; useful for
  * translating the map language into one of the supported ones found in [Languages].
  *
- * You'll also be able to get bounding box information for that same country so the map's starting
- * position target can adjust itself over the device's Locale country.
- *
  * A handful of [MapLocale]'s are already constructed and offered through this class as static
  * variables. If a country is missing and you'd like to add it, you can use one of the
  * [MapLocale] constructors to build a valid map locale. Once this is done, you need to add it
@@ -25,131 +21,12 @@ import java.util.*
  * @param mapLanguage   a non-null string which is allowed from [Languages]
  * @param countryBounds [CoordinateBounds] object which wraps around the country
  */
-data class MapLocale(val mapLanguage: Languages, val countryBounds: CoordinateBounds? = null) {
+data class MapLocale(val mapLanguage: Languages) {
 
   /**
    * Static properties and methods
    */
   companion object {
-    /**
-     * Approximate USA bounding box, excluding Hawaii and Alaska
-     */
-    val USA_BBOX: CoordinateBounds = CoordinateBounds(
-      Point.fromLngLat(-124.733253, 24.544245),
-      Point.fromLngLat(-66.954811, 49.388611), false
-    )
-
-    /**
-     * Approximate UK bounding box
-     */
-    val UK_BBOX: CoordinateBounds = CoordinateBounds(
-      Point.fromLngLat(-8.623555, 49.906193),
-      Point.fromLngLat(1.759, 59.360249), false
-    )
-
-    /**
-     * Approximate Canada bounding box
-     */
-    val CANADA_BBOX: CoordinateBounds = CoordinateBounds(
-      Point.fromLngLat(-141.0, 41.67598),
-      Point.fromLngLat(-52.636291, 83.110626), false
-    )
-
-    /**
-     * Approximate China bounding box
-     */
-    val CHINA_BBOX: CoordinateBounds = CoordinateBounds(
-      Point.fromLngLat(73.557693, 15.775416),
-      Point.fromLngLat(134.773911, 53.56086), false
-    )
-
-    /**
-     * Approximate Taiwan bounding box
-     */
-    val TAIWAN_BBOX: CoordinateBounds = CoordinateBounds(
-      Point.fromLngLat(118.115255566105, 21.733333),
-      Point.fromLngLat(122.107778, 26.389444), false
-    )
-
-    /**
-     * Approximate Germany bounding box
-     */
-    val GERMANY_BBOX: CoordinateBounds = CoordinateBounds(
-      Point.fromLngLat(5.865639, 47.275776),
-      Point.fromLngLat(15.039889, 55.055637), false
-    )
-
-    /**
-     * Approximate Korea bounding box
-     */
-    val KOREA_BBOX: CoordinateBounds = CoordinateBounds(
-      Point.fromLngLat(125.887108, 33.190945),
-      Point.fromLngLat(129.584671, 38.612446), false
-    )
-
-    /**
-     * Approximate Japan bounding box
-     */
-    val JAPAN_BBOX: CoordinateBounds = CoordinateBounds(
-      Point.fromLngLat(122.93853, 24.249472),
-      Point.fromLngLat(145.820892, 45.52314), false
-    )
-
-    /**
-     * Approximate France bounding box
-     */
-    val FRANCE_BBOX: CoordinateBounds = CoordinateBounds(
-      Point.fromLngLat(-5.142222, 41.371582),
-      Point.fromLngLat(9.561556, 51.092804), false
-    )
-
-    /**
-     * Approximate Russian bounding box
-     */
-    val RUSSIA_BBOX: CoordinateBounds = CoordinateBounds(
-      Point.fromLngLat(-168.997849, 41.185902),
-      Point.fromLngLat(19.638861, 81.856903), false
-    )
-
-    /**
-     * Approximate Spain bounding box
-     */
-    val SPAIN_BBOX: CoordinateBounds = CoordinateBounds(
-      Point.fromLngLat(-18.3936845, 43.9933088),
-      Point.fromLngLat(4.5918885, 27.4335426), false
-    )
-
-    /**
-     * Approximate Portugal bounding box
-     */
-    val PORTUGAL_BBOX: CoordinateBounds = CoordinateBounds(
-      Point.fromLngLat(-18.3936845, 42.280468655),
-      Point.fromLngLat(-6.3890876937, 27.4335426), false
-    )
-
-    /**
-     * Approximate Brazil bounding box
-     */
-    val BRAZIL_BBOX: CoordinateBounds = CoordinateBounds(
-      Point.fromLngLat(-33.8689056, -28.6341164),
-      Point.fromLngLat(-73.9830625, 5.2842873), false
-    )
-
-    /**
-     * Approximate Vietnam bounding box
-     */
-    val VIETNAM_BBOX: CoordinateBounds = CoordinateBounds(
-      Point.fromLngLat(102.216667, 23.666667),
-      Point.fromLngLat(109.466667, 8.383333), false
-    )
-
-    /**
-     * Approximate Italy bounding box
-     */
-    val ITALY_BBOX: CoordinateBounds = CoordinateBounds(
-      Point.fromLngLat(6.7499552751, 47.1153931748),
-      Point.fromLngLat(18.4802470232, 36.619987291), false
-    )
 
     /*
    * Some MapLocales already defined (these match with the predefined ones in the Locale class)
@@ -157,32 +34,32 @@ data class MapLocale(val mapLanguage: Languages, val countryBounds: CoordinateBo
     /**
      * Useful constant for FRANCE.
      */
-    val FRANCE: MapLocale = MapLocale(Languages.FRENCH, FRANCE_BBOX)
+    val FRANCE: MapLocale = MapLocale(Languages.FRENCH)
 
     /**
      * Useful constant for GERMANY.
      */
-    val GERMANY: MapLocale = MapLocale(Languages.GERMAN, GERMANY_BBOX)
+    val GERMANY: MapLocale = MapLocale(Languages.GERMAN)
 
     /**
      * Useful constant for JAPAN.
      */
-    val JAPAN: MapLocale = MapLocale(Languages.JAPANESE, JAPAN_BBOX)
+    val JAPAN: MapLocale = MapLocale(Languages.JAPANESE)
 
     /**
      * Useful constant for KOREA.
      */
-    val KOREA: MapLocale = MapLocale(Languages.KOREAN, KOREA_BBOX)
+    val KOREA: MapLocale = MapLocale(Languages.KOREAN)
 
     /**
      * Useful constant for CHINA.
      */
-    val CHINA: MapLocale = MapLocale(Languages.SIMPLIFIED_CHINESE, CHINA_BBOX)
+    val CHINA: MapLocale = MapLocale(Languages.SIMPLIFIED_CHINESE)
 
     /**
      * Useful constant for TAIWAN.
      */
-    val TAIWAN: MapLocale = MapLocale(Languages.TRADITIONAL_CHINESE, TAIWAN_BBOX)
+    val TAIWAN: MapLocale = MapLocale(Languages.TRADITIONAL_CHINESE)
 
     /**
      * Useful constant for China with general Simplified Chinese
@@ -197,52 +74,52 @@ data class MapLocale(val mapLanguage: Languages, val countryBounds: CoordinateBo
     /**
      * Useful constant for UK.
      */
-    val UK: MapLocale = MapLocale(Languages.ENGLISH, UK_BBOX)
+    val UK: MapLocale = MapLocale(Languages.ENGLISH)
 
     /**
      * Useful constant for US.
      */
-    val US: MapLocale = MapLocale(Languages.ENGLISH, USA_BBOX)
+    val US: MapLocale = MapLocale(Languages.ENGLISH)
 
     /**
      * Useful constant for CANADA.
      */
-    val CANADA: MapLocale = MapLocale(Languages.ENGLISH, CANADA_BBOX)
+    val CANADA: MapLocale = MapLocale(Languages.ENGLISH)
 
     /**
      * Useful constant for CANADA_FRENCH.
      */
-    val CANADA_FRENCH: MapLocale = MapLocale(Languages.FRENCH, CANADA_BBOX)
+    val CANADA_FRENCH: MapLocale = MapLocale(Languages.FRENCH)
 
     /**
      * Useful constant for RUSSIA.
      */
-    val RUSSIA: MapLocale = MapLocale(Languages.RUSSIAN, RUSSIA_BBOX)
+    val RUSSIA: MapLocale = MapLocale(Languages.RUSSIAN)
 
     /**
      * Useful constant for SPAIN.
      */
-    val SPAIN: MapLocale = MapLocale(Languages.SPANISH, SPAIN_BBOX)
+    val SPAIN: MapLocale = MapLocale(Languages.SPANISH)
 
     /**
      * Useful constant for PORTUGAL.
      */
-    val PORTUGAL: MapLocale = MapLocale(Languages.PORTUGUESE, PORTUGAL_BBOX)
+    val PORTUGAL: MapLocale = MapLocale(Languages.PORTUGUESE)
 
     /**
      * Useful constant for BRAZIL.
      */
-    val BRAZIL: MapLocale = MapLocale(Languages.PORTUGUESE, BRAZIL_BBOX)
+    val BRAZIL: MapLocale = MapLocale(Languages.PORTUGUESE)
 
     /**
      * Useful constant for VIETNAM.
      */
-    val VIETNAM: MapLocale = MapLocale(Languages.VIETNAMESE, VIETNAM_BBOX)
+    val VIETNAM: MapLocale = MapLocale(Languages.VIETNAMESE)
 
     /**
      * Useful constant for ITALY.
      */
-    val ITALY: MapLocale = MapLocale(Languages.ITALIAN, ITALY_BBOX)
+    val ITALY: MapLocale = MapLocale(Languages.ITALIAN)
 
     /**
      * When creating a new MapLocale, you'll need to associate a [Locale] so that
