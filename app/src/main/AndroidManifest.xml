@@ -68,6 +68,18 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
+            android:name=".examples.localization.LocalizationActivity"
+            android:description="@string/description_localization"
+            android:exported="true"
+            android:label="@string/activity_localization">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_basic" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
+        <activity
             android:name=".examples.RuntimeStylingActivity"
             android:description="@string/description_runtime_styling"
             android:exported="true"

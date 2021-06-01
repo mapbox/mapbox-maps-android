@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.localization
 
+import androidx.annotation.NonNull
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CoordinateBounds
 import com.mapbox.maps.plugin.MapPlugin
@@ -55,4 +56,11 @@ interface LocalizationPlugin : MapPlugin, MapStyleObserverPlugin {
    */
   fun setMapLanguage(locale: Locale, acceptFallback: Boolean = false)
 
+  /**
+   * You can pass in a []MapLocale] directly into this method which uses the language defined
+   * in it to represent the language found on the map.
+   *
+   * @param mapLocale the [MapLocale] object which contains the desired map language
+   */
+  fun setMapLanguage(  mapLocale:MapLocale)
 }

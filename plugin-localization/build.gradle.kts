@@ -17,6 +17,7 @@ android {
 
 dependencies {
   implementation(project(":sdk-base"))
+  implementation(project(":extension-style"))
   implementation(Dependencies.mapboxBase)
   implementation(Dependencies.kotlin)
   implementation(Dependencies.androidxAppCompat)
