@@ -74,6 +74,7 @@ class StyleExtensionImpl private constructor(
      *
      * Apply +[Layer] will add the layer to the [StyleExtensionImpl].
      */
+    @JvmName("addLayer")
     operator fun Layer.unaryPlus() {
       layers.add(Pair(this, LayerPosition(null, null, null)))
     }
@@ -83,6 +84,7 @@ class StyleExtensionImpl private constructor(
      *
      * Apply +[Pair]<[Layer], [LayerPosition]> will add the layer to the [StyleExtensionImpl] at given [LayerPosition].
      */
+    @JvmName("addLayerAtPosition")
     operator fun Pair<Layer, LayerPosition>.unaryPlus() {
       layers.add(this)
     }
@@ -92,6 +94,7 @@ class StyleExtensionImpl private constructor(
      *
      * Apply +[Source] will add the source to the [StyleExtensionImpl].
      */
+    @JvmName("addSource")
     operator fun Source.unaryPlus() {
       sources.add(this)
     }
@@ -101,6 +104,7 @@ class StyleExtensionImpl private constructor(
      *
      * Apply +[Light] will add the light to the [StyleExtensionImpl].
      */
+    @JvmName("addLight")
     operator fun Light.unaryPlus() {
       light = this
     }
@@ -110,6 +114,7 @@ class StyleExtensionImpl private constructor(
      *
      * Apply +[Terrain] will add the terrain to the [StyleExtensionImpl].
      */
+    @JvmName("addTerrain")
     operator fun Terrain.unaryPlus() {
       terrain = this
     }
@@ -119,6 +124,7 @@ class StyleExtensionImpl private constructor(
      *
      * Apply +[ImageExtensionImpl] will add the source to the [StyleExtensionImpl].
      */
+    @JvmName("addImage")
     operator fun ImageExtensionImpl.unaryPlus() {
       images.add(this)
     }
@@ -133,6 +139,7 @@ class StyleExtensionImpl private constructor(
      *
      * @return [Pair]<[Layer], [LayerPosition]>
      */
+    @JvmOverloads
     fun layerAtPosition(
       layer: Layer,
       above: String? = null,
@@ -142,7 +149,12 @@ class StyleExtensionImpl private constructor(
       return Pair(layer, LayerPosition(above, below, at))
     }
 
-    internal fun build(): StyleContract.StyleExtension {
+    /**
+     * Build an [StyleExtension] instance from this builder.
+     *
+     * @return an [StyleExtension] instance.
+     */
+    fun build(): StyleContract.StyleExtension {
       return StyleExtensionImpl(this)
     }
   }
