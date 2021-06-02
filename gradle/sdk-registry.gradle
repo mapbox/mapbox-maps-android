@@ -47,7 +47,7 @@ registry {
     sdkName = project.ext.mapboxRegistrySdkName
     override = project.ext.versionName.endsWith("-SNAPSHOT")
     dryRun = false
-    publish = false
+    publish = true
     snapshot = project.ext.versionName.endsWith("-SNAPSHOT")
     publishMessage = "cc @mapbox/maps-android"
     publications = ["ModularMapboxMapsSdkRegistryPublication"]

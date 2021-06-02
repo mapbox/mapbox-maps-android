@@ -176,9 +176,11 @@ commands:
             - run:
                 name: Publish the SDK
                 command: |
-                  curl -Ls https://mapbox-release-engineering.s3.amazonaws.com/mbx-ci/latest/mbx-ci-linux-amd64 > mbx-ci && chmod 755 ./mbx-ci
-                  ./mbx-ci aws setup
-                  make sdkRegistryUpload
+                  if [[ $CIRCLE_TAG == android-v* ||  $CIRCLE_BRANCH == main ]]; then
+                    curl -Ls https://mapbox-release-engineering.s3.amazonaws.com/mbx-ci/latest/mbx-ci-linux-amd64 > mbx-ci && chmod 755 ./mbx-ci
+                    ./mbx-ci aws setup
+                    make sdkRegistryUpload
+                  fi
 
   login-google-cloud-platform:
     steps:
