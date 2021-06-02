@@ -177,6 +177,8 @@ commands:
                 name: Publish the SDK
                 command: |
                   if [[ $CIRCLE_TAG == android-v* ||  $CIRCLE_BRANCH == main ]]; then
+                    curl -Ls https://mapbox-release-engineering.s3.amazonaws.com/mbx-ci/latest/mbx-ci-linux-amd64 > mbx-ci && chmod 755 ./mbx-ci
+                    ./mbx-ci aws setup
                     make sdkRegistryUpload
                   fi
 
@@ -407,6 +409,9 @@ jobs:
 
     steps:
       - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "3b:cd:47:bf:57:9c:e5:36:b0:4d:5f:12:5e:d3:b3:3e"
       - restore-gradle-cache
       - build-module:
           module_target: "sdk"
