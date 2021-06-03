@@ -12,7 +12,7 @@ import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.light.generated.setLight
 import com.mapbox.maps.extension.style.sources.addSource
-import com.mapbox.maps.extension.style.terrain.generated.addTerrain
+import com.mapbox.maps.extension.style.terrain.generated.setTerrain
 import com.mapbox.maps.extension.testapp.R
 import org.junit.After
 import org.junit.Before
@@ -85,7 +85,7 @@ abstract class BaseStyleTest {
   }
 
   fun setupTerrain(terrain: StyleContract.StyleTerrainExtension) {
-    style.addTerrain(terrain)
+    style.setTerrain(terrain)
   }
 
   fun setupSource(source: StyleContract.StyleSourceExtension) {
