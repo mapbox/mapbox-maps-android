@@ -2,6 +2,31 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.0.0-beta.21- June 3, 2021
+## Breaking changes ⚠️
+* Align load style functions for MapboxMap and Snapshotter. ([#371](https://github.com/mapbox/mapbox-maps-android/pull/371))
+* Change the default ambient cache path to `.mabox/maps/ambient_cache.db` ([#373](https://github.com/mapbox/mapbox-maps-android/pull/373))
+* Move text-font property from PointAnnotation to PointAnnotationManager ([#375](https://github.com/mapbox/mapbox-maps-android/pull/375))
+* Remove CredentialsManager in favour of ResourceOptionsManager ([#365](https://github.com/mapbox/mapbox-maps-android/pull/365))
+* Introduce separate minZoom/maxZoom fields into CustomGeometrySourceOptions API instead of the formerly used "zoomRange"
+
+## Features ✨ and improvements 🏁
+* Rework setPrefetchZoomDelta to reduce loading of expensive tiles and optimize zoom use-case (#1850)
+* Send billing event when Map is loaded 
+
+## Bug fixes 🐞
+* Fixed an issue that causes OnStyleLoaded callback not fired when there's a sprite loading error. ([#358](https://github.com/mapbox/mapbox-maps-android/pull/358))
+* Update map camera on first animator update. ([#352](https://github.com/mapbox/mapbox-maps-android/pull/352))
+* Fix crash due to missing access token ([#365](https://github.com/mapbox/mapbox-maps-android/pull/365))
+* Call style loaded callback if data set directly to geojson. ([#377](https://github.com/mapbox/mapbox-maps-android/pull/377))
+* Geojson async data parsing: fixes and improvements. ([#380](https://github.com/mapbox/mapbox-maps-android/pull/380))
+* Fix terrain transparency issue when a sky layer is not used
+* Make style pack resources immutable protecting the style pack from getting out of sync in case the style is updated remotely
+
+## Dependencies
+* Bump glNative to 10.0.0-beta.23, common to 13.0.0 ([#362](https://github.com/mapbox/mapbox-maps-android/pull/362))
+* Bump mapbox-events-android to latest releases telem-7.0.3 and core-4.0.2 ([#370](https://github.com/mapbox/mapbox-maps-android/pull/370))
+
 # 10.0.0-beta.20 - May 20, 2021
 ## Breaking changes ⚠️
 * Introduce ResourceOptionsManager to configure the default resource options, and removed the xml configuration options for cache path and tile store path. ([#339](https://github.com/mapbox/mapbox-maps-android/pull/339))
