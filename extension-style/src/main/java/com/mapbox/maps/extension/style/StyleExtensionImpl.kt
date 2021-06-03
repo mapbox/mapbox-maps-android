@@ -104,7 +104,7 @@ class StyleExtensionImpl private constructor(
      *
      * Apply +[Light] will add the light to the [StyleExtensionImpl].
      */
-    @JvmName("addLight")
+    @JvmName("setLight")
     operator fun Light.unaryPlus() {
       light = this
     }
