@@ -7,6 +7,9 @@ import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleObjectInfo
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
+import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
+import com.mapbox.maps.extension.style.layers.generated.symbolLayer
+import com.mapbox.maps.extension.style.layers.getLayerAs
 import com.mapbox.maps.extension.style.sources.generated.*
 import com.mapbox.maps.extension.style.utils.unwrap
 import com.mapbox.maps.plugin.delegates.*
@@ -43,13 +46,14 @@ class LocalizationPluginImpl : LocalizationPlugin {
           val isStreetsV8: Boolean = sourceIsStreetsV8(style, source)
           for (layer in style.styleLayers) {
             if (layer.type == "symbol") {
-              val textFieldProperty = getPropertyValue(style, layer, "text-field")
+              val symbolLayer = style.getLayerAs<SymbolLayer>(layer.id)
+              val textFieldProperty = symbolLayer.textFieldAsString
               textFieldProperty?.let {
                 if (isStreetsV8) {
-                  convertExpressionV8(mapLocale, style, layer, textFieldProperty)
+                  convertExpressionV8(mapLocale, style, symbolLayer, textFieldProperty.toString())
                 } else {
-                  val isStreetsV7: Boolean = sourceIsStreetsV7(style, source)
-                  convertExpression(mapLocale, style, layer, textFieldProperty, isStreetsV7)
+//                  val isStreetsV7: Boolean = sourceIsStreetsV7(style, source)
+//                  convertExpression(mapLocale, style, symbolLayer, textFieldProperty.getTextAsString(), isStreetsV7)
                 }
               }
             }
@@ -72,7 +76,7 @@ class LocalizationPluginImpl : LocalizationPlugin {
   }
 
   private fun convertExpression(
-    mapLocale: MapLocale, style: StyleInterface, layer: StyleObjectInfo,
+    mapLocale: MapLocale, style: StyleInterface, layer: SymbolLayer,
     textFieldProperty: String?, isStreetsV7: Boolean
   ) {
     textFieldProperty?.let {
@@ -88,10 +92,7 @@ class LocalizationPluginImpl : LocalizationPlugin {
 //        text =
 //          text.replace(LocalizationPlugin.STEP_REGEX.toRegex(), LocalizationPlugin.STEP_TEMPLATE)
 //      }
-      val expected = style.setStyleLayerProperty(layer.id, "text-field", Value(text))
-      expected.error?.let {
-        throw RuntimeException("Set layer property $text")
-      }
+      layer.textField(text)
     }
   }
 
@@ -113,11 +114,13 @@ class LocalizationPluginImpl : LocalizationPlugin {
 
   private fun convertExpressionV8(
     mapLocale: MapLocale,
-    style: StyleInterface, layer: StyleObjectInfo,
+    style: StyleInterface, layer: SymbolLayer,
     textFieldProperty: String?
   ) {
     textFieldProperty?.let {
       if(textFieldProperty.isEmpty()) return
+      Logger.e("======", "init textFieldProperty::::$textFieldProperty")
+
       var stringExpression: String = textFieldProperty.replace(
         EXPRESSION_V8_REGEX_LOCALIZED,
         EXPRESSION_V8_TEMPLATE_BASE
@@ -139,25 +142,7 @@ class LocalizationPluginImpl : LocalizationPlugin {
         )
       }
       Logger.e("======", stringExpression)
-      val expected = style.setStyleLayerProperty(layer.id, "text-field", (Expression.fromRaw(stringExpression)))
-      expected.error?.let {
-        throw RuntimeException("Set layer property $stringExpression")
-      }
-    }
-  }
-
-  private fun getPropertyValue(
-    style: StyleInterface,
-    layer: StyleObjectInfo,
-    propertyName: String
-  ): String? {
-    val styleLayerProperty = style.getStyleLayerProperty(layer.id, propertyName)
-    return try {
-      styleLayerProperty.unwrap()
-    } catch (e: RuntimeException) {
-      Log.e(TAG, "Get layer property failed: ${e.message}")
-      Log.e(TAG, styleLayerProperty.toString())
-      null
+      layer.textField(Expression.fromRaw(stringExpression))
     }
   }
 
