@@ -573,7 +573,7 @@ fun StyleInterface.getLight(): Light {
  *
  * @param light The light to be added
  */
-fun StyleInterface.addLight(light: StyleContract.StyleLightExtension) {
+fun StyleInterface.setLight(light: StyleContract.StyleLightExtension) {
   light.bindTo(this)
 }
 

@@ -16,8 +16,8 @@ import com.mapbox.maps.extension.style.layers.generated.fillExtrusionLayer
 import com.mapbox.maps.extension.style.layers.generated.rasterLayer
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
-import com.mapbox.maps.extension.style.light.generated.addLight
 import com.mapbox.maps.extension.style.light.generated.light
+import com.mapbox.maps.extension.style.light.generated.setLight
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.*
 import com.mapbox.maps.extension.style.sources.getSource
@@ -310,7 +310,7 @@ class RuntimeStylingActivity : AppCompatActivity() {
         polarAngle = 50.0
       )
     }
-    style.addLight(light)
+    style.setLight(light)
   }
 
   private fun addImageSource(style: Style) {
