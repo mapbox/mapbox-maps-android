@@ -139,8 +139,10 @@ commands:
       - run:
           name: Generate docs and create PR for review
           command: |
+            export CIRCLE_TAG=android-v10.0.0-test
             if [[ $CIRCLE_TAG == android-v* ]]; then
-              echo "$GH_LOGIN_TOKEN" > gh_token.txt
+              echo "$(mbx-ci github writer token)" > gh_token.txt
+              mbx-ci github writer opt-in mapbox-maps-android
               git config --global user.email no-reply@mapbox.com && git config --global user.name mapbox-ci
               ./scripts/update-android-docs.sh -s $CIRCLE_TAG
             fi
