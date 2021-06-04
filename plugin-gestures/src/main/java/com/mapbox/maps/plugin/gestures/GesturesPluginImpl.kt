@@ -1,4 +1,4 @@
-@file:JvmName("MapboxBoxUtils")
+@file:JvmName("MapboxMapUtils")
 @file:JvmMultifileClass
 
 package com.mapbox.maps.plugin.gestures

@@ -23,7 +23,7 @@ import com.mapbox.maps.extension.style.layers.generated.SymbolLayer;
 import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor;
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource;
 import com.mapbox.maps.extension.style.sources.generated.ImageSource;
-import com.mapbox.maps.plugin.gestures.MapboxBoxUtils;
+import com.mapbox.maps.plugin.gestures.MapboxMapUtils;
 import com.mapbox.maps.plugin.gestures.OnMapClickListener;
 import com.mapbox.maps.testapp.R;
 
@@ -105,7 +105,7 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
         mapView = findViewById(R.id.mapView);
         mapboxMap = mapView.getMapboxMap();
         mapboxMap.loadStyle(createStyle(), null, null);
-        MapboxBoxUtils.addOnMapClickListener(mapboxMap, this);
+        MapboxMapUtils.addOnMapClickListener(mapboxMap, this);
     }
 
     @Override
