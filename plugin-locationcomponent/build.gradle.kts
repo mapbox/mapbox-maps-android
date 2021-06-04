@@ -14,6 +14,11 @@ android {
     targetSdkVersion(AndroidVersions.targetSdkVersion)
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
+
+  sourceSets {
+    // limit amount of exposed library resources
+    getByName("main").res.srcDirs("src/main/res-public")
+  }
 }
 
 dependencies {
