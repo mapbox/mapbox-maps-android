@@ -16,6 +16,7 @@ import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.*
 import org.junit.runner.RunWith
+import java.io.File
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
@@ -25,18 +26,20 @@ import java.util.concurrent.TimeoutException
 class OfflineTest {
 
   private val handler = Handler(Looper.getMainLooper())
+  private val tileStore: TileStore by lazy {
+    TileStore.create().also {
+      it.setOption(
+        TileStoreOptions.MAPBOX_ACCESS_TOKEN,
+        TileDataDomain.MAPS,
+        Value(InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.mapbox_access_token))
+      )
+    }
+  }
   private val offlineManager: OfflineManager by lazy {
     OfflineManager(
-      MapInitOptions.getDefaultResourceOptions(
+      ResourceOptions.Builder().applyDefaultParams(
         InstrumentationRegistry.getInstrumentation().targetContext
-      )
-    )
-  }
-  private val cacheManager: CacheManager by lazy {
-    CacheManager(
-      MapInitOptions.getDefaultResourceOptions(
-        InstrumentationRegistry.getInstrumentation().targetContext
-      )
+      ).tileStore(tileStore).build()
     )
   }
 
@@ -48,21 +51,19 @@ class OfflineTest {
     val latch = CountDownLatch(2)
     handler.post {
       offlineManager.removeStylePack(STYLE)
-      TileStore.getInstance().removeTileRegion(TILE_REGION_ID)
-      TileStore.getInstance().setOption(TileStoreOptions.DISK_QUOTA, Value(0))
-      cacheManager.apply {
-        // clear cache in a most severe way
-        clearAmbientCache {
-          latch.countDown()
-        }
-        // restore ambient cache size to some default value > 0
-        setMaximumAmbientCacheSize(DEFAULT_AMBIENT_CACHE_SIZE_BYTES) {
-          latch.countDown()
-        }
-      }
+      tileStore.removeTileRegion(TILE_REGION_ID)
+      tileStore.setOption(TileStoreOptions.DISK_QUOTA, Value(0))
     }
     if (!latch.await(10, TimeUnit.SECONDS)) {
       throw TimeoutException()
+    }
+  }
+
+  @After
+  fun cleanUp() {
+    handler.post {
+      File(ResourceOptionsManager.getDefault(InstrumentationRegistry.getInstrumentation().context).resourceOptions.dataPath).listFiles()
+        .forEach { it.delete() }
     }
   }
 
@@ -168,7 +169,7 @@ class OfflineTest {
     var tileRegion: TileRegion? = null
     var tileRegionError: TileRegionError? = null
     handler.post {
-      TileStore.getInstance().loadTileRegion(
+      tileStore.loadTileRegion(
         TILE_REGION_ID,
         TileRegionLoadOptions.Builder()
           .geometry(TOKYO)
@@ -231,7 +232,7 @@ class OfflineTest {
     var tileRegionError: TileRegionError? = null
     var cancelableTileStoreTask: Cancelable? = null
     handler.post {
-      cancelableTileStoreTask = TileStore.getInstance().loadTileRegion(
+      cancelableTileStoreTask = tileStore.loadTileRegion(
         TILE_REGION_ID,
         TileRegionLoadOptions.Builder()
           .geometry(TOKYO)
@@ -284,12 +285,8 @@ class OfflineTest {
     }
   }
 
-  // TODO revisit after https://github.com/mapbox/mapbox-maps-android/issues/297
-  // this test must behave same as resourceLoadingFromTileStoreMapboxSwitch
-  // but for now we could check for style loaded event only to style is loaded
   @Test
   fun resourceLoadingFromTileStoreAirplaneMode() {
-    disableAmbientCache()
     loadTileStoreWithStylePack()
     val latch = CountDownLatch(2)
     var resourceRequests = 0
@@ -326,8 +323,7 @@ class OfflineTest {
       // verify resource requests came from tile store
       MatcherAssert.assertThat(resourceRequests, Matchers.greaterThan(0))
       // verify no map loading errors occurred
-      // TODO uncomment after https://github.com/mapbox/mapbox-maps-android/issues/297
-//      Assert.assertEquals(0, mapLoadingErrorCount)
+      Assert.assertEquals(0, mapLoadingErrorCount)
     } finally {
       switchAirplaneMode()
     }
@@ -335,7 +331,6 @@ class OfflineTest {
 
   @Test
   fun resourceLoadingFromTileStoreMapboxSwitch() {
-    disableAmbientCache()
     loadTileStoreWithStylePack()
     val latch = CountDownLatch(2)
     var resourceRequests = 0
@@ -387,7 +382,7 @@ class OfflineTest {
     Assert.assertNull(resultWithRegion.second)
     Assert.assertEquals(1, resultWithRegion.first.size)
     Assert.assertEquals(TILE_REGION_ID, resultWithRegion.first[0].id)
-    TileStore.getInstance().removeTileRegion(TILE_REGION_ID)
+    tileStore.removeTileRegion(TILE_REGION_ID)
     val resultWithNoRegion = queryTileRegions()
     Assert.assertNull(resultWithNoRegion.second)
     Assert.assertEquals(0, resultWithNoRegion.first.size)
@@ -406,10 +401,8 @@ class OfflineTest {
     Assert.assertEquals(0, stylePackWithNoStyle.first.size)
   }
 
-  @Ignore("TODO uncomment after https://github.com/mapbox/mapbox-maps-android/issues/297")
   @Test
   fun idleEventTileStoreAirplaneMode() {
-    disableAmbientCache()
     loadTileStoreWithStylePack()
     val latch = CountDownLatch(1)
     var idleEventCount = 0
@@ -438,7 +431,6 @@ class OfflineTest {
 
   @Test
   fun idleEventTileStoreMapboxSwitch() {
-    disableAmbientCache()
     loadTileStoreWithStylePack()
     val latch = CountDownLatch(1)
     var idleEventCount = 0
@@ -489,7 +481,7 @@ class OfflineTest {
     var tileRegionList: List<TileRegion> = listOf()
     var tileRegionError: TileRegionError? = null
     val latch = CountDownLatch(1)
-    TileStore.getInstance().getAllTileRegions { expected ->
+    tileStore.getAllTileRegions { expected ->
       if (expected.isValue) {
         expected.value?.let { tileRegionList = it }
       }
@@ -504,25 +496,10 @@ class OfflineTest {
     return Pair(tileRegionList, tileRegionError)
   }
 
-  private fun disableAmbientCache() {
-    val latch = CountDownLatch(1)
-    // set 0 size ambient cache to make use of only tile store + style packs
-    handler.post {
-      cacheManager.setMaximumAmbientCacheSize(0) {
-        if (it.isValue) {
-          latch.countDown()
-        }
-      }
-    }
-    if (!latch.await(5, TimeUnit.SECONDS)) {
-      throw TimeoutException()
-    }
-  }
-
   private fun loadTileStoreWithStylePack() {
     val latch = CountDownLatch(1)
     handler.post {
-      TileStore.getInstance().loadTileRegion(
+      tileStore.loadTileRegion(
         TILE_REGION_ID,
         TileRegionLoadOptions.Builder()
           .geometry(TOKYO)
@@ -626,6 +603,5 @@ class OfflineTest {
     private const val STYLE_PACK_METADATA = "STYLE_PACK_METADATA"
     private const val TILE_REGION_ID = "TILE_REGION_ID"
     private const val TILE_REGION_METADATA = "TILE_REGION_METADATA"
-    private const val DEFAULT_AMBIENT_CACHE_SIZE_BYTES = 50_000_000L
   }
 }

@@ -6,7 +6,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.mapbox.geojson.Point
-import com.mapbox.maps.test.R
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.CountDownLatch
@@ -25,11 +24,7 @@ class LegacyOfflineManagerTest {
     Handler(Looper.getMainLooper()).post {
       val context = InstrumentationRegistry.getInstrumentation().targetContext
       offlineManager = OfflineRegionManager(
-        ResourceOptions.Builder()
-          .accessToken(context.getString(R.string.mapbox_access_token))
-          .cachePath(InstrumentationRegistry.getInstrumentation().targetContext.filesDir.absolutePath + "/test.mbgl")
-          .cacheSize(50000L)
-          .build()
+        ResourceOptionsManager.getDefault(context).resourceOptions
       )
       offlineManager.createOfflineRegion(
         OfflineRegionGeometryDefinition.Builder()

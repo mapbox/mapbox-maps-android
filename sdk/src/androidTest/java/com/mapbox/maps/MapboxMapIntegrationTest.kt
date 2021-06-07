@@ -37,8 +37,7 @@ class MapboxMapIntegrationTest {
     val defaultOptions = MapInitOptions.getDefaultResourceOptions(mapView.context)
     val currentOptions = mapboxMap.getResourceOptions()
     assertEquals(defaultOptions.accessToken, currentOptions.accessToken)
-    assertEquals(defaultOptions.cachePath, currentOptions.cachePath)
-    assertEquals(defaultOptions.cacheSize, currentOptions.cacheSize)
+    assertEquals(defaultOptions.dataPath, currentOptions.dataPath)
   }
 
   @UiThreadTest
