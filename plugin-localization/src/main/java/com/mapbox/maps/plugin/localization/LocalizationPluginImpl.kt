@@ -1,18 +1,16 @@
 package com.mapbox.maps.plugin.localization
 
-import android.util.Log
 import com.mapbox.bindgen.Value
 import com.mapbox.common.Logger
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleObjectInfo
 import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.extension.style.expressions.dsl.generated.get
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
-import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.layers.getLayerAs
-import com.mapbox.maps.extension.style.sources.generated.*
-import com.mapbox.maps.extension.style.utils.unwrap
-import com.mapbox.maps.plugin.delegates.*
+import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
+import com.mapbox.maps.toJson
 import java.util.*
 
 /**
@@ -47,13 +45,13 @@ class LocalizationPluginImpl : LocalizationPlugin {
           for (layer in style.styleLayers) {
             if (layer.type == "symbol") {
               val symbolLayer = style.getLayerAs<SymbolLayer>(layer.id)
-              val textFieldProperty = symbolLayer.textFieldAsString
-              textFieldProperty?.let {
+              val textFieldExpression = symbolLayer.textFieldAsExpression
+              textFieldExpression?.let {
                 if (isStreetsV8) {
-                  convertExpressionV8(mapLocale, style, symbolLayer, textFieldProperty.toString())
+                  convertExpressionV8(mapLocale, symbolLayer, textFieldExpression)
                 } else {
-//                  val isStreetsV7: Boolean = sourceIsStreetsV7(style, source)
-//                  convertExpression(mapLocale, style, symbolLayer, textFieldProperty.getTextAsString(), isStreetsV7)
+                  val isStreetsV7: Boolean = sourceIsStreetsV7(style, source)
+                  convertExpression(mapLocale, symbolLayer, textFieldExpression, isStreetsV7)
                 }
               }
             }
@@ -76,21 +74,22 @@ class LocalizationPluginImpl : LocalizationPlugin {
   }
 
   private fun convertExpression(
-    mapLocale: MapLocale, style: StyleInterface, layer: SymbolLayer,
-    textFieldProperty: String?, isStreetsV7: Boolean
+    mapLocale: MapLocale, layer: SymbolLayer,
+    textFieldExpression: Expression?, isStreetsV7: Boolean
   ) {
-    textFieldProperty?.let {
+    textFieldExpression?.let {
       var newMapLocale = mapLocale
       val mapLanguage = mapLocale.mapLanguage
       if (mapLanguage == Languages.CHINESE) {
         // need to re-get mapLocale, since the default is for street-v8
         newMapLocale = getChineseMapLocale(mapLocale, isStreetsV7)
       }
-      var text: String = it.replace(EXPRESSION_REGEX, mapLanguage.value)
+      var text: String = it.toJson().replace(EXPRESSION_REGEX, newMapLocale.mapLanguage.value)
+      //todo: find a way to resolve textFieldExpression.toArray()
 //      if (text.startsWith("[\"step") && textFieldExpression.toArray().length % 2 === 0) {
 //        // got an invalid step expression from core, we need to add an additional name_x into step
 //        text =
-//          text.replace(LocalizationPlugin.STEP_REGEX.toRegex(), LocalizationPlugin.STEP_TEMPLATE)
+//          text.replace(STEP_REGEX.toRegex(), STEP_TEMPLATE)
 //      }
       layer.textField(text)
     }
@@ -113,27 +112,21 @@ class LocalizationPluginImpl : LocalizationPlugin {
   }
 
   private fun convertExpressionV8(
-    mapLocale: MapLocale,
-    style: StyleInterface, layer: SymbolLayer,
-    textFieldProperty: String?
+    mapLocale: MapLocale, layer: SymbolLayer,
+    textFieldExpression: Expression?
   ) {
-    textFieldProperty?.let {
-      if(textFieldProperty.isEmpty()) return
-      Logger.e("======", "init textFieldProperty::::$textFieldProperty")
-
-      var stringExpression: String = textFieldProperty.replace(
+    textFieldExpression?.let {
+      var stringExpression: String = textFieldExpression.toJson().replace(
         EXPRESSION_V8_REGEX_LOCALIZED,
         EXPRESSION_V8_TEMPLATE_BASE
       )
-      Logger.e("======", "init stringExpression::::$stringExpression")
-
       var mapLanguage = mapLocale.mapLanguage
       if (mapLanguage != Languages.ENGLISH) {
         if (mapLanguage == Languages.CHINESE) {
           mapLanguage = Languages.SIMPLIFIED_CHINESE
         }
         stringExpression = stringExpression.replace(
-          EXPRESSION_V8_REGEX_BASE, String.format(
+          EXPRESSION_V8_TEMPLATE_BASE, String.format(
             Locale.US,
             EXPRESSION_V8_TEMPLATE_LOCALIZED,
             mapLanguage.value,
@@ -141,7 +134,6 @@ class LocalizationPluginImpl : LocalizationPlugin {
           )
         )
       }
-      Logger.e("======", stringExpression)
       layer.textField(Expression.fromRaw(stringExpression))
     }
   }
@@ -192,35 +184,35 @@ class LocalizationPluginImpl : LocalizationPlugin {
     private val SUPPORTED_SOURCES = listOf(STREET_V6, STREET_V7, STREET_V8)
     private const val EXPRESSION_REGEX = "\\b(name|name_.{2,7})\\b"
 
-    private const val EXPRESSION_V8_REGEX_BASE = "\\[\"get\", \"name_en\"], \\[\"get\", \"name\"]"
-    private const val EXPRESSION_V8_TEMPLATE_BASE = "[\"get\", \"name_en\"], [\"get\", \"name\"]"
-    private const val EXPRESSION_V8_REGEX_LOCALIZED = ("\\[\"match\", \"(name|name_.{2,7})\", "
-      + "\"name_zh-Hant\", \\[\"coalesce\", "
-      + "\\[\"get\", \"name_zh-Hant\"], "
-      + "\\[\"get\", \"name_zh-Hans\"], "
-      + "\\[\"match\", \\[\"get\", \"name_script\"], \"Latin\", \\[\"get\", \"name\"], \\[\"get\", \"name_en\"]], "
-      + "\\[\"get\", \"name\"]], "
-      + "\\[\"coalesce\", "
-      + "\\[\"get\", \"(name|name_.{2,7})\"], "
-      + "\\[\"match\", \\[\"get\", \"name_script\"], \"Latin\", \\[\"get\", \"name\"], \\[\"get\", \"name_en\"]], "
-      + "\\[\"get\", \"name\"]]"
-      + "]")
-
-    private const val EXPRESSION_V8_TEMPLATE_LOCALIZED = ("[\"match\", \"%s\", "
-      + "\"name_zh-Hant\", [\"coalesce\", "
-      + "[\"get\", \"name_zh-Hant\"], "
-      + "[\"get\", \"name_zh-Hans\"], "
-      + "[\"match\", [\"get\", \"name_script\"], \"Latin\", [\"get\", \"name\"], [\"get\", \"name_en\"]], "
-      + "[\"get\", \"name\"]], "
-      + "[\"coalesce\", "
-      + "[\"get\", \"%s\"], "
-      + "[\"match\", [\"get\", \"name_script\"], \"Latin\", [\"get\", \"name\"], [\"get\", \"name_en\"]], "
-      + "[\"get\", \"name\"]]"
+    private val EXPRESSION_V8_TEMPLATE_BASE = "${get("name_en").toJson()},${get("name").toJson()}"
+    private val EXPRESSION_V8_REGEX_LOCALIZED = Regex(
+      "\\[\"match\",\"(name|name_.{2,7})\","
+        + "\"name_zh-Hant\",\\[\"coalesce\","
+        + "\\[\"get\",\"name_zh-Hant\"],"
+        + "\\[\"get\",\"name_zh-Hans\"],"
+        + "\\[\"match\",\\[\"get\",\"name_script\"],\"Latin\",\\[\"get\",\"name\"],\\[\"get\",\"name_en\"]],"
+        + "\\[\"get\",\"name\"]],"
+        + "\\[\"coalesce\","
+        + "\\[\"get\",\"(name|name_.{2,7})\"],"
+        + "\\[\"match\",\\[\"get\",\"name_script\"],\"Latin\",\\[\"get\",\"name\"],\\[\"get\",\"name_en\"]],"
+        + "\\[\"get\",\"name\"]]"
+        + "]"
+    )
+    private const val EXPRESSION_V8_TEMPLATE_LOCALIZED = ("[\"match\",\"%s\","
+      + "\"name_zh-Hant\",[\"coalesce\","
+      + "[\"get\",\"name_zh-Hant\"],"
+      + "[\"get\",\"name_zh-Hans\"],"
+      + "[\"match\",[\"get\",\"name_script\"],\"Latin\",[\"get\",\"name\"],[\"get\",\"name_en\"]],"
+      + "[\"get\",\"name\"]],"
+      + "[\"coalesce\","
+      + "[\"get\",\"%s\"],"
+      + "[\"match\",[\"get\",\"name_script\"],\"Latin\",[\"get\",\"name\"],[\"get\",\"name_en\"]],"
+      + "[\"get\",\"name\"]]"
       + "]")
 
     // faulty step expression workaround
-    private const val STEP_REGEX = "\\[\"zoom\"], "
-    private const val STEP_TEMPLATE = "[\"zoom\"], \"\", "
+    private const val STEP_REGEX = "\\[\"zoom\"],"
+    private const val STEP_TEMPLATE = "[\"zoom\"],\"\","
   }
 }
 
