@@ -91,7 +91,7 @@ class MapInitOptionsTest {
   fun defaultResourceOptions() {
     val mapboxMapOptions = MapInitOptions(context)
     assertEquals("token", mapboxMapOptions.resourceOptions.accessToken)
-    assertTrue(mapboxMapOptions.resourceOptions.dataPath!!.endsWith("foobar/.mapbox/maps"))
+    assertTrue(mapboxMapOptions.resourceOptions.dataPath!!.endsWith("foobar/.mapbox/maps/"))
   }
 
   @Test

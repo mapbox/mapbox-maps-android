@@ -11,7 +11,7 @@ import java.util.*
  *
  * The application must have sufficient permissions to create files within the provided directory.
  */
-const val DATA_PATH = ".mapbox/maps"
+const val DATA_PATH = ".mapbox/maps/"
 
 /**
  * Default Locale for data processing (ex: String.toLowerCase(com.mapbox.maps.getMAPBOX_LOCALE, "foo"))

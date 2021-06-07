@@ -66,7 +66,7 @@ class ResourceOptionsManagerTest {
   fun getDefaultTest() {
     var defaultResourceOptionsManager = ResourceOptionsManager.getDefault(context)
     assertEquals("token", defaultResourceOptionsManager.resourceOptions.accessToken)
-    Assert.assertTrue(defaultResourceOptionsManager.resourceOptions.dataPath!!.endsWith("/.mapbox/maps"))
+    Assert.assertTrue(defaultResourceOptionsManager.resourceOptions.dataPath!!.endsWith(DATA_PATH))
 
     defaultResourceOptionsManager = ResourceOptionsManager.getDefault(context, "newToken")
     assertEquals("newToken", defaultResourceOptionsManager.resourceOptions.accessToken)
@@ -102,6 +102,6 @@ class ResourceOptionsManagerTest {
     ResourceOptionsManager.destroyDefault()
     defaultResourceOptionsManager = ResourceOptionsManager.getDefault(context)
     assertEquals("token", defaultResourceOptionsManager.resourceOptions.accessToken)
-    Assert.assertTrue(defaultResourceOptionsManager.resourceOptions.dataPath!!.endsWith("/.mapbox/maps"))
+    Assert.assertTrue(defaultResourceOptionsManager.resourceOptions.dataPath!!.endsWith(DATA_PATH))
   }
 }
