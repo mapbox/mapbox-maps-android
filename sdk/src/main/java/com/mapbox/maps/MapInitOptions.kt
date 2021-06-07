@@ -100,13 +100,13 @@ fun ResourceOptions.Builder.applyDefaultParams(
   context: Context
 ): ResourceOptions.Builder = also {
   // make sure that directory `/mapbox/maps` exists
-  val databaseDirectoryPath = "${context.filesDir.absolutePath}/$DATABASE_PATH"
-  val databaseDirectory = File(databaseDirectoryPath)
-  if (!databaseDirectory.exists()) {
-    if (!databaseDirectory.mkdirs()) {
-      throw IllegalStateException("Unable to create database folder")
-    }
-  }
+  val dataDirectoryPath = "${context.filesDir.absolutePath}/$DATA_PATH"
+//  val databaseDirectory = File(dataDirectoryPath)
+//  if (!databaseDirectory.exists()) {
+//    if (!databaseDirectory.mkdirs()) {
+//      throw IllegalStateException("Unable to create database folder")
+//    }
+//  }
 
   // check in the resources
   val tokenResId = ResourceOptionsManager.getTokenResId(context)
@@ -115,6 +115,5 @@ fun ResourceOptions.Builder.applyDefaultParams(
     accessToken(context.getString(tokenResId))
   }
 
-  cachePath("$databaseDirectoryPath/$DATABASE_NAME")
-  cacheSize(DEFAULT_CACHE_SIZE) // 50 mb
+  dataPath("$dataDirectoryPath")
 }

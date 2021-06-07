@@ -6,9 +6,6 @@
     <!-- An URL that defines the base for API requests. -->
     <public name="mapbox_resourcesBaseUrl" type="attr" />
 
-    <!-- The size of the cache. -->
-    <public name="mapbox_resourcesCacheSize" type="attr" />
-
     <!-- The map context mode. This can be used to optimizations if we know that the drawing context is not shared with other code. -->
     <public name="mapbox_mapContextMode" type="attr" />
 

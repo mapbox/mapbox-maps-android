@@ -85,23 +85,6 @@ class ResourceAttributeParserTest {
   }
 
   @Test
-  fun cacheSize() {
-    every {
-      typedArray.getFloat(
-        R.styleable.mapbox_MapView_mapbox_resourcesCacheSize,
-        any()
-      )
-    } returns 1234F
-    assertEquals(
-      1234L,
-      ResourcesAttributeParser.parseResourcesOptions(
-        context,
-        typedArray
-      ).cacheSize
-    )
-  }
-
-  @Test
   fun baseUrl() {
     every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesBaseUrl) } returns "mapbox.be"
     assertEquals(
