@@ -1,6 +1,5 @@
 package com.mapbox.maps.plugin.localization
 
-import com.mapbox.bindgen.Value
 import com.mapbox.common.Logger
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleObjectInfo
@@ -9,6 +8,8 @@ import com.mapbox.maps.extension.style.expressions.dsl.generated.get
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
 import com.mapbox.maps.extension.style.layers.getLayerAs
+import com.mapbox.maps.extension.style.sources.generated.VectorSource
+import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.toJson
 import java.util.*
@@ -19,50 +20,76 @@ import java.util.*
 class LocalizationPluginImpl : LocalizationPlugin {
   private var mapLocale: MapLocale? = null
   private var styleDelegate: StyleInterface? = null
+
+  /**
+   * Initializing this plugin and then calling this method oftentimes will be the only thing you'll
+   * need to quickly adjust the map language to the devices specified language.
+   *
+   * @param acceptFallback whether the locale should fallback to the first declared that matches the language,
+   * the fallback locale can be added with [MapLocale#addMapLocale(Locale, MapLocale)], default is false.
+   */
   override fun matchMapLanguageWithDeviceDefault(acceptFallback: Boolean) {
-    setMapLanguage(Locale.getDefault())
+    setMapLanguage(Locale.getDefault(), acceptFallback)
   }
 
+  /**
+   * Set the map language directly by using one of the supported map languages found in
+   * [Languages].
+   *
+   * @param language one of the support languages Mapbox uses
+   */
   override fun setMapLanguage(language: Languages) {
     setMapLanguage(MapLocale(language))
   }
 
+  /**
+   * If you'd like to set the map language to a specific locale, you can pass it in as a parameter
+   * and MapLocale will try matching the information with one of the MapLocales found in its map.
+   * If one isn't found, a null point exception will be thrown. To prevent this, ensure that the
+   * locale you are trying to use, has a complementary [MapLocale] for it.
+   *
+   * @param locale a [Locale] which has a complementary [MapLocale] for it
+   * @param acceptFallback whether the locale should fallback to the first declared that matches the language,
+   * the fallback locale can be added with [MapLocale.addMapLocale], default is false.
+   */
   override fun setMapLanguage(locale: Locale, acceptFallback: Boolean) {
-    val mapLocale = MapLocale.getMapLocale(locale, acceptFallback)
-    if (mapLocale != null) {
-      setMapLanguage(mapLocale)
-    } else {
-      Logger.d(TAG, "Couldn't match Locale $locale ${locale.displayName} to a MapLocale")
+    MapLocale.getMapLocale(locale, acceptFallback)?.let {
+      setMapLanguage(it)
+      return
     }
+    Logger.w(TAG, "Couldn't match Locale $locale ${locale.displayName} to a MapLocale")
   }
 
+  /**
+   * You can pass in a []MapLocale] directly into this method which uses the language defined
+   * in it to represent the language found on the map.
+   *
+   * @param mapLocale the [MapLocale] object which contains the desired map language
+   */
   override fun setMapLanguage(mapLocale: MapLocale) {
     this.mapLocale = mapLocale
     styleDelegate?.let { style ->
-      for (source in style.styleSources) {
-        if (sourceIsFromMapbox(style, source)) {
-          val isStreetsV8: Boolean = sourceIsStreetsV8(style, source)
-          for (layer in style.styleLayers) {
-            if (layer.type == "symbol") {
+      style.styleSources
+        .filter { sourceIsFromMapbox(style, it) }
+        .forEach { source ->
+          style.styleLayers
+            .filter { it.type == LAYER_TYPE_SYMBOL }
+            .forEach { layer ->
               val symbolLayer = style.getLayerAs<SymbolLayer>(layer.id)
-              val textFieldExpression = symbolLayer.textFieldAsExpression
-              textFieldExpression?.let {
-                if (isStreetsV8) {
+              symbolLayer.textFieldAsExpression?.let { textFieldExpression ->
+                if (sourceIsStreetsV8(style, source)) {
                   convertExpressionV8(mapLocale, symbolLayer, textFieldExpression)
                 } else {
-                  val isStreetsV7: Boolean = sourceIsStreetsV7(style, source)
-                  convertExpression(mapLocale, symbolLayer, textFieldExpression, isStreetsV7)
+                  convertExpression(
+                    mapLocale,
+                    symbolLayer,
+                    textFieldExpression,
+                    sourceIsStreetsV7(style, source)
+                  )
                 }
               }
             }
-          }
-        } else {
-          Logger.d(
-            TAG,
-            "The source ${source.id} is not based on Mapbox Vector Tiles. Supported sources:\n $SUPPORTED_SOURCES"
-          )
         }
-      }
     }
   }
 
@@ -140,37 +167,27 @@ class LocalizationPluginImpl : LocalizationPlugin {
 
   private fun sourceIsFromMapbox(style: StyleInterface, source: StyleObjectInfo): Boolean {
     for (supportedSource in SUPPORTED_SOURCES) {
-      if (sourceIsTheType(style, source, supportedSource)) {
+      if (sourceIsType(style, source, supportedSource)) {
         return true
       }
     }
+    Logger.w(
+      TAG,
+      "The source ${source.id} is not based on Mapbox Vector Tiles. Supported sources:\n $SUPPORTED_SOURCES"
+    )
     return false
   }
 
   private fun sourceIsStreetsV7(style: StyleInterface, source: StyleObjectInfo): Boolean =
-    sourceIsTheType(style, source, STREET_V7)
+    sourceIsType(style, source, STREET_V7)
 
   private fun sourceIsStreetsV8(style: StyleInterface, source: StyleObjectInfo): Boolean =
-    sourceIsTheType(
-      style, source,
-      STREET_V8
-    )
+    sourceIsType(style, source, STREET_V8)
 
-  private fun sourceIsTheType(
-    style: StyleInterface,
-    source: StyleObjectInfo,
-    type: String
-  ): Boolean {
-    if (source.type == "vector") {
-      val expected = style.getStyleSourceProperties(source.id)
-      expected.value?.let { value ->
-        @Suppress("UNCHECKED_CAST")
-        val map = value.contents as HashMap<String, Value>
-        map["url"]?.contents?.let { url ->
-          if ((url as String).contains(type)) {
-            return true
-          }
-        }
+  private fun sourceIsType(style: StyleInterface, source: StyleObjectInfo, type: String): Boolean {
+    if (source.type == SOURCE_TYPE_VECTOR) {
+      style.getSourceAs<VectorSource>(source.id)?.url?.let{
+        return it.contains(type)
       }
     }
     return false
@@ -178,6 +195,8 @@ class LocalizationPluginImpl : LocalizationPlugin {
 
   companion object {
     private const val TAG = "LocalizationPluginImpl"
+    private const val SOURCE_TYPE_VECTOR = "vector"
+    private const val LAYER_TYPE_SYMBOL = "symbol"
     private const val STREET_V6 = "mapbox.mapbox-streets-v6"
     private const val STREET_V7 = "mapbox.mapbox-streets-v7"
     private const val STREET_V8 = "mapbox.mapbox-streets-v8"
