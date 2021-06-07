@@ -41,8 +41,7 @@ class ResourceAttributeParserTest {
       ResourcesAttributeParser.parseResourcesOptions(context, typedArray)
     assertEquals("pk.foobar", resourceOptions.accessToken)
     assertEquals(null, resourceOptions.baseURL)
-    assertEquals("/foobar/.mapbox/maps/ambient_cache.db", resourceOptions.cachePath)
-    assertEquals(99L, resourceOptions.cacheSize)
+    assertEquals("/foobar/.mapbox/maps", resourceOptions.dataPath)
   }
 
   @Test
@@ -81,7 +80,7 @@ class ResourceAttributeParserTest {
   fun cachePath() {
     val resourceOptions =
       ResourcesAttributeParser.parseResourcesOptions(context, typedArray)
-    assertEquals("/foobar/.mapbox/maps/ambient_cache.db", resourceOptions.cachePath)
+    assertEquals("/foobar/.mapbox/maps", resourceOptions.dataPath)
   }
 
   @Test
