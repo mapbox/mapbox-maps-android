@@ -146,18 +146,6 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.CacheManagementActivity"
-            android:description="@string/description_cache_management"
-            android:exported="true"
-            android:label="@string/activity_cache_management">
-            <meta-data
-                android:name="@string/category"
-                android:value="@string/category_integration" />
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ExampleOverviewActivity" />
-        </activity>
-        <activity
             android:name=".examples.GesturesActivity"
             android:description="@string/description_gestures"
             android:exported="true"

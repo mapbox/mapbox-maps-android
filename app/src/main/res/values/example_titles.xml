@@ -8,7 +8,6 @@
     <string name="activity_heatmap_layer">Heatmap Layer</string>
     <string name="activity_default_styles">Change the map\'s style</string>
     <string name="activity_map_recycle">RecyclerView</string>
-    <string name="activity_cache_management">Cache Manager</string>
     <string name="activity_gestures">Gestures</string>
     <string name="activity_raw_expression">Raw Expression</string>
     <string name="activity_raw_geojson">Raw GeoJSON</string>
