@@ -114,7 +114,7 @@ class StyleExtensionImpl private constructor(
      *
      * Apply +[Terrain] will add the terrain to the [StyleExtensionImpl].
      */
-    @JvmName("addTerrain")
+    @JvmName("setTerrain")
     operator fun Terrain.unaryPlus() {
       terrain = this
     }

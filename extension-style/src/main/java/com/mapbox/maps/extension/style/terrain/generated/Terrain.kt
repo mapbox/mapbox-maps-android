@@ -177,11 +177,11 @@ fun StyleInterface.getTerrain(sourceId: String): Terrain {
 }
 
 /**
- * Extension function to add a Terrain provided by the Style Extension to the Style.
+ * Extension function to set the Terrain provided by the Style Extension to the Style.
  *
- * @param terrain The terrain to be added
+ * @param terrain The terrain to be set
  */
-fun StyleInterface.addTerrain(terrain: StyleContract.StyleTerrainExtension) {
+fun StyleInterface.setTerrain(terrain: StyleContract.StyleTerrainExtension) {
   terrain.bindTo(this)
 }
 
