@@ -20,11 +20,6 @@
     <string name="pan_scroll_horizontal">Pan scroll horizontal</string>
     <string name="pan_scroll_vertical">Pan scroll vertical</string>
 
-    <!--Cache Manager-->
-    <string name="menu_cache_clear">Clear ambient cache</string>
-    <string name="menu_cache_invalidate">Invalidate ambient cache</string>
-    <string name="menu_cache_maximum">Change cache size</string>
-
     <!--Search-->
     <string name="search_edittext_hint">Search for examples here</string>
     <string name="clear_search_imageview_content_description">Clear example search button</string>
