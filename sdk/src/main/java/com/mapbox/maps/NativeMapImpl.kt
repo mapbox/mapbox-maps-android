@@ -120,6 +120,14 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.getElevation(point)
   }
 
+  override fun setRenderCacheOptions(options: RenderCacheOptions) {
+    map.renderCacheOptions = options
+  }
+
+  override fun getRenderCacheOptions(): RenderCacheOptions {
+    return map.renderCacheOptions
+  }
+
   override fun coordinateBoundsForCamera(cameraOptions: CameraOptions): CoordinateBounds {
     return map.coordinateBoundsForCamera(cameraOptions)
   }
