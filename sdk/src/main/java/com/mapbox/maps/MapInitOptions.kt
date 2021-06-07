@@ -3,7 +3,6 @@ package com.mapbox.maps
 import android.content.Context
 import android.util.AttributeSet
 import com.mapbox.maps.plugin.*
-import java.io.File
 
 /**
  * Defines configuration [MapInitOptions] for a [MapboxMap]. These options can be used when adding a
@@ -99,15 +98,6 @@ fun MapOptions.Builder.applyDefaultParams(context: Context): MapOptions.Builder 
 fun ResourceOptions.Builder.applyDefaultParams(
   context: Context
 ): ResourceOptions.Builder = also {
-  // make sure that directory `/mapbox/maps` exists
-  val dataDirectoryPath = "${context.filesDir.absolutePath}/$DATA_PATH"
-//  val databaseDirectory = File(dataDirectoryPath)
-//  if (!databaseDirectory.exists()) {
-//    if (!databaseDirectory.mkdirs()) {
-//      throw IllegalStateException("Unable to create database folder")
-//    }
-//  }
-
   // check in the resources
   val tokenResId = ResourceOptionsManager.getTokenResId(context)
   // Apply the token from resources.
@@ -115,5 +105,5 @@ fun ResourceOptions.Builder.applyDefaultParams(
     accessToken(context.getString(tokenResId))
   }
 
-  dataPath("$dataDirectoryPath")
+  dataPath("${context.filesDir.absolutePath}/$DATA_PATH")
 }
