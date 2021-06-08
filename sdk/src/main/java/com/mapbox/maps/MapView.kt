@@ -97,8 +97,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       },
       resolvedMapInitOptions
     )
-    // render cache disabled explicitly by default
-    mapController.setRenderCache(RenderCache.Disabled)
     addView(view, 0)
     mapController.initializePlugins(resolvedMapInitOptions, this)
   }
@@ -164,22 +162,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    */
   override fun onSizeChanged(w: Int, h: Int) {
     mapController.onSizeChanged(w, h)
-  }
-
-  /**
-   * Render cache is introduced to store intermediate rendering results of tiles into cache textures
-   * to be reused in future frames.
-   * It's considerably smaller effort from the GPU to render quads with single texture lookups
-   * rather than rendering geometries of individual layers and tiles separately.
-   *
-   * Using render cache may bring improvement to rendering performance
-   * and reduce communication between CPU and GPU.
-   *
-   * @param cache [RenderCache] to apply to given [MapView].
-   */
-  @MapboxExperimental
-  override fun setRenderCache(cache: RenderCache) {
-    mapController.setRenderCache(cache)
   }
 
   /**
