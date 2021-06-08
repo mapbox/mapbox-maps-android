@@ -296,7 +296,7 @@ class OfflineActivity : AppCompatActivity() {
     offlineManager.removeStylePack(Style.OUTDOORS)
 
     // Fixme add method to clear cached data(style pack)
-    File(ResourceOptionsManager.getDefault(this).resourceOptions.dataPath).listFiles().forEach { it.delete() }
+    File("${this.filesDir.absolutePath}/.mapbox/map_data/map_data.db").delete()
 
     // Reset progressbar.
     updateStylePackDownloadProgress(0, 0)

@@ -5,8 +5,8 @@ import com.mapbox.common.TileStore
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.After
-import org.junit.Assert
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -66,7 +66,7 @@ class ResourceOptionsManagerTest {
   fun getDefaultTest() {
     var defaultResourceOptionsManager = ResourceOptionsManager.getDefault(context)
     assertEquals("token", defaultResourceOptionsManager.resourceOptions.accessToken)
-    Assert.assertTrue(defaultResourceOptionsManager.resourceOptions.dataPath!!.endsWith(DATA_PATH))
+    assertNull(defaultResourceOptionsManager.resourceOptions.dataPath)
 
     defaultResourceOptionsManager = ResourceOptionsManager.getDefault(context, "newToken")
     assertEquals("newToken", defaultResourceOptionsManager.resourceOptions.accessToken)
@@ -102,6 +102,6 @@ class ResourceOptionsManagerTest {
     ResourceOptionsManager.destroyDefault()
     defaultResourceOptionsManager = ResourceOptionsManager.getDefault(context)
     assertEquals("token", defaultResourceOptionsManager.resourceOptions.accessToken)
-    Assert.assertTrue(defaultResourceOptionsManager.resourceOptions.dataPath!!.endsWith(DATA_PATH))
+    assertNull(defaultResourceOptionsManager.resourceOptions.dataPath)
   }
 }

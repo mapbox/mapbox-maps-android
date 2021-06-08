@@ -5,6 +5,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -37,7 +38,8 @@ class MapboxMapIntegrationTest {
     val defaultOptions = MapInitOptions.getDefaultResourceOptions(mapView.context)
     val currentOptions = mapboxMap.getResourceOptions()
     assertEquals(defaultOptions.accessToken, currentOptions.accessToken)
-    assertEquals(defaultOptions.dataPath, currentOptions.dataPath)
+    assertNull(defaultOptions.dataPath)
+    assertEquals("${mapView.context.filesDir.absolutePath}/.mapbox/map_data/", currentOptions.dataPath)
   }
 
   @UiThreadTest

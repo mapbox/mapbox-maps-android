@@ -104,6 +104,4 @@ fun ResourceOptions.Builder.applyDefaultParams(
   if (tokenResId != 0) {
     accessToken(context.getString(tokenResId))
   }
-
-  dataPath("${context.filesDir.absolutePath}/$DATA_PATH")
 }
