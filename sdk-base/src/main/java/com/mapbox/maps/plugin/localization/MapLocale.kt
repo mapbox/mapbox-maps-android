@@ -54,7 +54,7 @@ data class MapLocale(val mapLanguage: Languages) {
     /**
      * Useful constant for CHINA.
      */
-    val CHINA: MapLocale = MapLocale(Languages.CHINESE)
+    val CHINA: MapLocale = MapLocale(Languages.SIMPLIFIED_CHINESE)
 
     /**
      * Useful constant for TAIWAN.

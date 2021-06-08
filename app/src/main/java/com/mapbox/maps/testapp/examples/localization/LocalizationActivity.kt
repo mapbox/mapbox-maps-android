@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.extension.style.localizeLabels
 import com.mapbox.maps.plugin.localization.Languages
 import com.mapbox.maps.plugin.localization.LocalizationPlugin
 import com.mapbox.maps.plugin.localization.MapLocale
@@ -17,9 +18,9 @@ import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import kotlinx.android.synthetic.main.activity_map_localization.*
 import kotlinx.android.synthetic.main.activity_map_overlay.*
 import kotlinx.android.synthetic.main.activity_map_overlay.mapView
+import java.util.*
 
 class LocalizationActivity : AppCompatActivity() {
-  private lateinit var localizationPlugin: LocalizationPlugin
   private lateinit var mapboxMap: MapboxMap
   private var mapIsLocalized: Boolean = false
   private var index: Int = 0
@@ -27,27 +28,27 @@ class LocalizationActivity : AppCompatActivity() {
     get() {
       return AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]
     }
-
+  private lateinit var locale:Locale
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_map_localization)
+    locale = resources.configuration.locale
     mapIsLocalized = true
     Toast.makeText(this, R.string.change_language_instruction, Toast.LENGTH_LONG).show()
     mapboxMap = mapView.getMapboxMap()
     mapboxMap.loadStyleUri(nextStyle) {
-      localizationPlugin = mapView.localization()
-      localizationPlugin.matchMapLanguageWithDeviceDefault()
+      it.localizeLabels(locale)
     }
     fabStyles.setOnClickListener {
       mapboxMap.loadStyleUri(nextStyle)
     }
     fabLocalize.setOnClickListener {
       mapIsLocalized = if (mapIsLocalized) {
-        localizationPlugin.setMapLanguage(MapLocale(Languages.FRENCH))
+        mapboxMap.getStyle()?.localizeLabels(Locale.FRANCE)
         Toast.makeText(this, R.string.map_not_localized, Toast.LENGTH_SHORT).show()
         false
       } else {
-        localizationPlugin.matchMapLanguageWithDeviceDefault()
+        mapboxMap.getStyle()?.localizeLabels(locale)
         Toast.makeText(this, R.string.map_localized, Toast.LENGTH_SHORT).show()
         true
       }
@@ -62,59 +63,58 @@ class LocalizationActivity : AppCompatActivity() {
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
       R.id.english -> {
-        localizationPlugin.setMapLanguage(Languages.ENGLISH)
+        mapboxMap.getStyle()?.localizeLabels(Locale.ENGLISH)
         return true
       }
       R.id.spanish -> {
-        localizationPlugin.setMapLanguage(Languages.SPANISH)
+        mapboxMap.getStyle()?.localizeLabels(Locale("es", "ES"))
         return true
       }
       R.id.french -> {
-        localizationPlugin.setMapLanguage(Languages.FRENCH)
+         mapboxMap.getStyle()?.localizeLabels(Locale.FRENCH)
         return true
       }
       R.id.german -> {
-        localizationPlugin.setMapLanguage(Languages.GERMAN)
+         mapboxMap.getStyle()?.localizeLabels(Locale.GERMAN)
         return true
       }
       R.id.russian -> {
-        localizationPlugin.setMapLanguage(Languages.RUSSIAN)
+        mapboxMap.getStyle()?.localizeLabels(Locale("ru", "RU"))
         return true
       }
       R.id.chinese -> {
-        localizationPlugin.setMapLanguage(Languages.CHINESE)
+         mapboxMap.getStyle()?.localizeLabels(Locale.CHINESE)
         return true
       }
       R.id.simplified_chinese -> {
-        localizationPlugin.setMapLanguage(Languages.SIMPLIFIED_CHINESE)
+         mapboxMap.getStyle()?.localizeLabels(Locale.SIMPLIFIED_CHINESE)
         return true
       }
       R.id.portuguese -> {
-        localizationPlugin.setMapLanguage(Languages.PORTUGUESE)
+        mapboxMap.getStyle()?.localizeLabels(Locale("pt", "PT"))
         return true
       }
       R.id.arabic -> {
-        localizationPlugin.setMapLanguage(Languages.ARABIC)
         return true
       }
       R.id.japanese -> {
-        localizationPlugin.setMapLanguage(Languages.JAPANESE)
+         mapboxMap.getStyle()?.localizeLabels(Locale.JAPANESE)
         return true
       }
       R.id.korean -> {
-        localizationPlugin.setMapLanguage(Languages.KOREAN)
+         mapboxMap.getStyle()?.localizeLabels(Locale.KOREAN)
         return true
       }
       R.id.vietnamese -> {
-        localizationPlugin.setMapLanguage(Languages.VIETNAMESE)
+        mapboxMap.getStyle()?.localizeLabels(Locale("vi", "VN"))
         return true
       }
       R.id.italian -> {
-        localizationPlugin.setMapLanguage(Languages.ITALIAN)
+         mapboxMap.getStyle()?.localizeLabels(Locale.ITALIAN)
         return true
       }
       R.id.local -> {
-        localizationPlugin.setMapLanguage(Languages.LOCAL_NAME)
+         mapboxMap.getStyle()?.localizeLabels(locale)
         return true
       }
       android.R.id.home -> {
