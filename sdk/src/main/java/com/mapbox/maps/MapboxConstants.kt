@@ -5,15 +5,6 @@ package com.mapbox.maps
 import java.util.*
 
 /**
- * The path to the map data folder. The DATA_PATH will be relative(appended) to the application's files directory.
- *
- * The implementation will use this folder for storing offline style packages and temporary data.
- *
- * The application must have sufficient permissions to create files within the provided directory.
- */
-const val DATA_PATH = ".mapbox/maps/"
-
-/**
  * Default Locale for data processing (ex: String.toLowerCase(com.mapbox.maps.getMAPBOX_LOCALE, "foo"))
  */
 val MAPBOX_LOCALE: Locale = Locale.US

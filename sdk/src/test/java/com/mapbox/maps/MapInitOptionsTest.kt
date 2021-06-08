@@ -7,8 +7,7 @@ import com.mapbox.maps.plugin.*
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -91,7 +90,7 @@ class MapInitOptionsTest {
   fun defaultResourceOptions() {
     val mapboxMapOptions = MapInitOptions(context)
     assertEquals("token", mapboxMapOptions.resourceOptions.accessToken)
-    assertTrue(mapboxMapOptions.resourceOptions.dataPath!!.endsWith("foobar/.mapbox/maps/"))
+    assertNull(mapboxMapOptions.resourceOptions.dataPath)
   }
 
   @Test

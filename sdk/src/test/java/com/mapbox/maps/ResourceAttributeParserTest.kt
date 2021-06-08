@@ -7,6 +7,7 @@ import io.mockk.every
 import io.mockk.mockk
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 import java.io.File
@@ -40,8 +41,8 @@ class ResourceAttributeParserTest {
     val resourceOptions =
       ResourcesAttributeParser.parseResourcesOptions(context, typedArray)
     assertEquals("pk.foobar", resourceOptions.accessToken)
-    assertEquals(null, resourceOptions.baseURL)
-    assertEquals("/foobar/.mapbox/maps/", resourceOptions.dataPath)
+    assertNull(resourceOptions.baseURL)
+    assertNull(resourceOptions.dataPath)
   }
 
   @Test
@@ -80,7 +81,7 @@ class ResourceAttributeParserTest {
   fun cachePath() {
     val resourceOptions =
       ResourcesAttributeParser.parseResourcesOptions(context, typedArray)
-    assertEquals("/foobar/.mapbox/maps/", resourceOptions.dataPath)
+    assertNull(resourceOptions.dataPath)
   }
 
   @Test
