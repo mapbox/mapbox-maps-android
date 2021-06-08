@@ -28,7 +28,7 @@ class MapViewCustomizationActivity : AppCompatActivity() {
       it.setOption(
         TileStoreOptions.MAPBOX_ACCESS_TOKEN,
         TileDataDomain.MAPS,
-        Value(getString(R.string.mapbox_access_token))
+        Value(ResourceOptionsManager.getDefault(this).resourceOptions.accessToken)
       )
     }
   }

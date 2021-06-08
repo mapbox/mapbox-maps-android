@@ -26,7 +26,14 @@ class OfflineTest {
 
   private val handler = Handler(Looper.getMainLooper())
   private val tileStore: TileStore by lazy {
-    TileStore.create()
+    TileStore.create().also {
+      // Users need to make sure the custom TileStore is initialised properly with valid access token
+      it.setOption(
+        TileStoreOptions.MAPBOX_ACCESS_TOKEN,
+        TileDataDomain.MAPS,
+        Value(ResourceOptionsManager.getDefault(InstrumentationRegistry.getInstrumentation().targetContext).resourceOptions.accessToken)
+      )
+    }
   }
   private val offlineManager: OfflineManager by lazy {
     OfflineManager(
