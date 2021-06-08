@@ -141,6 +141,9 @@ commands:
           command: |
             curl -Ls https://mapbox-release-engineering.s3.amazonaws.com/mbx-ci/latest/mbx-ci-linux-amd64 > mbx-ci && chmod 755 ./mbx-ci
             ./mbx-ci aws setup
+            echo "export GITHUB_TOKEN=$(./mbx-ci github reader token)" >> $BASH_ENV
+            source $BASH_ENV
+            echo $BASH_ENV
 
   generate-docs:
     steps:
@@ -149,7 +152,6 @@ commands:
           command: |
             export CIRCLE_TAG=android-v10.0.0-test
             if [[ $CIRCLE_TAG == android-v* ]]; then
-              echo "$(./mbx-ci github writer token)" > gh_token.txt
               git config --global user.email no-reply@mapbox.com && git config --global user.name mapbox-ci
               ./scripts/update-android-docs.sh -s $CIRCLE_TAG
             fi
