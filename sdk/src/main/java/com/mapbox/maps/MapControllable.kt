@@ -41,20 +41,6 @@ interface MapControllable {
   fun onSizeChanged(w: Int, h: Int)
 
   /**
-   * Render cache is introduced to store intermediate rendering results of tiles into cache textures
-   * to be reused in future frames.
-   * It's considerably smaller effort from the GPU to render quads with single texture lookups
-   * rather than rendering geometries of individual layers and tiles separately.
-   *
-   * Using render cache may bring improvement to rendering performance
-   * and reduce communication between CPU and GPU.
-   *
-   * @param cache [RenderCache] to apply to given [MapView].
-   */
-  @MapboxExperimental
-  fun setRenderCache(cache: RenderCache)
-
-  /**
    * Queue a runnable to be executed on the map renderer thread.
    *
    * @param event the runnable to queue

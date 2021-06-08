@@ -7,6 +7,7 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
+@MapboxExperimental
 class RenderCacheTest {
 
   @get:Rule
@@ -36,10 +37,10 @@ class RenderCacheTest {
   fun setDisabledRenderCache() {
     rule.scenario.onActivity {
       it.runOnUiThread {
-        mapView.setRenderCache(RenderCache.Disabled)
+        mapView.getMapboxMap().setRenderCacheOptions(RenderCacheOptions.Builder().setDisabled().build())
         Assert.assertEquals(
-          RenderCache.CACHE_DISABLED,
-          Settings.get(RenderCache.RENDER_CACHE_SETTING).contents as Long
+          RENDER_CACHE_DISABLED,
+          mapView.getMapboxMap().getRenderCacheOptions().size
         )
       }
     }
@@ -49,10 +50,10 @@ class RenderCacheTest {
   fun setSmallRenderCache() {
     rule.scenario.onActivity {
       it.runOnUiThread {
-        mapView.setRenderCache(RenderCache.Small)
+        mapView.getMapboxMap().setRenderCacheOptions(RenderCacheOptions.Builder().setSmallSize().build())
         Assert.assertEquals(
-          RenderCache.CACHE_SIZE_SMALL_MB,
-          Settings.get(RenderCache.RENDER_CACHE_SETTING).contents as Long
+          RENDER_CACHE_SIZE_SMALL_MB,
+          mapView.getMapboxMap().getRenderCacheOptions().size
         )
       }
     }
@@ -62,10 +63,10 @@ class RenderCacheTest {
   fun setLargeRenderCache() {
     rule.scenario.onActivity {
       it.runOnUiThread {
-        mapView.setRenderCache(RenderCache.Large)
+        mapView.getMapboxMap().setRenderCacheOptions(RenderCacheOptions.Builder().setLargeSize().build())
         Assert.assertEquals(
-          RenderCache.CACHE_SIZE_LARGE_MB,
-          Settings.get(RenderCache.RENDER_CACHE_SETTING).contents as Long
+          RENDER_CACHE_SIZE_LARGE_MB,
+          mapView.getMapboxMap().getRenderCacheOptions().size
         )
       }
     }
@@ -75,24 +76,26 @@ class RenderCacheTest {
   fun setCustomRenderCache() {
     rule.scenario.onActivity {
       it.runOnUiThread {
-        val customSize = 256L
-        mapView.setRenderCache(RenderCache.Custom(customSize))
+        val customSize = 256
+        mapView.getMapboxMap().setRenderCacheOptions(RenderCacheOptions.Builder().size(customSize).build())
         Assert.assertEquals(
-          customSize, Settings.get(RenderCache.RENDER_CACHE_SETTING).contents as Long
+          customSize,
+          mapView.getMapboxMap().getRenderCacheOptions().size
         )
       }
     }
   }
 
   @Test
+  @Ignore("TODO Uncomment after https://github.com/mapbox/mapbox-maps-android/issues/402")
   fun setInvalidRenderCache() {
     rule.scenario.onActivity {
       it.runOnUiThread {
-        val customSize = -1L
-        mapView.setRenderCache(RenderCache.Custom(customSize))
-        // render cache disabled by default now so checking for 0 here
+        val customSize = -1
+        mapView.getMapboxMap().setRenderCacheOptions(RenderCacheOptions.Builder().size(customSize).build())
         Assert.assertEquals(
-          0L, Settings.get(RenderCache.RENDER_CACHE_SETTING).contents as Long
+          0,
+          mapView.getMapboxMap().getRenderCacheOptions().size
         )
       }
     }
