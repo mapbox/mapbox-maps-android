@@ -5,7 +5,6 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
-import com.mapbox.maps.testapp.R
 
 /**
  * Activity to validate creating a snapshot from a configuration not using style URI or JSON
@@ -17,11 +16,7 @@ class LocalStyleMapSnapshotterActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val snapshotterOptions = MapSnapshotOptions.Builder()
       .resourceOptions(
-        ResourceOptions.Builder()
-          .accessToken(getString(R.string.mapbox_access_token))
-          .cachePath(filesDir.absolutePath + "/$DATABASE_NAME")
-          .cacheSize(50000L)
-          .build()
+        ResourceOptionsManager.getDefault(this).resourceOptions
       )
       .size(Size(512.0f, 512.0f))
       .pixelRatio(1.0f)

@@ -5,19 +5,13 @@ package com.mapbox.maps
 import java.util.*
 
 /**
- * Name of the database file.
+ * The path to the map data folder. The DATA_PATH will be relative(appended) to the application's files directory.
+ *
+ * The implementation will use this folder for storing offline style packages and temporary data.
+ *
+ * The application must have sufficient permissions to create files within the provided directory.
  */
-const val DATABASE_NAME = "ambient_cache.db"
-
-/**
- * Path of the database file.
- */
-const val DATABASE_PATH = ".mapbox/maps"
-
-/**
- * The default cache size, which is 50MB
- */
-const val DEFAULT_CACHE_SIZE = 1024 * 1024 * 50L
+const val DATA_PATH = ".mapbox/maps/"
 
 /**
  * Default Locale for data processing (ex: String.toLowerCase(com.mapbox.maps.getMAPBOX_LOCALE, "foo"))

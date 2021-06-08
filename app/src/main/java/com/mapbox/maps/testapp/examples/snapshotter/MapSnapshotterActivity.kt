@@ -8,7 +8,6 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.Snapshotter
 import com.mapbox.maps.bitmap
-import com.mapbox.maps.testapp.R
 
 /**
  * Example demonstrating taking simple snapshot using [Snapshotter].
@@ -21,11 +20,7 @@ class MapSnapshotterActivity : AppCompatActivity(), SnapshotStyleListener {
     super.onCreate(savedInstanceState)
     val snapshotterOptions = MapSnapshotOptions.Builder()
       .resourceOptions(
-        ResourceOptions.Builder()
-          .accessToken(getString(R.string.mapbox_access_token))
-          .cachePath(filesDir.absolutePath + "/$DATABASE_NAME")
-          .cacheSize(50000L)
-          .build()
+        ResourceOptionsManager.getDefault(this).resourceOptions
       )
       .size(Size(512.0f, 512.0f))
       .pixelRatio(1.0f)

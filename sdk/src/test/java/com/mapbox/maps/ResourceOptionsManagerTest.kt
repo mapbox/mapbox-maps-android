@@ -65,16 +65,11 @@ class ResourceOptionsManagerTest {
   @Test
   fun getDefaultTest() {
     var defaultResourceOptionsManager = ResourceOptionsManager.getDefault(context)
-    defaultResourceOptionsManager.update {
-      cacheSize(1000L)
-    }
     assertEquals("token", defaultResourceOptionsManager.resourceOptions.accessToken)
-    Assert.assertTrue(defaultResourceOptionsManager.resourceOptions.cachePath!!.endsWith("/.mapbox/maps/ambient_cache.db"))
-    assertEquals(1000L, ResourceOptionsManager.getDefault(context).resourceOptions.cacheSize)
+    Assert.assertTrue(defaultResourceOptionsManager.resourceOptions.dataPath!!.endsWith(DATA_PATH))
 
     defaultResourceOptionsManager = ResourceOptionsManager.getDefault(context, "newToken")
     assertEquals("newToken", defaultResourceOptionsManager.resourceOptions.accessToken)
-    assertEquals(1000L, ResourceOptionsManager.getDefault(context).resourceOptions.cacheSize)
   }
 
   @Test
@@ -89,16 +84,14 @@ class ResourceOptionsManagerTest {
   fun updateDefaultResourceOptionsManagerTest() {
     var defaultResourceOptionsManager = ResourceOptionsManager.getDefault(context)
     defaultResourceOptionsManager.update {
-      cacheSize(1000L)
       accessToken("abc")
-      cachePath("cachePath")
+      dataPath("cachePath")
       tileStore(tileStore)
       tileStoreUsageMode(TileStoreUsageMode.READ_AND_UPDATE)
       baseURL("baseUrl")
     }
     assertEquals("abc", ResourceOptionsManager.getDefault(context).resourceOptions.accessToken)
-    assertEquals("cachePath", ResourceOptionsManager.getDefault(context).resourceOptions.cachePath)
-    assertEquals(1000L, ResourceOptionsManager.getDefault(context).resourceOptions.cacheSize)
+    assertEquals("cachePath", ResourceOptionsManager.getDefault(context).resourceOptions.dataPath)
     assertEquals(tileStore, ResourceOptionsManager.getDefault(context).resourceOptions.tileStore)
     assertEquals(
       TileStoreUsageMode.READ_AND_UPDATE,
@@ -109,7 +102,6 @@ class ResourceOptionsManagerTest {
     ResourceOptionsManager.destroyDefault()
     defaultResourceOptionsManager = ResourceOptionsManager.getDefault(context)
     assertEquals("token", defaultResourceOptionsManager.resourceOptions.accessToken)
-    Assert.assertTrue(defaultResourceOptionsManager.resourceOptions.cachePath!!.endsWith("/.mapbox/maps/ambient_cache.db"))
-    assertEquals(DEFAULT_CACHE_SIZE, defaultResourceOptionsManager.resourceOptions.cacheSize)
+    Assert.assertTrue(defaultResourceOptionsManager.resourceOptions.dataPath!!.endsWith(DATA_PATH))
   }
 }

@@ -25,15 +25,6 @@ internal object ResourcesAttributeParser {
     if (typedArray.hasValue(R.styleable.mapbox_MapView_mapbox_resourcesBaseUrl)) {
       builder.baseURL(typedArray.getString(R.styleable.mapbox_MapView_mapbox_resourcesBaseUrl))
     }
-
-    if (typedArray.hasValue(R.styleable.mapbox_MapView_mapbox_resourcesCacheSize)) {
-      builder.cacheSize(
-        typedArray.getFloat(
-          R.styleable.mapbox_MapView_mapbox_resourcesCacheSize,
-          DEFAULT_CACHE_SIZE.toFloat() // 50 mb
-        ).toLong()
-      )
-    }
     return builder.build()
   }
 }

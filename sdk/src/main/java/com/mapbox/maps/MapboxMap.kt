@@ -33,7 +33,6 @@ import java.util.*
  * Note: Similar to a View object, a MapboxMap should only be read and modified
  * from the main thread.
  *
- *
  * @property style the map style.
  */
 class MapboxMap internal constructor(
@@ -1137,6 +1136,31 @@ class MapboxMap internal constructor(
    * @return Elevation (in meters) multiplied by current terrain exaggeration, or empty if elevation for the coordinate is not available.
    */
   fun getElevation(coordinate: Point) = nativeMapWeakRef.call { this.getElevation(coordinate) }
+
+  /**
+   * Enables or disables the experimental render cache feature.
+   *
+   * Render cache is an experimental feature aiming to reduce resource usage of map rendering
+   * by caching intermediate rendering results of tiles into specific cache textures for reuse between frames.
+   * Performance benefit of the cache depends on the style as not all layers are cacheable due to e.g.
+   * viewport aligned features. Render cache always prefers quality over performance.
+   *
+   * @param options Options defining the render cache behavior
+   */
+  @MapboxExperimental
+  fun setRenderCacheOptions(options: RenderCacheOptions) {
+    nativeMapWeakRef.call { this.renderCacheOptions = options }
+  }
+
+  /**
+   * Get the current RenderCacheOptions.
+   *
+   * The size of the render cache is in megabytes. Returned value is zero if the feature is disabled.
+   */
+  @MapboxExperimental
+  fun getRenderCacheOptions(): RenderCacheOptions {
+    return nativeMapWeakRef.call { this.renderCacheOptions }
+  }
 
   /**
    * Returns if the style has been fully loaded.

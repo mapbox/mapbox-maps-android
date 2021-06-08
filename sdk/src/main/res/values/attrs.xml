@@ -52,8 +52,6 @@
         <attr name="mapbox_resourcesAccessToken" format="string" />
         <!-- An URL that defines the base for API requests. -->
         <attr name="mapbox_resourcesBaseUrl" format="string" />
-        <!-- The size of the cache. -->
-        <attr name="mapbox_resourcesCacheSize" format="float" />
 
         <!-- Font family to use as font fallback for client-side text renderings. -->
         <attr name="mapbox_mapFontFamily" format="string" />

@@ -3,7 +3,10 @@ package com.mapbox.maps.testapp.examples
 import android.os.Bundle
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.bindgen.Value
+import com.mapbox.common.TileDataDomain
 import com.mapbox.common.TileStore
+import com.mapbox.common.TileStoreOptions
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.*
@@ -18,16 +21,26 @@ import kotlinx.android.synthetic.main.activity_map_view_customization.*
 class MapViewCustomizationActivity : AppCompatActivity() {
 
   private lateinit var customMapView: MapView
+  // Users should keep a reference to the customised tileStore instance (if there's any)
+  private val tileStore by lazy {
+    TileStore.create().also {
+      // Users need to make sure the custom TileStore is initialised properly with valid access token
+      it.setOption(
+        TileStoreOptions.MAPBOX_ACCESS_TOKEN,
+        TileDataDomain.MAPS,
+        Value(ResourceOptionsManager.getDefault(this).resourceOptions.accessToken)
+      )
+    }
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    // Set the application-scoped ResourceOptionsManager with customised token, tile store and tile size
+    // Set the application-scoped ResourceOptionsManager with customised token, tile store and tile store usage mode
     // so that all MapViews created with default config will apply these settings.
     ResourceOptionsManager.getDefault(this, getString(R.string.mapbox_access_token)).update {
-      tileStore(TileStore.getInstance())
+      tileStore(tileStore)
       tileStoreUsageMode(TileStoreUsageMode.READ_ONLY)
-      cacheSize(75_000L)
     }
 
     setContentView(R.layout.activity_map_view_customization)
@@ -59,7 +72,6 @@ class MapViewCustomizationActivity : AppCompatActivity() {
     // set token and cache size for this particular map view, these settings will overwrite the default value.
     val resourceOptions = ResourceOptions.Builder().applyDefaultParams(this)
       .accessToken(getString(R.string.mapbox_access_token))
-      .cacheSize(10_000L)
       .tileStoreUsageMode(TileStoreUsageMode.DISABLED)
       .build()
 
