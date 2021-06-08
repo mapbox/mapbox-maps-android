@@ -4,73 +4,68 @@
 
     <item
         android:id="@+id/english"
-        android:title="English"
+        android:title="@string/english"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/spanish"
-        android:title="Spanish"
+        android:title="@string/spanish"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/french"
-        android:title="French"
+        android:title="@string/french"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/german"
-        android:title="German"
+        android:title="@string/german"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/russian"
-        android:title="Russian"
+        android:title="@string/russian"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/chinese"
-        android:title="Chinese"
+        android:title="@string/chinese"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/simplified_chinese"
-        android:title="Simplified Chinese"
+        android:title="@string/simplified_chinese"
         app:showAsAction="never"/>
 
 
     <item
         android:id="@+id/portuguese"
-        android:title="Portuguese"
-        app:showAsAction="never"/>
-
-    <item
-        android:id="@+id/arabic"
-        android:title="Arabic"
+        android:title="@string/portuguese"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/japanese"
-        android:title="Japanese"
+        android:title="@string/japanese"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/korean"
-        android:title="Korean"
+        android:title="@string/korean"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/vietnamese"
-        android:title="Vietnamese"
+        android:title="@string/vietnamese"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/italian"
-        android:title="Italian"
+        android:title="@string/italian"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/local"
-        android:title="Local names"
+        android:title="@string/local_names"
         app:showAsAction="never"/>
 
 </menu>

@@ -188,22 +188,30 @@ internal class Localization {
 
     init {
       LOCALE_LANGUAGES_MAP[Locale.US] = Languages.ENGLISH
+      LOCALE_LANGUAGES_MAP[Locale.ENGLISH] = Languages.ENGLISH
       LOCALE_LANGUAGES_MAP[Locale.CANADA_FRENCH] = Languages.FRENCH
       LOCALE_LANGUAGES_MAP[Locale.CANADA] = Languages.ENGLISH
+      LOCALE_LANGUAGES_MAP[Locale.CHINA] = Languages.CHINESE
       LOCALE_LANGUAGES_MAP[Locale.CHINESE] = Languages.CHINESE
       LOCALE_LANGUAGES_MAP[Locale.SIMPLIFIED_CHINESE] = Languages.CHINESE_HANS
       LOCALE_LANGUAGES_MAP[Locale.TRADITIONAL_CHINESE] = Languages.CHINESE_HANT
+      LOCALE_LANGUAGES_MAP[Locale.TAIWAN] = Languages.CHINESE_HANT
       LOCALE_LANGUAGES_MAP[Locale.UK] = Languages.ENGLISH
+      LOCALE_LANGUAGES_MAP[Locale.JAPAN] = Languages.JAPANESE
       LOCALE_LANGUAGES_MAP[Locale.JAPANESE] = Languages.JAPANESE
+      LOCALE_LANGUAGES_MAP[Locale.KOREA] = Languages.KOREAN
       LOCALE_LANGUAGES_MAP[Locale.KOREAN] = Languages.KOREAN
+      LOCALE_LANGUAGES_MAP[Locale.GERMAN] = Languages.GERMANY
       LOCALE_LANGUAGES_MAP[Locale.GERMANY] = Languages.GERMANY
       LOCALE_LANGUAGES_MAP[Locale.FRENCH] = Languages.FRENCH
+      LOCALE_LANGUAGES_MAP[Locale.FRANCE] = Languages.FRENCH
       LOCALE_LANGUAGES_MAP[Locale("ru", "RU")] = Languages.RUSSIAN
       LOCALE_LANGUAGES_MAP[Locale("es", "ES")] = Languages.SPANISH
       LOCALE_LANGUAGES_MAP[Locale("pt", "PT")] = Languages.PORTUGUESE
       LOCALE_LANGUAGES_MAP[Locale("pt", "BR")] = Languages.PORTUGUESE
       LOCALE_LANGUAGES_MAP[Locale("vi", "VN")] = Languages.VIETNAMESE
       LOCALE_LANGUAGES_MAP[Locale.ITALY] = Languages.ITALIAN
+      LOCALE_LANGUAGES_MAP[Locale.ITALIAN] = Languages.ITALIAN
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
         val zh_CN_Hans =
           Locale.Builder().setLanguage("zh").setRegion("CN").setScript("Hans").build()

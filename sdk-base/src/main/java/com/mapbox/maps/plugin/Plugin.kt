@@ -36,7 +36,3 @@ const val PLUGIN_MAPOVERLAY_CLASS_NAME = "com.mapbox.maps.plugin.overlay.MapOver
  * Class name for annotation plugin.
  */
 const val PLUGIN_ANNOTATION_CLASS_NAME = "com.mapbox.maps.plugin.annotation.AnnotationPluginImpl"
-/**
- * Class name for localization plugin.
- */
-const val PLUGIN_LOCALIZATION_CLASS_NAME = "com.mapbox.maps.plugin.localization.LocalizationPluginImpl"

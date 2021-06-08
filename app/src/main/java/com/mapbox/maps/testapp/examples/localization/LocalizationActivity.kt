@@ -5,18 +5,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.style.localizeLabels
-import com.mapbox.maps.plugin.localization.Languages
-import com.mapbox.maps.plugin.localization.LocalizationPlugin
-import com.mapbox.maps.plugin.localization.MapLocale
-import com.mapbox.maps.plugin.localization.MapLocale.Companion.CANADA
-import com.mapbox.maps.plugin.localization.localization
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import kotlinx.android.synthetic.main.activity_map_localization.*
-import kotlinx.android.synthetic.main.activity_map_overlay.*
 import kotlinx.android.synthetic.main.activity_map_overlay.mapView
 import java.util.*
 
@@ -44,7 +37,7 @@ class LocalizationActivity : AppCompatActivity() {
     }
     fabLocalize.setOnClickListener {
       mapIsLocalized = if (mapIsLocalized) {
-        mapboxMap.getStyle()?.localizeLabels(Locale.FRANCE)
+        mapboxMap.getStyle()?.localizeLabels(Locale.FRENCH)
         Toast.makeText(this, R.string.map_not_localized, Toast.LENGTH_SHORT).show()
         false
       } else {
@@ -94,9 +87,6 @@ class LocalizationActivity : AppCompatActivity() {
         mapboxMap.getStyle()?.localizeLabels(Locale("pt", "PT"))
         return true
       }
-      R.id.arabic -> {
-        return true
-      }
       R.id.japanese -> {
          mapboxMap.getStyle()?.localizeLabels(Locale.JAPANESE)
         return true
@@ -143,25 +133,5 @@ class LocalizationActivity : AppCompatActivity() {
   override fun onDestroy() {
     super.onDestroy()
     mapView.onDestroy()
-  }
-
-  companion object {
-
-    private val LOCALES = arrayOf(
-      CANADA, MapLocale.GERMANY, MapLocale.CHINA,
-      MapLocale.US, MapLocale.CANADA_FRENCH, MapLocale.JAPAN, MapLocale.KOREA,
-      MapLocale.FRANCE, MapLocale.SPAIN, MapLocale.VIETNAM, MapLocale.ITALY, MapLocale.UK
-    )
-
-    private var index: Int = 0
-
-    val nextMapLocale: MapLocale
-      get() {
-        index++
-        if (index == LOCALES.size) {
-          index = 0
-        }
-        return LOCALES[index]
-      }
   }
 }
