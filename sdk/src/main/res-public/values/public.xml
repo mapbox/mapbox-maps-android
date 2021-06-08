@@ -49,5 +49,5 @@
     <public name="mapbox_cameraPaddingRight" type="attr"/>
 
     <!-- The default style uri to load when no style is set. -->
-    <attr name="mapbox_styleUri" format="string" />
+    <public name="mapbox_styleUri" type="attr" />
 </resources>
