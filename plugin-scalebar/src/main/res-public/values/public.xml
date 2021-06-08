@@ -6,7 +6,7 @@
     <public name="mapbox_scaleBarEnabled" type="attr" />
 
     <!-- Defines where the scale bar is positioned on the map -->
-    <public name="mapbox_scaleBarGravity" type="attr" >
+    <public name="mapbox_scaleBarGravity" type="attr" />
 
     <!-- Defines the margin to the left that the scale bar honors. -->
     <public name="mapbox_scaleBarMarginLeft" type="attr" />

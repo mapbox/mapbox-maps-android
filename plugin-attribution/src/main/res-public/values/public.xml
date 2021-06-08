@@ -9,7 +9,7 @@
     <public name="mapbox_attributionIconColor" type="attr" />
 
     <!-- Defines where the attribution icon is positioned on the map -->
-    <public name="mapbox_attributionGravity" type="attr" >
+    <public name="mapbox_attributionGravity" type="attr" />
 
     <!-- Defines the margin to the left that the attribution icon honors. -->
     <public name="mapbox_attributionMarginLeft" type="attr" />

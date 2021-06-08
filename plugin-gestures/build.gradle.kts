@@ -19,6 +19,11 @@ android {
       isIncludeAndroidResources = true
     }
   }
+
+  sourceSets {
+    // limit amount of exposed library resources
+    getByName("main").res.srcDirs("src/main/res-public")
+  }
 }
 
 dependencies {

@@ -35,6 +35,11 @@ android {
       execution = "ANDROIDX_TEST_ORCHESTRATOR"
     }
   }
+
+  sourceSets {
+    // limit amount of exposed library resources
+    getByName("main").res.srcDirs("src/main/res-public")
+  }
 }
 
 dependencies {
