@@ -6,22 +6,34 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.maps.MapboxMap
-import com.mapbox.maps.extension.style.localizeLabels
+import com.mapbox.maps.Style
+import com.mapbox.maps.extension.style.localization.localizeLabels
 import com.mapbox.maps.testapp.R
-import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import kotlinx.android.synthetic.main.activity_map_localization.*
 import kotlinx.android.synthetic.main.activity_map_overlay.mapView
 import java.util.*
 
+/**
+ * Example showcasing usage of localization.
+ */
 class LocalizationActivity : AppCompatActivity() {
   private lateinit var mapboxMap: MapboxMap
   private var mapIsLocalized: Boolean = false
   private var index: Int = 0
+  private val styles =
+    arrayOf(
+      Style.MAPBOX_STREETS,
+      "mapbox://styles/mapbox/streets-v10",
+      "mapbox://styles/mapbox/streets-v9",
+      "mapbox://styles/mapbox/streets-v8",
+      "mapbox://styles/mapbox/streets-v7"
+    )
+
   private val nextStyle: String
     get() {
-      return AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]
+      return styles[index++ % styles.size]
     }
-  private lateinit var locale:Locale
+  private lateinit var locale: Locale
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_map_localization)
@@ -33,7 +45,12 @@ class LocalizationActivity : AppCompatActivity() {
       it.localizeLabels(locale)
     }
     fabStyles.setOnClickListener {
-      mapboxMap.loadStyleUri(nextStyle)
+      val styleUri = nextStyle
+      mapboxMap.loadStyleUri(styleUri){
+        it.localizeLabels(locale)
+      }
+      Toast.makeText(this, styleUri, Toast.LENGTH_SHORT).show()
+
     }
     fabLocalize.setOnClickListener {
       mapIsLocalized = if (mapIsLocalized) {
@@ -64,11 +81,11 @@ class LocalizationActivity : AppCompatActivity() {
         return true
       }
       R.id.french -> {
-         mapboxMap.getStyle()?.localizeLabels(Locale.FRENCH)
+        mapboxMap.getStyle()?.localizeLabels(Locale.FRENCH)
         return true
       }
       R.id.german -> {
-         mapboxMap.getStyle()?.localizeLabels(Locale.GERMAN)
+        mapboxMap.getStyle()?.localizeLabels(Locale.GERMAN)
         return true
       }
       R.id.russian -> {
@@ -76,11 +93,11 @@ class LocalizationActivity : AppCompatActivity() {
         return true
       }
       R.id.chinese -> {
-         mapboxMap.getStyle()?.localizeLabels(Locale.CHINESE)
+        mapboxMap.getStyle()?.localizeLabels(Locale.CHINESE)
         return true
       }
       R.id.simplified_chinese -> {
-         mapboxMap.getStyle()?.localizeLabels(Locale.SIMPLIFIED_CHINESE)
+        mapboxMap.getStyle()?.localizeLabels(Locale.SIMPLIFIED_CHINESE)
         return true
       }
       R.id.portuguese -> {
@@ -88,11 +105,11 @@ class LocalizationActivity : AppCompatActivity() {
         return true
       }
       R.id.japanese -> {
-         mapboxMap.getStyle()?.localizeLabels(Locale.JAPANESE)
+        mapboxMap.getStyle()?.localizeLabels(Locale.JAPANESE)
         return true
       }
       R.id.korean -> {
-         mapboxMap.getStyle()?.localizeLabels(Locale.KOREAN)
+        mapboxMap.getStyle()?.localizeLabels(Locale.KOREAN)
         return true
       }
       R.id.vietnamese -> {
@@ -100,11 +117,11 @@ class LocalizationActivity : AppCompatActivity() {
         return true
       }
       R.id.italian -> {
-         mapboxMap.getStyle()?.localizeLabels(Locale.ITALIAN)
+        mapboxMap.getStyle()?.localizeLabels(Locale.ITALIAN)
         return true
       }
       R.id.local -> {
-         mapboxMap.getStyle()?.localizeLabels(locale)
+        mapboxMap.getStyle()?.localizeLabels(locale)
         return true
       }
       android.R.id.home -> {
