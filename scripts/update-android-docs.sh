@@ -128,7 +128,7 @@ function create_pull_request() {
   eval $CMD
 }
 
-#gh auth login --with-token < gh_token.txt
+gh auth login --with-token < gh_token.txt
 
 # Generate docs, create branch and make PR with API documentation in the SDK repo.
 generate_docs

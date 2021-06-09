@@ -141,9 +141,11 @@ commands:
           command: |
             curl -Ls https://mapbox-release-engineering.s3.amazonaws.com/mbx-ci/latest/mbx-ci-linux-amd64 > mbx-ci && chmod 755 ./mbx-ci
             ./mbx-ci aws setup
-            export GITHUB_TOKEN=$(./mbx-ci github writer token)
-            echo $GITHUB_TOKEN
             ./mbx-ci github writer opt-in mapbox-maps-android
+            ./mbx-ci github writer opt-in android-docs
+            export GITHUB_TOKEN=$(./mbx-ci github writer token)
+            echo "$GITHUB_TOKEN" > gh_token.txt
+            echo $GITHUB_TOKEN
 
   generate-docs:
     steps:
