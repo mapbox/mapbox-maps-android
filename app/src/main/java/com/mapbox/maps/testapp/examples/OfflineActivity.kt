@@ -152,8 +152,8 @@ class OfflineActivity : AppCompatActivity() {
     // A style pack (a Style offline package) contains the loaded style and its resources: loaded
     // sources, fonts, sprites. Style packs are identified with their style URI.
 
-    // Style packs are stored in the ambient cache database, but their resources are not subject to
-    // the data eviction algorithm and are not considered when calculating the ambient cache size.
+    // Style packs are stored in the disk cache database, but their resources are not subject to
+    // the data eviction algorithm and are not considered when calculating the disk cache size.
     val stylePackCancelable = offlineManager.loadStylePack(
       Style.OUTDOORS,
       // Build Style pack load options
@@ -292,7 +292,7 @@ class OfflineActivity : AppCompatActivity() {
 
     // Remove the style pack with the style url.
     // Note this will not remove the downloaded style pack, instead, it will just mark the resources
-    // not a part of the existing style pack. The resources still exists as ambient cache.
+    // not a part of the existing style pack. The resources still exists as disk cache.
     offlineManager.removeStylePack(Style.OUTDOORS)
 
     // Fixme add method to clear cached data(style pack)

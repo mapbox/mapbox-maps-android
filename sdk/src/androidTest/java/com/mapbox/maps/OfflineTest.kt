@@ -281,7 +281,7 @@ class OfflineTest {
   // but for now we could check for style loaded event only to style is loaded
   @Test
   fun resourceLoadingFromTileStoreAirplaneMode() {
-    disableAmbientCache()
+    disableDiskCache()
     loadTileStoreWithStylePack()
     val latch = CountDownLatch(2)
     var resourceRequests = 0
@@ -327,7 +327,7 @@ class OfflineTest {
 
   @Test
   fun resourceLoadingFromTileStoreMapboxSwitch() {
-    disableAmbientCache()
+    disableDiskCache()
     loadTileStoreWithStylePack()
     val latch = CountDownLatch(2)
     var resourceRequests = 0
@@ -401,7 +401,7 @@ class OfflineTest {
   @Ignore("TODO uncomment after https://github.com/mapbox/mapbox-maps-android/issues/297")
   @Test
   fun idleEventTileStoreAirplaneMode() {
-    disableAmbientCache()
+    disableDiskCache()
     loadTileStoreWithStylePack()
     val latch = CountDownLatch(1)
     var idleEventCount = 0
@@ -430,7 +430,7 @@ class OfflineTest {
 
   @Test
   fun idleEventTileStoreMapboxSwitch() {
-    disableAmbientCache()
+    disableDiskCache()
     loadTileStoreWithStylePack()
     val latch = CountDownLatch(1)
     var idleEventCount = 0
@@ -496,7 +496,7 @@ class OfflineTest {
     return Pair(tileRegionList, tileRegionError)
   }
 
-  private fun disableAmbientCache() {
+  private fun disableDiskCache() {
     // no-ops, tbd if we have APIs to customise it in the future.
   }
 
