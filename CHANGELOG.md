@@ -3,6 +3,9 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # 10.0.0-rc.1 June 9, 2021
+
+**The Mapbox Maps SDK for Android has moved to release candidate status and is now ready for production use.**
+
 ## Breaking changes ⚠️
 * Rename setter for `Light` object from `add` to `set`. This matches API from GL-JS and clarifies there is only 1 Light object. ([#387](https://github.com/mapbox/mapbox-maps-android/pull/387))
 * Rename setter for `Terrain` object from `add` to `set`. ([#391](https://github.com/mapbox/mapbox-maps-android/pull/391))
