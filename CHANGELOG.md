@@ -17,7 +17,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Change the default `ResourceOptions#dataPath` to `${context.filesDir.absolutePath}/.mapbox/map_data/` and the database name from `ambient_cache.db` to `map_data.db`. ([#403](https://github.com/mapbox/mapbox-maps-android/pull/403))
 
 ## Features ✨ and improvements 🏁
-* Introduce `OfflineRegionManager.setOfflineMapboxTileCountLimit()` method. Note that the `OfflineRegionManager` API is deprecated. ([#399](https://github.com/mapbox/mapbox-maps-android/pull/399))
+* Introduce `OfflineRegionManager.setOfflineMapboxTileCountLimit()` method. ([#399](https://github.com/mapbox/mapbox-maps-android/pull/399))
 * The amount of the unique maps tile packs used in the offline regions is capped by the maximum amount equal to 750. The tile region loading is not be performed if it would cause exceeding of the tile pack limit. ([#399](https://github.com/mapbox/mapbox-maps-android/pull/399))
 
 ## Bug fixes 🐞
