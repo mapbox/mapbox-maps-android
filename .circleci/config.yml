@@ -143,6 +143,7 @@ commands:
             ./mbx-ci aws setup
             export GITHUB_TOKEN=$(./mbx-ci github writer token)
             echo $GITHUB_TOKEN
+            ./mbx-ci github writer opt-in mapbox-maps-android
 
   generate-docs:
     steps:
