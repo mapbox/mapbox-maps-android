@@ -2,7 +2,7 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 10.0.0-rc.1 June 9, 2021
+# 10.0.0-rc.1 June 10, 2021
 
 **The Mapbox Maps SDK for Android has moved to release candidate status and is now ready for production use.**
 
