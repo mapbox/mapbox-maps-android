@@ -123,22 +123,31 @@ private val supportedV8 =
     NAME_VI
   )
 
+/**
+ * Get the language name for v6, fallback to [NAME] if not supported.
+ */
 internal fun getLanguageNameV6(locale: Locale): String {
   if (locale.language.startsWith("zh")) return NAME_ZH
   "name_${locale.language}".apply { return if (supportedV6.contains(this)) this else NAME }
 }
 
+/**
+ * Get the language name for v7, fallback to [NAME] if not supported.
+ */
 internal fun getLanguageNameV7(locale: Locale): String {
-  if (locale.language.startsWith("zh")){
-    return if(locale == Locale.SIMPLIFIED_CHINESE || locale.script == "Hans") NAME_ZH_HANS
+  if (locale.language.startsWith("zh")) {
+    return if (locale == Locale.SIMPLIFIED_CHINESE || locale.script == "Hans") NAME_ZH_HANS
     else NAME_ZH
   }
   "name_${locale.language}".apply { return if (supportedV7.contains(this)) this else NAME }
 }
 
+/**
+ * Get the language name for v8, fallback to [NAME] if not supported.
+ */
 internal fun getLanguageNameV8(locale: Locale): String {
-  if (locale.language.startsWith("zh")){
-    return if(locale == Locale.TAIWAN || locale.script == "Hant") NAME_ZH_HANT
+  if (locale.language.startsWith("zh")) {
+    return if (locale == Locale.TAIWAN || locale.script == "Hant") NAME_ZH_HANT
     else NAME_ZH_HANS
   }
   "name_${locale.language}".apply { return if (supportedV8.contains(this)) this else NAME }

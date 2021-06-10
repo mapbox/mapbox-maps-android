@@ -23,10 +23,7 @@ class LocalizationActivity : AppCompatActivity() {
   private val styles =
     arrayOf(
       Style.MAPBOX_STREETS,
-      "mapbox://styles/mapbox/streets-v10",
-      "mapbox://styles/mapbox/streets-v9",
-      "mapbox://styles/mapbox/streets-v8",
-      "mapbox://styles/mapbox/streets-v7"
+      "mapbox://styles/mapbox/streets-v10"
     )
 
   private val nextStyle: String
@@ -46,11 +43,10 @@ class LocalizationActivity : AppCompatActivity() {
     }
     fabStyles.setOnClickListener {
       val styleUri = nextStyle
-      mapboxMap.loadStyleUri(styleUri){
+      mapboxMap.loadStyleUri(styleUri) {
         it.localizeLabels(locale)
       }
       Toast.makeText(this, styleUri, Toast.LENGTH_SHORT).show()
-
     }
     fabLocalize.setOnClickListener {
       mapIsLocalized = if (mapIsLocalized) {
