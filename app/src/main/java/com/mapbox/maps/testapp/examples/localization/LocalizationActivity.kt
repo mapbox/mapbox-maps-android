@@ -23,7 +23,7 @@ class LocalizationActivity : AppCompatActivity() {
   private val styles =
     arrayOf(
       Style.MAPBOX_STREETS,
-      "mapbox://styles/mapbox/streets-v10"
+      MAPBOX_STREETS_V10
     )
 
   private val nextStyle: String
@@ -146,5 +146,9 @@ class LocalizationActivity : AppCompatActivity() {
   override fun onDestroy() {
     super.onDestroy()
     mapView.onDestroy()
+  }
+
+  companion object {
+    private const val MAPBOX_STREETS_V10 = "mapbox://styles/mapbox/streets-v10"
   }
 }
