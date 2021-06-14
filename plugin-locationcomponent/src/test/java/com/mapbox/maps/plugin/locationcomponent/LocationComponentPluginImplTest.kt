@@ -326,7 +326,7 @@ class LocationComponentPluginImplTest {
 
   @Test
   fun testLocationProviderRegisterDisableEnable() {
-    every { style.addStyleLayer(any(), any()) } returns ExpectedFactory.createNone()
+    every { style.addPersistentStyleLayer(any(), any()) } returns ExpectedFactory.createNone()
 
     preparePluginInitialisationWithEnabled()
 
@@ -341,7 +341,7 @@ class LocationComponentPluginImplTest {
     if (styleCallbackSlot.isCaptured) {
       styleCallbackSlot.captured.invoke(style)
     }
-    verify(exactly = 1) { style.addStyleLayer(any(), any()) }
+    verify(exactly = 1) { style.addPersistentStyleLayer(any(), any()) }
     verify(exactly = 2) { locationProvider.registerLocationConsumer(any()) }
     verify(exactly = 1) { locationProvider.unRegisterLocationConsumer(any()) }
   }

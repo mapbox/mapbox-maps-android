@@ -69,9 +69,5 @@ class AnnotationPluginImplTest {
     annotationPluginImpl.removeAnnotationManager(polygonAnnotationManager)
     annotationPluginImpl.removeAnnotationManager(polylineAnnotationManager)
     assertEquals(0, annotationPluginImpl.managerList.size)
-    verify { circleAnnotationManager.onDestroy() }
-    verify { pointAnnotationManager.onDestroy() }
-    verify { polygonAnnotationManager.onDestroy() }
-    verify { polylineAnnotationManager.onDestroy() }
   }
 }

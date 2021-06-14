@@ -16,13 +16,14 @@ import com.mapbox.common.ValueConverter
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
+import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.QueriedFeature
 import com.mapbox.maps.QueryFeaturesCallback
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
-import com.mapbox.maps.extension.style.layers.addLayer
-import com.mapbox.maps.extension.style.layers.addLayerBelow
+import com.mapbox.maps.extension.style.layers.Layer
+import com.mapbox.maps.extension.style.layers.bindPersistentlyTo
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.extension.style.sources.addSource
@@ -64,7 +65,7 @@ class PointAnnotationManagerTest {
   val bitmap = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888)
   @Before
   fun setUp() {
-    mockkStatic("com.mapbox.maps.extension.style.layers.LayerKt")
+    mockkStatic("com.mapbox.maps.extension.style.layers.LayerExtKt")
     mockkStatic("com.mapbox.maps.extension.style.sources.SourceKt")
     mockkStatic(ValueConverter::class)
     every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue(
@@ -78,9 +79,9 @@ class PointAnnotationManagerTest {
     every { delegateProvider.styleStateDelegate } returns styleStateDelegate
     every { styleStateDelegate.isFullyLoaded() } returns true
     every { style.addSource(any()) } just Runs
-    every { style.addLayerBelow(any(), any()) } just Runs
     every { style.getSource(any()) } returns null
     every { style.addPersistentStyleLayer(any(), any()) } returns ExpectedFactory.createNone()
+    every { any<Layer>().bindPersistentlyTo(any(), any()) } just Runs
     every { style.styleSourceExists(any()) } returns false
     every { style.styleLayerExists(any()) } returns false
     every { style.removeStyleLayer(any()) } returns mockk()
@@ -157,11 +158,11 @@ class PointAnnotationManagerTest {
     verify { gesturesPlugin.addOnMapLongClickListener(any()) }
     verify { gesturesPlugin.addOnMoveListener(any()) }
     assertEquals(PointAnnotation.ID_KEY, manager.getAnnotationIdKey())
-    verify { style.addLayer(any()) }
+    verify { any<Layer>().bindPersistentlyTo(any(), null) }
     every { style.styleLayerExists("test_layer") } returns true
 
     manager = PointAnnotationManager(mapView, delegateProvider, AnnotationConfig("test_layer"))
-    verify { style.addLayerBelow(any(), "test_layer") }
+    verify { any<Layer>().bindPersistentlyTo(any(), LayerPosition(null, "test_layer", null)) }
 
     manager.addClickListener(mockk())
     manager.addDragListener(mockk())
