@@ -223,6 +223,25 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.addStyleCustomLayer(layerId, layerHost, layerPosition)
   }
 
+  override fun addPersistentStyleLayer(
+    properties: Value,
+    layerPosition: LayerPosition?
+  ): Expected<String, None> {
+    return map.addPersistentStyleLayer(properties, layerPosition)
+  }
+
+  override fun addPersistentStyleCustomLayer(
+    layerId: String,
+    layerHost: CustomLayerHost,
+    layerPosition: LayerPosition?
+  ): Expected<String, None> {
+    return map.addPersistentStyleCustomLayer(layerId, layerHost, layerPosition)
+  }
+
+  override fun isStyleLayerPersistent(layerId: String): Expected<String, Boolean> {
+    return map.isStyleLayerPersistent(layerId)
+  }
+
   override fun getResourceOptions(): ResourceOptions {
     return map.resourceOptions
   }

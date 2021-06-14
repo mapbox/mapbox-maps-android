@@ -614,6 +614,81 @@ class Style internal constructor(
   }
 
   /**
+   * Adds a new [style layer](https://docs.mapbox.com/mapbox-gl-js/style-spec/#layers).
+   *
+   * Note: This is an experimental API and is a subject to change.
+   *
+   * Whenever a new style is being parsed and currently used style has persistent layers,
+   * an engine will try to do following:
+   *   - keep the persistent layer at its relative position
+   *   - keep the source used by a persistent layer
+   *   - keep images added through `addStyleImage` method
+   *
+   * In cases when a new style has the same layer, source or image resource, style's resources would be
+   * used instead and `MapLoadingError` event will be emitted.
+   *
+   * @param properties A map of style layer properties.
+   * @param layerPosition If not empty, the new layer will be positioned according to `layer position` parameters.
+   *
+   * @return A string describing an error if the operation was not successful, or empty otherwise.
+   */
+  @MapboxExperimental
+  override fun addPersistentStyleLayer(
+    properties: Value,
+    layerPosition: LayerPosition?
+  ): Expected<String, None> {
+    return styleManagerRef.call {
+      this.addPersistentStyleLayer(properties, layerPosition)
+    }
+  }
+
+  /**
+   * Adds a new [style custom layer](https://docs.mapbox.com/mapbox-gl-js/style-spec/#layers).
+   *
+   * Note: This is an experimental API and is a subject to change.
+   *
+   * Whenever a new style is being parsed and currently used style has persistent layers,
+   * an engine will try to do following:
+   *   - keep the persistent layer at its relative position
+   *   - keep the source used by a persistent layer
+   *   - keep images added through `addStyleImage` method
+   *
+   * In cases when a new style has the same layer, source or image resource, style's resources would be
+   * used instead and `MapLoadingError` event will be emitted.
+   *
+   * @param layerId A style layer identifier.
+   * @param layerHost The `custom layer host`.
+   * @param layerPosition If not empty, the new layer will be positioned according to `layer position` parameters.
+   *
+   * @return A string describing an error if the operation was not successful, or empty otherwise.
+   */
+  @MapboxExperimental
+  override fun addPersistentStyleCustomLayer(
+    layerId: String,
+    layerHost: CustomLayerHost,
+    layerPosition: LayerPosition?
+  ): Expected<String, None> {
+    return styleManagerRef.call {
+      this.addPersistentStyleCustomLayer(layerId, layerHost, layerPosition)
+    }
+  }
+
+  /**
+   * Checks if a style layer is persistent.
+   *
+   * Note: This is an experimental API and is a subject to change.
+   *
+   * @param layerId A style layer identifier.
+   * @return A string describing an error if the operation was not successful, boolean representing state otherwise.
+   */
+  @MapboxExperimental
+  override fun isStyleLayerPersistent(layerId: String): Expected<String, Boolean> {
+    return styleManagerRef.call {
+      this.isStyleLayerPersistent(layerId)
+    }
+  }
+
+  /**
    * Adds a custom geometry to be used in the style. To add the data, implement the fetchTileFunction callback in the options and call setStyleCustomGeometrySourceTileData()
    *
    * @param sourceId Style source identifier

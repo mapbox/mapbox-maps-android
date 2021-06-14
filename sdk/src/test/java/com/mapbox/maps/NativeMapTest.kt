@@ -116,6 +116,31 @@ class NativeMapTest {
   }
 
   @Test
+  fun addPersistentStyleLayer() {
+    val value = mockk<Value>()
+    val layerPosition = LayerPosition(null, null, null)
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.addPersistentStyleLayer(value, layerPosition)
+    verify { map.addPersistentStyleLayer(value, layerPosition) }
+  }
+
+  @Test
+  fun addPersistentStyleCustomLayer() {
+    val value = mockk<CustomLayerHost>()
+    val layerPosition = LayerPosition(null, null, null)
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.addPersistentStyleCustomLayer("foobar", value, layerPosition)
+    verify { map.addPersistentStyleCustomLayer("foobar", value, layerPosition) }
+  }
+
+  @Test
+  fun isStyleLayerPersistent() {
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.isStyleLayerPersistent("foobar")
+    verify { map.isStyleLayerPersistent("foobar") }
+  }
+
+  @Test
   fun removeStyleLayer() {
     val nativeMap = NativeMapImpl(map)
     nativeMap.removeStyleLayer("foobar")
