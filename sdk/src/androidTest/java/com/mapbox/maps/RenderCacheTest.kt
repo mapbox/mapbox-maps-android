@@ -3,6 +3,7 @@ package com.mapbox.maps
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import org.junit.*
+import java.lang.RuntimeException
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
@@ -86,16 +87,12 @@ class RenderCacheTest {
     }
   }
 
-  @Test
+  @Test(expected = RuntimeException::class)
   fun setInvalidRenderCache() {
     rule.scenario.onActivity {
       it.runOnUiThread {
-        val customSize = -1
-        mapView.getMapboxMap().setRenderCacheOptions(RenderCacheOptions.Builder().size(customSize).build())
-        Assert.assertEquals(
-          RENDER_CACHE_DISABLED,
-          mapView.getMapboxMap().getRenderCacheOptions().size
-        )
+        val invalidSize = -1
+        mapView.getMapboxMap().setRenderCacheOptions(RenderCacheOptions.Builder().size(invalidSize).build())
       }
     }
   }
