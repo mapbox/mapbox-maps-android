@@ -87,14 +87,26 @@ class RenderCacheTest {
   }
 
   @Test
-  @Ignore("TODO Uncomment after https://github.com/mapbox/mapbox-maps-android/issues/402")
   fun setInvalidRenderCache() {
     rule.scenario.onActivity {
       it.runOnUiThread {
         val customSize = -1
         mapView.getMapboxMap().setRenderCacheOptions(RenderCacheOptions.Builder().size(customSize).build())
         Assert.assertEquals(
-          0,
+          RENDER_CACHE_DISABLED,
+          mapView.getMapboxMap().getRenderCacheOptions().size
+        )
+      }
+    }
+  }
+
+  @Test
+  fun setNoSizeRenderCache() {
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        mapView.getMapboxMap().setRenderCacheOptions(RenderCacheOptions.Builder().build())
+        Assert.assertEquals(
+          RENDER_CACHE_DISABLED,
           mapView.getMapboxMap().getRenderCacheOptions().size
         )
       }

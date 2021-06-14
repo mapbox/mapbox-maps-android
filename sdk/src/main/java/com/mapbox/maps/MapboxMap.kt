@@ -1145,11 +1145,22 @@ class MapboxMap internal constructor(
    * Performance benefit of the cache depends on the style as not all layers are cacheable due to e.g.
    * viewport aligned features. Render cache always prefers quality over performance.
    *
+   * If [RenderCacheOptions.size] is not specified explicitly or is less than zero when using [RenderCacheOptions.Builder] - render cache will be disabled.
+   *
    * @param options Options defining the render cache behavior
    */
   @MapboxExperimental
   fun setRenderCacheOptions(options: RenderCacheOptions) {
-    nativeMapWeakRef.call { this.renderCacheOptions = options }
+    options.size?.let { size ->
+      nativeMapWeakRef.call {
+        this.renderCacheOptions = if (size >= 0)
+          options
+        else
+          RenderCacheOptions.Builder().setDisabled().build()
+      }
+    } ?: nativeMapWeakRef.call {
+      this.renderCacheOptions = RenderCacheOptions.Builder().setDisabled().build()
+    }
   }
 
   /**
