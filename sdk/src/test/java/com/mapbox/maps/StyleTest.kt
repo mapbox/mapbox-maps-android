@@ -247,6 +247,28 @@ class StyleTest {
   }
 
   @Test
+  fun addPersistentStyleLayer() {
+    val value = mockk<Value>()
+    val position = mockk<LayerPosition>()
+    style.addPersistentStyleLayer(value, position)
+    verify { nativeMap.addPersistentStyleLayer(value, position) }
+  }
+
+  @Test
+  fun addPersistentStyleCustomLayer() {
+    val layerHost = mockk<CustomLayerHost>()
+    val layerPosition = mockk<LayerPosition>()
+    style.addPersistentStyleCustomLayer("id", layerHost, layerPosition)
+    verify { nativeMap.addPersistentStyleCustomLayer("id", layerHost, layerPosition) }
+  }
+
+  @Test
+  fun isStyleLayerPersistent() {
+    style.isStyleLayerPersistent("id")
+    verify { nativeMap.isStyleLayerPersistent("id") }
+  }
+
+  @Test
   fun setJson() {
     style.styleJSON = "foobar"
     verify { nativeMap.styleJSON = "foobar" }
