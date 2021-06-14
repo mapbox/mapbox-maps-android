@@ -3,6 +3,7 @@ package com.mapbox.maps
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import org.junit.*
+import java.lang.RuntimeException
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
@@ -86,15 +87,23 @@ class RenderCacheTest {
     }
   }
 
-  @Test
-  @Ignore("TODO Uncomment after https://github.com/mapbox/mapbox-maps-android/issues/402")
+  @Test(expected = RuntimeException::class)
   fun setInvalidRenderCache() {
     rule.scenario.onActivity {
       it.runOnUiThread {
-        val customSize = -1
-        mapView.getMapboxMap().setRenderCacheOptions(RenderCacheOptions.Builder().size(customSize).build())
+        val invalidSize = -1
+        mapView.getMapboxMap().setRenderCacheOptions(RenderCacheOptions.Builder().size(invalidSize).build())
+      }
+    }
+  }
+
+  @Test
+  fun setNoSizeRenderCache() {
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        mapView.getMapboxMap().setRenderCacheOptions(RenderCacheOptions.Builder().build())
         Assert.assertEquals(
-          0,
+          RENDER_CACHE_DISABLED,
           mapView.getMapboxMap().getRenderCacheOptions().size
         )
       }
