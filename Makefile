@@ -60,6 +60,13 @@ dokka-html:
 dokka-javadoc:
 	./gradlew dokkaJavadocCollector
 
+# Use `make generate-changelog TAG=LastReleaseTag` while running locally.
+.PHONY: generate-changelog
+generate-changelog:
+	mbx env; \
+	export GITHUB_TOKEN=$(shell mbx-ci github reader token); \
+	changelog-draft -b main -p $(TAG) -o CHANGELOG.md
+
 # Use `make update-android-docs TAG=YourReleaseTag` while running locally.
 .PHONY: update-android-docs
 update-android-docs:
