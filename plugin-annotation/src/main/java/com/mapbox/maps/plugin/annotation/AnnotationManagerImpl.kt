@@ -23,7 +23,7 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression.Companio
 import com.mapbox.maps.extension.style.image.addImage
 import com.mapbox.maps.extension.style.image.image
 import com.mapbox.maps.extension.style.layers.Layer
-import com.mapbox.maps.extension.style.layers.bindPersistentlyTo
+import com.mapbox.maps.extension.style.layers.addPersistentLayer
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
 import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
@@ -187,7 +187,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         annotationConfig?.belowLayerId?.let { belowLayerId ->
           // Check whether the below layer exists in the current style.
           if (style.styleLayerExists(belowLayerId)) {
-            it.bindPersistentlyTo(style, LayerPosition(null, annotationConfig.belowLayerId, null))
+            style.addPersistentLayer(it, LayerPosition(null, annotationConfig.belowLayerId, null))
             layerAdded = true
           } else {
             Logger.w(
@@ -197,7 +197,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
           }
         }
         if (!layerAdded) {
-          it.bindPersistentlyTo(style)
+          style.addPersistentLayer(it)
         }
       }
     }
@@ -213,12 +213,12 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
       it.colorLevels.forEachIndexed { level, _ ->
         val clusterLevelLayer = createClusterLevelLayer(level, it.colorLevels)
         if (!style.styleLayerExists(clusterLevelLayer.layerId)) {
-          clusterLevelLayer.bindPersistentlyTo(style)
+          style.addPersistentLayer(clusterLevelLayer)
         }
       }
       val clusterTextLayer = createClusterTextLayer()
       if (!style.styleLayerExists(clusterTextLayer.layerId)) {
-        clusterTextLayer.bindPersistentlyTo(style)
+        style.addPersistentLayer(clusterTextLayer)
       }
     }
   }

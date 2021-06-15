@@ -49,6 +49,13 @@ class LayerExtTest {
   }
 
   @Test
+  fun testAddPersistentLayer() {
+    val layer = symbolLayer("id", "source") {}
+    style.addPersistentLayer(layer)
+    verify { style.addPersistentStyleLayer(any(), any()) }
+  }
+
+  @Test
   fun testPersistentGet() {
     every { style.isStyleLayerPersistent(any()) } returns booleanExpected
     every { booleanExpected.value } returns true
