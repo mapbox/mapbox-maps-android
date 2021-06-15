@@ -21,8 +21,7 @@ import com.mapbox.maps.QueryFeaturesCallback
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
-import com.mapbox.maps.extension.style.layers.Layer
-import com.mapbox.maps.extension.style.layers.bindPersistentlyTo
+import com.mapbox.maps.extension.style.layers.addPersistentLayer
 import com.mapbox.maps.extension.style.layers.generated.FillLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
@@ -78,7 +77,7 @@ class PolygonAnnotationManagerTest {
     every { style.addSource(any()) } just Runs
     every { style.getSource(any()) } returns null
     every { style.addPersistentStyleLayer(any(), any()) } returns ExpectedFactory.createNone()
-    every { any<Layer>().bindPersistentlyTo(any(), any()) } just Runs
+    every { style.addPersistentLayer(any(), any()) } just Runs
     every { style.styleSourceExists(any()) } returns false
     every { style.styleLayerExists(any()) } returns false
     every { style.removeStyleLayer(any()) } returns mockk()
@@ -131,11 +130,11 @@ class PolygonAnnotationManagerTest {
     verify { gesturesPlugin.addOnMapLongClickListener(any()) }
     verify { gesturesPlugin.addOnMoveListener(any()) }
     assertEquals(PolygonAnnotation.ID_KEY, manager.getAnnotationIdKey())
-    verify { any<Layer>().bindPersistentlyTo(any(), null) }
+    verify { style.addPersistentLayer(any(), null) }
     every { style.styleLayerExists("test_layer") } returns true
 
     manager = PolygonAnnotationManager(mapView, delegateProvider, AnnotationConfig("test_layer"))
-    verify { any<Layer>().bindPersistentlyTo(any(), LayerPosition(null, "test_layer", null)) }
+    verify { style.addPersistentLayer(any(), LayerPosition(null, "test_layer", null)) }
 
     manager.addClickListener(mockk())
     manager.addDragListener(mockk())
