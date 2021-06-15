@@ -78,12 +78,6 @@ internal const val NAME_VI = "name_vi"
 internal const val NAME_IT = "name_it"
 
 /**
- * https://docs.mapbox.com/vector-tiles/reference/mapbox-streets-v6/#name-fields
- */
-private val supportedV6 =
-  arrayOf(NAME, NAME_EN, NAME_ES, NAME_FR, NAME_DE, NAME_RU, NAME_ZH)
-
-/**
  * https://docs.mapbox.com/vector-tiles/reference/mapbox-streets-v7/#name-fields
  */
 private val supportedV7 =
@@ -122,14 +116,6 @@ private val supportedV8 =
     NAME_ZH_HANT,
     NAME_VI
   )
-
-/**
- * Get the language name for v6, fallback to [NAME] if not supported.
- */
-internal fun getLanguageNameV6(locale: Locale): String {
-  if (locale.language.startsWith("zh")) return NAME_ZH
-  "name_${locale.language}".apply { return if (supportedV6.contains(this)) this else NAME }
-}
 
 /**
  * Get the language name for v7, fallback to [NAME] if not supported.

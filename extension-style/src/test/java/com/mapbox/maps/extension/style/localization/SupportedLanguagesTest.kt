@@ -6,30 +6,6 @@ import java.util.*
 
 class SupportedLanguagesTest {
   @Test
-  fun testV6() {
-    assertEquals(NAME_EN, getLanguageNameV6(Locale.UK))
-    assertEquals(NAME_ES, getLanguageNameV6(Locale("es", "ES")))
-    assertEquals(NAME_FR, getLanguageNameV6(Locale.FRANCE))
-    assertEquals(NAME_DE, getLanguageNameV6(Locale.GERMAN))
-    assertEquals(NAME_RU, getLanguageNameV6(Locale("ru", "RU")))
-    assertEquals(NAME_ZH, getLanguageNameV6(Locale.SIMPLIFIED_CHINESE))
-    assertEquals(NAME_ZH, getLanguageNameV6(Locale.TAIWAN))
-    assertEquals(
-      NAME_ZH,
-      getLanguageNameV6(
-        Locale.Builder().setLanguage("zh").setRegion("CN").setScript("Hans").build()
-      )
-    )
-    assertEquals(
-      NAME_ZH,
-      getLanguageNameV6(
-        Locale.Builder().setLanguage("zh").setRegion("HK").setScript("Hant").build()
-      )
-    )
-    assertEquals(NAME, getLanguageNameV6(Locale.JAPANESE))
-  }
-
-  @Test
   fun testV7() {
     assertEquals(NAME_EN, getLanguageNameV7(Locale.UK))
     assertEquals(NAME_AR, getLanguageNameV7(Locale("ar")))
@@ -55,8 +31,6 @@ class SupportedLanguagesTest {
         Locale.Builder().setLanguage("zh").setRegion("HK").setScript("Hant").build()
       )
     )
-
-    assertEquals(NAME, getLanguageNameV6(Locale.ITALIAN))
   }
 
   @Test

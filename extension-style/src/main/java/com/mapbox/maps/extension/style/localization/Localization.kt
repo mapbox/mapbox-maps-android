@@ -29,10 +29,7 @@ internal fun setMapLanguage(locale: Locale, style: StyleInterface) {
           val symbolLayer = style.getLayerAs<SymbolLayer>(layer.id)
           symbolLayer.textFieldAsExpression?.let { textFieldExpression ->
             val language = if (sourceIsStreetsV8(style, source)) getLanguageNameV8(locale)
-            else {
-              if (sourceIsStreetsV7(style, source)) getLanguageNameV7(locale)
-              else getLanguageNameV6(locale)
-            }
+            else getLanguageNameV7(locale)
             convertExpression(language, symbolLayer, textFieldExpression)
           }
         }
@@ -63,9 +60,6 @@ private fun sourceIsFromMapbox(style: StyleInterface, source: StyleObjectInfo): 
   return false
 }
 
-private fun sourceIsStreetsV7(style: StyleInterface, source: StyleObjectInfo): Boolean =
-  sourceIsType(style, source, STREET_V7)
-
 private fun sourceIsStreetsV8(style: StyleInterface, source: StyleObjectInfo): Boolean =
   sourceIsType(style, source, STREET_V8)
 
@@ -81,8 +75,7 @@ private fun sourceIsType(style: StyleInterface, source: StyleObjectInfo, type: S
 private const val TAG = "LocalizationPluginImpl"
 private const val SOURCE_TYPE_VECTOR = "vector"
 private const val LAYER_TYPE_SYMBOL = "symbol"
-private const val STREET_V6 = "mapbox.mapbox-streets-v6"
 private const val STREET_V7 = "mapbox.mapbox-streets-v7"
 private const val STREET_V8 = "mapbox.mapbox-streets-v8"
-private val SUPPORTED_SOURCES = listOf(STREET_V6, STREET_V7, STREET_V8)
+private val SUPPORTED_SOURCES = listOf(STREET_V7, STREET_V8)
 private val EXPRESSION_REGEX = Regex("\\[\"get\",\\s*\"(name|name_.{2,7})\"\\]")
