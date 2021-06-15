@@ -13,7 +13,7 @@ abstract class Annotation<T : Geometry>(
   /** The id for annotation */
   val id: Long,
   /** The jsonObject of annotation */
-  val jsonObject: JsonObject,
+  protected val jsonObject: JsonObject,
   /** The geometry of annotation */
   var geometry: T
 ) {
@@ -56,6 +56,9 @@ abstract class Annotation<T : Geometry>(
     return jsonObject[ID_DATA]
   }
 
+  fun getJsonObjectCopy():JsonObject{
+    return jsonObject.deepCopy()
+  }
   /**
    * Whether this annotation is draggable
    */

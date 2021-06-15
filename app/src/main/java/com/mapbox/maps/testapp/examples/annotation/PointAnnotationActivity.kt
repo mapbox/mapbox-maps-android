@@ -143,7 +143,19 @@ class PointAnnotationActivity : AppCompatActivity() {
       }
     }
     changeStyle.setOnClickListener {
-      mapView.getMapboxMap().loadStyleUri(nextStyle)
+      // Create the annotation
+      val annotation = symbolManager?.create(
+        PointAnnotationOptions().withDraggable(false)
+          .withPoint(AnnotationUtils.createRandomPoint())
+          .withTextAnchor(TextAnchor.BOTTOM)
+          .withTextColor(Color.BLUE)
+          .withTextSize(12.0)
+          .withTextField("Please don't crash!")
+      )
+      for (i in 0..100) {
+        annotation?.textField = "We're an enterprise customer!"
+        Thread.sleep(0, 2000)
+      }
     }
   }
 
