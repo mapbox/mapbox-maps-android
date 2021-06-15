@@ -4,27 +4,22 @@ import android.graphics.SurfaceTexture
 import android.view.Surface
 import android.view.TextureView
 import androidx.annotation.VisibleForTesting
-import java.lang.ref.WeakReference
 
 internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTextureListener {
 
-  private val textureView: WeakReference<TextureView>
-
-  constructor(textureView: WeakReference<TextureView>) {
-    this.textureView = textureView
+  constructor(textureView: TextureView) {
     renderThread = MapboxRenderThread(
       mapboxRenderer = this,
       translucentSurface = true
     )
-    textureView.get()?.let {
+    textureView.let {
       it.isOpaque = false
       it.surfaceTextureListener = this
     }
   }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal constructor(textureView: WeakReference<TextureView>, renderThread: MapboxRenderThread) {
-    this.textureView = textureView
+  internal constructor(renderThread: MapboxRenderThread) {
     this.renderThread = renderThread
   }
 
@@ -38,6 +33,7 @@ internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTe
 
   override fun onSurfaceTextureDestroyed(surface: SurfaceTexture?): Boolean {
     renderThread.onSurfaceDestroyed()
+    surface?.release()
     return true
   }
 
@@ -47,11 +43,5 @@ internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTe
       width = width,
       height = height
     )
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    textureView.get()?.surfaceTextureListener = null
-    renderThread.destroy()
   }
 }

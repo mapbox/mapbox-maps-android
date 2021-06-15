@@ -40,10 +40,4 @@ internal class MapboxSurfaceRendererTest : MapboxRendererTest() {
     surfaceRenderer.surfaceDestroyed()
     verify { renderThread.onSurfaceDestroyed() }
   }
-
-  @Test
-  fun onDestroyTest() {
-    surfaceRenderer.onDestroy()
-    verify { renderThread.destroy() }
-  }
 }

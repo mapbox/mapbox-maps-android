@@ -125,28 +125,46 @@ class MapboxRenderThreadTest {
   }
 
   @Test
-  fun onSurfaceDestroyedTest() {
+  fun onSurfaceOnlyDestroyedTest() {
     val latch = CountDownLatch(1)
     every { mapboxRenderer.onSurfaceDestroyed() } answers { latch.countDown() }
+    every { mapboxRenderer.needDestroy } returns false
     val surface = mockk<Surface>(relaxUnitFun = true)
     every { surface.isValid } returns true
     every { eglCore.eglStatusSuccess } returns true
     every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
     mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
     mapboxRenderThread.onSurfaceDestroyed()
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
     if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
-    verify {
-      mapboxRenderer.onSurfaceDestroyed()
+    verify { mapboxRenderer.onSurfaceDestroyed() }
+    assert(workerThread.handlerThread.isAlive)
+  }
+
+  @Test
+  fun onSurfaceWithActivityDestroyedTest() {
+    val latch = CountDownLatch(1)
+    every { mapboxRenderer.onSurfaceDestroyed() } answers { latch.countDown() }
+    every { mapboxRenderer.needDestroy } returns true
+    val surface = mockk<Surface>(relaxUnitFun = true)
+    every { surface.isValid } returns true
+    every { eglCore.eglStatusSuccess } returns true
+    every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
+    mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
+    mapboxRenderThread.onSurfaceDestroyed()
+    if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
     }
+    verify { mapboxRenderer.onSurfaceDestroyed() }
+    assert(!workerThread.handlerThread.isAlive)
   }
 
   @Test
   fun onSurfaceDestroyedWithRenderCallAfterTest() {
     val latch = CountDownLatch(1)
     every { mapboxRenderer.onSurfaceDestroyed() } answers { latch.countDown() }
+    every { mapboxRenderer.needDestroy } returns false
     val surface = mockk<Surface>(relaxUnitFun = true)
     every { surface.isValid } returns true
     every { eglCore.eglStatusSuccess } returns true
