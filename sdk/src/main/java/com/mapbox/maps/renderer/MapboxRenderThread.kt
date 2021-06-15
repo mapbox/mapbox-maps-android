@@ -256,6 +256,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         }
       }
       destroyCondition.await()
+      if (mapboxRenderer.needDestroy) {
+        destroy()
+      }
     }
   }
 
@@ -346,7 +349,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   @UiThread
-  fun destroy() {
+  internal fun destroy() {
     handlerThread.apply {
       clearMessageQueue()
       stop()

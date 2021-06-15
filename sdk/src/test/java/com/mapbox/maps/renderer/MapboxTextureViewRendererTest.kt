@@ -1,11 +1,10 @@
 package com.mapbox.maps.renderer
 
-import android.view.TextureView
+import android.graphics.SurfaceTexture
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
-import java.lang.ref.WeakReference
 
 internal class MapboxTextureViewRendererTest : MapboxRendererTest() {
 
@@ -14,9 +13,8 @@ internal class MapboxTextureViewRendererTest : MapboxRendererTest() {
   @Before
   override fun setUp() {
     super.setUp()
-    val weakView = WeakReference(mockk<TextureView>(relaxed = true))
-    mapboxRenderer = MapboxTextureViewRenderer(weakView, renderThread)
-    textureViewRenderer = MapboxTextureViewRenderer(weakView, renderThread)
+    mapboxRenderer = MapboxTextureViewRenderer(renderThread)
+    textureViewRenderer = MapboxTextureViewRenderer(renderThread)
   }
 
   @Test
@@ -32,13 +30,9 @@ internal class MapboxTextureViewRendererTest : MapboxRendererTest() {
 
   @Test
   fun onSurfaceTextureDestroyedTest() {
-    textureViewRenderer.onSurfaceTextureDestroyed(mockk())
+    val surfaceTexture = mockk<SurfaceTexture>(relaxUnitFun = true)
+    textureViewRenderer.onSurfaceTextureDestroyed(surfaceTexture)
     verify { renderThread.onSurfaceDestroyed() }
-  }
-
-  @Test
-  fun onDestroyTest() {
-    textureViewRenderer.onDestroy()
-    verify { renderThread.destroy() }
+    verify { surfaceTexture.release() }
   }
 }

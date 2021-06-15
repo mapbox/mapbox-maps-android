@@ -19,7 +19,6 @@ import com.mapbox.maps.renderer.MapboxSurfaceHolderRenderer
 import com.mapbox.maps.renderer.MapboxTextureViewRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import com.mapbox.maps.renderer.egl.EGLCore
-import java.lang.ref.WeakReference
 
 /**
  * A [MapView] provides an embeddable map interface.
@@ -92,7 +91,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     mapController = MapController(
       when (view) {
         is SurfaceView -> MapboxSurfaceHolderRenderer(view.holder)
-        is TextureView -> MapboxTextureViewRenderer(WeakReference(view))
+        is TextureView -> MapboxTextureViewRenderer(view)
         else -> throw IllegalArgumentException("Provided view has to be a texture or a surface.")
       },
       resolvedMapInitOptions

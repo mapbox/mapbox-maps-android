@@ -28,10 +28,12 @@ internal abstract class MapboxRenderer : MapClient() {
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var pixelReader: PixelReader? = null
 
+  internal var needDestroy = false
+
   @UiThread
-  @CallSuper
-  open fun onDestroy() {
-    // no-op
+  fun onDestroy() {
+    // we destroy and stop thread after surface or texture is destroyed
+    needDestroy = true
   }
 
   @AnyThread

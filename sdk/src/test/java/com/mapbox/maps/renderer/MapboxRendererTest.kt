@@ -14,6 +14,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -172,5 +173,11 @@ internal abstract class MapboxRendererTest {
     mapboxRenderer.snapshot(callback)
     Shadows.shadowOf(handlerThread.looper).idle()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
+  }
+
+  @Test
+  fun onDestroyTest() {
+    mapboxRenderer.onDestroy()
+    Assert.assertEquals(true, mapboxRenderer.needDestroy)
   }
 }

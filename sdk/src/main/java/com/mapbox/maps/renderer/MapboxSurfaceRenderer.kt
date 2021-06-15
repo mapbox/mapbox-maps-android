@@ -41,9 +41,4 @@ internal open class MapboxSurfaceRenderer : MapboxRenderer {
   fun surfaceCreated() {
     createSurface = true
   }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    renderThread.destroy()
-  }
 }
