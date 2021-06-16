@@ -77,4 +77,5 @@
     <string name="description_map_view_customization">Customize your map view</string>
     <string name="description_ornaments_margin">Update margins of ornaments when the map rotates</string>
     <string name="description_large_geojson">Display long route as large geojson</string>
+    <string name="description_style_cross_fade">Smooth animation when switching style</string>
 </resources>
