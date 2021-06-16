@@ -78,11 +78,11 @@ class UpdateAnnotationTest : BaseMapTest(), OnMapLoadedListener {
               .withTextTransform(TextTransform.UPPERCASE)
               .withTextSize(15.0)
               .withTextRadialOffset(1.0)
-              .withTextOpacity(0.8)
               .withTextOffset(listOf(1.0, 2.0))
               .withTextMaxWidth(10.0)
               .withPoint(Point.fromLngLat(0.0, 0.0))
           )
+          pointAnnotation.textOpacity = 0.8
           Assert.assertEquals(pointAnnotation, pointAnnotationManager.annotations[0])
         }
       }
