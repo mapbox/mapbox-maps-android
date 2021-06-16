@@ -33,6 +33,17 @@ dependencies {
 }
 ```
 
+#### Using Google's Fused Location Provider
+
+By default, the Maps SDK uses the Android Location Provider to obtain raw location updates. And with Android 11, the raw location updates might suffer from precision issue.
+
+The Maps SDK also comes pre-compiled with support for the [Google's Fused Location Provider](https://developers.google.com/location-context/fused-location-provider) if that dependency is available. This means, that if your target devices support Google Play Services, [we recommend adding the Google Play Location Services dependency to your project](https://developers.google.com/android/guides/setup).
+```groovy
+implementation("com.google.android.gms:play-services-location:18.0.0")
+```
+
+If that dependency is available in your app build, the Maps SDK will automatically use the Google's Fused Location Provider.
+
 ### Example
 
 Customizing Mapbox Maps Location Component Plugin for Android could be done in two ways: by either providing your own version of the location component plugin or by updating the settings on the location component plugin. The former is documented in [DEVELOPING.md](https://github.com/mapbox/mapbox-maps-android/blob/master/DEVELOPING.md), the latter can be achieved with:
