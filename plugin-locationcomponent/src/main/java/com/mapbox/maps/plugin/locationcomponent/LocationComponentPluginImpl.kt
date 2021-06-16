@@ -7,6 +7,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.geojson.Point
 import com.mapbox.maps.RenderedQueryOptions
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.LOCATION_INDICATOR_LAYER
@@ -276,6 +277,15 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
    */
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     this.delegateProvider = delegateProvider
+  }
+
+  /**
+   * Called when a new Style is loaded.
+   *
+   * @param styleDelegate
+   */
+  override fun onStyleChanged(styleDelegate: StyleInterface) {
+    // no-ops
   }
 
   override lateinit var internalSettings: LocationComponentSettings
