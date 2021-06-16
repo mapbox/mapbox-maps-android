@@ -32,7 +32,7 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
   private var mapboxMap: MapboxMap? = null
   private val job = Job()
   override val coroutineContext = job + Dispatchers.IO
-  private var symbolManager: PointAnnotationManager? = null
+  private var pointAnnotationManager: PointAnnotationManager? = null
   private var options: List<PointAnnotationOptions>? = null
   private var index: Int = 0
   private val nextStyle: String
@@ -69,14 +69,14 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
               )
             )
           )
-          symbolManager = annotationPlugin.createPointAnnotationManager(mapView, annotationConfig)
+          pointAnnotationManager = annotationPlugin.createPointAnnotationManager(mapView, annotationConfig)
           launch {
             loadData()
           }
         }
       }
 
-    deleteAll.setOnClickListener { symbolManager?.deleteAll() }
+    deleteAll.setOnClickListener { pointAnnotationManager?.deleteAll() }
     changeStyle.setOnClickListener {
       mapView.getMapboxMap().loadStyleUri(nextStyle)
     }
@@ -95,7 +95,7 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
     }
     runOnUiThread {
       options?.let {
-        symbolManager?.create(it)
+        pointAnnotationManager?.create(it)
       }
       progress.visibility = View.GONE
     }

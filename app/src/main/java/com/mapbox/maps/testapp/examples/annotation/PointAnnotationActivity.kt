@@ -32,7 +32,7 @@ import java.util.*
  * Example showing how to add Symbol annotations
  */
 class PointAnnotationActivity : AppCompatActivity() {
-  private var symbolManager: PointAnnotationManager? = null
+  private var pointAnnotationManager: PointAnnotationManager? = null
   private var pointAnnotation: PointAnnotation? = null
   private val animators: MutableList<ValueAnimator> = mutableListOf()
   private var index: Int = 0
@@ -47,7 +47,7 @@ class PointAnnotationActivity : AppCompatActivity() {
     setContentView(R.layout.activity_annotation)
     mapView.getMapboxMap().loadStyleUri(nextStyle) {
       annotationPlugin = mapView.annotations
-      symbolManager = annotationPlugin.createPointAnnotationManager(mapView).apply {
+      pointAnnotationManager = annotationPlugin.createPointAnnotationManager(mapView).apply {
         textFont = listOf("Arial Unicode MS Bold", "Open Sans Regular")
 
         addClickListener(
@@ -138,7 +138,7 @@ class PointAnnotationActivity : AppCompatActivity() {
     }
 
     deleteAll.setOnClickListener {
-      symbolManager?.let {
+      pointAnnotationManager?.let {
         annotationPlugin.removeAnnotationManager(it)
       }
     }
@@ -155,20 +155,20 @@ class PointAnnotationActivity : AppCompatActivity() {
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
       R.id.menu_action_draggable -> {
-        symbolManager?.annotations?.forEach {
+        pointAnnotationManager?.annotations?.forEach {
           it.isDraggable = !it.isDraggable
         }
       }
       R.id.menu_action_filter -> {
-        if (symbolManager != null && pointAnnotation != null) {
-          val idKey = symbolManager!!.getAnnotationIdKey()
+        if (pointAnnotationManager != null && pointAnnotation != null) {
+          val idKey = pointAnnotationManager!!.getAnnotationIdKey()
           val expression: Expression =
             eq(toNumber(get(idKey)), literal(pointAnnotation!!.id.toDouble()))
-          val filter = symbolManager!!.layerFilter
+          val filter = pointAnnotationManager!!.layerFilter
           if (filter != null && filter == expression) {
-            symbolManager!!.layerFilter = not(eq(toNumber(get(idKey)), literal(-1)))
+            pointAnnotationManager!!.layerFilter = not(eq(toNumber(get(idKey)), literal(-1)))
           } else {
-            symbolManager!!.layerFilter = expression
+            pointAnnotationManager!!.layerFilter = expression
           }
         }
       }
@@ -200,14 +200,14 @@ class PointAnnotationActivity : AppCompatActivity() {
       }
       else -> return super.onOptionsItemSelected(item)
     }
-    pointAnnotation?.let { symbolManager?.update(it) }
+    pointAnnotation?.let { pointAnnotationManager?.update(it) }
     return true
   }
 
   private fun resetSymbol() {
     pointAnnotation?.iconRotate = 0.0
     pointAnnotation?.geometry = Point.fromLngLat(AIRPORT_LONGITUDE, AIRPORT_LATITUDE)
-    pointAnnotation?.let { symbolManager?.update(it) }
+    pointAnnotation?.let { pointAnnotationManager?.update(it) }
   }
 
   private fun easeSymbol(
@@ -223,7 +223,7 @@ class PointAnnotationActivity : AppCompatActivity() {
     val moveSymbol = ValueAnimator.ofFloat(0f, 1f).setDuration(5000)
     moveSymbol.interpolator = LinearInterpolator()
     moveSymbol.addUpdateListener { animation: ValueAnimator ->
-      symbolManager?.let {
+      pointAnnotationManager?.let {
         if (!it.annotations.contains(pointAnnotation)) {
           return@addUpdateListener
         }

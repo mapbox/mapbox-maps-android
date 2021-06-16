@@ -82,7 +82,11 @@ class UpdateAnnotationTest : BaseMapTest(), OnMapLoadedListener {
               .withTextMaxWidth(10.0)
               .withPoint(Point.fromLngLat(0.0, 0.0))
           )
-          pointAnnotation.textOpacity = 0.8
+          for (i in 0..100) {
+            // Verify there is no ConcurrentModificationException https://github.com/mapbox/mapbox-maps-android/issues/383
+            pointAnnotation.textOpacity = 0.8
+            Thread.sleep(0, 2000)
+          }
           Assert.assertEquals(pointAnnotation, pointAnnotationManager.annotations[0])
         }
       }

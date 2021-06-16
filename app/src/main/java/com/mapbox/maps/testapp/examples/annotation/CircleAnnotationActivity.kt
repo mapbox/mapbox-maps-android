@@ -20,7 +20,7 @@ import java.util.*
  */
 class CircleAnnotationActivity : AppCompatActivity() {
   private val random = Random()
-  private var circleManager: CircleAnnotationManager? = null
+  private var circleAnnotationManager: CircleAnnotationManager? = null
   private var index: Int = 0
   private val nextStyle: String
     get() {
@@ -33,7 +33,7 @@ class CircleAnnotationActivity : AppCompatActivity() {
     setContentView(R.layout.activity_annotation)
     mapView.getMapboxMap().loadStyleUri(nextStyle) {
       annotationPlugin = mapView.annotations
-      circleManager = annotationPlugin.createCircleAnnotationManager(mapView).apply {
+      circleAnnotationManager = annotationPlugin.createCircleAnnotationManager(mapView).apply {
         addClickListener(
           OnCircleAnnotationClickListener {
             Toast.makeText(this@CircleAnnotationActivity, "click: ${it.id}", Toast.LENGTH_SHORT)
@@ -91,7 +91,7 @@ class CircleAnnotationActivity : AppCompatActivity() {
     }
 
     deleteAll.setOnClickListener {
-      circleManager?.let {
+      circleAnnotationManager?.let {
         annotationPlugin.removeAnnotationManager(it)
       }
     }

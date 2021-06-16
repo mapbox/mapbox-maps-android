@@ -21,7 +21,7 @@ import java.util.*
  */
 class PolyfillAnnotationActivity : AppCompatActivity() {
   private val random = Random()
-  private var fillManager: PolygonAnnotationManager? = null
+  private var polygonAnnotationManager: PolygonAnnotationManager? = null
   private var index: Int = 0
   private val nextStyle: String
     get() {
@@ -34,7 +34,7 @@ class PolyfillAnnotationActivity : AppCompatActivity() {
     setContentView(R.layout.activity_annotation)
     mapView.getMapboxMap().loadStyleUri(nextStyle) {
       annotationPlugin = mapView.annotations
-      fillManager = annotationPlugin.createPolygonAnnotationManager(mapView).apply {
+      polygonAnnotationManager = annotationPlugin.createPolygonAnnotationManager(mapView).apply {
         addClickListener(
           OnPolygonAnnotationClickListener {
             Toast.makeText(this@PolyfillAnnotationActivity, "click ${it.id}", Toast.LENGTH_SHORT)
@@ -98,7 +98,7 @@ class PolyfillAnnotationActivity : AppCompatActivity() {
     }
 
     deleteAll.setOnClickListener {
-      fillManager?.let {
+      polygonAnnotationManager?.let {
         annotationPlugin.removeAnnotationManager(it)
       }
     }

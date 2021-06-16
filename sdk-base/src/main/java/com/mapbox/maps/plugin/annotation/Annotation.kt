@@ -12,9 +12,9 @@ import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 abstract class Annotation<T : Geometry>(
   /** The id for annotation */
   val id: Long,
-  /** The jsonObject of annotation */
+  /** The jsonObject of annotation, saves all the property values of this annotation */
   protected val jsonObject: JsonObject,
-  /** The geometry of annotation */
+  /** The geometry that determines the location/shape of this annotation */
   var geometry: T
 ) {
 
@@ -56,9 +56,13 @@ abstract class Annotation<T : Geometry>(
     return jsonObject[ID_DATA]
   }
 
-  fun getJsonObjectCopy():JsonObject{
+  /**
+   * Get a copy of jsonObject from this annotation
+   */
+  fun getJsonObjectCopy(): JsonObject {
     return jsonObject.deepCopy()
   }
+
   /**
    * Whether this annotation is draggable
    */

@@ -22,7 +22,7 @@ import java.util.*
  */
 class PolylineAnnotationActivity : AppCompatActivity() {
   private val random = Random()
-  private var lineManager: PolylineAnnotationManager? = null
+  private var polylineAnnotationManager: PolylineAnnotationManager? = null
   private var index: Int = 0
   private val nextStyle: String
     get() {
@@ -35,7 +35,7 @@ class PolylineAnnotationActivity : AppCompatActivity() {
     setContentView(R.layout.activity_annotation)
     mapView.getMapboxMap().loadStyleUri(nextStyle) {
       annotationPlugin = mapView.annotations
-      lineManager = annotationPlugin.createPolylineAnnotationManager(
+      polylineAnnotationManager = annotationPlugin.createPolylineAnnotationManager(
         mapView,
         AnnotationConfig(PITCH_OUTLINE, LAYER_ID, SOURCE_ID)
       ).apply {
@@ -104,7 +104,7 @@ class PolylineAnnotationActivity : AppCompatActivity() {
     }
 
     deleteAll.setOnClickListener {
-      lineManager?.let {
+      polylineAnnotationManager?.let {
         annotationPlugin.removeAnnotationManager(it)
       }
     }
