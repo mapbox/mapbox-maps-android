@@ -119,7 +119,7 @@ abstract class Layer : StyleContract.StyleLayerExtension {
 
   // Layer Properties
 
-  private fun getCachedLayerProperties(): Value {
+  internal fun getCachedLayerProperties(): Value {
     val properties = HashMap<String, Value>()
     layerProperties.values.forEach {
       properties[it.propertyName] = it.value

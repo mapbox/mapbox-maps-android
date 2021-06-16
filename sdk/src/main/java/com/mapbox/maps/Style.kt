@@ -156,7 +156,7 @@ class Style internal constructor(
    * Load style from provided URI.
    *
    * This is an asynchronous call. In order to get result of this operation please use [OnStyleLoadedListener],
-   * [OnStyleDataLoadedListener] or [ONMapLoadErrorListener]. In case of successful style load you should
+   * [OnStyleDataLoadedListener] or [OnMapLoadErrorListener]. In case of successful style load you should
    * get notified by [OnStyleLoadedListener].
    *
    * And in case of error @see MapLoadError#StyleLoadError will be generated.

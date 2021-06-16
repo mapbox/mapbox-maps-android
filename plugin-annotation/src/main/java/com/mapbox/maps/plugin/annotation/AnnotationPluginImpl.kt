@@ -89,9 +89,11 @@ class AnnotationPluginImpl : AnnotationPlugin {
 
   /**
    * Called when a new Style is loaded.
+   *
+   * @param styleDelegate
    */
   override fun onStyleChanged(styleDelegate: StyleInterface) {
-    managerList.forEach { it.get()?.onStyleLoaded(styleDelegate) }
+    // no-ops
   }
 
   /**

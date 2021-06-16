@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.annotation
 
 import android.view.View
+import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.sources.addSource
@@ -38,6 +39,7 @@ class AnnotationPluginImplTest {
     every { styleStateDelegate.isFullyLoaded() } returns true
     every { style.addSource(any()) } just Runs
     every { style.addLayer(any()) } just Runs
+    every { style.addPersistentStyleLayer(any(), any()) } returns ExpectedFactory.createNone()
     every { style.styleSourceExists(any()) } returns false
     every { style.styleLayerExists(any()) } returns false
     every { delegateProvider.mapPluginProviderDelegate.getPlugin(any<Class<GesturesPlugin>>()) } returns gesturesPlugin
@@ -67,31 +69,5 @@ class AnnotationPluginImplTest {
     annotationPluginImpl.removeAnnotationManager(polygonAnnotationManager)
     annotationPluginImpl.removeAnnotationManager(polylineAnnotationManager)
     assertEquals(0, annotationPluginImpl.managerList.size)
-    verify { circleAnnotationManager.onDestroy() }
-    verify { pointAnnotationManager.onDestroy() }
-    verify { polygonAnnotationManager.onDestroy() }
-    verify { polylineAnnotationManager.onDestroy() }
-  }
-
-  @Test
-  fun onStyleChanged() {
-    val circleAnnotationManager =
-      annotationPluginImpl.createAnnotationManager(mapView, AnnotationType.CircleAnnotation, null)
-    assert(circleAnnotationManager is CircleAnnotationManager)
-    val pointAnnotationManager =
-      annotationPluginImpl.createAnnotationManager(mapView, AnnotationType.PointAnnotation, null)
-    assert(pointAnnotationManager is PointAnnotationManager)
-    val polygonAnnotationManager =
-      annotationPluginImpl.createAnnotationManager(mapView, AnnotationType.PolygonAnnotation, null)
-    assert(polygonAnnotationManager is PolygonAnnotationManager)
-    val polylineAnnotationManager =
-      annotationPluginImpl.createAnnotationManager(mapView, AnnotationType.PolylineAnnotation, null)
-    assert(polylineAnnotationManager is PolylineAnnotationManager)
-    assertEquals(4, annotationPluginImpl.managerList.size)
-    annotationPluginImpl.onStyleChanged(style)
-    verify { circleAnnotationManager.onStyleLoaded(style) }
-    verify { pointAnnotationManager.onStyleLoaded(style) }
-    verify { polygonAnnotationManager.onStyleLoaded(style) }
-    verify { polylineAnnotationManager.onStyleLoaded(style) }
   }
 }

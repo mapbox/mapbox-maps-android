@@ -15,13 +15,13 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
+import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.QueriedFeature
 import com.mapbox.maps.QueryFeaturesCallback
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
-import com.mapbox.maps.extension.style.layers.addLayer
-import com.mapbox.maps.extension.style.layers.addLayerBelow
+import com.mapbox.maps.extension.style.layers.addPersistentLayer
 import com.mapbox.maps.extension.style.layers.generated.LineLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.extension.style.sources.addSource
@@ -62,7 +62,7 @@ class PolylineAnnotationManagerTest {
   private lateinit var manager: PolylineAnnotationManager
   @Before
   fun setUp() {
-    mockkStatic("com.mapbox.maps.extension.style.layers.LayerKt")
+    mockkStatic("com.mapbox.maps.extension.style.layers.LayerExtKt")
     mockkStatic("com.mapbox.maps.extension.style.sources.SourceKt")
     mockkStatic(ValueConverter::class)
     every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue(
@@ -76,9 +76,9 @@ class PolylineAnnotationManagerTest {
     every { delegateProvider.styleStateDelegate } returns styleStateDelegate
     every { styleStateDelegate.isFullyLoaded() } returns true
     every { style.addSource(any()) } just Runs
-    every { style.addLayer(any()) } just Runs
-    every { style.addLayerBelow(any(), any()) } just Runs
     every { style.getSource(any()) } returns null
+    every { style.addPersistentStyleLayer(any(), any()) } returns ExpectedFactory.createNone()
+    every { style.addPersistentLayer(any(), any()) } just Runs
     every { style.styleSourceExists(any()) } returns false
     every { style.styleLayerExists(any()) } returns false
     every { style.removeStyleLayer(any()) } returns mockk()
@@ -135,11 +135,11 @@ class PolylineAnnotationManagerTest {
     verify { gesturesPlugin.addOnMapLongClickListener(any()) }
     verify { gesturesPlugin.addOnMoveListener(any()) }
     assertEquals(PolylineAnnotation.ID_KEY, manager.getAnnotationIdKey())
-    verify { style.addLayer(any()) }
+    verify { style.addPersistentLayer(any(), null) }
     every { style.styleLayerExists("test_layer") } returns true
 
     manager = PolylineAnnotationManager(mapView, delegateProvider, AnnotationConfig("test_layer"))
-    verify { style.addLayerBelow(any(), "test_layer") }
+    verify { style.addPersistentLayer(any(), LayerPosition(null, "test_layer", null)) }
 
     manager.addClickListener(mockk())
     manager.addDragListener(mockk())

@@ -4,7 +4,7 @@ import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.LayerPosition
-import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -20,7 +20,7 @@ import java.lang.RuntimeException
 class LocationLayerWrapperTest {
   private lateinit var locationLayerWrapper: LocationLayerWrapper
   private val layerId = "testLayerId"
-  private val mapStyleDelegate = mockk<StyleManagerInterface>(relaxed = true)
+  private val mapStyleDelegate = mockk<StyleInterface>(relaxed = true)
 
   @Before
   fun setup() {
@@ -29,23 +29,23 @@ class LocationLayerWrapperTest {
 
   @Test
   fun testBindTo() {
-    every { mapStyleDelegate.addStyleLayer(any(), any()) } returns ExpectedFactory.createNone()
+    every { mapStyleDelegate.addPersistentStyleLayer(any(), any()) } returns ExpectedFactory.createNone()
     val position = LayerPosition("above", "below", 0)
     locationLayerWrapper.bindTo(mapStyleDelegate, position)
-    verify { mapStyleDelegate.addStyleLayer(any(), position) }
+    verify { mapStyleDelegate.addPersistentStyleLayer(any(), position) }
   }
 
   @Test(expected = RuntimeException::class)
   fun testBindToAddLayerFailed() {
-    every { mapStyleDelegate.addStyleLayer(any(), any()) } returns ExpectedFactory.createError("error")
+    every { mapStyleDelegate.addPersistentStyleLayer(any(), any()) } returns ExpectedFactory.createError("error")
     val position = LayerPosition("above", "below", 0)
     locationLayerWrapper.bindTo(mapStyleDelegate, position)
-    verify { mapStyleDelegate.addStyleLayer(any(), position) }
+    verify { mapStyleDelegate.addPersistentStyleLayer(any(), position) }
   }
 
   @Test
   fun testVisibilityWhenLayerExists() {
-    every { mapStyleDelegate.addStyleLayer(any(), any()) } returns ExpectedFactory.createNone()
+    every { mapStyleDelegate.addPersistentStyleLayer(any(), any()) } returns ExpectedFactory.createNone()
     every { mapStyleDelegate.setStyleLayerProperty(layerId, any(), any()) } returns ExpectedFactory.createNone()
     every { mapStyleDelegate.styleLayerExists(any()) } returns true
     val position = LayerPosition("above", "below", 0)
@@ -56,7 +56,7 @@ class LocationLayerWrapperTest {
 
   @Test
   fun testVisibilityWhenLayerNotExist() {
-    every { mapStyleDelegate.addStyleLayer(any(), any()) } returns ExpectedFactory.createNone()
+    every { mapStyleDelegate.addPersistentStyleLayer(any(), any()) } returns ExpectedFactory.createNone()
     every { mapStyleDelegate.setStyleLayerProperty(layerId, any(), any()) } returns ExpectedFactory.createNone()
     every { mapStyleDelegate.styleLayerExists(any()) } returns false
     val position = LayerPosition("above", "below", 0)
@@ -67,7 +67,7 @@ class LocationLayerWrapperTest {
 
   @Test(expected = RuntimeException::class)
   fun testVisibilityWhenLayerExistSetPropertyFailed() {
-    every { mapStyleDelegate.addStyleLayer(any(), any()) } returns ExpectedFactory.createNone()
+    every { mapStyleDelegate.addPersistentStyleLayer(any(), any()) } returns ExpectedFactory.createNone()
     every { mapStyleDelegate.setStyleLayerProperty(layerId, any(), any()) } returns ExpectedFactory.createError("error")
     every { mapStyleDelegate.styleLayerExists(any()) } returns true
     val position = LayerPosition("above", "below", 0)

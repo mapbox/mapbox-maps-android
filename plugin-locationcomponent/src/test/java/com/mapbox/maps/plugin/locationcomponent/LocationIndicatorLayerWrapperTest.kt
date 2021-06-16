@@ -26,7 +26,7 @@ class LocationIndicatorLayerWrapperTest {
   @Before
   fun setup() {
     every { style.styleLayerExists(any()) } returns true
-    every { style.addStyleLayer(any(), any()) } returns expected
+    every { style.addPersistentStyleLayer(any(), any()) } returns expected
     every { style.setStyleLayerProperty(any(), any(), any()) } returns expected
     every { expected.error } returns null
 

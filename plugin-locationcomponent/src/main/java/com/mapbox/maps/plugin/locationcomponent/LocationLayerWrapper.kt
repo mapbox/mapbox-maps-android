@@ -12,7 +12,7 @@ internal open class LocationLayerWrapper(val layerId: String) {
 
   fun bindTo(mapStyleDelegate: StyleManagerInterface, position: LayerPosition? = null) {
     this.mapStyleDelegate = mapStyleDelegate
-    val expected = mapStyleDelegate.addStyleLayer(toValue(), position)
+    val expected = mapStyleDelegate.addPersistentStyleLayer(toValue(), position)
     expected.error?.let {
       throw RuntimeException("Add layer failed: $it")
     }

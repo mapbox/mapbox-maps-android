@@ -8,6 +8,7 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
+import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.extension.style.StyleInterface
@@ -22,8 +23,7 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression.Companio
 import com.mapbox.maps.extension.style.image.addImage
 import com.mapbox.maps.extension.style.image.image
 import com.mapbox.maps.extension.style.layers.Layer
-import com.mapbox.maps.extension.style.layers.addLayer
-import com.mapbox.maps.extension.style.layers.addLayerBelow
+import com.mapbox.maps.extension.style.layers.addPersistentLayer
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
 import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
@@ -53,7 +53,6 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   final override val delegateProvider: MapDelegateProvider,
   private val annotationConfig: AnnotationConfig?
 ) : AnnotationManager<G, T, S, D, U, V, I> {
-  protected lateinit var style: StyleInterface
   private var mapCameraManagerDelegate: MapCameraManagerDelegate =
     delegateProvider.mapCameraManagerDelegate
   private var mapFeatureQueryDelegate: MapFeatureQueryDelegate =
@@ -170,7 +169,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     }
   }
 
-  protected fun initLayerAndSource() {
+  protected fun initLayerAndSource(style: StyleInterface) {
     if (layer == null || source == null) {
       initializeDataDrivenPropertyMap()
       source = createSource()
@@ -188,7 +187,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         annotationConfig?.belowLayerId?.let { belowLayerId ->
           // Check whether the below layer exists in the current style.
           if (style.styleLayerExists(belowLayerId)) {
-            style.addLayerBelow(it, annotationConfig.belowLayerId)
+            style.addPersistentLayer(it, LayerPosition(null, annotationConfig.belowLayerId, null))
             layerAdded = true
           } else {
             Logger.w(
@@ -198,28 +197,28 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
           }
         }
         if (!layerAdded) {
-          style.addLayer(it)
+          style.addPersistentLayer(it)
         }
       }
     }
     if (layer is SymbolLayer) {
       // Only apply cluster for SymbolManager
-      initClusterLayers()
+      initClusterLayers(style)
     }
-    updateSource()
+    updateSource(style)
   }
 
-  private fun initClusterLayers() {
+  private fun initClusterLayers(style: StyleInterface) {
     annotationConfig?.annotationSourceOptions?.clusterOptions?.let {
       it.colorLevels.forEachIndexed { level, _ ->
         val clusterLevelLayer = createClusterLevelLayer(level, it.colorLevels)
         if (!style.styleLayerExists(clusterLevelLayer.layerId)) {
-          style.addLayer(clusterLevelLayer)
+          style.addPersistentLayer(clusterLevelLayer)
         }
       }
       val clusterTextLayer = createClusterTextLayer()
       if (!style.styleLayerExists(clusterTextLayer.layerId)) {
-        style.addLayer(clusterTextLayer)
+        style.addPersistentLayer(clusterTextLayer)
       }
     }
   }
@@ -266,21 +265,15 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   }
 
   /**
-   * Invoked when the style is loaded
-   */
-  override fun onStyleLoaded(styleDelegate: StyleInterface) {
-    style = styleDelegate
-    initLayerAndSource()
-  }
-
-  /**
    * Create an annotation with the option
    */
   override fun create(option: S): T {
     return option.build(currentId, this).also {
       annotationMap[it.id] = it
       currentId++
-      updateSource()
+      delegateProvider.getStyle { style ->
+        updateSource(style)
+      }
     }
   }
 
@@ -294,7 +287,9 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         currentId++
       }
     }
-    updateSource()
+    delegateProvider.getStyle { style ->
+      updateSource(style)
+    }
     return list
   }
 
@@ -303,7 +298,9 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    */
   override fun delete(annotation: T) {
     annotationMap.remove(annotation.id)
-    updateSource()
+    delegateProvider.getStyle { style ->
+      updateSource(style)
+    }
   }
 
   /**
@@ -313,7 +310,9 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     annotations.forEach {
       this.annotationMap.remove(it.id)
     }
-    updateSource()
+    delegateProvider.getStyle { style ->
+      updateSource(style)
+    }
   }
 
   /**
@@ -321,13 +320,15 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    */
   override fun deleteAll() {
     annotationMap.clear()
-    updateSource()
+    delegateProvider.getStyle { style ->
+      updateSource(style)
+    }
   }
 
   /**
    * Trigger an update to the underlying source
    */
-  private fun updateSource() {
+  private fun updateSource(style: StyleInterface) {
     if (!styleStateDelegate.isFullyLoaded()) {
       Logger.e(TAG, "Can't update source: style is not fully loaded.")
       return
@@ -371,7 +372,9 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   override fun update(annotation: T) {
     if (annotationMap.containsKey(annotation.id)) {
       annotationMap[annotation.id] = annotation
-      updateSource()
+      delegateProvider.getStyle { style ->
+        updateSource(style)
+      }
     } else {
       Logger.e(
         TAG,
@@ -394,21 +397,25 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         )
       }
     }
-    updateSource()
+    delegateProvider.getStyle { style ->
+      updateSource(style)
+    }
   }
 
   /**
    * Invoked when Mapview or Annotation manager is destroyed.
    */
   override fun onDestroy() {
-    layer?.let {
-      if (style.styleLayerExists(it.layerId)) {
-        style.removeStyleLayer(it.layerId)
+    delegateProvider.getStyle { style ->
+      layer?.let {
+        if (style.styleLayerExists(it.layerId)) {
+          style.removeStyleLayer(it.layerId)
+        }
       }
-    }
-    source?.let {
-      if (style.styleSourceExists(it.sourceId)) {
-        style.removeStyleSource(it.sourceId)
+      source?.let {
+        if (style.styleSourceExists(it.sourceId)) {
+          style.removeStyleSource(it.sourceId)
+        }
       }
     }
 
@@ -534,7 +541,9 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         }
         shiftedGeometry?.let { geometry ->
           annotation.geometry = geometry
-          updateSource()
+          delegateProvider.getStyle { style ->
+            updateSource(style)
+          }
           dragListeners.forEach {
             it.onAnnotationDrag(annotation)
           }

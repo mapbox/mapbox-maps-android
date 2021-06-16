@@ -145,18 +145,6 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
   }
 
   /**
-   * Called when a new Style is loaded.
-   */
-  override fun onStyleChanged(styleDelegate: StyleInterface) {
-    applySettings()
-    locationPuckManager?.let {
-      if (!it.isLayerInitialised()) {
-        it.initialize(styleDelegate)
-      }
-    }
-  }
-
-  /**
    * Called whenever activity's/fragment's lifecycle is entering a "started" state.
    */
   override fun onStart() {
@@ -289,6 +277,15 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
    */
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     this.delegateProvider = delegateProvider
+  }
+
+  /**
+   * Called when a new Style is loaded.
+   *
+   * @param styleDelegate
+   */
+  override fun onStyleChanged(styleDelegate: StyleInterface) {
+    // no-ops
   }
 
   override lateinit var internalSettings: LocationComponentSettings
