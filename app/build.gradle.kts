@@ -47,6 +47,9 @@ android {
       path = file("src/main/cpp/CMakeLists.txt")
     }
   }
+  dexOptions {
+    javaMaxHeapSize = "4g"
+  }
 }
 
 androidExtensions {
