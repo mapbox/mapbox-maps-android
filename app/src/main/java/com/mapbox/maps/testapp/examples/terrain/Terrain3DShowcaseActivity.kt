@@ -27,6 +27,7 @@ class Terrain3DShowcaseActivity : AppCompatActivity() {
       styleExtension = style(Style.SATELLITE_STREETS) {
         +rasterDemSource(SOURCE) {
           url(TERRAIN_URL_TILE_RESOURCE)
+          // 514 specifies padded DEM tile and provides better performance than 512 tiles.
           tileSize(514)
         }
         +terrain(SOURCE)
