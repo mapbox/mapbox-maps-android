@@ -61,7 +61,8 @@ class SantaCatalinaActivity : AppCompatActivity() {
       style(styleUri = Style.SATELLITE_STREETS) {
         +rasterDemSource(SOURCE) {
           url(TERRAIN_URL_TILE_RESOURCE)
-          tileSize(512)
+          // 514 specifies padded DEM tile and provides better performance than 512 tiles.
+          tileSize(514)
         }
         +terrain(SOURCE) {
           exaggeration(TERRAIN_EXEGERATION)
@@ -257,7 +258,7 @@ class SantaCatalinaActivity : AppCompatActivity() {
     private const val LINE_LAYER_ID = "line"
     private const val LOCATION_LAYER_ID = "location"
     private const val SOURCE = "TERRAIN_SOURCE"
-    private const val TERRAIN_URL_TILE_RESOURCE = "mapbox://mapbox.terrain-rgb"
+    private const val TERRAIN_URL_TILE_RESOURCE = "mapbox://mapbox.mapbox-terrain-dem-v1"
     private const val TERRAIN_EXEGERATION = 1.7
     private const val FOREGROUND_ICON = "mapbox-location-icon"
     private const val BACKGROUND_ICON = "mapbox-location-stroke-icon"
