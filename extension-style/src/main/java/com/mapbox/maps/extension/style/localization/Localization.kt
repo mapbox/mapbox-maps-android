@@ -41,7 +41,7 @@ private fun convertExpression(language: String, layer: SymbolLayer, textField: E
     val stringExpression: String = it.toJson().replace(
       EXPRESSION_REGEX,
       get(language).toJson()
-    )
+    ).replace(EXPRESSION_ABBR_REGEX, get(language).toJson())
 
     layer.textField(Expression.fromRaw(stringExpression))
   }
@@ -79,3 +79,4 @@ private const val STREET_V7 = "mapbox.mapbox-streets-v7"
 private const val STREET_V8 = "mapbox.mapbox-streets-v8"
 private val SUPPORTED_SOURCES = listOf(STREET_V7, STREET_V8)
 private val EXPRESSION_REGEX = Regex("\\[\"get\",\\s*\"(name|name_.{2,7})\"\\]")
+private val EXPRESSION_ABBR_REGEX = Regex("\\[\"get\",\\s*\"abbr\"\\]")
