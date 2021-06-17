@@ -82,11 +82,15 @@ function prepare_branch_with_documentation() {
   git add $1
   git commit -m "Add $1 API documentation."
   git checkout -b $INTERIM_BRANCH_WITH_DOCUMENTATION
-  git push --set-upstream origin $INTERIM_BRANCH_WITH_DOCUMENTATION
+  git push --set-upstream origin $INTERIM_BRANCH_WITH_DOCUMENTATION --force
 }
 
 function clone_android_docs_repo() {
-  git clone $ANDROID_DOCS_REPO $ANDROID_DOCS_DIRECTORY
+   if [ ! -d $DOKKA_OUTPUT_DIR ]; then
+    git clone $ANDROID_DOCS_REPO $ANDROID_DOCS_DIRECTORY
+   fi
+   git checkout $BRANCH_WITH_DOCUMENTATION
+   git pull --force origin $BRANCH_WITH_DOCUMENTATION:$BRANCH_WITH_DOCUMENTATION
 }
 
 function update_constants_and_map_version_numbers() {
@@ -133,12 +137,12 @@ gh auth login --with-token < gh_token.txt
 # Generate docs, create branch and make PR with API documentation in the SDK repo.
 generate_docs
 prepare_branch_with_documentation $MAPS_SDK_VERSION
-create_pull_request "Add ${MAPS_SDK_VERSION} API documentation." $BRANCH_WITH_DOCUMENTATION
+#create_pull_request "Add ${MAPS_SDK_VERSION} API documentation." $BRANCH_WITH_DOCUMENTATION
 
 ## Update config files in Android Docs Repo.
 clone_android_docs_repo
 update_constants_and_map_version_numbers $MAPS_SDK_VERSION
 prepare_android_docs_branch $MAPS_SDK_VERSION
 cd $ANDROID_DOCS_DIRECTORY
-create_pull_request "Carbon Maps SDK bump to ${MAPS_SDK_VERSION}" $BRANCH_WITH_DOCUMENTATION
+#create_pull_request "Carbon Maps SDK bump to ${MAPS_SDK_VERSION}" $BRANCH_WITH_DOCUMENTATION
 cd -
