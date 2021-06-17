@@ -6,6 +6,7 @@ import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.bindgen.Value
+import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.testapp.R
@@ -38,38 +39,9 @@ class StyleCrossFadeAnimationActivity : AppCompatActivity() {
         object : Observer() {
           override fun notify(event: Event) {
             when (event.type) {
-              // make newly loaded layers 'invisible' when new style is loaded
-              MapEvents.STYLE_LOADED -> {
-                for (layer in currentStyle.styleLayers) {
-                  if (layer.id.contains("road-") ||
-                    layer.id.contains("landuse") ||
-                    layer.id.contains("bridge-")
-                  ) {
-                    val property =
-                      currentStyle.getStyleLayerProperty(layer.id, layer.type + "-color")
-                    if (property.value != Value.nullValue()) {
-                      originalProperties[Pair(layer.id, layer.type)] = property.value
-                      currentStyle.setStyleLayerProperty(
-                        layer.id,
-                        layer.type + "-color-transition",
-                        Value(hashMapOf("duration" to Value(0), "delay" to Value(0)))
-                      )
-                      currentStyle.setStyleLayerProperty(
-                        layer.id,
-                        layer.type + "-color",
-                        Value(
-                          arrayListOf(
-                            Value("rgba"),
-                            Value(0.0), Value(0.0), Value(0.0), Value(0.0)
-                          )
-                        )
-                      )
-                    }
-                  }
-                }
-              }
               // when map loaded, fade-in layers using original values
               MapEvents.MAP_LOADED -> {
+                Logger.e("KIRYLDD", "MapEvents.MAP_LOADED $currentStyle")
                 for (originalProperty in originalProperties) {
                   currentStyle.setStyleLayerProperty(
                     originalProperty.key.first,
@@ -111,12 +83,13 @@ class StyleCrossFadeAnimationActivity : AppCompatActivity() {
     for (layer in currentStyle.styleLayers) {
       if (layer.id.contains("road-") ||
         layer.id.contains("landuse") ||
-        layer.id.contains("bridge-")
+        layer.id.contains("bridge-") ||
+        layer.id.contains("tunnel-")
       ) {
         currentStyle.setStyleLayerProperty(
           layer.id,
           layer.type + "-color-transition",
-          Value(hashMapOf("duration" to Value(STYLE_FADE_OUT_DURATION_MS), "delay" to Value(0)))
+          Value(hashMapOf("duration" to Value(0), "delay" to Value(0)))
         )
         currentStyle.setStyleLayerProperty(
           layer.id,
@@ -133,7 +106,38 @@ class StyleCrossFadeAnimationActivity : AppCompatActivity() {
     mainHandler.postDelayed(
       {
         mapView.getMapboxMap().loadStyleUri(newStyleUri) {
+          Logger.e("KIRYLDD", "Update style from $currentStyle to $it")
           currentStyle = it
+          Logger.e("KIRYLDD", "Layers: ${currentStyle.styleLayers.joinToString(", ")}")
+          // make newly loaded layers 'invisible' when new style is loaded
+          for (layer in currentStyle.styleLayers) {
+            if (layer.id.contains("road-") ||
+              layer.id.contains("landuse") ||
+              layer.id.contains("bridge-") ||
+              layer.id.contains("tunnel-")
+            ) {
+              val property =
+                currentStyle.getStyleLayerProperty(layer.id, layer.type + "-color")
+              if (property.value != Value.nullValue()) {
+                originalProperties[Pair(layer.id, layer.type)] = property.value
+                currentStyle.setStyleLayerProperty(
+                  layer.id,
+                  layer.type + "-color-transition",
+                  Value(hashMapOf("duration" to Value(0), "delay" to Value(0)))
+                )
+                currentStyle.setStyleLayerProperty(
+                  layer.id,
+                  layer.type + "-color",
+                  Value(
+                    arrayListOf(
+                      Value("rgba"),
+                      Value(0.0), Value(0.0), Value(0.0), Value(0.0)
+                    )
+                  )
+                )
+              }
+            }
+          }
           switchStyleButton.isEnabled = true
         }
       },
@@ -162,12 +166,11 @@ class StyleCrossFadeAnimationActivity : AppCompatActivity() {
   }
 
   companion object {
-    private const val LATITUDE = 55.7558
-    private const val LONGITUDE = 37.6173
-    private const val ZOOM = 14.0
+    private const val LATITUDE = 48.1351
+    private const val LONGITUDE = 11.582
+    private const val ZOOM = 13.0
     private const val PITCH = 60.0
 
     private const val STYLE_TRANSITION_DELAY_MS = 300L
-    private const val STYLE_FADE_OUT_DURATION_MS = (STYLE_TRANSITION_DELAY_MS / 1.5).toLong()
   }
 }
