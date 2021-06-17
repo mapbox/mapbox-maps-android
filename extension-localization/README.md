@@ -39,7 +39,9 @@ dependencies {
 Customizing Mapbox Localization Plugin for Android could be done in two ways: by either providing your own version of the Localization plugin or by using the existing apis of the Localization plugin. The former is documented in [DEVELOPING.md](https://github.com/mapbox/mapbox-maps-android/blob/master/DEVELOPING.md), the latter can be achieved with:
 
 ```kotlin
-
+mapboxMap.loadStyleUri(styleUri) {
+    it.localizeLabels(selectedLocale)
+}
 ```
 
 More concrete examples of the Localization plugin can be found in our [test application](https://github.com/mapbox/mapbox-maps-android/tree/master/app/src/main/java/com/mapbox/maps/testapp).
