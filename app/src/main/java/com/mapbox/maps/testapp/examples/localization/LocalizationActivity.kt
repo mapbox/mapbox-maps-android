@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
-import com.mapbox.maps.extension.style.localization.localizeLabels
+import com.mapbox.maps.extension.localization.localizeLabels
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_map_localization.*
 import kotlinx.android.synthetic.main.activity_map_overlay.mapView
@@ -49,7 +49,7 @@ class LocalizationActivity : AppCompatActivity() {
     fabStyles.setOnClickListener {
       val styleUri = nextStyle
       mapboxMap.loadStyleUri(styleUri) {
-        it.localizeLabels(locale)
+        it.localizeLabels(selectedLocale)
       }
       Toast.makeText(this, styleUri, Toast.LENGTH_SHORT).show()
     }

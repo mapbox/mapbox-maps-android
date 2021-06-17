@@ -1,4 +1,4 @@
-package com.mapbox.maps.extension.style.localization
+package com.mapbox.maps.extension.localization
 
 import java.util.*
 
