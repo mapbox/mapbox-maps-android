@@ -357,7 +357,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
           }
         }
       val features = annotations.map {
-        val annotation = Feature.fromGeometry(it.geometry, it.jsonObject)
+        val annotation = Feature.fromGeometry(it.geometry, it.getJsonObjectCopy())
         it.setUsedDataDrivenProperties()
         annotation
       }
