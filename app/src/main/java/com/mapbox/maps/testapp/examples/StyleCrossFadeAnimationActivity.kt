@@ -1,15 +1,12 @@
 package com.mapbox.maps.testapp.examples
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.bindgen.Value
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.utils.StyleSwitcher
 import kotlinx.android.synthetic.main.activity_style_cross_fade.*
 
 /**
@@ -17,9 +14,8 @@ import kotlinx.android.synthetic.main.activity_style_cross_fade.*
  */
 class StyleCrossFadeAnimationActivity : AppCompatActivity() {
 
-  private lateinit var currentStyle: Style
-  private val mainHandler = Handler(Looper.getMainLooper())
-  private val originalProperties = mutableMapOf<Pair<String, String>, Value>()
+  private lateinit var styleSwitcher: StyleSwitcher
+  private var currentStyleURI = Style.MAPBOX_STREETS
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -32,40 +28,9 @@ class StyleCrossFadeAnimationActivity : AppCompatActivity() {
         .pitch(PITCH)
         .build()
     )
-    mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
-      currentStyle = it
+    mapView.getMapboxMap().loadStyleUri(currentStyleURI) {
+      styleSwitcher = StyleSwitcher(mapView.getMapboxMap(), it)
       switchStyleButton.visibility = View.VISIBLE
-      mapView.getMapboxMap().subscribe(
-        object : Observer() {
-          override fun notify(event: Event) {
-            when (event.type) {
-              // when map loaded, fade-in layers using original values
-              MapEvents.MAP_LOADED -> {
-                Logger.e("KIRYLDD", "MapEvents.MAP_LOADED $currentStyle")
-                for (originalProperty in originalProperties) {
-                  currentStyle.setStyleLayerProperty(
-                    originalProperty.key.first,
-                    originalProperty.key.second + "-color-transition",
-                    Value(
-                      hashMapOf(
-                        "duration" to Value(STYLE_TRANSITION_DELAY_MS),
-                        "delay" to Value(0)
-                      )
-                    )
-                  )
-                  currentStyle.setStyleLayerProperty(
-                    originalProperty.key.first,
-                    originalProperty.key.second + "-color",
-                    originalProperty.value
-                  )
-                }
-                originalProperties.clear()
-              }
-            }
-          }
-        },
-        listOf(MapEvents.STYLE_LOADED, MapEvents.MAP_LOADED)
-      )
       switchStyleButton.setOnClickListener {
         crossFadeSwitchStyle()
       }
@@ -74,75 +39,21 @@ class StyleCrossFadeAnimationActivity : AppCompatActivity() {
 
   private fun crossFadeSwitchStyle() {
     switchStyleButton.isEnabled = false
-    val newStyleUri = if (currentStyle.styleURI == Style.MAPBOX_STREETS) {
+    val newStyleUri = if (currentStyleURI == Style.MAPBOX_STREETS) {
       Style.DARK
     } else {
       Style.MAPBOX_STREETS
     }
-    // fade-out flickering layers while new style is loaded
-    for (layer in currentStyle.styleLayers) {
-      if (layer.id.contains("road-") ||
-        layer.id.contains("landuse") ||
-        layer.id.contains("bridge-") ||
-        layer.id.contains("tunnel-")
-      ) {
-        currentStyle.setStyleLayerProperty(
-          layer.id,
-          layer.type + "-color-transition",
-          Value(hashMapOf("duration" to Value(0), "delay" to Value(0)))
-        )
-        currentStyle.setStyleLayerProperty(
-          layer.id,
-          layer.type + "-color",
-          Value(
-            arrayListOf(
-              Value("rgba"),
-              Value(0.0), Value(0.0), Value(0.0), Value(0.0)
-            )
-          )
-        )
+    styleSwitcher.switchStyle(
+      newStyleUri,
+      STYLE_TRANSITION_DELAY_MS,
+      listOf("road-", "landuse", "bridge-", "tunnel-")
+    ) {
+      currentStyleURI = it.styleURI
+      runOnUiThread {
+        switchStyleButton.isEnabled = true
       }
     }
-    mainHandler.postDelayed(
-      {
-        mapView.getMapboxMap().loadStyleUri(newStyleUri) {
-          Logger.e("KIRYLDD", "Update style from $currentStyle to $it")
-          currentStyle = it
-          Logger.e("KIRYLDD", "Layers: ${currentStyle.styleLayers.joinToString(", ")}")
-          // make newly loaded layers 'invisible' when new style is loaded
-          for (layer in currentStyle.styleLayers) {
-            if (layer.id.contains("road-") ||
-              layer.id.contains("landuse") ||
-              layer.id.contains("bridge-") ||
-              layer.id.contains("tunnel-")
-            ) {
-              val property =
-                currentStyle.getStyleLayerProperty(layer.id, layer.type + "-color")
-              if (property.value != Value.nullValue()) {
-                originalProperties[Pair(layer.id, layer.type)] = property.value
-                currentStyle.setStyleLayerProperty(
-                  layer.id,
-                  layer.type + "-color-transition",
-                  Value(hashMapOf("duration" to Value(0), "delay" to Value(0)))
-                )
-                currentStyle.setStyleLayerProperty(
-                  layer.id,
-                  layer.type + "-color",
-                  Value(
-                    arrayListOf(
-                      Value("rgba"),
-                      Value(0.0), Value(0.0), Value(0.0), Value(0.0)
-                    )
-                  )
-                )
-              }
-            }
-          }
-          switchStyleButton.isEnabled = true
-        }
-      },
-      STYLE_TRANSITION_DELAY_MS
-    )
   }
 
   override fun onStart() {
@@ -170,7 +81,6 @@ class StyleCrossFadeAnimationActivity : AppCompatActivity() {
     private const val LONGITUDE = 11.582
     private const val ZOOM = 13.0
     private const val PITCH = 60.0
-
     private const val STYLE_TRANSITION_DELAY_MS = 300L
   }
 }
