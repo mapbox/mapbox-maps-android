@@ -14,7 +14,10 @@ import kotlinx.android.synthetic.main.activity_map_overlay.mapView
 import java.util.*
 
 /**
- * Example showcasing usage of localization.
+ * Example showcasing how to localize a map client side to a specific locale using Style#localizeLabels(locale: Locale).
+ * This function will attempt to localize a map into a selected locale if the symbol layers are using
+ * a Mapbox source and the locale is being provided as part of the vector source data.
+ * This feature supports both v7 and v8 of Mapbox style spec version.
  */
 class LocalizationActivity : AppCompatActivity() {
   private lateinit var mapboxMap: MapboxMap
@@ -31,10 +34,12 @@ class LocalizationActivity : AppCompatActivity() {
       return styles[index++ % styles.size]
     }
   private lateinit var locale: Locale
+  private lateinit var selectedLocale: Locale
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_map_localization)
     locale = resources.configuration.locale
+    selectedLocale = locale
     mapIsLocalized = true
     Toast.makeText(this, R.string.change_language_instruction, Toast.LENGTH_LONG).show()
     mapboxMap = mapView.getMapboxMap()
@@ -50,7 +55,7 @@ class LocalizationActivity : AppCompatActivity() {
     }
     fabLocalize.setOnClickListener {
       mapIsLocalized = if (mapIsLocalized) {
-        mapboxMap.getStyle()?.localizeLabels(Locale.FRENCH)
+        mapboxMap.getStyle()?.localizeLabels(selectedLocale)
         Toast.makeText(this, R.string.map_not_localized, Toast.LENGTH_SHORT).show()
         false
       } else {
@@ -67,64 +72,22 @@ class LocalizationActivity : AppCompatActivity() {
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    when (item.itemId) {
-      R.id.english -> {
-        mapboxMap.getStyle()?.localizeLabels(Locale.ENGLISH)
-        return true
-      }
-      R.id.spanish -> {
-        mapboxMap.getStyle()?.localizeLabels(Locale("es", "ES"))
-        return true
-      }
-      R.id.french -> {
-        mapboxMap.getStyle()?.localizeLabels(Locale.FRENCH)
-        return true
-      }
-      R.id.german -> {
-        mapboxMap.getStyle()?.localizeLabels(Locale.GERMAN)
-        return true
-      }
-      R.id.russian -> {
-        mapboxMap.getStyle()?.localizeLabels(Locale("ru", "RU"))
-        return true
-      }
-      R.id.chinese -> {
-        mapboxMap.getStyle()?.localizeLabels(Locale.CHINESE)
-        return true
-      }
-      R.id.simplified_chinese -> {
-        mapboxMap.getStyle()?.localizeLabels(Locale.SIMPLIFIED_CHINESE)
-        return true
-      }
-      R.id.portuguese -> {
-        mapboxMap.getStyle()?.localizeLabels(Locale("pt", "PT"))
-        return true
-      }
-      R.id.japanese -> {
-        mapboxMap.getStyle()?.localizeLabels(Locale.JAPANESE)
-        return true
-      }
-      R.id.korean -> {
-        mapboxMap.getStyle()?.localizeLabels(Locale.KOREAN)
-        return true
-      }
-      R.id.vietnamese -> {
-        mapboxMap.getStyle()?.localizeLabels(Locale("vi", "VN"))
-        return true
-      }
-      R.id.italian -> {
-        mapboxMap.getStyle()?.localizeLabels(Locale.ITALIAN)
-        return true
-      }
-      R.id.local -> {
-        mapboxMap.getStyle()?.localizeLabels(locale)
-        return true
-      }
-      android.R.id.home -> {
-        finish()
-        return true
-      }
+    selectedLocale = when (item.itemId) {
+      R.id.english -> Locale.ENGLISH
+      R.id.spanish -> Locale("es", "ES")
+      R.id.french -> Locale.FRENCH
+      R.id.german -> Locale.GERMAN
+      R.id.russian -> Locale("ru", "RU")
+      R.id.chinese -> Locale.CHINESE
+      R.id.simplified_chinese -> Locale.SIMPLIFIED_CHINESE
+      R.id.portuguese -> Locale("pt", "PT")
+      R.id.japanese -> Locale.JAPANESE
+      R.id.korean -> Locale.KOREAN
+      R.id.vietnamese -> Locale("vi", "VN")
+      R.id.italian -> Locale.ITALIAN
+      else -> locale
     }
+    mapboxMap.getStyle()?.localizeLabels(selectedLocale)
     return super.onOptionsItemSelected(item)
   }
 
