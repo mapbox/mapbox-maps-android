@@ -82,7 +82,16 @@ function prepare_branch_with_documentation() {
   git add $1
   git commit -m "Add $1 API documentation."
   git checkout -b $INTERIM_BRANCH_WITH_DOCUMENTATION
-  git push --set-upstream origin $INTERIM_BRANCH_WITH_DOCUMENTATION --force
+  git push --set-upstream origin $INTERIM_BRANCH_WITH_DOCUMENTATION
+}
+
+function prepare_branch_with_empty() {
+  INTERIM_BRANCH_WITH_DOCUMENTATION="${BRANCH_WITH_DOCUMENTATION}_${1}_empty"
+  git checkout -f $BRANCH_WITH_DOCUMENTATION
+  git pull --force origin $BRANCH_WITH_DOCUMENTATION:$BRANCH_WITH_DOCUMENTATION
+  git checkout -b $INTERIM_BRANCH_WITH_DOCUMENTATION
+  git commit --allow-empty -m "empty commit"
+  git push --set-upstream origin $INTERIM_BRANCH_WITH_DOCUMENTATION
 }
 
 function clone_android_docs_repo() {
@@ -100,7 +109,7 @@ function update_constants_and_map_version_numbers() {
   mv $CONSTANTS_FILE_TMP $CONSTANTS_FILE
 
   MAP_VERSION_NUMBERS_FILE_TMP="${MAP_VERSION_NUMBERS_FILE}.tmp"
-  if [[ $1 == *beta* ]] || [[ $1 == *alpha* ]]; then
+  if [[ $1 == *beta* ]] || [[ $1 == *alpha* ]] || [[ $1 == *rc* ]]; then
     jq --arg version $1 '.[-1] |= $version' $MAP_VERSION_NUMBERS_FILE >$MAP_VERSION_NUMBERS_FILE_TMP
   else
     jq --arg version $1 '. += [$version]' $MAP_VERSION_NUMBERS_FILE >$MAP_VERSION_NUMBERS_FILE_TMP
@@ -137,12 +146,16 @@ gh auth login --with-token < gh_token.txt
 # Generate docs, create branch and make PR with API documentation in the SDK repo.
 generate_docs
 prepare_branch_with_documentation $MAPS_SDK_VERSION
-#create_pull_request "Add ${MAPS_SDK_VERSION} API documentation." $BRANCH_WITH_DOCUMENTATION
+create_pull_request "Add ${MAPS_SDK_VERSION} API documentation." $BRANCH_WITH_DOCUMENTATION
+
+# Create a pr with empty commit to trigger dos deploy
+prepare_branch_with_empty $MAPS_SDK_VERSION
+create_pull_request "Trigger ${MAPS_SDK_VERSION} deploy." $BRANCH_WITH_DOCUMENTATION
 
 ## Update config files in Android Docs Repo.
 clone_android_docs_repo
 update_constants_and_map_version_numbers $MAPS_SDK_VERSION
 prepare_android_docs_branch $MAPS_SDK_VERSION
 cd $ANDROID_DOCS_DIRECTORY
-#create_pull_request "Carbon Maps SDK bump to ${MAPS_SDK_VERSION}" $BRANCH_WITH_DOCUMENTATION
+create_pull_request "Carbon Maps SDK bump to ${MAPS_SDK_VERSION}" $BRANCH_WITH_DOCUMENTATION
 cd -
