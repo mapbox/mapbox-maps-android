@@ -21,7 +21,7 @@ import java.util.*
  */
 class LocalizationActivity : AppCompatActivity() {
   private lateinit var mapboxMap: MapboxMap
-  private var mapIsLocalized: Boolean = false
+  private var applySelectedLanguage: Boolean = false
   private var index: Int = 0
   private val styles =
     arrayOf(
@@ -40,7 +40,7 @@ class LocalizationActivity : AppCompatActivity() {
     setContentView(R.layout.activity_map_localization)
     locale = resources.configuration.locale
     selectedLocale = locale
-    mapIsLocalized = true
+    applySelectedLanguage = false
     Toast.makeText(this, R.string.change_language_instruction, Toast.LENGTH_LONG).show()
     mapboxMap = mapView.getMapboxMap()
     mapboxMap.loadStyleUri(nextStyle) {
@@ -54,14 +54,14 @@ class LocalizationActivity : AppCompatActivity() {
       Toast.makeText(this, styleUri, Toast.LENGTH_SHORT).show()
     }
     fabLocalize.setOnClickListener {
-      mapIsLocalized = if (mapIsLocalized) {
+      applySelectedLanguage = if (!applySelectedLanguage) {
         mapboxMap.getStyle()?.localizeLabels(selectedLocale)
         Toast.makeText(this, R.string.map_not_localized, Toast.LENGTH_SHORT).show()
-        false
+        true
       } else {
         mapboxMap.getStyle()?.localizeLabels(locale)
         Toast.makeText(this, R.string.map_localized, Toast.LENGTH_SHORT).show()
-        true
+        false
       }
     }
   }
@@ -72,6 +72,8 @@ class LocalizationActivity : AppCompatActivity() {
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    applySelectedLanguage = true
+    item.isChecked = true
     selectedLocale = when (item.itemId) {
       R.id.english -> Locale.ENGLISH
       R.id.spanish -> Locale("es", "ES")
@@ -88,7 +90,7 @@ class LocalizationActivity : AppCompatActivity() {
       else -> locale
     }
     mapboxMap.getStyle()?.localizeLabels(selectedLocale)
-    return super.onOptionsItemSelected(item)
+    return true
   }
 
   override fun onStart() {
