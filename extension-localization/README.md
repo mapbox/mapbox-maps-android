@@ -1,14 +1,15 @@
-## Mapbox Maps Localization Plugin for Android
+## Mapbox Maps Localization Extension for Android
 
 ### Overview
 
-The Mapbox Localization Plugin for Android is an public library for adding overlays on top of MapView. By registering overlays into Localization Plugin and providing the EdgeInsets(margins) of these overlay views, Localization Plugin can adjust the camera center location and zoom level to make sure all the important POIs(provided by `MapOverlayCoordinatesProvider`) are not covered by these overlays.
+The Mapbox Localization PlugExtensionn for Android is an public library for localizing labels in a MapView.
+This extension library can localize the supported languaged in [mapbox-streets-v8](https://docs.mapbox.com/vector-tiles/reference/mapbox-streets-v8/#common-fields) and [mapbox-streets-v7](https://docs.mapbox.com/vector-tiles/reference/mapbox-streets-v7/#name-fields)
 
 A full overview of classes and interfaces can be found in our [API documentation](https://docs.mapbox.com/android/beta/maps/guides/).
 
 ### Getting Started
 
-This README is intended for developers who are interested in [contributing](https://github.com/mapbox/mapbox-maps-android/blob/master/CONTRIBUTING.md) to the Mapbox Localization Plugin for Android. Please visit [DEVELOPING.md](https://github.com/mapbox/mapbox-maps-android/blob/master/DEVELOPING.md) for general information and instructions on how to use the Mapbox Maps Plugin System. To add the Localization plugin to your project, you configure its dependency in your `build.gradle` files.
+This README is intended for developers who are interested in [contributing](https://github.com/mapbox/mapbox-maps-android/blob/master/CONTRIBUTING.md) to the Mapbox Localization Extension for Android. Please visit [DEVELOPING.md](https://github.com/mapbox/mapbox-maps-android/blob/master/DEVELOPING.md) for general information and instructions on how to use the Mapbox Maps Extension System. To add the Localization Extension to your project, you configure its dependency in your `build.gradle` files.
 
 ```groovy
 // In the root build.gradle file
@@ -30,13 +31,13 @@ allprojects {
 
 // In the app build.gradle file
 dependencies {
-  implementation 'com.mapbox.plugin:maps-localization:10.0.0-beta.20'
+    implementation 'com.mapbox.extension:maps-localization:10.0.0-rc.2'
 }
 ```
 
 ### Example
 
-Customizing Mapbox Localization Plugin for Android could be done in two ways: by either providing your own version of the Localization plugin or by using the existing apis of the Localization plugin. The former is documented in [DEVELOPING.md](https://github.com/mapbox/mapbox-maps-android/blob/master/DEVELOPING.md), the latter can be achieved with:
+Customizing Mapbox Localization Extension for Android could be done in two ways: by either providing your own version of the Localization Extension or by using the existing apis of the Localization Extension. The former is documented in [DEVELOPING.md](https://github.com/mapbox/mapbox-maps-android/blob/master/DEVELOPING.md), the latter can be achieved with:
 
 ```kotlin
 mapboxMap.loadStyleUri(styleUri) {
@@ -44,8 +45,8 @@ mapboxMap.loadStyleUri(styleUri) {
 }
 ```
 
-More concrete examples of the Localization plugin can be found in our [test application](https://github.com/mapbox/mapbox-maps-android/tree/master/app/src/main/java/com/mapbox/maps/testapp).
+More concrete examples of the Localization Extension can be found in our [test application](https://github.com/mapbox/mapbox-maps-android/tree/master/app/src/main/java/com/mapbox/maps/testapp).
 
 #### Dependencies
 
-View [LICENSE.md](LICENSE.md) for all dependencies used by this plugin.
+View [LICENSE.md](LICENSE.md) for all dependencies used by this extension.
