@@ -77,4 +77,5 @@
     <string name="activity_map_view_customization">Creating a map view</string>
     <string name="activity_ornaments">Ornaments</string>
     <string name="activity_large_geojson">Geojson performance</string>
+    <string name="activity_style_crossfade">Cross fade style switch</string>
 </resources>
