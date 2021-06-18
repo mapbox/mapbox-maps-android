@@ -231,19 +231,21 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
       override fun onAnimationStart(animation: Animator?) {
         (animation as? CameraAnimator<*>)?.apply {
-
-          if (runningAnimatorsQueue.isEmpty()) {
-            highLevelListener?.onAnimationStart(animation)
+          // check for a specific use-case when canceling an animation with start delay that
+          // has not yet started - in that case onAnimationStart logic must be skipped
+          if (canceled) {
+            return
           }
-
           lifecycleListeners.forEach {
             it.onAnimatorStarting(type, this, owner)
           }
+          if (runningAnimatorsQueue.isEmpty()) {
+            highLevelAnimatorSet?.started = true
+            highLevelListener?.onAnimationStart(animation)
+          }
           mapTransformDelegate.setUserAnimationInProgress(true)
-
           // check if such animation is not running already
           // if it is - then cancel it
-
           // Safely iterate over new set because of the possible changes of "this.animators" in Animator callbacks
           HashSet(animators).forEach {
             if (it.type == type && it.isRunning && it != this) {
@@ -299,7 +301,10 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
               AnimationFinishStatus.ENDED -> it.onAnimatorEnding(type, this, owner)
             }
           }
-          if (runningAnimatorsQueue.isEmpty()) {
+          // it could happen that some animators are cancelled inside onAnimatorStarting callback
+          // while high-level animation is starting and highLevelListener != null already,
+          // so we check on `started` flag to validate that high-level animation truly started
+          if (runningAnimatorsQueue.isEmpty() && highLevelAnimatorSet?.started == true) {
             when (finishStatus) {
               AnimationFinishStatus.CANCELED -> {
                 highLevelListener?.onAnimationCancel(animation)

@@ -7,6 +7,8 @@ internal data class HighLevelAnimatorSet(
   val animatorSet: AnimatorSet
 ) : Cancelable {
 
+  var started = false
+
   override fun cancel() {
     animatorSet.cancel()
   }

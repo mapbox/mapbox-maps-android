@@ -1,11 +1,15 @@
 package com.mapbox.maps
 
 import android.animation.Animator
+import android.animation.AnimatorSet
+import android.animation.ValueAnimator
 import android.os.Handler
 import android.os.Looper
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.common.Logger
+import com.mapbox.geojson.Point
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.plugin.animation.*
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
@@ -440,6 +444,93 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
       assertFalse(pitchListenerThree.canceled)
       assertEquals(30.0, currentPitch, EPS)
       assertEquals(30.0, mapView.getMapboxMap().cameraState.pitch, EPS)
+    } else {
+      throw TimeoutException()
+    }
+  }
+
+  @Test
+  fun testDeadlockOnDelayedAnimatorOutsideCall() {
+    val camera = mapView.camera
+    val lowLevelOwner = "test"
+    val centerAnimator = camera.createCenterAnimator(
+      cameraAnimatorOptions(Point.fromLngLat(13.405, 52.52)) {
+        startValue(Point.fromLngLat(21.0122, 52.2297))
+        owner(lowLevelOwner)
+      }
+    ) {
+      duration = 2000L
+    }
+    val zoomAnimator = camera.createZoomAnimator(
+      cameraAnimatorOptions(10.0) {
+        startValue(12.0)
+        owner(lowLevelOwner)
+      }
+    ) {
+      duration = 2000L
+      startDelay = 1000L
+    }
+    mainHandler.post {
+      camera.registerAnimators(centerAnimator, zoomAnimator)
+      val set = AnimatorSet()
+      set.playTogether(centerAnimator, zoomAnimator)
+
+      camera.addCameraAnimationsLifecycleListener(object : CameraAnimationsLifecycleListener {
+        override fun onAnimatorStarting(
+          type: CameraAnimatorType,
+          animator: ValueAnimator,
+          owner: String?
+        ) {
+          if (owner != lowLevelOwner) {
+            set.cancel()
+            set.childAnimations.forEach {
+              camera.unregisterAnimators(it as ValueAnimator)
+            }
+          }
+        }
+
+        override fun onAnimatorInterrupting(
+          type: CameraAnimatorType,
+          runningAnimator: ValueAnimator,
+          runningAnimatorOwner: String?,
+          newAnimator: ValueAnimator,
+          newAnimatorOwner: String?
+        ) {}
+
+        override fun onAnimatorEnding(
+          type: CameraAnimatorType,
+          animator: ValueAnimator,
+          owner: String?
+        ) {}
+
+        override fun onAnimatorCancelling(
+          type: CameraAnimatorType,
+          animator: ValueAnimator,
+          owner: String?
+        ) {}
+      })
+
+      set.start()
+    }
+    val listener = CameraAnimatorListener()
+    mainHandler.postDelayed(
+      {
+        camera.easeTo(
+          cameraOptions {
+            zoom(7.0)
+            bearing(120.0)
+          },
+          mapAnimationOptions {
+            duration(1000)
+            animatorListener(listener)
+          }
+        )
+      },
+      500L
+    )
+    if (listener.latchEnd.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+      assertEquals(7.0, mapView.getMapboxMap().cameraState.zoom, EPS)
+      assertEquals(120.0, mapView.getMapboxMap().cameraState.bearing, EPS)
     } else {
       throw TimeoutException()
     }
