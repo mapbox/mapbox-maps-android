@@ -5,9 +5,14 @@ import android.os.Looper
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.*
 
+/**
+ * Convenience util class that could be used for smoother switching between styles.
+ *
+ * Approach used here is not a 100% solution and may require parameter tuning
+ * depending on given switched styles, potential blinking layers, device capabilities etc.
+ */
 class StyleSwitcher(
-  val mapboxMap: MapboxMap,
-  initialStyle: Style
+  val mapboxMap: MapboxMap
 ) {
   private lateinit var currentStyle: Style
   private val mainHandler = Handler(Looper.getMainLooper())
@@ -15,7 +20,7 @@ class StyleSwitcher(
   private var styleTransitionDelayMs: Long = 0
   private var onStyleSwitched: ((Style) -> Unit)? = null
 
-  init {
+  private fun addOnMapLoadedObserver() {
     mapboxMap.subscribe(
       object : Observer() {
         override fun notify(event: Event) {
@@ -23,6 +28,9 @@ class StyleSwitcher(
             // when map loaded, fade-in layers using original values
             MapEvents.MAP_LOADED -> {
               for (originalProperty in originalProperties) {
+                if (!currentStyle.styleLayerExists(originalProperty.key.first)) {
+                  continue
+                }
                 currentStyle.setStyleLayerProperty(
                   originalProperty.key.first,
                   originalProperty.key.second + "-color-transition",
@@ -41,13 +49,13 @@ class StyleSwitcher(
               }
               originalProperties.clear()
               onStyleSwitched?.invoke(currentStyle)
+              mapboxMap.unsubscribe(this)
             }
           }
         }
       },
       listOf(MapEvents.MAP_LOADED)
     )
-    currentStyle = initialStyle
   }
 
   fun switchStyle(
@@ -58,62 +66,65 @@ class StyleSwitcher(
   ) {
     this.onStyleSwitched = onStyleSwitched
     this.styleTransitionDelayMs = styleTransitionDelayMs
-    // fade-out flickering layers while new style is loaded
-    for (layer in currentStyle.styleLayers) {
-      for (flickeringLayer in flickeringLayers) {
-        if (layer.id.contains(flickeringLayer)) {
-          currentStyle.setStyleLayerProperty(
-            layer.id,
-            layer.type + "-color-transition",
-            Value(hashMapOf("duration" to Value(0), "delay" to Value(0)))
-          )
-          currentStyle.setStyleLayerProperty(
-            layer.id,
-            layer.type + "-color",
-            Value(
-              arrayListOf(
-                Value("rgba"),
-                Value(0.0), Value(0.0), Value(0.0), Value(0.0)
+    mapboxMap.getStyle { style ->
+      // fade-out flickering layers while new style is loaded
+      for (layer in style.styleLayers) {
+        for (flickeringLayer in flickeringLayers) {
+          if (layer.id.contains(flickeringLayer)) {
+            style.setStyleLayerProperty(
+              layer.id,
+              layer.type + "-color-transition",
+              Value(hashMapOf("duration" to Value(0), "delay" to Value(0)))
+            )
+            style.setStyleLayerProperty(
+              layer.id,
+              layer.type + "-color",
+              Value(
+                arrayListOf(
+                  Value("rgba"),
+                  Value(0.0), Value(0.0), Value(0.0), Value(0.0)
+                )
               )
             )
-          )
+          }
         }
       }
-    }
-    mainHandler.postDelayed(
-      {
-        mapboxMap.loadStyleUri(newStyleUri) {
-          currentStyle = it
-          // make newly loaded layers 'invisible' when new style is loaded
-          for (layer in currentStyle.styleLayers) {
-            for (flickeringLayer in flickeringLayers) {
-              if (layer.id.contains(flickeringLayer)) {
-                val property =
-                  currentStyle.getStyleLayerProperty(layer.id, layer.type + "-color")
-                if (property.value != Value.nullValue()) {
-                  originalProperties[Pair(layer.id, layer.type)] = property.value
-                  currentStyle.setStyleLayerProperty(
-                    layer.id,
-                    layer.type + "-color-transition",
-                    Value(hashMapOf("duration" to Value(0), "delay" to Value(0)))
-                  )
-                  currentStyle.setStyleLayerProperty(
-                    layer.id,
-                    layer.type + "-color",
-                    Value(
-                      arrayListOf(
-                        Value("rgba"),
-                        Value(0.0), Value(0.0), Value(0.0), Value(0.0)
+      mainHandler.postDelayed(
+        {
+          addOnMapLoadedObserver()
+          mapboxMap.loadStyleUri(newStyleUri) {
+            currentStyle = it
+            // make newly loaded layers 'invisible' when new style is loaded
+            for (layer in currentStyle.styleLayers) {
+              for (flickeringLayer in flickeringLayers) {
+                if (layer.id.contains(flickeringLayer)) {
+                  val property =
+                    currentStyle.getStyleLayerProperty(layer.id, layer.type + "-color")
+                  if (property.value != Value.nullValue()) {
+                    originalProperties[Pair(layer.id, layer.type)] = property.value
+                    currentStyle.setStyleLayerProperty(
+                      layer.id,
+                      layer.type + "-color-transition",
+                      Value(hashMapOf("duration" to Value(0), "delay" to Value(0)))
+                    )
+                    currentStyle.setStyleLayerProperty(
+                      layer.id,
+                      layer.type + "-color",
+                      Value(
+                        arrayListOf(
+                          Value("rgba"),
+                          Value(0.0), Value(0.0), Value(0.0), Value(0.0)
+                        )
                       )
                     )
-                  )
+                  }
                 }
               }
             }
           }
-        }
-      },
-      styleTransitionDelayMs
-    )
+        },
+        styleTransitionDelayMs
+      )
+    }
   }
 }

@@ -28,8 +28,8 @@ class StyleCrossFadeAnimationActivity : AppCompatActivity() {
         .pitch(PITCH)
         .build()
     )
+    styleSwitcher = StyleSwitcher(mapView.getMapboxMap())
     mapView.getMapboxMap().loadStyleUri(currentStyleURI) {
-      styleSwitcher = StyleSwitcher(mapView.getMapboxMap(), it)
       switchStyleButton.visibility = View.VISIBLE
       switchStyleButton.setOnClickListener {
         crossFadeSwitchStyle()
@@ -81,6 +81,6 @@ class StyleCrossFadeAnimationActivity : AppCompatActivity() {
     private const val LONGITUDE = 11.582
     private const val ZOOM = 13.0
     private const val PITCH = 60.0
-    private const val STYLE_TRANSITION_DELAY_MS = 300L
+    private const val STYLE_TRANSITION_DELAY_MS = 400L
   }
 }
