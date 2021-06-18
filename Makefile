@@ -63,13 +63,17 @@ dokka-javadoc:
 # Use `make generate-changelog TAG=LastReleaseTag` while running locally.
 .PHONY: generate-changelog
 generate-changelog:
-	mbx env; \
+	unset GITHUB_TOKEN; \
 	export GITHUB_TOKEN=$(shell mbx-ci github reader token); \
 	changelog-draft -b main -p $(TAG) -o CHANGELOG.md
 
 # Use `make update-android-docs TAG=YourReleaseTag` while running locally.
 .PHONY: update-android-docs
 update-android-docs:
+	unset GITHUB_TOKEN; \
+	mbx-ci github writer opt-in mapbox-maps-android; \
+	mbx-ci github writer opt-in android-docs; \
+	echo "$(shell mbx-ci github reader token)" > gh_token.txt;\
 	sh scripts/update-android-docs.sh -s $(TAG)
 
 .PHONY: prepare-release-doc
