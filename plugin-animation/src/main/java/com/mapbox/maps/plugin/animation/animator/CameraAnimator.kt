@@ -78,6 +78,7 @@ abstract class CameraAnimator<out T> (
    */
   final override fun start() {
     if (registered) {
+      canceled = false
       super.start()
     } else {
       Logger.w(
