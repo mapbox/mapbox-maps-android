@@ -42,6 +42,7 @@ abstract class CameraAnimator<out T> (
   private val userUpdateListeners = mutableListOf<AnimatorUpdateListener?>()
   private val userListeners = mutableListOf<AnimatorListener?>()
 
+  internal var canceled = false
   internal var isInternal = false
 
   init {
@@ -77,6 +78,7 @@ abstract class CameraAnimator<out T> (
    */
   final override fun start() {
     if (registered) {
+      canceled = false
       super.start()
     } else {
       Logger.w(
@@ -158,6 +160,18 @@ abstract class CameraAnimator<out T> (
       super.addListener(internalListener)
     }
     userListeners.clear()
+  }
+
+  /**
+   * Cancels the animation. Unlike end(), cancel() causes the animation to stop in its tracks,
+   * sending an Animator.AnimatorListener.onAnimationCancel(Animator) to its listeners,
+   * followed by an Animator.AnimatorListener.onAnimationEnd(Animator) message.
+   *
+   * This method must be called on the thread that is running the animation.
+   */
+  final override fun cancel() {
+    canceled = true
+    super.cancel()
   }
 
   internal fun addInternalUpdateListener(listener: AnimatorUpdateListener) {
