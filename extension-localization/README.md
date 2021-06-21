@@ -37,7 +37,7 @@ dependencies {
 
 ### Example
 
-Customizing Mapbox Localization Extension for Android could be done in two ways: by either providing your own version of the Localization Extension or by using the existing apis of the Localization Extension. The former is documented in [DEVELOPING.md](https://github.com/mapbox/mapbox-maps-android/blob/master/DEVELOPING.md), the latter can be achieved with:
+Customizing Mapbox Localization Extension for Android could be done in two ways: by either providing your own version of the Localization Extension or by using the existing Localization Extension API. The former is documented in [DEVELOPING.md](https://github.com/mapbox/mapbox-maps-android/blob/master/DEVELOPING.md), the latter can be achieved with:
 
 ```kotlin
 mapboxMap.loadStyleUri(styleUri) {
