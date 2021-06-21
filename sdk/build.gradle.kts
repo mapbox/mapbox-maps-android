@@ -58,6 +58,7 @@ dependencies {
   api(project(":plugin-scalebar"))
   api(project(":plugin-overlay"))
   api(project(":plugin-annotation"))
+  api(project(":extension-localization"))
   implementation(Dependencies.kotlin)
   implementation(Dependencies.androidxCoreKtx)
   implementation(Dependencies.androidxAnnotations)

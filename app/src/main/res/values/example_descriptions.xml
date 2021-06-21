@@ -60,6 +60,7 @@
     <string name="description_native_custom_layer">Custom Layer Example using C++</string>
     <string name="description_triangle_custom_layer">Triangle Custom Layer Example</string>
     <string name="description_map_overlay">Use Map Overlay</string>
+    <string name="description_localization">Automatically localize the map labels into the device\'s current language.</string>
     <string name="description_transparent_bg">MapView with transparent background</string>
     <string name="description_surface">MapSurface with SurfaceView host</string>
     <string name="description_view_snapshot">Create a bitmap snapshot from a MapView</string>

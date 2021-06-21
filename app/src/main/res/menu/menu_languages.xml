@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group
+        android:id="@+id/group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/english"
+            android:title="@string/english"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/spanish"
+            android:title="@string/spanish"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/french"
+            android:title="@string/french"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/german"
+            android:title="@string/german"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/russian"
+            android:title="@string/russian"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/chinese"
+            android:title="@string/chinese"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/simplified_chinese"
+            android:title="@string/simplified_chinese"
+            app:showAsAction="never" />
+
+
+        <item
+            android:id="@+id/portuguese"
+            android:title="@string/portuguese"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/japanese"
+            android:title="@string/japanese"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/korean"
+            android:title="@string/korean"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/vietnamese"
+            android:title="@string/vietnamese"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/italian"
+            android:title="@string/italian"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/local"
+            android:title="@string/local_names"
+            app:showAsAction="never" />
+    </group>
+</menu>
