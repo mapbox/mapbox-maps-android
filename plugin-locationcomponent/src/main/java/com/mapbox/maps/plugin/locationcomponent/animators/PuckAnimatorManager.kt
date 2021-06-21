@@ -8,7 +8,7 @@ import com.mapbox.maps.plugin.locationcomponent.LocationLayerRenderer
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
-import com.mapbox.maps.plugin.locationcomponent.utils.MathUtils
+import com.mapbox.maps.util.MathUtils
 
 internal class PuckAnimatorManager(
   indicatorPositionChangedListener: OnIndicatorPositionChangedListener,
@@ -62,16 +62,7 @@ internal class PuckAnimatorManager(
     vararg targets: Double,
     options: (ValueAnimator.() -> Unit)?
   ) {
-    val optimized = DoubleArray(targets.size)
-    targets.toTypedArray().apply {
-      for (i in 0 until size) {
-        optimized[i] = if (i == 0)
-          MathUtils.normalize(get(i))
-        else
-          MathUtils.shortestRotation(MathUtils.normalize(get(i)), optimized[i - 1])
-      }
-    }
-    bearingAnimator.animate(*optimized.toTypedArray(), options = options)
+    bearingAnimator.animate(*MathUtils.prepareOptimalBearingPath(targets).toTypedArray(), options = options)
   }
 
   fun animatePosition(

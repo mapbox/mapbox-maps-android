@@ -1,6 +1,5 @@
-package com.mapbox.maps.plugin.locationcomponent
+package com.mapbox.maps.util
 
-import com.mapbox.maps.plugin.locationcomponent.utils.MathUtils
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import kotlin.jvm.Throws

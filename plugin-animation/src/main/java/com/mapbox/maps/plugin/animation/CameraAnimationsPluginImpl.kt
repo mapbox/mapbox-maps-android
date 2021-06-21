@@ -13,6 +13,7 @@ import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.animation.animator.*
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.toCameraOptions
+import com.mapbox.maps.util.MathUtils
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.properties.Delegates
 
@@ -180,17 +181,26 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         )
       }
     }
-
-    val targets = cameraAnimator.targets
-    cameraAnimator.setObjectValues(
-      *Array(targets.size + 1) { index ->
+    val targets = if (cameraAnimator is CameraBearingAnimator) {
+      MathUtils.prepareOptimalBearingPath(
+        DoubleArray(cameraAnimator.targets.size + 1) { index ->
+          if (index == 0) {
+            startValue as Double
+          } else {
+            cameraAnimator.targets[index - 1]
+          }
+        }
+      ).toTypedArray()
+    } else {
+      Array(cameraAnimator.targets.size + 1) { index ->
         if (index == 0) {
           startValue
         } else {
-          targets[index - 1]
+          cameraAnimator.targets[index - 1]
         }
       }
-    )
+    }
+    cameraAnimator.setObjectValues(*targets)
     return true
   }
 

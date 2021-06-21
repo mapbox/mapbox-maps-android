@@ -1,6 +1,27 @@
-package com.mapbox.maps.plugin.locationcomponent.utils
+package com.mapbox.maps.util
 
-internal object MathUtils {
+/**
+ * Math utils class.
+ */
+object MathUtils {
+
+  /**
+   * Util function to transform given bearing values to optimal ones so that shortest path is
+   * always taken.
+   */
+  fun prepareOptimalBearingPath(targets: DoubleArray): DoubleArray {
+    val optimized = DoubleArray(targets.size)
+    targets.apply {
+      for (i in 0 until size) {
+        optimized[i] = if (i == 0)
+          normalize(get(i))
+        else
+          shortestRotation(normalize(get(i)), optimized[i - 1])
+      }
+    }
+    return optimized
+  }
+
   /**
    * Util for finding the shortest path from the current rotated degree to the new degree.
    *
@@ -8,7 +29,7 @@ internal object MathUtils {
    * @param previousHeading the current position of the rotation
    * @return the shortest degree of rotation possible
    */
-  fun shortestRotation(targetHeading: Double, previousHeading: Double): Double {
+  internal fun shortestRotation(targetHeading: Double, previousHeading: Double): Double {
     val diff = previousHeading - targetHeading
     return when {
       diff > 180.0f -> {
@@ -29,7 +50,7 @@ internal object MathUtils {
    * @param angle the provided angle
    * @return the normalized angle
    */
-  fun normalize(angle: Double): Double {
+  private fun normalize(angle: Double): Double {
     return (angle % 360.0 + 360.0) % 360.0
   }
 }

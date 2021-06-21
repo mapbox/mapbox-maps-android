@@ -62,28 +62,4 @@ internal object CameraTransform {
   }
 
   fun calculateScaleBy(amount: Double, currentZoom: Double) = log2(amount) + currentZoom
-
-  fun normalizeAngleRadians(angle: Double, anchorAngle: Double): Double {
-    var resultAngle = wrap(angle, -PI, PI)
-    if (resultAngle == -PI) resultAngle = PI
-    val diff = abs(resultAngle - anchorAngle)
-    if (abs(resultAngle - PI * 2 - anchorAngle) < diff) {
-      resultAngle -= PI * 2
-    }
-    if (abs(resultAngle + PI * 2 - anchorAngle) < diff) {
-      resultAngle += PI * 2
-    }
-    return resultAngle
-  }
-
-  private fun wrap(value: Double, min: Double, max: Double): Double {
-    if (value >= min && value < max) {
-      return value
-    } else if (value == max) {
-      return min
-    }
-    val delta = max - min
-    val wrapped = min + (value - min) % delta
-    return if (value < min) wrapped + delta else wrapped
-  }
 }
