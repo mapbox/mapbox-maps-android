@@ -182,6 +182,23 @@ commands:
                     make sdkRegistryUpload
                   fi
 
+  publish-sdk-registry-named-snapshot:
+    steps:
+      - unless:
+          condition: << pipeline.parameters.mapbox_upstream >>
+          steps:
+            - run:
+                name: Publish the SDK snapshot based on the keyword in commit message
+                command: |
+                  COMMIT_SHA=$(git rev-parse --short HEAD)
+                  LAST_RELEASE=$(git describe --tags --abbrev=0)
+                  if [[ -n ${CIRCLE_BRANCH+x} ]] && [[ $CIRCLE_BRANCH != "main" ]] && [[ "$(git log -1)" = *"publish_android_snapshot"* ]]; then
+                    sed -i -e "s/^VERSION_NAME=.*/VERSION_NAME=${LAST_RELEASE:9}-${CIRCLE_BRANCH}-SNAPSHOT/" gradle.properties
+                    curl -Ls https://mapbox-release-engineering.s3.amazonaws.com/mbx-ci/latest/mbx-ci-linux-amd64 > mbx-ci && chmod 755 ./mbx-ci
+                    ./mbx-ci aws setup
+                    make sdkRegistryUpload
+                  fi
+
   login-google-cloud-platform:
     steps:
       - run:
@@ -419,4 +436,5 @@ jobs:
       - update-version-name
       - track-metrics
       - publish-sdk-registry
+      - publish-sdk-registry-named-snapshot
       - generate-docs
