@@ -5,7 +5,7 @@
 The Mapbox Localization Extension for Android is a public library for localizing labels for a MapView.
 This extension library can localize supported languages in [mapbox-streets-v8](https://docs.mapbox.com/vector-tiles/reference/mapbox-streets-v8/#common-fields) and [mapbox-streets-v7](https://docs.mapbox.com/vector-tiles/reference/mapbox-streets-v7/#name-fields)
 
-A full overview of classes and interfaces can be found in our [API documentation](https://docs.mapbox.com/android/beta/maps/guides/).
+A full overview of classes and interfaces can be found in our [API documentation](https://docs.mapbox.com/android/beta/maps/api-reference/).
 
 ### Getting Started
 
