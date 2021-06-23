@@ -4681,13 +4681,14 @@ class SymbolLayerTest {
 
   @Test
   fun getSymbolLayerTest() {
-    val value = HashMap<String, Value>()
-    value["id"] = Value("id")
-    value["type"] = Value("symbol")
-    value["source"] = Value("source")
-    every { style.getStyleLayerProperties("id") } returns valueExpected
-    every { valueExpected.error } returns null
-    every { valueExpected.value } returns Value(value)
+    every { style.getStyleLayerProperty("id", "source") } returns StylePropertyValue(
+      Value("source"),
+      StylePropertyValueKind.CONSTANT
+    )
+    every { style.getStyleLayerProperty("id", "type") } returns StylePropertyValue(
+      Value("symbol"),
+      StylePropertyValueKind.CONSTANT
+    )
     val layer = style.getLayer("id") as SymbolLayer
     assertNotNull(layer)
     assertNotNull(layer.delegate)
