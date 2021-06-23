@@ -31,6 +31,11 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   private val onGeoJsonParsedListenerList = mutableListOf<OnGeoJsonParsed>()
   private var ignoreParsedGeoJson = false
 
+  private val workerHandler by lazy {
+    Handler(workerThread.looper)
+  }
+  private val mainHandler = Handler(Looper.getMainLooper())
+
   private constructor(
     builder: Builder,
     rawGeoJson: GeoJson?,
@@ -980,10 +985,6 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
         start()
       }
     }
-    private val workerHandler by lazy {
-      Handler(workerThread.looper)
-    }
-    private val mainHandler = Handler(Looper.getMainLooper())
 
     /**
      * Maximum zoom level at which to create vector tiles (higher means greater detail at high zoom

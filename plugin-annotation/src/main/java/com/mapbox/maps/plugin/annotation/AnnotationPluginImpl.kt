@@ -97,6 +97,15 @@ class AnnotationPluginImpl : AnnotationPlugin {
   }
 
   /**
+   * Called when the map is destroyed. Should be used to cleanup plugin resources for that map.
+   */
+  override fun cleanup() {
+    managerList.forEach {
+      it.get()?.onDestroy()
+    }
+  }
+
+  /**
    * Provides all map delegate instances.
    */
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
