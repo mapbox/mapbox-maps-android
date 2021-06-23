@@ -1,5 +1,6 @@
 package com.mapbox.maps.extension.localization
 
+import com.mapbox.common.Logger
 import java.util.*
 
 /**
@@ -117,6 +118,8 @@ private val supportedV8 =
     NAME_VI
   )
 
+private const val TAG = "Localization"
+
 /**
  * Get the language name for v7, fallback to [NAME] if not supported.
  */
@@ -125,7 +128,11 @@ internal fun getLanguageNameV7(locale: Locale): String {
     return if (locale == Locale.SIMPLIFIED_CHINESE || locale.script == "Hans") NAME_ZH_HANS
     else NAME_ZH
   }
-  "name_${locale.language}".apply { return if (supportedV7.contains(this)) this else NAME }
+  return "name_${locale.language}".apply {
+    if (!supportedV7.contains(this)) {
+      Logger.w(TAG, "Language ${locale.displayLanguage} is not supported in the current style")
+    }
+  }
 }
 
 /**
@@ -136,5 +143,9 @@ internal fun getLanguageNameV8(locale: Locale): String {
     return if (locale == Locale.TAIWAN || locale.script == "Hant") NAME_ZH_HANT
     else NAME_ZH_HANS
   }
-  "name_${locale.language}".apply { return if (supportedV8.contains(this)) this else NAME }
+  return "name_${locale.language}".apply {
+    if (!supportedV8.contains(this)) {
+      Logger.w(TAG, "Language ${locale.displayLanguage} is not supported in the current style")
+    }
+  }
 }
