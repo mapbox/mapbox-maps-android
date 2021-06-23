@@ -2,9 +2,34 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 10.0.0-rc.1 June 10, 2021
+# 10.0.0-rc.2 June 23, 2021
 
 **The Mapbox Maps SDK for Android has moved to release candidate status and is now ready for production use.**
+
+## Features ✨ and improvements 🏁
+* Introduce experimental `Style#addPersistentLayer`, `Layer#isPersistent`, `Style#addPersistentStyleLayer`, `Style#addPersistentStyleCustomLayer` and `Style#isStyleLayerPersistent` APIs, so that the tagged layer and its associated resources would remain when a style is reloaded. This improves performance of Annotation and Location Component Plugin during the style change. ([#368](https://github.com/mapbox/mapbox-maps-android/pull/368), ([#422](https://github.com/mapbox/mapbox-maps-android/pull/422)))
+* Add Localization API to apply languages to the style by provided locale. ([#379](https://github.com/mapbox/mapbox-maps-android/pull/379))
+* Reduce unnecessary render cache texture updates by introducing a small delay after zoom has changed.
+* Save and read application state on a background thread, to avoid delays (~3-5ms) on the main thread.
+
+## Bug fixes 🐞
+* Introduce size check for render cache. ([#425](https://github.com/mapbox/mapbox-maps-android/pull/425))
+* Fix memory leak on render destroy. ([#426](https://github.com/mapbox/mapbox-maps-android/pull/426))
+* Changes the visibility of jsonObject in annotation to protected, fix ConcurrentModificationException ([#427](https://github.com/mapbox/mapbox-maps-android/pull/427))
+* Fix camera deadlock use-case. ([#439](https://github.com/mapbox/mapbox-maps-android/pull/439))
+* Tileset descriptor resolving fixes:
+  - Operation completes even if the offline manager instance gets out of scope
+  - Fixes leaking TilesetResolverObserver instance
+  - Fixes possible crash on cancellation of pending style pack download operation
+* Fix text rendering when both 'text-rotate' and 'text-offset' are set.
+* Fix Android 12 compatibility to support [pending intents mutability](https://developer.android.com/about/versions/12/behavior-changes-12#pending-intent-mutability).
+
+
+## Dependencies
+* Bump gl-native to v10.0.0-rc.2 ([#422](https://github.com/mapbox/mapbox-maps-android/pull/422))
+* Bump telemetry to v8.0.0, android core to v5.0.0 ([#423](https://github.com/mapbox/mapbox-maps-android/pull/423))
+
+# 10.0.0-rc.1 June 10, 2021
 
 ## Breaking changes ⚠️
 * Rename setter for `Light` object from `add` to `set`. This matches API from GL-JS and clarifies there is only 1 Light object. ([#387](https://github.com/mapbox/mapbox-maps-android/pull/387))
