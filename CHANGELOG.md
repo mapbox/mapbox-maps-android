@@ -1,3 +1,33 @@
+## Features ✨ and improvements 🏁
+* Bump gl-native to v10.0.0-rc.2; Introduce experimental Style#addPersistentStyleLayer, Style#addPersistentStyleCustomLayer and Style#isStyleLayerPersistent API. ([#422](https://github.com/mapbox/mapbox-maps-android/pull/422))
+* Bump telemetry to v8.0.0, android core to v5.0.0 ([#423](https://github.com/mapbox/mapbox-maps-android/pull/423))
+* Use addPersistentStyleLayer API to improve the performance of Annotation Plugin and Location Component Plugin during the style change. ([#368](https://github.com/mapbox/mapbox-maps-android/pull/368))
+* Update location component plugin's README. ([#429](https://github.com/mapbox/mapbox-maps-android/pull/429))
+* Add activity showcasing style cross fading. ([#436](https://github.com/mapbox/mapbox-maps-android/pull/436))
+* Add localization api to apply languages to the style by `Locale` ([#379](https://github.com/mapbox/mapbox-maps-android/pull/379))
+
+
+## Bug fixes 🐞
+* Introduce size check for render cache. ([#425](https://github.com/mapbox/mapbox-maps-android/pull/425))
+* Fix memory leak on render destroy. ([#426](https://github.com/mapbox/mapbox-maps-android/pull/426))
+* Changes the visibility of  jsonObject in annotation to protected, fix ConcurrentModificationException ([#427](https://github.com/mapbox/mapbox-maps-android/pull/427))
+* Fix camera deadlock use-case. ([#439](https://github.com/mapbox/mapbox-maps-android/pull/439))
+
+
+## Skipped (no entry needed)
+* Update README.md to use v10.0.0-rc.1. ([#414](https://github.com/mapbox/mapbox-maps-android/pull/414))
+* Add command for generate-changelog ([#411](https://github.com/mapbox/mapbox-maps-android/pull/411))
+* Add google service location dependency to app module. ([#430](https://github.com/mapbox/mapbox-maps-android/pull/430))
+* [app] Set the maximum heap size for dex operation to 4g. ([#435](https://github.com/mapbox/mapbox-maps-android/pull/435))
+* [app] Update terrain examples to use optimised RasterDemSource url. ([#432](https://github.com/mapbox/mapbox-maps-android/pull/432))
+* Add command to generate and upload docs locally ([#437](https://github.com/mapbox/mapbox-maps-android/pull/437))
+* Coalesce to the default language if not supported ([#444](https://github.com/mapbox/mapbox-maps-android/pull/444))
+
+
+## UNCATEGORIZED
+* [build] Publish snapshot when the commit message contains publish_android_snapshot keyword. ([#438](https://github.com/mapbox/mapbox-maps-android/pull/438))
+
+
 # Changelog for Mapbox Maps SDK v10 for Android
 
 Mapbox welcomes participation and contributions from everyone.
