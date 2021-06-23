@@ -96,7 +96,7 @@ function prepare_branch_with_empty() {
 }
 
 function clone_android_docs_repo() {
-   if [ ! -d $DOKKA_OUTPUT_DIR ]; then
+   if [ ! -d $ANDROID_DOCS_DIRECTORY ]; then
     git clone $ANDROID_DOCS_REPO $ANDROID_DOCS_DIRECTORY
    fi
    git checkout $BRANCH_WITH_DOCUMENTATION
