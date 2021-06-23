@@ -16,7 +16,6 @@ import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.*
 import org.junit.runner.RunWith
-import java.io.File
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
@@ -36,12 +35,11 @@ class OfflineTest {
       )
     }
   }
+  private val resourceOptions = ResourceOptions.Builder().applyDefaultParams(
+    InstrumentationRegistry.getInstrumentation().targetContext
+  ).tileStore(tileStore).build()
   private val offlineManager: OfflineManager by lazy {
-    OfflineManager(
-      ResourceOptions.Builder().applyDefaultParams(
-        InstrumentationRegistry.getInstrumentation().targetContext
-      ).tileStore(tileStore).build()
-    )
+    OfflineManager(resourceOptions)
   }
 
   @get:Rule
@@ -49,12 +47,19 @@ class OfflineTest {
 
   @Before
   fun setUp() {
+    val latch = CountDownLatch(1)
     handler.post {
       offlineManager.removeStylePack(STYLE)
       tileStore.removeTileRegion(TILE_REGION_ID)
       tileStore.setOption(TileStoreOptions.DISK_QUOTA, Value(0))
-      // Fixme add method to clear cached data(style pack)
-      File("${InstrumentationRegistry.getInstrumentation().targetContext.filesDir.absolutePath}/.mapbox/map_data/map_data.db").delete()
+      MapboxMap.clearData(resourceOptions) {
+        if (!it.isError) {
+          latch.countDown()
+        }
+      }
+    }
+    if (!latch.await(30, TimeUnit.SECONDS)) {
+      throw TimeoutException()
     }
   }
 

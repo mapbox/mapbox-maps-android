@@ -24,7 +24,6 @@ import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_offline.*
 import kotlinx.android.synthetic.main.activity_offline.recycler
-import java.io.File
 import java.util.*
 
 /**
@@ -46,8 +45,11 @@ class OfflineActivity : AppCompatActivity() {
       )
     }
   }
+  private val resourceOptions: ResourceOptions by lazy {
+    ResourceOptions.Builder().applyDefaultParams(this).tileStore(tileStore).build()
+  }
   private val offlineManager: OfflineManager by lazy {
-    OfflineManager(ResourceOptions.Builder().applyDefaultParams(this).tileStore(tileStore).build())
+    OfflineManager(resourceOptions)
   }
   private val offlineLogsAdapter: OfflineLogsAdapter by lazy {
     OfflineLogsAdapter()
@@ -295,8 +297,11 @@ class OfflineActivity : AppCompatActivity() {
     // not a part of the existing style pack. The resources still exists as disk cache.
     offlineManager.removeStylePack(Style.OUTDOORS)
 
-    // Fixme add method to clear cached data(style pack)
-    File("${this.filesDir.absolutePath}/.mapbox/map_data/map_data.db").delete()
+    MapboxMap.clearData(resourceOptions) {
+      it.error?.let { error ->
+        logErrorMessage(error)
+      }
+    }
 
     // Reset progressbar.
     updateStylePackDownloadProgress(0, 0)
