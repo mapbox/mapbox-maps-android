@@ -1269,6 +1269,9 @@ class MapboxMap internal constructor(
     styleObserver.onDestroy()
   }
 
+  /**
+   * A convenience object to access MapboxMap's static utilities.
+   */
   companion object {
     /**
      * Clears temporary map data.
