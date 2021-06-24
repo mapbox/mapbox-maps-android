@@ -5,6 +5,7 @@ package com.mapbox.maps.plugin.annotation.generated
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.PointF
+import android.os.HandlerThread
 import android.view.View
 import com.mapbox.android.gestures.MoveDistancesObject
 import com.mapbox.android.gestures.MoveGestureDetector
@@ -62,8 +63,14 @@ class PointAnnotationManagerTest {
 
   private lateinit var manager: PointAnnotationManager
   val bitmap = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888)
+
   @Before
   fun setUp() {
+    GeoJsonSource.workerThread =
+      HandlerThread("STYLE_WORKER").apply {
+        priority = Thread.MAX_PRIORITY
+        start()
+      }
     mockkStatic("com.mapbox.maps.extension.style.layers.LayerExtKt")
     mockkStatic("com.mapbox.maps.extension.style.sources.SourceKt")
     mockkStatic(ValueConverter::class)
@@ -248,7 +255,10 @@ class PointAnnotationManagerTest {
         .withIconImage(bitmap)
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
-    assertEquals(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.generationId, annotation.iconImage)
+    assertEquals(
+      PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.generationId,
+      annotation.iconImage
+    )
 
     verify(exactly = 1) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
   }
@@ -261,7 +271,10 @@ class PointAnnotationManagerTest {
         .withIconImage(bitmap)
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
-    assertEquals(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.generationId, annotation.iconImage)
+    assertEquals(
+      PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.generationId,
+      annotation.iconImage
+    )
 
     verify(exactly = 1) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
 
@@ -271,7 +284,10 @@ class PointAnnotationManagerTest {
         .withIconImage(bitmap)
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
-    assertEquals(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.generationId, annotation2.iconImage)
+    assertEquals(
+      PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.generationId,
+      annotation2.iconImage
+    )
 
     verify(exactly = 1) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
   }
@@ -288,6 +304,7 @@ class PointAnnotationManagerTest {
     manager.update(annotation)
     verify(exactly = 1) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
   }
+
   @Test
   fun create() {
     val annotation = manager.create(

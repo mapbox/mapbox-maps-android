@@ -4,6 +4,7 @@ package com.mapbox.maps.plugin.annotation.generated
 
 import android.graphics.Color
 import android.graphics.PointF
+import android.os.HandlerThread
 import android.view.View
 import com.mapbox.android.gestures.MoveDistancesObject
 import com.mapbox.android.gestures.MoveGestureDetector
@@ -59,8 +60,14 @@ class PolygonAnnotationManagerTest {
   private val querySlot = slot<QueryFeaturesCallback>()
 
   private lateinit var manager: PolygonAnnotationManager
+
   @Before
   fun setUp() {
+    GeoJsonSource.workerThread =
+      HandlerThread("STYLE_WORKER").apply {
+        priority = Thread.MAX_PRIORITY
+        start()
+      }
     mockkStatic("com.mapbox.maps.extension.style.layers.LayerExtKt")
     mockkStatic("com.mapbox.maps.extension.style.sources.SourceKt")
     mockkStatic(ValueConverter::class)
@@ -185,7 +192,20 @@ class PolygonAnnotationManagerTest {
   @Test
   fun createFromFeature() {
     val featureCollection =
-      FeatureCollection.fromFeature(Feature.fromGeometry(Polygon.fromLngLats(listOf(listOf(Point.fromLngLat(0.0, 0.0))))))
+      FeatureCollection.fromFeature(
+        Feature.fromGeometry(
+          Polygon.fromLngLats(
+            listOf(
+              listOf(
+                Point.fromLngLat(
+                  0.0,
+                  0.0
+                )
+              )
+            )
+          )
+        )
+      )
     val annotations = manager.create(featureCollection.toJson())
     assertEquals(annotations.first(), manager.annotations[0])
     val annotations1 = manager.create(featureCollection)
@@ -195,8 +215,22 @@ class PolygonAnnotationManagerTest {
   @Test
   fun createList() {
     val list = listOf(
-      PolygonAnnotationOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))),
-      PolygonAnnotationOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+      PolygonAnnotationOptions().withPoints(
+        listOf(
+          listOf(
+            Point.fromLngLat(0.0, 0.0),
+            Point.fromLngLat(1.0, 1.0)
+          )
+        )
+      ),
+      PolygonAnnotationOptions().withPoints(
+        listOf(
+          listOf(
+            Point.fromLngLat(0.0, 0.0),
+            Point.fromLngLat(1.0, 1.0)
+          )
+        )
+      )
     )
     val annotations = manager.create(list)
     assertEquals(annotations[0], manager.annotations[0])
@@ -205,7 +239,16 @@ class PolygonAnnotationManagerTest {
 
   @Test
   fun update() {
-    val annotation = manager.create(PolygonAnnotationOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))))
+    val annotation = manager.create(
+      PolygonAnnotationOptions().withPoints(
+        listOf(
+          listOf(
+            Point.fromLngLat(0.0, 0.0),
+            Point.fromLngLat(1.0, 1.0)
+          )
+        )
+      )
+    )
     assertEquals(annotation, manager.annotations[0])
     annotation.points = listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))
     manager.update(annotation)
@@ -215,8 +258,22 @@ class PolygonAnnotationManagerTest {
   @Test
   fun updateList() {
     val list = listOf(
-      PolygonAnnotationOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))),
-      PolygonAnnotationOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+      PolygonAnnotationOptions().withPoints(
+        listOf(
+          listOf(
+            Point.fromLngLat(0.0, 0.0),
+            Point.fromLngLat(1.0, 1.0)
+          )
+        )
+      ),
+      PolygonAnnotationOptions().withPoints(
+        listOf(
+          listOf(
+            Point.fromLngLat(0.0, 0.0),
+            Point.fromLngLat(1.0, 1.0)
+          )
+        )
+      )
     )
     val annotations = manager.create(list)
     assertEquals(annotations[0], manager.annotations[0])
@@ -242,8 +299,22 @@ class PolygonAnnotationManagerTest {
   @Test
   fun deleteList() {
     val list = listOf(
-      PolygonAnnotationOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))),
-      PolygonAnnotationOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+      PolygonAnnotationOptions().withPoints(
+        listOf(
+          listOf(
+            Point.fromLngLat(0.0, 0.0),
+            Point.fromLngLat(1.0, 1.0)
+          )
+        )
+      ),
+      PolygonAnnotationOptions().withPoints(
+        listOf(
+          listOf(
+            Point.fromLngLat(0.0, 0.0),
+            Point.fromLngLat(1.0, 1.0)
+          )
+        )
+      )
     )
     val annotations = manager.create(list)
     assertEquals(annotations[0], manager.annotations[0])
@@ -256,8 +327,22 @@ class PolygonAnnotationManagerTest {
   @Test
   fun deleteAll() {
     val list = listOf(
-      PolygonAnnotationOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))),
-      PolygonAnnotationOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
+      PolygonAnnotationOptions().withPoints(
+        listOf(
+          listOf(
+            Point.fromLngLat(0.0, 0.0),
+            Point.fromLngLat(1.0, 1.0)
+          )
+        )
+      ),
+      PolygonAnnotationOptions().withPoints(
+        listOf(
+          listOf(
+            Point.fromLngLat(0.0, 0.0),
+            Point.fromLngLat(1.0, 1.0)
+          )
+        )
+      )
     )
     val annotations = manager.create(list)
     assertEquals(annotations[0], manager.annotations[0])
