@@ -266,8 +266,9 @@ class MapboxMap internal constructor(
    *
    * Clears temporary map data from the data path defined in the given resource options.
    * Useful to reduce the disk usage or in case the disk cache contains invalid data.
-   * Note that calling this API will affect all maps that use the same data path.
-   * Note that calling this API does not affect persistent map data like offline style packages.
+   *
+   * Note that calling this API will affect all maps that use the same data path and does not
+   * affect persistent map data like offline style packages.
    *
    * @param callback Called once the request is complete or an error occurred.
    */
@@ -1278,10 +1279,11 @@ class MapboxMap internal constructor(
      *
      * Clears temporary map data from the data path defined in the given resource options.
      * Useful to reduce the disk usage or in case the disk cache contains invalid data.
-     * Note that calling this API will affect all maps that use the same data path.
-     * Note that calling this API does not affect persistent map data like offline style packages.
      *
-     * @param resourceOptions The `resource options` that contan the map data path to be used
+     * Note that calling this API will affect all maps that use the same data path and does not
+     * affect persistent map data like offline style packages.
+     *
+     * @param resourceOptions The `resource options` that contain the map data path to be used
      * @param callback Called once the request is complete or an error occurred.
      */
     @JvmStatic
