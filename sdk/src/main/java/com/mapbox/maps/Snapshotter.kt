@@ -30,6 +30,7 @@ open class Snapshotter {
   private val context: WeakReference<Context>
   private val coreSnapshotter: MapSnapshotterInterface
   private val pixelRatio: Float
+  private val mapSnapshotOptions: MapSnapshotOptions
 
   private var snapshotCreatedCallback: SnapshotCreatedListener? = null
   private var snapshotStyleCallback: SnapshotStyleListener? = null
@@ -40,6 +41,7 @@ open class Snapshotter {
 
   constructor(context: Context, options: MapSnapshotOptions) {
     this.context = WeakReference(context)
+    this.mapSnapshotOptions = options
     coreSnapshotter = MapSnapshotter(options)
     pixelRatio = context.resources.displayMetrics.density
     mainHandler = Handler(context.mainLooper)
@@ -70,8 +72,9 @@ open class Snapshotter {
   }
 
   @VisibleForTesting
-  internal constructor(context: Context, snapshotter: MapSnapshotterInterface, mainHandler: Handler, observer: Observer) {
+  internal constructor(context: Context, options: MapSnapshotOptions, snapshotter: MapSnapshotterInterface, mainHandler: Handler, observer: Observer) {
     this.context = WeakReference(context)
+    this.mapSnapshotOptions = options
     coreSnapshotter = snapshotter
     pixelRatio = context.resources.displayMetrics.density
     this.observer = observer
@@ -281,6 +284,21 @@ open class Snapshotter {
    */
   fun unsubscribe(observer: Observer) {
     coreSnapshotter.unsubscribe(observer)
+  }
+
+  /**
+   * Clears temporary map data.
+   *
+   * Clears temporary map data from the data path defined in the given resource options.
+   * Useful to reduce the disk usage or in case the disk cache contains invalid data.
+   *
+   * Note that calling this API will affect all maps that use the same data path and does not
+   * affect persistent map data like offline style packages.
+   *
+   * @param callback Called once the request is complete or an error occurred.
+   */
+  fun clearData(callback: AsyncOperationResultCallback) {
+    return Map.clearData(mapSnapshotOptions.resourceOptions, callback)
   }
 
   private fun drawAttribution(

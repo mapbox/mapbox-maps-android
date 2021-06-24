@@ -2,6 +2,7 @@ package com.mapbox.maps
 
 import android.os.Looper
 import com.mapbox.bindgen.Value
+import com.mapbox.common.ShadowLogger
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
@@ -11,29 +12,33 @@ import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.OnMoveListener
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
+import io.mockk.*
 import junit.framework.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
+import org.robolectric.annotation.Config
 import org.robolectric.annotation.LooperMode
 import java.lang.ref.WeakReference
 
 @RunWith(RobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
+@Config(shadows = [ShadowLogger::class, ShadowMap::class])
 class MapboxMapTest {
 
   private val nativeMap: MapInterface = mockk(relaxed = true)
   private val nativeObserver: NativeObserver = mockk(relaxed = true)
+  private val resourceOptions = mockk<ResourceOptions>(relaxed = true)
 
   private lateinit var mapboxMap: MapboxMap
 
   @Before
   fun setUp() {
+    mockkStatic(Map::class)
+    every { Map.clearData(any(), any()) } just runs
+    every { nativeMap.resourceOptions } returns resourceOptions
     mapboxMap = MapboxMap(nativeMap, nativeObserver, 1.0f)
   }
 
@@ -803,5 +808,12 @@ class MapboxMapTest {
   fun cameraState() {
     mapboxMap.cameraState
     verify { nativeMap.cameraState }
+  }
+
+  @Test
+  fun clearData() {
+    val callback = mockk<AsyncOperationResultCallback>(relaxed = true)
+    mapboxMap.clearData(callback)
+    verify { Map.clearData(resourceOptions, callback) }
   }
 }

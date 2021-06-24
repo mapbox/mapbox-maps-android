@@ -2,9 +2,7 @@ package com.mapbox.maps
 
 import com.mapbox.common.ShadowLogger
 import com.mapbox.geojson.Point
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
+import io.mockk.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -13,16 +11,21 @@ import org.robolectric.annotation.Config
 import java.lang.IllegalStateException
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
+@Config(shadows = [ShadowLogger::class, ShadowMap::class])
 class SnapshotterDelegateTest {
 
   private lateinit var snapshotter: Snapshotter
   private lateinit var coreSnapshotter: MapSnapshotterInterface
+  private val mapSnapshotOptions = mockk<MapSnapshotOptions>(relaxed = true)
+  private val resourceOptions = mockk<ResourceOptions>(relaxed = true)
 
   @Before
   fun setUp() {
+    mockkStatic(Map::class)
+    every { Map.clearData(any(), any()) } just runs
     coreSnapshotter = mockk(relaxed = true)
-    snapshotter = Snapshotter(mockk(relaxed = true), coreSnapshotter, mockk(relaxed = true), mockk(relaxed = true))
+    every { mapSnapshotOptions.resourceOptions } returns resourceOptions
+    snapshotter = Snapshotter(mockk(relaxed = true), mapSnapshotOptions, coreSnapshotter, mockk(relaxed = true), mockk(relaxed = true))
   }
 
   @Test
@@ -138,5 +141,12 @@ class SnapshotterDelegateTest {
   fun cancel() {
     snapshotter.cancel()
     verify { coreSnapshotter.cancel() }
+  }
+
+  @Test
+  fun clearData() {
+    val callback = mockk<AsyncOperationResultCallback>(relaxed = true)
+    snapshotter.clearData(callback)
+    verify { Map.clearData(resourceOptions, callback) }
   }
 }
