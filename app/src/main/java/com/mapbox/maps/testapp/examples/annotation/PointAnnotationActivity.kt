@@ -141,7 +141,7 @@ class PointAnnotationActivity : AppCompatActivity() {
         }
         // random add symbols across the globe
         val pointAnnotationOptionsList: MutableList<PointAnnotationOptions> = ArrayList()
-        for (i in 0..2000) {
+        for (i in 0..20) {
           pointAnnotationOptionsList.add(
             PointAnnotationOptions()
               .withPoint(AnnotationUtils.createRandomPoint())

@@ -61,7 +61,6 @@ class PolylineAnnotationManagerTest {
   private val querySlot = slot<QueryFeaturesCallback>()
 
   private lateinit var manager: PolylineAnnotationManager
-
   @Before
   fun setUp() {
     GeoJsonSource.workerThread =
@@ -197,18 +196,7 @@ class PolylineAnnotationManagerTest {
   @Test
   fun createFromFeature() {
     val featureCollection =
-      FeatureCollection.fromFeature(
-        Feature.fromGeometry(
-          LineString.fromLngLats(
-            listOf(
-              Point.fromLngLat(
-                0.0,
-                0.0
-              )
-            )
-          )
-        )
-      )
+      FeatureCollection.fromFeature(Feature.fromGeometry(LineString.fromLngLats(listOf(Point.fromLngLat(0.0, 0.0)))))
     val annotations = manager.create(featureCollection.toJson())
     assertEquals(annotations.first(), manager.annotations[0])
     val annotations1 = manager.create(featureCollection)
@@ -218,18 +206,8 @@ class PolylineAnnotationManagerTest {
   @Test
   fun createList() {
     val list = listOf(
-      PolylineAnnotationOptions().withPoints(
-        listOf(
-          Point.fromLngLat(0.0, 0.0),
-          Point.fromLngLat(0.0, 0.0)
-        )
-      ),
-      PolylineAnnotationOptions().withPoints(
-        listOf(
-          Point.fromLngLat(0.0, 0.0),
-          Point.fromLngLat(0.0, 0.0)
-        )
-      )
+      PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))),
+      PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
     )
     val annotations = manager.create(list)
     assertEquals(annotations[0], manager.annotations[0])
@@ -238,14 +216,7 @@ class PolylineAnnotationManagerTest {
 
   @Test
   fun update() {
-    val annotation = manager.create(
-      PolylineAnnotationOptions().withPoints(
-        listOf(
-          Point.fromLngLat(0.0, 0.0),
-          Point.fromLngLat(0.0, 0.0)
-        )
-      )
-    )
+    val annotation = manager.create(PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))))
     assertEquals(annotation, manager.annotations[0])
     annotation.points = listOf(Point.fromLngLat(1.0, 1.0), Point.fromLngLat(1.0, 1.0))
     manager.update(annotation)
@@ -255,18 +226,8 @@ class PolylineAnnotationManagerTest {
   @Test
   fun updateList() {
     val list = listOf(
-      PolylineAnnotationOptions().withPoints(
-        listOf(
-          Point.fromLngLat(0.0, 0.0),
-          Point.fromLngLat(0.0, 0.0)
-        )
-      ),
-      PolylineAnnotationOptions().withPoints(
-        listOf(
-          Point.fromLngLat(0.0, 0.0),
-          Point.fromLngLat(0.0, 0.0)
-        )
-      )
+      PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))),
+      PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
     )
     val annotations = manager.create(list)
     assertEquals(annotations[0], manager.annotations[0])
@@ -292,18 +253,8 @@ class PolylineAnnotationManagerTest {
   @Test
   fun deleteList() {
     val list = listOf(
-      PolylineAnnotationOptions().withPoints(
-        listOf(
-          Point.fromLngLat(0.0, 0.0),
-          Point.fromLngLat(0.0, 0.0)
-        )
-      ),
-      PolylineAnnotationOptions().withPoints(
-        listOf(
-          Point.fromLngLat(0.0, 0.0),
-          Point.fromLngLat(0.0, 0.0)
-        )
-      )
+      PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))),
+      PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
     )
     val annotations = manager.create(list)
     assertEquals(annotations[0], manager.annotations[0])
@@ -316,18 +267,8 @@ class PolylineAnnotationManagerTest {
   @Test
   fun deleteAll() {
     val list = listOf(
-      PolylineAnnotationOptions().withPoints(
-        listOf(
-          Point.fromLngLat(0.0, 0.0),
-          Point.fromLngLat(0.0, 0.0)
-        )
-      ),
-      PolylineAnnotationOptions().withPoints(
-        listOf(
-          Point.fromLngLat(0.0, 0.0),
-          Point.fromLngLat(0.0, 0.0)
-        )
-      )
+      PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))),
+      PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
     )
     val annotations = manager.create(list)
     assertEquals(annotations[0], manager.annotations[0])

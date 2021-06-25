@@ -59,7 +59,6 @@ class CircleAnnotationManagerTest {
   private val querySlot = slot<QueryFeaturesCallback>()
 
   private lateinit var manager: CircleAnnotationManager
-
   @Before
   fun setUp() {
     GeoJsonSource.workerThread =

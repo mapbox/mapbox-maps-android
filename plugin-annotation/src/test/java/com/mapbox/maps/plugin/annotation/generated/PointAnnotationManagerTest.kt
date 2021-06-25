@@ -63,7 +63,6 @@ class PointAnnotationManagerTest {
 
   private lateinit var manager: PointAnnotationManager
   val bitmap = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888)
-
   @Before
   fun setUp() {
     GeoJsonSource.workerThread =
@@ -255,10 +254,7 @@ class PointAnnotationManagerTest {
         .withIconImage(bitmap)
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
-    assertEquals(
-      PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.generationId,
-      annotation.iconImage
-    )
+    assertEquals(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.generationId, annotation.iconImage)
 
     verify(exactly = 1) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
   }
@@ -271,10 +267,7 @@ class PointAnnotationManagerTest {
         .withIconImage(bitmap)
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
-    assertEquals(
-      PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.generationId,
-      annotation.iconImage
-    )
+    assertEquals(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.generationId, annotation.iconImage)
 
     verify(exactly = 1) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
 
@@ -284,10 +277,7 @@ class PointAnnotationManagerTest {
         .withIconImage(bitmap)
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
-    assertEquals(
-      PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.generationId,
-      annotation2.iconImage
-    )
+    assertEquals(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.generationId, annotation2.iconImage)
 
     verify(exactly = 1) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
   }
@@ -304,7 +294,6 @@ class PointAnnotationManagerTest {
     manager.update(annotation)
     verify(exactly = 1) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
   }
-
   @Test
   fun create() {
     val annotation = manager.create(
