@@ -17,9 +17,9 @@ import kotlinx.android.synthetic.main.activity_annotation.*
 import java.util.*
 
 /**
- * Example showing how to add Fill annotations
+ * Example showing how to add Polygone annotations
  */
-class PolyfillAnnotationActivity : AppCompatActivity() {
+class PolygoneAnnotationActivity : AppCompatActivity() {
   private val random = Random()
   private var polygonAnnotationManager: PolygonAnnotationManager? = null
   private var index: Int = 0
@@ -37,7 +37,7 @@ class PolyfillAnnotationActivity : AppCompatActivity() {
       polygonAnnotationManager = annotationPlugin.createPolygonAnnotationManager(mapView).apply {
         addClickListener(
           OnPolygonAnnotationClickListener {
-            Toast.makeText(this@PolyfillAnnotationActivity, "click ${it.id}", Toast.LENGTH_SHORT)
+            Toast.makeText(this@PolygoneAnnotationActivity, "click ${it.id}", Toast.LENGTH_SHORT)
               .show()
             false
           }
@@ -46,7 +46,7 @@ class PolyfillAnnotationActivity : AppCompatActivity() {
         addInteractionListener(object : OnPolygonAnnotationInteractionListener {
           override fun onSelectAnnotation(annotation: PolygonAnnotation) {
             Toast.makeText(
-              this@PolyfillAnnotationActivity,
+              this@PolygoneAnnotationActivity,
               "onSelectAnnotation ${annotation.id}",
               Toast.LENGTH_SHORT
             ).show()
@@ -54,7 +54,7 @@ class PolyfillAnnotationActivity : AppCompatActivity() {
 
           override fun onDeselectAnnotation(annotation: PolygonAnnotation) {
             Toast.makeText(
-              this@PolyfillAnnotationActivity,
+              this@PolygoneAnnotationActivity,
               "onDeselectAnnotation ${annotation.id}",
               Toast.LENGTH_SHORT
             ).show()
@@ -89,7 +89,7 @@ class PolyfillAnnotationActivity : AppCompatActivity() {
         create(polygonAnnotationOptionsList)
 
         AnnotationUtils.loadStringFromAssets(
-          this@PolyfillAnnotationActivity,
+          this@PolygoneAnnotationActivity,
           "annotations.json"
         )?.let {
           create(FeatureCollection.fromJson(it))

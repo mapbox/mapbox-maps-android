@@ -977,6 +977,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * Static variables and methods.
    */
   companion object {
+    /** A worker thread to parse large geojson data. */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var workerThread = HandlerThread("STYLE_WORKER").apply {
       priority = Thread.MAX_PRIORITY
