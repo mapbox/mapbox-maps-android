@@ -43,6 +43,7 @@ import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.OnMoveListener
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.CountDownLatch
 
 /**
  * Base class for annotation managers
@@ -454,18 +455,24 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   inner class MapClick : OnMapClickListener {
     /**
      * Called when the user clicks on the map view.
+     * Note that calling this method is blocking main thread until querying map for features is finished.
      *
      * @param point The projected map coordinate the user clicked on.
      * @return True if this click should be consumed and not passed further to other listeners registered afterwards,
      * false otherwise.
      */
     override fun onMapClick(point: Point): Boolean {
-      queryMapForFeatures(point) {
-        selectAnnotation(it)
-        clickListeners.forEach { listener ->
-          listener.onAnnotationClick(it)
+      val latch = CountDownLatch(1)
+      mapFeatureQueryDelegate.executeOnRenderThread {
+        queryMapForFeatures(point) {
+          selectAnnotation(it)
+          clickListeners.forEach { listener ->
+            listener.onAnnotationClick(it)
+          }
+          latch.countDown()
         }
       }
+      latch.await()
       return false
     }
   }
