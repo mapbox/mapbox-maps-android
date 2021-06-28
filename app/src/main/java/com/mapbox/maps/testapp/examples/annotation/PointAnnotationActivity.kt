@@ -21,6 +21,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
+import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
@@ -36,6 +37,7 @@ class PointAnnotationActivity : AppCompatActivity() {
   private var pointAnnotation: PointAnnotation? = null
   private val animators: MutableList<ValueAnimator> = mutableListOf()
   private var index: Int = 0
+  private var consumeClickEvent = false
   private val nextStyle: String
     get() {
       return AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]
@@ -52,17 +54,33 @@ class PointAnnotationActivity : AppCompatActivity() {
 
         addClickListener(
           OnPointAnnotationClickListener {
-            Toast.makeText(this@PointAnnotationActivity, "Click: ${it.id}", Toast.LENGTH_SHORT)
+            Toast.makeText(this@PointAnnotationActivity, "Click1: ${it.id}", Toast.LENGTH_SHORT)
               .show()
-            false
+            consumeClickEvent
+          }
+        )
+
+        addClickListener(
+          OnPointAnnotationClickListener {
+            Toast.makeText(this@PointAnnotationActivity, "Click2: ${it.id}", Toast.LENGTH_SHORT)
+              .show()
+            consumeClickEvent
           }
         )
 
         addLongClickListener(
           OnPointAnnotationLongClickListener {
-            Toast.makeText(this@PointAnnotationActivity, "LongClick: ${it.id}", Toast.LENGTH_SHORT)
+            Toast.makeText(this@PointAnnotationActivity, "LongClick1: ${it.id}", Toast.LENGTH_SHORT)
               .show()
-            false
+            consumeClickEvent
+          }
+        )
+
+        addLongClickListener(
+          OnPointAnnotationLongClickListener {
+            Toast.makeText(this@PointAnnotationActivity, "LongClick2: ${it.id}", Toast.LENGTH_SHORT)
+              .show()
+            consumeClickEvent
           }
         )
 
@@ -135,6 +153,11 @@ class PointAnnotationActivity : AppCompatActivity() {
           create(FeatureCollection.fromJson(it))
         }
       }
+
+      mapView.getMapboxMap().addOnMapClickListener {
+        Toast.makeText(this@PointAnnotationActivity, "OnMapClick", Toast.LENGTH_SHORT).show()
+        true
+      }
     }
 
     deleteAll.setOnClickListener {
@@ -158,6 +181,11 @@ class PointAnnotationActivity : AppCompatActivity() {
         pointAnnotationManager?.annotations?.forEach {
           it.isDraggable = !it.isDraggable
         }
+      }
+      R.id.menu_action_consume_click -> {
+        consumeClickEvent = !consumeClickEvent
+        val message = getString(R.string.consume_click_event_toast) + consumeClickEvent
+        Toast.makeText(this@PointAnnotationActivity, message, Toast.LENGTH_LONG).show()
       }
       R.id.menu_action_filter -> {
         if (pointAnnotationManager != null && pointAnnotation != null) {
