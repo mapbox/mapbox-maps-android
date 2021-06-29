@@ -183,23 +183,19 @@ abstract class Layer : StyleContract.StyleLayerExtension {
  * @return StyleLayerPlugin
  */
 fun StyleManagerInterface.getLayer(layerId: String): Layer? {
-  val source =
-    if (layerId != "background" && layerId != "location-indicator" && layerId != "sky") {
-      this.getStyleLayerProperty(layerId, "source").silentUnwrap<String>()
-    } else null
   return this.getStyleLayerProperty(layerId, "type").silentUnwrap<String>()?.let { type ->
     when (type) {
       "background" -> BackgroundLayer(layerId).also { it.delegate = this }
       "location-indicator" -> LocationIndicatorLayer(layerId).also { it.delegate = this }
       "sky" -> SkyLayer(layerId).also { it.delegate = this }
-      "circle" -> CircleLayer(layerId, source!!).also { it.delegate = this }
-      "fill-extrusion" -> FillExtrusionLayer(layerId, source!!).also { it.delegate = this }
-      "fill" -> FillLayer(layerId, source!!).also { it.delegate = this }
-      "heatmap" -> HeatmapLayer(layerId, source!!).also { it.delegate = this }
-      "hillshade" -> HillshadeLayer(layerId, source!!).also { it.delegate = this }
-      "line" -> LineLayer(layerId, source!!).also { it.delegate = this }
-      "raster" -> RasterLayer(layerId, source!!).also { it.delegate = this }
-      "symbol" -> SymbolLayer(layerId, source!!).also { it.delegate = this }
+      "circle" -> CircleLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
+      "fill-extrusion" -> FillExtrusionLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
+      "fill" -> FillLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
+      "heatmap" -> HeatmapLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
+      "hillshade" -> HillshadeLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
+      "line" -> LineLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
+      "raster" -> RasterLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
+      "symbol" -> SymbolLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
       else -> {
         Logger.e("StyleLayerPlugin", "Layer type: $type unknown.")
         null
