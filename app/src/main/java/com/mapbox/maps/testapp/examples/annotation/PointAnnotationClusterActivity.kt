@@ -73,15 +73,17 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
           )
           pointAnnotationManager =
             annotationPlugin.createPointAnnotationManager(mapView, annotationConfig)
-          pointAnnotationManager?.addClickListener(OnPointAnnotationClickListener {
-            Toast.makeText(
-              this@PointAnnotationClusterActivity,
-              "Click: ${it.id}",
-              Toast.LENGTH_SHORT
-            )
-              .show()
-            true
-          })
+          pointAnnotationManager?.addClickListener(
+            OnPointAnnotationClickListener {
+              Toast.makeText(
+                this@PointAnnotationClusterActivity,
+                "Click: ${it.id}",
+                Toast.LENGTH_SHORT
+              )
+                .show()
+              true
+            }
+          )
           launch {
             loadData()
           }
