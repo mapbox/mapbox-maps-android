@@ -620,7 +620,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Query the rendered annotation around the point
    *
    * @param point the point for querying
-   * @return the queried annotation on this ppint
+   * @return the queried annotation at this point
    */
   fun queryMapForFeatures(point: Point): T? {
     val screenCoordinate = mapCameraManagerDelegate.pixelForCoordinate(point)
