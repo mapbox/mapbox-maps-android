@@ -18,6 +18,7 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression.Companio
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.toNumber
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
+import com.mapbox.maps.plugin.annotation.Annotation
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
@@ -33,7 +34,9 @@ import java.util.*
  */
 class PointAnnotationActivity : AppCompatActivity() {
   private var pointAnnotationManager: PointAnnotationManager? = null
+  private var circleAnnotationManager: CircleAnnotationManager? = null
   private var pointAnnotation: PointAnnotation? = null
+  private var circleAnnotation: CircleAnnotation? = null
   private val animators: MutableList<ValueAnimator> = mutableListOf()
   private var index: Int = 0
   private val nextStyle: String
@@ -47,9 +50,29 @@ class PointAnnotationActivity : AppCompatActivity() {
     setContentView(R.layout.activity_annotation)
     mapView.getMapboxMap().loadStyleUri(nextStyle) {
       annotationPlugin = mapView.annotations
+      circleAnnotationManager = annotationPlugin.createCircleAnnotationManager(mapView).apply {
+        val circleAnnotationOptions: CircleAnnotationOptions = CircleAnnotationOptions()
+          .withPoint(Point.fromLngLat(AIRPORT_LONGITUDE, AIRPORT_LATITUDE))
+          .withCircleColor(Color.YELLOW)
+          .withCircleRadius(12.0)
+          .withDraggable(false)
+        circleAnnotation = create(circleAnnotationOptions)
+      }
       pointAnnotationManager = annotationPlugin.createPointAnnotationManager(mapView).apply {
         textFont = listOf("Arial Unicode MS Bold", "Open Sans Regular")
 
+        addDragListener(object : OnPointAnnotationDragListener {
+          override fun onAnnotationDragStarted(annotation: Annotation<*>) {}
+
+          override fun onAnnotationDrag(annotation: Annotation<*>) {
+            circleAnnotation?.let {
+              it.point = (annotation as PointAnnotation).point
+              circleAnnotationManager?.update(it)
+            }
+          }
+
+          override fun onAnnotationDragFinished(annotation: Annotation<*>) {}
+        })
         addClickListener(
           OnPointAnnotationClickListener {
             Toast.makeText(this@PointAnnotationActivity, "Click: ${it.id}", Toast.LENGTH_SHORT)

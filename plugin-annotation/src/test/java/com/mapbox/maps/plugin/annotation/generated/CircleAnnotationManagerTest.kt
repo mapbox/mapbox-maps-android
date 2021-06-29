@@ -4,6 +4,7 @@ package com.mapbox.maps.plugin.annotation.generated
 
 import android.graphics.Color
 import android.graphics.PointF
+import android.os.HandlerThread
 import android.view.View
 import com.mapbox.android.gestures.MoveDistancesObject
 import com.mapbox.android.gestures.MoveGestureDetector
@@ -60,6 +61,11 @@ class CircleAnnotationManagerTest {
   private lateinit var manager: CircleAnnotationManager
   @Before
   fun setUp() {
+    GeoJsonSource.workerThread =
+      HandlerThread("STYLE_WORKER").apply {
+        priority = Thread.MAX_PRIORITY
+        start()
+      }
     mockkStatic("com.mapbox.maps.extension.style.layers.LayerExtKt")
     mockkStatic("com.mapbox.maps.extension.style.sources.SourceKt")
     mockkStatic(ValueConverter::class)

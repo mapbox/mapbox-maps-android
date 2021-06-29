@@ -821,7 +821,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.annotation.PolyfillAnnotationActivity"
+            android:name=".examples.annotation.PolygoneAnnotationActivity"
             android:description="@string/description_annotation_fill"
             android:exported="true"
             android:label="@string/activity_fill">
