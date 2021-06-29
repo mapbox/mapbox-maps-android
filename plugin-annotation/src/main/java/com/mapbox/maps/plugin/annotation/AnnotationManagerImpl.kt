@@ -654,8 +654,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
           latch.countDown()
         }
       }
-      // At most wait 2 seconds to prevent ANR
-      latch.await(2, TimeUnit.SECONDS)
+      latch.await(QUERY_WAIT_TIME, TimeUnit.SECONDS)
     }
     return annotation
   }
@@ -669,6 +668,9 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
      */
     private const val TAG = "AnnotationManagerImpl"
     private const val POINT_COUNT = "point_count"
+
+    /** At most wait 2 seconds to prevent ANR */
+    private const val QUERY_WAIT_TIME = 2L
     private const val CLUSTER_TEXT_LAYER_ID = "mapbox-android-cluster-text-layer"
     private val DEFAULT_TEXT_FIELD = get("point_count")
   }
