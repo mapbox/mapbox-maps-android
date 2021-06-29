@@ -66,6 +66,7 @@ class ScaleBarImpl : ScaleBar, View {
 
   private val refreshHandler: RefreshHandler
   private val decimalFormat = DecimalFormat("0.#")
+  private var isScaleBarVisible = false
 
   /**
    * Current settings will be used to draw ScaleBar
@@ -102,9 +103,9 @@ class ScaleBarImpl : ScaleBar, View {
    * Whether ScaleBar is enabled or not
    */
   override var enable: Boolean
-    get() = visibility == View.VISIBLE
+    get() = isScaleBarVisible
     set(value) {
-      visibility = if (value) View.VISIBLE else View.GONE
+      isScaleBarVisible = value
     }
 
   /**
@@ -153,6 +154,10 @@ class ScaleBarImpl : ScaleBar, View {
    * Draw ScaleBar with current settings
    */
   override fun onDraw(canvas: Canvas) {
+    if (!isScaleBarVisible) {
+      canvas.drawARGB(0, 0, 0, 0)
+      return
+    }
     if (distancePerPixel <= 0 || mapViewWidth <= 0 || maxBarWidth <= 0) {
       return
     }

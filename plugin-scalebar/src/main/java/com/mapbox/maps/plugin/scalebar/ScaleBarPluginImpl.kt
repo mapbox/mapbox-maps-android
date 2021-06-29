@@ -114,10 +114,7 @@ open class ScaleBarPluginImpl(
     get() = internalSettings.enabled
     set(value) {
       if (value) {
-        mapListenerDelegate.addOnCameraChangeListener(cameraChangeListener)
         invalidateScaleBar()
-      } else {
-        mapListenerDelegate.removeOnCameraChangeListener(cameraChangeListener)
       }
       internalSettings.enabled = value
       scaleBar.enable = value
@@ -136,5 +133,5 @@ open class ScaleBarPluginImpl(
 /**
  * Extension val for MapView to get the ScaleBar plugin instance.
  */
-val MapPluginProviderDelegate.scalebar: ScaleBarPluginImpl
+val MapPluginProviderDelegate.scalebar: ScaleBarPlugin
   get() = this.getPlugin(ScaleBarPluginImpl::class.java)!!
