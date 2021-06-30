@@ -79,7 +79,7 @@ dependencies {
   // The Maps SDK also comes pre-compiled with support for the [Google's Fused Location Provider](https://developers.google.com/location-context/fused-location-provider)
   // if that dependency is available. This means, that if your target devices support Google Play
   // Services, [we recommend adding the Google Play Location Services dependency to your project](https://developers.google.com/android/guides/setup).
-  implementation(Dependencies.googleServiceLocation)
+  implementation(Dependencies.googlePlayServicesLocation)
 
   debugImplementation(Dependencies.squareLeakCanary)
   androidTestUtil(Dependencies.androidxOrchestrator)
