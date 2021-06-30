@@ -19,15 +19,21 @@ import java.util.*
  * `["format",["coalesce",["get","name_en"],["get","name"]],{}]` will be replaced by
  * `["format",["coalesce",["get","name_zh-Hans"],["get","name"]],{}]`
  */
-internal fun setMapLanguage(locale: Locale, style: StyleInterface) {
+internal fun setMapLanguage(locale: Locale, style: StyleInterface, layerIds: List<String>?) {
   style.styleSources
     .filter { sourceIsFromMapbox(style, it) }
     .forEach { source ->
       style.styleLayers
         .filter { it.type == LAYER_TYPE_SYMBOL }
+        .filter { layer ->
+          layerIds?.contains(layer.id) ?: true
+        }
         .forEach { layer ->
           val symbolLayer = style.getLayerAs<SymbolLayer>(layer.id)
           symbolLayer.textFieldAsExpression?.let { textFieldExpression ->
+            if (BuildConfig.DEBUG) {
+              Logger.i(TAG, "Localize layer id: ${symbolLayer.layerId}")
+            }
             val language = if (sourceIsStreetsV8(style, source)) getLanguageNameV8(locale)
             else getLanguageNameV7(locale)
             convertExpression(language, symbolLayer, textFieldExpression)
@@ -42,7 +48,9 @@ private fun convertExpression(language: String, layer: SymbolLayer, textField: E
       EXPRESSION_REGEX,
       get(language).toJson()
     ).replace(EXPRESSION_ABBR_REGEX, get(language).toJson())
-
+    if (BuildConfig.DEBUG) {
+      Logger.i(TAG, "Localize layer with expression: $stringExpression")
+    }
     layer.textField(Expression.fromRaw(stringExpression))
   }
 }
