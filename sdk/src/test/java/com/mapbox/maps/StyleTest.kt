@@ -7,7 +7,6 @@ import com.mapbox.geojson.Feature
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.Assert.assertFalse
 import org.junit.Before
 import org.junit.Test
 
@@ -79,14 +78,6 @@ class StyleTest {
     verify { bitmap.width }
     verify { bitmap.byteCount }
     verify { nativeMap.addStyleImage("foobar", 1.0f, any(), true, listOf(), listOf(), null) }
-  }
-
-  @Test
-  fun isFullyLoaded() {
-    style.fullyLoaded = true
-    assert(style.fullyLoaded)
-    style.fullyLoaded = false
-    assertFalse(style.fullyLoaded)
   }
 
   @Test

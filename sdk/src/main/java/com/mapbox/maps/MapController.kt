@@ -1,8 +1,6 @@
 package com.mapbox.maps
 
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.util.AttributeSet
 import android.view.MotionEvent
 import com.mapbox.annotation.module.MapboxModuleType
@@ -45,7 +43,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       mapInitOptions,
       renderer,
     )
-    this.nativeObserver = NativeObserver(WeakReference(nativeMap), Handler(Looper.getMainLooper()))
+    this.nativeObserver = NativeObserver(WeakReference(nativeMap))
     this.mapboxMap =
       MapProvider.getMapboxMap(nativeMap, nativeObserver, mapInitOptions.mapOptions.pixelRatio)
     this.mapboxMap.renderHandler = renderer.renderThread.handlerThread.handler
