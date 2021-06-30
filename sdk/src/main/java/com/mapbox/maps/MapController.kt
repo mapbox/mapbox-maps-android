@@ -48,6 +48,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.nativeObserver = NativeObserver(WeakReference(nativeMap), Handler(Looper.getMainLooper()))
     this.mapboxMap =
       MapProvider.getMapboxMap(nativeMap, nativeObserver, mapInitOptions.mapOptions.pixelRatio)
+    this.mapboxMap.renderHandler = renderer.renderThread.handlerThread.handler
     this.pluginRegistry = MapProvider.getMapPluginRegistry(
       mapboxMap,
       this,
@@ -83,6 +84,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.mapInitOptions = mapInitOptions
     this.nativeMap = nativeMap
     this.mapboxMap = mapboxMap
+    this.mapboxMap.renderHandler = renderer.renderThread.handlerThread.handler
     this.pluginRegistry = pluginRegistry
     this.onCameraChangedListener = OnCameraChangeListener {
       pluginRegistry.onCameraMove(nativeMap.cameraState)

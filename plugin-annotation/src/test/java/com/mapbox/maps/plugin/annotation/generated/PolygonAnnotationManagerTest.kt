@@ -58,6 +58,7 @@ class PolygonAnnotationManagerTest {
   private val feature = mockk<Feature>()
   private val queriedFeatureList = listOf(queriedFeature)
   private val querySlot = slot<QueryFeaturesCallback>()
+  private val executeQuerySlot = slot<Runnable>()
 
   private lateinit var manager: PolygonAnnotationManager
   @Before
@@ -110,6 +111,9 @@ class PolygonAnnotationManagerTest {
     every { queriedFeature.feature } returns feature
     every { queriedFeatures.value } returns queriedFeatureList
     every { feature.getProperty(any()).asLong } returns 0L
+    every { mapFeatureQueryDelegate.executeOnRenderThread(capture(executeQuerySlot)) } answers {
+      executeQuerySlot.captured.run()
+    }
     every {
       mapFeatureQueryDelegate.queryRenderedFeatures(
         any<ScreenCoordinate>(),

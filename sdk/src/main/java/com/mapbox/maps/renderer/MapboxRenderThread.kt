@@ -25,7 +25,7 @@ import kotlin.math.pow
  */
 internal class MapboxRenderThread : Choreographer.FrameCallback {
 
-  private val handlerThread: WorkerHandlerThread
+  internal val handlerThread: WorkerHandlerThread
   private val translucentSurface: Boolean
   private val mapboxRenderer: MapboxRenderer
   private val eglCore: EGLCore

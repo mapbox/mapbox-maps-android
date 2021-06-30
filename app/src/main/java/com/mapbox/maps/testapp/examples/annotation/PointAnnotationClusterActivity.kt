@@ -3,6 +3,7 @@ package com.mapbox.maps.testapp.examples.annotation
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
@@ -14,6 +15,7 @@ import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationSourceOptions
 import com.mapbox.maps.plugin.annotation.ClusterOptions
 import com.mapbox.maps.plugin.annotation.annotations
+import com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationClickListener
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
@@ -69,7 +71,19 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
               )
             )
           )
-          pointAnnotationManager = annotationPlugin.createPointAnnotationManager(mapView, annotationConfig)
+          pointAnnotationManager =
+            annotationPlugin.createPointAnnotationManager(mapView, annotationConfig)
+          pointAnnotationManager?.addClickListener(
+            OnPointAnnotationClickListener {
+              Toast.makeText(
+                this@PointAnnotationClusterActivity,
+                "Click: ${it.id}",
+                Toast.LENGTH_SHORT
+              )
+                .show()
+              true
+            }
+          )
           launch {
             loadData()
           }

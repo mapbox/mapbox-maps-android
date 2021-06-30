@@ -84,6 +84,8 @@
 
     <!-- Symbol Activity-->
     <string name="toggle_draggable_state">Toggle draggable state</string>
+    <string name="consume_click_event">Toggle consume click state</string>
+    <string name="consume_click_event_toast">Click listener will consume click event: </string>
     <string name="change_icon_to_coffee">Change icon to coffee</string>
     <string name="set_icon_rotation_to_45">Set icon rotation to 45</string>
     <string name="set_icon_anchor_bottom">Set icon anchor bottom</string>

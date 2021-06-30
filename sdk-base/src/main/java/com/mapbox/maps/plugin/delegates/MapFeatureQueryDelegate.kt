@@ -57,4 +57,25 @@ interface MapFeatureQueryDelegate {
     options: SourceQueryOptions,
     callback: QueryFeaturesCallback
   )
+
+  /**
+   * In some cases querying source / render features is expected to be a blocking operation
+   * e.g. performing this action on map click. In this case in order to avoid deadlock on main
+   * thread querying could be performed on render thread and in that case querying result will be also
+   * delivered on render thread not leading to the main thread deadlock. Example:
+   *
+   * fun onMapClick() {
+   *  executeOnRenderThread {
+   *    queryRenderedFeatures(pixel, options) {
+   *      // result callback called, do needed actions
+   *      lock.notify()
+   *    }
+   *  }
+   *  lock.wait()
+   *  return false
+   * }
+   */
+  fun executeOnRenderThread(
+    runnable: Runnable
+  )
 }

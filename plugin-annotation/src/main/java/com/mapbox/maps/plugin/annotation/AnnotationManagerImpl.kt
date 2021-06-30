@@ -43,6 +43,8 @@ import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.OnMoveListener
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 
 /**
  * Base class for annotation managers
@@ -71,6 +73,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   protected var touchAreaShiftY: Int = mapView.scrollY
   protected abstract val layerId: String
   protected abstract val sourceId: String
+
   @Suppress("UNCHECKED_CAST")
   private var gesturesPlugin: GesturesPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
     Class.forName(
@@ -454,17 +457,20 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   inner class MapClick : OnMapClickListener {
     /**
      * Called when the user clicks on the map view.
+     * Note that calling this method is blocking main thread until querying map for features is finished.
      *
      * @param point The projected map coordinate the user clicked on.
      * @return True if this click should be consumed and not passed further to other listeners registered afterwards,
      * false otherwise.
      */
     override fun onMapClick(point: Point): Boolean {
-      queryMapForFeatures(point) {
-        selectAnnotation(it)
+      queryMapForFeatures(point)?.let {
         clickListeners.forEach { listener ->
-          listener.onAnnotationClick(it)
+          if (listener.onAnnotationClick(it)) {
+            return true
+          }
         }
+        selectAnnotation(it)
       }
       return false
     }
@@ -485,9 +491,11 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
       if (longClickListeners.isEmpty()) {
         return false
       }
-      queryMapForFeatures(point) {
+      queryMapForFeatures(point)?.let {
         longClickListeners.forEach { listener ->
-          listener.onAnnotationLongClick(it)
+          if (listener.onAnnotationLongClick(it)) {
+            return true
+          }
         }
       }
       return false
@@ -508,7 +516,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
             detector.focalPoint.x.toDouble(),
             detector.focalPoint.y.toDouble()
           )
-        ) {
+        )?.let {
           startDragging(it)
         }
       }
@@ -612,39 +620,43 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Query the rendered annotation around the point
    *
    * @param point the point for querying
-   * @param callback query callback
+   * @return the queried annotation at this point
    */
-  fun queryMapForFeatures(point: Point, callback: QueryAnnotationCallback<T>) {
+  fun queryMapForFeatures(point: Point): T? {
     val screenCoordinate = mapCameraManagerDelegate.pixelForCoordinate(point)
-    queryMapForFeatures(screenCoordinate, callback)
+    return queryMapForFeatures(screenCoordinate)
   }
 
   /**
    * Query the rendered annotation around the point
    *
    * @param screenCoordinate the screenCoordinate for querying
-   * @param callback query callback
+   * @return the queried annotation on this screenCoordinate
    */
-  fun queryMapForFeatures(
-    screenCoordinate: ScreenCoordinate,
-    callback: QueryAnnotationCallback<T>
-  ) {
+  fun queryMapForFeatures(screenCoordinate: ScreenCoordinate): T? {
+    var annotation: T? = null
     layer?.let {
-      mapFeatureQueryDelegate.queryRenderedFeatures(
-        screenCoordinate,
-        RenderedQueryOptions(
-          listOf(it.layerId),
-          literal(true)
-        )
-      ) { features ->
-        features.value?.let { queriedFeatureList ->
-          if (queriedFeatureList.isNotEmpty()) {
-            val id = queriedFeatureList.first().feature.getProperty(getAnnotationIdKey()).asLong
-            annotationMap[id]?.let { annotation -> callback.onQueryAnnotation(annotation) }
+      val latch = CountDownLatch(1)
+      mapFeatureQueryDelegate.executeOnRenderThread {
+        mapFeatureQueryDelegate.queryRenderedFeatures(
+          screenCoordinate,
+          RenderedQueryOptions(
+            listOf(it.layerId),
+            literal(true)
+          )
+        ) { features ->
+          features.value?.let { queriedFeatureList ->
+            if (queriedFeatureList.isNotEmpty()) {
+              val id = queriedFeatureList.first().feature.getProperty(getAnnotationIdKey()).asLong
+              annotation = annotationMap[id]
+            }
           }
+          latch.countDown()
         }
       }
+      latch.await(QUERY_WAIT_TIME, TimeUnit.SECONDS)
     }
+    return annotation
   }
 
   /**
@@ -656,6 +668,9 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
      */
     private const val TAG = "AnnotationManagerImpl"
     private const val POINT_COUNT = "point_count"
+
+    /** At most wait 2 seconds to prevent ANR */
+    private const val QUERY_WAIT_TIME = 2L
     private const val CLUSTER_TEXT_LAYER_ID = "mapbox-android-cluster-text-layer"
     private val DEFAULT_TEXT_FIELD = get("point_count")
   }

@@ -78,6 +78,7 @@ class MapControllerTest {
     every { MapProvider.getMapboxMap(nativeMap, nativeObserver, 1.0f) } answers { mapboxMap }
     every { MapProvider.getMapPluginRegistry(any(), any(), any()) } returns pluginRegistry
     every { mapboxMap.isStyleLoadInitiated } returns false
+    every { renderer.renderThread.handlerThread.handler } returns mockk()
     mapController =
       MapController(
         renderer,
