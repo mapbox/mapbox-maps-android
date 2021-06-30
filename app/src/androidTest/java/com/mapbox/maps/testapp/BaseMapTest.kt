@@ -54,12 +54,17 @@ abstract class BaseMapTest {
   }
 
   protected open fun initialiseMapView() {
+    val latch = CountDownLatch(1)
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapView = MapView(context)
         mapView.id = R.id.mapView
         it.setContentView(mapView)
+        latch.countDown()
       }
+    }
+    if (!latch.await(10000, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
     }
   }
 

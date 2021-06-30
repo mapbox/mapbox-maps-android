@@ -27,7 +27,6 @@ class Style internal constructor(
   override val pixelRatio: Float
 ) : StyleInterface {
   private val styleManagerRef = WeakReference(styleManager)
-  var fullyLoaded = true
 
   /**
    * Subscribes an Observer to a provided list of event types.
@@ -773,13 +772,8 @@ class Style internal constructor(
    * @return TRUE if and only if the style JSON contents, the style specified sprite and sources are all loaded, otherwise returns FALSE.
    */
   override fun isStyleLoaded(): Boolean {
-    return styleManagerRef.call { this.isStyleLoaded() }
+    return styleManagerRef.call { this.isStyleLoaded }
   }
-
-  /**
-   * Return if the map is fully loaded
-   */
-  fun isFullyLoaded(): Boolean = fullyLoaded
 
   /**
    * A convenience object to access [the style ID](https://docs.mapbox.com/help/glossary/style-id/) strings of the professionally-designed

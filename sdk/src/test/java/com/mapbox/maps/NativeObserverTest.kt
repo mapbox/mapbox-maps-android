@@ -1,6 +1,5 @@
 package com.mapbox.maps
 
-import android.os.Handler
 import com.mapbox.bindgen.Value
 import com.mapbox.common.ShadowValueConverter
 import com.mapbox.maps.plugin.delegates.listeners.*
@@ -17,19 +16,12 @@ import java.lang.ref.WeakReference
 @Config(shadows = [ShadowValueConverter::class])
 class NativeObserverTest {
 
-  private val mainHandler = mockk<Handler>()
   private val observableInterface = mockk<ObservableInterface>(relaxed = true)
   private lateinit var nativeObserver: NativeObserver
-  private val runnableSlot = slot<Runnable>()
 
   @Before
   fun setUp() {
-    every { mainHandler.post(capture(runnableSlot)) } answers {
-      runnableSlot.captured.run()
-      true
-    }
-
-    nativeObserver = NativeObserver(WeakReference(observableInterface), mainHandler)
+    nativeObserver = NativeObserver(WeakReference(observableInterface))
   }
 
   private fun notifyEvents(type: String, value: Value = Value("")) {
