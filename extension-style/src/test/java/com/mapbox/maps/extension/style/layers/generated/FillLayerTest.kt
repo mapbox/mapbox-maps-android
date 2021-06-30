@@ -1003,14 +1003,13 @@ class FillLayerTest {
 
   @Test
   fun getFillLayerTest() {
-    every { style.getStyleLayerProperty("id", "source") } returns StylePropertyValue(
-      Value("source"),
-      StylePropertyValueKind.CONSTANT
-    )
-    every { style.getStyleLayerProperty("id", "type") } returns StylePropertyValue(
-      Value("fill"),
-      StylePropertyValueKind.CONSTANT
-    )
+    val value = HashMap<String, Value>()
+    value["id"] = Value("id")
+    value["type"] = Value("fill")
+    value["source"] = Value("source")
+    every { style.getStyleLayerProperties("id") } returns valueExpected
+    every { valueExpected.error } returns null
+    every { valueExpected.value } returns Value(value)
     val layer = style.getLayer("id") as FillLayer
     assertNotNull(layer)
     assertNotNull(layer.delegate)
