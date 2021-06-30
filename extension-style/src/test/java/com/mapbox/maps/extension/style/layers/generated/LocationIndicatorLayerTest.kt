@@ -1569,12 +1569,10 @@ class LocationIndicatorLayerTest {
 
   @Test
   fun getLocationIndicatorLayerTest() {
-    val value = HashMap<String, Value>()
-    value["id"] = Value("id")
-    value["type"] = Value("location-indicator")
-    every { style.getStyleLayerProperties("id") } returns valueExpected
-    every { valueExpected.error } returns null
-    every { valueExpected.value } returns Value(value)
+    every { style.getStyleLayerProperty("id", "type") } returns StylePropertyValue(
+      Value("location-indicator"),
+      StylePropertyValueKind.CONSTANT
+    )
     val layer = style.getLayer("id") as LocationIndicatorLayer
     assertNotNull(layer)
     assertNotNull(layer.delegate)

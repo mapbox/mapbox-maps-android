@@ -443,12 +443,10 @@ class BackgroundLayerTest {
 
   @Test
   fun getBackgroundLayerTest() {
-    val value = HashMap<String, Value>()
-    value["id"] = Value("id")
-    value["type"] = Value("background")
-    every { style.getStyleLayerProperties("id") } returns valueExpected
-    every { valueExpected.error } returns null
-    every { valueExpected.value } returns Value(value)
+    every { style.getStyleLayerProperty("id", "type") } returns StylePropertyValue(
+      Value("background"),
+      StylePropertyValueKind.CONSTANT
+    )
     val layer = style.getLayer("id") as BackgroundLayer
     assertNotNull(layer)
     assertNotNull(layer.delegate)

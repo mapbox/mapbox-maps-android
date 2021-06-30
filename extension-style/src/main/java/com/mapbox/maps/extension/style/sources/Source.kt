@@ -8,6 +8,7 @@ import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.sources.generated.*
+import com.mapbox.maps.extension.style.utils.silentUnwrap
 import com.mapbox.maps.extension.style.utils.unwrap
 
 /**
@@ -146,11 +147,8 @@ abstract class Source(
  * @return StyleSourcePlugin
  */
 fun StyleManagerInterface.getSource(sourceId: String): Source? {
-  val expected = this.getStyleSourceProperties(sourceId)
-  expected.value?.let { value ->
-    @Suppress("UNCHECKED_CAST")
-    val map = value.contents as HashMap<String, Value>
-    return when (val type = map["type"]?.contents?.let { it as String }) {
+  return this.getStyleSourceProperty(sourceId, "type").silentUnwrap<String>()?.let { type ->
+    when (type) {
       "vector" -> VectorSource.Builder(sourceId).build().also { it.delegate = this }
       "geojson" -> GeoJsonSource.Builder(sourceId) {}.build().also { it.delegate = this }
       "image" -> ImageSource.Builder(sourceId).build().also { it.delegate = this }
@@ -162,10 +160,6 @@ fun StyleManagerInterface.getSource(sourceId: String): Source? {
       }
     }
   }
-  expected.error?.let {
-    Logger.e("StyleSourcePlugin", "Get source $sourceId failed: $it")
-  }
-  return null
 }
 
 /**
