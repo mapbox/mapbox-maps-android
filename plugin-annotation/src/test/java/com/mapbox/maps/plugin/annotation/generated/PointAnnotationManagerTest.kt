@@ -71,8 +71,8 @@ class PointAnnotationManagerTest {
         priority = Thread.MAX_PRIORITY
         start()
       }
-    mockkStatic("com.mapbox.maps.extension.style.layers.LayerExtKt")
-    mockkStatic("com.mapbox.maps.extension.style.sources.SourceKt")
+    mockkStatic("com.mapbox.maps.extension.style.layers.LayerUtils")
+    mockkStatic("com.mapbox.maps.extension.style.sources.SourceUtils")
     mockkStatic(ValueConverter::class)
     every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue(
       Value(1)

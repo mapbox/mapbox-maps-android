@@ -31,8 +31,8 @@ class AnnotationPluginImplTest {
 
   @Before
   fun setUp() {
-    mockkStatic("com.mapbox.maps.extension.style.layers.LayerKt")
-    mockkStatic("com.mapbox.maps.extension.style.sources.SourceKt")
+    mockkStatic("com.mapbox.maps.extension.style.layers.LayerUtils")
+    mockkStatic("com.mapbox.maps.extension.style.sources.SourceUtils")
 
     val styleStateDelegate = mockk<MapStyleStateDelegate>()
     every { delegateProvider.styleStateDelegate } returns styleStateDelegate

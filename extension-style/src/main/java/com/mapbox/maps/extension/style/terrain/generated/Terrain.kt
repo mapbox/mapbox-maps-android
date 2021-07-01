@@ -1,5 +1,4 @@
 // This file is generated.
-
 package com.mapbox.maps.extension.style.terrain.generated
 
 import android.util.Log
@@ -165,24 +164,6 @@ fun terrain(sourceId: String, block: (TerrainDslReceiver.() -> Unit)? = null): T
   } else {
     Terrain(sourceId)
   }
-}
-
-/**
- * Extension function to get the terrain provided by the Style Extension.
- *
- * @return Terrain
- */
-fun StyleInterface.getTerrain(sourceId: String): Terrain {
-  return Terrain(sourceId).also { it.bindTo(this) }
-}
-
-/**
- * Extension function to set the Terrain provided by the Style Extension to the Style.
- *
- * @param terrain The terrain to be set
- */
-fun StyleInterface.setTerrain(terrain: StyleContract.StyleTerrainExtension) {
-  terrain.bindTo(this)
 }
 
 // End of generated file.
