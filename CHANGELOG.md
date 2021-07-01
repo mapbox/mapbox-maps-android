@@ -45,7 +45,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix Android 12 compatibility to support [pending intents mutability](https://developer.android.com/about/versions/12/behavior-changes-12#pending-intent-mutability).
 
 ## Dependencies
-* Bump gl-native to v10.0.0-rc.2 ([#422](https://github.com/mapbox/mapbox-maps-android/pull/422))
+* Bump gl-native to v10.0.0-rc.3 ([#422](https://github.com/mapbox/mapbox-maps-android/pull/422))
 * Bump telemetry to v8.0.0, android core to v5.0.0 ([#423](https://github.com/mapbox/mapbox-maps-android/pull/423))
 
 # 10.0.0-rc.1 June 10, 2021
