@@ -131,4 +131,6 @@
     <string name="vietnamese">Vietnamese</string>
     <string name="italian">Italian</string>
     <string name="local_names">Local names</string>
+    <string name="country_label">Country label</string>
+    <string name="state_label">State label</string>
 </resources>
