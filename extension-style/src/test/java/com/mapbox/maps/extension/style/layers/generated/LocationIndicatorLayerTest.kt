@@ -1569,10 +1569,12 @@ class LocationIndicatorLayerTest {
 
   @Test
   fun getLocationIndicatorLayerTest() {
+
     every { style.getStyleLayerProperty("id", "type") } returns StylePropertyValue(
       Value("location-indicator"),
       StylePropertyValueKind.CONSTANT
     )
+
     val layer = style.getLayer("id") as LocationIndicatorLayer
     assertNotNull(layer)
     assertNotNull(layer.delegate)

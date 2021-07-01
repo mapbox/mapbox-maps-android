@@ -443,10 +443,12 @@ class BackgroundLayerTest {
 
   @Test
   fun getBackgroundLayerTest() {
+
     every { style.getStyleLayerProperty("id", "type") } returns StylePropertyValue(
       Value("background"),
       StylePropertyValueKind.CONSTANT
     )
+
     val layer = style.getLayer("id") as BackgroundLayer
     assertNotNull(layer)
     assertNotNull(layer.delegate)

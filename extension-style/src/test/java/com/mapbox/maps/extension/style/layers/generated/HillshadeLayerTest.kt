@@ -843,10 +843,12 @@ class HillshadeLayerTest {
       Value("source"),
       StylePropertyValueKind.CONSTANT
     )
+
     every { style.getStyleLayerProperty("id", "type") } returns StylePropertyValue(
       Value("hillshade"),
       StylePropertyValueKind.CONSTANT
     )
+
     val layer = style.getLayer("id") as HillshadeLayer
     assertNotNull(layer)
     assertNotNull(layer.delegate)

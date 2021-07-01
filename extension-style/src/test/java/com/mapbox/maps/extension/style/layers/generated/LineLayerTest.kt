@@ -1681,10 +1681,12 @@ class LineLayerTest {
       Value("source"),
       StylePropertyValueKind.CONSTANT
     )
+
     every { style.getStyleLayerProperty("id", "type") } returns StylePropertyValue(
       Value("line"),
       StylePropertyValueKind.CONSTANT
     )
+
     val layer = style.getLayer("id") as LineLayer
     assertNotNull(layer)
     assertNotNull(layer.delegate)

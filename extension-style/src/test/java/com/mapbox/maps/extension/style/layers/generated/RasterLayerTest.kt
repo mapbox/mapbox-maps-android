@@ -930,10 +930,12 @@ class RasterLayerTest {
       Value("source"),
       StylePropertyValueKind.CONSTANT
     )
+
     every { style.getStyleLayerProperty("id", "type") } returns StylePropertyValue(
       Value("raster"),
       StylePropertyValueKind.CONSTANT
     )
+
     val layer = style.getLayer("id") as RasterLayer
     assertNotNull(layer)
     assertNotNull(layer.delegate)

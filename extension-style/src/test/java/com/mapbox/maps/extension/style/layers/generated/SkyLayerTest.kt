@@ -860,10 +860,12 @@ class SkyLayerTest {
 
   @Test
   fun getSkyLayerTest() {
+
     every { style.getStyleLayerProperty("id", "type") } returns StylePropertyValue(
       Value("sky"),
       StylePropertyValueKind.CONSTANT
     )
+
     val layer = style.getLayer("id") as SkyLayer
     assertNotNull(layer)
     assertNotNull(layer.delegate)

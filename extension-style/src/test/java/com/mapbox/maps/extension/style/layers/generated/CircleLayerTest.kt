@@ -1397,10 +1397,12 @@ class CircleLayerTest {
       Value("source"),
       StylePropertyValueKind.CONSTANT
     )
+
     every { style.getStyleLayerProperty("id", "type") } returns StylePropertyValue(
       Value("circle"),
       StylePropertyValueKind.CONSTANT
     )
+
     val layer = style.getLayer("id") as CircleLayer
     assertNotNull(layer)
     assertNotNull(layer.delegate)

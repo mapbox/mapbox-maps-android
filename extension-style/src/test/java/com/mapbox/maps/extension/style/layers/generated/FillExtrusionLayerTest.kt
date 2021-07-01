@@ -1005,10 +1005,12 @@ class FillExtrusionLayerTest {
       Value("source"),
       StylePropertyValueKind.CONSTANT
     )
+
     every { style.getStyleLayerProperty("id", "type") } returns StylePropertyValue(
       Value("fill-extrusion"),
       StylePropertyValueKind.CONSTANT
     )
+
     val layer = style.getLayer("id") as FillExtrusionLayer
     assertNotNull(layer)
     assertNotNull(layer.delegate)

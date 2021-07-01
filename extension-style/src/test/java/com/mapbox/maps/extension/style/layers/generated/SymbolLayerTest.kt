@@ -4685,10 +4685,12 @@ class SymbolLayerTest {
       Value("source"),
       StylePropertyValueKind.CONSTANT
     )
+
     every { style.getStyleLayerProperty("id", "type") } returns StylePropertyValue(
       Value("symbol"),
       StylePropertyValueKind.CONSTANT
     )
+
     val layer = style.getLayer("id") as SymbolLayer
     assertNotNull(layer)
     assertNotNull(layer.delegate)

@@ -1007,10 +1007,12 @@ class FillLayerTest {
       Value("source"),
       StylePropertyValueKind.CONSTANT
     )
+
     every { style.getStyleLayerProperty("id", "type") } returns StylePropertyValue(
       Value("fill"),
       StylePropertyValueKind.CONSTANT
     )
+
     val layer = style.getLayer("id") as FillLayer
     assertNotNull(layer)
     assertNotNull(layer.delegate)

@@ -659,10 +659,12 @@ class HeatmapLayerTest {
       Value("source"),
       StylePropertyValueKind.CONSTANT
     )
+
     every { style.getStyleLayerProperty("id", "type") } returns StylePropertyValue(
       Value("heatmap"),
       StylePropertyValueKind.CONSTANT
     )
+
     val layer = style.getLayer("id") as HeatmapLayer
     assertNotNull(layer)
     assertNotNull(layer.delegate)
