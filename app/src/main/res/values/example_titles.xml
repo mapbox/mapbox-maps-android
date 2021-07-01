@@ -68,6 +68,7 @@
     <string name="activity_fill">PolyfillAnnotation</string>
     <string name="activity_circle">CircleAnnotation</string>
     <string name="activity_symbol">PointAnnotation</string>
+    <string name="activity_animate_symbol">AnimatePointAnnotation</string>
     <string name="activity_symbol_cluster">Annotation Cluster Symbols</string>
     <string name="activity_line"> PolylineAnnotation</string>
     <string name="activity_terrain_showcase">3D Terrain showcase</string>
