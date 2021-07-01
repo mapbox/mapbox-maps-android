@@ -67,6 +67,7 @@ class ScaleBarImpl : ScaleBar, View {
   private val refreshHandler: RefreshHandler
   private val decimalFormat = DecimalFormat("0.#")
   private var isScaleBarVisible = false
+  private var reusableCanvas: Canvas? = null
 
   /**
    * Current settings will be used to draw ScaleBar
@@ -80,9 +81,7 @@ class ScaleBarImpl : ScaleBar, View {
       unit = if (value.isMetricUnits) METER_UNIT else FEET_UNIT
       strokePaint.strokeWidth = value.textBorderWidth
       enable = value.enabled
-      if (!refreshHandler.hasMessages(MSG_WHAT)) {
-        refreshHandler.sendEmptyMessageDelayed(MSG_WHAT, value.refreshInterval)
-      }
+      reusableCanvas = null
       // Refresh mapViewWidth
       mapViewWidth = mapViewWidth
       field = value
@@ -93,10 +92,10 @@ class ScaleBarImpl : ScaleBar, View {
    */
   override var distancePerPixel = 0F
     set(value) {
-      if (!refreshHandler.hasMessages(MSG_WHAT)) {
-        refreshHandler.sendEmptyMessageDelayed(MSG_WHAT, settings.refreshInterval)
+      if (field != value) {
+        reusableCanvas = null
+        field = if (settings.isMetricUnits) value else value * FEET_PER_METER
       }
-      field = if (settings.isMetricUnits) value else value * FEET_PER_METER
     }
 
   /**
@@ -147,7 +146,9 @@ class ScaleBarImpl : ScaleBar, View {
     strokePaint.color = Color.WHITE
 
     barPaint.isAntiAlias = true
-    refreshHandler = RefreshHandler(this)
+    refreshHandler = RefreshHandler(this).apply {
+      sendEmptyMessage(MSG_WHAT)
+    }
   }
 
   /**
@@ -158,7 +159,7 @@ class ScaleBarImpl : ScaleBar, View {
       canvas.drawARGB(0, 0, 0, 0)
       return
     }
-    if (distancePerPixel <= 0 || mapViewWidth <= 0 || maxBarWidth <= 0) {
+    if (distancePerPixel <= 0 || mapViewWidth <= 0 || maxBarWidth <= 0 || reusableCanvas != null) {
       return
     }
     val maxDistance = mapViewWidth * distancePerPixel * settings.ratio
@@ -227,6 +228,7 @@ class ScaleBarImpl : ScaleBar, View {
       canvas.drawPath(path, strokePaint)
     }
     canvas.drawPath(path, textPaint)
+    reusableCanvas = canvas
   }
 
   /**
@@ -257,8 +259,13 @@ class ScaleBarImpl : ScaleBar, View {
     override fun handleMessage(msg: Message) {
       scaleBarWidgetWeakReference.get()?.let {
         if (msg.what == MSG_WHAT) {
-          it.invalidate()
+          if (it.reusableCanvas == null) {
+            it.invalidate()
+          } else {
+            it.draw(it.reusableCanvas)
+          }
         }
+        sendEmptyMessageDelayed(MSG_WHAT, it.settings.refreshInterval)
       }
     }
   }

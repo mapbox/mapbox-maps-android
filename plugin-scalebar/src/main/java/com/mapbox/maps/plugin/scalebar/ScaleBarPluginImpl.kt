@@ -114,7 +114,10 @@ open class ScaleBarPluginImpl(
     get() = internalSettings.enabled
     set(value) {
       if (value) {
+        mapListenerDelegate.addOnCameraChangeListener(cameraChangeListener)
         invalidateScaleBar()
+      } else {
+        mapListenerDelegate.removeOnCameraChangeListener(cameraChangeListener)
       }
       internalSettings.enabled = value
       scaleBar.enable = value
