@@ -157,9 +157,9 @@ class RuntimeStylingActivity : AppCompatActivity() {
       cluster(true)
       prefetchZoomDelta(1)
     }
-    Logger.d(TAG, source.toString())
+    Logger.i(TAG, source.toString())
     style.addSource(source)
-    Logger.e(TAG, "prefetchZoomDelta : ${source.prefetchZoomDelta}")
+    Logger.i(TAG, "prefetchZoomDelta : ${source.prefetchZoomDelta}")
   }
 
   private fun addSymbolLayer(style: Style) {
@@ -217,7 +217,7 @@ class RuntimeStylingActivity : AppCompatActivity() {
       iconIgnorePlacement(false)
     }
     style.addLayer(symbolLayer)
-    Logger.e(TAG, symbolLayer.iconOpacityAsExpression.toString())
+    Logger.i(TAG, symbolLayer.iconOpacityAsExpression.toString())
   }
 
   private fun addFillSource(style: Style) {
@@ -261,7 +261,7 @@ class RuntimeStylingActivity : AppCompatActivity() {
         )
       )
     }
-    Logger.d(TAG, polygon.toString())
+    Logger.i(TAG, polygon.toString())
     style.addSource(polygon)
   }
 
@@ -288,7 +288,7 @@ class RuntimeStylingActivity : AppCompatActivity() {
       }
     )
     fillLayer.visibility(Visibility.VISIBLE)
-    Logger.e(TAG, fillLayer.fillColorAsExpression.toString())
+    Logger.i(TAG, fillLayer.fillColorAsExpression.toString())
   }
 
   private fun addFillExtrusionLayer(style: Style) {
@@ -340,7 +340,7 @@ class RuntimeStylingActivity : AppCompatActivity() {
     val expected = style.addStyleImage(
       "myImage",
       1f,
-      Image(32, 32, byteBuffer.array()),
+      Image(64, 64, byteBuffer.array()),
       false,
       mutableListOf(),
       mutableListOf(),
