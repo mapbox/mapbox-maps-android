@@ -1,5 +1,6 @@
 package com.mapbox.maps.testapp.examples.snapshotter
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,11 @@ class MapSnapshotterActivity : AppCompatActivity(), SnapshotStyleListener {
 
   private lateinit var mapSnapshotter: Snapshotter
 
+  class CustomSnapshotter(context: Context, options: MapSnapshotOptions) :Snapshotter(context, options){
+    override fun addOverlay(mapSnapshot: Snapshot): Snapshot {
+      return mapSnapshot
+    }
+  }
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     val snapshotterOptions = MapSnapshotOptions.Builder()
@@ -26,7 +32,7 @@ class MapSnapshotterActivity : AppCompatActivity(), SnapshotStyleListener {
       .pixelRatio(1.0f)
       .build()
 
-    mapSnapshotter = Snapshotter(this, snapshotterOptions).apply {
+    mapSnapshotter = CustomSnapshotter(this, snapshotterOptions).apply {
       setStyleListener(this@MapSnapshotterActivity)
       setStyleUri(Style.MAPBOX_STREETS)
       setCamera(

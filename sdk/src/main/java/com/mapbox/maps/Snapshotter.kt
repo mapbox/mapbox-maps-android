@@ -328,7 +328,7 @@ open class Snapshotter {
     canvas.restore()
   }
 
-  private fun addOverlay(mapSnapshot: Snapshot): Snapshot {
+  protected open fun addOverlay(mapSnapshot: Snapshot): Snapshot {
     context.get()?.apply {
       val canvas = Canvas(mapSnapshot.bitmap)
       val margin: Int = this.resources.displayMetrics.density.toInt() * 4

@@ -7,7 +7,7 @@ import java.nio.ByteBuffer
 /**
  * An image snapshot of a map rendered by MapSnapshotter.
  */
-internal class Snapshot(snapshot: MapSnapshot) : MapSnapshotInterface {
+class Snapshot(snapshot: MapSnapshot) : MapSnapshotInterface {
   private var _bitmap: Bitmap
 
   /**
