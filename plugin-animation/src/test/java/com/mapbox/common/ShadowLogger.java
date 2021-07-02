@@ -11,6 +11,8 @@ import org.robolectric.annotation.Implements;
 @Implements(Logger.class)
 public class ShadowLogger {
 
+    public static int logCount = 0;
+
     @Implementation
     public static void e(@Nullable String tag, @NonNull String message) {
         Log.e(message, tag);
@@ -18,6 +20,7 @@ public class ShadowLogger {
 
     @Implementation
     public static void d(@Nullable String tag, @NonNull String message) {
+        logCount++;
         Log.d(message, tag);
     }
 

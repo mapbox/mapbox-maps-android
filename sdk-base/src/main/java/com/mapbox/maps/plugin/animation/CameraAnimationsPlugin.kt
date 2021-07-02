@@ -13,6 +13,12 @@ import com.mapbox.maps.plugin.MapPlugin
 interface CameraAnimationsPlugin : MapPlugin {
 
   /**
+   * If debug mode is enabled extra logs will be written about animation lifecycle and
+   * some other events that may be useful for debugging.
+   */
+  var debugMode: Boolean
+
+  /**
    * Map camera anchor value.
    * Default value is NULL meaning center of given map view.
    * Left-top corner is represented as [ScreenCoordinate] (0.0, 0.0).

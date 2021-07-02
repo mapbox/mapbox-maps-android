@@ -49,6 +49,7 @@ class CameraAnimationsPluginImplTest {
   @Before
   fun setUp() {
     ShadowLog.stream = System.out
+    ShadowLogger.logCount = 0
     cameraAnimatorsFactory = mockk(relaxed = true)
     bearingAnimator = mockk(relaxed = true)
     centerAnimator = mockk(relaxed = true)
@@ -960,6 +961,21 @@ class CameraAnimationsPluginImplTest {
     // second bearing tick as first animation -
     // pitch is updated to start value
     assertEquals(10.0, updateList[1].pitch!!, EPS)
+  }
+
+  @Test
+  fun debugModeTest() {
+    // debug mode is enabled by default for backward compatibility
+    shadowOf(getMainLooper()).pause()
+    cameraAnimationsPluginImpl.easeTo(cameraOptions, mapAnimationOptions { duration(DURATION) })
+    shadowOf(getMainLooper()).idle()
+    assertNotEquals(0, ShadowLogger.logCount)
+    ShadowLogger.logCount = 0
+    cameraAnimationsPluginImpl.debugMode = false
+    shadowOf(getMainLooper()).pause()
+    cameraAnimationsPluginImpl.easeTo(cameraOptions, mapAnimationOptions { duration(DURATION) })
+    shadowOf(getMainLooper()).idle()
+    assertEquals(0, ShadowLogger.logCount)
   }
 
   class LifecycleListener : CameraAnimationsLifecycleListener {
