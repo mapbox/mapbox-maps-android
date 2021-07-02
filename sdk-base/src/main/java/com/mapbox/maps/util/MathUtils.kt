@@ -36,7 +36,7 @@ object MathUtils {
         targetHeading + 360.0f
       }
       diff < -180.0f -> {
-        targetHeading - 360f
+        targetHeading - 360.0f
       }
       else -> {
         targetHeading

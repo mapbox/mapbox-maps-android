@@ -146,18 +146,21 @@ interface CameraAnimationsPlugin : MapPlugin {
   ): ValueAnimator
 
   /**
-   * Create CameraBearingAnimator. Current map camera option will be applied on animation start.
+   * Create CameraBearingAnimator. Current map camera option will be applied on animation start if not specified explicitly with [options.startValue].
    *
    * @param options animator options object to set targets and other non mandatory options
+   * @param optimizePath if set to True shortest bearing path will be applied while animating wrapped bearing values.
+   * If set to False clock-wise rotation will be used if target is positive and counter clock-wise rotation will be used if target value is negative.
    * @param block optional block to apply any [ValueAnimator] parameters
    */
   fun createBearingAnimator(
     options: CameraAnimatorOptions<Double>,
+    optimizePath: Boolean = true,
     block: (ValueAnimator.() -> Unit)? = null
   ): ValueAnimator
 
   /**
-   * Create CameraPitchAnimator. Current map camera option will be applied on animation start.
+   * Create CameraPitchAnimator. Current map camera option will be applied on animation start if not specified explicitly with [options.startValue].
    *
    * @param options animator options object to set targets and other non mandatory options
    * @param block optional block to apply any [ValueAnimator] parameters
@@ -168,7 +171,7 @@ interface CameraAnimationsPlugin : MapPlugin {
   ): ValueAnimator
 
   /**
-   * Create CameraPaddingAnimator. Current map camera option will be applied on animation start.
+   * Create CameraPaddingAnimator. Current map camera option will be applied on animation start if not specified explicitly with [options.startValue].
    *
    * @param options animator options object to set targets and other non mandatory options
    * @param block optional block to apply any [ValueAnimator] parameters
@@ -179,7 +182,7 @@ interface CameraAnimationsPlugin : MapPlugin {
   ): ValueAnimator
 
   /**
-   * Create CameraCenterAnimator. Current map camera option will be applied on animation start.
+   * Create CameraCenterAnimator. Current map camera option will be applied on animation start if not specified explicitly with [options.startValue].
    *
    * @param options animator options object to set targets and other non mandatory options
    * @param block optional block to apply any [ValueAnimator] parameters

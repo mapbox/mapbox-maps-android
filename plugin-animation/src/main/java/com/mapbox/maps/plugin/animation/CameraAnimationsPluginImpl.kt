@@ -181,7 +181,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         )
       }
     }
-    val targets = if (cameraAnimator is CameraBearingAnimator) {
+    val targets = if (cameraAnimator is CameraBearingAnimator && cameraAnimator.optimizePath) {
       MathUtils.prepareOptimalBearingPath(
         DoubleArray(cameraAnimator.targets.size + 1) { index ->
           if (index == 0) {
@@ -714,8 +714,9 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
   override fun createBearingAnimator(
     options: CameraAnimatorOptions<Double>,
+    optimizePath: Boolean,
     block: (ValueAnimator.() -> Unit)?
-  ) = CameraBearingAnimator(options, block)
+  ) = CameraBearingAnimator(options, optimizePath, block)
 
   override fun createPitchAnimator(
     options: CameraAnimatorOptions<Double>,
