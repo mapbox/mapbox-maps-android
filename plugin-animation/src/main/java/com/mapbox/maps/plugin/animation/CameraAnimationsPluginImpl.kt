@@ -7,12 +7,9 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.EdgeInsets
-import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.*
 import com.mapbox.maps.plugin.animation.animator.*
 import com.mapbox.maps.plugin.delegates.*
-import com.mapbox.maps.toCameraOptions
 import com.mapbox.maps.util.MathUtils
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.properties.Delegates
@@ -159,7 +156,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     // move native map to new position
     mapCameraManagerDelegate.setCamera(cameraOptions)
     // notify listeners with actual values
-    notifyListeners(cameraOptions)
+    notifyListeners(mapCameraManagerDelegate.cameraState)
     lastCameraOptions = cameraOptions
   }
 
@@ -204,7 +201,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     return true
   }
 
-  internal fun notifyListeners(cameraOptions: CameraOptions) {
+  internal fun notifyListeners(cameraOptions: CameraState) {
     cameraOptions.also {
       bearing = it.bearing
       center = it.center
