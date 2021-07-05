@@ -8,15 +8,13 @@ import android.view.animation.LinearInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.addListener
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CoordinateBounds
-import com.mapbox.maps.MapboxMap
-import com.mapbox.maps.Style
+import com.mapbox.maps.*
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadedListener
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
-import com.mapbox.maps.toCameraOptions
+import com.mapbox.turf.TurfMeasurement
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.mapView
 import kotlinx.android.synthetic.main.activity_annotation.*
@@ -31,12 +29,24 @@ class AnimatePointAnnotationActivity : AppCompatActivity(), OnMapLoadedListener 
   private val animators: MutableList<ValueAnimator> = mutableListOf()
   private var noAnimateCarNum: Int = 10
   private var animateCarNum: Int = 10
-  private var animateDuration = 100L
+  private var animateDuration = 5000L
   private lateinit var mapboxMap: MapboxMap
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_annotation)
     mapboxMap = mapView.getMapboxMap()
+    mapboxMap.setCamera(
+      CameraOptions.Builder()
+        .center(
+          Point.fromLngLat(
+            LONGITUDE,
+            LATITUDE
+          )
+        )
+        .zoom(12.0)
+        .build()
+    )
+
     mapboxMap.addOnMapLoadedListener(this@AnimatePointAnnotationActivity)
     mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
     deleteAll.visibility = View.GONE
@@ -47,33 +57,31 @@ class AnimatePointAnnotationActivity : AppCompatActivity(), OnMapLoadedListener 
     pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView).apply {
       bitmapFromDrawableRes(
         this@AnimatePointAnnotationActivity,
-        R.drawable.ic_taxi_top
+        R.drawable.ic_car_top
       )?.let {
-        val optionList = mutableListOf<PointAnnotationOptions>()
+        val noAnimationOptionList = mutableListOf<PointAnnotationOptions>()
         for (i in 0 until noAnimateCarNum) {
-          optionList.add(
+          noAnimationOptionList.add(
             PointAnnotationOptions()
               .withPoint(getPointInBounds())
-              .withIconSize(0.5)
               .withIconImage(it)
           )
         }
-        create(optionList)
+        create(noAnimationOptionList)
       }
       bitmapFromDrawableRes(
         this@AnimatePointAnnotationActivity,
-        R.drawable.ic_car_top
+        R.drawable.ic_taxi_top
       )?.let {
-        val optionList = mutableListOf<PointAnnotationOptions>()
+        val animationOptionList = mutableListOf<PointAnnotationOptions>()
         for (i in 0 until animateCarNum) {
-          optionList.add(
+          animationOptionList.add(
             PointAnnotationOptions()
               .withPoint(getPointInBounds())
-              .withIconSize(0.5)
               .withIconImage(it)
           )
         }
-        animateCarList = create(optionList)
+        animateCarList = create(animationOptionList)
       }
     }
     animateCars()
@@ -82,11 +90,20 @@ class AnimatePointAnnotationActivity : AppCompatActivity(), OnMapLoadedListener 
   private fun animateCars() {
     cleanAnimation()
     for (i in 0 until animateCarNum) {
+      val nextPoint = getPointInBounds()
       val animator =
-        ValueAnimator.ofObject(PointEvaluator(), animateCarList[i].point, getPointInBounds())
-          .setDuration(animateDuration)
+        ValueAnimator.ofObject(
+          CarEvaluator(),
+          animateCarList[i].point,
+          nextPoint
+        ).setDuration(animateDuration)
+      animateCarList[i].iconRotate = TurfMeasurement.bearing(animateCarList[i].point, nextPoint)
       animator.interpolator = LinearInterpolator()
-      animator.addUpdateListener { animateCarList[i].point = it.animatedValue as Point }
+      animator.addUpdateListener { valueAnimator ->
+        (valueAnimator.animatedValue as Point).let {
+          animateCarList[i].point = it
+        }
+      }
       animator.start()
       animators.add(animator)
     }
@@ -144,11 +161,22 @@ class AnimatePointAnnotationActivity : AppCompatActivity(), OnMapLoadedListener 
     mapView.onDestroy()
   }
 
-  private class PointEvaluator : TypeEvaluator<Point> {
-    override fun evaluate(fraction: Float, startValue: Point, endValue: Point): Point {
-      val lat = startValue.latitude() + (endValue.latitude() - startValue.latitude()) * fraction
-      val lon = startValue.longitude() + (endValue.longitude() - startValue.longitude()) * fraction
+  private class CarEvaluator : TypeEvaluator<Point> {
+    override fun evaluate(
+      fraction: Float,
+      startValue: Point,
+      endValue: Point
+    ): Point {
+      val lat =
+        startValue.latitude() + (endValue.latitude() - startValue.latitude()) * fraction
+      val lon =
+        startValue.longitude() + (endValue.longitude() - startValue.longitude()) * fraction
       return Point.fromLngLat(lon, lat)
     }
+  }
+
+  companion object {
+    private const val LATITUDE = 55.665957
+    private const val LONGITUDE = 12.550343
   }
 }
