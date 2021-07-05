@@ -13,6 +13,7 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl.Companion.TAG
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.animator.CameraBearingAnimator
@@ -960,6 +961,28 @@ class CameraAnimationsPluginImplTest {
     // second bearing tick as first animation -
     // pitch is updated to start value
     assertEquals(10.0, updateList[1].pitch!!, EPS)
+  }
+
+  @Test
+  fun debugModeTrueTest() {
+    mockkStatic(ShadowLogger::class)
+    cameraAnimationsPluginImpl.debugMode = true
+    shadowOf(getMainLooper()).pause()
+    cameraAnimationsPluginImpl.easeTo(cameraOptions, mapAnimationOptions { duration(DURATION) })
+    shadowOf(getMainLooper()).idle()
+    verify { ShadowLogger.d(TAG, any()) }
+    unmockkStatic(ShadowLogger::class)
+  }
+
+  @Test
+  fun debugModeFalseTest() {
+    mockkStatic(ShadowLogger::class)
+    cameraAnimationsPluginImpl.debugMode = false
+    shadowOf(getMainLooper()).pause()
+    cameraAnimationsPluginImpl.easeTo(cameraOptions, mapAnimationOptions { duration(DURATION) })
+    shadowOf(getMainLooper()).idle()
+    verify(exactly = 0) { ShadowLogger.d(TAG, any()) }
+    unmockkStatic(ShadowLogger::class)
   }
 
   class LifecycleListener : CameraAnimationsLifecycleListener {

@@ -57,6 +57,8 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
   private val lifecycleListeners = CopyOnWriteArraySet<CameraAnimationsLifecycleListener>()
 
+  override var debugMode: Boolean = false
+
   private var center by Delegates.observable<Point?>(null) { _, old, new ->
     new?.let {
       if (old != it) {
@@ -171,10 +173,12 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       CameraAnimatorType.BEARING -> mapCameraManagerDelegate.cameraState.bearing
       CameraAnimatorType.PITCH -> mapCameraManagerDelegate.cameraState.pitch
     }.also {
-      Logger.i(
-        TAG,
-        "Animation ${cameraAnimator.type.name}(${cameraAnimator.hashCode()}): automatically setting start value $it."
-      )
+      if (debugMode) {
+        Logger.d(
+          TAG,
+          "Animation ${cameraAnimator.type.name}(${cameraAnimator.hashCode()}): automatically setting start value $it."
+        )
+      }
     }
 
     val targets = cameraAnimator.targets
@@ -262,7 +266,9 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
           if (isUpdated) {
             // finally register update listener in order to update map properly
             registerInternalUpdateListener(this)
-            Logger.i(TAG, "Animation ${type.name}(${hashCode()}) started.")
+            if (debugMode) {
+              Logger.d(TAG, "Animation ${type.name}(${hashCode()}) started.")
+            }
           }
         } ?: throw RuntimeException(
           "Could not start animation in CameraManager! " +
@@ -283,13 +289,17 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       private fun finishAnimation(animation: Animator?, finishStatus: AnimationFinishStatus) {
         (animation as? CameraAnimator<*>)?.apply {
           runningAnimatorsQueue.remove(animation)
-          val logText = when (finishStatus) {
-            AnimationFinishStatus.CANCELED -> "was canceled."
-            AnimationFinishStatus.ENDED -> "ended."
+          if (debugMode) {
+            val logText = when (finishStatus) {
+              AnimationFinishStatus.CANCELED -> "was canceled."
+              AnimationFinishStatus.ENDED -> "ended."
+            }
+            Logger.d(TAG, "Animation ${type.name}(${hashCode()}) $logText")
           }
-          Logger.i(TAG, "Animation ${type.name}(${hashCode()}) $logText")
           if (isInternal) {
-            Logger.i(TAG, "Internal Animator ${type.name} was unregistered")
+            if (debugMode) {
+              Logger.d(TAG, "Internal Animator ${type.name} was unregistered")
+            }
             unregisterAnimators(this, cancelAnimators = false)
           }
           if (runningAnimatorsQueue.isEmpty()) {
@@ -799,7 +809,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
    * Static variables and methods.
    */
   companion object {
-    private const val TAG = "Mbgl-CameraManager"
+    internal const val TAG = "Mbgl-CameraManager"
   }
 }
 
