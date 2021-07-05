@@ -57,7 +57,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
   private val lifecycleListeners = CopyOnWriteArraySet<CameraAnimationsLifecycleListener>()
 
-  override var debugMode: Boolean = true
+  override var debugMode: Boolean = false
 
   private var center by Delegates.observable<Point?>(null) { _, old, new ->
     new?.let {
@@ -809,7 +809,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
    * Static variables and methods.
    */
   companion object {
-    private const val TAG = "Mbgl-CameraManager"
+    internal const val TAG = "Mbgl-CameraManager"
   }
 }
 

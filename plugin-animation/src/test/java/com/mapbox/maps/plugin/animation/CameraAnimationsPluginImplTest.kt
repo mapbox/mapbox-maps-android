@@ -13,6 +13,7 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl.Companion.TAG
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.animator.CameraBearingAnimator
@@ -49,7 +50,6 @@ class CameraAnimationsPluginImplTest {
   @Before
   fun setUp() {
     ShadowLog.stream = System.out
-    ShadowLogger.logCount = 0
     cameraAnimatorsFactory = mockk(relaxed = true)
     bearingAnimator = mockk(relaxed = true)
     centerAnimator = mockk(relaxed = true)
@@ -964,18 +964,25 @@ class CameraAnimationsPluginImplTest {
   }
 
   @Test
-  fun debugModeTest() {
-    // debug mode is enabled by default for backward compatibility
+  fun debugModeTrueTest() {
+    mockkStatic(ShadowLogger::class)
+    cameraAnimationsPluginImpl.debugMode = true
     shadowOf(getMainLooper()).pause()
     cameraAnimationsPluginImpl.easeTo(cameraOptions, mapAnimationOptions { duration(DURATION) })
     shadowOf(getMainLooper()).idle()
-    assertNotEquals(0, ShadowLogger.logCount)
-    ShadowLogger.logCount = 0
+    verify { ShadowLogger.d(TAG, any()) }
+    unmockkStatic(ShadowLogger::class)
+  }
+
+  @Test
+  fun debugModeFalseTest() {
+    mockkStatic(ShadowLogger::class)
     cameraAnimationsPluginImpl.debugMode = false
     shadowOf(getMainLooper()).pause()
     cameraAnimationsPluginImpl.easeTo(cameraOptions, mapAnimationOptions { duration(DURATION) })
     shadowOf(getMainLooper()).idle()
-    assertEquals(0, ShadowLogger.logCount)
+    verify(exactly = 0) { ShadowLogger.d(TAG, any()) }
+    unmockkStatic(ShadowLogger::class)
   }
 
   class LifecycleListener : CameraAnimationsLifecycleListener {
