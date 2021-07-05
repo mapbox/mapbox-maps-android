@@ -14,6 +14,7 @@ import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
 import com.mapbox.maps.plugin.delegates.MapTransformDelegate
+import com.mapbox.maps.toCameraOptions
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert
@@ -110,6 +111,21 @@ class CameraAnimatorsFactoryTest {
     every { mapTransformDelegate.getMapOptions() } returns MapOptions.Builder().size(Size(1078.875f, 1698.375f)).build()
     val target = CameraOptions.Builder().bearing(-25.981604850040434).build()
     val animators = cameraAnimatorsFactory.getRotateBy(ScreenCoordinate(0.0, 0.0), ScreenCoordinate(500.0, 500.0))
+    testAnimators(animators, target)
+  }
+
+  @Test
+  fun testFlyToAnimatorsWithSinglePixelPadding() {
+    val size = Size(800.0f, 600.0f)
+    every { mapCameraManagerDelegate.cameraState } returns initialCameraPosition
+    every { mapTransformDelegate.getMapOptions() } returns MapOptions.Builder().size(size).build()
+    every { mapTransformDelegate.getSize() } returns size
+
+    val target = initialCameraPosition.toCameraOptions().toBuilder()
+      .bearing(90.0)
+      .padding(EdgeInsets(300.0, 400.0, 300.0, 400.0))
+      .build()
+    val animators = cameraAnimatorsFactory.getFlyTo(target)
     testAnimators(animators, target)
   }
 
