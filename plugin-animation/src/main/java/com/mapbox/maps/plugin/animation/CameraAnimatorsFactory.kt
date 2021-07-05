@@ -68,7 +68,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           options = cameraAnimatorOptions(it) {
             startValue(currentCameraState.bearing)
           },
-          optimizePath = true,
+          useShortestPath = true,
           block = defaultAnimationParameters[CameraAnimatorType.BEARING]
         )
       )
@@ -237,7 +237,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           options = cameraAnimatorOptions(bearing) {
             startValue(cameraBearingDegrees)
           },
-          optimizePath = true,
+          useShortestPath = true,
           block = defaultAnimationParameters[CameraAnimatorType.BEARING]
         )
       }
@@ -366,7 +366,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
         options = cameraAnimatorOptions(endBearing) {
           startValue(startBearing)
         },
-        optimizePath = true,
+        useShortestPath = true,
         block = defaultAnimationParameters[CameraAnimatorType.BEARING]
       ),
       CameraZoomAnimator(

@@ -149,14 +149,14 @@ interface CameraAnimationsPlugin : MapPlugin {
    * Create CameraBearingAnimator. Current map camera option will be applied on animation start if not specified explicitly with [options.startValue].
    *
    * @param options animator options object to set targets and other non mandatory options
-   * @param optimizePath if set to True shortest bearing path will be applied while animating bearing values.
+   * @param useShortestPath if set to True shortest bearing path will be applied while animating bearing values.
    * If set to False clock-wise rotation will be used if next target is greater or equal than current one
    * and counter clock-wise rotation will be used if next target less than current one.
    * @param block optional block to apply any [ValueAnimator] parameters
    */
   fun createBearingAnimator(
     options: CameraAnimatorOptions<Double>,
-    optimizePath: Boolean = true,
+    useShortestPath: Boolean = true,
     block: (ValueAnimator.() -> Unit)? = null
   ): ValueAnimator
 

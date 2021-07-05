@@ -25,21 +25,21 @@ object MathUtils {
   /**
    * Util for finding the shortest path from the current rotated degree to the new degree.
    *
-   * @param targetHeading  the new position of the rotation
+   * @param currentHeading  the new position of the rotation
    * @param previousHeading the current position of the rotation
    * @return the shortest degree of rotation possible
    */
-  internal fun shortestRotation(targetHeading: Double, previousHeading: Double): Double {
-    val diff = previousHeading - targetHeading
+  internal fun shortestRotation(currentHeading: Double, previousHeading: Double): Double {
+    val diff = previousHeading - currentHeading
     return when {
       diff > 180.0f -> {
-        targetHeading + 360.0f
+        currentHeading + 360.0f
       }
       diff < -180.0f -> {
-        targetHeading - 360.0f
+        currentHeading - 360.0f
       }
       else -> {
-        targetHeading
+        currentHeading
       }
     }
   }
