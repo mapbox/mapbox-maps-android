@@ -101,4 +101,11 @@ class ScaleBarPluginTest {
     verify { scaleBarPlugin.distancePerPixel = 100F }
     verify { scaleBarView.distancePerPixel = 100F }
   }
+
+  @Test
+  fun set_useContinuousRendering() {
+    scaleBarPlugin.useContinuousRendering = true
+    verify { scaleBarPlugin.useContinuousRendering = true }
+    verify { scaleBarView.useContinuousRendering = true }
+  }
 }
