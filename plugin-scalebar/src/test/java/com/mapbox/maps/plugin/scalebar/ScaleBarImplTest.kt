@@ -2,16 +2,20 @@ package com.mapbox.maps.plugin.scalebar
 
 import android.content.Context
 import android.graphics.Color
+import android.os.Looper
 import android.view.Gravity
+import com.mapbox.maps.plugin.scalebar.ScaleBarImpl.Companion.MSG_RENDER_CONTINUOUS
+import com.mapbox.maps.plugin.scalebar.ScaleBarImpl.Companion.MSG_RENDER_ON_DEMAND
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings
 import io.mockk.mockk
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows
 import org.robolectric.annotation.Config
+import org.robolectric.annotation.LooperMode
 
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowProjection::class])
@@ -105,5 +109,27 @@ class ScaleBarImplTest {
     assertEquals("1.9 mi", scaleBarView.getDistanceText(10000))
     assertEquals("2 mi", scaleBarView.getDistanceText(10560))
     assertEquals("10 mi", scaleBarView.getDistanceText(52800))
+  }
+
+  @Test
+  @LooperMode(LooperMode.Mode.PAUSED)
+  fun renderingOnDemandTest() {
+    scaleBarView.useContinuousRendering = false
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    scaleBarView.distancePerPixel = 1.0f
+    assertTrue(scaleBarView.refreshHandler.hasMessages(MSG_RENDER_ON_DEMAND))
+    assertFalse(scaleBarView.refreshHandler.hasMessages(MSG_RENDER_CONTINUOUS))
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+  }
+
+  @Test
+  @LooperMode(LooperMode.Mode.PAUSED)
+  fun renderingContinuousTest() {
+    scaleBarView.useContinuousRendering = true
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    scaleBarView.distancePerPixel = 1.0f
+    assertFalse(scaleBarView.refreshHandler.hasMessages(MSG_RENDER_ON_DEMAND))
+    assertTrue(scaleBarView.refreshHandler.hasMessages(MSG_RENDER_CONTINUOUS))
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
   }
 }

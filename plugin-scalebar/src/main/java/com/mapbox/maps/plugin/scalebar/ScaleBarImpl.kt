@@ -10,6 +10,7 @@ import android.os.Message
 import android.util.AttributeSet
 import android.util.Pair
 import android.view.View
+import androidx.annotation.VisibleForTesting
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings
 import java.lang.ref.WeakReference
 import java.text.DecimalFormat
@@ -64,8 +65,36 @@ class ScaleBarImpl : ScaleBar, View {
       }
     }
 
-  private val refreshHandler: RefreshHandler
+  /**
+   * If set to True scale bar will be triggering onDraw depending on [ScaleBarSettings.refreshInterval]
+   * even if actual data did not change. If set to False scale bar will redraw only on demand.
+   *
+   * Defaults to False and should not be changed explicitly in most cases.
+   * Could be set to True to produce correct GPU frame metrics when running gfxinfo command.
+   */
+  override var useContinuousRendering = false
+    set(value) {
+      if (value) {
+        if (!isScaleBarVisible) {
+          visibility = VISIBLE
+        }
+        refreshHandler.removeMessages(MSG_RENDER_ON_DEMAND)
+        refreshHandler.sendEmptyMessage(MSG_RENDER_CONTINUOUS)
+      } else {
+        if (!isScaleBarVisible) {
+          visibility = GONE
+        }
+        refreshHandler.removeMessages(MSG_RENDER_CONTINUOUS)
+        reusableCanvas = null
+      }
+      field = value
+    }
+
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal val refreshHandler: RefreshHandler
   private val decimalFormat = DecimalFormat("0.#")
+  private var isScaleBarVisible = false
+  private var reusableCanvas: Canvas? = null
 
   /**
    * Current settings will be used to draw ScaleBar
@@ -79,8 +108,12 @@ class ScaleBarImpl : ScaleBar, View {
       unit = if (value.isMetricUnits) METER_UNIT else FEET_UNIT
       strokePaint.strokeWidth = value.textBorderWidth
       enable = value.enabled
-      if (!refreshHandler.hasMessages(MSG_WHAT)) {
-        refreshHandler.sendEmptyMessageDelayed(MSG_WHAT, value.refreshInterval)
+      if (useContinuousRendering) {
+        reusableCanvas = null
+      } else {
+        if (!refreshHandler.hasMessages(MSG_RENDER_ON_DEMAND)) {
+          refreshHandler.sendEmptyMessageDelayed(MSG_RENDER_ON_DEMAND, value.refreshInterval)
+        }
       }
       // Refresh mapViewWidth
       mapViewWidth = mapViewWidth
@@ -92,19 +125,28 @@ class ScaleBarImpl : ScaleBar, View {
    */
   override var distancePerPixel = 0F
     set(value) {
-      if (!refreshHandler.hasMessages(MSG_WHAT)) {
-        refreshHandler.sendEmptyMessageDelayed(MSG_WHAT, settings.refreshInterval)
+      if (field != value) {
+        if (useContinuousRendering) {
+          reusableCanvas = null
+        } else {
+          if (!refreshHandler.hasMessages(MSG_RENDER_ON_DEMAND)) {
+            refreshHandler.sendEmptyMessageDelayed(MSG_RENDER_ON_DEMAND, settings.refreshInterval)
+          }
+        }
+        field = if (settings.isMetricUnits) value else value * FEET_PER_METER
       }
-      field = if (settings.isMetricUnits) value else value * FEET_PER_METER
     }
 
   /**
    * Whether ScaleBar is enabled or not
    */
   override var enable: Boolean
-    get() = visibility == View.VISIBLE
+    get() = isScaleBarVisible
     set(value) {
-      visibility = if (value) View.VISIBLE else View.GONE
+      isScaleBarVisible = value
+      if (!useContinuousRendering) {
+        visibility = if (value) VISIBLE else GONE
+      }
     }
 
   /**
@@ -146,13 +188,26 @@ class ScaleBarImpl : ScaleBar, View {
     strokePaint.color = Color.WHITE
 
     barPaint.isAntiAlias = true
-    refreshHandler = RefreshHandler(this)
+    refreshHandler = RefreshHandler(this).apply {
+      if (useContinuousRendering) {
+        sendEmptyMessage(MSG_RENDER_CONTINUOUS)
+      }
+    }
   }
 
   /**
    * Draw ScaleBar with current settings
    */
   override fun onDraw(canvas: Canvas) {
+    if (useContinuousRendering) {
+      if (!isScaleBarVisible) {
+        canvas.drawARGB(0, 0, 0, 0)
+        return
+      }
+      if (reusableCanvas != null) {
+        return
+      }
+    }
     if (distancePerPixel <= 0 || mapViewWidth <= 0 || maxBarWidth <= 0) {
       return
     }
@@ -222,6 +277,9 @@ class ScaleBarImpl : ScaleBar, View {
       canvas.drawPath(path, strokePaint)
     }
     canvas.drawPath(path, textPaint)
+    if (useContinuousRendering) {
+      reusableCanvas = canvas
+    }
   }
 
   /**
@@ -245,14 +303,25 @@ class ScaleBarImpl : ScaleBar, View {
   /**
    * Handler class to limit the refresh frequent.
    */
-  private class RefreshHandler(scaleBarImpl: ScaleBarImpl) : Handler() {
+  internal class RefreshHandler(scaleBarImpl: ScaleBarImpl) : Handler() {
     private var scaleBarWidgetWeakReference: WeakReference<ScaleBarImpl> =
       WeakReference(scaleBarImpl)
 
     override fun handleMessage(msg: Message) {
       scaleBarWidgetWeakReference.get()?.let {
-        if (msg.what == MSG_WHAT) {
-          it.invalidate()
+        when (msg.what) {
+          MSG_RENDER_CONTINUOUS -> {
+            if (it.reusableCanvas == null) {
+              it.invalidate()
+            } else {
+              it.draw(it.reusableCanvas)
+            }
+            sendEmptyMessageDelayed(MSG_RENDER_CONTINUOUS, it.settings.refreshInterval)
+          }
+          MSG_RENDER_ON_DEMAND -> {
+            it.invalidate()
+          }
+          else -> return
         }
       }
     }
@@ -262,7 +331,8 @@ class ScaleBarImpl : ScaleBar, View {
    * Static variables and methods.
    */
   companion object {
-    internal const val MSG_WHAT = 0
+    internal const val MSG_RENDER_ON_DEMAND = 0
+    internal const val MSG_RENDER_CONTINUOUS = 1
     internal const val DEFAULT_MAPVIEW_WIDTH = 0F
     internal const val DEFAULT_BAR_WIDTH = 0F
   }

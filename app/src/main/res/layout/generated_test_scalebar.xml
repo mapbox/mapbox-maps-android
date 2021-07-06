@@ -21,6 +21,7 @@
     mapbox:mapbox_scaleBarRefreshInterval = "1000000"
     mapbox:mapbox_scaleBarShowTextBorder = "false"
     mapbox:mapbox_scaleBarRatio = "0.9"
+    mapbox:mapbox_scaleBarUseContinuousRendering = "false"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
 <!-- End of generated file. -->

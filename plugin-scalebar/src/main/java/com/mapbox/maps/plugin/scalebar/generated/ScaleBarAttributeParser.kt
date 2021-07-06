@@ -41,6 +41,7 @@ internal object ScaleBarAttributeParser {
         refreshInterval = typedArray.getInt(R.styleable.mapbox_MapView_mapbox_scaleBarRefreshInterval, 15).toLong(),
         showTextBorder = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_scaleBarShowTextBorder, true),
         ratio = typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_scaleBarRatio, 0.5f),
+        useContinuousRendering = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_scaleBarUseContinuousRendering, false),
       )
     } finally {
       typedArray.recycle()

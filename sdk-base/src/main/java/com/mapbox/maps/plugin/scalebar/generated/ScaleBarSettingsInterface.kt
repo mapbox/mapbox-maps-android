@@ -109,6 +109,11 @@ interface ScaleBarSettingsInterface {
    * configures ratio of scale bar max width compared with MapView width, default is 0.5.
    */
   var ratio: Float
+
+  /**
+   * If set to True scale bar will be triggering onDraw depending on [ScaleBarSettings.refreshInterval] even if actual data did not change. If set to False scale bar will redraw only on demand. Defaults to False and should not be changed explicitly in most cases. Could be set to True to produce correct GPU frame metrics when running gfxinfo command.
+   */
+  var useContinuousRendering: Boolean
 }
 
 // End of generated file.
