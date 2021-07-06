@@ -201,8 +201,8 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     return true
   }
 
-  internal fun notifyListeners(cameraOptions: CameraState) {
-    cameraOptions.also {
+  internal fun notifyListeners(cameraState: CameraState) {
+    cameraState.also {
       bearing = it.bearing
       center = it.center
       padding = it.padding
