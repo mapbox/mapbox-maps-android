@@ -2,6 +2,7 @@ package com.mapbox.maps
 
 import android.os.Handler
 import android.os.Looper
+import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
@@ -24,6 +25,7 @@ import java.util.concurrent.TimeoutException
 @LargeTest
 class OfflineTest {
 
+  private lateinit var mapView: MapView
   private val handler = Handler(Looper.getMainLooper())
   private val tileStore: TileStore by lazy {
     TileStore.create().also {
@@ -61,6 +63,13 @@ class OfflineTest {
     if (!latch.await(30, TimeUnit.SECONDS)) {
       throw TimeoutException()
     }
+  }
+
+  @After
+  @UiThreadTest
+  fun cleanup() {
+    mapView.onStop()
+    mapView.onDestroy()
   }
 
   @Test
@@ -281,9 +290,6 @@ class OfflineTest {
     }
   }
 
-  // TODO revisit after https://github.com/mapbox/mapbox-maps-android/issues/297
-  // this test must behave same as resourceLoadingFromTileStoreMapboxSwitch
-  // but for now we could check for style loaded event only to style is loaded
   @Test
   fun resourceLoadingFromTileStoreAirplaneMode() {
     loadTileStoreWithStylePack()
@@ -322,9 +328,9 @@ class OfflineTest {
       // verify resource requests came from tile store
       MatcherAssert.assertThat(resourceRequests, Matchers.greaterThan(0))
       // verify no map loading errors occurred
-      // TODO uncomment after https://github.com/mapbox/mapbox-maps-android/issues/297
-//      Assert.assertEquals(0, mapLoadingErrorCount)
+      Assert.assertEquals(0, mapLoadingErrorCount)
     } finally {
+      mapView.getMapboxMap().unsubscribe(observer)
       switchAirplaneMode()
     }
   }
@@ -346,7 +352,7 @@ class OfflineTest {
           mapLoadingErrorCount++
         }
         if (event.type == MapEvents.MAP_LOADED || event.type == MapEvents.STYLE_LOADED) {
-          latch.countDown()
+//          latch.countDown()
         }
       }
     }
@@ -362,15 +368,13 @@ class OfflineTest {
     )
     try {
       // map loaded, style loaded
-      if (latch.await(10, TimeUnit.SECONDS)) {
-        // verify resource requests came from tile store
-        MatcherAssert.assertThat(resourceRequests, Matchers.greaterThan(0))
-        // verify no map loading errors occurred
-        Assert.assertEquals(0, mapLoadingErrorCount)
-      } else {
-        throw TimeoutException()
-      }
+      latch.await(10, TimeUnit.SECONDS)
+      // verify resource requests came from tile store
+      MatcherAssert.assertThat(resourceRequests, Matchers.greaterThan(0))
+      // verify no map loading errors occurred
+      Assert.assertEquals(0, mapLoadingErrorCount)
     } finally {
+      mapView.getMapboxMap().unsubscribe(observer)
       OfflineSwitch.getInstance().isMapboxStackConnected = true
     }
   }
@@ -401,7 +405,6 @@ class OfflineTest {
     Assert.assertEquals(0, stylePackWithNoStyle.first.size)
   }
 
-  @Ignore("TODO uncomment after https://github.com/mapbox/mapbox-maps-android/issues/297")
   @Test
   fun idleEventTileStoreAirplaneMode() {
     loadTileStoreWithStylePack()
@@ -426,6 +429,7 @@ class OfflineTest {
       latch.await(10, TimeUnit.SECONDS)
       Assert.assertEquals(1, idleEventCount)
     } finally {
+      mapView.getMapboxMap().unsubscribe(observer)
       switchAirplaneMode()
     }
   }
@@ -453,6 +457,7 @@ class OfflineTest {
       latch.await(10, TimeUnit.SECONDS)
       Assert.assertEquals(1, idleEventCount)
     } finally {
+      mapView.getMapboxMap().unsubscribe(observer)
       OfflineSwitch.getInstance().isMapboxStackConnected = true
     }
   }
@@ -548,7 +553,7 @@ class OfflineTest {
       it.runOnUiThread {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         // uses default resource options under the hood
-        val mapView = MapView(
+        mapView = MapView(
           context = context,
           mapInitOptions = MapInitOptions(
             context = context,
@@ -597,7 +602,7 @@ class OfflineTest {
   }
 
   companion object {
-    private const val TAG = "OfflineTest"
+    private const val TAG = "MbxOfflineTest"
     private const val ZOOM = 12.0
     private val TOKYO: Point = Point.fromLngLat(139.769305, 35.682027)
     private const val STYLE = Style.MAPBOX_STREETS
