@@ -63,22 +63,12 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
     }
 
     cameraOptions.bearing?.let {
-      var startBearing = currentCameraState.bearing
-      var endBearing = it
-      // Minimize rotation by taking the shorter path around the circle.
-      endBearing = -CameraTransform.normalizeAngleRadians(
-        -endBearing.deg2rad(),
-        startBearing.deg2rad()
-      ).rad2deg()
-      startBearing = CameraTransform.normalizeAngleRadians(
-        startBearing.deg2rad(),
-        endBearing.deg2rad()
-      ).rad2deg()
       animationList.add(
         CameraBearingAnimator(
-          options = cameraAnimatorOptions(endBearing) {
-            startValue(startBearing)
+          options = cameraAnimatorOptions(it) {
+            startValue(currentCameraState.bearing)
           },
+          useShortestPath = true,
           block = defaultAnimationParameters[CameraAnimatorType.BEARING]
         )
       )
@@ -247,6 +237,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
           options = cameraAnimatorOptions(bearing) {
             startValue(cameraBearingDegrees)
           },
+          useShortestPath = true,
           block = defaultAnimationParameters[CameraAnimatorType.BEARING]
         )
       }
@@ -266,10 +257,10 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
     val endPadding = cameraOptions.padding ?: currentCameraState.padding
     val endPointRaw = cameraOptions.center ?: currentCameraState.center
     var endZoom = cameraOptions.zoom ?: currentCameraState.zoom
-    var endBearing = cameraOptions.bearing ?: currentCameraState.bearing
+    val endBearing = cameraOptions.bearing ?: currentCameraState.bearing
     val endPitch = cameraOptions.pitch ?: currentCameraState.pitch
 
-    var startBearing = currentCameraState.bearing
+    val startBearing = currentCameraState.bearing
     val startScale = 2.0.pow(currentCameraState.zoom)
     val startZoom = startScale.scaleZoom()
     endZoom = endZoom.coerceIn(
@@ -283,14 +274,6 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
 
     val startPoint = mapProjectionDelegate.project(startPointRaw, startScale)
     val endPoint = mapProjectionDelegate.project(endPointRaw, startScale)
-
-    // Minimize rotation by taking the shorter path around the circle.
-
-    endBearing =
-      -CameraTransform.normalizeAngleRadians(-endBearing.deg2rad(), startBearing.deg2rad())
-        .rad2deg()
-    startBearing =
-      CameraTransform.normalizeAngleRadians(startBearing.deg2rad(), endBearing.deg2rad()).rad2deg()
 
     // w₀: Initial visible span, measured in pixels at the initial scale.
     // Known henceforth as a <i>screenful</i>.
@@ -383,6 +366,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
         options = cameraAnimatorOptions(endBearing) {
           startValue(startBearing)
         },
+        useShortestPath = true,
         block = defaultAnimationParameters[CameraAnimatorType.BEARING]
       ),
       CameraZoomAnimator(

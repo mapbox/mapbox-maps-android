@@ -7,12 +7,10 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.EdgeInsets
-import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.*
 import com.mapbox.maps.plugin.animation.animator.*
 import com.mapbox.maps.plugin.delegates.*
-import com.mapbox.maps.toCameraOptions
+import com.mapbox.maps.util.MathUtils
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.properties.Delegates
 
@@ -158,7 +156,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     // move native map to new position
     mapCameraManagerDelegate.setCamera(cameraOptions)
     // notify listeners with actual values
-    notifyListeners(cameraOptions)
+    notifyListeners(mapCameraManagerDelegate.cameraState)
     lastCameraOptions = cameraOptions
   }
 
@@ -180,22 +178,31 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         )
       }
     }
-
-    val targets = cameraAnimator.targets
-    cameraAnimator.setObjectValues(
-      *Array(targets.size + 1) { index ->
+    val targets = if (cameraAnimator is CameraBearingAnimator && cameraAnimator.useShortestPath) {
+      MathUtils.prepareOptimalBearingPath(
+        DoubleArray(cameraAnimator.targets.size + 1) { index ->
+          if (index == 0) {
+            startValue as Double
+          } else {
+            cameraAnimator.targets[index - 1]
+          }
+        }
+      ).toTypedArray()
+    } else {
+      Array(cameraAnimator.targets.size + 1) { index ->
         if (index == 0) {
           startValue
         } else {
-          targets[index - 1]
+          cameraAnimator.targets[index - 1]
         }
       }
-    )
+    }
+    cameraAnimator.setObjectValues(*targets)
     return true
   }
 
-  internal fun notifyListeners(cameraOptions: CameraOptions) {
-    cameraOptions.also {
+  internal fun notifyListeners(cameraState: CameraState) {
+    cameraState.also {
       bearing = it.bearing
       center = it.center
       padding = it.padding
@@ -704,8 +711,9 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
   override fun createBearingAnimator(
     options: CameraAnimatorOptions<Double>,
+    useShortestPath: Boolean,
     block: (ValueAnimator.() -> Unit)?
-  ) = CameraBearingAnimator(options, block)
+  ) = CameraBearingAnimator(options, useShortestPath, block)
 
   override fun createPitchAnimator(
     options: CameraAnimatorOptions<Double>,

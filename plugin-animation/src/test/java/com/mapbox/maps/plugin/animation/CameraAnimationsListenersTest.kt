@@ -4,6 +4,8 @@ import android.animation.Animator
 import android.animation.ValueAnimator
 import android.os.Looper
 import com.mapbox.common.ShadowLogger
+import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImplTest.Companion.toCameraState
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.animator.CameraBearingAnimator
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
@@ -48,7 +50,6 @@ class CameraAnimationsListenersTest {
     mockkObject(CameraTransform)
     every { delegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
     every { delegateProvider.mapTransformDelegate } returns mapTransformDelegate
-    every { CameraTransform.normalizeAngleRadians(any(), any()) } answers { secondArg() }
     cameraAnimationsPluginImpl = CameraAnimationsPluginImpl().apply {
       onDelegateProvider(delegateProvider)
     }
@@ -56,7 +57,7 @@ class CameraAnimationsListenersTest {
 
   @Test
   fun testAddListenerBeforeRegister() {
-    val bearingAnimator = CameraBearingAnimator(CameraAnimatorOptions.Builder(1.0).build())
+    val bearingAnimator = CameraBearingAnimator(CameraAnimatorOptions.Builder(1.0).build(), true)
     val listener1 = Listener()
     val listener2 = Listener()
     bearingAnimator.addListener(listener1)
@@ -77,7 +78,7 @@ class CameraAnimationsListenersTest {
 
   @Test
   fun testAddListenerAfterRegister() {
-    val bearingAnimator = CameraBearingAnimator(CameraAnimatorOptions.Builder(1.0).build())
+    val bearingAnimator = CameraBearingAnimator(CameraAnimatorOptions.Builder(1.0).build(), true)
     val listener1 = Listener()
     val listener2 = Listener()
     cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)
@@ -98,7 +99,7 @@ class CameraAnimationsListenersTest {
 
   @Test
   fun testAddAndRemoveUserListeners() {
-    val bearingAnimator = CameraBearingAnimator(CameraAnimatorOptions.Builder(1.0).build())
+    val bearingAnimator = CameraBearingAnimator(CameraAnimatorOptions.Builder(1.0).build(), true)
     val listener1 = Listener()
     bearingAnimator.addListener(listener1)
     bearingAnimator.removeListener(listener1)
@@ -120,7 +121,7 @@ class CameraAnimationsListenersTest {
 
   @Test
   fun testAddAndRemoveInternalListeners() {
-    val bearingAnimator = CameraBearingAnimator(CameraAnimatorOptions.Builder(1.0).build())
+    val bearingAnimator = CameraBearingAnimator(CameraAnimatorOptions.Builder(1.0).build(), true)
     val listener1 = Listener()
     bearingAnimator.addListener(listener1)
     cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)
@@ -165,7 +166,10 @@ class CameraAnimationsListenersTest {
 
   @Test
   fun testAddUpdateListenerBeforeRegister() {
-    val bearingAnimator = CameraBearingAnimator(CameraAnimatorOptions.Builder(100.0).build()) {
+    val bearingAnimator = CameraBearingAnimator(
+      CameraAnimatorOptions.Builder(100.0).build(),
+      true
+    ) {
       duration = 0
     }
     val valuesList = mutableListOf<Int>()
@@ -190,7 +194,10 @@ class CameraAnimationsListenersTest {
 
   @Test
   fun testAddUpdateListenerAfterRegister() {
-    val bearingAnimator = CameraBearingAnimator(CameraAnimatorOptions.Builder(100.0).build()) {
+    val bearingAnimator = CameraBearingAnimator(
+      CameraAnimatorOptions.Builder(100.0).build(),
+      true
+    ) {
       duration = 0
     }
     val valuesList = mutableListOf<Int>()
@@ -215,7 +222,10 @@ class CameraAnimationsListenersTest {
 
   @Test
   fun testAddAndRemoveUserUpdateListeners() {
-    val bearingAnimator = CameraBearingAnimator(CameraAnimatorOptions.Builder(100.0).build()) {
+    val bearingAnimator = CameraBearingAnimator(
+      CameraAnimatorOptions.Builder(100.0).build(),
+      true
+    ) {
       duration = 0
     }
     val valuesList = mutableListOf<Int>()
@@ -236,7 +246,10 @@ class CameraAnimationsListenersTest {
 
   @Test
   fun testAddTwoSameUserUpdateListeners() {
-    val bearingAnimator = CameraBearingAnimator(CameraAnimatorOptions.Builder(100.0).build()) {
+    val bearingAnimator = CameraBearingAnimator(
+      CameraAnimatorOptions.Builder(100.0).build(),
+      true
+    ) {
       duration = 0
     }
     val valuesList = mutableListOf<Int>()
@@ -259,7 +272,10 @@ class CameraAnimationsListenersTest {
 
   @Test
   fun testAddAndRemoveInternalUpdateListeners() {
-    val bearingAnimator = CameraBearingAnimator(CameraAnimatorOptions.Builder(100.0).build()) {
+    val bearingAnimator = CameraBearingAnimator(
+      CameraAnimatorOptions.Builder(100.0).build(),
+      true
+    ) {
       duration = 0
     }
     val valuesList = mutableListOf<Int>()
@@ -302,7 +318,10 @@ class CameraAnimationsListenersTest {
 
   @Test
   fun testRemoveAllListeners() {
-    val bearingAnimator = CameraBearingAnimator(CameraAnimatorOptions.Builder(1.0).build())
+    val bearingAnimator = CameraBearingAnimator(
+      CameraAnimatorOptions.Builder(1.0).build(),
+      true
+    )
     val listener1 = Listener()
     val listener2 = Listener()
     cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)
@@ -317,12 +336,20 @@ class CameraAnimationsListenersTest {
 
   @Test
   fun testRemoveAllUpdateListeners() {
+    var cameraPosition = CameraOptions.Builder().build()
     val bearingAnimator = CameraBearingAnimator(
       cameraAnimatorOptions(100.0) {
         startValue(0.0)
-      }
+      },
+      true
     ) {
       duration = 50
+    }
+    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
+      cameraPosition = firstArg()
+    }
+    every { mapCameraManagerDelegate.cameraState } answers {
+      cameraPosition.toCameraState()
     }
     var bearing = 0.0
     cameraAnimationsPluginImpl.registerAnimators(bearingAnimator)

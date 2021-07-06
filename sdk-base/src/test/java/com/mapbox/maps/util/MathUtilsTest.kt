@@ -1,13 +1,22 @@
-package com.mapbox.maps.plugin.locationcomponent
+package com.mapbox.maps.util
 
-import com.mapbox.maps.plugin.locationcomponent.utils.MathUtils
+import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import kotlin.jvm.Throws
 
 internal class MathUtilsTest {
+
   @Test
-  @Throws(Exception::class)
+  fun prepareOptimalBearingPathTest() {
+    var value = MathUtils.prepareOptimalBearingPath(doubleArrayOf(-0.0, -10.0, 10.0, 270.0, 560.0))
+    assertArrayEquals(doubleArrayOf(0.0, -10.0, 10.0, -90.0, -160.0), value, EPS)
+    value = MathUtils.prepareOptimalBearingPath(doubleArrayOf(0.0, 90.0, 270.0))
+    assertArrayEquals(doubleArrayOf(0.0, 90.0, 270.0), value, EPS)
+    value = MathUtils.prepareOptimalBearingPath(doubleArrayOf(20.0, 720.0, 0.0))
+    assertArrayEquals(doubleArrayOf(20.0, 0.0, 0.0), value, EPS)
+  }
+
+  @Test
   fun shortestRotation_doesReturnValueDistanceQuickestToZero() {
     var value = MathUtils.shortestRotation(0.0, 181.0)
     assertEquals(360.0, value, EPS)
@@ -18,7 +27,6 @@ internal class MathUtilsTest {
   }
 
   @Test
-  @Throws(Exception::class)
   fun shortestRotation_doesReturnValueDistanceQuickestToFifty() {
     var value = MathUtils.shortestRotation(50.0, 231.0)
     assertEquals(410.0, value, EPS)

@@ -3,7 +3,7 @@ package com.mapbox.maps.plugin.animation
 import com.mapbox.geojson.Point
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
-import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImplTest.Companion.cameraOptions
+import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImplTest.Companion.cameraState
 import org.junit.Assert
 import org.junit.Test
 import kotlin.math.pow
@@ -17,7 +17,7 @@ class CameraAnimationsChangeListenersTest {
       Assert.assertEquals(CameraAnimationsPluginImplTest.VALUE, it, 10.0.pow(-6.0))
     }
     cameraAnimationsPluginImpl.addCameraZoomChangeListener(listener)
-    cameraAnimationsPluginImpl.notifyListeners(cameraOptions)
+    cameraAnimationsPluginImpl.notifyListeners(cameraState)
   }
 
   @Test
@@ -26,7 +26,7 @@ class CameraAnimationsChangeListenersTest {
     val listener = CameraAnimatorChangeListener<Double> { assert(false) }
     cameraAnimationsPluginImpl.addCameraZoomChangeListener(listener)
     cameraAnimationsPluginImpl.removeCameraZoomChangeListener(listener)
-    cameraAnimationsPluginImpl.notifyListeners(cameraOptions)
+    cameraAnimationsPluginImpl.notifyListeners(cameraState)
   }
 
   @Test
@@ -43,7 +43,7 @@ class CameraAnimationsChangeListenersTest {
         )
       }
     cameraAnimationsPluginImpl.addCameraCenterChangeListener(listener)
-    cameraAnimationsPluginImpl.notifyListeners(cameraOptions)
+    cameraAnimationsPluginImpl.notifyListeners(cameraState)
   }
 
   @Test
@@ -52,7 +52,7 @@ class CameraAnimationsChangeListenersTest {
     val listener = CameraAnimatorChangeListener<Point> { assert(false) }
     cameraAnimationsPluginImpl.addCameraCenterChangeListener(listener)
     cameraAnimationsPluginImpl.removeCameraCenterChangeListener(listener)
-    cameraAnimationsPluginImpl.notifyListeners(cameraOptions)
+    cameraAnimationsPluginImpl.notifyListeners(cameraState)
   }
 
   @Test
@@ -62,7 +62,7 @@ class CameraAnimationsChangeListenersTest {
       Assert.assertEquals(CameraAnimationsPluginImplTest.VALUE, it, 10.0.pow(-6.0))
     }
     cameraAnimationsPluginImpl.addCameraPitchChangeListener(listener)
-    cameraAnimationsPluginImpl.notifyListeners(cameraOptions)
+    cameraAnimationsPluginImpl.notifyListeners(cameraState)
   }
 
   @Test
@@ -71,7 +71,7 @@ class CameraAnimationsChangeListenersTest {
     val listener = CameraAnimatorChangeListener<Double> { assert(false) }
     cameraAnimationsPluginImpl.addCameraPitchChangeListener(listener)
     cameraAnimationsPluginImpl.removeCameraPitchChangeListener(listener)
-    cameraAnimationsPluginImpl.notifyListeners(cameraOptions)
+    cameraAnimationsPluginImpl.notifyListeners(cameraState)
   }
 
   @Test
@@ -81,7 +81,7 @@ class CameraAnimationsChangeListenersTest {
       Assert.assertEquals(CameraAnimationsPluginImplTest.VALUE, it, 10.0.pow(-6.0))
     }
     cameraAnimationsPluginImpl.addCameraBearingChangeListener(listener)
-    cameraAnimationsPluginImpl.notifyListeners(cameraOptions)
+    cameraAnimationsPluginImpl.notifyListeners(cameraState)
   }
 
   @Test
@@ -90,7 +90,7 @@ class CameraAnimationsChangeListenersTest {
     val listener = CameraAnimatorChangeListener<Double> { assert(false) }
     cameraAnimationsPluginImpl.addCameraBearingChangeListener(listener)
     cameraAnimationsPluginImpl.removeCameraBearingChangeListener(listener)
-    cameraAnimationsPluginImpl.notifyListeners(cameraOptions)
+    cameraAnimationsPluginImpl.notifyListeners(cameraState)
   }
 
   @Test
@@ -108,7 +108,7 @@ class CameraAnimationsChangeListenersTest {
       )
     }
     cameraAnimationsPluginImpl.addCameraPaddingChangeListener(listener)
-    cameraAnimationsPluginImpl.notifyListeners(cameraOptions)
+    cameraAnimationsPluginImpl.notifyListeners(cameraState)
   }
 
   @Test
@@ -117,7 +117,7 @@ class CameraAnimationsChangeListenersTest {
     val listener = CameraAnimatorChangeListener<EdgeInsets> { assert(false) }
     cameraAnimationsPluginImpl.addCameraPaddingChangeListener(listener)
     cameraAnimationsPluginImpl.removeCameraPaddingChangeListener(listener)
-    cameraAnimationsPluginImpl.notifyListeners(cameraOptions)
+    cameraAnimationsPluginImpl.notifyListeners(cameraState)
   }
 
   @Test
@@ -133,7 +133,7 @@ class CameraAnimationsChangeListenersTest {
       )
     }
     cameraAnimationsPluginImpl.addCameraAnchorChangeListener(listener)
-    cameraAnimationsPluginImpl.notifyListeners(cameraOptions)
+    cameraAnimationsPluginImpl.notifyListeners(cameraState)
   }
 
   @Test
@@ -142,6 +142,6 @@ class CameraAnimationsChangeListenersTest {
     val listener = CameraAnimatorNullableChangeListener<ScreenCoordinate?> { assert(false) }
     cameraAnimationsPluginImpl.addCameraAnchorChangeListener(listener)
     cameraAnimationsPluginImpl.removeCameraAnchorChangeListener(listener)
-    cameraAnimationsPluginImpl.notifyListeners(cameraOptions)
+    cameraAnimationsPluginImpl.notifyListeners(cameraState)
   }
 }

@@ -10,6 +10,7 @@ import com.mapbox.maps.plugin.animation.CameraAnimatorType
  */
 internal class CameraBearingAnimator(
   options: CameraAnimatorOptions<Double>,
+  val useShortestPath: Boolean,
   block: (ValueAnimator.() -> Unit)? = null
 ) : CameraAnimator<Double>(
   Evaluators.DOUBLE,

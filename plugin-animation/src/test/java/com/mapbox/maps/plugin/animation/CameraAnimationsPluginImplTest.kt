@@ -9,10 +9,7 @@ import android.os.Looper.getMainLooper
 import androidx.core.animation.addListener
 import com.mapbox.common.ShadowLogger
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.CameraState
-import com.mapbox.maps.EdgeInsets
-import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.*
 import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl.Companion.TAG
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
@@ -80,7 +77,6 @@ class CameraAnimationsPluginImplTest {
     mockkObject(CameraTransform)
     every { delegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
     every { delegateProvider.mapTransformDelegate } returns mapTransformDelegate
-    every { CameraTransform.normalizeAngleRadians(any(), any()) } answers { secondArg() }
     cameraAnimationsPluginImpl = CameraAnimationsPluginImpl().apply {
       onDelegateProvider(delegateProvider)
     }
@@ -132,7 +128,8 @@ class CameraAnimationsPluginImplTest {
     val bearingAnimator = CameraBearingAnimator(
       cameraAnimatorOptions(10.0) {
         startValue(0.0)
-      }
+      },
+      true
     )
     val animators = arrayOf(
       bearingAnimator
@@ -152,7 +149,8 @@ class CameraAnimationsPluginImplTest {
     val bearingAnimator = CameraBearingAnimator(
       cameraAnimatorOptions(10.0) {
         startValue(0.0)
-      }
+      },
+      true
     )
     val animators = arrayOf(
       bearingAnimator
@@ -168,7 +166,7 @@ class CameraAnimationsPluginImplTest {
   @Test
   fun testEaseToRegister() {
     cameraAnimationsPluginImpl.cameraAnimationsFactory = cameraAnimatorsFactory
-    cameraAnimationsPluginImpl.easeTo(cameraOptions, mapAnimationOptions { duration(DURATION) })
+    cameraAnimationsPluginImpl.easeTo(cameraState.toCameraOptions(), mapAnimationOptions { duration(DURATION) })
     verify {
       centerAnimator.addInternalListener(any())
       bearingAnimator.addInternalListener(any())
@@ -295,6 +293,9 @@ class CameraAnimationsPluginImplTest {
     every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
       cameraPosition = firstArg()
     }
+    every { mapCameraManagerDelegate.cameraState } answers {
+      cameraPosition.toCameraState()
+    }
 
     val targetPitch = 5.0
     val cameraOptions = CameraOptions.Builder().pitch(targetPitch).build()
@@ -324,10 +325,13 @@ class CameraAnimationsPluginImplTest {
     every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
       cameraPosition = firstArg()
     }
+    every { mapCameraManagerDelegate.cameraState } answers {
+      cameraPosition.toCameraState()
+    }
 
     val targetPitch = 5.0
     val cameraOptions = CameraOptions.Builder().pitch(targetPitch).build()
-    val expectedValues = mutableSetOf(0.0, targetPitch)
+    val expectedValues = mutableSetOf(VALUE, targetPitch)
     val updatedValues = mutableListOf<Double>()
 
     cameraAnimationsPluginImpl.addCameraPitchChangeListener { updatedValue ->
@@ -439,6 +443,9 @@ class CameraAnimationsPluginImplTest {
     every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } answers {
       cameraPosition = firstArg()
     }
+    every { mapCameraManagerDelegate.cameraState } answers {
+      cameraPosition.toCameraState()
+    }
 
     val targetPitchOne = 10.0
     val pitchAnimatorOne = createPitchAnimator(targetPitchOne, 0, 1000L)
@@ -532,7 +539,8 @@ class CameraAnimationsPluginImplTest {
     val bearingAnimator = CameraBearingAnimator(
       cameraAnimatorOptions(targetBearing) {
         startValue(0.0)
-      }
+      },
+      true
     ) {
       duration = DURATION
     }
@@ -640,7 +648,7 @@ class CameraAnimationsPluginImplTest {
     val listener = CameraAnimatorListener()
     shadowOf(getMainLooper()).pause()
     cameraAnimationsPluginImpl.easeTo(
-      cameraOptions,
+      cameraState.toCameraOptions(),
       mapAnimationOptions {
         duration(100L)
         animatorListener(listener)
@@ -660,7 +668,7 @@ class CameraAnimationsPluginImplTest {
 
     val handler = Handler(getMainLooper())
     cameraAnimationsPluginImpl.easeTo(
-      cameraOptions,
+      cameraState.toCameraOptions(),
       mapAnimationOptions {
         duration(10L)
         animatorListener(listener)
@@ -742,7 +750,7 @@ class CameraAnimationsPluginImplTest {
 
     val handler = Handler(getMainLooper())
     cameraAnimationsPluginImpl.easeTo(
-      cameraOptions,
+      cameraState.toCameraOptions(),
       mapAnimationOptions {
         duration(10L)
         animatorListener(listenerOne)
@@ -751,7 +759,7 @@ class CameraAnimationsPluginImplTest {
     handler.postDelayed(
       {
         cameraAnimationsPluginImpl.easeTo(
-          cameraOptions,
+          cameraState.toCameraOptions(),
           mapAnimationOptions {
             duration(10L)
             animatorListener(listenerTwo)
@@ -825,7 +833,7 @@ class CameraAnimationsPluginImplTest {
       duration(1000)
       animatorListener(object : AnimatorListenerAdapter() {})
     }
-    cameraAnimationsPluginImpl.easeTo(cameraOptions, options)
+    cameraAnimationsPluginImpl.easeTo(cameraState.toCameraOptions(), options)
     assert(cameraAnimationsPluginImpl.highLevelListener != null)
   }
 
@@ -835,7 +843,7 @@ class CameraAnimationsPluginImplTest {
       duration(0)
       animatorListener(object : AnimatorListenerAdapter() {})
     }
-    cameraAnimationsPluginImpl.easeTo(cameraOptions, options)
+    cameraAnimationsPluginImpl.easeTo(cameraState.toCameraOptions(), options)
     assert(cameraAnimationsPluginImpl.highLevelListener == null)
   }
 
@@ -968,7 +976,7 @@ class CameraAnimationsPluginImplTest {
     mockkStatic(ShadowLogger::class)
     cameraAnimationsPluginImpl.debugMode = true
     shadowOf(getMainLooper()).pause()
-    cameraAnimationsPluginImpl.easeTo(cameraOptions, mapAnimationOptions { duration(DURATION) })
+    cameraAnimationsPluginImpl.easeTo(cameraState.toCameraOptions(), mapAnimationOptions { duration(DURATION) })
     shadowOf(getMainLooper()).idle()
     verify { ShadowLogger.d(TAG, any()) }
     unmockkStatic(ShadowLogger::class)
@@ -979,7 +987,7 @@ class CameraAnimationsPluginImplTest {
     mockkStatic(ShadowLogger::class)
     cameraAnimationsPluginImpl.debugMode = false
     shadowOf(getMainLooper()).pause()
-    cameraAnimationsPluginImpl.easeTo(cameraOptions, mapAnimationOptions { duration(DURATION) })
+    cameraAnimationsPluginImpl.easeTo(cameraState.toCameraOptions(), mapAnimationOptions { duration(DURATION) })
     shadowOf(getMainLooper()).idle()
     verify(exactly = 0) { ShadowLogger.d(TAG, any()) }
     unmockkStatic(ShadowLogger::class)
@@ -1066,7 +1074,8 @@ class CameraAnimationsPluginImplTest {
     CameraBearingAnimator(
       cameraAnimatorOptions(target) {
         startValue(0.0)
-      }
+      },
+      true
     ) {
       startDelay = animatorDelay
       duration = animatorDuration
@@ -1082,27 +1091,26 @@ class CameraAnimationsPluginImplTest {
       duration = animatorDuration
     }
 
-  private fun CameraOptions.toCameraState(): CameraState {
-    return CameraState(
-      center ?: cameraOptions.center!!,
-      padding ?: cameraOptions.padding!!,
-      zoom ?: cameraOptions.zoom!!,
-      bearing ?: cameraOptions.bearing!!,
-      pitch ?: cameraOptions.pitch!!
-    )
-  }
-
   companion object {
     private const val DURATION = 3000L
     const val VALUE = 10.0
-    val cameraOptions: CameraOptions = CameraOptions.Builder()
-      .anchor(ScreenCoordinate(VALUE, VALUE))
-      .bearing(VALUE)
-      .center(Point.fromLngLat(VALUE, VALUE))
-      .pitch(VALUE)
-      .padding(EdgeInsets(VALUE, VALUE, VALUE, VALUE))
-      .zoom(VALUE)
-      .build()
+    val cameraState: CameraState = CameraState(
+      Point.fromLngLat(VALUE, VALUE),
+      EdgeInsets(VALUE, VALUE, VALUE, VALUE),
+      VALUE,
+      VALUE,
+      VALUE
+    )
+
+    internal fun CameraOptions.toCameraState(): CameraState {
+      return CameraState(
+        center ?: cameraState.center,
+        padding ?: cameraState.padding,
+        zoom ?: cameraState.zoom,
+        bearing ?: cameraState.bearing,
+        pitch ?: cameraState.pitch
+      )
+    }
 
     const val EPS = 0.000001
   }
