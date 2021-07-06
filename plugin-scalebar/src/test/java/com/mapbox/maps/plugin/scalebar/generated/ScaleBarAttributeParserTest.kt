@@ -193,6 +193,20 @@ class ScaleBarAttributeParserTest {
     val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, 1.2f)
     assertEquals(0.5f, settings.ratio)
   }
+
+  @Test
+  fun useContinuousRenderingTestTrue() {
+    every { typedArray.getBoolean(any(), any()) } returns true
+    val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, 1.2f)
+    assertEquals(true, settings.useContinuousRendering)
+  }
+
+  @Test
+  fun useContinuousRenderingTestFalse() {
+    every { typedArray.getBoolean(any(), any()) } returns false
+    val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, 1.2f)
+    assertEquals(false, settings.useContinuousRendering)
+  }
 }
 
 // End of generated file.

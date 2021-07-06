@@ -113,6 +113,11 @@ class ScaleBarAttributeParserDefaultValueTest : BaseMapTest() {
       0.5f,
       mapView.scalebar.getSettings().ratio
     )
+    assertEquals(
+      "useContinuousRendering test failed..",
+      false,
+      mapView.scalebar.getSettings().useContinuousRendering
+    )
   }
 }
 
