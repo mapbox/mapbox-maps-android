@@ -14,5 +14,5 @@
     <string name="category_offline">Offline</string>
     <string name="category_sky">Sky</string>
     <string name="category_annotation">Annotation</string>
-    <string name="category_terrain">Terrain</string>
+    <string name="category_3D">3D</string>
 </resources>

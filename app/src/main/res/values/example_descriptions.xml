@@ -35,7 +35,7 @@
     <string name="activity_camera_animate_description">Animate the camera changes with the fly-to animation. This causes the camera to ease from a starting point to an end destination.</string>
     <string name="activity_camera_predefined_animators_description">Use setCamera to animate the camera position.</string>
     <string name="description_camera_low_level">Animate the map camera to a new position using camera animators. Individual camera properties such as zoom, bearing, and center coordinate can be animated independently.</string>
-    <string name="description_fill_extrusion">Show a fill extrusion layer using OSM building data</string>
+    <string name="description_fill_extrusion">Use extrusions to display buildings height in 3D map.</string>
     <string name="description_icon_property">Use different images to represent features within a symbol layer based on properties.</string>
     <string name="description_animated_image_source">Use an ImageSource and RasterLayer to animate weather data</string>
     <string name="description_dds_multiple_geometries">Draw multiple geometries</string>
