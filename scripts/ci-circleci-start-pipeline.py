@@ -32,7 +32,7 @@ def TriggerPipeline(slug, token, branch, params):
 
 def Main():
     token = os.getenv("CIRCLE_API_TOKEN")
-    hash = os.getenv("CIRCLE_SHA1", default="1234567890")
+    hash = os.getenv("CIRCLE_SHA1", default="6d01efe474b9cd78b96e35fcc970a9f0ce03c83c")
     username = os.getenv("CIRCLE_PROJECT_USERNAME", default="username")
     project = os.getenv("CIRCLE_PROJECT_REPONAME", default="repository")
 

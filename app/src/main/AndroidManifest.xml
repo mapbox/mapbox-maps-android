@@ -863,6 +863,18 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
+            android:name=".examples.annotation.AnimatePointAnnotationActivity"
+            android:description="@string/description_animate_annotation_symbol"
+            android:exported="true"
+            android:label="@string/activity_animate_symbol">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_annotation" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
+        <activity
             android:name=".examples.annotation.PointAnnotationClusterActivity"
             android:description="@string/description_annotation_symbol_cluster"
             android:exported="true"
