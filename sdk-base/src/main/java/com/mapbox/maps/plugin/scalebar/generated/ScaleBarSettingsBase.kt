@@ -254,11 +254,7 @@ abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
     }
 
   /**
-   * If set to True scale bar will be triggering onDraw depending on [ScaleBarSettings.refreshInterval]
-   * even if actual data did not change. If set to False scale bar will redraw only on demand.
-
-   * Defaults to False and should not be changed explicitly in most cases.
-   * Could be set to True to produce correct GPU frame metrics when running gfxinfo command.
+   * If set to True scale bar will be triggering onDraw depending on [ScaleBarSettings.refreshInterval] even if actual data did not change. If set to False scale bar will redraw only on demand. Defaults to False and should not be changed explicitly in most cases. Could be set to True to produce correct GPU frame metrics when running gfxinfo command.
    */
   override var useContinuousRendering: Boolean
     get() {
