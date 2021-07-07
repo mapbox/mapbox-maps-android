@@ -1,4 +1,4 @@
-package com.mapbox.maps.testapp.examples
+package com.mapbox.maps.testapp.examples.terrain3D
 
 import android.graphics.Color
 import android.os.Bundle
@@ -33,12 +33,13 @@ class FillExtrusionActivity : AppCompatActivity() {
       CameraOptions.Builder()
         .center(Point.fromLngLat(-74.0066, 40.7135))
         .pitch(45.0)
-        .zoom(15.0)
+        .zoom(15.5)
+        .bearing(-17.6)
         .build()
     )
 
     mapboxMap.loadStyleUri(
-      Style.MAPBOX_STREETS
+      Style.LIGHT
     ) { style ->
       setupBuildings(style)
       setupLight(style)
@@ -50,10 +51,10 @@ class FillExtrusionActivity : AppCompatActivity() {
     fillExtrusionLayer.sourceLayer("building")
     fillExtrusionLayer.filter(eq(get("extrude"), literal("true")))
     fillExtrusionLayer.minZoom(15.0)
-    fillExtrusionLayer.fillExtrusionColor(Color.LTGRAY)
+    fillExtrusionLayer.fillExtrusionColor(Color.parseColor("#aaaaaa"))
     fillExtrusionLayer.fillExtrusionHeight(get("height"))
     fillExtrusionLayer.fillExtrusionBase(get("min_height"))
-    fillExtrusionLayer.fillExtrusionOpacity(0.9)
+    fillExtrusionLayer.fillExtrusionOpacity(0.6)
     style.addLayer(fillExtrusionLayer)
   }
 

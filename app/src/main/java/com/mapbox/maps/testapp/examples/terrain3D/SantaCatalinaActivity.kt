@@ -1,4 +1,4 @@
-package com.mapbox.maps.testapp.examples.terrain
+package com.mapbox.maps.testapp.examples.terrain3D
 
 import android.animation.*
 import android.graphics.Color.rgb

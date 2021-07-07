@@ -296,13 +296,13 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.FillExtrusionActivity"
+            android:name=".examples.terrain3D.FillExtrusionActivity"
             android:description="@string/description_fill_extrusion"
             android:exported="true"
             android:label="@string/activity_fill_extrusion">
             <meta-data
                 android:name="@string/category"
-                android:value="@string/category_styles" />
+                android:value="@string/category_3D" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
@@ -899,13 +899,13 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.terrain.Terrain3DShowcaseActivity"
+            android:name=".examples.terrain3D.Terrain3DShowcaseActivity"
             android:description="@string/description_terrain_showcase"
             android:exported="true"
             android:label="@string/activity_terrain_showcase">
             <meta-data
                 android:name="@string/category"
-                android:value="@string/category_terrain" />
+                android:value="@string/category_3D" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
@@ -935,7 +935,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.terrain.SantaCatalinaActivity"
+            android:name=".examples.terrain3D.SantaCatalinaActivity"
             android:description="@string/description_santa_catalina"
             android:exported="true"
             android:label="@string/activity_santa_catalina"
@@ -943,7 +943,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="@string/category"
-                android:value="@string/category_terrain" />
+                android:value="@string/category_3D" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />

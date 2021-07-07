@@ -1,4 +1,4 @@
-package com.mapbox.maps.testapp.examples.terrain
+package com.mapbox.maps.testapp.examples.terrain3D
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

@@ -17,7 +17,7 @@
     <string name="activity_map_viewpager">ViewPager</string>
     <string name="activity_map_multi">Multi map fragments</string>
     <string name="activity_debug_mode">Debug mode</string>
-    <string name="activity_fill_extrusion">Building layer with FillExtrusions</string>
+    <string name="activity_fill_extrusion">Display building extrusions</string>
     <string name="activity_icon_property">Display multiple icon images in a symbol layer</string>
     <string name="activity_snapshotter">Create a snapshot</string>
     <string name="activity_snapshotter_dds">DDS MapSnapshotter</string>
@@ -71,10 +71,10 @@
     <string name="activity_animate_symbol">AnimatePointAnnotation</string>
     <string name="activity_symbol_cluster">Annotation Cluster Symbols</string>
     <string name="activity_line"> PolylineAnnotation</string>
-    <string name="activity_terrain_showcase">3D Terrain showcase</string>
+    <string name="activity_terrain_showcase">Use 3D Terrain</string>
     <string name="activity_location_component">Location component</string>
     <string name="activity_location_component_animation">Location component animation</string>
-    <string name="activity_santa_catalina">Santa Catalina Island</string>
+    <string name="activity_santa_catalina">Add a Line to 3D Terrain</string>
     <string name="activity_multiple_display">Multi display</string>
     <string name="activity_map_view_customization">Creating a map view</string>
     <string name="activity_ornaments">Ornaments</string>
