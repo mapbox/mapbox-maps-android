@@ -1,13 +1,20 @@
 package com.mapbox.maps.plugin.animation
 
+import android.animation.Animator
 import android.view.animation.DecelerateInterpolator
 import com.mapbox.geojson.Point
-import com.mapbox.maps.*
+import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraState
+import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.MapOptions
+import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.Size
 import com.mapbox.maps.plugin.animation.animator.CameraAnimator
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
 import com.mapbox.maps.plugin.delegates.MapTransformDelegate
+import com.mapbox.maps.toCameraOptions
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert
@@ -15,9 +22,13 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.LooperMode
 import org.robolectric.shadows.ShadowLog
+import org.robolectric.shadows.ShadowLooper.shadowMainLooper
+import java.time.Duration
 
 @RunWith(RobolectricTestRunner::class)
+@LooperMode(LooperMode.Mode.PAUSED)
 class CameraAnimatorsFactoryTest {
 
   private lateinit var mapTransformDelegate: MapTransformDelegate
@@ -35,6 +46,20 @@ class CameraAnimatorsFactoryTest {
   private val decelerateInterpolatorNew = DecelerateInterpolator()
   private val delayNew = 20L
   private val durationNew = 50L
+
+  private val emptyListener = object : Animator.AnimatorListener {
+    override fun onAnimationStart(animation: Animator?) {
+    }
+
+    override fun onAnimationEnd(animation: Animator?) {
+    }
+
+    override fun onAnimationCancel(animation: Animator?) {
+    }
+
+    override fun onAnimationRepeat(animation: Animator?) {
+    }
+  }
 
   @Before
   fun setUp() {
@@ -90,6 +115,21 @@ class CameraAnimatorsFactoryTest {
   }
 
   @Test
+  fun testFlyToAnimatorsWithSinglePixelPadding() {
+    val size = Size(800.0f, 600.0f)
+    every { mapCameraManagerDelegate.cameraState } returns initialCameraPosition
+    every { mapTransformDelegate.getMapOptions() } returns MapOptions.Builder().size(size).build()
+    every { mapTransformDelegate.getSize() } returns size
+
+    val target = initialCameraPosition.toCameraOptions().toBuilder()
+      .bearing(90.0)
+      .padding(EdgeInsets(300.0, 400.0, 300.0, 400.0))
+      .build()
+    val animators = cameraAnimatorsFactory.getFlyTo(target)
+    testAnimators(animators, target)
+  }
+
+  @Test
   fun testScaleByAnimators() {
     every { mapCameraManagerDelegate.cameraState } returns initialCameraPosition
     val scaleBy = 15.0
@@ -110,12 +150,12 @@ class CameraAnimatorsFactoryTest {
 
   private fun testAnimators(animators: Array<CameraAnimator<*>>, targetCameraPosition: CameraOptions) {
     animators.forEach {
-      val startValue = it.startValue
-      val targetValue = it.targets.first()
-
       Assert.assertEquals(it.interpolator, decelerateInterpolatorNew)
       Assert.assertEquals(it.startDelay, delayNew)
       Assert.assertEquals(it.duration, durationNew)
+
+      val startValue = it.startValue
+      val targetValue = it.targets.first()
 
       when (it.type) {
         CameraAnimatorType.BEARING -> {
@@ -136,6 +176,39 @@ class CameraAnimatorsFactoryTest {
         }
         CameraAnimatorType.ANCHOR -> {
           Assert.assertEquals(targetCameraPosition.anchor, targetValue)
+        }
+        CameraAnimatorType.PADDING -> {
+          Assert.assertEquals(initialCameraPosition.padding, startValue)
+          Assert.assertEquals(targetCameraPosition.padding, targetValue)
+        }
+      }
+    }
+
+    animators.forEach {
+      it.addInternalListener(emptyListener)
+      it.start()
+    }
+
+    shadowMainLooper().idleFor(Duration.ofMillis(delayNew + durationNew))
+
+    animators.forEach {
+      val startValue = it.startValue
+      val targetValue = it.animatedValue
+
+      when (it.type) {
+        CameraAnimatorType.BEARING -> {
+          Assert.assertEquals(initialCameraPosition.bearing, startValue)
+          Assert.assertEquals(targetCameraPosition.bearing!!, targetValue)
+        }
+        CameraAnimatorType.PITCH -> {
+          Assert.assertEquals(initialCameraPosition.pitch, startValue)
+          Assert.assertEquals(targetCameraPosition.pitch, targetValue)
+        }
+        CameraAnimatorType.ZOOM -> {
+          Assert.assertEquals(initialCameraPosition.zoom, startValue)
+          Assert.assertEquals(targetCameraPosition.zoom, targetValue)
+        }
+        CameraAnimatorType.ANCHOR -> {
           Assert.assertEquals(targetCameraPosition.anchor, targetValue)
         }
         CameraAnimatorType.PADDING -> {

@@ -280,10 +280,19 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
 
     val size = mapTransformDelegate.getSize()
     val pixelRatio = mapTransformDelegate.getMapOptions().pixelRatio
-    val w0 = max(
-      (size.width - endPadding.left - endPadding.right) / pixelRatio,
-      (size.height - endPadding.top - endPadding.bottom) / pixelRatio
-    )
+    val w0 = if (size.width.toDouble() != endPadding.left + endPadding.right &&
+      size.height.toDouble() != endPadding.bottom + endPadding.top
+    ) {
+      max(
+        (size.width - endPadding.left - endPadding.right) / pixelRatio,
+        (size.height - endPadding.top - endPadding.bottom) / pixelRatio
+      )
+    } else {
+      max(
+        size.width.toDouble() / pixelRatio,
+        size.height.toDouble() / pixelRatio
+      )
+    }
     // w₁: Final visible span, measured in pixels with respect to the initial
     // scale.
     val w1 = w0 / (endZoom - startZoom).zoomScale()
