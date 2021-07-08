@@ -1,0 +1,5 @@
+-keep class BillingService{ *; }
+-keep class BillingServiceError
+-keep class BillingServiceErrorCode
+-keep class OnBillingServiceErrorNative{ *; }
+-keep interface OnBillingServiceError
