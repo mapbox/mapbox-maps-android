@@ -1,6 +1,5 @@
 package com.mapbox.maps
 
-import android.os.Build
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
@@ -31,14 +30,14 @@ abstract class BaseAnimationMapTest {
 
   @Before
   fun before() {
-    if (!BuildConfig.RUN_FROM_IDE && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+    if (!BuildConfig.RUN_FROM_IDE) {
       with(InstrumentationRegistry.getInstrumentation().uiAutomation) {
         executeShellCommand("settings put global window_animation_scale 1")
         executeShellCommand("settings put global transition_animation_scale 1")
         executeShellCommand("settings put global animator_duration_scale 1")
       }
     }
-    val latch = CountDownLatch(1)
+    val latch = CountDownLatch(2)
     rule.scenario.onActivity {
       it.runOnUiThread {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
@@ -47,12 +46,16 @@ abstract class BaseAnimationMapTest {
         cameraAnimationPlugin = mapView.camera
         it.setContentView(mapView)
 
-        mapboxMap = mapView.getMapboxMap()
-        mapboxMap.loadStyleUri(
-          Style.DARK
-        ) { style ->
-          this@BaseAnimationMapTest.style = style
-          latch.countDown()
+        mapboxMap = mapView.getMapboxMap().apply {
+          loadStyleUri(
+            Style.DARK
+          ) { style ->
+            this@BaseAnimationMapTest.style = style
+            latch.countDown()
+          }
+          addOnMapIdleListener {
+            latch.countDown()
+          }
         }
         mapView.onStart()
       }
@@ -65,7 +68,7 @@ abstract class BaseAnimationMapTest {
 
   @After
   fun tearDown() {
-    if (!BuildConfig.RUN_FROM_IDE && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+    if (!BuildConfig.RUN_FROM_IDE) {
       with(InstrumentationRegistry.getInstrumentation().uiAutomation) {
         executeShellCommand("settings put global window_animation_scale 0")
         executeShellCommand("settings put global transition_animation_scale 0")
