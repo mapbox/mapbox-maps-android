@@ -310,6 +310,14 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
             unregisterAnimators(this, cancelAnimators = false)
           }
           if (runningAnimatorsQueue.isEmpty()) {
+            cameraOptionsBuilder.build().let { options ->
+              if (options.hasChanges) {
+                // cameraOptionsBuilder might have some accumulated, but not applied changes.
+                performMapJump(options)
+                cameraOptionsBuilder = CameraOptions.Builder()
+              }
+            }
+
             mapTransformDelegate.setUserAnimationInProgress(false)
           }
           lifecycleListeners.forEach {
