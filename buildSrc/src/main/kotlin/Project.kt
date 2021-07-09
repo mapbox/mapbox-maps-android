@@ -1,5 +1,6 @@
 object AndroidVersions {
   const val minSdkVersion = 21
+  const val minAndroidAutoSdkVersion = 23
   const val targetSdkVersion = 28
   const val compileSdkVersion = 28
 }
@@ -46,6 +47,7 @@ object Dependencies {
   const val androidxLifecycle = "androidx.lifecycle:lifecycle-runtime:${Versions.androidxLifecycle}"
   const val googleMaterialDesign = "com.google.android.material:material:${Versions.materialDesign}"
   const val googlePlayServicesLocation = "com.google.android.gms:play-services-location:${Versions.googlePlayServicesLocation}"
+  const val googleCarAppLibrary = "androidx.car.app:app:${Versions.googleCarAppLibrary}"
   const val squareLeakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.squareLeakCanary}"
   const val squareRetrofit = "com.squareup.retrofit2:retrofit:${Versions.squareRetrofit}"
   const val squareRetrofitGsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.squareRetrofit}"
@@ -89,6 +91,7 @@ object Versions {
   const val squareLeakCanary = "2.4"
   const val materialDesign = "1.2.0"
   const val googlePlayServicesLocation = "18.0.0"
+  const val googleCarAppLibrary= "1.1.0-alpha01"
   const val kotlinCoroutines = "1.3.9"
   const val junit = "4.12"
   const val mockk = "1.9.3"
