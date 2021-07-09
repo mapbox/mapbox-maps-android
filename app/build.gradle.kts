@@ -37,7 +37,7 @@ android {
   }
 
   testOptions {
-    animationsDisabled = true
+    animationsDisabled = false
     if (!project.hasProperty("android.injected.invoked.from.ide")) {
       execution = "ANDROIDX_TEST_ORCHESTRATOR"
     }
