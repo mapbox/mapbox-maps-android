@@ -3,6 +3,7 @@ package com.mapbox.maps
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -28,6 +29,9 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
   @Test
   fun testAnimatorWithAnimatorDelay() {
+    if (ignoreTestForGivenAbi()) {
+      return
+    }
     val duration = 2000L
     val delay = 1000L
     val animatorListener = CameraAnimatorListener()
@@ -70,6 +74,9 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
   @Test
   fun testCancelAnimatorWithDelayed() {
+    if (ignoreTestForGivenAbi()) {
+      return
+    }
     val duration = 2000L
     val delay = 500L
     val animatorListener = CameraAnimatorListener()
@@ -107,6 +114,9 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
   @Test
   fun testAnimatorWithHandlerPostDelay() {
+    if (ignoreTestForGivenAbi()) {
+      return
+    }
     val duration = 1000L
     val delay = 2000L
     val animatorListener = CameraAnimatorListener()
@@ -153,6 +163,9 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
   @Test
   fun testCameraUpdateFrequency() {
+    if (ignoreTestForGivenAbi()) {
+      return
+    }
     val duration = 3000L
 
     // Considering min update frequency is not less than 20 ms assuming running on x86 emulator on CI
@@ -183,6 +196,9 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
   @Test
   fun testRegisterExistedAnimatorTypeAndStart() {
+    if (ignoreTestForGivenAbi()) {
+      return
+    }
     val duration = 2000L
 
     val animatorListener1 = CameraAnimatorListener()
@@ -253,6 +269,9 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
   @Test
   fun testEaseToSingleDurationShort() {
+    if (ignoreTestForGivenAbi()) {
+      return
+    }
     val targetBearing = 5.0
     val cameraOptions = CameraOptions.Builder().bearing(targetBearing).build()
     val expectedValues = mutableSetOf(-0.0, targetBearing)
@@ -307,7 +326,9 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
   @Test
   fun testEaseToSequenceDurationShort() {
-
+    if (ignoreTestForGivenAbi()) {
+      return
+    }
     val targetBearing1 = 5.0
     val targetBearing2 = 10.0
     val targetBearing3 = 15.0
@@ -337,7 +358,9 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
   @Test
   fun testEaseToAnimatorSequenceLessThenFrameUpdate() {
-
+    if (ignoreTestForGivenAbi()) {
+      return
+    }
     val targetBearing1 = 5.0
     val targetBearing2 = 10.0
     val targetBearing3 = 15.0
@@ -395,6 +418,9 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
   @Test
   fun testPostDelayedAndStartDelayedAnimators() {
+    if (ignoreTestForGivenAbi()) {
+      return
+    }
     val pitchAnimatorOne = createPitchAnimator(cameraAnimationPlugin, 10.0, 0, 1000L)
     val pitchListenerOne = CameraAnimatorListener()
     pitchAnimatorOne.addListener(pitchListenerOne)
@@ -594,6 +620,10 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
       duration = animatorDuration
       startDelay = animatorDelay
     }
+
+  // TODO some tests must have animations enabled
+  // before https://github.com/mapbox/mapbox-maps-android/issues/490 is resolved we ignore those tests
+  private fun ignoreTestForGivenAbi() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.M
 
   companion object {
     private const val TAG = "Mbgl-CameraManager"
