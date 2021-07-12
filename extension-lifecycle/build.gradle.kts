@@ -21,7 +21,7 @@ dependencies {
   implementation(Dependencies.kotlin)
   implementation(Dependencies.androidxAppCompat)
   implementation(Dependencies.androidxCoreKtx)
-  implementation(Dependencies.androidxAnnotations)
+  implementation(Dependencies.androidxLifecycle)
   testImplementation(Dependencies.junit)
   testImplementation(Dependencies.mockk)
   testImplementation(Dependencies.androidxTestCore)
