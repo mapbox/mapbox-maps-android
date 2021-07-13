@@ -46,6 +46,10 @@
     <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelScale_z" type="attr" />
     <!-- The scale expression of the model, which will overwrite the default scale expression that keeps the model size constant during zoom. -->
     <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelScaleExpression" type="attr" />
+    <!-- The translation of the model [lon, lat, z] -->
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelTranslation_lon" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelTranslation_lat" type="attr" />
+    <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelTranslation_z" type="attr" />
     <!-- The rotation of the model. -->
     <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_x" type="attr" />
     <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelRotation_y" type="attr" />
