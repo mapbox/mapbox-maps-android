@@ -1,4 +1,4 @@
-package com.mapbox.maps.testapp.examples
+package com.mapbox.maps.testapp.examples.markerscallouts
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
