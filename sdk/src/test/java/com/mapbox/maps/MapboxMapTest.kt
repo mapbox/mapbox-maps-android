@@ -458,6 +458,56 @@ class MapboxMapTest {
   }
 
   @Test
+  fun cameraForCoordinateBoundsOverload() {
+    val bounds = mockk<CoordinateBounds>()
+    mapboxMap.cameraForCoordinateBounds(bounds)
+    verify {
+      nativeMap.cameraForCoordinateBounds(
+        bounds,
+        EdgeInsets(0.0, 0.0, 0.0, 0.0),
+        null,
+        null
+      )
+    }
+  }
+
+  @Test
+  fun cameraForCoordinateBoundsOverloadPadding() {
+    val bounds = mockk<CoordinateBounds>()
+    val padding = EdgeInsets(1.1, 1.3, 1.4, 1.2)
+    mapboxMap.cameraForCoordinateBounds(bounds, padding)
+    verify { nativeMap.cameraForCoordinateBounds(bounds, padding, null, null) }
+  }
+
+  @Test
+  fun cameraForCoordinateBoundsOverloadBearing() {
+    val bounds = mockk<CoordinateBounds>()
+    mapboxMap.cameraForCoordinateBounds(bounds, bearing = 2.0)
+    verify {
+      nativeMap.cameraForCoordinateBounds(
+        bounds,
+        EdgeInsets(0.0, 0.0, 0.0, 0.0),
+        2.0,
+        null
+      )
+    }
+  }
+
+  @Test
+  fun cameraForCoordinateBoundsOverloadPitch() {
+    val bounds = mockk<CoordinateBounds>()
+    mapboxMap.cameraForCoordinateBounds(bounds, pitch = 2.0)
+    verify {
+      nativeMap.cameraForCoordinateBounds(
+        bounds,
+        EdgeInsets(0.0, 0.0, 0.0, 0.0),
+        null,
+        2.0
+      )
+    }
+  }
+
+  @Test
   fun coordinateBoundsForCamera() {
     val cameraOptions = mockk<CameraOptions>()
     mapboxMap.coordinateBoundsForCamera(cameraOptions)
@@ -496,11 +546,53 @@ class MapboxMapTest {
   }
 
   @Test
+  fun cameraForCoordinatesOverload() {
+    val points = mockk<List<Point>>()
+    mapboxMap.cameraForCoordinates(points)
+    verify { nativeMap.cameraForCoordinates(points, EdgeInsets(0.0, 0.0, 0.0, 0.0), null, null) }
+  }
+
+  @Test
+  fun cameraForCoordinatesOverloadBearing() {
+    val points = mockk<List<Point>>()
+    mapboxMap.cameraForCoordinates(points, bearing = 2.0)
+    verify { nativeMap.cameraForCoordinates(points, EdgeInsets(0.0, 0.0, 0.0, 0.0), 2.0, null) }
+  }
+
+  @Test
+  fun cameraForCoordinatesOverloadPitch() {
+    val points = mockk<List<Point>>()
+    mapboxMap.cameraForCoordinates(points, pitch = 2.0)
+    verify { nativeMap.cameraForCoordinates(points, EdgeInsets(0.0, 0.0, 0.0, 0.0), null, 2.0) }
+  }
+
+  @Test
   fun cameraForGeometry() {
     val point = mockk<Point>()
     val edgeInsets = mockk<EdgeInsets>()
     mapboxMap.cameraForGeometry(point, edgeInsets, 0.0, 1.0)
     verify { nativeMap.cameraForGeometry(point, edgeInsets, 0.0, 1.0) }
+  }
+
+  @Test
+  fun cameraForGeometryOverload() {
+    val point = mockk<Point>()
+    mapboxMap.cameraForGeometry(point)
+    verify { nativeMap.cameraForGeometry(point, EdgeInsets(0.0, 0.0, 0.0, 0.0), null, null) }
+  }
+
+  @Test
+  fun cameraForGeometryOverloadBearing() {
+    val point = mockk<Point>()
+    mapboxMap.cameraForGeometry(point, bearing = 2.0)
+    verify { nativeMap.cameraForGeometry(point, EdgeInsets(0.0, 0.0, 0.0, 0.0), 2.0, null) }
+  }
+
+  @Test
+  fun cameraForGeometryOverloadPitch() {
+    val point = mockk<Point>()
+    mapboxMap.cameraForGeometry(point, pitch = 2.0)
+    verify { nativeMap.cameraForGeometry(point, EdgeInsets(0.0, 0.0, 0.0, 0.0), null, 2.0) }
   }
 
   @Test
