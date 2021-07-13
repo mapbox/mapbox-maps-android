@@ -233,10 +233,20 @@ commands:
           no_output_timeout: 50m
           command: |
             if [[ -n "${GCLOUD_SERVICE_ACCOUNT_JSON}" ]]; then
-              gcloud firebase test android run --type instrumentation \
+              if [ << parameters.module_target >> == "extension-style-app" ]; then
+                gcloud firebase test android run --type instrumentation \
+                  --app << parameters.app_target >>/build/outputs/apk/debug/<< parameters.app_target >>-debug.apk \
+                  --test << parameters.module_target >>/build/outputs/apk/androidTest/debug/<< parameters.module_target >>-debug-androidTest.apk \
+                  --device model=AOP_sprout,version=28,locale=en,orientation=portrait \
+                  --timeout 45m --use-orchestrator --num-flaky-test-attempts 3
+              else
+                gcloud firebase test android run --type instrumentation \
                 --app << parameters.app_target >>/build/outputs/apk/debug/<< parameters.app_target >>-debug.apk \
                 --test << parameters.module_target >>/build/outputs/apk/androidTest/debug/<< parameters.module_target >>-debug-androidTest.apk \
-                --device-ids sailfish --os-version-ids "26" --locales en --orientations portrait --timeout 45m --use-orchestrator
+                --device model=harpia,version=23,locale=en,orientation=portrait \
+                --device model=AOP_sprout,version=28,locale=en,orientation=portrait \
+                --timeout 45m --use-orchestrator --num-flaky-test-attempts 3
+              fi
             fi
 
   run-firebase-robo:
@@ -248,8 +258,8 @@ commands:
             if [[ -n "${GCLOUD_SERVICE_ACCOUNT_JSON}" ]]; then
               gcloud firebase test android run --type robo \
                 --app app/build/outputs/apk/release/app-release.apk \
-                --device model=sailfish,version=28,locale=en,orientation=portrait \
-                --device model=zeroflte,version=23,locale=en,orientation=portrait \
+                --device model=AOP_sprout,version=28,locale=en,orientation=portrait \
+                --device model=harpia,version=23,locale=en,orientation=portrait \
                 --device model=Pixel2,version=30,locale=en,orientation=portrait \
                 --device model=mata,version=25,locale=en,orientation=portrait \
                 --timeout 90s

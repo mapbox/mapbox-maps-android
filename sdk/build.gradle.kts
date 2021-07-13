@@ -31,6 +31,7 @@ android {
     unitTests.apply {
       isIncludeAndroidResources = true
     }
+    animationsDisabled = true
     if (!project.hasProperty("android.injected.invoked.from.ide")) {
       execution = "ANDROIDX_TEST_ORCHESTRATOR"
     }
