@@ -1,4 +1,4 @@
-package com.mapbox.maps.testapp.examples
+package com.mapbox.maps.testapp.examples.linesandpolygons
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
