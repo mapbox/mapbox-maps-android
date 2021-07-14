@@ -2,6 +2,39 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.0.0-rc.4 July 14, 2021
+
+**The Mapbox Maps SDK for Android has moved to release candidate status and is now ready for production use.**
+
+## Features ✨ and improvements 🏁
+* Add new param to allow users localize selected layers. ([#461](https://github.com/mapbox/mapbox-maps-android/pull/461))
+* Add API to control logging for animation plugin and disable debug logs by default. ([#474](https://github.com/mapbox/mapbox-maps-android/pull/474))
+* Introduce option to use continuous rendering for scale bar. Continuous render mode will fix gfxinfo profiling. ([#458](https://github.com/mapbox/mapbox-maps-android/pull/458))
+* Add shortest bearing path option for animators. ([#473](https://github.com/mapbox/mapbox-maps-android/pull/473))
+* Add modelTranslation support for LocationPuck3D ([#493](https://github.com/mapbox/mapbox-maps-android/pull/493))
+* Add default parameters to coordinate conversion functions of MapCameraManagerDelegate#cameraForCoordinates, MapCameraManagerDelegate#cameraForCoordinateBounds and MapCameraManagerDelegate#cameraForGeometry. This overloads the functions to have a more simple API surface for developers to hook into. ([#491](https://github.com/mapbox/mapbox-maps-android/pull/491))
+* Support text-writing-mode property for line symbol-placement text labels (#1766)
+  Note: This change will bring following changes for CJK text block:
+  - For vertical CJK text, all the characters including Latin and Numbers will be vertically placed now. Previously, Latin and Numbers are horizontally placed.
+  - For horizontal CJK text, it may have a slight horizontal shift due to the anchor shift.
+* Session SKU generation is now available
+* Add getSKUTokenIfValid to get a SKU token for a SKU identifier if it exists and is not expired, return empty string if not.
+* Allow filtering of log messages by categories.
+* Expose isFiltered for checking logging category settings
+
+## Bug fixes 🐞
+* Fix flyTo crash when using single-pixel paddings. ([#478](https://github.com/mapbox/mapbox-maps-android/pull/478))
+* Fixed regression in map gestures on devices with Android 6 and lower. ([#484](https://github.com/mapbox/mapbox-maps-android/pull/484))
+* Fix overwriting sync geojson data with getSourceAs by async. ([#482](https://github.com/mapbox/mapbox-maps-android/pull/482))
+* Clean up network listener after http file source gets out of scope
+* Fix line-center anchor calculation when the anchor is very near to the line geometry point
+* Fix crash when a Feature State API is used with dedicated rendering thread
+* Fix threading issues in HTTP file source
+* Fix volatile tilesets handling
+
+## Dependencies
+* Update gl-native to v10.0.0-rc.5 and common to v16.0.0. ([#487](https://github.com/mapbox/mapbox-maps-android/pull/487))
+
 # 10.0.0-rc.3 June 30, 2021
 
 **The Mapbox Maps SDK for Android has moved to release candidate status and is now ready for production use.**
