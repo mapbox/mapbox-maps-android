@@ -10,4 +10,5 @@
     <color name="blue">#1E8CAB</color>
     <color name="red">#f74e4e</color>
     <color name="simi_transparent_blue">#334264fb</color>
+    <color name="black">#000000</color>
 </resources>
