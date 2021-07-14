@@ -230,7 +230,9 @@ class OfflineTest {
       cancelableTileStoreTask = tileStore.loadTileRegion(
         TILE_REGION_ID,
         TileRegionLoadOptions.Builder()
-          .geometry(TOKYO)
+          // TODO https://github.com/mapbox/mapbox-maps-android/issues/503
+          // we explicitly set another region to make test not flaky
+          .geometry(Point.fromLngLat(0.0, 0.0))
           .descriptors(
             listOf(
               offlineManager.createTilesetDescriptor(
@@ -444,7 +446,6 @@ class OfflineTest {
         Logger.e(TAG, "type ${event.type}, data ${event.data.toJson()}")
         if (event.type == MapEvents.MAP_IDLE) {
           idleEventCount++
-          latch.countDown()
         }
         if (event.type == MapEvents.MAP_LOADING_ERROR) {
           mapLoadingErrorCount++
@@ -457,12 +458,10 @@ class OfflineTest {
       listOf(MapEvents.MAP_IDLE)
     )
     try {
-      if (!latch.await(10, TimeUnit.SECONDS)) {
-        throw TimeoutException()
-      } else {
-        Assert.assertEquals(0, mapLoadingErrorCount)
-        Assert.assertEquals(1, idleEventCount)
-      }
+      // we wait for whole time and verify we hit exactly one IDLE event
+      latch.await(10, TimeUnit.SECONDS)
+      Assert.assertEquals(0, mapLoadingErrorCount)
+      Assert.assertEquals(1, idleEventCount)
     } finally {
       OfflineSwitch.getInstance().isMapboxStackConnected = true
     }
