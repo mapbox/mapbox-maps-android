@@ -21,7 +21,7 @@ import org.robolectric.annotation.Config
 class ModelLayerWrapperTest {
 
   private val style: StyleManagerInterface = mockk(relaxed = true)
-  private val layer = ModelLayerWrapper(MODEL_LAYER_ID, MODEL_SOURCE_ID, INITIAL_SCALE, INITIAL_ROTATION)
+  private val layer = ModelLayerWrapper(MODEL_LAYER_ID, MODEL_SOURCE_ID, INITIAL_SCALE, INITIAL_ROTATION, INITIAL_TRANSLATION)
   private val expected: Expected<String, None> = mockk(relaxed = true)
 
   @Before
@@ -38,7 +38,7 @@ class ModelLayerWrapperTest {
   @Test
   fun testInitialProperties() {
     val value = layer.toValue()
-    assertEquals("{model-rotation=[8.0], id=modelLayerId, source=modelSourceId, type=model, model-scale=[6.0]}", value.toString())
+    assertEquals("{model-rotation=[8.0], id=modelLayerId, source=modelSourceId, type=model, model-scale=[6.0], model-translation=[0.0]}", value.toString())
   }
 
   @Test
@@ -56,6 +56,13 @@ class ModelLayerWrapperTest {
   }
 
   @Test
+  fun testTranslation() {
+    val translation = arrayListOf(1.0, 2.0)
+    layer.modelTranslation(translation)
+    verify { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-translation", Value(translation.map { Value(it) })) }
+  }
+
+  @Test
   fun testLayerNotReady() {
     every { style.styleLayerExists(any()) } returns false
     val scale = arrayListOf(1.0, 2.0)
@@ -68,5 +75,6 @@ class ModelLayerWrapperTest {
     private const val MODEL_SOURCE_ID = "modelSourceId"
     private val INITIAL_SCALE = arrayListOf(6.0)
     private val INITIAL_ROTATION = arrayListOf(8.0)
+    private val INITIAL_TRANSLATION = arrayListOf(0.0)
   }
 }

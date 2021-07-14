@@ -76,6 +76,10 @@ data class LocationPuck3D(
    */
   var modelScaleExpression: String? = null,
   /**
+   * The translation of the model [lon, lat, z]
+   */
+  var modelTranslation: List<Float> = listOf(0f, 0f, 0f),
+  /**
    * The rotation of the model.
    */
   var modelRotation: List<Float> = listOf(0f, 0f, 90f),
