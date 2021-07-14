@@ -3,9 +3,7 @@ package com.mapbox.maps.testapp.examples.java;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.mapbox.geojson.Point;
 import com.mapbox.maps.MapView;
 import com.mapbox.maps.MapboxMap;
@@ -26,9 +24,7 @@ import com.mapbox.maps.extension.style.sources.generated.ImageSource;
 import com.mapbox.maps.plugin.gestures.MapboxMapUtils;
 import com.mapbox.maps.plugin.gestures.OnMapClickListener;
 import com.mapbox.maps.testapp.R;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
