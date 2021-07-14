@@ -1,13 +1,12 @@
-package com.mapbox.maps.testapp.examples.markerscallouts
+package com.mapbox.maps.testapp.examples.markersandcallouts
 
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.gson.JsonPrimitive
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
-import com.mapbox.maps.extension.style.layers.getLayer
-import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
@@ -19,11 +18,11 @@ import kotlinx.android.synthetic.main.activity_annotation.*
 import java.util.*
 
 /**
- * Example showing how to add Line annotations
+ * Example showing how to add Polygone annotations
  */
-class PolylineAnnotationActivity : AppCompatActivity() {
+class PolygoneAnnotationActivity : AppCompatActivity() {
   private val random = Random()
-  private var polylineAnnotationManager: PolylineAnnotationManager? = null
+  private var polygonAnnotationManager: PolygonAnnotationManager? = null
   private var index: Int = 0
   private val nextStyle: String
     get() {
@@ -36,33 +35,27 @@ class PolylineAnnotationActivity : AppCompatActivity() {
     setContentView(R.layout.activity_annotation)
     mapView.getMapboxMap().loadStyleUri(nextStyle) {
       annotationPlugin = mapView.annotations
-      polylineAnnotationManager = annotationPlugin.createPolylineAnnotationManager(
-        mapView,
-        AnnotationConfig(PITCH_OUTLINE, LAYER_ID, SOURCE_ID)
-      ).apply {
-        it.getLayer(LAYER_ID)?.let { layer ->
-          Toast.makeText(this@PolylineAnnotationActivity, layer.layerId, Toast.LENGTH_LONG).show()
-        }
+      polygonAnnotationManager = annotationPlugin.createPolygonAnnotationManager(mapView).apply {
         addClickListener(
-          OnPolylineAnnotationClickListener {
-            Toast.makeText(this@PolylineAnnotationActivity, "click ${it.id}", Toast.LENGTH_SHORT)
+          OnPolygonAnnotationClickListener {
+            Toast.makeText(this@PolygoneAnnotationActivity, "click ${it.id}", Toast.LENGTH_SHORT)
               .show()
             false
           }
         )
 
-        addInteractionListener(object : OnPolylineAnnotationInteractionListener {
-          override fun onSelectAnnotation(annotation: PolylineAnnotation) {
+        addInteractionListener(object : OnPolygonAnnotationInteractionListener {
+          override fun onSelectAnnotation(annotation: PolygonAnnotation) {
             Toast.makeText(
-              this@PolylineAnnotationActivity,
+              this@PolygoneAnnotationActivity,
               "onSelectAnnotation ${annotation.id}",
               Toast.LENGTH_SHORT
             ).show()
           }
 
-          override fun onDeselectAnnotation(annotation: PolylineAnnotation) {
+          override fun onDeselectAnnotation(annotation: PolygonAnnotation) {
             Toast.makeText(
-              this@PolylineAnnotationActivity,
+              this@PolygoneAnnotationActivity,
               "onDeselectAnnotation ${annotation.id}",
               Toast.LENGTH_SHORT
             ).show()
@@ -70,33 +63,34 @@ class PolylineAnnotationActivity : AppCompatActivity() {
         })
 
         val points = listOf(
-          Point.fromLngLat(-4.375974, -2.178992),
-          Point.fromLngLat(-7.639772, -4.107888),
-          Point.fromLngLat(-11.439207, 2.798737),
+          listOf(
+            Point.fromLngLat(-3.363937, -10.733102),
+            Point.fromLngLat(1.754703, -19.716317),
+            Point.fromLngLat(-15.747196, -21.085074),
+            Point.fromLngLat(-3.363937, -10.733102)
+          )
         )
 
-        val polylineAnnotationOptions: PolylineAnnotationOptions = PolylineAnnotationOptions()
+        val polygonAnnotationOptions: PolygonAnnotationOptions = PolygonAnnotationOptions()
           .withPoints(points)
-          .withLineColor(Color.RED)
-          .withLineWidth(5.0)
-        create(polylineAnnotationOptions)
+          .withData(JsonPrimitive("Foobar"))
+          .withFillColor(Color.RED)
+        create(polygonAnnotationOptions)
 
-        // random add lines across the globe
-        val lists: MutableList<List<Point>> = ArrayList<List<Point>>()
-        for (i in 0..99) {
-          lists.add(AnnotationUtils.createRandomPoints())
-        }
-        val lineOptionsList = lists.map {
+        // random add fills across the globe
+        val polygonAnnotationOptionsList: MutableList<PolygonAnnotationOptions> = ArrayList()
+        for (i in 0..2) {
           val color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
-          PolylineAnnotationOptions()
-            .withPoints(it)
-            .withLineColor(color)
+          polygonAnnotationOptionsList.add(
+            PolygonAnnotationOptions()
+              .withPoints(AnnotationUtils.createRandomPointsList())
+              .withFillColor(color)
+          )
         }
-
-        create(lineOptionsList)
+        create(polygonAnnotationOptionsList)
 
         AnnotationUtils.loadStringFromAssets(
-          this@PolylineAnnotationActivity,
+          this@PolygoneAnnotationActivity,
           "annotations.json"
         )?.let {
           create(FeatureCollection.fromJson(it))
@@ -105,13 +99,11 @@ class PolylineAnnotationActivity : AppCompatActivity() {
     }
 
     deleteAll.setOnClickListener {
-      polylineAnnotationManager?.let {
+      polygonAnnotationManager?.let {
         annotationPlugin.removeAnnotationManager(it)
       }
     }
-    changeStyle.setOnClickListener {
-      mapView.getMapboxMap().loadStyleUri(nextStyle)
-    }
+    changeStyle.setOnClickListener { mapView.getMapboxMap().loadStyleUri(nextStyle) }
   }
 
   override fun onStart() {
@@ -132,11 +124,5 @@ class PolylineAnnotationActivity : AppCompatActivity() {
   override fun onDestroy() {
     super.onDestroy()
     mapView.onDestroy()
-  }
-
-  companion object {
-    private const val LAYER_ID = "line_layer"
-    private const val SOURCE_ID = "line_source"
-    private const val PITCH_OUTLINE = "pitch-outline"
   }
 }

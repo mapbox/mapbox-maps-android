@@ -524,7 +524,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.markerscallouts.MultipleGeometriesActivity"
+            android:name=".examples.markersandcallouts.MultipleGeometriesActivity"
             android:description="@string/description_dds_multiple_geometries"
             android:exported="true"
             android:label="@string/activity_dds_multiple_geometries_title">
@@ -596,7 +596,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.markerscallouts.AnimatedMarkerActivity"
+            android:name=".examples.markersandcallouts.AnimatedMarkerActivity"
             android:description="@string/description_animate_marker_position"
             android:exported="true"
             android:label="@string/activity_animate_marker_position">
@@ -644,7 +644,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.markerscallouts.IconSizeChangeOnClickActivity"
+            android:name=".examples.markersandcallouts.IconSizeChangeOnClickActivity"
             android:description="@string/description_change_icon_size"
             android:exported="true"
             android:label="@string/activity_style_change_icon_size_title">
@@ -656,7 +656,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.markerscallouts.AddMarkersSymbolActivity"
+            android:name=".examples.markersandcallouts.AddMarkersSymbolActivity"
             android:description="@string/description_add_marker_symbol"
             android:exported="true"
             android:label="@string/activity_basic_add_marker_title">
@@ -668,7 +668,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.markerscallouts.AddOneMarkerSymbolActivity"
+            android:name=".examples.markersandcallouts.AddOneMarkerSymbolActivity"
             android:description="@string/description_add_one_marker_symbol"
             android:exported="true"
             android:label="@string/activity_basic_add_one_marker_title">
@@ -827,7 +827,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.markerscallouts.PolygoneAnnotationActivity"
+            android:name=".examples.markersandcallouts.PolygoneAnnotationActivity"
             android:description="@string/description_annotation_fill"
             android:exported="true"
             android:label="@string/activity_fill">
@@ -839,7 +839,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.markerscallouts.CircleAnnotationActivity"
+            android:name=".examples.markersandcallouts.CircleAnnotationActivity"
             android:description="@string/description_annotation_circle"
             android:exported="true"
             android:label="@string/activity_circle">
@@ -851,7 +851,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.markerscallouts.PointAnnotationActivity"
+            android:name=".examples.markersandcallouts.PointAnnotationActivity"
             android:description="@string/description_annotation_symbol"
             android:exported="true"
             android:label="@string/activity_symbol">
@@ -875,7 +875,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.markerscallouts.PointAnnotationClusterActivity"
+            android:name=".examples.markersandcallouts.PointAnnotationClusterActivity"
             android:description="@string/description_annotation_symbol_cluster"
             android:exported="true"
             android:label="@string/activity_symbol_cluster">
@@ -887,7 +887,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.markerscallouts.PolylineAnnotationActivity"
+            android:name=".examples.markersandcallouts.PolylineAnnotationActivity"
             android:description="@string/description_annotation_line"
             android:exported="true"
             android:label="@string/activity_line">
