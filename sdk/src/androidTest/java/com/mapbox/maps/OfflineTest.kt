@@ -219,7 +219,6 @@ class OfflineTest {
     }
   }
 
-  @Ignore("TODO flaky test")
   @Test
   fun loadTileRegionCancel() {
     val latch = CountDownLatch(1)
@@ -231,7 +230,9 @@ class OfflineTest {
       cancelableTileStoreTask = tileStore.loadTileRegion(
         TILE_REGION_ID,
         TileRegionLoadOptions.Builder()
-          .geometry(TOKYO)
+          // TODO https://github.com/mapbox/mapbox-maps-android/issues/503
+          // we explicitly set another region to make test not flaky
+          .geometry(Point.fromLngLat(0.0, 0.0))
           .descriptors(
             listOf(
               offlineManager.createTilesetDescriptor(
@@ -269,6 +270,7 @@ class OfflineTest {
     if (!latch.await(30, TimeUnit.SECONDS)) {
       throw TimeoutException()
     } else {
+      Assert.assertEquals(TileRegionErrorType.CANCELED, tileRegionError?.type)
       Assert.assertNull(tileRegion)
       Assert.assertNotNull(tileRegionError)
       Assert.assertNotNull(tileRegionProgress)
@@ -277,13 +279,9 @@ class OfflineTest {
         tileRegionProgress?.requiredResourceCount,
         tileRegionProgress?.completedResourceCount
       )
-      Assert.assertEquals(TileRegionErrorType.CANCELED, tileRegionError?.type)
     }
   }
 
-  // TODO revisit after https://github.com/mapbox/mapbox-maps-android/issues/297
-  // this test must behave same as resourceLoadingFromTileStoreMapboxSwitch
-  // but for now we could check for style loaded event only to style is loaded
   @Test
   fun resourceLoadingFromTileStoreAirplaneMode() {
     loadTileStoreWithStylePack()
@@ -319,11 +317,10 @@ class OfflineTest {
     try {
       // we do not throw exception here but verify request count
       latch.await(10, TimeUnit.SECONDS)
-      // verify resource requests came from tile store
+      // verify resource requests came from tile store, map will be shown
       MatcherAssert.assertThat(resourceRequests, Matchers.greaterThan(0))
-      // verify no map loading errors occurred
-      // TODO uncomment after https://github.com/mapbox/mapbox-maps-android/issues/297
-//      Assert.assertEquals(0, mapLoadingErrorCount)
+      // map load errors will still occur because of no internet
+      MatcherAssert.assertThat(mapLoadingErrorCount, Matchers.greaterThan(0))
     } finally {
       switchAirplaneMode()
     }
@@ -401,17 +398,24 @@ class OfflineTest {
     Assert.assertEquals(0, stylePackWithNoStyle.first.size)
   }
 
-  @Ignore("TODO uncomment after https://github.com/mapbox/mapbox-maps-android/issues/297")
+  // It's still discussable whether we should trigger MAP_IDLE event
+  // if there's no internet and Mapbox stack is set to True.
+  // Currently it works as designed - we do not trigger MAP_IDLE if any
+  // errors occurred during style load.
   @Test
   fun idleEventTileStoreAirplaneMode() {
     loadTileStoreWithStylePack()
     val latch = CountDownLatch(1)
     var idleEventCount = 0
+    var mapLoadingErrorCount = 0
     val observer = object : Observer() {
       override fun notify(event: Event) {
         Logger.e(TAG, "type ${event.type}, data ${event.data.toJson()}")
         if (event.type == MapEvents.MAP_IDLE) {
           idleEventCount++
+        }
+        if (event.type == MapEvents.MAP_LOADING_ERROR) {
+          mapLoadingErrorCount++
         }
       }
     }
@@ -419,12 +423,13 @@ class OfflineTest {
     verifyAirplaneModeEnabled()
     prepareMapView(
       observer,
-      listOf(MapEvents.MAP_IDLE)
+      listOf(MapEvents.MAP_IDLE, MapEvents.MAP_LOADING_ERROR)
     )
     try {
       // we do not throw timeout exception and verify we have exactly 1 IDLE event after timeout
       latch.await(10, TimeUnit.SECONDS)
-      Assert.assertEquals(1, idleEventCount)
+      MatcherAssert.assertThat(mapLoadingErrorCount, Matchers.greaterThan(0))
+      Assert.assertEquals(0, idleEventCount)
     } finally {
       switchAirplaneMode()
     }
@@ -435,11 +440,15 @@ class OfflineTest {
     loadTileStoreWithStylePack()
     val latch = CountDownLatch(1)
     var idleEventCount = 0
+    var mapLoadingErrorCount = 0
     val observer = object : Observer() {
       override fun notify(event: Event) {
         Logger.e(TAG, "type ${event.type}, data ${event.data.toJson()}")
         if (event.type == MapEvents.MAP_IDLE) {
           idleEventCount++
+        }
+        if (event.type == MapEvents.MAP_LOADING_ERROR) {
+          mapLoadingErrorCount++
         }
       }
     }
@@ -449,8 +458,9 @@ class OfflineTest {
       listOf(MapEvents.MAP_IDLE)
     )
     try {
-      // we do not throw timeout exception and verify we have exactly 1 IDLE event after timeout
+      // we wait for whole time and verify we hit exactly one IDLE event
       latch.await(10, TimeUnit.SECONDS)
+      Assert.assertEquals(0, mapLoadingErrorCount)
       Assert.assertEquals(1, idleEventCount)
     } finally {
       OfflineSwitch.getInstance().isMapboxStackConnected = true
