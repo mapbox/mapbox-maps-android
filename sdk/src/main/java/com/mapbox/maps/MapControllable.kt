@@ -73,5 +73,4 @@ interface MapControllable : MapboxLifeCycleObserver {
    * Set [OnFpsChangedListener] to get map rendering FPS.
    */
   fun setOnFpsChangedListener(listener: OnFpsChangedListener)
-
 }

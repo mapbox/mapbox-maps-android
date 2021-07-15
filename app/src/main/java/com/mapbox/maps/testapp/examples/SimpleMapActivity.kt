@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.extension.lifecycle.attachLifeCycle
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_simple_map.*
 
@@ -16,7 +15,6 @@ class SimpleMapActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_simple_map)
-    attachLifeCycle(mapView,this)
     mapView.getMapboxMap()
       .apply {
         setCamera(
@@ -25,6 +23,9 @@ class SimpleMapActivity : AppCompatActivity() {
       }
   }
 
+  override fun onResume() {
+    super.onResume()
+  }
   override fun onLowMemory() {
     super.onLowMemory()
     mapView.onLowMemory()

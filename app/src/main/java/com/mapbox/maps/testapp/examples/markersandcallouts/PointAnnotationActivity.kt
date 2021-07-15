@@ -297,25 +297,9 @@ class PointAnnotationActivity : AppCompatActivity() {
     animators.add(moveSymbol)
   }
 
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    animators.forEach { it.cancel() }
-    mapView.onStop()
-  }
-
   override fun onLowMemory() {
     super.onLowMemory()
     mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

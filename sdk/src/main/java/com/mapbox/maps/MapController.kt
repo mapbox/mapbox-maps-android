@@ -269,6 +269,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     }
   }
 
+  internal fun onAttachedToWindow(mapView: MapView) {
+    pluginRegistry.onAttachedToWindow(mapView)
+  }
+
   companion object {
     const val TAG = "MapController"
     private const val PLUGIN_MISSING_TEMPLATE =
