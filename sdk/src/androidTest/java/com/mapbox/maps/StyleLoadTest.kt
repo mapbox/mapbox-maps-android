@@ -69,8 +69,7 @@ class StyleLoadTest {
       }
     }
     countDownLatch.await(10, TimeUnit.SECONDS)
-    // we should notify only once that style is loaded
-    Assert.assertEquals(1, styleLoadedCount)
+    Assert.assertEquals(2, styleLoadedCount)
   }
 
   @Test
