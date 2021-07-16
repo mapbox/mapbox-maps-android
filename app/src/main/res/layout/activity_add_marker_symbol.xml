@@ -10,5 +10,5 @@
         android:layout_height="match_parent"
         mapbox:mapbox_cameraTargetLat="55.665957"
         mapbox:mapbox_cameraTargetLng="12.550343"
-        mapbox:mapbox_cameraZoom="9" />
+        mapbox:mapbox_cameraZoom="8" />
 </merge>

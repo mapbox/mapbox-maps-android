@@ -69,6 +69,7 @@ class AddMarkersSymbolActivity : AppCompatActivity() {
         //    BLUE_MARKER
         //  else
         //    RED_MARKER
+        // rotate the blue marker with 45 degrees.
         +symbolLayer(LAYER_ID, SOURCE_ID) {
           iconImage(
             match {
@@ -84,6 +85,18 @@ class AddMarkersSymbolActivity : AppCompatActivity() {
                 literal(BLUE_ICON_ID)
               }
               literal(RED_ICON_ID)
+            }
+          )
+          iconRotate(
+            match {
+              get {
+                literal(ICON_KEY)
+              }
+              stop {
+                literal(ICON_BLUE_PROPERTY)
+                literal(45.0)
+              }
+              literal(0.0)
             }
           )
           iconAllowOverlap(true)
