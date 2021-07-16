@@ -31,6 +31,7 @@ open class Snapshotter {
   private val coreSnapshotter: MapSnapshotterInterface
   private val pixelRatio: Float
   private val mapSnapshotOptions: MapSnapshotOptions
+  private val snapshotOverlayOptions: SnapshotOverlayOptions
 
   private var snapshotCreatedCallback: SnapshotCreatedListener? = null
   private var snapshotStyleCallback: SnapshotStyleListener? = null
@@ -39,9 +40,10 @@ open class Snapshotter {
 
   private val mainHandler: Handler
 
-  constructor(context: Context, options: MapSnapshotOptions) {
+  constructor(context: Context, options: MapSnapshotOptions, snapshotOverlayOptions: SnapshotOverlayOptions = SnapshotOverlayOptions()) {
     this.context = WeakReference(context)
     this.mapSnapshotOptions = options
+    this.snapshotOverlayOptions = snapshotOverlayOptions
     coreSnapshotter = MapSnapshotter(options)
     pixelRatio = context.resources.displayMetrics.density
     mainHandler = Handler(context.mainLooper)
@@ -72,9 +74,10 @@ open class Snapshotter {
   }
 
   @VisibleForTesting
-  internal constructor(context: Context, options: MapSnapshotOptions, snapshotter: MapSnapshotterInterface, mainHandler: Handler, observer: Observer) {
+  internal constructor(context: Context, options: MapSnapshotOptions, snapshotter: MapSnapshotterInterface, mainHandler: Handler, observer: Observer, snapshotOverlayOptions: SnapshotOverlayOptions = SnapshotOverlayOptions()) {
     this.context = WeakReference(context)
     this.mapSnapshotOptions = options
+    this.snapshotOverlayOptions = snapshotOverlayOptions
     coreSnapshotter = snapshotter
     pixelRatio = context.resources.displayMetrics.density
     this.observer = observer
@@ -342,8 +345,12 @@ open class Snapshotter {
       val measure: AttributionMeasure = getAttributionMeasure(it, mapSnapshot, snapshot, margin)
       val layout = measure.measure()
       layout?.let {
-        drawLogo(mapSnapshot, canvas, margin, layout)
-        drawAttribution(mapSnapshot, canvas, measure, layout)
+        if (snapshotOverlayOptions.showLogo) {
+          drawLogo(mapSnapshot, canvas, margin, layout)
+        }
+        if (snapshotOverlayOptions.showAttributes) {
+          drawAttribution(mapSnapshot, canvas, measure, layout)
+        }
       }
     }
   }
