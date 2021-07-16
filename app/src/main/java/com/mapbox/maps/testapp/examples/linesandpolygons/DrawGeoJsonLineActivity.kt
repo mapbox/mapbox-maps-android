@@ -27,7 +27,7 @@ class DrawGeoJsonLineActivity : AppCompatActivity() {
           LATITUDE,
           LONGITUDE
         )
-      ).zoom(CAMERA_ZOOM).build()
+      ).zoom(ZOOM).build()
     )
     mapView.getMapboxMap().loadStyle(
       (
@@ -71,6 +71,6 @@ class DrawGeoJsonLineActivity : AppCompatActivity() {
     private const val GEOJSON_SOURCE_ID = "line"
     private const val LATITUDE = -122.486052
     private const val LONGITUDE = 37.830348
-    private const val CAMERA_ZOOM = 14.0
+    private const val ZOOM = 14.0
   }
 }

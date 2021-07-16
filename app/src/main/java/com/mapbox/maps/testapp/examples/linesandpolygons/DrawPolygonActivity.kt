@@ -32,7 +32,7 @@ class DrawPolygonActivity : AppCompatActivity() {
     mapView.getMapboxMap().loadStyle(
       style(styleUri = Style.LIGHT) {
         +geoJsonSource(SOURCE_ID) {
-          url("asset://maine_polygon.geojson")
+          url(SOURCE_URL)
         }
         +layerAtPosition(
           fillLayer(LAYER_ID, SOURCE_ID) {
@@ -86,6 +86,7 @@ class DrawPolygonActivity : AppCompatActivity() {
     private const val SOURCE_ID = "source-id"
     private const val TOP_LAYER_ID = "line-layer"
     private const val SETTLEMENT_LABEL = "settlement-label"
+    private const val SOURCE_URL = "asset://maine_polygon.geojson"
     private val START_CAMERA_POSITION = cameraOptions {
       center(
         Point.fromLngLat(-68.137343, 45.137451)
