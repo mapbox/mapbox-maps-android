@@ -23,9 +23,6 @@ class SimpleMapActivity : AppCompatActivity() {
       }
   }
 
-  override fun onResume() {
-    super.onResume()
-  }
   override fun onLowMemory() {
     super.onLowMemory()
     mapView.onLowMemory()

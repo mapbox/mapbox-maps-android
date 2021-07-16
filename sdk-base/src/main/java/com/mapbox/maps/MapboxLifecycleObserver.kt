@@ -1,9 +1,9 @@
 package com.mapbox.maps
 
 /**
- * MapboxLifeCycleObserver interface defines the lifecycle events that needed by MapView.
+ * MapboxLifecycleObserver interface defines the lifecycle events that needed by MapView.
  */
-interface MapboxLifeCycleObserver {
+interface MapboxLifecycleObserver {
   /**
    * Called to start rendering
    */

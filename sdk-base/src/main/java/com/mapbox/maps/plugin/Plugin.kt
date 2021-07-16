@@ -39,4 +39,4 @@ const val PLUGIN_ANNOTATION_CLASS_NAME = "com.mapbox.maps.plugin.annotation.Anno
 /**
  * Class name for life cycle plugin.
  */
-const val PLUGIN_LIFE_CYCLE_CLASS_NAME = "com.mapbox.maps.plugin.lifecycle.MapboxLifeCyclePluginImpl"
+const val PLUGIN_LIFE_CYCLE_CLASS_NAME = "com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePluginImpl"

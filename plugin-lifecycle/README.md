@@ -31,11 +31,9 @@ allprojects {
 // In the app build.gradle file
 dependencies {
   implementation 'com.mapbox.plugin:maps-lifecycle:10.0.0-rc.4'
-  // Make sure the version of appcompat is 1.3.0+
-  implementation 'androidx.appcompat:appcompat:1.3.0'
 }
 ```
-The LifeCycle Plugin will take effect automatically if added to dependency
+The Lifecycle Plugin will take effect automatically if added to dependency
 #### Dependencies
 
 View [LICENSE.md](LICENSE.md) for all dependencies used by this plugin.

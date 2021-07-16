@@ -5,20 +5,20 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ViewTreeLifecycleOwner
-import com.mapbox.maps.MapboxLifeCycleObserver
+import com.mapbox.maps.MapboxLifecycleObserver
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 
 /**
- * Concrete implementation of MapboxLifeCyclePlugin.
+ * Concrete implementation of MapboxLifecyclePlugin.
  */
-class MapboxLifeCyclePluginImpl : MapboxLifeCyclePlugin {
+class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
   /**
-   * Register a MapboxLifeCycleObserver to observe life cycle events from LifecycleOwner
+   * Register a MapboxLifecycleObserver to observe life cycle events from LifecycleOwner
    *
    * @param mapView the instance of mapView, will get the LifecycleOwner from mapview's parent
    * @param observer the observer that listen to the life cycle events
    */
-  override fun registerLifeCycleObserver(mapView: FrameLayout, observer: MapboxLifeCycleObserver) {
+  override fun registerLifecycleObserver(mapView: FrameLayout, observer: MapboxLifecycleObserver) {
     ViewTreeLifecycleOwner.get(mapView)?.apply {
       lifecycle.addObserver(object : LifecycleObserver {
         @OnLifecycleEvent(Lifecycle.Event.ON_START)
@@ -45,6 +45,6 @@ class MapboxLifeCyclePluginImpl : MapboxLifeCyclePlugin {
  *
  * @return Map overlay plugin instance
  */
-fun MapPluginProviderDelegate.lifecycle(): MapboxLifeCyclePlugin {
-  return this.getPlugin(MapboxLifeCyclePluginImpl::class.java)!!
+fun MapPluginProviderDelegate.lifecycle(): MapboxLifecyclePlugin {
+  return this.getPlugin(MapboxLifecyclePluginImpl::class.java)!!
 }

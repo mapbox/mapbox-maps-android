@@ -7,7 +7,7 @@ import com.mapbox.maps.renderer.OnFpsChangedListener
 /**
  * MapControllable interface is the gateway for public API to talk to the internal map controller.
  */
-interface MapControllable : MapboxLifeCycleObserver {
+interface MapControllable : MapboxLifecycleObserver {
 
   /**
    * Returns a [MapboxMap] object that can be used to interact with the map.
