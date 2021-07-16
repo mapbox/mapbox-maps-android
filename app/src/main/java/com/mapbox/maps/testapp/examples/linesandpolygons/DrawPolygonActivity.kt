@@ -1,16 +1,17 @@
-package com.mapbox.maps.testapp.examples
+package com.mapbox.maps.testapp.examples.linesandpolygons
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
-import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
-import com.mapbox.geojson.Polygon
 import com.mapbox.maps.Style
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.style.layers.generated.FillLayer
 import com.mapbox.maps.extension.style.layers.generated.fillLayer
+import com.mapbox.maps.extension.style.layers.generated.lineLayer
 import com.mapbox.maps.extension.style.layers.getLayer
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
@@ -25,17 +26,26 @@ class DrawPolygonActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_dds_draw_polygon)
+    mapView.getMapboxMap().setCamera(
+      START_CAMERA_POSITION
+    )
     mapView.getMapboxMap().loadStyle(
-      style(styleUri = Style.MAPBOX_STREETS) {
+      style(styleUri = Style.LIGHT) {
         +geoJsonSource(SOURCE_ID) {
-          feature(Feature.fromGeometry(Polygon.fromLngLats(POINTS)))
+          url(SOURCE_URL)
         }
         +layerAtPosition(
           fillLayer(LAYER_ID, SOURCE_ID) {
-            fillColor(ContextCompat.getColor(this@DrawPolygonActivity, R.color.polygon))
+            fillColor(Color.parseColor("#0080ff")).fillOpacity(0.5)
           },
           below = SETTLEMENT_LABEL
         )
+        +lineLayer(
+          TOP_LAYER_ID, SOURCE_ID
+        ) {
+          lineColor(ContextCompat.getColor(this@DrawPolygonActivity, R.color.black))
+          lineWidth(3.0)
+        }
       }
     )
     findViewById<View>(R.id.pattern_fab).setOnClickListener {
@@ -74,24 +84,16 @@ class DrawPolygonActivity : AppCompatActivity() {
     private const val IMAGE_ID = "stripe-pattern"
     private const val LAYER_ID = "layer-id"
     private const val SOURCE_ID = "source-id"
+    private const val TOP_LAYER_ID = "line-layer"
     private const val SETTLEMENT_LABEL = "settlement-label"
-    private val POINTS = listOf(
-      listOf(
-        Point.fromLngLat(-122.685699, 45.522585),
-        Point.fromLngLat(-122.685699, 45.522585),
-        Point.fromLngLat(-122.708873, 45.534611),
-        Point.fromLngLat(-122.678833, 45.530883),
-        Point.fromLngLat(-122.667503, 45.547115),
-        Point.fromLngLat(-122.660121, 45.530643),
-        Point.fromLngLat(-122.636260, 45.533529),
-        Point.fromLngLat(-122.659091, 45.521743),
-        Point.fromLngLat(-122.648792, 45.510677),
-        Point.fromLngLat(-122.664070, 45.515008),
-        Point.fromLngLat(-122.669048, 45.502496),
-        Point.fromLngLat(-122.678489, 45.515369),
-        Point.fromLngLat(-122.702007, 45.506346),
-        Point.fromLngLat(-122.685699, 45.522585)
+    private const val SOURCE_URL = "asset://maine_polygon.geojson"
+    private val START_CAMERA_POSITION = cameraOptions {
+      center(
+        Point.fromLngLat(-68.137343, 45.137451)
       )
-    )
+      zoom(5.0)
+      bearing(0.0)
+      pitch(0.0)
+    }
   }
 }

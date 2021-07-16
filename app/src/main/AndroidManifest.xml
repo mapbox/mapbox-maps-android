@@ -440,49 +440,49 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.LineGradientActivity"
+            android:name=".examples.linesandpolygons.LineGradientActivity"
             android:description="@string/description_dds_gradient_line"
             android:exported="true"
             android:label="@string/activity_dds_gradient_line_title">
             <meta-data
                 android:name="@string/category"
-                android:value="@string/category_styles" />
+                android:value="@string/category_lines_and_polygons" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.PolygonHolesActivity"
+            android:name=".examples.linesandpolygons.PolygonHolesActivity"
             android:description="@string/description_dds_polygon_holes"
             android:exported="true"
             android:label="@string/activity_dds_polygon_holes_title">
             <meta-data
                 android:name="@string/category"
-                android:value="@string/category_styles" />
+                android:value="@string/category_lines_and_polygons" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.DrawPolygonActivity"
+            android:name=".examples.linesandpolygons.DrawPolygonActivity"
             android:description="@string/description_dds_polygon"
             android:exported="true"
             android:label="@string/activity_dds_polygon_title">
             <meta-data
                 android:name="@string/category"
-                android:value="@string/category_styles" />
+                android:value="@string/category_lines_and_polygons" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.DrawGeoJsonLineActivity"
+            android:name=".examples.linesandpolygons.DrawGeoJsonLineActivity"
             android:description="@string/description_dds_geojson_line"
             android:exported="true"
             android:label="@string/activity_dds_geojson_line_title">
             <meta-data
                 android:name="@string/category"
-                android:value="@string/category_styles" />
+                android:value="@string/category_lines_and_polygons" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
@@ -584,13 +584,13 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.MovingIconWithTrailingLineActivity"
+            android:name=".examples.linesandpolygons.MovingIconWithTrailingLineActivity"
             android:description="@string/description_lab_moving_icon_with_trailing_line_title"
             android:exported="true"
             android:label="@string/activity_lab_moving_icon_with_trailing_line_title">
             <meta-data
                 android:name="@string/category"
-                android:value="@string/category_lab" />
+                android:value="@string/category_lines_and_polygons" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
@@ -608,13 +608,13 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.SnakingDirectionsRouteActivity"
+            android:name=".examples.linesandpolygons.SnakingDirectionsRouteActivity"
             android:description="@string/description_labs_snaking_directions_route_title"
             android:exported="true"
             android:label="@string/activity_labs_snaking_directions_route_title">
             <meta-data
                 android:name="@string/category"
-                android:value="@string/category_lab" />
+                android:value="@string/category_lines_and_polygons" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />

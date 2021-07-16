@@ -45,7 +45,7 @@
     <string name="activity_distance_style">Distance Expression</string>
     <string name="activity_lab_moving_icon_with_trailing_line_title">Line behind moving icon</string>
     <string name="activity_animate_marker_position">Update point annotation position</string>
-    <string name="activity_labs_snaking_directions_route_title">Animate a line layer</string>
+    <string name="activity_labs_snaking_directions_route_title">Animate a line</string>
     <string name="activity_styles_show_hide_layers_title">Show/hide layers</string>
     <string name="activity_styles_dds_geojson_circle_layer_clusters_title">Cluster points within a layer</string>
     <string name="activity_style_change_icon_size_title">Change icon size</string>
