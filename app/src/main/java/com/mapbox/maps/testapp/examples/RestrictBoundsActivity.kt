@@ -40,12 +40,8 @@ class RestrictBoundsActivity : AppCompatActivity() {
         +geoJsonSource(BOUNDS_ID) {
           featureCollection(FeatureCollection.fromFeatures(listOf()))
         }
-        +fillLayer(BOUNDS_ID, BOUNDS_ID) {
-          fillColor(Color.RED)
-          fillOpacity(0.333)
-        }
       }
-    ) { setupBounds(ICELAND_BOUNDS) }
+    ) { setupBounds(SAN_FRANCISCO_BOUND) }
     showCrosshair()
   }
 
@@ -56,8 +52,8 @@ class RestrictBoundsActivity : AppCompatActivity() {
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
-      R.id.menu_action_iceland_bounds -> {
-        setupBounds(ICELAND_BOUNDS)
+      R.id.menu_action_san_francisco_bounds -> {
+        setupBounds(SAN_FRANCISCO_BOUND)
         return true
       }
       R.id.menu_action_allmost_world_bounds -> {
@@ -132,15 +128,15 @@ class RestrictBoundsActivity : AppCompatActivity() {
 
   companion object {
     private val BOUNDS_ID = "BOUNDS_ID"
-    private val ICELAND_BOUNDS: CameraBoundsOptions = CameraBoundsOptions.Builder()
+    private val SAN_FRANCISCO_BOUND: CameraBoundsOptions = CameraBoundsOptions.Builder()
       .bounds(
         CoordinateBounds(
-          Point.fromLngLat(-25.985652, 62.985661),
-          Point.fromLngLat(-12.626277, 66.852863),
+          Point.fromLngLat(-122.66336, 37.492987),
+          Point.fromLngLat(-122.250481, 37.87165),
           false
         )
       )
-      .minZoom(2.0)
+      .minZoom(10.0)
       .build()
 
     private val ALMOST_WORLD_BOUNDS: CameraBoundsOptions = CameraBoundsOptions.Builder()
