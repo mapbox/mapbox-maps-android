@@ -26,7 +26,7 @@ class AddMarkersSymbolActivity : AppCompatActivity() {
     setContentView(R.layout.activity_add_marker_symbol)
 
     mapView.getMapboxMap().loadStyle(
-      styleExtension = style(Style.LIGHT) {
+      styleExtension = style(Style.MAPBOX_STREETS) {
         // prepare red marker from resources
         +image(RED_ICON_ID) {
           bitmap(BitmapFactory.decodeResource(resources, R.drawable.red_marker))
@@ -43,16 +43,16 @@ class AddMarkersSymbolActivity : AppCompatActivity() {
               arrayOf(
                 Feature.fromGeometry(
                   Point.fromLngLat(
-                    72.88055419921875,
-                    19.05822387777432
+                    12.554729,
+                    55.70651
                   )
                 ).apply {
                   addStringProperty(ICON_KEY, ICON_RED_PROPERTY)
                 },
                 Feature.fromGeometry(
                   Point.fromLngLat(
-                    77.22015380859375,
-                    28.549544699103865
+                    12.65147,
+                    55.608166
                   )
                 ).apply {
                   addStringProperty(ICON_KEY, ICON_BLUE_PROPERTY)
