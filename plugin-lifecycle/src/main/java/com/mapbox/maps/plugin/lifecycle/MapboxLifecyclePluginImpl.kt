@@ -41,9 +41,9 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
 }
 
 /**
- * Extension function for MapView to get the map overlay plugin instance.
+ * Extension function for MapView to get the lifecycle plugin instance.
  *
- * @return Map overlay plugin instance
+ * @return Lifecycle plugin instance
  */
 fun MapPluginProviderDelegate.lifecycle(): MapboxLifecyclePlugin {
   return this.getPlugin(MapboxLifecyclePluginImpl::class.java)!!

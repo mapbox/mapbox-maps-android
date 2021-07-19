@@ -26,7 +26,7 @@ class StyleLoadTest {
   @UiThreadTest
   fun setUp() {
     rule.scenario.onActivity {
-      mapView = MapView(it)
+      mapView = MapView(it, MapInitOptions(it, plugins = listOf()))
       mapboxMap = mapView.getMapboxMap()
       it.frameLayout.addView(mapView)
     }
@@ -69,7 +69,7 @@ class StyleLoadTest {
       }
     }
     countDownLatch.await(10, TimeUnit.SECONDS)
-    Assert.assertEquals(2, styleLoadedCount)
+    Assert.assertEquals(1, styleLoadedCount)
   }
 
   @Test
