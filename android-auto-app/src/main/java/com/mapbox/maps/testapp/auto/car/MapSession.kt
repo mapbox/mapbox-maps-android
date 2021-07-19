@@ -17,7 +17,7 @@ import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.extension.style.terrain.generated.terrain
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.auto.R
-import com.mapbox.maps.testapp.auto.lib.MapboxCarUtils
+import com.mapbox.maps.testapp.auto.lib.initMapSurface
 
 /**
  * Session class for the Mapbox Map sample app for Android Auto.
@@ -28,7 +28,7 @@ class MapSession : Session() {
 
   override fun onCreateScreen(intent: Intent): Screen {
     val mapScreen = MapScreen(carContext)
-    MapboxCarUtils.initMapSurface(carContext, lifecycle, scrollListener = carCameraController) {
+    initMapSurface(scrollListener = carCameraController) {
       mapSurface = it
       carCameraController.init(
         mapSurface,
