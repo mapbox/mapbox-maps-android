@@ -31,6 +31,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   private val pluginRegistry: MapPluginRegistry
   private val onStyleDataLoadedListener: OnStyleDataLoadedListener
   private val onCameraChangedListener: OnCameraChangeListener
+  private var lifecycleState: LIFECYCLE_STATE = LIFECYCLE_STATE.STATE_PAUSED
 
   constructor(
     renderer: MapboxRenderer,
@@ -95,6 +96,11 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun onStart() {
+    if (lifecycleState != LIFECYCLE_STATE.STATE_PAUSED) {
+      return
+    }
+    lifecycleState = LIFECYCLE_STATE.STATE_STARTED
+
     nativeObserver.apply {
       onStart()
       addOnCameraChangeListener(onCameraChangedListener)
@@ -115,6 +121,11 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun onStop() {
+    if (lifecycleState != LIFECYCLE_STATE.STATE_STARTED) {
+      return
+    }
+    lifecycleState = LIFECYCLE_STATE.STATE_PAUSED
+
     nativeObserver.apply {
       removeOnCameraChangeListener(onCameraChangedListener)
       removeOnStyleDataLoadedListener(onStyleDataLoadedListener)
@@ -125,6 +136,11 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun onDestroy() {
+    if (lifecycleState == LIFECYCLE_STATE.STATE_DESTROYED) {
+      return
+    }
+    lifecycleState = LIFECYCLE_STATE.STATE_DESTROYED
+
     mapboxMap.onDestroy()
     nativeObserver.clearListeners()
     renderer.onDestroy()
@@ -273,12 +289,19 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     pluginRegistry.onAttachedToWindow(mapView)
   }
 
+  private enum class LIFECYCLE_STATE {
+    STATE_PAUSED,
+    STATE_STARTED,
+    STATE_DESTROYED
+  }
+
   companion object {
     const val TAG = "MapController"
     private const val PLUGIN_MISSING_TEMPLATE =
       "Add %s plugin dependency to the classpath take automatically load the plugin implementation."
     private const val VIEW_HIERARCHY_MISSING_TEMPLATE =
       "%s plugin requires a View hierarchy to be injected, plugin is ignored."
+
     init {
       MapboxMapStaticInitializer.loadMapboxMapNativeLib()
     }
