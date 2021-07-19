@@ -104,6 +104,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     super.onAttachedToWindow()
     mapController.onAttachedToWindow(this)
   }
+
   @SuppressLint("CustomViewStyleable")
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal fun parseTypedArray(context: Context, attrs: AttributeSet?): MapInitOptions {
