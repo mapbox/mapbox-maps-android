@@ -526,13 +526,13 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.MultipleGeometriesActivity"
+            android:name=".examples.markersandcallouts.MultipleGeometriesActivity"
             android:description="@string/description_dds_multiple_geometries"
             android:exported="true"
             android:label="@string/activity_dds_multiple_geometries_title">
             <meta-data
                 android:name="@string/category"
-                android:value="@string/category_styles" />
+                android:value="@string/category_markers_and_callouts" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
@@ -598,13 +598,13 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.AnimatedMarkerActivity"
+            android:name=".examples.markersandcallouts.AnimatedMarkerActivity"
             android:description="@string/description_animate_marker_position"
             android:exported="true"
             android:label="@string/activity_animate_marker_position">
             <meta-data
                 android:name="@string/category"
-                android:value="@string/category_lab" />
+                android:value="@string/category_markers_and_callouts" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
@@ -646,37 +646,37 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.IconSizeChangeOnClickActivity"
+            android:name=".examples.markersandcallouts.IconSizeChangeOnClickActivity"
             android:description="@string/description_change_icon_size"
             android:exported="true"
             android:label="@string/activity_style_change_icon_size_title">
             <meta-data
                 android:name="@string/category"
-                android:value="@string/category_styles" />
+                android:value="@string/category_markers_and_callouts" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.AddMarkersSymbolActivity"
+            android:name=".examples.markersandcallouts.AddMarkersSymbolActivity"
             android:description="@string/description_add_marker_symbol"
             android:exported="true"
             android:label="@string/activity_basic_add_marker_title">
             <meta-data
                 android:name="@string/category"
-                android:value="@string/category_basic" />
+                android:value="@string/category_markers_and_callouts" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.AddOneMarkerSymbolActivity"
+            android:name=".examples.markersandcallouts.AddOneMarkerSymbolActivity"
             android:description="@string/description_add_one_marker_symbol"
             android:exported="true"
             android:label="@string/activity_basic_add_one_marker_title">
             <meta-data
                 android:name="@string/category"
-                android:value="@string/category_basic" />
+                android:value="@string/category_markers_and_callouts" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
@@ -830,37 +830,37 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.annotation.PolygoneAnnotationActivity"
+            android:name=".examples.markersandcallouts.PolygoneAnnotationActivity"
             android:description="@string/description_annotation_fill"
             android:exported="true"
             android:label="@string/activity_fill">
             <meta-data
                 android:name="@string/category"
-                android:value="@string/category_annotation" />
+                android:value="@string/category_markers_and_callouts" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.annotation.CircleAnnotationActivity"
+            android:name=".examples.markersandcallouts.CircleAnnotationActivity"
             android:description="@string/description_annotation_circle"
             android:exported="true"
             android:label="@string/activity_circle">
             <meta-data
                 android:name="@string/category"
-                android:value="@string/category_annotation" />
+                android:value="@string/category_markers_and_callouts" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.annotation.PointAnnotationActivity"
+            android:name=".examples.markersandcallouts.PointAnnotationActivity"
             android:description="@string/description_annotation_symbol"
             android:exported="true"
             android:label="@string/activity_symbol">
             <meta-data
                 android:name="@string/category"
-                android:value="@string/category_annotation" />
+                android:value="@string/category_markers_and_callouts" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
@@ -878,25 +878,25 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.annotation.PointAnnotationClusterActivity"
+            android:name=".examples.markersandcallouts.PointAnnotationClusterActivity"
             android:description="@string/description_annotation_symbol_cluster"
             android:exported="true"
             android:label="@string/activity_symbol_cluster">
             <meta-data
                 android:name="@string/category"
-                android:value="@string/category_annotation" />
+                android:value="@string/category_markers_and_callouts" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.annotation.PolylineAnnotationActivity"
+            android:name=".examples.markersandcallouts.PolylineAnnotationActivity"
             android:description="@string/description_annotation_line"
             android:exported="true"
             android:label="@string/activity_line">
             <meta-data
                 android:name="@string/category"
-                android:value="@string/category_annotation" />
+                android:value="@string/category_markers_and_callouts" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />

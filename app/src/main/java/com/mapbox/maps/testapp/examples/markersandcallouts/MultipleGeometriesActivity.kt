@@ -1,4 +1,4 @@
-package com.mapbox.maps.testapp.examples
+package com.mapbox.maps.testapp.examples.markersandcallouts
 
 import android.graphics.Color
 import android.os.Bundle

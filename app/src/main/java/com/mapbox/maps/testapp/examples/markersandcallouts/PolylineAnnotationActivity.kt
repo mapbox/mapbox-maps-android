@@ -1,4 +1,4 @@
-package com.mapbox.maps.testapp.examples.annotation
+package com.mapbox.maps.testapp.examples.markersandcallouts
 
 import android.graphics.Color
 import android.os.Bundle
@@ -12,6 +12,7 @@ import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
 import kotlinx.android.synthetic.main.activity_add_marker_symbol.mapView
 import kotlinx.android.synthetic.main.activity_annotation.*
