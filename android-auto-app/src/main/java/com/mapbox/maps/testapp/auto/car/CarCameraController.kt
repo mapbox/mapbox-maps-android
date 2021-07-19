@@ -4,9 +4,9 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapSurface
 import com.mapbox.maps.dsl.cameraOptions
+import com.mapbox.maps.extension.androidauto.OnMapScrollListener
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
-import com.mapbox.maps.testapp.auto.lib.OnMapScrollListener
 
 /**
  * Controller class to handle map camera changes.

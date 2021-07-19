@@ -1,4 +1,4 @@
-package com.mapbox.maps.testapp.auto.lib
+package com.mapbox.maps.extension.androidauto
 
 import android.graphics.Rect
 import android.util.Log
@@ -9,14 +9,12 @@ import androidx.car.app.SurfaceContainer
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.mapbox.common.Logger
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.MapInitOptions
-import com.mapbox.maps.MapSurface
-import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.*
 
 /**
  * MapSurface ready callback, will be called when the MapSurface is created successfully.
  */
+@MapboxExperimental
 fun interface MapSurfaceReadyCallback {
   /**
    * Map surface is ready.
@@ -27,6 +25,7 @@ fun interface MapSurfaceReadyCallback {
 /**
  * Fired when there's a map scroll event.
  */
+@MapboxExperimental
 fun interface OnMapScrollListener {
   /**
    * Map scroll event fired.
@@ -37,6 +36,7 @@ fun interface OnMapScrollListener {
 /**
  * Fired when there's a map scale event.
  */
+@MapboxExperimental
 fun interface OnMapScaleListener {
   /**
    * Map scroll event fired.
@@ -52,6 +52,7 @@ fun interface OnMapScaleListener {
  * @param scaleListener
  * @param mapSurfaceReadyCallback
  */
+@MapboxExperimental
 fun Session.initMapSurface(
   mapInitOptions: MapInitOptions = MapInitOptions(carContext),
   scrollListener: OnMapScrollListener? = null,

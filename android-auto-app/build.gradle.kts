@@ -37,6 +37,7 @@ androidExtensions {
 }
 
 dependencies {
+  implementation(project(":extension-androidauto"))
   implementation(project(":sdk"))
   implementation(Dependencies.googleCarAppLibrary)
   implementation(Dependencies.kotlin)
