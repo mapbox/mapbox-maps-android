@@ -77,7 +77,7 @@ class AttributionViewImpl @JvmOverloads constructor(
   /**
    * Set an [View.OnClickListener] to AttributionView
    */
-  override fun setOnClickListener(listener: OnClickListener) {
+  override fun setViewOnClickListener(listener: OnClickListener) {
     super.setOnClickListener(listener)
   }
 }

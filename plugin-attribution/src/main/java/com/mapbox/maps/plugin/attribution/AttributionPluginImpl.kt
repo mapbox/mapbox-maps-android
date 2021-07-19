@@ -106,7 +106,7 @@ open class AttributionViewPlugin(
   override fun onPluginView(view: View) {
     attributionView = view as? AttributionView
       ?: throw IllegalArgumentException("The provided view needs to implement AttributionView")
-    attributionView.setOnClickListener(this)
+    attributionView.setViewOnClickListener(this)
   }
 
   /**
