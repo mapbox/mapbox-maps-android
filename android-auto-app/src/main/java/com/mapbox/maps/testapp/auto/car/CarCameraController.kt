@@ -4,9 +4,9 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapSurface
 import com.mapbox.maps.dsl.cameraOptions
+import com.mapbox.maps.extension.androidauto.OnMapScrollListener
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
-import com.mapbox.maps.testapp.auto.lib.OnMapScrollListener
 
 /**
  * Controller class to handle map camera changes.
@@ -27,8 +27,8 @@ class CarCameraController : OnIndicatorPositionChangedListener, OnMapScrollListe
     surface = mapSurface
     surface.getMapboxMap().setCamera(
       cameraOptions {
-        pitch(75.0)
-        zoom(16.0)
+        pitch(INITIAL_PITCH)
+        zoom(INITIAL_ZOOM)
         center(lastGpsLocation)
       }
     )
@@ -36,15 +36,13 @@ class CarCameraController : OnIndicatorPositionChangedListener, OnMapScrollListe
 
   override fun onIndicatorPositionChanged(point: Point) {
     lastGpsLocation = point
-    synchronized(this) {
-      if (isTrackingPuck) {
-        surface.getMapboxMap().setCamera(
-          cameraOptions {
-            center(point)
-            padding(insets)
-          }
-        )
-      }
+    if (isTrackingPuck) {
+      surface.getMapboxMap().setCamera(
+        cameraOptions {
+          center(point)
+          padding(insets)
+        }
+      )
     }
   }
 
@@ -84,6 +82,8 @@ class CarCameraController : OnIndicatorPositionChangedListener, OnMapScrollListe
 
   companion object {
     private val HELSINKI = Point.fromLngLat(24.9384, 60.1699)
+    private const val INITIAL_ZOOM = 16.0
+    private const val INITIAL_PITCH = 75.0
     private const val TAG = "CarCameraController"
   }
 }

@@ -10,6 +10,7 @@ import androidx.car.app.Session
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapSurface
 import com.mapbox.maps.Style
+import com.mapbox.maps.extension.androidauto.initMapSurface
 import com.mapbox.maps.extension.style.layers.generated.skyLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.SkyType
 import com.mapbox.maps.extension.style.sources.generated.rasterDemSource
@@ -17,7 +18,6 @@ import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.extension.style.terrain.generated.terrain
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.auto.R
-import com.mapbox.maps.testapp.auto.lib.initMapSurface
 
 /**
  * Session class for the Mapbox Map sample app for Android Auto.
@@ -28,8 +28,8 @@ class MapSession : Session() {
 
   override fun onCreateScreen(intent: Intent): Screen {
     val mapScreen = MapScreen(carContext)
-    initMapSurface(scrollListener = carCameraController) {
-      mapSurface = it
+    initMapSurface(scrollListener = carCameraController) { surface ->
+      mapSurface = surface
       carCameraController.init(
         mapSurface,
         EdgeInsets(
@@ -40,8 +40,8 @@ class MapSession : Session() {
         )
       )
       mapScreen.setMapCameraController(carCameraController)
-      loadStyle(it)
-      initLocationComponent(it)
+      loadStyle(surface)
+      initLocationComponent(surface)
     }
     return if (carContext.checkSelfPermission(ACCESS_FINE_LOCATION) != PERMISSION_GRANTED) {
       carContext.getCarService(ScreenManager::class.java).push(mapScreen)

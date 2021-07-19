@@ -1,7 +1,6 @@
-package com.mapbox.maps.testapp.auto.lib
+package com.mapbox.maps.extension.androidauto
 
 import android.graphics.Rect
-import android.util.Log
 import androidx.car.app.AppManager
 import androidx.car.app.Session
 import androidx.car.app.SurfaceCallback
@@ -9,14 +8,12 @@ import androidx.car.app.SurfaceContainer
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.mapbox.common.Logger
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.MapInitOptions
-import com.mapbox.maps.MapSurface
-import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.*
 
 /**
  * MapSurface ready callback, will be called when the MapSurface is created successfully.
  */
+@MapboxExperimental
 fun interface MapSurfaceReadyCallback {
   /**
    * Map surface is ready.
@@ -27,6 +24,7 @@ fun interface MapSurfaceReadyCallback {
 /**
  * Fired when there's a map scroll event.
  */
+@MapboxExperimental
 fun interface OnMapScrollListener {
   /**
    * Map scroll event fired.
@@ -37,6 +35,7 @@ fun interface OnMapScrollListener {
 /**
  * Fired when there's a map scale event.
  */
+@MapboxExperimental
 fun interface OnMapScaleListener {
   /**
    * Map scroll event fired.
@@ -52,6 +51,7 @@ fun interface OnMapScaleListener {
  * @param scaleListener
  * @param mapSurfaceReadyCallback
  */
+@MapboxExperimental
 fun Session.initMapSurface(
   mapInitOptions: MapInitOptions = MapInitOptions(carContext),
   scrollListener: OnMapScrollListener? = null,
@@ -62,7 +62,7 @@ fun Session.initMapSurface(
   val surfaceCallback: SurfaceCallback = object : SurfaceCallback {
     override fun onSurfaceAvailable(surfaceContainer: SurfaceContainer) {
       synchronized(this) {
-        Log.i(TAG, "Surface available $surfaceContainer")
+        Logger.i(TAG, "Surface available $surfaceContainer")
         surfaceContainer.surface?.let { surface ->
           mapSurface = MapSurface(carContext, surface, mapInitOptions).also { surface ->
             surface.surfaceCreated()
@@ -75,7 +75,7 @@ fun Session.initMapSurface(
 
     override fun onVisibleAreaChanged(visibleArea: Rect) {
       synchronized(this) {
-        Log.i(
+        Logger.i(
           TAG,
           "Visible area changed $visibleArea"
         )
@@ -84,7 +84,7 @@ fun Session.initMapSurface(
 
     override fun onStableAreaChanged(stableArea: Rect) {
       synchronized(this) {
-        Log.i(
+        Logger.i(
           TAG,
           "Stable area changed $stableArea"
         )
@@ -93,13 +93,13 @@ fun Session.initMapSurface(
 
     override fun onSurfaceDestroyed(surfaceContainer: SurfaceContainer) {
       synchronized(this) {
-        Log.i(TAG, "Surface destroyed")
+        Logger.i(TAG, "Surface destroyed")
         mapSurface?.surfaceDestroyed()
       }
     }
 
     override fun onScroll(distanceX: Float, distanceY: Float) {
-      Logger.e(TAG, "onScroll $distanceX, $distanceY")
+      Logger.d(TAG, "onScroll $distanceX, $distanceY")
       synchronized(this) {
         mapSurface?.onScroll(distanceX, distanceY)
         scrollListener?.onMapScroll()
@@ -107,7 +107,7 @@ fun Session.initMapSurface(
     }
 
     override fun onScale(focusX: Float, focusY: Float, scaleFactor: Float) {
-      Logger.e(TAG, "onScroll $focusX, $focusY, $scaleFactor")
+      Logger.d(TAG, "onScroll $focusX, $focusY, $scaleFactor")
       synchronized(this) {
         mapSurface?.onScale(focusX, focusY, scaleFactor)
         scaleListener?.onMapScale()
@@ -118,50 +118,61 @@ fun Session.initMapSurface(
   lifecycle.addObserver(
     object : DefaultLifecycleObserver {
       override fun onCreate(owner: LifecycleOwner) {
-        Log.i(TAG, "SurfaceRenderer created")
-        carContext.getCarService(AppManager::class.java)
-          .setSurfaceCallback(surfaceCallback)
+        Logger.i(TAG, "SurfaceRenderer created")
+        synchronized(this) {
+          carContext.getCarService(AppManager::class.java)
+            .setSurfaceCallback(surfaceCallback)
+        }
       }
 
       override fun onStart(owner: LifecycleOwner) {
-        Log.i(TAG, "onStart")
-        mapSurface?.onStart()
+        Logger.i(TAG, "onStart")
+        synchronized(this) {
+          mapSurface?.onStart()
+        }
       }
 
       override fun onStop(owner: LifecycleOwner) {
-        Log.i(TAG, "onStop")
-        mapSurface?.onStop()
+        Logger.i(TAG, "onStop")
+        synchronized(this) {
+          mapSurface?.onStop()
+        }
       }
 
       override fun onDestroy(owner: LifecycleOwner) {
-        Log.i(TAG, "onDestroy")
-        mapSurface?.onDestroy()
+        Logger.i(TAG, "onDestroy")
+        synchronized(this) {
+          mapSurface?.onDestroy()
+        }
       }
     }
   )
 }
 
 private fun MapSurface.onScroll(distanceX: Float, distanceY: Float) {
-  val centerScreen = ScreenCoordinate(0.0, 0.0)
-  getMapboxMap().apply {
-    dragStart(centerScreen)
-    val newCamera = getMapboxMap().getDragCameraOptions(
-      centerScreen,
-      ScreenCoordinate(
-        centerScreen.x - distanceX,
-        centerScreen.y - distanceY
+  Logger.i(TAG, "handleScroll $distanceX, $distanceY")
+  synchronized(this) {
+    val centerScreen = ScreenCoordinate(0.0, 0.0)
+    getMapboxMap().apply {
+      dragStart(centerScreen)
+      val newCamera = getMapboxMap().getDragCameraOptions(
+        centerScreen,
+        ScreenCoordinate(
+          centerScreen.x - distanceX,
+          centerScreen.y - distanceY
+        )
       )
-    )
-    setCamera(newCamera)
-    dragEnd()
+      setCamera(newCamera)
+      dragEnd()
+    }
   }
 }
 
 private fun MapSurface.onScale(focusX: Float, focusY: Float, scaleFactor: Float) {
-  Logger.e(TAG, "handleScale $focusX, $focusY. $scaleFactor")
+  Logger.i(TAG, "handleScale $focusX, $focusY. $scaleFactor")
   synchronized(this) {
     val cameraState = getMapboxMap().cameraState
-    Logger.e(TAG, "setting zoom ${cameraState.zoom * scaleFactor}")
+    Logger.i(TAG, "setting zoom ${cameraState.zoom * scaleFactor}")
     val newZoom = cameraState.zoom * scaleFactor
     val cameraOptionsBuilder = CameraOptions.Builder().zoom(newZoom)
     if (focusX >= 0 && focusY >= 0) {
