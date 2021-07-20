@@ -5,7 +5,6 @@ import android.os.Looper
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.CountDownLatch
@@ -19,7 +18,6 @@ class MapSnapshotterTest {
   private lateinit var mapSnapshotter: MapSnapshotter
 
   @Test
-  @Ignore("Flaky test #339")
   fun sanity() {
     val latch = CountDownLatch(1)
     Handler(Looper.getMainLooper()).post {
@@ -28,21 +26,27 @@ class MapSnapshotterTest {
         .resourceOptions(
           ResourceOptionsManager.getDefault(context).resourceOptions
         )
-        .size(Size(512.0f, 512.0f))
+        .size(Size(600.0f, 512.0f))
         .pixelRatio(1.0f)
         .build()
 
-      mapSnapshotter = MapSnapshotter(snapshotterOptions)
-      mapSnapshotter.setCamera(
-        CameraOptions.Builder().zoom(14.0).center(
-          com.mapbox.geojson.Point.fromLngLat(
-            4.895033, 52.374724
-          )
-        ).build()
-      )
-      mapSnapshotter.styleURI = Style.MAPBOX_STREETS
-      mapSnapshotter.start {
-        latch.countDown()
+      mapSnapshotter = MapSnapshotter(snapshotterOptions).apply {
+        setCamera(
+          CameraOptions.Builder().zoom(14.0).center(
+            com.mapbox.geojson.Point.fromLngLat(
+              4.895033, 52.374724
+            )
+          ).build()
+        )
+        styleURI = Style.MAPBOX_STREETS
+        start {
+          if (it.isValue) {
+            val image = it.value!!.image()
+            if (image.data.isNotEmpty() && image.width == 600 && image.height == 512) {
+              latch.countDown()
+            }
+          }
+        }
       }
     }
     if (!latch.await(10, TimeUnit.SECONDS)) {
