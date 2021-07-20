@@ -31,7 +31,6 @@ dependencies {
   testImplementation(Dependencies.mockk)
   testImplementation(Dependencies.androidxTestCore)
   testImplementation(Dependencies.robolectric)
-  testImplementation(project(":plugin-animation"))
   androidTestImplementation(Dependencies.androidxTestRunner)
   androidTestImplementation(Dependencies.androidxJUnitTestRules)
   androidTestImplementation(Dependencies.androidxEspresso)

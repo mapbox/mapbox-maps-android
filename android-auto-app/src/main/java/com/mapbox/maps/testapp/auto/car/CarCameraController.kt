@@ -27,8 +27,8 @@ class CarCameraController : OnIndicatorPositionChangedListener, OnMapScrollListe
     surface = mapSurface
     surface.getMapboxMap().setCamera(
       cameraOptions {
-        pitch(75.0)
-        zoom(16.0)
+        pitch(INITIAL_PITCH)
+        zoom(INITIAL_ZOOM)
         center(lastGpsLocation)
       }
     )
@@ -36,15 +36,13 @@ class CarCameraController : OnIndicatorPositionChangedListener, OnMapScrollListe
 
   override fun onIndicatorPositionChanged(point: Point) {
     lastGpsLocation = point
-    synchronized(this) {
-      if (isTrackingPuck) {
-        surface.getMapboxMap().setCamera(
-          cameraOptions {
-            center(point)
-            padding(insets)
-          }
-        )
-      }
+    if (isTrackingPuck) {
+      surface.getMapboxMap().setCamera(
+        cameraOptions {
+          center(point)
+          padding(insets)
+        }
+      )
     }
   }
 
@@ -84,6 +82,8 @@ class CarCameraController : OnIndicatorPositionChangedListener, OnMapScrollListe
 
   companion object {
     private val HELSINKI = Point.fromLngLat(24.9384, 60.1699)
+    private const val INITIAL_ZOOM = 16.0
+    private const val INITIAL_PITCH = 75.0
     private const val TAG = "CarCameraController"
   }
 }

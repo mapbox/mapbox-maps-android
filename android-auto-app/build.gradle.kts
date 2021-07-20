@@ -58,4 +58,4 @@ project.apply {
 }
 
 the<com.mapbox.AccessTokenExtension>().file =
-  "${project.rootDir}/extension-style-app/src/main/res/values/developer-config.xml"
+  "${project.rootDir}/android-auto-app/src/main/res/values/developer-config.xml"
