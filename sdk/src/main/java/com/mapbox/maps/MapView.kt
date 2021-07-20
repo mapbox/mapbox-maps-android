@@ -173,7 +173,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * @see android.app.Activity.onStart
    * @see android.app.Fragment.onStart
    */
-  @Deprecated("MapboxLifecyclePlugin is applied by default, no need to manually invoke this method.")
   override fun onStart() {
     mapController.onStart()
   }
@@ -183,7 +182,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * @see android.app.Activity.onStop
    * @see android.app.Fragment.onStop
    */
-  @Deprecated("MapboxLifecyclePlugin is applied by default, no need to manually invoke this method.")
   override fun onStop() {
     mapController.onStop()
   }
@@ -193,14 +191,13 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * @see android.app.Activity.onLowMemory
    * @see android.app.Fragment.onLowMemory
    */
-  fun onLowMemory() {
-    mapController.reduceMemoryUse()
+  override fun onLowMemory() {
+    mapController.onLowMemory()
   }
 
   /**
    * You must call this method from the parent's Activity#onDestroy() or Fragment#onDestroy()
    */
-  @Deprecated("MapboxLifecyclePlugin is applied by default, no need to manually invoke this method.")
   override fun onDestroy() {
     mapController.onDestroy()
   }

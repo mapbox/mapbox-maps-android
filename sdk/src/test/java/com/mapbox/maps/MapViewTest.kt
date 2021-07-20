@@ -95,7 +95,7 @@ class MapViewTest {
   @Test
   fun onLowMemory() {
     mapView.onLowMemory()
-    verify { mapController.reduceMemoryUse() }
+    verify { mapController.onLowMemory() }
   }
 
   @Test

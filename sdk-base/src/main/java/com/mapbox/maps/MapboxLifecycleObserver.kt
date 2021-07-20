@@ -18,4 +18,9 @@ interface MapboxLifecycleObserver {
    * Called to dispose the renderer
    */
   fun onDestroy()
+
+  /**
+   * Called to reduce memory use
+   */
+  fun onLowMemory()
 }
