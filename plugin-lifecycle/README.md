@@ -35,7 +35,7 @@ dependencies {
   implementation 'androidx.appcompat:appcompat:1.3.0'
 }
 ```
-The Lifecycle Plugin will take effect automatically if added to dependency
+The Lifecycle Plugin will take effect automatically if added as dependency.
 #### Dependencies
 
 View [LICENSE.md](LICENSE.md) for all dependencies used by this plugin.
