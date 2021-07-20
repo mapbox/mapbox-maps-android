@@ -1,10 +1,13 @@
 package com.mapbox.maps.plugin.lifecycle
 
+import android.content.ComponentCallbacks
+import android.content.res.Configuration
 import android.widget.FrameLayout
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ViewTreeLifecycleOwner
+import com.mapbox.common.Logger
 import com.mapbox.maps.MapboxLifecycleObserver
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 
@@ -19,8 +22,23 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
    * @param observer the observer that listen to the life cycle events
    */
   override fun registerLifecycleObserver(mapView: FrameLayout, observer: MapboxLifecycleObserver) {
-    ViewTreeLifecycleOwner.get(mapView)?.apply {
-      lifecycle.addObserver(object : LifecycleObserver {
+    val lifecycleOwner = ViewTreeLifecycleOwner.get(mapView)
+    if (lifecycleOwner == null) {
+      Logger.w(
+        TAG,
+        "Can't get lifecycleOwner for mapview, please make sure the host Activity is AppCompatActivity"
+      )
+    } else {
+      mapView.context.registerComponentCallbacks(object : ComponentCallbacks {
+        override fun onConfigurationChanged(newConfig: Configuration?) {
+          // no need
+        }
+
+        override fun onLowMemory() {
+          observer.onLowMemory()
+        }
+      })
+      lifecycleOwner.lifecycle.addObserver(object : LifecycleObserver {
         @OnLifecycleEvent(Lifecycle.Event.ON_START)
         fun onStart() {
           observer.onStart()
@@ -37,6 +55,10 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
         }
       })
     }
+  }
+
+  companion object {
+    private const val TAG = "MapboxLifecyclePlugin"
   }
 }
 

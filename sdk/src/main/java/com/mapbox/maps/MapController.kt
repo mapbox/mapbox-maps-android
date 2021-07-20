@@ -116,10 +116,6 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     }
   }
 
-  fun reduceMemoryUse() {
-    mapboxMap.reduceMemoryUse()
-  }
-
   override fun onStop() {
     if (lifecycleState != LIFECYCLE_STATE.STATE_STARTED) {
       return
@@ -145,6 +141,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     nativeObserver.clearListeners()
     renderer.onDestroy()
     pluginRegistry.cleanup()
+  }
+
+  override fun onLowMemory() {
+    mapboxMap.reduceMemoryUse()
   }
 
   override fun onTouchEvent(event: MotionEvent): Boolean {
