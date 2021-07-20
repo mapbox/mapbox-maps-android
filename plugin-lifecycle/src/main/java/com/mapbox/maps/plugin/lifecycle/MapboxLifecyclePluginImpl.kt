@@ -2,7 +2,7 @@ package com.mapbox.maps.plugin.lifecycle
 
 import android.content.ComponentCallbacks
 import android.content.res.Configuration
-import android.widget.FrameLayout
+import android.view.View
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
@@ -21,12 +21,15 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
    * @param mapView the instance of mapView, will get the LifecycleOwner from mapview's parent
    * @param observer the observer that listen to the life cycle events
    */
-  override fun registerLifecycleObserver(mapView: FrameLayout, observer: MapboxLifecycleObserver) {
+  override fun registerLifecycleObserver(mapView: View, observer: MapboxLifecycleObserver) {
     val lifecycleOwner = ViewTreeLifecycleOwner.get(mapView)
     if (lifecycleOwner == null) {
-      Logger.w(
+      Logger.e(
         TAG,
-        "Can't get lifecycleOwner for mapview, please make sure the host Activity is AppCompatActivity"
+        """Can't get lifecycleOwner for mapview,
+          please make sure the host Activity is AppCompatActivity and the version of appcompat is 1.3.0+.
+          If the host Activity is not AppCompatActivity,
+          you need manually invoke the corresponding lifecycle methods in onStart/onStop/onDestroy methods of the host Activity"""
       )
     } else {
       mapView.context.registerComponentCallbacks(object : ComponentCallbacks {

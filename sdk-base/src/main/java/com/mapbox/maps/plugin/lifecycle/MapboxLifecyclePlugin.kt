@@ -1,6 +1,6 @@
 package com.mapbox.maps.plugin.lifecycle
 
-import android.widget.FrameLayout
+import android.view.View
 import com.mapbox.maps.MapboxLifecycleObserver
 import com.mapbox.maps.plugin.MapPlugin
 
@@ -15,5 +15,5 @@ fun interface MapboxLifecyclePlugin : MapPlugin {
    * @param mapView the instance of mapView, will get the LifecycleOwner from mapview's parent
    * @param observer the observer that listen to the life cycle events
    */
-  fun registerLifecycleObserver(mapView: FrameLayout, observer: MapboxLifecycleObserver)
+  fun registerLifecycleObserver(mapView: View, observer: MapboxLifecycleObserver)
 }

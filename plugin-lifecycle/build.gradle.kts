@@ -19,7 +19,6 @@ dependencies {
   implementation(project(":sdk-base"))
   implementation(Dependencies.mapboxBase)
   implementation(Dependencies.kotlin)
-  implementation(Dependencies.androidxAppCompat)
   implementation(Dependencies.androidxCoreKtx)
   implementation(Dependencies.androidxLifecycle)
   testImplementation(Dependencies.junit)
