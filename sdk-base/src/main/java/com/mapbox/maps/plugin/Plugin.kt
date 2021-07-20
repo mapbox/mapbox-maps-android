@@ -37,6 +37,6 @@ const val PLUGIN_MAPOVERLAY_CLASS_NAME = "com.mapbox.maps.plugin.overlay.MapOver
  */
 const val PLUGIN_ANNOTATION_CLASS_NAME = "com.mapbox.maps.plugin.annotation.AnnotationPluginImpl"
 /**
- * Class name for life cycle plugin.
+ * Class name for lifecycle plugin.
  */
 const val PLUGIN_LIFE_CYCLE_CLASS_NAME = "com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePluginImpl"
