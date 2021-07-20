@@ -447,4 +447,3 @@ jobs:
       - track-metrics
       - publish-sdk-registry
       - publish-sdk-registry-named-snapshot
-      - generate-docs
