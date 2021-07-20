@@ -140,25 +140,9 @@ class AnimatePointAnnotationActivity : AppCompatActivity(), OnMapLoadedListener 
     animators.clear()
   }
 
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    cleanAnimation()
-    mapView.onStop()
-  }
-
   override fun onLowMemory() {
     super.onLowMemory()
     mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   private class CarEvaluator : TypeEvaluator<Point> {

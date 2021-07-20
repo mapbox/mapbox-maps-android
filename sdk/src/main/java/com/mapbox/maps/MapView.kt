@@ -100,6 +100,11 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     mapController.initializePlugins(resolvedMapInitOptions, this)
   }
 
+  override fun onAttachedToWindow() {
+    super.onAttachedToWindow()
+    mapController.onAttachedToWindow(this)
+  }
+
   @SuppressLint("CustomViewStyleable")
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal fun parseTypedArray(context: Context, attrs: AttributeSet?): MapInitOptions {
@@ -186,8 +191,8 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * @see android.app.Activity.onLowMemory
    * @see android.app.Fragment.onLowMemory
    */
-  fun onLowMemory() {
-    mapController.reduceMemoryUse()
+  override fun onLowMemory() {
+    mapController.onLowMemory()
   }
 
   /**

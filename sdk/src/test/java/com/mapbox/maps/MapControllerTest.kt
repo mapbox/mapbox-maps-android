@@ -108,6 +108,7 @@ class MapControllerTest {
 
   @Test
   fun onStop() {
+    mapController.onStart()
     mapController.onStop()
     verify { renderer.onStop() }
     verify { pluginRegistry.onStop() }
@@ -115,7 +116,7 @@ class MapControllerTest {
 
   @Test
   fun onReduceMemoryUse() {
-    mapController.reduceMemoryUse()
+    mapController.onLowMemory()
     verify { mapboxMap.reduceMemoryUse() }
   }
 

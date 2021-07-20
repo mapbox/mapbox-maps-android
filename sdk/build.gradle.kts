@@ -60,6 +60,7 @@ dependencies {
   api(project(":plugin-overlay"))
   api(project(":plugin-annotation"))
   api(project(":extension-localization"))
+  api(project(":plugin-lifecycle"))
   implementation(Dependencies.kotlin)
   implementation(Dependencies.androidxCoreKtx)
   implementation(Dependencies.androidxAnnotations)

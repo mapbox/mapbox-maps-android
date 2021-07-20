@@ -39,32 +39,6 @@ class MapFragment : Fragment() {
     callback.invoke(mapboxMap)
   } else this.onMapReady = callback
 
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroyView() {
-    super.onDestroyView()
-    mapView.onDestroy()
-  }
-
-//  // Used for test
-//  override fun onDestroy() {
-//    super.onDestroy()
-//    mapView.onDestroy()
-//  }
-
   fun getMapView(): MapView? {
     return mapView
   }
