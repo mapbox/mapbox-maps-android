@@ -13,7 +13,7 @@ fun interface MapboxLifecyclePlugin : MapPlugin {
    * Register the MapboxLifecycleObserver to observe lifecycle events from LifecycleOwner
    *
    * @param mapView the instance of mapView, will get the LifecycleOwner from mapview's parent
-   * @param observer the observer that listen to the life cycle events
+   * @param observer observer listening to lifecycle events
    */
   fun registerLifecycleObserver(mapView: View, observer: MapboxLifecycleObserver)
 }
