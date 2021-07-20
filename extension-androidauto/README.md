@@ -64,4 +64,4 @@ More concrete examples of the gestures plugin can be found in our [test applicat
 
 #### Dependencies
 
-View [LICENSE.md](LICENSE.md) for all dependencies used by this plugin.
+View [LICENSE.md](LICENSE.md) for all dependencies used by this extension.
