@@ -97,7 +97,7 @@ MapPluginRegistry(private val mapDelegateProvider: MapDelegateProvider) {
       }
 
       if (instance is MapboxLifecyclePlugin) {
-        mapboxLifecyclePlugins = instance
+        mapboxLifecyclePlugin = instance
       }
 
       instance.initialize()
@@ -178,6 +178,6 @@ MapPluginRegistry(private val mapDelegateProvider: MapDelegateProvider) {
   }
 
   fun onAttachedToWindow(mapView: MapView) {
-    mapboxLifecyclePlugins?.registerLifecycleObserver(mapView, mapView)
+    mapboxLifecyclePlugin?.registerLifecycleObserver(mapView, mapView)
   }
 }

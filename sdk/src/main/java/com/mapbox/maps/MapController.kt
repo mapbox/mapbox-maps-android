@@ -31,7 +31,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   private val pluginRegistry: MapPluginRegistry
   private val onStyleDataLoadedListener: OnStyleDataLoadedListener
   private val onCameraChangedListener: OnCameraChangeListener
-  private var lifecycleState: LIFECYCLE_STATE = LIFECYCLE_STATE.STATE_PAUSED
+  private var lifecycleState: LifecycleState = LifecycleState.STATE_STOPPED
 
   constructor(
     renderer: MapboxRenderer,
@@ -96,10 +96,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun onStart() {
-    if (lifecycleState != LIFECYCLE_STATE.STATE_PAUSED) {
+    if (lifecycleState == LifecycleState.STATE_STARTED) {
       return
     }
-    lifecycleState = LIFECYCLE_STATE.STATE_STARTED
+    lifecycleState = LifecycleState.STATE_STARTED
 
     nativeObserver.apply {
       onStart()
@@ -117,10 +117,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun onStop() {
-    if (lifecycleState != LIFECYCLE_STATE.STATE_STARTED) {
+    if (lifecycleState == LifecycleState.STATE_STOPPED) {
       return
     }
-    lifecycleState = LIFECYCLE_STATE.STATE_PAUSED
+    lifecycleState = LifecycleState.STATE_STOPPED
 
     nativeObserver.apply {
       removeOnCameraChangeListener(onCameraChangedListener)
@@ -132,10 +132,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun onDestroy() {
-    if (lifecycleState == LIFECYCLE_STATE.STATE_DESTROYED) {
+    if (lifecycleState == LifecycleState.STATE_DESTROYED) {
       return
     }
-    lifecycleState = LIFECYCLE_STATE.STATE_DESTROYED
+    lifecycleState = LifecycleState.STATE_DESTROYED
 
     mapboxMap.onDestroy()
     nativeObserver.clearListeners()
@@ -289,8 +289,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     pluginRegistry.onAttachedToWindow(mapView)
   }
 
-  private enum class LIFECYCLE_STATE {
-    STATE_PAUSED,
+  private enum class LifecycleState {
+    STATE_STOPPED,
     STATE_STARTED,
     STATE_DESTROYED
   }
