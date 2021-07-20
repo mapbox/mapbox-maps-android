@@ -10,7 +10,7 @@ import com.mapbox.maps.plugin.MapPlugin
 fun interface MapboxLifecyclePlugin : MapPlugin {
 
   /**
-   * Register a MapboxLifecycleObserver to observe life cycle events from LifecycleOwner
+   * Register the MapboxLifecycleObserver to observe lifecycle events from LifecycleOwner
    *
    * @param mapView the instance of mapView, will get the LifecycleOwner from mapview's parent
    * @param observer the observer that listen to the life cycle events
