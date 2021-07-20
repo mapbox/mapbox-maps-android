@@ -2,6 +2,7 @@ package com.mapbox.maps.plugin.lifecycle
 
 import android.content.ComponentCallbacks
 import android.content.res.Configuration
+import android.view.View
 import android.widget.FrameLayout
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
@@ -21,7 +22,7 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
    * @param mapView the instance of mapView, will get the LifecycleOwner from mapview's parent
    * @param observer the observer that listen to the life cycle events
    */
-  override fun registerLifecycleObserver(mapView: FrameLayout, observer: MapboxLifecycleObserver) {
+  override fun registerLifecycleObserver(mapView: View, observer: MapboxLifecycleObserver) {
     val lifecycleOwner = ViewTreeLifecycleOwner.get(mapView)
     if (lifecycleOwner == null) {
       Logger.w(

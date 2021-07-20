@@ -177,7 +177,7 @@ MapPluginRegistry(private val mapDelegateProvider: MapDelegateProvider) {
     }
   }
 
-  fun onAttachedToWindow(mapView: MapView) {
-    mapboxLifecyclePlugins?.registerLifecycleObserver(mapView, mapView)
+  fun onAttachedToWindow(mapView: View, observer: MapboxLifecycleObserver) {
+    mapboxLifecyclePlugins?.registerLifecycleObserver(mapView, observer)
   }
 }

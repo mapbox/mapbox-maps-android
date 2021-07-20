@@ -25,7 +25,7 @@ class MapWallpaper : WallpaperService() {
       super.onCreate(surfaceHolder)
       surfaceHolder.addCallback(this)
 
-      mapSurface = MapSurface(context, surfaceHolder.surface)
+//      mapSurface = MapSurface(context, surfaceHolder.surface)
       mapboxMap = mapSurface.getMapboxMap()
 
       // Custom configuration

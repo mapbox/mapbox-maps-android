@@ -3,6 +3,7 @@ package com.mapbox.maps
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.View
 import com.mapbox.annotation.module.MapboxModuleType
 import com.mapbox.common.Logger
 import com.mapbox.common.module.provider.MapboxModuleProvider
@@ -285,8 +286,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     }
   }
 
-  internal fun onAttachedToWindow(mapView: MapView) {
-    pluginRegistry.onAttachedToWindow(mapView)
+  internal fun onAttachedToWindow(mapView: View, observer: MapboxLifecycleObserver) {
+    pluginRegistry.onAttachedToWindow(mapView,observer)
   }
 
   private enum class LIFECYCLE_STATE {

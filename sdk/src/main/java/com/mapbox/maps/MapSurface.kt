@@ -1,9 +1,9 @@
 package com.mapbox.maps
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.view.MotionEvent
 import android.view.Surface
+import android.view.SurfaceView
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.renderer.MapboxSurfaceRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
@@ -25,9 +25,9 @@ import com.mapbox.maps.renderer.OnFpsChangedListener
  * @param mapInitOptions the init options to for map
  */
 class MapSurface(
-  context: Context,
+  surfaceView: SurfaceView,
   private val surface: Surface,
-  mapInitOptions: MapInitOptions = MapInitOptions(context)
+  mapInitOptions: MapInitOptions = MapInitOptions(surfaceView.context)
 ) : MapPluginProviderDelegate, MapControllable {
 
   private val mapController: MapController
@@ -39,6 +39,7 @@ class MapSurface(
       mapInitOptions
     )
     mapController.initializePlugins(mapInitOptions)
+    mapController.onAttachedToWindow(surfaceView,this)
   }
 
   /**

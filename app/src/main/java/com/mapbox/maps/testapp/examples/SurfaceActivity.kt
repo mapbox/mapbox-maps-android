@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.SurfaceHolder
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.common.Logger
 import com.mapbox.maps.*
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_surface.*
@@ -25,7 +26,7 @@ class SurfaceActivity : AppCompatActivity(), SurfaceHolder.Callback {
     surfaceHolder = surface.holder
     surfaceHolder.addCallback(this)
     mapSurface = MapSurface(
-      this,
+      surface,
       surfaceHolder.surface
     )
 
@@ -47,21 +48,6 @@ class SurfaceActivity : AppCompatActivity(), SurfaceHolder.Callback {
 
   override fun surfaceDestroyed(holder: SurfaceHolder) {
     mapSurface.surfaceDestroyed()
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapSurface.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapSurface.onStop()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapSurface.onDestroy()
   }
 
   companion object {

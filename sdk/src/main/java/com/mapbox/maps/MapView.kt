@@ -102,7 +102,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
 
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
-    mapController.onAttachedToWindow(this)
+    mapController.onAttachedToWindow(this, this)
   }
 
   @SuppressLint("CustomViewStyleable")
