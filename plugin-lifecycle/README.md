@@ -2,7 +2,7 @@
 
 ### Overview
 
-The Mapbox Maps Lifecycle Plugin for Android is an public library for handling Lifecycle events of the Mapbox SDK MapView. By default, the Lifecycle Plugin will automatically hook into the lifecycle events(onStart/onStop/onDestroy) of the host Activity or Fragment, so that developers doesn't need to manually invoke the corresponding lifecycle methods of MapView themselves.
+The Mapbox Maps Lifecycle Plugin for Android is an public library for handling Lifecycle events of the Mapbox SDK MapView. By default, the Lifecycle Plugin will automatically hook into the lifecycle events(onStart/onStop/onDestroy) of the host Activity or Fragment, so that developers don't need to invoke the corresponding lifecycle methods of MapView manually themselves.
 
 A full overview of classes and interfaces can be found in our [API documentation](https://docs.mapbox.com/android/beta/maps/guides/).
 
