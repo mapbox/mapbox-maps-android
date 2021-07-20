@@ -60,7 +60,7 @@ class MapSession : Session() {
   }
 ```
 
-More concrete examples of the gestures plugin can be found in our [test application](https://github.com/mapbox/mapbox-maps-android/tree/master/android-auto-app/src/main/java/com/mapbox/maps/testapp/auto).
+More concrete examples of the Android Auto extension can be found in our [test application](https://github.com/mapbox/mapbox-maps-android/tree/master/android-auto-app/src/main/java/com/mapbox/maps/testapp/auto).
 
 #### Dependencies
 
