@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.opengl.GLES20
 import android.opengl.GLES30
 import android.os.Build
+import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.annotation.RequiresApi
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -85,6 +86,7 @@ internal class PixelReader(
   companion object {
     // currently support just RGBA
     private const val channelNum = 4
+    @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.N)
     private val supportsPbo = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
   }
 }

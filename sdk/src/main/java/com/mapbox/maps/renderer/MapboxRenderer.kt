@@ -5,12 +5,14 @@ import android.graphics.Matrix
 import android.opengl.GLES20
 import androidx.annotation.*
 import com.mapbox.common.Logger
-import com.mapbox.maps.MapClient
-import com.mapbox.maps.MapInterface
+import com.mapbox.maps.*
 import com.mapbox.maps.MapView.OnSnapshotReady
 import com.mapbox.maps.Size
-import com.mapbox.maps.Task
+import com.mapbox.maps.extension.observable.getRenderFrameFinishedEventData
+import com.mapbox.maps.plugin.delegates.listeners.eventdata.RenderMode
 import com.mapbox.maps.renderer.gl.PixelReader
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 
@@ -29,6 +31,21 @@ internal abstract class MapboxRenderer : MapClient() {
   internal var pixelReader: PixelReader? = null
 
   internal var needDestroy = false
+
+  // in order to prevent snapshots being black we capture first moment
+  // when map is rendered fully
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal var readyForSnapshot = AtomicBoolean(false)
+  private val observer = object : Observer() {
+    override fun notify(event: Event) {
+      if (event.type == MapEvents.RENDER_FRAME_FINISHED) {
+        val data = event.getRenderFrameFinishedEventData()
+        if (data.renderMode == RenderMode.FULL) {
+          readyForSnapshot.set(true)
+        }
+      }
+    }
+  }
 
   @UiThread
   fun onDestroy() {
@@ -72,6 +89,8 @@ internal abstract class MapboxRenderer : MapClient() {
   @WorkerThread
   fun onSurfaceDestroyed() {
     map?.destroyRenderer()
+    pixelReader?.release()
+    pixelReader = null
   }
 
   @WorkerThread
@@ -82,13 +101,14 @@ internal abstract class MapboxRenderer : MapClient() {
   @UiThread
   fun onStop() {
     renderThread.pause()
-    pixelReader?.release()
-    pixelReader = null
+    map?.unsubscribe(observer)
+    readyForSnapshot.set(false)
   }
 
   @UiThread
   fun onStart() {
     renderThread.resume()
+    map?.subscribe(observer, listOf(MapEvents.RENDER_FRAME_FINISHED))
   }
 
   @AnyThread
@@ -102,7 +122,12 @@ internal abstract class MapboxRenderer : MapClient() {
   }
 
   @AnyThread
+  @Synchronized
   fun snapshot(): Bitmap? {
+    if (!readyForSnapshot.get()) {
+      Logger.e(TAG, "Could not take map snapshot because map is not ready yet.")
+      return null
+    }
     val lock = ReentrantLock()
     val waitCondition = lock.newCondition()
     lock.withLock {
@@ -113,13 +138,18 @@ internal abstract class MapboxRenderer : MapClient() {
           waitCondition.signal()
         }
       }
-      waitCondition.await()
+      waitCondition.await(1, TimeUnit.SECONDS)
       return snapshot
     }
   }
 
   @AnyThread
+  @Synchronized
   fun snapshot(listener: OnSnapshotReady) {
+    if (!readyForSnapshot.get()) {
+      Logger.e(TAG, "Could not take map snapshot because map is not ready yet.")
+      listener.onSnapshotReady(null)
+    }
     renderThread.queueRenderEvent {
       listener.onSnapshotReady(performSnapshot())
     }
