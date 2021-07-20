@@ -42,7 +42,7 @@ MapPluginRegistry(private val mapDelegateProvider: MapDelegateProvider) {
   private val gesturePlugins = CopyOnWriteArrayList<GesturesPlugin>()
   private val styleObserverPlugins = CopyOnWriteArrayList<MapStyleObserverPlugin>()
   private val mapSizePlugins = CopyOnWriteArrayList<MapSizePlugin>()
-  private var mapboxLifecyclePlugins: MapboxLifecyclePlugin? = null
+  private var mapboxLifecyclePlugin: MapboxLifecyclePlugin? = null
 
   fun <T> createPlugin(
     mapView: MapView?,
