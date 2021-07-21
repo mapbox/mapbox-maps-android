@@ -23,6 +23,10 @@ class SimpleMapActivity : AppCompatActivity() {
       }
   }
 
+  override fun onStart() {
+    super.onStart()
+    mapView.onStart()
+  }
   companion object {
     private const val LATITUDE = 40.0
     private const val LONGITUDE = -74.5
