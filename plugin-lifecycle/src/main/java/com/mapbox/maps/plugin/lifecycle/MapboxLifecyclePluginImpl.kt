@@ -29,7 +29,7 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
         """Can't get lifecycleOwner for mapview,
           please make sure the host Activity is AppCompatActivity and the version of appcompat is 1.3.0+.
           If the host Activity is not AppCompatActivity,
-          you need manually invoke the corresponding lifecycle methods in onStart/onStop/onDestroy methods of the host Activity"""
+          you need manually invoke the corresponding lifecycle methods in onStart/onStop/onDestroy/onLowMemory methods of the host Activity"""
       )
     } else {
       mapView.context.registerComponentCallbacks(object : ComponentCallbacks {
