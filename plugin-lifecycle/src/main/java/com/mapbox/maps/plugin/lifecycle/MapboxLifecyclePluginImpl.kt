@@ -70,6 +70,5 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
  *
  * @return Lifecycle plugin instance
  */
-fun MapPluginProviderDelegate.lifecycle(): MapboxLifecyclePlugin {
-  return this.getPlugin(MapboxLifecyclePluginImpl::class.java)!!
-}
+val MapPluginProviderDelegate.lifecycle: MapboxLifecyclePlugin
+  get() = this.getPlugin(MapboxLifecyclePluginImpl::class.java)!!

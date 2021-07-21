@@ -72,7 +72,6 @@ dependencies {
   implementation(Dependencies.squareRetrofit)
   implementation(Dependencies.androidxFragmentTest)
   implementation(Dependencies.squareRetrofitGsonConverter)
-  implementation(Dependencies.androidxAppCompat)
 
   // By default, the Maps SDK uses the Android Location Provider to obtain raw location updates.
   // And with Android 11, the raw location updates might suffer from precision issue.
