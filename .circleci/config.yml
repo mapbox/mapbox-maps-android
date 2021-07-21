@@ -133,6 +133,10 @@ commands:
             if [[ $CIRCLE_TAG == android-v* ]]; then
               sed -i -e "s/^VERSION_NAME=.*/VERSION_NAME=${CIRCLE_TAG:9}/" gradle.properties
             fi
+            if [[ $CIRCLE_TAG == main ]]; then
+              COMMIT_SHA=$(git rev-parse --short HEAD)
+              sed -i -e "s/-SNAPSHOT.*/-${COMMIT_SHA}-SNAPSHOT/" gradle.properties
+            fi
 
   generate-docs:
     steps:
