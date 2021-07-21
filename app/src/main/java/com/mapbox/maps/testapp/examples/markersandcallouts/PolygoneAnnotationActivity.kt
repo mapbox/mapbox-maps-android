@@ -105,9 +105,4 @@ class PolygoneAnnotationActivity : AppCompatActivity() {
     }
     changeStyle.setOnClickListener { mapView.getMapboxMap().loadStyleUri(nextStyle) }
   }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
 }

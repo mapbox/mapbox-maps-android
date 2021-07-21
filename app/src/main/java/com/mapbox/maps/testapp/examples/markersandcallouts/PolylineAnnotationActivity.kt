@@ -114,11 +114,6 @@ class PolylineAnnotationActivity : AppCompatActivity() {
     }
   }
 
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
   companion object {
     private const val LAYER_ID = "line_layer"
     private const val SOURCE_ID = "line_source"

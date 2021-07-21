@@ -116,11 +116,6 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
     }
   }
 
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
   companion object {
     private const val AMOUNT = 10000
     private const val ICON_FIRE_STATION = "fire-station-11"

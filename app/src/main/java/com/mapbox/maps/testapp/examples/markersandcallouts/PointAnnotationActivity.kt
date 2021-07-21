@@ -297,11 +297,6 @@ class PointAnnotationActivity : AppCompatActivity() {
     animators.add(moveSymbol)
   }
 
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
   companion object {
     private const val ID_ICON_AIRPORT = "airport"
     private const val MAKI_ICON_CAR = "car-15"

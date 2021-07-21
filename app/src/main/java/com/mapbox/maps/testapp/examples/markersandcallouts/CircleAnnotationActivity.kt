@@ -101,11 +101,6 @@ class CircleAnnotationActivity : AppCompatActivity() {
     }
   }
 
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
   companion object {
     private const val CIRCLE_LONGITUDE = 0.381457
     private const val CIRCLE_LATITUDE = 6.687337
