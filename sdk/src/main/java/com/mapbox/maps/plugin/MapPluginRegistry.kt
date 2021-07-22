@@ -5,6 +5,7 @@ import android.view.View
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
+import com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePlugin
 import java.util.concurrent.CopyOnWriteArrayList
 
 @Suppress("UNCHECKED_CAST")
@@ -41,6 +42,7 @@ MapPluginRegistry(private val mapDelegateProvider: MapDelegateProvider) {
   private val gesturePlugins = CopyOnWriteArrayList<GesturesPlugin>()
   private val styleObserverPlugins = CopyOnWriteArrayList<MapStyleObserverPlugin>()
   private val mapSizePlugins = CopyOnWriteArrayList<MapSizePlugin>()
+  private var mapboxLifecyclePlugin: MapboxLifecyclePlugin? = null
 
   fun <T> createPlugin(
     mapView: MapView?,
@@ -92,6 +94,10 @@ MapPluginRegistry(private val mapDelegateProvider: MapDelegateProvider) {
 
       if (instance is MapStyleObserverPlugin) {
         styleObserverPlugins.add(instance)
+      }
+
+      if (instance is MapboxLifecyclePlugin) {
+        mapboxLifecyclePlugin = instance
       }
 
       instance.initialize()
@@ -169,5 +175,9 @@ MapPluginRegistry(private val mapDelegateProvider: MapDelegateProvider) {
     plugins.forEach {
       it.value.cleanup()
     }
+  }
+
+  fun onAttachedToWindow(mapView: MapView) {
+    mapboxLifecyclePlugin?.registerLifecycleObserver(mapView, mapView)
   }
 }
