@@ -354,6 +354,10 @@ jobs:
   run-robo-test:
     docker:
       - image: mbgl/android-ndk-r21e:latest
+    resource_class: xlarge
+    environment:
+      JVM_OPTS: -Xmx3200m
+      GRADLE_OPTS: -Xmx4096m -Dorg.gradle.daemon=false -Dkotlin.compiler.execution.strategy=in-process
 
     steps:
       - checkout
@@ -436,6 +440,10 @@ jobs:
   build-sdk-release:
     docker:
       - image: mbgl/android-ndk-r21e:latest
+    resource_class: xlarge
+    environment:
+      JVM_OPTS: -Xmx3200m
+      GRADLE_OPTS: -Xmx4096m -Dorg.gradle.daemon=false -Dkotlin.compiler.execution.strategy=in-process
 
     steps:
       - checkout
