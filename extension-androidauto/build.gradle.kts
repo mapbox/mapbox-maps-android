@@ -22,7 +22,7 @@ android {
 }
 
 dependencies {
-  implementation(project(":sdk"))
+  compileOnly(project(":sdk"))
   implementation(Dependencies.googleCarAppLibrary)
   implementation(Dependencies.kotlin)
   implementation(Dependencies.androidxCoreKtx)
