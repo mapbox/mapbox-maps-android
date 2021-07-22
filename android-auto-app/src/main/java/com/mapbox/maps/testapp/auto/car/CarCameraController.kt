@@ -54,7 +54,7 @@ class CarCameraController : OnIndicatorPositionChangedListener, OnMapScrollListe
    * Make camera center to location puck and track the location puck's position.
    */
   fun focusOnLocationPuck() {
-    surface.camera.easeTo(
+    surface.camera.flyTo(
       cameraOptions {
         center(lastGpsLocation)
       }
