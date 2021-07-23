@@ -173,8 +173,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * @see android.app.Activity.onStart
    * @see android.app.Fragment.onStart
    */
-  @MapboxObsolete
-  @Deprecated("test message")
   override fun onStart() {
     mapController.onStart()
   }
@@ -184,7 +182,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * @see android.app.Activity.onStop
    * @see android.app.Fragment.onStop
    */
-  @MapboxObsolete
   override fun onStop() {
     mapController.onStop()
   }
@@ -194,7 +191,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * @see android.app.Activity.onLowMemory
    * @see android.app.Fragment.onLowMemory
    */
-  @MapboxObsolete
   override fun onLowMemory() {
     mapController.onLowMemory()
   }
@@ -202,7 +198,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   /**
    * You must call this method from the parent's Activity#onDestroy() or Fragment#onDestroy()
    */
-  @MapboxObsolete
   override fun onDestroy() {
     mapController.onDestroy()
   }

@@ -4,14 +4,46 @@ import com.android.tools.lint.checks.infrastructure.TestFiles
 import com.android.tools.lint.checks.infrastructure.TestLintTask
 import org.junit.Test
 
-class MapboxObsoleteDetectorTest {
+class LifecycleMethodDetectorTest {
+  val mapViewFile = TestFiles.java(
+    """
+                    package com.mapbox.maps;
+                    public class MapView {
+                        void onStart() {
+                        }
+                        void onStop() {
+                        }
+                        void onDestroy() {
+                        }
+                        void onLowMemory() {
+                        }
+                    }
+                    """
+  ).indented()
+
+  val fooFile = TestFiles.java(
+    """
+                    package com.foo;
+                    public class Foo {
+                        void onStart() {
+                        }
+                        void onStop() {
+                        }
+                        void onDestroy() {
+                        }
+                        void onLowMemory() {
+                        }
+                    }
+                    """
+  ).indented()
 
   @Test
   fun mapViewOnStart() {
     TestLintTask.lint().files(
+      mapViewFile,
       TestFiles.java(
         """
-                    package test.pkg;
+                    package com.foo;
                     import com.mapbox.maps.MapView;
                     public class TestClass {
                         MapView mapView = new MapView();
@@ -24,12 +56,12 @@ class MapboxObsoleteDetectorTest {
     )
 
       .issues(
-        MapboxObsoleteDetector.ISSUE
+        LifecycleMethodDetector.ISSUE
       )
       .run()
       .expect(
         """
-         |src/test/pkg/TestClass.java:6: Warning: No need to invoke onStart/onStop/onDestroy/onLowMemory with Mapbox Lifecycle Plugin. [Lifecycle]
+         |src/com/foo/TestClass.java:6: Warning: No need to invoke onStart/onStop/onDestroy/onLowMemory with Mapbox Lifecycle Plugin. [Lifecycle]
          |        mapView.onStart();
          |        ~~~~~~~~~~~~~~~~~
          |0 errors, 1 warnings
@@ -40,9 +72,10 @@ class MapboxObsoleteDetectorTest {
   @Test
   fun mapViewOnStop() {
     TestLintTask.lint().files(
+      mapViewFile,
       TestFiles.java(
         """
-                    package test.pkg;
+                    package com.foo;
                     import com.mapbox.maps.MapView;
                     public class TestClass {
                         MapView mapView = new MapView();
@@ -54,12 +87,12 @@ class MapboxObsoleteDetectorTest {
       ).indented()
     )
       .issues(
-        MapboxObsoleteDetector.ISSUE
+        LifecycleMethodDetector.ISSUE
       )
       .run()
       .expect(
         """
-         |src/test/pkg/TestClass.java:6: Warning: No need to invoke onStart/onStop/onDestroy/onLowMemory with Mapbox Lifecycle Plugin. [Lifecycle]
+         |src/com/foo/TestClass.java:6: Warning: No need to invoke onStart/onStop/onDestroy/onLowMemory with Mapbox Lifecycle Plugin. [Lifecycle]
          |        mapView.onStop();
          |        ~~~~~~~~~~~~~~~~
          |0 errors, 1 warnings
@@ -70,9 +103,10 @@ class MapboxObsoleteDetectorTest {
   @Test
   fun mapViewOnDestroy() {
     TestLintTask.lint().files(
+      mapViewFile,
       TestFiles.java(
         """
-                    package test.pkg;
+                    package com.foo;
                     import com.mapbox.maps.MapView;
                     public class TestClass {
                         MapView mapView = new MapView();
@@ -84,12 +118,12 @@ class MapboxObsoleteDetectorTest {
       ).indented()
     )
       .issues(
-        MapboxObsoleteDetector.ISSUE
+        LifecycleMethodDetector.ISSUE
       )
       .run()
       .expect(
         """
-         |src/test/pkg/TestClass.java:6: Warning: No need to invoke onStart/onStop/onDestroy/onLowMemory with Mapbox Lifecycle Plugin. [Lifecycle]
+         |src/com/foo/TestClass.java:6: Warning: No need to invoke onStart/onStop/onDestroy/onLowMemory with Mapbox Lifecycle Plugin. [Lifecycle]
          |        mapView.onDestroy();
          |        ~~~~~~~~~~~~~~~~~~~
          |0 errors, 1 warnings
@@ -100,9 +134,10 @@ class MapboxObsoleteDetectorTest {
   @Test
   fun mapViewOnLowMemory() {
     TestLintTask.lint().files(
+      mapViewFile,
       TestFiles.java(
         """
-                    package test.pkg;
+                    package com.foo;
                     import com.mapbox.maps.MapView;
                     public class TestClass {
                         MapView mapView = new MapView();
@@ -114,12 +149,12 @@ class MapboxObsoleteDetectorTest {
       ).indented()
     )
       .issues(
-        MapboxObsoleteDetector.ISSUE
+        LifecycleMethodDetector.ISSUE
       )
       .run()
       .expect(
         """
-         |src/test/pkg/TestClass.java:6: Warning: No need to invoke onStart/onStop/onDestroy/onLowMemory with Mapbox Lifecycle Plugin. [Lifecycle]
+         |src/com/foo/TestClass.java:6: Warning: No need to invoke onStart/onStop/onDestroy/onLowMemory with Mapbox Lifecycle Plugin. [Lifecycle]
          |        mapView.onLowMemory();
          |        ~~~~~~~~~~~~~~~~~~~~~
          |0 errors, 1 warnings
@@ -130,10 +165,12 @@ class MapboxObsoleteDetectorTest {
   @Test
   fun normalOnStart() {
     TestLintTask.lint().files(
+      fooFile,
       TestFiles.java(
         """
-                    package test.pkg;
+                    package com.foo;
                     public class TestClass {
+                        Foo foo = new Foo();
                         void onStart() {
                             foo.onStart();
                         }
@@ -142,7 +179,7 @@ class MapboxObsoleteDetectorTest {
       ).indented()
     )
       .issues(
-        MapboxObsoleteDetector.ISSUE
+        LifecycleMethodDetector.ISSUE
       )
       .run()
       .expectClean()
@@ -151,10 +188,12 @@ class MapboxObsoleteDetectorTest {
   @Test
   fun normalOnStop() {
     TestLintTask.lint().files(
+      fooFile,
       TestFiles.java(
         """
-                    package test.pkg;
+                    package com.foo;
                     public class TestClass {
+                        Foo foo = new Foo();
                         void onStop() {
                             foo.onStop();
                         }
@@ -163,7 +202,7 @@ class MapboxObsoleteDetectorTest {
       ).indented()
     )
       .issues(
-        MapboxObsoleteDetector.ISSUE
+        LifecycleMethodDetector.ISSUE
       )
       .run()
       .expectClean()
@@ -172,10 +211,12 @@ class MapboxObsoleteDetectorTest {
   @Test
   fun normalOnDestroy() {
     TestLintTask.lint().files(
+      fooFile,
       TestFiles.java(
         """
-                    package test.pkg;
+                    package com.foo;
                     public class TestClass {
+                        Foo foo = new Foo();
                         void onDestroy() {
                             foo.onDestroy();
                         }
@@ -184,7 +225,7 @@ class MapboxObsoleteDetectorTest {
       ).indented()
     )
       .issues(
-        MapboxObsoleteDetector.ISSUE
+        LifecycleMethodDetector.ISSUE
       )
       .run()
       .expectClean()
@@ -193,10 +234,12 @@ class MapboxObsoleteDetectorTest {
   @Test
   fun normalOnLowMemory() {
     TestLintTask.lint().files(
+      fooFile,
       TestFiles.java(
         """
-                    package test.pkg;
+                    package com.foo;
                     public class TestClass {
+                        Foo foo = new Foo();
                         void onLowMemory() {
                             foo.onLowMemory();
                         }
@@ -205,7 +248,7 @@ class MapboxObsoleteDetectorTest {
       ).indented()
     )
       .issues(
-        MapboxObsoleteDetector.ISSUE
+        LifecycleMethodDetector.ISSUE
       )
       .run()
       .expectClean()
