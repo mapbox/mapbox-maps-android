@@ -1,5 +1,4 @@
 buildscript {
-  val kotlin_version by extra("1.5.21")
   repositories {
     google()
     jcenter()
@@ -25,7 +24,6 @@ buildscript {
     classpath(Plugins.androidPublish)
     classpath(Plugins.mapboxAccessToken)
     classpath(Plugins.mapboxSdkRegistry)
-    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
   }
 }
 

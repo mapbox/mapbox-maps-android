@@ -29,6 +29,8 @@ dependencies {
   androidTestImplementation(Dependencies.androidxJUnitTestRules)
   androidTestImplementation(Dependencies.androidxEspresso)
   lintPublish(project(":mapbox-lint"))
+  // Custom China Lint library
+//  lintChecks(project(":mapbox-lint"))
 }
 
 tasks.withType<DokkaTask>().configureEach {
