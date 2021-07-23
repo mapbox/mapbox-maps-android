@@ -29,7 +29,7 @@ class LifecycleMethodDetector : Detector(), Detector.UastScanner {
     private const val BRIEF_DESCRIPTION = "Redundant method call"
     private const val PRIORITY = 8
     private const val REPORT_MESSAGE =
-      "No need to invoke onStart/onStop/onDestroy/onLowMemory explicitly when Mapbox Lifecycle Plugin is added as dependency."
+      "No need to invoke onStart/onStop/onDestroy/onLowMemory explicitly when Mapbox Lifecycle Plugin is added as dependency and appcompact 1.3.0+ is used."
 
     private val IMPLEMENTATION = Implementation(
       LifecycleMethodDetector::class.java, Scope.JAVA_FILE_SCOPE
