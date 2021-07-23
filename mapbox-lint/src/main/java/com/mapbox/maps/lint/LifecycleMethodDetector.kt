@@ -28,7 +28,7 @@ class LifecycleMethodDetector : Detector(), Detector.UastScanner {
     private const val ISSUE_ID = "Lifecycle"
     private const val BRIEF_DESCRIPTION = "Redundant method call"
     private const val REPORT_MESSAGE =
-      "No need to invoke onStart/onStop/onDestroy/onLowMemory with Mapbox Lifecycle Plugin."
+      "No need to invoke onStart/onStop/onDestroy/onLowMemory explicitly when Mapbox Lifecycle Plugin is added as dependency."
 
     private val IMPLEMENTATION = Implementation(
       LifecycleMethodDetector::class.java, Scope.JAVA_FILE_SCOPE
