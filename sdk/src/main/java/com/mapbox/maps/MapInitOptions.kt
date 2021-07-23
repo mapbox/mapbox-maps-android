@@ -15,7 +15,7 @@ import com.mapbox.maps.plugin.*
  * @property context The context of the MapView.
  * @property resourceOptions Resource options when using a MapView. Access token required when using a Mapbox service. Please see [https://www.mapbox.com/help/create-api-access-token/](https://www.mapbox.com/help/create-api-access-token/) to learn how to create one.More information in this guide [https://www.mapbox.com/help/first-steps-android-sdk/#access-tokens](https://www.mapbox.com/help/first-steps-android-sdk/#access-tokens).
  * @property mapOptions Describes the map options value when using a MapView.
- * @property plugins The plugins, a list of strings representing class names, that will be loaded as part of MapView initialisation,
+ * @property pluginTypes The plugins, a list of strings representing class names, that will be loaded as part of MapView initialisation,
  * @property cameraOptions The Initial Camera options when creating a MapView.
  * @property textureView Flag indicating to use a TextureView as render surface for the MapView. Default is false.
  * @property styleUri The styleUri will applied for the MapView in the onStart lifecycle event if no style is set. Default is [Style.MAPBOX_STREETS]. If set to null, then there is no default style will be loaded.
@@ -25,7 +25,7 @@ data class MapInitOptions constructor(
   val context: Context,
   var resourceOptions: ResourceOptions = getDefaultResourceOptions(context),
   var mapOptions: MapOptions = getDefaultMapOptions(context),
-  var plugins: List<String> = getDefaultPlugins(),
+  var pluginTypes: List<PluginType> = PluginType.values().toList(),
   var cameraOptions: CameraOptions? = null,
   var textureView: Boolean = false,
   val styleUri: String? = Style.MAPBOX_STREETS,
@@ -49,24 +49,6 @@ data class MapInitOptions constructor(
      */
     fun getDefaultMapOptions(context: Context): MapOptions =
       MapOptions.Builder().applyDefaultParams(context).build()
-
-    /**
-     * Get a default selection of Mapbox created plugins.
-     */
-    fun getDefaultPlugins(): List<String> {
-      return listOf(
-        PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME,
-        PLUGIN_COMPASS_CLASS_NAME,
-        PLUGIN_LOGO_CLASS_NAME,
-        PLUGIN_GESTURE_CLASS_NAME,
-        PLUGIN_ATTRIBUTION_CLASS_NAME,
-        PLUGIN_LOCATION_COMPONENT_CLASS_NAME,
-        PLUGIN_SCALE_BAR_CLASS_NAME,
-        PLUGIN_MAPOVERLAY_CLASS_NAME,
-        PLUGIN_ANNOTATION_CLASS_NAME,
-        PLUGIN_LIFE_CYCLE_CLASS_NAME
-      )
-    }
   }
 }
 

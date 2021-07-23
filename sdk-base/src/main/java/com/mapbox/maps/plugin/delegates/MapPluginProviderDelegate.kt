@@ -1,5 +1,8 @@
 package com.mapbox.maps.plugin.delegates
 
+import com.mapbox.maps.plugin.MapPlugin
+import com.mapbox.maps.plugin.PluginType
+
 /**
  * Definition of a map plugin provider delegate.
  */
@@ -10,13 +13,5 @@ interface MapPluginProviderDelegate {
    * @param clazz the same class type that was used when instantiating the plugin
    * @return created plugin instance
    */
-  fun <T> getPlugin(clazz: Class<T>): T?
-
-  /**
-   * Get the plugin instance from name.
-   *
-   * @param className
-   * @return created plugin instance
-   */
-  fun <T> getPlugin(className: String): T?
+  fun getPlugin(type: PluginType): MapPlugin?
 }

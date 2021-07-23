@@ -9,7 +9,7 @@ import com.mapbox.maps.plugin.animation.CameraAnimatorType
 /**
  * Animator class used to animate [CameraOptions.zoom] property.
  */
-internal class CameraZoomAnimator : CameraAnimator<Double> {
+class CameraZoomAnimator : CameraAnimator<Double> {
 
   constructor(
     options: CameraAnimatorOptions<Double>,

@@ -30,7 +30,7 @@ import kotlin.properties.Delegates
  * However, it doesn't have to be the UI thread.
  */
 
-internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
+class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal val animators = hashSetOf<CameraAnimator<*>>()

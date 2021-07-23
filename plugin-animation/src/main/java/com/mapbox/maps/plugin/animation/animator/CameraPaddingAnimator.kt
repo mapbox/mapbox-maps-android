@@ -9,7 +9,7 @@ import com.mapbox.maps.plugin.animation.CameraAnimatorType
 /**
  * Animator class used to animate [CameraOptions.padding] property.
  */
-internal class CameraPaddingAnimator(
+class CameraPaddingAnimator(
   options: CameraAnimatorOptions<EdgeInsets>,
   block: (ValueAnimator.() -> Unit)? = null
 ) : CameraAnimator<EdgeInsets>(

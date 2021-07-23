@@ -36,7 +36,7 @@ MapPluginRegistry(private val mapDelegateProvider: MapDelegateProvider) {
       }
     }
 
-  private val plugins = mutableMapOf<Class<*>, MapPlugin>()
+  private val plugins = mutableMapOf<PluginType, MapPlugin>()
   private val viewPlugins = mutableMapOf<ViewPlugin, View>()
   private val cameraPlugins = CopyOnWriteArrayList<MapCameraPlugin>()
   private val gesturePlugins = CopyOnWriteArrayList<GesturesPlugin>()
@@ -44,21 +44,20 @@ MapPluginRegistry(private val mapDelegateProvider: MapDelegateProvider) {
   private val mapSizePlugins = CopyOnWriteArrayList<MapSizePlugin>()
   private var mapboxLifecyclePlugin: MapboxLifecyclePlugin? = null
 
-  fun <T> createPlugin(
+  fun createPlugin(
     mapView: MapView?,
     mapInitOptions: MapInitOptions,
-    pluginImplementationClazz: Class<T>,
-    vararg constructorArguments: Pair<Class<*>, Any>
-  ): T {
-    if (!plugins.containsKey(pluginImplementationClazz)) {
-      val instance = pluginImplementationClazz.instantiate(*constructorArguments) as MapPlugin
+    type: PluginType,
+    instance: MapPlugin
+  ) {
+    if (!plugins.containsKey(type)) {
 
       if (instance is ViewPlugin && mapView == null) {
         // throw if view plugin if host is not a MapView (eg. MapSurface)
-        throw InvalidViewPluginHostException("Cause: $pluginImplementationClazz")
+        throw InvalidViewPluginHostException("Cause: ${instance.javaClass}")
       }
 
-      plugins[pluginImplementationClazz] = instance
+      plugins[type] = instance
       instance.onDelegateProvider(mapDelegateProvider)
 
       if (instance is ViewPlugin) {
@@ -105,16 +104,14 @@ MapPluginRegistry(private val mapDelegateProvider: MapDelegateProvider) {
       if (mapState == State.STARTED && instance is LifecyclePlugin) {
         instance.onStart()
       }
-      return instance as T
     } else {
-      plugins[pluginImplementationClazz]?.initialize()
-      return plugins[pluginImplementationClazz] as T
+      plugins[type]?.initialize()
     }
   }
 
-  fun <T> getPlugin(clazz: Class<T>): T? {
+  fun getPlugin(type: PluginType): MapPlugin? {
     return try {
-      plugins[clazz] as T
+      plugins[type]
     } catch (ex: Exception) {
       null
     }

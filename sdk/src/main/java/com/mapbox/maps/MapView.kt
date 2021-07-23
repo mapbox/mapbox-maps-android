@@ -14,6 +14,7 @@ import androidx.annotation.IntRange
 import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import com.mapbox.maps.plugin.MapPlugin
+import com.mapbox.maps.plugin.PluginType
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.renderer.MapboxSurfaceHolderRenderer
 import com.mapbox.maps.renderer.MapboxTextureViewRenderer
@@ -259,33 +260,12 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    *
    * @return the created plugin instance
    */
-  fun <T : MapPlugin> createPlugin(
-    clazz: Class<T>,
-    vararg constructorArguments: Pair<Class<*>, Any>
-  ): T? = mapController.createPlugin(this, clazz, *constructorArguments)
+  fun createPlugin(
+    type: PluginType,
+    plugin: MapPlugin
+  ) = mapController.createPlugin(this, type, plugin)
 
-  /**
-   * Get the plugin instance.
-   *
-   * @param clazz the same class type that was used when instantiating the plugin
-   * @return created plugin instance
-   */
-  override fun <T> getPlugin(clazz: Class<T>): T? = mapController.getPlugin(clazz)
-
-  /**
-   * Get the plugin instance
-   *
-   * @param className the name of the class that was used when instantiating the plugin
-   * @return created plugin instance
-   */
-  override fun <T> getPlugin(className: String): T? {
-    @Suppress("UNCHECKED_CAST")
-    return getPlugin(
-      Class.forName(
-        className
-      )
-    ) as T
-  }
+  override fun getPlugin(type: PluginType) = mapController.getPlugin(type)
 
   /**
    * Called when a touch event has occurred.

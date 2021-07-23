@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import com.mapbox.maps.plugin.PluginType
 import com.mapbox.maps.plugin.attribution.generated.AttributionAttributeParser
 import com.mapbox.maps.plugin.attribution.generated.AttributionSettings
 import com.mapbox.maps.plugin.attribution.generated.AttributionSettingsBase
@@ -121,4 +122,4 @@ open class AttributionViewPlugin(
  * Extension val for MapView to get the Compass View plugin instance.
  */
 val MapPluginProviderDelegate.attribution: AttributionPlugin
-  get() = this.getPlugin(AttributionViewPlugin::class.java)!!
+  get() = this.getPlugin(PluginType.ATTRIBUTION)!! as AttributionPlugin

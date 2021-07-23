@@ -8,7 +8,7 @@ import com.mapbox.maps.plugin.animation.CameraAnimatorType
 /**
  * Animator class used to animate [CameraOptions.pitch] property.
  */
-internal class CameraPitchAnimator(
+class CameraPitchAnimator(
   options: CameraAnimatorOptions<Double>,
   block: (ValueAnimator.() -> Unit)? = null
 ) : CameraAnimator<Double>(

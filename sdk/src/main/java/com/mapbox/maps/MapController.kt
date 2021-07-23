@@ -1,7 +1,6 @@
 package com.mapbox.maps
 
 import android.content.Context
-import android.util.AttributeSet
 import android.view.MotionEvent
 import com.mapbox.annotation.module.MapboxModuleType
 import com.mapbox.common.Logger
@@ -12,11 +11,21 @@ import com.mapbox.maps.loader.MapboxMapStaticInitializer
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.*
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
+import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl
+import com.mapbox.maps.plugin.annotation.AnnotationPluginImpl
+import com.mapbox.maps.plugin.attribution.AttributionViewPlugin
+import com.mapbox.maps.plugin.compass.CompassViewPlugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener
 import com.mapbox.maps.plugin.delegates.listeners.eventdata.StyleDataType
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
+import com.mapbox.maps.plugin.gestures.GesturesPluginImpl
+import com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePluginImpl
+import com.mapbox.maps.plugin.locationcomponent.LocationComponentPluginImpl
+import com.mapbox.maps.plugin.logo.LogoViewPlugin
+import com.mapbox.maps.plugin.overlay.MapOverlayPluginImpl
+import com.mapbox.maps.plugin.scalebar.ScaleBarPluginImpl
 import com.mapbox.maps.renderer.MapboxRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import java.lang.ref.WeakReference
@@ -226,61 +235,81 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   // Plugin API
   //
 
-  override fun <T> getPlugin(clazz: Class<T>): T? = pluginRegistry.getPlugin(clazz)
-
-  override fun <T> getPlugin(className: String): T? {
-    @Suppress("UNCHECKED_CAST")
-    return getPlugin(
-      Class.forName(
-        className
-      )
-    ) as T
+  override fun getPlugin(type: PluginType): MapPlugin? {
+    return pluginRegistry.getPlugin(type)
   }
 
-  fun <T> createPlugin(
+  fun createPlugin(
     mapView: MapView?,
-    clazz: Class<T>,
-    vararg constructorArguments: Pair<Class<*>, Any>
-  ): T? = pluginRegistry.createPlugin(mapView, mapInitOptions, clazz, *constructorArguments)
+    type: PluginType,
+    plugin: MapPlugin
+  ) = pluginRegistry.createPlugin(mapView, mapInitOptions, type, plugin)
 
   fun initializePlugins(
     options: MapInitOptions,
     mapView: MapView? = null,
   ) {
-    for (pluginName in options.plugins) {
+    for (plugin in options.pluginTypes) {
       try {
-        val pluginClass = Class.forName(pluginName)
-        val plugin = if (pluginName == PLUGIN_GESTURE_CLASS_NAME) {
+        if (plugin == PluginType.GESTURES) {
           val attrs = options.attrs
           if (attrs != null) {
             createPlugin(
               mapView,
-              pluginClass,
-              Pair(Context::class.java, options.context),
-              Pair(AttributeSet::class.java, attrs),
-              Pair(Float::class.java, options.mapOptions.pixelRatio)
+              PluginType.GESTURES,
+              GesturesPluginImpl(options.context, attrs, options.mapOptions.pixelRatio)
             )
           } else {
             createPlugin(
               mapView,
-              pluginClass,
-              Pair(Context::class.java, options.context),
-              Pair(Float::class.java, options.mapOptions.pixelRatio)
+              PluginType.GESTURES,
+              GesturesPluginImpl(options.context, options.mapOptions.pixelRatio)
             )
           }
-        } else {
-          createPlugin(mapView, pluginClass)
         }
-        if (plugin is CameraAnimationsPlugin) {
-          mapboxMap.setCameraAnimationPlugin(plugin)
+        val pluginObject = when (plugin) {
+          PluginType.CAMERA -> {
+            CameraAnimationsPluginImpl()
+          }
+          PluginType.ANNOTATION -> {
+            AnnotationPluginImpl()
+          }
+          PluginType.COMPASS -> {
+            CompassViewPlugin()
+          }
+          PluginType.ATTRIBUTION -> {
+            AttributionViewPlugin()
+          }
+          PluginType.LIFECYCLE -> {
+            MapboxLifecyclePluginImpl()
+          }
+          PluginType.LOCATION_COMPONENT -> {
+            LocationComponentPluginImpl()
+          }
+          PluginType.LOGO -> {
+            LogoViewPlugin()
+          }
+          PluginType.MAP_OVERLAY -> {
+            MapOverlayPluginImpl()
+          }
+          PluginType.SCALEBAR -> {
+            ScaleBarPluginImpl()
+          }
+          else -> {
+            throw RuntimeException("Unknown plugin $plugin")
+          }
         }
-        if (plugin is GesturesPlugin) {
-          mapboxMap.setGesturesAnimationPlugin(plugin)
+        createPlugin(mapView, plugin, pluginObject)
+        if (pluginObject is CameraAnimationsPlugin) {
+          mapboxMap.setCameraAnimationPlugin(pluginObject)
+        }
+        if (pluginObject is GesturesPlugin) {
+          mapboxMap.setGesturesAnimationPlugin(pluginObject)
         }
       } catch (ex: ClassNotFoundException) {
-        Logger.d(TAG, PLUGIN_MISSING_TEMPLATE.format(pluginName))
+        Logger.d(TAG, PLUGIN_MISSING_TEMPLATE.format(plugin))
       } catch (ex: InvalidViewPluginHostException) {
-        Logger.d(TAG, VIEW_HIERARCHY_MISSING_TEMPLATE.format(pluginName))
+        Logger.d(TAG, VIEW_HIERARCHY_MISSING_TEMPLATE.format(plugin))
       }
     }
   }
