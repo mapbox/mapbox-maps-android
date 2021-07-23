@@ -90,8 +90,6 @@ dependencies {
   androidTestImplementation(Dependencies.androidxEspresso)
   androidTestImplementation(Dependencies.androidxUiAutomator)
   testImplementation(Dependencies.junit)
-  // Custom China Lint library
-  lintChecks(project(":mapbox-lint"))
 }
 
 project.apply {

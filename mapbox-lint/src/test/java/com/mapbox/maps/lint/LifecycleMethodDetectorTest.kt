@@ -7,34 +7,34 @@ import org.junit.Test
 class LifecycleMethodDetectorTest {
   val mapViewFile = TestFiles.java(
     """
-                    package com.mapbox.maps;
-                    public class MapView {
-                        void onStart() {
-                        }
-                        void onStop() {
-                        }
-                        void onDestroy() {
-                        }
-                        void onLowMemory() {
-                        }
-                    }
-                    """
+              package com.mapbox.maps;
+              public class MapView {
+                  void onStart() {
+                  }
+                  void onStop() {
+                  }
+                  void onDestroy() {
+                  }
+                  void onLowMemory() {
+                  }
+              }
+              """
   ).indented()
 
   val fooFile = TestFiles.java(
     """
-                    package com.foo;
-                    public class Foo {
-                        void onStart() {
-                        }
-                        void onStop() {
-                        }
-                        void onDestroy() {
-                        }
-                        void onLowMemory() {
-                        }
-                    }
-                    """
+              package com.foo;
+              public class Foo {
+                  void onStart() {
+                  }
+                  void onStop() {
+                  }
+                  void onDestroy() {
+                  }
+                  void onLowMemory() {
+                  }
+              }
+              """
   ).indented()
 
   @Test
@@ -43,15 +43,15 @@ class LifecycleMethodDetectorTest {
       mapViewFile,
       TestFiles.java(
         """
-                    package com.foo;
-                    import com.mapbox.maps.MapView;
-                    public class TestClass {
-                        MapView mapView = new MapView();
-                        void onStart() {
-                            mapView.onStart();
-                        }
-                    }
-                    """
+                  package com.foo;
+                  import com.mapbox.maps.MapView;
+                  public class TestClass {
+                      MapView mapView = new MapView();
+                      void onStart() {
+                          mapView.onStart();
+                      }
+                  }
+                  """
       ).indented()
     )
 
@@ -75,15 +75,15 @@ class LifecycleMethodDetectorTest {
       mapViewFile,
       TestFiles.java(
         """
-                    package com.foo;
-                    import com.mapbox.maps.MapView;
-                    public class TestClass {
-                        MapView mapView = new MapView();
-                        void onStop() {
-                            mapView.onStop();
-                        }
-                    }
-                    """
+                  package com.foo;
+                  import com.mapbox.maps.MapView;
+                  public class TestClass {
+                      MapView mapView = new MapView();
+                      void onStop() {
+                          mapView.onStop();
+                      }
+                  }
+                  """
       ).indented()
     )
       .issues(
@@ -106,15 +106,15 @@ class LifecycleMethodDetectorTest {
       mapViewFile,
       TestFiles.java(
         """
-                    package com.foo;
-                    import com.mapbox.maps.MapView;
-                    public class TestClass {
-                        MapView mapView = new MapView();
-                        void onDestroy() {
-                            mapView.onDestroy();
-                        }
-                    }
-                    """
+                  package com.foo;
+                  import com.mapbox.maps.MapView;
+                  public class TestClass {
+                      MapView mapView = new MapView();
+                      void onDestroy() {
+                          mapView.onDestroy();
+                      }
+                  }
+                  """
       ).indented()
     )
       .issues(
@@ -137,15 +137,15 @@ class LifecycleMethodDetectorTest {
       mapViewFile,
       TestFiles.java(
         """
-                    package com.foo;
-                    import com.mapbox.maps.MapView;
-                    public class TestClass {
-                        MapView mapView = new MapView();
-                        void onLowMemory() {
-                            mapView.onLowMemory();
-                        }
-                    }
-                    """
+                  package com.foo;
+                  import com.mapbox.maps.MapView;
+                  public class TestClass {
+                      MapView mapView = new MapView();
+                      void onLowMemory() {
+                          mapView.onLowMemory();
+                      }
+                  }
+                  """
       ).indented()
     )
       .issues(
@@ -168,14 +168,14 @@ class LifecycleMethodDetectorTest {
       fooFile,
       TestFiles.java(
         """
-                    package com.foo;
-                    public class TestClass {
-                        Foo foo = new Foo();
-                        void onStart() {
-                            foo.onStart();
-                        }
-                    }
-                    """
+                  package com.foo;
+                  public class TestClass {
+                      Foo foo = new Foo();
+                      void onStart() {
+                          foo.onStart();
+                      }
+                  }
+                  """
       ).indented()
     )
       .issues(
@@ -191,14 +191,14 @@ class LifecycleMethodDetectorTest {
       fooFile,
       TestFiles.java(
         """
-                    package com.foo;
-                    public class TestClass {
-                        Foo foo = new Foo();
-                        void onStop() {
-                            foo.onStop();
-                        }
-                    }
-                    """
+                  package com.foo;
+                  public class TestClass {
+                      Foo foo = new Foo();
+                      void onStop() {
+                          foo.onStop();
+                      }
+                  }
+                  """
       ).indented()
     )
       .issues(
@@ -214,14 +214,14 @@ class LifecycleMethodDetectorTest {
       fooFile,
       TestFiles.java(
         """
-                    package com.foo;
-                    public class TestClass {
-                        Foo foo = new Foo();
-                        void onDestroy() {
-                            foo.onDestroy();
-                        }
-                    }
-                    """
+                  package com.foo;
+                  public class TestClass {
+                      Foo foo = new Foo();
+                      void onDestroy() {
+                          foo.onDestroy();
+                      }
+                  }
+                  """
       ).indented()
     )
       .issues(
@@ -237,14 +237,14 @@ class LifecycleMethodDetectorTest {
       fooFile,
       TestFiles.java(
         """
-                    package com.foo;
-                    public class TestClass {
-                        Foo foo = new Foo();
-                        void onLowMemory() {
-                            foo.onLowMemory();
-                        }
-                    }
-                    """
+                  package com.foo;
+                  public class TestClass {
+                      Foo foo = new Foo();
+                      void onLowMemory() {
+                          foo.onLowMemory();
+                      }
+                  }
+                  """
       ).indented()
     )
       .issues(

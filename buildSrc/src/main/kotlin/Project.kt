@@ -57,6 +57,11 @@ object Dependencies {
   const val mockk = "io.mockk:mockk:${Versions.mockk}"
   const val robolectric = "org.robolectric:robolectric:${Versions.robolectric}"
   const val robolectricEgl = "org.khronos:opengl-api:${Versions.robolectricEgl}"
+  const val lintApi = "com.android.tools.lint:lint-api:${Versions.lint}"
+  const val lintChecks = "com.android.tools.lint:lint-checks:${Versions.lint}"
+  const val lint = "com.android.tools.lint:lint:${Versions.lint}"
+  const val lintTests = "com.android.tools.lint:lint-tests:${Versions.lint}"
+  const val testUtils = "com.android.tools:testutils:${Versions.lint}"
 }
 
 object Versions {
@@ -97,4 +102,5 @@ object Versions {
   const val mockk = "1.9.3"
   const val robolectric = "4.3.1"
   const val robolectricEgl = "gl1.1-android-2.1_r1"
+  const val lint = "27.2.2"
 }
