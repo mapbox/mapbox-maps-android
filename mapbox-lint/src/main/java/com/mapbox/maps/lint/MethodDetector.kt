@@ -1,30 +1,24 @@
 package com.mapbox.maps.lint
 
-import com.android.tools.lint.client.api.UElementHandler
 import com.android.tools.lint.detector.api.*
-import com.intellij.psi.JavaElementVisitor
 import com.intellij.psi.PsiMethod
-import com.intellij.psi.PsiMethodCallExpression
-import org.jetbrains.uast.*
-import java.util.*
+import org.jetbrains.uast.UCallExpression
 
 /**
  * Lint detector for lifecycle events
  */
-class MapboxObsoleteDetector : Detector(), SourceCodeScanner {
+class MethodDetector : Detector(), Detector.UastScanner {
 
-  override fun getApplicableUastTypes(): List<Class<out UElement>>? =
-    listOf(UCallExpression::class.java)
+  override fun getApplicableMethodNames()= listOf(ON_START, ON_STOP, ON_DESTROY, ON_LOW_MEMORY)
 
-  override fun createUastHandler(context: JavaContext): UElementHandler =
-    object : UElementHandler() {
-      override fun visitCallExpression(node: UCallExpression) {
-        if (node.methodName == ON_START || node.methodName == ON_STOP || node.methodName == ON_DESTROY || node.methodName == ON_LOW_MEMORY) {
-          val s = node.resolve()
-          context.report(ISSUE, node, context.getLocation(node), REPORT_MESSAGE)
-        }
-      }
+  override fun visitMethodCall(context: JavaContext, node: UCallExpression, method: PsiMethod) {
+    if(context.evaluator.isMemberInClass(method, "com.mapbox.maps.MapView")){
+      context.report(
+        ISSUE, node, context.getLocation(node),
+        REPORT_MESSAGE
+      )
     }
+  }
 
   companion object Issues {
     private const val ON_START = "onStart"
@@ -37,7 +31,7 @@ class MapboxObsoleteDetector : Detector(), SourceCodeScanner {
       "No need to invoke onStart/onStop/onDestroy/onLowMemory with Mapbox Lifecycle Plugin."
 
     private val IMPLEMENTATION = Implementation(
-      MapboxObsoleteDetector::class.java, Scope.JAVA_FILE_SCOPE
+      MethodDetector::class.java, Scope.JAVA_FILE_SCOPE
     )
 
     @JvmField

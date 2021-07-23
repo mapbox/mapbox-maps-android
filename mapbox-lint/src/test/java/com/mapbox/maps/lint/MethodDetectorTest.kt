@@ -4,7 +4,7 @@ import com.android.tools.lint.checks.infrastructure.TestFiles
 import com.android.tools.lint.checks.infrastructure.TestLintTask
 import org.junit.Test
 
-class MapboxObsoleteDetectorTest {
+class MethodDetectorTest {
 
   @Test
   fun mapViewOnStart() {
@@ -24,7 +24,7 @@ class MapboxObsoleteDetectorTest {
     )
 
       .issues(
-        MapboxObsoleteDetector.ISSUE
+        MethodDetector.ISSUE
       )
       .run()
       .expect(
@@ -54,7 +54,7 @@ class MapboxObsoleteDetectorTest {
       ).indented()
     )
       .issues(
-        MapboxObsoleteDetector.ISSUE
+        MethodDetector.ISSUE
       )
       .run()
       .expect(
@@ -84,7 +84,7 @@ class MapboxObsoleteDetectorTest {
       ).indented()
     )
       .issues(
-        MapboxObsoleteDetector.ISSUE
+        MethodDetector.ISSUE
       )
       .run()
       .expect(
@@ -114,7 +114,7 @@ class MapboxObsoleteDetectorTest {
       ).indented()
     )
       .issues(
-        MapboxObsoleteDetector.ISSUE
+        MethodDetector.ISSUE
       )
       .run()
       .expect(
@@ -142,7 +142,7 @@ class MapboxObsoleteDetectorTest {
       ).indented()
     )
       .issues(
-        MapboxObsoleteDetector.ISSUE
+        MethodDetector.ISSUE
       )
       .run()
       .expectClean()
@@ -163,7 +163,7 @@ class MapboxObsoleteDetectorTest {
       ).indented()
     )
       .issues(
-        MapboxObsoleteDetector.ISSUE
+        MethodDetector.ISSUE
       )
       .run()
       .expectClean()
@@ -184,7 +184,7 @@ class MapboxObsoleteDetectorTest {
       ).indented()
     )
       .issues(
-        MapboxObsoleteDetector.ISSUE
+        MethodDetector.ISSUE
       )
       .run()
       .expectClean()
@@ -205,7 +205,7 @@ class MapboxObsoleteDetectorTest {
       ).indented()
     )
       .issues(
-        MapboxObsoleteDetector.ISSUE
+        MethodDetector.ISSUE
       )
       .run()
       .expectClean()

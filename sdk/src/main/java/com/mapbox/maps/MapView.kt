@@ -174,6 +174,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * @see android.app.Fragment.onStart
    */
   @MapboxObsolete
+  @Deprecated("test message")
   override fun onStart() {
     mapController.onStart()
   }
