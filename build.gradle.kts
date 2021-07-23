@@ -2,6 +2,7 @@ buildscript {
   repositories {
     google()
     jcenter()
+    mavenCentral()
     maven {
       url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
       credentials {
@@ -31,6 +32,7 @@ allprojects {
   repositories {
     google()
     jcenter()
+    mavenCentral()
     maven {
       url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
       credentials {

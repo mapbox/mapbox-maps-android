@@ -6,6 +6,7 @@ plugins {
   kotlin("android")
   id("com.jaredsburrows.license")
   id("org.jetbrains.dokka")
+  id("com.google.devtools.ksp")
   //id("com.mapbox.maps.token") #mapbox-android-gradle-plugins/issues/29
 }
 
@@ -22,6 +23,8 @@ dependencies {
   implementation(Dependencies.kotlin)
   implementation(Dependencies.mapboxBase)
   implementation(Dependencies.androidxAnnotations)
+  implementation(project(":test-processor"))
+  ksp(project(":test-processor"))
   api(Dependencies.mapboxGestures)
   api(Dependencies.mapboxGlNative)
   api(Dependencies.mapboxCoreCommon)
