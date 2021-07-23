@@ -710,33 +710,33 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   override fun createZoomAnimator(
     options: CameraAnimatorOptions<Double>,
     block: (ValueAnimator.() -> Unit)?
-  ) = CameraZoomAnimator(options, block)
+  ): ValueAnimator = CameraZoomAnimator(options, block)
 
   override fun createAnchorAnimator(
     options: CameraAnimatorOptions<ScreenCoordinate>,
     block: (ValueAnimator.() -> Unit)?
-  ) = CameraAnchorAnimator(options, block)
+  ): ValueAnimator = CameraAnchorAnimator(options, block)
 
   override fun createBearingAnimator(
     options: CameraAnimatorOptions<Double>,
     useShortestPath: Boolean,
     block: (ValueAnimator.() -> Unit)?
-  ) = CameraBearingAnimator(options, useShortestPath, block)
+  ): ValueAnimator = CameraBearingAnimator(options, useShortestPath, block)
 
   override fun createPitchAnimator(
     options: CameraAnimatorOptions<Double>,
     block: (ValueAnimator.() -> Unit)?
-  ) = CameraPitchAnimator(options, block)
+  ): ValueAnimator = CameraPitchAnimator(options, block)
 
   override fun createPaddingAnimator(
     options: CameraAnimatorOptions<EdgeInsets>,
     block: (ValueAnimator.() -> Unit)?
-  ) = CameraPaddingAnimator(options, block)
+  ): ValueAnimator = CameraPaddingAnimator(options, block)
 
   override fun createCenterAnimator(
     options: CameraAnimatorOptions<Point>,
     block: (ValueAnimator.() -> Unit)?
-  ) = CameraCenterAnimator(options, block)
+  ): ValueAnimator = CameraCenterAnimator(options, block)
 
   /**
    * Play given [ValueAnimator]'s together

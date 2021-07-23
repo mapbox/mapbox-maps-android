@@ -9,7 +9,7 @@ import com.mapbox.maps.plugin.animation.CameraAnimatorType
 /**
  * Animator class used to animate [CameraOptions.anchor] property.
  */
-class CameraAnchorAnimator(
+internal class CameraAnchorAnimator(
   options: CameraAnimatorOptions<ScreenCoordinate>,
   block: (ValueAnimator.() -> Unit)? = null
 ) : CameraAnimator<ScreenCoordinate>(

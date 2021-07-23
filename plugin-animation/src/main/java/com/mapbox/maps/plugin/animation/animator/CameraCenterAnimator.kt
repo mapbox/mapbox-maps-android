@@ -10,7 +10,7 @@ import com.mapbox.maps.plugin.animation.CameraAnimatorType
 /**
  * Animator class used to animate [CameraOptions.center] property.
  */
-class CameraCenterAnimator : CameraAnimator<Point> {
+internal class CameraCenterAnimator : CameraAnimator<Point> {
 
   constructor(
     options: CameraAnimatorOptions<Point>,

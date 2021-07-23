@@ -8,7 +8,7 @@ import com.mapbox.maps.plugin.animation.CameraAnimatorType
 /**
  * Animator class used to animate [CameraOptions.bearing] property.
  */
-class CameraBearingAnimator(
+internal class CameraBearingAnimator(
   options: CameraAnimatorOptions<Double>,
   val useShortestPath: Boolean,
   block: (ValueAnimator.() -> Unit)? = null
