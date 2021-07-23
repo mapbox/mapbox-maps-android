@@ -251,23 +251,15 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   ) {
     for (plugin in options.pluginTypes) {
       try {
-        if (plugin == PluginType.GESTURES) {
-          val attrs = options.attrs
-          if (attrs != null) {
-            createPlugin(
-              mapView,
-              PluginType.GESTURES,
-              GesturesPluginImpl(options.context, attrs, options.mapOptions.pixelRatio)
-            )
-          } else {
-            createPlugin(
-              mapView,
-              PluginType.GESTURES,
-              GesturesPluginImpl(options.context, options.mapOptions.pixelRatio)
-            )
-          }
-        }
         val pluginObject = when (plugin) {
+          PluginType.GESTURES -> {
+            val attrs = options.attrs
+            if (attrs != null) {
+              GesturesPluginImpl(options.context, attrs, options.mapOptions.pixelRatio)
+            } else {
+              GesturesPluginImpl(options.context, options.mapOptions.pixelRatio)
+            }
+          }
           PluginType.CAMERA -> {
             CameraAnimationsPluginImpl()
           }
@@ -307,6 +299,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
           mapboxMap.setGesturesAnimationPlugin(pluginObject)
         }
       } catch (ex: ClassNotFoundException) {
+        Logger.d(TAG, PLUGIN_MISSING_TEMPLATE.format(plugin))
+      } catch (ex: NoClassDefFoundError) {
         Logger.d(TAG, PLUGIN_MISSING_TEMPLATE.format(plugin))
       } catch (ex: InvalidViewPluginHostException) {
         Logger.d(TAG, VIEW_HIERARCHY_MISSING_TEMPLATE.format(plugin))
