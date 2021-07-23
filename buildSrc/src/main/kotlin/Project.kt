@@ -61,6 +61,7 @@ object Dependencies {
   const val lint = "com.android.tools.lint:lint:${Versions.lint}"
   const val lintTests = "com.android.tools.lint:lint-tests:${Versions.lint}"
   const val testUtils = "com.android.tools:testutils:${Versions.lint}"
+  const val hamcrest = "org.hamcrest:hamcrest:${Versions.hamcrest}"
 }
 
 object Versions {
@@ -101,4 +102,5 @@ object Versions {
   const val robolectric = "4.6.1"
   const val robolectricEgl = "gl1.1-android-2.1_r1"
   const val lint = "27.2.2"
+  const val hamcrest = "2.1"
 }
