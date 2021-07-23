@@ -26,3 +26,6 @@ dependencies {
     testImplementation(Dependencies.lintTests)
     testImplementation(Dependencies.testUtils)
 }
+project.apply {
+    from("$rootDir/gradle/ktlint.gradle")
+}
