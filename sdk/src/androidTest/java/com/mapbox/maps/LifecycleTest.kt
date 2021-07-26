@@ -28,7 +28,7 @@ class LifecycleTest {
   @UiThreadTest
   fun setUp() {
     rule.scenario.onActivity {
-      mapView = MapView(it, MapInitOptions(it, pluginTypes = listOf(PLUGIN_LIFE_CYCLE_CLASS_NAME)))
+      mapView = MapView(it, MapInitOptions(it, pluginDescriptors = listOf(PLUGIN_LIFE_CYCLE_CLASS_NAME)))
       mapboxMap = mapView.getMapboxMap()
       it.frameLayout.addView(mapView)
     }

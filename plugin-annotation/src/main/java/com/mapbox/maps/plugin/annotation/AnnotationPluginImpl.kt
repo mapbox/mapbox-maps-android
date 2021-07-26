@@ -3,7 +3,7 @@ package com.mapbox.maps.plugin.annotation
 import android.view.View
 import androidx.annotation.VisibleForTesting
 import com.mapbox.maps.extension.style.StyleInterface
-import com.mapbox.maps.plugin.PluginType
+import com.mapbox.maps.plugin.MAPBOX_ANNOTATION_PLUGIN
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
@@ -118,4 +118,4 @@ class AnnotationPluginImpl : AnnotationPlugin {
  * Extension val for MapView to get the Annotation plugin instance.
  */
 val MapPluginProviderDelegate.annotations: AnnotationPlugin
-  get() = this.getPlugin(PluginType.ANNOTATION)!! as AnnotationPlugin
+  get() = this.getPlugin(MAPBOX_ANNOTATION_PLUGIN)!! as AnnotationPlugin

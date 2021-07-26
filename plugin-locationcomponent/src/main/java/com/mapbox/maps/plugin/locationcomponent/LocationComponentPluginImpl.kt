@@ -8,7 +8,7 @@ import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.geojson.Point
 import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.extension.style.StyleInterface
-import com.mapbox.maps.plugin.PluginType
+import com.mapbox.maps.plugin.MAPBOX_LOCATION_COMPONENT_PLUGIN
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.LOCATION_INDICATOR_LAYER
@@ -315,4 +315,4 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
  * Extension val to get the LocationComponentPlugin instance.
  */
 val MapPluginProviderDelegate.location: LocationComponentPlugin
-  get() = this.getPlugin(PluginType.LOCATION_COMPONENT)!! as LocationComponentPlugin
+  get() = this.getPlugin(MAPBOX_LOCATION_COMPONENT_PLUGIN)!! as LocationComponentPlugin

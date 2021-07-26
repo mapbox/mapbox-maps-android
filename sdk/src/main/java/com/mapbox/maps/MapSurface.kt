@@ -4,8 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.view.MotionEvent
 import android.view.Surface
-import com.mapbox.maps.plugin.MapPlugin
-import com.mapbox.maps.plugin.PluginType
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.renderer.MapboxSurfaceRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
@@ -177,5 +175,5 @@ class MapSurface(
     mapController.onLowMemory()
   }
 
-  override fun getPlugin(type: PluginType) = mapController.getPlugin(type)
+  override fun getPlugin(id: String) = mapController.getPlugin(id)
 }

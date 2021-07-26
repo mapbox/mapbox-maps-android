@@ -26,7 +26,7 @@ class StyleLoadTest {
   @UiThreadTest
   fun setUp() {
     rule.scenario.onActivity {
-      mapView = MapView(it, MapInitOptions(it, pluginTypes = listOf()))
+      mapView = MapView(it, MapInitOptions(it, pluginDescriptors = listOf()))
       mapboxMap = mapView.getMapboxMap()
       it.frameLayout.addView(mapView)
     }

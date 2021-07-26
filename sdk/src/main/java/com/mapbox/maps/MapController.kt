@@ -235,24 +235,23 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   // Plugin API
   //
 
-  override fun getPlugin(type: PluginType): MapPlugin? {
-    return pluginRegistry.getPlugin(type)
+  override fun getPlugin(id: String): MapPlugin? {
+    return pluginRegistry.getPlugin(id)
   }
 
   fun createPlugin(
     mapView: MapView?,
-    type: PluginType,
-    plugin: MapPlugin
-  ) = pluginRegistry.createPlugin(mapView, mapInitOptions, type, plugin)
+    descriptor: PluginDescriptor
+  ) = pluginRegistry.createPlugin(mapView, mapInitOptions, descriptor)
 
   fun initializePlugins(
     options: MapInitOptions,
     mapView: MapView? = null,
   ) {
-    for (plugin in options.pluginTypes) {
+    for (plugin in options.pluginDescriptors) {
       try {
-        val pluginObject = when (plugin) {
-          PluginType.GESTURES -> {
+        val pluginObject = when (plugin.pluginId) {
+          MAPBOX_GESTURES_PLUGIN -> {
             val attrs = options.attrs
             if (attrs != null) {
               GesturesPluginImpl(options.context, attrs, options.mapOptions.pixelRatio)
@@ -260,46 +259,44 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
               GesturesPluginImpl(options.context, options.mapOptions.pixelRatio)
             }
           }
-          PluginType.CAMERA -> {
+          MAPBOX_CAMERA_PLUGIN -> {
             CameraAnimationsPluginImpl()
           }
-          PluginType.ANNOTATION -> {
+          MAPBOX_ANNOTATION_PLUGIN -> {
             AnnotationPluginImpl()
           }
-          PluginType.COMPASS -> {
+          MAPBOX_COMPASS_PLUGIN -> {
             CompassViewPlugin()
           }
-          PluginType.ATTRIBUTION -> {
+          MAPBOX_ATTRIBUTION_PLUGIN -> {
             AttributionViewPlugin()
           }
-          PluginType.LIFECYCLE -> {
+          MAPBOX_LIFECYCLE_PLUGIN -> {
             MapboxLifecyclePluginImpl()
           }
-          PluginType.LOCATION_COMPONENT -> {
+          MAPBOX_LOCATION_COMPONENT_PLUGIN -> {
             LocationComponentPluginImpl()
           }
-          PluginType.LOGO -> {
+          MAPBOX_LOGO_PLUGIN -> {
             LogoViewPlugin()
           }
-          PluginType.MAP_OVERLAY -> {
+          MAPBOX_MAP_OVERLAY_PLUGIN -> {
             MapOverlayPluginImpl()
           }
-          PluginType.SCALEBAR -> {
+          MAPBOX_SCALEBAR_PLUGIN -> {
             ScaleBarPluginImpl()
           }
           else -> {
-            throw RuntimeException("Unknown plugin $plugin")
+            plugin.pluginInstance ?: throw RuntimeException("Custom non Mapbox plugins must have non-null pluginInstance parameter!")
           }
         }
-        createPlugin(mapView, plugin, pluginObject)
-        if (pluginObject is CameraAnimationsPlugin) {
+        createPlugin(mapView, PluginDescriptor(plugin.pluginId, pluginObject))
+        if (pluginObject is CameraAnimationsPluginImpl) {
           mapboxMap.setCameraAnimationPlugin(pluginObject)
         }
-        if (pluginObject is GesturesPlugin) {
+        if (pluginObject is GesturesPluginImpl) {
           mapboxMap.setGesturesAnimationPlugin(pluginObject)
         }
-      } catch (ex: ClassNotFoundException) {
-        Logger.d(TAG, PLUGIN_MISSING_TEMPLATE.format(plugin))
       } catch (ex: NoClassDefFoundError) {
         Logger.d(TAG, PLUGIN_MISSING_TEMPLATE.format(plugin))
       } catch (ex: InvalidViewPluginHostException) {

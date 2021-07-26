@@ -1619,7 +1619,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     this.mapPluginProviderDelegate = delegateProvider.mapPluginProviderDelegate
     @Suppress("UNCHECKED_CAST")
     this.cameraAnimationsPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
-      PluginType.CAMERA
+      MAPBOX_CAMERA_PLUGIN
     ) as CameraAnimationsPlugin?
       ?: throw InvalidPluginConfigurationException(
         "Can't look up an instance of plugin, " +
@@ -1640,7 +1640,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
  * Extension val for MapView to get the Gestures plugin instance.
  */
 val MapPluginProviderDelegate.gestures: GesturesPlugin
-  get() = this.getPlugin(PluginType.GESTURES)!! as GesturesPlugin
+  get() = this.getPlugin(MAPBOX_GESTURES_PLUGIN)!! as GesturesPlugin
 
 /**
  * Add a callback that is invoked when the map is clicked.
