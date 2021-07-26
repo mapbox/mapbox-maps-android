@@ -1,7 +1,6 @@
 package com.mapbox.maps.plugin.delegates
 
 import com.mapbox.maps.plugin.MapPlugin
-import com.mapbox.maps.plugin.PluginDescriptor
 
 /**
  * Definition of a map plugin provider delegate.

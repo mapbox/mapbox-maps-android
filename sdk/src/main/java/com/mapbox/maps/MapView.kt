@@ -14,7 +14,7 @@ import androidx.annotation.IntRange
 import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import com.mapbox.maps.plugin.MapPlugin
-import com.mapbox.maps.plugin.PluginDescriptor
+import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.renderer.MapboxSurfaceHolderRenderer
 import com.mapbox.maps.renderer.MapboxTextureViewRenderer
@@ -261,7 +261,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * @return the created plugin instance
    */
   fun createPlugin(
-    descriptor: PluginDescriptor
+    descriptor: Plugin
   ) = mapController.createPlugin(this, descriptor)
 
   override fun getPlugin(id: String) = mapController.getPlugin(id)

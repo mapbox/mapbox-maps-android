@@ -243,7 +243,7 @@ class MapControllerTest {
         mockk()
       )
     val mapInitOptions = MapInitOptions(mockk(relaxed = true))
-    mapInitOptions.pluginDescriptors = listOf()
+    mapInitOptions.plugins = listOf()
     mapController.initializePlugins(mapInitOptions)
   }
 
@@ -260,7 +260,7 @@ class MapControllerTest {
         mockk()
       )
     val mapInitOptions = MapInitOptions(mockk(relaxed = true))
-    mapInitOptions.pluginDescriptors = listOf(PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME)
+    mapInitOptions.plugins = listOf(PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME)
     mapController.initializePlugins(mapInitOptions)
     verify { mapboxMap.setCameraAnimationPlugin(any()) }
   }

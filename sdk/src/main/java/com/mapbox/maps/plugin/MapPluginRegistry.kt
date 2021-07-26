@@ -47,7 +47,7 @@ internal class MapPluginRegistry(
   fun createPlugin(
     mapView: MapView?,
     mapInitOptions: MapInitOptions,
-    descriptor: PluginDescriptor
+    descriptor: Plugin
   ) {
     descriptor.pluginInstance?.let { mapPlugin ->
       if (!plugins.containsKey(descriptor.pluginId)) {
@@ -182,16 +182,16 @@ internal class MapPluginRegistry(
   companion object {
     // by default we add all Mapbox plugins
     val defaultPluginRegistry = mutableListOf(
-      PluginDescriptor(MAPBOX_CAMERA_PLUGIN),
-      PluginDescriptor(MAPBOX_GESTURES_PLUGIN),
-      PluginDescriptor(MAPBOX_COMPASS_PLUGIN),
-      PluginDescriptor(MAPBOX_LOGO_PLUGIN),
-      PluginDescriptor(MAPBOX_ATTRIBUTION_PLUGIN),
-      PluginDescriptor(MAPBOX_LOCATION_COMPONENT_PLUGIN),
-      PluginDescriptor(MAPBOX_SCALEBAR_PLUGIN),
-      PluginDescriptor(MAPBOX_ANNOTATION_PLUGIN),
-      PluginDescriptor(MAPBOX_LIFECYCLE_PLUGIN),
-      PluginDescriptor(MAPBOX_MAP_OVERLAY_PLUGIN)
+      Plugin.Camera(MAPBOX_CAMERA_PLUGIN),
+      Plugin.Gestures(MAPBOX_GESTURES_PLUGIN),
+      Plugin.Compass(MAPBOX_COMPASS_PLUGIN),
+      Plugin.Logo(MAPBOX_LOGO_PLUGIN),
+      Plugin.Attribution(MAPBOX_ATTRIBUTION_PLUGIN),
+      Plugin.LocationComponent(MAPBOX_LOCATION_COMPONENT_PLUGIN),
+      Plugin.Scalebar(MAPBOX_SCALEBAR_PLUGIN),
+      Plugin.Annotation(MAPBOX_ANNOTATION_PLUGIN),
+      Plugin.Lifecycle(MAPBOX_LIFECYCLE_PLUGIN),
+      Plugin.MapOverlay(MAPBOX_MAP_OVERLAY_PLUGIN)
     )
   }
 }

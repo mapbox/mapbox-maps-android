@@ -10,7 +10,6 @@ import com.mapbox.maps.assets.AssetManagerProvider
 import com.mapbox.maps.loader.MapboxMapStaticInitializer
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.*
-import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl
 import com.mapbox.maps.plugin.annotation.AnnotationPluginImpl
 import com.mapbox.maps.plugin.attribution.AttributionViewPlugin
@@ -19,7 +18,6 @@ import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener
 import com.mapbox.maps.plugin.delegates.listeners.eventdata.StyleDataType
-import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.GesturesPluginImpl
 import com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePluginImpl
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentPluginImpl
@@ -241,14 +239,14 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
 
   fun createPlugin(
     mapView: MapView?,
-    descriptor: PluginDescriptor
+    descriptor: Plugin
   ) = pluginRegistry.createPlugin(mapView, mapInitOptions, descriptor)
 
   fun initializePlugins(
     options: MapInitOptions,
     mapView: MapView? = null,
   ) {
-    for (plugin in options.pluginDescriptors) {
+    for (plugin in options.plugins) {
       try {
         val pluginObject = when (plugin.pluginId) {
           MAPBOX_GESTURES_PLUGIN -> {
@@ -290,7 +288,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
             plugin.pluginInstance ?: throw RuntimeException("Custom non Mapbox plugins must have non-null pluginInstance parameter!")
           }
         }
-        createPlugin(mapView, PluginDescriptor(plugin.pluginId, pluginObject))
+        createPlugin(mapView, Plugin.Custom(plugin.pluginId, pluginObject))
         if (pluginObject is CameraAnimationsPluginImpl) {
           mapboxMap.setCameraAnimationPlugin(pluginObject)
         }

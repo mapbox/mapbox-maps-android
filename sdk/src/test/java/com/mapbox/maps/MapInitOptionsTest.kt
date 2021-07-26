@@ -96,7 +96,7 @@ class MapInitOptionsTest {
   @Test
   fun defaultPlugins() {
     val mapboxMapOptions = MapInitOptions(context)
-    val plugins = mapboxMapOptions.pluginDescriptors
+    val plugins = mapboxMapOptions.plugins
     assertTrue(
       plugins.contains(
         PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
@@ -146,15 +146,15 @@ class MapInitOptionsTest {
 
   @Test
   fun emptyPlugins() {
-    val mapboxMapOptions = MapInitOptions(context, pluginDescriptors = listOf())
-    val plugins = mapboxMapOptions.pluginDescriptors
+    val mapboxMapOptions = MapInitOptions(context, plugins = listOf())
+    val plugins = mapboxMapOptions.plugins
     assertTrue(plugins.isEmpty())
   }
 
   @Test
   fun customPlugins() {
-    val mapboxMapOptions = MapInitOptions(context, pluginDescriptors = listOf("foobar"))
-    val plugins = mapboxMapOptions.pluginDescriptors
+    val mapboxMapOptions = MapInitOptions(context, plugins = listOf("foobar"))
+    val plugins = mapboxMapOptions.plugins
     assertTrue(plugins.size == 1)
     assertEquals("foobar", plugins[0])
   }
