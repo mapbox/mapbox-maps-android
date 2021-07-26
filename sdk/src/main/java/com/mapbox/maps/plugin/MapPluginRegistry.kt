@@ -110,13 +110,7 @@ internal class MapPluginRegistry(
     } ?: throw RuntimeException("MapPlugin instance is missing for ${descriptor.pluginId}!")
   }
 
-  fun getPlugin(id: String): MapPlugin? {
-    return try {
-      plugins[id]
-    } catch (ex: Exception) {
-      null
-    }
-  }
+  fun getPlugin(id: String): MapPlugin? = plugins[id]
 
   fun onStart() {
     mapState = State.STARTED
