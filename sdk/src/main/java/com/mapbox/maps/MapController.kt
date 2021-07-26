@@ -296,7 +296,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
           mapboxMap.setGesturesAnimationPlugin(pluginObject)
         }
       } catch (ex: NoClassDefFoundError) {
-        Logger.d(TAG, PLUGIN_MISSING_TEMPLATE.format(plugin))
+        Logger.d(TAG, PLUGIN_MISSING_TEMPLATE.format(plugin.pluginId))
       } catch (ex: InvalidViewPluginHostException) {
         Logger.d(TAG, VIEW_HIERARCHY_MISSING_TEMPLATE.format(plugin))
       }

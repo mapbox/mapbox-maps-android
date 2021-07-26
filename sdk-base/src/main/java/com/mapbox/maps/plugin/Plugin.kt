@@ -48,4 +48,8 @@ sealed class Plugin(
 
   class Custom(pluginId: String, pluginInstance: MapPlugin? = null) :
     Plugin(pluginId, pluginInstance)
+
+  override fun toString(): String {
+    return "pluginId = $pluginId, pluginInstance = ${pluginInstance?.javaClass}"
+  }
 }
