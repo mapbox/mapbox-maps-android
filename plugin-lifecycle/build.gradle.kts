@@ -28,6 +28,7 @@ dependencies {
   androidTestImplementation(Dependencies.androidxTestRunner)
   androidTestImplementation(Dependencies.androidxJUnitTestRules)
   androidTestImplementation(Dependencies.androidxEspresso)
+  lintPublish(project(":mapbox-lint"))
 }
 
 tasks.withType<DokkaTask>().configureEach {
