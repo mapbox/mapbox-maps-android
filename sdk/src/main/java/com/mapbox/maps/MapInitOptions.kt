@@ -51,14 +51,14 @@ data class MapInitOptions constructor(
       MapOptions.Builder().applyDefaultParams(context).build()
 
     /**
-     * Default map view plugin registry.
+     * Default map view plugin registry. All Mapbox plugins are present in this list.
      *
-     * If creating [MapView] from xml -
-     * all plugins listed here will be applied to given [MapView] on startup.
+     * If specific plugins are required to be added to [MapView] on startup
+     * consider creating [MapView] programmatically specifying [MapInitOptions.plugins].
      *
-     * By default all Mapbox plugins are present in this list.
+     * If creating [MapView] from xml - all plugins listed here will be applied to given [MapView] on startup.
      */
-    val defaultPluginList = mutableListOf(
+    val defaultPluginList = listOf(
       Plugin.Mapbox(Plugin.MAPBOX_CAMERA_PLUGIN_ID),
       Plugin.Mapbox(Plugin.MAPBOX_GESTURES_PLUGIN_ID),
       Plugin.Mapbox(Plugin.MAPBOX_COMPASS_PLUGIN_ID),

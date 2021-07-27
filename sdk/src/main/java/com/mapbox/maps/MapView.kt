@@ -251,9 +251,6 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * Create a new plugin instance that will be added to the map.
    * Only one instance of [Plugin.instance] with given [Plugin.id] can exist for given [MapView].
    *
-   * If plugin is supposed to be added to [MapView] inflated from xml on startup
-   * please consider adding it to [MapInitOptions.defaultPluginList] static list.
-   *
    * @param plugin instance of [Plugin] that will be added to the [MapView].
    */
   fun createPlugin(
