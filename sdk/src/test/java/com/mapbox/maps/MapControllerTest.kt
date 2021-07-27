@@ -172,9 +172,9 @@ class MapControllerTest {
   @Test
   fun getPlugin() {
     val plugin = mockk<MapPlugin>()
-    every { pluginRegistry.getPlugin("id") } returns plugin
+    every { pluginRegistry.getPlugin<MapPlugin>("id") } returns plugin
     Assert.assertEquals(plugin, mapController.getPlugin("id"))
-    verify { pluginRegistry.getPlugin("id") }
+    verify { pluginRegistry.getPlugin<MapPlugin>("id") }
   }
 
   @Test

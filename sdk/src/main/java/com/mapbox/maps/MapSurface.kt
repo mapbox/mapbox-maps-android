@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.view.MotionEvent
 import android.view.Surface
+import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.renderer.MapboxSurfaceRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
@@ -181,5 +182,5 @@ class MapSurface(
    * @param id plugin id
    * @return created plugin instance or null if no plugin is found for given id.
    */
-  override fun getPlugin(id: String) = mapController.getPlugin(id)
+  override fun <T : MapPlugin> getPlugin(id: String): T? = mapController.getPlugin(id)
 }

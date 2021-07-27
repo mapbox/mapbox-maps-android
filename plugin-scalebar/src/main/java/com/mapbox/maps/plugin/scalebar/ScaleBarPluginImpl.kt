@@ -151,4 +151,4 @@ open class ScaleBarPluginImpl(
  * Extension val for MapView to get the ScaleBar plugin instance.
  */
 val MapPluginProviderDelegate.scalebar: ScaleBarPlugin
-  get() = this.getPlugin(MAPBOX_SCALEBAR_PLUGIN_ID)!! as ScaleBarPlugin
+  get() = this.getPlugin(MAPBOX_SCALEBAR_PLUGIN_ID)!!

@@ -288,5 +288,5 @@ class MapOverlayPluginImpl : MapOverlayPlugin {
  */
 @MapboxExperimental
 fun MapPluginProviderDelegate.overlay(): MapOverlayPlugin {
-  return this.getPlugin(MAPBOX_MAP_OVERLAY_PLUGIN_ID)!! as MapOverlayPlugin
+  return this.getPlugin(MAPBOX_MAP_OVERLAY_PLUGIN_ID)!!
 }

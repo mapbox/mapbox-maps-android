@@ -315,4 +315,4 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
  * Extension val to get the LocationComponentPlugin instance.
  */
 val MapPluginProviderDelegate.location: LocationComponentPlugin
-  get() = this.getPlugin(MAPBOX_LOCATION_COMPONENT_PLUGIN_ID)!! as LocationComponentPlugin
+  get() = this.getPlugin(MAPBOX_LOCATION_COMPONENT_PLUGIN_ID)!!

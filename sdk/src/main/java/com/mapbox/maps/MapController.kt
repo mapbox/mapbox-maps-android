@@ -243,9 +243,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   // Plugin API
   //
 
-  override fun getPlugin(id: String): MapPlugin? {
-    return pluginRegistry.getPlugin(id)
-  }
+  override fun <T : MapPlugin> getPlugin(id: String): T? = pluginRegistry.getPlugin(id)
 
   fun createPlugin(
     mapView: MapView?,

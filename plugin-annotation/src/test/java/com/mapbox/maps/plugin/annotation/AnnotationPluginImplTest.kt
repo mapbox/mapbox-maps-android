@@ -43,7 +43,7 @@ class AnnotationPluginImplTest {
     every { style.addPersistentStyleLayer(any(), any()) } returns ExpectedFactory.createNone()
     every { style.styleSourceExists(any()) } returns false
     every { style.styleLayerExists(any()) } returns false
-    every { delegateProvider.mapPluginProviderDelegate.getPlugin(Plugin.MAPBOX_GESTURES_PLUGIN_ID) } returns gesturesPlugin
+    every { delegateProvider.mapPluginProviderDelegate.getPlugin<GesturesPlugin>(Plugin.MAPBOX_GESTURES_PLUGIN_ID) } returns gesturesPlugin
 
     annotationPluginImpl = AnnotationPluginImpl()
     annotationPluginImpl.onDelegateProvider(delegateProvider)

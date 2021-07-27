@@ -118,4 +118,4 @@ class AnnotationPluginImpl : AnnotationPlugin {
  * Extension val for MapView to get the Annotation plugin instance.
  */
 val MapPluginProviderDelegate.annotations: AnnotationPlugin
-  get() = this.getPlugin(MAPBOX_ANNOTATION_PLUGIN_ID)!! as AnnotationPlugin
+  get() = this.getPlugin(MAPBOX_ANNOTATION_PLUGIN_ID)!!

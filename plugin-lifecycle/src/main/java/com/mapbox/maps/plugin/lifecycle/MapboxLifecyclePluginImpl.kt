@@ -72,4 +72,4 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
  * @return Lifecycle plugin instance
  */
 val MapPluginProviderDelegate.lifecycle: MapboxLifecyclePlugin
-  get() = this.getPlugin(MAPBOX_LIFECYCLE_PLUGIN_ID)!! as MapboxLifecyclePlugin
+  get() = this.getPlugin(MAPBOX_LIFECYCLE_PLUGIN_ID)!!

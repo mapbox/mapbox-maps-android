@@ -99,7 +99,7 @@ class PolylineAnnotationManagerTest {
     every { gesturesPlugin.removeOnMoveListener(any()) } just Runs
     every { gesturesPlugin.removeOnMapClickListener(any()) } just Runs
     every { gesturesPlugin.removeOnMapLongClickListener(any()) } just Runs
-    every { delegateProvider.mapPluginProviderDelegate.getPlugin(Plugin.MAPBOX_GESTURES_PLUGIN_ID) } returns gesturesPlugin
+    every { delegateProvider.mapPluginProviderDelegate.getPlugin<GesturesPlugin>(Plugin.MAPBOX_GESTURES_PLUGIN_ID) } returns gesturesPlugin
     every { delegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
     every { delegateProvider.mapFeatureQueryDelegate } returns mapFeatureQueryDelegate
     every { mapCameraManagerDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)

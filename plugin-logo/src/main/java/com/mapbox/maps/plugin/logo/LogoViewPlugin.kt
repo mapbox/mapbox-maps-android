@@ -79,4 +79,4 @@ open class LogoViewPlugin(
  * Extension val for MapView to get the Logo View plugin instance.
  */
 val MapPluginProviderDelegate.logo: LogoPlugin
-  get() = this.getPlugin(MAPBOX_LOGO_PLUGIN_ID)!! as LogoPlugin
+  get() = this.getPlugin(MAPBOX_LOGO_PLUGIN_ID)!!

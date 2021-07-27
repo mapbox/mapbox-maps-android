@@ -122,4 +122,4 @@ open class AttributionViewPlugin(
  * Extension val for MapView to get the Compass View plugin instance.
  */
 val MapPluginProviderDelegate.attribution: AttributionPlugin
-  get() = this.getPlugin(MAPBOX_ATTRIBUTION_PLUGIN_ID)!! as AttributionPlugin
+  get() = this.getPlugin(MAPBOX_ATTRIBUTION_PLUGIN_ID)!!

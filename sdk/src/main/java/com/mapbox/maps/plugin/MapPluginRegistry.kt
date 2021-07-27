@@ -111,7 +111,8 @@ internal class MapPluginRegistry(
     } ?: throw RuntimeException("MapPlugin instance is missing for ${plugin.id}!")
   }
 
-  fun getPlugin(id: String): MapPlugin? = plugins[id]
+  @Suppress("UNCHECKED_CAST")
+  fun <T> getPlugin(id: String): T? = plugins[id] as T
 
   fun onStart() {
     mapState = State.STARTED

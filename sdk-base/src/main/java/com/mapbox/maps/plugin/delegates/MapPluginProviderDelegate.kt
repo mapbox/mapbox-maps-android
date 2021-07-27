@@ -12,5 +12,5 @@ interface MapPluginProviderDelegate {
    * @param id plugin id
    * @return created plugin instance or null if no plugin is found for given id.
    */
-  fun getPlugin(id: String): MapPlugin?
+  fun <T : MapPlugin> getPlugin(id: String): T?
 }

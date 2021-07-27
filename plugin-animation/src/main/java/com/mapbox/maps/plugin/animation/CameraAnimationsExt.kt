@@ -12,7 +12,7 @@ import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
  */
 val MapPluginProviderDelegate.camera: CameraAnimationsPlugin
   @JvmName("getCamera")
-  get() = this.getPlugin(MAPBOX_CAMERA_PLUGIN_ID)!! as CameraAnimationsPlugin
+  get() = this.getPlugin(MAPBOX_CAMERA_PLUGIN_ID)!!
 
 /**
  * Extension easeTo() for [MapPluginExtensionsDelegate]

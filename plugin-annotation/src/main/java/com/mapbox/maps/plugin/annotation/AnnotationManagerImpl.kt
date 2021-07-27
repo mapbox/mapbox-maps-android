@@ -77,11 +77,10 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   @Suppress("UNCHECKED_CAST")
   private var gesturesPlugin: GesturesPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
     MAPBOX_GESTURES_PLUGIN_ID
-  ) as GesturesPlugin?
-    ?: throw InvalidPluginConfigurationException(
-      "Can't look up an instance of plugin, " +
-        "is it available on the clazz path and loaded through the map?"
-    )
+  ) ?: throw InvalidPluginConfigurationException(
+    "Can't look up an instance of plugin, " +
+      "is it available on the clazz path and loaded through the map?"
+  )
 
   /** The layer created by this manger. Annotations will be added to this layer.*/
   internal var layer: L? = null

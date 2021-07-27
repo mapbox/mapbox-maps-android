@@ -13,6 +13,7 @@ import android.widget.FrameLayout
 import androidx.annotation.IntRange
 import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
+import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.renderer.MapboxSurfaceHolderRenderer
@@ -265,7 +266,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * @param id plugin id
    * @return created plugin instance or null if no plugin is found for given id.
    */
-  override fun getPlugin(id: String) = mapController.getPlugin(id)
+  override fun <T : MapPlugin> getPlugin(id: String): T? = mapController.getPlugin(id)
 
   /**
    * Called when a touch event has occurred.

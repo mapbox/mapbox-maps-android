@@ -8,6 +8,7 @@ import android.util.DisplayMetrics
 import android.view.MotionEvent
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.loader.MapboxMapStaticInitializer
+import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import io.mockk.*
@@ -184,9 +185,9 @@ class MapViewTest {
 
   @Test
   fun getPlugin() {
-    every { mapController.getPlugin(any()) } returns mockk()
-    mapView.getPlugin("id")
-    verify { mapController.getPlugin("id") }
+    every { mapController.getPlugin<MapPlugin>(any()) } returns mockk()
+    mapView.getPlugin<MapPlugin>("id")
+    verify { mapController.getPlugin<MapPlugin>("id") }
   }
 
   @Test

@@ -46,7 +46,7 @@ class CompassViewPluginTest {
     every { mapCameraDelegate.cameraState.bearing } returns 0.0
     every { compassView.isCompassEnabled } returns true
     every { compassView.compassRotation } returns 0f
-    every { delegateProvider.mapPluginProviderDelegate.getPlugin(Plugin.MAPBOX_CAMERA_PLUGIN_ID) } returns animatePlugin
+    every { delegateProvider.mapPluginProviderDelegate.getPlugin<CameraAnimationsPlugin>(Plugin.MAPBOX_CAMERA_PLUGIN_ID) } returns animatePlugin
     every { mainHandler.post(capture(runnableSlot)) } answers {
       runnableSlot.captured.run()
       true

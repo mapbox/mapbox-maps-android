@@ -81,7 +81,7 @@ class GesturePluginTest {
     every { mapDelegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
     every { mapDelegateProvider.mapTransformDelegate } returns mapTransformDelegate
     every { mapDelegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
-    every { mapPluginProviderDelegate.getPlugin(Plugin.MAPBOX_CAMERA_PLUGIN_ID) } returns cameraAnimationsPlugin
+    every { mapPluginProviderDelegate.getPlugin<CameraAnimationsPlugin>(Plugin.MAPBOX_CAMERA_PLUGIN_ID) } returns cameraAnimationsPlugin
 
     presenter = GesturesPluginImpl(context, attrs, mockk(relaxed = true))
 

@@ -29,8 +29,10 @@ class LifecycleTest {
   fun setUp() {
     rule.scenario.onActivity {
       mapView = MapView(
-        it, MapInitOptions(
-          it, plugins = listOf(Plugin.Lifecycle(Plugin.MAPBOX_LIFECYCLE_PLUGIN_ID))
+        it,
+        MapInitOptions(
+          it,
+          plugins = listOf(Plugin.Lifecycle(Plugin.MAPBOX_LIFECYCLE_PLUGIN_ID))
         )
       )
       mapboxMap = mapView.getMapboxMap()
