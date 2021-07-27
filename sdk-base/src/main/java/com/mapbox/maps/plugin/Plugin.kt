@@ -14,7 +14,7 @@ import com.mapbox.maps.plugin.scalebar.ScaleBarPlugin
 /**
  * Class describing plugin instance.
  *
- * For Mapbox plugins it is enough to provide plugin id specified in MapboxPluginRegistry file.
+ * For Mapbox plugins it is enough to provide plugin id from this class without plugin instance.
  * For user-defined plugins both unique id and plugin instance must be provided.
  */
 sealed class Plugin(
@@ -121,7 +121,7 @@ sealed class Plugin(
 
   /**
    * Class for custom plugin.
-   * May be used for any user-defined plugin that wants to be added to the map view.
+   * May be used for any user-defined plugin that is supposed to be added to the map view.
    *
    * @param pluginId unique id.
    * @param pluginInstance instance of [MapPlugin]
@@ -131,6 +131,24 @@ sealed class Plugin(
 
   override fun toString(): String {
     return "pluginId = $id, pluginInstance = ${instance?.javaClass}"
+  }
+
+  override fun equals(other: Any?): Boolean {
+    if (this === other) {
+      return true
+    }
+    if (other == null || javaClass != other.javaClass) {
+      return false
+    }
+    val that = other as Plugin
+    if (that.id != id) {
+      return false
+    }
+    return true
+  }
+
+  override fun hashCode(): Int {
+    return 31 + id.hashCode()
   }
 
   companion object {
