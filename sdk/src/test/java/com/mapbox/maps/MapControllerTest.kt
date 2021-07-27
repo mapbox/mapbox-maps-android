@@ -164,7 +164,7 @@ class MapControllerTest {
 
   @Test
   fun createPlugin() {
-    val plugin = Plugin("id", mockk())
+    val plugin = Plugin.Custom("id", mockk())
     mapController.createPlugin(mapView, plugin)
     verify { pluginRegistry.createPlugin(mapView, mapInitOptions, plugin) }
   }
@@ -249,7 +249,7 @@ class MapControllerTest {
         mockk()
       )
     val mapInitOptions = MapInitOptions(mockk(relaxed = true))
-    mapInitOptions.plugins = listOf(Plugin(Plugin.MAPBOX_CAMERA_PLUGIN_ID))
+    mapInitOptions.plugins = listOf(Plugin.Mapbox(Plugin.MAPBOX_CAMERA_PLUGIN_ID))
     mapController.initializePlugins(mapInitOptions)
     verify { mapboxMap.setCameraAnimationPlugin(any()) }
   }

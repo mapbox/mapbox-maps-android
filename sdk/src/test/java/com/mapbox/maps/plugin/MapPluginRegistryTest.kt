@@ -45,7 +45,7 @@ class MapPluginRegistryTest {
   fun createPlugin() {
     val mapView = mockk<MapView>(relaxUnitFun = true)
     val mapPlugin = mockk<MapPlugin>(relaxUnitFun = true)
-    val plugin = Plugin("id", mapPlugin)
+    val plugin = Plugin.Custom("id", mapPlugin)
 
     mapPluginRegistry.createPlugin(mapView, mapInitOptions, plugin)
     verify { mapPlugin.onDelegateProvider(delegateProvider) }
@@ -56,11 +56,11 @@ class MapPluginRegistryTest {
   fun createPlugin_duplicate() {
     val mapView = mockk<MapView>(relaxUnitFun = true)
     val mapPluginOne = mockk<MapPlugin>(relaxUnitFun = true)
-    val pluginOne = Plugin("id", mapPluginOne)
+    val pluginOne = Plugin.Custom("id", mapPluginOne)
     mapPluginRegistry.createPlugin(mapView, mapInitOptions, pluginOne)
 
     val mapPluginTwo = mockk<MapPlugin>(relaxUnitFun = true)
-    val pluginTwo = Plugin("id", mapPluginTwo)
+    val pluginTwo = Plugin.Custom("id", mapPluginTwo)
     mapPluginRegistry.createPlugin(mapView, mapInitOptions, pluginTwo)
 
     verify(exactly = 1) { mapPluginOne.onDelegateProvider(delegateProvider) }
@@ -73,7 +73,7 @@ class MapPluginRegistryTest {
   fun createPlugin_startedBefore() {
     val mapView = mockk<MapView>()
     val lifecyclePlugin = mockk<TestLifecyclePlugin>(relaxUnitFun = true)
-    val plugin = Plugin("id", lifecyclePlugin)
+    val plugin = Plugin.Custom("id", lifecyclePlugin)
 
     mapPluginRegistry.onStart()
     mapPluginRegistry.createPlugin(mapView, mapInitOptions, plugin)
@@ -85,7 +85,7 @@ class MapPluginRegistryTest {
     val mapView = mockk<MapView>(relaxed = true)
     val viewPlugin = mockk<ViewPlugin>(relaxUnitFun = true)
     val view = mockk<View>()
-    val plugin = Plugin("id", viewPlugin)
+    val plugin = Plugin.Custom("id", viewPlugin)
     every { mapInitOptions.context } returns mockk()
     every { mapOptions.pixelRatio } returns 1f
     every { viewPlugin.bind(mapView, any(), any()) } returns view
@@ -99,7 +99,7 @@ class MapPluginRegistryTest {
   fun createPlugin_gesturePlugin() {
     val mapView = mockk<MapView>(relaxed = true)
     val gesturesPlugin = mockk<GesturesPlugin>(relaxUnitFun = true)
-    val plugin = Plugin("id", gesturesPlugin)
+    val plugin = Plugin.Custom("id", gesturesPlugin)
     every { gesturesPlugin.bind(any(), any(), any()) } returns mockk()
     every { mapInitOptions.context } returns mockk()
     every { mapOptions.pixelRatio } returns 1f
@@ -114,7 +114,7 @@ class MapPluginRegistryTest {
   fun getPlugin() {
     val mapView = mockk<MapView>()
     val mapPlugin = mockk<MapPlugin>(relaxUnitFun = true)
-    val plugin = Plugin("id", mapPlugin)
+    val plugin = Plugin.Custom("id", mapPlugin)
 
     mapPluginRegistry.createPlugin(mapView, mapInitOptions, plugin)
     Assert.assertEquals(mapPlugin, mapPluginRegistry.getPlugin("id"))
@@ -129,7 +129,7 @@ class MapPluginRegistryTest {
   fun onStart() {
     val mapView = mockk<MapView>()
     val lifecyclePlugin = mockk<TestLifecyclePlugin>(relaxUnitFun = true)
-    val plugin = Plugin("id", lifecyclePlugin)
+    val plugin = Plugin.Custom("id", lifecyclePlugin)
 
     mapPluginRegistry.createPlugin(mapView, mapInitOptions, plugin)
     mapPluginRegistry.onStart()
@@ -140,7 +140,7 @@ class MapPluginRegistryTest {
   fun onStop() {
     val mapView = mockk<MapView>()
     val lifecyclePlugin = mockk<TestLifecyclePlugin>(relaxUnitFun = true)
-    val plugin = Plugin("id", lifecyclePlugin)
+    val plugin = Plugin.Custom("id", lifecyclePlugin)
 
     mapPluginRegistry.createPlugin(mapView, mapInitOptions, plugin)
     mapPluginRegistry.onStart()
@@ -152,7 +152,7 @@ class MapPluginRegistryTest {
   fun onCameraMove() {
     val mapView = mockk<MapView>(relaxUnitFun = true)
     val cameraPlugin = mockk<MapCameraPlugin>(relaxUnitFun = true)
-    val plugin = Plugin("id", cameraPlugin)
+    val plugin = Plugin.Custom("id", cameraPlugin)
     val cameraState = mockk<CameraState>()
 
     val center = Point.fromLngLat(1.0, 2.0)
@@ -187,7 +187,7 @@ class MapPluginRegistryTest {
     val displayMetrics = DisplayMetrics().also { it.density = 1f }
     val motionEvent = mockk<MotionEvent>(relaxUnitFun = true)
     val gesturesPlugin = mockk<GesturesPlugin>(relaxed = true)
-    val plugin = Plugin("id", gesturesPlugin)
+    val plugin = Plugin.Custom("id", gesturesPlugin)
 
     every { mapView.context.applicationContext } returns context
     every { mapInitOptions.context } returns context
@@ -211,7 +211,7 @@ class MapPluginRegistryTest {
     val displayMetrics = DisplayMetrics().also { it.density = 1f }
     val motionEvent = mockk<MotionEvent>(relaxUnitFun = true)
     val gesturesPlugin = mockk<GesturesPlugin>(relaxed = true)
-    val plugin = Plugin("id", gesturesPlugin)
+    val plugin = Plugin.Custom("id", gesturesPlugin)
 
     every { mapView.context.applicationContext } returns context
     every { mapInitOptions.context } returns context
@@ -234,7 +234,7 @@ class MapPluginRegistryTest {
     val context = mockk<Context>(relaxUnitFun = true)
     val displayMetrics = DisplayMetrics().also { it.density = 1f }
     val gesturesPlugin = mockk<GesturesPlugin>(relaxed = true)
-    val plugin = Plugin("id", gesturesPlugin)
+    val plugin = Plugin.Custom("id", gesturesPlugin)
 
     every { mapView.context.applicationContext } returns context
     every { mapInitOptions.context } returns context
@@ -254,7 +254,7 @@ class MapPluginRegistryTest {
     val mapView = mockk<MapView>(relaxed = true)
     val stylePlugin = mockk<TestStyleObserverPlugin>(relaxUnitFun = true)
     val style = mockk<Style>()
-    val plugin = Plugin("id", stylePlugin)
+    val plugin = Plugin.Custom("id", stylePlugin)
 
     mapPluginRegistry.createPlugin(mapView, mapInitOptions, plugin)
 

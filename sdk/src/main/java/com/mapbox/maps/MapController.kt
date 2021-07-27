@@ -296,7 +296,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
             plugin.instance ?: throw RuntimeException("Custom non Mapbox plugins must have non-null `instance` parameter!")
           }
         }
-        createPlugin(mapView, Plugin(plugin.id, pluginObject))
+        createPlugin(mapView, Plugin.Custom(plugin.id, pluginObject))
         if (pluginObject is CameraAnimationsPluginImpl) {
           mapboxMap.setCameraAnimationPlugin(pluginObject)
         }

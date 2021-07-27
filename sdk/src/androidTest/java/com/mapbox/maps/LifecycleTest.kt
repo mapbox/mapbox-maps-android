@@ -32,7 +32,7 @@ class LifecycleTest {
         it,
         MapInitOptions(
           it,
-          plugins = listOf(Plugin.Lifecycle(Plugin.MAPBOX_LIFECYCLE_PLUGIN_ID))
+          plugins = listOf(Plugin.Mapbox(Plugin.MAPBOX_LIFECYCLE_PLUGIN_ID))
         )
       )
       mapboxMap = mapView.getMapboxMap()

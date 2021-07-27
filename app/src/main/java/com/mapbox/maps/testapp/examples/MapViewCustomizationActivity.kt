@@ -67,8 +67,8 @@ class MapViewCustomizationActivity : AppCompatActivity() {
 
     // plugins configuration
     val plugins = listOf(
-      Plugin(MAPBOX_LOGO_PLUGIN_ID),
-      Plugin(MAPBOX_ATTRIBUTION_PLUGIN_ID)
+      Plugin.Mapbox(MAPBOX_LOGO_PLUGIN_ID),
+      Plugin.Mapbox(MAPBOX_ATTRIBUTION_PLUGIN_ID)
     )
 
     // set token and cache size for this particular map view, these settings will overwrite the default value.

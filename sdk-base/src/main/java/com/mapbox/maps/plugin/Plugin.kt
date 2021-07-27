@@ -6,7 +6,7 @@ package com.mapbox.maps.plugin
  * For Mapbox plugins it is enough to provide plugin id from this class without plugin instance.
  * For user-defined plugins both unique id and plugin instance must be provided.
  */
-data class Plugin(
+sealed class Plugin(
   /**
    * Unique plugin id.
    */
@@ -15,8 +15,45 @@ data class Plugin(
    * Plugin instance implementing [MapPlugin].
    * Must be non-null for user-defined plugins or RuntimeException will occur when trying to initiate such plugin.
    */
-  val instance: MapPlugin? = null
+  val instance: MapPlugin?
 ) {
+  /**
+   * Should be used to create Mapbox official plugins.
+   *
+   * @param id unique id
+   */
+  class Mapbox(id: String) : Plugin(id, null)
+
+  /**
+   * Should be used to create custom user-defined plugins.
+   *
+   * @param id unique id
+   * @param instance instance of user-defined [MapPlugin]
+   */
+  class Custom(id: String, instance: MapPlugin) : Plugin(id, instance)
+
+  override fun toString(): String {
+    return "pluginId = $id, pluginInstance = ${instance?.javaClass}"
+  }
+
+  override fun equals(other: Any?): Boolean {
+    if (this === other) {
+      return true
+    }
+    if (other == null || javaClass != other.javaClass) {
+      return false
+    }
+    val that = other as Plugin
+    if (that.id != id) {
+      return false
+    }
+    return true
+  }
+
+  override fun hashCode(): Int {
+    return 31 + id.hashCode()
+  }
+
   companion object {
     /**
      * Id for Mapbox Camera Plugin.
