@@ -57,9 +57,7 @@ androidExtensions {
 }
 
 dependencies {
-  implementation(project(":sdk")) {
-    exclude(group = null, module = "plugin-overlay")
-  }
+  implementation(project(":sdk"))
   implementation(Dependencies.kotlin)
   implementation(Dependencies.mapboxJavaTurf)
   implementation(Dependencies.mapboxJavaGeoJSON)

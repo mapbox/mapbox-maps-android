@@ -175,5 +175,11 @@ class MapSurface(
     mapController.onLowMemory()
   }
 
+  /**
+   * Get the plugin instance.
+   *
+   * @param id plugin id
+   * @return created plugin instance or null if no plugin is found for given id.
+   */
   override fun getPlugin(id: String) = mapController.getPlugin(id)
 }

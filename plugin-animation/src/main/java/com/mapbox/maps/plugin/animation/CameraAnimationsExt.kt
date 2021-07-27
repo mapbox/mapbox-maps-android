@@ -3,7 +3,7 @@ package com.mapbox.maps.plugin.animation
 
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
-import com.mapbox.maps.plugin.MAPBOX_CAMERA_PLUGIN
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
 import com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 
@@ -12,7 +12,7 @@ import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
  */
 val MapPluginProviderDelegate.camera: CameraAnimationsPlugin
   @JvmName("getCamera")
-  get() = this.getPlugin(MAPBOX_CAMERA_PLUGIN)!! as CameraAnimationsPlugin
+  get() = this.getPlugin(MAPBOX_CAMERA_PLUGIN_ID)!! as CameraAnimationsPlugin
 
 /**
  * Extension easeTo() for [MapPluginExtensionsDelegate]

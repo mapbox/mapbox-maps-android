@@ -3,7 +3,6 @@ package com.mapbox.maps
 import android.content.Context
 import android.util.AttributeSet
 import com.mapbox.maps.plugin.*
-import com.mapbox.maps.plugin.MapPluginRegistry.Companion.defaultPluginRegistry
 
 /**
  * Defines configuration [MapInitOptions] for a [MapboxMap]. These options can be used when adding a
@@ -26,7 +25,7 @@ data class MapInitOptions constructor(
   val context: Context,
   var resourceOptions: ResourceOptions = getDefaultResourceOptions(context),
   var mapOptions: MapOptions = getDefaultMapOptions(context),
-  var plugins: List<Plugin> = defaultPluginRegistry,
+  var plugins: List<Plugin> = defaultPluginList,
   var cameraOptions: CameraOptions? = null,
   var textureView: Boolean = false,
   val styleUri: String? = Style.MAPBOX_STREETS,
@@ -50,6 +49,27 @@ data class MapInitOptions constructor(
      */
     fun getDefaultMapOptions(context: Context): MapOptions =
       MapOptions.Builder().applyDefaultParams(context).build()
+
+    /**
+     * Default map view plugin registry.
+     *
+     * If creating [MapView] from xml -
+     * all plugins listed here will be applied to given [MapView] on startup.
+     *
+     * By default all Mapbox plugins are present in this list.
+     */
+    val defaultPluginList = mutableListOf(
+      Plugin.Camera(Plugin.MAPBOX_CAMERA_PLUGIN_ID),
+      Plugin.Gestures(Plugin.MAPBOX_GESTURES_PLUGIN_ID),
+      Plugin.Compass(Plugin.MAPBOX_COMPASS_PLUGIN_ID),
+      Plugin.Logo(Plugin.MAPBOX_LOGO_PLUGIN_ID),
+      Plugin.Attribution(Plugin.MAPBOX_ATTRIBUTION_PLUGIN_ID),
+      Plugin.LocationComponent(Plugin.MAPBOX_LOCATION_COMPONENT_PLUGIN_ID),
+      Plugin.Scalebar(Plugin.MAPBOX_SCALEBAR_PLUGIN_ID),
+      Plugin.Annotation(Plugin.MAPBOX_ANNOTATION_PLUGIN_ID),
+      Plugin.Lifecycle(Plugin.MAPBOX_LIFECYCLE_PLUGIN_ID),
+      Plugin.MapOverlay(Plugin.MAPBOX_MAP_OVERLAY_PLUGIN_ID)
+    )
   }
 }
 

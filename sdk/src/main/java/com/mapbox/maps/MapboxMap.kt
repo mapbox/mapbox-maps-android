@@ -2,7 +2,6 @@ package com.mapbox.maps
 
 import android.app.Activity
 import android.os.Handler
-import android.os.Looper
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.bindgen.Expected

@@ -9,8 +9,8 @@ interface MapPluginProviderDelegate {
   /**
    * Get the plugin instance.
    *
-   * @param clazz the same class type that was used when instantiating the plugin
-   * @return created plugin instance
+   * @param id plugin id
+   * @return created plugin instance or null if no plugin is found for given id.
    */
   fun getPlugin(id: String): MapPlugin?
 }

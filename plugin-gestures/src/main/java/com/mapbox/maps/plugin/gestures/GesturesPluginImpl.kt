@@ -19,6 +19,8 @@ import com.mapbox.android.gestures.*
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.*
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_GESTURES_PLUGIN_ID
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
@@ -1619,7 +1621,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     this.mapPluginProviderDelegate = delegateProvider.mapPluginProviderDelegate
     @Suppress("UNCHECKED_CAST")
     this.cameraAnimationsPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
-      MAPBOX_CAMERA_PLUGIN
+      MAPBOX_CAMERA_PLUGIN_ID
     ) as CameraAnimationsPlugin?
       ?: throw InvalidPluginConfigurationException(
         "Can't look up an instance of plugin, " +
@@ -1640,7 +1642,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
  * Extension val for MapView to get the Gestures plugin instance.
  */
 val MapPluginProviderDelegate.gestures: GesturesPlugin
-  get() = this.getPlugin(MAPBOX_GESTURES_PLUGIN)!! as GesturesPlugin
+  get() = this.getPlugin(MAPBOX_GESTURES_PLUGIN_ID)!! as GesturesPlugin
 
 /**
  * Add a callback that is invoked when the map is clicked.

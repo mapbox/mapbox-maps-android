@@ -3,6 +3,16 @@ package com.mapbox.maps.plugin
 import android.view.MotionEvent
 import android.view.View
 import com.mapbox.maps.*
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_ANNOTATION_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_ATTRIBUTION_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_COMPASS_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_GESTURES_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_LIFECYCLE_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_LOCATION_COMPONENT_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_LOGO_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_MAP_OVERLAY_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_SCALEBAR_PLUGIN_ID
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePlugin
@@ -10,7 +20,7 @@ import java.util.concurrent.CopyOnWriteArrayList
 
 internal class MapPluginRegistry(
   private val mapDelegateProvider: MapDelegateProvider
-  ) {
+) {
 
   private enum class State {
     STARTED,
@@ -47,17 +57,17 @@ internal class MapPluginRegistry(
   fun createPlugin(
     mapView: MapView?,
     mapInitOptions: MapInitOptions,
-    descriptor: Plugin
+    plugin: Plugin
   ) {
-    descriptor.pluginInstance?.let { mapPlugin ->
-      if (!plugins.containsKey(descriptor.pluginId)) {
+    plugin.instance?.let { mapPlugin ->
+      if (!plugins.containsKey(plugin.id)) {
 
-        if (descriptor.pluginInstance is ViewPlugin && mapView == null) {
+        if (plugin.instance is ViewPlugin && mapView == null) {
           // throw if view plugin if host is not a MapView (eg. MapSurface)
           throw InvalidViewPluginHostException("Cause: ${mapPlugin.javaClass}")
         }
 
-        plugins[descriptor.pluginId] = mapPlugin
+        plugins[plugin.id] = mapPlugin
         mapPlugin.onDelegateProvider(mapDelegateProvider)
 
         if (mapPlugin is ViewPlugin) {
@@ -103,11 +113,12 @@ internal class MapPluginRegistry(
 
         if (mapState == State.STARTED && mapPlugin is LifecyclePlugin) {
           mapPlugin.onStart()
-        } else {}
+        } else {
+        }
       } else {
-        plugins[descriptor.pluginId]?.initialize()
+        plugins[plugin.id]?.initialize()
       }
-    } ?: throw RuntimeException("MapPlugin instance is missing for ${descriptor.pluginId}!")
+    } ?: throw RuntimeException("MapPlugin instance is missing for ${plugin.id}!")
   }
 
   fun getPlugin(id: String): MapPlugin? = plugins[id]
@@ -171,21 +182,5 @@ internal class MapPluginRegistry(
 
   fun onAttachedToWindow(mapView: MapView) {
     mapboxLifecyclePlugin?.registerLifecycleObserver(mapView, mapView)
-  }
-
-  companion object {
-    // by default we add all Mapbox plugins
-    val defaultPluginRegistry = mutableListOf(
-      Plugin.Camera(MAPBOX_CAMERA_PLUGIN),
-      Plugin.Gestures(MAPBOX_GESTURES_PLUGIN),
-      Plugin.Compass(MAPBOX_COMPASS_PLUGIN),
-      Plugin.Logo(MAPBOX_LOGO_PLUGIN),
-      Plugin.Attribution(MAPBOX_ATTRIBUTION_PLUGIN),
-      Plugin.LocationComponent(MAPBOX_LOCATION_COMPONENT_PLUGIN),
-      Plugin.Scalebar(MAPBOX_SCALEBAR_PLUGIN),
-      Plugin.Annotation(MAPBOX_ANNOTATION_PLUGIN),
-      Plugin.Lifecycle(MAPBOX_LIFECYCLE_PLUGIN),
-      Plugin.MapOverlay(MAPBOX_MAP_OVERLAY_PLUGIN)
-    )
   }
 }

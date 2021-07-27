@@ -10,6 +10,16 @@ import com.mapbox.maps.assets.AssetManagerProvider
 import com.mapbox.maps.loader.MapboxMapStaticInitializer
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.*
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_ANNOTATION_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_ATTRIBUTION_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_COMPASS_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_GESTURES_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_LIFECYCLE_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_LOCATION_COMPONENT_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_LOGO_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_MAP_OVERLAY_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_SCALEBAR_PLUGIN_ID
 import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl
 import com.mapbox.maps.plugin.annotation.AnnotationPluginImpl
 import com.mapbox.maps.plugin.attribution.AttributionViewPlugin
@@ -239,8 +249,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
 
   fun createPlugin(
     mapView: MapView?,
-    descriptor: Plugin
-  ) = pluginRegistry.createPlugin(mapView, mapInitOptions, descriptor)
+    plugin: Plugin
+  ) = pluginRegistry.createPlugin(mapView, mapInitOptions, plugin)
 
   fun initializePlugins(
     options: MapInitOptions,
@@ -248,8 +258,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   ) {
     for (plugin in options.plugins) {
       try {
-        val pluginObject = when (plugin.pluginId) {
-          MAPBOX_GESTURES_PLUGIN -> {
+        val pluginObject = when (plugin.id) {
+          MAPBOX_GESTURES_PLUGIN_ID -> {
             val attrs = options.attrs
             if (attrs != null) {
               GesturesPluginImpl(options.context, attrs, options.mapOptions.pixelRatio)
@@ -257,38 +267,38 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
               GesturesPluginImpl(options.context, options.mapOptions.pixelRatio)
             }
           }
-          MAPBOX_CAMERA_PLUGIN -> {
+          MAPBOX_CAMERA_PLUGIN_ID -> {
             CameraAnimationsPluginImpl()
           }
-          MAPBOX_ANNOTATION_PLUGIN -> {
+          MAPBOX_ANNOTATION_PLUGIN_ID -> {
             AnnotationPluginImpl()
           }
-          MAPBOX_COMPASS_PLUGIN -> {
+          MAPBOX_COMPASS_PLUGIN_ID -> {
             CompassViewPlugin()
           }
-          MAPBOX_ATTRIBUTION_PLUGIN -> {
+          MAPBOX_ATTRIBUTION_PLUGIN_ID -> {
             AttributionViewPlugin()
           }
-          MAPBOX_LIFECYCLE_PLUGIN -> {
+          MAPBOX_LIFECYCLE_PLUGIN_ID -> {
             MapboxLifecyclePluginImpl()
           }
-          MAPBOX_LOCATION_COMPONENT_PLUGIN -> {
+          MAPBOX_LOCATION_COMPONENT_PLUGIN_ID -> {
             LocationComponentPluginImpl()
           }
-          MAPBOX_LOGO_PLUGIN -> {
+          MAPBOX_LOGO_PLUGIN_ID -> {
             LogoViewPlugin()
           }
-          MAPBOX_MAP_OVERLAY_PLUGIN -> {
+          MAPBOX_MAP_OVERLAY_PLUGIN_ID -> {
             MapOverlayPluginImpl()
           }
-          MAPBOX_SCALEBAR_PLUGIN -> {
+          MAPBOX_SCALEBAR_PLUGIN_ID -> {
             ScaleBarPluginImpl()
           }
           else -> {
-            plugin.pluginInstance ?: throw RuntimeException("Custom non Mapbox plugins must have non-null pluginInstance parameter!")
+            plugin.instance ?: throw RuntimeException("Custom non Mapbox plugins must have non-null `instance` parameter!")
           }
         }
-        createPlugin(mapView, Plugin.Custom(plugin.pluginId, pluginObject))
+        createPlugin(mapView, Plugin.Custom(plugin.id, pluginObject))
         if (pluginObject is CameraAnimationsPluginImpl) {
           mapboxMap.setCameraAnimationPlugin(pluginObject)
         }
@@ -296,7 +306,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
           mapboxMap.setGesturesAnimationPlugin(pluginObject)
         }
       } catch (ex: NoClassDefFoundError) {
-        Logger.d(TAG, PLUGIN_MISSING_TEMPLATE.format(plugin.pluginId))
+        Logger.d(TAG, PLUGIN_MISSING_TEMPLATE.format(plugin.id))
       } catch (ex: InvalidViewPluginHostException) {
         Logger.d(TAG, VIEW_HIERARCHY_MISSING_TEMPLATE.format(plugin))
       }

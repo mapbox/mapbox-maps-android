@@ -9,7 +9,7 @@ import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ViewTreeLifecycleOwner
 import com.mapbox.common.Logger
 import com.mapbox.maps.MapboxLifecycleObserver
-import com.mapbox.maps.plugin.MAPBOX_LIFECYCLE_PLUGIN
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_LIFECYCLE_PLUGIN_ID
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 
 /**
@@ -72,4 +72,4 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
  * @return Lifecycle plugin instance
  */
 val MapPluginProviderDelegate.lifecycle: MapboxLifecyclePlugin
-  get() = this.getPlugin(MAPBOX_LIFECYCLE_PLUGIN)!! as MapboxLifecyclePlugin
+  get() = this.getPlugin(MAPBOX_LIFECYCLE_PLUGIN_ID)!! as MapboxLifecyclePlugin

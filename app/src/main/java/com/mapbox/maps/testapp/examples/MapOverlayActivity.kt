@@ -21,7 +21,7 @@ import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.overlay.MapOverlayCoordinatesProvider
 import com.mapbox.maps.plugin.overlay.MapOverlayPlugin
-//import com.mapbox.maps.plugin.overlay.overlay
+import com.mapbox.maps.plugin.overlay.overlay
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_map_overlay.*
 
@@ -64,16 +64,16 @@ class MapOverlayActivity : AppCompatActivity(), OnMapClickListener {
         }
       }
     ) { mapboxMap.addOnMapClickListener(this@MapOverlayActivity) }
-//    mapOverlayPlugin = mapView.overlay()
-//      .apply {
-//        registerMapOverlayCoordinatesProvider(provider)
-//        registerOverlay(location_top_left)
-//        registerOverlay(location_top_right)
-//        registerOverlay(location_bottom_left)
-//        registerOverlay(location_bottom_right)
-//        registerOverlay(reframe_button)
-//        setDisplayingAreaMargins(100, 50, 50, 50)
-//      }
+    mapOverlayPlugin = mapView.overlay()
+      .apply {
+        registerMapOverlayCoordinatesProvider(provider)
+        registerOverlay(location_top_left)
+        registerOverlay(location_top_right)
+        registerOverlay(location_bottom_left)
+        registerOverlay(location_bottom_right)
+        registerOverlay(reframe_button)
+        setDisplayingAreaMargins(100, 50, 50, 50)
+      }
 
     val cameraAnimationsPlugin = mapView.camera
     reframe_button.setOnClickListener {
