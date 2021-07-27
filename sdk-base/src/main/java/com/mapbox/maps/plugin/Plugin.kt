@@ -54,6 +54,9 @@ sealed class Plugin(
     return 31 + id.hashCode()
   }
 
+  /**
+   * Static ids for Mapbox plugins.
+   */
   companion object {
     /**
      * Id for Mapbox Camera Plugin.
