@@ -32,10 +32,16 @@ sealed class Plugin(
    */
   class Custom(id: String, instance: MapPlugin) : Plugin(id, instance)
 
+  /**
+   * toString implementation.
+   */
   override fun toString(): String {
     return "pluginId = $id, pluginInstance = ${instance?.javaClass}"
   }
 
+  /**
+   * Equals implementation taking only id into account.
+   */
   override fun equals(other: Any?): Boolean {
     if (this === other) {
       return true
@@ -50,6 +56,9 @@ sealed class Plugin(
     return true
   }
 
+  /**
+   * Hash code implementation taking only id into account.
+   */
   override fun hashCode(): Int {
     return 31 + id.hashCode()
   }
