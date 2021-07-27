@@ -116,7 +116,7 @@ class MapInitOptionsTest {
     val mapboxMapOptions = MapInitOptions(
       context,
       plugins = listOf(
-        Plugin.Custom("customId", customPluginDummy)
+        Plugin("customId", customPluginDummy)
       )
     )
     val plugins = mapboxMapOptions.plugins

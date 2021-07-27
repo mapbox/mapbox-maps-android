@@ -59,16 +59,16 @@ data class MapInitOptions constructor(
      * By default all Mapbox plugins are present in this list.
      */
     val defaultPluginList = mutableListOf(
-      Plugin.Camera(Plugin.MAPBOX_CAMERA_PLUGIN_ID),
-      Plugin.Gestures(Plugin.MAPBOX_GESTURES_PLUGIN_ID),
-      Plugin.Compass(Plugin.MAPBOX_COMPASS_PLUGIN_ID),
-      Plugin.Logo(Plugin.MAPBOX_LOGO_PLUGIN_ID),
-      Plugin.Attribution(Plugin.MAPBOX_ATTRIBUTION_PLUGIN_ID),
-      Plugin.LocationComponent(Plugin.MAPBOX_LOCATION_COMPONENT_PLUGIN_ID),
-      Plugin.Scalebar(Plugin.MAPBOX_SCALEBAR_PLUGIN_ID),
-      Plugin.Annotation(Plugin.MAPBOX_ANNOTATION_PLUGIN_ID),
-      Plugin.Lifecycle(Plugin.MAPBOX_LIFECYCLE_PLUGIN_ID),
-      Plugin.MapOverlay(Plugin.MAPBOX_MAP_OVERLAY_PLUGIN_ID)
+      Plugin(Plugin.MAPBOX_CAMERA_PLUGIN_ID),
+      Plugin(Plugin.MAPBOX_GESTURES_PLUGIN_ID),
+      Plugin(Plugin.MAPBOX_COMPASS_PLUGIN_ID),
+      Plugin(Plugin.MAPBOX_LOGO_PLUGIN_ID),
+      Plugin(Plugin.MAPBOX_ATTRIBUTION_PLUGIN_ID),
+      Plugin(Plugin.MAPBOX_LOCATION_COMPONENT_PLUGIN_ID),
+      Plugin(Plugin.MAPBOX_SCALEBAR_PLUGIN_ID),
+      Plugin(Plugin.MAPBOX_ANNOTATION_PLUGIN_ID),
+      Plugin(Plugin.MAPBOX_LIFECYCLE_PLUGIN_ID),
+      Plugin(Plugin.MAPBOX_MAP_OVERLAY_PLUGIN_ID)
     )
   }
 }

@@ -178,7 +178,7 @@ class MapViewTest {
   @Test
   fun createPlugin() {
     every { mapController.createPlugin(any(), any()) } returns mockk()
-    val plugin = Plugin.Logo("id", mockk())
+    val plugin = Plugin("id", mockk())
     mapView.createPlugin(plugin)
     verify { mapController.createPlugin(mapView, plugin) }
   }
