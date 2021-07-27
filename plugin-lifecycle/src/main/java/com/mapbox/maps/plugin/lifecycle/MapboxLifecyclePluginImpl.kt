@@ -33,7 +33,7 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
           you need manually invoke the corresponding lifecycle methods in onStart/onStop/onDestroy/onLowMemory methods of the host Activity"""
       )
     } else {
-      mapView.context.registerComponentCallbacks(object : ComponentCallbacks {
+      val componentCallback = object : ComponentCallbacks {
         override fun onConfigurationChanged(newConfig: Configuration?) {
           // no need
         }
@@ -41,7 +41,8 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
         override fun onLowMemory() {
           observer.onLowMemory()
         }
-      })
+      }
+      mapView.context.registerComponentCallbacks(componentCallback)
       lifecycleOwner.lifecycle.addObserver(object : LifecycleObserver {
         @OnLifecycleEvent(Lifecycle.Event.ON_START)
         fun onStart() {
@@ -56,6 +57,8 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
         @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
         fun onDestroy() {
           observer.onDestroy()
+          lifecycleOwner.lifecycle.removeObserver(this)
+          mapView.context.unregisterComponentCallbacks(componentCallback)
         }
       })
     }
