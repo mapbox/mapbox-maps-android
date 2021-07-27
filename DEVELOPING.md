@@ -335,4 +335,61 @@ stacktrace that was saved as a txt file.
 $ ndk-stack -sym obj/arm64-v8a -dump trace.txt
 ```
 
+## Working with snapshots
 
+The Mapbox Maps SDK for Android publishes snapshot releases to our API downloads infrastructure. These
+snapshots can be used in downstream project to verify bug fixes or preview new features. However, we
+do not recommend using snapshot releases in production environment.
+
+### Automatic snapshot releases
+
+By default, each commit to the main branch of the repository will trigger a snapshot release for the
+sdk, as well as all the plugins/extensions/modules, with an unique version name.
+
+The name of the snapshot is defined in the `VERSION_NAME` in the project's `gradle.properties` file,
+with the commit hash inserted before the `-SNAPSHOT`.
+
+An example of snapshot for the sdk is `com.mapbox.maps:android:10.0.0-a1d95e7a-SNAPSHOT`.
+
+### Manually triggered snapshot releases
+
+The Mapbox Maps SDK for Android also features manually triggerd snapshot releases from a developing
+branch.
+
+If a last commit in a developing branch has `publish_android_snapshot` in a title or description,
+the `build-sdk-release` CI bot will create a snapshot release.
+
+The name of the snapshot release would be:
+
+${LAST_RELEASE_VERSION_BEFORE_THIS_COMMIT}-${BRANCH_NAME}-SNAPSHOT for example:
+
+`10.0.0-rc.1-peng-commit-message-based-snapshot-SNAPSHOT`
+
+### Use snapshot releases in your app
+
+Snapshot releases are distributed from a different Downloads API endpoint, you will need to add
+this API endpoint to your project's `build.gradle` as follows:
+
+```gradle
+allprojects {
+  repositories {
+    maven {
+      url 'https://api.mapbox.com/downloads/v2/snapshots/maven'
+      authentication {
+          basic(BasicAuthentication)
+      }
+      credentials {
+        // Do not change the username below.
+        // This should always be `mapbox` (not your username).
+          username = 'mapbox'
+          // Use the secret token you stored in gradle.properties as the password
+          password = project.properties['MAPBOX_DOWNLOADS_TOKEN'] ?: ""
+      }
+    }
+  }
+}
+```
+
+Where the password is the secret token and can be configured following the [installation guide](https://docs.mapbox.com/android/beta/maps/guides/install/#configure-credentials)
+
+And then update the Mapbox Maps SDK's version name to the snapshot version in your app's `build.gradle`.
