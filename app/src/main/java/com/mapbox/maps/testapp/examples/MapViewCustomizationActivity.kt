@@ -10,6 +10,8 @@ import com.mapbox.common.TileStoreOptions
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.*
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_ATTRIBUTION_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_LOGO_PLUGIN_ID
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_map_view_customization.*
 
@@ -65,8 +67,8 @@ class MapViewCustomizationActivity : AppCompatActivity() {
 
     // plugins configuration
     val plugins = listOf(
-      PLUGIN_LOGO_CLASS_NAME,
-      PLUGIN_ATTRIBUTION_CLASS_NAME
+      Plugin.Mapbox(MAPBOX_LOGO_PLUGIN_ID),
+      Plugin.Mapbox(MAPBOX_ATTRIBUTION_PLUGIN_ID)
     )
 
     // set token and cache size for this particular map view, these settings will overwrite the default value.

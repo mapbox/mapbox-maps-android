@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.Projection.getMetersPerPixelAtLatitude
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_SCALEBAR_PLUGIN_ID
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarAttributeParser
@@ -150,4 +151,4 @@ open class ScaleBarPluginImpl(
  * Extension val for MapView to get the ScaleBar plugin instance.
  */
 val MapPluginProviderDelegate.scalebar: ScaleBarPlugin
-  get() = this.getPlugin(ScaleBarPluginImpl::class.java)!!
+  get() = this.getPlugin(MAPBOX_SCALEBAR_PLUGIN_ID)!!

@@ -17,6 +17,7 @@ import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.PanScrollMode
+import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
@@ -80,7 +81,7 @@ class GesturePluginTest {
     every { mapDelegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
     every { mapDelegateProvider.mapTransformDelegate } returns mapTransformDelegate
     every { mapDelegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
-    every { mapPluginProviderDelegate.getPlugin(any<Class<CameraAnimationsPlugin>>()) } returns cameraAnimationsPlugin
+    every { mapPluginProviderDelegate.getPlugin<CameraAnimationsPlugin>(Plugin.MAPBOX_CAMERA_PLUGIN_ID) } returns cameraAnimationsPlugin
 
     presenter = GesturesPluginImpl(context, attrs, mockk(relaxed = true))
 

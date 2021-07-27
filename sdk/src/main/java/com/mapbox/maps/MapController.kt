@@ -1,7 +1,6 @@
 package com.mapbox.maps
 
 import android.content.Context
-import android.util.AttributeSet
 import android.view.MotionEvent
 import com.mapbox.annotation.module.MapboxModuleType
 import com.mapbox.common.Logger
@@ -11,12 +10,30 @@ import com.mapbox.maps.assets.AssetManagerProvider
 import com.mapbox.maps.loader.MapboxMapStaticInitializer
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.*
-import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_ANNOTATION_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_ATTRIBUTION_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_COMPASS_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_GESTURES_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_LIFECYCLE_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_LOCATION_COMPONENT_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_LOGO_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_MAP_OVERLAY_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_SCALEBAR_PLUGIN_ID
+import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl
+import com.mapbox.maps.plugin.annotation.AnnotationPluginImpl
+import com.mapbox.maps.plugin.attribution.AttributionViewPlugin
+import com.mapbox.maps.plugin.compass.CompassViewPlugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener
 import com.mapbox.maps.plugin.delegates.listeners.eventdata.StyleDataType
-import com.mapbox.maps.plugin.gestures.GesturesPlugin
+import com.mapbox.maps.plugin.gestures.GesturesPluginImpl
+import com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePluginImpl
+import com.mapbox.maps.plugin.locationcomponent.LocationComponentPluginImpl
+import com.mapbox.maps.plugin.logo.LogoViewPlugin
+import com.mapbox.maps.plugin.overlay.MapOverlayPluginImpl
+import com.mapbox.maps.plugin.scalebar.ScaleBarPluginImpl
 import com.mapbox.maps.renderer.MapboxRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import java.lang.ref.WeakReference
@@ -226,61 +243,70 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   // Plugin API
   //
 
-  override fun <T> getPlugin(clazz: Class<T>): T? = pluginRegistry.getPlugin(clazz)
+  override fun <T : MapPlugin> getPlugin(id: String): T? = pluginRegistry.getPlugin(id)
 
-  override fun <T> getPlugin(className: String): T? {
-    @Suppress("UNCHECKED_CAST")
-    return getPlugin(
-      Class.forName(
-        className
-      )
-    ) as T
-  }
-
-  fun <T> createPlugin(
+  fun createPlugin(
     mapView: MapView?,
-    clazz: Class<T>,
-    vararg constructorArguments: Pair<Class<*>, Any>
-  ): T? = pluginRegistry.createPlugin(mapView, mapInitOptions, clazz, *constructorArguments)
+    plugin: Plugin
+  ) = pluginRegistry.createPlugin(mapView, mapInitOptions, plugin)
 
   fun initializePlugins(
     options: MapInitOptions,
     mapView: MapView? = null,
   ) {
-    for (pluginName in options.plugins) {
+    for (plugin in options.plugins) {
       try {
-        val pluginClass = Class.forName(pluginName)
-        val plugin = if (pluginName == PLUGIN_GESTURE_CLASS_NAME) {
-          val attrs = options.attrs
-          if (attrs != null) {
-            createPlugin(
-              mapView,
-              pluginClass,
-              Pair(Context::class.java, options.context),
-              Pair(AttributeSet::class.java, attrs),
-              Pair(Float::class.java, options.mapOptions.pixelRatio)
-            )
-          } else {
-            createPlugin(
-              mapView,
-              pluginClass,
-              Pair(Context::class.java, options.context),
-              Pair(Float::class.java, options.mapOptions.pixelRatio)
-            )
+        val pluginObject = when (plugin.id) {
+          MAPBOX_GESTURES_PLUGIN_ID -> {
+            val attrs = options.attrs
+            if (attrs != null) {
+              GesturesPluginImpl(options.context, attrs, options.mapOptions.pixelRatio)
+            } else {
+              GesturesPluginImpl(options.context, options.mapOptions.pixelRatio)
+            }
           }
-        } else {
-          createPlugin(mapView, pluginClass)
+          MAPBOX_CAMERA_PLUGIN_ID -> {
+            CameraAnimationsPluginImpl()
+          }
+          MAPBOX_ANNOTATION_PLUGIN_ID -> {
+            AnnotationPluginImpl()
+          }
+          MAPBOX_COMPASS_PLUGIN_ID -> {
+            CompassViewPlugin()
+          }
+          MAPBOX_ATTRIBUTION_PLUGIN_ID -> {
+            AttributionViewPlugin()
+          }
+          MAPBOX_LIFECYCLE_PLUGIN_ID -> {
+            MapboxLifecyclePluginImpl()
+          }
+          MAPBOX_LOCATION_COMPONENT_PLUGIN_ID -> {
+            LocationComponentPluginImpl()
+          }
+          MAPBOX_LOGO_PLUGIN_ID -> {
+            LogoViewPlugin()
+          }
+          MAPBOX_MAP_OVERLAY_PLUGIN_ID -> {
+            MapOverlayPluginImpl()
+          }
+          MAPBOX_SCALEBAR_PLUGIN_ID -> {
+            ScaleBarPluginImpl()
+          }
+          else -> {
+            plugin.instance ?: throw RuntimeException("Custom non Mapbox plugins must have non-null `instance` parameter!")
+          }
         }
-        if (plugin is CameraAnimationsPlugin) {
-          mapboxMap.setCameraAnimationPlugin(plugin)
+        createPlugin(mapView, Plugin.Custom(plugin.id, pluginObject))
+        if (pluginObject is CameraAnimationsPluginImpl) {
+          mapboxMap.setCameraAnimationPlugin(pluginObject)
         }
-        if (plugin is GesturesPlugin) {
-          mapboxMap.setGesturesAnimationPlugin(plugin)
+        if (pluginObject is GesturesPluginImpl) {
+          mapboxMap.setGesturesAnimationPlugin(pluginObject)
         }
-      } catch (ex: ClassNotFoundException) {
-        Logger.d(TAG, PLUGIN_MISSING_TEMPLATE.format(pluginName))
+      } catch (ex: NoClassDefFoundError) {
+        Logger.d(TAG, PLUGIN_MISSING_TEMPLATE.format(plugin.id))
       } catch (ex: InvalidViewPluginHostException) {
-        Logger.d(TAG, VIEW_HIERARCHY_MISSING_TEMPLATE.format(pluginName))
+        Logger.d(TAG, VIEW_HIERARCHY_MISSING_TEMPLATE.format(plugin))
       }
     }
   }

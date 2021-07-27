@@ -31,7 +31,7 @@ import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
-import com.mapbox.maps.plugin.PLUGIN_GESTURE_CLASS_NAME
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_GESTURES_PLUGIN_ID
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
@@ -76,14 +76,11 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
 
   @Suppress("UNCHECKED_CAST")
   private var gesturesPlugin: GesturesPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
-    Class.forName(
-      PLUGIN_GESTURE_CLASS_NAME
-    ) as Class<GesturesPlugin>
+    MAPBOX_GESTURES_PLUGIN_ID
+  ) ?: throw InvalidPluginConfigurationException(
+    "Can't look up an instance of plugin, " +
+      "is it available on the clazz path and loaded through the map?"
   )
-    ?: throw InvalidPluginConfigurationException(
-      "Can't look up an instance of plugin, " +
-        "is it available on the clazz path and loaded through the map?"
-    )
 
   /** The layer created by this manger. Annotations will be added to this layer.*/
   internal var layer: L? = null

@@ -8,8 +8,8 @@ import android.util.DisplayMetrics
 import android.view.MotionEvent
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.loader.MapboxMapStaticInitializer
-import com.mapbox.maps.plugin.PLUGIN_LOGO_CLASS_NAME
-import com.mapbox.maps.plugin.logo.LogoPlugin
+import com.mapbox.maps.plugin.MapPlugin
+import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import io.mockk.*
 import junit.framework.Assert.*
@@ -177,27 +177,17 @@ class MapViewTest {
 
   @Test
   fun createPlugin() {
-    every { mapController.createPlugin<LogoPlugin>(any(), any(), any()) } returns mockk()
-    val clazz = Class.forName(PLUGIN_LOGO_CLASS_NAME) as Class<LogoPlugin>
-    val args = mockk<Pair<Class<*>, Any>>()
-    mapView.createPlugin(clazz, args)
-    verify { mapController.createPlugin(mapView, clazz, args) }
+    every { mapController.createPlugin(any(), any()) } returns mockk()
+    val plugin = Plugin.Custom("id", mockk())
+    mapView.createPlugin(plugin)
+    verify { mapController.createPlugin(mapView, plugin) }
   }
 
   @Test
-  fun getPluginByClazz() {
-    val clazz = Class.forName(PLUGIN_LOGO_CLASS_NAME) as Class<LogoPlugin>
-    every { mapController.getPlugin(clazz) } returns mockk()
-    mapView.getPlugin<LogoPlugin>(PLUGIN_LOGO_CLASS_NAME)
-    verify { mapController.getPlugin(clazz) }
-  }
-
-  @Test
-  fun getPluginByName() {
-    val clazz = Class.forName(PLUGIN_LOGO_CLASS_NAME) as Class<LogoPlugin>
-    every { mapController.getPlugin(clazz) } returns mockk()
-    mapView.getPlugin(clazz)
-    verify { mapController.getPlugin(clazz) }
+  fun getPlugin() {
+    every { mapController.getPlugin<MapPlugin>(any()) } returns mockk()
+    mapView.getPlugin<MapPlugin>("id")
+    verify { mapController.getPlugin<MapPlugin>("id") }
   }
 
   @Test

@@ -5,6 +5,7 @@ import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.sources.addSource
+import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationManager
@@ -42,7 +43,7 @@ class AnnotationPluginImplTest {
     every { style.addPersistentStyleLayer(any(), any()) } returns ExpectedFactory.createNone()
     every { style.styleSourceExists(any()) } returns false
     every { style.styleLayerExists(any()) } returns false
-    every { delegateProvider.mapPluginProviderDelegate.getPlugin(any<Class<GesturesPlugin>>()) } returns gesturesPlugin
+    every { delegateProvider.mapPluginProviderDelegate.getPlugin<GesturesPlugin>(Plugin.MAPBOX_GESTURES_PLUGIN_ID) } returns gesturesPlugin
 
     annotationPluginImpl = AnnotationPluginImpl()
     annotationPluginImpl.onDelegateProvider(delegateProvider)
