@@ -169,6 +169,13 @@ class MapSurface(
   }
 
   /**
+   * Called to reduce memory use
+   */
+  override fun onLowMemory() {
+    mapController.onLowMemory()
+  }
+
+  /**
    * Get the plugin instance.
    *
    * @param clazz the same class type that was used when instantiating the plugin

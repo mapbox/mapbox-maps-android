@@ -12,17 +12,15 @@ internal class MapboxSurfaceHolderRenderer : MapboxSurfaceRenderer, SurfaceHolde
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal constructor(renderThread: MapboxRenderThread) : super(renderThread)
 
-  override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
-    holder?.let {
-      super.surfaceChanged(holder.surface, width, height)
-    }
+  override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
+    super.surfaceChanged(holder.surface, width, height)
   }
 
-  override fun surfaceDestroyed(holder: SurfaceHolder?) {
+  override fun surfaceDestroyed(holder: SurfaceHolder) {
     super.surfaceDestroyed()
   }
 
-  override fun surfaceCreated(holder: SurfaceHolder?) {
+  override fun surfaceCreated(holder: SurfaceHolder) {
     super.surfaceCreated()
   }
 }

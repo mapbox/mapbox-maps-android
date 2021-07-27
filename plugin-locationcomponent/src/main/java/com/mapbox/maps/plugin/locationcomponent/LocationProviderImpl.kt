@@ -30,7 +30,7 @@ internal class LocationProviderImpl(private val context: Context) :
   private val locationConsumers = CopyOnWriteArrayList<LocationConsumer>()
 
   private var handler: Handler? = null
-  private var runnable: Runnable? = null
+  private lateinit var runnable: Runnable
   private var updateDelay = INIT_UPDATE_DELAY
 
   @SuppressLint("MissingPermission")

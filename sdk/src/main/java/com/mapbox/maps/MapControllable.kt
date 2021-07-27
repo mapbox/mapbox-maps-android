@@ -7,7 +7,7 @@ import com.mapbox.maps.renderer.OnFpsChangedListener
 /**
  * MapControllable interface is the gateway for public API to talk to the internal map controller.
  */
-interface MapControllable {
+interface MapControllable : MapboxLifecycleObserver {
 
   /**
    * Returns a [MapboxMap] object that can be used to interact with the map.
@@ -73,19 +73,4 @@ interface MapControllable {
    * Set [OnFpsChangedListener] to get map rendering FPS.
    */
   fun setOnFpsChangedListener(listener: OnFpsChangedListener)
-
-  /**
-   * Called to start rendering
-   */
-  fun onStart()
-
-  /**
-   * Called to stop rendering
-   */
-  fun onStop()
-
-  /**
-   * Called to dispose the renderer
-   */
-  fun onDestroy()
 }

@@ -16,7 +16,6 @@ import com.mapbox.maps.CameraBoundsOptions
 import com.mapbox.maps.CoordinateBounds
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
-import com.mapbox.maps.extension.style.layers.generated.fillLayer
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
@@ -36,7 +35,7 @@ class RestrictBoundsActivity : AppCompatActivity() {
     setContentView(R.layout.activity_restrict_bounds)
     mapboxMap = mapView.getMapboxMap()
     mapboxMap.loadStyle(
-      style(Style.SATELLITE_STREETS) {
+      style(Style.MAPBOX_STREETS) {
         +geoJsonSource(BOUNDS_ID) {
           featureCollection(FeatureCollection.fromFeatures(listOf()))
         }

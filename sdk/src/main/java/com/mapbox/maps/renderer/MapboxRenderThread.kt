@@ -50,7 +50,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   private var needRenderOnResume = false
   private var expectedVsyncWakeTimeNs = 0L
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal var awaitingNextVsync = AtomicBoolean(false)
+  internal val awaitingNextVsync = AtomicBoolean(false)
   private var sizeChanged = false
   private var paused = false
   private var shouldExit = false

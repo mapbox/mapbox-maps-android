@@ -31,6 +31,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   private val pluginRegistry: MapPluginRegistry
   private val onStyleDataLoadedListener: OnStyleDataLoadedListener
   private val onCameraChangedListener: OnCameraChangeListener
+  private var lifecycleState: LifecycleState = LifecycleState.STATE_STOPPED
 
   constructor(
     renderer: MapboxRenderer,
@@ -95,6 +96,11 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun onStart() {
+    if (lifecycleState == LifecycleState.STATE_STARTED) {
+      return
+    }
+    lifecycleState = LifecycleState.STATE_STARTED
+
     nativeObserver.apply {
       onStart()
       addOnCameraChangeListener(onCameraChangedListener)
@@ -110,11 +116,12 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     }
   }
 
-  fun reduceMemoryUse() {
-    mapboxMap.reduceMemoryUse()
-  }
-
   override fun onStop() {
+    if (lifecycleState == LifecycleState.STATE_STOPPED) {
+      return
+    }
+    lifecycleState = LifecycleState.STATE_STOPPED
+
     nativeObserver.apply {
       removeOnCameraChangeListener(onCameraChangedListener)
       removeOnStyleDataLoadedListener(onStyleDataLoadedListener)
@@ -125,10 +132,19 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun onDestroy() {
+    if (lifecycleState == LifecycleState.STATE_DESTROYED) {
+      return
+    }
+    lifecycleState = LifecycleState.STATE_DESTROYED
+
     mapboxMap.onDestroy()
     nativeObserver.clearListeners()
     renderer.onDestroy()
     pluginRegistry.cleanup()
+  }
+
+  override fun onLowMemory() {
+    mapboxMap.reduceMemoryUse()
   }
 
   override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -269,12 +285,23 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     }
   }
 
+  internal fun onAttachedToWindow(mapView: MapView) {
+    pluginRegistry.onAttachedToWindow(mapView)
+  }
+
+  private enum class LifecycleState {
+    STATE_STOPPED,
+    STATE_STARTED,
+    STATE_DESTROYED
+  }
+
   companion object {
     const val TAG = "MapController"
     private const val PLUGIN_MISSING_TEMPLATE =
       "Add %s plugin dependency to the classpath take automatically load the plugin implementation."
     private const val VIEW_HIERARCHY_MISSING_TEMPLATE =
       "%s plugin requires a View hierarchy to be injected, plugin is ignored."
+
     init {
       MapboxMapStaticInitializer.loadMapboxMapNativeLib()
     }

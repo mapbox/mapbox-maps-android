@@ -1,6 +1,5 @@
 package com.mapbox.maps.renderer
 
-import android.graphics.Bitmap
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.Looper
@@ -23,6 +22,7 @@ import org.robolectric.Shadows
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.LooperMode
 import java.nio.ByteBuffer
+import java.util.concurrent.atomic.AtomicBoolean
 
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowLogger::class])
@@ -102,7 +102,7 @@ internal abstract class MapboxRendererTest {
     val map = mockk<MapInterface>(relaxUnitFun = true)
     mapboxRenderer.map = map
     mapboxRenderer.onSurfaceChanged(1, 1)
-    verify { map.setSize(Size(1f, 1f)) }
+    verify { map.size = Size(1f, 1f) }
   }
 
   @Test
@@ -122,7 +122,7 @@ internal abstract class MapboxRendererTest {
   }
 
   @Test
-  fun onSnapshotSync() {
+  fun onSnapshotSuccessSync() {
     val pixelReader = mockk<PixelReader>(relaxed = true)
     every { pixelReader.width } returns 1
     every { pixelReader.height } returns 1
@@ -137,6 +137,7 @@ internal abstract class MapboxRendererTest {
       handler.post(runnable.captured)
     }
     mapboxRenderer.pixelReader = pixelReader
+    mapboxRenderer.readyForSnapshot = AtomicBoolean(true)
     mapboxRenderer.onSurfaceChanged(1, 1)
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     mapboxRenderer.snapshot()
@@ -146,7 +147,7 @@ internal abstract class MapboxRendererTest {
   }
 
   @Test
-  fun onSnapshotAsync() {
+  fun onSnapshotFailureSync() {
     val pixelReader = mockk<PixelReader>(relaxed = true)
     every { pixelReader.width } returns 1
     every { pixelReader.height } returns 1
@@ -161,17 +162,68 @@ internal abstract class MapboxRendererTest {
       handler.post(runnable.captured)
     }
     mapboxRenderer.pixelReader = pixelReader
+    mapboxRenderer.readyForSnapshot = AtomicBoolean(false)
     mapboxRenderer.onSurfaceChanged(1, 1)
-    val callback = object : MapView.OnSnapshotReady {
-      override fun onSnapshotReady(bitmap: Bitmap?) {
-        verify { pixelReader.readPixels() }
-        handlerThread.quit()
-      }
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    mapboxRenderer.snapshot()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    verify(exactly = 0) { pixelReader.readPixels() }
+    handlerThread.quit()
+  }
+
+  @Test
+  fun onSnapshotSuccessAsync() {
+    val pixelReader = mockk<PixelReader>(relaxed = true)
+    every { pixelReader.width } returns 1
+    every { pixelReader.height } returns 1
+    every { pixelReader.readPixels() } returns ByteBuffer.allocateDirect(1 * 1 * 4)
+    var handler: Handler
+    val handlerThread = HandlerThread("thread").apply {
+      start()
+      handler = Handler(this.looper)
+    }
+    val runnable = slot<Runnable>()
+    every { renderThread.queueRenderEvent(capture(runnable)) } answers {
+      handler.post(runnable.captured)
+    }
+    mapboxRenderer.pixelReader = pixelReader
+    mapboxRenderer.readyForSnapshot = AtomicBoolean(true)
+    mapboxRenderer.onSurfaceChanged(1, 1)
+    val callback = MapView.OnSnapshotReady {
+      verify { pixelReader.readPixels() }
+      handlerThread.quit()
     }
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     Shadows.shadowOf(handlerThread.looper).pause()
     mapboxRenderer.snapshot(callback)
     Shadows.shadowOf(handlerThread.looper).idle()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+  }
+
+  @Test
+  fun onSnapshotFailureAsync() {
+    val pixelReader = mockk<PixelReader>(relaxed = true)
+    every { pixelReader.width } returns 1
+    every { pixelReader.height } returns 1
+    every { pixelReader.readPixels() } returns ByteBuffer.allocateDirect(1 * 1 * 4)
+    var handler: Handler
+    val handlerThread = HandlerThread("thread").apply {
+      start()
+      handler = Handler(this.looper)
+    }
+    val runnable = slot<Runnable>()
+    every { renderThread.queueRenderEvent(capture(runnable)) } answers {
+      handler.post(runnable.captured)
+    }
+    mapboxRenderer.pixelReader = pixelReader
+    mapboxRenderer.readyForSnapshot = AtomicBoolean(false)
+    mapboxRenderer.onSurfaceChanged(1, 1)
+    val callback = MapView.OnSnapshotReady {
+      Assert.assertNull(it)
+      handlerThread.quit()
+    }
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    mapboxRenderer.snapshot(callback)
     Shadows.shadowOf(Looper.getMainLooper()).idle()
   }
 
