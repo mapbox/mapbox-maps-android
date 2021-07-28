@@ -9,7 +9,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Breaking changes ⚠️
 * Improve camera API consumption from java programming language by adding `CameraAnimationsUtils` and `getCamera` JvmName annotations. ([#495](https://github.com/mapbox/mapbox-maps-android/pull/495))
 * Rename `AttributionView#setOnClickListener` to `setViewOnClickListener` to avoid overloading the Android SDK method. Results in compilation on Android P and above. Adjust codebase to changes in enforced nullability of Android SDK code. ([#497](https://github.com/mapbox/mapbox-maps-android/pull/497))
-* Get rid of using reflection when creating plugins. Which will decrease MapView startup time if plugins are enabled. ([#519](https://github.com/mapbox/mapbox-maps-android/pull/519))
+* Get rid of using reflection when creating plugins which should decrease `MapView` startup time if plugins are enabled. ([#519](https://github.com/mapbox/mapbox-maps-android/pull/519))
 
 ## Features ✨ and improvements 🏁
 * Add `showLogo` and `showAttributes` config for snapshotter which are defaulted to true. User can now hide logo and attributions in a snapshotter by changing this config ([#496](https://github.com/mapbox/mapbox-maps-android/pull/496))
