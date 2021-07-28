@@ -76,6 +76,7 @@ dependencies {
   androidTestImplementation(Dependencies.androidxJUnitTestRules)
   androidTestImplementation(Dependencies.androidxEspresso)
   androidTestImplementation(Dependencies.androidxUiAutomator)
+  androidTestImplementation(project(":plugin-lifecycle"))
   androidTestUtil(Dependencies.androidxOrchestrator)
 }
 
