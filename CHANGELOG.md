@@ -12,7 +12,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Get rid of using reflection when creating plugins. Which will decrease MapView startup time if plugins are enabled. ([#519](https://github.com/mapbox/mapbox-maps-android/pull/519))
 
 ## Features ✨ and improvements 🏁
-* Add `showLogo` and `showAttributes` config for snapshotter. User can then hide logo and attributions in a snapshotter ([#496](https://github.com/mapbox/mapbox-maps-android/pull/496))
+* Add `showLogo` and `showAttributes` config for snapshotter which are defaulted to true. User can now hide logo and attributions in a snapshotter by changing this config ([#496](https://github.com/mapbox/mapbox-maps-android/pull/496))
 * Add lifecycle plugin so there is no need to call `onStart`/`onStop`/`onDestroy`/`onLowMemory` methods explicitly, if the appcompact 1.3.0+ is used. ([#485](https://github.com/mapbox/mapbox-maps-android/pull/485))
 * Add a minimum Android Auto test app and an optional Android Auto extension that provide convenient extension function to initialise the MapSurface from a Car App Session. ([#488](https://github.com/mapbox/mapbox-maps-android/pull/488))
 * Add lint check for lifecycle methods ([#516](https://github.com/mapbox/mapbox-maps-android/pull/516))
