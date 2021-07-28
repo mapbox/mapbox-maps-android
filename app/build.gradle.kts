@@ -58,6 +58,8 @@ androidExtensions {
 
 dependencies {
   implementation(project(":sdk"))
+  implementation(project(":plugin-overlay"))
+  implementation(project(":plugin-lifecycle"))
   implementation(Dependencies.kotlin)
   implementation(Dependencies.mapboxJavaTurf)
   implementation(Dependencies.mapboxJavaGeoJSON)
