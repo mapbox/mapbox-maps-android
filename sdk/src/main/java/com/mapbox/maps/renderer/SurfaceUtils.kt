@@ -1,4 +1,4 @@
-package com.mapbox.maps.extension.androidauto
+package com.mapbox.maps.renderer
 
 import android.graphics.Bitmap
 import android.graphics.Rect

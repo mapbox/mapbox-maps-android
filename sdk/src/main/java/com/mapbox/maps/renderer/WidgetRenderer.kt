@@ -1,9 +1,9 @@
-package com.mapbox.maps.extension.widget
+package com.mapbox.maps.renderer
 
 import android.opengl.GLES20
 import android.util.Log
 import com.mapbox.common.Logger
-import com.mapbox.maps.extension.androidauto.BuildConfig
+import com.mapbox.maps.BuildConfig
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
@@ -77,7 +77,9 @@ class WidgetRenderer {
     if (program != 0) {
       Logger.e(TAG, "Render called!")
       // Add program to OpenGL ES environment
-      GLES20.glUseProgram(program).also { checkError("glUseProgram") }
+      GLES20.glUseProgram(program).also {
+//        checkError("glUseProgram")
+      }
 
       GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, positionHandle)
 
@@ -137,15 +139,12 @@ class WidgetRenderer {
     private const val COORDS_PER_VERTEX = 2
     private const val BYTES_PER_FLOAT = 4
     private const val VERTEX_STRIDE = COORDS_PER_VERTEX * BYTES_PER_FLOAT // 4 bytes per vertex
+    // TODO don't forget to use pixel ratio to avoid stretching
     private val BACKGROUND_COORDINATES = floatArrayOf( // in counterclockwise order:
-      -1.0f, -1.0f,
-      1.0f, -1.0f,
-      -1.0f, 1.0f,
+      0.6f, 0.6f,
+      1.0f, 0.6f,
+      0.6f, 1.0f,
       1.0f, 1.0f
-//      0.8f, 0.8f,
-//      1.0f, 0.8f,
-//      0.8f, 1.0f,
-//      1.0f, 1.0f
     )
     private val VERTEX_COUNT = BACKGROUND_COORDINATES.size / COORDS_PER_VERTEX
 
