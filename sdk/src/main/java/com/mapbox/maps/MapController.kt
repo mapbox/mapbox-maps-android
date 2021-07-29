@@ -36,6 +36,7 @@ import com.mapbox.maps.plugin.overlay.MapOverlayPluginImpl
 import com.mapbox.maps.plugin.scalebar.ScaleBarPluginImpl
 import com.mapbox.maps.renderer.MapboxRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
+import com.mapbox.maps.renderer.Widget
 import java.lang.ref.WeakReference
 
 internal class MapController : MapPluginProviderDelegate, MapControllable {
@@ -199,6 +200,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
 
   override fun setOnFpsChangedListener(listener: OnFpsChangedListener) {
     renderer.setOnFpsChangedListener(listener)
+  }
+
+  fun addWidget(widget: Widget) {
+    renderer.renderThread.addWidget(widget)
   }
 
   //

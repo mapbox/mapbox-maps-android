@@ -39,6 +39,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val eventQueue = CopyOnWriteArrayList<Runnable>()
 
+  private val widgetList = CopyOnWriteArrayList<Widget>()
+
   private var surface: Surface? = null
   private var eglSurface: EGLSurface? = EGL10.EGL_NO_SURFACE
   private var width: Int = 0
@@ -166,8 +168,14 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     if (expectedVsyncWakeTimeNs > currentTimeNs) {
       return
     }
+    Logger.e("KIRYLDD", "map draw, render event queue size ${renderEventQueue.size}")
     mapboxRenderer.onDrawFrame()
-    drainQueue(eventQueue)
+    // drain render events after actual frame draw
+    drainQueue(renderEventQueue)
+    // render all the widgets
+    widgetList.forEach {
+      it.render()
+    }
     eglSurface?.let {
       when (val swapStatus = eglCore.swapBuffers(it)) {
         EGL10.EGL_SUCCESS -> {}
@@ -215,7 +223,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       return
     }
     checkSurfaceSizeChanged()
-    drainQueue(renderEventQueue)
     // listen to next VSYNC event if not listening already
     if (awaitingNextVsync.compareAndSet(false, true)) {
       Choreographer.getInstance().postFrameCallback(this)
@@ -263,6 +270,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
+  fun addWidget(widget: Widget) {
+    widgetList.add(widget)
+  }
+
   @UiThread
   fun onSurfaceCreated(surface: Surface, width: Int, height: Int) {
     lock.withLock {
@@ -294,12 +305,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     try {
       awaitingNextVsync.set(false)
       if (eglPrepared && !paused && !shouldExit) {
-//        drainQueue(eventQueue)
         draw()
       }
     } finally {
       // regardless if we did drawing or not execute all non gl relative events
-//      drainQueue(eventQueue)
+      drainQueue(eventQueue)
     }
   }
 
@@ -313,7 +323,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @AnyThread
   fun queueRenderEvent(runnable: Runnable) {
     renderEventQueue.add(runnable)
-    postPrepareRenderFrame()
+    if (!awaitingNextVsync.get()) {
+      postPrepareRenderFrame()
+    }
   }
 
   @AnyThread

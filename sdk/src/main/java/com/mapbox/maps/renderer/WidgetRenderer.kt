@@ -9,7 +9,7 @@ import java.nio.ByteOrder
 import java.nio.FloatBuffer
 
 
-class WidgetRenderer {
+class WidgetRenderer : Widget() {
   private var program = 0
   private var positionHandle = 0
   private var colorHandle = 0
@@ -33,7 +33,7 @@ class WidgetRenderer {
     }
   }
 
-  fun initialize() {
+  override fun initialize() {
     val maxAttrib = IntArray(1)
     GLES20.glGetIntegerv(GLES20.GL_MAX_VERTEX_ATTRIBS, maxAttrib, 0)
     Logger.e(TAG, "Max vertex attributes: ${maxAttrib[0]}")
@@ -73,7 +73,8 @@ class WidgetRenderer {
       .also { checkError("glGetUniformLocation") }
   }
 
-  fun render() {
+  override fun render() {
+    super.render()
     if (program != 0) {
       Logger.e(TAG, "Render called!")
       // Add program to OpenGL ES environment
@@ -108,7 +109,7 @@ class WidgetRenderer {
     program = 0
   }
 
-  fun deinitialize() {
+  override fun deinitialize() {
     if (program != 0) {
       // Disable vertex array
       GLES20.glDisableVertexAttribArray(positionHandle)

@@ -19,6 +19,7 @@ import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.renderer.MapboxSurfaceHolderRenderer
 import com.mapbox.maps.renderer.MapboxTextureViewRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
+import com.mapbox.maps.renderer.Widget
 import com.mapbox.maps.renderer.egl.EGLCore
 
 /**
@@ -290,6 +291,11 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    */
   override fun setOnFpsChangedListener(listener: OnFpsChangedListener) {
     mapController.setOnFpsChangedListener(listener)
+  }
+
+  // TODO make it part of interface
+  fun addWidget(widget: Widget) {
+    mapController.addWidget(widget)
   }
 
   /**
