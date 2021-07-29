@@ -11,6 +11,7 @@ import com.mapbox.common.Logger
 import com.mapbox.maps.renderer.egl.EGLCore
 import java.util.LinkedList
 import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.locks.ReentrantLock
 import javax.microedition.khronos.egl.EGL10
 import javax.microedition.khronos.egl.EGL11
@@ -38,6 +39,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val nonRenderEventQueue = ConcurrentLinkedQueue<RenderEvent>()
+
+  private val widgetList = CopyOnWriteArrayList<Widget>()
 
   private var surface: Surface? = null
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -205,6 +208,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         width = width,
         height = height
       )
+      widgetList.forEach { it.onSizeChanged(width, height) }
       sizeChanged = false
     }
   }
@@ -224,6 +228,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     // it makes sense to execute them after drawing a map but before swapping buffers
     // **note** this queue also holds snapshot tasks
     drainQueue(renderEventQueue)
+    // render all the widgets
+    widgetList.forEach {
+      it.render()
+    }
     when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
       EGL10.EGL_SUCCESS -> {}
       EGL11.EGL_CONTEXT_LOST -> {
@@ -336,6 +344,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
+  fun addWidget(widget: Widget) {
+    widget.onSizeChanged(this.width, this.height)
+    widgetList.add(widget)
+  }
+
   @WorkerThread
   internal fun processAndroidSurface(surface: Surface, width: Int, height: Int) {
     if (this.surface != surface) {
@@ -347,6 +360,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
     this.width = width
     this.height = height
+    widgetList.forEach { it.onSizeChanged(width, height) }
     renderEventQueue.removeAll { it.eventType == EventType.SDK }
     nonRenderEventQueue.removeAll { it.eventType == EventType.SDK }
     // we do not want to clear render events scheduled by user

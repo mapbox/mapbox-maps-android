@@ -1,15 +1,13 @@
-package com.mapbox.maps.testapp.examples.customlayer
+package com.mapbox.maps.extension.androidauto
 
 import android.opengl.GLES20
 import com.mapbox.common.Logger
-import com.mapbox.maps.CustomLayerHost
-import com.mapbox.maps.CustomLayerRenderParameters
-import com.mapbox.maps.testapp.BuildConfig
+import com.mapbox.maps.renderer.Widget
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
 
-class ExampleCustomLayer : CustomLayerHost {
+class BackgroundWidget : Widget() {
   private var program = 0
   private var positionHandle = 0
   private var colorHandle = 0
@@ -73,7 +71,8 @@ class ExampleCustomLayer : CustomLayerHost {
       .also { checkError("glGetUniformLocation") }
   }
 
-  override fun render(parameters: CustomLayerRenderParameters) {
+  override fun render() {
+    super.render()
     if (program != 0) {
       // Add program to OpenGL ES environment
       GLES20.glUseProgram(program).also { checkError("glUseProgram") }
@@ -100,7 +99,7 @@ class ExampleCustomLayer : CustomLayerHost {
     }
   }
 
-  override fun contextLost() {
+  fun contextLost() {
     Logger.w(TAG, "contextLost")
     program = 0
   }
@@ -137,15 +136,16 @@ class ExampleCustomLayer : CustomLayerHost {
     private const val BYTES_PER_FLOAT = 4
     private const val VERTEX_STRIDE = COORDS_PER_VERTEX * BYTES_PER_FLOAT // 4 bytes per vertex
     private val BACKGROUND_COORDINATES = floatArrayOf( // in counterclockwise order:
-      -1.0f, -1.0f,
-      1.0f, -1.0f,
-      -1.0f, 1.0f,
-      1.0f, 1.0f
+//      -1.0f, -1.0f,
+//      1.0f, -1.0f,
+//      -1.0f, 1.0f,
+//      1.0f, 1.0f
+      -0.8f, -0.8f,
+      -1.0f, -0.8f,
+      -0.8f, -1.0f,
+      -1.0f, -1.0f
     )
-    //      -0.8f, -0.8f,
-//      -1.0f, -0.8f,
-//      -0.8f, -1.0f,
-//      -1.0f, -1.0f
+
     private val VERTEX_COUNT = BACKGROUND_COORDINATES.size / COORDS_PER_VERTEX
 
     // Set color with red, green, blue and alpha (opacity) values

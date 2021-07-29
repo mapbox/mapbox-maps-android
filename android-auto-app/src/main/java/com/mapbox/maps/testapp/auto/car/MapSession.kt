@@ -4,12 +4,14 @@ import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.content.res.Configuration
-import androidx.car.app.Screen
-import androidx.car.app.ScreenManager
-import androidx.car.app.Session
+import android.graphics.BitmapFactory
+import android.util.Log
+import androidx.car.app.*
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapSurface
 import com.mapbox.maps.Style
+import com.mapbox.maps.extension.androidauto.CompassWidget
+import com.mapbox.maps.extension.androidauto.LogoWidget
 import com.mapbox.maps.extension.androidauto.initMapSurface
 import com.mapbox.maps.extension.style.layers.generated.skyLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.SkyType
@@ -17,6 +19,7 @@ import com.mapbox.maps.extension.style.sources.generated.rasterDemSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.extension.style.terrain.generated.terrain
 import com.mapbox.maps.plugin.locationcomponent.location
+import com.mapbox.maps.renderer.Widget
 import com.mapbox.maps.testapp.auto.R
 
 /**
@@ -25,10 +28,15 @@ import com.mapbox.maps.testapp.auto.R
 class MapSession : Session() {
   private lateinit var mapSurface: MapSurface
   private val carCameraController = CarCameraController()
+  private val widgetList = mutableListOf<Widget>()
 
   override fun onCreateScreen(intent: Intent): Screen {
     val mapScreen = MapScreen(carContext)
-    initMapSurface(scrollListener = carCameraController) { surface ->
+    widgetList.add(LogoWidget(carContext))
+    widgetList.add(CompassWidget(carContext))
+    initMapSurface(
+      scrollListener = carCameraController,
+    ) { surface ->
       mapSurface = surface
       carCameraController.init(
         mapSurface,
@@ -42,6 +50,16 @@ class MapSession : Session() {
       mapScreen.setMapCameraController(carCameraController)
       loadStyle(surface)
       initLocationComponent(surface)
+      widgetList.forEach { surface.addWidget(it) }
+      surface.getMapboxMap().apply {
+        addOnCameraChangeListener {
+          widgetList.filterIsInstance<CompassWidget>().forEach {
+            it.rotate(
+              this.cameraState.bearing.toFloat().also { Log.e("testtest", it.toString()) }
+            )
+          }
+        }
+      }
     }
     return if (carContext.checkSelfPermission(ACCESS_FINE_LOCATION) != PERMISSION_GRANTED) {
       carContext.getCarService(ScreenManager::class.java).push(mapScreen)
@@ -73,6 +91,7 @@ class MapSession : Session() {
       locationPuck = CarLocationPuck.duckLocationPuckLowZoom
       enabled = true
       addOnIndicatorPositionChangedListener(carCameraController)
+      addOnIndicatorBearingChangedListener(carCameraController)
     }
   }
 
