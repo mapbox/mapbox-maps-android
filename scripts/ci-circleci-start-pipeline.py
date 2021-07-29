@@ -57,9 +57,9 @@ def Main():
         sys.exit(1)
 
     params = {
-        "mapbox_upstream": True,
+        "mapbox_android_upstream": True,
         "mapbox_slug": args.origin_slug,
-        "mapbox_hash": args.hash
+        "mapbox_android_hash": args.hash
     }
 
     TriggerPipeline(args.target_slug, args.token, args.branch, params)
