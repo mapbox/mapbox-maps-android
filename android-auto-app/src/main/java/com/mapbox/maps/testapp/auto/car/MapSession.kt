@@ -4,18 +4,22 @@ import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.content.res.Configuration
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.car.app.Screen
 import androidx.car.app.ScreenManager
 import androidx.car.app.Session
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapSurface
 import com.mapbox.maps.Style
+import com.mapbox.maps.extension.androidauto.drawWidget
 import com.mapbox.maps.extension.androidauto.initMapSurface
 import com.mapbox.maps.extension.style.layers.generated.skyLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.SkyType
 import com.mapbox.maps.extension.style.sources.generated.rasterDemSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.extension.style.terrain.generated.terrain
+import com.mapbox.maps.extension.widget.WidgetRenderer
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.auto.R
 
@@ -25,6 +29,7 @@ import com.mapbox.maps.testapp.auto.R
 class MapSession : Session() {
   private lateinit var mapSurface: MapSurface
   private val carCameraController = CarCameraController()
+  private val widgetRenderer = WidgetRenderer()
 
   override fun onCreateScreen(intent: Intent): Screen {
     val mapScreen = MapScreen(carContext)
@@ -42,6 +47,22 @@ class MapSession : Session() {
       mapScreen.setMapCameraController(carCameraController)
       loadStyle(surface)
       initLocationComponent(surface)
+//      surface.surface.drawWidget(BitmapFactory.decodeResource(carContext.resources,R.drawable.mapbox_compass_icon))
+      surface.queueEvent({
+        widgetRenderer.initialize()
+      }, false)
+      surface.queueEvent(
+        {
+          widgetRenderer.render()
+        }, false
+      )
+      surface.getMapboxMap().addOnRenderFrameStartedListener {
+        surface.queueEvent(
+          {
+            widgetRenderer.render()
+          }, false
+        )
+      }
     }
     return if (carContext.checkSelfPermission(ACCESS_FINE_LOCATION) != PERMISSION_GRANTED) {
       carContext.getCarService(ScreenManager::class.java).push(mapScreen)

@@ -27,7 +27,7 @@ import com.mapbox.maps.renderer.OnFpsChangedListener
  */
 class MapSurface(
   context: Context,
-  private val surface: Surface,
+  val surface: Surface,
   mapInitOptions: MapInitOptions = MapInitOptions(context)
 ) : MapPluginProviderDelegate, MapControllable {
 

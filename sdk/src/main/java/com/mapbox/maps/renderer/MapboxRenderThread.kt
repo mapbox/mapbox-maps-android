@@ -167,6 +167,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       return
     }
     mapboxRenderer.onDrawFrame()
+    drainQueue(eventQueue)
     eglSurface?.let {
       when (val swapStatus = eglCore.swapBuffers(it)) {
         EGL10.EGL_SUCCESS -> {}
@@ -293,11 +294,12 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     try {
       awaitingNextVsync.set(false)
       if (eglPrepared && !paused && !shouldExit) {
+//        drainQueue(eventQueue)
         draw()
       }
     } finally {
       // regardless if we did drawing or not execute all non gl relative events
-      drainQueue(eventQueue)
+//      drainQueue(eventQueue)
     }
   }
 
