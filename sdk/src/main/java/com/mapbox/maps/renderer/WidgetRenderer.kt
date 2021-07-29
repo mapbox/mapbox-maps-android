@@ -79,7 +79,7 @@ class WidgetRenderer : Widget() {
       Logger.e(TAG, "Render called!")
       // Add program to OpenGL ES environment
       GLES20.glUseProgram(program).also {
-//        checkError("glUseProgram")
+        checkError("glUseProgram")
       }
 
       GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, positionHandle)
@@ -101,6 +101,13 @@ class WidgetRenderer : Widget() {
       // Draw the background
       GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, VERTEX_COUNT)
         .also { checkError("glDrawArrays") }
+
+      // never forget to clean up!
+
+      // Clearing
+      GLES20.glDisableVertexAttribArray(positionHandle)
+      GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0)
+      GLES20.glUseProgram(0)
     }
   }
 
@@ -178,6 +185,7 @@ class WidgetRenderer : Widget() {
       }
     }
 
+    // TODO on Mali G77 seeing crashes - to investigate
     private fun checkError(cmd: String? = null) {
       Log.e(TAG, "ran: $cmd")
       if (BuildConfig.DEBUG) {
@@ -185,12 +193,12 @@ class WidgetRenderer : Widget() {
           GLES20.GL_NO_ERROR -> {
             Logger.d(TAG, "$cmd -> no error")
           }
-          GLES20.GL_INVALID_ENUM -> throw RuntimeException("$cmd -> error in gl: GL_INVALID_ENUM")
-          GLES20.GL_INVALID_VALUE -> throw RuntimeException("$cmd -> error in gl: GL_INVALID_VALUE")
-          GLES20.GL_INVALID_OPERATION -> throw RuntimeException("$cmd -> error in gl: GL_INVALID_OPERATION")
-          GLES20.GL_INVALID_FRAMEBUFFER_OPERATION -> throw RuntimeException("$cmd -> error in gl: GL_INVALID_FRAMEBUFFER_OPERATION")
-          GLES20.GL_OUT_OF_MEMORY -> throw RuntimeException("$cmd -> error in gl: GL_OUT_OF_MEMORY")
-          else -> throw RuntimeException("$cmd -> error in gl: $error")
+          GLES20.GL_INVALID_ENUM -> Logger.e(TAG, "$cmd -> error in gl: GL_INVALID_ENUM")
+          GLES20.GL_INVALID_VALUE -> Logger.e(TAG,"$cmd -> error in gl: GL_INVALID_VALUE")
+          GLES20.GL_INVALID_OPERATION -> Logger.e(TAG,"$cmd -> error in gl: GL_INVALID_OPERATION")
+          GLES20.GL_INVALID_FRAMEBUFFER_OPERATION -> Logger.e(TAG,"$cmd -> error in gl: GL_INVALID_FRAMEBUFFER_OPERATION")
+          GLES20.GL_OUT_OF_MEMORY -> Logger.e(TAG,"$cmd -> error in gl: GL_OUT_OF_MEMORY")
+          else -> Logger.e(TAG,"$cmd -> error in gl: $error")
         }
       }
     }
