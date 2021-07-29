@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.activity_simple_map.*
  */
 class SimpleMapActivity : AppCompatActivity() {
 
-  private val widgetRenderer = WidgetRenderer()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -27,20 +26,7 @@ class SimpleMapActivity : AppCompatActivity() {
         )
       }
 
-    mapView.getMapboxMap().addOnMapIdleListener {
-      mapView.queueEvent({
-        widgetRenderer.initialize()
-      }, false)
-      mapView.getMapboxMap().addOnRenderFrameStartedListener {
-        Logger.e("KIRYLDD", "render frame started")
-        mapView.queueEvent(
-          {
-            Logger.e("KIRYLDD", "queue from render frame started")
-            widgetRenderer.render()
-          }, true
-        )
-      }
-    }
+    mapView.addWidget(WidgetRenderer())
 
   }
 
