@@ -54,13 +54,13 @@ class MapSession : Session() {
       surface.queueEvent(
         {
           widgetRenderer.render()
-        }, false
+        }, true
       )
       surface.getMapboxMap().addOnRenderFrameStartedListener {
         surface.queueEvent(
           {
             widgetRenderer.render()
-          }, false
+          }, true
         )
       }
     }
