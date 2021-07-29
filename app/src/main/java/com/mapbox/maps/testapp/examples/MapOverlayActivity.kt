@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
+import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
@@ -77,7 +78,34 @@ class MapOverlayActivity : AppCompatActivity(), OnMapClickListener {
 
     val cameraAnimationsPlugin = mapView.camera
     reframe_button.setOnClickListener {
-      mapOverlayPlugin.reframe { it?.let { cameraAnimationsPlugin.flyTo(it, mapAnimationOptions { duration(1000L) }) } }
+      if (camera_coordinate_radio_button.isChecked) {
+        mapOverlayPlugin.reframeWithCameraCoordinates {
+          it?.let {
+            cameraAnimationsPlugin.flyTo(
+              it,
+              mapAnimationOptions { duration(1000L) })
+          }
+        }
+      } else {
+        mapOverlayPlugin.reframe {
+          it?.let {
+            cameraAnimationsPlugin.flyTo(
+              it,
+              mapAnimationOptions { duration(1000L) })
+          }
+        }
+      }
+    }
+    bearing_30.setOnClickListener {
+      val cameraBrarning = mapboxMap.cameraState.bearing
+      mapboxMap.setCamera(CameraOptions.Builder().bearing(cameraBrarning + 20.0).build())
+    }
+    pitch_30.setOnClickListener {
+      val cameraPitch = mapboxMap.cameraState.pitch
+      mapboxMap.setCamera(CameraOptions.Builder().pitch(cameraPitch + 20.0).build())
+    }
+    reset_pitch_bearing.setOnClickListener {
+      mapboxMap.setCamera(CameraOptions.Builder().pitch(0.0).bearing(0.0).build())
     }
   }
 

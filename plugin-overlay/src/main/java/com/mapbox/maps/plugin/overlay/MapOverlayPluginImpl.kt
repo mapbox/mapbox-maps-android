@@ -124,6 +124,25 @@ class MapOverlayPluginImpl : MapOverlayPlugin {
   }
 
   /**
+   * Reframe MapView to a certain zoom and position to make sure every coordinate will be shown
+   * on the MapView and not covered by registered MapOverlays.
+   * Uses camera coordinates for bounding box.
+   * own animation to move the camera.
+   *
+   * @param onReframeFinished the listener to get the CameraOptions
+   */
+  override fun reframeWithCameraCoordinates(onReframeFinished: OnReframeFinished?) {
+    val reframeCameraOption = getReframeCameraOptionWithCameraCoordinates()
+    if (onReframeFinished != null) {
+      onReframeFinished.onReframeFinished(reframeCameraOption)
+    } else {
+      reframeCameraOption?.let {
+        mapCameraManagerDelegate.setCamera(it)
+      }
+    }
+  }
+
+  /**
    * Get the CameraOptions that make sure every coordinate will be shown
    * on the MapView and not covered by registered MapOverlays.
    * Users can use their own animation to move camera with this CameraOptions.
@@ -147,10 +166,32 @@ class MapOverlayPluginImpl : MapOverlayPlugin {
 
       val bounds = CoordinateBounds(Point.fromLngLat(west, south), Point.fromLngLat(east, north), false)
       val edgeInsets = getEdgeInsets()
-      return mapCameraManagerDelegate.cameraForCoordinateBounds(bounds, edgeInsets, null, null)
+      val bearing = mapCameraManagerDelegate.cameraState.bearing
+      val pitch = mapCameraManagerDelegate.cameraState.pitch
+      return mapCameraManagerDelegate.cameraForCoordinateBounds(bounds, edgeInsets, bearing, pitch)
     }
     return null
   }
+
+  /**
+   * Get the CameraOptions that make sure every coordinate will be shown
+   * on the MapView and not covered by registered MapOverlays.
+   * Users can use their own animation to move camera with this CameraOptions.
+   *
+   * @return the CameraOptions that MapView should animate to.
+   * Will be null if MapOverlayCoordinatesProvider is not provided.
+   */
+  private fun getReframeCameraOptionWithCameraCoordinates(): CameraOptions? {
+    mapOverlayCoordinatesProvider?.let {
+      val coordinates = it.getShownCoordinates()
+      val edgeInsets = getEdgeInsets()
+      val bearing = mapCameraManagerDelegate.cameraState.bearing
+      val pitch = mapCameraManagerDelegate.cameraState.pitch
+      return mapCameraManagerDelegate.cameraForCoordinates(coordinates, edgeInsets, bearing, pitch)
+    }
+    return null
+  }
+
 
   private fun getMapOverLayRect(view: View): MapOverLayRect {
     return MapOverLayRect(view.left, view.top, view.right, view.bottom)

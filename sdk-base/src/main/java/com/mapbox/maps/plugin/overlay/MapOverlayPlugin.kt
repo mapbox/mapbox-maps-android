@@ -68,6 +68,11 @@ interface MapOverlayPlugin : MapSizePlugin, MapPlugin {
   fun reframe(onReframeFinished: OnReframeFinished? = null)
 
   /**
+   * reframe MapView with CameraCoordinate function
+   */
+  fun reframeWithCameraCoordinates(onReframeFinished: OnReframeFinished? = null)
+
+  /**
    * Get an EdgeInsets that represent the width and height of overlays
    *
    * @return the EdgeInsets

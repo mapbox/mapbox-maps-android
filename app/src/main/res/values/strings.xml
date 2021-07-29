@@ -133,4 +133,8 @@
     <string name="local_names">Local names</string>
     <string name="country_label">Country label</string>
     <string name="state_label">State label</string>
+    <string name="bearing_30">bearing +20 degrees</string>
+    <string name="pitch_30">pitch +20 degrees</string>
+    <string name="coordinate_text">with Coordinates</string>
+    <string name="coordinate_bounds">with Coordinate bound</string>
 </resources>
