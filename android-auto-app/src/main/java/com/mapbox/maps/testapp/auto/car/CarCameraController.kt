@@ -6,12 +6,13 @@ import com.mapbox.maps.MapSurface
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.androidauto.OnMapScrollListener
 import com.mapbox.maps.plugin.animation.camera
+import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 
 /**
  * Controller class to handle map camera changes.
  */
-class CarCameraController : OnIndicatorPositionChangedListener, OnMapScrollListener {
+class CarCameraController : OnIndicatorPositionChangedListener, OnIndicatorBearingChangedListener, OnMapScrollListener {
 
   private var lastGpsLocation: Point = HELSINKI
   private var isTrackingPuck = true
@@ -41,6 +42,16 @@ class CarCameraController : OnIndicatorPositionChangedListener, OnMapScrollListe
         cameraOptions {
           center(point)
           padding(insets)
+        }
+      )
+    }
+  }
+
+  override fun onIndicatorBearingChanged(bearing: Double) {
+    if (isTrackingPuck) {
+      surface.getMapboxMap().setCamera(
+        cameraOptions {
+          bearing(bearing)
         }
       )
     }
@@ -86,4 +97,5 @@ class CarCameraController : OnIndicatorPositionChangedListener, OnMapScrollListe
     private const val INITIAL_PITCH = 75.0
     private const val TAG = "CarCameraController"
   }
+
 }

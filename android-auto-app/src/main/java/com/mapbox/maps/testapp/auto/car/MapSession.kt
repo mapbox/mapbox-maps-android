@@ -33,7 +33,7 @@ class MapSession : Session() {
   override fun onCreateScreen(intent: Intent): Screen {
     val mapScreen = MapScreen(carContext)
     widgetList.add(LogoWidget(carContext))
-    widgetList.add(CompassWidget(carContext).also { it.rotate(90f) })
+    widgetList.add(CompassWidget(carContext))
     initMapSurface(
       scrollListener = carCameraController,
     ) { surface ->
@@ -51,6 +51,15 @@ class MapSession : Session() {
       loadStyle(surface)
       initLocationComponent(surface)
       widgetList.forEach { surface.addWidget(it) }
+      surface.getMapboxMap().apply {
+        addOnCameraChangeListener {
+          widgetList.filterIsInstance<CompassWidget>().forEach {
+            it.rotate(
+              this.cameraState.bearing.toFloat().also { Log.e("testtest", it.toString()) }
+            )
+          }
+        }
+      }
     }
     return if (carContext.checkSelfPermission(ACCESS_FINE_LOCATION) != PERMISSION_GRANTED) {
       carContext.getCarService(ScreenManager::class.java).push(mapScreen)
@@ -82,6 +91,7 @@ class MapSession : Session() {
       locationPuck = CarLocationPuck.duckLocationPuckLowZoom
       enabled = true
       addOnIndicatorPositionChangedListener(carCameraController)
+      addOnIndicatorBearingChangedListener(carCameraController)
     }
   }
 
