@@ -6,9 +6,8 @@ import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import androidx.car.app.Screen
-import androidx.car.app.ScreenManager
-import androidx.car.app.Session
+import androidx.car.app.*
+import androidx.core.content.ContextCompat
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapSurface
 import com.mapbox.maps.Style
@@ -29,11 +28,22 @@ import com.mapbox.maps.testapp.auto.R
 class MapSession : Session() {
   private lateinit var mapSurface: MapSurface
   private val carCameraController = CarCameraController()
-  private val widgetRenderer = WidgetRenderer()
+  private lateinit var widgetRenderer: WidgetRenderer
 
   override fun onCreateScreen(intent: Intent): Screen {
     val mapScreen = MapScreen(carContext)
-    initMapSurface(scrollListener = carCameraController) { surface ->
+    initMapSurface(
+      scrollListener = carCameraController,
+      callback = object: SurfaceCallback {
+        override fun onSurfaceAvailable(surfaceContainer: SurfaceContainer) {
+          widgetRenderer = WidgetRenderer(
+            BitmapFactory.decodeResource(carContext.resources, R.drawable.mapbox_logo_icon),
+            surfaceContainer.width,
+            surfaceContainer.height
+          )
+        }
+      }
+    ) { surface ->
       mapSurface = surface
       carCameraController.init(
         mapSurface,

@@ -142,6 +142,10 @@ class ExampleCustomLayer : CustomLayerHost() {
       -1.0f, 1.0f,
       1.0f, 1.0f
     )
+    //      -0.8f, -0.8f,
+//      -1.0f, -0.8f,
+//      -0.8f, -1.0f,
+//      -1.0f, -1.0f
     private val VERTEX_COUNT = BACKGROUND_COORDINATES.size / COORDS_PER_VERTEX
 
     // Set color with red, green, blue and alpha (opacity) values

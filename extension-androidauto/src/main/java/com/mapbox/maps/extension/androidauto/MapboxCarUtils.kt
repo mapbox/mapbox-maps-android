@@ -56,11 +56,13 @@ fun Session.initMapSurface(
   mapInitOptions: MapInitOptions = MapInitOptions(carContext),
   scrollListener: OnMapScrollListener? = null,
   scaleListener: OnMapScaleListener? = null,
+  callback: SurfaceCallback? = null,
   mapSurfaceReadyCallback: MapSurfaceReadyCallback
 ) {
   var mapSurface: MapSurface? = null
   val surfaceCallback: SurfaceCallback = object : SurfaceCallback {
     override fun onSurfaceAvailable(surfaceContainer: SurfaceContainer) {
+      callback?.onSurfaceAvailable(surfaceContainer)
       synchronized(this) {
         Logger.i(TAG, "Surface available $surfaceContainer")
         surfaceContainer.surface?.let { surface ->
