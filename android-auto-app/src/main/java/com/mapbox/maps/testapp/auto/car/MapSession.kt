@@ -10,7 +10,8 @@ import androidx.car.app.*
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapSurface
 import com.mapbox.maps.Style
-import com.mapbox.maps.extension.androidauto.BaseWidgetRenderer
+import com.mapbox.maps.extension.androidauto.CompassWidget
+import com.mapbox.maps.extension.androidauto.LogoWidget
 import com.mapbox.maps.extension.androidauto.initMapSurface
 import com.mapbox.maps.extension.style.layers.generated.skyLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.SkyType
@@ -18,6 +19,7 @@ import com.mapbox.maps.extension.style.sources.generated.rasterDemSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.extension.style.terrain.generated.terrain
 import com.mapbox.maps.plugin.locationcomponent.location
+import com.mapbox.maps.renderer.Widget
 import com.mapbox.maps.testapp.auto.R
 
 /**
@@ -26,22 +28,14 @@ import com.mapbox.maps.testapp.auto.R
 class MapSession : Session() {
   private lateinit var mapSurface: MapSurface
   private val carCameraController = CarCameraController()
-  private lateinit var widgetRenderer: BaseWidgetRenderer
+  private val widgetList = mutableListOf<Widget>()
 
   override fun onCreateScreen(intent: Intent): Screen {
     val mapScreen = MapScreen(carContext)
+    widgetList.add(LogoWidget(carContext))
+    widgetList.add(CompassWidget(carContext))
     initMapSurface(
       scrollListener = carCameraController,
-      callback = object: SurfaceCallback {
-        override fun onSurfaceAvailable(surfaceContainer: SurfaceContainer) {
-          widgetRenderer = BaseWidgetRenderer(
-            BitmapFactory.decodeResource(carContext.resources, R.drawable.mapbox_logo_icon),
-            surfaceContainer.width,
-            surfaceContainer.height
-          )
-//          widgetRenderer = BackgroundWidget()
-        }
-      }
     ) { surface ->
       mapSurface = surface
       carCameraController.init(
@@ -56,8 +50,7 @@ class MapSession : Session() {
       mapScreen.setMapCameraController(carCameraController)
       loadStyle(surface)
       initLocationComponent(surface)
-      Log.e("testtest", "pixelRatio: ${carContext.resources.displayMetrics.density}")
-      surface.addWidget(widgetRenderer)
+      widgetList.forEach { surface.addWidget(it) }
     }
     return if (carContext.checkSelfPermission(ACCESS_FINE_LOCATION) != PERMISSION_GRANTED) {
       carContext.getCarService(ScreenManager::class.java).push(mapScreen)

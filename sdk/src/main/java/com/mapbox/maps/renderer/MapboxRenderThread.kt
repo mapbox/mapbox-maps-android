@@ -36,6 +36,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val renderEventQueue = CopyOnWriteArrayList<Runnable>()
+
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val eventQueue = CopyOnWriteArrayList<Runnable>()
 
@@ -48,14 +49,17 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val renderTimeNs = AtomicLong(0)
+
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   private var needRenderOnResume = false
   private var expectedVsyncWakeTimeNs = 0L
+
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val awaitingNextVsync = AtomicBoolean(false)
   private var sizeChanged = false
   private var paused = false
   private var shouldExit = false
+
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var eglPrepared = false
   private var nativeRenderCreated = false
@@ -178,7 +182,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
     eglSurface?.let {
       when (val swapStatus = eglCore.swapBuffers(it)) {
-        EGL10.EGL_SUCCESS -> {}
+        EGL10.EGL_SUCCESS -> {
+        }
         EGL11.EGL_CONTEXT_LOST -> {
           Logger.w(TAG, "Context lost. Waiting for re-acquire")
           eglPrepared = false
@@ -271,6 +276,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   fun addWidget(widget: Widget) {
+    widget.onSizeChanged(this.width, this.height)
     widgetList.add(widget)
   }
 
@@ -286,6 +292,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         }
         this.width = width
         this.height = height
+        widgetList.forEach { it.onSizeChanged(width, height) }
         shouldExit = false
         eventQueue.clear()
         renderEventQueue.clear()

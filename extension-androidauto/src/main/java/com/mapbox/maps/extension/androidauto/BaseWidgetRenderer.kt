@@ -11,10 +11,13 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
 
-class BaseWidgetRenderer(
-  private val bitmap: Bitmap,
-  private val width: Int,
-  private val height: Int
+open class BaseWidgetRenderer(
+  private var bitmap: Bitmap,
+  private val position: WidgetPosition = WidgetPosition.BOTTOM_LEFT,
+  private val marginLeft: Float = 0f,
+  private val marginTop: Float = 0f,
+  private val marginRight: Float = 0f,
+  private val marginBottom: Float = 0f,
 ) : Widget() {
   private var program = 0
   private var vertexPositionHandle = 0
@@ -23,83 +26,17 @@ class BaseWidgetRenderer(
   private var screenMatrixHandle = 0
   private val textures = intArrayOf(0)
 
-  //  private var colorHandle = 0
   private var vertexShader = 0
   private var fragmentShader = 0
 
-  init {
-    Log.e(TAG, "bitmap: ${bitmap.width}, ${bitmap.height}")
-    Log.e(TAG, "screen size: ${width}, ${height}")
-  }
+  private var heightOffset: Float = 0f
+  private var widthOffset: Float = 0f
 
-  // The uScreen matrix
-  //
-  // First of all, the only coordinate system that OpenGL understands
-  // put the center of the screen at the 0,0 position. The maximum value of
-  // the X axis is 1 (rightmost part of the screen) and the minimum is -1
-  // (leftmost part of the screen). The same thing goes for the Y axis,
-  // where 1 is the top of the screen and -1 the bottom.
-  //
-  // However, when you're doing a 2d application you often need to think in 'pixels'
-  // (or something like that). If you have a 300x300 screen, you want to see the center
-  // at 150,150 not 0,0!
-  //
-  // The solution to this 'problem' is to multiply a matrix with your position to
-  // another matrix that will convert 'your' coordinates to the one OpenGL expects.
-  // There's no magic in this, only a bit of math. Try to multiply the uScreen matrix
-  // to the 150,150 position in a sheet of paper and look at the results.
-  //
-  // IMPORTANT: When trying to calculate the matrix on paper, you should treat the
-  // uScreen ROWS as COLUMNS and vice versa. This happens because OpenGL expect the
-  // matrix values ordered in a more efficient way, that unfortunately is different
-  // from the mathematical notation :(
-  private val screenMatrixData = floatArrayOf(
-    2f / width.toFloat(), 0f, 0f, 0f,
-    0f, -2f / height.toFloat(), 0f, 0f,
-    0f, 0f, 0f, 0f,
-    -1f, 1f, 0f, 1f
-  )
+  private lateinit var screenMatrixData: FloatArray
+  private lateinit var screenMatrixBuffer: FloatBuffer
 
-  private val screenMatrixBuffer: FloatBuffer by lazy {
-    // initialize vertex byte buffer for shape coordinates
-    // (number of coordinate values * 4 bytes per float)
-    ByteBuffer.allocateDirect(screenMatrixData.size * BYTES_PER_FLOAT).run {
-      // use the device hardware's native byte order
-      order(ByteOrder.nativeOrder())
-
-      // create a floating point buffer from the ByteBuffer
-      asFloatBuffer().apply {
-        // add the coordinates to the FloatBuffer
-        put(screenMatrixData)
-        // set the buffer to read the first coordinate
-        rewind()
-      }
-    }
-  }
-
-  private val vertexPositionData = floatArrayOf(
-    0f, height.toFloat() - bitmap.height.toFloat(),  //V1
-    0f, height.toFloat(),  //V2
-    bitmap.width.toFloat(), height.toFloat() - bitmap.height.toFloat(), //V3
-    bitmap.width.toFloat(), height.toFloat(), //V4
-  )
-
-  private val vertexPositionBuffer: FloatBuffer by lazy {
-    // initialize vertex byte buffer for shape coordinates
-    // (number of coordinate values * 4 bytes per float)
-    ByteBuffer.allocateDirect(vertexPositionData.size * BYTES_PER_FLOAT).run {
-      // use the device hardware's native byte order
-      order(ByteOrder.nativeOrder())
-
-      // create a floating point buffer from the ByteBuffer
-      asFloatBuffer().apply {
-        // add the coordinates to the FloatBuffer
-        put(vertexPositionData)
-        // set the buffer to read the first coordinate
-        rewind()
-      }
-    }
-  }
+  private lateinit var vertexPositionData: FloatArray
+  private lateinit var vertexPositionBuffer: FloatBuffer
 
   private val texturePositionData = floatArrayOf(
     0f, 0f,     //Texture coordinate for V1
@@ -107,7 +44,6 @@ class BaseWidgetRenderer(
     1f, 0f,
     1f, 1f
   )
-
   private val texturePositionBuffer: FloatBuffer by lazy {
     // initialize vertex byte buffer for shape coordinates
     // (number of coordinate values * 4 bytes per float)
@@ -123,6 +59,90 @@ class BaseWidgetRenderer(
         rewind()
       }
     }
+  }
+
+  override fun onSizeChanged(width: Int, height: Int) {
+    super.onSizeChanged(width, height)
+    Log.e(TAG, "bitmap size: ${bitmap.width}, ${bitmap.height}")
+    Log.e(TAG, "screen size: ${width}, ${height}")
+    heightOffset = when (position) {
+      WidgetPosition.BOTTOM_LEFT -> height.toFloat() - bitmap.height.toFloat() - marginBottom
+      WidgetPosition.BOTTOM_RIGHT -> height.toFloat() - bitmap.height.toFloat() - marginBottom
+      WidgetPosition.TOP_LEFT -> marginTop
+      WidgetPosition.TOP_RIGHT -> marginTop
+    }
+    widthOffset = when (position) {
+      WidgetPosition.TOP_RIGHT -> width.toFloat() - bitmap.width.toFloat() - marginRight
+      WidgetPosition.BOTTOM_RIGHT -> width.toFloat() - bitmap.width.toFloat() - marginRight
+      WidgetPosition.TOP_LEFT -> marginLeft
+      WidgetPosition.BOTTOM_LEFT -> marginLeft
+    }
+
+    // The uScreen matrix
+    //
+    // First of all, the only coordinate system that OpenGL understands
+    // put the center of the screen at the 0,0 position. The maximum value of
+    // the X axis is 1 (rightmost part of the screen) and the minimum is -1
+    // (leftmost part of the screen). The same thing goes for the Y axis,
+    // where 1 is the top of the screen and -1 the bottom.
+    //
+    // However, when you're doing a 2d application you often need to think in 'pixels'
+    // (or something like that). If you have a 300x300 screen, you want to see the center
+    // at 150,150 not 0,0!
+    //
+    // The solution to this 'problem' is to multiply a matrix with your position to
+    // another matrix that will convert 'your' coordinates to the one OpenGL expects.
+    // There's no magic in this, only a bit of math. Try to multiply the uScreen matrix
+    // to the 150,150 position in a sheet of paper and look at the results.
+    //
+    // IMPORTANT: When trying to calculate the matrix on paper, you should treat the
+    // uScreen ROWS as COLUMNS and vice versa. This happens because OpenGL expect the
+    // matrix values ordered in a more efficient way, that unfortunately is different
+    // from the mathematical notation :(
+    screenMatrixData = floatArrayOf(
+      2f / width.toFloat(), 0f, 0f, 0f,
+      0f, -2f / height.toFloat(), 0f, 0f,
+      0f, 0f, 0f, 0f,
+      -1f, 1f, 0f, 1f
+    )
+
+    // initialize vertex byte buffer for shape coordinates
+    // (number of coordinate values * 4 bytes per float)
+    screenMatrixBuffer = ByteBuffer.allocateDirect(screenMatrixData.size * BYTES_PER_FLOAT).run {
+      // use the device hardware's native byte order
+      order(ByteOrder.nativeOrder())
+
+      // create a floating point buffer from the ByteBuffer
+      asFloatBuffer().apply {
+        // add the coordinates to the FloatBuffer
+        put(screenMatrixData)
+        // set the buffer to read the first coordinate
+        rewind()
+      }
+    }
+
+    vertexPositionData = floatArrayOf(
+      widthOffset, heightOffset,  //V1
+      widthOffset, heightOffset + bitmap.height.toFloat(),  //V2
+      widthOffset + bitmap.width.toFloat(), heightOffset, //V3
+      widthOffset + bitmap.width.toFloat(), heightOffset + bitmap.height.toFloat(), //V4
+    )
+
+    // initialize vertex byte buffer for shape coordinates
+    // (number of coordinate values * 4 bytes per float)
+    vertexPositionBuffer =
+      ByteBuffer.allocateDirect(vertexPositionData.size * BYTES_PER_FLOAT).run {
+        // use the device hardware's native byte order
+        order(ByteOrder.nativeOrder())
+
+        // create a floating point buffer from the ByteBuffer
+        asFloatBuffer().apply {
+          // add the coordinates to the FloatBuffer
+          put(vertexPositionData)
+          // set the buffer to read the first coordinate
+          rewind()
+        }
+      }
   }
 
   override fun initialize() {
@@ -181,8 +201,6 @@ class BaseWidgetRenderer(
         checkError("glUseProgram")
       }
 
-//      GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vertexPositionHandle)
-
       GLES20.glUniformMatrix4fv(
         screenMatrixHandle,
         screenMatrixBuffer.limit() / screenMatrixData.size,
@@ -200,7 +218,6 @@ class BaseWidgetRenderer(
       GLES20.glUniform1i(textureHandle, 0)
 
       // set the viewport and a fixed, white background
-//      GLES20.glViewport(0, 0, width, height);
       GLES20.glClearColor(1f, 1f, 1f, 1f);
 
       // since we're using a PNG file with transparency, enable alpha blending.
@@ -218,8 +235,6 @@ class BaseWidgetRenderer(
         VERTEX_STRIDE, vertexPositionBuffer
       ).also { checkError("glVertexAttribPointer") }
 
-//      GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, texturePositionHandle)
-
       // Enable a handle to the tex position
       GLES20.glEnableVertexAttribArray(texturePositionHandle)
         .also { checkError("glEnableVertexAttribArray") }
@@ -235,11 +250,10 @@ class BaseWidgetRenderer(
       GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, VERTEX_COUNT)
         .also { checkError("glDrawArrays") }
 
-      // never forget to clean up!
 
       // Clearing
       GLES20.glDisableVertexAttribArray(vertexPositionHandle)
-//      GLES20.glDisableVertexAttribArray(texturePositionHandle)
+      GLES20.glDisableVertexAttribArray(texturePositionHandle)
       GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0)
       GLES20.glUseProgram(0)
     }
@@ -307,8 +321,12 @@ class BaseWidgetRenderer(
       )
       // The parameters specified above, generates a 2D texture
       GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0)
-//      bitmap.recycle()
+      bitmap.recycle()
     }
+  }
+
+  fun updateBitmap(bitmap: Bitmap) {
+    this.bitmap = bitmap
   }
 
   companion object {
@@ -318,31 +336,8 @@ class BaseWidgetRenderer(
     private const val COORDS_PER_VERTEX = 2
     private const val BYTES_PER_FLOAT = 4
     private const val VERTEX_STRIDE = COORDS_PER_VERTEX * BYTES_PER_FLOAT // 4 bytes per vertex
+    private const val VERTEX_COUNT = 4  // 4 vertex in total
 
-    // TODO don't forget to use pixel ratio to avoid stretching
-    private val BACKGROUND_COORDINATES = floatArrayOf( // in counterclockwise order:
-//      -0.8f, -0.8f,
-//      -1.0f, -0.8f,
-//      -0.8f, -1.0f,
-//      -1.0f, -1.0f
-      -1.0f, -1.0f,
-      1.0f, -1.0f,
-      -1.0f, 1.0f,
-      1.0f, 1.0f
-    )
-
-    private val VERTEX_COUNT = BACKGROUND_COORDINATES.size / COORDS_PER_VERTEX
-
-//    private val VERTEX_SHADER_CODE = """
-//      uniform mat4 uScreen;
-//      attribute vec2 vPosition;
-//      attribute vec2 vCoordinate;
-//      varying vec2 aCoordinate;
-//      void main() {
-//        gl_Position = vec4(vPosition, 0.0, 1.0);
-//        aCoordinate = vCoordinate;
-//      }
-//    """.trimIndent()
     private val VERTEX_SHADER_CODE = """
       uniform mat4 uScreen;
       attribute vec2 vPosition;

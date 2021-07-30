@@ -1,11 +1,21 @@
 package com.mapbox.maps.renderer
 
+import android.content.Context
+import android.graphics.Bitmap
 import android.opengl.GLES20
 import androidx.annotation.CallSuper
 
 abstract class Widget {
 
   private var isInit = false
+  var width = 0
+  var height = 0
+
+  @CallSuper
+  open fun onSizeChanged(width: Int, height: Int) {
+    this.width = width
+    this.height = height
+  }
 
   abstract fun initialize()
 
