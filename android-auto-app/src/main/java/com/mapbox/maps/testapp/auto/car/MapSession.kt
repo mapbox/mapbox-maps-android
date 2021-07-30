@@ -33,7 +33,7 @@ class MapSession : Session() {
   override fun onCreateScreen(intent: Intent): Screen {
     val mapScreen = MapScreen(carContext)
     widgetList.add(LogoWidget(carContext))
-    widgetList.add(CompassWidget(carContext))
+    widgetList.add(CompassWidget(carContext).also { it.rotate(90f) })
     initMapSurface(
       scrollListener = carCameraController,
     ) { surface ->

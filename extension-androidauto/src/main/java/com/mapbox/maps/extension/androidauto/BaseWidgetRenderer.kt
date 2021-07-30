@@ -3,6 +3,7 @@ package com.mapbox.maps.extension.androidauto
 import android.graphics.Bitmap
 import android.opengl.GLES20
 import android.opengl.GLUtils
+import android.opengl.Matrix
 import android.util.Log
 import com.mapbox.common.Logger
 import com.mapbox.maps.BuildConfig
@@ -24,6 +25,8 @@ open class BaseWidgetRenderer(
   private var texturePositionHandle = 0
   private var textureHandle = 0
   private var screenMatrixHandle = 0
+  private var rotationMatrixHandle = 0
+  private var translatematrixHandle = 0
   private val textures = intArrayOf(0)
 
   private var vertexShader = 0
@@ -35,8 +38,37 @@ open class BaseWidgetRenderer(
   private lateinit var screenMatrixData: FloatArray
   private lateinit var screenMatrixBuffer: FloatBuffer
 
+  private val rotationMatrixData = FloatArray(16).apply {
+    Matrix.setIdentityM(this, 0)
+  }
+
+  private val translateMatrix = FloatArray(16).apply {
+    Matrix.setIdentityM(this, 0)
+  }
+
+//  private lateinit var rotationMatrixBuffer : FloatBuffer
+
+  private fun getMatrixBuffer(matrixData: FloatArray): FloatBuffer {
+    return ByteBuffer.allocateDirect(matrixData.size * BYTES_PER_FLOAT).run {
+      // use the device hardware's native byte order
+      order(ByteOrder.nativeOrder())
+
+      // create a floating point buffer from the ByteBuffer
+      asFloatBuffer().apply {
+        // add the coordinates to the FloatBuffer
+        put(matrixData)
+        // set the buffer to read the first coordinate
+        rewind()
+      }
+    }
+  }
+
   private lateinit var vertexPositionData: FloatArray
   private lateinit var vertexPositionBuffer: FloatBuffer
+
+  init {
+    Matrix.setIdentityM(rotationMatrixData, 0)
+  }
 
   private val texturePositionData = floatArrayOf(
     0f, 0f,     //Texture coordinate for V1
@@ -45,20 +77,7 @@ open class BaseWidgetRenderer(
     1f, 1f
   )
   private val texturePositionBuffer: FloatBuffer by lazy {
-    // initialize vertex byte buffer for shape coordinates
-    // (number of coordinate values * 4 bytes per float)
-    ByteBuffer.allocateDirect(texturePositionData.size * BYTES_PER_FLOAT).run {
-      // use the device hardware's native byte order
-      order(ByteOrder.nativeOrder())
-
-      // create a floating point buffer from the ByteBuffer
-      asFloatBuffer().apply {
-        // add the coordinates to the FloatBuffer
-        put(texturePositionData)
-        // set the buffer to read the first coordinate
-        rewind()
-      }
-    }
+    getMatrixBuffer(texturePositionData)
   }
 
   override fun onSizeChanged(width: Int, height: Int) {
@@ -66,17 +85,25 @@ open class BaseWidgetRenderer(
     Log.e(TAG, "bitmap size: ${bitmap.width}, ${bitmap.height}")
     Log.e(TAG, "screen size: ${width}, ${height}")
     heightOffset = when (position) {
-      WidgetPosition.BOTTOM_LEFT -> height.toFloat() - bitmap.height.toFloat() - marginBottom
-      WidgetPosition.BOTTOM_RIGHT -> height.toFloat() - bitmap.height.toFloat() - marginBottom
-      WidgetPosition.TOP_LEFT -> marginTop
-      WidgetPosition.TOP_RIGHT -> marginTop
+      WidgetPosition.BOTTOM_LEFT -> height.toFloat() - bitmap.height.toFloat() / 2f - marginBottom
+      WidgetPosition.BOTTOM_RIGHT -> height.toFloat() - bitmap.height.toFloat() / 2f - marginBottom
+      WidgetPosition.TOP_LEFT -> marginTop + bitmap.height.toFloat() / 2f
+      WidgetPosition.TOP_RIGHT -> marginTop + bitmap.height.toFloat() / 2f
     }
     widthOffset = when (position) {
-      WidgetPosition.TOP_RIGHT -> width.toFloat() - bitmap.width.toFloat() - marginRight
-      WidgetPosition.BOTTOM_RIGHT -> width.toFloat() - bitmap.width.toFloat() - marginRight
-      WidgetPosition.TOP_LEFT -> marginLeft
-      WidgetPosition.BOTTOM_LEFT -> marginLeft
+      WidgetPosition.TOP_RIGHT -> width.toFloat() - bitmap.width.toFloat() / 2f - marginRight
+      WidgetPosition.BOTTOM_RIGHT -> width.toFloat() - bitmap.width.toFloat() / 2f - marginRight
+      WidgetPosition.TOP_LEFT -> marginLeft + bitmap.width.toFloat() / 2f
+      WidgetPosition.BOTTOM_LEFT -> marginLeft + bitmap.width.toFloat() / 2f
     }
+
+    Matrix.translateM(
+      translateMatrix,
+      0,
+      widthOffset,
+      heightOffset,
+      0f
+    )
 
     // The uScreen matrix
     //
@@ -122,10 +149,10 @@ open class BaseWidgetRenderer(
     }
 
     vertexPositionData = floatArrayOf(
-      widthOffset, heightOffset,  //V1
-      widthOffset, heightOffset + bitmap.height.toFloat(),  //V2
-      widthOffset + bitmap.width.toFloat(), heightOffset, //V3
-      widthOffset + bitmap.width.toFloat(), heightOffset + bitmap.height.toFloat(), //V4
+      -bitmap.width.toFloat() / 2f, -bitmap.height.toFloat() / 2f,
+      -bitmap.width.toFloat() / 2f, bitmap.height.toFloat() / 2f,
+      bitmap.width.toFloat() / 2f, -bitmap.height.toFloat() / 2f,
+      bitmap.width.toFloat() / 2f, bitmap.height.toFloat() / 2f,
     )
 
     // initialize vertex byte buffer for shape coordinates
@@ -180,13 +207,22 @@ open class BaseWidgetRenderer(
     screenMatrixHandle =
       GLES20.glGetUniformLocation(program, "uScreen").also { checkError("glGetAttribLocation") }
 
+    // get handle to rotation matrix(fragment shader's uRotation member)
+    rotationMatrixHandle =
+      GLES20.glGetUniformLocation(program, "uRotation").also { checkError("glGetAttribLocation") }
+
+    translatematrixHandle =
+      GLES20.glGetUniformLocation(program, "uTranslate")
+        .also { checkError("glGetAttribLocation") }
+
     // get handle to vertex shader's vPosition member
     vertexPositionHandle =
       GLES20.glGetAttribLocation(program, "vPosition").also { checkError("glGetAttribLocation") }
 
     // get handle to texture coordinate(vertex shader's vCoordinate member)
     texturePositionHandle =
-      GLES20.glGetAttribLocation(program, "vCoordinate").also { checkError("glGetAttribLocation") }
+      GLES20.glGetAttribLocation(program, "vCoordinate")
+        .also { checkError("glGetAttribLocation") }
 
     // get handle to fragment shader's vColor member
     textureHandle =
@@ -206,6 +242,22 @@ open class BaseWidgetRenderer(
         screenMatrixBuffer.limit() / screenMatrixData.size,
         false,
         screenMatrixBuffer
+      )
+
+      val rotationBuffer = getMatrixBuffer(rotationMatrixData)
+      GLES20.glUniformMatrix4fv(
+        rotationMatrixHandle,
+        rotationBuffer.limit() / rotationMatrixData.size,
+        false,
+        rotationBuffer
+      )
+
+      val translateBuffer = getMatrixBuffer(translateMatrix)
+      GLES20.glUniformMatrix4fv(
+        translatematrixHandle,
+        rotationBuffer.limit() / translateMatrix.size,
+        false,
+        translateBuffer
       )
 
       createTexture()
@@ -327,6 +379,11 @@ open class BaseWidgetRenderer(
 
   fun updateBitmap(bitmap: Bitmap) {
     this.bitmap = bitmap
+    onSizeChanged(width, height)
+  }
+
+  fun rotate(bearing: Float) {
+    Matrix.rotateM(rotationMatrixData, 0, bearing, 0f, 0f, 1f);
   }
 
   companion object {
@@ -340,12 +397,14 @@ open class BaseWidgetRenderer(
 
     private val VERTEX_SHADER_CODE = """
       uniform mat4 uScreen;
+      uniform mat4 uTranslate;
+      uniform mat4 uRotation;
       attribute vec2 vPosition;
       attribute vec2 vCoordinate;
       varying vec2 aCoordinate;
       void main() {
         aCoordinate = vCoordinate;
-        gl_Position = uScreen * vec4(vPosition, 0.0, 1.0);
+        gl_Position =  uScreen * uTranslate  * uRotation * vec4(vPosition, 0.0, 1.0);
       }
     """.trimIndent()
 
@@ -377,7 +436,10 @@ open class BaseWidgetRenderer(
           }
           GLES20.GL_INVALID_ENUM -> Logger.e(TAG, "$cmd -> error in gl: GL_INVALID_ENUM")
           GLES20.GL_INVALID_VALUE -> Logger.e(TAG, "$cmd -> error in gl: GL_INVALID_VALUE")
-          GLES20.GL_INVALID_OPERATION -> Logger.e(TAG, "$cmd -> error in gl: GL_INVALID_OPERATION")
+          GLES20.GL_INVALID_OPERATION -> Logger.e(
+            TAG,
+            "$cmd -> error in gl: GL_INVALID_OPERATION"
+          )
           GLES20.GL_INVALID_FRAMEBUFFER_OPERATION -> Logger.e(
             TAG,
             "$cmd -> error in gl: GL_INVALID_FRAMEBUFFER_OPERATION"
