@@ -1,4 +1,4 @@
-package com.mapbox.maps.renderer
+package com.mapbox.maps.extension.androidauto
 
 import android.graphics.Bitmap
 import android.opengl.GLES20
@@ -6,15 +6,21 @@ import android.opengl.GLUtils
 import android.util.Log
 import com.mapbox.common.Logger
 import com.mapbox.maps.BuildConfig
+import com.mapbox.maps.renderer.Widget
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
 
-class WidgetRenderer(val bitmap: Bitmap, val width: Int, val height: Int) : Widget() {
+class BaseWidgetRenderer(
+  private val bitmap: Bitmap,
+  private val width: Int,
+  private val height: Int
+) : Widget() {
   private var program = 0
-  private var positionHandle = 0
-  private var texPositionHandle = 0
+  private var vertexPositionHandle = 0
+  private var texturePositionHandle = 0
   private var textureHandle = 0
+//  private var screenMatrixHandle = 0
   private val textures = intArrayOf(0)
 
   //  private var colorHandle = 0
@@ -23,18 +29,62 @@ class WidgetRenderer(val bitmap: Bitmap, val width: Int, val height: Int) : Widg
 
   init {
     Log.e(TAG, "bitmap: ${bitmap.width}, ${bitmap.height}")
+    Log.e(TAG, "screen size: ${width}, ${height}")
   }
 
-  val widthRatio = bitmap.width.toFloat() / (width * 2).toFloat()
-  val heightRatio = bitmap.height.toFloat() / (height * 2).toFloat()
-  private val bitMapPosition = floatArrayOf(
-    -1.0f, -1.0f,
-    -1.0f + widthRatio, -1.0f,
-    -1.0f, -1.0f + heightRatio,
-    -1.0f + widthRatio, -1.0f + heightRatio
+  // The uScreen matrix
+  //
+  // First of all, the only coordinate system that OpenGL understands
+  // put the center of the screen at the 0,0 position. The maximum value of
+  // the X axis is 1 (rightmost part of the screen) and the minimum is -1
+  // (leftmost part of the screen). The same thing goes for the Y axis,
+  // where 1 is the top of the screen and -1 the bottom.
+  //
+  // However, when you're doing a 2d application you often need to think in 'pixels'
+  // (or something like that). If you have a 300x300 screen, you want to see the center
+  // at 150,150 not 0,0!
+  //
+  // The solution to this 'problem' is to multiply a matrix with your position to
+  // another matrix that will convert 'your' coordinates to the one OpenGL expects.
+  // There's no magic in this, only a bit of math. Try to multiply the uScreen matrix
+  // to the 150,150 position in a sheet of paper and look at the results.
+  //
+  // IMPORTANT: When trying to calculate the matrix on paper, you should treat the
+  // uScreen ROWS as COLUMNS and vice versa. This happens because OpenGL expect the
+  // matrix values ordered in a more efficient way, that unfortunately is different
+  // from the mathematical notation :(
+  private val screenMatrixData = floatArrayOf(
+    2f / width.toFloat(), 0f, 0f, 0f,
+    0f, -2f / height.toFloat(), 0f, 0f,
+    0f, 0f, 0f, 0f,
+    -1f, 1f, 0f, 1f
   )
 
-  private val vertexBuffer: FloatBuffer by lazy {
+  private val screenMatrixBuffer: FloatBuffer by lazy {
+    // initialize vertex byte buffer for shape coordinates
+    // (number of coordinate values * 4 bytes per float)
+    ByteBuffer.allocateDirect(screenMatrixData.size * BYTES_PER_FLOAT).run {
+      // use the device hardware's native byte order
+      order(ByteOrder.nativeOrder())
+
+      // create a floating point buffer from the ByteBuffer
+      asFloatBuffer().apply {
+        // add the coordinates to the FloatBuffer
+        put(screenMatrixData)
+        // set the buffer to read the first coordinate
+        rewind()
+      }
+    }
+  }
+
+  private val vertexPositionData = floatArrayOf(
+    0f, 0f,  //V1
+    100f, 0f,  //V2
+    0f, 100f, //V3
+    100f, 100f,  //V4
+  )
+
+  private val vertexPositionBuffer: FloatBuffer by lazy {
     // initialize vertex byte buffer for shape coordinates
     // (number of coordinate values * 4 bytes per float)
     ByteBuffer.allocateDirect(BACKGROUND_COORDINATES.size * BYTES_PER_FLOAT).run {
@@ -51,24 +101,29 @@ class WidgetRenderer(val bitmap: Bitmap, val width: Int, val height: Int) : Widg
     }
   }
 
+  private val texturePositionData = floatArrayOf(
+    0f, 1f,     //Texture coordinate for V1
+    1f, 1f,
+    0f, 0f,
+    1f, 0f,
+  )
 
-  private val texPositionBuffer: FloatBuffer by lazy {
+  private val texturePositionBuffer: FloatBuffer by lazy {
     // initialize vertex byte buffer for shape coordinates
     // (number of coordinate values * 4 bytes per float)
-    ByteBuffer.allocateDirect(BACKGROUND_COORDINATES.size * BYTES_PER_FLOAT).run {
+    ByteBuffer.allocateDirect(texturePositionData.size * BYTES_PER_FLOAT).run {
       // use the device hardware's native byte order
       order(ByteOrder.nativeOrder())
 
       // create a floating point buffer from the ByteBuffer
       asFloatBuffer().apply {
         // add the coordinates to the FloatBuffer
-        put(BACKGROUND_COORDINATES)
+        put(texturePositionData)
         // set the buffer to read the first coordinate
         rewind()
       }
     }
   }
-
 
   override fun initialize() {
     val maxAttrib = IntArray(1)
@@ -101,14 +156,21 @@ class WidgetRenderer(val bitmap: Bitmap, val width: Int, val height: Int) : Widg
       }
     }
 
+    // get handle to screen matrix(fragment shader's uScreen member)
+//    screenMatrixHandle =
+//      GLES20.glGetUniformLocation(program, "uScreen").also { checkError("glGetAttribLocation") }
+
     // get handle to vertex shader's vPosition member
-    positionHandle =
+    vertexPositionHandle =
       GLES20.glGetAttribLocation(program, "vPosition").also { checkError("glGetAttribLocation") }
 
-    texPositionHandle = GLES20.glGetAttribLocation(program, "vCoordinate")
+    // get handle to texture coordinate(vertex shader's vCoordinate member)
+    texturePositionHandle =
+      GLES20.glGetAttribLocation(program, "vCoordinate").also { checkError("glGetAttribLocation") }
 
     // get handle to fragment shader's vColor member
-    textureHandle = GLES20.glGetUniformLocation(program, "vTexture")
+    textureHandle =
+      GLES20.glGetUniformLocation(program, "vTexture").also { checkError("glGetAttribLocation") }
   }
 
   override fun render() {
@@ -119,7 +181,14 @@ class WidgetRenderer(val bitmap: Bitmap, val width: Int, val height: Int) : Widg
         checkError("glUseProgram")
       }
 
-      GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, positionHandle)
+//      GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vertexPositionHandle)
+
+//      GLES20.glUniformMatrix4fv(
+//        screenMatrixHandle,
+//        screenMatrixBuffer.limit() / screenMatrixData.size,
+//        false,
+//        screenMatrixBuffer
+//      )
 
       createTexture()
 
@@ -138,19 +207,32 @@ class WidgetRenderer(val bitmap: Bitmap, val width: Int, val height: Int) : Widg
       GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
       GLES20.glEnable(GLES20.GL_BLEND);
 
+      // Prepare the screen matrix data
+      // TODO
+
       // Enable a handle to the vertices
-      GLES20.glEnableVertexAttribArray(positionHandle)
+      GLES20.glEnableVertexAttribArray(vertexPositionHandle)
         .also { checkError("glEnableVertexAttribArray") }
 
-      // Prepare the coordinate data
+      // Prepare the vertex coordinate data
       GLES20.glVertexAttribPointer(
-        positionHandle, COORDS_PER_VERTEX,
+        vertexPositionHandle, COORDS_PER_VERTEX,
         GLES20.GL_FLOAT, false,
-        VERTEX_STRIDE, vertexBuffer
+        VERTEX_STRIDE, vertexPositionBuffer
       ).also { checkError("glVertexAttribPointer") }
 
-      // Set color for drawing the background
-//      GLES20.glUniform4fv(textureHandle, 1, color, 0).also { checkError("glUniform4fv") }
+//      GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, texturePositionHandle)
+
+      // Enable a handle to the tex position
+      GLES20.glEnableVertexAttribArray(texturePositionHandle)
+        .also { checkError("glEnableVertexAttribArray") }
+
+      // Prepare the texture coordinate data
+      GLES20.glVertexAttribPointer(
+        texturePositionHandle, COORDS_PER_VERTEX,
+        GLES20.GL_FLOAT, false,
+        VERTEX_STRIDE, texturePositionBuffer
+      ).also { checkError("glVertexAttribPointer") }
 
       // Draw the background
       GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, VERTEX_COUNT)
@@ -159,7 +241,8 @@ class WidgetRenderer(val bitmap: Bitmap, val width: Int, val height: Int) : Widg
       // never forget to clean up!
 
       // Clearing
-      GLES20.glDisableVertexAttribArray(positionHandle)
+      GLES20.glDisableVertexAttribArray(vertexPositionHandle)
+//      GLES20.glDisableVertexAttribArray(texturePositionHandle)
       GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0)
       GLES20.glUseProgram(0)
     }
@@ -173,7 +256,7 @@ class WidgetRenderer(val bitmap: Bitmap, val width: Int, val height: Int) : Widg
   override fun deinitialize() {
     if (program != 0) {
       // Disable vertex array
-      GLES20.glDisableVertexAttribArray(positionHandle)
+      GLES20.glDisableVertexAttribArray(vertexPositionHandle)
       GLES20.glDetachShader(program, vertexShader)
       GLES20.glDetachShader(program, fragmentShader)
       GLES20.glDeleteShader(vertexShader)
@@ -238,6 +321,7 @@ class WidgetRenderer(val bitmap: Bitmap, val width: Int, val height: Int) : Widg
     private const val COORDS_PER_VERTEX = 2
     private const val BYTES_PER_FLOAT = 4
     private const val VERTEX_STRIDE = COORDS_PER_VERTEX * BYTES_PER_FLOAT // 4 bytes per vertex
+
     // TODO don't forget to use pixel ratio to avoid stretching
     private val BACKGROUND_COORDINATES = floatArrayOf( // in counterclockwise order:
 //      -0.8f, -0.8f,
@@ -249,15 +333,26 @@ class WidgetRenderer(val bitmap: Bitmap, val width: Int, val height: Int) : Widg
       -1.0f, 1.0f,
       1.0f, 1.0f
     )
+
     private val VERTEX_COUNT = BACKGROUND_COORDINATES.size / COORDS_PER_VERTEX
 
+//    private val VERTEX_SHADER_CODE = """
+//      uniform mat4 uScreen;
+//      attribute vec2 vPosition;
+//      attribute vec2 vCoordinate;
+//      varying vec2 aCoordinate;
+//      void main() {
+//        gl_Position = vec4(vPosition, 0.0, 1.0);
+//        aCoordinate = vCoordinate;
+//      }
+//    """.trimIndent()
     private val VERTEX_SHADER_CODE = """
       attribute vec2 vPosition;
       attribute vec2 vCoordinate;
       varying vec2 aCoordinate;
       void main() {
+        aCoordinate = vCoordinate;
         gl_Position = vec4(vPosition, 0.0, 1.0);
-        aCoordinate = vPosition;
       }
     """.trimIndent()
 
@@ -281,20 +376,21 @@ class WidgetRenderer(val bitmap: Bitmap, val width: Int, val height: Int) : Widg
       }
     }
 
-    // TODO on Mali G77 seeing crashes - to investigate
     private fun checkError(cmd: String? = null) {
-//      Log.e(TAG, "ran: $cmd")
       if (BuildConfig.DEBUG) {
         when (val error = GLES20.glGetError()) {
           GLES20.GL_NO_ERROR -> {
             Logger.d(TAG, "$cmd -> no error")
           }
           GLES20.GL_INVALID_ENUM -> Logger.e(TAG, "$cmd -> error in gl: GL_INVALID_ENUM")
-          GLES20.GL_INVALID_VALUE -> Logger.e(TAG,"$cmd -> error in gl: GL_INVALID_VALUE")
-          GLES20.GL_INVALID_OPERATION -> Logger.e(TAG,"$cmd -> error in gl: GL_INVALID_OPERATION")
-          GLES20.GL_INVALID_FRAMEBUFFER_OPERATION -> Logger.e(TAG,"$cmd -> error in gl: GL_INVALID_FRAMEBUFFER_OPERATION")
-          GLES20.GL_OUT_OF_MEMORY -> Logger.e(TAG,"$cmd -> error in gl: GL_OUT_OF_MEMORY")
-          else -> Logger.e(TAG,"$cmd -> error in gl: $error")
+          GLES20.GL_INVALID_VALUE -> Logger.e(TAG, "$cmd -> error in gl: GL_INVALID_VALUE")
+          GLES20.GL_INVALID_OPERATION -> Logger.e(TAG, "$cmd -> error in gl: GL_INVALID_OPERATION")
+          GLES20.GL_INVALID_FRAMEBUFFER_OPERATION -> Logger.e(
+            TAG,
+            "$cmd -> error in gl: GL_INVALID_FRAMEBUFFER_OPERATION"
+          )
+          GLES20.GL_OUT_OF_MEMORY -> Logger.e(TAG, "$cmd -> error in gl: GL_OUT_OF_MEMORY")
+          else -> Logger.e(TAG, "$cmd -> error in gl: $error")
         }
       }
     }

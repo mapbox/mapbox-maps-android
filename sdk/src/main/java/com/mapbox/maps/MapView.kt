@@ -293,8 +293,11 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     mapController.setOnFpsChangedListener(listener)
   }
 
-  // TODO make it part of interface
-  fun addWidget(widget: Widget) {
+  /**
+   * Add static image widget to the map.
+   */
+  @MapboxExperimental
+  override fun addWidget(widget: Widget) {
     mapController.addWidget(widget)
   }
 

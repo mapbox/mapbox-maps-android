@@ -202,7 +202,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     renderer.setOnFpsChangedListener(listener)
   }
 
-  fun addWidget(widget: Widget) {
+  override fun addWidget(widget: Widget) {
     renderer.renderThread.addWidget(widget)
   }
 

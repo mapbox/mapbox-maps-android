@@ -4,21 +4,19 @@ import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.content.res.Configuration
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.util.Log
 import androidx.car.app.*
-import androidx.core.content.ContextCompat
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapSurface
 import com.mapbox.maps.Style
-import com.mapbox.maps.extension.androidauto.drawWidget
+import com.mapbox.maps.extension.androidauto.BaseWidgetRenderer
 import com.mapbox.maps.extension.androidauto.initMapSurface
 import com.mapbox.maps.extension.style.layers.generated.skyLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.SkyType
 import com.mapbox.maps.extension.style.sources.generated.rasterDemSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.extension.style.terrain.generated.terrain
-import com.mapbox.maps.extension.widget.WidgetRenderer
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.auto.R
 
@@ -28,7 +26,7 @@ import com.mapbox.maps.testapp.auto.R
 class MapSession : Session() {
   private lateinit var mapSurface: MapSurface
   private val carCameraController = CarCameraController()
-  private lateinit var widgetRenderer: WidgetRenderer
+  private lateinit var widgetRenderer: BaseWidgetRenderer
 
   override fun onCreateScreen(intent: Intent): Screen {
     val mapScreen = MapScreen(carContext)
@@ -36,11 +34,12 @@ class MapSession : Session() {
       scrollListener = carCameraController,
       callback = object: SurfaceCallback {
         override fun onSurfaceAvailable(surfaceContainer: SurfaceContainer) {
-          widgetRenderer = WidgetRenderer(
+          widgetRenderer = BaseWidgetRenderer(
             BitmapFactory.decodeResource(carContext.resources, R.drawable.mapbox_logo_icon),
             surfaceContainer.width,
             surfaceContainer.height
           )
+//          widgetRenderer = BackgroundWidget()
         }
       }
     ) { surface ->
@@ -57,22 +56,8 @@ class MapSession : Session() {
       mapScreen.setMapCameraController(carCameraController)
       loadStyle(surface)
       initLocationComponent(surface)
-//      surface.surface.drawWidget(BitmapFactory.decodeResource(carContext.resources,R.drawable.mapbox_compass_icon))
-      surface.queueEvent({
-        widgetRenderer.initialize()
-      }, false)
-      surface.queueEvent(
-        {
-          widgetRenderer.render()
-        }, true
-      )
-      surface.getMapboxMap().addOnRenderFrameStartedListener {
-        surface.queueEvent(
-          {
-            widgetRenderer.render()
-          }, true
-        )
-      }
+      Log.e("testtest", "pixelRatio: ${carContext.resources.displayMetrics.density}")
+      surface.addWidget(widgetRenderer)
     }
     return if (carContext.checkSelfPermission(ACCESS_FINE_LOCATION) != PERMISSION_GRANTED) {
       carContext.getCarService(ScreenManager::class.java).push(mapScreen)
