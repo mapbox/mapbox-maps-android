@@ -20,7 +20,7 @@ class BaseWidgetRenderer(
   private var vertexPositionHandle = 0
   private var texturePositionHandle = 0
   private var textureHandle = 0
-//  private var screenMatrixHandle = 0
+  private var screenMatrixHandle = 0
   private val textures = intArrayOf(0)
 
   //  private var colorHandle = 0
@@ -78,23 +78,23 @@ class BaseWidgetRenderer(
   }
 
   private val vertexPositionData = floatArrayOf(
-    0f, 0f,  //V1
-    100f, 0f,  //V2
-    0f, 100f, //V3
-    100f, 100f,  //V4
+    0f, height.toFloat() - bitmap.height.toFloat(),  //V1
+    0f, height.toFloat(),  //V2
+    bitmap.width.toFloat(), height.toFloat() - bitmap.height.toFloat(), //V3
+    bitmap.width.toFloat(), height.toFloat(), //V4
   )
 
   private val vertexPositionBuffer: FloatBuffer by lazy {
     // initialize vertex byte buffer for shape coordinates
     // (number of coordinate values * 4 bytes per float)
-    ByteBuffer.allocateDirect(BACKGROUND_COORDINATES.size * BYTES_PER_FLOAT).run {
+    ByteBuffer.allocateDirect(vertexPositionData.size * BYTES_PER_FLOAT).run {
       // use the device hardware's native byte order
       order(ByteOrder.nativeOrder())
 
       // create a floating point buffer from the ByteBuffer
       asFloatBuffer().apply {
         // add the coordinates to the FloatBuffer
-        put(BACKGROUND_COORDINATES)
+        put(vertexPositionData)
         // set the buffer to read the first coordinate
         rewind()
       }
@@ -102,10 +102,10 @@ class BaseWidgetRenderer(
   }
 
   private val texturePositionData = floatArrayOf(
-    0f, 1f,     //Texture coordinate for V1
-    1f, 1f,
-    0f, 0f,
+    0f, 0f,     //Texture coordinate for V1
+    0f, 1f,
     1f, 0f,
+    1f, 1f
   )
 
   private val texturePositionBuffer: FloatBuffer by lazy {
@@ -157,8 +157,8 @@ class BaseWidgetRenderer(
     }
 
     // get handle to screen matrix(fragment shader's uScreen member)
-//    screenMatrixHandle =
-//      GLES20.glGetUniformLocation(program, "uScreen").also { checkError("glGetAttribLocation") }
+    screenMatrixHandle =
+      GLES20.glGetUniformLocation(program, "uScreen").also { checkError("glGetAttribLocation") }
 
     // get handle to vertex shader's vPosition member
     vertexPositionHandle =
@@ -183,12 +183,12 @@ class BaseWidgetRenderer(
 
 //      GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vertexPositionHandle)
 
-//      GLES20.glUniformMatrix4fv(
-//        screenMatrixHandle,
-//        screenMatrixBuffer.limit() / screenMatrixData.size,
-//        false,
-//        screenMatrixBuffer
-//      )
+      GLES20.glUniformMatrix4fv(
+        screenMatrixHandle,
+        screenMatrixBuffer.limit() / screenMatrixData.size,
+        false,
+        screenMatrixBuffer
+      )
 
       createTexture()
 
@@ -206,9 +206,6 @@ class BaseWidgetRenderer(
       // since we're using a PNG file with transparency, enable alpha blending.
       GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
       GLES20.glEnable(GLES20.GL_BLEND);
-
-      // Prepare the screen matrix data
-      // TODO
 
       // Enable a handle to the vertices
       GLES20.glEnableVertexAttribArray(vertexPositionHandle)
@@ -347,12 +344,13 @@ class BaseWidgetRenderer(
 //      }
 //    """.trimIndent()
     private val VERTEX_SHADER_CODE = """
+      uniform mat4 uScreen;
       attribute vec2 vPosition;
       attribute vec2 vCoordinate;
       varying vec2 aCoordinate;
       void main() {
         aCoordinate = vCoordinate;
-        gl_Position = vec4(vPosition, 0.0, 1.0);
+        gl_Position = uScreen * vec4(vPosition, 0.0, 1.0);
       }
     """.trimIndent()
 
