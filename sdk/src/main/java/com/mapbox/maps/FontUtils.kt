@@ -39,7 +39,7 @@ internal object FontUtils {
       }
     }
     Log.i(
-      TAG, "Couldn't map font family for local ideograph, using ${DEFAULT_FONT} instead"
+      TAG, "Couldn't map font family for local ideograph, using $DEFAULT_FONT instead"
     )
     return DEFAULT_FONT
   }
