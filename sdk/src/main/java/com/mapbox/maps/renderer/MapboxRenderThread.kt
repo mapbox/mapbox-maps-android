@@ -150,6 +150,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         width = width,
         height = height
       )
+      widgetList.forEach { it.onSizeChanged(width, height) }
       sizeChanged = false
     }
   }

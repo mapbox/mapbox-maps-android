@@ -1,8 +1,7 @@
 package com.mapbox.maps.renderer
 
-import android.content.Context
-import android.graphics.Bitmap
 import android.opengl.GLES20
+import android.util.Log
 import androidx.annotation.CallSuper
 
 abstract class Widget {
@@ -13,6 +12,7 @@ abstract class Widget {
 
   @CallSuper
   open fun onSizeChanged(width: Int, height: Int) {
+    Log.e("testtest", "onSize changed: $width, $height")
     this.width = width
     this.height = height
   }

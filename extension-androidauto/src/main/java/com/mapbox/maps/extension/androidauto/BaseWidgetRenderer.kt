@@ -272,10 +272,6 @@ open class BaseWidgetRenderer(
       // set the viewport and a fixed, white background
       GLES20.glClearColor(1f, 1f, 1f, 1f);
 
-      // since we're using a PNG file with transparency, enable alpha blending.
-      GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
-      GLES20.glEnable(GLES20.GL_BLEND);
-
       // Enable a handle to the vertices
       GLES20.glEnableVertexAttribArray(vertexPositionHandle)
         .also { checkError("glEnableVertexAttribArray") }
@@ -383,6 +379,7 @@ open class BaseWidgetRenderer(
   }
 
   fun rotate(bearing: Float) {
+    Matrix.setIdentityM(rotationMatrixData, 0)
     Matrix.rotateM(rotationMatrixData, 0, bearing, 0f, 0f, 1f);
   }
 
