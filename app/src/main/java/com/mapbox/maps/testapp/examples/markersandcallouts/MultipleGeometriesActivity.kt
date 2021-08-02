@@ -33,6 +33,7 @@ class MultipleGeometriesActivity : AppCompatActivity() {
       createGeoJsonSource(it)
       addPolygonLayer(it)
       addLineStringLayer(it)
+      addPointLayer(it)
     }
   }
 
@@ -41,7 +42,7 @@ class MultipleGeometriesActivity : AppCompatActivity() {
       // Load data from GeoJSON file in the assets folder
       loadedMapStyle.addSource(
         geoJsonSource(GEOJSON_SOURCE_ID) {
-          url("asset://multiple_geometry_example.geojson")
+          url(GEOJSON_SOURCE_URL)
         }
       )
     } catch (exception: URISyntaxException) {
@@ -52,9 +53,9 @@ class MultipleGeometriesActivity : AppCompatActivity() {
   private fun addPolygonLayer(loadedMapStyle: Style) {
     // Create and style a FillLayer that uses the Polygon Feature's coordinates in the GeoJSON data
     loadedMapStyle.addLayer(
-      fillLayer("polygon", GEOJSON_SOURCE_ID) {
-        fillColor(Color.RED)
-        fillOpacity(.4)
+      fillLayer(POLYGON_LAYER_ID, GEOJSON_SOURCE_ID) {
+        fillColor(Color.parseColor("#4469f7"))
+        fillOpacity(POLYGON_OPACITY)
         filter(
           eq {
             literal("\$type")
@@ -68,15 +69,33 @@ class MultipleGeometriesActivity : AppCompatActivity() {
   private fun addLineStringLayer(loadedMapStyle: Style) {
     // Create and style a LineLayer that uses the Line String Feature's coordinates in the GeoJSON data
     loadedMapStyle.addLayer(
-      lineLayer("line_string", GEOJSON_SOURCE_ID) {
-        lineColor(Color.YELLOW)
-        lineOpacity(.7)
+      lineLayer(LINE_LAYER_ID, GEOJSON_SOURCE_ID) {
+        lineColor(Color.RED)
+        lineWidth(LINE_WIDTH)
         filter(
           eq {
             literal("\$type")
             literal("LineString")
           }
         )
+      }
+    )
+  }
+
+  private fun addPointLayer(loadedMapStyle: Style) {
+    // Create and style a Circle layer that uses the Point Feature's coordinates in the GeoJSON data
+    loadedMapStyle.addLayer(
+      circleLayer(CIRCLE_LAYER_ID, GEOJSON_SOURCE_ID) {
+        filter(
+          eq {
+            literal("\$type")
+            literal("Point")
+          }
+        )
+        circleColor(Color.RED)
+        circleRadius(CIRCLE_RADIUS)
+        circleStrokeWidth(CIRCLE_STROKE_WIDTH)
+        circleStrokeColor(Color.BLACK)
       }
     )
   }
@@ -99,5 +118,13 @@ class MultipleGeometriesActivity : AppCompatActivity() {
   companion object {
     private val TAG = MultipleGeometriesActivity::class.java.simpleName
     private const val GEOJSON_SOURCE_ID = "geojson_sample"
+    private const val CIRCLE_LAYER_ID = "circle-layer"
+    private const val LINE_LAYER_ID = "line_string"
+    private const val POLYGON_LAYER_ID = "polygon"
+    private const val GEOJSON_SOURCE_URL = "asset://multiple_geometry_example.geojson"
+    private const val LINE_WIDTH = 2.0
+    private const val CIRCLE_RADIUS = 6.0
+    private const val CIRCLE_STROKE_WIDTH = 2.0
+    private const val POLYGON_OPACITY = 0.3
   }
 }
