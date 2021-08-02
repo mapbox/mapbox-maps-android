@@ -64,13 +64,13 @@ class ImageExtensionImpl(private val builder: Builder) : StyleContract.StyleImag
      * An array of two-element arrays, consisting of two numbers that represent
      * the from position and the to position of areas that can be stretched horizontally.
      */
-    internal val stretchX = mutableListOf<ImageStretches>()
+    internal var stretchX = listOf<ImageStretches>()
 
     /**
      * An array of two-element arrays, consisting of two numbers that represent
      * the from position and the to position of areas that can be stretched vertically.
      */
-    internal val stretchY = mutableListOf<ImageStretches>()
+    internal var stretchY = listOf<ImageStretches>()
 
     /**
      * An array of four numbers, with the first two specifying the left, top
@@ -99,6 +99,24 @@ class ImageExtensionImpl(private val builder: Builder) : StyleContract.StyleImag
     }
 
     /**
+     * Set 9-patch bitmap.
+     *
+     * This will automatically set correct [internalImage], [content], [stretchX] and [stretchY]
+     * with no need to calculate them manually.
+     */
+    fun bitmapNinePatch(bitmap: Bitmap) = apply {
+      if (bitmap.config != Bitmap.Config.ARGB_8888) {
+        throw RuntimeException("Only ARGB_8888 bitmap config is supported!")
+      }
+      bitmap.parseNinePatchBitmap().also {
+        internalImage = it.internalImage
+        content = it.imageContent
+        stretchX = it.stretchX
+        stretchY = it.stretchY
+      }
+    }
+
+    /**
      * Scale factor for the image.
      */
     fun scale(scale: Float) = apply {
@@ -117,7 +135,7 @@ class ImageExtensionImpl(private val builder: Builder) : StyleContract.StyleImag
      * the from position and the to position of areas that can be stretched horizontally.
      */
     fun stretchX(stretchX: List<ImageStretches> = listOf()) = apply {
-      this.stretchX.addAll(stretchX)
+      this.stretchX = stretchX
     }
 
     /**
@@ -125,7 +143,7 @@ class ImageExtensionImpl(private val builder: Builder) : StyleContract.StyleImag
      * the from position and the to position of areas that can be stretched vertically.
      */
     fun stretchY(stretchY: List<ImageStretches> = listOf()) = apply {
-      this.stretchY.addAll(stretchY)
+      this.stretchY = stretchY
     }
 
     /**

@@ -111,6 +111,39 @@ class ImagePluginImplTest {
     assertEquals(bitmap.byteCount, imageSlot.captured.data.size)
   }
 
+  @Test
+  fun bitmapNinePatchTest() {
+    mockkStatic("com.mapbox.maps.extension.style.image.NinePatchUtils")
+    val bitmap = Bitmap.createBitmap(400, 400, Bitmap.Config.ARGB_8888)
+    val image = Image(20, 20, byteArrayOf())
+    val imageContent = ImageContent(1f, 1f, 1f, 1f)
+    val stretchX = listOf(ImageStretches(1f, 1f))
+    val stretchY = listOf(ImageStretches(2f, 2f))
+    val ninePatchImage = NinePatchImage(
+      image,
+      stretchX,
+      stretchY,
+      imageContent
+    )
+    every { bitmap.parseNinePatchBitmap() } returns ninePatchImage
+    val imagePlugin = image("imageId") {
+      bitmapNinePatch(bitmap)
+    }
+    style.addImage(imagePlugin)
+    verify {
+      style.addStyleImage(
+        "imageId",
+        pixelRatio,
+        image,
+        false,
+        stretchX,
+        stretchY,
+        imageContent
+      )
+    }
+    unmockkStatic("com.mapbox.maps.extension.style.image.NinePatchUtils")
+  }
+
   @Test(expected = RuntimeException::class)
   fun imageNotAvailableTest() {
     val imagePlugin = image("imageId") {
