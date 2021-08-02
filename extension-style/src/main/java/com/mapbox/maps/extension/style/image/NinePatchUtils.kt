@@ -39,7 +39,7 @@ fun StyleInterface.addImageNinePatch(
 /**
  * Utility function returning [NinePatchImage] from a given [Bitmap].
  *
- * [Bitmap] was be in 9-patch format (.9.png) or [RuntimeException] will be thrown.
+ * [Bitmap] has to be in 9-patch format (.9.png) or [RuntimeException] will be thrown.
  */
 fun Bitmap.parseNinePatchBitmap() = decodeNinePatchChunk(this)
 
