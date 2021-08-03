@@ -26,7 +26,7 @@ open class BaseWidgetRenderer(
   private var textureHandle = 0
   private var screenMatrixHandle = 0
   private var rotationMatrixHandle = 0
-  private var translatematrixHandle = 0
+  private var translateMatrixHandle = 0
   private val textures = intArrayOf(0)
 
   private var vertexShader = 0
@@ -211,7 +211,7 @@ open class BaseWidgetRenderer(
     rotationMatrixHandle =
       GLES20.glGetUniformLocation(program, "uRotation").also { checkError("glGetAttribLocation") }
 
-    translatematrixHandle =
+    translateMatrixHandle =
       GLES20.glGetUniformLocation(program, "uTranslate")
         .also { checkError("glGetAttribLocation") }
 
@@ -254,7 +254,7 @@ open class BaseWidgetRenderer(
 
       val translateBuffer = getMatrixBuffer(translateMatrix)
       GLES20.glUniformMatrix4fv(
-        translatematrixHandle,
+        translateMatrixHandle,
         rotationBuffer.limit() / translateMatrix.size,
         false,
         translateBuffer
@@ -263,14 +263,14 @@ open class BaseWidgetRenderer(
       createTexture()
 
       // Activate the first texture (GL_TEXTURE0) and bind it to our handle
-      GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-      GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[0]);
+      GLES20.glActiveTexture(GLES20.GL_TEXTURE0)
+      GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[0])
 
       // Textures
       GLES20.glUniform1i(textureHandle, 0)
 
       // set the viewport and a fixed, white background
-      GLES20.glClearColor(1f, 1f, 1f, 1f);
+      GLES20.glClearColor(1f, 1f, 1f, 1f)
 
       // Enable a handle to the vertices
       GLES20.glEnableVertexAttribArray(vertexPositionHandle)
@@ -380,7 +380,7 @@ open class BaseWidgetRenderer(
 
   fun rotate(bearing: Float) {
     Matrix.setIdentityM(rotationMatrixData, 0)
-    Matrix.rotateM(rotationMatrixData, 0, bearing, 0f, 0f, 1f);
+    Matrix.rotateM(rotationMatrixData, 0, bearing, 0f, 0f, 1f)
   }
 
   companion object {
