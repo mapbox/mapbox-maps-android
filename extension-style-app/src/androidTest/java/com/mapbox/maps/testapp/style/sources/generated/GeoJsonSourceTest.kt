@@ -360,6 +360,29 @@ class GeoJsonSourceTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun generateIdTest() {
+    val testSource = geoJsonSource("testId") {
+      url(TEST_URI)
+      generateId(true)
+    }
+    setupSource(testSource)
+    assertEquals(true, testSource.generateId)
+  }
+
+  @Test
+  @UiThreadTest
+  fun generateIdAsExpressionTest() {
+    val expression = literal(true)
+    val testSource = geoJsonSource("testId") {
+      url(TEST_URI)
+      generateId(expression)
+    }
+    setupSource(testSource)
+    assertEquals(expression.toString(), testSource.generateIdAsExpression?.toString())
+  }
+
+  @Test
+  @UiThreadTest
   fun prefetchZoomDeltaTest() {
     val testSource = geoJsonSource("testId") {
       url(TEST_URI)
@@ -586,6 +609,8 @@ class GeoJsonSourceTest : BaseStyleTest() {
     assertNotNull("defaultClusterMaxZoomAsExpression should not be null", GeoJsonSource.defaultClusterMaxZoomAsExpression)
     assertNotNull("defaultLineMetrics should not be null", GeoJsonSource.defaultLineMetrics)
     assertNotNull("defaultLineMetricsAsExpression should not be null", GeoJsonSource.defaultLineMetricsAsExpression)
+    assertNotNull("defaultGenerateId should not be null", GeoJsonSource.defaultGenerateId)
+    assertNotNull("defaultGenerateIdAsExpression should not be null", GeoJsonSource.defaultGenerateIdAsExpression)
     assertNotNull("defaultPrefetchZoomDelta should not be null", GeoJsonSource.defaultPrefetchZoomDelta)
     assertNotNull("defaultPrefetchZoomDeltaAsExpression should not be null", GeoJsonSource.defaultPrefetchZoomDeltaAsExpression)
   }
