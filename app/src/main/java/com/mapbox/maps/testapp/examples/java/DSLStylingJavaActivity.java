@@ -1,5 +1,7 @@
 package com.mapbox.maps.testapp.examples.java;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -17,13 +19,15 @@ import com.mapbox.maps.Style;
 import com.mapbox.maps.extension.style.StyleContract;
 import com.mapbox.maps.extension.style.StyleExtensionImpl;
 import com.mapbox.maps.extension.style.expressions.generated.Expression;
+import com.mapbox.maps.extension.style.image.ImageNinePatchExtensionImpl;
+import com.mapbox.maps.extension.style.image.ImageUtils;
 import com.mapbox.maps.extension.style.layers.generated.CircleLayer;
 import com.mapbox.maps.extension.style.layers.generated.RasterLayer;
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer;
 import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor;
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource;
 import com.mapbox.maps.extension.style.sources.generated.ImageSource;
-import com.mapbox.maps.plugin.gestures.MapboxMapUtils;
+import com.mapbox.maps.plugin.gestures.GesturesUtils;
 import com.mapbox.maps.plugin.gestures.OnMapClickListener;
 import com.mapbox.maps.testapp.R;
 
@@ -82,6 +86,7 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
     private static final String CIRCLE_LAYER_ID = "earthquakeCircle";
     private static final String SYMBOL_LAYER_ID = "earthquakeText";
     private static final String RASTER_LAYER_ID = "raster";
+    private static final String IMAGE_9_PATCH_ID = "image9patch";
     private static final Expression MAG_KEY = literal("mag");
     private static final List<String> QUERY_LIST = new ArrayList() {
         {
@@ -104,8 +109,15 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
         setContentView(R.layout.activity_simple_map);
         mapView = findViewById(R.id.mapView);
         mapboxMap = mapView.getMapboxMap();
-        mapboxMap.loadStyle(createStyle(), null, null);
-        MapboxMapUtils.addOnMapClickListener(mapboxMap, this);
+        mapboxMap.loadStyle(createStyle(), style -> {
+            Bitmap bitmap = BitmapFactory.decodeResource(DSLStylingJavaActivity.this.getResources(), R.drawable.blue_round_nine);
+            ImageUtils.addImage9Patch(style, new ImageNinePatchExtensionImpl.Builder(IMAGE_9_PATCH_ID, bitmap).build());
+            ImageUtils.image9Patch(IMAGE_9_PATCH_ID, bitmap, builder -> {
+                builder.build();
+                return null;
+            });
+        }, null);
+        GesturesUtils.addOnMapClickListener(mapboxMap, this);
     }
 
     @Override

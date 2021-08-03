@@ -1,6 +1,3 @@
-@file:JvmName("MapboxMapUtils")
-@file:JvmMultifileClass
-
 package com.mapbox.maps.plugin.gestures
 
 import android.animation.Animator
@@ -18,16 +15,19 @@ import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.android.gestures.*
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
-import com.mapbox.maps.plugin.*
+import com.mapbox.maps.plugin.InvalidPluginConfigurationException
+import com.mapbox.maps.plugin.PanScrollMode
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
-import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_GESTURES_PLUGIN_ID
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
-import com.mapbox.maps.plugin.delegates.*
+import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
+import com.mapbox.maps.plugin.delegates.MapDelegateProvider
+import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
+import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettingsBase
@@ -1636,136 +1636,3 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     initializeGestureListeners(context, true)
   }
 }
-
-/**
- * Extension val for MapView to get the Gestures plugin instance.
- */
-val MapPluginProviderDelegate.gestures: GesturesPlugin
-  get() = this.getPlugin(MAPBOX_GESTURES_PLUGIN_ID)!!
-
-/**
- * Add a callback that is invoked when the map is clicked.
- */
-fun MapPluginExtensionsDelegate.addOnMapClickListener(onMapClickListener: OnMapClickListener) {
-  gesturesPlugin { addOnMapClickListener(onMapClickListener) }
-}
-
-/**
- * Remove a callback that is invoked when the map is clicked.
- */
-fun MapPluginExtensionsDelegate.removeOnMapClickListener(onMapClickListener: OnMapClickListener) {
-  gesturesPlugin { removeOnMapClickListener(onMapClickListener) }
-}
-
-/**
- * Add a callback that is invoked when the map is long clicked.
- */
-fun MapPluginExtensionsDelegate.addOnMapLongClickListener(onMapLongClickListener: OnMapLongClickListener) {
-  gesturesPlugin { addOnMapLongClickListener(onMapLongClickListener) }
-}
-
-/**
- * Remove a callback that is invoked when the map is long clicked.
- */
-fun MapPluginExtensionsDelegate.removeOnMapLongClickListener(onMapLongClickListener: OnMapLongClickListener) {
-  gesturesPlugin { removeOnMapLongClickListener(onMapLongClickListener) }
-}
-
-/**
- * Add a callback that is invoked when the map is has received a fling gesture.
- */
-fun MapPluginExtensionsDelegate.addOnFlingListener(onFlingListener: OnFlingListener) {
-  gesturesPlugin { addOnFlingListener(onFlingListener) }
-}
-
-/**
- * Remove a callback that is invoked when the map is has received a fling gesture.
- */
-fun MapPluginExtensionsDelegate.removeOnFlingListener(onFlingListener: OnFlingListener) {
-  gesturesPlugin { removeOnFlingListener(onFlingListener) }
-}
-
-/**
- * Add a callback that is invoked when the map is moved.
- */
-fun MapPluginExtensionsDelegate.addOnMoveListener(listener: OnMoveListener) {
-  gesturesPlugin { addOnMoveListener(listener) }
-}
-
-/**
- * Remove a callback that is invoked when the map is moved.
- */
-fun MapPluginExtensionsDelegate.removeOnMoveListener(listener: OnMoveListener) {
-  gesturesPlugin { removeOnMoveListener(listener) }
-}
-
-/**
- * Add a callback that is invoked when the map is rotated.
- */
-fun MapPluginExtensionsDelegate.addOnRotateListener(listener: OnRotateListener) {
-  gesturesPlugin { addOnRotateListener(listener) }
-}
-
-/**
- * Remove a callback that is invoked when the map is rotated.
- */
-fun MapPluginExtensionsDelegate.removeOnRotateListener(listener: OnRotateListener) {
-  gesturesPlugin { removeOnRotateListener(listener) }
-}
-
-/**
- * Add a callback that is invoked when the map is scaled.
- */
-fun MapPluginExtensionsDelegate.addOnScaleListener(listener: OnScaleListener) {
-  gesturesPlugin { addOnScaleListener(listener) }
-}
-
-/**
- * Remove a callback that is invoked when the map is scaled.
- */
-fun MapPluginExtensionsDelegate.removeOnScaleListener(listener: OnScaleListener) {
-  gesturesPlugin { removeOnScaleListener(listener) }
-}
-
-/**
- * Add a callback that is invoked when the map is shoved.
- */
-fun MapPluginExtensionsDelegate.addOnShoveListener(listener: OnShoveListener) {
-  gesturesPlugin { addOnShoveListener(listener) }
-}
-
-/**
- * Remove a callback that is invoked when the map is shoved.
- */
-fun MapPluginExtensionsDelegate.removeOnShoveListener(listener: OnShoveListener) {
-  gesturesPlugin { removeOnShoveListener(listener) }
-}
-
-/**
- * Get the current configured AndroidGesturesManager.
- */
-fun MapPluginExtensionsDelegate.getGesturesManager(): AndroidGesturesManager? {
-  return gesturesPlugin { getGesturesManager() } as AndroidGesturesManager?
-}
-
-/**
- * Set the AndroidGesturesManager instance.
- */
-fun MapPluginExtensionsDelegate.setGesturesManager(
-  androidGesturesManager: AndroidGesturesManager,
-  attachDefaultListeners: Boolean,
-  setDefaultMutuallyExclusives: Boolean
-) {
-  gesturesPlugin {
-    setGesturesManager(
-      androidGesturesManager,
-      attachDefaultListeners,
-      setDefaultMutuallyExclusives
-    )
-  }
-}
-
-/**
- * The gesture configuration object.
- */
-fun MapPluginExtensionsDelegate.getGesturesSettings() = gesturesPlugin { getSettings() } as GesturesSettings?

@@ -8,7 +8,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.plugin.overlay.MapOverlayCoordinatesProvider
 import com.mapbox.maps.plugin.overlay.MapOverlayPlugin
-import com.mapbox.maps.plugin.overlay.overlay
+import com.mapbox.maps.plugin.overlay.mapboxOverlay
 import com.mapbox.maps.testapp.BaseMapTest
 import junit.framework.Assert.*
 import org.junit.Before
@@ -29,7 +29,7 @@ class MapOverlayPluginTest : BaseMapTest() {
   @Before
   fun setUp() {
     super.before()
-    mapOverlayPlugin = mapView.overlay()
+    mapOverlayPlugin = mapView.mapboxOverlay
   }
 
   @Test

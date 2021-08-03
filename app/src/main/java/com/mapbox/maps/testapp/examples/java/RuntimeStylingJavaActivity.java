@@ -19,6 +19,7 @@ import com.mapbox.maps.MapView;
 import com.mapbox.maps.MapboxMap;
 import com.mapbox.maps.Style;
 import com.mapbox.maps.extension.style.expressions.generated.Expression;
+import com.mapbox.maps.extension.style.image.ImageUtils;
 import com.mapbox.maps.extension.style.layers.LayerUtils;
 import com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer;
 import com.mapbox.maps.extension.style.layers.generated.FillLayer;
@@ -229,13 +230,7 @@ public class RuntimeStylingJavaActivity extends AppCompatActivity {
     private void addImage(Style style) {
         final Drawable drawable = ContextCompat.getDrawable(this, R.drawable.android_symbol);
         final Bitmap bitmap = DrawableKt.toBitmap(drawable, 64, 64, null);
-        final Expected<String, None> expected = style.addImage(IMAGE_ID, bitmap, true);
-        if (expected.isError()) {
-            Logger.e(TAG, expected.getError());
-        }
-        if (expected.isValue()) {
-            Logger.d(TAG, expected.getValue().toString());
-        }
+        ImageUtils.addImage(style, delegate -> delegate.addImage(IMAGE_ID, bitmap));
     }
 
     private void addSymbolSource(Style style) {

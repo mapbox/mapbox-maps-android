@@ -150,18 +150,3 @@ class ImageExtensionImpl(private val builder: Builder) : StyleContract.StyleImag
     }
   }
 }
-
-/**
- * DSL function for [ImageExtensionImpl].
- */
-fun image(imageId: String, block: ImageExtensionImpl.Builder.() -> Unit): ImageExtensionImpl =
-  ImageExtensionImpl.Builder(imageId).apply(block).build()
-
-/**
- * Extension function to add an image provided by the Style Extension to the Style.
- *
- * @param image The image to be added
- */
-fun StyleInterface.addImage(image: StyleContract.StyleImageExtension) {
-  image.bindTo(this)
-}
