@@ -99,24 +99,6 @@ class ImageExtensionImpl(private val builder: Builder) : StyleContract.StyleImag
     }
 
     /**
-     * Set 9-patch bitmap.
-     *
-     * This will automatically set correct [internalImage], [content], [stretchX] and [stretchY]
-     * with no need to calculate them manually.
-     */
-    fun bitmapNinePatch(bitmap: Bitmap) = apply {
-      if (bitmap.config != Bitmap.Config.ARGB_8888) {
-        throw RuntimeException("Only ARGB_8888 bitmap config is supported!")
-      }
-      bitmap.parseNinePatchBitmap().also {
-        internalImage = it.internalImage
-        content = it.imageContent
-        stretchX = it.stretchX
-        stretchY = it.stretchY
-      }
-    }
-
-    /**
      * Scale factor for the image.
      */
     fun scale(scale: Float) = apply {

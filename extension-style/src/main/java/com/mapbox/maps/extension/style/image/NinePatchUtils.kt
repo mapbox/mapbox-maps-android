@@ -20,16 +20,18 @@ import java.nio.ByteOrder
  *
  * @return A string describing an error if the operation was not successful, empty otherwise.
  */
-fun StyleInterface.addImageNinePatch(
+fun StyleInterface.addImage9Patch(
   imageId: String,
-  bitmap: Bitmap
+  bitmap: Bitmap,
+  scale: Float = pixelRatio,
+  sdf: Boolean = false
 ): Expected<String, None> {
   val ninePatchImage = decodeNinePatchChunk(bitmap)
   return addStyleImage(
     imageId,
-    pixelRatio,
+    scale,
     ninePatchImage.internalImage,
-    false,
+    sdf,
     ninePatchImage.stretchX,
     ninePatchImage.stretchY,
     ninePatchImage.imageContent
@@ -41,7 +43,7 @@ fun StyleInterface.addImageNinePatch(
  *
  * [Bitmap] has to be in 9-patch format (.9.png) or [RuntimeException] will be thrown.
  */
-fun Bitmap.parseNinePatchBitmap() = decodeNinePatchChunk(this)
+fun Bitmap.parse9PatchBitmap() = decodeNinePatchChunk(this)
 
 private fun decodeNinePatchChunk(bitmap: Bitmap): NinePatchImage {
   val ninePatchChunk = bitmap.ninePatchChunk

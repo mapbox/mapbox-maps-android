@@ -3,6 +3,7 @@ package com.mapbox.maps.extension.style
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.extension.style.StyleExtensionImpl.*
 import com.mapbox.maps.extension.style.image.ImageExtensionImpl
+import com.mapbox.maps.extension.style.image.ImageNinePatchExtensionImpl
 import com.mapbox.maps.extension.style.layers.*
 import com.mapbox.maps.extension.style.light.generated.Light
 import com.mapbox.maps.extension.style.sources.*
@@ -65,7 +66,7 @@ class StyleExtensionImpl private constructor(
   ) {
     internal val layers = mutableListOf<Pair<Layer, LayerPosition>>()
     internal val sources = mutableListOf<Source>()
-    internal val images = mutableListOf<ImageExtensionImpl>()
+    internal val images = mutableListOf<StyleContract.StyleImageExtension>()
     internal var light: Light? = null
     internal var terrain: Terrain? = null
 
@@ -130,6 +131,16 @@ class StyleExtensionImpl private constructor(
     }
 
     /**
+     * Extension function for [ImageNinePatchExtensionImpl] to overload Unary operations.
+     *
+     * Apply +[ImageNinePatchExtensionImpl] will add the source to the [StyleExtensionImpl].
+     */
+    @JvmName("addImage9Patch")
+    operator fun ImageNinePatchExtensionImpl.unaryPlus() {
+      images.add(this)
+    }
+
+    /**
      * Convenient function to combine [Layer] and [LayerPosition] into [Pair]<[Layer], [LayerPosition]>.
      *
      * @param layer the layer to add
@@ -150,9 +161,9 @@ class StyleExtensionImpl private constructor(
     }
 
     /**
-     * Build an [StyleExtension] instance from this builder.
+     * Build an [StyleContract.StyleExtension] instance from this builder.
      *
-     * @return an [StyleExtension] instance.
+     * @return an [StyleContract.StyleExtension] instance.
      */
     fun build(): StyleContract.StyleExtension {
       return StyleExtensionImpl(this)

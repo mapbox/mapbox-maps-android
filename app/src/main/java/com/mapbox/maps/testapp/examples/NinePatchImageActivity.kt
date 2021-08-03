@@ -7,7 +7,7 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.Style
-import com.mapbox.maps.extension.style.image.image
+import com.mapbox.maps.extension.style.image.image9Patch
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.layers.getLayer
@@ -32,9 +32,10 @@ class NinePatchImageActivity : AppCompatActivity() {
 
     mapView.getMapboxMap().loadStyle(
       styleExtension = style(Style.MAPBOX_STREETS) {
-        +image(NINE_PATCH_ID) {
-          bitmapNinePatch(BitmapFactory.decodeResource(resources, R.drawable.blue_round_nine))
-        }
+        +image9Patch(
+          NINE_PATCH_ID,
+          BitmapFactory.decodeResource(resources, R.drawable.blue_round_nine)
+        )
         +geoJsonSource(SOURCE_ID) {
           feature(Feature.fromGeometry(CENTER))
         }
@@ -42,7 +43,7 @@ class NinePatchImageActivity : AppCompatActivity() {
           iconImage(NINE_PATCH_ID)
           // make sure we stretch image both in X and Y
           iconTextFit(IconTextFit.BOTH)
-          iconTextFitPadding(listOf(10.0, 10.0, 10.0, 10.0))
+          iconTextFitPadding(listOf(5.0, 5.0, 5.0, 5.0))
           textField(TEXT_BASE)
         }
       }
