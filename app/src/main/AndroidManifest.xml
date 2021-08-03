@@ -136,7 +136,7 @@
             android:label="@string/activity_heatmap_layer">
             <meta-data
                 android:name="@string/category"
-                android:value="@string/category_styles" />
+                android:value="@string/category_data_visualization" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
