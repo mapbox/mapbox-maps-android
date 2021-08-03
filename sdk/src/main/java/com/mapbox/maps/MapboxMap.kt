@@ -2,7 +2,6 @@ package com.mapbox.maps
 
 import android.app.Activity
 import android.os.Handler
-import android.os.Looper
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.bindgen.Expected
@@ -14,12 +13,12 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.sources.OnGeoJsonParsed
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
-import com.mapbox.maps.plugin.PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
-import com.mapbox.maps.plugin.PLUGIN_GESTURE_CLASS_NAME
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
+import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
+import com.mapbox.maps.plugin.gestures.GesturesPluginImpl
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -51,7 +50,6 @@ class MapboxMap internal constructor(
   private val nativeMapWeakRef = WeakReference(nativeMap)
   internal lateinit var style: Style
   internal var isStyleLoadInitiated = false
-  private val handlerMain = Handler(Looper.getMainLooper())
   private val styleObserver = StyleObserver(this, nativeMapWeakRef, nativeObserver, pixelRatio)
   internal var renderHandler: Handler? = null
 
@@ -1247,7 +1245,7 @@ class MapboxMap internal constructor(
 
   internal fun setCameraAnimationPlugin(cameraAnimationsPlugin: CameraAnimationsPlugin?) {
     cameraAnimationsPlugin?.let {
-      if (it.javaClass.canonicalName == PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME)
+      if (it is CameraAnimationsPluginImpl)
         this.cameraAnimationsPlugin = WeakReference(it)
     }
   }
@@ -1265,7 +1263,7 @@ class MapboxMap internal constructor(
 
   internal fun setGesturesAnimationPlugin(gesturesPlugin: GesturesPlugin?) {
     gesturesPlugin?.let {
-      if (it.javaClass.canonicalName == PLUGIN_GESTURE_CLASS_NAME)
+      if (it is GesturesPluginImpl)
         this.gesturesPlugin = WeakReference(it)
     }
   }

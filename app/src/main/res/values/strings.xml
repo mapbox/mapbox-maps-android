@@ -34,7 +34,7 @@
     <string name="location_start_pulsing">Start pulsing</string>
 
     <!--RestrictBounds-->
-    <string name="restrict_iceland">Restrict iceland</string>
+    <string name="restrict_san_francisco">Restrict San Francisco</string>
     <string name="restrict_almost_worldview">Restrict almost worldview</string>
     <string name="restrict_across_idl">Restrict across IDL</string>
     <string name="restrict_reset">Reset bounds</string>

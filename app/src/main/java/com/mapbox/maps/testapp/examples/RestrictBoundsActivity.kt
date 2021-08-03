@@ -16,7 +16,6 @@ import com.mapbox.maps.CameraBoundsOptions
 import com.mapbox.maps.CoordinateBounds
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
-import com.mapbox.maps.extension.style.layers.generated.fillLayer
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
@@ -36,16 +35,12 @@ class RestrictBoundsActivity : AppCompatActivity() {
     setContentView(R.layout.activity_restrict_bounds)
     mapboxMap = mapView.getMapboxMap()
     mapboxMap.loadStyle(
-      style(Style.SATELLITE_STREETS) {
+      style(Style.MAPBOX_STREETS) {
         +geoJsonSource(BOUNDS_ID) {
           featureCollection(FeatureCollection.fromFeatures(listOf()))
         }
-        +fillLayer(BOUNDS_ID, BOUNDS_ID) {
-          fillColor(Color.RED)
-          fillOpacity(0.333)
-        }
       }
-    ) { setupBounds(ICELAND_BOUNDS) }
+    ) { setupBounds(SAN_FRANCISCO_BOUND) }
     showCrosshair()
   }
 
@@ -56,8 +51,8 @@ class RestrictBoundsActivity : AppCompatActivity() {
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
-      R.id.menu_action_iceland_bounds -> {
-        setupBounds(ICELAND_BOUNDS)
+      R.id.menu_action_san_francisco_bounds -> {
+        setupBounds(SAN_FRANCISCO_BOUND)
         return true
       }
       R.id.menu_action_allmost_world_bounds -> {
@@ -132,15 +127,15 @@ class RestrictBoundsActivity : AppCompatActivity() {
 
   companion object {
     private val BOUNDS_ID = "BOUNDS_ID"
-    private val ICELAND_BOUNDS: CameraBoundsOptions = CameraBoundsOptions.Builder()
+    private val SAN_FRANCISCO_BOUND: CameraBoundsOptions = CameraBoundsOptions.Builder()
       .bounds(
         CoordinateBounds(
-          Point.fromLngLat(-25.985652, 62.985661),
-          Point.fromLngLat(-12.626277, 66.852863),
+          Point.fromLngLat(-122.66336, 37.492987),
+          Point.fromLngLat(-122.250481, 37.87165),
           false
         )
       )
-      .minZoom(2.0)
+      .minZoom(10.0)
       .build()
 
     private val ALMOST_WORLD_BOUNDS: CameraBoundsOptions = CameraBoundsOptions.Builder()

@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menu_action_iceland_bounds"
-        android:title="@string/restrict_iceland"
+        android:id="@+id/menu_action_san_francisco_bounds"
+        android:title="@string/restrict_san_francisco"
         app:showAsAction="never"/>
     <item
         android:id="@+id/menu_action_allmost_world_bounds"

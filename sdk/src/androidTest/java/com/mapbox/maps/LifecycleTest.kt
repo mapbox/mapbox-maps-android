@@ -4,7 +4,7 @@ import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import com.mapbox.maps.plugin.PLUGIN_LIFE_CYCLE_CLASS_NAME
+import com.mapbox.maps.plugin.Plugin
 import junit.framework.TestCase.assertTrue
 import org.junit.Before
 import org.junit.Rule
@@ -28,7 +28,13 @@ class LifecycleTest {
   @UiThreadTest
   fun setUp() {
     rule.scenario.onActivity {
-      mapView = MapView(it, MapInitOptions(it, plugins = listOf(PLUGIN_LIFE_CYCLE_CLASS_NAME)))
+      mapView = MapView(
+        it,
+        MapInitOptions(
+          it,
+          plugins = listOf(Plugin.Mapbox(Plugin.MAPBOX_LIFECYCLE_PLUGIN_ID))
+        )
+      )
       mapboxMap = mapView.getMapboxMap()
       it.frameLayout.addView(mapView)
     }

@@ -22,7 +22,7 @@
     <string name="description_snapshotter_local">Use an local style with static map image generation</string>
     <string name="description_location_tracking">Display the user\'s location on a map with the default user location puck.</string>
     <string name="description_location_basic_pulsing_circle">Display the LocationComponent\'s default pulsing circle</string>
-    <string name="description_restrict_bounds">Restrict end-user bounds to a geometry</string>
+    <string name="description_restrict_bounds">Restrict the map\'s viewport to a specified set of coordinates for gesture-based camera changes. The viewport can still be changed programmatically.</string>
     <string name="description_texture_view">Use TextureView as render surface</string>
     <string name="description_texture_view_animation">Apply ViewAnimation on a TextureView</string>
     <string name="description_style_circles_categorically">Using a categorical circle-color property function for a visualization</string>

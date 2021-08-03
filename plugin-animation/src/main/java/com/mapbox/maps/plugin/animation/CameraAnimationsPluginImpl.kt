@@ -30,7 +30,7 @@ import kotlin.properties.Delegates
  * However, it doesn't have to be the UI thread.
  */
 
-internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
+class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal val animators = hashSetOf<CameraAnimator<*>>()
@@ -55,6 +55,10 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
   private val lifecycleListeners = CopyOnWriteArraySet<CameraAnimationsLifecycleListener>()
 
+  /**
+   * If debug mode is enabled extra logs will be written about animation lifecycle and
+   * some other events that may be useful for debugging.
+   */
   override var debugMode: Boolean = false
 
   private var center by Delegates.observable<Point?>(null) { _, old, new ->
@@ -81,6 +85,18 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     }
   }
 
+  /**
+   * Map camera anchor value.
+   * Default value is NULL meaning center of given map view.
+   * Left-top corner is represented as [ScreenCoordinate] (0.0, 0.0).
+   *
+   * If [anchor] is set to some specific value (set directly or by some running anchor animation)
+   * it will be used as anchor for all upcoming animations even if they do not animate anchor directly.
+   *
+   * **Note**: If anchor animator is started and no start value is specified explicitly
+   * and [anchor] = NULL - then start value will be set to ScreenCoordinate(0.0, 0.0) automatically
+   * and it will be start point for interpolation.
+   */
   override var anchor by Delegates.observable<ScreenCoordinate?>(null) { _, old, new ->
     if (old != new) {
       anchorListeners.forEach { listener -> listener.onChanged(new) }
@@ -707,36 +723,75 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     animationOptions
   )
 
+  /**
+   * Create CameraZoomAnimator
+   *
+   * @param options animator options object to set targets and other non mandatory options
+   * @param block optional block to apply any [ValueAnimator] parameters
+   */
   override fun createZoomAnimator(
     options: CameraAnimatorOptions<Double>,
     block: (ValueAnimator.() -> Unit)?
-  ) = CameraZoomAnimator(options, block)
+  ): ValueAnimator = CameraZoomAnimator(options, block)
 
+  /**
+   * Create CameraAnchorAnimator
+   *
+   * @param options animator options object to set targets and other non mandatory options
+   * @param block optional block to apply any [ValueAnimator] parameters
+   */
   override fun createAnchorAnimator(
     options: CameraAnimatorOptions<ScreenCoordinate>,
     block: (ValueAnimator.() -> Unit)?
-  ) = CameraAnchorAnimator(options, block)
+  ): ValueAnimator = CameraAnchorAnimator(options, block)
 
+  /**
+   * Create CameraBearingAnimator. Current map camera option will be applied on animation start if not specified explicitly with [options.startValue].
+   *
+   * @param options animator options object to set targets and other non mandatory options
+   * @param useShortestPath if set to True shortest bearing path will be applied while animating bearing values.
+   * If set to False clock-wise rotation will be used if next target is greater or equal than current one
+   * and counter clock-wise rotation will be used if next target less than current one.
+   * @param block optional block to apply any [ValueAnimator] parameters
+   */
   override fun createBearingAnimator(
     options: CameraAnimatorOptions<Double>,
     useShortestPath: Boolean,
     block: (ValueAnimator.() -> Unit)?
-  ) = CameraBearingAnimator(options, useShortestPath, block)
+  ): ValueAnimator = CameraBearingAnimator(options, useShortestPath, block)
 
+  /**
+   * Create CameraPitchAnimator. Current map camera option will be applied on animation start if not specified explicitly with [options.startValue].
+   *
+   * @param options animator options object to set targets and other non mandatory options
+   * @param block optional block to apply any [ValueAnimator] parameters
+   */
   override fun createPitchAnimator(
     options: CameraAnimatorOptions<Double>,
     block: (ValueAnimator.() -> Unit)?
-  ) = CameraPitchAnimator(options, block)
+  ): ValueAnimator = CameraPitchAnimator(options, block)
 
+  /**
+   * Create CameraPaddingAnimator. Current map camera option will be applied on animation start if not specified explicitly with [options.startValue].
+   *
+   * @param options animator options object to set targets and other non mandatory options
+   * @param block optional block to apply any [ValueAnimator] parameters
+   */
   override fun createPaddingAnimator(
     options: CameraAnimatorOptions<EdgeInsets>,
     block: (ValueAnimator.() -> Unit)?
-  ) = CameraPaddingAnimator(options, block)
+  ): ValueAnimator = CameraPaddingAnimator(options, block)
 
+  /**
+   * Create CameraCenterAnimator. Current map camera option will be applied on animation start if not specified explicitly with [options.startValue].
+   *
+   * @param options animator options object to set targets and other non mandatory options
+   * @param block optional block to apply any [ValueAnimator] parameters
+   */
   override fun createCenterAnimator(
     options: CameraAnimatorOptions<Point>,
     block: (ValueAnimator.() -> Unit)?
-  ) = CameraCenterAnimator(options, block)
+  ): ValueAnimator = CameraCenterAnimator(options, block)
 
   /**
    * Play given [ValueAnimator]'s together

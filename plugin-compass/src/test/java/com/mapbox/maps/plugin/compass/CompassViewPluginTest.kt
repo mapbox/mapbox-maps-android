@@ -7,6 +7,7 @@ import android.os.Handler
 import android.util.AttributeSet
 import android.view.Gravity
 import android.widget.FrameLayout
+import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
@@ -45,7 +46,7 @@ class CompassViewPluginTest {
     every { mapCameraDelegate.cameraState.bearing } returns 0.0
     every { compassView.isCompassEnabled } returns true
     every { compassView.compassRotation } returns 0f
-    every { delegateProvider.mapPluginProviderDelegate.getPlugin(any<Class<CameraAnimationsPlugin>>()) } returns animatePlugin
+    every { delegateProvider.mapPluginProviderDelegate.getPlugin<CameraAnimationsPlugin>(Plugin.MAPBOX_CAMERA_PLUGIN_ID) } returns animatePlugin
     every { mainHandler.post(capture(runnableSlot)) } answers {
       runnableSlot.captured.run()
       true

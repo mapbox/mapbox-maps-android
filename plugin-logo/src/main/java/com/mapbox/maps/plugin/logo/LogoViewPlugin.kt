@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_LOGO_PLUGIN_ID
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.plugin.logo.generated.LogoAttributeParser
 import com.mapbox.maps.plugin.logo.generated.LogoSettings
@@ -78,4 +79,4 @@ open class LogoViewPlugin(
  * Extension val for MapView to get the Logo View plugin instance.
  */
 val MapPluginProviderDelegate.logo: LogoPlugin
-  get() = this.getPlugin(LogoViewPlugin::class.java)!!
+  get() = this.getPlugin(MAPBOX_LOGO_PLUGIN_ID)!!

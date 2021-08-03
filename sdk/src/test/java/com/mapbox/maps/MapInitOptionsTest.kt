@@ -97,50 +97,9 @@ class MapInitOptionsTest {
   fun defaultPlugins() {
     val mapboxMapOptions = MapInitOptions(context)
     val plugins = mapboxMapOptions.plugins
-    assertTrue(
-      plugins.contains(
-        PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
-      )
-    )
-    assertTrue(
-      plugins.contains(
-        PLUGIN_COMPASS_CLASS_NAME
-      )
-    )
-    assertTrue(
-      plugins.contains(
-        PLUGIN_LOGO_CLASS_NAME
-      )
-    )
-    assertTrue(
-      plugins.contains(
-        PLUGIN_GESTURE_CLASS_NAME
-      )
-    )
-    assertTrue(
-      plugins.contains(
-        PLUGIN_ATTRIBUTION_CLASS_NAME
-      )
-    )
-    assertTrue(
-      plugins.contains(
-        PLUGIN_LOCATION_COMPONENT_CLASS_NAME
-      )
-    )
-    assertTrue(
-      plugins.contains(
-        PLUGIN_SCALE_BAR_CLASS_NAME
-      )
-    )
-    assertTrue(
-      plugins.contains(
-        PLUGIN_MAPOVERLAY_CLASS_NAME
-      )
-    )
-    assertTrue(
-      plugins.contains(
-        PLUGIN_ANNOTATION_CLASS_NAME
-      )
+    assertEquals(
+      MapInitOptions.defaultPluginList,
+      plugins
     )
   }
 
@@ -153,9 +112,16 @@ class MapInitOptionsTest {
 
   @Test
   fun customPlugins() {
-    val mapboxMapOptions = MapInitOptions(context, plugins = listOf("foobar"))
+    val customPluginDummy = object : MapPlugin {}
+    val mapboxMapOptions = MapInitOptions(
+      context,
+      plugins = listOf(
+        Plugin.Custom("customId", customPluginDummy)
+      )
+    )
     val plugins = mapboxMapOptions.plugins
     assertTrue(plugins.size == 1)
-    assertEquals("foobar", plugins[0])
+    assertEquals("customId", plugins[0].id)
+    assertEquals(customPluginDummy, plugins[0].instance)
   }
 }

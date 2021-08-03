@@ -8,9 +8,9 @@ import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePlugin
 import java.util.concurrent.CopyOnWriteArrayList
 
-@Suppress("UNCHECKED_CAST")
-internal class
-MapPluginRegistry(private val mapDelegateProvider: MapDelegateProvider) {
+internal class MapPluginRegistry(
+  private val mapDelegateProvider: MapDelegateProvider
+) {
 
   private enum class State {
     STARTED,
@@ -36,7 +36,7 @@ MapPluginRegistry(private val mapDelegateProvider: MapDelegateProvider) {
       }
     }
 
-  private val plugins = mutableMapOf<Class<*>, MapPlugin>()
+  private val plugins = mutableMapOf<String, MapPlugin>()
   private val viewPlugins = mutableMapOf<ViewPlugin, View>()
   private val cameraPlugins = CopyOnWriteArrayList<MapCameraPlugin>()
   private val gesturePlugins = CopyOnWriteArrayList<GesturesPlugin>()
@@ -44,81 +44,75 @@ MapPluginRegistry(private val mapDelegateProvider: MapDelegateProvider) {
   private val mapSizePlugins = CopyOnWriteArrayList<MapSizePlugin>()
   private var mapboxLifecyclePlugin: MapboxLifecyclePlugin? = null
 
-  fun <T> createPlugin(
+  fun createPlugin(
     mapView: MapView?,
     mapInitOptions: MapInitOptions,
-    pluginImplementationClazz: Class<T>,
-    vararg constructorArguments: Pair<Class<*>, Any>
-  ): T {
-    if (!plugins.containsKey(pluginImplementationClazz)) {
-      val instance = pluginImplementationClazz.instantiate(*constructorArguments) as MapPlugin
+    plugin: Plugin
+  ) {
+    plugin.instance?.let { mapPlugin ->
+      if (!plugins.containsKey(plugin.id)) {
 
-      if (instance is ViewPlugin && mapView == null) {
-        // throw if view plugin if host is not a MapView (eg. MapSurface)
-        throw InvalidViewPluginHostException("Cause: $pluginImplementationClazz")
+        if (plugin.instance is ViewPlugin && mapView == null) {
+          // throw if view plugin if host is not a MapView (eg. MapSurface)
+          throw InvalidViewPluginHostException("Cause: ${mapPlugin.javaClass}")
+        }
+
+        plugins[plugin.id] = mapPlugin
+        mapPlugin.onDelegateProvider(mapDelegateProvider)
+
+        if (mapPlugin is ViewPlugin) {
+          val pluginView = mapPlugin.bind(
+            mapView!!,
+            mapInitOptions.attrs,
+            mapInitOptions.mapOptions.pixelRatio
+          )
+          mapView.addView(pluginView)
+          mapPlugin.onPluginView(pluginView)
+          viewPlugins[mapPlugin] = pluginView
+        }
+
+        if (mapPlugin is ContextBinder) {
+          mapPlugin.bind(
+            mapInitOptions.context,
+            mapInitOptions.attrs,
+            mapInitOptions.mapOptions.pixelRatio
+          )
+        }
+
+        if (mapPlugin is MapSizePlugin) {
+          mapSizePlugins.add(mapPlugin)
+        }
+
+        if (mapPlugin is MapCameraPlugin) {
+          cameraPlugins.add(mapPlugin)
+        }
+
+        if (mapPlugin is GesturesPlugin) {
+          gesturePlugins.add(mapPlugin)
+        }
+
+        if (mapPlugin is MapStyleObserverPlugin) {
+          styleObserverPlugins.add(mapPlugin)
+        }
+
+        if (mapPlugin is MapboxLifecyclePlugin) {
+          mapboxLifecyclePlugin = mapPlugin
+        }
+
+        mapPlugin.initialize()
+
+        if (mapState == State.STARTED && mapPlugin is LifecyclePlugin) {
+          mapPlugin.onStart()
+        } else {
+        }
+      } else {
+        plugins[plugin.id]?.initialize()
       }
-
-      plugins[pluginImplementationClazz] = instance
-      instance.onDelegateProvider(mapDelegateProvider)
-
-      if (instance is ViewPlugin) {
-        val pluginView = instance.bind(
-          mapView!!,
-          mapInitOptions.attrs,
-          mapInitOptions.mapOptions.pixelRatio
-        )
-        mapView.addView(pluginView)
-        instance.onPluginView(pluginView)
-        viewPlugins[instance] = pluginView
-      }
-
-      if (instance is ContextBinder) {
-        instance.bind(
-          mapInitOptions.context,
-          mapInitOptions.attrs,
-          mapInitOptions.mapOptions.pixelRatio
-        )
-      }
-
-      if (instance is MapSizePlugin) {
-        mapSizePlugins.add(instance)
-      }
-
-      if (instance is MapCameraPlugin) {
-        cameraPlugins.add(instance)
-      }
-
-      if (instance is GesturesPlugin) {
-        gesturePlugins.add(instance)
-      }
-
-      if (instance is MapStyleObserverPlugin) {
-        styleObserverPlugins.add(instance)
-      }
-
-      if (instance is MapboxLifecyclePlugin) {
-        mapboxLifecyclePlugin = instance
-      }
-
-      instance.initialize()
-
-      if (mapState == State.STARTED && instance is LifecyclePlugin) {
-        instance.onStart()
-      }
-      return instance as T
-    } else {
-      plugins[pluginImplementationClazz]?.initialize()
-      return plugins[pluginImplementationClazz] as T
-    }
+    } ?: throw RuntimeException("MapPlugin instance is missing for ${plugin.id}!")
   }
 
-  fun <T> getPlugin(clazz: Class<T>): T? {
-    return try {
-      plugins[clazz] as T
-    } catch (ex: Exception) {
-      null
-    }
-  }
+  @Suppress("UNCHECKED_CAST")
+  fun <T> getPlugin(id: String): T? = plugins[id] as T
 
   fun onStart() {
     mapState = State.STARTED

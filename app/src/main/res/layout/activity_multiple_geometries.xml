@@ -6,7 +6,7 @@
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        mapbox:mapbox_cameraTargetLng="-121.37145"
-        mapbox:mapbox_cameraTargetLat="38.64583"
-        mapbox:mapbox_cameraZoom="6.7" />
+        mapbox:mapbox_cameraTargetLng="-77.039679"
+        mapbox:mapbox_cameraTargetLat="38.897435"
+        mapbox:mapbox_cameraZoom="11.3" />
 </merge>

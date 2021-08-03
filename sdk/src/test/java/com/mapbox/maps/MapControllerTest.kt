@@ -5,8 +5,9 @@ import android.graphics.Bitmap
 import android.view.MotionEvent
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.loader.MapboxMapStaticInitializer
+import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.MapPluginRegistry
-import com.mapbox.maps.plugin.PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
+import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.renderer.MapboxRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
@@ -163,29 +164,17 @@ class MapControllerTest {
 
   @Test
   fun createPlugin() {
-    val mapView = mockk<MapView>()
-    val clazz = mockkClass(Any::class)::class.java
-    mapController.createPlugin(mapView, clazz)
-    verify { pluginRegistry.createPlugin(mapView, mapInitOptions, clazz) }
-  }
-
-  @Test
-  fun createPlugin_constructor_args() {
-    val mapView = mockk<MapView>()
-    val clazz = mockkClass(Any::class)::class.java
-    val pair1 = Any::class.java to Any()
-    val pair2 = Any::class.java to Any()
-    mapController.createPlugin(mapView, clazz, pair1, pair2)
-    verify { pluginRegistry.createPlugin(mapView, mapInitOptions, clazz, pair1, pair2) }
+    val plugin = Plugin.Custom("id", mockk())
+    mapController.createPlugin(mapView, plugin)
+    verify { pluginRegistry.createPlugin(mapView, mapInitOptions, plugin) }
   }
 
   @Test
   fun getPlugin() {
-    val plugin = mockk<Any>()
-    val clazz = mockkClass(Any::class)::class.java
-    every { pluginRegistry.getPlugin(clazz) } returns plugin
-    Assert.assertEquals(plugin, mapController.getPlugin(clazz))
-    verify { pluginRegistry.getPlugin(clazz) }
+    val plugin = mockk<MapPlugin>()
+    every { pluginRegistry.getPlugin<MapPlugin>("id") } returns plugin
+    Assert.assertEquals(plugin, mapController.getPlugin("id"))
+    verify { pluginRegistry.getPlugin<MapPlugin>("id") }
   }
 
   @Test
@@ -260,7 +249,7 @@ class MapControllerTest {
         mockk()
       )
     val mapInitOptions = MapInitOptions(mockk(relaxed = true))
-    mapInitOptions.plugins = listOf(PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME)
+    mapInitOptions.plugins = listOf(Plugin.Mapbox(Plugin.MAPBOX_CAMERA_PLUGIN_ID))
     mapController.initializePlugins(mapInitOptions)
     verify { mapboxMap.setCameraAnimationPlugin(any()) }
   }

@@ -6,6 +6,7 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CoordinateBounds
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_MAP_OVERLAY_PLUGIN_ID
 import com.mapbox.maps.plugin.delegates.*
 import java.util.*
 
@@ -287,5 +288,5 @@ class MapOverlayPluginImpl : MapOverlayPlugin {
  */
 @MapboxExperimental
 fun MapPluginProviderDelegate.overlay(): MapOverlayPlugin {
-  return this.getPlugin(MapOverlayPluginImpl::class.java)!!
+  return this.getPlugin(MAPBOX_MAP_OVERLAY_PLUGIN_ID)!!
 }

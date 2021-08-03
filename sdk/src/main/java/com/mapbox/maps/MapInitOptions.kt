@@ -25,7 +25,7 @@ data class MapInitOptions constructor(
   val context: Context,
   var resourceOptions: ResourceOptions = getDefaultResourceOptions(context),
   var mapOptions: MapOptions = getDefaultMapOptions(context),
-  var plugins: List<String> = getDefaultPlugins(),
+  var plugins: List<Plugin> = defaultPluginList,
   var cameraOptions: CameraOptions? = null,
   var textureView: Boolean = false,
   val styleUri: String? = Style.MAPBOX_STREETS,
@@ -51,22 +51,25 @@ data class MapInitOptions constructor(
       MapOptions.Builder().applyDefaultParams(context).build()
 
     /**
-     * Get a default selection of Mapbox created plugins.
+     * Default map view plugin registry. All Mapbox plugins are present in this list.
+     *
+     * If specific plugins are required to be added to [MapView] on startup
+     * consider creating [MapView] programmatically specifying [MapInitOptions.plugins].
+     *
+     * If creating [MapView] from xml - all plugins listed here will be applied to given [MapView] on startup.
      */
-    fun getDefaultPlugins(): List<String> {
-      return listOf(
-        PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME,
-        PLUGIN_COMPASS_CLASS_NAME,
-        PLUGIN_LOGO_CLASS_NAME,
-        PLUGIN_GESTURE_CLASS_NAME,
-        PLUGIN_ATTRIBUTION_CLASS_NAME,
-        PLUGIN_LOCATION_COMPONENT_CLASS_NAME,
-        PLUGIN_SCALE_BAR_CLASS_NAME,
-        PLUGIN_MAPOVERLAY_CLASS_NAME,
-        PLUGIN_ANNOTATION_CLASS_NAME,
-        PLUGIN_LIFE_CYCLE_CLASS_NAME
-      )
-    }
+    val defaultPluginList = listOf(
+      Plugin.Mapbox(Plugin.MAPBOX_CAMERA_PLUGIN_ID),
+      Plugin.Mapbox(Plugin.MAPBOX_GESTURES_PLUGIN_ID),
+      Plugin.Mapbox(Plugin.MAPBOX_COMPASS_PLUGIN_ID),
+      Plugin.Mapbox(Plugin.MAPBOX_LOGO_PLUGIN_ID),
+      Plugin.Mapbox(Plugin.MAPBOX_ATTRIBUTION_PLUGIN_ID),
+      Plugin.Mapbox(Plugin.MAPBOX_LOCATION_COMPONENT_PLUGIN_ID),
+      Plugin.Mapbox(Plugin.MAPBOX_SCALEBAR_PLUGIN_ID),
+      Plugin.Mapbox(Plugin.MAPBOX_ANNOTATION_PLUGIN_ID),
+      Plugin.Mapbox(Plugin.MAPBOX_LIFECYCLE_PLUGIN_ID),
+      Plugin.Mapbox(Plugin.MAPBOX_MAP_OVERLAY_PLUGIN_ID)
+    )
   }
 }
 

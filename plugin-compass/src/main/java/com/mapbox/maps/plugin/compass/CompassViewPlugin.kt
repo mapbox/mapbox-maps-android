@@ -11,7 +11,8 @@ import android.widget.FrameLayout
 import androidx.core.animation.addListener
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
-import com.mapbox.maps.plugin.PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
+import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_COMPASS_PLUGIN_ID
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
@@ -149,11 +150,7 @@ open class CompassViewPlugin(
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     mapCameraManager = delegateProvider.mapCameraManagerDelegate
     bearing = delegateProvider.mapCameraManagerDelegate.cameraState.bearing
-    animationPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
-      Class.forName(
-        PLUGIN_CAMERA_ANIMATIONS_CLASS_NAME
-      ) as Class<CameraAnimationsPlugin>
-    )
+    animationPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(MAPBOX_CAMERA_PLUGIN_ID)
       ?: throw InvalidPluginConfigurationException(
         "Can't look up an instance of plugin, " +
           "is it available on the clazz path and loaded through the map?"
@@ -278,4 +275,4 @@ open class CompassViewPlugin(
  * Extension val for MapView to get the Compass View plugin instance.
  */
 val MapPluginProviderDelegate.compass: CompassPlugin
-  get() = this.getPlugin(CompassViewPlugin::class.java)!!
+  get() = this.getPlugin(MAPBOX_COMPASS_PLUGIN_ID)!!
