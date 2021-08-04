@@ -1166,9 +1166,9 @@ class MapboxMap internal constructor(
   fun getElevation(coordinate: Point) = nativeMapWeakRef.call { this.getElevation(coordinate) }
 
   /**
-   * Enables or disables the experimental render cache feature.
+   * Enables or disables the render cache feature.
    *
-   * Render cache is an experimental feature aiming to reduce resource usage of map rendering
+   * Render cache is the feature aiming to reduce resource usage of map rendering
    * by caching intermediate rendering results of tiles into specific cache textures for reuse between frames.
    * Performance benefit of the cache depends on the style as not all layers are cacheable due to e.g.
    * viewport aligned features. Render cache always prefers quality over performance.
@@ -1178,7 +1178,6 @@ class MapboxMap internal constructor(
    *
    * @param options Options defining the render cache behavior
    */
-  @MapboxExperimental
   fun setRenderCacheOptions(options: RenderCacheOptions) {
     options.size?.let { size ->
       nativeMapWeakRef.call {
@@ -1197,7 +1196,6 @@ class MapboxMap internal constructor(
    *
    * The size of the render cache is in megabytes. Returned value is zero if the feature is disabled.
    */
-  @MapboxExperimental
   fun getRenderCacheOptions(): RenderCacheOptions {
     return nativeMapWeakRef.call { this.renderCacheOptions }
   }

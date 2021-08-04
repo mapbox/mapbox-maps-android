@@ -8,7 +8,6 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
-@MapboxExperimental
 class RenderCacheTest {
 
   @get:Rule
@@ -104,6 +103,19 @@ class RenderCacheTest {
         mapView.getMapboxMap().setRenderCacheOptions(RenderCacheOptions.Builder().build())
         Assert.assertEquals(
           RENDER_CACHE_DISABLED,
+          mapView.getMapboxMap().getRenderCacheOptions().size
+        )
+      }
+    }
+  }
+
+  @Test
+  fun defaultRenderCache() {
+    // should be large by default
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        Assert.assertEquals(
+          RENDER_CACHE_SIZE_LARGE_MB,
           mapView.getMapboxMap().getRenderCacheOptions().size
         )
       }
