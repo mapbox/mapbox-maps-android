@@ -444,13 +444,13 @@ internal class NativeMapImpl(private val map: MapInterface) :
   override fun addStyleImage(
     imageId: String,
     scale: Float,
-    float: Image,
+    image: Image,
     sdf: Boolean,
     stretchX: MutableList<ImageStretches>,
     stretchY: MutableList<ImageStretches>,
     content: ImageContent?
   ): Expected<String, None> {
-    return map.addStyleImage(imageId, scale, float, sdf, stretchX, stretchY, content)
+    return map.addStyleImage(imageId, scale, image, sdf, stretchX, stretchY, content)
   }
 
   override fun reduceMemoryUse() {
