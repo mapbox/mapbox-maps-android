@@ -81,4 +81,5 @@
     <string name="activity_large_geojson">Geojson performance</string>
     <string name="activity_style_crossfade">Cross fade style switch</string>
     <string name="activity_nine_patch">9-patch image</string>
+    <string name="activity_feature_state">Feature state</string>
 </resources>
