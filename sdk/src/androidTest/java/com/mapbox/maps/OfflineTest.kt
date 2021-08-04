@@ -230,9 +230,7 @@ class OfflineTest {
       cancelableTileStoreTask = tileStore.loadTileRegion(
         TILE_REGION_ID,
         TileRegionLoadOptions.Builder()
-          // TODO https://github.com/mapbox/mapbox-maps-android/issues/503
-          // we explicitly set another region to make test not flaky
-          .geometry(Point.fromLngLat(0.0, 0.0))
+          .geometry(TOKYO)
           .descriptors(
             listOf(
               offlineManager.createTilesetDescriptor(
