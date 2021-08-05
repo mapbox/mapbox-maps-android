@@ -64,7 +64,7 @@ class LocalStyleMapSnapshotterActivity : AppCompatActivity() {
 
   override fun onDestroy() {
     super.onDestroy()
-    mapSnapshotter.cancel()
+    mapSnapshotter.destroy()
   }
 
   companion object {

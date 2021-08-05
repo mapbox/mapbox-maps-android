@@ -3,6 +3,7 @@ package com.mapbox.maps
 import com.mapbox.common.ShadowLogger
 import com.mapbox.geojson.Point
 import io.mockk.*
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -141,6 +142,14 @@ class SnapshotterDelegateTest {
   fun cancel() {
     snapshotter.cancel()
     verify { coreSnapshotter.cancel() }
+  }
+
+  @Test
+  fun destroy() {
+    snapshotter.destroy()
+    verify { coreSnapshotter.cancel() }
+    Assert.assertNull(snapshotter.snapshotCreatedCallback)
+    Assert.assertNull(snapshotter.snapshotStyleCallback)
   }
 
   @Test

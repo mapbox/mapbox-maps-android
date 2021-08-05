@@ -51,6 +51,7 @@ internal abstract class MapboxRenderer : MapClient() {
   fun onDestroy() {
     // we destroy and stop thread after surface or texture is destroyed
     needDestroy = true
+    renderThread.fpsChangedListener = null
   }
 
   @AnyThread

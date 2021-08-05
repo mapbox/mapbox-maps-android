@@ -55,7 +55,7 @@ class MapSnapshotterActivity : AppCompatActivity(), SnapshotStyleListener {
 
   override fun onDestroy() {
     super.onDestroy()
-    mapSnapshotter.cancel()
+    mapSnapshotter.destroy()
   }
 
   companion object {

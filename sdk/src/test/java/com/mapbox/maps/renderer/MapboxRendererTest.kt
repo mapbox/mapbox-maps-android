@@ -229,7 +229,11 @@ internal abstract class MapboxRendererTest {
 
   @Test
   fun onDestroyTest() {
+    val listener = OnFpsChangedListener { }
+    every { renderThread.fpsChangedListener } returns listener
+    mapboxRenderer.setOnFpsChangedListener(listener)
     mapboxRenderer.onDestroy()
     Assert.assertEquals(true, mapboxRenderer.needDestroy)
+    verify { renderThread.fpsChangedListener = null }
   }
 }
