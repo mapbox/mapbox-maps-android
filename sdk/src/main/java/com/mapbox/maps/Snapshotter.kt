@@ -33,8 +33,8 @@ open class Snapshotter {
   private val mapSnapshotOptions: MapSnapshotOptions
   private val snapshotOverlayOptions: SnapshotOverlayOptions
 
-  private var snapshotCreatedCallback: SnapshotCreatedListener? = null
-  private var snapshotStyleCallback: SnapshotStyleListener? = null
+  internal var snapshotCreatedCallback: SnapshotCreatedListener? = null
+  internal var snapshotStyleCallback: SnapshotStyleListener? = null
 
   private val observer: Observer
 
@@ -132,6 +132,15 @@ open class Snapshotter {
   fun cancel() {
     coreSnapshotter.cancel()
     snapshotCreatedCallback = null
+  }
+
+  /**
+   * Destroy snapshotter.
+   */
+  fun destroy() {
+    cancel()
+    unsubscribeEvents()
+    snapshotStyleCallback = null
   }
 
   /**

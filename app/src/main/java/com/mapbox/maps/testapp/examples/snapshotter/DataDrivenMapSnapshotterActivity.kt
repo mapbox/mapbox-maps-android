@@ -134,7 +134,7 @@ class DataDrivenMapSnapshotterActivity : AppCompatActivity() {
 
   override fun onDestroy() {
     super.onDestroy()
-    snapshotter.cancel()
+    snapshotter.destroy()
   }
 
   companion object {
