@@ -4,7 +4,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_transparent_background.*
+import com.mapbox.maps.testapp.databinding.ActivityTransparentBackgroundBinding
 
 /**
  * Example of using custom video as a background for MapView.
@@ -12,20 +12,23 @@ import kotlinx.android.synthetic.main.activity_transparent_background.*
  */
 class TransparentBackgroundActivity : AppCompatActivity() {
 
+  private lateinit var binding: ActivityTransparentBackgroundBinding
+
   private fun initVideoView() {
     val path = "android.resource://" + packageName + "/" + R.raw.moving_background_water
-    videoView.apply {
+    binding.videoView.apply {
       setVideoURI(Uri.parse(path))
       start()
-      setOnCompletionListener { videoView.start() }
+      setOnCompletionListener { binding.videoView.start() }
     }
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_transparent_background)
+    binding = ActivityTransparentBackgroundBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
-    mapView.getMapboxMap().loadStyleJson(
+    binding.mapView.getMapboxMap().loadStyleJson(
       """
       {
         "version": 8,
@@ -74,24 +77,8 @@ class TransparentBackgroundActivity : AppCompatActivity() {
     ) { initVideoView() }
   }
 
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
   override fun onDestroy() {
     super.onDestroy()
-    videoView.stopPlayback()
-    mapView.onDestroy()
+    binding.videoView.stopPlayback()
   }
 }

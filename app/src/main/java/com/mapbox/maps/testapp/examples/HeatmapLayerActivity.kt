@@ -14,8 +14,7 @@ import com.mapbox.maps.extension.style.layers.generated.heatmapLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
-import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_heatmap_layer.*
+import com.mapbox.maps.testapp.databinding.ActivityHeatmapLayerBinding
 
 class HeatmapLayerActivity : AppCompatActivity() {
 
@@ -23,9 +22,10 @@ class HeatmapLayerActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_heatmap_layer)
+    val binding = ActivityHeatmapLayerBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
-    mapboxMap = mapView.getMapboxMap()
+    mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.loadStyleUri(
       styleUri = Style.DARK
     ) { style -> addRuntimeLayers(style) }
@@ -234,26 +234,6 @@ class HeatmapLayerActivity : AppCompatActivity() {
       circleStrokeColor("white")
       circleStrokeWidth(0.1)
     }
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

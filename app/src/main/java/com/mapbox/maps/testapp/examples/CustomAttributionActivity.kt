@@ -20,7 +20,7 @@ import com.mapbox.maps.plugin.attribution.AttributionParserConfig
 import com.mapbox.maps.plugin.attribution.attribution
 import com.mapbox.maps.plugin.delegates.MapAttributionDelegate
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_custom_attribution.*
+import com.mapbox.maps.testapp.databinding.ActivityCustomAttributionBinding
 
 /**
  * This activity demonstrates how to use a custom attribution dialog.
@@ -31,16 +31,21 @@ class CustomAttributionActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_custom_attribution)
+    val binding = ActivityCustomAttributionBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
-    mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS)
-    checkBoxes =
-      listOf(withImproveMap, withCopyrightSign, withTelemetryAttribution, withMapboxAttribution)
+    binding.mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS)
+    checkBoxes = listOf(
+      binding.withImproveMap,
+      binding.withCopyrightSign,
+      binding.withTelemetryAttribution,
+      binding.withMapboxAttribution
+    )
     checkBoxes.forEach { checkedTextView ->
       checkedTextView.setOnClickListener { checkedTextView.toggle() }
     }
-    val attributionPlugin = mapView.attribution
-    custom_attribution_fab.setOnClickListener {
+    val attributionPlugin = binding.mapView.attribution
+    binding.customAttributionFab.setOnClickListener {
       Toast.makeText(this, R.string.custom_attribution_custom, Toast.LENGTH_LONG).show()
       val config = AttributionParserConfig(
         checkBoxes[0].isChecked,
@@ -52,26 +57,6 @@ class CustomAttributionActivity : AppCompatActivity() {
         CustomAttributionDialog(this, config)
       )
     }
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   inner class CustomAttributionDialog(

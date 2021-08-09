@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <com.mapbox.maps.MapView
         android:id="@+id/mapView"
@@ -43,4 +45,4 @@
         android:layout_marginBottom="16dp"
         android:src="@drawable/ic_baseline_refresh_24" />
 
-</merge>
+</FrameLayout>

@@ -27,7 +27,7 @@ import com.mapbox.maps.plugin.animation.CameraAnimatorsFactory.Companion.DEFAULT
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.animator.CameraAnimator
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_camera_predefined_animators.*
+import com.mapbox.maps.testapp.databinding.ActivityCameraPredefinedAnimatorsBinding
 
 /**
  * Example of using predefined animators with camera animation system.
@@ -39,18 +39,20 @@ class CameraPredefinedAnimatorsActivity : AppCompatActivity() {
 
   private var currentAnimators: Array<CameraAnimator<Any>> = arrayOf()
   private var runningCancelableAnimator: Cancelable? = null
+  private lateinit var binding: ActivityCameraPredefinedAnimatorsBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_camera_predefined_animators)
-    mapboxMap = mapView.getMapboxMap()
-    cameraAnimationsPlugin = mapView.camera
+    binding = ActivityCameraPredefinedAnimatorsBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    mapboxMap = binding.mapView.getMapboxMap()
+    cameraAnimationsPlugin = binding.mapView.camera
     mapboxMap.loadStyle(
       style(Style.MAPBOX_STREETS) {
         mapboxMap.setCamera(START_CAMERA_POSITION)
       }
     )
-    buttonCancel.setOnClickListener {
+    binding.buttonCancel.setOnClickListener {
       runningCancelableAnimator?.cancel()
     }
     initSpinner()
@@ -146,21 +148,21 @@ class CameraPredefinedAnimatorsActivity : AppCompatActivity() {
       override fun onAnimationStart(animation: Animator?) {
         super.onAnimationStart(animation)
         runOnUiThread {
-          buttonCancel.visibility = View.VISIBLE
+          binding.buttonCancel.visibility = View.VISIBLE
         }
       }
 
       override fun onAnimationEnd(animation: Animator?) {
         super.onAnimationEnd(animation)
         runOnUiThread {
-          buttonCancel.visibility = View.INVISIBLE
+          binding.buttonCancel.visibility = View.INVISIBLE
         }
       }
 
       override fun onAnimationCancel(animation: Animator?) {
         super.onAnimationCancel(animation)
         runOnUiThread {
-          buttonCancel.visibility = View.INVISIBLE
+          binding.buttonCancel.visibility = View.INVISIBLE
         }
       }
     })
@@ -207,26 +209,6 @@ class CameraPredefinedAnimatorsActivity : AppCompatActivity() {
         )
       else -> null
     }
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

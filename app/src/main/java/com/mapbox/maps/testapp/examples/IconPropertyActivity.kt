@@ -11,7 +11,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.extension.style.sources.generated.vectorSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
+import com.mapbox.maps.testapp.databinding.ActivityIconPropertyBinding
 
 /**
  * Example displaying multiple images in a symbol layer
@@ -20,9 +20,10 @@ class IconPropertyActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_icon_property)
+    val binding = ActivityIconPropertyBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
-    mapView.getMapboxMap().loadStyle(
+    binding.mapView.getMapboxMap().loadStyle(
       styleExtension = style(Style.OUTDOORS) {
         // Add icons from the U.S. National Parks Service to the map's style.
         +image(RESTROOMS) {
@@ -78,26 +79,6 @@ class IconPropertyActivity : AppCompatActivity() {
         }
       }
     )
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.databinding.ActivityEmptyFabBinding
 import com.mapbox.maps.testapp.examples.fragment.MapFragment
-import kotlinx.android.synthetic.main.activity_empty_fab.*
 
 class FragmentBackStackActivity : AppCompatActivity() {
 
@@ -19,7 +19,8 @@ class FragmentBackStackActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_empty_fab)
+    val binding = ActivityEmptyFabBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
     if (savedInstanceState == null) {
       mapFragment = MapFragment()
@@ -39,8 +40,8 @@ class FragmentBackStackActivity : AppCompatActivity() {
       }
     }
 
-    displayOnSecondDisplayButton.setOnClickListener { handleClick() }
-    fragmentButton.setOnClickListener { addNewFragment() }
+    binding.displayOnSecondDisplayButton.setOnClickListener { handleClick() }
+    binding.fragmentButton.setOnClickListener { addNewFragment() }
   }
 
   private fun addNewFragment() {

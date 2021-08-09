@@ -1,5 +1,6 @@
 package com.mapbox.maps.testapp.examples
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.view.*
@@ -20,8 +21,7 @@ import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.PanScrollMode
 import com.mapbox.maps.plugin.gestures.*
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_gestures.*
-import kotlinx.android.synthetic.main.activity_gestures.mapView
+import com.mapbox.maps.testapp.databinding.ActivityGesturesBinding
 import java.util.*
 
 /**
@@ -34,11 +34,13 @@ class GesturesActivity : AppCompatActivity() {
   private lateinit var gesturesManager: AndroidGesturesManager
   private lateinit var gestureAlertsAdapter: GestureAlertsAdapter
   private var focalPointLatLng: Point? = null
+  private lateinit var binding: ActivityGesturesBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_gestures)
-    mapboxMap = mapView.getMapboxMap()
+    binding = ActivityGesturesBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.setCamera(
       CameraOptions.Builder()
         .center(Point.fromLngLat(-0.11968, 51.50325))
@@ -47,13 +49,13 @@ class GesturesActivity : AppCompatActivity() {
     )
     mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
 
-    mapView.waitForLayout {
+    binding.mapView.waitForLayout {
       initializeMap()
     }
 
-    recycler.layoutManager = LinearLayoutManager(this)
+    binding.recycler.layoutManager = LinearLayoutManager(this)
     gestureAlertsAdapter = GestureAlertsAdapter()
-    recycler.adapter = gestureAlertsAdapter
+    binding.recycler.adapter = gestureAlertsAdapter
   }
 
   override fun onPause() {
@@ -61,34 +63,14 @@ class GesturesActivity : AppCompatActivity() {
     gestureAlertsAdapter.cancelUpdates()
   }
 
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
-  }
-
   private fun initializeMap() {
-    gesturesPlugin = mapView.gestures
+    gesturesPlugin = binding.mapView.gestures
     gesturesManager = gesturesPlugin.getGesturesManager()
 
-    val layoutParams = recycler.layoutParams as RelativeLayout.LayoutParams
-    layoutParams.height = (mapView.height / 1.75).toInt()
-    layoutParams.width = mapView.width / 3
-    recycler.layoutParams = layoutParams
+    val layoutParams = binding.recycler.layoutParams as RelativeLayout.LayoutParams
+    layoutParams.height = (binding.mapView.height / 1.75).toInt()
+    layoutParams.width = binding.mapView.width / 3
+    binding.recycler.layoutParams = layoutParams
 
     attachListeners()
 
@@ -231,17 +213,17 @@ class GesturesActivity : AppCompatActivity() {
         item.isChecked = gesturesPlugin.quickZoomEnabled
       }
       R.id.menu_gesture_pan_scroll_horizontal_vertical -> {
-        mapView.gestures.updateSettings {
+        binding.mapView.gestures.updateSettings {
           panScrollMode = PanScrollMode.HORIZONTAL_AND_VERTICAL
         }
       }
       R.id.menu_gesture_pan_scroll_horizontal -> {
-        mapView.gestures.updateSettings {
+        binding.mapView.gestures.updateSettings {
           panScrollMode = PanScrollMode.HORIZONTAL
         }
       }
       R.id.menu_gesture_pan_scroll_vertical -> {
-        mapView.gestures.updateSettings {
+        binding.mapView.gestures.updateSettings {
           panScrollMode = PanScrollMode.VERTICAL
         }
       }
@@ -280,6 +262,7 @@ class GesturesActivity : AppCompatActivity() {
     private val updateHandler = Handler()
     private val alerts = ArrayList<GestureAlert>()
 
+    @SuppressLint("NotifyDataSetChanged")
     private val updateRunnable = Runnable {
       notifyDataSetChanged()
       isUpdating = false
@@ -335,6 +318,7 @@ class GesturesActivity : AppCompatActivity() {
     }
   }
 
+  @SuppressLint("ResourceAsColor")
   private class GestureAlert(
     @param:Type @field:Type val alertType: Int,
     val message: String?

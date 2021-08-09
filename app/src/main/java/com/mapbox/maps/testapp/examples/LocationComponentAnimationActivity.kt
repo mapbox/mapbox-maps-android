@@ -14,7 +14,7 @@ import com.mapbox.maps.plugin.locationcomponent.LocationConsumer
 import com.mapbox.maps.plugin.locationcomponent.LocationProvider
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_simple_map.*
+import com.mapbox.maps.testapp.databinding.ActivityLocationComponentAmimationBinding
 
 /**
  * Example that demonstrates using custom [LocationProvider] and sending custom location updates
@@ -96,8 +96,9 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_location_component_amimation)
-    mapboxMap = mapView.getMapboxMap().apply {
+    val binding = ActivityLocationComponentAmimationBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    mapboxMap = binding.mapView.getMapboxMap().apply {
       loadStyleUri(
         Style.MAPBOX_STREETS
       ) {
@@ -107,7 +108,7 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
             .center(Point.fromLngLat(POINT_LNG, POINT_LAT))
             .build()
         )
-        mapView.location.apply {
+        binding.mapView.location.apply {
           setLocationProvider(FakeLocationProvider())
           updateSettings {
             locationPuck = LocationPuck2D(
@@ -122,25 +123,9 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
     }
   }
 
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
   override fun onDestroy() {
     super.onDestroy()
     handler.removeCallbacksAndMessages(null)
-    mapView.onDestroy()
   }
 
   companion object {

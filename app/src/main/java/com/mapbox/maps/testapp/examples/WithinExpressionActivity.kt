@@ -17,8 +17,7 @@ import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.camera
-import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_within_expression.*
+import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
 
 /**
  * An Activity that showcases the within expression to filter features outside a geometry
@@ -27,12 +26,18 @@ class WithinExpressionActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_within_expression)
+    val binding = ActivitySimpleMapBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
     val center = Point.fromLngLat(LON, LAT)
 
     // Setup camera position above Georgetown
-    mapView.getMapboxMap().setCamera(CameraOptions.Builder().center(center).zoom(15.5).build())
+    binding.mapView.getMapboxMap().setCamera(
+      CameraOptions.Builder()
+        .center(center)
+        .zoom(15.5)
+        .build()
+    )
 
     // Assume the route is represented by an array of coordinates.
     val coordinates = listOf<Point>(
@@ -57,7 +62,7 @@ class WithinExpressionActivity : AppCompatActivity() {
     // Create buffer around linestring
     val bufferedRouteGeometry = bufferLineStringGeometry()
 
-    mapView.getMapboxMap().loadStyle(
+    binding.mapView.getMapboxMap().loadStyle(
       style(Style.MAPBOX_STREETS) {
         +geoJsonSource(POINT_ID) {
           geometry(LineString.fromLngLats(coordinates))
@@ -85,7 +90,7 @@ class WithinExpressionActivity : AppCompatActivity() {
       )
 
       // Move to a new camera position
-      mapView.camera.easeTo(
+      binding.mapView.camera.easeTo(
         CameraOptions.Builder()
           .zoom(16.0)
           .center(Point.fromLngLat(-77.06535338052844, 38.905156245642814))
@@ -110,26 +115,6 @@ class WithinExpressionActivity : AppCompatActivity() {
         Visibility.NONE
       )
     }
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   private fun bufferLineStringGeometry(): Polygon {

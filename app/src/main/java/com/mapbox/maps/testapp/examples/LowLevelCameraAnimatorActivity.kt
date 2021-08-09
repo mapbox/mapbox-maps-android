@@ -20,17 +20,18 @@ import com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer
 import com.mapbox.maps.extension.style.light.generated.getLight
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.camera
-import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_camera_animate.*
+import com.mapbox.maps.testapp.databinding.ActivityCameraAnimateBinding
 
 class LowLevelCameraAnimatorActivity : AppCompatActivity() {
 
   private lateinit var mapboxMap: MapboxMap
+  private lateinit var binding: ActivityCameraAnimateBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_camera_animate)
-    mapboxMap = mapView.getMapboxMap()
+    binding = ActivityCameraAnimateBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.loadStyleUri(
       Style.MAPBOX_STREETS
     ) {
@@ -40,7 +41,7 @@ class LowLevelCameraAnimatorActivity : AppCompatActivity() {
   }
 
   private fun animateCameraDelayed() {
-    mapView.camera.apply {
+    binding.mapView.camera.apply {
       val bearing = createBearingAnimator(cameraAnimatorOptions(0.0, 160.0)) {
         duration = 8500
         interpolator = AnticipateOvershootInterpolator()
@@ -89,25 +90,5 @@ class LowLevelCameraAnimatorActivity : AppCompatActivity() {
     fillExtrusionLayer.fillExtrusionBase(get(Expression.literal("min_height")))
     fillExtrusionLayer.fillExtrusionOpacity(0.6)
     style.addLayer(fillExtrusionLayer)
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 }

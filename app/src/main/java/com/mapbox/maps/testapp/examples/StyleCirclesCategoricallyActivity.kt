@@ -12,7 +12,7 @@ import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.sources.generated.vectorSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_dds_style_circles_categorically.*
+import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
 
 /**
  * Use data-driven styling to set circles' colors based on imported vector data.
@@ -23,10 +23,10 @@ class StyleCirclesCategoricallyActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-
+    val binding = ActivitySimpleMapBinding.inflate(layoutInflater)
     // This contains the MapView in XML and needs to be called after the access token is configured.
-    setContentView(R.layout.activity_dds_style_circles_categorically)
-    mapboxMap = mapView.getMapboxMap()
+    setContentView(binding.root)
+    mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.loadStyle(
       style(Style.LIGHT) {
 
@@ -115,25 +115,5 @@ class StyleCirclesCategoricallyActivity : AppCompatActivity() {
         .zoom(12.0)
         .build()
     )
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 }

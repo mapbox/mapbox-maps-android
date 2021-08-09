@@ -9,8 +9,7 @@ import com.mapbox.maps.extension.style.layers.generated.RasterLayer
 import com.mapbox.maps.extension.style.layers.getLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.rasterSource
-import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_wms_source.*
+import com.mapbox.maps.testapp.databinding.ActivityWmsSourceBinding
 
 /**
  * Adding an external Web Map Service layer to the map.
@@ -19,8 +18,9 @@ class WmsSourceActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_wms_source)
-    mapView.getMapboxMap().loadStyleUri(
+    val binding = ActivityWmsSourceBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    binding.mapView.getMapboxMap().loadStyleUri(
       Style.LIGHT
     ) {
       it.addSource(
@@ -39,26 +39,6 @@ class WmsSourceActivity : AppCompatActivity() {
         it.addLayer(RasterLayer(RASTER_LAYER_ID, WMS_SOURCE_ID))
       }
     }
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

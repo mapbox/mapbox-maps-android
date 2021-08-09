@@ -5,8 +5,7 @@ import android.os.Bundle
 import android.view.SurfaceHolder
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.maps.*
-import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_surface.*
+import com.mapbox.maps.testapp.databinding.ActivitySurfaceBinding
 
 /**
  * Example integration with MapSurface through using SurfaceView directly.
@@ -19,10 +18,11 @@ class SurfaceActivity : AppCompatActivity(), SurfaceHolder.Callback {
   @SuppressLint("ClickableViewAccessibility")
   public override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_surface)
+    val binding = ActivitySurfaceBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
     // Setup map surface
-    surfaceHolder = surface.holder
+    surfaceHolder = binding.surface.holder
     surfaceHolder.addCallback(this)
     mapSurface = MapSurface(
       this,
@@ -33,8 +33,8 @@ class SurfaceActivity : AppCompatActivity(), SurfaceHolder.Callback {
     mapSurface.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS)
 
     // Touch handling (verify plugin integration)
-    surface.setOnTouchListener { _, event -> mapSurface.onTouchEvent(event) }
-    surface.setOnGenericMotionListener { _, event -> mapSurface.onGenericMotionEvent(event) }
+    binding.surface.setOnTouchListener { _, event -> mapSurface.onTouchEvent(event) }
+    binding.surface.setOnGenericMotionListener { _, event -> mapSurface.onGenericMotionEvent(event) }
   }
 
   override fun surfaceCreated(holder: SurfaceHolder) {

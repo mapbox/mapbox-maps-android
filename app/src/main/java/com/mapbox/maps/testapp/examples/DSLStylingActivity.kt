@@ -16,8 +16,7 @@ import com.mapbox.maps.extension.style.sources.generated.imageSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
-import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_simple_map.*
+import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
 import java.text.DateFormat.getDateTimeInstance
 import java.util.*
 
@@ -30,9 +29,10 @@ class DSLStylingActivity : AppCompatActivity(), OnMapClickListener {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_simple_map)
+    val binding = ActivitySimpleMapBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
-    mapboxMap = mapView.getMapboxMap()
+    mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.loadStyle(createStyle())
     mapboxMap.addOnMapClickListener(this)
   }
@@ -136,26 +136,6 @@ class DSLStylingActivity : AppCompatActivity(), OnMapClickListener {
     +rasterLayer("raster", "imag") {
       rasterOpacity(0.8)
     }
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

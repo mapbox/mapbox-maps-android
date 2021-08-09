@@ -15,7 +15,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
+import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
 
 /**
  * Example showcasing of adding 9-patch image to style
@@ -25,12 +25,13 @@ class NinePatchImageActivity : AppCompatActivity() {
 
   private var appendTextCounter = 1
   private lateinit var style: Style
+  private lateinit var binding: ActivitySimpleMapBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_simple_map)
-
-    mapView.getMapboxMap().loadStyle(
+    binding = ActivitySimpleMapBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    binding.mapView.getMapboxMap().loadStyle(
       styleExtension = style(Style.MAPBOX_STREETS) {
         +image9Patch(
           NINE_PATCH_ID,
@@ -51,7 +52,7 @@ class NinePatchImageActivity : AppCompatActivity() {
       style = it
       updateIconText()
     }
-    mapView.getMapboxMap().setCamera(
+    binding.mapView.getMapboxMap().setCamera(
       CameraOptions.Builder()
         .center(CENTER)
         .zoom(ZOOM)
@@ -61,7 +62,7 @@ class NinePatchImageActivity : AppCompatActivity() {
 
   // start appending text in a loop, stretching icon in both X and Y
   private fun updateIconText() {
-    mapView.postDelayed(
+    binding.mapView.postDelayed(
       {
         val layer = (style.getLayer(LAYER_ID) as SymbolLayer)
         layer.textField("${layer.textField?.getTextAsString()} $TEXT_BASE")

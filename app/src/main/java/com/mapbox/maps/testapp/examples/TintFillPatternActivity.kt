@@ -11,8 +11,7 @@ import com.mapbox.maps.extension.style.image.image
 import com.mapbox.maps.extension.style.layers.generated.fillLayer
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_rts_fill_pattern_tint.*
-import kotlinx.android.synthetic.main.item_map.mapView
+import com.mapbox.maps.testapp.databinding.ActivityRtsFillPatternTintBinding
 
 /**
  * Tint a fill pattern and change it's color on button click.
@@ -23,17 +22,18 @@ class TintFillPatternActivity : AppCompatActivity() {
 
   public override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_rts_fill_pattern_tint)
+    val binding = ActivityRtsFillPatternTintBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
     initialBitmap = BitmapFactory.decodeResource(resources, R.drawable.fill_pattern)
 
-    fabPaint.setOnClickListener {
-      mapView.getMapboxMap().getStyle()?.apply {
+    binding.fabPaint.setOnClickListener {
+      binding.mapView.getMapboxMap().getStyle()?.apply {
         addImage(FILL_PATTERN_ID, changeBitmapColor(initialBitmap, randomColor()))
       }
     }
 
-    mapView.getMapboxMap().loadStyle(
+    binding.mapView.getMapboxMap().loadStyle(
       style(styleUri = Style.MAPBOX_STREETS) {
         +image(FILL_PATTERN_ID) {
           bitmap(changeBitmapColor(initialBitmap, randomColor()))
@@ -81,26 +81,6 @@ class TintFillPatternActivity : AppCompatActivity() {
 
   private fun randomColor(): Int {
     return (Math.random() * 16777215).toInt() or (0xFF shl 24)
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
   }
 
   companion object {

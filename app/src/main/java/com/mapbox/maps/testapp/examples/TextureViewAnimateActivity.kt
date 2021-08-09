@@ -9,8 +9,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.camera
-import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_texture_view.*
+import com.mapbox.maps.testapp.databinding.ActivityTextureViewBinding
 
 /**
  * Example of applying animation to a map which renders to TextureView.
@@ -34,10 +33,11 @@ class TextureViewAnimateActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_texture_view)
+    val binding = ActivityTextureViewBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
-    mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS)
-    val cameraPlugin = mapView.camera
+    binding.mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS)
+    val cameraPlugin = binding.mapView.camera
 
     for (i in places.indices) {
       handler.postDelayed(
@@ -56,7 +56,7 @@ class TextureViewAnimateActivity : AppCompatActivity() {
 
     // Animate the map view
     animation = ObjectAnimator.ofFloat(
-      mapView,
+      binding.mapView,
       "rotationY",
       0.0f,
       360f
@@ -67,26 +67,10 @@ class TextureViewAnimateActivity : AppCompatActivity() {
     }
   }
 
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
   override fun onDestroy() {
     super.onDestroy()
     animation.cancel()
     handler.removeCallbacksAndMessages(null)
-    mapView.onDestroy()
   }
 
   companion object {

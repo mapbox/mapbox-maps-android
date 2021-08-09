@@ -9,8 +9,7 @@ import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.layers.generated.fillLayer
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_style_geojson_layer_in_stack.*
+import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
 
 class GeoJsonLayerInStackActivity : AppCompatActivity() {
 
@@ -18,8 +17,9 @@ class GeoJsonLayerInStackActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_style_geojson_layer_in_stack)
-    mapboxMap = mapView.getMapboxMap()
+    val binding = ActivitySimpleMapBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    mapboxMap = binding.mapView.getMapboxMap()
 
     mapboxMap.loadStyle(
       style(styleUri = Style.MAPBOX_STREETS) {
@@ -42,25 +42,5 @@ class GeoJsonLayerInStackActivity : AppCompatActivity() {
         .zoom(8.471903)
         .build()
     )
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 }

@@ -21,7 +21,7 @@ import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_restrict_bounds.*
+import com.mapbox.maps.testapp.databinding.ActivityRestrictBoundsBinding
 
 /**
  * Test activity showcasing restricting user gestures to a bounds around Iceland, almost worldview and IDL.
@@ -29,11 +29,13 @@ import kotlinx.android.synthetic.main.activity_restrict_bounds.*
 class RestrictBoundsActivity : AppCompatActivity() {
 
   private lateinit var mapboxMap: MapboxMap
+  private lateinit var binding: ActivityRestrictBoundsBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_restrict_bounds)
-    mapboxMap = mapView.getMapboxMap()
+    binding = ActivityRestrictBoundsBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.loadStyle(
       style(Style.MAPBOX_STREETS) {
         +geoJsonSource(BOUNDS_ID) {
@@ -102,31 +104,11 @@ class RestrictBoundsActivity : AppCompatActivity() {
     val crosshair = View(this)
     crosshair.layoutParams = FrameLayout.LayoutParams(10, 10, Gravity.CENTER)
     crosshair.setBackgroundColor(Color.BLUE)
-    mapView.addView(crosshair)
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
+    binding.mapView.addView(crosshair)
   }
 
   companion object {
-    private val BOUNDS_ID = "BOUNDS_ID"
+    private const val BOUNDS_ID = "BOUNDS_ID"
     private val SAN_FRANCISCO_BOUND: CameraBoundsOptions = CameraBoundsOptions.Builder()
       .bounds(
         CoordinateBounds(

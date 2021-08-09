@@ -22,8 +22,8 @@ import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
-import kotlinx.android.synthetic.main.activity_simple_map.*
 
 /**
  * Example of passing large geojson to verify it does not block UI thread
@@ -35,7 +35,8 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_simple_map)
+    val binding = ActivitySimpleMapBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
     routePoints = FeatureCollection.fromFeature(
       Feature.fromGeometry(
@@ -50,7 +51,7 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
       )
     )
 
-    mapView.getMapboxMap()
+    binding.mapView.getMapboxMap()
       .apply {
         setCamera(
           CameraOptions.Builder()
@@ -127,26 +128,6 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
         lineOffset(5.0 * (LARGE_SOURCE_COUNT + 1))
       }
     )
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

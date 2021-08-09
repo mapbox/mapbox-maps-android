@@ -12,10 +12,9 @@ import com.mapbox.maps.extension.style.layers.getLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.Visibility
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.databinding.ActivityWithinExpressionBinding
 import com.mapbox.turf.TurfConstants
 import com.mapbox.turf.TurfTransformation
-import kotlinx.android.synthetic.main.activity_within_expression.*
 
 /**
  * An Activity that showcases the within expression to filter features outside a geometry
@@ -24,15 +23,16 @@ class DistanceExpressionActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_within_expression)
+    val binding = ActivityWithinExpressionBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
     val center = Point.fromLngLat(LON, LAT)
     val circle = TurfTransformation.circle(center, RADIUS, TurfConstants.UNIT_METERS)
 
     // Setup camera position above Georgetown
-    mapView.getMapboxMap().setCamera(CameraOptions.Builder().center(center).zoom(16.0).build())
+    binding.mapView.getMapboxMap().setCamera(CameraOptions.Builder().center(center).zoom(16.0).build())
 
-    mapView.getMapboxMap().loadStyle(
+    binding.mapView.getMapboxMap().loadStyle(
       style(Style.MAPBOX_STREETS) {
         +geoJsonSource(POINT_ID) {
           geometry(center)
@@ -61,26 +61,6 @@ class DistanceExpressionActivity : AppCompatActivity() {
       (it.getLayer(TRANSIT_LABEL) as SymbolLayer).visibility(Visibility.NONE)
       (it.getLayer(ROAD_NUMBER_SHIELD) as SymbolLayer).visibility(Visibility.NONE)
     }
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

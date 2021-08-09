@@ -15,9 +15,9 @@ import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.databinding.ActivityLocationComponentBinding
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
 import com.mapbox.maps.toJson
-import kotlinx.android.synthetic.main.activity_simple_map.*
 
 class LocationComponentActivity : AppCompatActivity() {
 
@@ -25,21 +25,23 @@ class LocationComponentActivity : AppCompatActivity() {
   private lateinit var locationPermissionHelper: LocationPermissionHelper
   private val onIndicatorPositionChangedListener = OnIndicatorPositionChangedListener {
     // Jump to the current indicator position
-    mapView.getMapboxMap().setCamera(CameraOptions.Builder().center(it).build())
+    binding.mapView.getMapboxMap().setCamera(CameraOptions.Builder().center(it).build())
     // Set the gestures plugin's focal point to the current indicator location.
-    mapView.gestures.focalPoint = mapView.getMapboxMap().pixelForCoordinate(it)
+    binding.mapView.gestures.focalPoint = binding.mapView.getMapboxMap().pixelForCoordinate(it)
   }
+  private lateinit var binding: ActivityLocationComponentBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_location_component)
+    binding = ActivityLocationComponentBinding.inflate(layoutInflater)
+    setContentView(binding.root)
     locationPermissionHelper = LocationPermissionHelper(this)
     locationPermissionHelper.checkPermissions {
-      mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) { _ ->
+      binding.mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
         // Disable scroll gesture, since we are updating the camera position based on the indicator location.
-        mapView.gestures.scrollEnabled = false
-        mapView.gestures.addOnMapClickListener { point ->
-          mapView.location
+        binding.mapView.gestures.scrollEnabled = false
+        binding.mapView.gestures.addOnMapClickListener { point ->
+          binding.mapView.location
             .isLocatedAt(point) { isPuckLocatedAtPoint ->
               if (isPuckLocatedAtPoint) {
                 Toast.makeText(this, "Clicked on location puck", Toast.LENGTH_SHORT).show()
@@ -47,8 +49,8 @@ class LocationComponentActivity : AppCompatActivity() {
             }
           true
         }
-        mapView.gestures.addOnMapLongClickListener { point ->
-          mapView.location
+        binding.mapView.gestures.addOnMapLongClickListener { point ->
+          binding.mapView.location
             .isLocatedAt(point) { isPuckLocatedAtPoint ->
               if (isPuckLocatedAtPoint) {
                 Toast.makeText(this, "Long-clicked on location puck", Toast.LENGTH_SHORT).show()
@@ -76,11 +78,11 @@ class LocationComponentActivity : AppCompatActivity() {
         return true
       }
       R.id.action_component_disable -> {
-        mapView.location.enabled = false
+        binding.mapView.location.enabled = false
         return true
       }
       R.id.action_component_enabled -> {
-        mapView.location.enabled = true
+        binding.mapView.location.enabled = true
         return true
       }
       else -> return super.onOptionsItemSelected(item)
@@ -88,7 +90,7 @@ class LocationComponentActivity : AppCompatActivity() {
   }
 
   private fun toggleCustomisedPuck() {
-    mapView.location.let {
+    binding.mapView.location.let {
       when (it.locationPuck) {
         is LocationPuck3D -> it.locationPuck = LocationPuck2D(
           topImage = AppCompatResources.getDrawable(
@@ -127,7 +129,7 @@ class LocationComponentActivity : AppCompatActivity() {
 
   private fun toggleMapStyle() {
     val styleUrl = if (lastStyleUri == Style.DARK) Style.LIGHT else Style.DARK
-    mapView.getMapboxMap().loadStyleUri(styleUrl) {
+    binding.mapView.getMapboxMap().loadStyleUri(styleUrl) {
       lastStyleUri = styleUrl
     }
   }
@@ -143,25 +145,13 @@ class LocationComponentActivity : AppCompatActivity() {
 
   override fun onStart() {
     super.onStart()
-    mapView.onStart()
-    mapView.location
+    binding.mapView.location
       .addOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
   }
 
   override fun onStop() {
     super.onStop()
-    mapView.onStop()
-    mapView.location
+    binding.mapView.location
       .removeOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 }

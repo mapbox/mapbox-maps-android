@@ -6,30 +6,32 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.mapbox.maps.Style
-import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.databinding.ActivityViewpagerBinding
 import com.mapbox.maps.testapp.examples.fragment.MapFragment
-import kotlinx.android.synthetic.main.activity_viewpager.*
 
 /**
  * Test activity showcasing using the Android SDK ViewPager API to show MapFragments.
  */
 class ViewPagerActivity : AppCompatActivity() {
 
+  private lateinit var binding: ActivityViewpagerBinding
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_viewpager)
-    viewPager.adapter = MapFragmentAdapter(supportFragmentManager)
+    binding = ActivityViewpagerBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    binding.viewPager.adapter = MapFragmentAdapter(supportFragmentManager)
   }
 
   override fun onRestoreInstanceState(savedInstanceState: Bundle) {
     super.onRestoreInstanceState(savedInstanceState)
-    val currentPosition = viewPager.currentItem
-    val offscreenLimit = viewPager.offscreenPageLimit
+    val currentPosition = binding.viewPager.currentItem
+    val offscreenLimit = binding.viewPager.offscreenPageLimit
     for (i in currentPosition - offscreenLimit..currentPosition + offscreenLimit) {
-      if (i < 0 || i > viewPager.adapter?.count ?: 0) {
+      if (i < 0 || i > binding.viewPager.adapter?.count ?: 0) {
         continue
       }
-      val mapFragment = viewPager.adapter?.instantiateItem(viewPager, i) as MapFragment
+      val mapFragment = binding.viewPager.adapter?.instantiateItem(binding.viewPager, i) as MapFragment
       mapFragment.getMapAsync(i)
     }
   }
@@ -48,7 +50,7 @@ class ViewPagerActivity : AppCompatActivity() {
       return fragment
     }
 
-    override fun getPageTitle(position: Int): CharSequence? {
+    override fun getPageTitle(position: Int): CharSequence {
       return "Page $position"
     }
 

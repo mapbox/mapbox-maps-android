@@ -19,8 +19,7 @@ import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_multi_display.*
-import kotlinx.android.synthetic.main.activity_simple_map.mapView
+import com.mapbox.maps.testapp.databinding.ActivityMultiDisplayBinding
 
 /**
  * Example of displaying a map on the second screen.
@@ -30,10 +29,13 @@ import kotlinx.android.synthetic.main.activity_simple_map.mapView
  */
 class MultiDisplayActivity : AppCompatActivity() {
 
+  private lateinit var binding: ActivityMultiDisplayBinding
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_multi_display)
-    mapView.getMapboxMap().loadStyle(
+    binding = ActivityMultiDisplayBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    binding.mapView.getMapboxMap().loadStyle(
       style(Style.DARK) {
         +image(IMAGE_ID) {
           bitmap(BitmapFactory.decodeResource(resources, R.drawable.red_marker))
@@ -48,10 +50,10 @@ class MultiDisplayActivity : AppCompatActivity() {
       }
     )
 
-    displayOnSecondDisplayButton.setOnClickListener {
+    binding.displayOnSecondDisplayButton.setOnClickListener {
       displayMapInSecondaryScreen()
     }
-    moveCameraButton.setOnClickListener {
+    binding.moveCameraButton.setOnClickListener {
       moveCamera()
     }
   }
@@ -62,7 +64,7 @@ class MultiDisplayActivity : AppCompatActivity() {
       .zoom(ZOOM)
       .build()
 
-    mapView.getMapboxMap().flyTo(
+    binding.mapView.getMapboxMap().flyTo(
       cameraOption,
       mapAnimationOptions {
         duration(DURATION)
@@ -87,26 +89,6 @@ class MultiDisplayActivity : AppCompatActivity() {
     } else {
       Toast.makeText(this, "Second screen not found.", Toast.LENGTH_SHORT).show()
     }
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {
