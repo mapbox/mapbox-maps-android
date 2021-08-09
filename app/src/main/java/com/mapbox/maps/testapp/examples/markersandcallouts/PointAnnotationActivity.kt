@@ -24,11 +24,9 @@ import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
-import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
-import kotlinx.android.synthetic.main.activity_add_marker_symbol.mapView
-import kotlinx.android.synthetic.main.activity_annotation.*
 import java.util.*
 
 /**
@@ -50,10 +48,11 @@ class PointAnnotationActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_annotation)
-    mapView.getMapboxMap().loadStyleUri(nextStyle) {
-      annotationPlugin = mapView.annotations
-      circleAnnotationManager = annotationPlugin.createCircleAnnotationManager(mapView).apply {
+    val binding = ActivityAnnotationBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    binding.mapView.getMapboxMap().loadStyleUri(nextStyle) {
+      annotationPlugin = binding.mapView.annotations
+      circleAnnotationManager = annotationPlugin.createCircleAnnotationManager(binding.mapView).apply {
         val circleAnnotationOptions: CircleAnnotationOptions = CircleAnnotationOptions()
           .withPoint(Point.fromLngLat(AIRPORT_LONGITUDE, AIRPORT_LATITUDE))
           .withCircleColor(Color.YELLOW)
@@ -61,7 +60,7 @@ class PointAnnotationActivity : AppCompatActivity() {
           .withDraggable(false)
         circleAnnotation = create(circleAnnotationOptions)
       }
-      pointAnnotationManager = annotationPlugin.createPointAnnotationManager(mapView).apply {
+      pointAnnotationManager = annotationPlugin.createPointAnnotationManager(binding.mapView).apply {
         textFont = listOf("Arial Unicode MS Bold", "Open Sans Regular")
 
         addDragListener(object : OnPointAnnotationDragListener {
@@ -178,19 +177,19 @@ class PointAnnotationActivity : AppCompatActivity() {
         }
       }
 
-      mapView.getMapboxMap().addOnMapClickListener {
+      binding.mapView.getMapboxMap().addOnMapClickListener {
         Toast.makeText(this@PointAnnotationActivity, "OnMapClick", Toast.LENGTH_SHORT).show()
         true
       }
     }
 
-    deleteAll.setOnClickListener {
+    binding.deleteAll.setOnClickListener {
       pointAnnotationManager?.let {
         annotationPlugin.removeAnnotationManager(it)
       }
     }
-    changeStyle.setOnClickListener {
-      mapView.getMapboxMap().loadStyleUri(nextStyle)
+    binding.changeStyle.setOnClickListener {
+      binding.mapView.getMapboxMap().loadStyleUri(nextStyle)
     }
   }
 

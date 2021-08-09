@@ -53,7 +53,6 @@ class AnimatedImageSourceActivity : AppCompatActivity() {
     }
   }
 
-
   override fun onStop() {
     super.onStop()
     handler.removeCallbacks(runnable)

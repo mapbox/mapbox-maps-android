@@ -25,10 +25,10 @@ import com.mapbox.maps.plugin.compass.compass
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.scalebar.scalebar
 import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
 import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
 import com.mapbox.turf.TurfConstants
 import com.mapbox.turf.TurfMeasurement
-import kotlinx.android.synthetic.main.activity_simple_map.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,11 +43,12 @@ class SantaCatalinaActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     requestWindowFeature(Window.FEATURE_NO_TITLE)
-    setContentView(R.layout.activity_simple_map)
-    mapView.disablePlugins()
+    val binding = ActivitySimpleMapBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    binding.mapView.disablePlugins()
 
     // get map and setup initial camera
-    mapboxMap = mapView.getMapboxMap()
+    mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.setCamera(
       CameraOptions.Builder()
         .center(POINT_START)
@@ -230,26 +231,6 @@ class SantaCatalinaActivity : AppCompatActivity() {
       timeAnimator.duration = ANIMATION_DURATION.toLong()
       timeAnimator.start()
     }
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

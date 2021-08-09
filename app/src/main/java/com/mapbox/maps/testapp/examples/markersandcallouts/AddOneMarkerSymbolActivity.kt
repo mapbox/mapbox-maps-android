@@ -12,7 +12,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
+import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
 
 /**
  * Example showing how to add a marker on map with symbol layer
@@ -21,9 +21,10 @@ class AddOneMarkerSymbolActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_simple_map)
+    val binding = ActivitySimpleMapBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
-    mapView.getMapboxMap().also {
+    binding.mapView.getMapboxMap().also {
       it.setCamera(
         CameraOptions.Builder()
           .center(Point.fromLngLat(LONGITUDE, LATITUDE))
@@ -45,26 +46,6 @@ class AddOneMarkerSymbolActivity : AppCompatActivity() {
         }
       }
     )
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

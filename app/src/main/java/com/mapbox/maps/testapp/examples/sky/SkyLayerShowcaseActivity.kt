@@ -13,7 +13,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.SkyType
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.scalebar.scalebar
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_sky_layer.*
+import com.mapbox.maps.testapp.databinding.ActivitySkyLayerBinding
 
 /**
  * Showcase for Sky layer.
@@ -41,11 +41,14 @@ class SkyLayerShowcaseActivity : AppCompatActivity() {
   // polar, could be between 0.0 and 180.0
   private var skyAtmosphereCenterP = 90.0
 
+  private lateinit var binding: ActivitySkyLayerBinding
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_sky_layer)
+    binding = ActivitySkyLayerBinding.inflate(layoutInflater)
+    setContentView(binding.root)
     applyControls()
-    mapView.getMapboxMap().loadStyle(
+    binding.mapView.getMapboxMap().loadStyle(
       styleExtension = style(Style.SATELLITE_STREETS) {
         +skyLayer(SKY_LAYER) {
           skyType(skyType)
@@ -74,24 +77,24 @@ class SkyLayerShowcaseActivity : AppCompatActivity() {
         }
       }
     ) {
-      mapView.scalebar.enabled = false
+      binding.mapView.scalebar.enabled = false
       skyLayer = it.getLayerAs(SKY_LAYER)
     }
   }
 
   private fun applyControls() {
     applyInitials()
-    switchSkyMode.setOnCheckedChangeListener { _, isChecked ->
+    binding.switchSkyMode.setOnCheckedChangeListener { _, isChecked ->
       if (isChecked) {
         skyType = SkyType.ATMOSPHERE
-        textSkyMode.text = getString(R.string.sky_mode, skyType.name)
-        layoutGradient.visibility = View.GONE
-        layoutAtmosphere.visibility = View.VISIBLE
+        binding.textSkyMode.text = getString(R.string.sky_mode, skyType.name)
+        binding.layoutGradient.visibility = View.GONE
+        binding.layoutAtmosphere.visibility = View.VISIBLE
       } else {
         skyType = SkyType.GRADIENT
-        textSkyMode.text = getString(R.string.sky_mode, skyType.name)
-        layoutGradient.visibility = View.VISIBLE
-        layoutAtmosphere.visibility = View.GONE
+        binding.textSkyMode.text = getString(R.string.sky_mode, skyType.name)
+        binding.layoutGradient.visibility = View.VISIBLE
+        binding.layoutAtmosphere.visibility = View.GONE
       }
       applySkyProperties()
     }
@@ -100,20 +103,20 @@ class SkyLayerShowcaseActivity : AppCompatActivity() {
   }
 
   private fun applyInitials() {
-    textSkyMode.text = getString(R.string.sky_mode, skyType.name)
-    captionAtmosphereCenterA.text = getString(R.string.sky_center_azimuth, skyAtmosphereCenterA.toInt())
-    captionAtmosphereCenterP.text = getString(R.string.sky_center_polar, skyAtmosphereCenterP.toInt())
-    captionGradientCenterA.text = getString(R.string.sky_center_azimuth, skyGradientCenterA.toInt())
-    captionGradientCenterP.text = getString(R.string.sky_center_polar, skyGradientCenterP.toInt())
-    captionAtmosphereSunIntensity.text = getString(R.string.sky_sun_intensity, skyAtmosphereSunIntensity.toInt())
-    captionGradientRadius.text = getString(R.string.sky_gradient_radius, skyGradientRadius.toInt())
+    binding.textSkyMode.text = getString(R.string.sky_mode, skyType.name)
+    binding.captionAtmosphereCenterA.text = getString(R.string.sky_center_azimuth, skyAtmosphereCenterA.toInt())
+    binding.captionAtmosphereCenterP.text = getString(R.string.sky_center_polar, skyAtmosphereCenterP.toInt())
+    binding.captionGradientCenterA.text = getString(R.string.sky_center_azimuth, skyGradientCenterA.toInt())
+    binding.captionGradientCenterP.text = getString(R.string.sky_center_polar, skyGradientCenterP.toInt())
+    binding.captionAtmosphereSunIntensity.text = getString(R.string.sky_sun_intensity, skyAtmosphereSunIntensity.toInt())
+    binding.captionGradientRadius.text = getString(R.string.sky_gradient_radius, skyGradientRadius.toInt())
   }
 
   private fun applySkyGradientControls() {
-    seekBarGradientRadius.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+    binding.seekBarGradientRadius.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
       override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
         skyGradientRadius = progress.toDouble()
-        captionGradientRadius.text = getString(R.string.sky_gradient_radius, skyGradientRadius.toInt())
+        binding.captionGradientRadius.text = getString(R.string.sky_gradient_radius, skyGradientRadius.toInt())
         applySkyProperties()
       }
 
@@ -121,11 +124,11 @@ class SkyLayerShowcaseActivity : AppCompatActivity() {
 
       override fun onStopTrackingTouch(seekBar: SeekBar?) {}
     })
-    seekBarGradientCenterA.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+    binding.seekBarGradientCenterA.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
       override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
         // convert [0, 360] range to [-180, 180]
         skyGradientCenterA = progress.toDouble() - 180.0
-        captionGradientCenterA.text = getString(R.string.sky_center_azimuth, skyGradientCenterA.toInt())
+        binding.captionGradientCenterA.text = getString(R.string.sky_center_azimuth, skyGradientCenterA.toInt())
         applySkyProperties()
       }
 
@@ -133,10 +136,10 @@ class SkyLayerShowcaseActivity : AppCompatActivity() {
 
       override fun onStopTrackingTouch(seekBar: SeekBar?) {}
     })
-    seekBarGradientCenterP.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+    binding.seekBarGradientCenterP.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
       override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
         skyGradientCenterP = progress.toDouble()
-        captionGradientCenterP.text = getString(R.string.sky_center_polar, skyGradientCenterP.toInt())
+        binding.captionGradientCenterP.text = getString(R.string.sky_center_polar, skyGradientCenterP.toInt())
         applySkyProperties()
       }
 
@@ -147,10 +150,10 @@ class SkyLayerShowcaseActivity : AppCompatActivity() {
   }
 
   private fun applySkyAtmosphereControls() {
-    seekBarAtmosphereSunIntensity.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+    binding.seekBarAtmosphereSunIntensity.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
       override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
         skyAtmosphereSunIntensity = progress.toDouble()
-        captionAtmosphereSunIntensity.text = getString(R.string.sky_sun_intensity, skyAtmosphereSunIntensity.toInt())
+        binding.captionAtmosphereSunIntensity.text = getString(R.string.sky_sun_intensity, skyAtmosphereSunIntensity.toInt())
         applySkyProperties()
       }
 
@@ -158,11 +161,11 @@ class SkyLayerShowcaseActivity : AppCompatActivity() {
 
       override fun onStopTrackingTouch(seekBar: SeekBar?) {}
     })
-    seekBarAtmosphereCenterA.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+    binding.seekBarAtmosphereCenterA.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
       override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
         // convert [0, 360] range to [-180, 180]
         skyAtmosphereCenterA = progress.toDouble() - 180.0
-        captionAtmosphereCenterA.text = getString(R.string.sky_center_azimuth, skyAtmosphereCenterA.toInt())
+        binding.captionAtmosphereCenterA.text = getString(R.string.sky_center_azimuth, skyAtmosphereCenterA.toInt())
         applySkyProperties()
       }
 
@@ -170,10 +173,10 @@ class SkyLayerShowcaseActivity : AppCompatActivity() {
 
       override fun onStopTrackingTouch(seekBar: SeekBar?) {}
     })
-    seekBarAtmosphereCenterP.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+    binding.seekBarAtmosphereCenterP.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
       override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
         skyAtmosphereCenterP = progress.toDouble()
-        captionAtmosphereCenterP.text = getString(R.string.sky_center_polar, skyAtmosphereCenterP.toInt())
+        binding.captionAtmosphereCenterP.text = getString(R.string.sky_center_polar, skyAtmosphereCenterP.toInt())
         applySkyProperties()
       }
 
@@ -199,26 +202,6 @@ class SkyLayerShowcaseActivity : AppCompatActivity() {
   private fun applySkyAtmosphereProperties() {
     skyLayer?.skyAtmosphereSunIntensity(skyAtmosphereSunIntensity)
     skyLayer?.skyAtmosphereSun(listOf(skyAtmosphereCenterA, skyAtmosphereCenterP))
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

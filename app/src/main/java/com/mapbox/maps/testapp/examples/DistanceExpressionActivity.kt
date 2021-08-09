@@ -12,7 +12,7 @@ import com.mapbox.maps.extension.style.layers.getLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.Visibility
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.testapp.databinding.ActivityWithinExpressionBinding
+import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
 import com.mapbox.turf.TurfConstants
 import com.mapbox.turf.TurfTransformation
 
@@ -23,7 +23,7 @@ class DistanceExpressionActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val binding = ActivityWithinExpressionBinding.inflate(layoutInflater)
+    val binding = ActivitySimpleMapBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
     val center = Point.fromLngLat(LON, LAT)

@@ -10,10 +10,8 @@ import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
-import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
-import kotlinx.android.synthetic.main.activity_add_marker_symbol.mapView
-import kotlinx.android.synthetic.main.activity_annotation.*
 import java.util.*
 
 /**
@@ -28,11 +26,13 @@ class CircleAnnotationActivity : AppCompatActivity() {
       return AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]
     }
   private lateinit var annotationPlugin: AnnotationPlugin
+  private lateinit var binding: ActivityAnnotationBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    binding = ActivityAnnotationBinding.inflate(layoutInflater)
     setContentView(R.layout.activity_annotation)
-    annotationPlugin = mapView.annotations
+    annotationPlugin = binding.mapView.annotations
     circleAnnotationManager = annotationPlugin.createCircleAnnotationManager(mapView).apply {
       addClickListener(
         OnCircleAnnotationClickListener {
@@ -41,7 +41,7 @@ class CircleAnnotationActivity : AppCompatActivity() {
           false
         }
       )
-      mapView.getMapboxMap().loadStyleUri(nextStyle) {
+      binding.mapView.getMapboxMap().loadStyleUri(nextStyle) {
         addInteractionListener(
           object : OnCircleAnnotationInteractionListener {
             override fun onSelectAnnotation(annotation: CircleAnnotation) {
@@ -90,13 +90,13 @@ class CircleAnnotationActivity : AppCompatActivity() {
       }
     }
 
-    deleteAll.setOnClickListener {
+    binding.deleteAll.setOnClickListener {
       circleAnnotationManager?.let {
         annotationPlugin.removeAnnotationManager(it)
       }
     }
-    changeStyle.setOnClickListener {
-      mapView.getMapboxMap().loadStyleUri(nextStyle)
+    binding.changeStyle.setOnClickListener {
+      binding.mapView.getMapboxMap().loadStyleUri(nextStyle)
     }
   }
 

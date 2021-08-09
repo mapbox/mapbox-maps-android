@@ -20,7 +20,7 @@ import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.gestures.removeOnMapClickListener
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_icon_size_change_on_click.*
+import com.mapbox.maps.testapp.databinding.ActivityIconSizeChangeOnClickBinding
 
 class IconSizeChangeOnClickActivity : AppCompatActivity(), OnMapClickListener {
 
@@ -30,9 +30,10 @@ class IconSizeChangeOnClickActivity : AppCompatActivity(), OnMapClickListener {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_icon_size_change_on_click)
+    val binding = ActivityIconSizeChangeOnClickBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
-    mapboxMap = mapView.getMapboxMap()
+    mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.loadStyle(
       styleExtension = style(Style.DARK) {
         +geoJsonSource("marker-source") {
@@ -125,26 +126,10 @@ class IconSizeChangeOnClickActivity : AppCompatActivity(), OnMapClickListener {
     markerSelected = select
   }
 
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
   override fun onDestroy() {
     super.onDestroy()
     markerAnimator.cancel()
     mapboxMap.removeOnMapClickListener(this)
-    mapView.onDestroy()
   }
 
   private fun screenBoxFromPixel(pixel: ScreenCoordinate) = ScreenBox(

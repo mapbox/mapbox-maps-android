@@ -19,10 +19,8 @@ import com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationClickListene
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
-import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
-import kotlinx.android.synthetic.main.activity_add_marker_symbol.mapView
-import kotlinx.android.synthetic.main.activity_annotation.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -42,12 +40,14 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
     get() {
       return AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]
     }
+  private lateinit var binding: ActivityAnnotationBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_annotation)
-    progress.visibility = View.VISIBLE
-    mapboxMap = mapView.getMapboxMap()
+    binding = ActivityAnnotationBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    binding.progress.visibility = View.VISIBLE
+    mapboxMap = binding.mapView.getMapboxMap()
       .apply {
         setCamera(
           CameraOptions.Builder()
@@ -56,7 +56,7 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
             .build()
         )
         loadStyleUri(nextStyle) {
-          val annotationPlugin = mapView.annotations
+          val annotationPlugin = binding.mapView.annotations
           val annotationConfig = AnnotationConfig(
             annotationSourceOptions = AnnotationSourceOptions(
               clusterOptions = ClusterOptions(
@@ -73,7 +73,7 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
             )
           )
           pointAnnotationManager =
-            annotationPlugin.createPointAnnotationManager(mapView, annotationConfig)
+            annotationPlugin.createPointAnnotationManager(binding.mapView, annotationConfig)
           pointAnnotationManager?.addClickListener(
             OnPointAnnotationClickListener {
               Toast.makeText(
@@ -91,9 +91,9 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
         }
       }
 
-    deleteAll.setOnClickListener { pointAnnotationManager?.deleteAll() }
-    changeStyle.setOnClickListener {
-      mapView.getMapboxMap().loadStyleUri(nextStyle)
+    binding.deleteAll.setOnClickListener { pointAnnotationManager?.deleteAll() }
+    binding.changeStyle.setOnClickListener {
+      binding.mapView.getMapboxMap().loadStyleUri(nextStyle)
     }
   }
 
@@ -112,7 +112,7 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
       options?.let {
         pointAnnotationManager?.create(it)
       }
-      progress.visibility = View.GONE
+      binding.progress.visibility = View.GONE
     }
   }
 

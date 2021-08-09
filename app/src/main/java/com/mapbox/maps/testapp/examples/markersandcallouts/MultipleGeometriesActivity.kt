@@ -11,8 +11,7 @@ import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.*
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
-import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_multiple_geometries.*
+import com.mapbox.maps.testapp.databinding.ActivityMultipleGeometriesBinding
 import java.net.URISyntaxException
 
 /**
@@ -24,9 +23,10 @@ class MultipleGeometriesActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_multiple_geometries)
+    val binding = ActivityMultipleGeometriesBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
-    mapboxMap = mapView.getMapboxMap()
+    mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.loadStyleUri(
       Style.LIGHT
     ) {
@@ -98,21 +98,6 @@ class MultipleGeometriesActivity : AppCompatActivity() {
         circleStrokeColor(Color.BLACK)
       }
     )
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {
