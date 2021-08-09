@@ -106,7 +106,7 @@ class ExampleOverviewActivity : AppCompatActivity(), CoroutineScope {
             currentTextInEditText.toString().toLowerCase(Locale.getDefault())
           val filteredList = allExampleList.filter {
             // Set search criteria
-            it.getSimpleName().toLowerCase(Locale.getDefault()).contains(lowercaseSearchText) ||
+            it.simpleName.toLowerCase(Locale.getDefault()).contains(lowercaseSearchText) ||
               it.category.toLowerCase(Locale.getDefault()).contains(lowercaseSearchText) ||
               it.getDescription().toLowerCase(Locale.getDefault()).contains(lowercaseSearchText) ||
               it.getLabel().toLowerCase(Locale.getDefault()).contains(lowercaseSearchText)

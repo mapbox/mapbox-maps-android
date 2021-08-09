@@ -10,25 +10,20 @@ data class SpecificExample(
   val category: String
 ) : Parcelable {
 
-  private var simpleName: String = buildSimpleName()
+  val simpleName: String
+    get() = buildSimpleName()
 
   constructor(parcel: Parcel) : this(
     parcel.readString()!!,
     parcel.readString(),
     parcel.readString(),
     parcel.readString()!!
-  ) {
-    simpleName = buildSimpleName()
-  }
+  )
 
   private fun buildSimpleName(): String {
     val split =
       name.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
     return split[split.size - 1]
-  }
-
-  fun getSimpleName(): String {
-    return simpleName
   }
 
   fun getLabel(): String {
