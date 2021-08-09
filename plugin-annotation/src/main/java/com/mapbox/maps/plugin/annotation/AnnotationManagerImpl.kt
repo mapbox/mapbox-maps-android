@@ -333,6 +333,9 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
       Logger.e(TAG, "Can't update source: style is not fully loaded.")
       return
     }
+    if (source == null || layer == null) {
+      initLayerAndSource(style)
+    }
     source?.let { geoJsonSource ->
       if (!style.styleSourceExists(geoJsonSource.sourceId)) {
         Logger.e(TAG, "Can't update source: source has not been added to style.")

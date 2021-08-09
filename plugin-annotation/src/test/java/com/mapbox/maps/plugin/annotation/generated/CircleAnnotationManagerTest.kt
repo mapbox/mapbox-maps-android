@@ -26,7 +26,6 @@ import com.mapbox.maps.extension.style.layers.generated.CircleLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
-import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.annotation.*
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
@@ -97,7 +96,7 @@ class CircleAnnotationManagerTest {
     every { gesturesPlugin.removeOnMoveListener(any()) } just Runs
     every { gesturesPlugin.removeOnMapClickListener(any()) } just Runs
     every { gesturesPlugin.removeOnMapLongClickListener(any()) } just Runs
-    every { delegateProvider.mapPluginProviderDelegate.getPlugin<GesturesPlugin>(Plugin.MAPBOX_GESTURES_PLUGIN_ID) } returns gesturesPlugin
+    every { delegateProvider.mapPluginProviderDelegate.getPlugin<GesturesPlugin>(any()) } returns gesturesPlugin
     every { delegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
     every { delegateProvider.mapFeatureQueryDelegate } returns mapFeatureQueryDelegate
     every { mapCameraManagerDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
@@ -166,6 +165,25 @@ class CircleAnnotationManagerTest {
     assertTrue(manager.dragListeners.isEmpty())
     assertTrue(manager.clickListeners.isEmpty())
     assertTrue(manager.longClickListeners.isEmpty())
+  }
+
+  @Test
+  fun initializeBeforeStyleLoad() {
+    every { style.styleLayerExists("test_layer") } returns true
+    val captureCallback = slot<(StyleInterface) -> Unit>()
+    every { delegateProvider.getStyle(capture(captureCallback)) } just Runs
+    manager = CircleAnnotationManager(mapView, delegateProvider, AnnotationConfig("test_layer"))
+    // Style is not loaded, can't create and add layer to style
+    verify(exactly = 0) { style.addPersistentLayer(any(), LayerPosition(null, "test_layer", null)) }
+    every { delegateProvider.getStyle(capture(captureCallback)) } answers {
+      captureCallback.captured.invoke(style)
+    }
+    manager.create(
+      CircleAnnotationOptions()
+        .withPoint(Point.fromLngLat(0.0, 0.0))
+    )
+    // Style is loaded, will create and add layer to style while creating annotations
+    verify(exactly = 1) { style.addPersistentLayer(any(), LayerPosition(null, "test_layer", null)) }
   }
 
   @Test

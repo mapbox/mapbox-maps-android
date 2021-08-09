@@ -32,17 +32,16 @@ class CircleAnnotationActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_annotation)
-    mapView.getMapboxMap().loadStyleUri(nextStyle) {
-      annotationPlugin = mapView.annotations
-      circleAnnotationManager = annotationPlugin.createCircleAnnotationManager(mapView).apply {
-        addClickListener(
-          OnCircleAnnotationClickListener {
-            Toast.makeText(this@CircleAnnotationActivity, "click: ${it.id}", Toast.LENGTH_SHORT)
-              .show()
-            false
-          }
-        )
-
+    annotationPlugin = mapView.annotations
+    circleAnnotationManager = annotationPlugin.createCircleAnnotationManager(mapView).apply {
+      addClickListener(
+        OnCircleAnnotationClickListener {
+          Toast.makeText(this@CircleAnnotationActivity, "click: ${it.id}", Toast.LENGTH_SHORT)
+            .show()
+          false
+        }
+      )
+      mapView.getMapboxMap().loadStyleUri(nextStyle) {
         addInteractionListener(
           object : OnCircleAnnotationInteractionListener {
             override fun onSelectAnnotation(annotation: CircleAnnotation) {
