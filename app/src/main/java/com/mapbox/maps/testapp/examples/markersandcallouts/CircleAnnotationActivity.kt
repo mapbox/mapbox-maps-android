@@ -9,7 +9,6 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
-import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import java.util.*
@@ -31,7 +30,7 @@ class CircleAnnotationActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     binding = ActivityAnnotationBinding.inflate(layoutInflater)
-    setContentView(R.layout.activity_annotation)
+    setContentView(binding.root)
     annotationPlugin = binding.mapView.annotations
     circleAnnotationManager = annotationPlugin.createCircleAnnotationManager(mapView).apply {
       addClickListener(

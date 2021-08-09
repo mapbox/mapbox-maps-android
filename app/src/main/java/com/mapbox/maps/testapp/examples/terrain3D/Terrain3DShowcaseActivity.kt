@@ -9,7 +9,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.SkyType
 import com.mapbox.maps.extension.style.sources.generated.rasterDemSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.extension.style.terrain.generated.terrain
-import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
+import com.mapbox.maps.testapp.databinding.ActivityTerrainShowcaseBinding
 
 /**
  * Example that demonstrates realistic map with 3D terrain and atmosphere sky layer.
@@ -20,7 +20,7 @@ class Terrain3DShowcaseActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val binding = ActivitySimpleMapBinding.inflate(layoutInflater)
+    val binding = ActivityTerrainShowcaseBinding.inflate(layoutInflater)
     setContentView(binding.root)
     mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.loadStyle(

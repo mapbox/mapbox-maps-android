@@ -318,8 +318,8 @@ class OfflineActivity : AppCompatActivity() {
   }
 
   private fun updateTileRegionDownloadProgress(progress: Long, max: Long, message: String? = null) {
-    binding.stylePackDownloadProgress.max = max.toInt()
-    binding.stylePackDownloadProgress.progress = progress.toInt()
+    binding.tilePackDownloadProgress.max = max.toInt()
+    binding.tilePackDownloadProgress.progress = progress.toInt()
     message?.let {
       offlineLogsAdapter.addLog(OfflineLog.TilePackProgress(it))
     }
