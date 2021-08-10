@@ -6,7 +6,6 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CoordinateBounds
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_MAP_OVERLAY_PLUGIN_ID
 import com.mapbox.maps.plugin.delegates.*
 import java.util.*
 
@@ -279,14 +278,4 @@ class MapOverlayPluginImpl : MapOverlayPlugin {
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     mapCameraManagerDelegate = delegateProvider.mapCameraManagerDelegate
   }
-}
-
-/**
- * Extension function for MapView to get the map overlay plugin instance.
- *
- * @return Map overlay plugin instance
- */
-@MapboxExperimental
-fun MapPluginProviderDelegate.overlay(): MapOverlayPlugin {
-  return this.getPlugin(MAPBOX_MAP_OVERLAY_PLUGIN_ID)!!
 }

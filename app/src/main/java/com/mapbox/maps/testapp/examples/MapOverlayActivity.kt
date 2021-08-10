@@ -21,7 +21,7 @@ import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.overlay.MapOverlayCoordinatesProvider
 import com.mapbox.maps.plugin.overlay.MapOverlayPlugin
-import com.mapbox.maps.plugin.overlay.overlay
+import com.mapbox.maps.plugin.overlay.mapboxOverlay
 import com.mapbox.maps.testapp.R
 import kotlinx.android.synthetic.main.activity_map_overlay.*
 
@@ -64,7 +64,7 @@ class MapOverlayActivity : AppCompatActivity(), OnMapClickListener {
         }
       }
     ) { mapboxMap.addOnMapClickListener(this@MapOverlayActivity) }
-    mapOverlayPlugin = mapView.overlay()
+    mapOverlayPlugin = mapView.mapboxOverlay
       .apply {
         registerMapOverlayCoordinatesProvider(provider)
         registerOverlay(location_top_left)
