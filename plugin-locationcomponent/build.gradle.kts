@@ -30,7 +30,6 @@ dependencies {
   implementation(Dependencies.androidxCoreKtx)
   implementation(Dependencies.androidxAnnotations)
   implementation(Dependencies.mapboxJavaGeoJSON)
-  implementation(Dependencies.mapboxJavaTurf)
   testImplementation(Dependencies.junit)
   testImplementation(Dependencies.mockk)
   testImplementation(Dependencies.androidxTestCore)
