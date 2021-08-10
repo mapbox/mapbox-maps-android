@@ -16,7 +16,6 @@ import com.mapbox.maps.extension.style.sources.generated.imageSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
-import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
 import java.text.DateFormat.getDateTimeInstance
 import java.util.*
 
@@ -29,10 +28,10 @@ class DSLStylingActivity : AppCompatActivity(), OnMapClickListener {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val binding = ActivitySimpleMapBinding.inflate(layoutInflater)
-    setContentView(binding.root)
+    val mapView = MapView(this)
+    setContentView(mapView)
 
-    mapboxMap = binding.mapView.getMapboxMap()
+    mapboxMap = mapView.getMapboxMap()
     mapboxMap.loadStyle(createStyle())
     mapboxMap.addOnMapClickListener(this)
   }

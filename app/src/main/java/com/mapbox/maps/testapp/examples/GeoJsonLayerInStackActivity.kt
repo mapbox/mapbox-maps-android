@@ -4,12 +4,12 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.layers.generated.fillLayer
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
 
 class GeoJsonLayerInStackActivity : AppCompatActivity() {
 
@@ -17,9 +17,9 @@ class GeoJsonLayerInStackActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val binding = ActivitySimpleMapBinding.inflate(layoutInflater)
-    setContentView(binding.root)
-    mapboxMap = binding.mapView.getMapboxMap()
+    val mapView = MapView(this)
+    setContentView(mapView)
+    mapboxMap = mapView.getMapboxMap()
 
     mapboxMap.loadStyle(
       style(styleUri = Style.MAPBOX_STREETS) {

@@ -3,9 +3,9 @@ package com.mapbox.maps.testapp.examples
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.common.ValueConverter
+import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
-import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
 import java.lang.RuntimeException
 
 /**
@@ -37,9 +37,9 @@ class RawExpressionActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val binding = ActivitySimpleMapBinding.inflate(layoutInflater)
-    setContentView(binding.root)
-    mapboxMap = binding.mapView.getMapboxMap()
+    val mapView = MapView(this)
+    setContentView(mapView)
+    mapboxMap = mapView.getMapboxMap()
     mapboxMap.loadStyleUri(
       Style.MAPBOX_STREETS
     ) { addExpressionToStyle(it) }

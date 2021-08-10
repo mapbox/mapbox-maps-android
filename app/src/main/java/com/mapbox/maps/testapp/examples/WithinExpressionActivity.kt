@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.*
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.within
 import com.mapbox.maps.extension.style.layers.addLayerBelow
@@ -17,7 +18,6 @@ import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.camera
-import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
 
 /**
  * An Activity that showcases the within expression to filter features outside a geometry
@@ -26,13 +26,13 @@ class WithinExpressionActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val binding = ActivitySimpleMapBinding.inflate(layoutInflater)
-    setContentView(binding.root)
+    val mapView = MapView(this)
+    setContentView(mapView)
 
     val center = Point.fromLngLat(LON, LAT)
 
     // Setup camera position above Georgetown
-    binding.mapView.getMapboxMap().setCamera(
+    mapView.getMapboxMap().setCamera(
       CameraOptions.Builder()
         .center(center)
         .zoom(15.5)
@@ -62,7 +62,7 @@ class WithinExpressionActivity : AppCompatActivity() {
     // Create buffer around linestring
     val bufferedRouteGeometry = bufferLineStringGeometry()
 
-    binding.mapView.getMapboxMap().loadStyle(
+    mapView.getMapboxMap().loadStyle(
       style(Style.MAPBOX_STREETS) {
         +geoJsonSource(POINT_ID) {
           geometry(LineString.fromLngLats(coordinates))
@@ -90,7 +90,7 @@ class WithinExpressionActivity : AppCompatActivity() {
       )
 
       // Move to a new camera position
-      binding.mapView.camera.easeTo(
+      mapView.camera.easeTo(
         CameraOptions.Builder()
           .zoom(16.0)
           .center(Point.fromLngLat(-77.06535338052844, 38.905156245642814))

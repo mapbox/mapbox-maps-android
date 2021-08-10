@@ -88,6 +88,11 @@ class AnimatePointAnnotationActivity : AppCompatActivity(), OnMapLoadedListener 
     animateCars()
   }
 
+  override fun onDestroy() {
+    super.onDestroy()
+    cleanAnimation()
+  }
+
   private fun animateCars() {
     cleanAnimation()
     for (i in 0 until animateCarNum) {

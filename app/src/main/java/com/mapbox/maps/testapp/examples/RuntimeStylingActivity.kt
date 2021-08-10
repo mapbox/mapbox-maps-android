@@ -22,7 +22,6 @@ import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.*
 import com.mapbox.maps.extension.style.sources.getSource
 import com.mapbox.maps.testapp.R
-import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
 import java.nio.ByteBuffer
 
 /**
@@ -34,10 +33,10 @@ class RuntimeStylingActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val binding = ActivitySimpleMapBinding.inflate(layoutInflater)
-    setContentView(binding.root)
+    val mapView = MapView(this)
+    setContentView(mapView)
 
-    mapboxMap = binding.mapView.getMapboxMap()
+    mapboxMap = mapView.getMapboxMap()
     mapboxMap.loadStyleUri(
       Style.MAPBOX_STREETS
     ) { setupStyle(it) }

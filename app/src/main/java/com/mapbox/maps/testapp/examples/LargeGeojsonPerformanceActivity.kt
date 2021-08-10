@@ -10,6 +10,7 @@ import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.image.image
 import com.mapbox.maps.extension.style.layers.addLayer
@@ -22,7 +23,6 @@ import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.testapp.R
-import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 
 /**
@@ -35,8 +35,8 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val binding = ActivitySimpleMapBinding.inflate(layoutInflater)
-    setContentView(binding.root)
+    val mapView = MapView(this)
+    setContentView(mapView)
 
     routePoints = FeatureCollection.fromFeature(
       Feature.fromGeometry(
@@ -51,7 +51,7 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
       )
     )
 
-    binding.mapView.getMapboxMap()
+    mapView.getMapboxMap()
       .apply {
         setCamera(
           CameraOptions.Builder()

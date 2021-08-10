@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.plugin.LocationPuck2D
@@ -15,7 +16,6 @@ import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListene
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.R
-import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
 import com.mapbox.maps.toJson
 
@@ -27,12 +27,12 @@ class LocationTrackingActivity : AppCompatActivity() {
   private lateinit var locationPermissionHelper: LocationPermissionHelper
 
   private val onIndicatorBearingChangedListener = OnIndicatorBearingChangedListener {
-    binding.mapView.getMapboxMap().setCamera(CameraOptions.Builder().bearing(it).build())
+    mapView.getMapboxMap().setCamera(CameraOptions.Builder().bearing(it).build())
   }
 
   private val onIndicatorPositionChangedListener = OnIndicatorPositionChangedListener {
-    binding.mapView.getMapboxMap().setCamera(CameraOptions.Builder().center(it).build())
-    binding.mapView.gestures.focalPoint = binding.mapView.getMapboxMap().pixelForCoordinate(it)
+    mapView.getMapboxMap().setCamera(CameraOptions.Builder().center(it).build())
+    mapView.gestures.focalPoint = mapView.getMapboxMap().pixelForCoordinate(it)
   }
 
   private val onMoveListener = object : OnMoveListener {
@@ -46,12 +46,12 @@ class LocationTrackingActivity : AppCompatActivity() {
 
     override fun onMoveEnd(detector: MoveGestureDetector) {}
   }
-  private lateinit var binding: ActivitySimpleMapBinding
+  private lateinit var mapView: MapView
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    binding = ActivitySimpleMapBinding.inflate(layoutInflater)
-    setContentView(binding.root)
+    mapView = MapView(this)
+    setContentView(mapView)
     locationPermissionHelper = LocationPermissionHelper(this)
     locationPermissionHelper.checkPermissions {
       onMapReady()
@@ -59,12 +59,12 @@ class LocationTrackingActivity : AppCompatActivity() {
   }
 
   private fun onMapReady() {
-    binding.mapView.getMapboxMap().setCamera(
+    mapView.getMapboxMap().setCamera(
       CameraOptions.Builder()
         .zoom(14.0)
         .build()
     )
-    binding.mapView.getMapboxMap().loadStyleUri(
+    mapView.getMapboxMap().loadStyleUri(
       Style.MAPBOX_STREETS
     ) {
       initLocationComponent()
@@ -73,11 +73,11 @@ class LocationTrackingActivity : AppCompatActivity() {
   }
 
   private fun setupGesturesListener() {
-    binding.mapView.gestures.addOnMoveListener(onMoveListener)
+    mapView.gestures.addOnMoveListener(onMoveListener)
   }
 
   private fun initLocationComponent() {
-    val locationComponentPlugin = binding.mapView.location
+    val locationComponentPlugin = mapView.location
     locationComponentPlugin.updateSettings {
       this.enabled = true
       this.locationPuck = LocationPuck2D(
@@ -109,20 +109,20 @@ class LocationTrackingActivity : AppCompatActivity() {
 
   private fun onCameraTrackingDismissed() {
     Toast.makeText(this, "onCameraTrackingDismissed", Toast.LENGTH_SHORT).show()
-    binding.mapView.location
+    mapView.location
       .removeOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
-    binding.mapView.location
+    mapView.location
       .removeOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener)
-    binding.mapView.gestures.removeOnMoveListener(onMoveListener)
+    mapView.gestures.removeOnMoveListener(onMoveListener)
   }
 
   override fun onDestroy() {
     super.onDestroy()
-    binding.mapView.location
+    mapView.location
       .removeOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener)
-    binding.mapView.location
+    mapView.location
       .removeOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
-    binding.mapView.gestures.removeOnMoveListener(onMoveListener)
+    mapView.gestures.removeOnMoveListener(onMoveListener)
   }
 
   override fun onRequestPermissionsResult(

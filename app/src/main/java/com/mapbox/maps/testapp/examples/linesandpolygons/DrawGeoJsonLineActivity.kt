@@ -4,13 +4,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.LineCap
 import com.mapbox.maps.extension.style.layers.properties.generated.LineJoin
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
 
 /**
  * Draw a polyline by parsing a GeoJSON file with the Mapbox Android SDK.
@@ -19,9 +19,9 @@ class DrawGeoJsonLineActivity : AppCompatActivity() {
 
   public override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val binding = ActivitySimpleMapBinding.inflate(layoutInflater)
-    setContentView(binding.root)
-    binding.mapView.getMapboxMap().setCamera(
+    val mapView = MapView(this)
+    setContentView(mapView)
+    mapView.getMapboxMap().setCamera(
       CameraOptions.Builder().center(
         Point.fromLngLat(
           LATITUDE,
@@ -29,7 +29,7 @@ class DrawGeoJsonLineActivity : AppCompatActivity() {
         )
       ).zoom(ZOOM).build()
     )
-    binding.mapView.getMapboxMap().loadStyle(
+    mapView.getMapboxMap().loadStyle(
       (
         style(styleUri = Style.MAPBOX_STREETS) {
           +geoJsonSource(GEOJSON_SOURCE_ID) {

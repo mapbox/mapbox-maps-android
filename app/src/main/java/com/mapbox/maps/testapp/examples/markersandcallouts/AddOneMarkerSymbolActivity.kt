@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.image.image
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
@@ -12,7 +13,6 @@ import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.R
-import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
 
 /**
  * Example showing how to add a marker on map with symbol layer
@@ -21,10 +21,10 @@ class AddOneMarkerSymbolActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val binding = ActivitySimpleMapBinding.inflate(layoutInflater)
-    setContentView(binding.root)
+    val mapView = MapView(this)
+    setContentView(mapView)
 
-    binding.mapView.getMapboxMap().also {
+    mapView.getMapboxMap().also {
       it.setCamera(
         CameraOptions.Builder()
           .center(Point.fromLngLat(LONGITUDE, LATITUDE))

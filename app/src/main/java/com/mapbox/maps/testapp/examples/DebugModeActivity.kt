@@ -1,6 +1,5 @@
 package com.mapbox.maps.testapp.examples
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -168,12 +167,11 @@ class DebugModeActivity : AppCompatActivity() {
     }
   }
 
-  @SuppressLint("SetTextI18n")
   override fun onStart() {
     super.onStart()
     binding.mapView.setOnFpsChangedListener {
       runOnUiThread {
-        binding.fpsView.text = "${it.toInt()} FPS"
+        binding.fpsView.text = getString(R.string.fps, it.toInt())
       }
     }
   }

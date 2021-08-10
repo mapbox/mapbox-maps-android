@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
+import com.mapbox.maps.MapView
 
 /**
  * Example of displaying a map.
@@ -13,12 +13,15 @@ class SimpleMapActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val binding = ActivitySimpleMapBinding.inflate(layoutInflater)
-    setContentView(binding.root)
-    binding.mapView.getMapboxMap()
+    val mapView = MapView(this)
+    setContentView(mapView)
+    mapView.getMapboxMap()
       .apply {
         setCamera(
-          CameraOptions.Builder().center(Point.fromLngLat(LONGITUDE, LATITUDE)).zoom(9.0).build()
+          CameraOptions.Builder()
+            .center(Point.fromLngLat(LONGITUDE, LATITUDE))
+            .zoom(9.0)
+            .build()
         )
       }
   }

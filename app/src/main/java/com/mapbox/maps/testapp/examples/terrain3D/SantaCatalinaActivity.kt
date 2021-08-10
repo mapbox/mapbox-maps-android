@@ -25,7 +25,6 @@ import com.mapbox.maps.plugin.compass.compass
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.scalebar.scalebar
 import com.mapbox.maps.testapp.R
-import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
 import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
 import com.mapbox.turf.TurfConstants
 import com.mapbox.turf.TurfMeasurement
@@ -44,12 +43,12 @@ class SantaCatalinaActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     requestWindowFeature(Window.FEATURE_NO_TITLE)
-    val binding = ActivitySimpleMapBinding.inflate(layoutInflater)
-    setContentView(binding.root)
-    binding.mapView.disablePlugins()
+    val mapView = MapView(this)
+    setContentView(mapView)
+    mapView.disablePlugins()
 
     // get map and setup initial camera
-    mapboxMap = binding.mapView.getMapboxMap()
+    mapboxMap = mapView.getMapboxMap()
     mapboxMap.setCamera(
       CameraOptions.Builder()
         .center(POINT_START)

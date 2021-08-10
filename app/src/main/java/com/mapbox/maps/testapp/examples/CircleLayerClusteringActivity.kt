@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.TransitionOptions
 import com.mapbox.maps.extension.style.expressions.dsl.generated.*
@@ -19,7 +20,6 @@ import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.testapp.R
-import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
 import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
 
 /**
@@ -29,10 +29,9 @@ class CircleLayerClusteringActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val binding = ActivitySimpleMapBinding.inflate(layoutInflater)
-    // This contains the MapView in XML and needs to be called after the access token is configured.
-    setContentView(binding.root)
-    val mapboxMap = binding.mapView.getMapboxMap()
+    val mapView = MapView(this)
+    setContentView(mapView)
+    val mapboxMap = mapView.getMapboxMap()
 
     mapboxMap.loadStyleUri(
       Style.LIGHT

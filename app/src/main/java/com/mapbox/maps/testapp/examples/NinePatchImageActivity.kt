@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.image.image9Patch
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
@@ -15,7 +16,6 @@ import com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.R
-import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
 
 /**
  * Example showcasing of adding 9-patch image to style
@@ -25,13 +25,13 @@ class NinePatchImageActivity : AppCompatActivity() {
 
   private var appendTextCounter = 1
   private lateinit var style: Style
-  private lateinit var binding: ActivitySimpleMapBinding
+  private lateinit var mapView: MapView
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    binding = ActivitySimpleMapBinding.inflate(layoutInflater)
-    setContentView(binding.root)
-    binding.mapView.getMapboxMap().loadStyle(
+    mapView = MapView(this)
+    setContentView(mapView)
+    mapView.getMapboxMap().loadStyle(
       styleExtension = style(Style.MAPBOX_STREETS) {
         +image9Patch(
           NINE_PATCH_ID,
@@ -52,7 +52,7 @@ class NinePatchImageActivity : AppCompatActivity() {
       style = it
       updateIconText()
     }
-    binding.mapView.getMapboxMap().setCamera(
+    mapView.getMapboxMap().setCamera(
       CameraOptions.Builder()
         .center(CENTER)
         .zoom(ZOOM)
@@ -62,7 +62,7 @@ class NinePatchImageActivity : AppCompatActivity() {
 
   // start appending text in a loop, stretching icon in both X and Y
   private fun updateIconText() {
-    binding.mapView.postDelayed(
+    mapView.postDelayed(
       {
         val layer = (style.getLayer(LAYER_ID) as SymbolLayer)
         layer.textField("${layer.textField?.getTextAsString()} $TEXT_BASE")

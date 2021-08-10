@@ -3,8 +3,8 @@ package com.mapbox.maps.testapp.examples
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.common.ValueConverter
+import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
-import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
 
 /**
  * Example showcasing raw source/layer json conversion support through the ValueConverter API.
@@ -43,9 +43,9 @@ class RawSourceLayerActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val binding = ActivitySimpleMapBinding.inflate(layoutInflater)
-    setContentView(binding.root)
-    binding.mapView.getMapboxMap().loadStyleUri(
+    val mapView = MapView(this)
+    setContentView(mapView)
+    mapView.getMapboxMap().loadStyleUri(
       Style.MAPBOX_STREETS
     ) { addGeoJsonSource(it) }
   }

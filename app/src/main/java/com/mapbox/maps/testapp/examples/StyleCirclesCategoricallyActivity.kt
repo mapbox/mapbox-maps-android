@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
@@ -12,7 +13,6 @@ import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.sources.generated.vectorSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.R
-import com.mapbox.maps.testapp.databinding.ActivitySimpleMapBinding
 
 /**
  * Use data-driven styling to set circles' colors based on imported vector data.
@@ -23,10 +23,9 @@ class StyleCirclesCategoricallyActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val binding = ActivitySimpleMapBinding.inflate(layoutInflater)
-    // This contains the MapView in XML and needs to be called after the access token is configured.
-    setContentView(binding.root)
-    mapboxMap = binding.mapView.getMapboxMap()
+    val mapView = MapView(this)
+    setContentView(mapView)
+    mapboxMap = mapView.getMapboxMap()
     mapboxMap.loadStyle(
       style(Style.LIGHT) {
 
