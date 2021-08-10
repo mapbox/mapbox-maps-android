@@ -9,8 +9,7 @@ import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.localization.localizeLabels
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_map_localization.*
-import kotlinx.android.synthetic.main.activity_map_overlay.mapView
+import com.mapbox.maps.testapp.databinding.ActivityMapLocalizationBinding
 import java.util.*
 
 /**
@@ -36,25 +35,27 @@ class LocalizationActivity : AppCompatActivity() {
   private lateinit var locale: Locale
   private lateinit var selectedLocale: Locale
   private var layerIdList = mutableSetOf<String>()
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_map_localization)
+    val binding = ActivityMapLocalizationBinding.inflate(layoutInflater)
+    setContentView(binding.root)
     locale = resources.configuration.locale
     selectedLocale = locale
     applySelectedLanguage = false
     Toast.makeText(this, R.string.change_language_instruction, Toast.LENGTH_LONG).show()
-    mapboxMap = mapView.getMapboxMap()
+    mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.loadStyleUri(nextStyle) {
       it.localizeLabels(locale)
     }
-    fabStyles.setOnClickListener {
+    binding.fabStyles.setOnClickListener {
       val styleUri = nextStyle
       mapboxMap.loadStyleUri(styleUri) {
         it.localizeLabels(selectedLocale)
       }
       Toast.makeText(this, styleUri, Toast.LENGTH_SHORT).show()
     }
-    fabLocalize.setOnClickListener {
+    binding.fabLocalize.setOnClickListener {
       applySelectedLanguage = if (!applySelectedLanguage) {
         mapboxMap.getStyle()?.localizeLabels(selectedLocale)
         Toast.makeText(this, R.string.map_not_localized, Toast.LENGTH_SHORT).show()
@@ -112,26 +113,6 @@ class LocalizationActivity : AppCompatActivity() {
     }
     mapboxMap.getStyle()?.localizeLabels(selectedLocale, layerIdList.toList())
     return true
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

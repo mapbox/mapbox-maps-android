@@ -12,8 +12,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.SkyType
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.compass.compass
 import com.mapbox.maps.plugin.scalebar.scalebar
-import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_sky_snapshotter.*
+import com.mapbox.maps.testapp.databinding.ActivitySkySnapshotterBinding
 
 /**
  * Prototype for Junction view showing upcoming maneuver.
@@ -21,13 +20,15 @@ import kotlinx.android.synthetic.main.activity_sky_snapshotter.*
 class SkyLayerSnapshotterActivity : AppCompatActivity() {
 
   private var snapshotter: Snapshotter? = null
+  private lateinit var binding: ActivitySkySnapshotterBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_sky_snapshotter)
-    mapView.scalebar.enabled = false
-    mapView.compass.enabled = false
-    mapView.getMapboxMap().setCamera(
+    binding = ActivitySkySnapshotterBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    binding.mapView.scalebar.enabled = false
+    binding.mapView.compass.enabled = false
+    binding.mapView.getMapboxMap().setCamera(
       CameraOptions.Builder()
         .center(Point.fromLngLat(24.827187523937795, 60.55932732152849))
         .zoom(16.0)
@@ -35,7 +36,7 @@ class SkyLayerSnapshotterActivity : AppCompatActivity() {
         .bearing(330.1)
         .build()
     )
-    mapView.getMapboxMap().loadStyle(
+    binding.mapView.getMapboxMap().loadStyle(
       styleExtension = style(Style.OUTDOORS) {
         +skyLayer("sky") {
           skyType(SkyType.GRADIENT)
@@ -84,31 +85,15 @@ class SkyLayerSnapshotterActivity : AppCompatActivity() {
       setStyleUri(Style.MAPBOX_STREETS)
       start {
         it?.let { snapshot ->
-          maneuverView.setImageBitmap(snapshot.bitmap())
-          maneuverCaption.visibility = View.VISIBLE
+          binding.maneuverView.setImageBitmap(snapshot.bitmap())
+          binding.maneuverCaption.visibility = View.VISIBLE
         }
       }
     }
   }
 
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
   override fun onDestroy() {
     super.onDestroy()
     snapshotter?.cancel()
-    mapView.onDestroy()
   }
 }

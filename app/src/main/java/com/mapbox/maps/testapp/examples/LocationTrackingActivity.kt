@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.plugin.LocationPuck2D
@@ -17,7 +18,6 @@ import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
 import com.mapbox.maps.toJson
-import kotlinx.android.synthetic.main.activity_simple_map.*
 
 /**
  * Tracks the user location on screen, simulates a navigation session.
@@ -46,10 +46,12 @@ class LocationTrackingActivity : AppCompatActivity() {
 
     override fun onMoveEnd(detector: MoveGestureDetector) {}
   }
+  private lateinit var mapView: MapView
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_simple_map)
+    mapView = MapView(this)
+    setContentView(mapView)
     locationPermissionHelper = LocationPermissionHelper(this)
     locationPermissionHelper.checkPermissions {
       onMapReady()
@@ -114,24 +116,8 @@ class LocationTrackingActivity : AppCompatActivity() {
     mapView.gestures.removeOnMoveListener(onMoveListener)
   }
 
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
   override fun onDestroy() {
     super.onDestroy()
-    mapView.onDestroy()
     mapView.location
       .removeOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener)
     mapView.location

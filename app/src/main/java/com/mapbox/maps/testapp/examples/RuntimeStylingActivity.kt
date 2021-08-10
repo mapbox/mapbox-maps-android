@@ -22,7 +22,6 @@ import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.*
 import com.mapbox.maps.extension.style.sources.getSource
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_simple_map.*
 import java.nio.ByteBuffer
 
 /**
@@ -34,7 +33,8 @@ class RuntimeStylingActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_simple_map)
+    val mapView = MapView(this)
+    setContentView(mapView)
 
     mapboxMap = mapView.getMapboxMap()
     mapboxMap.loadStyleUri(
@@ -373,26 +373,6 @@ class RuntimeStylingActivity : AppCompatActivity() {
     style.setStyleLayerProperty("layer", "icon-opacity", Value(1.0))
     style.setStyleLayerProperty("layer", "icon-size", Value(5.0))
     style.setStyleLayerProperty("layer", "icon-color", Value("white"))
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

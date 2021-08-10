@@ -13,7 +13,7 @@ import com.mapbox.maps.plugin.*
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_ATTRIBUTION_PLUGIN_ID
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_LOGO_PLUGIN_ID
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_map_view_customization.*
+import com.mapbox.maps.testapp.databinding.ActivityMapViewCustomizationBinding
 
 /**
  * Example of customizing your [MapView].
@@ -34,9 +34,12 @@ class MapViewCustomizationActivity : AppCompatActivity() {
       )
     }
   }
+  private lateinit var binding: ActivityMapViewCustomizationBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+
+    binding = ActivityMapViewCustomizationBinding.inflate(layoutInflater)
 
     // Set the application-scoped ResourceOptionsManager with customised token, tile store and tile store usage mode
     // so that all MapViews created with default config will apply these settings.
@@ -45,10 +48,10 @@ class MapViewCustomizationActivity : AppCompatActivity() {
       tileStoreUsageMode(TileStoreUsageMode.READ_ONLY)
     }
 
-    setContentView(R.layout.activity_map_view_customization)
+    setContentView(binding.root)
 
     // all options provided in xml file - so we just load style
-    mapView.getMapboxMap().loadStyleUri(Style.DARK)
+    binding.mapView.getMapboxMap().loadStyleUri(Style.DARK)
     configureMapViewFromCode()
   }
 
@@ -94,32 +97,28 @@ class MapViewCustomizationActivity : AppCompatActivity() {
       0,
       1.0f
     )
-    root.addView(customMapView, params)
+    binding.rootLayout.addView(customMapView, params)
     // load style to map view
     customMapView.getMapboxMap().loadStyleUri(Style.SATELLITE)
   }
 
   override fun onStart() {
     super.onStart()
-    mapView.onStart()
     customMapView.onStart()
   }
 
   override fun onStop() {
     super.onStop()
-    mapView.onStop()
     customMapView.onStop()
   }
 
   override fun onLowMemory() {
     super.onLowMemory()
-    mapView.onLowMemory()
     customMapView.onLowMemory()
   }
 
   override fun onDestroy() {
     super.onDestroy()
-    mapView.onDestroy()
     customMapView.onDestroy()
     // Restore the default application-scoped resource settings, otherwise it will affect other activities
     ResourceOptionsManager.destroyDefault()

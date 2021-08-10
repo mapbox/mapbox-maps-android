@@ -11,11 +11,8 @@ import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
-import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
-import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
-import kotlinx.android.synthetic.main.activity_add_marker_symbol.mapView
-import kotlinx.android.synthetic.main.activity_annotation.*
 import java.util.*
 
 /**
@@ -33,11 +30,12 @@ class PolylineAnnotationActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_annotation)
-    mapView.getMapboxMap().loadStyleUri(nextStyle) {
-      annotationPlugin = mapView.annotations
+    val binding = ActivityAnnotationBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    binding.mapView.getMapboxMap().loadStyleUri(nextStyle) {
+      annotationPlugin = binding.mapView.annotations
       polylineAnnotationManager = annotationPlugin.createPolylineAnnotationManager(
-        mapView,
+        binding.mapView,
         AnnotationConfig(PITCH_OUTLINE, LAYER_ID, SOURCE_ID)
       ).apply {
         it.getLayer(LAYER_ID)?.let { layer ->
@@ -104,13 +102,13 @@ class PolylineAnnotationActivity : AppCompatActivity() {
       }
     }
 
-    deleteAll.setOnClickListener {
+    binding.deleteAll.setOnClickListener {
       polylineAnnotationManager?.let {
         annotationPlugin.removeAnnotationManager(it)
       }
     }
-    changeStyle.setOnClickListener {
-      mapView.getMapboxMap().loadStyleUri(nextStyle)
+    binding.changeStyle.setOnClickListener {
+      binding.mapView.getMapboxMap().loadStyleUri(nextStyle)
     }
   }
 

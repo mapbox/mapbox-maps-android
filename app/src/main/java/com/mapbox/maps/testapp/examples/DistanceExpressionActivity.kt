@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.lt
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
@@ -12,10 +13,8 @@ import com.mapbox.maps.extension.style.layers.getLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.Visibility
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.testapp.R
 import com.mapbox.turf.TurfConstants
 import com.mapbox.turf.TurfTransformation
-import kotlinx.android.synthetic.main.activity_within_expression.*
 
 /**
  * An Activity that showcases the within expression to filter features outside a geometry
@@ -24,7 +23,8 @@ class DistanceExpressionActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_within_expression)
+    val mapView = MapView(this)
+    setContentView(mapView)
 
     val center = Point.fromLngLat(LON, LAT)
     val circle = TurfTransformation.circle(center, RADIUS, TurfConstants.UNIT_METERS)
@@ -61,26 +61,6 @@ class DistanceExpressionActivity : AppCompatActivity() {
       (it.getLayer(TRANSIT_LABEL) as SymbolLayer).visibility(Visibility.NONE)
       (it.getLayer(ROAD_NUMBER_SHIELD) as SymbolLayer).visibility(Visibility.NONE)
     }
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

@@ -11,16 +11,17 @@ import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.extension.style.sources.updateImage
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.databinding.ActivityImageSourceBinding
 import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
-import kotlinx.android.synthetic.main.activity_animated_imagesource.*
 import java.nio.ByteBuffer
 
 class ImageSourceActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_image_source)
-    val map = mapView.getMapboxMap()
+    val binding = ActivityImageSourceBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    val map = binding.mapView.getMapboxMap()
 
     map.loadStyle(
       style(styleUri = Style.DARK) {
@@ -44,26 +45,6 @@ class ImageSourceActivity : AppCompatActivity() {
         imageSource.updateImage(Image(bitmap.width, bitmap.height, byteBuffer.array()))
       }
     }
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

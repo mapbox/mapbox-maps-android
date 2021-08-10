@@ -10,11 +10,8 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
-import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
-import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
-import kotlinx.android.synthetic.main.activity_add_marker_symbol.mapView
-import kotlinx.android.synthetic.main.activity_annotation.*
 import java.util.*
 
 /**
@@ -32,10 +29,11 @@ class PolygoneAnnotationActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_annotation)
-    mapView.getMapboxMap().loadStyleUri(nextStyle) {
-      annotationPlugin = mapView.annotations
-      polygonAnnotationManager = annotationPlugin.createPolygonAnnotationManager(mapView).apply {
+    val binding = ActivityAnnotationBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    binding.mapView.getMapboxMap().loadStyleUri(nextStyle) {
+      annotationPlugin = binding.mapView.annotations
+      polygonAnnotationManager = annotationPlugin.createPolygonAnnotationManager(binding.mapView).apply {
         addClickListener(
           OnPolygonAnnotationClickListener {
             Toast.makeText(this@PolygoneAnnotationActivity, "click ${it.id}", Toast.LENGTH_SHORT)
@@ -98,11 +96,11 @@ class PolygoneAnnotationActivity : AppCompatActivity() {
       }
     }
 
-    deleteAll.setOnClickListener {
+    binding.deleteAll.setOnClickListener {
       polygonAnnotationManager?.let {
         annotationPlugin.removeAnnotationManager(it)
       }
     }
-    changeStyle.setOnClickListener { mapView.getMapboxMap().loadStyleUri(nextStyle) }
+    binding.changeStyle.setOnClickListener { binding.mapView.getMapboxMap().loadStyleUri(nextStyle) }
   }
 }

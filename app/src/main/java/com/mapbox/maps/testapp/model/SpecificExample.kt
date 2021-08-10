@@ -1,35 +1,57 @@
 package com.mapbox.maps.testapp.model
 
+import android.os.Parcel
 import android.os.Parcelable
-import kotlinx.android.parcel.IgnoredOnParcel
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
 data class SpecificExample(
-  var name: String,
-  private var label: String? = null,
-  private var description: String? = null,
-  var category: String
+  val name: String,
+  private val label: String? = null,
+  private val description: String? = null,
+  val category: String
 ) : Parcelable {
 
-  @IgnoredOnParcel
-  private var simpleName: String = ""
+  val simpleName: String
+    get() = buildSimpleName()
 
-  init {
+  constructor(parcel: Parcel) : this(
+    parcel.readString()!!,
+    parcel.readString(),
+    parcel.readString(),
+    parcel.readString()!!
+  )
+
+  private fun buildSimpleName(): String {
     val split =
       name.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-    simpleName = split[split.size - 1]
-  }
-
-  fun getSimpleName(): String {
-    return simpleName
+    return split[split.size - 1]
   }
 
   fun getLabel(): String {
-    return if (label != null) label!! else simpleName
+    return label ?: simpleName
   }
 
   fun getDescription(): String {
-    return if (description != null) description!! else "-"
+    return description ?: "-"
+  }
+
+  override fun writeToParcel(parcel: Parcel, flags: Int) {
+    parcel.writeString(name)
+    parcel.writeString(getLabel())
+    parcel.writeString(getDescription())
+    parcel.writeString(category)
+  }
+
+  override fun describeContents(): Int {
+    return 0
+  }
+
+  companion object CREATOR : Parcelable.Creator<SpecificExample> {
+    override fun createFromParcel(parcel: Parcel): SpecificExample {
+      return SpecificExample(parcel)
+    }
+
+    override fun newArray(size: Int): Array<SpecificExample?> {
+      return arrayOfNulls(size)
+    }
   }
 }

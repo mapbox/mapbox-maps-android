@@ -9,8 +9,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.LineCap
 import com.mapbox.maps.extension.style.layers.properties.generated.LineJoin
 import com.mapbox.maps.extension.style.sources.generated.vectorSource
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_style_vector_source.*
+import com.mapbox.maps.testapp.databinding.ActivityStyleVectorSourceBinding
 
 /**
  * Add a vector source to a map using an URL and visualize it with a line layer.
@@ -19,8 +18,9 @@ class VectorTileSourceActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_style_vector_source)
-    mapView.getMapboxMap().loadStyle(
+    val binding = ActivityStyleVectorSourceBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    binding.mapView.getMapboxMap().loadStyle(
       style(Style.LIGHT) {
         +vectorSource("terrain-data") {
           url("mapbox://mapbox.mapbox-terrain-v2")
@@ -37,25 +37,5 @@ class VectorTileSourceActivity : AppCompatActivity() {
         )
       }
     )
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 }

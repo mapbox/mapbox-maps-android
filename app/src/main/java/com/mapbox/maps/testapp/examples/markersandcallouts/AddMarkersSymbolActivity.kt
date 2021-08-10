@@ -14,7 +14,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
+import com.mapbox.maps.testapp.databinding.ActivityAddMarkerSymbolBinding
 
 /**
  * Example showing how to add 2 different markers based on their type
@@ -23,9 +23,10 @@ class AddMarkersSymbolActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_add_marker_symbol)
+    val binding = ActivityAddMarkerSymbolBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
-    mapView.getMapboxMap().loadStyle(
+    binding.mapView.getMapboxMap().loadStyle(
       styleExtension = style(Style.MAPBOX_STREETS) {
         // prepare red marker from resources
         +image(RED_ICON_ID) {
@@ -104,26 +105,6 @@ class AddMarkersSymbolActivity : AppCompatActivity() {
         }
       }
     )
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

@@ -15,9 +15,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.mapbox.maps.testapp.adapter.ExampleAdapter
 import com.mapbox.maps.testapp.adapter.ExampleSectionAdapter
+import com.mapbox.maps.testapp.databinding.ActivityExampleOverviewBinding
 import com.mapbox.maps.testapp.model.SpecificExample
 import com.mapbox.maps.testapp.utils.ItemClickSupport
-import kotlinx.android.synthetic.main.activity_example_overview.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -42,12 +42,14 @@ class ExampleOverviewActivity : AppCompatActivity(), CoroutineScope {
 
   override val coroutineContext = job + Dispatchers.IO
 
+  private lateinit var binding: ActivityExampleOverviewBinding
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    binding = ActivityExampleOverviewBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
-    setContentView(R.layout.activity_example_overview)
-
-    recyclerView.apply {
+    binding.recyclerView.apply {
       layoutManager = LinearLayoutManager(this@ExampleOverviewActivity)
       addOnItemTouchListener(RecyclerView.SimpleOnItemTouchListener())
       setHasFixedSize(true)
@@ -72,7 +74,7 @@ class ExampleOverviewActivity : AppCompatActivity(), CoroutineScope {
       displayExampleList(savedInstanceState.getParcelableArrayList(KEY_STATE_EXAMPLES)!!)
     }
 
-    example_search_edittext.addTextChangedListener(object : TextWatcher {
+    binding.exampleSearchEdittext.addTextChangedListener(object : TextWatcher {
 
       override fun afterTextChanged(s: Editable) {
         // Empty because this callback isn't useful for the app
@@ -95,16 +97,16 @@ class ExampleOverviewActivity : AppCompatActivity(), CoroutineScope {
       ) {
         if (currentTextInEditText.isEmpty()) {
           displayExampleList(allExampleList)
-          clear_search_imageview.visibility = View.INVISIBLE
+          binding.clearSearchImageview.visibility = View.INVISIBLE
         } else {
-          if (clear_search_imageview.visibility == View.INVISIBLE) {
-            clear_search_imageview.visibility = View.VISIBLE
+          if (binding.clearSearchImageview.visibility == View.INVISIBLE) {
+            binding.clearSearchImageview.visibility = View.VISIBLE
           }
           val lowercaseSearchText =
             currentTextInEditText.toString().toLowerCase(Locale.getDefault())
           val filteredList = allExampleList.filter {
             // Set search criteria
-            it.getSimpleName().toLowerCase(Locale.getDefault()).contains(lowercaseSearchText) ||
+            it.simpleName.toLowerCase(Locale.getDefault()).contains(lowercaseSearchText) ||
               it.category.toLowerCase(Locale.getDefault()).contains(lowercaseSearchText) ||
               it.getDescription().toLowerCase(Locale.getDefault()).contains(lowercaseSearchText) ||
               it.getLabel().toLowerCase(Locale.getDefault()).contains(lowercaseSearchText)
@@ -113,7 +115,7 @@ class ExampleOverviewActivity : AppCompatActivity(), CoroutineScope {
             displayExampleList(filteredList)
           } else {
             Snackbar.make(
-              root_layout,
+              binding.rootLayout,
               getString(R.string.no_results_for_search_query),
               Snackbar.LENGTH_SHORT
             ).show()
@@ -122,9 +124,9 @@ class ExampleOverviewActivity : AppCompatActivity(), CoroutineScope {
       }
     })
 
-    clear_search_imageview.setOnClickListener {
-      example_search_edittext.text.clear()
-      clear_search_imageview.visibility = View.INVISIBLE
+    binding.clearSearchImageview.setOnClickListener {
+      binding.exampleSearchEdittext.text.clear()
+      binding.clearSearchImageview.visibility = View.INVISIBLE
       currentlyDisplayedExampleList = allExampleList
     }
   }
@@ -149,7 +151,7 @@ class ExampleOverviewActivity : AppCompatActivity(), CoroutineScope {
     )
     runOnUiThread {
       sectionAdapter.setSections(sections.toTypedArray())
-      recyclerView.adapter = sectionAdapter
+      binding.recyclerView.adapter = sectionAdapter
     }
     currentlyDisplayedExampleList = specificExamplesList
   }

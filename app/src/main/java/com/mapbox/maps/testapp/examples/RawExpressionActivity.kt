@@ -3,10 +3,9 @@ package com.mapbox.maps.testapp.examples
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.common.ValueConverter
+import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
-import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_simple_map.*
 import java.lang.RuntimeException
 
 /**
@@ -38,7 +37,8 @@ class RawExpressionActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_simple_map)
+    val mapView = MapView(this)
+    setContentView(mapView)
     mapboxMap = mapView.getMapboxMap()
     mapboxMap.loadStyleUri(
       Style.MAPBOX_STREETS
@@ -64,25 +64,5 @@ class RawExpressionActivity : AppCompatActivity() {
     } else {
       throw RuntimeException("Invalid expression")
     }
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 }

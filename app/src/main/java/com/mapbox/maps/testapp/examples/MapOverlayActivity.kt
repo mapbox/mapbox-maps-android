@@ -23,7 +23,7 @@ import com.mapbox.maps.plugin.overlay.MapOverlayCoordinatesProvider
 import com.mapbox.maps.plugin.overlay.MapOverlayPlugin
 import com.mapbox.maps.plugin.overlay.mapboxOverlay
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_map_overlay.*
+import com.mapbox.maps.testapp.databinding.ActivityMapOverlayBinding
 
 @MapboxExperimental
 class MapOverlayActivity : AppCompatActivity(), OnMapClickListener {
@@ -36,12 +36,14 @@ class MapOverlayActivity : AppCompatActivity(), OnMapClickListener {
   private lateinit var mapOverlayPlugin: MapOverlayPlugin
   private lateinit var mapboxMap: MapboxMap
   private val provider = MapOverlayCoordinatesProvider { markerCoordinates }
+  private lateinit var binding: ActivityMapOverlayBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_map_overlay)
+    binding = ActivityMapOverlayBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
-    mapboxMap = mapView.getMapboxMap()
+    mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.loadStyle(
       styleExtension = style(Style.LIGHT) {
         +geoJsonSource(sourceId) {
@@ -64,19 +66,19 @@ class MapOverlayActivity : AppCompatActivity(), OnMapClickListener {
         }
       }
     ) { mapboxMap.addOnMapClickListener(this@MapOverlayActivity) }
-    mapOverlayPlugin = mapView.mapboxOverlay
+    mapOverlayPlugin = binding.mapView.mapboxOverlay
       .apply {
         registerMapOverlayCoordinatesProvider(provider)
-        registerOverlay(location_top_left)
-        registerOverlay(location_top_right)
-        registerOverlay(location_bottom_left)
-        registerOverlay(location_bottom_right)
-        registerOverlay(reframe_button)
+        registerOverlay(binding.locationTopLeft)
+        registerOverlay(binding.locationTopRight)
+        registerOverlay(binding.locationBottomLeft)
+        registerOverlay(binding.locationBottomRight)
+        registerOverlay(binding.reframeButton)
         setDisplayingAreaMargins(100, 50, 50, 50)
       }
 
-    val cameraAnimationsPlugin = mapView.camera
-    reframe_button.setOnClickListener {
+    val cameraAnimationsPlugin = binding.mapView.camera
+    binding.reframeButton.setOnClickListener {
       mapOverlayPlugin.reframe { it?.let { cameraAnimationsPlugin.flyTo(it, mapAnimationOptions { duration(1000L) }) } }
     }
   }
@@ -91,26 +93,6 @@ class MapOverlayActivity : AppCompatActivity(), OnMapClickListener {
       )
     )
     return true
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

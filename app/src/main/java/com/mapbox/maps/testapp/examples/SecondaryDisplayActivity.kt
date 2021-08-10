@@ -13,18 +13,20 @@ import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_multi_display.*
-import kotlinx.android.synthetic.main.activity_simple_map.mapView
+import com.mapbox.maps.testapp.databinding.ActivitySecondaryDisplayBinding
 
 /**
  * Example of displaying a map on a secondary display.
  */
 class SecondaryDisplayActivity : AppCompatActivity() {
 
+  private lateinit var binding: ActivitySecondaryDisplayBinding
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_secondary_display)
-    mapView.getMapboxMap().loadStyle(
+    binding = ActivitySecondaryDisplayBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    binding.mapView.getMapboxMap().loadStyle(
       style(Style.MAPBOX_STREETS) {
         +image(IMAGE_ID) {
           bitmap(BitmapFactory.decodeResource(resources, R.drawable.red_marker))
@@ -41,7 +43,7 @@ class SecondaryDisplayActivity : AppCompatActivity() {
         }
       }
     )
-    moveCameraButton.setOnClickListener {
+    binding.moveCameraButton.setOnClickListener {
       moveCamera()
     }
   }
@@ -52,32 +54,12 @@ class SecondaryDisplayActivity : AppCompatActivity() {
       .zoom(ZOOM)
       .build()
 
-    mapView.getMapboxMap().flyTo(
+    binding.mapView.getMapboxMap().flyTo(
       cameraOption,
       MapAnimationOptions.mapAnimationOptions {
         duration(DURATION)
       }
     )
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

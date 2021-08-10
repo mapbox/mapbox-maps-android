@@ -13,11 +13,9 @@ import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadedListener
 import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
 import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
 import com.mapbox.turf.TurfMeasurement
-import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
-import kotlinx.android.synthetic.main.activity_add_marker_symbol.mapView
-import kotlinx.android.synthetic.main.activity_annotation.*
 import java.util.*
 
 /**
@@ -31,10 +29,13 @@ class AnimatePointAnnotationActivity : AppCompatActivity(), OnMapLoadedListener 
   private var animateCarNum: Int = 10
   private var animateDuration = 5000L
   private lateinit var mapboxMap: MapboxMap
+  private lateinit var binding: ActivityAnnotationBinding
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_annotation)
-    mapboxMap = mapView.getMapboxMap()
+    binding = ActivityAnnotationBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.setCamera(
       CameraOptions.Builder()
         .center(
@@ -49,12 +50,12 @@ class AnimatePointAnnotationActivity : AppCompatActivity(), OnMapLoadedListener 
 
     mapboxMap.addOnMapLoadedListener(this@AnimatePointAnnotationActivity)
     mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
-    deleteAll.visibility = View.GONE
-    changeStyle.visibility = View.GONE
+    binding.deleteAll.visibility = View.GONE
+    binding.changeStyle.visibility = View.GONE
   }
 
   override fun onMapLoaded() {
-    pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView).apply {
+    pointAnnotationManager = binding.mapView.annotations.createPointAnnotationManager(binding.mapView).apply {
       bitmapFromDrawableRes(
         this@AnimatePointAnnotationActivity,
         R.drawable.ic_car_top
@@ -85,6 +86,11 @@ class AnimatePointAnnotationActivity : AppCompatActivity(), OnMapLoadedListener 
       }
     }
     animateCars()
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    cleanAnimation()
   }
 
   private fun animateCars() {
@@ -138,11 +144,6 @@ class AnimatePointAnnotationActivity : AppCompatActivity(), OnMapLoadedListener 
       it.cancel()
     }
     animators.clear()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
   }
 
   private class CarEvaluator : TypeEvaluator<Point> {

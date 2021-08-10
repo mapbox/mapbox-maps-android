@@ -18,7 +18,7 @@ import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.gestures.removeOnMapClickListener
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_animated_marker.*
+import com.mapbox.maps.testapp.databinding.ActivityAnimatedMarkerBinding
 
 /**
  * Example of animating a map marker on click.
@@ -28,16 +28,18 @@ class AnimatedMarkerActivity : AppCompatActivity(), OnMapClickListener {
   private lateinit var geojsonSource: GeoJsonSource
   private var currentPoint = Point.fromLngLat(-18.167040, 64.900932)
   private var animator: ValueAnimator? = null
+  private lateinit var binding: ActivityAnimatedMarkerBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_animated_marker)
+    binding = ActivityAnimatedMarkerBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
     geojsonSource = geoJsonSource("source-id") {
       feature(Feature.fromGeometry(currentPoint))
     }
 
-    val mapboxMap = mapView.getMapboxMap()
+    val mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.loadStyle(
       style(Style.SATELLITE_STREETS) {
         +image("marker_icon") {
@@ -88,25 +90,9 @@ class AnimatedMarkerActivity : AppCompatActivity(), OnMapClickListener {
     return true
   }
 
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
   override fun onDestroy() {
     super.onDestroy()
     animator?.cancel()
-    mapView.getMapboxMap().removeOnMapClickListener(this)
-    mapView.onDestroy()
+    binding.mapView.getMapboxMap().removeOnMapClickListener(this)
   }
 }

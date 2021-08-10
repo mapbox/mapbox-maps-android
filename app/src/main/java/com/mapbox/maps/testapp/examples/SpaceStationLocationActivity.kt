@@ -10,6 +10,7 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.layers.addLayer
@@ -22,7 +23,6 @@ import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimati
 import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.model.IssModel
-import kotlinx.android.synthetic.main.activity_lab_space_station_location.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,9 +42,8 @@ class SpaceStationLocationActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-
-    // This contains the MapView in XML and needs to be called after the access token is configured.
-    setContentView(R.layout.activity_lab_space_station_location)
+    val mapView = MapView(this)
+    setContentView(mapView)
     mapboxMap = mapView.getMapboxMap()
     mapboxMap.loadStyleUri(
       Style.SATELLITE_STREETS
@@ -173,7 +172,6 @@ class SpaceStationLocationActivity : AppCompatActivity() {
 
   override fun onStart() {
     super.onStart()
-    mapView.onStart()
     // When the user returns to the activity we want to resume the API calling.
     handler.post(runnable)
   }
@@ -183,17 +181,6 @@ class SpaceStationLocationActivity : AppCompatActivity() {
     // When the user leaves the activity, there is no need in calling the API since the map
     // isn't in view.
     handler.removeCallbacks(runnable)
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

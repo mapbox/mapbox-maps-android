@@ -2,7 +2,6 @@ package com.mapbox.maps.testapp.examples.linesandpolygons
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
@@ -16,7 +15,7 @@ import com.mapbox.maps.extension.style.layers.getLayer
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_dds_draw_polygon.*
+import com.mapbox.maps.testapp.databinding.ActivityDdsDrawPolygonBinding
 
 /**
  * Draw a vector polygon on a map with the Mapbox Android SDK.
@@ -25,11 +24,12 @@ class DrawPolygonActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_dds_draw_polygon)
-    mapView.getMapboxMap().setCamera(
+    val binding = ActivityDdsDrawPolygonBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    binding.mapView.getMapboxMap().setCamera(
       START_CAMERA_POSITION
     )
-    mapView.getMapboxMap().loadStyle(
+    binding.mapView.getMapboxMap().loadStyle(
       style(styleUri = Style.LIGHT) {
         +geoJsonSource(SOURCE_ID) {
           url(SOURCE_URL)
@@ -48,8 +48,8 @@ class DrawPolygonActivity : AppCompatActivity() {
         }
       }
     )
-    findViewById<View>(R.id.pattern_fab).setOnClickListener {
-      mapView.getMapboxMap().getStyle { style ->
+    binding.patternFab.setOnClickListener {
+      binding.mapView.getMapboxMap().getStyle { style ->
         val bitmap = ContextCompat.getDrawable(this@DrawPolygonActivity, R.drawable.pattern)
           ?.toBitmap(128, 128)!!
         style.addImage(IMAGE_ID, bitmap)
@@ -58,26 +58,6 @@ class DrawPolygonActivity : AppCompatActivity() {
         layer.fillOpacity(0.7)
       }
     }
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

@@ -13,15 +13,15 @@ import com.mapbox.maps.extension.style.layers.properties.generated.LineCap
 import com.mapbox.maps.extension.style.layers.properties.generated.LineJoin
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_line_gradient.*
+import com.mapbox.maps.testapp.databinding.ActivityLineGradientBinding
 
 class LineGradientActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_line_gradient)
-    mapView.getMapboxMap().loadStyle(createStyle()) {
+    val binding = ActivityLineGradientBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    binding.mapView.getMapboxMap().loadStyle(createStyle()) {
       Logger.d(TAG, "Style loaded: ${it.styleURI}")
     }
   }
@@ -54,21 +54,6 @@ class LineGradientActivity : AppCompatActivity() {
         }
       )
     }
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

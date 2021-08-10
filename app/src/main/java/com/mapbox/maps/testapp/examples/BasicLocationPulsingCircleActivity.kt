@@ -9,8 +9,8 @@ import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.databinding.ActivityLocationLayerBasicPulsingCircleBinding
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
-import kotlinx.android.synthetic.main.activity_location_layer_basic_pulsing_circle.*
 
 /**
  * This activity shows a basic usage of the LocationComponent's pulsing circle. There's no
@@ -21,11 +21,13 @@ class BasicLocationPulsingCircleActivity : AppCompatActivity() {
   private lateinit var mapboxMap: MapboxMap
   private lateinit var locationPermissionHelper: LocationPermissionHelper
   private var lastStyleUri = Style.DARK
+  private lateinit var binding: ActivityLocationLayerBasicPulsingCircleBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_location_layer_basic_pulsing_circle)
-    mapboxMap = mapView.getMapboxMap()
+    binding = ActivityLocationLayerBasicPulsingCircleBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    mapboxMap = binding.mapView.getMapboxMap()
     locationPermissionHelper = LocationPermissionHelper(this)
     locationPermissionHelper.checkPermissions {
       onMapReady()
@@ -53,19 +55,19 @@ class BasicLocationPulsingCircleActivity : AppCompatActivity() {
         return true
       }
       R.id.action_component_disable -> {
-        mapView.location.enabled = false
+        binding.mapView.location.enabled = false
         return true
       }
       R.id.action_component_enabled -> {
-        mapView.location.enabled = true
+        binding.mapView.location.enabled = true
         return true
       }
       R.id.action_stop_pulsing -> {
-        mapView.location.pulsingEnabled = false
+        binding.mapView.location.pulsingEnabled = false
         return true
       }
       R.id.action_start_pulsing -> {
-        mapView.location.pulsingEnabled = true
+        binding.mapView.location.pulsingEnabled = true
         return true
       }
       else -> return super.onOptionsItemSelected(item)
@@ -86,25 +88,5 @@ class BasicLocationPulsingCircleActivity : AppCompatActivity() {
   ) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     locationPermissionHelper.onRequestPermissionsResult(requestCode, permissions, grantResults)
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 }

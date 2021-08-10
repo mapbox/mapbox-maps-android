@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.eq
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
@@ -13,8 +12,7 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression.Companio
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.FillExtrusionLayer
 import com.mapbox.maps.extension.style.light.generated.getLight
-import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_fill_extrusion.*
+import com.mapbox.maps.testapp.databinding.ActivityFillExtrusionBinding
 
 /**
  * Test activity showcasing fill extrusions
@@ -23,11 +21,13 @@ class FillExtrusionActivity : AppCompatActivity() {
 
   private var isRedColor: Boolean = false
   private var isInitPosition: Boolean = false
+  private lateinit var binding: ActivityFillExtrusionBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_fill_extrusion)
-    val mapboxMap = (mapView as MapView).getMapboxMap()
+    binding = ActivityFillExtrusionBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    val mapboxMap = binding.mapView.getMapboxMap()
 
     mapboxMap.setCamera(
       CameraOptions.Builder()
@@ -60,7 +60,7 @@ class FillExtrusionActivity : AppCompatActivity() {
 
   private fun setupLight(style: Style) {
     val light = style.getLight()
-    fabLightPosition.setOnClickListener {
+    binding.fabLightPosition.setOnClickListener {
       isInitPosition = !isInitPosition
       if (isInitPosition) {
         light.position(1.5, 90.0, 80.0)
@@ -69,7 +69,7 @@ class FillExtrusionActivity : AppCompatActivity() {
       }
     }
 
-    fabLightColor.setOnClickListener {
+    binding.fabLightColor.setOnClickListener {
       isRedColor = !isRedColor
       if (isRedColor) {
         light.color(Color.RED)
@@ -77,25 +77,5 @@ class FillExtrusionActivity : AppCompatActivity() {
         light.color(Color.BLUE)
       }
     }
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 }

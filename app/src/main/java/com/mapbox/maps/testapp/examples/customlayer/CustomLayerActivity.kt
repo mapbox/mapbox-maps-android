@@ -11,18 +11,20 @@ import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_custom_layer.*
+import com.mapbox.maps.testapp.databinding.ActivityCustomLayerBinding
 
 /**
  * Test activity showcasing the Custom Layer API
  */
 class CustomLayerActivity : AppCompatActivity() {
   private lateinit var mapboxMap: MapboxMap
+  private lateinit var binding: ActivityCustomLayerBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_custom_layer)
-    mapboxMap = mapView.getMapboxMap()
+    binding = ActivityCustomLayerBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.loadStyleUri(
       Style.MAPBOX_STREETS
     ) {
@@ -34,7 +36,7 @@ class CustomLayerActivity : AppCompatActivity() {
   }
 
   private fun initFab() {
-    fab.setOnClickListener {
+    binding.fab.setOnClickListener {
       swapCustomLayer()
     }
   }
@@ -43,7 +45,7 @@ class CustomLayerActivity : AppCompatActivity() {
     mapboxMap.getStyle()?.let { style ->
       if (style.styleLayerExists(CUSTOM_LAYER_ID)) {
         style.removeStyleLayer(CUSTOM_LAYER_ID)
-        fab.setImageResource(R.drawable.ic_layers)
+        binding.fab.setImageResource(R.drawable.ic_layers)
       } else {
         val expected = style.addStyleCustomLayer(
           layerId = CUSTOM_LAYER_ID,
@@ -53,33 +55,13 @@ class CustomLayerActivity : AppCompatActivity() {
         expected.error?.let {
           Logger.e(TAG, "Add custom layer exception $it")
         }
-        fab.setImageResource(R.drawable.ic_layers_clear)
+        binding.fab.setImageResource(R.drawable.ic_layers_clear)
       }
     }
   }
 
   private fun updateLayer() {
     mapboxMap.triggerRepaint()
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {

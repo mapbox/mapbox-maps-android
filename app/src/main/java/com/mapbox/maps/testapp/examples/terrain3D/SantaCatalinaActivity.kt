@@ -28,7 +28,6 @@ import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
 import com.mapbox.turf.TurfConstants
 import com.mapbox.turf.TurfMeasurement
-import kotlinx.android.synthetic.main.activity_simple_map.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,11 +38,13 @@ import retrofit2.Response
 class SantaCatalinaActivity : AppCompatActivity() {
 
   private lateinit var mapboxMap: MapboxMap
+  private var timeAnimator: TimeAnimator? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     requestWindowFeature(Window.FEATURE_NO_TITLE)
-    setContentView(R.layout.activity_simple_map)
+    val mapView = MapView(this)
+    setContentView(mapView)
     mapView.disablePlugins()
 
     // get map and setup initial camera
@@ -173,83 +174,69 @@ class SantaCatalinaActivity : AppCompatActivity() {
       val camera = mapboxMap.getFreeCameraOptions()
 
       // use time animator to animate the lineString and location layer
-      val timeAnimator = TimeAnimator()
-      timeAnimator.setTimeListener { animator, totalTime, _ ->
+      timeAnimator = TimeAnimator().apply {
+        setTimeListener { animator, totalTime, _ ->
 
-        // phase determines how far through the animation we are
-        val phase: Double = totalTime / ANIMATION_DURATION
+          // phase determines how far through the animation we are
+          val phase: Double = totalTime / ANIMATION_DURATION
 
-        // phase is normalized between 0 and 1
-        // when the animation is finished, cancel the animation
-        if (phase > 1) {
-          animator.cancel()
-        }
+          // phase is normalized between 0 and 1
+          // when the animation is finished, cancel the animation
+          if (phase > 1) {
+            animator.cancel()
+          }
 
-        // use phase to get a point that is the appropriate distance along the route
-        val cameraLookingAt = TurfMeasurement.along(
-          lineString, routeDistance * phase,
-          TurfConstants.UNIT_KILOMETERS
-        )
-
-        // at start, we hover the current position first before trailing it
-        var cameraPhase = phase - PHASE_DROP_OFF
-        if (cameraPhase < 0) {
-          cameraPhase = 0.0
-        }
-
-        // use phase that trails behind to be able to create a tilted camera
-        val cameraLocation = TurfMeasurement.along(
-          lineString, routeDistance * cameraPhase,
-          TurfConstants.UNIT_KILOMETERS
-        )
-
-        // calculate the elevation of the user location
-        val elevation = (ELEVATION_MAX * phase) + ELEVATION_MIN
-
-        // Update location indicator
-        locationLayer.location(
-          listOf(
-            cameraLookingAt.latitude(),
-            cameraLookingAt.longitude(),
-            elevation
+          // use phase to get a point that is the appropriate distance along the route
+          val cameraLookingAt = TurfMeasurement.along(
+            lineString, routeDistance * phase,
+            TurfConstants.UNIT_KILOMETERS
           )
-        )
 
-        // place the camera above the elevation of the user position
-        val elevationDifference = BASE_CAMERA_ELEVATION + elevation
+          // at start, we hover the current position first before trailing it
+          var cameraPhase = phase - PHASE_DROP_OFF
+          if (cameraPhase < 0) {
+            cameraPhase = 0.0
+          }
 
-        // set the position and altitude of the camera
-        camera.setLocation(cameraLocation, elevationDifference)
+          // use phase that trails behind to be able to create a tilted camera
+          val cameraLocation = TurfMeasurement.along(
+            lineString, routeDistance * cameraPhase,
+            TurfConstants.UNIT_KILOMETERS
+          )
 
-        // set the position to look with a decreased elevation for creating tilted camera
-        camera.lookAtPoint(cameraLookingAt, elevation)
+          // calculate the elevation of the user location
+          val elevation = (ELEVATION_MAX * phase) + ELEVATION_MIN
 
-        // set the updated camera position
-        mapboxMap.setCamera(camera)
+          // Update location indicator
+          locationLayer.location(
+            listOf(
+              cameraLookingAt.latitude(),
+              cameraLookingAt.longitude(),
+              elevation
+            )
+          )
+
+          // place the camera above the elevation of the user position
+          val elevationDifference = BASE_CAMERA_ELEVATION + elevation
+
+          // set the position and altitude of the camera
+          camera.setLocation(cameraLocation, elevationDifference)
+
+          // set the position to look with a decreased elevation for creating tilted camera
+          camera.lookAtPoint(cameraLookingAt, elevation)
+
+          // set the updated camera position
+          mapboxMap.setCamera(camera)
+        }
+        duration = ANIMATION_DURATION.toLong()
+        start()
       }
-      timeAnimator.duration = ANIMATION_DURATION.toLong()
-      timeAnimator.start()
     }
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
   }
 
   override fun onDestroy() {
     super.onDestroy()
-    mapView.onDestroy()
+    timeAnimator?.cancel()
   }
 
   companion object {

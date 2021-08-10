@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.image.image9Patch
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
@@ -15,7 +16,6 @@ import com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_add_marker_symbol.*
 
 /**
  * Example showcasing of adding 9-patch image to style
@@ -25,11 +25,12 @@ class NinePatchImageActivity : AppCompatActivity() {
 
   private var appendTextCounter = 1
   private lateinit var style: Style
+  private lateinit var mapView: MapView
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_simple_map)
-
+    mapView = MapView(this)
+    setContentView(mapView)
     mapView.getMapboxMap().loadStyle(
       styleExtension = style(Style.MAPBOX_STREETS) {
         +image9Patch(

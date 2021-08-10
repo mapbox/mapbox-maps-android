@@ -2,7 +2,6 @@ package com.mapbox.maps.testapp.examples
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.LineString
@@ -25,6 +24,7 @@ import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.logo.logo
 import com.mapbox.maps.plugin.scalebar.scalebar
 import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.databinding.ActivityInsetMapBinding
 import com.mapbox.maps.testapp.examples.fragment.MapFragment
 
 /**
@@ -33,15 +33,14 @@ import com.mapbox.maps.testapp.examples.fragment.MapFragment
  */
 class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
 
-  private lateinit var mainMapView: MapView
   private lateinit var mainMapboxMap: MapboxMap
   private lateinit var insetMapboxMap: MapboxMap
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_inset_map)
-    mainMapView = findViewById(R.id.mapView)
-    mainMapboxMap = mainMapView.getMapboxMap()
+    val binding = ActivityInsetMapBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    mainMapboxMap = binding.mapView.getMapboxMap()
     mainMapboxMap.loadStyleUri(
       styleUri = STYLE_URL
     ) { mainMapboxMap.addOnCameraChangeListener(this@InsetMapActivity) }
@@ -92,7 +91,7 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
       transaction.commit()
     }
 
-    findViewById<View>(R.id.show_bounds_toggle_fab).setOnClickListener {
+    binding.showBoundsToggleFab.setOnClickListener {
       // Toggle the visibility of the camera bounds LineLayer
       insetMapboxMap.getStyle { style ->
         style.getLayer(BOUNDS_LINE_LAYER_LAYER_ID)?.apply {
@@ -133,25 +132,9 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
     )
   }
 
-  override fun onStart() {
-    super.onStart()
-    mainMapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mainMapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mainMapView.onLowMemory()
-  }
-
   override fun onDestroy() {
     super.onDestroy()
     mainMapboxMap.removeOnCameraChangeListener(this)
-    mainMapView.onDestroy()
   }
 
   companion object {

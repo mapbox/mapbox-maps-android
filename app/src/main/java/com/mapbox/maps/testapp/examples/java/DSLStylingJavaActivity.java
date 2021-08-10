@@ -106,8 +106,8 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_simple_map);
-        mapView = findViewById(R.id.mapView);
+        mapView = new MapView(this);
+        setContentView(mapView);
         mapboxMap = mapView.getMapboxMap();
         mapboxMap.loadStyle(createStyle(), style -> {
             Bitmap bitmap = BitmapFactory.decodeResource(DSLStylingJavaActivity.this.getResources(), R.drawable.blue_round_nine);

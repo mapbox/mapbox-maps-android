@@ -1,7 +1,6 @@
 plugins {
   id("com.android.application")
   kotlin("android")
-  kotlin("android.extensions")
   id("com.mapbox.maps.token")
 }
 
@@ -36,6 +35,10 @@ android {
     jvmTarget = JavaVersion.VERSION_1_8.toString()
   }
 
+  buildFeatures {
+    viewBinding = true
+  }
+
   testOptions {
     animationsDisabled = true
     if (!project.hasProperty("android.injected.invoked.from.ide")) {
@@ -50,10 +53,6 @@ android {
   dexOptions {
     javaMaxHeapSize = "4g"
   }
-}
-
-androidExtensions {
-  isExperimental = true
 }
 
 dependencies {

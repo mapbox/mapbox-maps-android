@@ -13,8 +13,7 @@ import com.mapbox.maps.plugin.compass.compass
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
 import com.mapbox.maps.plugin.delegates.listeners.eventdata.MapLoadErrorType
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_debug.*
-import kotlinx.android.synthetic.main.activity_debug.mapView
+import com.mapbox.maps.testapp.databinding.ActivityDebugBinding
 
 /**
  * Example of enabling and visualizing some debug information for a map.
@@ -49,22 +48,25 @@ class DebugModeActivity : AppCompatActivity() {
     }
   }
 
+  private lateinit var binding: ActivityDebugBinding
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_debug)
+    binding = ActivityDebugBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
-    mapboxMap = mapView.getMapboxMap()
+    mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.subscribe(observable, listOf("resource-request"))
     // Using the extension method
     mapboxMap.subscribeResourceRequest(extensionObservable)
     mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
-    mapView.compass.opacity = 0.5f
+    binding.mapView.compass.opacity = 0.5f
     mapboxMap.setDebug(debugOptions, true)
     registerListeners(mapboxMap)
   }
 
   private fun registerListeners(mapboxMap: MapboxMap) {
-    mapboxMap.addOnStyleLoadedListener() {
+    mapboxMap.addOnStyleLoadedListener {
       Logger.i(TAG, "OnStyleLoadedListener")
     }
     mapboxMap.addOnStyleDataLoadedListener {
@@ -80,8 +82,8 @@ class DebugModeActivity : AppCompatActivity() {
       Logger.i(TAG, "OnMapIdleListener")
     }
     mapboxMap.addOnMapLoadErrorListener(object : OnMapLoadErrorListener {
-      override fun onMapLoadError(mapLoadErrorType: MapLoadErrorType, description: String) {
-        Logger.i(TAG, "OnMapLoadErrorListener: $mapLoadErrorType, $description")
+      override fun onMapLoadError(mapLoadErrorType: MapLoadErrorType, message: String) {
+        Logger.i(TAG, "OnMapLoadErrorListener: $mapLoadErrorType, $message")
       }
     })
     mapboxMap.addOnMapLoadedListener {
@@ -167,29 +169,17 @@ class DebugModeActivity : AppCompatActivity() {
 
   override fun onStart() {
     super.onStart()
-    mapView.onStart()
-    mapView.setOnFpsChangedListener {
+    binding.mapView.setOnFpsChangedListener {
       runOnUiThread {
-        fpsView.text = "${it.toInt()} FPS"
+        binding.fpsView.text = getString(R.string.fps, it.toInt().toString())
       }
     }
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
   }
 
   override fun onDestroy() {
     super.onDestroy()
     mapboxMap.unsubscribe(observable)
     mapboxMap.unsubscribeResourceRequest(extensionObservable)
-    mapView.onDestroy()
   }
 
   companion object {

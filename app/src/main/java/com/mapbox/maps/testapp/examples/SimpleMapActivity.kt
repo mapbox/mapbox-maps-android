@@ -4,8 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_simple_map.*
+import com.mapbox.maps.MapView
 
 /**
  * Example of displaying a map.
@@ -14,11 +13,15 @@ class SimpleMapActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_simple_map)
+    val mapView = MapView(this)
+    setContentView(mapView)
     mapView.getMapboxMap()
       .apply {
         setCamera(
-          CameraOptions.Builder().center(Point.fromLngLat(LONGITUDE, LATITUDE)).zoom(9.0).build()
+          CameraOptions.Builder()
+            .center(Point.fromLngLat(LONGITUDE, LATITUDE))
+            .zoom(9.0)
+            .build()
         )
       }
   }

@@ -14,8 +14,8 @@ import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.extension.style.sources.updateImage
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.databinding.ActivityAnimatedImagesourceBinding
 import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
-import kotlinx.android.synthetic.main.activity_animated_imagesource.*
 import java.nio.ByteBuffer
 
 /**
@@ -28,8 +28,9 @@ class AnimatedImageSourceActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_animated_imagesource)
-    val map = mapView.getMapboxMap()
+    val binding = ActivityAnimatedImagesourceBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    val map = binding.mapView.getMapboxMap()
 
     map.loadStyle(
       style(styleUri = Style.MAPBOX_STREETS) {
@@ -52,29 +53,13 @@ class AnimatedImageSourceActivity : AppCompatActivity() {
     }
   }
 
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
   override fun onStop() {
     super.onStop()
-    mapView.onStop()
     handler.removeCallbacks(runnable)
   }
 
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
-  }
-
   private class RefreshImageRunnable constructor(
-    private val appContext: Context,
+    appContext: Context,
     private val imageSource: ImageSource,
     private val handler: Handler
   ) :

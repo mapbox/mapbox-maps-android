@@ -12,10 +12,10 @@ import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_recycler.*
+import com.mapbox.maps.testapp.databinding.ActivityRecyclerBinding
 
 /**
- * TestActivity showcasing how to integrate multiple SurfaceView MapViews in a RecyclerView.
+ * Test activity showcasing how to integrate multiple SurfaceView MapViews in a RecyclerView.
  *
  * It requires calling the correct lifecycle methods when detaching and attaching the View to
  * the RecyclerView with onViewAttachedToWindow and onViewDetachedFromWindow.
@@ -28,23 +28,10 @@ class SurfaceRecyclerViewActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_recycler)
-    recyclerView.layoutManager = LinearLayoutManager(this)
-    recyclerView.adapter = ItemAdapter(this, LayoutInflater.from(this))
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    if (this::mapView.isInitialized) {
-      mapView.onLowMemory()
-    }
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    if (this::mapView.isInitialized) {
-      mapView.onDestroy()
-    }
+    val binding = ActivityRecyclerBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    binding.recyclerView.layoutManager = LinearLayoutManager(this)
+    binding.recyclerView.adapter = ItemAdapter(this, LayoutInflater.from(this))
   }
 
   fun getMapItemLayoutId(): Int {

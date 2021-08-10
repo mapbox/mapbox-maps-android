@@ -6,8 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Snapshotter
 import com.mapbox.maps.Style
-import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_view_snapshot.*
+import com.mapbox.maps.testapp.databinding.ActivityViewSnapshotBinding
 
 /**
  * Example demonstrating taking simple snapshot or screenshot not using [Snapshotter] appearing
@@ -19,34 +18,15 @@ class MapViewSnapshotActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_view_snapshot)
+    val binding = ActivityViewSnapshotBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
-    mapboxMap = mapView.getMapboxMap()
+    mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
 
-    fab.setOnClickListener {
-      val bitmap = mapView.snapshot()
-      imageView.setImageBitmap(bitmap)
+    binding.fab.setOnClickListener {
+      val bitmap = binding.mapView.snapshot()
+      binding.imageView.setImageBitmap(bitmap)
     }
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 }

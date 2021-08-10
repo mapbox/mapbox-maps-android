@@ -9,8 +9,7 @@ import com.mapbox.maps.extension.style.layers.getLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.Visibility
 import com.mapbox.maps.extension.style.sources.generated.vectorSource
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_show_hide_layers.*
+import com.mapbox.maps.testapp.databinding.ActivityShowHideLayersBinding
 
 /**
  * Example for showing / hiding layers on button click.
@@ -19,8 +18,9 @@ class ShowHideLayersActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_show_hide_layers)
-    mapView.getMapboxMap().loadStyle(
+    val binding = ActivityShowHideLayersBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    binding.mapView.getMapboxMap().loadStyle(
       style(Style.LIGHT) {
         +vectorSource(SOURCE_ID) {
           url(SOURCE_URL)
@@ -33,8 +33,8 @@ class ShowHideLayersActivity : AppCompatActivity() {
         }
       }
     )
-    fab_layer_toggle.setOnClickListener {
-      mapView.getMapboxMap().getStyle {
+    binding.fabLayerToggle.setOnClickListener {
+      binding.mapView.getMapboxMap().getStyle {
         it.getLayer(LAYER_ID)?.let { layer ->
           if (layer.visibility == Visibility.VISIBLE) {
             layer.visibility(Visibility.NONE)
@@ -44,26 +44,6 @@ class ShowHideLayersActivity : AppCompatActivity() {
         }
       }
     }
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.*
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.within
 import com.mapbox.maps.extension.style.layers.addLayerBelow
@@ -17,8 +18,6 @@ import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.camera
-import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_within_expression.*
 
 /**
  * An Activity that showcases the within expression to filter features outside a geometry
@@ -27,12 +26,18 @@ class WithinExpressionActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_within_expression)
+    val mapView = MapView(this)
+    setContentView(mapView)
 
     val center = Point.fromLngLat(LON, LAT)
 
     // Setup camera position above Georgetown
-    mapView.getMapboxMap().setCamera(CameraOptions.Builder().center(center).zoom(15.5).build())
+    mapView.getMapboxMap().setCamera(
+      CameraOptions.Builder()
+        .center(center)
+        .zoom(15.5)
+        .build()
+    )
 
     // Assume the route is represented by an array of coordinates.
     val coordinates = listOf<Point>(
@@ -110,26 +115,6 @@ class WithinExpressionActivity : AppCompatActivity() {
         Visibility.NONE
       )
     }
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   private fun bufferLineStringGeometry(): Polygon {

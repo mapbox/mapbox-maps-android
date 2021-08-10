@@ -27,7 +27,7 @@ import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_dds_draw_polygon.*
+import com.mapbox.maps.testapp.databinding.ActivityJavaservicesSnakingDirectionsRouteBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,12 +43,14 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
   private val handler = Handler()
   private val drivingRoutePolyLineFeatureList = mutableListOf<Feature>()
   private var counterIndex = 0
+  private lateinit var binding: ActivityJavaservicesSnakingDirectionsRouteBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_javaservices_snaking_directions_route)
+    binding = ActivityJavaservicesSnakingDirectionsRouteBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
-    mapView.getMapboxMap().loadStyle(
+    binding.mapView.getMapboxMap().loadStyle(
       style(Style.LIGHT) {
         +image(ICON_ID) {
           bitmap(BitmapFactory.decodeResource(resources, R.drawable.red_marker))
@@ -141,7 +143,7 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
           )
           drivingRoutePolyLineFeatureList.add(Feature.fromGeometry(lineStringRepresentingSingleStep))
         }
-        mapView.getMapboxMap().getStyle {
+        binding.mapView.getMapboxMap().getStyle {
           val source = it.getSource(DRIVING_ROUTE_POLYLINE_SOURCE_ID) as? GeoJsonSource
           source?.featureCollection(FeatureCollection.fromFeatures(drivingRoutePolyLineFeatureList))
         }
@@ -152,21 +154,6 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
     handler.postDelayed(drawRouteRunnable, DRAW_SPEED_MILLISECONDS)
   }
 
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
   override fun onDestroy() {
     super.onDestroy()
     if (this::mapboxDirectionsClient.isInitialized) {
@@ -175,7 +162,6 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
     if (this::drawRouteRunnable.isInitialized) {
       handler.removeCallbacks(drawRouteRunnable)
     }
-    mapView.onDestroy()
   }
 
   companion object {

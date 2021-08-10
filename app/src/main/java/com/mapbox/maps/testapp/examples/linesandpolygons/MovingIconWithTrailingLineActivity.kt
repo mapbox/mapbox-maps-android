@@ -33,8 +33,8 @@ import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.easeTo
 import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.databinding.ActivityDdsMovingIconWithTrailingLineBinding
 import com.mapbox.turf.TurfMeasurement
-import kotlinx.android.synthetic.main.activity_dds_moving_icon_with_trailing_line.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -54,11 +54,13 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
   private lateinit var currentAnimator: Animator
 
   private var count = 0
+  private lateinit var binding: ActivityDdsMovingIconWithTrailingLineBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_dds_moving_icon_with_trailing_line)
-    mapView.getMapboxMap().loadStyleUri(
+    binding = ActivityDdsMovingIconWithTrailingLineBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    binding.mapView.getMapboxMap().loadStyleUri(
       Style.LIGHT
     ) { // Use the Mapbox Directions API to get a directions route
       getRoute()
@@ -146,8 +148,8 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
           }
 
           val currentRoute = body.routes()[0]
-          mapView.getMapboxMap().getStyle { style ->
-            mapView.getMapboxMap().let { mapboxMap ->
+          binding.mapView.getMapboxMap().getStyle { style ->
+            binding.mapView.getMapboxMap().let { mapboxMap ->
               mapboxMap.easeTo(
                 mapboxMap.cameraForCoordinateBounds(
                   CoordinateBounds(originPoint, destinationPoint, false),
@@ -235,26 +237,6 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
       },
       below = "road-label"
     )
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

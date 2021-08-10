@@ -6,8 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
-import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_legacy_offline.*
+import com.mapbox.maps.testapp.databinding.ActivityLegacyOfflineBinding
 
 /**
  * Example app that downloads an offline region and when succeeded
@@ -18,6 +17,7 @@ class LegacyOfflineActivity : AppCompatActivity() {
   private lateinit var offlineManager: OfflineRegionManager
   private lateinit var offlineRegion: OfflineRegion
   private var mapView: MapView? = null
+  private lateinit var binding: ActivityLegacyOfflineBinding
 
   private val regionObserver: OfflineRegionObserver = object : OfflineRegionObserver() {
     override fun mapboxTileCountLimitExceeded(limit: Long) {
@@ -55,7 +55,8 @@ class LegacyOfflineActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_legacy_offline)
+    binding = ActivityLegacyOfflineBinding.inflate(layoutInflater)
+    setContentView(binding.root)
     offlineManager = OfflineRegionManager(MapInitOptions.getDefaultResourceOptions(this))
     offlineManager.createOfflineRegion(
       OfflineRegionGeometryDefinition.Builder()
@@ -71,9 +72,9 @@ class LegacyOfflineActivity : AppCompatActivity() {
   }
 
   private fun downloadComplete() {
-    download_progress.visibility = View.GONE
-    show_map_button.visibility = View.VISIBLE
-    show_map_button.setOnClickListener {
+    binding.downloadProgress.visibility = View.GONE
+    binding.showMapButton.visibility = View.VISIBLE
+    binding.showMapButton.setOnClickListener {
       it.visibility = View.GONE
       // create mapView
       mapView = MapView(this@LegacyOfflineActivity).also { mapview ->

@@ -22,8 +22,7 @@ import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
 import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_offline.*
-import kotlinx.android.synthetic.main.activity_offline.recycler
+import com.mapbox.maps.testapp.databinding.ActivityOfflineBinding
 import java.util.*
 
 /**
@@ -56,15 +55,17 @@ class OfflineActivity : AppCompatActivity() {
   }
   private var mapView: MapView? = null
   private lateinit var handler: Handler
+  private lateinit var binding: ActivityOfflineBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_offline)
+    binding = ActivityOfflineBinding.inflate(layoutInflater)
+    setContentView(binding.root)
     handler = Handler()
 
     // Initialize a logger that writes into the recycler view
-    recycler.layoutManager = LinearLayoutManager(this)
-    recycler.adapter = offlineLogsAdapter
+    binding.recycler.layoutManager = LinearLayoutManager(this)
+    binding.recycler.adapter = offlineLogsAdapter
 
     prepareDownloadButton()
   }
@@ -110,7 +111,7 @@ class OfflineActivity : AppCompatActivity() {
             )
           }
         }
-        container.addView(mapView)
+        binding.container.addView(mapView)
         mapView?.onStart()
         prepareShowDownloadedRegionButton()
       }
@@ -128,7 +129,7 @@ class OfflineActivity : AppCompatActivity() {
     updateButton("REMOVE DOWNLOADED REGIONS") {
       removeOfflineRegions()
       showDownloadedRegions()
-      container.removeAllViews()
+      binding.container.removeAllViews()
 
       // Re-enable the Mapbox network stack, so that the new offline region download can succeed.
       OfflineSwitch.getInstance().isMapboxStackConnected = true
@@ -139,8 +140,8 @@ class OfflineActivity : AppCompatActivity() {
   }
 
   private fun updateButton(text: String, listener: View.OnClickListener) {
-    button.text = text
-    button.setOnClickListener(listener)
+    binding.button.text = text
+    binding.button.setOnClickListener(listener)
   }
 
   private fun downloadOfflineRegion() {
@@ -176,7 +177,7 @@ class OfflineActivity : AppCompatActivity() {
           expected.value?.let { stylePack ->
             // Style pack download finishes successfully
             logSuccessMessage("StylePack downloaded: $stylePack")
-            if (tile_pack_download_progress.progress == tile_pack_download_progress.max) {
+            if (binding.tilePackDownloadProgress.progress == binding.tilePackDownloadProgress.max) {
               prepareViewMapButton()
             } else {
               logInfoMessage("Waiting for tile region download to be finished.")
@@ -240,7 +241,7 @@ class OfflineActivity : AppCompatActivity() {
         // Tile pack download finishes successfully
         expected.value?.let { region ->
           logSuccessMessage("TileRegion downloaded: $region")
-          if (style_pack_download_progress.progress == style_pack_download_progress.max) {
+          if (binding.stylePackDownloadProgress.progress == binding.stylePackDownloadProgress.max) {
             prepareViewMapButton()
           } else {
             logInfoMessage("Waiting for style pack download to be finished.")
@@ -309,16 +310,16 @@ class OfflineActivity : AppCompatActivity() {
   }
 
   private fun updateStylePackDownloadProgress(progress: Long, max: Long, message: String? = null) {
-    style_pack_download_progress.max = max.toInt()
-    style_pack_download_progress.progress = progress.toInt()
+    binding.stylePackDownloadProgress.max = max.toInt()
+    binding.stylePackDownloadProgress.progress = progress.toInt()
     message?.let {
       offlineLogsAdapter.addLog(OfflineLog.StylePackProgress(it))
     }
   }
 
   private fun updateTileRegionDownloadProgress(progress: Long, max: Long, message: String? = null) {
-    tile_pack_download_progress.max = max.toInt()
-    tile_pack_download_progress.progress = progress.toInt()
+    binding.tilePackDownloadProgress.max = max.toInt()
+    binding.tilePackDownloadProgress.progress = progress.toInt()
     message?.let {
       offlineLogsAdapter.addLog(OfflineLog.TilePackProgress(it))
     }

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.TransitionOptions
 import com.mapbox.maps.extension.style.expressions.dsl.generated.*
@@ -20,7 +21,6 @@ import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
-import kotlinx.android.synthetic.main.activity_dds_style_circles_categorically.*
 
 /**
  * Example of using GeoJSON and circle layers to visualize point data in clusters.
@@ -29,9 +29,8 @@ class CircleLayerClusteringActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-
-    // This contains the MapView in XML and needs to be called after the access token is configured.
-    setContentView(R.layout.activity_circle_layer_clustering)
+    val mapView = MapView(this)
+    setContentView(mapView)
     val mapboxMap = mapView.getMapboxMap()
 
     mapboxMap.loadStyleUri(
@@ -202,26 +201,6 @@ class CircleLayerClusteringActivity : AppCompatActivity() {
         textAllowOverlap(true)
       }
     )
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

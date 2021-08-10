@@ -9,8 +9,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.SkyType
 import com.mapbox.maps.extension.style.sources.generated.rasterDemSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.extension.style.terrain.generated.terrain
-import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_simple_map.*
+import com.mapbox.maps.testapp.databinding.ActivityTerrainShowcaseBinding
 
 /**
  * Example that demonstrates realistic map with 3D terrain and atmosphere sky layer.
@@ -21,8 +20,9 @@ class Terrain3DShowcaseActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_terrain_showcase)
-    mapboxMap = mapView.getMapboxMap()
+    val binding = ActivityTerrainShowcaseBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    mapboxMap = binding.mapView.getMapboxMap()
     mapboxMap.loadStyle(
       styleExtension = style(Style.SATELLITE_STREETS) {
         +rasterDemSource(SOURCE) {
@@ -37,26 +37,6 @@ class Terrain3DShowcaseActivity : AppCompatActivity() {
         }
       }
     )
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
   }
 
   companion object {

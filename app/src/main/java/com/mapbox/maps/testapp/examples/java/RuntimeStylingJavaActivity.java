@@ -202,8 +202,8 @@ public class RuntimeStylingJavaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_simple_map);
-        mapView = findViewById(R.id.mapView);
+        mapView = new MapView(this);
+        setContentView(mapView);
         mapboxMap = mapView.getMapboxMap();
         mapboxMap.loadStyleUri(Style.MAPBOX_STREETS, this::setUpStyle);
     }

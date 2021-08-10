@@ -112,6 +112,7 @@
     <string name="toggle_overdraw">Overdraw</string>
     <string name="toggle_stencil_clip">Stencil Clip</string>
     <string name="toggle_depth_buffer">Depth Buffer</string>
+    <string name="fps">%1$s FPS</string>
 
     <string name="switch_style_button">Switch style</string>
 

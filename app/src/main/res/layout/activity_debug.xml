@@ -34,7 +34,7 @@
         android:padding="10dp"
         android:textColor="@color/green"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="30 FPS" />
 
