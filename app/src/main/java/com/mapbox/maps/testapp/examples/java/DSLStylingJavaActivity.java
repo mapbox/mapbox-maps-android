@@ -29,6 +29,7 @@ import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource;
 import com.mapbox.maps.extension.style.sources.generated.ImageSource;
 import com.mapbox.maps.plugin.gestures.GesturesUtils;
 import com.mapbox.maps.plugin.gestures.OnMapClickListener;
+import com.mapbox.maps.testapp.R;
 
 import org.jetbrains.annotations.NotNull;
 
