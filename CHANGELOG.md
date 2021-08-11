@@ -2,9 +2,30 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 10.0.0-rc.5 July 28, 2021
+# 10.0.0-rc.6 August 11, 2021
 
 **The Mapbox Maps SDK for Android has moved to release candidate status and is now ready for production use.**
+
+## Breaking changes ⚠️
+* Update extension function signatures making them easier to use from Java. ([#539](https://github.com/mapbox/mapbox-maps-android/pull/539))
+* Rename `mapView#overlay()` to `mapView#mapboxOverlay`. ([#539](https://github.com/mapbox/mapbox-maps-android/pull/539))
+
+## Features ✨ and improvements 🏁
+* Support adding 9-patch images to the style. ([#536](https://github.com/mapbox/mapbox-maps-android/pull/536))
+* Volatile geometry tiles do not show outdated data, they get hidden if the network refresh fails. ([#543](https://github.com/mapbox/mapbox-maps-android/pull/543))
+
+## Bug fixes 🐞
+* Fix several memory leaks: clean up OnFpsChangeListener on render thread destroy / introduce Snapshotter#destroy method that must be called in Activity#onDestroy ([#546](https://github.com/mapbox/mapbox-maps-android/pull/546))
+* Add check for layer and source while creating annotations and init them if not initiated before. So that enable create the AnnotationManager before loading style. ([#549](https://github.com/mapbox/mapbox-maps-android/pull/549))
+* Fix an assertion in online manager that happens if a reachable status notification follows right after the offline switch callback. ([#543](https://github.com/mapbox/mapbox-maps-android/pull/543))
+* Fix error messages returned by `Style#removeStyleSource` method. ([#543](https://github.com/mapbox/mapbox-maps-android/pull/543))
+* Store persistent layer's LayerPosition, so that layer can be re-added to correct position if LayerPosition.above or LayerPosition.at is used. ([#543](https://github.com/mapbox/mapbox-maps-android/pull/543))
+
+## Dependencies
+* Update gl-native to v10.0.0-rc.6 and common to v16.2.0. ([#543](https://github.com/mapbox/mapbox-maps-android/pull/543))
+* Remove turf dependency of location component plugin. ([#551](https://github.com/mapbox/mapbox-maps-android/pull/551))
+
+# 10.0.0-rc.5 July 28, 2021
 
 ## Breaking changes ⚠️
 * Improve camera API consumption from java programming language by adding `CameraAnimationsUtils` and `getCamera` JvmName annotations. ([#495](https://github.com/mapbox/mapbox-maps-android/pull/495))
