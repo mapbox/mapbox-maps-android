@@ -710,4 +710,11 @@ class NativeMapTest {
     nativeMap.resourceOptions
     verify { map.resourceOptions }
   }
+
+  @Test
+  fun moveStyleLayer() {
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.moveStyleLayer("layerId", LayerPosition("above", "below", 0))
+    verify { map.moveStyleLayer("layerId", LayerPosition("above", "below", 0)) }
+  }
 }
