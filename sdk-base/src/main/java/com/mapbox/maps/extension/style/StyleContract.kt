@@ -85,11 +85,11 @@ interface StyleContract {
   }
 
   /**
-   * Define the interfaces for the Light plugin.
+   * Define the interfaces for the source plugin.
    */
   fun interface StyleSourceExtension {
     /**
-     * Add the source to the Style.
+     * Bind the source to the Style.
      *
      * @param delegate The style delegate
      */
@@ -101,7 +101,7 @@ interface StyleContract {
    */
   fun interface StyleImageExtension {
     /**
-     * Add the image to the Style.
+     * Bind the image to the Style.
      *
      * @param delegate The style delegate
      */

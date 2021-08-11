@@ -52,7 +52,7 @@ inline fun <reified T : Source> StyleManagerInterface.getSourceAs(sourceId: Stri
 /**
  * Extension function to add a Source provided by the Style Extension to the Style.
  *
- * @param source The light to be added
+ * @param source The source to be added
  */
 fun StyleInterface.addSource(source: StyleContract.StyleSourceExtension) {
   source.bindTo(this)
