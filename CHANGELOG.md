@@ -12,12 +12,11 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Features ✨ and improvements 🏁
 * Support adding 9-patch images to the style. ([#536](https://github.com/mapbox/mapbox-maps-android/pull/536))
-* Volatile geometry tiles do not show outdated data, they get hidden if the network refresh fails. ([#543](https://github.com/mapbox/mapbox-maps-android/pull/543))
+* Outdated data for volatile sources gets hidden if cannot be updated due to no Internet connection. ([#543](https://github.com/mapbox/mapbox-maps-android/pull/543))
 
 ## Bug fixes 🐞
 * Fix several memory leaks: clean up OnFpsChangeListener on render thread destroy / introduce Snapshotter#destroy method that must be called in Activity#onDestroy ([#546](https://github.com/mapbox/mapbox-maps-android/pull/546))
-* Add check for layer and source while creating annotations and init them if not initiated before. So that enable create the AnnotationManager before loading style. ([#549](https://github.com/mapbox/mapbox-maps-android/pull/549))
-* Fix an assertion in online manager that happens if a reachable status notification follows right after the offline switch callback. ([#543](https://github.com/mapbox/mapbox-maps-android/pull/543))
+* Add layer and source check when creating annotations and init them if not initiated before which creates `AnnotationManager` before loading style. ([#549](https://github.com/mapbox/mapbox-maps-android/pull/549))
 * Fix error messages returned by `Style#removeStyleSource` method. ([#543](https://github.com/mapbox/mapbox-maps-android/pull/543))
 * Store persistent layer's LayerPosition, so that layer can be re-added to correct position if LayerPosition.above or LayerPosition.at is used. ([#543](https://github.com/mapbox/mapbox-maps-android/pull/543))
 
