@@ -242,6 +242,10 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.isStyleLayerPersistent(layerId)
   }
 
+  override fun moveStyleLayer(layerId: String, layerPosition: LayerPosition?): Expected<String, None> {
+    return map.moveStyleLayer(layerId, layerPosition)
+  }
+
   override fun getResourceOptions(): ResourceOptions {
     return map.resourceOptions
   }

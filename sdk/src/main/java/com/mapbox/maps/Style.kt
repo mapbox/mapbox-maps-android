@@ -140,6 +140,17 @@ class Style internal constructor(
     styleManagerRef.call { this.removeStyleLayer(layerId) }
 
   /**
+   * Moves an existing style layer.
+   *
+   * @param layerId – Identifier of the style layer to move.
+   * @param layerPosition – The layer will be positioned according to the LayerPosition parameters. If an empty LayerPosition is provided then the layer is moved to the top of the layerstack.
+   *
+   * @return A string describing an error if the operation was not successful, or empty otherwise.
+   */
+  override fun moveStyleLayer(layerId: String, layerPosition: LayerPosition?): Expected<String, None> =
+    styleManagerRef.call { this.moveStyleLayer(layerId, layerPosition) }
+
+  /**
    * Checks whether a given style layer exists.
    *
    * Runtime style layers are valid until they are either removed or a new style is loaded.
