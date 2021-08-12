@@ -77,6 +77,9 @@ internal class MapPluginRegistry(
             mapInitOptions.attrs,
             mapInitOptions.mapOptions.pixelRatio
           )
+          mapView?.let {
+            mapPlugin.bind(it)
+          }
         }
 
         if (mapPlugin is MapSizePlugin) {

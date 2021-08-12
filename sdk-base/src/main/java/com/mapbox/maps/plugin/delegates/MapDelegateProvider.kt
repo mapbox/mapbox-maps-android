@@ -48,6 +48,11 @@ interface MapDelegateProvider {
   val mapListenerDelegate: MapListenerDelegate
 
   /**
+   * Delegate used to control view annotations.
+   */
+  val mapViewAnnotationDelegate: MapViewAnnotationDelegate
+
+  /**
    * Delegate used for style state.
    */
   // TODO replace with style.isFullyLoaded

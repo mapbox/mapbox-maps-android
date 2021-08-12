@@ -107,5 +107,9 @@ sealed class Plugin(
      * Id for Mapbox Map Overlay Plugin.
      */
     const val MAPBOX_MAP_OVERLAY_PLUGIN_ID = "MAPBOX_MAP_OVERLAY_PLUGIN_ID"
+    /**
+     * Id for Mapbox View Annotation Plugin.
+     */
+    const val MAPBOX_VIEW_ANNOTATION_PLUGIN_ID = "MAPBOX_VIEW_ANNOTATION_PLUGIN_ID"
   }
 }

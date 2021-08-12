@@ -72,6 +72,7 @@ dependencies {
   api(project(":plugin-annotation"))
   api(project(":extension-localization"))
   api(project(":plugin-lifecycle"))
+  api(project(":plugin-view-annotation"))
   implementation(Dependencies.kotlin)
   implementation(Dependencies.androidxCoreKtx)
   implementation(Dependencies.androidxAnnotations)
