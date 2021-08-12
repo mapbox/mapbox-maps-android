@@ -1,7 +1,12 @@
 package com.mapbox.maps.testapp.examples.markersandcallouts
 
+import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Handler
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
@@ -12,16 +17,23 @@ import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
+import com.mapbox.maps.plugin.gestures.OnMapClickListener
+import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.utils.viewannotations.ViewAnnotationPlugin
 
 /**
  * Example showing how to add a marker on map with symbol layer
  */
-class AddOneMarkerSymbolActivity : AppCompatActivity() {
+class AddOneMarkerSymbolActivity : AppCompatActivity(), OnMapClickListener {
+
+  private lateinit var viewAnnotationPlugin: ViewAnnotationPlugin
+  private var count = 1
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     val mapView = MapView(this)
+    viewAnnotationPlugin = ViewAnnotationPlugin(mapView)
     setContentView(mapView)
 
     mapView.getMapboxMap().also {
@@ -31,6 +43,11 @@ class AddOneMarkerSymbolActivity : AppCompatActivity() {
           .zoom(8.0)
           .build()
       )
+      // we need to wait until map is loaded to add annotations as we rely on MapOptions.size
+      // guess it should be handled in our plugin internally but leaving as is for now
+      it.addOnMapLoadedListener {
+        mapView.getMapboxMap().addOnMapClickListener(this)
+      }
     }.loadStyle(
       styleExtension = style(Style.MAPBOX_STREETS) {
         // prepare blue marker from resources
@@ -54,5 +71,33 @@ class AddOneMarkerSymbolActivity : AppCompatActivity() {
     private const val LAYER_ID = "layer_id"
     private const val LATITUDE = 55.665957
     private const val LONGITUDE = 12.550343
+  }
+
+  override fun onMapClick(point: Point): Boolean {
+    val handler = Handler(mainLooper)
+    for (i in 0 until 50) {
+      handler.postDelayed(
+        {
+          val view = viewAnnotationPlugin.addViewAnnotation(
+            R.layout.item_callout_view,
+            Point.fromLngLat(point.longitude() + (0.01 * i), point.latitude() + (0.01 * i))
+          )
+          view.findViewById<TextView>(R.id.textNativeView).text = "Annotation ${count++}"
+          view.findViewById<ImageView>(R.id.closeNativeView).setOnClickListener {
+            view.visibility = View.GONE
+          }
+        },
+        i * 33L
+      )
+    }
+//    val view = viewAnnotationPlugin.addViewAnnotation(
+//      R.layout.item_callout_view,
+//      point
+//    )
+//    view.findViewById<TextView>(R.id.textNativeView).text = "Annotation ${count++}"
+//    view.findViewById<ImageView>(R.id.closeNativeView).setOnClickListener {
+//      view.visibility = View.GONE
+//    }
+    return true
   }
 }
