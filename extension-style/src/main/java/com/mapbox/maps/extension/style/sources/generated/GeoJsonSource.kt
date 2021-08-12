@@ -2,10 +2,6 @@
 
 package com.mapbox.maps.extension.style.sources.generated
 
-import android.os.Handler
-import android.os.HandlerThread
-import android.os.Looper
-import androidx.annotation.VisibleForTesting
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
@@ -20,6 +16,7 @@ import com.mapbox.maps.extension.style.types.SourceDsl
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.extension.style.utils.silentUnwrap
 import com.mapbox.maps.extension.style.utils.toValue
+import kotlinx.coroutines.*
 
 /**
  * A GeoJSON data source.
@@ -28,11 +25,12 @@ import com.mapbox.maps.extension.style.utils.toValue
  *
  */
 class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
+  private var parsingJob: Job? = null
   private var geoJsonParsed = false
   private val onGeoJsonParsedListenerList = mutableListOf<OnGeoJsonParsed>()
-  private val workerHandler by lazy {
-    Handler(workerThread.looper)
-  }
+  private val scope = MainScope()
+  private var waitingData: Pair<GeoJson, ((GeoJsonSource) -> Unit)>? = null
+
   private constructor(
     builder: Builder,
     rawGeoJson: GeoJson?,
@@ -41,21 +39,26 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     rawGeoJson?.let {
       ignoreParsedGeoJsonRegistry[sourceId] = false
       onGeoJsonParsedListenerList.add(onGeoJsonParsed)
-      workerHandler.post {
-        val property = it.toPropertyValue()
-        mainHandler.post {
-          geoJsonParsed = true
-          // we set parsed data when sync setter was not called during background work
-          if (ignoreParsedGeoJsonRegistry[sourceId] == false) {
-            setProperty(property, throwRuntimeException = false)
-            onGeoJsonParsedListenerList.forEach {
-              it.onGeoJsonParsed(this)
-            }
+      scope.launch {
+        val property = getPropertyValue(it)
+        geoJsonParsed = true
+        // we set parsed data when sync setter was not called during background work
+        if (ignoreParsedGeoJsonRegistry[sourceId] == false) {
+          setProperty(property, throwRuntimeException = false)
+          onGeoJsonParsedListenerList.forEach {
+            it.onGeoJsonParsed(this@GeoJsonSource)
           }
         }
       }
-    } ?: run { geoJsonParsed = true }
+    } ?: run {
+      geoJsonParsed = true
+    }
   }
+
+  private suspend fun getPropertyValue(it: GeoJson) =
+    withContext(Dispatchers.Default) {
+      it.toPropertyValue()
+    }
 
   /**
    * Add listener that gets invoked when feature, featureCollection or geometry data is parsed.
@@ -98,7 +101,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    */
   fun data(value: String) = apply {
     ignoreParsedGeoJsonRegistry[sourceId] = true
-    workerHandler.removeCallbacksAndMessages(null)
+    waitingData = null
     setProperty(PropertyValue("data", TypeUtils.wrapToValue(value)))
   }
 
@@ -344,24 +347,44 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   ): GeoJsonSource = apply {
     onDataParsed?.let { listener ->
       ignoreParsedGeoJsonRegistry[sourceId] = false
-      // remove any events from queue before posting this task
-      workerHandler.removeCallbacksAndMessages(null)
-      workerHandler.post {
-        val property = data.toPropertyValue()
-        mainHandler.post {
-          // we set parsed data when sync setter was not called during background work
-          if (ignoreParsedGeoJsonRegistry[sourceId] == false) {
-            setProperty(property, throwRuntimeException = false)
-            listener.invoke(this)
+      // No parseJob is working now, parse the data directly.
+      if (parsingJob == null) {
+        parseData(data, listener)
+      } else {
+        parsingJob?.let {
+          if (it.isActive) {
+            // still have parse job working, save the current data to waitingData.
+            waitingData = Pair(data, listener)
+          } else {
+            // the last parseJob completed, start the parse directly.
+            parseData(data, listener)
           }
         }
       }
     } ?: run {
       // if any task is running - set flag to skip it when it is finished
       ignoreParsedGeoJsonRegistry[sourceId] = true
-      // remove any events from queue - they should not overwrite data set synchronously
-      workerHandler.removeCallbacksAndMessages(null)
+      // remove any waiting data - they should not overwrite data set synchronously
+      waitingData = null
       setProperty(data.toPropertyValue())
+    }
+  }
+
+  private fun GeoJsonSource.parseData(data: GeoJson, listener: (GeoJsonSource) -> Unit) {
+    // start a coroutine to parse the data.
+    parsingJob = scope.launch {
+      val property = getPropertyValue(data)
+      // we set parsed data when sync setter was not called during background work
+      if (ignoreParsedGeoJsonRegistry[sourceId] == false) {
+        setProperty(property, throwRuntimeException = false)
+        listener.invoke(this@GeoJsonSource)
+      }
+      waitingData?.let {
+        // have data waiting to parse, continue parse this data
+        parseData(it.first, it.second)
+        // clear waitingData, so that if new data coming could wait.
+        waitingData = null
+      }
     }
   }
 
@@ -624,14 +647,6 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * Static variables and methods.
    */
   companion object {
-    /** A worker thread to parse large geojson data. */
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    var workerThread = HandlerThread("STYLE_WORKER").apply {
-      priority = Thread.MAX_PRIORITY
-      start()
-    }
-
-    private val mainHandler = Handler(Looper.getMainLooper())
     /** Registry to control if we need to ignore parsed result for given sourceId. */
     private val ignoreParsedGeoJsonRegistry = hashMapOf<String, Boolean>()
 

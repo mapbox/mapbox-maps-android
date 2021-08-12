@@ -23,6 +23,7 @@ dependencies {
   implementation(Dependencies.androidxAppCompat)
   implementation(Dependencies.androidxCoreKtx)
   implementation(Dependencies.androidxAnnotations)
+  implementation(Dependencies.coroutines)
   testImplementation(Dependencies.junit)
   testImplementation(Dependencies.mockk)
   testImplementation(Dependencies.androidxTestCore)

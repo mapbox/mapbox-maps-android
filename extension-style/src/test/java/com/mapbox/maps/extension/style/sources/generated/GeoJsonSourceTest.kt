@@ -2,7 +2,6 @@
 
 package com.mapbox.maps.extension.style.sources.generated
 
-import android.os.HandlerThread
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
@@ -46,11 +45,6 @@ class GeoJsonSourceTest {
     // For default property getters
     mockkStatic(StyleManager::class)
     every { StyleManager.getStyleSourcePropertyDefaultValue(any(), any()) } returns styleProperty
-    GeoJsonSource.workerThread =
-      HandlerThread("STYLE_WORKER").apply {
-        priority = Thread.MAX_PRIORITY
-        start()
-      }
   }
 
   @Test
