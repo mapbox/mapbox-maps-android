@@ -76,7 +76,7 @@ object Versions {
   const val mapboxGestures = "0.7.0"
   const val mapboxJavaServices = "5.4.1"
   const val mapboxBase = "0.5.0"
-  const val mapboxGlNative = "10.0.0-rc.7"
+  const val mapboxGlNative = "10.0.0-rc.7.1"
   const val mapboxCommon = "17.0.0"
   const val mapboxAndroidCore = "5.0.0"
   const val mapboxAndroidTelemetry = "8.1.0"
