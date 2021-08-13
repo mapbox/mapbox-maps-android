@@ -134,4 +134,7 @@
     <string name="local_names">Local names</string>
     <string name="country_label">Country label</string>
     <string name="state_label">State label</string>
+    <string name="magnitude">Magnitude:</string>
+    <string name="location">Location:</string>
+    <string name="date">Date:</string>
 </resources>
