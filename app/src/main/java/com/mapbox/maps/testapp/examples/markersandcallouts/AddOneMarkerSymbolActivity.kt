@@ -74,30 +74,14 @@ class AddOneMarkerSymbolActivity : AppCompatActivity(), OnMapClickListener {
   }
 
   override fun onMapClick(point: Point): Boolean {
-    val handler = Handler(mainLooper)
-    for (i in 0 until 50) {
-      handler.postDelayed(
-        {
-          val view = viewAnnotationPlugin.addViewAnnotation(
-            R.layout.item_callout_view,
-            Point.fromLngLat(point.longitude() + (0.01 * i), point.latitude() + (0.01 * i))
-          )
-          view.findViewById<TextView>(R.id.textNativeView).text = "Annotation ${count++}"
-          view.findViewById<ImageView>(R.id.closeNativeView).setOnClickListener {
-            view.visibility = View.GONE
-          }
-        },
-        i * 33L
-      )
+    val view = viewAnnotationPlugin.addViewAnnotation(
+      R.layout.item_callout_view,
+      point
+    )
+    view.findViewById<TextView>(R.id.textNativeView).text = "Annotation ${count++}"
+    view.findViewById<ImageView>(R.id.closeNativeView).setOnClickListener {
+      view.visibility = View.GONE
     }
-//    val view = viewAnnotationPlugin.addViewAnnotation(
-//      R.layout.item_callout_view,
-//      point
-//    )
-//    view.findViewById<TextView>(R.id.textNativeView).text = "Annotation ${count++}"
-//    view.findViewById<ImageView>(R.id.closeNativeView).setOnClickListener {
-//      view.visibility = View.GONE
-//    }
     return true
   }
 }
