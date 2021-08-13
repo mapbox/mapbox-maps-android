@@ -18,6 +18,7 @@ class ViewAnnotationPlugin(
   private val annotations = LinkedHashMap<Int, ViewAnnotation>()
 
   init {
+    mapView.requestDisallowInterceptTouchEvent(false)
     mapView.getMapboxMap().addOnCameraChangeListener(this)
   }
 
