@@ -19,9 +19,7 @@ import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.plugin.scalebar.scalebar
-import com.mapbox.maps.testapp.R
-import kotlinx.android.synthetic.main.activity_feature_state.*
-import kotlinx.android.synthetic.main.activity_simple_map.mapView
+import com.mapbox.maps.testapp.databinding.ActivityFeatureStateBinding
 import java.text.DateFormat.getDateTimeInstance
 import java.text.SimpleDateFormat
 import java.util.*
@@ -34,18 +32,22 @@ class FeatureStateActivity : AppCompatActivity(), OnCameraChangeListener {
   private lateinit var mapboxMap: MapboxMap
   private var lastFeatureId: String? = null
   private lateinit var crosshair: View
+  private lateinit var binding: ActivityFeatureStateBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_feature_state)
+    binding = ActivityFeatureStateBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
-    mapboxMap = mapView.getMapboxMap()
-    mapView.scalebar.enabled = false
+    mapboxMap = binding.mapView.getMapboxMap()
+    binding.mapView.scalebar.enabled = false
     mapboxMap.loadStyle(createStyle()) {
-      mapboxMap.setCamera(cameraOptions {
-        center(CAMERA_CENTER)
-        zoom(CAMERA_ZOOM)
-      })
+      mapboxMap.setCamera(
+        cameraOptions {
+          center(CAMERA_CENTER)
+          zoom(CAMERA_ZOOM)
+        }
+      )
     }
     showCrosshair()
     mapboxMap.addOnCameraChangeListener(this)
@@ -54,7 +56,7 @@ class FeatureStateActivity : AppCompatActivity(), OnCameraChangeListener {
   override fun onCameraChanged() {
     val offsetViewBounds = Rect()
     crosshair.getDrawingRect(offsetViewBounds)
-    mapView.offsetDescendantRectToMyCoords(crosshair, offsetViewBounds)
+    binding.mapView.offsetDescendantRectToMyCoords(crosshair, offsetViewBounds)
     mapboxMap.queryRenderedFeatures(
       ScreenBox(
         ScreenCoordinate(offsetViewBounds.left.toDouble(), offsetViewBounds.top.toDouble()),
@@ -80,9 +82,9 @@ class FeatureStateActivity : AppCompatActivity(), OnCameraChangeListener {
         }
         // Update Magnitude, location and date text view.
         val time = selectedFeature.getNumberProperty("time")
-        date.text = getDateTime(time.toLong())
-        location.text = selectedFeature.getStringProperty("place")
-        magnitude.text = selectedFeature.getNumberProperty("mag").toString()
+        binding.date.text = getDateTime(time.toLong())
+        binding.location.text = selectedFeature.getStringProperty("place")
+        binding.magnitude.text = selectedFeature.getNumberProperty("mag").toString()
       } ?: let {
         lastFeatureId?.let {
           setHoverFeatureState(it, false)
@@ -93,7 +95,9 @@ class FeatureStateActivity : AppCompatActivity(), OnCameraChangeListener {
 
   private fun setHoverFeatureState(featureId: String, hover: Boolean) {
     mapboxMap.setFeatureState(
-      SOURCE_ID, null, featureId, Value(
+      sourceId = SOURCE_ID,
+      featureId = featureId,
+      state = Value(
         hashMapOf(
           "hover" to Value(hover)
         )
@@ -105,7 +109,7 @@ class FeatureStateActivity : AppCompatActivity(), OnCameraChangeListener {
     crosshair = View(this)
     crosshair.layoutParams = FrameLayout.LayoutParams(20, 20, Gravity.CENTER)
     crosshair.setBackgroundColor(Color.RED)
-    mapView.addView(crosshair)
+    binding.mapView.addView(crosshair)
   }
 
   private fun getDateTime(time: Long): String = try {
@@ -243,17 +247,16 @@ class FeatureStateActivity : AppCompatActivity(), OnCameraChangeListener {
      * Use data from the USGS Earthquake Catalog API, which returns information about recent earthquakes,
      * including the magnitude, location, and the time at which the earthquake happened.
      */
-    private val GEOJSON_URL =
-      "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&minmagnitude=1&starttime=${
-        // Get the date seven days ago as an ISO 8601 timestamp, as required by the USGS Earthquake Catalog API.
-        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US).apply {
-          timeZone = TimeZone.getTimeZone("UTC")
-        }.format(
-          Calendar.getInstance().apply {
-            add(Calendar.DATE, -7)
-          }.time
-        )
-      }"
+    private val GEOJSON_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&minmagnitude=1&starttime=${
+    // Get the date seven days ago as an ISO 8601 timestamp, as required by the USGS Earthquake Catalog API.
+    SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US).apply {
+      timeZone = TimeZone.getTimeZone("UTC")
+    }.format(
+      Calendar.getInstance().apply {
+        add(Calendar.DATE, -7)
+      }.time
+    )
+    }"
     private const val LAYER_ID = "earthquakes-viz"
     private const val SOURCE_ID = "earthquakes"
     private val CAMERA_CENTER = Point.fromLngLat(-122.44121, 37.76132)
