@@ -823,7 +823,7 @@ class MapboxMap internal constructor(
    */
   fun setFeatureState(
     sourceId: String,
-    sourceLayerId: String?,
+    sourceLayerId: String? = null,
     featureId: String,
     state: Value
   ) =
