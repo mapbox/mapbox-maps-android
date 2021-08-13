@@ -699,6 +699,57 @@ class GeoJsonSourceTest {
   }
 
   @Test
+  fun generateIdSet() {
+    val testSource = geoJsonSource("testId") {
+      generateId(true)
+    }
+    testSource.bindTo(style)
+
+    verify { style.addStyleSource("testId", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("generateId=true"))
+  }
+
+  @Test
+  fun generateIdAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val testSource = geoJsonSource("testId") {
+      generateId(expression)
+    }
+    testSource.bindTo(style)
+
+    verify { style.addStyleSource("testId", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("generateId=[+, 2, 3]"))
+  }
+
+  @Test
+  fun generateIdGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
+    val testSource = geoJsonSource("testId") {}
+    testSource.bindTo(style)
+
+    assertEquals(true.toString(), testSource.generateId?.toString())
+    verify { style.getStyleSourceProperty("testId", "generateId") }
+  }
+
+  @Test
+  fun generateIdAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val testSource = geoJsonSource("testId") {}
+    testSource.bindTo(style)
+
+    assertEquals(expression.toString(), testSource.generateIdAsExpression?.toString())
+    verify { style.getStyleSourceProperty("testId", "generateId") }
+  }
+
+  @Test
   fun prefetchZoomDeltaSet() {
     val testSource = geoJsonSource("testId") {
       prefetchZoomDelta(1L)
@@ -1079,6 +1130,27 @@ class GeoJsonSourceTest {
 
     assertEquals(expression.toString(), GeoJsonSource.defaultLineMetricsAsExpression?.toString())
     verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "lineMetrics") }
+  }
+
+  @Test
+  fun defaultGenerateIdGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(true)
+
+    assertEquals(true.toString(), GeoJsonSource.defaultGenerateId?.toString())
+    verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "generateId") }
+  }
+
+  @Test
+  fun defaultGenerateIdAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), GeoJsonSource.defaultGenerateIdAsExpression?.toString())
+    verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "generateId") }
   }
 
   @Test

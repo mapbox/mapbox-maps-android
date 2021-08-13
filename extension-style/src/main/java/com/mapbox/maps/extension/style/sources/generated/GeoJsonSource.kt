@@ -475,6 +475,38 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     }
 
   /**
+   * Whether to generate ids for the geojson features. When enabled, the `feature.id` property will be auto
+   * assigned based on its index in the `features` array, over-writing any previous values.
+   */
+  val generateId: Boolean?
+    /**
+     * Get the GenerateId property
+     *
+     * @return Boolean
+     */
+    get() = getPropertyValue("generateId")
+
+  /**
+   * Whether to generate ids for the geojson features. When enabled, the `feature.id` property will be auto
+   * assigned based on its index in the `features` array, over-writing any previous values.
+   */
+  val generateIdAsExpression: Expression?
+    /**
+     * Get the GenerateId property as an Expression
+     *
+     * @return Expression
+     */
+    get() {
+      getPropertyValue<Expression>("generateId")?.let {
+        return it
+      }
+      generateId?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
    * When loading a map, if `PrefetchZoomDelta` is set to any number greater than 0, the map
    * will first request a tile for `zoom - delta` in a attempt to display a full
    * map at lower resolution as quick as possible. It will get clamped at the tile source
@@ -911,6 +943,24 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     }
 
     /**
+     * Whether to generate ids for the geojson features. When enabled, the `feature.id` property will be auto
+     * assigned based on its index in the `features` array, over-writing any previous values.
+     */
+    fun generateId(value: Boolean = false) = apply {
+      val propertyValue = PropertyValue("generateId", TypeUtils.wrapToValue(value))
+      properties[propertyValue.propertyName] = propertyValue
+    }
+
+    /**
+     * Whether to generate ids for the geojson features. When enabled, the `feature.id` property will be auto
+     * assigned based on its index in the `features` array, over-writing any previous values.
+     */
+    fun generateId(value: Expression) = apply {
+      val propertyValue = PropertyValue("generateId", value)
+      properties[propertyValue.propertyName] = propertyValue
+    }
+
+    /**
      * When loading a map, if `PrefetchZoomDelta` is set to any number greater than 0, the map
      * will first request a tile for `zoom - delta` in a attempt to display a full
      * map at lower resolution as quick as possible. It will get clamped at the tile source
@@ -1217,6 +1267,38 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
           return it
         }
         defaultLineMetrics?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
+     * Whether to generate ids for the geojson features. When enabled, the `feature.id` property will be auto
+     * assigned based on its index in the `features` array, over-writing any previous values.
+     */
+    val defaultGenerateId: Boolean?
+      /**
+       * Get the GenerateId property
+       *
+       * @return Boolean
+       */
+      get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "generateId").silentUnwrap()
+
+    /**
+     * Whether to generate ids for the geojson features. When enabled, the `feature.id` property will be auto
+     * assigned based on its index in the `features` array, over-writing any previous values.
+     */
+    val defaultGenerateIdAsExpression: Expression?
+      /**
+       * Get the GenerateId property as an Expression
+       *
+       * @return Expression
+       */
+      get() {
+        StyleManager.getStyleSourcePropertyDefaultValue("geojson", "generateId").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultGenerateId?.let {
           return Expression.literal(it)
         }
         return null
