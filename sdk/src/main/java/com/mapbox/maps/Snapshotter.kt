@@ -7,6 +7,7 @@ import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.VisibleForTesting
 import androidx.core.content.res.ResourcesCompat
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
@@ -23,23 +24,29 @@ import kotlin.math.min
 /**
  * [Snapshotter] is high-level component responsible for taking map snapshot with given [MapSnapshotOptions].
  */
-open class Snapshotter(
-  context: Context,
-  options: MapSnapshotOptions,
-  private val snapshotOverlayOptions: SnapshotOverlayOptions = SnapshotOverlayOptions()
-) {
+open class Snapshotter {
 
-  private val context: WeakReference<Context> = WeakReference(context)
-  private var coreSnapshotter: MapSnapshotterInterface?
-  private val pixelRatio: Float = context.resources.displayMetrics.density
-  private val mapSnapshotOptions: MapSnapshotOptions = options
+  private val context: WeakReference<Context>
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal var coreSnapshotter: MapSnapshotterInterface?
+  private val pixelRatio: Float
+  private val mapSnapshotOptions: MapSnapshotOptions
 
   internal var snapshotCreatedCallback: SnapshotCreatedListener? = null
   internal var snapshotStyleCallback: SnapshotStyleListener? = null
 
   private val observer: Observer
+  private val snapshotOverlayOptions: SnapshotOverlayOptions
 
-  init {
+  constructor(
+    context: Context,
+    options: MapSnapshotOptions,
+    overlayOptions: SnapshotOverlayOptions = SnapshotOverlayOptions()
+  ) {
+    this.context = WeakReference(context)
+    mapSnapshotOptions = options
+    snapshotOverlayOptions = overlayOptions
+    pixelRatio = context.resources.displayMetrics.density
     coreSnapshotter = MapSnapshotter(options)
     observer = object : Observer() {
       override fun notify(event: Event) {
@@ -63,6 +70,22 @@ open class Snapshotter(
       }
     }
     coreSnapshotter!!.subscribe(observer, STYLE_LOAD_EVENTS_LIST)
+  }
+
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal constructor(
+    context: WeakReference<Context>,
+    options: MapSnapshotOptions,
+    overlayOptions: SnapshotOverlayOptions,
+    coreSnapshotter: MapSnapshotterInterface,
+    observer: Observer
+  ) {
+    this.context = context
+    mapSnapshotOptions = options
+    snapshotOverlayOptions = overlayOptions
+    this.coreSnapshotter = coreSnapshotter
+    this.observer = observer
+    pixelRatio = 1f
   }
 
   private fun unsubscribeEvents() {
@@ -117,7 +140,10 @@ open class Snapshotter(
 
   /**
    * Destroy snapshotter.
+   *
+   * Needs to be called after each snapshot before creating new [Snapshotter] or memory leak will happen.
    */
+  // TODO https://github.com/mapbox/mapbox-maps-android/issues/570
   fun destroy() {
     cancel()
     unsubscribeEvents()
