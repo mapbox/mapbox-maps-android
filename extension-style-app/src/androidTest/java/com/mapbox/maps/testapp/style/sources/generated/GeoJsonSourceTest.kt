@@ -45,18 +45,6 @@ class GeoJsonSourceTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun dataAsExpressionTest() {
-    val expression = literal(TEST_URI)
-    val testSource = geoJsonSource("testId") {
-      url(TEST_URI)
-      data(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.dataAsExpression?.toString())
-  }
-
-  @Test
-  @UiThreadTest
   fun urlTest() {
     val testSource = geoJsonSource("testId") {
       url(TEST_URI)
@@ -78,17 +66,6 @@ class GeoJsonSourceTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun urlAsExpressionTest() {
-    val expression = literal(TEST_URI)
-    val testSource = geoJsonSource("testId") {
-      url(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.dataAsExpression?.toString())
-  }
-
-  @Test
-  @UiThreadTest
   fun maxzoomTest() {
     val testSource = geoJsonSource("testId") {
       url(TEST_URI)
@@ -96,18 +73,6 @@ class GeoJsonSourceTest : BaseStyleTest() {
     }
     setupSource(testSource)
     assertEquals(1L, testSource.maxzoom)
-  }
-
-  @Test
-  @UiThreadTest
-  fun maxzoomAsExpressionTest() {
-    val expression = literal(1L)
-    val testSource = geoJsonSource("testId") {
-      url(TEST_URI)
-      maxzoom(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.maxzoomAsExpression?.toString())
   }
 
   @Test
@@ -123,18 +88,6 @@ class GeoJsonSourceTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun attributionAsExpressionTest() {
-    val expression = literal("abc")
-    val testSource = geoJsonSource("testId") {
-      url(TEST_URI)
-      attribution(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.attributionAsExpression?.toString())
-  }
-
-  @Test
-  @UiThreadTest
   fun bufferTest() {
     val testSource = geoJsonSource("testId") {
       url(TEST_URI)
@@ -142,18 +95,6 @@ class GeoJsonSourceTest : BaseStyleTest() {
     }
     setupSource(testSource)
     assertEquals(1L, testSource.buffer)
-  }
-
-  @Test
-  @UiThreadTest
-  fun bufferAsExpressionTest() {
-    val expression = literal(1L)
-    val testSource = geoJsonSource("testId") {
-      url(TEST_URI)
-      buffer(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.bufferAsExpression?.toString())
   }
 
   @Test
@@ -169,18 +110,6 @@ class GeoJsonSourceTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun toleranceAsExpressionTest() {
-    val expression = literal(1.0)
-    val testSource = geoJsonSource("testId") {
-      url(TEST_URI)
-      tolerance(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.toleranceAsExpression?.toString())
-  }
-
-  @Test
-  @UiThreadTest
   fun clusterTest() {
     val testSource = geoJsonSource("testId") {
       url(TEST_URI)
@@ -188,18 +117,6 @@ class GeoJsonSourceTest : BaseStyleTest() {
     }
     setupSource(testSource)
     assertEquals(true, testSource.cluster)
-  }
-
-  @Test
-  @UiThreadTest
-  fun clusterAsExpressionTest() {
-    val expression = literal(true)
-    val testSource = geoJsonSource("testId") {
-      url(TEST_URI)
-      cluster(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.clusterAsExpression?.toString())
   }
 
   @Test
@@ -215,18 +132,6 @@ class GeoJsonSourceTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun clusterRadiusAsExpressionTest() {
-    val expression = literal(1L)
-    val testSource = geoJsonSource("testId") {
-      url(TEST_URI)
-      clusterRadius(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.clusterRadiusAsExpression?.toString())
-  }
-
-  @Test
-  @UiThreadTest
   fun clusterMaxZoomTest() {
     val testSource = geoJsonSource("testId") {
       url(TEST_URI)
@@ -234,18 +139,6 @@ class GeoJsonSourceTest : BaseStyleTest() {
     }
     setupSource(testSource)
     assertEquals(1L, testSource.clusterMaxZoom)
-  }
-
-  @Test
-  @UiThreadTest
-  fun clusterMaxZoomAsExpressionTest() {
-    val expression = literal(1L)
-    val testSource = geoJsonSource("testId") {
-      url(TEST_URI)
-      clusterMaxZoom(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.clusterMaxZoomAsExpression?.toString())
   }
 
   @Test
@@ -258,19 +151,6 @@ class GeoJsonSourceTest : BaseStyleTest() {
     }
     setupSource(testSource)
     assertEquals((hashMapOf("key1" to "x", "key2" to "y") as HashMap<String, Any>), testSource.clusterProperties)
-  }
-
-  @Test
-  @UiThreadTest
-  @Ignore("https://github.com/mapbox/mapbox-maps-android/issues/499")
-  fun clusterPropertiesAsExpressionTest() {
-    val expression = literal(hashMapOf("key1" to "x", "key2" to "y") as HashMap<String, Any>)
-    val testSource = geoJsonSource("testId") {
-      url(TEST_URI)
-      clusterProperties(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.clusterPropertiesAsExpression?.toString())
   }
 
   @Test
@@ -348,18 +228,6 @@ class GeoJsonSourceTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun lineMetricsAsExpressionTest() {
-    val expression = literal(true)
-    val testSource = geoJsonSource("testId") {
-      url(TEST_URI)
-      lineMetrics(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.lineMetricsAsExpression?.toString())
-  }
-
-  @Test
-  @UiThreadTest
   fun generateIdTest() {
     val testSource = geoJsonSource("testId") {
       url(TEST_URI)
@@ -367,18 +235,6 @@ class GeoJsonSourceTest : BaseStyleTest() {
     }
     setupSource(testSource)
     assertEquals(true, testSource.generateId)
-  }
-
-  @Test
-  @UiThreadTest
-  fun generateIdAsExpressionTest() {
-    val expression = literal(true)
-    val testSource = geoJsonSource("testId") {
-      url(TEST_URI)
-      generateId(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.generateIdAsExpression?.toString())
   }
 
   @Test
@@ -401,18 +257,6 @@ class GeoJsonSourceTest : BaseStyleTest() {
     setupSource(testSource)
     testSource.prefetchZoomDelta(1L)
     assertEquals(1L, testSource.prefetchZoomDelta)
-  }
-
-  @Test
-  @UiThreadTest
-  fun prefetchZoomDeltaAsExpressionTest() {
-    val expression = literal(1L)
-    val testSource = geoJsonSource("testId") {
-      url(TEST_URI)
-      prefetchZoomDelta(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.prefetchZoomDeltaAsExpression?.toString())
   }
 
   @Test
@@ -596,23 +440,14 @@ class GeoJsonSourceTest : BaseStyleTest() {
   @UiThreadTest
   fun defaultSourcePropertiesTest() {
     assertNotNull("defaultMaxzoom should not be null", GeoJsonSource.defaultMaxzoom)
-    assertNotNull("defaultMaxzoomAsExpression should not be null", GeoJsonSource.defaultMaxzoomAsExpression)
     assertNotNull("defaultBuffer should not be null", GeoJsonSource.defaultBuffer)
-    assertNotNull("defaultBufferAsExpression should not be null", GeoJsonSource.defaultBufferAsExpression)
     assertNotNull("defaultTolerance should not be null", GeoJsonSource.defaultTolerance)
-    assertNotNull("defaultToleranceAsExpression should not be null", GeoJsonSource.defaultToleranceAsExpression)
     assertNotNull("defaultCluster should not be null", GeoJsonSource.defaultCluster)
-    assertNotNull("defaultClusterAsExpression should not be null", GeoJsonSource.defaultClusterAsExpression)
     assertNotNull("defaultClusterRadius should not be null", GeoJsonSource.defaultClusterRadius)
-    assertNotNull("defaultClusterRadiusAsExpression should not be null", GeoJsonSource.defaultClusterRadiusAsExpression)
     assertNotNull("defaultClusterMaxZoom should not be null", GeoJsonSource.defaultClusterMaxZoom)
-    assertNotNull("defaultClusterMaxZoomAsExpression should not be null", GeoJsonSource.defaultClusterMaxZoomAsExpression)
     assertNotNull("defaultLineMetrics should not be null", GeoJsonSource.defaultLineMetrics)
-    assertNotNull("defaultLineMetricsAsExpression should not be null", GeoJsonSource.defaultLineMetricsAsExpression)
     assertNotNull("defaultGenerateId should not be null", GeoJsonSource.defaultGenerateId)
-    assertNotNull("defaultGenerateIdAsExpression should not be null", GeoJsonSource.defaultGenerateIdAsExpression)
     assertNotNull("defaultPrefetchZoomDelta should not be null", GeoJsonSource.defaultPrefetchZoomDelta)
-    assertNotNull("defaultPrefetchZoomDeltaAsExpression should not be null", GeoJsonSource.defaultPrefetchZoomDeltaAsExpression)
   }
 
   companion object {

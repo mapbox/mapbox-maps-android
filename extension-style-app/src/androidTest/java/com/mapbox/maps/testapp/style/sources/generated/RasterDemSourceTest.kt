@@ -4,7 +4,6 @@ package com.mapbox.maps.testapp.style.sources.generated
 
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.mapbox.maps.extension.style.expressions.dsl.generated.*
 import com.mapbox.maps.extension.style.sources.TileSet
 import com.mapbox.maps.extension.style.sources.generated.*
 import com.mapbox.maps.testapp.style.BaseStyleTest
@@ -44,18 +43,6 @@ class RasterDemSourceTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun urlAsExpressionTest() {
-    val expression = literal("abc")
-    val testSource = rasterDemSource("testId") {
-      url(TEST_URI)
-      url(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.urlAsExpression?.toString())
-  }
-
-  @Test
-  @UiThreadTest
   @Ignore("https://github.com/mapbox/mapbox-maps-android/issues/499")
   fun tilesTest() {
     val testSource = rasterDemSource("testId") {
@@ -80,19 +67,6 @@ class RasterDemSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   @Ignore("https://github.com/mapbox/mapbox-maps-android/issues/499")
-  fun tilesAsExpressionTest() {
-    val expression = literal(listOf("a", "b", "c"))
-    val testSource = rasterDemSource("testId") {
-      url(TEST_URI)
-      tiles(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.tilesAsExpression?.toString())
-  }
-
-  @Test
-  @UiThreadTest
-  @Ignore("https://github.com/mapbox/mapbox-maps-android/issues/499")
   fun boundsTest() {
     val testSource = rasterDemSource("testId") {
       url(TEST_URI)
@@ -100,19 +74,6 @@ class RasterDemSourceTest : BaseStyleTest() {
     }
     setupSource(testSource)
     assertEquals(listOf(0.0, 1.0, 2.0, 3.0), testSource.bounds)
-  }
-
-  @Test
-  @UiThreadTest
-  @Ignore("https://github.com/mapbox/mapbox-maps-android/issues/499")
-  fun boundsAsExpressionTest() {
-    val expression = literal(listOf(0.0, 1.0, 2.0, 3.0))
-    val testSource = rasterDemSource("testId") {
-      url(TEST_URI)
-      bounds(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.boundsAsExpression?.toString())
   }
 
   @Test
@@ -139,18 +100,6 @@ class RasterDemSourceTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun minzoomAsExpressionTest() {
-    val expression = literal(1L)
-    val testSource = rasterDemSource("testId") {
-      url(TEST_URI)
-      minzoom(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.minzoomAsExpression?.toString())
-  }
-
-  @Test
-  @UiThreadTest
   fun maxzoomTest() {
     val testSource = rasterDemSource("testId") {
       url(TEST_URI)
@@ -173,18 +122,6 @@ class RasterDemSourceTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun maxzoomAsExpressionTest() {
-    val expression = literal(1L)
-    val testSource = rasterDemSource("testId") {
-      url(TEST_URI)
-      maxzoom(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.maxzoomAsExpression?.toString())
-  }
-
-  @Test
-  @UiThreadTest
   fun tileSizeTest() {
     val testSource = rasterDemSource("testId") {
       url(TEST_URI)
@@ -192,18 +129,6 @@ class RasterDemSourceTest : BaseStyleTest() {
     }
     setupSource(testSource)
     assertEquals(1L, testSource.tileSize)
-  }
-
-  @Test
-  @UiThreadTest
-  fun tileSizeAsExpressionTest() {
-    val expression = literal(1L)
-    val testSource = rasterDemSource("testId") {
-      url(TEST_URI)
-      tileSize(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.tileSizeAsExpression?.toString())
   }
 
   @Test
@@ -221,19 +146,6 @@ class RasterDemSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   @Ignore("https://github.com/mapbox/mapbox-maps-android/issues/499")
-  fun attributionAsExpressionTest() {
-    val expression = literal("abc")
-    val testSource = rasterDemSource("testId") {
-      url(TEST_URI)
-      attribution(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.attributionAsExpression?.toString())
-  }
-
-  @Test
-  @UiThreadTest
-  @Ignore("https://github.com/mapbox/mapbox-maps-android/issues/499")
   fun encodingTest() {
     val testSource = rasterDemSource("testId") {
       url(TEST_URI)
@@ -241,19 +153,6 @@ class RasterDemSourceTest : BaseStyleTest() {
     }
     setupSource(testSource)
     assertEquals(Encoding.TERRARIUM, testSource.encoding)
-  }
-
-  @Test
-  @UiThreadTest
-  @Ignore("https://github.com/mapbox/mapbox-maps-android/issues/499")
-  fun encodingAsExpressionTest() {
-    val expression = literal("terrarium")
-    val testSource = rasterDemSource("testId") {
-      url(TEST_URI)
-      encoding(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.encodingAsExpression?.toString())
   }
 
   @Test
@@ -280,18 +179,6 @@ class RasterDemSourceTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun volatileAsExpressionTest() {
-    val expression = literal(true)
-    val testSource = rasterDemSource("testId") {
-      url(TEST_URI)
-      volatile(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.volatileAsExpression?.toString())
-  }
-
-  @Test
-  @UiThreadTest
   fun prefetchZoomDeltaTest() {
     val testSource = rasterDemSource("testId") {
       url(TEST_URI)
@@ -310,18 +197,6 @@ class RasterDemSourceTest : BaseStyleTest() {
     setupSource(testSource)
     testSource.prefetchZoomDelta(1L)
     assertEquals(1L, testSource.prefetchZoomDelta)
-  }
-
-  @Test
-  @UiThreadTest
-  fun prefetchZoomDeltaAsExpressionTest() {
-    val expression = literal(1L)
-    val testSource = rasterDemSource("testId") {
-      url(TEST_URI)
-      prefetchZoomDelta(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.prefetchZoomDeltaAsExpression?.toString())
   }
 
   @Test
@@ -348,18 +223,6 @@ class RasterDemSourceTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun minimumTileUpdateIntervalAsExpressionTest() {
-    val expression = literal(1.0)
-    val testSource = rasterDemSource("testId") {
-      url(TEST_URI)
-      minimumTileUpdateInterval(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.minimumTileUpdateIntervalAsExpression?.toString())
-  }
-
-  @Test
-  @UiThreadTest
   fun maxOverscaleFactorForParentTilesTest() {
     val testSource = rasterDemSource("testId") {
       url(TEST_URI)
@@ -378,18 +241,6 @@ class RasterDemSourceTest : BaseStyleTest() {
     setupSource(testSource)
     testSource.maxOverscaleFactorForParentTiles(1L)
     assertEquals(1L, testSource.maxOverscaleFactorForParentTiles)
-  }
-
-  @Test
-  @UiThreadTest
-  fun maxOverscaleFactorForParentTilesAsExpressionTest() {
-    val expression = literal(1L)
-    val testSource = rasterDemSource("testId") {
-      url(TEST_URI)
-      maxOverscaleFactorForParentTiles(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.maxOverscaleFactorForParentTilesAsExpression?.toString())
   }
 
   @Test
@@ -420,17 +271,11 @@ class RasterDemSourceTest : BaseStyleTest() {
   @UiThreadTest
   fun defaultSourcePropertiesTest() {
     assertNotNull("defaultMinzoom should not be null", RasterDemSource.defaultMinzoom)
-    assertNotNull("defaultMinzoomAsExpression should not be null", RasterDemSource.defaultMinzoomAsExpression)
     assertNotNull("defaultMaxzoom should not be null", RasterDemSource.defaultMaxzoom)
-    assertNotNull("defaultMaxzoomAsExpression should not be null", RasterDemSource.defaultMaxzoomAsExpression)
     assertNotNull("defaultEncoding should not be null", RasterDemSource.defaultEncoding)
-    assertNotNull("defaultEncodingAsExpression should not be null", RasterDemSource.defaultEncodingAsExpression)
     assertNotNull("defaultVolatile should not be null", RasterDemSource.defaultVolatile)
-    assertNotNull("defaultVolatileAsExpression should not be null", RasterDemSource.defaultVolatileAsExpression)
     assertNotNull("defaultPrefetchZoomDelta should not be null", RasterDemSource.defaultPrefetchZoomDelta)
-    assertNotNull("defaultPrefetchZoomDeltaAsExpression should not be null", RasterDemSource.defaultPrefetchZoomDeltaAsExpression)
     assertNotNull("defaultMinimumTileUpdateInterval should not be null", RasterDemSource.defaultMinimumTileUpdateInterval)
-    assertNotNull("defaultMinimumTileUpdateIntervalAsExpression should not be null", RasterDemSource.defaultMinimumTileUpdateIntervalAsExpression)
   }
 
   companion object {
