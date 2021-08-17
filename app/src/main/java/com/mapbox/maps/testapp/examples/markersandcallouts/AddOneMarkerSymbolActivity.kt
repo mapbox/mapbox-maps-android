@@ -1,38 +1,43 @@
 package com.mapbox.maps.testapp.examples.markersandcallouts
 
-import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.MapView
-import com.mapbox.maps.Style
+import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.image.image
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
+import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
+import com.mapbox.maps.plugin.gestures.addOnMapLongClickListener
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.utils.viewannotations.ViewAnnotationPlugin
+import com.mapbox.maps.testapp.utils.viewannotations.ViewAnnotationType
 
 /**
  * Example showing how to add a marker on map with symbol layer
  */
-class AddOneMarkerSymbolActivity : AppCompatActivity(), OnMapClickListener {
+class AddOneMarkerSymbolActivity : AppCompatActivity(), OnMapClickListener, OnMapLongClickListener {
 
   private lateinit var viewAnnotationPlugin: ViewAnnotationPlugin
   private var count = 1
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val mapView = MapView(this)
+    val mapView = MapView(
+      this,
+      MapInitOptions(
+        context = this,
+        textureView = false
+      )
+    )
     viewAnnotationPlugin = ViewAnnotationPlugin(mapView)
     setContentView(mapView)
 
@@ -47,6 +52,7 @@ class AddOneMarkerSymbolActivity : AppCompatActivity(), OnMapClickListener {
       // guess it should be handled in our plugin internally but leaving as is for now
       it.addOnMapLoadedListener {
         mapView.getMapboxMap().addOnMapClickListener(this)
+        mapView.getMapboxMap().addOnMapLongClickListener(this)
       }
     }.loadStyle(
       styleExtension = style(Style.MAPBOX_STREETS) {
@@ -76,11 +82,26 @@ class AddOneMarkerSymbolActivity : AppCompatActivity(), OnMapClickListener {
   override fun onMapClick(point: Point): Boolean {
     val view = viewAnnotationPlugin.addViewAnnotation(
       R.layout.item_callout_view,
+      ViewAnnotationType.NATIVE,
       point
     )
-    view.findViewById<TextView>(R.id.textNativeView).text = "Annotation ${count++}"
+    view.findViewById<TextView>(R.id.textNativeView).text = "Native ${count++}"
     view.findViewById<ImageView>(R.id.closeNativeView).setOnClickListener {
       view.visibility = View.GONE
+    }
+    return true
+  }
+
+  override fun onMapLongClick(point: Point): Boolean {
+    viewAnnotationPlugin.addViewAnnotation(
+      R.layout.item_callout_view,
+      ViewAnnotationType.CALLOUT,
+      point
+    ) { view ->
+      view.findViewById<TextView>(R.id.textNativeView).text = "Callout ${count++}"
+      view.findViewById<ImageView>(R.id.closeNativeView).setOnClickListener {
+        view.visibility = View.GONE
+      }
     }
     return true
   }
