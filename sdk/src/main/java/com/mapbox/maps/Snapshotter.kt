@@ -2,7 +2,6 @@ package com.mapbox.maps
 
 import android.content.Context
 import android.graphics.*
-import android.os.Handler
 import android.text.Html
 import android.util.DisplayMetrics
 import android.view.View
@@ -28,26 +27,27 @@ import kotlin.math.min
 open class Snapshotter {
 
   private val context: WeakReference<Context>
-  private val coreSnapshotter: MapSnapshotterInterface
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal var coreSnapshotter: MapSnapshotterInterface?
   private val pixelRatio: Float
   private val mapSnapshotOptions: MapSnapshotOptions
-  private val snapshotOverlayOptions: SnapshotOverlayOptions
 
   internal var snapshotCreatedCallback: SnapshotCreatedListener? = null
   internal var snapshotStyleCallback: SnapshotStyleListener? = null
 
   private val observer: Observer
+  private val snapshotOverlayOptions: SnapshotOverlayOptions
 
-  private val mainHandler: Handler
-
-  constructor(context: Context, options: MapSnapshotOptions, snapshotOverlayOptions: SnapshotOverlayOptions = SnapshotOverlayOptions()) {
+  constructor(
+    context: Context,
+    options: MapSnapshotOptions,
+    overlayOptions: SnapshotOverlayOptions = SnapshotOverlayOptions()
+  ) {
     this.context = WeakReference(context)
-    this.mapSnapshotOptions = options
-    this.snapshotOverlayOptions = snapshotOverlayOptions
-    coreSnapshotter = MapSnapshotter(options)
+    mapSnapshotOptions = options
+    snapshotOverlayOptions = overlayOptions
     pixelRatio = context.resources.displayMetrics.density
-    mainHandler = Handler(context.mainLooper)
-
+    coreSnapshotter = MapSnapshotter(options)
     observer = object : Observer() {
       override fun notify(event: Event) {
         when (event.type) {
@@ -56,11 +56,11 @@ open class Snapshotter {
             unsubscribeEvents()
           }
           MapEvents.STYLE_DATA_LOADED -> if (event.getStyleDataLoadedEventData().styleDataType == StyleDataType.STYLE) {
-            snapshotStyleCallback?.onDidFinishLoadingStyle(Style(coreSnapshotter, pixelRatio))
+            snapshotStyleCallback?.onDidFinishLoadingStyle(Style(coreSnapshotter!!, pixelRatio))
           }
           MapEvents.STYLE_LOADED -> {
             snapshotStyleCallback?.onDidFullyLoadStyle(
-              Style(coreSnapshotter, pixelRatio)
+              Style(coreSnapshotter!!, pixelRatio)
             )
             unsubscribeEvents()
           }
@@ -69,27 +69,27 @@ open class Snapshotter {
         }
       }
     }
-
-    coreSnapshotter.subscribe(observer, STYLE_LOAD_EVENTS_LIST)
+    coreSnapshotter!!.subscribe(observer, STYLE_LOAD_EVENTS_LIST)
   }
 
-  @VisibleForTesting
-  internal constructor(context: Context, options: MapSnapshotOptions, snapshotter: MapSnapshotterInterface, mainHandler: Handler, observer: Observer, snapshotOverlayOptions: SnapshotOverlayOptions = SnapshotOverlayOptions()) {
-    this.context = WeakReference(context)
-    this.mapSnapshotOptions = options
-    this.snapshotOverlayOptions = snapshotOverlayOptions
-    coreSnapshotter = snapshotter
-    pixelRatio = context.resources.displayMetrics.density
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal constructor(
+    context: WeakReference<Context>,
+    options: MapSnapshotOptions,
+    overlayOptions: SnapshotOverlayOptions,
+    coreSnapshotter: MapSnapshotterInterface,
+    observer: Observer
+  ) {
+    this.context = context
+    mapSnapshotOptions = options
+    snapshotOverlayOptions = overlayOptions
+    this.coreSnapshotter = coreSnapshotter
     this.observer = observer
-    this.mainHandler = mainHandler
+    pixelRatio = 1f
   }
 
-  // Currently the unsubscribe inside the notify events will cause deadlock, it will be fixed in the gl-native.
-  // As a workaround, the unsubscribe task is scheduled on the platform side.
   private fun unsubscribeEvents() {
-    mainHandler.post {
-      coreSnapshotter.unsubscribe(observer)
-    }
+    coreSnapshotter!!.unsubscribe(observer)
   }
 
   /**
@@ -104,6 +104,8 @@ open class Snapshotter {
    *
    * @param callback instance of [SnapshotCreatedListener] that will be triggered
    *  when snapshot will be ready or will error out.
+   *
+   * @throws [NullPointerException] if [destroy] was called beforehand.
    */
   fun start(callback: SnapshotCreatedListener) {
     snapshotCreatedCallback = callback
@@ -111,7 +113,7 @@ open class Snapshotter {
       throw IllegalStateException("It's required to call setUri or setJson to provide a style definition before calling start.")
     }
 
-    coreSnapshotter.start { result ->
+    coreSnapshotter!!.start { result ->
       if (result.isValue) {
         result.value?.let {
           snapshotCreatedCallback?.onSnapshotResult(addOverlay(Snapshot(it)) as MapSnapshotInterface)
@@ -128,37 +130,47 @@ open class Snapshotter {
 
   /**
    * Cancel taking snapshot if it was running.
+   *
+   * @throws [NullPointerException] if [destroy] was called beforehand.
    */
   fun cancel() {
-    coreSnapshotter.cancel()
+    coreSnapshotter!!.cancel()
     snapshotCreatedCallback = null
   }
 
   /**
    * Destroy snapshotter.
+   *
+   * Needs to be called after each snapshot before creating new [Snapshotter] or memory leak will happen.
    */
+  // TODO https://github.com/mapbox/mapbox-maps-android/issues/570
   fun destroy() {
     cancel()
     unsubscribeEvents()
     snapshotStyleCallback = null
+    coreSnapshotter = null
   }
 
   /**
    * Set the camera options of the snapshot.
    *
    * @param cameraOptions the camera options of the snapshot.
+   *
+   * @throws [NullPointerException] if [destroy] was called beforehand.
    */
   fun setCamera(cameraOptions: CameraOptions) {
-    coreSnapshotter.setCamera(cameraOptions)
+    coreSnapshotter!!.setCamera(cameraOptions)
   }
 
   /**
    * Set the URI of the current Mapbox Style in use.
    *
    * @param styleUri string containing a Mapbox style URI.
+   *
+   * @throws [NullPointerException] if [destroy] was called beforehand.
    */
   fun setStyleUri(styleUri: String) {
-    coreSnapshotter.styleURI = styleUri
+    coreSnapshotter!!.styleURI = styleUri
   }
 
   /**
@@ -167,9 +179,11 @@ open class Snapshotter {
    * In the tile mode, the snapshotter fetches the still image of a single tile.
    *
    * @param set Bool representing if the snapshotter is in the tile mode.
+   *
+   * @throws [NullPointerException] if [destroy] was called beforehand.
    */
   fun setTileMode(set: Boolean) {
-    coreSnapshotter.setTileMode(set)
+    coreSnapshotter!!.setTileMode(set)
   }
 
   /**
@@ -179,9 +193,11 @@ open class Snapshotter {
    * might not represent the minimum bounding box.
    *
    * @return CoordinateBounds
+   *
+   * @throws [NullPointerException] if [destroy] was called beforehand.
    */
   fun coordinateBoundsForCamera(options: CameraOptions): CoordinateBounds {
-    return coreSnapshotter.coordinateBoundsForCamera(options)
+    return coreSnapshotter!!.coordinateBoundsForCamera(options)
   }
 
   /**
@@ -193,6 +209,8 @@ open class Snapshotter {
    * @param pitch The pitch of the map
    *
    * @return Returns the camera options object representing the provided params
+   *
+   * @throws [NullPointerException] if [destroy] was called beforehand.
    */
   fun cameraForCoordinates(
     coordinates: List<Point>,
@@ -200,41 +218,49 @@ open class Snapshotter {
     bearing: Double,
     pitch: Double
   ): CameraOptions {
-    return coreSnapshotter.cameraForCoordinates(coordinates, padding, bearing, pitch)
+    return coreSnapshotter!!.cameraForCoordinates(coordinates, padding, bearing, pitch)
   }
 
   /**
    *  Returns TRUE if the snapshotter is in the tile mode.
+   *
+   *  @throws [NullPointerException] if [destroy] was called beforehand.
    */
   fun isInTileMode(): Boolean {
-    return coreSnapshotter.isInTileMode
+    return coreSnapshotter!!.isInTileMode
   }
 
   /**
    * Get the current camera state.
    *
    * @return [CameraState] object.
+   *
+   * @throws [NullPointerException] if [destroy] was called beforehand.
    */
   fun getCameraState(): CameraState {
-    return coreSnapshotter.cameraState
+    return coreSnapshotter!!.cameraState
   }
 
   /**
    * Sets the size of the snapshot
    *
    * @param size The new size of the snapshot in \link MapOptions#size platform pixels \endlink
+   *
+   * @throws [NullPointerException] if [destroy] was called beforehand.
    */
   fun setSize(size: Size) {
-    coreSnapshotter.size = size
+    coreSnapshotter!!.size = size
   }
 
   /**
    * Gets the size of the snapshot
    *
    * @return Snapshot size in \link MapOptions#size platform pixels \endlink
+   *
+   * @throws [NullPointerException] if [destroy] was called beforehand.
    */
   fun getSize(): Size {
-    return coreSnapshotter.size
+    return coreSnapshotter!!.size
   }
 
   /**
@@ -243,27 +269,33 @@ open class Snapshotter {
    * This method should be called on the same thread where @see Map object is initialized.
    *
    * @param styleJson A JSON string containing a serialized Mapbox Style.
+   *
+   * @throws [NullPointerException] if [destroy] was called beforehand.
    */
   fun setStyleJson(styleJson: String) {
-    coreSnapshotter.styleJSON = styleJson
+    coreSnapshotter!!.styleJSON = styleJson
   }
 
   /**
    * Get the JSON serialization string of the current Mapbox Style in use.
    *
    * @return A JSON string containing a serialized Mapbox Style.
+   *
+   * @throws [NullPointerException] if [destroy] was called beforehand.
    */
   fun getStyleJson(): String {
-    return coreSnapshotter.styleJSON
+    return coreSnapshotter!!.styleJSON
   }
 
   /**
    * Get the URI of the current Mapbox Style in use.
    *
    * @return A string containing a Mapbox style URI.
+   *
+   * @throws [NullPointerException] if [destroy] was called beforehand.
    */
   fun getStyleUri(): String {
-    return coreSnapshotter.styleURI
+    return coreSnapshotter!!.styleURI
   }
 
   /**
@@ -274,9 +306,11 @@ open class Snapshotter {
    *
    * @param observer an Observer
    * @param events an array of event types to be subscribed to.
+   *
+   * @throws [NullPointerException] if [destroy] was called beforehand.
    */
   fun subscribe(observer: Observer, events: MutableList<String>) {
-    coreSnapshotter.subscribe(observer, events)
+    coreSnapshotter!!.subscribe(observer, events)
   }
 
   /**
@@ -284,18 +318,22 @@ open class Snapshotter {
    *
    * @param observer an Observer
    * @param events an array of event types to be unsubscribed from.
+   *
+   * @throws [NullPointerException] if [destroy] was called beforehand.
    */
   fun unsubscribe(observer: Observer, events: MutableList<String>) {
-    coreSnapshotter.unsubscribe(observer, events)
+    coreSnapshotter!!.unsubscribe(observer, events)
   }
 
   /**
    * Unsubscribes an Observer from all events.
    *
    * @param observer an Observer
+   *
+   * @throws [NullPointerException] if [destroy] was called beforehand.
    */
   fun unsubscribe(observer: Observer) {
-    coreSnapshotter.unsubscribe(observer)
+    coreSnapshotter!!.unsubscribe(observer)
   }
 
   /**

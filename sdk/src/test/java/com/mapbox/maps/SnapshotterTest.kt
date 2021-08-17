@@ -25,7 +25,13 @@ class SnapshotterTest {
     every { Map.clearData(any(), any()) } just runs
     coreSnapshotter = mockk(relaxed = true)
     every { mapSnapshotOptions.resourceOptions } returns resourceOptions
-    snapshotter = Snapshotter(mockk(relaxed = true), mapSnapshotOptions, coreSnapshotter, mockk(relaxed = true), mockk(relaxed = true))
+    snapshotter = Snapshotter(
+      mockk(relaxed = true),
+      mapSnapshotOptions,
+      mockk(relaxed = true),
+      coreSnapshotter,
+      mockk(relaxed = true)
+    )
   }
 
   @Test
@@ -144,6 +150,7 @@ class SnapshotterTest {
   fun destroy() {
     snapshotter.destroy()
     verify { coreSnapshotter.cancel() }
+    Assert.assertNull(snapshotter.coreSnapshotter)
     Assert.assertNull(snapshotter.snapshotStyleCallback)
     Assert.assertNull(snapshotter.snapshotCreatedCallback)
   }
@@ -153,5 +160,11 @@ class SnapshotterTest {
     val callback = mockk<AsyncOperationResultCallback>(relaxed = true)
     snapshotter.clearData(callback)
     verify { Map.clearData(resourceOptions, callback) }
+  }
+
+  @Test(expected = NullPointerException::class)
+  fun isInTileModeWithException() {
+    snapshotter.destroy()
+    snapshotter.isInTileMode()
   }
 }
