@@ -4,12 +4,10 @@ package com.mapbox.maps.testapp.style.sources.generated
 
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.mapbox.maps.extension.style.expressions.dsl.generated.*
 import com.mapbox.maps.extension.style.sources.generated.*
 import com.mapbox.maps.testapp.style.BaseStyleTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -45,19 +43,6 @@ class ImageSourceTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
-  fun urlAsExpressionTest() {
-    val expression = literal("abc")
-    val testSource = imageSource("testId") {
-      url(TEST_URI)
-      coordinates(TEST_COORDINATES)
-      url(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.urlAsExpression?.toString())
-  }
-
-  @Test
-  @UiThreadTest
   fun coordinatesTest() {
     val testSource = imageSource("testId") {
       url(TEST_URI)
@@ -78,20 +63,6 @@ class ImageSourceTest : BaseStyleTest() {
     setupSource(testSource)
     testSource.coordinates(listOf(listOf(0.0, 1.0), listOf(0.0, 1.0), listOf(0.0, 1.0), listOf(0.0, 1.0)))
     assertEquals(listOf(listOf(0.0, 1.0), listOf(0.0, 1.0), listOf(0.0, 1.0), listOf(0.0, 1.0)), testSource.coordinates)
-  }
-
-  @Test
-  @UiThreadTest
-  @Ignore("https://github.com/mapbox/mapbox-maps-android/issues/500")
-  fun coordinatesAsExpressionTest() {
-    val expression = literal(listOf(listOf(0.0, 1.0), listOf(0.0, 1.0), listOf(0.0, 1.0), listOf(0.0, 1.0)))
-    val testSource = imageSource("testId") {
-      url(TEST_URI)
-      coordinates(TEST_COORDINATES)
-      coordinates(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.coordinatesAsExpression?.toString())
   }
 
   @Test
@@ -118,26 +89,12 @@ class ImageSourceTest : BaseStyleTest() {
     assertEquals(1L, testSource.prefetchZoomDelta)
   }
 
-  @Test
-  @UiThreadTest
-  fun prefetchZoomDeltaAsExpressionTest() {
-    val expression = literal(1L)
-    val testSource = imageSource("testId") {
-      url(TEST_URI)
-      coordinates(TEST_COORDINATES)
-      prefetchZoomDelta(expression)
-    }
-    setupSource(testSource)
-    assertEquals(expression.toString(), testSource.prefetchZoomDeltaAsExpression?.toString())
-  }
-
   // Default source properties getter tests
 
   @Test
   @UiThreadTest
   fun defaultSourcePropertiesTest() {
     assertNotNull("defaultPrefetchZoomDelta should not be null", ImageSource.defaultPrefetchZoomDelta)
-    assertNotNull("defaultPrefetchZoomDeltaAsExpression should not be null", ImageSource.defaultPrefetchZoomDeltaAsExpression)
   }
 
   companion object {

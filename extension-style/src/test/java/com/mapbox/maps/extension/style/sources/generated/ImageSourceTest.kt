@@ -10,7 +10,6 @@ import com.mapbox.maps.StylePropertyValue
 import com.mapbox.maps.StylePropertyValueKind
 import com.mapbox.maps.extension.style.ShadowStyleManager
 import com.mapbox.maps.extension.style.StyleInterface
-import com.mapbox.maps.extension.style.expressions.dsl.generated.sum
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import io.mockk.*
 import org.junit.Assert.*
@@ -61,21 +60,6 @@ class ImageSourceTest {
   }
 
   @Test
-  fun urlAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = imageSource("testId") {
-      url(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.addStyleSource("testId", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("url=[+, 2, 3]"))
-  }
-
-  @Test
   fun urlSetAfterBind() {
     val testSource = imageSource("testId") {}
     testSource.bindTo(style)
@@ -86,41 +70,12 @@ class ImageSourceTest {
   }
 
   @Test
-  fun urlAsExpressionSetAfterBind() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = imageSource("testId") {}
-    testSource.bindTo(style)
-    testSource.url(expression)
-
-    verify { style.setStyleSourceProperty("testId", "url", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
-  }
-
-  @Test
   fun urlGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue("abc")
     val testSource = imageSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals("abc".toString(), testSource.url?.toString())
-    verify { style.getStyleSourceProperty("testId", "url") }
-  }
-
-  @Test
-  fun urlAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = imageSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.urlAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "url") }
   }
 
@@ -136,21 +91,6 @@ class ImageSourceTest {
   }
 
   @Test
-  fun coordinatesAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = imageSource("testId") {
-      coordinates(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.addStyleSource("testId", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("coordinates=[+, 2, 3]"))
-  }
-
-  @Test
   fun coordinatesSetAfterBind() {
     val testSource = imageSource("testId") {}
     testSource.bindTo(style)
@@ -161,41 +101,12 @@ class ImageSourceTest {
   }
 
   @Test
-  fun coordinatesAsExpressionSetAfterBind() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = imageSource("testId") {}
-    testSource.bindTo(style)
-    testSource.coordinates(expression)
-
-    verify { style.setStyleSourceProperty("testId", "coordinates", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
-  }
-
-  @Test
   fun coordinatesGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(listOf(0.0, 1.0), listOf(0.0, 1.0), listOf(0.0, 1.0), listOf(0.0, 1.0)))
     val testSource = imageSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals(listOf(listOf(0.0, 1.0), listOf(0.0, 1.0), listOf(0.0, 1.0), listOf(0.0, 1.0)).toString(), testSource.coordinates?.toString())
-    verify { style.getStyleSourceProperty("testId", "coordinates") }
-  }
-
-  @Test
-  fun coordinatesAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = imageSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.coordinatesAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "coordinates") }
   }
 
@@ -211,21 +122,6 @@ class ImageSourceTest {
   }
 
   @Test
-  fun prefetchZoomDeltaAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = imageSource("testId") {
-      prefetchZoomDelta(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.setStyleSourceProperty("testId", "prefetch-zoom-delta", capture(valueSlot)) }
-    assertEquals("[+, 2, 3]", valueSlot.captured.toString())
-  }
-
-  @Test
   fun prefetchZoomDeltaSetAfterBind() {
     val testSource = imageSource("testId") {}
     testSource.bindTo(style)
@@ -233,20 +129,6 @@ class ImageSourceTest {
 
     verify { style.setStyleSourceProperty("testId", "prefetch-zoom-delta", capture(valueSlot)) }
     assertEquals(valueSlot.captured.toString(), "1")
-  }
-
-  @Test
-  fun prefetchZoomDeltaAsExpressionSetAfterBind() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = imageSource("testId") {}
-    testSource.bindTo(style)
-    testSource.prefetchZoomDelta(expression)
-
-    verify { style.setStyleSourceProperty("testId", "prefetch-zoom-delta", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
   }
 
   @Test
@@ -258,21 +140,6 @@ class ImageSourceTest {
     assertEquals(1L.toString(), testSource.prefetchZoomDelta?.toString())
     verify { style.getStyleSourceProperty("testId", "prefetch-zoom-delta") }
   }
-
-  @Test
-  fun prefetchZoomDeltaAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = imageSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.prefetchZoomDeltaAsExpression?.toString())
-    verify { style.getStyleSourceProperty("testId", "prefetch-zoom-delta") }
-  }
   // Default source property getters tests
 
   @Test
@@ -280,19 +147,6 @@ class ImageSourceTest {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
 
     assertEquals(1L.toString(), ImageSource.defaultPrefetchZoomDelta?.toString())
-    verify { StyleManager.getStyleSourcePropertyDefaultValue("image", "prefetch-zoom-delta") }
-  }
-
-  @Test
-  fun defaultPrefetchZoomDeltaAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-
-    assertEquals(expression.toString(), ImageSource.defaultPrefetchZoomDeltaAsExpression?.toString())
     verify { StyleManager.getStyleSourcePropertyDefaultValue("image", "prefetch-zoom-delta") }
   }
 }

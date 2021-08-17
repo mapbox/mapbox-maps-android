@@ -3,7 +3,6 @@
 package com.mapbox.maps.extension.style.sources.generated
 
 import com.mapbox.maps.StyleManager
-import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.sources.Source
 import com.mapbox.maps.extension.style.sources.TileSet
@@ -42,13 +41,6 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
   /**
    * A URL to a TileJSON resource. Supported protocols are `http:`, `https:`, and `mapbox://<Tileset ID>`.
    */
-  fun url(value: Expression) = apply {
-    setProperty(PropertyValue("url", value))
-  }
-
-  /**
-   * A URL to a TileJSON resource. Supported protocols are `http:`, `https:`, and `mapbox://<Tileset ID>`.
-   */
   val url: String?
     /**
      * Get the Url property
@@ -58,36 +50,10 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
     get() = getPropertyValue("url")
 
   /**
-   * A URL to a TileJSON resource. Supported protocols are `http:`, `https:`, and `mapbox://<Tileset ID>`.
-   */
-  val urlAsExpression: Expression?
-    /**
-     * Get the Url property as an Expression
-     *
-     * @return Expression
-     */
-    get() {
-      getPropertyValue<Expression>("url")?.let {
-        return it
-      }
-      url?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
-
-  /**
    * An array of one or more tile source URLs, as in the TileJSON spec.
    */
   fun tiles(value: List<String>) = apply {
     setProperty(PropertyValue("tiles", TypeUtils.wrapToValue(value)))
-  }
-
-  /**
-   * An array of one or more tile source URLs, as in the TileJSON spec.
-   */
-  fun tiles(value: Expression) = apply {
-    setProperty(PropertyValue("tiles", value))
   }
 
   /**
@@ -100,25 +66,6 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
      * @return List<String>
      */
     get() = getPropertyValue("tiles")
-
-  /**
-   * An array of one or more tile source URLs, as in the TileJSON spec.
-   */
-  val tilesAsExpression: Expression?
-    /**
-     * Get the Tiles property as an Expression
-     *
-     * @return Expression
-     */
-    get() {
-      getPropertyValue<Expression>("tiles")?.let {
-        return it
-      }
-      tiles?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
 
   /**
    * An array containing the longitude and latitude of the southwest and northeast corners of the source's
@@ -134,38 +81,10 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
     get() = getPropertyValue("bounds")
 
   /**
-   * An array containing the longitude and latitude of the southwest and northeast corners of the source's
-   * bounding box in the following order: `[sw.lng, sw.lat, ne.lng, ne.lat]`. When this property is included in
-   * a source, no tiles outside of the given bounds are requested by Mapbox GL.
-   */
-  val boundsAsExpression: Expression?
-    /**
-     * Get the Bounds property as an Expression
-     *
-     * @return Expression
-     */
-    get() {
-      getPropertyValue<Expression>("bounds")?.let {
-        return it
-      }
-      bounds?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
-
-  /**
    * Minimum zoom level for which tiles are available, as in the TileJSON spec.
    */
   fun minzoom(value: Long = 0L) = apply {
     setProperty(PropertyValue("minzoom", TypeUtils.wrapToValue(value)))
-  }
-
-  /**
-   * Minimum zoom level for which tiles are available, as in the TileJSON spec.
-   */
-  fun minzoom(value: Expression) = apply {
-    setProperty(PropertyValue("minzoom", value))
   }
 
   /**
@@ -180,38 +99,11 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
     get() = getPropertyValue("minzoom")
 
   /**
-   * Minimum zoom level for which tiles are available, as in the TileJSON spec.
-   */
-  val minzoomAsExpression: Expression?
-    /**
-     * Get the Minzoom property as an Expression
-     *
-     * @return Expression
-     */
-    get() {
-      getPropertyValue<Expression>("minzoom")?.let {
-        return it
-      }
-      minzoom?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
-
-  /**
    * Maximum zoom level for which tiles are available, as in the TileJSON spec. Data from tiles
    * at the maxzoom are used when displaying the map at higher zoom levels.
    */
   fun maxzoom(value: Long = 22L) = apply {
     setProperty(PropertyValue("maxzoom", TypeUtils.wrapToValue(value)))
-  }
-
-  /**
-   * Maximum zoom level for which tiles are available, as in the TileJSON spec. Data from tiles
-   * at the maxzoom are used when displaying the map at higher zoom levels.
-   */
-  fun maxzoom(value: Expression) = apply {
-    setProperty(PropertyValue("maxzoom", value))
   }
 
   /**
@@ -227,26 +119,6 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
     get() = getPropertyValue("maxzoom")
 
   /**
-   * Maximum zoom level for which tiles are available, as in the TileJSON spec. Data from tiles
-   * at the maxzoom are used when displaying the map at higher zoom levels.
-   */
-  val maxzoomAsExpression: Expression?
-    /**
-     * Get the Maxzoom property as an Expression
-     *
-     * @return Expression
-     */
-    get() {
-      getPropertyValue<Expression>("maxzoom")?.let {
-        return it
-      }
-      maxzoom?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
-
-  /**
    * The minimum visual size to display tiles for this layer. Only configurable for raster layers.
    */
   val tileSize: Long?
@@ -256,25 +128,6 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
      * @return Long
      */
     get() = getPropertyValue("tileSize")
-
-  /**
-   * The minimum visual size to display tiles for this layer. Only configurable for raster layers.
-   */
-  val tileSizeAsExpression: Expression?
-    /**
-     * Get the TileSize property as an Expression
-     *
-     * @return Expression
-     */
-    get() {
-      getPropertyValue<Expression>("tileSize")?.let {
-        return it
-      }
-      tileSize?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
 
   /**
    * Influences the y direction of the tile coordinates. The global-mercator (aka Spherical Mercator) profile is assumed.
@@ -293,27 +146,6 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
     }
 
   /**
-   * Influences the y direction of the tile coordinates. The global-mercator (aka Spherical Mercator) profile is assumed.
-   * This is an Expression representation of this Property.
-   *
-   */
-  val schemeAsExpression: Expression?
-    /**
-     * Get the Scheme property as an Expression
-     *
-     * @return expression
-     */
-    get() {
-      getPropertyValue<Expression>("scheme")?.let {
-        return it
-      }
-      scheme?.let {
-        return Expression.literal(it.value)
-      }
-      return null
-    }
-
-  /**
    * Contains an attribution to be displayed when the map is shown to a user.
    */
   val attribution: String?
@@ -325,36 +157,10 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
     get() = getPropertyValue("attribution")
 
   /**
-   * Contains an attribution to be displayed when the map is shown to a user.
-   */
-  val attributionAsExpression: Expression?
-    /**
-     * Get the Attribution property as an Expression
-     *
-     * @return Expression
-     */
-    get() {
-      getPropertyValue<Expression>("attribution")?.let {
-        return it
-      }
-      attribution?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
-
-  /**
    * A setting to determine whether a source's tiles are cached locally.
    */
   fun volatile(value: Boolean = false) = apply {
     setProperty(PropertyValue("volatile", TypeUtils.wrapToValue(value)))
-  }
-
-  /**
-   * A setting to determine whether a source's tiles are cached locally.
-   */
-  fun volatile(value: Expression) = apply {
-    setProperty(PropertyValue("volatile", value))
   }
 
   /**
@@ -367,25 +173,6 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
      * @return Boolean
      */
     get() = getPropertyValue("volatile")
-
-  /**
-   * A setting to determine whether a source's tiles are cached locally.
-   */
-  val volatileAsExpression: Expression?
-    /**
-     * Get the Volatile property as an Expression
-     *
-     * @return Expression
-     */
-    get() {
-      getPropertyValue<Expression>("volatile")?.let {
-        return it
-      }
-      volatile?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
 
   /**
    * When loading a map, if `PrefetchZoomDelta` is set to any number greater than 0, the map
@@ -403,16 +190,6 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
    * map at lower resolution as quick as possible. It will get clamped at the tile source
    * minimum zoom. The default `delta` is 4.
    */
-  fun prefetchZoomDelta(value: Expression) = apply {
-    setVolatileProperty(PropertyValue("prefetch-zoom-delta", value))
-  }
-
-  /**
-   * When loading a map, if `PrefetchZoomDelta` is set to any number greater than 0, the map
-   * will first request a tile for `zoom - delta` in a attempt to display a full
-   * map at lower resolution as quick as possible. It will get clamped at the tile source
-   * minimum zoom. The default `delta` is 4.
-   */
   val prefetchZoomDelta: Long?
     /**
      * Get the PrefetchZoomDelta property
@@ -422,39 +199,10 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
     get() = getPropertyValue("prefetch-zoom-delta")
 
   /**
-   * When loading a map, if `PrefetchZoomDelta` is set to any number greater than 0, the map
-   * will first request a tile for `zoom - delta` in a attempt to display a full
-   * map at lower resolution as quick as possible. It will get clamped at the tile source
-   * minimum zoom. The default `delta` is 4.
-   */
-  val prefetchZoomDeltaAsExpression: Expression?
-    /**
-     * Get the PrefetchZoomDelta property as an Expression
-     *
-     * @return Expression
-     */
-    get() {
-      getPropertyValue<Expression>("prefetch-zoom-delta")?.let {
-        return it
-      }
-      prefetchZoomDelta?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
-
-  /**
    * Minimum tile update interval in milliseconds, which is used to throttle the tile update network requests.
    */
   fun minimumTileUpdateInterval(value: Double = 0.0) = apply {
     setVolatileProperty(PropertyValue("minimum-tile-update-interval", TypeUtils.wrapToValue(value)))
-  }
-
-  /**
-   * Minimum tile update interval in milliseconds, which is used to throttle the tile update network requests.
-   */
-  fun minimumTileUpdateInterval(value: Expression) = apply {
-    setVolatileProperty(PropertyValue("minimum-tile-update-interval", value))
   }
 
   /**
@@ -467,25 +215,6 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
      * @return Double
      */
     get() = getPropertyValue("minimum-tile-update-interval")
-
-  /**
-   * Minimum tile update interval in milliseconds, which is used to throttle the tile update network requests.
-   */
-  val minimumTileUpdateIntervalAsExpression: Expression?
-    /**
-     * Get the MinimumTileUpdateInterval property as an Expression
-     *
-     * @return Expression
-     */
-    get() {
-      getPropertyValue<Expression>("minimum-tile-update-interval")?.let {
-        return it
-      }
-      minimumTileUpdateInterval?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
 
   /**
    * When a set of tiles for a current zoom level is being rendered and some of
@@ -503,16 +232,6 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
    * instead. This might introduce unwanted rendering side-effects, especially for raster tiles that are overscaled multiple times.
    * This property sets the maximum limit for how much a parent tile can be overscaled.
    */
-  fun maxOverscaleFactorForParentTiles(value: Expression) = apply {
-    setVolatileProperty(PropertyValue("max-overscale-factor-for-parent-tiles", value))
-  }
-
-  /**
-   * When a set of tiles for a current zoom level is being rendered and some of
-   * the ideal tiles that cover the screen are not yet loaded, parent tile could be used
-   * instead. This might introduce unwanted rendering side-effects, especially for raster tiles that are overscaled multiple times.
-   * This property sets the maximum limit for how much a parent tile can be overscaled.
-   */
   val maxOverscaleFactorForParentTiles: Long?
     /**
      * Get the MaxOverscaleFactorForParentTiles property
@@ -520,28 +239,6 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
      * @return Long
      */
     get() = getPropertyValue("max-overscale-factor-for-parent-tiles")
-
-  /**
-   * When a set of tiles for a current zoom level is being rendered and some of
-   * the ideal tiles that cover the screen are not yet loaded, parent tile could be used
-   * instead. This might introduce unwanted rendering side-effects, especially for raster tiles that are overscaled multiple times.
-   * This property sets the maximum limit for how much a parent tile can be overscaled.
-   */
-  val maxOverscaleFactorForParentTilesAsExpression: Expression?
-    /**
-     * Get the MaxOverscaleFactorForParentTiles property as an Expression
-     *
-     * @return Expression
-     */
-    get() {
-      getPropertyValue<Expression>("max-overscale-factor-for-parent-tiles")?.let {
-        return it
-      }
-      maxOverscaleFactorForParentTiles?.let {
-        return Expression.literal(it)
-      }
-      return null
-    }
 
   /**
    * Builder for RasterSource.
@@ -563,26 +260,10 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
     }
 
     /**
-     * A URL to a TileJSON resource. Supported protocols are `http:`, `https:`, and `mapbox://<Tileset ID>`.
-     */
-    fun url(value: Expression) = apply {
-      val propertyValue = PropertyValue("url", value)
-      properties[propertyValue.propertyName] = propertyValue
-    }
-
-    /**
      * An array of one or more tile source URLs, as in the TileJSON spec.
      */
     fun tiles(value: List<String>) = apply {
       val propertyValue = PropertyValue("tiles", TypeUtils.wrapToValue(value))
-      properties[propertyValue.propertyName] = propertyValue
-    }
-
-    /**
-     * An array of one or more tile source URLs, as in the TileJSON spec.
-     */
-    fun tiles(value: Expression) = apply {
-      val propertyValue = PropertyValue("tiles", value)
       properties[propertyValue.propertyName] = propertyValue
     }
 
@@ -597,28 +278,10 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
     }
 
     /**
-     * An array containing the longitude and latitude of the southwest and northeast corners of the source's
-     * bounding box in the following order: `[sw.lng, sw.lat, ne.lng, ne.lat]`. When this property is included in
-     * a source, no tiles outside of the given bounds are requested by Mapbox GL.
-     */
-    fun bounds(value: Expression) = apply {
-      val propertyValue = PropertyValue("bounds", value)
-      properties[propertyValue.propertyName] = propertyValue
-    }
-
-    /**
      * Minimum zoom level for which tiles are available, as in the TileJSON spec.
      */
     fun minzoom(value: Long = 0L) = apply {
       val propertyValue = PropertyValue("minzoom", TypeUtils.wrapToValue(value))
-      properties[propertyValue.propertyName] = propertyValue
-    }
-
-    /**
-     * Minimum zoom level for which tiles are available, as in the TileJSON spec.
-     */
-    fun minzoom(value: Expression) = apply {
-      val propertyValue = PropertyValue("minzoom", value)
       properties[propertyValue.propertyName] = propertyValue
     }
 
@@ -632,27 +295,10 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
     }
 
     /**
-     * Maximum zoom level for which tiles are available, as in the TileJSON spec. Data from tiles
-     * at the maxzoom are used when displaying the map at higher zoom levels.
-     */
-    fun maxzoom(value: Expression) = apply {
-      val propertyValue = PropertyValue("maxzoom", value)
-      properties[propertyValue.propertyName] = propertyValue
-    }
-
-    /**
      * The minimum visual size to display tiles for this layer. Only configurable for raster layers.
      */
     fun tileSize(value: Long = 512L) = apply {
       val propertyValue = PropertyValue("tileSize", TypeUtils.wrapToValue(value))
-      properties[propertyValue.propertyName] = propertyValue
-    }
-
-    /**
-     * The minimum visual size to display tiles for this layer. Only configurable for raster layers.
-     */
-    fun tileSize(value: Expression) = apply {
-      val propertyValue = PropertyValue("tileSize", value)
       properties[propertyValue.propertyName] = propertyValue
     }
 
@@ -665,14 +311,6 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
     }
 
     /**
-     * Influences the y direction of the tile coordinates. The global-mercator (aka Spherical Mercator) profile is assumed.
-     */
-    fun scheme(value: Expression) = apply {
-      val propertyValue = PropertyValue("scheme", value)
-      properties[propertyValue.propertyName] = propertyValue
-    }
-
-    /**
      * Contains an attribution to be displayed when the map is shown to a user.
      */
     fun attribution(value: String) = apply {
@@ -681,26 +319,10 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
     }
 
     /**
-     * Contains an attribution to be displayed when the map is shown to a user.
-     */
-    fun attribution(value: Expression) = apply {
-      val propertyValue = PropertyValue("attribution", value)
-      properties[propertyValue.propertyName] = propertyValue
-    }
-
-    /**
      * A setting to determine whether a source's tiles are cached locally.
      */
     fun volatile(value: Boolean = false) = apply {
       val propertyValue = PropertyValue("volatile", TypeUtils.wrapToValue(value))
-      properties[propertyValue.propertyName] = propertyValue
-    }
-
-    /**
-     * A setting to determine whether a source's tiles are cached locally.
-     */
-    fun volatile(value: Expression) = apply {
-      val propertyValue = PropertyValue("volatile", value)
       properties[propertyValue.propertyName] = propertyValue
     }
 
@@ -716,29 +338,10 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
     }
 
     /**
-     * When loading a map, if `PrefetchZoomDelta` is set to any number greater than 0, the map
-     * will first request a tile for `zoom - delta` in a attempt to display a full
-     * map at lower resolution as quick as possible. It will get clamped at the tile source
-     * minimum zoom. The default `delta` is 4.
-     */
-    fun prefetchZoomDelta(value: Expression) = apply {
-      val propertyValue = PropertyValue("prefetch-zoom-delta", value)
-      volatileProperties[propertyValue.propertyName] = propertyValue
-    }
-
-    /**
      * Minimum tile update interval in milliseconds, which is used to throttle the tile update network requests.
      */
     fun minimumTileUpdateInterval(value: Double = 0.0) = apply {
       val propertyValue = PropertyValue("minimum-tile-update-interval", TypeUtils.wrapToValue(value))
-      volatileProperties[propertyValue.propertyName] = propertyValue
-    }
-
-    /**
-     * Minimum tile update interval in milliseconds, which is used to throttle the tile update network requests.
-     */
-    fun minimumTileUpdateInterval(value: Expression) = apply {
-      val propertyValue = PropertyValue("minimum-tile-update-interval", value)
       volatileProperties[propertyValue.propertyName] = propertyValue
     }
 
@@ -750,17 +353,6 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
      */
     fun maxOverscaleFactorForParentTiles(value: Long) = apply {
       val propertyValue = PropertyValue("max-overscale-factor-for-parent-tiles", TypeUtils.wrapToValue(value))
-      volatileProperties[propertyValue.propertyName] = propertyValue
-    }
-
-    /**
-     * When a set of tiles for a current zoom level is being rendered and some of
-     * the ideal tiles that cover the screen are not yet loaded, parent tile could be used
-     * instead. This might introduce unwanted rendering side-effects, especially for raster tiles that are overscaled multiple times.
-     * This property sets the maximum limit for how much a parent tile can be overscaled.
-     */
-    fun maxOverscaleFactorForParentTiles(value: Expression) = apply {
-      val propertyValue = PropertyValue("max-overscale-factor-for-parent-tiles", value)
       volatileProperties[propertyValue.propertyName] = propertyValue
     }
 
@@ -815,25 +407,6 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
       get() = StyleManager.getStyleSourcePropertyDefaultValue("raster", "minzoom").silentUnwrap()
 
     /**
-     * Minimum zoom level for which tiles are available, as in the TileJSON spec.
-     */
-    val defaultMinzoomAsExpression: Expression?
-      /**
-       * Get the Minzoom property as an Expression
-       *
-       * @return Expression
-       */
-      get() {
-        StyleManager.getStyleSourcePropertyDefaultValue("raster", "minzoom").silentUnwrap<Expression>()?.let {
-          return it
-        }
-        defaultMinzoom?.let {
-          return Expression.literal(it)
-        }
-        return null
-      }
-
-    /**
      * Maximum zoom level for which tiles are available, as in the TileJSON spec. Data from tiles
      * at the maxzoom are used when displaying the map at higher zoom levels.
      */
@@ -844,26 +417,6 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
        * @return Long
        */
       get() = StyleManager.getStyleSourcePropertyDefaultValue("raster", "maxzoom").silentUnwrap()
-
-    /**
-     * Maximum zoom level for which tiles are available, as in the TileJSON spec. Data from tiles
-     * at the maxzoom are used when displaying the map at higher zoom levels.
-     */
-    val defaultMaxzoomAsExpression: Expression?
-      /**
-       * Get the Maxzoom property as an Expression
-       *
-       * @return Expression
-       */
-      get() {
-        StyleManager.getStyleSourcePropertyDefaultValue("raster", "maxzoom").silentUnwrap<Expression>()?.let {
-          return it
-        }
-        defaultMaxzoom?.let {
-          return Expression.literal(it)
-        }
-        return null
-      }
 
     /**
      * Influences the y direction of the tile coordinates. The global-mercator (aka Spherical Mercator) profile is assumed.
@@ -882,27 +435,6 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
       }
 
     /**
-     * Influences the y direction of the tile coordinates. The global-mercator (aka Spherical Mercator) profile is assumed.
-     * This is an Expression representation of this Property.
-     *
-     */
-    val defaultSchemeAsExpression: Expression?
-      /**
-       * Get the Scheme property as an Expression
-       *
-       * @return expression
-       */
-      get() {
-        StyleManager.getStyleSourcePropertyDefaultValue("raster", "scheme").silentUnwrap<Expression>()?.let {
-          return it
-        }
-        defaultScheme?.let {
-          return Expression.literal(it.value)
-        }
-        return null
-      }
-
-    /**
      * A setting to determine whether a source's tiles are cached locally.
      */
     val defaultVolatile: Boolean?
@@ -912,25 +444,6 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
        * @return Boolean
        */
       get() = StyleManager.getStyleSourcePropertyDefaultValue("raster", "volatile").silentUnwrap()
-
-    /**
-     * A setting to determine whether a source's tiles are cached locally.
-     */
-    val defaultVolatileAsExpression: Expression?
-      /**
-       * Get the Volatile property as an Expression
-       *
-       * @return Expression
-       */
-      get() {
-        StyleManager.getStyleSourcePropertyDefaultValue("raster", "volatile").silentUnwrap<Expression>()?.let {
-          return it
-        }
-        defaultVolatile?.let {
-          return Expression.literal(it)
-        }
-        return null
-      }
 
     /**
      * When loading a map, if `PrefetchZoomDelta` is set to any number greater than 0, the map
@@ -947,28 +460,6 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
       get() = StyleManager.getStyleSourcePropertyDefaultValue("raster", "prefetch-zoom-delta").silentUnwrap()
 
     /**
-     * When loading a map, if `PrefetchZoomDelta` is set to any number greater than 0, the map
-     * will first request a tile for `zoom - delta` in a attempt to display a full
-     * map at lower resolution as quick as possible. It will get clamped at the tile source
-     * minimum zoom. The default `delta` is 4.
-     */
-    val defaultPrefetchZoomDeltaAsExpression: Expression?
-      /**
-       * Get the PrefetchZoomDelta property as an Expression
-       *
-       * @return Expression
-       */
-      get() {
-        StyleManager.getStyleSourcePropertyDefaultValue("raster", "prefetch-zoom-delta").silentUnwrap<Expression>()?.let {
-          return it
-        }
-        defaultPrefetchZoomDelta?.let {
-          return Expression.literal(it)
-        }
-        return null
-      }
-
-    /**
      * Minimum tile update interval in milliseconds, which is used to throttle the tile update network requests.
      */
     val defaultMinimumTileUpdateInterval: Double?
@@ -978,25 +469,6 @@ class RasterSource(builder: Builder) : Source(builder.sourceId) {
        * @return Double
        */
       get() = StyleManager.getStyleSourcePropertyDefaultValue("raster", "minimum-tile-update-interval").silentUnwrap()
-
-    /**
-     * Minimum tile update interval in milliseconds, which is used to throttle the tile update network requests.
-     */
-    val defaultMinimumTileUpdateIntervalAsExpression: Expression?
-      /**
-       * Get the MinimumTileUpdateInterval property as an Expression
-       *
-       * @return Expression
-       */
-      get() {
-        StyleManager.getStyleSourcePropertyDefaultValue("raster", "minimum-tile-update-interval").silentUnwrap<Expression>()?.let {
-          return it
-        }
-        defaultMinimumTileUpdateInterval?.let {
-          return Expression.literal(it)
-        }
-        return null
-      }
   }
 }
 

@@ -10,7 +10,6 @@ import com.mapbox.maps.StylePropertyValue
 import com.mapbox.maps.StylePropertyValueKind
 import com.mapbox.maps.extension.style.ShadowStyleManager
 import com.mapbox.maps.extension.style.StyleInterface
-import com.mapbox.maps.extension.style.expressions.dsl.generated.sum
 import com.mapbox.maps.extension.style.sources.TileSet
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import io.mockk.*
@@ -62,21 +61,6 @@ class VectorSourceTest {
   }
 
   @Test
-  fun urlAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = vectorSource("testId") {
-      url(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.addStyleSource("testId", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("url=[+, 2, 3]"))
-  }
-
-  @Test
   fun urlSetAfterBind() {
     val testSource = vectorSource("testId") {}
     testSource.bindTo(style)
@@ -87,41 +71,12 @@ class VectorSourceTest {
   }
 
   @Test
-  fun urlAsExpressionSetAfterBind() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = vectorSource("testId") {}
-    testSource.bindTo(style)
-    testSource.url(expression)
-
-    verify { style.setStyleSourceProperty("testId", "url", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
-  }
-
-  @Test
   fun urlGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue("abc")
     val testSource = vectorSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals("abc".toString(), testSource.url?.toString())
-    verify { style.getStyleSourceProperty("testId", "url") }
-  }
-
-  @Test
-  fun urlAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = vectorSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.urlAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "url") }
   }
 
@@ -137,21 +92,6 @@ class VectorSourceTest {
   }
 
   @Test
-  fun tilesAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = vectorSource("testId") {
-      tiles(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.addStyleSource("testId", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("tiles=[+, 2, 3]"))
-  }
-
-  @Test
   fun tilesSetAfterBind() {
     val testSource = vectorSource("testId") {}
     testSource.bindTo(style)
@@ -162,41 +102,12 @@ class VectorSourceTest {
   }
 
   @Test
-  fun tilesAsExpressionSetAfterBind() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = vectorSource("testId") {}
-    testSource.bindTo(style)
-    testSource.tiles(expression)
-
-    verify { style.setStyleSourceProperty("testId", "tiles", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
-  }
-
-  @Test
   fun tilesGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(listOf("a", "b", "c"))
     val testSource = vectorSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals(listOf("a", "b", "c").toString(), testSource.tiles?.toString())
-    verify { style.getStyleSourceProperty("testId", "tiles") }
-  }
-
-  @Test
-  fun tilesAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = vectorSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.tilesAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "tiles") }
   }
 
@@ -212,42 +123,12 @@ class VectorSourceTest {
   }
 
   @Test
-  fun boundsAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = vectorSource("testId") {
-      bounds(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.addStyleSource("testId", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("bounds=[+, 2, 3]"))
-  }
-
-  @Test
   fun boundsGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0, 2.0, 3.0))
     val testSource = vectorSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals(listOf(0.0, 1.0, 2.0, 3.0).toString(), testSource.bounds?.toString())
-    verify { style.getStyleSourceProperty("testId", "bounds") }
-  }
-
-  @Test
-  fun boundsAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = vectorSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.boundsAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "bounds") }
   }
 
@@ -263,42 +144,12 @@ class VectorSourceTest {
   }
 
   @Test
-  fun schemeAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = vectorSource("testId") {
-      scheme(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.addStyleSource("testId", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("scheme=[+, 2, 3]"))
-  }
-
-  @Test
   fun schemeGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue("xyz")
     val testSource = vectorSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals(Scheme.XYZ, testSource.scheme)
-    verify { style.getStyleSourceProperty("testId", "scheme") }
-  }
-
-  @Test
-  fun schemeAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = vectorSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.schemeAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "scheme") }
   }
 
@@ -314,21 +165,6 @@ class VectorSourceTest {
   }
 
   @Test
-  fun minzoomAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = vectorSource("testId") {
-      minzoom(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.addStyleSource("testId", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("minzoom=[+, 2, 3]"))
-  }
-
-  @Test
   fun minzoomSetAfterBind() {
     val testSource = vectorSource("testId") {}
     testSource.bindTo(style)
@@ -339,41 +175,12 @@ class VectorSourceTest {
   }
 
   @Test
-  fun minzoomAsExpressionSetAfterBind() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = vectorSource("testId") {}
-    testSource.bindTo(style)
-    testSource.minzoom(expression)
-
-    verify { style.setStyleSourceProperty("testId", "minzoom", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
-  }
-
-  @Test
   fun minzoomGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
     val testSource = vectorSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals(1L.toString(), testSource.minzoom?.toString())
-    verify { style.getStyleSourceProperty("testId", "minzoom") }
-  }
-
-  @Test
-  fun minzoomAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = vectorSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.minzoomAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "minzoom") }
   }
 
@@ -389,21 +196,6 @@ class VectorSourceTest {
   }
 
   @Test
-  fun maxzoomAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = vectorSource("testId") {
-      maxzoom(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.addStyleSource("testId", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("maxzoom=[+, 2, 3]"))
-  }
-
-  @Test
   fun maxzoomSetAfterBind() {
     val testSource = vectorSource("testId") {}
     testSource.bindTo(style)
@@ -414,41 +206,12 @@ class VectorSourceTest {
   }
 
   @Test
-  fun maxzoomAsExpressionSetAfterBind() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = vectorSource("testId") {}
-    testSource.bindTo(style)
-    testSource.maxzoom(expression)
-
-    verify { style.setStyleSourceProperty("testId", "maxzoom", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
-  }
-
-  @Test
   fun maxzoomGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
     val testSource = vectorSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals(1L.toString(), testSource.maxzoom?.toString())
-    verify { style.getStyleSourceProperty("testId", "maxzoom") }
-  }
-
-  @Test
-  fun maxzoomAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = vectorSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.maxzoomAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "maxzoom") }
   }
 
@@ -464,42 +227,12 @@ class VectorSourceTest {
   }
 
   @Test
-  fun attributionAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = vectorSource("testId") {
-      attribution(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.addStyleSource("testId", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("attribution=[+, 2, 3]"))
-  }
-
-  @Test
   fun attributionGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue("abc")
     val testSource = vectorSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals("abc".toString(), testSource.attribution?.toString())
-    verify { style.getStyleSourceProperty("testId", "attribution") }
-  }
-
-  @Test
-  fun attributionAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = vectorSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.attributionAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "attribution") }
   }
 
@@ -515,21 +248,6 @@ class VectorSourceTest {
   }
 
   @Test
-  fun volatileAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = vectorSource("testId") {
-      volatile(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.addStyleSource("testId", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("volatile=[+, 2, 3]"))
-  }
-
-  @Test
   fun volatileSetAfterBind() {
     val testSource = vectorSource("testId") {}
     testSource.bindTo(style)
@@ -540,41 +258,12 @@ class VectorSourceTest {
   }
 
   @Test
-  fun volatileAsExpressionSetAfterBind() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = vectorSource("testId") {}
-    testSource.bindTo(style)
-    testSource.volatile(expression)
-
-    verify { style.setStyleSourceProperty("testId", "volatile", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
-  }
-
-  @Test
   fun volatileGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(true)
     val testSource = vectorSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals(true.toString(), testSource.volatile?.toString())
-    verify { style.getStyleSourceProperty("testId", "volatile") }
-  }
-
-  @Test
-  fun volatileAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = vectorSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.volatileAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "volatile") }
   }
 
@@ -590,21 +279,6 @@ class VectorSourceTest {
   }
 
   @Test
-  fun prefetchZoomDeltaAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = vectorSource("testId") {
-      prefetchZoomDelta(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.setStyleSourceProperty("testId", "prefetch-zoom-delta", capture(valueSlot)) }
-    assertEquals("[+, 2, 3]", valueSlot.captured.toString())
-  }
-
-  @Test
   fun prefetchZoomDeltaSetAfterBind() {
     val testSource = vectorSource("testId") {}
     testSource.bindTo(style)
@@ -615,41 +289,12 @@ class VectorSourceTest {
   }
 
   @Test
-  fun prefetchZoomDeltaAsExpressionSetAfterBind() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = vectorSource("testId") {}
-    testSource.bindTo(style)
-    testSource.prefetchZoomDelta(expression)
-
-    verify { style.setStyleSourceProperty("testId", "prefetch-zoom-delta", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
-  }
-
-  @Test
   fun prefetchZoomDeltaGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
     val testSource = vectorSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals(1L.toString(), testSource.prefetchZoomDelta?.toString())
-    verify { style.getStyleSourceProperty("testId", "prefetch-zoom-delta") }
-  }
-
-  @Test
-  fun prefetchZoomDeltaAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = vectorSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.prefetchZoomDeltaAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "prefetch-zoom-delta") }
   }
 
@@ -665,21 +310,6 @@ class VectorSourceTest {
   }
 
   @Test
-  fun minimumTileUpdateIntervalAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = vectorSource("testId") {
-      minimumTileUpdateInterval(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.setStyleSourceProperty("testId", "minimum-tile-update-interval", capture(valueSlot)) }
-    assertEquals("[+, 2, 3]", valueSlot.captured.toString())
-  }
-
-  @Test
   fun minimumTileUpdateIntervalSetAfterBind() {
     val testSource = vectorSource("testId") {}
     testSource.bindTo(style)
@@ -690,41 +320,12 @@ class VectorSourceTest {
   }
 
   @Test
-  fun minimumTileUpdateIntervalAsExpressionSetAfterBind() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = vectorSource("testId") {}
-    testSource.bindTo(style)
-    testSource.minimumTileUpdateInterval(expression)
-
-    verify { style.setStyleSourceProperty("testId", "minimum-tile-update-interval", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
-  }
-
-  @Test
   fun minimumTileUpdateIntervalGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
     val testSource = vectorSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals(1.0.toString(), testSource.minimumTileUpdateInterval?.toString())
-    verify { style.getStyleSourceProperty("testId", "minimum-tile-update-interval") }
-  }
-
-  @Test
-  fun minimumTileUpdateIntervalAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = vectorSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.minimumTileUpdateIntervalAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "minimum-tile-update-interval") }
   }
 
@@ -740,21 +341,6 @@ class VectorSourceTest {
   }
 
   @Test
-  fun maxOverscaleFactorForParentTilesAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = vectorSource("testId") {
-      maxOverscaleFactorForParentTiles(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.setStyleSourceProperty("testId", "max-overscale-factor-for-parent-tiles", capture(valueSlot)) }
-    assertEquals("[+, 2, 3]", valueSlot.captured.toString())
-  }
-
-  @Test
   fun maxOverscaleFactorForParentTilesSetAfterBind() {
     val testSource = vectorSource("testId") {}
     testSource.bindTo(style)
@@ -765,41 +351,12 @@ class VectorSourceTest {
   }
 
   @Test
-  fun maxOverscaleFactorForParentTilesAsExpressionSetAfterBind() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = vectorSource("testId") {}
-    testSource.bindTo(style)
-    testSource.maxOverscaleFactorForParentTiles(expression)
-
-    verify { style.setStyleSourceProperty("testId", "max-overscale-factor-for-parent-tiles", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
-  }
-
-  @Test
   fun maxOverscaleFactorForParentTilesGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
     val testSource = vectorSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals(1L.toString(), testSource.maxOverscaleFactorForParentTiles?.toString())
-    verify { style.getStyleSourceProperty("testId", "max-overscale-factor-for-parent-tiles") }
-  }
-
-  @Test
-  fun maxOverscaleFactorForParentTilesAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = vectorSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.maxOverscaleFactorForParentTilesAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "max-overscale-factor-for-parent-tiles") }
   }
 
@@ -845,36 +402,10 @@ class VectorSourceTest {
   }
 
   @Test
-  fun defaultSchemeAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-
-    assertEquals(expression.toString(), VectorSource.defaultSchemeAsExpression?.toString())
-    verify { StyleManager.getStyleSourcePropertyDefaultValue("vector", "scheme") }
-  }
-
-  @Test
   fun defaultMinzoomGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
 
     assertEquals(1L.toString(), VectorSource.defaultMinzoom?.toString())
-    verify { StyleManager.getStyleSourcePropertyDefaultValue("vector", "minzoom") }
-  }
-
-  @Test
-  fun defaultMinzoomAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-
-    assertEquals(expression.toString(), VectorSource.defaultMinzoomAsExpression?.toString())
     verify { StyleManager.getStyleSourcePropertyDefaultValue("vector", "minzoom") }
   }
 
@@ -887,36 +418,10 @@ class VectorSourceTest {
   }
 
   @Test
-  fun defaultMaxzoomAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-
-    assertEquals(expression.toString(), VectorSource.defaultMaxzoomAsExpression?.toString())
-    verify { StyleManager.getStyleSourcePropertyDefaultValue("vector", "maxzoom") }
-  }
-
-  @Test
   fun defaultVolatileGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(true)
 
     assertEquals(true.toString(), VectorSource.defaultVolatile?.toString())
-    verify { StyleManager.getStyleSourcePropertyDefaultValue("vector", "volatile") }
-  }
-
-  @Test
-  fun defaultVolatileAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-
-    assertEquals(expression.toString(), VectorSource.defaultVolatileAsExpression?.toString())
     verify { StyleManager.getStyleSourcePropertyDefaultValue("vector", "volatile") }
   }
 
@@ -929,36 +434,10 @@ class VectorSourceTest {
   }
 
   @Test
-  fun defaultPrefetchZoomDeltaAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-
-    assertEquals(expression.toString(), VectorSource.defaultPrefetchZoomDeltaAsExpression?.toString())
-    verify { StyleManager.getStyleSourcePropertyDefaultValue("vector", "prefetch-zoom-delta") }
-  }
-
-  @Test
   fun defaultMinimumTileUpdateIntervalGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
 
     assertEquals(1.0.toString(), VectorSource.defaultMinimumTileUpdateInterval?.toString())
-    verify { StyleManager.getStyleSourcePropertyDefaultValue("vector", "minimum-tile-update-interval") }
-  }
-
-  @Test
-  fun defaultMinimumTileUpdateIntervalAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-
-    assertEquals(expression.toString(), VectorSource.defaultMinimumTileUpdateIntervalAsExpression?.toString())
     verify { StyleManager.getStyleSourcePropertyDefaultValue("vector", "minimum-tile-update-interval") }
   }
 }

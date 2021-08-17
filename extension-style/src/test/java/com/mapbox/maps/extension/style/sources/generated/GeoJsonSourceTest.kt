@@ -71,21 +71,6 @@ class GeoJsonSourceTest {
   }
 
   @Test
-  fun dataAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = geoJsonSource("testId") {
-      data(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.addStyleSource("testId", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("data=[+, 2, 3]"))
-  }
-
-  @Test
   fun dataSetAfterBind() {
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
@@ -96,41 +81,12 @@ class GeoJsonSourceTest {
   }
 
   @Test
-  fun dataAsExpressionSetAfterBind() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = geoJsonSource("testId") {}
-    testSource.bindTo(style)
-    testSource.data(expression)
-
-    verify { style.setStyleSourceProperty("testId", "data", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
-  }
-
-  @Test
   fun dataGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(TEST_GEOJSON)
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals(TEST_GEOJSON.toString(), testSource.data?.toString())
-    verify { style.getStyleSourceProperty("testId", "data") }
-  }
-
-  @Test
-  fun dataAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = geoJsonSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.dataAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "data") }
   }
 
@@ -146,18 +102,6 @@ class GeoJsonSourceTest {
   }
 
   @Test
-  fun urlExpressionSetTest() {
-    val expression = literal("testUrl")
-    val testSource = geoJsonSource("testId") {
-      url(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.addStyleSource("testId", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("data=$expression"))
-  }
-
-  @Test
   fun urlSetAfterBindTest() {
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
@@ -165,17 +109,6 @@ class GeoJsonSourceTest {
 
     verify { style.setStyleSourceProperty("testId", "data", capture(valueSlot)) }
     assertEquals(valueSlot.captured.toString(), "testUrl")
-  }
-
-  @Test
-  fun urlExpressionSetAfterBindTest() {
-    val expression = literal("testUrl")
-    val testSource = geoJsonSource("testId") {}
-    testSource.bindTo(style)
-    testSource.url(expression)
-
-    verify { style.setStyleSourceProperty("testId", "data", capture(valueSlot)) }
-    assertEquals(expression.toString(), valueSlot.captured.toString())
   }
 
   @Test
@@ -190,42 +123,12 @@ class GeoJsonSourceTest {
   }
 
   @Test
-  fun maxzoomAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = geoJsonSource("testId") {
-      maxzoom(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.addStyleSource("testId", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("maxzoom=[+, 2, 3]"))
-  }
-
-  @Test
   fun maxzoomGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals(1L.toString(), testSource.maxzoom?.toString())
-    verify { style.getStyleSourceProperty("testId", "maxzoom") }
-  }
-
-  @Test
-  fun maxzoomAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = geoJsonSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.maxzoomAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "maxzoom") }
   }
 
@@ -241,42 +144,12 @@ class GeoJsonSourceTest {
   }
 
   @Test
-  fun attributionAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = geoJsonSource("testId") {
-      attribution(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.addStyleSource("testId", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("attribution=[+, 2, 3]"))
-  }
-
-  @Test
   fun attributionGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue("abc")
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals("abc".toString(), testSource.attribution?.toString())
-    verify { style.getStyleSourceProperty("testId", "attribution") }
-  }
-
-  @Test
-  fun attributionAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = geoJsonSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.attributionAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "attribution") }
   }
 
@@ -292,42 +165,12 @@ class GeoJsonSourceTest {
   }
 
   @Test
-  fun bufferAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = geoJsonSource("testId") {
-      buffer(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.addStyleSource("testId", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("buffer=[+, 2, 3]"))
-  }
-
-  @Test
   fun bufferGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals(1L.toString(), testSource.buffer?.toString())
-    verify { style.getStyleSourceProperty("testId", "buffer") }
-  }
-
-  @Test
-  fun bufferAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = geoJsonSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.bufferAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "buffer") }
   }
 
@@ -343,42 +186,12 @@ class GeoJsonSourceTest {
   }
 
   @Test
-  fun toleranceAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = geoJsonSource("testId") {
-      tolerance(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.addStyleSource("testId", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("tolerance=[+, 2, 3]"))
-  }
-
-  @Test
   fun toleranceGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals(1.0.toString(), testSource.tolerance?.toString())
-    verify { style.getStyleSourceProperty("testId", "tolerance") }
-  }
-
-  @Test
-  fun toleranceAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = geoJsonSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.toleranceAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "tolerance") }
   }
 
@@ -394,42 +207,12 @@ class GeoJsonSourceTest {
   }
 
   @Test
-  fun clusterAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = geoJsonSource("testId") {
-      cluster(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.addStyleSource("testId", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("cluster=[+, 2, 3]"))
-  }
-
-  @Test
   fun clusterGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(true)
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals(true.toString(), testSource.cluster?.toString())
-    verify { style.getStyleSourceProperty("testId", "cluster") }
-  }
-
-  @Test
-  fun clusterAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = geoJsonSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.clusterAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "cluster") }
   }
 
@@ -445,42 +228,12 @@ class GeoJsonSourceTest {
   }
 
   @Test
-  fun clusterRadiusAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = geoJsonSource("testId") {
-      clusterRadius(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.addStyleSource("testId", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("clusterRadius=[+, 2, 3]"))
-  }
-
-  @Test
   fun clusterRadiusGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals(1L.toString(), testSource.clusterRadius?.toString())
-    verify { style.getStyleSourceProperty("testId", "clusterRadius") }
-  }
-
-  @Test
-  fun clusterRadiusAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = geoJsonSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.clusterRadiusAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "clusterRadius") }
   }
 
@@ -496,42 +249,12 @@ class GeoJsonSourceTest {
   }
 
   @Test
-  fun clusterMaxZoomAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = geoJsonSource("testId") {
-      clusterMaxZoom(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.addStyleSource("testId", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("clusterMaxZoom=[+, 2, 3]"))
-  }
-
-  @Test
   fun clusterMaxZoomGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals(1L.toString(), testSource.clusterMaxZoom?.toString())
-    verify { style.getStyleSourceProperty("testId", "clusterMaxZoom") }
-  }
-
-  @Test
-  fun clusterMaxZoomAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = geoJsonSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.clusterMaxZoomAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "clusterMaxZoom") }
   }
 
@@ -547,42 +270,12 @@ class GeoJsonSourceTest {
   }
 
   @Test
-  fun clusterPropertiesAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = geoJsonSource("testId") {
-      clusterProperties(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.addStyleSource("testId", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("clusterProperties=[+, 2, 3]"))
-  }
-
-  @Test
   fun clusterPropertiesGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue((hashMapOf("key1" to "x", "key2" to "y") as HashMap<String, Any>))
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals((hashMapOf("key1" to "x", "key2" to "y") as HashMap<String, Any>).toString(), testSource.clusterProperties?.toString())
-    verify { style.getStyleSourceProperty("testId", "clusterProperties") }
-  }
-
-  @Test
-  fun clusterPropertiesAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = geoJsonSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.clusterPropertiesAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "clusterProperties") }
   }
   // Cluster Properties is not mutable so afterBind test is ignored
@@ -659,42 +352,12 @@ class GeoJsonSourceTest {
   }
 
   @Test
-  fun lineMetricsAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = geoJsonSource("testId") {
-      lineMetrics(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.addStyleSource("testId", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("lineMetrics=[+, 2, 3]"))
-  }
-
-  @Test
   fun lineMetricsGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(true)
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals(true.toString(), testSource.lineMetrics?.toString())
-    verify { style.getStyleSourceProperty("testId", "lineMetrics") }
-  }
-
-  @Test
-  fun lineMetricsAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = geoJsonSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.lineMetricsAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "lineMetrics") }
   }
 
@@ -710,42 +373,12 @@ class GeoJsonSourceTest {
   }
 
   @Test
-  fun generateIdAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = geoJsonSource("testId") {
-      generateId(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.addStyleSource("testId", capture(valueSlot)) }
-    assertTrue(valueSlot.captured.toString().contains("generateId=[+, 2, 3]"))
-  }
-
-  @Test
   fun generateIdGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(true)
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals(true.toString(), testSource.generateId?.toString())
-    verify { style.getStyleSourceProperty("testId", "generateId") }
-  }
-
-  @Test
-  fun generateIdAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = geoJsonSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.generateIdAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "generateId") }
   }
 
@@ -761,21 +394,6 @@ class GeoJsonSourceTest {
   }
 
   @Test
-  fun prefetchZoomDeltaAsExpressionSet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = geoJsonSource("testId") {
-      prefetchZoomDelta(expression)
-    }
-    testSource.bindTo(style)
-
-    verify { style.setStyleSourceProperty("testId", "prefetch-zoom-delta", capture(valueSlot)) }
-    assertEquals("[+, 2, 3]", valueSlot.captured.toString())
-  }
-
-  @Test
   fun prefetchZoomDeltaSetAfterBind() {
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
@@ -786,41 +404,12 @@ class GeoJsonSourceTest {
   }
 
   @Test
-  fun prefetchZoomDeltaAsExpressionSetAfterBind() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    val testSource = geoJsonSource("testId") {}
-    testSource.bindTo(style)
-    testSource.prefetchZoomDelta(expression)
-
-    verify { style.setStyleSourceProperty("testId", "prefetch-zoom-delta", capture(valueSlot)) }
-    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
-  }
-
-  @Test
   fun prefetchZoomDeltaGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
 
     assertEquals(1L.toString(), testSource.prefetchZoomDelta?.toString())
-    verify { style.getStyleSourceProperty("testId", "prefetch-zoom-delta") }
-  }
-
-  @Test
-  fun prefetchZoomDeltaAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-    val testSource = geoJsonSource("testId") {}
-    testSource.bindTo(style)
-
-    assertEquals(expression.toString(), testSource.prefetchZoomDeltaAsExpression?.toString())
     verify { style.getStyleSourceProperty("testId", "prefetch-zoom-delta") }
   }
 
@@ -994,36 +583,10 @@ class GeoJsonSourceTest {
   }
 
   @Test
-  fun defaultMaxzoomAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-
-    assertEquals(expression.toString(), GeoJsonSource.defaultMaxzoomAsExpression?.toString())
-    verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "maxzoom") }
-  }
-
-  @Test
   fun defaultBufferGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
 
     assertEquals(1L.toString(), GeoJsonSource.defaultBuffer?.toString())
-    verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "buffer") }
-  }
-
-  @Test
-  fun defaultBufferAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-
-    assertEquals(expression.toString(), GeoJsonSource.defaultBufferAsExpression?.toString())
     verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "buffer") }
   }
 
@@ -1036,36 +599,10 @@ class GeoJsonSourceTest {
   }
 
   @Test
-  fun defaultToleranceAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-
-    assertEquals(expression.toString(), GeoJsonSource.defaultToleranceAsExpression?.toString())
-    verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "tolerance") }
-  }
-
-  @Test
   fun defaultClusterGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(true)
 
     assertEquals(true.toString(), GeoJsonSource.defaultCluster?.toString())
-    verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "cluster") }
-  }
-
-  @Test
-  fun defaultClusterAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-
-    assertEquals(expression.toString(), GeoJsonSource.defaultClusterAsExpression?.toString())
     verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "cluster") }
   }
 
@@ -1078,36 +615,10 @@ class GeoJsonSourceTest {
   }
 
   @Test
-  fun defaultClusterRadiusAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-
-    assertEquals(expression.toString(), GeoJsonSource.defaultClusterRadiusAsExpression?.toString())
-    verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "clusterRadius") }
-  }
-
-  @Test
   fun defaultClusterMaxZoomGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
 
     assertEquals(1L.toString(), GeoJsonSource.defaultClusterMaxZoom?.toString())
-    verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "clusterMaxZoom") }
-  }
-
-  @Test
-  fun defaultClusterMaxZoomAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-
-    assertEquals(expression.toString(), GeoJsonSource.defaultClusterMaxZoomAsExpression?.toString())
     verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "clusterMaxZoom") }
   }
 
@@ -1120,19 +631,6 @@ class GeoJsonSourceTest {
   }
 
   @Test
-  fun defaultLineMetricsAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-
-    assertEquals(expression.toString(), GeoJsonSource.defaultLineMetricsAsExpression?.toString())
-    verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "lineMetrics") }
-  }
-
-  @Test
   fun defaultGenerateIdGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(true)
 
@@ -1141,36 +639,10 @@ class GeoJsonSourceTest {
   }
 
   @Test
-  fun defaultGenerateIdAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-
-    assertEquals(expression.toString(), GeoJsonSource.defaultGenerateIdAsExpression?.toString())
-    verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "generateId") }
-  }
-
-  @Test
   fun defaultPrefetchZoomDeltaGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
 
     assertEquals(1L.toString(), GeoJsonSource.defaultPrefetchZoomDelta?.toString())
-    verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "prefetch-zoom-delta") }
-  }
-
-  @Test
-  fun defaultPrefetchZoomDeltaAsExpressionGet() {
-    val expression = sum {
-      literal(2)
-      literal(3)
-    }
-    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
-    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
-
-    assertEquals(expression.toString(), GeoJsonSource.defaultPrefetchZoomDeltaAsExpression?.toString())
     verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "prefetch-zoom-delta") }
   }
 
