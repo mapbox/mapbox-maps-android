@@ -1,9 +1,11 @@
 package com.mapbox.maps.testapp.examples
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.common.Logger
+import com.mapbox.common.OfflineSwitch
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.testapp.databinding.ActivityLegacyOfflineBinding
@@ -71,7 +73,10 @@ class LegacyOfflineActivity : AppCompatActivity() {
     )
   }
 
+  @SuppressLint("Lifecycle")
   private fun downloadComplete() {
+    // Disable network stack, so that the map can only load from downloaded region.
+    OfflineSwitch.getInstance().isMapboxStackConnected = false
     binding.downloadProgress.visibility = View.GONE
     binding.showMapButton.visibility = View.VISIBLE
     binding.showMapButton.setOnClickListener {
@@ -83,25 +88,14 @@ class LegacyOfflineActivity : AppCompatActivity() {
         mapboxMap.loadStyleUri(styleUrl)
       }
       setContentView(mapView)
-
       mapView?.onStart()
     }
-  }
-
-  override fun onStart() {
-    super.onStart()
-    mapView?.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView?.onStop()
   }
 
   override fun onDestroy() {
     super.onDestroy()
     offlineRegion.invalidate { }
-    mapView?.onDestroy()
+    OfflineSwitch.getInstance().isMapboxStackConnected = true
   }
 
   companion object {

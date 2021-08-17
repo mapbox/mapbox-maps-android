@@ -137,4 +137,17 @@
     <string name="magnitude">Magnitude:</string>
     <string name="location">Location:</string>
     <string name="date">Date:</string>
+    <string name="delete_all">Delete All</string>
+    <string name="change_style">Change Style</string>
+    <string name="custom_attribution">Custom Attribution</string>
+    <string name="switch_visibility">Switch Visibility</string>
+    <string name="switch_styles">Switch styles</string>
+    <string name="localize">Localize</string>
+    <string name="toggle_layer">Toggle layer</string>
+    <string name="reframe">Reframe</string>
+    <string name="show_bounds_toggle">Show bounds toggle</string>
+    <string name="toggle_light_position">Toggle light position</string>
+    <string name="toggle_light_color">Toggle light color</string>
+    <string name="toggle_paint">Toggle paint</string>
+    <string name="snapshot">Snapshot</string>
 </resources>

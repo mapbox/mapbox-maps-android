@@ -21,6 +21,7 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:src="@drawable/ic_layers_24dp"
-        tools:backgroundTint="@color/pink"/>
+        tools:backgroundTint="@color/pink"
+        android:contentDescription="@string/toggle_layer" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

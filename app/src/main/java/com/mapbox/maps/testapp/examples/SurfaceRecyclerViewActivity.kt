@@ -86,6 +86,7 @@ class SurfaceRecyclerViewActivity : AppCompatActivity() {
       }
     }
 
+    @SuppressLint("Lifecycle")
     override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
       super.onViewAttachedToWindow(holder)
       if (holder is MapHolder) {
@@ -94,6 +95,7 @@ class SurfaceRecyclerViewActivity : AppCompatActivity() {
       }
     }
 
+    @SuppressLint("Lifecycle")
     override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
       super.onViewDetachedFromWindow(holder)
       if (holder is MapHolder) {
