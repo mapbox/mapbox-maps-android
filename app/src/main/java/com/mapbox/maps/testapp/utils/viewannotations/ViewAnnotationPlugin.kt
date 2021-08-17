@@ -93,6 +93,8 @@ class ViewAnnotationPlugin(
         // do not depend on current map bearing on initial view adding
         annotation.view.rotation = 0f
 
+        annotation.view.pivotX = annotation.width / 2f
+        annotation.view.pivotY = annotation.height / 2f
         annotation.view.rotationX = mapView.getMapboxMap().cameraState.pitch.toFloat()
       }
     }
@@ -128,8 +130,11 @@ class ViewAnnotationPlugin(
               // TBD but nothing comes to mind right now
             }
             is ViewAnnotationDescriptor.Native -> {
-              // do not depend on current map bearing on initial view adding
+              view.pivotX = 0f
+              view.pivotY = 0f
               view.rotation = -(mapView.getMapboxMap().cameraState.bearing.toFloat() - descriptor.initialBearing)
+              view.pivotX = width / 2f
+              view.pivotY = height / 2f
               view.rotationX = mapView.getMapboxMap().cameraState.pitch.toFloat()
             }
           }
