@@ -85,6 +85,7 @@ class OfflineActivity : AppCompatActivity() {
     }
   }
 
+  @SuppressLint("Lifecycle")
   private fun prepareViewMapButton() {
     // Disable network stack, so that the map can only load from downloaded region.
     OfflineSwitch.getInstance().isMapboxStackConnected = false
@@ -112,6 +113,7 @@ class OfflineActivity : AppCompatActivity() {
           }
         }
         binding.container.addView(mapView)
+        mapView?.onStart()
         prepareShowDownloadedRegionButton()
       }
     }
