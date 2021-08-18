@@ -6,6 +6,7 @@ import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import androidx.core.view.updateMargins
+import com.mapbox.common.Logger
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
@@ -29,7 +30,8 @@ class ViewAnnotationPlugin(
   fun addViewAnnotation(
     @LayoutRes id: Int,
     type: ViewAnnotationType,
-    geometry: Geometry
+    geometry: Geometry,
+    options: ViewAnnotationOptions
   ): View {
     val nativeView = LayoutInflater.from(mapView.context).inflate(id, mapView, false)
     val nativeViewLayout = nativeView.layoutParams as FrameLayout.LayoutParams
@@ -37,12 +39,13 @@ class ViewAnnotationPlugin(
       view = nativeView,
       viewLayoutParams = nativeViewLayout,
       descriptor = when(type) {
-        ViewAnnotationType.NATIVE -> ViewAnnotationDescriptor.Native(mapView.getMapboxMap().cameraState.bearing.toFloat())
-        ViewAnnotationType.CALLOUT -> ViewAnnotationDescriptor.Callout
+        ViewAnnotationType.NATIVE -> ViewAnnotationDescriptor.Native(mapView.getMapboxMap().cameraState)
+        ViewAnnotationType.CALLOUT -> ViewAnnotationDescriptor.Callout(mapView.getMapboxMap().cameraState)
       },
-      width = nativeView.layoutParams.width,
-      height = nativeView.layoutParams.height,
-      geometry = geometry
+      initialWidth = nativeView.layoutParams.width,
+      initialHeight = nativeView.layoutParams.height,
+      geometry = geometry,
+      options = options
     )
     annotations[nativeView.hashCode()] = annotation
     displayAnnotation(annotation)
@@ -54,24 +57,30 @@ class ViewAnnotationPlugin(
     @LayoutRes id: Int,
     type: ViewAnnotationType,
     geometry: Geometry,
+    options: ViewAnnotationOptions,
     result: (View) -> Unit
   ) {
-    asyncInflater.inflate(id, mapView) { nativeView, _, _ ->
-      val nativeViewLayout = nativeView.layoutParams as FrameLayout.LayoutParams
+    asyncInflater.inflate(id, mapView) { view, _, _ ->
+      val nativeViewLayout = view.layoutParams as FrameLayout.LayoutParams
       val annotation = ViewAnnotation(
-        view = nativeView,
+        view = view,
         viewLayoutParams = nativeViewLayout,
         descriptor = when(type) {
-          ViewAnnotationType.NATIVE -> ViewAnnotationDescriptor.Native(mapView.getMapboxMap().cameraState.bearing.toFloat())
-          ViewAnnotationType.CALLOUT -> ViewAnnotationDescriptor.Callout
+          ViewAnnotationType.NATIVE -> ViewAnnotationDescriptor.Native(
+            mapView.getMapboxMap().cameraState
+          )
+          ViewAnnotationType.CALLOUT -> ViewAnnotationDescriptor.Callout(
+            mapView.getMapboxMap().cameraState
+          )
         },
-        width = nativeView.layoutParams.width,
-        height = nativeView.layoutParams.height,
-        geometry = geometry
+        initialWidth = view.layoutParams.width,
+        initialHeight = view.layoutParams.height,
+        geometry = geometry,
+        options = options
       )
-      annotations[nativeView.hashCode()] = annotation
+      annotations[view.hashCode()] = annotation
       displayAnnotation(annotation)
-      result.invoke(nativeView)
+      result.invoke(view)
     }
   }
 
@@ -83,7 +92,7 @@ class ViewAnnotationPlugin(
     // correctly position the view
     annotation.viewLayoutParams.updateMargins(leftTop.x.toInt(), leftTop.y.toInt(), 0, 0)
     when (annotation.descriptor) {
-      ViewAnnotationDescriptor.Callout -> {
+      is ViewAnnotationDescriptor.Callout -> {
         // TBD but nothing comes to mind right now
       }
       is ViewAnnotationDescriptor.Native -> {
@@ -93,8 +102,8 @@ class ViewAnnotationPlugin(
         // do not depend on current map bearing on initial view adding
         annotation.view.rotation = 0f
 
-        annotation.view.pivotX = annotation.width / 2f
-        annotation.view.pivotY = annotation.height / 2f
+        annotation.view.pivotX = annotation.viewLayoutParams.width / 2f
+        annotation.view.pivotY = annotation.viewLayoutParams.height / 2f
         annotation.view.rotationX = mapView.getMapboxMap().cameraState.pitch.toFloat()
       }
     }
@@ -110,12 +119,24 @@ class ViewAnnotationPlugin(
     annotations.clear()
   }
 
-  // this should be some new API from gl-native returning array of [id, ScreenCoordinate]
+  // this should be some new API from gl-native returning array of [id, ScreenCoordinate, width, height]
   // however it terms of prototyping we use camera change callback and calculate ScreenCoordinate by ourselves
   override fun onCameraChanged() {
     annotations.forEach {
       with(it.value) {
         mapView.removeView(view)
+        val zoom = mapView.getMapboxMap().cameraState.zoom
+        if (options.resizeFactor != 0f && zoom != descriptor.initialCamera.zoom) {
+          // updated width and height must come from gl native but we calculate them manually here
+          val k = (
+            1.0 + options.resizeFactor * (zoom - descriptor.initialCamera.zoom)
+              / zoom.coerceAtLeast(descriptor.initialCamera.zoom)
+            ).coerceAtLeast(0.0)
+          viewLayoutParams = FrameLayout.LayoutParams(
+            (k * initialWidth).toInt(),
+            (k * initialHeight).toInt()
+          )
+        }
         val point = geometry as Point
         // we must have new callback from gl-native returning ORDERED array of [viewId, ScreenCoordinate]
         // in this case we calculate it ourselves (bind to hardcoded point)
@@ -126,19 +147,19 @@ class ViewAnnotationPlugin(
         if (visibleOnX && visibleOnY) {
           viewLayoutParams.updateMargins(leftTopInner.x.toInt(), leftTopInner.y.toInt(), 0, 0)
           when (descriptor) {
-            ViewAnnotationDescriptor.Callout -> {
+            is ViewAnnotationDescriptor.Callout -> {
               // TBD but nothing comes to mind right now
             }
             is ViewAnnotationDescriptor.Native -> {
               view.pivotX = 0f
               view.pivotY = 0f
-              view.rotation = -(mapView.getMapboxMap().cameraState.bearing.toFloat() - descriptor.initialBearing)
-              view.pivotX = width / 2f
-              view.pivotY = height / 2f
+              view.rotation = -(mapView.getMapboxMap().cameraState.bearing - descriptor.initialCamera.bearing).toFloat()
+              view.pivotX = viewLayoutParams.width / 2f
+              view.pivotY = viewLayoutParams.height / 2f
               view.rotationX = mapView.getMapboxMap().cameraState.pitch.toFloat()
             }
           }
-          mapView.addView(it.value.view, it.value.viewLayoutParams)
+          mapView.addView(view, viewLayoutParams)
         }
       }
     }
