@@ -4,11 +4,14 @@ import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Matrix
 import android.os.Build
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.SurfaceView
 import android.view.TextureView
+import android.view.View
+import android.view.animation.Transformation
 import android.widget.FrameLayout
 import androidx.annotation.IntRange
 import androidx.annotation.RequiresApi
@@ -16,6 +19,7 @@ import androidx.annotation.VisibleForTesting
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
+import com.mapbox.maps.plugin.viewannotation.ViewAnnotationPluginImpl
 import com.mapbox.maps.renderer.MapboxSurfaceHolderRenderer
 import com.mapbox.maps.renderer.MapboxTextureViewRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
@@ -97,8 +101,27 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       },
       resolvedMapInitOptions
     )
+    setStaticTransformationsEnabled(true)
     addView(view, 0)
     mapController.initializePlugins(resolvedMapInitOptions, this)
+  }
+
+  // needed for View Annotations plugin
+  override fun getChildStaticTransformation(child: View?, t: Transformation?): Boolean {
+    child?.tag?.let {
+      val tagData = it as Pair<String, Double>
+      if (it.first == ViewAnnotationPluginImpl.MAPBOX_VIEW_ANNOTATION_ID) {
+        val matrix = Matrix()
+        matrix.setRotate(
+          -(getMapboxMap().cameraState.bearing - tagData.second).toFloat(),
+          0f,
+          0f
+        )
+        t?.matrix?.set(matrix)
+        return true
+      }
+    }
+    return false
   }
 
   override fun onAttachedToWindow() {

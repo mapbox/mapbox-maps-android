@@ -17,11 +17,13 @@ import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapLongClickListener
+import com.mapbox.maps.plugin.viewannotation.ViewAnnotationOptions
+import com.mapbox.maps.plugin.viewannotation.ViewAnnotationOptions.Companion.viewAnnotationOptions
+import com.mapbox.maps.plugin.viewannotation.ViewAnnotationPlugin
+import com.mapbox.maps.plugin.viewannotation.ViewAnnotationPluginImpl
+import com.mapbox.maps.plugin.viewannotation.ViewAnnotationType.*
+import com.mapbox.maps.plugin.viewannotation.viewAnnotation
 import com.mapbox.maps.testapp.R
-import com.mapbox.maps.testapp.utils.viewannotations.ViewAnnotationOptions
-import com.mapbox.maps.testapp.utils.viewannotations.ViewAnnotationOptions.Companion.viewAnnotationOptions
-import com.mapbox.maps.testapp.utils.viewannotations.ViewAnnotationPlugin
-import com.mapbox.maps.testapp.utils.viewannotations.ViewAnnotationType
 
 /**
  * Example showing how to add a marker on map with symbol layer
@@ -40,9 +42,9 @@ class AddOneMarkerSymbolActivity : AppCompatActivity(), OnMapClickListener, OnMa
         textureView = false
       )
     )
-    viewAnnotationPlugin = ViewAnnotationPlugin(mapView)
     setContentView(mapView)
 
+    viewAnnotationPlugin = mapView.viewAnnotation
     mapView.getMapboxMap().also {
       it.setCamera(
         CameraOptions.Builder()
@@ -84,7 +86,7 @@ class AddOneMarkerSymbolActivity : AppCompatActivity(), OnMapClickListener, OnMa
   override fun onMapClick(point: Point): Boolean {
     val view = viewAnnotationPlugin.addViewAnnotation(
       R.layout.item_callout_view,
-      ViewAnnotationType.NATIVE,
+      NATIVE,
       point,
       viewAnnotationOptions {
         resizeFactor(2f)
@@ -100,7 +102,7 @@ class AddOneMarkerSymbolActivity : AppCompatActivity(), OnMapClickListener, OnMa
   override fun onMapLongClick(point: Point): Boolean {
     viewAnnotationPlugin.addViewAnnotation(
       R.layout.item_callout_view,
-      ViewAnnotationType.CALLOUT,
+      CALLOUT,
       point,
       ViewAnnotationOptions.Builder().build()
     ) { view ->
