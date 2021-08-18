@@ -102,24 +102,8 @@ class MapViewCustomizationActivity : AppCompatActivity() {
     customMapView.getMapboxMap().loadStyleUri(Style.SATELLITE)
   }
 
-  override fun onStart() {
-    super.onStart()
-    customMapView.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    customMapView.onStop()
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-    customMapView.onLowMemory()
-  }
-
   override fun onDestroy() {
     super.onDestroy()
-    customMapView.onDestroy()
     // Restore the default application-scoped resource settings, otherwise it will affect other activities
     ResourceOptionsManager.destroyDefault()
   }

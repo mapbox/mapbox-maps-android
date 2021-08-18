@@ -98,6 +98,30 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 ===========================================================================
 
+Mapbox Maps Android uses portions of the Kotlin Stdlib.
+
+URL: [https://kotlinlang.org/](https://kotlinlang.org/)
+
+License: [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Maps Android uses portions of the Kotlin Stdlib Common.
+
+URL: [https://kotlinlang.org/](https://kotlinlang.org/)
+
+License: [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Maps Android uses portions of the Kotlin Stdlib Jdk7.
+
+URL: [https://kotlinlang.org/](https://kotlinlang.org/)
+
+License: [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
 Mapbox Maps Android uses portions of the Mapbox Android Commmon OkHttp SDK.
 
 URL: [https://github.com/mapbox/mapbox-sdk](https://github.com/mapbox/mapbox-sdk)
@@ -167,30 +191,6 @@ Mapbox Maps Android uses portions of the Okio.
 URL: [https://github.com/square/okio/](https://github.com/square/okio/)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-===========================================================================
-
-Mapbox Maps Android uses portions of the org.jetbrains.kotlin:kotlin-stdlib.
-
-URL: [https://kotlinlang.org/](https://kotlinlang.org/)
-
-License: [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-===========================================================================
-
-Mapbox Maps Android uses portions of the org.jetbrains.kotlin:kotlin-stdlib-common.
-
-URL: [https://kotlinlang.org/](https://kotlinlang.org/)
-
-License: [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-===========================================================================
-
-Mapbox Maps Android uses portions of the org.jetbrains.kotlin:kotlin-stdlib-jdk7.
-
-URL: [https://kotlinlang.org/](https://kotlinlang.org/)
-
-License: [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
 

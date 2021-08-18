@@ -388,28 +388,4 @@ public class RuntimeStylingJavaActivity extends AppCompatActivity {
         style.setStyleLayerProperty("layer", "icon-size", new Value(5.0));
         style.setStyleLayerProperty("layer", "icon-color", new Value("white"));
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mapView.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mapView.onStop();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mapView.onLowMemory();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mapView.onDestroy();
-    }
 }

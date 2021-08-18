@@ -65,10 +65,10 @@ object Dependencies {
 }
 
 object Versions {
-  const val pluginAndroidGradle = "4.0.1"
-  const val pluginKotlin = "1.4.0"
+  const val pluginAndroidGradle = "4.2.2"
+  const val pluginKotlin = "1.5.21"
   const val pluginLicense = "0.8.5"
-  const val pluginDokka =  "1.4.10"
+  const val pluginDokka =  "1.4.20"
   const val pluginJacoco = "0.2"
   const val pluginMavenPublish = "3.6.2"
   const val mapboxAccessToken="0.2.1"

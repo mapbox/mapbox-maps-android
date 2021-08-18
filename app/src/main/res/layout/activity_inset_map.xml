@@ -34,6 +34,7 @@
         android:layout_gravity="end|bottom"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:src="@drawable/ic_swap_horiz_white_24dp" />
+        android:src="@drawable/ic_swap_horiz_white_24dp"
+        android:contentDescription="@string/show_bounds_toggle" />
 
 </FrameLayout>
