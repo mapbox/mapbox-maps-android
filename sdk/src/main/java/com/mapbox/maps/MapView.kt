@@ -20,10 +20,12 @@ import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.plugin.viewannotation.ViewAnnotationPluginImpl
+import com.mapbox.maps.plugin.viewannotation.ViewPosition
 import com.mapbox.maps.renderer.MapboxSurfaceHolderRenderer
 import com.mapbox.maps.renderer.MapboxTextureViewRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import com.mapbox.maps.renderer.egl.EGLCore
+import java.lang.Exception
 
 /**
  * A [MapView] provides an embeddable map interface.
@@ -109,16 +111,19 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   // needed for View Annotations plugin
   override fun getChildStaticTransformation(child: View?, t: Transformation?): Boolean {
     child?.tag?.let {
-      val tagData = it as Pair<String, Double>
-      if (it.first == ViewAnnotationPluginImpl.MAPBOX_VIEW_ANNOTATION_ID) {
-        val matrix = Matrix()
-        matrix.setRotate(
-          -(getMapboxMap().cameraState.bearing - tagData.second).toFloat(),
-          0f,
-          0f
-        )
-        t?.matrix?.set(matrix)
-        return true
+      return try {
+          val tagData = it as ViewPosition
+          val matrix = Matrix()
+          matrix.preRotate(
+            -(getMapboxMap().cameraState.bearing - tagData.bearing).toFloat(),
+            0f,
+            0f
+          )
+          matrix.postConcat(tagData.rotationMatrix)
+          t?.matrix?.set(matrix)
+        true
+      } catch (e: Exception) {
+        false
       }
     }
     return false
