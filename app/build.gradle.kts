@@ -88,8 +88,6 @@ dependencies {
   // Services, [we recommend adding the Google Play Location Services dependency to your project](https://developers.google.com/android/guides/setup).
   implementation(Dependencies.googlePlayServicesLocation)
 
-  implementation("androidx.asynclayoutinflater:asynclayoutinflater:1.0.0")
-
   debugImplementation(Dependencies.squareLeakCanary)
   androidTestUtil(Dependencies.androidxOrchestrator)
   androidTestImplementation(Dependencies.androidxTestRunner)

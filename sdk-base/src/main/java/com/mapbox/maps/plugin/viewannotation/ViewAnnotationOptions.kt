@@ -1,4 +1,4 @@
-package com.mapbox.maps.testapp.utils.viewannotations
+package com.mapbox.maps.plugin.viewannotation
 
 // bunch of potential properties about placing annotation etc
 class ViewAnnotationOptions private constructor(

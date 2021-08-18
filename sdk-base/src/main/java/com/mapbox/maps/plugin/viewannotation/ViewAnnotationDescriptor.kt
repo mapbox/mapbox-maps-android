@@ -1,4 +1,4 @@
-package com.mapbox.maps.testapp.utils.viewannotations
+package com.mapbox.maps.plugin.viewannotation
 
 import android.view.View
 import com.mapbox.maps.CameraState
