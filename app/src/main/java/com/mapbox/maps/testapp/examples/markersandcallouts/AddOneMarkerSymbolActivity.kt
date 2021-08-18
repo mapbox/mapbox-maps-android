@@ -18,6 +18,8 @@ import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapLongClickListener
 import com.mapbox.maps.testapp.R
+import com.mapbox.maps.testapp.utils.viewannotations.ViewAnnotationOptions
+import com.mapbox.maps.testapp.utils.viewannotations.ViewAnnotationOptions.Companion.viewAnnotationOptions
 import com.mapbox.maps.testapp.utils.viewannotations.ViewAnnotationPlugin
 import com.mapbox.maps.testapp.utils.viewannotations.ViewAnnotationType
 
@@ -83,7 +85,10 @@ class AddOneMarkerSymbolActivity : AppCompatActivity(), OnMapClickListener, OnMa
     val view = viewAnnotationPlugin.addViewAnnotation(
       R.layout.item_callout_view,
       ViewAnnotationType.NATIVE,
-      point
+      point,
+      viewAnnotationOptions {
+        resizeFactor(2f)
+      }
     )
     view.findViewById<TextView>(R.id.textNativeView).text = "Native ${count++}"
     view.findViewById<ImageView>(R.id.closeNativeView).setOnClickListener {
@@ -96,7 +101,8 @@ class AddOneMarkerSymbolActivity : AppCompatActivity(), OnMapClickListener, OnMa
     viewAnnotationPlugin.addViewAnnotation(
       R.layout.item_callout_view,
       ViewAnnotationType.CALLOUT,
-      point
+      point,
+      ViewAnnotationOptions.Builder().build()
     ) { view ->
       view.findViewById<TextView>(R.id.textNativeView).text = "Callout ${count++}"
       view.findViewById<ImageView>(R.id.closeNativeView).setOnClickListener {
