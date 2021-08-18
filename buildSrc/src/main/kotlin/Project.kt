@@ -10,7 +10,6 @@ object Plugins {
   const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.pluginKotlin}"
   const val jacoco = "com.hiya:jacoco-android:${Versions.pluginJacoco}"
   const val license = "com.jaredsburrows:gradle-license-plugin:${Versions.pluginLicense}"
-  const val androidPublish = "digital.wup:android-maven-publish:${Versions.pluginMavenPublish}"
   const val mapboxAccessToken = "com.mapbox.gradle.plugins:access-token:${Versions.mapboxAccessToken}"
   const val mapboxSdkRegistry = "com.mapbox.gradle.plugins:sdk-registry:${Versions.mapboxSdkRegistry}"
 }
@@ -70,7 +69,6 @@ object Versions {
   const val pluginLicense = "0.8.5"
   const val pluginDokka =  "1.4.20"
   const val pluginJacoco = "0.2"
-  const val pluginMavenPublish = "3.6.2"
   const val mapboxAccessToken="0.2.1"
   const val mapboxSdkRegistry="0.4.0"
   const val mapboxGestures = "0.7.0"

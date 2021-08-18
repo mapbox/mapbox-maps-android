@@ -1,43 +1,41 @@
-apply plugin: 'digital.wup.android-maven-publish'
 apply plugin: 'maven-publish'
 apply plugin: 'com.mapbox.sdkRegistry'
 apply from: file('../gradle/artifact-settings.gradle')
 
 version = project.ext.versionName
 group = project.ext.mapboxArtifactGroupId
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId this.group
+                artifactId project.ext.mapboxArtifactId
+                version this.version
 
-publishing {
-    publications {
-        ModularMapboxMapsSdkRegistryPublication(MavenPublication) {
-            from components.android
-            groupId this.group
-            artifactId project.ext.mapboxArtifactId
-            version this.version
-
-            afterEvaluate {
                 artifact(androidSourcesJar)
                 artifact(javadocsJar)
-            }
 
-            pom.withXml {
-                final mainNode = asNode()
-                mainNode.appendNode('name', project.ext.mapboxArtifactTitle)
-                mainNode.appendNode('description', project.ext.mapboxArtifactTitle)
-                mainNode.appendNode('url', project.ext.mapboxArtifactUrl)
+                pom.withXml {
+                    final mainNode = asNode()
+                    mainNode.appendNode('name', project.ext.mapboxArtifactTitle)
+                    mainNode.appendNode('description', project.ext.mapboxArtifactTitle)
+                    mainNode.appendNode('url', project.ext.mapboxArtifactUrl)
 
-                final licenseNode = mainNode.appendNode('licenses').appendNode('license')
-                licenseNode.appendNode('name', project.ext.mapboxArtifactLicenseName)
-                licenseNode.appendNode('url', project.ext.mapboxArtifactLicenseUrl)
-                licenseNode.appendNode('distribution', "repo")
+                    final licenseNode = mainNode.appendNode('licenses').appendNode('license')
+                    licenseNode.appendNode('name', project.ext.mapboxArtifactLicenseName)
+                    licenseNode.appendNode('url', project.ext.mapboxArtifactLicenseUrl)
+                    licenseNode.appendNode('distribution', "repo")
 
-                final developerNode = mainNode.appendNode('developers').appendNode('developer')
-                developerNode.appendNode('id', project.ext.mapboxDeveloperId)
-                developerNode.appendNode('name', project.ext.mapboxDeveloperName)
+                    final developerNode = mainNode.appendNode('developers').appendNode('developer')
+                    developerNode.appendNode('id', project.ext.mapboxDeveloperId)
+                    developerNode.appendNode('name', project.ext.mapboxDeveloperName)
 
-                final scmNode = mainNode.appendNode("scm")
-                scmNode.appendNode("connection", project.ext.mapboxArtifactScmUrl)
-                scmNode.appendNode("developerConnection", project.ext.mapboxArtifactScmUrl)
-                scmNode.appendNode("url", project.ext.mapboxArtifactUrl)
+                    final scmNode = mainNode.appendNode("scm")
+                    scmNode.appendNode("connection", project.ext.mapboxArtifactScmUrl)
+                    scmNode.appendNode("developerConnection", project.ext.mapboxArtifactScmUrl)
+                    scmNode.appendNode("url", project.ext.mapboxArtifactUrl)
+                }
             }
         }
     }
@@ -50,7 +48,7 @@ registry {
     publish = true
     snapshot = project.ext.versionName.endsWith("-SNAPSHOT")
     publishMessage = "cc @mapbox/maps-android"
-    publications = ["ModularMapboxMapsSdkRegistryPublication"]
+    publications = ["release"]
 }
 
 task androidJavadocs(type: Javadoc) {
@@ -82,5 +80,3 @@ afterEvaluate { project ->
         }
     }
 }
-
-

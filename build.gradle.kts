@@ -21,7 +21,6 @@ buildscript {
     classpath(Plugins.kotlin)
     classpath(Plugins.jacoco)
     classpath(Plugins.license)
-    classpath(Plugins.androidPublish)
     classpath(Plugins.mapboxAccessToken)
     classpath(Plugins.mapboxSdkRegistry)
   }
