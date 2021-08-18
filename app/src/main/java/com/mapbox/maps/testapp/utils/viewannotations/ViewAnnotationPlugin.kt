@@ -6,7 +6,6 @@ import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import androidx.core.view.updateMargins
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
@@ -101,9 +100,9 @@ class ViewAnnotationPlugin(
         annotation.view.pivotY = 0f
         // do not depend on current map bearing on initial view adding
         annotation.view.rotation = 0f
-
-        annotation.view.pivotX = annotation.viewLayoutParams.width / 2f
-        annotation.view.pivotY = annotation.viewLayoutParams.height / 2f
+        // TODO not working as expected
+//        annotation.view.pivotX = annotation.viewLayoutParams.width / 2f
+//        annotation.view.pivotY = annotation.viewLayoutParams.height / 2f
         annotation.view.rotationX = mapView.getMapboxMap().cameraState.pitch.toFloat()
       }
     }
@@ -154,8 +153,9 @@ class ViewAnnotationPlugin(
               view.pivotX = 0f
               view.pivotY = 0f
               view.rotation = -(mapView.getMapboxMap().cameraState.bearing - descriptor.initialCamera.bearing).toFloat()
-              view.pivotX = viewLayoutParams.width / 2f
-              view.pivotY = viewLayoutParams.height / 2f
+              // TODO not working as expected
+//              view.pivotX = viewLayoutParams.width / 2f
+//              view.pivotY = viewLayoutParams.height / 2f
               view.rotationX = mapView.getMapboxMap().cameraState.pitch.toFloat()
             }
           }
