@@ -109,6 +109,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   }
 
   // needed for View Annotations plugin
+  // TODO gl-native will send us single matrix, for now calculating by ourselves
   override fun getChildStaticTransformation(child: View?, t: Transformation?): Boolean {
     child?.tag?.let {
       return try {

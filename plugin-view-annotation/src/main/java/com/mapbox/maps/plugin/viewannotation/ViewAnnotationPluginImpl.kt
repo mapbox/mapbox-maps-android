@@ -112,7 +112,7 @@ class ViewAnnotationPluginImpl(
     annotations.clear()
   }
 
-  // this should be some new API from gl-native returning array of [id, ScreenCoordinate, width, height]
+  // this should be some new API from gl-native returning array of [id, ScreenCoordinate, width, height, matrix]
   // however it terms of prototyping we use camera change callback and calculate ScreenCoordinate by ourselves
   override fun onCameraChanged() {
     annotations.forEach {
@@ -131,7 +131,7 @@ class ViewAnnotationPluginImpl(
           )
         }
         val point = geometry as Point
-        // we must have new callback from gl-native returning ORDERED array of [viewId, ScreenCoordinate, width, height]
+        // we must have new callback from gl-native returning ORDERED array of [id, ScreenCoordinate, width, height, matrix]
         // in this case we calculate it ourselves (bind to hardcoded point)
         val leftTopInner = delegateProvider.mapCameraManagerDelegate.pixelForCoordinate(point)
         // TODO ideally need to depend on transformed dimensions (take pitch / bearing into account)
