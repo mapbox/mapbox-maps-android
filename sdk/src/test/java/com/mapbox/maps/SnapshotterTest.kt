@@ -150,7 +150,7 @@ class SnapshotterTest {
   fun destroy() {
     snapshotter.destroy()
     verify { coreSnapshotter.cancel() }
-    Assert.assertNull(snapshotter.coreSnapshotter)
+    verify { coreSnapshotter.unsubscribe(any()) }
     Assert.assertNull(snapshotter.snapshotStyleCallback)
     Assert.assertNull(snapshotter.snapshotCreatedCallback)
   }
@@ -160,11 +160,5 @@ class SnapshotterTest {
     val callback = mockk<AsyncOperationResultCallback>(relaxed = true)
     snapshotter.clearData(callback)
     verify { Map.clearData(resourceOptions, callback) }
-  }
-
-  @Test(expected = NullPointerException::class)
-  fun isInTileModeWithException() {
-    snapshotter.destroy()
-    snapshotter.isInTileMode()
   }
 }
