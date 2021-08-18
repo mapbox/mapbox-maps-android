@@ -49,7 +49,7 @@ class ViewAnnotationPluginImpl(
       geometry = geometry,
       options = options
     )
-    nativeView.tag = Pair(MAPBOX_VIEW_ANNOTATION_ID, annotation.descriptor.initialCamera.bearing)
+    nativeView.tag = ViewPosition(annotation.descriptor.initialCamera.bearing)
     annotations[nativeView.hashCode()] = annotation
     displayAnnotation(annotation)
     return nativeView
@@ -77,7 +77,7 @@ class ViewAnnotationPluginImpl(
         geometry = geometry,
         options = options
       )
-      view.tag = Pair(MAPBOX_VIEW_ANNOTATION_ID, annotation.descriptor.initialCamera.bearing)
+      view.tag = ViewPosition(annotation.descriptor.initialCamera.bearing)
       annotations[view.hashCode()] = annotation
       displayAnnotation(annotation)
       result.invoke(view)
@@ -131,7 +131,7 @@ class ViewAnnotationPluginImpl(
           )
         }
         val point = geometry as Point
-        // we must have new callback from gl-native returning ORDERED array of [viewId, ScreenCoordinate]
+        // we must have new callback from gl-native returning ORDERED array of [viewId, ScreenCoordinate, width, height]
         // in this case we calculate it ourselves (bind to hardcoded point)
         val leftTopInner = delegateProvider.mapCameraManagerDelegate.pixelForCoordinate(point)
         // TODO ideally need to depend on transformed dimensions (take pitch / bearing into account)
@@ -146,22 +146,20 @@ class ViewAnnotationPluginImpl(
               // TBD but nothing comes to mind right now
             }
             is ViewAnnotationDescriptor.Native -> {
-//              view.pivotX = 0f
-//              view.pivotY = 0f
-//              view.rotation = -(mapView.getMapboxMap().cameraState.bearing - descriptor.initialCamera.bearing).toFloat()
-//              // TODO not working as expected
-////              view.pivotX = viewLayoutParams.width / 2f
-////              view.pivotY = viewLayoutParams.height / 2f
-//              view.rotationX = mapView.getMapboxMap().cameraState.pitch.toFloat()
+              // TODO too lazy to calculate it ourselves so using dirty hack here, revisit later
+              view.pivotX = viewLayoutParams.width / 2f
+              view.pivotY = viewLayoutParams.height / 2f
+              view.rotationX = delegateProvider.mapCameraManagerDelegate.cameraState.pitch.toFloat()
+              view.tag = ViewPosition(
+                descriptor.initialCamera.bearing,
+                view.matrix
+              )
+              view.rotationX = 0f
             }
           }
           mapView.addView(view, viewLayoutParams)
         }
       }
     }
-  }
-
-  companion object {
-    const val MAPBOX_VIEW_ANNOTATION_ID = "MAPBOX_VIEW_ANNOTATION_ID"
   }
 }
