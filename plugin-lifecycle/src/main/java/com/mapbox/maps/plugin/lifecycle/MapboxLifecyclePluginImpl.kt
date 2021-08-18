@@ -34,7 +34,7 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
       )
     } else {
       val componentCallback = object : ComponentCallbacks {
-        override fun onConfigurationChanged(newConfig: Configuration?) {
+        override fun onConfigurationChanged(newConfig: Configuration) {
           // no need
         }
 
