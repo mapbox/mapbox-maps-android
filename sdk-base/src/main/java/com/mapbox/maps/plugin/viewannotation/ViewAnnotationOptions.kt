@@ -2,21 +2,46 @@ package com.mapbox.maps.plugin.viewannotation
 
 // bunch of potential properties about placing annotation etc
 class ViewAnnotationOptions private constructor(
-  val resizeFactor: Float = 0f
+  val width: Int,
+  val height: Int,
+  val resizeFactor: Float
 ) {
   class Builder {
     private var resizeFactor = 0f
+    private var width = -1
+    private var height = -1
 
     fun resizeFactor(resizeFactor: Float) = apply { this.resizeFactor = resizeFactor }
 
-    fun build() = ViewAnnotationOptions(resizeFactor)
+    /**
+     * If used during adding view for the first time and not updating it's advised to not populate
+     * them directly as correct width will be calculated from inflated layout
+     */
+    fun width(width: Int) = apply { this.width = width }
+
+    /**
+     * If used during adding view for the first time and not updating it's advised to not populate
+     * them directly as correct height will be calculated from inflated layout
+     */
+    fun height(height: Int) = apply { this.height = height }
+
+    fun build() = ViewAnnotationOptions(width, height, resizeFactor)
+  }
+
+  fun toBuilder(): Builder {
+    return Builder()
+      .resizeFactor(resizeFactor)
+      .width(width)
+      .height(height)
   }
 
   /**
    * Hash code method.
    */
   override fun hashCode(): Int {
-    val result = resizeFactor.hashCode()
+    var result = resizeFactor.hashCode()
+    result += width.hashCode()
+    result += height.hashCode()
     return result
   }
 
@@ -32,6 +57,12 @@ class ViewAnnotationOptions private constructor(
     }
     val that = other as ViewAnnotationOptions
     if (that.resizeFactor != resizeFactor) {
+      return false
+    }
+    if (that.width != width) {
+      return false
+    }
+    if (that.height != height) {
       return false
     }
     return true

@@ -37,6 +37,10 @@ class ViewAnnotationPluginImpl(
   ): View {
     val nativeView = LayoutInflater.from(mapView.context).inflate(id, mapView, false)
     val nativeViewLayout = nativeView.layoutParams as FrameLayout.LayoutParams
+    val updatedOptions = options.toBuilder()
+      .width(if (options.width == -1) nativeViewLayout.width else options.width)
+      .height(if (options.height == -1) nativeViewLayout.height else options.height)
+      .build()
     val annotation = ViewAnnotation(
       view = nativeView,
       viewLayoutParams = nativeViewLayout,
@@ -44,10 +48,8 @@ class ViewAnnotationPluginImpl(
         ViewAnnotationType.NATIVE -> ViewAnnotationDescriptor.Native(delegateProvider.mapCameraManagerDelegate.cameraState)
         ViewAnnotationType.CALLOUT -> ViewAnnotationDescriptor.Callout(delegateProvider.mapCameraManagerDelegate.cameraState)
       },
-      initialWidth = nativeView.layoutParams.width,
-      initialHeight = nativeView.layoutParams.height,
       geometry = geometry,
-      options = options
+      options = updatedOptions
     )
     nativeView.tag = ViewPosition(annotation.descriptor.initialCamera.bearing)
     annotations[nativeView.hashCode()] = annotation
@@ -65,6 +67,10 @@ class ViewAnnotationPluginImpl(
   ) {
     asyncInflater.inflate(id, mapView) { view, _, _ ->
       val nativeViewLayout = view.layoutParams as FrameLayout.LayoutParams
+      val updatedOptions = options.toBuilder()
+        .width(if (options.width == -1) nativeViewLayout.width else options.width)
+        .height(if (options.height == -1) nativeViewLayout.height else options.height)
+        .build()
       val annotation = ViewAnnotation(
         view = view,
         viewLayoutParams = nativeViewLayout,
@@ -72,10 +78,8 @@ class ViewAnnotationPluginImpl(
           ViewAnnotationType.NATIVE -> ViewAnnotationDescriptor.Native(delegateProvider.mapCameraManagerDelegate.cameraState)
           ViewAnnotationType.CALLOUT -> ViewAnnotationDescriptor.Callout(delegateProvider.mapCameraManagerDelegate.cameraState)
         },
-        initialWidth = view.layoutParams.width,
-        initialHeight = view.layoutParams.height,
         geometry = geometry,
-        options = options
+        options = updatedOptions
       )
       view.tag = ViewPosition(annotation.descriptor.initialCamera.bearing)
       annotations[view.hashCode()] = annotation
@@ -106,6 +110,14 @@ class ViewAnnotationPluginImpl(
     annotations.remove(view.hashCode())
   }
 
+  override fun updateViewAnnotation(
+    view: View,
+    options: ViewAnnotationOptions,
+    geometry: Geometry?
+  ) {
+    TODO("Not yet implemented")
+  }
+
   override fun cleanup() {
     super.cleanup()
     delegateProvider.mapListenerDelegate.removeOnCameraChangeListener(this)
@@ -126,8 +138,8 @@ class ViewAnnotationPluginImpl(
               / zoom.coerceAtLeast(descriptor.initialCamera.zoom)
             ).coerceAtLeast(0.0)
           viewLayoutParams = FrameLayout.LayoutParams(
-            (k * initialWidth).toInt(),
-            (k * initialHeight).toInt()
+            (k * options.width).toInt(),
+            (k * options.height).toInt()
           )
         }
         val point = geometry as Point

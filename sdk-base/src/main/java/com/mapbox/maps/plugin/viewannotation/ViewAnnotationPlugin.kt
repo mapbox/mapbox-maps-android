@@ -24,4 +24,10 @@ interface ViewAnnotationPlugin: MapPlugin, OnCameraChangeListener {
   )
 
   fun removeViewAnnotation(view: View)
+
+  fun updateViewAnnotation(
+    view: View,
+    options: ViewAnnotationOptions,
+    geometry: Geometry?
+  )
 }
