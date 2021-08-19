@@ -43,9 +43,16 @@ android {
   }
 }
 
+val buildFromSource: String by project
+
 dependencies {
   api(Dependencies.mapboxBase)
-  api(Dependencies.mapboxOkHttp)
+  if (buildFromSource.toBoolean()) {
+    api(project(":okhttp"))
+  } else {
+    api(Dependencies.mapboxOkHttp)
+  }
+
   implementation(Dependencies.mapboxAnnotations)
   api(project(":sdk-base"))
   implementation(project(":module-telemetry"))

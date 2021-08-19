@@ -5,6 +5,8 @@ plugins {
   id("com.mapbox.maps.token")
 }
 
+val buildFromSource: String by project
+
 android {
   compileSdkVersion(AndroidVersions.compileSdkVersion)
   defaultConfig {
@@ -28,6 +30,12 @@ android {
   testOptions {
     if (!project.hasProperty("android.injected.invoked.from.ide")) {
       execution = "ANDROIDX_TEST_ORCHESTRATOR"
+    }
+  }
+
+  if (buildFromSource.toBoolean()) {
+    packagingOptions {
+      pickFirst("**/libc++_shared.so")
     }
   }
 }
@@ -66,5 +74,5 @@ project.apply {
   from("$rootDir/gradle/lint.gradle")
 }
 
-the<com.mapbox.AccessTokenExtension>().file =
-  "${project.rootDir}/android-auto-app/src/main/res/values/developer-config.xml"
+val localPath:String = org.apache.commons.io.FilenameUtils.getFullPathNoEndSeparator(project.buildscript.sourceFile.toString())
+the<com.mapbox.AccessTokenExtension>().file = "${localPath}/src/main/res/values/developer-config.xml"
