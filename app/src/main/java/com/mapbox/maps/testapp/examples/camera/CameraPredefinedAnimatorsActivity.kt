@@ -1,4 +1,4 @@
-package com.mapbox.maps.testapp.examples
+package com.mapbox.maps.testapp.examples.camera
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
