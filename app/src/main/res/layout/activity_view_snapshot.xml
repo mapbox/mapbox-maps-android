@@ -19,8 +19,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_layers"
         android:tint="@color/primary"
-        app:backgroundTint="@android:color/white"
-        android:contentDescription="@string/snapshot" />
+        app:backgroundTint="@android:color/white"/>
 
     <ImageView
         android:id="@+id/imageView"

@@ -43,7 +43,6 @@
         android:layout_gravity="end|bottom"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:src="@drawable/ic_baseline_refresh_24"
-        android:contentDescription="@string/custom_attribution" />
+        android:src="@drawable/ic_baseline_refresh_24" />
 
 </FrameLayout>

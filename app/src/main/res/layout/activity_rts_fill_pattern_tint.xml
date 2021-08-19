@@ -21,7 +21,6 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:src="@drawable/ic_paint"
-        mapbox:backgroundTint="@color/primary"
-        android:contentDescription="@string/toggle_paint" />
+        mapbox:backgroundTint="@color/primary" />
 
 </FrameLayout>
