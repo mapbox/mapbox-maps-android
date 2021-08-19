@@ -83,8 +83,8 @@ class PointAnnotation(
      */
     get() {
       val value = jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_ANCHOR)
-      value?.let {
-        return IconAnchor.valueOf(it.asString)
+      value?.let { element ->
+        return IconAnchor.values().firstOrNull { it.value == element.asString }
       }
       return null
     }
@@ -268,8 +268,8 @@ class PointAnnotation(
      */
     get() {
       val value = jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_ANCHOR)
-      value?.let {
-        return TextAnchor.valueOf(it.asString)
+      value?.let { element ->
+        return TextAnchor.values().firstOrNull { it.value == element.asString }
       }
       return null
     }
@@ -330,8 +330,8 @@ class PointAnnotation(
      */
     get() {
       val value = jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY)
-      value?.let {
-        return TextJustify.valueOf(it.asString)
+      value?.let { element ->
+        return TextJustify.values().firstOrNull { it.value == element.asString }
       }
       return null
     }
@@ -546,8 +546,8 @@ class PointAnnotation(
      */
     get() {
       val value = jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM)
-      value?.let {
-        return TextTransform.valueOf(it.asString)
+      value?.let { element ->
+        return TextTransform.values().firstOrNull { it.value == element.asString }
       }
       return null
     }
