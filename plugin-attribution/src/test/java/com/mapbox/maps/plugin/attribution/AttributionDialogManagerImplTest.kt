@@ -7,6 +7,7 @@ import com.mapbox.maps.plugin.delegates.MapAttributionDelegate
 import io.mockk.*
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -63,6 +64,7 @@ class AttributionDialogManagerImplTest {
   }
 
   @Test
+  @Ignore("https://github.com/mapbox/mapbox-maps-android/issues/574")
   fun onClickTelemetryPositive() {
     val slot = slot<Boolean>()
     every { telemetry.setUserTelemetryRequestState(capture(slot)) } just Runs
@@ -80,6 +82,7 @@ class AttributionDialogManagerImplTest {
   }
 
   @Test
+  @Ignore("https://github.com/mapbox/mapbox-maps-android/issues/574")
   fun onClickTelemetryNegativeButton() {
     val slot = slot<Boolean>()
     every { telemetry.setUserTelemetryRequestState(capture(slot)) } just Runs
@@ -97,6 +100,7 @@ class AttributionDialogManagerImplTest {
   }
 
   @Test
+  @Ignore("https://github.com/mapbox/mapbox-maps-android/issues/574")
   fun onClickTelemetryNeutralButton() {
     assertNull(attributionDialogManagerImpl.telemetryDialog)
     attributionDialogManagerImpl.showAttribution(mapAttributionDelegate)

@@ -1,6 +1,5 @@
 package com.mapbox.maps.plugin.locationcomponent
 
-import android.text.TextUtils
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.LOCATION_INDICATOR_LAYER
@@ -10,7 +9,7 @@ import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL
 internal class LayerSourceProvider {
 
   fun getModelSource(locationModelLayerOptions: LocationPuck3D): ModelSourceWrapper {
-    if (TextUtils.isEmpty(locationModelLayerOptions.modelUri)) {
+    if (locationModelLayerOptions.modelUri.isEmpty()) {
       throw RuntimeException("Model Url must not be empty!")
     }
     return ModelSourceWrapper(

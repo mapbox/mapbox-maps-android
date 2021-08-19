@@ -9,10 +9,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 
-@RunWith(RobolectricTestRunner::class)
 class LayerSourceProviderTest {
 
   private lateinit var layerSourceProvider: LayerSourceProvider

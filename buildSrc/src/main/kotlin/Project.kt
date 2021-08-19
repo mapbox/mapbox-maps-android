@@ -1,8 +1,8 @@
 object AndroidVersions {
   const val minSdkVersion = 21
   const val minAndroidAutoSdkVersion = 23
-  const val targetSdkVersion = 28
-  const val compileSdkVersion = 28
+  const val targetSdkVersion = 30
+  const val compileSdkVersion = 30
 }
 
 object Plugins {
@@ -61,6 +61,7 @@ object Dependencies {
   const val lint = "com.android.tools.lint:lint:${Versions.lint}"
   const val lintTests = "com.android.tools.lint:lint-tests:${Versions.lint}"
   const val testUtils = "com.android.tools:testutils:${Versions.lint}"
+  const val hamcrest = "org.hamcrest:hamcrest:${Versions.hamcrest}"
 }
 
 object Versions {
@@ -98,7 +99,8 @@ object Versions {
   const val kotlinCoroutines = "1.3.9"
   const val junit = "4.12"
   const val mockk = "1.9.3"
-  const val robolectric = "4.3.1"
+  const val robolectric = "4.6.1"
   const val robolectricEgl = "gl1.1-android-2.1_r1"
   const val lint = "27.2.2"
+  const val hamcrest = "2.1"
 }

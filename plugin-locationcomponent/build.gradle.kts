@@ -34,6 +34,7 @@ dependencies {
   testImplementation(Dependencies.mockk)
   testImplementation(Dependencies.androidxTestCore)
   testImplementation(Dependencies.robolectric)
+  testImplementation(Dependencies.hamcrest)
   testImplementation(project(":plugin-gestures"))
   testImplementation(project(":plugin-animation"))
   androidTestImplementation(Dependencies.androidxTestRunner)
