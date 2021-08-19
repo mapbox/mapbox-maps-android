@@ -296,8 +296,16 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
     val annotation = pointAnnotationManager.create(PointAnnotationOptions().withPoint(Point.fromLngLat(0.0, 0.0)))
     assertEquals(annotation, pointAnnotationManager.annotations[0])
     annotation.point = Point.fromLngLat(1.0, 1.0)
+    annotation.iconAnchor = IconAnchor.CENTER
+    annotation.textAnchor = TextAnchor.CENTER
+    annotation.textJustify = TextJustify.AUTO
+    annotation.textTransform = TextTransform.NONE
     pointAnnotationManager.update(annotation)
     assertEquals(annotation, pointAnnotationManager.annotations[0])
+    assertEquals(IconAnchor.CENTER, annotation.iconAnchor)
+    assertEquals(TextAnchor.CENTER, annotation.textAnchor)
+    assertEquals(TextJustify.AUTO, annotation.textJustify)
+    assertEquals(TextTransform.NONE, annotation.textTransform)
   }
 
   @Test

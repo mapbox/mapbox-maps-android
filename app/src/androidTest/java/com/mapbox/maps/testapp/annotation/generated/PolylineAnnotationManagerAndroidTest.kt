@@ -121,8 +121,10 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
     val annotation = polylineAnnotationManager.create(PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))))
     assertEquals(annotation, polylineAnnotationManager.annotations[0])
     annotation.points = listOf(Point.fromLngLat(1.0, 1.0), Point.fromLngLat(1.0, 1.0))
+    annotation.lineJoin = LineJoin.BEVEL
     polylineAnnotationManager.update(annotation)
     assertEquals(annotation, polylineAnnotationManager.annotations[0])
+    assertEquals(LineJoin.BEVEL, annotation.lineJoin)
   }
 
   @Test

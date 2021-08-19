@@ -64,7 +64,7 @@ class PolylineAnnotation(
     get() {
       val value = jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_JOIN)
       value?.let {
-        return LineJoin.valueOf(it.asString)
+        return LineJoin.valueOf(it.asString.uppercase())
       }
       return null
     }
