@@ -69,7 +69,7 @@ class CircleAnnotationActivity : AppCompatActivity() {
 
         // random add circles across the globe
         val circleAnnotationOptionsList: MutableList<CircleAnnotationOptions> = ArrayList()
-        for (i in 0..20) {
+        for (i in 0..2000) {
           val color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
           circleAnnotationOptionsList.add(
             CircleAnnotationOptions()

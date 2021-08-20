@@ -30,7 +30,8 @@ class PolylineAnnotationManager(
   private val id = ID_GENERATOR.incrementAndGet()
   override val layerId = annotationConfig?.layerId ?: "mapbox-android-polylineAnnotation-layer-$id"
   override val sourceId = annotationConfig?.sourceId ?: "mapbox-android-polylineAnnotation-source-$id"
-
+  override val dragLayerId = annotationConfig?.layerId ?: "mapbox-android-polylineAnnotation-draglayer"
+  override val dragSourceId = annotationConfig?.sourceId ?: "mapbox-android-polylineAnnotation-dragsource"
   init {
     delegateProvider.getStyle {
       initLayerAndSource(it)
@@ -51,15 +52,42 @@ class PolylineAnnotationManager(
 
   override fun setDataDrivenPropertyIsUsed(property: String) {
     when (property) {
-      PolylineAnnotationOptions.PROPERTY_LINE_JOIN -> layer?.lineJoin(get(PolylineAnnotationOptions.PROPERTY_LINE_JOIN))
-      PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY -> layer?.lineSortKey(get(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY))
-      PolylineAnnotationOptions.PROPERTY_LINE_BLUR -> layer?.lineBlur(get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR))
-      PolylineAnnotationOptions.PROPERTY_LINE_COLOR -> layer?.lineColor(get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR))
-      PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH -> layer?.lineGapWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH))
-      PolylineAnnotationOptions.PROPERTY_LINE_OFFSET -> layer?.lineOffset(get(PolylineAnnotationOptions.PROPERTY_LINE_OFFSET))
-      PolylineAnnotationOptions.PROPERTY_LINE_OPACITY -> layer?.lineOpacity(get(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY))
-      PolylineAnnotationOptions.PROPERTY_LINE_PATTERN -> layer?.linePattern(get(PolylineAnnotationOptions.PROPERTY_LINE_PATTERN))
-      PolylineAnnotationOptions.PROPERTY_LINE_WIDTH -> layer?.lineWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH))
+      PolylineAnnotationOptions.PROPERTY_LINE_JOIN -> {
+        layer?.lineJoin(get(PolylineAnnotationOptions.PROPERTY_LINE_JOIN))
+        dragLayer?.lineJoin(get(PolylineAnnotationOptions.PROPERTY_LINE_JOIN))
+      }
+      PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY -> {
+        layer?.lineSortKey(get(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY))
+        dragLayer?.lineSortKey(get(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY))
+      }
+      PolylineAnnotationOptions.PROPERTY_LINE_BLUR -> {
+        layer?.lineBlur(get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR))
+        dragLayer?.lineBlur(get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR))
+      }
+      PolylineAnnotationOptions.PROPERTY_LINE_COLOR -> {
+        layer?.lineColor(get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR))
+        dragLayer?.lineColor(get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR))
+      }
+      PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH -> {
+        layer?.lineGapWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH))
+        dragLayer?.lineGapWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH))
+      }
+      PolylineAnnotationOptions.PROPERTY_LINE_OFFSET -> {
+        layer?.lineOffset(get(PolylineAnnotationOptions.PROPERTY_LINE_OFFSET))
+        dragLayer?.lineOffset(get(PolylineAnnotationOptions.PROPERTY_LINE_OFFSET))
+      }
+      PolylineAnnotationOptions.PROPERTY_LINE_OPACITY -> {
+        layer?.lineOpacity(get(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY))
+        dragLayer?.lineOpacity(get(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY))
+      }
+      PolylineAnnotationOptions.PROPERTY_LINE_PATTERN -> {
+        layer?.linePattern(get(PolylineAnnotationOptions.PROPERTY_LINE_PATTERN))
+        dragLayer?.linePattern(get(PolylineAnnotationOptions.PROPERTY_LINE_PATTERN))
+      }
+      PolylineAnnotationOptions.PROPERTY_LINE_WIDTH -> {
+        layer?.lineWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH))
+        dragLayer?.lineWidth(get(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH))
+      }
     }
   }
 
@@ -285,7 +313,9 @@ class PolylineAnnotationManager(
   override fun createLayer(): LineLayer {
     return lineLayer(layerId, sourceId) {}
   }
-
+  override fun createDragLayer(): LineLayer {
+    return lineLayer(dragLayerId, dragSourceId) {}
+  }
   /**
    * The filter on the managed polylineAnnotations.
    *

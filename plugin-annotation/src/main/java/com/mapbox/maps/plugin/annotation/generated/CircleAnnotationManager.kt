@@ -30,7 +30,8 @@ class CircleAnnotationManager(
   private val id = ID_GENERATOR.incrementAndGet()
   override val layerId = annotationConfig?.layerId ?: "mapbox-android-circleAnnotation-layer-$id"
   override val sourceId = annotationConfig?.sourceId ?: "mapbox-android-circleAnnotation-source-$id"
-
+  override val dragLayerId = annotationConfig?.layerId ?: "mapbox-android-circleAnnotation-draglayer"
+  override val dragSourceId = annotationConfig?.sourceId ?: "mapbox-android-circleAnnotation-dragsource"
   init {
     delegateProvider.getStyle {
       initLayerAndSource(it)
@@ -50,14 +51,38 @@ class CircleAnnotationManager(
 
   override fun setDataDrivenPropertyIsUsed(property: String) {
     when (property) {
-      CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY -> layer?.circleSortKey(get(CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY))
-      CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR -> layer?.circleBlur(get(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR))
-      CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR -> layer?.circleColor(get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR))
-      CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY -> layer?.circleOpacity(get(CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY))
-      CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS -> layer?.circleRadius(get(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS))
-      CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR -> layer?.circleStrokeColor(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR))
-      CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY -> layer?.circleStrokeOpacity(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY))
-      CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH -> layer?.circleStrokeWidth(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH))
+      CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY -> {
+        layer?.circleSortKey(get(CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY))
+        dragLayer?.circleSortKey(get(CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY))
+      }
+      CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR -> {
+        layer?.circleBlur(get(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR))
+        dragLayer?.circleBlur(get(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR))
+      }
+      CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR -> {
+        layer?.circleColor(get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR))
+        dragLayer?.circleColor(get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR))
+      }
+      CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY -> {
+        layer?.circleOpacity(get(CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY))
+        dragLayer?.circleOpacity(get(CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY))
+      }
+      CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS -> {
+        layer?.circleRadius(get(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS))
+        dragLayer?.circleRadius(get(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS))
+      }
+      CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR -> {
+        layer?.circleStrokeColor(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR))
+        dragLayer?.circleStrokeColor(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR))
+      }
+      CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY -> {
+        layer?.circleStrokeOpacity(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY))
+        dragLayer?.circleStrokeOpacity(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY))
+      }
+      CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH -> {
+        layer?.circleStrokeWidth(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH))
+        dragLayer?.circleStrokeWidth(get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH))
+      }
     }
   }
 
@@ -233,7 +258,9 @@ class CircleAnnotationManager(
   override fun createLayer(): CircleLayer {
     return circleLayer(layerId, sourceId) {}
   }
-
+  override fun createDragLayer(): CircleLayer {
+    return circleLayer(dragLayerId, dragSourceId) {}
+  }
   /**
    * The filter on the managed circleAnnotations.
    *

@@ -131,6 +131,20 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun deleteAndAdd() {
+    val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager(mapView)
+    val annotation = polygonAnnotationManager.create(
+      PolygonAnnotationOptions()
+        .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0), Point.fromLngLat(0.0, 1.0), Point.fromLngLat(1.0, 0.0))))
+    )
+    assertEquals(annotation, polygonAnnotationManager.annotations[0])
+    polygonAnnotationManager.delete(annotation)
+    assertTrue(polygonAnnotationManager.annotations.isEmpty())
+    polygonAnnotationManager.addAnnotation(annotation)
+    assertEquals(annotation, polygonAnnotationManager.annotations[0])
+  }
+
+  @Test
   fun deleteList() {
     val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager(mapView)
     val list = listOf(

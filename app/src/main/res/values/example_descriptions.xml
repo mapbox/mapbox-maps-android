@@ -67,7 +67,7 @@
     <string name="description_custom_attribution">Custom attribution showcase</string>
     <string name="description_annotation_fill">Show polygon annotations on a map</string>
     <string name="description_annotation_circle">Show circle annotations on a map</string>
-    <string name="description_annotation_symbol">Show symbol annotations on a map</string>
+    <string name="description_annotation_symbol">Show point annotations on a map</string>
     <string name="description_animate_annotation_symbol">Animate PointAnnotations on a map</string>
     <string name="description_annotation_symbol_cluster">Show fire hydrants in Washington DC area in a cluster</string>
     <string name="description_annotation_line">Show polyline annotations on a map</string>
