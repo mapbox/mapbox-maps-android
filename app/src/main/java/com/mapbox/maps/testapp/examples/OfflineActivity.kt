@@ -85,7 +85,6 @@ class OfflineActivity : AppCompatActivity() {
     }
   }
 
-  @SuppressLint("Lifecycle")
   private fun prepareViewMapButton() {
     // Disable network stack, so that the map can only load from downloaded region.
     OfflineSwitch.getInstance().isMapboxStackConnected = false
@@ -338,12 +337,23 @@ class OfflineActivity : AppCompatActivity() {
     offlineLogsAdapter.addLog(OfflineLog.Success(message))
   }
 
+  override fun onStart() {
+    super.onStart()
+    mapView?.onStart()
+  }
+
+  override fun onStop() {
+    super.onStop()
+    mapView?.onStop()
+  }
+
   override fun onDestroy() {
     super.onDestroy()
     // Remove downloaded style packs and tile regions.
     removeOfflineRegions()
     // Bring back the network connectivity when exiting the OfflineActivity.
     OfflineSwitch.getInstance().isMapboxStackConnected = true
+    mapView?.onDestroy()
   }
 
   private class OfflineLogsAdapter : RecyclerView.Adapter<OfflineLogsAdapter.ViewHolder>() {

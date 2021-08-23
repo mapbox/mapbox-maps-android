@@ -15,7 +15,9 @@ android {
     versionName = "0.1.0"
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    testInstrumentationRunnerArguments["clearPackageData"] = "true"
+    testInstrumentationRunnerArguments = mapOf(
+      "clearPackageData" to "true"
+    )
   }
 
   compileOptions {

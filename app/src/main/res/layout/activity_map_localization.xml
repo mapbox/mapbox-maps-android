@@ -30,8 +30,7 @@
         app:fabSize="normal"
         app:layout_constraintBottom_toTopOf="@id/fabLocalize"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:contentDescription="@string/switch_styles" />
+        app:layout_constraintRight_toRightOf="parent"/>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -44,7 +43,6 @@
         app:backgroundTint="@color/primary"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:contentDescription="@string/localize" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
