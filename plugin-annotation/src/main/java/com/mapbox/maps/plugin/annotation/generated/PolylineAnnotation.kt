@@ -13,6 +13,7 @@ import com.mapbox.maps.plugin.annotation.Annotation
 import com.mapbox.maps.plugin.annotation.AnnotationManager
 import com.mapbox.maps.plugin.annotation.AnnotationType
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
+import java.util.Locale
 
 /**
  * Class for PolylineAnnotation
@@ -64,7 +65,7 @@ class PolylineAnnotation(
     get() {
       val value = jsonObject.get(PolylineAnnotationOptions.PROPERTY_LINE_JOIN)
       value?.let {
-        return LineJoin.valueOf(it.asString.uppercase())
+        return LineJoin.valueOf(it.asString.toUpperCase(Locale.US))
       }
       return null
     }
