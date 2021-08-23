@@ -14,6 +14,7 @@ import com.mapbox.maps.plugin.annotation.Annotation
 import com.mapbox.maps.plugin.annotation.AnnotationManager
 import com.mapbox.maps.plugin.annotation.AnnotationType
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
+import java.util.Locale
 
 /**
  * Class for PointAnnotation
@@ -84,7 +85,7 @@ class PointAnnotation(
     get() {
       val value = jsonObject.get(PointAnnotationOptions.PROPERTY_ICON_ANCHOR)
       value?.let {
-        return IconAnchor.valueOf(it.asString.uppercase())
+        return IconAnchor.valueOf(it.asString.toUpperCase(Locale.US))
       }
       return null
     }
@@ -269,7 +270,7 @@ class PointAnnotation(
     get() {
       val value = jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_ANCHOR)
       value?.let {
-        return TextAnchor.valueOf(it.asString.uppercase())
+        return TextAnchor.valueOf(it.asString.toUpperCase(Locale.US))
       }
       return null
     }
@@ -331,7 +332,7 @@ class PointAnnotation(
     get() {
       val value = jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY)
       value?.let {
-        return TextJustify.valueOf(it.asString.uppercase())
+        return TextJustify.valueOf(it.asString.toUpperCase(Locale.US))
       }
       return null
     }
@@ -547,7 +548,7 @@ class PointAnnotation(
     get() {
       val value = jsonObject.get(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM)
       value?.let {
-        return TextTransform.valueOf(it.asString.uppercase())
+        return TextTransform.valueOf(it.asString.toUpperCase(Locale.US))
       }
       return null
     }
