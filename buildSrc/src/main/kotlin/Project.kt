@@ -62,6 +62,7 @@ object Dependencies {
   const val lintTests = "com.android.tools.lint:lint-tests:${Versions.lint}"
   const val testUtils = "com.android.tools:testutils:${Versions.lint}"
   const val hamcrest = "org.hamcrest:hamcrest:${Versions.hamcrest}"
+  const val annotations = androidxAnnotations
 }
 
 object Versions {
