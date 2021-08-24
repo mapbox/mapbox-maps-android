@@ -842,7 +842,7 @@ class MapboxMap internal constructor(
    */
   fun getFeatureState(
     sourceId: String,
-    sourceLayerId: String?,
+    sourceLayerId: String? = null,
     featureId: String,
     callback: QueryFeatureStateCallback
   ) {
@@ -864,9 +864,9 @@ class MapboxMap internal constructor(
    */
   fun removeFeatureState(
     sourceId: String,
-    sourceLayerId: String?,
+    sourceLayerId: String? = null,
     featureId: String,
-    stateKey: String?
+    stateKey: String? = null
   ) {
     nativeMapWeakRef.call {
       this.removeFeatureState(

@@ -86,7 +86,10 @@ class FeatureStateTest : BaseMapTest() {
     val countDownLatch = CountDownLatch(1)
     rule.scenario.onActivity {
       it.runOnUiThread {
-        mapboxMap.getFeatureState("source", null, FEATURE_ID) { stateMap ->
+        mapboxMap.getFeatureState(
+          sourceId = "source",
+          featureId = FEATURE_ID
+        ) { stateMap ->
           stateMap.value?.let { value ->
             Assert.assertEquals(
               hashMapOf("hover" to true).toString(), value.toString()
