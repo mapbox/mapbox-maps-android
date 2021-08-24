@@ -45,7 +45,8 @@ class MapboxMap internal constructor(
   MapListenerDelegate,
   MapPluginExtensionsDelegate,
   MapCameraManagerDelegate,
-  MapStyleStateDelegate {
+  MapStyleStateDelegate,
+  MapViewAnnotationDelegate {
 
   private val nativeMapWeakRef = WeakReference(nativeMap)
   internal lateinit var style: Style
@@ -1304,4 +1305,16 @@ class MapboxMap internal constructor(
       Map.clearData(resourceOptions, callback)
     }
   }
+
+  override fun addViewAnnotation(viewId: Int, options: ViewAnnotationOptions) =
+    nativeMapWeakRef.call { this.addViewAnnotation(viewId, options) }
+
+  override fun updateViewAnnotation(viewId: Int, options: ViewAnnotationOptions) =
+    nativeMapWeakRef.call { this.updateViewAnnotation(viewId, options) }
+
+  override fun removeViewAnnotation(viewId: Int) =
+    nativeMapWeakRef.call { this.removeViewAnnotation(viewId) }
+
+  override fun calculateViewAnnotationsPosition() =
+    nativeMapWeakRef.call { this.calculateViewAnnotationsPosition() }
 }

@@ -17,8 +17,6 @@ import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapLongClickListener
-import com.mapbox.maps.plugin.viewannotation.ViewAnnotationOptions
-import com.mapbox.maps.plugin.viewannotation.ViewAnnotationOptions.Companion.viewAnnotationOptions
 import com.mapbox.maps.plugin.viewannotation.ViewAnnotationPlugin
 import com.mapbox.maps.plugin.viewannotation.ViewAnnotationPluginImpl
 import com.mapbox.maps.plugin.viewannotation.ViewAnnotationType.*
@@ -28,7 +26,7 @@ import com.mapbox.maps.testapp.R
 /**
  * Example showing how to add a marker on map with symbol layer
  */
-class AddOneMarkerSymbolActivity : AppCompatActivity(), OnMapClickListener, OnMapLongClickListener {
+class AddOneMarkerSymbolActivity : AppCompatActivity(), OnMapClickListener {
 
   private lateinit var viewAnnotationPlugin: ViewAnnotationPlugin
   private var count = 1
@@ -56,7 +54,6 @@ class AddOneMarkerSymbolActivity : AppCompatActivity(), OnMapClickListener, OnMa
       // guess it should be handled in our plugin internally but leaving as is for now
       it.addOnMapLoadedListener {
         mapView.getMapboxMap().addOnMapClickListener(this)
-        mapView.getMapboxMap().addOnMapLongClickListener(this)
       }
     }.loadStyle(
       styleExtension = style(Style.MAPBOX_STREETS) {
@@ -84,27 +81,19 @@ class AddOneMarkerSymbolActivity : AppCompatActivity(), OnMapClickListener, OnMa
   }
 
   override fun onMapClick(point: Point): Boolean {
-    val view = viewAnnotationPlugin.addViewAnnotation(
-      R.layout.item_callout_view,
-      NATIVE,
-      point,
-      viewAnnotationOptions {
-        resizeFactor(2f)
-      }
-    )
-    view.findViewById<TextView>(R.id.textNativeView).text = "Native ${count++}"
-    view.findViewById<ImageView>(R.id.closeNativeView).setOnClickListener {
-      view.visibility = View.GONE
-    }
-    return true
-  }
-
-  override fun onMapLongClick(point: Point): Boolean {
+    // TODO revisit API and allow be nullable
     viewAnnotationPlugin.addViewAnnotation(
       R.layout.item_callout_view,
       CALLOUT,
-      point,
-      ViewAnnotationOptions.Builder().build()
+      ViewAnnotationOptions.Builder()
+        .anchor(ViewAnnotationAnchor.TOP_LEFT)
+        .allowViewAnnotationsCollision(true)
+        .marginTop(0)
+        .marginLeft(0)
+        .marginBottom(0)
+        .marginRight(0)
+        .geometry(point)
+        .build()
     ) { view ->
       view.findViewById<TextView>(R.id.textNativeView).text = "Callout ${count++}"
       view.findViewById<ImageView>(R.id.closeNativeView).setOnClickListener {
