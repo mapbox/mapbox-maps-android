@@ -74,7 +74,10 @@ class FeatureStateActivity : AppCompatActivity(), OnCameraChangeListener {
         }
         lastFeatureId = featureId
         setHoverFeatureState(featureId, true)
-        mapboxMap.getFeatureState(SOURCE_ID, null, featureId) { stateMap ->
+        mapboxMap.getFeatureState(
+          sourceId = SOURCE_ID,
+          featureId = featureId
+        ) { stateMap ->
           Logger.d(
             TAG,
             "getFeatureState: ${stateMap.value!!}"
