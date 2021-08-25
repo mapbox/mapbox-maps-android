@@ -2,9 +2,30 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 10.0.0-rc.6 August 11, 2021
+# 10.0.0-rc.7 August 25, 2021
 
 **The Mapbox Maps SDK for Android has moved to release candidate status and is now ready for production use.**
+
+## Features ✨ and improvements 🏁
+* Add generateId property for GeoJsonSource. ([#538](https://github.com/mapbox/mapbox-maps-android/pull/538))
+* Add default value to improve usability of FeatureState API. ([#588](https://github.com/mapbox/mapbox-maps-android/pull/588))
+* Added move layer API
+
+## Bug fixes 🐞
+* Fix snapshotter leak. Now calling MapSnapshotter#destroy truly frees memory. ([#569](https://github.com/mapbox/mapbox-maps-android/pull/569))
+* Remove the expression getter/setters for source properties. ([#568](https://github.com/mapbox/mapbox-maps-android/pull/568))
+* Remove strong ref dependency in snapshotter that was leading to a memory leak if Snapshotter#destroy was not called explicitly. ([#571](https://github.com/mapbox/mapbox-maps-android/pull/571))
+* Fix get annotation enum property crash ([#579](https://github.com/mapbox/mapbox-maps-android/pull/579))
+* Fix rendering issue for round line-join in line gradients
+* A fix of the layer paint property evaluation while transitioning from a data-driven value. It snaps immediately to the new value thus preventing of drawing stale data during the animation.
+* Reduced memory consumption when using raster layers by deleting CPU side tile bitmap copy after uploading to GPU texture.
+* Fix crash on Android when using tile requests delay API
+
+## Dependencies
+* Bump gl-native to rc.7.2, common to 17.1.0 ([#575](https://github.com/mapbox/mapbox-maps-android/pull/575))
+* Bump targetSDKVersion and compileSDKVersion to 30, robolectric version to 4.6.1. ([#514](https://github.com/mapbox/mapbox-maps-android/pull/514))
+
+# 10.0.0-rc.6 August 11, 2021
 
 ## Breaking changes ⚠️
 * Update extension function signatures making them easier to use from Java. ([#539](https://github.com/mapbox/mapbox-maps-android/pull/539))
