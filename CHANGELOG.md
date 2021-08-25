@@ -13,18 +13,19 @@ Mapbox welcomes participation and contributions from everyone.
 * Add generateId property for GeoJsonSource. ([#538](https://github.com/mapbox/mapbox-maps-android/pull/538))
 * Add default value to improve usability of FeatureState API. ([#588](https://github.com/mapbox/mapbox-maps-android/pull/588))
 * Add Style#moveStyleLayer(layerId: String, layerPosition: LayerPosition?): Expected<String, None> API ([#563](https://github.com/mapbox/mapbox-maps-android/pull/563))
-* Allow using combination of line-dasharray and line-gradient for line layer.
+* Allow using combination of line-dasharray and line-gradient for line layer. ([#563](https://github.com/mapbox/mapbox-maps-android/pull/563))
 
 ## Bug fixes 🐞
-* Fix snapshotter leak. Now calling MapSnapshotter#destroy truly frees memory. ([#569](https://github.com/mapbox/mapbox-maps-android/pull/569))
 * Remove strong ref dependency in snapshotter that was leading to a memory leak if Snapshotter#destroy was not called explicitly. ([#571](https://github.com/mapbox/mapbox-maps-android/pull/571))
 * Fix get annotation enum property crash ([#579](https://github.com/mapbox/mapbox-maps-android/pull/579))
-* Fix rendering issue for round line-join in line gradients
-* A fix of the layer paint property evaluation while transitioning from a data-driven value. It snaps immediately to the new value thus preventing of drawing stale data during the animation.
-* Reduced memory consumption when using raster layers by deleting CPU side tile bitmap copy after uploading to GPU texture.
-* Fix crash on Android when using tile requests delay API
+* Fix rendering issue for round line-join in line gradients ([#565](https://github.com/mapbox/mapbox-maps-android/pull/565))
+* A fix of the layer paint property evaluation while transitioning from a data-driven value. It snaps immediately to the new value thus preventing of drawing stale data during the animation.([#563](https://github.com/mapbox/mapbox-maps-android/pull/563))
+* Reduced memory consumption when using raster layers by deleting CPU side tile bitmap copy after uploading to GPU texture.([#563](https://github.com/mapbox/mapbox-maps-android/pull/563))
+* Fix crash on Android when using tile requests delay API([#563](https://github.com/mapbox/mapbox-maps-android/pull/563))
 
 ## Dependencies
+* Bump gl-native to v10.0.0-rc.7, common to v17.0.0 ([#563](https://github.com/mapbox/mapbox-maps-android/pull/563))
+* Bump gl-native to v10.0.0-rc.7.1. ([#565](https://github.com/mapbox/mapbox-maps-android/pull/565))
 * Bump gl-native to v10.0.0-rc.7.2, common to 17.1.0 ([#575](https://github.com/mapbox/mapbox-maps-android/pull/575))
 * Bump targetSDKVersion and compileSDKVersion to 30, robolectric version to 4.6.1. ([#514](https://github.com/mapbox/mapbox-maps-android/pull/514))
 
