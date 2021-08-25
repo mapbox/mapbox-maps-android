@@ -9,7 +9,8 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Add generateId property for GeoJsonSource. ([#538](https://github.com/mapbox/mapbox-maps-android/pull/538))
 * Add default value to improve usability of FeatureState API. ([#588](https://github.com/mapbox/mapbox-maps-android/pull/588))
-* Added move layer API
+* Add Style#moveStyleLayer(layerId: String, layerPosition: LayerPosition?): Expected<String, None> API ([#563](https://github.com/mapbox/mapbox-maps-android/pull/563))
+* Allow using combination of line-dasharray and line-gradient for line layer.
 
 ## Bug fixes 🐞
 * Fix snapshotter leak. Now calling MapSnapshotter#destroy truly frees memory. ([#569](https://github.com/mapbox/mapbox-maps-android/pull/569))
