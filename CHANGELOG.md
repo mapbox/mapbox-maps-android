@@ -6,6 +6,9 @@ Mapbox welcomes participation and contributions from everyone.
 
 **The Mapbox Maps SDK for Android has moved to release candidate status and is now ready for production use.**
 
+## Breaking changes ⚠️
+* Remove the expression getter/setters for source properties. ([#568](https://github.com/mapbox/mapbox-maps-android/pull/568))
+
 ## Features ✨ and improvements 🏁
 * Add generateId property for GeoJsonSource. ([#538](https://github.com/mapbox/mapbox-maps-android/pull/538))
 * Add default value to improve usability of FeatureState API. ([#588](https://github.com/mapbox/mapbox-maps-android/pull/588))
@@ -14,7 +17,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Fix snapshotter leak. Now calling MapSnapshotter#destroy truly frees memory. ([#569](https://github.com/mapbox/mapbox-maps-android/pull/569))
-* Remove the expression getter/setters for source properties. ([#568](https://github.com/mapbox/mapbox-maps-android/pull/568))
 * Remove strong ref dependency in snapshotter that was leading to a memory leak if Snapshotter#destroy was not called explicitly. ([#571](https://github.com/mapbox/mapbox-maps-android/pull/571))
 * Fix get annotation enum property crash ([#579](https://github.com/mapbox/mapbox-maps-android/pull/579))
 * Fix rendering issue for round line-join in line gradients
