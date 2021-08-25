@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
+import com.mapbox.maps.ViewAnnotationAnchor
 import com.mapbox.maps.ViewAnnotationOptions
 import com.mapbox.maps.ViewAnnotationsPosition
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
@@ -18,7 +19,6 @@ class ViewAnnotationPluginImpl(
   private val asyncInflater by lazy { AsyncLayoutInflater(mapView.context) }
 
   private val annotations = HashMap<Int, ViewAnnotation>()
-  private val lastVisibleViewIds = mutableListOf<Int>()
 
   private lateinit var delegateProvider: MapDelegateProvider
   private lateinit var delegateMapViewAnnotations: MapViewAnnotationDelegate
@@ -36,82 +36,80 @@ class ViewAnnotationPluginImpl(
   // synchronous method
   override fun addViewAnnotation(
     @LayoutRes id: Int,
-    type: ViewAnnotationType,
     options: ViewAnnotationOptions
   ): View {
+    if (options.geometry == null) {
+      throw RuntimeException("Geometry can not be null!")
+    }
     val nativeView = LayoutInflater.from(mapView.context).inflate(id, mapView, false)
     val nativeViewLayout = nativeView.layoutParams as FrameLayout.LayoutParams
     val updatedOptions = options.toBuilder()
+      .anchor(if (options.anchor == null) ViewAnnotationAnchor.TOP_LEFT else options.anchor)
       .width(if (options.width == null) nativeViewLayout.width else options.width)
       .height(if (options.height == null) nativeViewLayout.height else options.height)
       .build()
     val annotation = ViewAnnotation(
       view = nativeView,
       viewLayoutParams = nativeViewLayout,
-      descriptor = when(type) {
-        ViewAnnotationType.NATIVE -> ViewAnnotationDescriptor.Native(delegateProvider.mapCameraManagerDelegate.cameraState)
-        ViewAnnotationType.CALLOUT -> ViewAnnotationDescriptor.Callout(delegateProvider.mapCameraManagerDelegate.cameraState)
-      },
       options = updatedOptions
     )
-    nativeView.tag = ViewPosition(annotation.descriptor.initialCamera.bearing)
     val viewId = nativeView.hashCode()
     annotations[viewId] = annotation
-    val positionsToUpdate = delegateMapViewAnnotations.addViewAnnotation(viewId, updatedOptions)
-    displayAnnotation(positionsToUpdate, false)
+    delegateMapViewAnnotations.addViewAnnotation(viewId, updatedOptions)?.let {
+      displayAnnotations(it, false)
+    }
     return nativeView
   }
 
   // asynchronous method
   override fun addViewAnnotation(
     @LayoutRes id: Int,
-    type: ViewAnnotationType,
     options: ViewAnnotationOptions,
     result: (View) -> Unit
   ) {
+    if (options.geometry == null) {
+      throw RuntimeException("Geometry can not be null!")
+    }
     asyncInflater.inflate(id, mapView) { view, _, _ ->
       val nativeViewLayout = view.layoutParams as FrameLayout.LayoutParams
       val updatedOptions = options.toBuilder()
+        .anchor(if (options.anchor == null) ViewAnnotationAnchor.TOP_LEFT else options.anchor)
         .width(if (options.width == null) nativeViewLayout.width else options.width)
         .height(if (options.height == null) nativeViewLayout.height else options.height)
         .build()
       val annotation = ViewAnnotation(
         view = view,
         viewLayoutParams = nativeViewLayout,
-        descriptor = when(type) {
-          ViewAnnotationType.NATIVE -> ViewAnnotationDescriptor.Native(delegateProvider.mapCameraManagerDelegate.cameraState)
-          ViewAnnotationType.CALLOUT -> ViewAnnotationDescriptor.Callout(delegateProvider.mapCameraManagerDelegate.cameraState)
-        },
         options = updatedOptions
       )
-      view.tag = ViewPosition(annotation.descriptor.initialCamera.bearing)
       val viewId = view.hashCode()
       annotations[viewId] = annotation
-      val positionsToUpdate = delegateMapViewAnnotations.addViewAnnotation(viewId, updatedOptions)
-      displayAnnotation(positionsToUpdate, true)
+      delegateMapViewAnnotations.addViewAnnotation(viewId, updatedOptions)?.let {
+        displayAnnotations(it, false)
+      }
       result.invoke(view)
     }
   }
 
-  private fun displayAnnotation(
+  private fun displayAnnotations(
     positionsToUpdate: ViewAnnotationsPosition,
-    // TODO updateAll seems useless here, revisit
-    updateAll: Boolean
+    fullRedraw: Boolean
   ) {
+    if (fullRedraw) {
+      annotations.forEach {
+        mapView.removeView(it.value.view)
+      }
+    }
     for (viewPosition in positionsToUpdate.positions) {
       annotations[viewPosition.id]?.let { annotation ->
-        if (updateAll || lastVisibleViewIds.contains(viewPosition.id)) {
-          mapView.removeView(annotation.view)
-          // TODO revisit
-          val density = mapView.resources.displayMetrics.density
-          annotation.viewLayoutParams.setMargins(
-            (viewPosition.leftTopCoordinate.x * density).toInt(),
-            (viewPosition.leftTopCoordinate.y * density).toInt(),
-            0,
-            0
-          )
-          mapView.addView(annotation.view, annotation.viewLayoutParams)
-        }
+        mapView.removeView(annotation.view)
+        annotation.viewLayoutParams.setMargins(
+          viewPosition.leftTopCoordinate.x.toInt(),
+          viewPosition.leftTopCoordinate.y.toInt(),
+          0,
+          0
+        )
+        mapView.addView(annotation.view, annotation.viewLayoutParams)
       }
     }
   }
@@ -119,8 +117,10 @@ class ViewAnnotationPluginImpl(
   override fun removeViewAnnotation(view: View) {
     val id = view.hashCode()
     annotations.remove(id)
-    val positionsToUpdate = delegateMapViewAnnotations.removeViewAnnotation(id)
-    displayAnnotation(positionsToUpdate, true)
+    mapView.removeView(view)
+    delegateMapViewAnnotations.removeViewAnnotation(id)?.let {
+      displayAnnotations(it, false)
+    }
   }
 
   override fun updateViewAnnotation(
@@ -128,8 +128,26 @@ class ViewAnnotationPluginImpl(
     options: ViewAnnotationOptions,
   ) {
     val id = view.hashCode()
-    val positionsToUpdate = delegateMapViewAnnotations.updateViewAnnotation(id, options)
-    displayAnnotation(positionsToUpdate, true)
+    annotations[id]?.let {
+      val updatedOptions = ViewAnnotationOptions.Builder()
+        .geometry(if (options.geometry != null) options.geometry else it.options.geometry)
+        .allowViewAnnotationsCollision(
+          if (!options.allowViewAnnotationsCollision)
+            options.allowViewAnnotationsCollision
+          else it.options.allowViewAnnotationsCollision
+        )
+        .anchor(if (options.anchor != null) options.anchor else it.options.anchor)
+        .width(if (options.width != null) options.width else it.options.width)
+        .height(if (options.height != null) options.height else it.options.height)
+        .marginLeft(if (options.marginLeft != 0) options.marginLeft else it.options.marginLeft)
+        .marginTop(if (options.marginTop != 0) options.marginTop else it.options.marginTop)
+        .marginRight(if (options.marginRight != 0) options.marginRight else it.options.marginRight)
+        .marginBottom(if (options.marginBottom != 0) options.marginBottom else it.options.marginBottom)
+        .build()
+      delegateMapViewAnnotations.updateViewAnnotation(id, updatedOptions)?.let { position ->
+        displayAnnotations(position, false)
+      }
+    }
   }
 
   override fun cleanup() {
@@ -140,11 +158,6 @@ class ViewAnnotationPluginImpl(
 
   override fun onCameraChanged() {
     val positionsToUpdate = delegateMapViewAnnotations.calculateViewAnnotationsPosition()
-    displayAnnotation(positionsToUpdate, true)
-    lastVisibleViewIds.clear()
-    // TODO use nicer Kotlin here
-    positionsToUpdate.positions.forEach {
-      lastVisibleViewIds.add(it.id)
-    }
+    displayAnnotations(positionsToUpdate, true)
   }
 }

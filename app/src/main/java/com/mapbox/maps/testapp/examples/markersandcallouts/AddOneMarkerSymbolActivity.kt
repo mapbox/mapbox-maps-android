@@ -2,7 +2,6 @@ package com.mapbox.maps.testapp.examples.markersandcallouts
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -14,12 +13,8 @@ import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
-import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
-import com.mapbox.maps.plugin.gestures.addOnMapLongClickListener
 import com.mapbox.maps.plugin.viewannotation.ViewAnnotationPlugin
-import com.mapbox.maps.plugin.viewannotation.ViewAnnotationPluginImpl
-import com.mapbox.maps.plugin.viewannotation.ViewAnnotationType.*
 import com.mapbox.maps.plugin.viewannotation.viewAnnotation
 import com.mapbox.maps.testapp.R
 
@@ -84,20 +79,14 @@ class AddOneMarkerSymbolActivity : AppCompatActivity(), OnMapClickListener {
     // TODO revisit API and allow be nullable
     viewAnnotationPlugin.addViewAnnotation(
       R.layout.item_callout_view,
-      CALLOUT,
       ViewAnnotationOptions.Builder()
-        .anchor(ViewAnnotationAnchor.TOP_LEFT)
-        .allowViewAnnotationsCollision(true)
-        .marginTop(0)
-        .marginLeft(0)
-        .marginBottom(0)
-        .marginRight(0)
         .geometry(point)
         .build()
     ) { view ->
       view.findViewById<TextView>(R.id.textNativeView).text = "Callout ${count++}"
       view.findViewById<ImageView>(R.id.closeNativeView).setOnClickListener {
-        view.visibility = View.GONE
+//        view.visibility = View.GONE
+        viewAnnotationPlugin.removeViewAnnotation(view)
       }
     }
     return true

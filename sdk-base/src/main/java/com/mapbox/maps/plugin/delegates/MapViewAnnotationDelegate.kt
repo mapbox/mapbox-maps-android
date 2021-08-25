@@ -8,14 +8,14 @@ interface MapViewAnnotationDelegate {
   fun addViewAnnotation(
     viewId: Int,
     options: ViewAnnotationOptions
-  ): ViewAnnotationsPosition
+  ): ViewAnnotationsPosition?
 
   fun updateViewAnnotation(
     viewId: Int,
     options: ViewAnnotationOptions
-  ): ViewAnnotationsPosition
+  ): ViewAnnotationsPosition?
 
-  fun removeViewAnnotation(viewId: Int): ViewAnnotationsPosition
+  fun removeViewAnnotation(viewId: Int): ViewAnnotationsPosition?
 
   fun calculateViewAnnotationsPosition(): ViewAnnotationsPosition
 }

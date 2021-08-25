@@ -4,14 +4,11 @@ import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Matrix
 import android.os.Build
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.SurfaceView
 import android.view.TextureView
-import android.view.View
-import android.view.animation.Transformation
 import android.widget.FrameLayout
 import androidx.annotation.IntRange
 import androidx.annotation.RequiresApi
@@ -19,13 +16,10 @@ import androidx.annotation.VisibleForTesting
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
-import com.mapbox.maps.plugin.viewannotation.ViewAnnotationPluginImpl
-import com.mapbox.maps.plugin.viewannotation.ViewPosition
 import com.mapbox.maps.renderer.MapboxSurfaceHolderRenderer
 import com.mapbox.maps.renderer.MapboxTextureViewRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import com.mapbox.maps.renderer.egl.EGLCore
-import java.lang.Exception
 
 /**
  * A [MapView] provides an embeddable map interface.
@@ -103,31 +97,8 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       },
       resolvedMapInitOptions
     )
-    setStaticTransformationsEnabled(true)
     addView(view, 0)
     mapController.initializePlugins(resolvedMapInitOptions, this)
-  }
-
-  // needed for View Annotations plugin
-  // TODO gl-native will send us single matrix, for now calculating by ourselves
-  override fun getChildStaticTransformation(child: View?, t: Transformation?): Boolean {
-    child?.tag?.let {
-      return try {
-          val tagData = it as ViewPosition
-          val matrix = Matrix()
-          matrix.preRotate(
-            -(getMapboxMap().cameraState.bearing - tagData.bearing).toFloat(),
-            0f,
-            0f
-          )
-          matrix.postConcat(tagData.rotationMatrix)
-          t?.matrix?.set(matrix)
-        true
-      } catch (e: Exception) {
-        false
-      }
-    }
-    return false
   }
 
   override fun onAttachedToWindow() {
