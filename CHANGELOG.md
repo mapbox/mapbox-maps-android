@@ -22,7 +22,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix crash on Android when using tile requests delay API
 
 ## Dependencies
-* Bump gl-native to rc.7.2, common to 17.1.0 ([#575](https://github.com/mapbox/mapbox-maps-android/pull/575))
+* Bump gl-native to v10.0.0-rc.7.2, common to 17.1.0 ([#575](https://github.com/mapbox/mapbox-maps-android/pull/575))
 * Bump targetSDKVersion and compileSDKVersion to 30, robolectric version to 4.6.1. ([#514](https://github.com/mapbox/mapbox-maps-android/pull/514))
 
 # 10.0.0-rc.6 August 11, 2021
