@@ -3,6 +3,7 @@
 package com.mapbox.maps.plugin.gestures
 
 import com.mapbox.android.gestures.AndroidGesturesManager
+import com.mapbox.maps.plugin.PanScrollMode
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
@@ -142,3 +143,19 @@ fun MapPluginExtensionsDelegate.setGesturesManager(
  */
 fun MapPluginExtensionsDelegate.getGesturesSettings() =
   gesturesPlugin { getSettings() } as GesturesSettings?
+
+/**
+ * Returns if the panning is horizontally limited,
+ * In other words, the pan scroll mode is set to vertical.
+ */
+fun GesturesSettings.isPanHorizontallyLimited(): Boolean {
+  return panScrollMode == PanScrollMode.VERTICAL
+}
+
+/**
+ * Returns if the panning is vertically limited,
+ * In other words, the pan scroll mode is set to horizontal.
+ */
+fun GesturesSettings.isPanVerticallyLimited(): Boolean {
+  return panScrollMode == PanScrollMode.HORIZONTAL
+}
