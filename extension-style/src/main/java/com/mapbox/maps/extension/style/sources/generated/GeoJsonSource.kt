@@ -29,7 +29,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   private var geoJsonParsed = false
   private val onGeoJsonParsedListenerList = mutableListOf<OnGeoJsonParsed>()
   private val scope = MainScope()
-  private var waitingData: Pair<GeoJson, ((GeoJsonSource) -> Unit)>? = null
+  private var pendingData: Pair<GeoJson, ((GeoJsonSource) -> Unit)>? = null
 
   private constructor(
     builder: Builder,
@@ -39,7 +39,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     rawGeoJson?.let {
       ignoreParsedGeoJsonRegistry[sourceId] = false
       onGeoJsonParsedListenerList.add(onGeoJsonParsed)
-      scope.launch {
+      parsingJob = scope.launch {
         val property = getPropertyValue(it)
         geoJsonParsed = true
         // we set parsed data when sync setter was not called during background work
@@ -48,6 +48,12 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
           onGeoJsonParsedListenerList.forEach {
             it.onGeoJsonParsed(this@GeoJsonSource)
           }
+        }
+        pendingData?.let {
+          // have data waiting to parse, continue parse this data
+          parseData(it.first, it.second)
+          // clear waitingData, so that if new data coming could wait.
+          pendingData = null
         }
       }
     } ?: run {
@@ -101,7 +107,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    */
   fun data(value: String) = apply {
     ignoreParsedGeoJsonRegistry[sourceId] = true
-    waitingData = null
+    pendingData = null
     setProperty(PropertyValue("data", TypeUtils.wrapToValue(value)))
   }
 
@@ -354,7 +360,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
         parsingJob?.let {
           if (it.isActive) {
             // still have parse job working, save the current data to waitingData.
-            waitingData = Pair(data, listener)
+            pendingData = Pair(data, listener)
           } else {
             // the last parseJob completed, start the parse directly.
             parseData(data, listener)
@@ -365,7 +371,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
       // if any task is running - set flag to skip it when it is finished
       ignoreParsedGeoJsonRegistry[sourceId] = true
       // remove any waiting data - they should not overwrite data set synchronously
-      waitingData = null
+      pendingData = null
       setProperty(data.toPropertyValue())
     }
   }
@@ -379,11 +385,11 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
         setProperty(property, throwRuntimeException = false)
         listener.invoke(this@GeoJsonSource)
       }
-      waitingData?.let {
+      pendingData?.let {
         // have data waiting to parse, continue parse this data
         parseData(it.first, it.second)
         // clear waitingData, so that if new data coming could wait.
-        waitingData = null
+        pendingData = null
       }
     }
   }
@@ -402,6 +408,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
 
     private var rawGeoJson: GeoJson? = null
     internal val properties = HashMap<String, PropertyValue<*>>()
+
     // Properties that only settable after the source is added to the style.
     internal val volatileProperties = HashMap<String, PropertyValue<*>>()
 
