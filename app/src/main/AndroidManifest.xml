@@ -345,7 +345,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.RestrictBoundsActivity"
+            android:name=".examples.camera.RestrictBoundsActivity"
             android:description="@string/description_restrict_bounds"
             android:exported="true"
             android:label="@string/activity_restrict_bounds">
@@ -489,7 +489,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.AnimateMapCameraActivity"
+            android:name=".examples.camera.AnimateMapCameraActivity"
             android:description="@string/activity_camera_animate_description"
             android:exported="true"
             android:label="@string/activity_camera_animate_title">
@@ -501,7 +501,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.CameraPredefinedAnimatorsActivity"
+            android:name=".examples.camera.CameraPredefinedAnimatorsActivity"
             android:description="@string/activity_camera_predefined_animators_description"
             android:exported="true"
             android:label="@string/activity_camera_predefined_animators_title">
@@ -513,7 +513,7 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.LowLevelCameraAnimatorActivity"
+            android:name=".examples.camera.LowLevelCameraAnimatorActivity"
             android:description="@string/description_camera_low_level"
             android:exported="true"
             android:label="@string/activity_camera_low_level">
