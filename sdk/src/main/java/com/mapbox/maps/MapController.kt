@@ -293,8 +293,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
             ScaleBarPluginImpl()
           }
           MAPBOX_VIEW_ANNOTATION_PLUGIN_ID -> {
-            // TODO rethink
-            ViewAnnotationPluginImpl(mapView!!)
+            ViewAnnotationPluginImpl()
           }
           else -> {
             plugin.instance ?: throw RuntimeException("Custom non Mapbox plugins must have non-null `instance` parameter!")

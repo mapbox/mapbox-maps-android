@@ -76,11 +76,11 @@ class AddOneMarkerSymbolActivity : AppCompatActivity(), OnMapClickListener {
   }
 
   override fun onMapClick(point: Point): Boolean {
-    // TODO revisit API and allow be nullable
     viewAnnotationPlugin.addViewAnnotation(
       R.layout.item_callout_view,
       ViewAnnotationOptions.Builder()
         .geometry(point)
+        .allowViewAnnotationsCollision(false)
         .build()
     ) { view ->
       view.findViewById<TextView>(R.id.textNativeView).text = "Callout ${count++}"

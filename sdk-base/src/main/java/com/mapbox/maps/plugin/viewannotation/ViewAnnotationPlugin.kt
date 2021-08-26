@@ -2,11 +2,14 @@ package com.mapbox.maps.plugin.viewannotation
 
 import android.view.View
 import androidx.annotation.LayoutRes
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ViewAnnotationOptions
+import com.mapbox.maps.plugin.ContextBinder
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 
-interface ViewAnnotationPlugin: MapPlugin, OnCameraChangeListener {
+@MapboxExperimental
+interface ViewAnnotationPlugin: MapPlugin, ContextBinder, OnCameraChangeListener {
 
   /**
    * Add annotation view inflated from [id] synchronously.
