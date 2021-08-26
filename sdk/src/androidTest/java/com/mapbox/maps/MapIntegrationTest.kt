@@ -19,6 +19,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.*
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
@@ -473,6 +474,121 @@ class MapIntegrationTest {
           )
         }
         mapView.onStart()
+      }
+    }
+    if (!countDownLatch.await(5, TimeUnit.SECONDS)) {
+      throw TimeoutException()
+    }
+  }
+
+  private fun createRandomPoint(): Point {
+    val random = Random()
+    return Point.fromLngLat(
+      random.nextDouble() * -360.0 + 180.0,
+      random.nextDouble() * -180.0 + 90.0
+    )
+  }
+
+  @Test
+  fun testApplyLargeDataAfterCreate() {
+    countDownLatch = CountDownLatch(1)
+    val pointList = mutableListOf<Feature>()
+    for (i in 0..1000) {
+      val point = createRandomPoint()
+      pointList.add(Feature.fromGeometry(point))
+    }
+    rule.scenario.onActivity {
+      mapView = MapView(it)
+      mapboxMap = mapView.getMapboxMap()
+      it.frameLayout.addView(mapView)
+      mapboxMap.setCamera(
+        CameraOptions.Builder()
+          .center(Point.fromLngLat(0.0, 0.0))
+          .zoom(9.0)
+          .build()
+      )
+      mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) { style ->
+        // load a large feature collection in constructor
+        val source = geoJsonSource("source") {
+          featureCollection(FeatureCollection.fromFeatures(pointList))
+        }
+        // change geometry immediately after create the source
+        source.geometry(Point.fromLngLat(0.0, 0.0)) {}
+
+        style.addSource(source)
+        style.addLayer(
+          circleLayer("layer", "source") {
+            circleColor("red")
+            circleRadius(10.0)
+          }
+        )
+        mapView.postDelayed(
+          {
+            mapboxMap.queryRenderedFeatures(
+              ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0),
+              RenderedQueryOptions(listOf("layer"), null)
+            ) { result ->
+              if (result.value?.size == 1) {
+                countDownLatch.countDown()
+              }
+            }
+          },
+          1_000L
+        )
+      }
+    }
+    if (!countDownLatch.await(5, TimeUnit.SECONDS)) {
+      throw TimeoutException()
+    }
+  }
+
+  @Test
+  fun testApplyDataAfterLargeData() {
+    countDownLatch = CountDownLatch(1)
+    val pointList = mutableListOf<Feature>()
+    for (i in 0..1000) {
+      val point = createRandomPoint()
+      pointList.add(Feature.fromGeometry(point))
+    }
+    rule.scenario.onActivity {
+      mapView = MapView(it)
+      mapboxMap = mapView.getMapboxMap()
+      it.frameLayout.addView(mapView)
+      mapboxMap.setCamera(
+        CameraOptions.Builder()
+          .center(Point.fromLngLat(0.0, 0.0))
+          .zoom(9.0)
+          .build()
+      )
+      mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) { style ->
+        val source = geoJsonSource("source") {
+          data("")
+        }
+        // load a large feature collection
+        source.featureCollection(FeatureCollection.fromFeatures(pointList))
+        // change geometry immediately
+        source.geometry(Point.fromLngLat(0.0, 0.0)) {}
+
+        style.addSource(source)
+        style.addLayer(
+          circleLayer("layer", "source") {
+            circleColor("red")
+            circleRadius(10.0)
+          }
+        )
+        mapView.postDelayed(
+          {
+            mapboxMap.queryRenderedFeatures(
+              ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0),
+              RenderedQueryOptions(listOf("layer"), null)
+            ) { result ->
+              if (result.value?.size == 1) {
+                countDownLatch.countDown()
+              }
+            }
+          },
+          1_000L
+        )
       }
     }
     if (!countDownLatch.await(5, TimeUnit.SECONDS)) {

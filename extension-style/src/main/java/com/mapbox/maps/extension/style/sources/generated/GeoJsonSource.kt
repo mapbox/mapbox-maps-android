@@ -408,7 +408,6 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
 
     private var rawGeoJson: GeoJson? = null
     internal val properties = HashMap<String, PropertyValue<*>>()
-
     // Properties that only settable after the source is added to the style.
     internal val volatileProperties = HashMap<String, PropertyValue<*>>()
 
