@@ -1183,7 +1183,12 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     return false
   }
 
-  internal fun handleFlingEvent(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+  internal fun handleFlingEvent(
+    e1: MotionEvent,
+    e2: MotionEvent,
+    velocityX: Float,
+    velocityY: Float
+  ): Boolean {
     if (!internalSettings.scrollEnabled) {
       // don't allow a fling if scroll is disabled
       return false
@@ -1286,27 +1291,23 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       if (notifyOnMoveListeners(detector)) {
         return true
       }
-      val pitch = mapCameraManagerDelegate.cameraState.pitch
+
+      val focalPoint = detector.focalPoint
+      val fromX = focalPoint.x.toDouble()
+      val fromY = focalPoint.y.toDouble()
 
       val resolvedDistanceX =
-        if (internalSettings.panScrollMode == PanScrollMode.VERTICAL) 0f else distanceX
+        if (internalSettings.isPanHorizontallyLimited()) 0.0 else distanceX.toDouble()
       val resolvedDistanceY =
-        if (internalSettings.panScrollMode == PanScrollMode.HORIZONTAL) 0f else distanceY
+        if (internalSettings.isPanVerticallyLimited()) 0.0 else distanceY.toDouble()
 
-      // Scroll the map
-      val offset = if (pitch in NORMAL_MAX_PITCH..MAXIMUM_PITCH) {
-        // reducing distance values for high pitch values
-        // based equation system
-        // f(NORMAL_MAX_PITCH) = 1.0 and f(MAXIMUM_PITCH) = 4.5
-        // TODO use triangulation to calculate the y distance
-        ScreenCoordinate((-resolvedDistanceX).toDouble(), -resolvedDistanceY / (0.14 * pitch - 7.4))
-      } else {
-        ScreenCoordinate((-resolvedDistanceX).toDouble(), (-resolvedDistanceY).toDouble())
-      }
+      val toX = fromX - resolvedDistanceX
+      val toY = fromY - resolvedDistanceY
+
       easeToImmediately(
         mapCameraManagerDelegate.getDragCameraOptions(
-          centerScreen,
-          ScreenCoordinate(centerScreen.x + offset.x, centerScreen.y + offset.y)
+          ScreenCoordinate(fromX, fromY),
+          ScreenCoordinate(toX, toY)
         )
       )
     }

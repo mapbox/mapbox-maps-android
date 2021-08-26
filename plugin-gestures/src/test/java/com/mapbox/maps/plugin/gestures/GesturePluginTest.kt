@@ -449,7 +449,13 @@ class GesturePluginTest {
         any()
       )
     } returns CameraOptions.Builder().build()
-    val handled = presenter.handleMove(mockk(), 50.0f, 50.0f)
+
+    val moveGestureDetector = mockk<MoveGestureDetector>()
+    every {
+      moveGestureDetector.focalPoint
+    } returns PointF(0.0f, 0.0f)
+
+    val handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
     assert(handled)
     verify { listener.onMove(any()) }
     verify {
