@@ -34,6 +34,24 @@ class MapIntegrationTest {
   private lateinit var mapView: MapView
   private lateinit var mapboxMap: MapboxMap
   private lateinit var countDownLatch: CountDownLatch
+  private val pointCount = 10000
+
+  private fun createRandomPoint(): Point {
+    val random = Random()
+    return Point.fromLngLat(
+      random.nextDouble() * -360.0 + 180.0,
+      random.nextDouble() * -180.0 + 90.0
+    )
+  }
+
+  private fun getFeatureCollection(): FeatureCollection {
+    val pointList = mutableListOf<Feature>()
+    for (i in 0..pointCount) {
+      val point = createRandomPoint()
+      pointList.add(Feature.fromGeometry(point))
+    }
+    return FeatureCollection.fromFeatures(pointList)
+  }
 
   @Before
   @UiThreadTest
@@ -195,16 +213,7 @@ class MapIntegrationTest {
           }
           source.geometry(Point.fromLngLat(0.0, 0.0)) {}
           source.feature(Feature.fromGeometry(Point.fromLngLat(0.0, 0.0))) {}
-          source.featureCollection(
-            FeatureCollection.fromFeature(
-              Feature.fromGeometry(
-                Point.fromLngLat(
-                  0.0,
-                  0.0
-                )
-              )
-            )
-          ) {}
+          source.featureCollection(getFeatureCollection()) {}
           // sync method must clear async queue and not allow current running async task apply changes
           source.geometry(Point.fromLngLat(0.1, 0.1))
           style.addSource(source)
@@ -253,7 +262,7 @@ class MapIntegrationTest {
           }
           // async loading
           val source = geoJsonSource("source") {
-            geometry(Point.fromLngLat(0.0, 0.0))
+            featureCollection(getFeatureCollection())
           }
           // sync method must clear async queue and not allow current running async task apply changes
           source.data(
@@ -328,7 +337,7 @@ class MapIntegrationTest {
             geometry(Point.fromLngLat(0.0, 0.0))
           }
           // sync method must clear async queue and not allow current running async task apply changes
-          source.geometry(Point.fromLngLat(0.1, 0.1))
+          source.featureCollection(getFeatureCollection())
           // follow up with new async that must take effect
           source.geometry(Point.fromLngLat(0.2, 0.2)) {}
           style.addSource(source)
@@ -379,7 +388,7 @@ class MapIntegrationTest {
           geoJsonSource(
             "source",
             config = {
-              geometry(Point.fromLngLat(0.0, 0.0))
+              featureCollection(getFeatureCollection())
             }
           ) { source ->
             // sync method
@@ -481,22 +490,9 @@ class MapIntegrationTest {
     }
   }
 
-  private fun createRandomPoint(): Point {
-    val random = Random()
-    return Point.fromLngLat(
-      random.nextDouble() * -360.0 + 180.0,
-      random.nextDouble() * -180.0 + 90.0
-    )
-  }
-
   @Test
   fun testApplyLargeDataAfterCreate() {
     countDownLatch = CountDownLatch(1)
-    val pointList = mutableListOf<Feature>()
-    for (i in 0..1000) {
-      val point = createRandomPoint()
-      pointList.add(Feature.fromGeometry(point))
-    }
     rule.scenario.onActivity {
       mapView = MapView(it)
       mapboxMap = mapView.getMapboxMap()
@@ -510,7 +506,7 @@ class MapIntegrationTest {
       mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) { style ->
         // load a large feature collection in constructor
         val source = geoJsonSource("source") {
-          featureCollection(FeatureCollection.fromFeatures(pointList))
+          featureCollection(getFeatureCollection())
         }
         // change geometry immediately after create the source
         source.geometry(Point.fromLngLat(0.0, 0.0)) {}
@@ -537,7 +533,7 @@ class MapIntegrationTest {
         )
       }
     }
-    if (!countDownLatch.await(5, TimeUnit.SECONDS)) {
+    if (!countDownLatch.await(10, TimeUnit.SECONDS)) {
       throw TimeoutException()
     }
   }
@@ -545,11 +541,6 @@ class MapIntegrationTest {
   @Test
   fun testApplyDataAfterLargeData() {
     countDownLatch = CountDownLatch(1)
-    val pointList = mutableListOf<Feature>()
-    for (i in 0..1000) {
-      val point = createRandomPoint()
-      pointList.add(Feature.fromGeometry(point))
-    }
     rule.scenario.onActivity {
       mapView = MapView(it)
       mapboxMap = mapView.getMapboxMap()
@@ -565,7 +556,7 @@ class MapIntegrationTest {
           data("")
         }
         // load a large feature collection
-        source.featureCollection(FeatureCollection.fromFeatures(pointList))
+        source.featureCollection(getFeatureCollection())
         // change geometry immediately
         source.geometry(Point.fromLngLat(0.0, 0.0)) {}
 
@@ -576,10 +567,12 @@ class MapIntegrationTest {
             circleRadius(10.0)
           }
         )
+        val min = ScreenCoordinate(mapView.width / 2.0 - 10, mapView.height / 2.0 - 10)
+        val max = ScreenCoordinate(mapView.width / 2.0 + 10, mapView.height / 2.0 + 10)
         mapView.postDelayed(
           {
             mapboxMap.queryRenderedFeatures(
-              ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0),
+              ScreenBox(min, max),
               RenderedQueryOptions(listOf("layer"), null)
             ) { result ->
               if (result.value?.size == 1) {
