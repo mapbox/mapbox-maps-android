@@ -16,7 +16,6 @@ import com.mapbox.android.gestures.*
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
-import com.mapbox.maps.plugin.PanScrollMode
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
@@ -308,8 +307,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     scheduledAnimators.clear()
     unregisterScheduledAnimators(scaleAnimators)
     unregisterScheduledAnimators(rotateAnimators)
-
-    dispatchCameraIdle()
   }
 
   private fun unregisterScheduledAnimators(animators: Array<ValueAnimator>?) =
@@ -559,8 +556,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     val velocityXY = abs(velocityX) + abs(velocityY)
     if (!internalSettings.scaleVelocityAnimationEnabled || velocityXY < minimumVelocity || spanSinceLast / velocityXY < scaleVelocityRatioThreshold
     ) {
-      // notifying listeners that camera is idle only if there is no follow-up animation
-      dispatchCameraIdle()
       return
     }
 
@@ -586,9 +581,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     if (immediateEaseInProcess) {
       return true
     }
-    // dispatching camera start event only when the movement actually occurred
-    // cameraChangeDispatcher.onCameraMoveStarted(CameraChangeDispatcher.REASON_API_GESTURE);
-
     val focalPoint = getScaleFocalPoint(detector)
     scaleCachedAnchor = cameraAnimationsPlugin.anchor
     if (quickZoom) {
@@ -786,7 +778,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       object : AnimatorListenerAdapter() {
         override fun onAnimationEnd(animation: Animator) {
           cameraAnimationsPlugin.anchor = rotateCachedAnchor
-          dispatchCameraIdle()
         }
       }
     )
@@ -821,7 +812,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     if (!internalSettings.rotateVelocityAnimationEnabled || abs(angularVelocity) < minimumAngularVelocity || gesturesManager.standardScaleGestureDetector.isInProgress() && ratio < rotateVelocityRatioThreshold) {
       // notifying listeners that camera is idle only if there is no follow-up animation
-      dispatchCameraIdle()
       return
     }
 
@@ -846,9 +836,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     if (immediateEaseInProcess) {
       return true
     }
-    // dispatching camera start event only when the movement actually occurred
-    // cameraChangeDispatcher.onCameraMoveStarted(CameraChangeDispatcher.REASON_API_GESTURE);
-
     // Calculate map bearing value
     val currentBearing = mapCameraManagerDelegate.cameraState.bearing
     rotateCachedAnchor = cameraAnimationsPlugin.anchor
@@ -958,9 +945,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     detector: ShoveGestureDetector,
     deltaPixelsSinceLast: Float
   ): Boolean {
-    // dispatching camera start event only when the movement actually occurred
-    // cameraChangeDispatcher.onCameraMoveStarted(CameraChangeDispatcher.REASON_API_GESTURE);
-
     // Get pitch value (scale and clamp)
     var pitch = mapCameraManagerDelegate.cameraState.pitch
     val optimizedPitch = pitch - (SHOVE_PIXEL_CHANGE_FACTOR * deltaPixelsSinceLast).toDouble()
@@ -975,8 +959,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   internal fun handleShoveEnd(
     detector: ShoveGestureDetector
   ) {
-    dispatchCameraIdle()
-
     // re-enabling move gesture
     gesturesManager.moveGestureDetector.isEnabled = true
 
@@ -994,7 +976,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       }
 
       cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
-      // cameraChangeDispatcher.onCameraMoveStarted(REASON_API_GESTURE);
 
       val zoomFocalPoint: ScreenCoordinate
       // Single finger double tap
@@ -1045,7 +1026,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
       override fun onAnimationEnd(animation: Animator) {
         cameraAnimationsPlugin.anchor = scaleCachedAnchor
-        dispatchCameraIdle()
       }
     })
     return arrayOf(zoomAnimator, anchorAnimator)
@@ -1096,16 +1076,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     } else {
       scheduleAnimators(animators)
     }
-  }
-
-  private fun dispatchCameraIdle() {
-    //    // we need to dispatch camera idle callback only if there is no other gestures in progress
-    //    if (noGesturesInProgress()) {
-    //      // invalidate the camera position, so that it's valid when fetched from the #onIdle event
-    //      // and doesn't rely on the last frame being rendered
-    //      mapTransformDelegate.invalidateCameraPosition();
-    //      cameraChangeDispatcher.onCameraIdle();
-    //    }
   }
 
   private fun cancelTransitionsIfRequired() {
@@ -1213,44 +1183,19 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     flingInProcess = true
 
     cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
-    // cameraChangeDispatcher.onCameraMoveStarted(REASON_API_GESTURE);
 
-    // pitch results in a bigger translation, limiting input for #5281
-    val pitch = mapCameraManagerDelegate.cameraState.pitch
-    val pitchFactorAdditionalComponent = when {
-      pitch == MINIMUM_PITCH -> {
-        0.0
-      }
-      pitch > MINIMUM_PITCH && pitch < NORMAL_MAX_PITCH -> {
-        pitch / 10.0
-      }
-      pitch in NORMAL_MAX_PITCH..MAXIMUM_PITCH -> {
-        val a = ln(NORMAL_MAX_PITCH / 10.0)
-        val b = ln(MAXIMUM_PITCH)
-        // exp(a) = it / 10.0
-        // exp(b) = it
-        exp((b - a) * (pitch - NORMAL_MAX_PITCH) / (MAXIMUM_PITCH - NORMAL_MAX_PITCH) + a)
-      }
-      else -> 0.0
-    }
-    val pitchFactor = 1.5 + pitchFactorAdditionalComponent
+    val offsetX = if (internalSettings.isPanHorizontallyLimited()) 0.0 else velocityX / FLING_LIMITING_FACTOR
+    val offsetY = if (internalSettings.isPanVerticallyLimited()) 0.0 else velocityY / FLING_LIMITING_FACTOR
 
-    var offsetX = velocityX.toDouble() / pitchFactor / screenDensity.toDouble()
-    var offsetY = velocityY.toDouble() / pitchFactor / screenDensity.toDouble()
-
-    if (internalSettings.panScrollMode == PanScrollMode.HORIZONTAL) {
-      offsetY = 0.0
-    } else if (internalSettings.panScrollMode == PanScrollMode.VERTICAL) {
-      offsetX = 0.0
-    }
     // calculate animation time based on displacement
-    val animationTime =
-      (velocityXY / 7.0 / pitchFactor + ANIMATION_DURATION_FLING_BASE).toLong()
+    // velocityXY ranges from VELOCITY_THRESHOLD_IGNORE_FLING to ~5000
+    // limit animation time to Android SDK default animation time
+    val animationTime = (velocityXY / FLING_LIMITING_FACTOR).toLong()
 
     cameraAnimationsPlugin.easeTo(
       mapCameraManagerDelegate.getDragCameraOptions(
-        centerScreen,
-        ScreenCoordinate(centerScreen.x + offsetX, centerScreen.y + offsetY)
+        ScreenCoordinate(e1.x.toDouble(), e1.y.toDouble()),
+        ScreenCoordinate(e1.x + offsetX, e1.y + offsetY)
       ),
       mapAnimationOptions {
         owner(MapAnimationOwnerRegistry.GESTURES)
@@ -1286,8 +1231,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   ): Boolean {
     // first move event is often delivered with no displacement
     if (distanceX != 0f || distanceY != 0f) {
-      // dispatching camera start event only when the movement actually occurred
-      // cameraChangeDispatcher.onCameraMoveStarted(CameraChangeDispatcher.REASON_API_GESTURE);
       if (notifyOnMoveListeners(detector)) {
         return true
       }
@@ -1315,7 +1258,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   }
 
   internal fun handleMoveEnd(detector: MoveGestureDetector) {
-    dispatchCameraIdle()
     notifyOnMoveEndListeners(detector)
   }
 

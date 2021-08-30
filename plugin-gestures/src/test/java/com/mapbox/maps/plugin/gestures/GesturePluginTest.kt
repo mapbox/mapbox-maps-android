@@ -341,11 +341,14 @@ class GesturePluginTest {
         any()
       )
     } returns CameraOptions.Builder().build()
-    val result = presenter.handleFlingEvent(mockk(), mockk(), 10000f, 10000f)
+    val motionEvent = mockk<MotionEvent>()
+    every { motionEvent.x } returns 0.0f
+    every { motionEvent.y } returns 0.0f
+    val result = presenter.handleFlingEvent(motionEvent, mockk(), 10000f, 10000f)
     verify {
       mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),
-        ScreenCoordinate(666.6666666666667, 666.6666666666667)
+        ScreenCoordinate(1000.0, 1000.0)
       )
     }
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
@@ -368,11 +371,14 @@ class GesturePluginTest {
       )
     } returns CameraOptions.Builder().build()
     presenter.updateSettings { panScrollMode = PanScrollMode.VERTICAL }
-    val result = presenter.handleFlingEvent(mockk(), mockk(), 10000f, 10000f)
+    val motionEvent = mockk<MotionEvent>()
+    every { motionEvent.x } returns 0.0f
+    every { motionEvent.y } returns 0.0f
+    val result = presenter.handleFlingEvent(motionEvent, mockk(), 10000f, 10000f)
     verify {
       mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),
-        ScreenCoordinate(0.0, 666.6666666666667)
+        ScreenCoordinate(0.0, 1000.0)
       )
     }
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
@@ -395,11 +401,14 @@ class GesturePluginTest {
       )
     } returns CameraOptions.Builder().build()
     presenter.updateSettings { panScrollMode = PanScrollMode.HORIZONTAL }
-    val result = presenter.handleFlingEvent(mockk(), mockk(), 10000f, 10000f)
+    val motionEvent = mockk<MotionEvent>()
+    every { motionEvent.x } returns 0.0f
+    every { motionEvent.y } returns 0.0f
+    val result = presenter.handleFlingEvent(motionEvent, mockk(), 10000f, 10000f)
     verify {
       mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),
-        ScreenCoordinate(666.6666666666667, 0.0)
+        ScreenCoordinate(1000.0, 0.0)
       )
     }
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
