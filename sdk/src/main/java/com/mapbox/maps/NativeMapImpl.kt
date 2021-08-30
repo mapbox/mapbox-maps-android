@@ -128,6 +128,10 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.renderCacheOptions
   }
 
+  override fun setMapProjection(value: Value) = map.setMapProjection(value)
+
+  override fun getMapProjection() = map.mapProjection
+
   override fun coordinateBoundsForCamera(cameraOptions: CameraOptions): CoordinateBounds {
     return map.coordinateBoundsForCamera(cameraOptions)
   }
