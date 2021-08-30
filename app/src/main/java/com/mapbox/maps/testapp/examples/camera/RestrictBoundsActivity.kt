@@ -136,7 +136,7 @@ class RestrictBoundsActivity : AppCompatActivity() {
       .bounds(
         CoordinateBounds(
           Point.fromLngLat(170.0202020, -20.0),
-          Point.fromLngLat(190.0, 20.0),
+          Point.fromLngLat(-10.0, 20.0),
           false
         )
       )
@@ -147,7 +147,7 @@ class RestrictBoundsActivity : AppCompatActivity() {
       .bounds(
         CoordinateBounds(
           Point.fromLngLat(170.0202020, -20.0),
-          Point.fromLngLat(190.0, 20.0),
+          Point.fromLngLat(-10.0, 20.0),
           true
         )
       )

@@ -14,7 +14,7 @@ For the full license terms, please see the Mapbox Terms of Service at https://ww
 ## Additional Mapbox Maps Android licenses
 Mapbox Maps Android uses portions of the Android App Startup Runtime.
 
-URL: [https://developer.android.com/jetpack/androidx/releases/startup#1.0.0](https://developer.android.com/jetpack/androidx/releases/startup#1.0.0)
+URL: [https://developer.android.com/jetpack/androidx/releases/startup#1.1.0](https://developer.android.com/jetpack/androidx/releases/startup#1.1.0)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
