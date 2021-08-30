@@ -140,6 +140,9 @@ class CameraAnimationsPluginImplTest {
       playTogether(*animators)
       start()
     }
+
+    shadowOf(getMainLooper()).idle()
+
     verify { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) }
   }
 
@@ -828,26 +831,6 @@ class CameraAnimationsPluginImplTest {
   }
 
   @Test
-  fun easeToTestNonZeroDurationWithListener() {
-    val options = mapAnimationOptions {
-      duration(1000)
-      animatorListener(object : AnimatorListenerAdapter() {})
-    }
-    cameraAnimationsPluginImpl.easeTo(cameraState.toCameraOptions(), options)
-    assert(cameraAnimationsPluginImpl.highLevelListener != null)
-  }
-
-  @Test
-  fun easeToTestZeroDurationWithListener() {
-    val options = mapAnimationOptions {
-      duration(0)
-      animatorListener(object : AnimatorListenerAdapter() {})
-    }
-    cameraAnimationsPluginImpl.easeTo(cameraState.toCameraOptions(), options)
-    assert(cameraAnimationsPluginImpl.highLevelListener == null)
-  }
-
-  @Test
   fun registerOnlyCameraAnimatorsTest() {
     val pitch = createPitchAnimator(15.0, 0, 5)
     val bearing = createBearingAnimator(10.0, 0, 5)
@@ -962,13 +945,9 @@ class CameraAnimationsPluginImplTest {
     bearingAnimator.start()
     pitchAnimator.start()
     shadowOf(getMainLooper()).idle()
-    // first bearing tick as first animation -
-    // bearing updated to start value and pitch is not updated
-    assertEquals(20.0, updateList[0].bearing!!, EPS)
-    assertEquals(0.0, updateList[0].pitch!!, EPS)
-    // second bearing tick as first animation -
-    // pitch is updated to start value
-    assertEquals(10.0, updateList[1].pitch!!, EPS)
+    // Both, tick and bearing are updated to the start values at first tick.
+    assertEquals(20.0, updateList.first().bearing!!, EPS)
+    assertEquals(10.0, updateList.first().pitch!!, EPS)
   }
 
   @Test

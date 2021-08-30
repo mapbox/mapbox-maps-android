@@ -174,6 +174,12 @@ abstract class CameraAnimator<out T> (
     super.cancel()
   }
 
+  /**
+   * true if CameraAnimator have any external listeners registered.
+   */
+  internal val hasUserListeners: Boolean
+    get() = userUpdateListeners.isNotEmpty()
+
   internal fun addInternalUpdateListener(listener: AnimatorUpdateListener) {
     super.removeAllUpdateListeners()
     internalUpdateListener = listener
