@@ -81,6 +81,7 @@ class AddOneMarkerSymbolActivity : AppCompatActivity(), OnMapClickListener {
       ViewAnnotationOptions.Builder()
         .geometry(point)
         .allowViewAnnotationsCollision(false)
+        .anchor(ViewAnnotationAnchor.TOP_RIGHT)
         .build()
     ) { view ->
       view.findViewById<TextView>(R.id.textNativeView).text = "Callout ${count++}"

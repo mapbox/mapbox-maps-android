@@ -513,9 +513,9 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.calculateViewAnnotationsPosition()
   }
 
-  override fun addViewAnnotation(id: Int, options: ViewAnnotationOptions) = map.addViewAnnotation(id, options)
+  override fun addViewAnnotation(id: String, options: ViewAnnotationOptions) = map.addViewAnnotation(id, options)
 
-  override fun updateViewAnnotation(id: Int, options: ViewAnnotationOptions) = map.updateViewAnnotation(id, options)
+  override fun updateViewAnnotation(id: String, options: ViewAnnotationOptions) = map.updateViewAnnotation(id, options)
 
-  override fun removeViewAnnotation(id: Int) = map.removeViewAnnotation(id)
+  override fun removeViewAnnotation(id: String) = map.removeViewAnnotation(id)
 }

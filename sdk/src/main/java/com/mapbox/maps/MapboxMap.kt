@@ -1306,13 +1306,13 @@ class MapboxMap internal constructor(
     }
   }
 
-  override fun addViewAnnotation(viewId: Int, options: ViewAnnotationOptions) =
+  override fun addViewAnnotation(viewId: String, options: ViewAnnotationOptions) =
     nativeMapWeakRef.call { this.addViewAnnotation(viewId, options) }
 
-  override fun updateViewAnnotation(viewId: Int, options: ViewAnnotationOptions) =
+  override fun updateViewAnnotation(viewId: String, options: ViewAnnotationOptions) =
     nativeMapWeakRef.call { this.updateViewAnnotation(viewId, options) }
 
-  override fun removeViewAnnotation(viewId: Int) =
+  override fun removeViewAnnotation(viewId: String) =
     nativeMapWeakRef.call { this.removeViewAnnotation(viewId) }
 
   override fun calculateViewAnnotationsPosition() =

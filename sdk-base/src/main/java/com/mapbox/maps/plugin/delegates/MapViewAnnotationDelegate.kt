@@ -6,16 +6,16 @@ import com.mapbox.maps.ViewAnnotationsPosition
 interface MapViewAnnotationDelegate {
 
   fun addViewAnnotation(
-    viewId: Int,
+    viewId: String,
     options: ViewAnnotationOptions
   ): ViewAnnotationsPosition?
 
   fun updateViewAnnotation(
-    viewId: Int,
+    viewId: String,
     options: ViewAnnotationOptions
   ): ViewAnnotationsPosition?
 
-  fun removeViewAnnotation(viewId: Int): ViewAnnotationsPosition?
+  fun removeViewAnnotation(viewId: String): ViewAnnotationsPosition?
 
   fun calculateViewAnnotationsPosition(): ViewAnnotationsPosition
 }

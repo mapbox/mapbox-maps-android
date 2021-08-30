@@ -21,7 +21,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
   // using async inflater if needed to free up main thread a bit
   private val asyncInflater by lazy { AsyncLayoutInflater(mapView.context) }
 
-  private val annotations = HashMap<Int, ViewAnnotation>()
+  private val annotations = HashMap<String, ViewAnnotation>()
 
   private lateinit var delegateProvider: MapDelegateProvider
   private lateinit var delegateMapViewAnnotations: MapViewAnnotationDelegate
@@ -61,7 +61,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
       viewLayoutParams = nativeViewLayout,
       options = updatedOptions
     )
-    val viewId = nativeView.hashCode()
+    val viewId = nativeView.hashCode().toString()
     annotations[viewId] = annotation
     delegateMapViewAnnotations.addViewAnnotation(viewId, updatedOptions)?.let {
       redrawAnnotations(it, !options.allowViewAnnotationsCollision)
@@ -90,7 +90,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
         viewLayoutParams = nativeViewLayout,
         options = updatedOptions
       )
-      val viewId = view.hashCode()
+      val viewId = view.hashCode().toString()
       annotations[viewId] = annotation
       delegateMapViewAnnotations.addViewAnnotation(viewId, updatedOptions)?.let {
         redrawAnnotations(it, !options.allowViewAnnotationsCollision)
@@ -109,7 +109,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
       }
     }
     for (viewPosition in positionsToUpdate.positions) {
-      annotations[viewPosition.id]?.let { annotation ->
+      annotations[viewPosition.identifier]?.let { annotation ->
         mapView.removeView(annotation.view)
         annotation.viewLayoutParams.setMargins(
           viewPosition.leftTopCoordinate.x.toInt(),
@@ -123,7 +123,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
   }
 
   override fun removeViewAnnotation(view: View) {
-    val id = view.hashCode()
+    val id = view.hashCode().toString()
     annotations.remove(id)
     mapView.removeView(view)
     delegateMapViewAnnotations.removeViewAnnotation(id)?.let {
@@ -136,7 +136,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
     view: View,
     options: ViewAnnotationOptions,
   ) {
-    val id = view.hashCode()
+    val id = view.hashCode().toString()
     annotations[id]?.let {
       val updatedOptions = ViewAnnotationOptions.Builder()
         .geometry(if (options.geometry != null) options.geometry else it.options.geometry)
