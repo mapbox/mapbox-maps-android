@@ -40,7 +40,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   internal val eventQueue = CopyOnWriteArrayList<Runnable>()
 
   private var surface: Surface? = null
-  private var eglSurface: EGLSurface = EGL10.EGL_NO_SURFACE
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal var eglSurface: EGLSurface? = null
   private var width: Int = 0
   private var height: Int = 0
 
@@ -89,7 +90,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     lock.withLock {
       try {
         surface?.let {
-          if (eglSurface == EGL10.EGL_NO_SURFACE) {
+          if (eglSurface == null || eglSurface == EGL10.EGL_NO_SURFACE) {
             return prepareEglSurface(it)
           }
         } ?: return false
@@ -123,7 +124,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       postPrepareRenderFrame()
       return false
     }
-    eglCore.makeCurrent(eglSurface)
+    eglSurface?.let {
+      eglCore.makeCurrent(it)
+    }
+
     if (!nativeRenderCreated) {
       mapboxRenderer.onSurfaceCreated()
       nativeRenderCreated = true
@@ -164,15 +168,17 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       return
     }
     mapboxRenderer.onDrawFrame()
-    when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
-      EGL10.EGL_SUCCESS -> {}
-      EGL11.EGL_CONTEXT_LOST -> {
-        Logger.w(TAG, "Context lost. Waiting for re-acquire")
-        releaseEgl()
-      }
-      else -> {
-        Logger.w(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
-        releaseEglSurface()
+    eglSurface?.let {
+      when (val swapStatus = eglCore.swapBuffers(it)) {
+        EGL10.EGL_SUCCESS -> {}
+        EGL11.EGL_CONTEXT_LOST -> {
+          Logger.w(TAG, "Context lost. Waiting for re-acquire")
+          releaseEgl()
+        }
+        else -> {
+          Logger.w(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
+          releaseEglSurface()
+        }
       }
     }
     val actualEndRenderTimeNs = SystemClock.elapsedRealtimeNanos()
@@ -199,8 +205,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun releaseEglSurface() {
-    eglCore.releaseSurface(eglSurface)
-    eglSurface = EGL10.EGL_NO_SURFACE
+    eglSurface?.let {
+      eglCore.releaseSurface(it)
+    }
+    eglSurface = null
   }
 
   private fun prepareRenderFrame() {

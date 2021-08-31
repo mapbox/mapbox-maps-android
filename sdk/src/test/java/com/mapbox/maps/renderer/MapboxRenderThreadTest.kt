@@ -26,7 +26,7 @@ class MapboxRenderThreadTest {
   private lateinit var mapboxRenderer: MapboxRenderer
   private lateinit var eglCore: EGLCore
   private lateinit var workerThread: WorkerHandlerThread
-  private val waitTime = 100L
+  private val waitTime = 200L
 
   @Before
   fun setUp() {
@@ -126,8 +126,6 @@ class MapboxRenderThreadTest {
 
   @Test
   fun onSurfaceOnlyDestroyedTest() {
-    val latch = CountDownLatch(1)
-    every { mapboxRenderer.onSurfaceDestroyed() } answers { latch.countDown() }
     every { mapboxRenderer.needDestroy } returns false
     val surface = mockk<Surface>(relaxUnitFun = true)
     every { surface.isValid } returns true
@@ -135,10 +133,7 @@ class MapboxRenderThreadTest {
     every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
     mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
     mapboxRenderThread.onSurfaceDestroyed()
-    if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
-    }
-    verify { mapboxRenderer.onSurfaceDestroyed() }
+    verify(exactly = 0) { mapboxRenderer.onSurfaceDestroyed() }
     assert(workerThread.handlerThread.isAlive)
   }
 
@@ -162,8 +157,6 @@ class MapboxRenderThreadTest {
 
   @Test
   fun onSurfaceDestroyedWithRenderCallAfterTest() {
-    val latch = CountDownLatch(1)
-    every { mapboxRenderer.onSurfaceDestroyed() } answers { latch.countDown() }
     every { mapboxRenderer.needDestroy } returns false
     val surface = mockk<Surface>(relaxUnitFun = true)
     every { surface.isValid } returns true
@@ -174,14 +167,14 @@ class MapboxRenderThreadTest {
     Shadows.shadowOf(workerThread.handler?.looper).idle()
     mapboxRenderThread.requestRender()
     Shadows.shadowOf(workerThread.handler?.looper).idle()
-    if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
-    }
-    verify(exactly = 1) {
+    // we do not destroy native renderer if it's stop and not destroy
+    verify(exactly = 0) {
       mapboxRenderer.onSurfaceDestroyed()
     }
-    // we should not even start preparing EGL again until new surface will not arrive
-    assert(!mapboxRenderThread.eglPrepared)
+    // EGL should still be prepared
+    assert(mapboxRenderThread.eglPrepared)
+    // EGL surface should be null
+    Assert.assertNull(mapboxRenderThread.eglSurface)
   }
 
   @Test
