@@ -13,6 +13,7 @@ internal class ModelLayerWrapper(
     layerProperties["id"] = Value(layerId)
     layerProperties["type"] = Value("model")
     layerProperties["source"] = Value(sourceId)
+    layerProperties["model-type"] = Value("location-indicator")
     layerProperties["model-scale"] = Value(modelScale.map { Value(it) })
     layerProperties["model-rotation"] = Value(modelRotation.map { Value(it) })
     layerProperties["model-translation"] = Value(modelTranslation.map { Value(it) })
