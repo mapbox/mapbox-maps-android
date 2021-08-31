@@ -277,6 +277,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       handlerThread.post {
         if (this.surface != surface) {
           releaseEgl()
+          this.surface?.release()
           this.surface = surface
         }
         this.width = width
