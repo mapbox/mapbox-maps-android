@@ -45,6 +45,14 @@ class GeoJsonSourceTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun emptyDataTest() {
+    val testSource = geoJsonSource("testId")
+    setupSource(testSource)
+    assertNotNull(testSource.data)
+  }
+
+  @Test
+  @UiThreadTest
   fun urlTest() {
     val testSource = geoJsonSource("testId") {
       url(TEST_URI)

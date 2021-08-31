@@ -4,7 +4,7 @@
     package="com.mapbox.maps.testapp">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".MapboxApplication"
@@ -19,8 +19,8 @@
         <activity
             android:name=".ExampleOverviewActivity"
             android:exported="true"
-            android:launchMode="singleTop"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -120,14 +120,12 @@
             android:name=".examples.java.DSLStylingJavaActivity"
             android:description="@string/description_dsl_styling"
             android:exported="true"
-            android:label="@string/activity_dsl_styling">
-        </activity>
+            android:label="@string/activity_dsl_styling"></activity>
         <activity
             android:name=".examples.java.RuntimeStylingJavaActivity"
             android:description="@string/description_dsl_styling"
             android:exported="true"
-            android:label="@string/activity_dsl_styling">
-        </activity>
+            android:label="@string/activity_dsl_styling"></activity>
         <activity
             android:name=".examples.HeatmapLayerActivity"
             android:description="@string/description_heatmap_layer"

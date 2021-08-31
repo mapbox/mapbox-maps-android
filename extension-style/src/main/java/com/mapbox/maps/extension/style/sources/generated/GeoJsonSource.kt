@@ -603,6 +603,13 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     }
 
     /**
+     * Initialize GeoJsonSource builder with default data to allow empty data source.
+     */
+    init {
+      this.data("")
+    }
+
+    /**
      * Build the GeoJsonSource.
      *
      * @return the GeoJsonSource
@@ -741,6 +748,17 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
       get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "prefetch-zoom-delta").silentUnwrap()
   }
 }
+
+/**
+ * DSL function for [GeoJsonSource] accepting empty data source.
+ * Immediately returns [GeoJsonSource] with no data set
+ *
+ * Using this method means that it is user's responsibility to proceed with adding data,
+ * layers or other style objects in [onGeoJsonParsed] callback.
+ */
+fun geoJsonSource(
+  id: String
+) = GeoJsonSource.Builder(id) {}.build()
 
 /**
  * DSL function for [GeoJsonSource] performing parsing using background thread.
