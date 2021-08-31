@@ -38,7 +38,7 @@ class ModelLayerWrapperTest {
   @Test
   fun testInitialProperties() {
     val value = layer.toValue()
-    assertEquals("{model-rotation=[8.0], id=modelLayerId, source=modelSourceId, type=model, model-scale=[6.0], model-translation=[0.0]}", value.toString())
+    assertEquals("{model-type=location-indicator, model-rotation=[8.0], id=modelLayerId, source=modelSourceId, type=model, model-scale=[6.0], model-translation=[0.0]}", value.toString())
   }
 
   @Test
