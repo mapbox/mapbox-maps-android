@@ -24,6 +24,24 @@ build:
 	./gradlew plugin-overlay:assembleRelease;
 	./gradlew plugin-scalebar:assembleRelease;
 
+.PHONY: checkApi
+checkApi:
+	sh ./scripts/java-api-check.sh "$(TAG)" "./sdk/build/outputs/aar/sdk-release.aar" "sdk"
+	sh ./scripts/java-api-check.sh "$(TAG)" "./sdk-base/build/outputs/aar/sdk-base-release.aar" "base"
+	sh ./scripts/java-api-check.sh "$(TAG)" "./plugin-scalebar/build/outputs/aar/plugin-scalebar-release.aar" "scalebar"
+	sh ./scripts/java-api-check.sh "$(TAG)" "./plugin-overlay/build/outputs/aar/plugin-overlay-release.aar" "overlay"
+	sh ./scripts/java-api-check.sh "$(TAG)" "./plugin-logo/build/outputs/aar/plugin-logo-release.aar" "logo"
+	sh ./scripts/java-api-check.sh "$(TAG)" "./plugin-locationcomponent/build/outputs/aar/plugin-locationcomponent-release.aar" "locationcomponent"
+	sh ./scripts/java-api-check.sh "$(TAG)" "./plugin-lifecycle/build/outputs/aar/plugin-lifecycle-release.aar" "lifecycle"
+	sh ./scripts/java-api-check.sh "$(TAG)" "./plugin-gestures/build/outputs/aar/plugin-gestures-release.aar" "gestures"
+	sh ./scripts/java-api-check.sh "$(TAG)" "./plugin-compass/build/outputs/aar/plugin-compass-release.aar" "compass"
+	sh ./scripts/java-api-check.sh "$(TAG)" "./plugin-attribution/build/outputs/aar/plugin-attribution-release.aar" "attribution"
+	sh ./scripts/java-api-check.sh "$(TAG)" "./plugin-annotation/build/outputs/aar/plugin-annotation-release.aar" "annotation"
+	sh ./scripts/java-api-check.sh "$(TAG)" "./plugin-animation/build/outputs/aar/plugin-animation-release.aar" "animation"
+	sh ./scripts/java-api-check.sh "$(TAG)" "./extension-style/build/outputs/aar/extension-style-release.aar" "style"
+	sh ./scripts/java-api-check.sh "$(TAG)" "./extension-localization/build/outputs/aar/extension-localization-release.aar" "localization"
+	sh ./scripts/java-api-check.sh "$(TAG)" "./extension-androidauto/build/outputs/aar/extension-androidauto-release.aar" "androidauto"
+
 .PHONY: proguard
 proguard:
 	./gradlew clean;

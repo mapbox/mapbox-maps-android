@@ -22,3 +22,4 @@ sdk/src/main/res/values/developer-config.xml
 node_modules/
 gh_token.txt
 android-docs-repo
+/scripts/revapi/revapi-0.9.7/
