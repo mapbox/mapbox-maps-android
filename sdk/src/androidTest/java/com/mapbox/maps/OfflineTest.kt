@@ -236,8 +236,9 @@ class OfflineTest {
               offlineManager.createTilesetDescriptor(
                 TilesetDescriptorOptions.Builder()
                   .styleURI(STYLE)
-                  .minZoom(ZOOM.toInt().toByte())
-                  .maxZoom(ZOOM.toInt().toByte())
+                  // Make the zoom range lager to make sure the download process not complete to fast.
+                  .minZoom((ZOOM - 5).toInt().toByte())
+                  .maxZoom((ZOOM + 5).toInt().toByte())
                   .build()
               )
             )
@@ -303,6 +304,7 @@ class OfflineTest {
     }
     switchAirplaneMode()
     verifyAirplaneModeEnabled()
+    // Make the zoom lever one more larger to make sure all the tiles are downloaded.
     prepareMapView(
       observer,
       listOf(
@@ -353,7 +355,8 @@ class OfflineTest {
         MapEvents.MAP_LOADED,
         MapEvents.STYLE_LOADED,
         MapEvents.MAP_LOADING_ERROR
-      )
+      ),
+      ZOOM + 1
     )
     try {
       // map loaded, style loaded
@@ -419,9 +422,11 @@ class OfflineTest {
     }
     switchAirplaneMode()
     verifyAirplaneModeEnabled()
+    // Show map with the zoom level larger than download range to trigger loading error
     prepareMapView(
       observer,
-      listOf(MapEvents.MAP_IDLE, MapEvents.MAP_LOADING_ERROR)
+      listOf(MapEvents.MAP_IDLE, MapEvents.MAP_LOADING_ERROR),
+      ZOOM + 3
     )
     try {
       // we do not throw timeout exception and verify we have exactly 1 IDLE event after timeout
@@ -451,9 +456,11 @@ class OfflineTest {
       }
     }
     OfflineSwitch.getInstance().isMapboxStackConnected = false
+    // Set zoom 1 larger to make sure all tiles are download.
     prepareMapView(
       observer,
-      listOf(MapEvents.MAP_IDLE)
+      listOf(MapEvents.MAP_IDLE),
+      ZOOM + 1
     )
     try {
       // we wait for whole time and verify we hit exactly one IDLE event
@@ -524,10 +531,10 @@ class OfflineTest {
                       .metadata(Value(STYLE_PACK_METADATA))
                       .build()
                   )
-                  // set min zoom twice less in order to make sure tile in loaded map view
+                  // set min and max zoom in range [zoom-2, zoom+2] to make sure tile in loaded map view
                   // will be fully visible and not somewhere on tile edge
-                  .minZoom((ZOOM.toInt() / 2).toByte())
-                  .maxZoom(ZOOM.toInt().toByte())
+                  .minZoom((ZOOM - 2).toInt().toByte())
+                  .maxZoom((ZOOM + 2).toInt().toByte())
                   .build()
               )
             )
@@ -550,7 +557,7 @@ class OfflineTest {
     }
   }
 
-  private fun prepareMapView(observer: Observer, eventList: List<String>) {
+  private fun prepareMapView(observer: Observer, eventList: List<String>, zoom: Double = ZOOM) {
     var mapboxMap: MapboxMap
     rule.scenario.onActivity {
       it.runOnUiThread {
@@ -562,7 +569,7 @@ class OfflineTest {
             context = context,
             cameraOptions = CameraOptions.Builder()
               .center(TOKYO)
-              .zoom(ZOOM)
+              .zoom(zoom)
               .build()
           )
         )

@@ -146,8 +146,8 @@ class RestrictBoundsActivity : AppCompatActivity() {
     private val INFINITE_BOUNDS: CameraBoundsOptions = CameraBoundsOptions.Builder()
       .bounds(
         CoordinateBounds(
-          Point.fromLngLat(170.0202020, -20.0),
-          Point.fromLngLat(190.0, 20.0),
+          Point.fromLngLat(0.0, 0.0),
+          Point.fromLngLat(0.0, 0.0),
           true
         )
       )

@@ -30,7 +30,7 @@ class NativeCustomLayerActivity : AppCompatActivity() {
       Style.MAPBOX_STREETS
     ) {
       mapboxMap.setCamera(
-        CameraOptions.Builder().center(Point.fromLngLat(-243.60947, 39.91448)).zoom(10.0)
+        CameraOptions.Builder().center(Point.fromLngLat(116.39053, 39.91448)).zoom(10.0)
           .build()
       )
       initFab()
