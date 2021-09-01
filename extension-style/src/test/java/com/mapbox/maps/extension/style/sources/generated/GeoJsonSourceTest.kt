@@ -414,6 +414,15 @@ class GeoJsonSourceTest {
   }
 
   @Test
+  fun emptyDataTest() {
+    val testSource = geoJsonSource("testId")
+    testSource.bindTo(style)
+
+    verify { style.addStyleSource("testId", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("data="))
+  }
+
+  @Test
   fun featureAfterBindTest() {
     val feature = Feature.fromJson(
       """
