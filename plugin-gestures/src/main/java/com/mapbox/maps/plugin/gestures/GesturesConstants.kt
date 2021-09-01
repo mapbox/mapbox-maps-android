@@ -2,7 +2,17 @@ package com.mapbox.maps.plugin.gestures
 
 internal const val SCHEDULED_ANIMATION_TIMEOUT = 150L
 
+/**
+ * The velocity threshold value at which a fling gesture is ignored.
+ * The Android OS produces fling gestures fairly easy, this results in unwanted fling invocations.
+ */
 internal const val VELOCITY_THRESHOLD_IGNORE_FLING: Long = 1000
+
+/**
+ * Fling limiting factor. Velocity values produces by Android OS are not related to any pixel value.
+ * We add a limiting factor to produce values that create a good user experience when flinging.
+ */
+internal const val FLING_LIMITING_FACTOR: Double = 10.0
 
 /**
  * Last scale span delta to XY velocity ratio required to execute scale velocity animation.
@@ -50,11 +60,6 @@ internal const val SHOVE_PIXEL_CHANGE_FACTOR = 0.1f
 internal const val MINIMUM_PITCH = 0.0
 
 /**
- * Maximum locked pitch value.
- */
-internal const val NORMAL_MAX_PITCH = 60.0
-
-/**
  * The currently supported maximum unlocked pitch value.
  */
 internal const val MAXIMUM_PITCH = 85.0
@@ -63,13 +68,3 @@ internal const val MAXIMUM_PITCH = 85.0
  * Default animation time
  */
 internal const val ANIMATION_DURATION = 300
-
-/**
- * Default short animation time
- */
-internal const val ANIMATION_DURATION_SHORT = 150
-
-/**
- * Animation time of a fling gesture
- */
-internal const val ANIMATION_DURATION_FLING_BASE = ANIMATION_DURATION_SHORT.toLong()
