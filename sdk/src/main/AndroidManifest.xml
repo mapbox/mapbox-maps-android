@@ -1,1 +1,8 @@
-<manifest package="com.mapbox.maps" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.mapbox.maps">
+    <!--
+    Android 6.0 OS bug, need to include CHANGE_NETWORK_STATE permission
+    java.lang.SecurityException: was not granted: android.permission.CHANGE_NETWORK_STATE
+    when calling android.net.ConnectivityManager.requestNetwork
+    -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+</manifest>
