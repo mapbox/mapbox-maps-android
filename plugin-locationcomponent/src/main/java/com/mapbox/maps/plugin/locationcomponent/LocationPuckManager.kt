@@ -5,7 +5,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
-import com.mapbox.common.ValueConverter
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.LocationPuck2D
@@ -158,7 +157,7 @@ internal class LocationPuckManager(
       is LocationPuck2D -> {
         val scaleExpression = puck.scaleExpression
         if (scaleExpression != null) {
-          locationLayerRenderer.styleScaling(ValueConverter.fromJson(scaleExpression).take())
+          locationLayerRenderer.styleScaling(Value.fromJson(scaleExpression).take())
         }
       }
       is LocationPuck3D -> {
@@ -198,7 +197,7 @@ internal class LocationPuckManager(
             )
           )
         } else {
-          ValueConverter.fromJson(modelScaleExpression).take()
+          Value.fromJson(modelScaleExpression).take()
         }
         locationLayerRenderer.styleScaling(scaleExpression)
       }
@@ -207,7 +206,7 @@ internal class LocationPuckManager(
 }
 
 /**
- * Internal function to check if a method invoke on ValueConverter succeeded, throws exception if not.
+ * Internal function to check if a method invoke on Value succeeded, throws exception if not.
  */
 private inline fun <reified T> Expected<String, T>.take(): T {
   this.also {

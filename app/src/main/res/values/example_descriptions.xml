@@ -9,7 +9,7 @@
     <string name="description_default_styles">Switch between custom and default Mapbox styles for the same map view.</string>
     <string name="description_map_recycle">MapView integration inside a RecyclerView</string>
     <string name="description_gestures">Manipulate gesture interaction with the map</string>
-    <string name="description_raw_geojson">Use a GeoJSON string as data for a GeoJSON source through ValueConverter API</string>
+    <string name="description_raw_geojson">Use a GeoJSON string as data for a GeoJSON source through Value API</string>
     <string name="description_geojson_layer_in_stack">Insert a specific layer above or below other layers.</string>
     <string name="description_raw_expression">Use a JSON string as an expression</string>
     <string name="description_raw_source_layer">Use a JSON string as an Source/Layer</string>

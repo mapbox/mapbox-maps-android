@@ -5,11 +5,9 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
-import com.mapbox.common.ValueConverter
 import com.mapbox.geojson.Feature
 import com.mapbox.maps.StylePropertyValue
 import com.mapbox.maps.StylePropertyValueKind
-import com.mapbox.maps.extension.style.ShadowValueConverter
 import com.mapbox.maps.extension.style.expressions.dsl.generated.*
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.generated.Visibility
@@ -18,24 +16,19 @@ import com.mapbox.maps.extension.style.types.formatted
 import com.mapbox.maps.extension.style.types.transitionOptions
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkStatic
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowValueConverter::class])
 class TypeUtilsTest {
   private val expected = mockk<Expected<String, Value>>(relaxed = true)
 
   @Before
   fun prepare() {
-    mockkStatic(ValueConverter::class)
-    every { ValueConverter.fromJson(any()) } returns expected
     every { expected.error } returns null
     every { expected.value } returns Value(0)
   }
@@ -178,7 +171,7 @@ class TypeUtilsTest {
 
   @Test
   fun wrapToValue_Json() {
-    // TODO add support of Json after introducing ValueConverter.
+    // TODO add support of Json after introducing Value.
     val innerObject = JsonObject()
     innerObject.addProperty("name", "john")
     val jsonObject = JsonObject()

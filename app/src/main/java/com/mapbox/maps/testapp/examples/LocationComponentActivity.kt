@@ -17,7 +17,6 @@ import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityLocationComponentBinding
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
-import com.mapbox.maps.toJson
 
 class LocationComponentActivity : AppCompatActivity() {
 

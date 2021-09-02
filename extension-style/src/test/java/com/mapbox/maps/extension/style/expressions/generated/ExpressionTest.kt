@@ -5,9 +5,7 @@ package com.mapbox.maps.extension.style.expressions.generated
 import android.graphics.Color
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
-import com.mapbox.common.ValueConverter
 import com.mapbox.geojson.Polygon
-import com.mapbox.maps.extension.style.ShadowValueConverter
 import com.mapbox.maps.extension.style.expressions.dsl.generated.*
 import com.mapbox.maps.extension.style.expressions.types.FormatSection
 import io.mockk.every
@@ -18,11 +16,9 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 import java.util.*
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowValueConverter::class])
 class ExpressionTest {
 
   @Before
@@ -30,8 +26,8 @@ class ExpressionTest {
     val map = HashMap<String, Value>()
     map["type"] = Value("Polygon")
     map["coordinates"] = Value(listOf(Value(30), Value(30)))
-    mockkStatic(ValueConverter::class)
-    every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue<String, Value>(Value(map))
+    mockkStatic(Value::class)
+    every { Value.fromJson(any()) } returns ExpectedFactory.createValue<String, Value>(Value(map))
   }
 
   @Test
@@ -1418,9 +1414,9 @@ class ExpressionTest {
       literal(1.0)
       literal(2.0)
     }
-    every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue(Value("[+, 1.0, 2.0]"))
+    every { Value.fromJson(any()) } returns ExpectedFactory.createValue(Value("[+, 1.0, 2.0]"))
     assertEquals(expression.toString(), Expression.fromRaw("[+, 1.0, 2.0]").toString())
-    verify { ValueConverter.fromJson("[+, 1.0, 2.0]") }
+    verify { Value.fromJson("[+, 1.0, 2.0]") }
   }
 
   @Test

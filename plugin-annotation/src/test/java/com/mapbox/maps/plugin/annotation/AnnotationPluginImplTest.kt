@@ -22,7 +22,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowValueConverter::class, ShadowLogger::class])
+@Config(shadows = [ShadowLogger::class])
 class AnnotationPluginImplTest {
   private val delegateProvider: MapDelegateProvider = mockk(relaxed = true)
   private val style: StyleInterface = mockk(relaxed = true)

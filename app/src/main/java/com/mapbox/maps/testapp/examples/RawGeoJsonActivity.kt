@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.bindgen.Value
-import com.mapbox.common.ValueConverter
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
@@ -12,7 +11,7 @@ import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.circleLayer
 
 /**
- * Example showcasing raw geojson conversion support through the ValueConverter API.
+ * Example showcasing raw geojson conversion support through the Value API.
  * This converts the following geojson to a value object:
  * ```
  * {
@@ -48,7 +47,7 @@ class RawGeoJsonActivity : AppCompatActivity() {
   }
 
   private fun addGeoJsonSource(style: Style) {
-    val geojson = ValueConverter.fromJson(
+    val geojson = Value.fromJson(
       """
       {
         "type": "FeatureCollection",

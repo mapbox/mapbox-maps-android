@@ -2,14 +2,14 @@ package com.mapbox.maps.testapp.examples
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.common.ValueConverter
+import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import java.lang.RuntimeException
 
 /**
- * Example showcasing raw expression support through the ValueConverter API.
+ * Example showcasing raw expression support through the Value API.
  * This example manipulates the water fill layer of mapbox-streets to:
  * ```
  *         {
@@ -46,7 +46,7 @@ class RawExpressionActivity : AppCompatActivity() {
   }
 
   private fun addExpressionToStyle(style: Style) {
-    val expression = ValueConverter.fromJson(
+    val expression = Value.fromJson(
       """
       [
         "interpolate",

@@ -6,7 +6,6 @@ import com.mapbox.maps.R
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
-import com.mapbox.maps.toJson
 
 /**
  * Provides car location puck definitions.

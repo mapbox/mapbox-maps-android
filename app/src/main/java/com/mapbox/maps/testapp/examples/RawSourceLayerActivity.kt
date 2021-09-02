@@ -2,12 +2,12 @@ package com.mapbox.maps.testapp.examples
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.common.ValueConverter
+import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 
 /**
- * Example showcasing raw source/layer json conversion support through the ValueConverter API.
+ * Example showcasing raw source/layer json conversion support through the Value API.
  *
  * Source:
  * ```
@@ -51,7 +51,7 @@ class RawSourceLayerActivity : AppCompatActivity() {
   }
 
   private fun addGeoJsonSource(style: Style) {
-    val source = ValueConverter.fromJson(
+    val source = Value.fromJson(
       """
         {
           "type": "geojson",
@@ -79,7 +79,7 @@ class RawSourceLayerActivity : AppCompatActivity() {
       throw RuntimeException("Invalid GeoJson:" + expected.error)
     }
 
-    val layer = ValueConverter.fromJson(
+    val layer = Value.fromJson(
       """
         {
             "id": "custom",

@@ -9,7 +9,6 @@ import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
 import com.mapbox.maps.extension.style.layers.getLayerAs
 import com.mapbox.maps.extension.style.sources.generated.VectorSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
-import com.mapbox.maps.toJson
 import java.util.*
 
 /**

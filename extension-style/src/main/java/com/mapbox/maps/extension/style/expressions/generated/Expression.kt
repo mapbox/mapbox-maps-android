@@ -4,7 +4,6 @@ package com.mapbox.maps.extension.style.expressions.generated
 
 import androidx.annotation.ColorInt
 import com.mapbox.bindgen.Value
-import com.mapbox.common.ValueConverter
 import com.mapbox.geojson.GeoJson
 import com.mapbox.geojson.Geometry
 import com.mapbox.maps.extension.style.expressions.types.FormatSection
@@ -1635,7 +1634,7 @@ class Expression : Value {
      */
     @JvmStatic
     fun fromRaw(expression: String): Expression =
-      ValueConverter.fromJson(expression).take().unwrapToExpression()
+      fromJson(expression).take().unwrapToExpression()
 
     /**
      * For two inputs, returns the result of subtracting the second input from the first. For a
@@ -2226,7 +2225,7 @@ class Expression : Value {
     @JvmStatic
     fun distance(geojson: GeoJson): Expression {
       val builder = ExpressionBuilder("distance")
-      val expected = ValueConverter.fromJson(geojson.toJson())
+      val expected = fromJson(geojson.toJson())
       expected.value?.let {
         @Suppress("UNCHECKED_CAST")
         builder.addArgument(Expression(it.contents as HashMap<String, Value>))
@@ -3127,7 +3126,7 @@ class Expression : Value {
     @JvmStatic
     fun within(geometry: Geometry): Expression {
       val builder = ExpressionBuilder("within")
-      val expected = ValueConverter.fromJson(geometry.toJson())
+      val expected = fromJson(geometry.toJson())
       expected.value?.let {
         @Suppress("UNCHECKED_CAST")
         builder.addArgument(Expression(it.contents as HashMap<String, Value>))

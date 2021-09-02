@@ -11,7 +11,6 @@ import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
-import com.mapbox.common.ValueConverter
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
@@ -42,7 +41,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowValueConverter::class, ShadowLogger::class])
+@Config(shadows = [ShadowLogger::class])
 class CircleAnnotationManagerTest {
   private val delegateProvider: MapDelegateProvider = mockk()
   private val style: StyleInterface = mockk()
@@ -69,8 +68,8 @@ class CircleAnnotationManagerTest {
       }
     mockkStatic("com.mapbox.maps.extension.style.layers.LayerUtils")
     mockkStatic("com.mapbox.maps.extension.style.sources.SourceUtils")
-    mockkStatic(ValueConverter::class)
-    every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue(
+    mockkStatic(Value::class)
+    every { Value.fromJson(any()) } returns ExpectedFactory.createValue(
       Value(1)
     )
     val captureCallback = slot<(StyleInterface) -> Unit>()
