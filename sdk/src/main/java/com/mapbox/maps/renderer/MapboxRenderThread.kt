@@ -253,7 +253,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         Choreographer.getInstance().removeFrameCallback(this)
         shouldExit = true
         lock.withLock {
-          if (mapboxRenderer.needDestroy) {
+          // TODO https://github.com/mapbox/mapbox-maps-android/issues/607
+          if (mapboxRenderer.needDestroy || mapboxRenderer is MapboxTextureViewRenderer) {
             mapboxRenderer.onSurfaceDestroyed()
             releaseEgl()
             surface?.release()
