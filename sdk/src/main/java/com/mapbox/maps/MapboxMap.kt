@@ -1306,15 +1306,19 @@ class MapboxMap internal constructor(
     }
   }
 
-  override fun addViewAnnotation(viewId: String, options: ViewAnnotationOptions) =
-    nativeMapWeakRef.call { this.addViewAnnotation(viewId, options) }
+  override fun addViewAnnotation(viewId: String, options: ViewAnnotationOptions, callback: ViewAnnotationsPositionCallback) {
+    nativeMapWeakRef.call { this.addViewAnnotation(viewId, options, callback) }
+  }
 
-  override fun updateViewAnnotation(viewId: String, options: ViewAnnotationOptions) =
-    nativeMapWeakRef.call { this.updateViewAnnotation(viewId, options) }
+  override fun updateViewAnnotation(viewId: String, options: ViewAnnotationOptions, callback: ViewAnnotationsPositionCallback) {
+    nativeMapWeakRef.call { this.updateViewAnnotation(viewId, options, callback) }
+  }
 
-  override fun removeViewAnnotation(viewId: String) =
-    nativeMapWeakRef.call { this.removeViewAnnotation(viewId) }
+  override fun removeViewAnnotation(viewId: String, callback: ViewAnnotationsPositionCallback) {
+    nativeMapWeakRef.call { this.removeViewAnnotation(viewId, callback) }
+  }
 
-  override fun calculateViewAnnotationsPosition() =
-    nativeMapWeakRef.call { this.calculateViewAnnotationsPosition() }
+  override fun calculateViewAnnotationsPosition(callback: ViewAnnotationsPositionCallback) {
+    nativeMapWeakRef.call { this.calculateViewAnnotationsPosition(callback) }
+  }
 }

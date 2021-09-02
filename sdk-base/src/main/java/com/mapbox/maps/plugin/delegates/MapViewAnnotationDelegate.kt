@@ -1,21 +1,23 @@
 package com.mapbox.maps.plugin.delegates
 
 import com.mapbox.maps.ViewAnnotationOptions
-import com.mapbox.maps.ViewAnnotationsPosition
+import com.mapbox.maps.ViewAnnotationsPositionCallback
 
 interface MapViewAnnotationDelegate {
 
   fun addViewAnnotation(
     viewId: String,
-    options: ViewAnnotationOptions
-  ): ViewAnnotationsPosition?
+    options: ViewAnnotationOptions,
+    callback: ViewAnnotationsPositionCallback
+  )
 
   fun updateViewAnnotation(
     viewId: String,
-    options: ViewAnnotationOptions
-  ): ViewAnnotationsPosition?
+    options: ViewAnnotationOptions,
+    callback: ViewAnnotationsPositionCallback
+  )
 
-  fun removeViewAnnotation(viewId: String): ViewAnnotationsPosition?
+  fun removeViewAnnotation(viewId: String, callback: ViewAnnotationsPositionCallback)
 
-  fun calculateViewAnnotationsPosition(): ViewAnnotationsPosition
+  fun calculateViewAnnotationsPosition(callback: ViewAnnotationsPositionCallback)
 }

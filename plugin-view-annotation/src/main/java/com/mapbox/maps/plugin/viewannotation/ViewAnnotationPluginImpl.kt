@@ -10,7 +10,7 @@ import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ViewAnnotationAnchor
 import com.mapbox.maps.ViewAnnotationOptions
-import com.mapbox.maps.ViewAnnotationsPosition
+import com.mapbox.maps.ViewAnnotationPositionDescriptor
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapViewAnnotationDelegate
 
@@ -63,7 +63,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
     )
     val viewId = nativeView.hashCode().toString()
     annotations[viewId] = annotation
-    delegateMapViewAnnotations.addViewAnnotation(viewId, updatedOptions)?.let {
+    delegateMapViewAnnotations.addViewAnnotation(viewId, updatedOptions) {
       redrawAnnotations(it, !options.allowViewAnnotationsCollision)
     }
     return nativeView
@@ -92,7 +92,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
       )
       val viewId = view.hashCode().toString()
       annotations[viewId] = annotation
-      delegateMapViewAnnotations.addViewAnnotation(viewId, updatedOptions)?.let {
+      delegateMapViewAnnotations.addViewAnnotation(viewId, updatedOptions) {
         redrawAnnotations(it, !options.allowViewAnnotationsCollision)
       }
       result.invoke(view)
@@ -100,7 +100,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
   }
 
   private fun redrawAnnotations(
-    positionsToUpdate: ViewAnnotationsPosition,
+    positionsToUpdate: List<ViewAnnotationPositionDescriptor>,
     fullRedraw: Boolean
   ) {
     if (fullRedraw) {
@@ -108,7 +108,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
         mapView.removeView(it.value.view)
       }
     }
-    for (viewPosition in positionsToUpdate.positions) {
+    for (viewPosition in positionsToUpdate) {
       annotations[viewPosition.identifier]?.let { annotation ->
         mapView.removeView(annotation.view)
         annotation.viewLayoutParams.setMargins(
@@ -126,7 +126,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
     val id = view.hashCode().toString()
     annotations.remove(id)
     mapView.removeView(view)
-    delegateMapViewAnnotations.removeViewAnnotation(id)?.let {
+    delegateMapViewAnnotations.removeViewAnnotation(id) {
       // TODO may be optimized to do full redraw only when top level visible annotation was not allowing collisions
       redrawAnnotations(it, true)
     }
@@ -152,8 +152,8 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
         .offsetX(if (options.offsetX != 0) options.offsetX else it.options.offsetX)
         .offsetY(if (options.offsetY != 0) options.offsetY else it.options.offsetY)
         .build()
-      delegateMapViewAnnotations.updateViewAnnotation(id, updatedOptions)?.let { position ->
-        redrawAnnotations(position, !updatedOptions.allowViewAnnotationsCollision)
+      delegateMapViewAnnotations.updateViewAnnotation(id, updatedOptions) { positions ->
+        redrawAnnotations(positions, !updatedOptions.allowViewAnnotationsCollision)
       }
     }
   }
@@ -165,7 +165,8 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
   }
 
   override fun onCameraChanged() {
-    val positionsToUpdate = delegateMapViewAnnotations.calculateViewAnnotationsPosition()
-    redrawAnnotations(positionsToUpdate, true)
+    delegateMapViewAnnotations.calculateViewAnnotationsPosition {
+      redrawAnnotations(it, true)
+    }
   }
 }
