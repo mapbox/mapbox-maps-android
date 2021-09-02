@@ -3,6 +3,7 @@ package com.mapbox.maps.plugin.animation
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
+import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.common.Logger
@@ -40,6 +41,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
    * Consists of set owner + animator set itself.
    */
   private var highLevelAnimatorSet: HighLevelAnimatorSet? = null
+
   @VisibleForTesting(otherwise = PRIVATE)
   internal var highLevelListener: Animator.AnimatorListener? = null
 
@@ -150,10 +152,14 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       return
     }
     // move native map to new position
-    mapCameraManagerDelegate.setCamera(cameraOptions)
-    // notify listeners with actual values
-    notifyListeners(cameraOptions)
-    lastCameraOptions = cameraOptions
+    try {
+      mapCameraManagerDelegate.setCamera(cameraOptions)
+      // notify listeners with actual values
+      notifyListeners(cameraOptions)
+      lastCameraOptions = cameraOptions
+    } catch (e: Exception) {
+      Log.e(TAG, "Exception while setting camera options : ${e.message}")
+    }
   }
 
   private fun updateAnimatorValues(cameraAnimator: CameraAnimator<*>): Boolean {
