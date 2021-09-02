@@ -40,7 +40,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   internal val eventQueue = CopyOnWriteArrayList<Runnable>()
 
   private var surface: Surface? = null
-  private var eglSurface: EGLSurface? = EGL10.EGL_NO_SURFACE
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal var eglSurface: EGLSurface? = null
   private var width: Int = 0
   private var height: Int = 0
 
@@ -79,7 +80,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     this.mapboxRenderer = mapboxRenderer
     this.handlerThread = handlerThread
     this.eglCore = eglCore
-    this.eglSurface = null
   }
 
   private fun postPrepareRenderFrame() {
@@ -127,6 +127,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     eglSurface?.let {
       eglCore.makeCurrent(it)
     }
+
     if (!nativeRenderCreated) {
       mapboxRenderer.onSurfaceCreated()
       nativeRenderCreated = true
@@ -172,15 +173,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         EGL10.EGL_SUCCESS -> {}
         EGL11.EGL_CONTEXT_LOST -> {
           Logger.w(TAG, "Context lost. Waiting for re-acquire")
-          eglPrepared = false
-          eglCore.releaseSurface(it)
-          eglSurface = EGL10.EGL_NO_SURFACE
-          eglCore.release()
+          releaseEgl()
         }
         else -> {
-          Logger.w(TAG, "eglSwapBuffer error: $swapStatus. Waiting or new surface")
-          eglCore.releaseSurface(it)
-          eglSurface = EGL10.EGL_NO_SURFACE
+          Logger.w(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
+          releaseEglSurface()
         }
       }
     }
@@ -197,6 +194,21 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       }
       timeElapsed = actualEndRenderTimeNs
     }
+  }
+
+  private fun releaseEgl() {
+    releaseEglSurface()
+    if (eglPrepared) {
+      eglCore.release()
+    }
+    eglPrepared = false
+  }
+
+  private fun releaseEglSurface() {
+    eglSurface?.let {
+      eglCore.releaseSurface(it)
+    }
+    eglSurface = null
   }
 
   private fun prepareRenderFrame() {
@@ -241,17 +253,15 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         Choreographer.getInstance().removeFrameCallback(this)
         shouldExit = true
         lock.withLock {
-          mapboxRenderer.onSurfaceDestroyed()
-          if (eglPrepared) {
-            eglSurface?.let {
-              eglCore.releaseSurface(it)
-            }
-            eglCore.release()
-            eglPrepared = false
+          // TODO https://github.com/mapbox/mapbox-maps-android/issues/607
+          if (mapboxRenderer.needDestroy || mapboxRenderer is MapboxTextureViewRenderer) {
+            mapboxRenderer.onSurfaceDestroyed()
+            releaseEgl()
+            surface?.release()
+          } else {
+            releaseEglSurface()
           }
-          eglSurface = EGL10.EGL_NO_SURFACE
           handlerThread.clearMessageQueue()
-          surface?.release()
           destroyCondition.signal()
         }
       }
@@ -266,9 +276,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   fun onSurfaceCreated(surface: Surface, width: Int, height: Int) {
     lock.withLock {
       handlerThread.post {
-        // Surface could be re-used effectively by Android under the hood -
-        // in that case do not release it.
         if (this.surface != surface) {
+          releaseEgl()
           this.surface?.release()
           this.surface = surface
         }
