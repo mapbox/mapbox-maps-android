@@ -164,20 +164,22 @@ class VectorSource(builder: Builder) : Source(builder.sourceId) {
     get() = getPropertyValue("volatile")
 
   /**
-   * When loading a map, if `PrefetchZoomDelta` is set to any number greater than 0, the map
-   * will first request a tile for `zoom - delta` in a attempt to display a full
-   * map at lower resolution as quick as possible. It will get clamped at the tile source
-   * minimum zoom. The default `delta` is 4.
+   * When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map
+   * will first request a tile at zoom level lower than zoom - delta, but so that
+   * the zoom level is multiple of delta, in an attempt to display a full map at
+   * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
+   * The default delta is 4.
    */
   fun prefetchZoomDelta(value: Long = 4L) = apply {
     setVolatileProperty(PropertyValue("prefetch-zoom-delta", TypeUtils.wrapToValue(value)))
   }
 
   /**
-   * When loading a map, if `PrefetchZoomDelta` is set to any number greater than 0, the map
-   * will first request a tile for `zoom - delta` in a attempt to display a full
-   * map at lower resolution as quick as possible. It will get clamped at the tile source
-   * minimum zoom. The default `delta` is 4.
+   * When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map
+   * will first request a tile at zoom level lower than zoom - delta, but so that
+   * the zoom level is multiple of delta, in an attempt to display a full map at
+   * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
+   * The default delta is 4.
    */
   val prefetchZoomDelta: Long?
     /**
@@ -308,10 +310,11 @@ class VectorSource(builder: Builder) : Source(builder.sourceId) {
     }
 
     /**
-     * When loading a map, if `PrefetchZoomDelta` is set to any number greater than 0, the map
-     * will first request a tile for `zoom - delta` in a attempt to display a full
-     * map at lower resolution as quick as possible. It will get clamped at the tile source
-     * minimum zoom. The default `delta` is 4.
+     * When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map
+     * will first request a tile at zoom level lower than zoom - delta, but so that
+     * the zoom level is multiple of delta, in an attempt to display a full map at
+     * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
+     * The default delta is 4.
      */
     fun prefetchZoomDelta(value: Long = 4L) = apply {
       val propertyValue = PropertyValue("prefetch-zoom-delta", TypeUtils.wrapToValue(value))
@@ -427,10 +430,11 @@ class VectorSource(builder: Builder) : Source(builder.sourceId) {
       get() = StyleManager.getStyleSourcePropertyDefaultValue("vector", "volatile").silentUnwrap()
 
     /**
-     * When loading a map, if `PrefetchZoomDelta` is set to any number greater than 0, the map
-     * will first request a tile for `zoom - delta` in a attempt to display a full
-     * map at lower resolution as quick as possible. It will get clamped at the tile source
-     * minimum zoom. The default `delta` is 4.
+     * When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map
+     * will first request a tile at zoom level lower than zoom - delta, but so that
+     * the zoom level is multiple of delta, in an attempt to display a full map at
+     * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
+     * The default delta is 4.
      */
     val defaultPrefetchZoomDelta: Long?
       /**
