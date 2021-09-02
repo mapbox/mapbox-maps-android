@@ -10,7 +10,6 @@ import com.mapbox.android.gestures.MoveDistancesObject
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
-import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.LineString
@@ -70,10 +69,6 @@ class PolylineAnnotationManagerTest {
       }
     mockkStatic("com.mapbox.maps.extension.style.layers.LayerUtils")
     mockkStatic("com.mapbox.maps.extension.style.sources.SourceUtils")
-    mockkStatic(Value::class)
-    every { Value.fromJson(any()) } returns ExpectedFactory.createValue(
-      Value(1)
-    )
     val captureCallback = slot<(StyleInterface) -> Unit>()
     every { delegateProvider.getStyle(capture(captureCallback)) } answers {
       captureCallback.captured.invoke(style)
