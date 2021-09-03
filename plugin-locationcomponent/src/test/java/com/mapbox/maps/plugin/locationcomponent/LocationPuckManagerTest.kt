@@ -2,8 +2,6 @@ package com.mapbox.maps.plugin.locationcomponent
 
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
-import com.mapbox.common.ShadowValueConverter
-import com.mapbox.common.ValueConverter
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
@@ -20,10 +18,8 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowValueConverter::class])
 class LocationPuckManagerTest {
   private val settings = mockk<LocationComponentSettings>(relaxed = true)
   private val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
@@ -41,7 +37,7 @@ class LocationPuckManagerTest {
 
   @Before
   fun setup() {
-    mockkStatic(ValueConverter::class)
+    mockkStatic(Value::class)
     every { delegateProvider.mapCameraManagerDelegate } returns mapCameraDelegate
     every { mapCameraDelegate.cameraState.bearing } returns 0.0
     every { mapCameraDelegate.cameraState } returns CameraState(
@@ -191,7 +187,7 @@ class LocationPuckManagerTest {
     every { settings.locationPuck } returns LocationPuck2D(
       scaleExpression = "expression"
     )
-    every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue(Value("expression"))
+    every { Value.fromJson(any()) } returns ExpectedFactory.createValue(Value("expression"))
     locationPuckManager.styleScaling(settings)
     verify { locationLayerRenderer.styleScaling(Value("expression")) }
   }
@@ -199,7 +195,7 @@ class LocationPuckManagerTest {
   @Test
   fun testDefault2DStyleScaling() {
     every { settings.locationPuck } returns LocationPuck2D()
-    every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue(Value("expression"))
+    every { Value.fromJson(any()) } returns ExpectedFactory.createValue(Value("expression"))
     locationPuckManager.styleScaling(settings)
     verify(exactly = 0) { locationLayerRenderer.styleScaling(any()) }
   }
@@ -210,7 +206,7 @@ class LocationPuckManagerTest {
       modelUri = "uri",
       modelScaleExpression = "expression"
     )
-    every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue(Value("expression"))
+    every { Value.fromJson(any()) } returns ExpectedFactory.createValue(Value("expression"))
     locationPuckManager.styleScaling(settings)
     verify { locationLayerRenderer.styleScaling(Value("expression")) }
   }
@@ -220,7 +216,7 @@ class LocationPuckManagerTest {
     every { settings.locationPuck } returns LocationPuck3D(
       modelUri = "uri",
     )
-    every { ValueConverter.fromJson(any()) } returns ExpectedFactory.createValue(Value("expression"))
+    every { Value.fromJson(any()) } returns ExpectedFactory.createValue(Value("expression"))
     locationPuckManager.styleScaling(settings)
     verify { locationLayerRenderer.styleScaling(capture(valueSlot)) }
     assertEquals(

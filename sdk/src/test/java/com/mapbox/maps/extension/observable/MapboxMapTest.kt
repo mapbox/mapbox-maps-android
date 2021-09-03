@@ -1,7 +1,6 @@
 package com.mapbox.maps.extension.observable
 
 import com.mapbox.bindgen.Value
-import com.mapbox.common.ShadowValueConverter
 import com.mapbox.maps.Event
 import com.mapbox.maps.ObservableInterface
 import com.mapbox.maps.Observer
@@ -12,10 +11,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowValueConverter::class])
 class MapboxMapTest {
 
   private val observableInterface: ObservableInterface = mockk(relaxed = true)
@@ -35,7 +32,6 @@ class MapboxMapTest {
 
   @Test
   fun getEventData() {
-    val event = Event("resource-request", Value.valueOf("test"))
     val request = Request(listOf("network"), "https://api.mapbox.com", "tile", "regular")
     val response = Response(
       eTag = "d8abd8d10bee6b45b4dbf5c05496587a",
@@ -48,6 +44,37 @@ class MapboxMapTest {
       size = 181576,
       error = Error("not-found", "error message")
     )
+    val requestMap = hashMapOf(
+      Pair("loading-method", Value(listOf(Value("network")))),
+      Pair("url", Value("https://api.mapbox.com")),
+      Pair("kind", Value("tile")),
+      Pair("priority", Value("regular"))
+    )
+    val responseMap = hashMapOf(
+      Pair("etag", Value("d8abd8d10bee6b45b4dbf5c05496587a")),
+      Pair("must-revalidate", Value(false)),
+      Pair("no-content", Value(false)),
+      Pair("modified", Value("Mon, 05 Oct 2020 14:23:52 GMT")),
+      Pair("source", Value("network")),
+      Pair("not-modified", Value(false)),
+      Pair("expires", Value("Thu, 15 Oct 2020 14:32:23 GMT")),
+      Pair("size", Value(181576)),
+      Pair(
+        "error",
+        Value(
+          hashMapOf(
+            Pair("reason", Value("not-found")),
+            Pair("message", Value("error message"))
+          )
+        )
+      )
+    )
+    val map = hashMapOf(
+      Pair("data-source", Value("network")),
+      Pair("request", Value(requestMap)),
+      Pair("response", Value(responseMap))
+    )
+    val event = Event("resource-request", Value.valueOf(map))
 
     val eventData = event.getResourceEventData()
     assertEquals("network", eventData.dataSource)

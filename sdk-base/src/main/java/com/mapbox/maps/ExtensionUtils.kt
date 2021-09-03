@@ -1,8 +1,6 @@
 package com.mapbox.maps
 
 import android.graphics.Bitmap
-import com.mapbox.bindgen.Value
-import com.mapbox.common.ValueConverter
 import java.nio.ByteBuffer
 import kotlin.math.abs
 
@@ -18,13 +16,6 @@ fun Double.equalsWithDelta(other: Double, delta: Double): Boolean {
  */
 fun Double.roughlyEquals(other: Double): Boolean {
   return this.equalsWithDelta(other, 1E-5)
-}
-
-/**
- * Extension function to compare two double with default delta of 1E-5.
- */
-fun Value.toJson(): String {
-  return ValueConverter.toJson(this)
 }
 
 /**

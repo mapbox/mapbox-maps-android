@@ -748,7 +748,7 @@ class Style internal constructor(
 
   /**
    * Gets style source parameters.
-   * In order to convert returned value to a json string please take a look at mapbox::common::ValueConverter.
+   * In order to convert returned value to a json string please take a look at mapbox::common::Value.
    *
    * @param sourceId Style source identifier.
    *

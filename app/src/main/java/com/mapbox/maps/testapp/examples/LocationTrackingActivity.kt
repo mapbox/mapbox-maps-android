@@ -17,7 +17,6 @@ import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListen
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
-import com.mapbox.maps.toJson
 
 /**
  * Tracks the user location on screen, simulates a navigation session.

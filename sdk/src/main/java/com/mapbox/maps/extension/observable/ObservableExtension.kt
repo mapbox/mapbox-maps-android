@@ -1,7 +1,6 @@
 package com.mapbox.maps.extension.observable
 
 import com.google.gson.Gson
-import com.mapbox.common.ValueConverter
 import com.mapbox.maps.Event
 import com.mapbox.maps.MapEvents
 import com.mapbox.maps.ObservableInterface
@@ -299,7 +298,7 @@ fun ObservableInterface.unsubscribeSourceRemoved(observer: Observer) =
  * @return a parsed ResourceEventData object.
  */
 fun Event.getResourceEventData(): ResourceEventData {
-  val json = ValueConverter.toJson(data)
+  val json = data.toJson()
   return Gson().fromJson(json, ResourceEventData::class.java)
 }
 
@@ -308,7 +307,7 @@ fun Event.getResourceEventData(): ResourceEventData {
  * @return a parsed MapLoadingErrorEventData object.
  */
 fun Event.getMapLoadingErrorEventData(): MapLoadingErrorEventData {
-  val json = ValueConverter.toJson(data)
+  val json = data.toJson()
   return Gson().fromJson(json, MapLoadingErrorEventData::class.java)
 }
 
@@ -317,7 +316,7 @@ fun Event.getMapLoadingErrorEventData(): MapLoadingErrorEventData {
  * @return a parsed StyleDataLoadedEventData object.
  */
 fun Event.getStyleDataLoadedEventData(): StyleDataLoadedEventData {
-  val json = ValueConverter.toJson(data)
+  val json = data.toJson()
   return Gson().fromJson(json, StyleDataLoadedEventData::class.java)
 }
 
@@ -326,12 +325,12 @@ fun Event.getStyleDataLoadedEventData(): StyleDataLoadedEventData {
  * @return a parsed SourceDataLoadedEventData object.
  */
 fun Event.getSourceDataLoadedEventData(): SourceDataLoadedEventData {
-  val json = ValueConverter.toJson(data)
+  val json = data.toJson()
   return Gson().fromJson(json, SourceDataLoadedEventData::class.java)
 }
 
 internal fun Event.getIDStringEventData(): IDStringEventData {
-  val json = ValueConverter.toJson(data)
+  val json = data.toJson()
   return Gson().fromJson(json, IDStringEventData::class.java)
 }
 
@@ -364,6 +363,6 @@ fun Event.getSourceRemovedEventData(): IDStringEventData = getIDStringEventData(
  * @return a parsed RenderFrameFinishedEventData.
  */
 fun Event.getRenderFrameFinishedEventData(): RenderFrameFinishedEventData {
-  val json = ValueConverter.toJson(data)
+  val json = data.toJson()
   return Gson().fromJson(json, RenderFrameFinishedEventData::class.java)
 }
