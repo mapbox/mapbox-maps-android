@@ -338,6 +338,20 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun deleteAndAdd() {
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val annotation = pointAnnotationManager.create(
+      PointAnnotationOptions()
+        .withPoint(Point.fromLngLat(0.0, 0.0))
+    )
+    assertEquals(annotation, pointAnnotationManager.annotations[0])
+    pointAnnotationManager.delete(annotation)
+    assertTrue(pointAnnotationManager.annotations.isEmpty())
+    pointAnnotationManager.addAnnotation(annotation)
+    assertEquals(annotation, pointAnnotationManager.annotations[0])
+  }
+
+  @Test
   fun deleteList() {
     val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
     val list = listOf(

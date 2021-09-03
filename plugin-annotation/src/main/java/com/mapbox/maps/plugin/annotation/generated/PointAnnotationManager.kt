@@ -30,7 +30,8 @@ class PointAnnotationManager(
   private val id = ID_GENERATOR.incrementAndGet()
   override val layerId = annotationConfig?.layerId ?: "mapbox-android-pointAnnotation-layer-$id"
   override val sourceId = annotationConfig?.sourceId ?: "mapbox-android-pointAnnotation-source-$id"
-
+  override val dragLayerId = annotationConfig?.layerId ?: "mapbox-android-pointAnnotation-draglayer"
+  override val dragSourceId = annotationConfig?.sourceId ?: "mapbox-android-pointAnnotation-dragsource"
   init {
     delegateProvider.getStyle {
       initLayerAndSource(it)
@@ -73,32 +74,110 @@ class PointAnnotationManager(
 
   override fun setDataDrivenPropertyIsUsed(property: String) {
     when (property) {
-      PointAnnotationOptions.PROPERTY_ICON_ANCHOR -> layer?.iconAnchor(get(PointAnnotationOptions.PROPERTY_ICON_ANCHOR))
-      PointAnnotationOptions.PROPERTY_ICON_IMAGE -> layer?.iconImage(get(PointAnnotationOptions.PROPERTY_ICON_IMAGE))
-      PointAnnotationOptions.PROPERTY_ICON_OFFSET -> layer?.iconOffset(get(PointAnnotationOptions.PROPERTY_ICON_OFFSET))
-      PointAnnotationOptions.PROPERTY_ICON_ROTATE -> layer?.iconRotate(get(PointAnnotationOptions.PROPERTY_ICON_ROTATE))
-      PointAnnotationOptions.PROPERTY_ICON_SIZE -> layer?.iconSize(get(PointAnnotationOptions.PROPERTY_ICON_SIZE))
-      PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY -> layer?.symbolSortKey(get(PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY))
-      PointAnnotationOptions.PROPERTY_TEXT_ANCHOR -> layer?.textAnchor(get(PointAnnotationOptions.PROPERTY_TEXT_ANCHOR))
-      PointAnnotationOptions.PROPERTY_TEXT_FIELD -> layer?.textField(get(PointAnnotationOptions.PROPERTY_TEXT_FIELD))
-      PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY -> layer?.textJustify(get(PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY))
-      PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING -> layer?.textLetterSpacing(get(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING))
-      PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH -> layer?.textMaxWidth(get(PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH))
-      PointAnnotationOptions.PROPERTY_TEXT_OFFSET -> layer?.textOffset(get(PointAnnotationOptions.PROPERTY_TEXT_OFFSET))
-      PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET -> layer?.textRadialOffset(get(PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET))
-      PointAnnotationOptions.PROPERTY_TEXT_ROTATE -> layer?.textRotate(get(PointAnnotationOptions.PROPERTY_TEXT_ROTATE))
-      PointAnnotationOptions.PROPERTY_TEXT_SIZE -> layer?.textSize(get(PointAnnotationOptions.PROPERTY_TEXT_SIZE))
-      PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM -> layer?.textTransform(get(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM))
-      PointAnnotationOptions.PROPERTY_ICON_COLOR -> layer?.iconColor(get(PointAnnotationOptions.PROPERTY_ICON_COLOR))
-      PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR -> layer?.iconHaloBlur(get(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR))
-      PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR -> layer?.iconHaloColor(get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR))
-      PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH -> layer?.iconHaloWidth(get(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH))
-      PointAnnotationOptions.PROPERTY_ICON_OPACITY -> layer?.iconOpacity(get(PointAnnotationOptions.PROPERTY_ICON_OPACITY))
-      PointAnnotationOptions.PROPERTY_TEXT_COLOR -> layer?.textColor(get(PointAnnotationOptions.PROPERTY_TEXT_COLOR))
-      PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR -> layer?.textHaloBlur(get(PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR))
-      PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR -> layer?.textHaloColor(get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR))
-      PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH -> layer?.textHaloWidth(get(PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH))
-      PointAnnotationOptions.PROPERTY_TEXT_OPACITY -> layer?.textOpacity(get(PointAnnotationOptions.PROPERTY_TEXT_OPACITY))
+      PointAnnotationOptions.PROPERTY_ICON_ANCHOR -> {
+        layer?.iconAnchor(get(PointAnnotationOptions.PROPERTY_ICON_ANCHOR))
+        dragLayer?.iconAnchor(get(PointAnnotationOptions.PROPERTY_ICON_ANCHOR))
+      }
+      PointAnnotationOptions.PROPERTY_ICON_IMAGE -> {
+        layer?.iconImage(get(PointAnnotationOptions.PROPERTY_ICON_IMAGE))
+        dragLayer?.iconImage(get(PointAnnotationOptions.PROPERTY_ICON_IMAGE))
+      }
+      PointAnnotationOptions.PROPERTY_ICON_OFFSET -> {
+        layer?.iconOffset(get(PointAnnotationOptions.PROPERTY_ICON_OFFSET))
+        dragLayer?.iconOffset(get(PointAnnotationOptions.PROPERTY_ICON_OFFSET))
+      }
+      PointAnnotationOptions.PROPERTY_ICON_ROTATE -> {
+        layer?.iconRotate(get(PointAnnotationOptions.PROPERTY_ICON_ROTATE))
+        dragLayer?.iconRotate(get(PointAnnotationOptions.PROPERTY_ICON_ROTATE))
+      }
+      PointAnnotationOptions.PROPERTY_ICON_SIZE -> {
+        layer?.iconSize(get(PointAnnotationOptions.PROPERTY_ICON_SIZE))
+        dragLayer?.iconSize(get(PointAnnotationOptions.PROPERTY_ICON_SIZE))
+      }
+      PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY -> {
+        layer?.symbolSortKey(get(PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY))
+        dragLayer?.symbolSortKey(get(PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY))
+      }
+      PointAnnotationOptions.PROPERTY_TEXT_ANCHOR -> {
+        layer?.textAnchor(get(PointAnnotationOptions.PROPERTY_TEXT_ANCHOR))
+        dragLayer?.textAnchor(get(PointAnnotationOptions.PROPERTY_TEXT_ANCHOR))
+      }
+      PointAnnotationOptions.PROPERTY_TEXT_FIELD -> {
+        layer?.textField(get(PointAnnotationOptions.PROPERTY_TEXT_FIELD))
+        dragLayer?.textField(get(PointAnnotationOptions.PROPERTY_TEXT_FIELD))
+      }
+      PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY -> {
+        layer?.textJustify(get(PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY))
+        dragLayer?.textJustify(get(PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY))
+      }
+      PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING -> {
+        layer?.textLetterSpacing(get(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING))
+        dragLayer?.textLetterSpacing(get(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING))
+      }
+      PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH -> {
+        layer?.textMaxWidth(get(PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH))
+        dragLayer?.textMaxWidth(get(PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH))
+      }
+      PointAnnotationOptions.PROPERTY_TEXT_OFFSET -> {
+        layer?.textOffset(get(PointAnnotationOptions.PROPERTY_TEXT_OFFSET))
+        dragLayer?.textOffset(get(PointAnnotationOptions.PROPERTY_TEXT_OFFSET))
+      }
+      PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET -> {
+        layer?.textRadialOffset(get(PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET))
+        dragLayer?.textRadialOffset(get(PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET))
+      }
+      PointAnnotationOptions.PROPERTY_TEXT_ROTATE -> {
+        layer?.textRotate(get(PointAnnotationOptions.PROPERTY_TEXT_ROTATE))
+        dragLayer?.textRotate(get(PointAnnotationOptions.PROPERTY_TEXT_ROTATE))
+      }
+      PointAnnotationOptions.PROPERTY_TEXT_SIZE -> {
+        layer?.textSize(get(PointAnnotationOptions.PROPERTY_TEXT_SIZE))
+        dragLayer?.textSize(get(PointAnnotationOptions.PROPERTY_TEXT_SIZE))
+      }
+      PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM -> {
+        layer?.textTransform(get(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM))
+        dragLayer?.textTransform(get(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM))
+      }
+      PointAnnotationOptions.PROPERTY_ICON_COLOR -> {
+        layer?.iconColor(get(PointAnnotationOptions.PROPERTY_ICON_COLOR))
+        dragLayer?.iconColor(get(PointAnnotationOptions.PROPERTY_ICON_COLOR))
+      }
+      PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR -> {
+        layer?.iconHaloBlur(get(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR))
+        dragLayer?.iconHaloBlur(get(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR))
+      }
+      PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR -> {
+        layer?.iconHaloColor(get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR))
+        dragLayer?.iconHaloColor(get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR))
+      }
+      PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH -> {
+        layer?.iconHaloWidth(get(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH))
+        dragLayer?.iconHaloWidth(get(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH))
+      }
+      PointAnnotationOptions.PROPERTY_ICON_OPACITY -> {
+        layer?.iconOpacity(get(PointAnnotationOptions.PROPERTY_ICON_OPACITY))
+        dragLayer?.iconOpacity(get(PointAnnotationOptions.PROPERTY_ICON_OPACITY))
+      }
+      PointAnnotationOptions.PROPERTY_TEXT_COLOR -> {
+        layer?.textColor(get(PointAnnotationOptions.PROPERTY_TEXT_COLOR))
+        dragLayer?.textColor(get(PointAnnotationOptions.PROPERTY_TEXT_COLOR))
+      }
+      PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR -> {
+        layer?.textHaloBlur(get(PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR))
+        dragLayer?.textHaloBlur(get(PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR))
+      }
+      PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR -> {
+        layer?.textHaloColor(get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR))
+        dragLayer?.textHaloColor(get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR))
+      }
+      PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH -> {
+        layer?.textHaloWidth(get(PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH))
+        dragLayer?.textHaloWidth(get(PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH))
+      }
+      PointAnnotationOptions.PROPERTY_TEXT_OPACITY -> {
+        layer?.textOpacity(get(PointAnnotationOptions.PROPERTY_TEXT_OPACITY))
+        dragLayer?.textOpacity(get(PointAnnotationOptions.PROPERTY_TEXT_OPACITY))
+      }
     }
   }
 
@@ -886,7 +965,9 @@ class PointAnnotationManager(
   override fun createLayer(): SymbolLayer {
     return symbolLayer(layerId, sourceId) {}
   }
-
+  override fun createDragLayer(): SymbolLayer {
+    return symbolLayer(dragLayerId, dragSourceId) {}
+  }
   /**
    * The filter on the managed pointAnnotations.
    *

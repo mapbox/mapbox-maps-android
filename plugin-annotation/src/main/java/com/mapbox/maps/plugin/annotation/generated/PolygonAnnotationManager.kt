@@ -30,7 +30,8 @@ class PolygonAnnotationManager(
   private val id = ID_GENERATOR.incrementAndGet()
   override val layerId = annotationConfig?.layerId ?: "mapbox-android-polygonAnnotation-layer-$id"
   override val sourceId = annotationConfig?.sourceId ?: "mapbox-android-polygonAnnotation-source-$id"
-
+  override val dragLayerId = annotationConfig?.layerId ?: "mapbox-android-polygonAnnotation-draglayer"
+  override val dragSourceId = annotationConfig?.sourceId ?: "mapbox-android-polygonAnnotation-dragsource"
   init {
     delegateProvider.getStyle {
       initLayerAndSource(it)
@@ -47,11 +48,26 @@ class PolygonAnnotationManager(
 
   override fun setDataDrivenPropertyIsUsed(property: String) {
     when (property) {
-      PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY -> layer?.fillSortKey(get(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY))
-      PolygonAnnotationOptions.PROPERTY_FILL_COLOR -> layer?.fillColor(get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR))
-      PolygonAnnotationOptions.PROPERTY_FILL_OPACITY -> layer?.fillOpacity(get(PolygonAnnotationOptions.PROPERTY_FILL_OPACITY))
-      PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR -> layer?.fillOutlineColor(get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR))
-      PolygonAnnotationOptions.PROPERTY_FILL_PATTERN -> layer?.fillPattern(get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN))
+      PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY -> {
+        layer?.fillSortKey(get(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY))
+        dragLayer?.fillSortKey(get(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY))
+      }
+      PolygonAnnotationOptions.PROPERTY_FILL_COLOR -> {
+        layer?.fillColor(get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR))
+        dragLayer?.fillColor(get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR))
+      }
+      PolygonAnnotationOptions.PROPERTY_FILL_OPACITY -> {
+        layer?.fillOpacity(get(PolygonAnnotationOptions.PROPERTY_FILL_OPACITY))
+        dragLayer?.fillOpacity(get(PolygonAnnotationOptions.PROPERTY_FILL_OPACITY))
+      }
+      PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR -> {
+        layer?.fillOutlineColor(get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR))
+        dragLayer?.fillOutlineColor(get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR))
+      }
+      PolygonAnnotationOptions.PROPERTY_FILL_PATTERN -> {
+        layer?.fillPattern(get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN))
+        dragLayer?.fillPattern(get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN))
+      }
     }
   }
 
@@ -197,7 +213,9 @@ class PolygonAnnotationManager(
   override fun createLayer(): FillLayer {
     return fillLayer(layerId, sourceId) {}
   }
-
+  override fun createDragLayer(): FillLayer {
+    return fillLayer(dragLayerId, dragSourceId) {}
+  }
   /**
    * The filter on the managed polygonAnnotations.
    *

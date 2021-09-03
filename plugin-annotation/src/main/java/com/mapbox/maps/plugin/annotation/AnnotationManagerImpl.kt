@@ -2,6 +2,7 @@ package com.mapbox.maps.plugin.annotation
 
 import android.graphics.PointF
 import android.view.View
+import androidx.annotation.VisibleForTesting
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Feature
@@ -67,12 +68,14 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   private val mapClickResolver = MapClick()
   private val mapLongClickResolver = MapLongClick()
   private val mapMoveResolver = MapMove()
-  private var draggedAnnotation: T? = null
+  private var draggingAnnotation: T? = null
   private val annotationMap = ConcurrentHashMap<Long, T>()
   protected var touchAreaShiftX: Int = mapView.scrollX
   protected var touchAreaShiftY: Int = mapView.scrollY
   protected abstract val layerId: String
   protected abstract val sourceId: String
+  protected abstract val dragLayerId: String
+  protected abstract val dragSourceId: String
 
   @Suppress("UNCHECKED_CAST")
   private var gesturesPlugin: GesturesPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
@@ -82,11 +85,17 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
       "is it available on the clazz path and loaded through the map?"
   )
 
-  /** The layer created by this manger. Annotations will be added to this layer.*/
+  /** The layer created by this manager. Annotations will be added to this layer.*/
   internal var layer: L? = null
 
-  /** The source created by this manger. Feature data will bed added to this source.*/
+  /** The source created by this manager. Feature data will be added to this source.*/
   internal var source: GeoJsonSource? = null
+
+  /** The drag layer created by this manager. The dragging annotation will be added to this layer.*/
+  internal var dragLayer: L? = null
+
+  /** The drag source created by this manager. The feature data of dragging annotation will be added to this source.*/
+  internal var dragSource: GeoJsonSource? = null
 
   /**
    * The added annotations
@@ -137,6 +146,13 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   protected abstract fun createLayer(): L
 
   /**
+   * Create the drag layer for dragging annotation
+   *
+   * @return the layer created
+   */
+  protected abstract fun createDragLayer(): L
+
+  /**
    * Set filter on the managed annotations.
    */
   abstract var layerFilter: Expression?
@@ -169,11 +185,19 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     }
   }
 
+  private fun createDragSource(): GeoJsonSource {
+    return geoJsonSource(dragSourceId) {
+      featureCollection(FeatureCollection.fromFeatures(listOf()))
+    }
+  }
+
   protected fun initLayerAndSource(style: StyleInterface) {
     if (layer == null || source == null) {
       initializeDataDrivenPropertyMap()
       source = createSource()
       layer = createLayer()
+      dragSource = createDragSource()
+      dragLayer = createDragLayer()
     }
 
     source?.let {
@@ -181,6 +205,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         style.addSource(it)
       }
     }
+
     layer?.let {
       if (!style.styleLayerExists(it.layerId)) {
         var layerAdded = false
@@ -198,6 +223,20 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         }
         if (!layerAdded) {
           style.addPersistentLayer(it)
+        }
+      }
+    }
+
+    dragSource?.let {
+      if (!style.styleSourceExists(it.sourceId)) {
+        style.addSource(it)
+      }
+    }
+    dragLayer?.let {
+      if (!style.styleLayerExists(it.layerId)) {
+        layer?.layerId?.let { aboveLayerId ->
+          // Add drag layer above the annotation layer
+          style.addPersistentLayer(it, LayerPosition(aboveLayerId, null, null))
         }
       }
     }
@@ -278,6 +317,19 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   }
 
   /**
+   * Add an annotation to MapView.
+   *
+   * @param annotation the annotation added to MapView.
+   */
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  fun addAnnotation(annotation: T) {
+    annotationMap[annotation.id] = annotation
+    delegateProvider.getStyle { style ->
+      updateSource(style)
+    }
+  }
+
+  /**
    * Create some annotations with the options
    */
   override fun create(options: List<S>): List<T> {
@@ -322,6 +374,37 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     annotationMap.clear()
     delegateProvider.getStyle { style ->
       updateSource(style)
+    }
+  }
+
+  private fun updateDragSource(style: StyleInterface) {
+    dragSource?.let { geoJsonSource ->
+      if (!style.styleSourceExists(geoJsonSource.sourceId)) {
+        Logger.e(TAG, "Can't update dragSource: source has not been added to style.")
+        return
+      }
+      val features = mutableListOf<Feature>()
+      draggingAnnotation?.let {
+        if (it.getType() == AnnotationType.PointAnnotation) {
+          val symbol = it as PointAnnotation
+          symbol.iconImage?.let { image ->
+            if (image.startsWith(PointAnnotation.ICON_DEFAULT_NAME_PREFIX)) {
+              // User set the bitmap icon, add the icon to style
+              symbol.iconImageBitmap?.let { bitmap ->
+                if (style.getStyleImage(image) == null) {
+                  val imagePlugin = image(image) {
+                    bitmap(bitmap)
+                  }
+                  style.addImage(imagePlugin)
+                }
+              }
+            }
+          }
+        }
+        features.add(Feature.fromGeometry(it.geometry, it.getJsonObjectCopy()))
+      }
+
+      geoJsonSource.featureCollection(FeatureCollection.fromFeatures(features), onDataParsed = {})
     }
   }
 
@@ -526,14 +609,14 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
      * Called when the move gesture is executing.
      */
     override fun onMove(detector: MoveGestureDetector): Boolean {
-      if (draggedAnnotation != null && (detector.pointersCount > 1 || !draggedAnnotation!!.isDraggable)) {
+      if (draggingAnnotation != null && (detector.pointersCount > 1 || !draggingAnnotation!!.isDraggable)) {
         // Stopping the drag when we don't work with a simple, on-pointer move anymore
         stopDragging()
         return true
       }
 
       // Updating symbol's position
-      draggedAnnotation?.let { annotation ->
+      draggingAnnotation?.let { annotation ->
         val moveObject = detector.getMoveObject(0)
         val x = moveObject.currentX - touchAreaShiftX
         val y = moveObject.currentY - touchAreaShiftY
@@ -550,7 +633,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         shiftedGeometry?.let { geometry ->
           annotation.geometry = geometry
           delegateProvider.getStyle { style ->
-            updateSource(style)
+            updateDragSource(style)
           }
           dragListeners.forEach {
             it.onAnnotationDrag(annotation)
@@ -572,17 +655,28 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     private fun startDragging(annotation: T): Boolean {
       if (annotation.isDraggable) {
         dragListeners.forEach { it.onAnnotationDragStarted(annotation) }
-        draggedAnnotation = annotation
+        draggingAnnotation = annotation
+        // Delete the dragging annotation from original source
+        delete(annotation)
+        delegateProvider.getStyle { style ->
+          // Add the dragging annotation to drag layer
+          updateDragSource(style)
+        }
         return true
       }
       return false
     }
 
     private fun stopDragging() {
-      draggedAnnotation?.let { annotation ->
+      draggingAnnotation?.let { annotation ->
         dragListeners.forEach { it.onAnnotationDragFinished(annotation) }
+        draggingAnnotation = null
+        addAnnotation(annotation)
       }
-      draggedAnnotation = null
+      // Remove dragging annotation from drag layer
+      delegateProvider.getStyle { style ->
+        updateDragSource(style)
+      }
     }
   }
 
