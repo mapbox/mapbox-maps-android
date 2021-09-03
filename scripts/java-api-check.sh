@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -eo pipefail
+set -Eeuxo pipefail
 
 # Usage:
 #   ./java-api-check.sh <current release tag (empty for branches)> <path to current aar> <module name> <optional, path to previously released aar>

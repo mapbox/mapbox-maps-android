@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -eo pipefail
+set -Eeuxo pipefail
 # Usage:
 #   ./java-api-check-all.sh <current release tag (empty for branches)>
 #

@@ -174,6 +174,13 @@ commands:
           command: |
             python3 scripts/ci-circleci-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} --origin-slug mapbox/mapbox-maps-android --target-slug mapbox/mapbox-maps-android-internal
 
+  check-api:
+    steps:
+      - run:
+          name: Check api compatibility
+          command: |
+            ./scripts/java-api-check-all.sh $CIRCLE_TAG
+
   publish-sdk-registry:
     steps:
       - unless:
@@ -473,5 +480,6 @@ jobs:
           variant: "Release"
       - update-version-name
       - track-metrics
+      - check-api
       - publish-sdk-registry
       - publish-sdk-registry-named-snapshot
