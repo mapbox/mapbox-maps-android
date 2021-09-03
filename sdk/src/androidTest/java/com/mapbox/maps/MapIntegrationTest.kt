@@ -529,7 +529,7 @@ class MapIntegrationTest {
               }
             }
           },
-          1_000L
+          5_000L
         )
       }
     }
@@ -548,7 +548,7 @@ class MapIntegrationTest {
       mapboxMap.setCamera(
         CameraOptions.Builder()
           .center(Point.fromLngLat(0.0, 0.0))
-          .zoom(9.0)
+          .zoom(2.0)
           .build()
       )
       mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) { style ->
