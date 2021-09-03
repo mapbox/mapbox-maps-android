@@ -85,16 +85,16 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
       "is it available on the clazz path and loaded through the map?"
   )
 
-  /** The layer created by this manger. Annotations will be added to this layer.*/
+  /** The layer created by this manager. Annotations will be added to this layer.*/
   internal var layer: L? = null
 
-  /** The source created by this manger. Feature data will be added to this source.*/
+  /** The source created by this manager. Feature data will be added to this source.*/
   internal var source: GeoJsonSource? = null
 
-  /** The drag layer created by this manger. The dragging annotation will be added to this layer.*/
+  /** The drag layer created by this manager. The dragging annotation will be added to this layer.*/
   internal var dragLayer: L? = null
 
-  /** The drag source created by this manger. The feature data of dragging annotation will be added to this source.*/
+  /** The drag source created by this manager. The feature data of dragging annotation will be added to this source.*/
   internal var dragSource: GeoJsonSource? = null
 
   /**
