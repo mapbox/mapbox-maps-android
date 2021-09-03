@@ -22,24 +22,14 @@ then
 fi
 
 CURRENT_DIR=$(dirname "$0")
-TMPDIR=${CURRENT_DIR}/temp
-REVAPI=${CURRENT_DIR}/revapi
+TMPDIR=`mktemp -d`
 REPORT_DIR=${TMPDIR}/api_compat_report
 mkdir -p "${REPORT_DIR}"
 mkdir -p "${TMPDIR}"
-mkdir -p "${REVAPI}"
 
-if [[ -f "$REVAPI/revapi-0.9.7/revapi.sh" ]]; then
-  echo "Revapi has installed in $REVAPI/revapi-0.9.7/revapi.sh"
-  export PATH=${REVAPI}/revapi-0.9.7:$PATH
-fi
 if ! [ -x "$(command -v revapi.sh)" ]; then
-    echo "Revapi is not installed. Installing revapi"
-    pushd "${REVAPI}" > /dev/null
-    wget https://search.maven.org/remotecontent?filepath=org/revapi/revapi-standalone/0.9.7/revapi-standalone-0.9.7-standalone.zip -O revapi.zip \
-    && unzip revapi.zip \
-    && export PATH=${REVAPI}/revapi-0.9.7:$PATH
-    popd > /dev/null
+    echo "Revapi is not installed. Please install revapi before running this script"
+    exit 1
 fi
 # Fetched by parent script from circle-ci CIRCLE_TAG env variable,
 # if CIRCLE_TAG is not set, TAGGED_RELEASE_VERSION would be empty (branch build).
