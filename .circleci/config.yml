@@ -181,6 +181,14 @@ commands:
           command: |
             ./scripts/java-api-check-all.sh $CIRCLE_TAG
 
+  init-aws:
+    steps:
+      - run:
+          name: Init aws with mbx-ci
+          command: |
+            curl -Ls https://mapbox-release-engineering.s3.amazonaws.com/mbx-ci/latest/mbx-ci-linux-amd64 > mbx-ci && chmod 755 ./mbx-ci
+            ./mbx-ci aws setup
+
   publish-sdk-registry:
     steps:
       - unless:
@@ -190,8 +198,6 @@ commands:
                 name: Publish the SDK
                 command: |
                   if [[ $CIRCLE_TAG == android-v* ||  $CIRCLE_BRANCH == main ]]; then
-                    curl -Ls https://mapbox-release-engineering.s3.amazonaws.com/mbx-ci/latest/mbx-ci-linux-amd64 > mbx-ci && chmod 755 ./mbx-ci
-                    ./mbx-ci aws setup
                     make sdkRegistryUpload
                   fi
 
@@ -480,6 +486,7 @@ jobs:
           variant: "Release"
       - update-version-name
       - track-metrics
+      - init-aws
       - check-api
       - publish-sdk-registry
       - publish-sdk-registry-named-snapshot
