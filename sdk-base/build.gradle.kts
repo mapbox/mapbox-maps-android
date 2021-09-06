@@ -1,4 +1,3 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
@@ -29,7 +28,12 @@ dependencies {
     api(project(":common"))
   } else {
     api(Dependencies.mapboxGlNative)
-    api(Dependencies.mapboxCoreCommon)
+    api("com.mapbox.common:common") {
+      version {
+        strictly("18.0.0-SNAPSHOT")
+      }
+      because("Use snapshot in order to support testing core telemetry")
+    }
   }
 
   testImplementation(Dependencies.junit)

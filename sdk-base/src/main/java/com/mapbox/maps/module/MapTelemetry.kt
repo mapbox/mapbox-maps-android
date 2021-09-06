@@ -41,4 +41,6 @@ interface MapTelemetry {
    * @param data performance event data
    */
   fun onPerformanceEvent(data: Bundle?)
+
+  fun onDestroy()
 }

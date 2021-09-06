@@ -50,6 +50,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   private val onCameraChangedListener: OnCameraChangeListener
   private var lifecycleState: LifecycleState = LifecycleState.STATE_STOPPED
 
+  private val telemetry: MapTelemetry
+
   constructor(
     renderer: MapboxRenderer,
     mapInitOptions: MapInitOptions,
@@ -65,10 +67,11 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.mapboxMap =
       MapProvider.getMapboxMap(nativeMap, nativeObserver, mapInitOptions.mapOptions.pixelRatio)
     this.mapboxMap.renderHandler = renderer.renderThread.handlerThread.handler
+    telemetry = dispatchTelemetryTurnstileEvent()
     this.pluginRegistry = MapProvider.getMapPluginRegistry(
       mapboxMap,
       this,
-      dispatchTelemetryTurnstileEvent()
+      telemetry
     )
     this.onCameraChangedListener = OnCameraChangeListener {
       pluginRegistry.onCameraMove(nativeMap.cameraState)
@@ -93,6 +96,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     nativeMap: MapInterface,
     mapboxMap: MapboxMap,
     pluginRegistry: MapPluginRegistry,
+    telemetry: MapTelemetry,
     onStyleLoadingFinishedListener: OnStyleDataLoadedListener
   ) {
     this.renderer = renderer
@@ -102,6 +106,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.mapboxMap = mapboxMap
     this.mapboxMap.renderHandler = renderer.renderThread.handlerThread.handler
     this.pluginRegistry = pluginRegistry
+    this.telemetry = telemetry
     this.onCameraChangedListener = OnCameraChangeListener {
       pluginRegistry.onCameraMove(nativeMap.cameraState)
     }
@@ -158,6 +163,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     nativeObserver.clearListeners()
     renderer.onDestroy()
     pluginRegistry.cleanup()
+    telemetry.onDestroy()
   }
 
   override fun onLowMemory() {

@@ -7,7 +7,7 @@ import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.delegates.MapAttributionDelegate
 
-internal class MapDelegateProviderImpl constructor(val mapboxMap: MapboxMap, mapController: MapController, telemetry: MapTelemetry) : MapDelegateProvider {
+internal class MapDelegateProviderImpl constructor(val mapboxMap: MapboxMap, mapController: MapController, val telemetry: MapTelemetry) : MapDelegateProvider {
   override val mapCameraManagerDelegate: MapCameraManagerDelegate by lazy { mapboxMap }
   override val mapProjectionDelegate: MapProjectionDelegate by lazy { mapboxMap }
   override val mapTransformDelegate: MapTransformDelegate by lazy { mapboxMap }
