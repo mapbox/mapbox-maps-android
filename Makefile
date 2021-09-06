@@ -13,6 +13,8 @@ build:
 	./gradlew sdk-base:assembleRelease;
 	./gradlew sdk:assembleRelease;
 	./gradlew extension-style:assembleRelease;
+	./gradlew extension-localization:assembleRelease;
+	./gradlew extension-androidauto:assembleRelease;
 	./gradlew module-telemetry:assembleRelease;
 	./gradlew plugin-animation:assembleRelease;
 	./gradlew plugin-annotation:assembleRelease;
@@ -23,10 +25,11 @@ build:
 	./gradlew plugin-logo:assembleRelease;
 	./gradlew plugin-overlay:assembleRelease;
 	./gradlew plugin-scalebar:assembleRelease;
+	./gradlew plugin-lifecycle:assembleRelease;
 
 .PHONY: checkApi
 checkApi:
-	sh ./scripts/java-api-check-all.sh "$(TAG)"
+	./scripts/java-api-check-all.sh "$(TAG)"
 
 .PHONY: proguard
 proguard:

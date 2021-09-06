@@ -23,6 +23,9 @@ workflows:
       - verify-docs:
           requires:
             - verify-code
+      - verify-api:
+          requires:
+            - verify-code
       - verify-internal:
             requires:
               - verify-code
@@ -173,13 +176,6 @@ commands:
           name: Trigger generated code validation
           command: |
             python3 scripts/ci-circleci-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} --origin-slug mapbox/mapbox-maps-android --target-slug mapbox/mapbox-maps-android-internal
-
-  check-api:
-    steps:
-      - run:
-          name: Check api compatibility
-          command: |
-            ./scripts/java-api-check-all.sh $CIRCLE_TAG
 
   init-aws:
     steps:
@@ -344,6 +340,25 @@ jobs:
           name: docs
           command: sh scripts/kdoc-validate.sh
 
+  verify-api:
+    docker:
+      - image: mbgl/android-ndk-r21e:latest
+
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - init-aws
+      - run:
+          no_output_timeout: 30m
+          name: verfiy-api
+          command: |
+            make build
+            if [[ $CIRCLE_TAG == android-v* ]]; then
+              ./scripts/java-api-check-all.sh "${CIRCLE_TAG}"
+            else
+              ./scripts/java-api-check-all.sh ""
+            fi
+
   verify-internal:
     docker:
       - image: mbgl/android-ndk-r21e:latest
@@ -487,6 +502,5 @@ jobs:
       - update-version-name
       - track-metrics
       - init-aws
-      - check-api
       - publish-sdk-registry
       - publish-sdk-registry-named-snapshot
