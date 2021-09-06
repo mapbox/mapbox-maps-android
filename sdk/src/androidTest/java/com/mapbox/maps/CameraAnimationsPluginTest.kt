@@ -28,6 +28,133 @@ import java.util.concurrent.TimeoutException
 class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
   @Test
+  fun testAnimatorListener() {
+    val listener = CameraAnimatorListener()
+    mainHandler.post {
+      mapView.camera.easeTo(
+        cameraOptions {
+          zoom(7.0)
+          bearing(120.0)
+        },
+        mapAnimationOptions {
+          duration(200)
+          animatorListener(listener)
+        }
+      )
+    }
+
+    if (!listener.latchStart.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
+    }
+
+    if (listener.latchEnd.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+      assertEquals(7.0, mapView.getMapboxMap().cameraState.zoom, EPS)
+      assertEquals(120.0, mapView.getMapboxMap().cameraState.bearing, EPS)
+    } else {
+      throw TimeoutException()
+    }
+  }
+
+  @Test
+  fun testAnimatorListenerOnImmediateAnimations() {
+    val listener = CameraAnimatorListener()
+    mainHandler.post {
+      mapView.camera.easeTo(
+        cameraOptions {
+          zoom(7.0)
+          bearing(120.0)
+        },
+        mapAnimationOptions {
+          duration(0)
+          animatorListener(listener)
+        }
+      )
+    }
+
+    if (!listener.latchStart.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
+    }
+
+    if (listener.latchEnd.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+      assertEquals(7.0, mapView.getMapboxMap().cameraState.zoom, EPS)
+      assertEquals(120.0, mapView.getMapboxMap().cameraState.bearing, EPS)
+    } else {
+      throw TimeoutException()
+    }
+  }
+
+  @Test
+  fun testAnimatorListenerOnImmediateAnimationsWithOtherOngoingAnimations() {
+    mainHandler.post {
+      val bearingAnimator = createBearingAnimator(cameraAnimationPlugin, 180.0, 0, 90000)
+      cameraAnimationPlugin.registerAnimators(bearingAnimator)
+      bearingAnimator.start()
+    }
+
+    val listener = CameraAnimatorListener()
+    mainHandler.post {
+      mapView.camera.easeTo(
+        cameraOptions {
+          zoom(7.0)
+        },
+        mapAnimationOptions {
+          duration(0)
+          animatorListener(listener)
+        }
+      )
+    }
+
+    if (!listener.latchStart.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
+    }
+
+    if (listener.latchEnd.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+      assertEquals(7.0, mapView.getMapboxMap().cameraState.zoom, EPS)
+    } else {
+      throw TimeoutException()
+    }
+  }
+
+  @Test
+  fun testAnimatorListenerOnImmediatelyCanceledAnimations() {
+    val listener = CameraAnimatorListener()
+
+    mainHandler.post {
+      mapView.getMapboxMap().setCamera(
+        cameraOptions {
+          zoom(4.0)
+          bearing(0.0)
+        },
+      )
+    }
+
+    mainHandler.post {
+      val set = mapView.camera.easeTo(
+        cameraOptions {
+          zoom(7.0)
+          bearing(120.0)
+        },
+        mapAnimationOptions {
+          duration(100)
+          animatorListener(listener)
+        }
+      )
+      set.cancel()
+    }
+
+    if (!listener.latchStart.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
+    }
+
+    if (listener.latchCancel.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+      assertEquals(4.0, mapView.getMapboxMap().cameraState.zoom, EPS)
+      assertEquals(0.0, mapView.getMapboxMap().cameraState.bearing, EPS)
+    } else {
+      throw TimeoutException()
+    }
+  }
+
+  @Test
   fun testAnimatorWithAnimatorDelay() {
     if (ignoreTestForGivenAbi()) {
       return

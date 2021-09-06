@@ -1,8 +1,11 @@
 package com.mapbox.maps.plugin.animation
 
 import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
+import android.os.Handler
+import android.os.Looper
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.common.Logger
@@ -42,8 +45,6 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
    * Consists of set owner + animator set itself.
    */
   private var highLevelAnimatorSet: HighLevelAnimatorSet? = null
-  @VisibleForTesting(otherwise = PRIVATE)
-  internal var highLevelListener: Animator.AnimatorListener? = null
 
   private val centerListeners = CopyOnWriteArraySet<CameraAnimatorChangeListener<Point>>()
   private val zoomListeners = CopyOnWriteArraySet<CameraAnimatorChangeListener<Double>>()
@@ -54,6 +55,16 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
   private val pitchListeners = CopyOnWriteArraySet<CameraAnimatorChangeListener<Double>>()
 
   private val lifecycleListeners = CopyOnWriteArraySet<CameraAnimationsLifecycleListener>()
+
+  private val handler = Handler(Looper.getMainLooper())
+  private var commitScheduled = false
+  private val commitChangesRunnable = Runnable {
+    performMapJump(cameraOptionsBuilder.anchor(anchor).build())
+
+    // reset values
+    cameraOptionsBuilder = CameraOptions.Builder()
+    commitScheduled = false
+  }
 
   /**
    * If debug mode is enabled extra logs will be written about animation lifecycle and
@@ -163,6 +174,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     paddingListeners.clear()
     lifecycleListeners.clear()
     animators.clear()
+    handler.removeCallbacks(commitChangesRunnable)
   }
 
   private fun performMapJump(cameraOptions: CameraOptions) {
@@ -238,21 +250,6 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     }
   }
 
-  private fun correctInitialCamera(
-    currentCameraBuilder: CameraOptions.Builder,
-    cameraAnimator: CameraAnimator<*>
-  ): CameraOptions {
-    return when (cameraAnimator) {
-      is CameraCenterAnimator -> currentCameraBuilder.center(cameraAnimator.animatedValue as? Point).build()
-      is CameraZoomAnimator -> currentCameraBuilder.zoom(cameraAnimator.animatedValue as? Double).build()
-      is CameraAnchorAnimator -> currentCameraBuilder.anchor(cameraAnimator.animatedValue as? ScreenCoordinate).build()
-      is CameraPaddingAnimator -> currentCameraBuilder.padding(cameraAnimator.animatedValue as? EdgeInsets).build()
-      is CameraBearingAnimator -> currentCameraBuilder.bearing(cameraAnimator.animatedValue as? Double).build()
-      is CameraPitchAnimator -> currentCameraBuilder.pitch(cameraAnimator.animatedValue as? Double).build()
-      else -> throw RuntimeException("Unsupported animator type!")
-    }
-  }
-
   private fun registerInternalListener(animator: CameraAnimator<*>) {
     animator.addInternalListener(object : Animator.AnimatorListener {
 
@@ -265,10 +262,6 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
           }
           lifecycleListeners.forEach {
             it.onAnimatorStarting(type, this, owner)
-          }
-          if (runningAnimatorsQueue.isEmpty()) {
-            highLevelAnimatorSet?.started = true
-            highLevelListener?.onAnimationStart(animation)
           }
           mapTransformDelegate.setUserAnimationInProgress(true)
           // check if such animation is not running already
@@ -326,14 +319,6 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
             unregisterAnimators(this, cancelAnimators = false)
           }
           if (runningAnimatorsQueue.isEmpty()) {
-            cameraOptionsBuilder.build().let { options ->
-              if (options.hasChanges) {
-                // cameraOptionsBuilder might have some accumulated, but not applied changes.
-                performMapJump(options)
-                cameraOptionsBuilder = CameraOptions.Builder()
-              }
-            }
-
             mapTransformDelegate.setUserAnimationInProgress(false)
           }
           lifecycleListeners.forEach {
@@ -342,17 +327,8 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
               AnimationFinishStatus.ENDED -> it.onAnimatorEnding(type, this, owner)
             }
           }
-          // it could happen that some animators are cancelled inside onAnimatorStarting callback
-          // while high-level animation is starting and highLevelListener != null already,
-          // so we check on `started` flag to validate that high-level animation truly started
-          if (runningAnimatorsQueue.isEmpty() && highLevelAnimatorSet?.started == true) {
-            when (finishStatus) {
-              AnimationFinishStatus.CANCELED -> {
-                highLevelListener?.onAnimationCancel(animation)
-                highLevelListener?.onAnimationEnd(animation)
-              }
-              AnimationFinishStatus.ENDED -> highLevelListener?.onAnimationEnd(animation)
-            }
+          if (runningAnimatorsQueue.isEmpty()) {
+            commitChanges()
           }
         } ?: throw RuntimeException(
           "Could not finish animation in CameraManager! " +
@@ -364,44 +340,36 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
   private fun registerInternalUpdateListener(animator: CameraAnimator<*>) {
     animator.addInternalUpdateListener {
+      // add current animator to queue-set if was not present
+      runningAnimatorsQueue.add(animator)
+
       // set current animator value in any case
       updateCameraValue(animator)
-      // main idea here is not to update map on each option change
-      // we perform jump based on update tick of first (oldest) animation
-      val firstAnimator = if (runningAnimatorsQueue.iterator().hasNext()) {
-        runningAnimatorsQueue.iterator().next()
-      } else {
-        null
-      }
+
       if (animator.type == CameraAnimatorType.ANCHOR) {
         anchor = it.animatedValue as ScreenCoordinate
       }
-      val cameraOptions = when {
-        // if no running animators in queue - get current map camera but apply first updated value
-        firstAnimator == null -> {
-          correctInitialCamera(
-            mapCameraManagerDelegate.cameraState.toCameraOptions(anchor).toBuilder(),
-            animator
-          )
-        }
-        // if update is triggered for first (oldest) animator - build options and jump
-        it == firstAnimator -> {
-          cameraOptionsBuilder.anchor(anchor).build()
-        }
-        // do not perform jump if update is triggered for not first (oldest) animator
-        else -> {
-          null
+
+      if (animator.hasUserListeners) {
+        // If the animator have third-party listeners camera changes must be applied immediately
+        // to be seen from the listeners.
+        commitChanges()
+      } else {
+        // main idea here is not to update map on each option change.
+        // the runnable posted here will be executed right after all the animators are applied.
+        if (!commitScheduled) {
+          handler.postAtFrontOfQueue(commitChangesRunnable)
+          commitScheduled = true
         }
       }
-      cameraOptions?.let { camera ->
-        // move map camera
-        performMapJump(camera)
-        // reset values
-        cameraOptionsBuilder = CameraOptions.Builder()
-      }
-      // add current animator to queue-set if was not present
-      runningAnimatorsQueue.add(it)
     }
+  }
+
+  private fun commitChanges() {
+    if (commitScheduled) {
+      handler.removeCallbacks(commitChangesRunnable)
+    }
+    commitChangesRunnable.run()
   }
 
   private fun cancelAnimatorSet() {
@@ -857,16 +825,16 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         interpolator = it
       }
       animationOptions?.animatorListener?.let {
-        // duration == 0L does not behave the same as > 0 and actually
-        // our custom `highLevelListener` designed for proper notifying of lifecycle
-        // based on `runningAnimatorsQueue` is not working because animators end immediately.
-        // We use standard listener in that corner case.
-        highLevelListener = if (animationOptions.duration == 0L) {
-          addListener(it)
-          null
-        } else {
-          it
-        }
+        addListener(object : AnimatorListenerAdapter() {
+          override fun onAnimationEnd(animation: Animator?) {
+            commitChanges()
+
+            if (highLevelAnimatorSet?.animatorSet === animation) {
+              highLevelAnimatorSet = null
+            }
+          }
+        })
+        addListener(it)
       }
       playTogether(*animators)
     }

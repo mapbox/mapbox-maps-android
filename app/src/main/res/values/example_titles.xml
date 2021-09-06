@@ -38,6 +38,7 @@
     <string name="activity_animated_image_source">Animated ImageSource</string>
     <string name="activity_camera_predefined_animators_title">Using camera animations</string>
     <string name="activity_camera_low_level">Using custom camera animations</string>
+    <string name="activity_camera_animate_during_gesture">Continue camera animation during gestures</string>
     <string name="activity_dds_multiple_geometries_title">Draw multiple geometries</string>
     <string name="activity_wms_source">WMS Source</string>
     <string name="activity_within">Within expression</string>

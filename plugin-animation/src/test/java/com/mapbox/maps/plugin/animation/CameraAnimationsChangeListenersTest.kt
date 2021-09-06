@@ -6,8 +6,11 @@ import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImplTest.Companion.cameraState
 import org.junit.Assert
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 import kotlin.math.pow
 
+@RunWith(RobolectricTestRunner::class)
 class CameraAnimationsChangeListenersTest {
 
   @Test
