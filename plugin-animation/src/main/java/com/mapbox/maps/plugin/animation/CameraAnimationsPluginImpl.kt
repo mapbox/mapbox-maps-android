@@ -158,9 +158,15 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       notifyListeners(cameraOptions)
       lastCameraOptions = cameraOptions
     } catch (e: Exception) {
-      Log.e(TAG, "Exception while setting camera options : ${e.message}")
+      Log.e(
+        TAG,
+        "Exception while setting camera options : ${e.message} CameraOptions = $cameraOptions"
+      )
     } catch (error: Error) {
-      Log.e(TAG, "Error while setting camera options : ${error.message}")
+      Log.e(
+        TAG,
+        "Error while setting camera options : ${error.message} CameraOptions = $cameraOptions"
+      )
     }
   }
 
