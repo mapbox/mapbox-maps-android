@@ -53,19 +53,23 @@ else
 fi
 LAST_VERSION=${LAST_VERSION:9}
 
-if [[ -z $4 ]]; then
+RELEASE_TAG=${4-""}
+if [[ -z $RELEASE_TAG ]]; then
   echo "Path to previous version of aar is not set, using ${LAST_VERSION}"
+  AAR_PATH="s3://mapbox-api-downloads-production/v2/mobile-maps-android-"${MODULE_NAME}"/releases/android/"${LAST_VERSION}"/maven/maps-"${MODULE_NAME}"-"${LAST_VERSION}".aar"
   if [[ $MODULE_NAME == sdk ]]; then
-    aws s3 cp s3://mapbox-api-downloads-production/v2/mobile-maps-android/releases/android/"${LAST_VERSION}"/maven/android-"${LAST_VERSION}".aar "${PREVIOUS_RELEASE}"
+    AAR_PATH="s3://mapbox-api-downloads-production/v2/mobile-maps-android/releases/android/"${LAST_VERSION}"/maven/android-"${LAST_VERSION}".aar"
   elif [[ $MODULE_NAME == base ]]; then
-    aws s3 cp s3://mapbox-api-downloads-production/v2/mobile-maps-android-base/releases/android/"${LAST_VERSION}"/maven/base-"${LAST_VERSION}".aar "${PREVIOUS_RELEASE}"
-  else
-    aws s3 cp s3://mapbox-api-downloads-production/v2/mobile-maps-android-"${MODULE_NAME}"/releases/android/"${LAST_VERSION}"/maven/maps-"${MODULE_NAME}"-"${LAST_VERSION}".aar "${PREVIOUS_RELEASE}"
+    AAR_PATH="s3://mapbox-api-downloads-production/v2/mobile-maps-android-base/releases/android/"${LAST_VERSION}"/maven/base-"${LAST_VERSION}".aar"
   fi
-# todo: need to handle newly added modules
+  echo "aar path is: $AAR_PATH, checking file"
+  #todo check if file exists on s3
+#  aws s3 ls "$AAR_PATH" >/dev/null 2>&1
+  echo "Downloading file from s3"
+  aws s3 cp "$AAR_PATH" "${PREVIOUS_RELEASE}"
 else
     echo "Using the set path for previous release"
-  cp "$4" "${TMPDIR}"/previous/sdk-release.aar
+  cp "$RELEASE_TAG" "${TMPDIR}"/previous/sdk-release.aar
 fi
 
 extract_classess_jar() {

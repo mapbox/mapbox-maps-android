@@ -21,6 +21,8 @@ if ! [ -x "$(command -v revapi.sh)" ]; then
     popd > /dev/null
 fi
 
+RELEATE_TAG=${1-""}
+echo "Release tag: $RELEATE_TAG"
 "${CURRENT_DIR}"/java-api-check.sh "$1" "./sdk/build/outputs/aar/sdk-release.aar" "sdk"
 "${CURRENT_DIR}"/java-api-check.sh "$1" "./sdk-base/build/outputs/aar/sdk-base-release.aar" "base"
 "${CURRENT_DIR}"/java-api-check.sh "$1" "./plugin-scalebar/build/outputs/aar/plugin-scalebar-release.aar" "scalebar"
