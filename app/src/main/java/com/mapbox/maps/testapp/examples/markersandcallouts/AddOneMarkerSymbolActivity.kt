@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.postDelayed
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.image.image

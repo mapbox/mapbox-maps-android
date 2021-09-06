@@ -63,8 +63,11 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
     )
     val viewId = nativeView.hashCode().toString()
     annotations[viewId] = annotation
-    delegateMapViewAnnotations.addViewAnnotation(viewId, updatedOptions) {
-      redrawAnnotations(it, !options.allowViewAnnotationsCollision)
+    delegateMapViewAnnotations.apply {
+      addViewAnnotation(viewId, updatedOptions)
+      calculateViewAnnotationsPosition {
+        redrawAnnotations(it, !options.allowViewAnnotationsCollision)
+      }
     }
     return nativeView
   }
@@ -92,8 +95,11 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
       )
       val viewId = view.hashCode().toString()
       annotations[viewId] = annotation
-      delegateMapViewAnnotations.addViewAnnotation(viewId, updatedOptions) {
-        redrawAnnotations(it, !options.allowViewAnnotationsCollision)
+      delegateMapViewAnnotations.apply {
+        addViewAnnotation(viewId, updatedOptions)
+        calculateViewAnnotationsPosition {
+          redrawAnnotations(it, !options.allowViewAnnotationsCollision)
+        }
       }
       result.invoke(view)
     }
@@ -126,9 +132,12 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
     val id = view.hashCode().toString()
     annotations.remove(id)
     mapView.removeView(view)
-    delegateMapViewAnnotations.removeViewAnnotation(id) {
-      // TODO may be optimized to do full redraw only when top level visible annotation was not allowing collisions
-      redrawAnnotations(it, true)
+    delegateMapViewAnnotations.apply {
+      removeViewAnnotation(id)
+      calculateViewAnnotationsPosition {
+        // TODO may be optimized to do full redraw only when top level visible annotation was not allowing collisions
+        redrawAnnotations(it, true)
+      }
     }
   }
 
@@ -152,8 +161,11 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
         .offsetX(if (options.offsetX != 0) options.offsetX else it.options.offsetX)
         .offsetY(if (options.offsetY != 0) options.offsetY else it.options.offsetY)
         .build()
-      delegateMapViewAnnotations.updateViewAnnotation(id, updatedOptions) { positions ->
-        redrawAnnotations(positions, !updatedOptions.allowViewAnnotationsCollision)
+      delegateMapViewAnnotations.apply {
+        updateViewAnnotation(id, updatedOptions)
+        calculateViewAnnotationsPosition { positions ->
+          redrawAnnotations(positions, !updatedOptions.allowViewAnnotationsCollision)
+        }
       }
     }
   }

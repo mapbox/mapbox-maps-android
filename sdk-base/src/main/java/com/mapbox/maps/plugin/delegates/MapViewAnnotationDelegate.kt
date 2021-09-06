@@ -7,17 +7,15 @@ interface MapViewAnnotationDelegate {
 
   fun addViewAnnotation(
     viewId: String,
-    options: ViewAnnotationOptions,
-    callback: ViewAnnotationsPositionCallback
+    options: ViewAnnotationOptions
   )
 
   fun updateViewAnnotation(
     viewId: String,
-    options: ViewAnnotationOptions,
-    callback: ViewAnnotationsPositionCallback
+    options: ViewAnnotationOptions
   )
 
-  fun removeViewAnnotation(viewId: String, callback: ViewAnnotationsPositionCallback)
+  fun removeViewAnnotation(viewId: String)
 
   fun calculateViewAnnotationsPosition(callback: ViewAnnotationsPositionCallback)
 }
