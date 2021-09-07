@@ -23,6 +23,9 @@ workflows:
       - verify-docs:
           requires:
             - verify-code
+      - verify-api:
+          requires:
+            - verify-code
       - verify-internal:
             requires:
               - verify-code
@@ -174,6 +177,14 @@ commands:
           command: |
             python3 scripts/ci-circleci-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} --origin-slug mapbox/mapbox-maps-android --target-slug mapbox/mapbox-maps-android-internal
 
+  init-aws:
+    steps:
+      - run:
+          name: Init aws with mbx-ci
+          command: |
+            curl -Ls https://mapbox-release-engineering.s3.amazonaws.com/mbx-ci/latest/mbx-ci-linux-amd64 > mbx-ci && chmod 755 ./mbx-ci
+            ./mbx-ci aws setup
+
   publish-sdk-registry:
     steps:
       - unless:
@@ -183,8 +194,6 @@ commands:
                 name: Publish the SDK
                 command: |
                   if [[ $CIRCLE_TAG == android-v* ||  $CIRCLE_BRANCH == main ]]; then
-                    curl -Ls https://mapbox-release-engineering.s3.amazonaws.com/mbx-ci/latest/mbx-ci-linux-amd64 > mbx-ci && chmod 755 ./mbx-ci
-                    ./mbx-ci aws setup
                     make sdkRegistryUpload
                   fi
 
@@ -331,6 +340,25 @@ jobs:
           name: docs
           command: sh scripts/kdoc-validate.sh
 
+  verify-api:
+    docker:
+      - image: mbgl/android-ndk-r21e:latest
+
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - init-aws
+      - run:
+          no_output_timeout: 30m
+          name: verfiy-api
+          command: |
+            make build
+            if [[ $CIRCLE_TAG == android-v* ]]; then
+              ./scripts/java-api-check-all.sh "${CIRCLE_TAG}"
+            else
+              ./scripts/java-api-check-all.sh ""
+            fi
+
   verify-internal:
     docker:
       - image: mbgl/android-ndk-r21e:latest
@@ -473,5 +501,6 @@ jobs:
           variant: "Release"
       - update-version-name
       - track-metrics
+      - init-aws
       - publish-sdk-registry
       - publish-sdk-registry-named-snapshot
