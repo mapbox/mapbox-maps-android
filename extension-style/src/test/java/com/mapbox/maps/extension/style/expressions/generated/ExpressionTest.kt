@@ -648,6 +648,21 @@ class ExpressionTest {
   }
 
   @Test
+  fun dsl_expression_indexOf() {
+    val expression = indexOf {
+      // test builder function
+      indexOf {}
+    }
+    assertEquals("assert index-of expression", "[index-of, [index-of]]", expression.toString())
+  }
+
+  @Test
+  fun expression_indexOf() {
+    val expression = Expression.indexOf(Expression.literal("abc"))
+    assertEquals("assert index-of expression", "[index-of, abc]", expression.toString())
+  }
+
+  @Test
   fun dsl_expression_interpolate_exponential() {
     val expression = interpolate {
       exponential {
@@ -1186,6 +1201,21 @@ class ExpressionTest {
   fun expression_skyRadialProgress() {
     val expression = skyRadialProgress()
     assertEquals("assert sky-radial-progress expression", "[sky-radial-progress]", expression.toString())
+  }
+
+  @Test
+  fun dsl_expression_slice() {
+    val expression = slice {
+      // test builder function
+      slice {}
+    }
+    assertEquals("assert slice expression", "[slice, [slice]]", expression.toString())
+  }
+
+  @Test
+  fun expression_slice() {
+    val expression = Expression.slice(Expression.literal("abc"))
+    assertEquals("assert slice expression", "[slice, abc]", expression.toString())
   }
 
   @Test

@@ -222,6 +222,11 @@ fun image(block: Expression.ExpressionBuilder.() -> Unit) = Expression.image(blo
 fun inExpression(block: Expression.ExpressionBuilder.() -> Unit) = Expression.inExpression(block)
 
 /**
+ * Returns the first position at which an item can be found in an array or a substring can be found in a string, or `-1` if the input cannot be found. Accepts an optional index from where to begin the search.
+ */
+fun indexOf(block: Expression.ExpressionBuilder.() -> Unit) = Expression.indexOf(block)
+
+/**
  * Produces continuous, smooth results by interpolating between pairs of input and output values ("stops"). The `input` may be any numeric expression (e.g., `["get", "population"]`). Stop inputs must be numeric literals in strictly ascending order. The output type must be `number`, `array<number>`, or `color`.
 
 Interpolation types:
@@ -373,6 +378,11 @@ fun sin(block: Expression.ExpressionBuilder.() -> Unit) = Expression.sin(block)
  * Gets the distance of a point on the sky from the sun position. Returns 0 at sun position and 1 when the distance reaches `sky-gradient-radius`. Can only be used in the `sky-gradient` property.
  */
 fun skyRadialProgress() = Expression.skyRadialProgress()
+
+/**
+ * Returns an item from an array or a substring from a string from a specified start index, or between a start index and an end index if set. The return value is inclusive of the start index but not of the end index.
+ */
+fun slice(block: Expression.ExpressionBuilder.() -> Unit) = Expression.slice(block)
 
 /**
  * Returns the square root of the input.
