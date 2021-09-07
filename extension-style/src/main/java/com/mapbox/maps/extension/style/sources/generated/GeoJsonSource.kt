@@ -30,6 +30,9 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   private val onGeoJsonParsedListenerList = mutableListOf<OnGeoJsonParsed>()
   private val scope = MainScope()
   private var pendingData: Pair<GeoJson, ((GeoJsonSource) -> Unit)>? = null
+  // Use a shared single thread to get a better performance for multi sources.
+  @ObsoleteCoroutinesApi
+  private val dispatcher = newSingleThreadContext("GeoJsonSourceParseThread")
 
   private constructor(
     builder: Builder,
@@ -62,7 +65,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   }
 
   private suspend fun getPropertyValue(it: GeoJson) =
-    withContext(Dispatchers.Default) {
+    withContext(dispatcher) {
       it.toPropertyValue()
     }
 
