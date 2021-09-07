@@ -500,6 +500,15 @@ class Expression : Value {
     }
 
     /**
+     * Returns the first position at which an item can be found in an array or a
+     * substring can be found in a string, or `-1` if the input cannot be found. Accepts
+     * an optional index from where to begin the search.
+     */
+    fun indexOf(block: ExpressionBuilder.() -> Unit) {
+      this@ExpressionBuilder.arguments.add(Expression.indexOf(block))
+    }
+
+    /**
      * Produces continuous, smooth results by interpolating between pairs of input and output values ("stops"). The `input`
      * may be any numeric expression (e.g., `["get", "population"]`). Stop inputs must be numeric literals in strictly
      * ascending order. The output type must be `number`, `array<number>`, or `color`.
@@ -741,6 +750,15 @@ class Expression : Value {
      */
     fun skyRadialProgress() {
       this@ExpressionBuilder.arguments.add(Expression.skyRadialProgress())
+    }
+
+    /**
+     * Returns an item from an array or a substring from a string from a specified start
+     * index, or between a start index and an end index if set. The return value is
+     * inclusive of the start index but not of the end index.
+     */
+    fun slice(block: ExpressionBuilder.() -> Unit) {
+      this@ExpressionBuilder.arguments.add(Expression.slice(block))
     }
 
     /**
@@ -2425,6 +2443,26 @@ class Expression : Value {
       ExpressionBuilder("in").apply(block).build()
 
     /**
+     * Returns the first position at which an item can be found in an array or a
+     * substring can be found in a string, or `-1` if the input cannot be found. Accepts
+     * an optional index from where to begin the search.
+     */
+    @JvmStatic
+    fun indexOf(vararg expressions: Expression): Expression {
+      val builder = ExpressionBuilder("index-of")
+      expressions.forEach {
+        builder.addArgument(it)
+      }
+      return builder.build()
+    }
+
+    /**
+     * DSL function for "index-of".
+     */
+    fun indexOf(block: ExpressionBuilder.() -> Unit): Expression =
+      ExpressionBuilder("index-of").apply(block).build()
+
+    /**
      * Produces continuous, smooth results by interpolating between pairs of input and output values ("stops"). The `input`
      * may be any numeric expression (e.g., `["get", "population"]`). Stop inputs must be numeric literals in strictly
      * ascending order. The output type must be `number`, `array<number>`, or `color`.
@@ -2877,6 +2915,26 @@ class Expression : Value {
      */
     @JvmStatic
     fun skyRadialProgress() = ExpressionBuilder("sky-radial-progress").build()
+
+    /**
+     * Returns an item from an array or a substring from a string from a specified start
+     * index, or between a start index and an end index if set. The return value is
+     * inclusive of the start index but not of the end index.
+     */
+    @JvmStatic
+    fun slice(vararg expressions: Expression): Expression {
+      val builder = ExpressionBuilder("slice")
+      expressions.forEach {
+        builder.addArgument(it)
+      }
+      return builder.build()
+    }
+
+    /**
+     * DSL function for "slice".
+     */
+    fun slice(block: ExpressionBuilder.() -> Unit): Expression =
+      ExpressionBuilder("slice").apply(block).build()
 
     /**
      * Returns the square root of the input.
