@@ -87,7 +87,6 @@ class PointAnnotationManagerTest {
     every { style.removeStyleLayer(any()) } returns mockk()
     every { style.removeStyleSource(any()) } returns mockk()
     every { style.pixelRatio } returns 1.0f
-    every { style.getStyleImage(any()) } returns null
     every { gesturesPlugin.addOnMapClickListener(any()) } just Runs
     every { gesturesPlugin.addOnMapLongClickListener(any()) } just Runs
     every { gesturesPlugin.addOnMoveListener(any()) } just Runs
@@ -288,15 +287,14 @@ class PointAnnotationManagerTest {
 
     verify(exactly = 1) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
 
-    every { style.getStyleImage(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.generationId) } returns mockk()
     val annotation2 = manager.create(
       PointAnnotationOptions()
         .withIconImage(bitmap)
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
     assertEquals(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.generationId, annotation2.iconImage)
-
-    verify(exactly = 1) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
+    // The first one will trigger twice and the second one once.
+    verify(exactly = 3) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
   }
 
   @Test
@@ -307,7 +305,7 @@ class PointAnnotationManagerTest {
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
     verify(exactly = 0) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
-    annotation.iconImageBitmap = bitmap
+    annotation.iconImageBitmap = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888)
     manager.update(annotation)
     verify(exactly = 1) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
   }

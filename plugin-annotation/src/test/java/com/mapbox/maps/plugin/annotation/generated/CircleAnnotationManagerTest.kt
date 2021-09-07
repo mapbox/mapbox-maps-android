@@ -83,7 +83,6 @@ class CircleAnnotationManagerTest {
     every { style.removeStyleLayer(any()) } returns mockk()
     every { style.removeStyleSource(any()) } returns mockk()
     every { style.pixelRatio } returns 1.0f
-    every { style.getStyleImage(any()) } returns null
     every { gesturesPlugin.addOnMapClickListener(any()) } just Runs
     every { gesturesPlugin.addOnMapLongClickListener(any()) } just Runs
     every { gesturesPlugin.addOnMoveListener(any()) } just Runs
