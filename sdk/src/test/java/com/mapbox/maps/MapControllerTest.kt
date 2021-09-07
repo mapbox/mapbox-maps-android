@@ -124,7 +124,7 @@ class MapControllerTest {
   @Test
   fun onDestroy() {
     mapController.onDestroy()
-    verify { nativeObserver.clearListeners() }
+    verify { nativeObserver.onDestroy() }
   }
 
   @Test

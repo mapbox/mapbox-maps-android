@@ -119,7 +119,6 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     lifecycleState = LifecycleState.STATE_STARTED
 
     nativeObserver.apply {
-      onStart()
       addOnCameraChangeListener(onCameraChangedListener)
       addOnStyleDataLoadedListener(onStyleDataLoadedListener)
     }
@@ -142,7 +141,6 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     nativeObserver.apply {
       removeOnCameraChangeListener(onCameraChangedListener)
       removeOnStyleDataLoadedListener(onStyleDataLoadedListener)
-      onStop()
     }
     renderer.onStop()
     pluginRegistry.onStop()
@@ -155,7 +153,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     lifecycleState = LifecycleState.STATE_DESTROYED
 
     mapboxMap.onDestroy()
-    nativeObserver.clearListeners()
+    nativeObserver.onDestroy()
     renderer.onDestroy()
     pluginRegistry.cleanup()
   }

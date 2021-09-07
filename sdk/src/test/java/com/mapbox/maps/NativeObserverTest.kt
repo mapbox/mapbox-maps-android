@@ -588,7 +588,9 @@ class NativeObserverTest {
     nativeObserver.onStyleImageUnusedListeners.add(mockk(relaxed = true))
     nativeObserver.onStyleDataLoadedListeners.add(mockk(relaxed = true))
 
-    nativeObserver.clearListeners()
+    nativeObserver.onDestroy()
+
+    verify { observableInterface.unsubscribe(eq(nativeObserver)) }
 
     assertTrue(nativeObserver.onCameraChangeListeners.isEmpty())
 
