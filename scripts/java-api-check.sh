@@ -34,7 +34,7 @@ fi
 # Fetched by parent script from circle-ci CIRCLE_TAG env variable,
 # if CIRCLE_TAG is not set, TAGGED_RELEASE_VERSION would be empty (branch build).
 TAGGED_RELEASE_VERSION=$1
-TAGGED_RELEASE_VERSION=${TAGGED_RELEASE_VERSION:6}
+TAGGED_RELEASE_VERSION=${TAGGED_RELEASE_VERSION:8}
 
 mkdir "${TMPDIR}"/current "${TMPDIR}"/previous
 cp "$2" "${TMPDIR}"/current/sdk-release.aar
@@ -59,7 +59,7 @@ if [[ -z $RELEASE_TAG ]]; then
   AAR_PATH="s3://mapbox-api-downloads-production/v2/mobile-maps-android-"${MODULE_NAME}"/releases/android/"${LAST_VERSION}"/maven/maps-"${MODULE_NAME}"-"${LAST_VERSION}".aar"
   if [[ $MODULE_NAME == sdk ]]; then
     AAR_PATH="s3://mapbox-api-downloads-production/v2/mobile-maps-android/releases/android/"${LAST_VERSION}"/maven/android-"${LAST_VERSION}".aar"
-  elif [[ $MODULE_NAME == base ]]; then
+  elif [[ $MODULE_NAME == sdk-base ]]; then
     AAR_PATH="s3://mapbox-api-downloads-production/v2/mobile-maps-android-base/releases/android/"${LAST_VERSION}"/maven/base-"${LAST_VERSION}".aar"
   fi
   echo "aar path is: $AAR_PATH, checking file"

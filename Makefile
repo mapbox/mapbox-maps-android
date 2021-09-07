@@ -27,6 +27,7 @@ build:
 	./gradlew plugin-scalebar:assembleRelease;
 	./gradlew plugin-lifecycle:assembleRelease;
 
+# Use `make checkApi TAG=ReleaseTag` to check the release tag or `make checkApi` to check current branch while running locally.
 .PHONY: checkApi
 checkApi:
 	./scripts/java-api-check-all.sh "$(TAG)"

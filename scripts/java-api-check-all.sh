@@ -23,20 +23,20 @@ fi
 
 RELEATE_TAG=${1-""}
 echo "Release tag: $RELEATE_TAG"
-"${CURRENT_DIR}"/java-api-check.sh "$RELEATE_TAG" "./sdk/build/outputs/aar/sdk-release.aar" "sdk"
-"${CURRENT_DIR}"/java-api-check.sh "$RELEATE_TAG" "./sdk-base/build/outputs/aar/sdk-base-release.aar" "base"
-"${CURRENT_DIR}"/java-api-check.sh "$RELEATE_TAG" "./plugin-scalebar/build/outputs/aar/plugin-scalebar-release.aar" "scalebar"
-"${CURRENT_DIR}"/java-api-check.sh "$RELEATE_TAG" "./plugin-overlay/build/outputs/aar/plugin-overlay-release.aar" "overlay"
-"${CURRENT_DIR}"/java-api-check.sh "$RELEATE_TAG" "./plugin-logo/build/outputs/aar/plugin-logo-release.aar" "logo"
-"${CURRENT_DIR}"/java-api-check.sh "$RELEATE_TAG" "./plugin-locationcomponent/build/outputs/aar/plugin-locationcomponent-release.aar" "locationcomponent"
-"${CURRENT_DIR}"/java-api-check.sh "$RELEATE_TAG" "./plugin-lifecycle/build/outputs/aar/plugin-lifecycle-release.aar" "lifecycle"
-"${CURRENT_DIR}"/java-api-check.sh "$RELEATE_TAG" "./plugin-gestures/build/outputs/aar/plugin-gestures-release.aar" "gestures"
-"${CURRENT_DIR}"/java-api-check.sh "$RELEATE_TAG" "./plugin-compass/build/outputs/aar/plugin-compass-release.aar" "compass"
-"${CURRENT_DIR}"/java-api-check.sh "$RELEATE_TAG" "./plugin-attribution/build/outputs/aar/plugin-attribution-release.aar" "attribution"
-"${CURRENT_DIR}"/java-api-check.sh "$RELEATE_TAG" "./plugin-annotation/build/outputs/aar/plugin-annotation-release.aar" "annotation"
-"${CURRENT_DIR}"/java-api-check.sh "$RELEATE_TAG" "./plugin-animation/build/outputs/aar/plugin-animation-release.aar" "animation"
-"${CURRENT_DIR}"/java-api-check.sh "$RELEATE_TAG" "./extension-style/build/outputs/aar/extension-style-release.aar" "style"
-"${CURRENT_DIR}"/java-api-check.sh "$RELEATE_TAG" "./extension-localization/build/outputs/aar/extension-localization-release.aar" "localization"
-"${CURRENT_DIR}"/java-api-check.sh "$RELEATE_TAG" "./extension-androidauto/build/outputs/aar/extension-androidauto-release.aar" "androidauto"
+MODULES=$(cat ./settings.gradle.kts | grep include | sed 's/.*(\([^]]*\)).*/\1/g' | tr , \\n | sed 's/.*":\([^]]*\)".*/\1/g')
+for i in $MODULES; do
+  if [ -f "./$i/build/outputs/aar/$i-release.aar" ]; then
+    MODULE_NAME=$i
+    if [[ $i == plugin* ]]; then
+      MODULE_NAME=${MODULE_NAME: 7}
+    elif [[ $i == extension* ]]; then
+      MODULE_NAME=${MODULE_NAME: 10}
+    elif [[ $i == *telemetry* ]]; then
+      continue
+    fi
+    echo "Checking module: $i, module aar name: $MODULE_NAME"
+    "${CURRENT_DIR}"/java-api-check.sh "$RELEATE_TAG" "./$i/build/outputs/aar/$i-release.aar" "$MODULE_NAME"
+  fi
+done
 
 rm -rf "${REVAPI}"
