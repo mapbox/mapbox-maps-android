@@ -58,4 +58,13 @@ interface ViewAnnotationPlugin: MapPlugin, ContextBinder, OnCameraChangeListener
     view: View,
     options: ViewAnnotationOptions
   )
+
+  /**
+   * Find [View] by icon id if it was specified as part of [ViewAnnotationOptions.iconIdentifier].
+   *
+   * @return [View] if view was found and NULL otherwise.
+   */
+  fun findViewAnnotation(
+    markerId: String
+  ): View?
 }

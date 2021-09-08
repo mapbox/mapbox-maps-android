@@ -170,6 +170,15 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
     }
   }
 
+  override fun findViewAnnotation(markerId: String): View? {
+    annotations.forEach {
+      if (it.value.options.iconIdentifier == markerId) {
+        return it.value.view
+      }
+    }
+    return null
+  }
+
   override fun cleanup() {
     super.cleanup()
     delegateProvider.mapListenerDelegate.removeOnCameraChangeListener(this)
