@@ -2,9 +2,43 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 10.0.0-rc.7 August 25, 2021
+# 10.0.0-rc.8 September 8, 2021
 
 **The Mapbox Maps SDK for Android has moved to release candidate status and is now ready for production use.**
+
+## Breaking changes ⚠️
+* In offline mode (set by either mapbox::common::OfflineSwitch API or on platform side), the error notifications are send if the required resources are not present locally. The volatile tiles are not considered to be required in offline.([#604](https://github.com/mapbox/mapbox-maps-android/pull/604))
+* Adapt setBounds to gl-js behavior: constraining of coordinates and zoom level is now stricter to prevent out of bounds map area to be visible in the viewport.([#604](https://github.com/mapbox/mapbox-maps-android/pull/604))
+* Add HTTP interceptor API - for anyone who is using HttpServiceInterface; there is a new method called setInterceptor that should be overridden([#604](https://github.com/mapbox/mapbox-maps-android/pull/604))
+
+## Features ✨ and improvements 🏁
+* Make 3D puck always over (in front of) 3D layers (buildings, landmarks, custom layer) but behind hill (terrain). ([#601](https://github.com/mapbox/mapbox-maps-android/pull/601))
+* Integrate value marshalling performance improvement ([#606](https://github.com/mapbox/mapbox-maps-android/pull/606))
+* Introduce drag layer/source for annotation plugin to improve drag performance. ([#582](https://github.com/mapbox/mapbox-maps-android/pull/582))
+* Update prefetch zoom delta documentation to match actual behavior ([#609](https://github.com/mapbox/mapbox-maps-android/pull/609))
+* Add support for the index-of and slice expressions ([#616](https://github.com/mapbox/mapbox-maps-android/pull/616))
+* Improve collision detection by using runtime calculated sizes for collision boxes. Previously collision boxes' sizes are constant, they are calculated during symbol layout time by using constant zoom level([#604](https://github.com/mapbox/mapbox-maps-android/pull/604))
+* Improve collision detection by using runtime calculated pixelated sizes for collision circles. Previously collision circles' sizes are constant, they are calculated during symbol layout time by using constant zoom level([#604](https://github.com/mapbox/mapbox-maps-android/pull/604))
+* Implement 'promoteId' feature for geojson and vector sources. The feature allows to promote feature's property to a feature id, so that promoted id can be used with FeatureState API.([#604](https://github.com/mapbox/mapbox-maps-android/pull/604))
+* Enable instant transitions for data driven paint layer properties([#604](https://github.com/mapbox/mapbox-maps-android/pull/604))
+
+## Bug fixes 🐞
+* Use touch focal point to calculate the correct scroll displacement when the map is pitched. ([#593](https://github.com/mapbox/mapbox-maps-android/pull/593))
+* Use touch focal point to calculate the correct fling displacement. ([#599](https://github.com/mapbox/mapbox-maps-android/pull/599))
+* Allow geojson source to initialise with empty data. ([#602](https://github.com/mapbox/mapbox-maps-android/pull/602))
+* Preserve EGL setup on renderer stop. This fixes full map reloading when map is brought out from background. ([#598](https://github.com/mapbox/mapbox-maps-android/pull/598))
+* Fix issue with camera animators ordering on Android 6 and lower by revisiting overall approach of applying accumulated camera changes. ([#597](https://github.com/mapbox/mapbox-maps-android/pull/597))
+* Enable update bitmap for annotations  ([#615](https://github.com/mapbox/mapbox-maps-android/pull/615))
+* Fix volatile tiles disappearing on "not modified" response([#604](https://github.com/mapbox/mapbox-maps-android/pull/604))
+* Prioritize addition of a persistent layer whose id is used for other persistent layer positions([#604](https://github.com/mapbox/mapbox-maps-android/pull/604))
+* Only do line breaking process for point placement labels. And if text-max-width is 0, still do general ideographic beaking checks for point labels.([#604](https://github.com/mapbox/mapbox-maps-android/pull/604))
+* Fix collision box's 'dynamicVerticesExt' updating in placement stage([#604](https://github.com/mapbox/mapbox-maps-android/pull/604))
+* Trigger map redraw when feature state changes ([#604](https://github.com/mapbox/mapbox-maps-android/pull/604))
+
+## Dependencies
+* Bump gl-native to 10.0.0-rc.8, common to 18.0.0 ([#604](https://github.com/mapbox/mapbox-maps-android/pull/604))
+
+# 10.0.0-rc.7 August 25, 2021
 
 ## Breaking changes ⚠️
 * Remove the expression getter/setters for source properties. ([#568](https://github.com/mapbox/mapbox-maps-android/pull/568))
