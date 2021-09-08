@@ -50,6 +50,9 @@ workflows:
       - build-sdk-from-source:
           requires:
             - verify-code
+      - build-android-auto-app:
+          requires:
+            - verify-code
       - build-sdk-release:
           requires:
             - verify-code
@@ -126,6 +129,7 @@ commands:
             if [ -n "${MAPBOX_DEVELOPER_CONFIG_XML}" ]; then
               echo "${MAPBOX_DEVELOPER_CONFIG_XML}" > app/src/main/res/values/developer-config.xml
               echo "${MAPBOX_DEVELOPER_CONFIG_XML}" > extension-style-app/src/main/res/values/developer-config.xml
+              echo "${MAPBOX_DEVELOPER_CONFIG_XML}" > android-auto-app/src/main/res/values/developer-config.xml
             fi
       - run:
           name: Build << parameters.module_target >> apk in << parameters.variant >> mode
@@ -478,6 +482,17 @@ jobs:
       - restore-gradle-cache
       - build-module:
           module_target: "sdk"
+          variant: "Release"
+
+  build-android-auto-app:
+    docker:
+      - image: mbgl/android-ndk-r21e:latest
+
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - build-module:
+          module_target: "android-auto-app"
           variant: "Release"
 
   build-sdk-release:
