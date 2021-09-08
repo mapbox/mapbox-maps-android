@@ -37,7 +37,7 @@ data class FormattedSection @JvmOverloads constructor(
     @ColorInt
     get() {
       textColor?.let {
-        ColorUtils.rgbaToColor(it)?.let { colorInt ->
+        ColorUtils.rgbaToColor(it).let { colorInt ->
           return colorInt
         }
       }

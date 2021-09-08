@@ -108,6 +108,7 @@ internal class LocationPuckManager(
     animationManager.onStop()
   }
 
+  @Suppress("UNCHECKED_CAST")
   fun updateCurrentPosition(vararg points: Point, options: (ValueAnimator.() -> Unit)? = null) {
     val targets = if (lastLocation == null) arrayOf(*points, *points) else {
       show()

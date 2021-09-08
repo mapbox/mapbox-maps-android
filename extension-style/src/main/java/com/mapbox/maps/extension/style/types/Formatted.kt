@@ -55,6 +55,7 @@ class Formatted : ArrayList<FormattedSection>() {
     /**
      * Construct a [Formatted] object from a Formatted List (Returned from the Core).
      */
+    @Suppress("UNCHECKED_CAST")
     fun fromProperty(list: ArrayList<*>): Formatted {
       val formatted = Formatted()
 

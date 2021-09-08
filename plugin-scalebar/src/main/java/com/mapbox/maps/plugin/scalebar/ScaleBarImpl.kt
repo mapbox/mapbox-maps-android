@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.os.Handler
+import android.os.Looper
 import android.os.Message
 import android.util.AttributeSet
 import android.util.Pair
@@ -303,7 +304,7 @@ class ScaleBarImpl : ScaleBar, View {
   /**
    * Handler class to limit the refresh frequent.
    */
-  internal class RefreshHandler(scaleBarImpl: ScaleBarImpl) : Handler() {
+  internal class RefreshHandler(scaleBarImpl: ScaleBarImpl) : Handler(Looper.getMainLooper()) {
     private var scaleBarWidgetWeakReference: WeakReference<ScaleBarImpl> =
       WeakReference(scaleBarImpl)
 

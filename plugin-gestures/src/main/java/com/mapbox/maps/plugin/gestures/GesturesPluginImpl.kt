@@ -118,7 +118,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   /**
    * Cancels scheduled velocity animations if user doesn't lift fingers within [SCHEDULED_ANIMATION_TIMEOUT]
    */
-  private val animationsTimeoutHandler = Handler()
+  private val animationsTimeoutHandler = Handler(Looper.getMainLooper())
   private var mainHandler: Handler? = null
   internal var doubleTapRegistered: Boolean = false
 
@@ -390,7 +390,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   /**
    * Standard gesture listener, receives callbacks for gestures detected by AndroidGesturesManager.
    */
-  private inner class StandardGestureListener internal constructor(private val doubleTapMovementThreshold: Float) :
+  private inner class StandardGestureListener constructor(private val doubleTapMovementThreshold: Float) :
     StandardGestureDetector.SimpleStandardOnGestureListener() {
 
     /**
@@ -439,7 +439,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       velocityX: Float,
       velocityY: Float
     ): Boolean {
-      return handleFlingEvent(e1, e2, velocityX, velocityY)
+      return handleFlingEvent(e1, velocityX, velocityY)
     }
   }
 
@@ -800,11 +800,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     notifyOnRotateEndListeners(detector)
 
     angularVelocity *= angularVelocityMultiplier
-    angularVelocity = clamp(
-      angularVelocity,
-      -MAXIMUM_ANGULAR_VELOCITY,
-      MAXIMUM_ANGULAR_VELOCITY
-    )
+    angularVelocity =
+      -MAXIMUM_ANGULAR_VELOCITY.coerceAtLeast(
+        MAXIMUM_ANGULAR_VELOCITY.coerceAtMost(angularVelocity)
+      )
 
     val velocityXY = abs(velocityX) + abs(velocityY)
     val delta = abs(detector.deltaSinceLast)
@@ -1035,11 +1034,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
    * Zoom in by 1.
    *
    * @param zoomFocalPoint focal point of zoom animation
-   * @param runImmediately if true, animation will be started right away, otherwise it will wait until
    * [MotionEvent.ACTION_UP] is registered.
    */
-  private fun zoomInAnimated(zoomFocalPoint: ScreenCoordinate, runImmediately: Boolean) {
-    zoomAnimated(true, zoomFocalPoint, runImmediately)
+  private fun zoomInAnimated(zoomFocalPoint: ScreenCoordinate) {
+    zoomAnimated(true, zoomFocalPoint, false)
   }
 
   /**
@@ -1147,7 +1145,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         doubleTapFocalPoint = it
       }
 
-      zoomInAnimated(doubleTapFocalPoint, false)
+      zoomInAnimated(doubleTapFocalPoint)
       return true
     }
     return false
@@ -1155,7 +1153,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
   internal fun handleFlingEvent(
     e1: MotionEvent,
-    e2: MotionEvent,
     velocityX: Float,
     velocityY: Float
   ): Boolean {
@@ -1184,8 +1181,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
 
-    val offsetX = if (internalSettings.isPanHorizontallyLimited()) 0.0 else velocityX / FLING_LIMITING_FACTOR
-    val offsetY = if (internalSettings.isPanVerticallyLimited()) 0.0 else velocityY / FLING_LIMITING_FACTOR
+    val offsetX =
+      if (internalSettings.isPanHorizontallyLimited()) 0.0 else velocityX / FLING_LIMITING_FACTOR
+    val offsetY =
+      if (internalSettings.isPanVerticallyLimited()) 0.0 else velocityY / FLING_LIMITING_FACTOR
 
     // calculate animation time based on displacement
     // velocityXY ranges from VELOCITY_THRESHOLD_IGNORE_FLING to ~5000
@@ -1509,10 +1508,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   }
 
   private fun clamp(value: Double, min: Double, max: Double): Double {
-    return min.coerceAtLeast(max.coerceAtMost(value))
-  }
-
-  private fun clamp(value: Float, min: Float, max: Float): Float {
     return min.coerceAtLeast(max.coerceAtMost(value))
   }
 

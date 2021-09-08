@@ -18,8 +18,7 @@ internal object CameraAttributeParser {
    * @param attrs AttributionSet
    */
   fun parseCameraOptions(
-    attrs: TypedArray,
-    pixelRatio: Float = 1.0f
+    attrs: TypedArray
   ): CameraOptions? {
     with(attrs) {
       cameraOptionsBuilder = null

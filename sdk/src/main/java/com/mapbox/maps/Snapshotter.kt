@@ -381,6 +381,7 @@ open class Snapshotter {
     )
   }
 
+  @Suppress("DEPRECATION")
   private fun createTextView(
     context: Context,
     mapSnapshot: Snapshot,

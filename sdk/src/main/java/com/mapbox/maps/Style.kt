@@ -724,6 +724,7 @@ class Style internal constructor(
    *
    * @return The list of source attributions.
    */
+  @Suppress("UNCHECKED_CAST")
   fun getStyleSourcesAttribution(): List<String> {
     val sources = styleSources
     val sourceAttributions = mutableListOf<String>()

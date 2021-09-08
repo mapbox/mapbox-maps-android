@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import android.annotation.SuppressLint
 import android.graphics.Typeface
 import android.os.Build
 import android.util.Log
@@ -46,6 +47,8 @@ internal object FontUtils {
 
   @get:RequiresApi(Build.VERSION_CODES.LOLLIPOP)
   private val deviceFonts: List<String>
+    @SuppressLint("DiscouragedPrivateApi", "unchecked")
+    @Suppress("UNCHECKED_CAST")
     get() {
       val fonts: MutableList<String> = ArrayList()
       try {

@@ -144,7 +144,8 @@ class MapOverlayPluginImpl : MapOverlayPlugin {
         east = maxOf(east, it.longitude())
       }
 
-      val bounds = CoordinateBounds(Point.fromLngLat(west, south), Point.fromLngLat(east, north), false)
+      val bounds =
+        CoordinateBounds(Point.fromLngLat(west, south), Point.fromLngLat(east, north), false)
       val edgeInsets = getEdgeInsets()
       return mapCameraManagerDelegate.cameraForCoordinateBounds(bounds, edgeInsets, null, null)
     }
@@ -169,35 +170,37 @@ class MapOverlayPluginImpl : MapOverlayPlugin {
       var size = queue.size
       while (size > 0) {
         val subMapRect = queue.pollFirst()
-        if (it.isOverLap(subMapRect)) {
-          // insert the new subMapRect
-          if (it.top - subMapRect.top < subMapRect.bottom - it.bottom) {
-            // overlay rect is on the top part of MapRect, create a new MapRect with the bottom part
-            queue.offerLast(subMapRect.updateTop(it.bottom))
-          } else if (it.top - subMapRect.top > subMapRect.bottom - it.bottom) {
-            // overlay rect is on the bottom part of MapRect, create a new MapRect with the top part
-            queue.offerLast(subMapRect.updateBottom(it.top))
-          } else {
-            // overlay rect is on the center of MapRect, create a new MapRect with both the top part and bottom part
-            queue.offerLast(subMapRect.updateTop(it.bottom))
-            queue.offerLast(subMapRect.updateBottom(it.top))
-          }
+        subMapRect?.let {
+          if (it.isOverLap(subMapRect)) {
+            // insert the new subMapRect
+            if (it.top - subMapRect.top < subMapRect.bottom - it.bottom) {
+              // overlay rect is on the top part of MapRect, create a new MapRect with the bottom part
+              queue.offerLast(subMapRect.updateTop(it.bottom))
+            } else if (it.top - subMapRect.top > subMapRect.bottom - it.bottom) {
+              // overlay rect is on the bottom part of MapRect, create a new MapRect with the top part
+              queue.offerLast(subMapRect.updateBottom(it.top))
+            } else {
+              // overlay rect is on the center of MapRect, create a new MapRect with both the top part and bottom part
+              queue.offerLast(subMapRect.updateTop(it.bottom))
+              queue.offerLast(subMapRect.updateBottom(it.top))
+            }
 
-          if (it.left - subMapRect.left < subMapRect.right - it.right) {
-            // overlay rect is on the left part of MapRect, create a new MapRect with the right part
-            queue.offerLast(subMapRect.updateLeft(it.right))
-          } else if (it.left - subMapRect.left < subMapRect.right - it.right) {
-            // overlay rect is on the right part of MapRect, create a new MapRect with the left part
-            queue.offerLast(subMapRect.updateRight(it.left))
+            if (it.left - subMapRect.left < subMapRect.right - it.right) {
+              // overlay rect is on the left part of MapRect, create a new MapRect with the right part
+              queue.offerLast(subMapRect.updateLeft(it.right))
+            } else if (it.left - subMapRect.left < subMapRect.right - it.right) {
+              // overlay rect is on the right part of MapRect, create a new MapRect with the left part
+              queue.offerLast(subMapRect.updateRight(it.left))
+            } else {
+              // overlay rect is on the center part of MapRect, create a new MapRect with both the left and the right part
+              queue.offerLast(subMapRect.updateLeft(it.right))
+              queue.offerLast(subMapRect.updateRight(it.left))
+            }
           } else {
-            // overlay rect is on the center part of MapRect, create a new MapRect with both the left and the right part
-            queue.offerLast(subMapRect.updateLeft(it.right))
-            queue.offerLast(subMapRect.updateRight(it.left))
+            queue.offerLast(subMapRect)
           }
-        } else {
-          queue.offerLast(subMapRect)
+          size--
         }
-        size--
       }
     }
 

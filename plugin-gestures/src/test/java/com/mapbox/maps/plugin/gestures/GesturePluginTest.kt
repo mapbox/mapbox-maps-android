@@ -303,16 +303,16 @@ class GesturePluginTest {
   fun verifyFlingListener() {
     val listener: OnFlingListener = mockk(relaxed = true)
     presenter.addOnFlingListener(listener)
-    presenter.handleFlingEvent(mockk(), mockk(), 0.0f, 0.0f)
+    presenter.handleFlingEvent(mockk(), 0.0f, 0.0f)
     verify { listener.onFling() }
     presenter.removeOnFlingListener(listener)
-    presenter.handleFlingEvent(mockk(), mockk(), 0.0f, 0.0f)
+    presenter.handleFlingEvent(mockk(), 0.0f, 0.0f)
     verify(exactly = 1) { listener.onFling() }
   }
 
   @Test
   fun verifyFlingIgnoreSmallDisplacement() {
-    val result = presenter.handleFlingEvent(mockk(), mockk(), 0.1f, 0.1f)
+    val result = presenter.handleFlingEvent(mockk(), 0.1f, 0.1f)
     assertFalse(result)
   }
 
@@ -321,7 +321,7 @@ class GesturePluginTest {
     val listener: OnFlingListener = mockk(relaxed = true)
     presenter.addOnFlingListener(listener)
     presenter.scrollEnabled = false
-    val result = presenter.handleFlingEvent(mockk(), mockk(), 10000f, 10000f)
+    val result = presenter.handleFlingEvent(mockk(), 10000f, 10000f)
     assertFalse(result)
     verify(exactly = 0) { listener.onFling() }
   }
@@ -344,7 +344,7 @@ class GesturePluginTest {
     val motionEvent = mockk<MotionEvent>()
     every { motionEvent.x } returns 0.0f
     every { motionEvent.y } returns 0.0f
-    val result = presenter.handleFlingEvent(motionEvent, mockk(), 10000f, 10000f)
+    val result = presenter.handleFlingEvent(motionEvent, 10000f, 10000f)
     verify {
       mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),
@@ -374,7 +374,7 @@ class GesturePluginTest {
     val motionEvent = mockk<MotionEvent>()
     every { motionEvent.x } returns 0.0f
     every { motionEvent.y } returns 0.0f
-    val result = presenter.handleFlingEvent(motionEvent, mockk(), 10000f, 10000f)
+    val result = presenter.handleFlingEvent(motionEvent, 10000f, 10000f)
     verify {
       mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),
@@ -404,7 +404,7 @@ class GesturePluginTest {
     val motionEvent = mockk<MotionEvent>()
     every { motionEvent.x } returns 0.0f
     every { motionEvent.y } returns 0.0f
-    val result = presenter.handleFlingEvent(motionEvent, mockk(), 10000f, 10000f)
+    val result = presenter.handleFlingEvent(motionEvent, 10000f, 10000f)
     verify {
       mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),

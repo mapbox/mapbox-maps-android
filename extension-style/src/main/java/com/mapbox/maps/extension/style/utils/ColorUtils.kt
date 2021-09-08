@@ -25,7 +25,7 @@ object ColorUtils {
    * @return the int representation of rgba
    */
   @ColorInt
-  fun rgbaToColor(value: String): Int? { // we need to accept and floor float values as well, as those can come from core
+  fun rgbaToColor(value: String): Int { // we need to accept and floor float values as well, as those can come from core
     val c = Pattern.compile(
       "rgba?\\s*\\(\\s*(\\d+\\.?\\d*)\\s*,\\s*(\\d+\\.?\\d*)\\s*,\\s*(\\d+\\.?\\d*)\\s*," +
         "?\\s*(\\d+\\.?\\d*)?\\s*\\)"
@@ -33,13 +33,13 @@ object ColorUtils {
     val m = c.matcher(value)
     return if (m.matches() && m.groupCount() == 3) {
       Color.rgb(
-        m.group(1).toFloat().toInt(), m.group(2).toFloat().toInt(),
-        m.group(3).toFloat().toInt()
+        m.group(1)!!.toFloat().toInt(), m.group(2)!!.toFloat().toInt(),
+        m.group(3)!!.toFloat().toInt()
       )
     } else if (m.matches() && m.groupCount() == 4) {
       Color.argb(
-        (m.group(4).toFloat() * 255).toInt(), m.group(1).toFloat().toInt(),
-        m.group(2).toFloat().toInt(), m.group(3).toFloat().toInt()
+        (m.group(4)!!.toFloat() * 255).toInt(), m.group(1)!!.toFloat().toInt(),
+        m.group(2)!!.toFloat().toInt(), m.group(3)!!.toFloat().toInt()
       )
     } else {
       Log.e(TAG, "Not a valid rgb/rgba value")
@@ -80,20 +80,20 @@ object ColorUtils {
    * @return the int representation of rgba
    */
   @ColorInt
-  fun rgbaExpressionToColorInt(value: Expression): Int? { // we need to accept and floor float values as well, as those can come from core
+  fun rgbaExpressionToColorInt(value: Expression): Int { // we need to accept and floor float values as well, as those can come from core
     val c = Pattern.compile(
-      "\\[?\\s*rgba?\\s*,?\\s*(\\d+\\.?\\d*)\\s*,\\s*(\\d+\\.?\\d*)\\s*,\\s*(\\d+\\.?\\d*)\\s*,?\\s*(\\d+\\.?\\d*)?\\s*\\]"
+      "\\[?\\s*rgba?\\s*,?\\s*(\\d+\\.?\\d*)\\s*,\\s*(\\d+\\.?\\d*)\\s*,\\s*(\\d+\\.?\\d*)\\s*,?\\s*(\\d+\\.?\\d*)?\\s*]"
     )
     val m = c.matcher(value.toString())
     return if (m.matches() && m.groupCount() == 3) {
       Color.rgb(
-        m.group(1).toFloat().toInt(), m.group(2).toFloat().toInt(),
-        m.group(3).toFloat().toInt()
+        m.group(1)!!.toFloat().toInt(), m.group(2)!!.toFloat().toInt(),
+        m.group(3)!!.toFloat().toInt()
       )
     } else if (m.matches() && m.groupCount() == 4) {
       Color.argb(
-        (m.group(4).toFloat() * 255).toInt(), m.group(1).toFloat().toInt(),
-        m.group(2).toFloat().toInt(), m.group(3).toFloat().toInt()
+        (m.group(4)!!.toFloat() * 255).toInt(), m.group(1)!!.toFloat().toInt(),
+        m.group(2)!!.toFloat().toInt(), m.group(3)!!.toFloat().toInt()
       )
     } else {
       Log.e(TAG, "Not a valid rgb/rgba value")
@@ -113,15 +113,15 @@ object ColorUtils {
   fun rgbaExpressionToColorString(value: Expression): String? {
     // we need to accept and floor float values as well, as those can come from core
     val c = Pattern.compile(
-      "\\[?\\s*rgba?\\s*,?\\s*(\\d+\\.?\\d*)\\s*,\\s*(\\d+\\.?\\d*)\\s*,\\s*(\\d+\\.?\\d*)\\s*,?\\s*(\\d+\\.?\\d*)?\\s*\\]"
+      "\\[?\\s*rgba?\\s*,?\\s*(\\d+\\.?\\d*)\\s*,\\s*(\\d+\\.?\\d*)\\s*,\\s*(\\d+\\.?\\d*)\\s*,?\\s*(\\d+\\.?\\d*)?\\s*]"
     )
     val m = c.matcher(value.toString())
     return if (m.matches() && m.groupCount() == 3) {
       String.format(
         Locale.US, "rgba(%d, %d, %d, 1)",
-        m.group(1).toFloat().toInt(),
-        m.group(2).toFloat().toInt(),
-        m.group(3).toFloat().toInt()
+        m.group(1)!!.toFloat().toInt(),
+        m.group(2)!!.toFloat().toInt(),
+        m.group(3)!!.toFloat().toInt()
       )
     } else if (m.matches() && m.groupCount() == 4) {
       val numberFormat =
@@ -129,12 +129,12 @@ object ColorUtils {
       val decimalFormat = numberFormat as DecimalFormat
       decimalFormat.applyPattern("#.###")
       val alpha =
-        decimalFormat.format(m.group(4).toFloat())
+        decimalFormat.format(m.group(4)!!.toFloat())
       String.format(
         Locale.US, "rgba(%d, %d, %d, %s)",
-        m.group(1).toFloat().toInt(),
-        m.group(2).toFloat().toInt(),
-        m.group(3).toFloat().toInt(),
+        m.group(1)!!.toFloat().toInt(),
+        m.group(2)!!.toFloat().toInt(),
+        m.group(3)!!.toFloat().toInt(),
         alpha
       )
     } else {

@@ -64,10 +64,10 @@ fun Session.initMapSurface(
       synchronized(this) {
         Logger.i(TAG, "Surface available $surfaceContainer")
         surfaceContainer.surface?.let { surface ->
-          mapSurface = MapSurface(carContext, surface, mapInitOptions).also { surface ->
-            surface.surfaceCreated()
-            surface.surfaceChanged(surfaceContainer.width, surfaceContainer.height)
-            mapSurfaceReadyCallback.onMapSurfaceReady(surface)
+          mapSurface = MapSurface(carContext, surface, mapInitOptions).also { mapSurface ->
+            mapSurface.surfaceCreated()
+            mapSurface.surfaceChanged(surfaceContainer.width, surfaceContainer.height)
+            mapSurfaceReadyCallback.onMapSurfaceReady(mapSurface)
           }
         }
       }

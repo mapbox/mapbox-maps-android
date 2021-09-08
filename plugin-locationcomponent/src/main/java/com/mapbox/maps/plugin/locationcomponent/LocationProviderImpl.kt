@@ -41,7 +41,7 @@ internal class LocationProviderImpl(private val context: Context) :
       )
     } else {
       if (handler == null) {
-        handler = Handler()
+        handler = Handler(Looper.getMainLooper())
         runnable = Runnable { requestLocationUpdates() }
       }
       if (updateDelay * 2 < MAX_UPDATE_DELAY) {
