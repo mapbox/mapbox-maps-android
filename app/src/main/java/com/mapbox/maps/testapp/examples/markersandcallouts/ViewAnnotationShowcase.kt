@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.common.Logger
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
@@ -39,6 +40,9 @@ class ViewAnnotationShowcase : AppCompatActivity(), OnMapClickListener, OnMapLon
   private val pointList = mutableListOf<Feature>()
   private var id = "0"
 
+  private var width = 0
+  private var height = 0
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     val mapView = MapView(
@@ -56,15 +60,16 @@ class ViewAnnotationShowcase : AppCompatActivity(), OnMapClickListener, OnMapLon
     mapboxMap.loadStyle(
       styleExtension = style(Style.MAPBOX_STREETS) {
         +image(BLUE_ICON_ID) {
-          bitmap(BitmapFactory.decodeResource(
-            resources,
-            R.drawable.blue_marker_view)
-          )
+          val bitmap = BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view)
+          width = bitmap.width
+          height = bitmap.height
+          Logger.e("KIRYLDD", "w=$width, h=$height")
+          bitmap(bitmap)
         }
         +geoJsonSource(SOURCE_ID)
         +symbolLayer(LAYER_ID, SOURCE_ID) {
           iconImage(BLUE_ICON_ID)
-          iconAnchor(IconAnchor.BOTTOM)
+          iconAnchor(IconAnchor.CENTER)
           iconAllowOverlap(true)
         }
       }
@@ -89,7 +94,7 @@ class ViewAnnotationShowcase : AppCompatActivity(), OnMapClickListener, OnMapLon
       if (it.isValue && it.value?.size!! > 0) {
         it.value?.get(0)?.feature?.let { feature ->
           if (feature.id() != null) {
-            val annotationView = viewAnnotationPlugin.findViewAnnotation(feature.id()!!)
+            val annotationView = viewAnnotationPlugin.findViewAnnotationByMarkerId(feature.id()!!)
             annotationView?.visibility = View.VISIBLE
           }
         }
@@ -113,15 +118,18 @@ class ViewAnnotationShowcase : AppCompatActivity(), OnMapClickListener, OnMapLon
       ViewAnnotationOptions.Builder()
         .geometry(point)
         .iconIdentifier(markerId)
+//        .offsetY(height)
+        .anchor(ViewAnnotationAnchor.TOP)
         .allowViewAnnotationsCollision(true)
-        .anchor(ViewAnnotationAnchor.TOP_RIGHT)
         .build()
     ) {
-      it.visibility = View.GONE
-      it.findViewById<TextView>(R.id.textNativeView).text =
-        point.coordinates().joinToString(", ")
-      it.findViewById<ImageView>(R.id.closeNativeView).setOnClickListener { view ->
-        viewAnnotationPlugin.removeViewAnnotation(view)
+      viewAnnotationPlugin.findViewAnnotationById(it)?.let { view ->
+        view.visibility = View.GONE
+        view.findViewById<TextView>(R.id.textNativeView).text =
+          "lat=%.2f\nlon=%.2f".format(point.latitude(), point.longitude())
+        view.findViewById<ImageView>(R.id.closeNativeView).setOnClickListener { _ ->
+          viewAnnotationPlugin.removeViewAnnotation(it)
+        }
       }
     }
   }

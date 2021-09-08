@@ -45,7 +45,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
   override fun addViewAnnotation(
     @LayoutRes id: Int,
     options: ViewAnnotationOptions
-  ): View {
+  ): String {
     if (options.geometry == null) {
       throw RuntimeException("Geometry can not be null!")
     }
@@ -61,7 +61,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
       viewLayoutParams = nativeViewLayout,
       options = updatedOptions
     )
-    val viewId = nativeView.hashCode().toString()
+    val viewId = annotation.hashCode().toString()
     annotations[viewId] = annotation
     delegateMapViewAnnotations.apply {
       addViewAnnotation(viewId, updatedOptions)
@@ -69,14 +69,14 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
         redrawAnnotations(it, !options.allowViewAnnotationsCollision)
       }
     }
-    return nativeView
+    return viewId
   }
 
   // asynchronous method
   override fun addViewAnnotation(
     @LayoutRes id: Int,
     options: ViewAnnotationOptions,
-    result: (View) -> Unit
+    result: (String) -> Unit
   ) {
     if (options.geometry == null) {
       throw RuntimeException("Geometry can not be null!")
@@ -93,7 +93,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
         viewLayoutParams = nativeViewLayout,
         options = updatedOptions
       )
-      val viewId = view.hashCode().toString()
+      val viewId = annotation.hashCode().toString()
       annotations[viewId] = annotation
       delegateMapViewAnnotations.apply {
         addViewAnnotation(viewId, updatedOptions)
@@ -101,7 +101,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
           redrawAnnotations(it, !options.allowViewAnnotationsCollision)
         }
       }
-      result.invoke(view)
+      result.invoke(viewId)
     }
   }
 
@@ -128,10 +128,9 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
     }
   }
 
-  override fun removeViewAnnotation(view: View) {
-    val id = view.hashCode().toString()
+  override fun removeViewAnnotation(id: String) {
+    mapView.removeView(findViewAnnotationById(id))
     annotations.remove(id)
-    mapView.removeView(view)
     delegateMapViewAnnotations.apply {
       removeViewAnnotation(id)
       calculateViewAnnotationsPosition {
@@ -142,10 +141,9 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
   }
 
   override fun updateViewAnnotation(
-    view: View,
+    id: String,
     options: ViewAnnotationOptions,
   ) {
-    val id = view.hashCode().toString()
     annotations[id]?.let {
       val updatedOptions = ViewAnnotationOptions.Builder()
         .geometry(if (options.geometry != null) options.geometry else it.options.geometry)
@@ -170,7 +168,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
     }
   }
 
-  override fun findViewAnnotation(markerId: String): View? {
+  override fun findViewAnnotationByMarkerId(markerId: String): View? {
     annotations.forEach {
       if (it.value.options.iconIdentifier == markerId) {
         return it.value.view
@@ -179,9 +177,14 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
     return null
   }
 
+  override fun findViewAnnotationById(id: String) = annotations[id]?.view
+
   override fun cleanup() {
     super.cleanup()
     delegateProvider.mapListenerDelegate.removeOnCameraChangeListener(this)
+    annotations.forEach {
+      mapView.removeView(it.value.view)
+    }
     annotations.clear()
   }
 

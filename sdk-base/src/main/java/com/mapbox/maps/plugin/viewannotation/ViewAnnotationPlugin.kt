@@ -19,13 +19,13 @@ interface ViewAnnotationPlugin: MapPlugin, ContextBinder, OnCameraChangeListener
    * Width and height could be specified explicitly but better idea will be not specifying them
    * as they will be calculated automatically based on view layout.
    *
-   * @return Inflated [View] instance.
+   * @return id for given view annotation. Actual [View] could be obtained by [findViewById].
    * @throws [RuntimeException] if options did not include geometry.
    */
   fun addViewAnnotation(
     @LayoutRes id: Int,
     options: ViewAnnotationOptions
-  ): View
+  ): String
 
   /**
    * Add annotation view inflated from [id] asynchronously.
@@ -41,21 +41,21 @@ interface ViewAnnotationPlugin: MapPlugin, ContextBinder, OnCameraChangeListener
   fun addViewAnnotation(
     @LayoutRes id: Int,
     options: ViewAnnotationOptions,
-    result: (View) -> Unit
+    result: (String) -> Unit
   )
 
   /**
-   * Remove given annotation [view]. It will remove it from map completely.
+   * Remove given annotation view by [id]. It will remove actual view from map completely as well.
    */
-  fun removeViewAnnotation(view: View)
+  fun removeViewAnnotation(id: String)
 
   /**
-   * Update given [View] with [ViewAnnotationOptions].
+   * Update given view annotation [id] with [ViewAnnotationOptions].
    * Important thing to keep in mind that only properties present in [options] will be updated,
    * all other will remain the same as specified before.
    */
   fun updateViewAnnotation(
-    view: View,
+    id: String,
     options: ViewAnnotationOptions
   )
 
@@ -64,7 +64,16 @@ interface ViewAnnotationPlugin: MapPlugin, ContextBinder, OnCameraChangeListener
    *
    * @return [View] if view was found and NULL otherwise.
    */
-  fun findViewAnnotation(
+  fun findViewAnnotationByMarkerId(
     markerId: String
+  ): View?
+
+  /**
+   * Find [View] by view annotation id.
+   *
+   * @return [View] if view was found and NULL otherwise.
+   */
+  fun findViewAnnotationById(
+    id: String
   ): View?
 }
