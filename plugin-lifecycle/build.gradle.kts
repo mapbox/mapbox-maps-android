@@ -1,5 +1,7 @@
 import org.jetbrains.dokka.gradle.DokkaTask
 
+project.apply(from = "../gradle/versions.gradle.kts")
+
 plugins {
   id("com.android.library")
   kotlin("android")
@@ -7,27 +9,29 @@ plugins {
 }
 
 android {
-  compileSdkVersion(AndroidVersions.compileSdkVersion)
+  val androidSdkVersions = project.extra.get("androidSdkVersions") as HashMap<String, String>
+  compileSdkVersion(androidSdkVersions["compileSdkVersion"]!!)
   defaultConfig {
-    minSdkVersion(AndroidVersions.minSdkVersion)
-    targetSdkVersion(AndroidVersions.targetSdkVersion)
+    minSdkVersion(androidSdkVersions["minSdkVersion"])
+    targetSdkVersion(androidSdkVersions["targetSdkVersion"])
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 }
 
 dependencies {
+  val dependencies = project.extra.get("dependencies") as HashMap<*, *>
   implementation(project(":sdk-base"))
-  implementation(Dependencies.mapboxBase)
-  implementation(Dependencies.kotlin)
-  implementation(Dependencies.androidxCoreKtx)
-  implementation(Dependencies.androidxLifecycle)
-  testImplementation(Dependencies.junit)
-  testImplementation(Dependencies.mockk)
-  testImplementation(Dependencies.androidxTestCore)
-  testImplementation(Dependencies.robolectric)
-  androidTestImplementation(Dependencies.androidxTestRunner)
-  androidTestImplementation(Dependencies.androidxJUnitTestRules)
-  androidTestImplementation(Dependencies.androidxEspresso)
+  implementation(dependencies["mapboxBase"]!!)
+  implementation(dependencies["kotlin"]!!)
+  implementation(dependencies["androidxCoreKtx"]!!)
+  implementation(dependencies["androidxLifecycle"]!!)
+  testImplementation(dependencies["junit"]!!)
+  testImplementation(dependencies["mockk"]!!)
+  testImplementation(dependencies["androidxTestCore"]!!)
+  testImplementation(dependencies["robolectric"]!!)
+  androidTestImplementation(dependencies["androidxTestRunner"]!!)
+  androidTestImplementation(dependencies["androidxJUnitTestRules"]!!)
+  androidTestImplementation(dependencies["androidxEspresso"]!!)
   lintPublish(project(":mapbox-lint"))
 }
 

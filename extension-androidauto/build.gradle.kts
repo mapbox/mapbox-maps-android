@@ -1,5 +1,7 @@
 import org.jetbrains.dokka.gradle.DokkaTask
 
+project.apply(from = "../gradle/versions.gradle.kts")
+
 plugins {
   id("com.android.library")
   kotlin("android")
@@ -7,10 +9,11 @@ plugins {
 }
 
 android {
-  compileSdkVersion(AndroidVersions.compileSdkVersion)
+  val androidSdkVersions = project.extra.get("androidSdkVersions") as HashMap<String, String>
+  compileSdkVersion(androidSdkVersions["compileSdkVersion"]!!)
   defaultConfig {
-    minSdkVersion(AndroidVersions.minAndroidAutoSdkVersion)
-    targetSdkVersion(AndroidVersions.targetSdkVersion)
+    minSdkVersion(androidSdkVersions["minAndroidAutoSdkVersion"])
+    targetSdkVersion(androidSdkVersions["targetSdkVersion"])
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
@@ -22,18 +25,19 @@ android {
 }
 
 dependencies {
+  val dependencies = project.extra.get("dependencies") as HashMap<*, *>
   compileOnly(project(":sdk"))
-  implementation(Dependencies.googleCarAppLibrary)
-  implementation(Dependencies.kotlin)
-  implementation(Dependencies.androidxCoreKtx)
-  implementation(Dependencies.androidxAnnotations)
-  testImplementation(Dependencies.junit)
-  testImplementation(Dependencies.mockk)
-  testImplementation(Dependencies.androidxTestCore)
-  testImplementation(Dependencies.robolectric)
-  androidTestImplementation(Dependencies.androidxTestRunner)
-  androidTestImplementation(Dependencies.androidxJUnitTestRules)
-  androidTestImplementation(Dependencies.androidxEspresso)
+  implementation(dependencies["googleCarAppLibrary"]!!)
+  implementation(dependencies["kotlin"]!!)
+  implementation(dependencies["androidxCoreKtx"]!!)
+  implementation(dependencies["androidxAnnotations"]!!)
+  testImplementation(dependencies["junit"]!!)
+  testImplementation(dependencies["mockk"]!!)
+  testImplementation(dependencies["androidxTestCore"]!!)
+  testImplementation(dependencies["robolectric"]!!)
+  androidTestImplementation(dependencies["androidxTestRunner"]!!)
+  androidTestImplementation(dependencies["androidxJUnitTestRules"]!!)
+  androidTestImplementation(dependencies["androidxEspresso"]!!)
 }
 
 tasks.withType<DokkaTask>().configureEach {

@@ -1,7 +1,7 @@
 buildscript {
   repositories {
     google()
-    jcenter()
+    mavenCentral()
     maven {
       url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
       credentials {
@@ -16,20 +16,24 @@ buildscript {
       url = uri("https://plugins.gradle.org/m2/")
     }
   }
+
+  project.apply(from = "gradle/versions.gradle.kts")
+  val plugins = project.extra.get("plugins") as HashMap<String, String>
+
   dependencies {
-    classpath(Plugins.android)
-    classpath(Plugins.kotlin)
-    classpath(Plugins.jacoco)
-    classpath(Plugins.license)
-    classpath(Plugins.mapboxAccessToken)
-    classpath(Plugins.mapboxSdkRegistry)
+    classpath(plugins["androidPlugin"]!!)
+    classpath(plugins["kotlinPlugin"]!!)
+    classpath(plugins["jacocoPlugin"]!!)
+    classpath(plugins["licensePlugin"]!!)
+    classpath(plugins["mapboxAccessTokenPlugin"]!!)
+    classpath(plugins["mapboxSdkRegistryPlugin"]!!)
   }
 }
 
 allprojects {
   repositories {
     google()
-    jcenter()
+    mavenCentral()
     maven {
       url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
       credentials {
@@ -47,7 +51,7 @@ allprojects {
 }
 
 plugins {
-  id("org.jetbrains.dokka") version Versions.pluginDokka
+  id("org.jetbrains.dokka") version "1.4.10"
 }
 repositories {
   maven(url = "https://dl.bintray.com/kotlin/dokka")

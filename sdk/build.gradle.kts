@@ -1,5 +1,6 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import org.jetbrains.dokka.gradle.DokkaTask
+
+project.apply(from = "../gradle/versions.gradle.kts")
 
 plugins {
   id("com.android.library")
@@ -9,11 +10,11 @@ plugins {
 }
 
 android {
-  compileSdkVersion(AndroidVersions.compileSdkVersion)
-
+  val androidSdkVersions = project.extra.get("androidSdkVersions") as HashMap<String, String>
+  compileSdkVersion(androidSdkVersions["compileSdkVersion"]!!)
   defaultConfig {
-    minSdkVersion(AndroidVersions.minSdkVersion)
-    targetSdkVersion(AndroidVersions.targetSdkVersion)
+    minSdkVersion(androidSdkVersions["minSdkVersion"])
+    targetSdkVersion(androidSdkVersions["targetSdkVersion"])
     consumerProguardFiles("proguard-rules.pro")
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     testInstrumentationRunnerArguments = mapOf(
@@ -46,14 +47,14 @@ android {
 val buildFromSource: String by project
 
 dependencies {
-  api(Dependencies.mapboxBase)
+  val dependencies = project.extra.get("dependencies") as HashMap<*, *>
+  api(dependencies["mapboxBase"]!!)
   if (buildFromSource.toBoolean()) {
     api(project(":okhttp"))
   } else {
-    api(Dependencies.mapboxOkHttp)
+    api(dependencies["mapboxOkHttp"]!!)
   }
-
-  implementation(Dependencies.mapboxAnnotations)
+  implementation(dependencies["mapboxAnnotations"]!!)
   api(project(":sdk-base"))
   implementation(project(":module-telemetry"))
   api(project(":extension-style"))
@@ -68,22 +69,22 @@ dependencies {
   api(project(":plugin-annotation"))
   api(project(":extension-localization"))
   api(project(":plugin-lifecycle"))
-  implementation(Dependencies.kotlin)
-  implementation(Dependencies.androidxCoreKtx)
-  implementation(Dependencies.androidxAnnotations)
-  testImplementation(Dependencies.junit)
-  testImplementation(Dependencies.mockk)
-  testImplementation(Dependencies.androidxTestCore)
-  testImplementation(Dependencies.robolectric)
-  testImplementation(Dependencies.robolectricEgl)
-  debugImplementation(Dependencies.androidxAppCompat)
-  androidTestImplementation(Dependencies.androidxTestRunner)
-  androidTestImplementation(Dependencies.androidxTestJUnit)
-  androidTestImplementation(Dependencies.androidxRules)
-  androidTestImplementation(Dependencies.androidxJUnitTestRules)
-  androidTestImplementation(Dependencies.androidxEspresso)
-  androidTestImplementation(Dependencies.androidxUiAutomator)
-  androidTestUtil(Dependencies.androidxOrchestrator)
+  implementation(dependencies["kotlin"]!!)
+  implementation(dependencies["androidxCoreKtx"]!!)
+  implementation(dependencies["androidxAnnotations"]!!)
+  testImplementation(dependencies["junit"]!!)
+  testImplementation(dependencies["mockk"]!!)
+  testImplementation(dependencies["androidxTestCore"]!!)
+  testImplementation(dependencies["robolectric"]!!)
+  testImplementation(dependencies["robolectricEgl"]!!)
+  debugImplementation(dependencies["androidxAppCompat"]!!)
+  androidTestImplementation(dependencies["androidxTestRunner"]!!)
+  androidTestImplementation(dependencies["androidxTestJUnit"]!!)
+  androidTestImplementation(dependencies["androidxRules"]!!)
+  androidTestImplementation(dependencies["androidxJUnitTestRules"]!!)
+  androidTestImplementation(dependencies["androidxEspresso"]!!)
+  androidTestImplementation(dependencies["androidxUiAutomator"]!!)
+  androidTestUtil(dependencies["androidxOrchestrator"]!!)
 }
 
 tasks.withType<DokkaTask>().configureEach {

@@ -1,3 +1,5 @@
+project.apply(from = "../gradle/versions.gradle.kts")
+
 plugins {
   id("com.android.application")
   kotlin("android")
@@ -7,11 +9,12 @@ plugins {
 val buildFromSource: String by project
 
 android {
-  compileSdkVersion(AndroidVersions.compileSdkVersion)
+  val androidSdkVersions = project.extra.get("androidSdkVersions") as HashMap<String, String>
+  compileSdkVersion(androidSdkVersions["compileSdkVersion"]!!)
   defaultConfig {
     applicationId = "com.mapbox.maps.testapp"
-    minSdkVersion(AndroidVersions.minSdkVersion)
-    targetSdkVersion(AndroidVersions.targetSdkVersion)
+    minSdkVersion(androidSdkVersions["minSdkVersion"])
+    targetSdkVersion(androidSdkVersions["targetSdkVersion"])
     versionCode = 1
     versionName = "0.1.0"
     multiDexEnabled = true
@@ -64,21 +67,22 @@ android {
 }
 
 dependencies {
+  val dependencies = project.extra.get("dependencies") as HashMap<*, *>
   implementation(project(":sdk"))
-  implementation(Dependencies.kotlin)
-  implementation(Dependencies.mapboxJavaTurf)
-  implementation(Dependencies.mapboxJavaGeoJSON)
-  implementation(Dependencies.mapboxServices)
-  implementation(Dependencies.coroutines)
-  implementation(Dependencies.androidxAppCompat)
-  implementation(Dependencies.androidxCoreKtx)
-  implementation(Dependencies.androidxRecyclerView)
-  implementation(Dependencies.androidxConstraintLayout)
-  implementation(Dependencies.androidxMultidex)
-  implementation(Dependencies.googleMaterialDesign)
-  implementation(Dependencies.squareRetrofit)
-  implementation(Dependencies.androidxFragmentTest)
-  implementation(Dependencies.squareRetrofitGsonConverter)
+  implementation(dependencies["kotlin"]!!)
+  implementation(dependencies["mapboxJavaTurf"]!!)
+  implementation(dependencies["mapboxJavaGeoJSON"]!!)
+  implementation(dependencies["mapboxServices"]!!)
+  implementation(dependencies["coroutines"]!!)
+  implementation(dependencies["androidxAppCompat"]!!)
+  implementation(dependencies["androidxCoreKtx"]!!)
+  implementation(dependencies["androidxRecyclerView"]!!)
+  implementation(dependencies["androidxConstraintLayout"]!!)
+  implementation(dependencies["androidxMultidex"]!!)
+  implementation(dependencies["googleMaterialDesign"]!!)
+  implementation(dependencies["squareRetrofit"]!!)
+  implementation(dependencies["androidxFragmentTest"]!!)
+  implementation(dependencies["squareRetrofitGsonConverter"]!!)
 
   // By default, the Maps SDK uses the Android Location Provider to obtain raw location updates.
   // And with Android 11, the raw location updates might suffer from precision issue.
@@ -86,17 +90,17 @@ dependencies {
   // The Maps SDK also comes pre-compiled with support for the [Google's Fused Location Provider](https://developers.google.com/location-context/fused-location-provider)
   // if that dependency is available. This means, that if your target devices support Google Play
   // Services, [we recommend adding the Google Play Location Services dependency to your project](https://developers.google.com/android/guides/setup).
-  implementation(Dependencies.googlePlayServicesLocation)
+  implementation(dependencies["googlePlayServicesLocation"]!!)
 
-  debugImplementation(Dependencies.squareLeakCanary)
-  androidTestUtil(Dependencies.androidxOrchestrator)
-  androidTestImplementation(Dependencies.androidxTestRunner)
-  androidTestImplementation(Dependencies.androidxJUnitTestRules)
-  androidTestImplementation(Dependencies.androidxRules)
-  androidTestImplementation(Dependencies.androidxTestJUnit)
-  androidTestImplementation(Dependencies.androidxEspresso)
-  androidTestImplementation(Dependencies.androidxUiAutomator)
-  testImplementation(Dependencies.junit)
+  debugImplementation(dependencies["squareLeakCanary"]!!)
+  androidTestUtil(dependencies["androidxOrchestrator"]!!)
+  androidTestImplementation(dependencies["androidxTestRunner"]!!)
+  androidTestImplementation(dependencies["androidxJUnitTestRules"]!!)
+  androidTestImplementation(dependencies["androidxRules"]!!)
+  androidTestImplementation(dependencies["androidxTestJUnit"]!!)
+  androidTestImplementation(dependencies["androidxEspresso"]!!)
+  androidTestImplementation(dependencies["androidxUiAutomator"]!!)
+  testImplementation(dependencies["junit"]!!)
 }
 
 project.apply {

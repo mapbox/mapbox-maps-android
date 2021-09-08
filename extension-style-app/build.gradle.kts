@@ -1,3 +1,5 @@
+project.apply(from = "../gradle/versions.gradle.kts")
+
 plugins {
   id("com.android.application")
   kotlin("android")
@@ -8,11 +10,12 @@ plugins {
 val buildFromSource: String by project
 
 android {
-  compileSdkVersion(AndroidVersions.compileSdkVersion)
+  val androidSdkVersions = project.extra.get("androidSdkVersions") as HashMap<String, String>
+  compileSdkVersion(androidSdkVersions["compileSdkVersion"]!!)
   defaultConfig {
     applicationId = "com.mapbox.maps.testapp.style"
-    minSdkVersion(AndroidVersions.minSdkVersion)
-    targetSdkVersion(AndroidVersions.targetSdkVersion)
+    minSdkVersion(androidSdkVersions["minSdkVersion"])
+    targetSdkVersion(androidSdkVersions["targetSdkVersion"])
     versionCode = 1
     versionName = "0.1.0"
     multiDexEnabled = true
@@ -45,17 +48,18 @@ androidExtensions {
 }
 
 dependencies {
+  val dependencies = project.extra.get("dependencies") as HashMap<*, *>
   implementation(project(":sdk"))
-  implementation(Dependencies.kotlin)
-  implementation(Dependencies.androidxAppCompat)
-  androidTestUtil(Dependencies.androidxOrchestrator)
-  androidTestImplementation(Dependencies.androidxTestRunner)
-  androidTestImplementation(Dependencies.androidxJUnitTestRules)
-  androidTestImplementation(Dependencies.androidxRules)
-  androidTestImplementation(Dependencies.androidxTestJUnit)
-  androidTestImplementation(Dependencies.androidxEspresso)
-  androidTestImplementation(Dependencies.androidxUiAutomator)
-  testImplementation(Dependencies.junit)
+  implementation(dependencies["kotlin"]!!)
+  implementation(dependencies["androidxAppCompat"]!!)
+  androidTestUtil(dependencies["androidxOrchestrator"]!!)
+  androidTestImplementation(dependencies["androidxTestRunner"]!!)
+  androidTestImplementation(dependencies["androidxJUnitTestRules"]!!)
+  androidTestImplementation(dependencies["androidxRules"]!!)
+  androidTestImplementation(dependencies["androidxTestJUnit"]!!)
+  androidTestImplementation(dependencies["androidxEspresso"]!!)
+  androidTestImplementation(dependencies["androidxUiAutomator"]!!)
+  testImplementation(dependencies["junit"]!!)
 }
 
 project.apply {

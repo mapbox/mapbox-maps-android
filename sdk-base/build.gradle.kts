@@ -1,5 +1,6 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import org.jetbrains.dokka.gradle.DokkaTask
+
+project.apply(from = "../gradle/versions.gradle.kts")
 
 plugins {
   id("com.android.library")
@@ -10,31 +11,33 @@ plugins {
 }
 
 android {
-  compileSdkVersion(AndroidVersions.compileSdkVersion)
+  val androidSdkVersions = project.extra.get("androidSdkVersions") as HashMap<String, String>
+  compileSdkVersion(androidSdkVersions["compileSdkVersion"]!!)
   defaultConfig {
-    minSdkVersion(AndroidVersions.minSdkVersion)
-    targetSdkVersion(AndroidVersions.targetSdkVersion)
+    minSdkVersion(androidSdkVersions["minSdkVersion"])
+    targetSdkVersion(androidSdkVersions["targetSdkVersion"])
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 }
 val buildFromSource: String by project
 
 dependencies {
-  implementation(Dependencies.kotlin)
-  implementation(Dependencies.mapboxBase)
-  implementation(Dependencies.androidxAnnotations)
-  api(Dependencies.mapboxGestures)
+  val dependencies = project.extra.get("dependencies") as HashMap<*, *>
+  implementation(dependencies["kotlin"]!!)
+  implementation(dependencies["mapboxBase"]!!)
+  implementation(dependencies["androidxAnnotations"]!!)
+  api(dependencies["mapboxGestures"]!!)
   if (buildFromSource.toBoolean()) {
     api(project(":maps-core"))
     api(project(":common"))
   } else {
-    api(Dependencies.mapboxGlNative)
-    api(Dependencies.mapboxCoreCommon)
+    api(dependencies["mapboxGlNative"]!!)
+    api(dependencies["mapboxCoreCommon"]!!)
   }
 
-  testImplementation(Dependencies.junit)
-  testImplementation(Dependencies.mockk)
-  testImplementation(Dependencies.androidxTestCore)
+  testImplementation(dependencies["junit"]!!)
+  testImplementation(dependencies["mockk"]!!)
+  testImplementation(dependencies["androidxTestCore"]!!)
 }
 
 tasks.withType<DokkaTask>().configureEach {

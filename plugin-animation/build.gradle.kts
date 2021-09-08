@@ -1,5 +1,7 @@
 import org.jetbrains.dokka.gradle.DokkaTask
 
+project.apply(from = "../gradle/versions.gradle.kts")
+
 plugins {
   id("com.android.library")
   kotlin("android")
@@ -8,10 +10,11 @@ plugins {
 }
 
 android {
-  compileSdkVersion(AndroidVersions.compileSdkVersion)
+  val androidSdkVersions = project.extra.get("androidSdkVersions") as HashMap<String, String>
+  compileSdkVersion(androidSdkVersions["compileSdkVersion"]!!)
   defaultConfig {
-    minSdkVersion(AndroidVersions.minSdkVersion)
-    targetSdkVersion(AndroidVersions.targetSdkVersion)
+    minSdkVersion(androidSdkVersions["minSdkVersion"])
+    targetSdkVersion(androidSdkVersions["targetSdkVersion"])
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
@@ -23,16 +26,17 @@ android {
 }
 
 dependencies {
+  val dependencies = project.extra.get("dependencies") as HashMap<*, *>
   implementation(project(":sdk-base"))
-  implementation(Dependencies.androidxInterpolators)
-  implementation(Dependencies.kotlin)
-  implementation(Dependencies.androidxCoreKtx)
-  testImplementation(Dependencies.junit)
-  testImplementation(Dependencies.mockk)
-  testImplementation(Dependencies.robolectric)
-  androidTestImplementation(Dependencies.androidxTestRunner)
-  androidTestImplementation(Dependencies.androidxJUnitTestRules)
-  androidTestImplementation(Dependencies.androidxEspresso)
+  implementation(dependencies["androidxInterpolators"]!!)
+  implementation(dependencies["kotlin"]!!)
+  implementation(dependencies["androidxCoreKtx"]!!)
+  testImplementation(dependencies["junit"]!!)
+  testImplementation(dependencies["mockk"]!!)
+  testImplementation(dependencies["robolectric"]!!)
+  androidTestImplementation(dependencies["androidxTestRunner"]!!)
+  androidTestImplementation(dependencies["androidxJUnitTestRules"]!!)
+  androidTestImplementation(dependencies["androidxEspresso"]!!)
 }
 
 tasks.withType<DokkaTask>().configureEach {

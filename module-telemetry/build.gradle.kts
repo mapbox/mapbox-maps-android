@@ -1,5 +1,7 @@
 import org.jetbrains.dokka.gradle.DokkaTask
 
+project.apply(from = "../gradle/versions.gradle.kts")
+
 plugins {
   id("com.android.library")
   kotlin("android")
@@ -10,10 +12,11 @@ plugins {
 val VERSION_NAME: String by project
 
 android {
-  compileSdkVersion(AndroidVersions.compileSdkVersion)
+  val androidSdkVersions = project.extra.get("androidSdkVersions") as HashMap<String, String>
+  compileSdkVersion(androidSdkVersions["compileSdkVersion"]!!)
   defaultConfig {
-    minSdkVersion(AndroidVersions.minSdkVersion)
-    targetSdkVersion(AndroidVersions.targetSdkVersion)
+    minSdkVersion(androidSdkVersions["minSdkVersion"])
+    targetSdkVersion(androidSdkVersions["targetSdkVersion"])
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     buildConfigField("String", "MAPBOX_SDK_IDENTIFIER", String.format("\"%s\"", "mapbox-maps-android"))
     buildConfigField("String", "MAPBOX_SDK_VERSION", String.format("\"%s\"", VERSION_NAME))
@@ -23,18 +26,19 @@ android {
 }
 
 dependencies {
+  val dependencies = project.extra.get("dependencies") as HashMap<*, *>
   implementation(project(":sdk-base"))
-  implementation(Dependencies.mapboxBase)
-  implementation(Dependencies.mapboxAndroidTelemetry)
-  compileOnly(Dependencies.mapboxAnnotations)
-  kapt(Dependencies.mapboxAnnotationsProcessor)
-  implementation(Dependencies.kotlin)
-  testImplementation(Dependencies.junit)
-  testImplementation(Dependencies.mockk)
-  testImplementation(Dependencies.robolectric)
-  androidTestImplementation(Dependencies.androidxTestRunner)
-  androidTestImplementation(Dependencies.androidxJUnitTestRules)
-  androidTestImplementation(Dependencies.androidxEspresso)
+  implementation(dependencies["mapboxBase"]!!)
+  implementation(dependencies["mapboxAndroidTelemetry"]!!)
+  compileOnly(dependencies["mapboxAnnotations"]!!)
+  kapt(dependencies["mapboxAnnotationsProcessor"]!!)
+  implementation(dependencies["kotlin"]!!)
+  testImplementation(dependencies["junit"]!!)
+  testImplementation(dependencies["mockk"]!!)
+  testImplementation(dependencies["robolectric"]!!)
+  androidTestImplementation(dependencies["androidxTestRunner"]!!)
+  androidTestImplementation(dependencies["androidxJUnitTestRules"]!!)
+  androidTestImplementation(dependencies["androidxEspresso"]!!)
 }
 
 tasks.withType<DokkaTask>().configureEach {

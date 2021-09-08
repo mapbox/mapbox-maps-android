@@ -1,3 +1,5 @@
+project.apply(from = "../gradle/versions.gradle.kts")
+
 plugins {
   id("com.android.application")
   kotlin("android")
@@ -8,11 +10,12 @@ plugins {
 val buildFromSource: String by project
 
 android {
-  compileSdkVersion(AndroidVersions.compileSdkVersion)
+  val androidSdkVersions = project.extra.get("androidSdkVersions") as HashMap<String, String>
+  compileSdkVersion(androidSdkVersions["compileSdkVersion"]!!)
   defaultConfig {
     applicationId = "com.mapbox.maps.testapp.auto"
-    minSdkVersion(AndroidVersions.minAndroidAutoSdkVersion)
-    targetSdkVersion(AndroidVersions.targetSdkVersion)
+    minSdkVersion(androidSdkVersions["minAndroidAutoSdkVersion"])
+    targetSdkVersion(androidSdkVersions["targetSdkVersion"])
     versionCode = 1
     versionName = "0.1.0"
     multiDexEnabled = true
@@ -45,11 +48,12 @@ androidExtensions {
 }
 
 dependencies {
+  val dependencies = project.extra.get("dependencies") as HashMap<*, *>
   implementation(project(":extension-androidauto"))
   implementation(project(":sdk"))
-  implementation(Dependencies.googleCarAppLibrary)
-  implementation(Dependencies.kotlin)
-  implementation(Dependencies.androidxAppCompat)
+  implementation(dependencies["googleCarAppLibrary"]!!)
+  implementation(dependencies["kotlin"]!!)
+  implementation(dependencies["androidxAppCompat"]!!)
 
   // By default, the Maps SDK uses the Android Location Provider to obtain raw location updates.
   // And with Android 11, the raw location updates might suffer from precision issue.
@@ -57,16 +61,16 @@ dependencies {
   // The Maps SDK also comes pre-compiled with support for the [Google's Fused Location Provider](https://developers.google.com/location-context/fused-location-provider)
   // if that dependency is available. This means, that if your target devices support Google Play
   // Services, [we recommend adding the Google Play Location Services dependency to your project](https://developers.google.com/android/guides/setup).
-  implementation(Dependencies.googlePlayServicesLocation)
+  implementation(dependencies["googlePlayServicesLocation"]!!)
 
-  androidTestUtil(Dependencies.androidxOrchestrator)
-  androidTestImplementation(Dependencies.androidxTestRunner)
-  androidTestImplementation(Dependencies.androidxJUnitTestRules)
-  androidTestImplementation(Dependencies.androidxRules)
-  androidTestImplementation(Dependencies.androidxTestJUnit)
-  androidTestImplementation(Dependencies.androidxEspresso)
-  androidTestImplementation(Dependencies.androidxUiAutomator)
-  testImplementation(Dependencies.junit)
+  androidTestUtil(dependencies["androidxOrchestrator"]!!)
+  androidTestImplementation(dependencies["androidxTestRunner"]!!)
+  androidTestImplementation(dependencies["androidxJUnitTestRules"]!!)
+  androidTestImplementation(dependencies["androidxRules"]!!)
+  androidTestImplementation(dependencies["androidxTestJUnit"]!!)
+  androidTestImplementation(dependencies["androidxEspresso"]!!)
+  androidTestImplementation(dependencies["androidxUiAutomator"]!!)
+  testImplementation(dependencies["junit"]!!)
 }
 
 project.apply {

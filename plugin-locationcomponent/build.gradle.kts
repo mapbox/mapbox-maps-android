@@ -1,5 +1,7 @@
 import org.jetbrains.dokka.gradle.DokkaTask
 
+project.apply(from = "../gradle/versions.gradle.kts")
+
 plugins {
   id("com.android.library")
   kotlin("android")
@@ -7,11 +9,12 @@ plugins {
 }
 
 android {
-  compileSdkVersion(AndroidVersions.compileSdkVersion)
+  val androidSdkVersions = project.extra.get("androidSdkVersions") as HashMap<String, String>
+  compileSdkVersion(androidSdkVersions["compileSdkVersion"]!!)
   defaultConfig {
     vectorDrawables.useSupportLibrary = true
-    minSdkVersion(AndroidVersions.minSdkVersion)
-    targetSdkVersion(AndroidVersions.targetSdkVersion)
+    minSdkVersion(androidSdkVersions["minSdkVersion"])
+    targetSdkVersion(androidSdkVersions["targetSdkVersion"])
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
@@ -22,24 +25,25 @@ android {
 }
 
 dependencies {
-  api(Dependencies.mapboxAndroidCore)
+  val dependencies = project.extra.get("dependencies") as HashMap<*, *>
+  api(dependencies["mapboxAndroidCore"]!!)
   implementation(project(":sdk-base"))
-  implementation(Dependencies.mapboxBase)
-  implementation(Dependencies.kotlin)
-  implementation(Dependencies.androidxAppCompat)
-  implementation(Dependencies.androidxCoreKtx)
-  implementation(Dependencies.androidxAnnotations)
-  implementation(Dependencies.mapboxJavaGeoJSON)
-  testImplementation(Dependencies.junit)
-  testImplementation(Dependencies.mockk)
-  testImplementation(Dependencies.androidxTestCore)
-  testImplementation(Dependencies.robolectric)
-  testImplementation(Dependencies.hamcrest)
+  implementation(dependencies["mapboxBase"]!!)
+  implementation(dependencies["kotlin"]!!)
+  implementation(dependencies["androidxAppCompat"]!!)
+  implementation(dependencies["androidxCoreKtx"]!!)
+  implementation(dependencies["androidxAnnotations"]!!)
+  implementation(dependencies["mapboxJavaGeoJSON"]!!)
+  testImplementation(dependencies["junit"]!!)
+  testImplementation(dependencies["mockk"]!!)
+  testImplementation(dependencies["androidxTestCore"]!!)
+  testImplementation(dependencies["robolectric"]!!)
+  testImplementation(dependencies["hamcrest"]!!)
   testImplementation(project(":plugin-gestures"))
   testImplementation(project(":plugin-animation"))
-  androidTestImplementation(Dependencies.androidxTestRunner)
-  androidTestImplementation(Dependencies.androidxJUnitTestRules)
-  androidTestImplementation(Dependencies.androidxEspresso)
+  androidTestImplementation(dependencies["androidxTestRunner"]!!)
+  androidTestImplementation(dependencies["androidxJUnitTestRules"]!!)
+  androidTestImplementation(dependencies["androidxEspresso"]!!)
 }
 
 tasks.withType<DokkaTask>().configureEach {
