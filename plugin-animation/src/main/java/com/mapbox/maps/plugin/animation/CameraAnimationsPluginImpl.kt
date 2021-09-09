@@ -12,7 +12,6 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.animation.animator.*
-import com.mapbox.maps.plugin.annotation.Annotation
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.toCameraOptions
 import java.util.concurrent.CopyOnWriteArraySet
@@ -178,8 +177,10 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
 
   private fun isValidCameraLngLat(cameraOptions: CameraOptions): Boolean {
     cameraOptions.center?.let {
-      return (it.latitude() < MAX_MERCATOR_LATITUDE && it.latitude() > MIN_MERCATOR_LATITUDE
-        && it.longitude() < MAX_MERCATOR_LONGITUDE && it.longitude() > MIN_MERCATOR_LONGITUDE)
+      return (
+        it.latitude() < MAX_MERCATOR_LATITUDE && it.latitude() > MIN_MERCATOR_LATITUDE &&
+          it.longitude() < MAX_MERCATOR_LONGITUDE && it.longitude() > MIN_MERCATOR_LONGITUDE
+        )
     }
     return true
   }
