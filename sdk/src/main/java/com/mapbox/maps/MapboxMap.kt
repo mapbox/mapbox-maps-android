@@ -216,11 +216,15 @@ class MapboxMap internal constructor(
   /**
    * Get the Style of the map asynchronously.
    *
-   * @param onStyleLoaded the callback to be invoked when the style is fully loaded
+   * @param checkLoaded whether check the load state of the style. If set to true will only get the callback while style is loaded
+   * @param onStyleLoaded the callback to be invoked when the style is initialized or fully loaded
    */
-  fun getStyle(onStyleLoaded: Style.OnStyleLoaded) {
+  fun getStyle(checkLoaded: Boolean = true, onStyleLoaded: Style.OnStyleLoaded) {
     if (::style.isInitialized) {
-      if (style.isStyleLoaded) {
+      if (!checkLoaded) {
+        // No check to check style state, return the style.
+        onStyleLoaded.onStyleLoaded(style)
+      } else if (style.isStyleLoaded) {
         // style has loaded, notify callback immediately
         onStyleLoaded.onStyleLoaded(style)
       } else {

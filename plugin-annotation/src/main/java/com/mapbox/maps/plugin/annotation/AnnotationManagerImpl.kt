@@ -310,7 +310,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     return option.build(currentId, this).also {
       annotationMap[it.id] = it
       currentId++
-      delegateProvider.getStyle { style ->
+      delegateProvider.getStyle(false) { style ->
         updateSource(style)
       }
     }
@@ -324,7 +324,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   fun addAnnotation(annotation: T) {
     annotationMap[annotation.id] = annotation
-    delegateProvider.getStyle { style ->
+    delegateProvider.getStyle(false) { style ->
       updateSource(style)
     }
   }
@@ -339,7 +339,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         currentId++
       }
     }
-    delegateProvider.getStyle { style ->
+    delegateProvider.getStyle(false) { style ->
       updateSource(style)
     }
     return list
@@ -350,7 +350,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    */
   override fun delete(annotation: T) {
     annotationMap.remove(annotation.id)
-    delegateProvider.getStyle { style ->
+    delegateProvider.getStyle(false) { style ->
       updateSource(style)
     }
   }
@@ -362,7 +362,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     annotations.forEach {
       this.annotationMap.remove(it.id)
     }
-    delegateProvider.getStyle { style ->
+    delegateProvider.getStyle(false) { style ->
       updateSource(style)
     }
   }
@@ -372,7 +372,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    */
   override fun deleteAll() {
     annotationMap.clear()
-    delegateProvider.getStyle { style ->
+    delegateProvider.getStyle(false) { style ->
       updateSource(style)
     }
   }
@@ -410,10 +410,6 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Trigger an update to the underlying source
    */
   private fun updateSource(style: StyleInterface) {
-    if (!styleStateDelegate.isFullyLoaded()) {
-      Logger.e(TAG, "Can't update source: style is not fully loaded.")
-      return
-    }
     if (source == null || layer == null) {
       initLayerAndSource(style)
     }
@@ -454,7 +450,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   override fun update(annotation: T) {
     if (annotationMap.containsKey(annotation.id)) {
       annotationMap[annotation.id] = annotation
-      delegateProvider.getStyle { style ->
+      delegateProvider.getStyle(false) { style ->
         updateSource(style)
       }
     } else {
@@ -479,7 +475,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         )
       }
     }
-    delegateProvider.getStyle { style ->
+    delegateProvider.getStyle(false) { style ->
       updateSource(style)
     }
   }
@@ -488,7 +484,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Invoked when Mapview or Annotation manager is destroyed.
    */
   override fun onDestroy() {
-    delegateProvider.getStyle { style ->
+    delegateProvider.getStyle(false) { style ->
       layer?.let {
         if (style.styleLayerExists(it.layerId)) {
           style.removeStyleLayer(it.layerId)
@@ -628,7 +624,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         }
         shiftedGeometry?.let { geometry ->
           annotation.geometry = geometry
-          delegateProvider.getStyle { style ->
+          delegateProvider.getStyle(false) { style ->
             updateDragSource(style)
           }
           dragListeners.forEach {
@@ -654,7 +650,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         draggingAnnotation = annotation
         // Delete the dragging annotation from original source
         delete(annotation)
-        delegateProvider.getStyle { style ->
+        delegateProvider.getStyle(false) { style ->
           // Add the dragging annotation to drag layer
           updateDragSource(style)
         }
@@ -670,7 +666,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         addAnnotation(annotation)
       }
       // Remove dragging annotation from drag layer
-      delegateProvider.getStyle { style ->
+      delegateProvider.getStyle(false) { style ->
         updateDragSource(style)
       }
     }

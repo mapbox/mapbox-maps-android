@@ -64,7 +64,7 @@ class MapDelegateProviderTest {
   @Test
   fun styleExtensionDelegate() {
     val captureCallback = slot<Style.OnStyleLoaded>()
-    every { mapboxMap.getStyle(capture(captureCallback)) } answers {
+    every { mapboxMap.getStyle(true, capture(captureCallback)) } answers {
       captureCallback.captured.onStyleLoaded(mockk())
     }
     val mapDelegateProvider = MapDelegateProviderImpl(mapboxMap, mockk(), mockk())

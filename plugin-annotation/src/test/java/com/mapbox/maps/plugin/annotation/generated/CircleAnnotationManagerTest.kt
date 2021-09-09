@@ -68,7 +68,7 @@ class CircleAnnotationManagerTest {
     mockkStatic("com.mapbox.maps.extension.style.layers.LayerUtils")
     mockkStatic("com.mapbox.maps.extension.style.sources.SourceUtils")
     val captureCallback = slot<(StyleInterface) -> Unit>()
-    every { delegateProvider.getStyle(capture(captureCallback)) } answers {
+    every { delegateProvider.getStyle(false, capture(captureCallback)) } answers {
       captureCallback.captured.invoke(style)
     }
     val styleStateDelegate = mockk<MapStyleStateDelegate>()
@@ -164,11 +164,11 @@ class CircleAnnotationManagerTest {
   fun initializeBeforeStyleLoad() {
     every { style.styleLayerExists("test_layer") } returns true
     val captureCallback = slot<(StyleInterface) -> Unit>()
-    every { delegateProvider.getStyle(capture(captureCallback)) } just Runs
+    every { delegateProvider.getStyle(false, capture(captureCallback)) } just Runs
     manager = CircleAnnotationManager(mapView, delegateProvider, AnnotationConfig("test_layer"))
     // Style is not loaded, can't create and add layer to style
     verify(exactly = 0) { style.addPersistentLayer(any(), LayerPosition(null, "test_layer", null)) }
-    every { delegateProvider.getStyle(capture(captureCallback)) } answers {
+    every { delegateProvider.getStyle(false, capture(captureCallback)) } answers {
       captureCallback.captured.invoke(style)
     }
     manager.create(

@@ -33,7 +33,7 @@ class CircleAnnotationManager(
   override val dragLayerId = annotationConfig?.layerId ?: "mapbox-android-circleAnnotation-draglayer"
   override val dragSourceId = annotationConfig?.sourceId ?: "mapbox-android-circleAnnotation-dragsource"
   init {
-    delegateProvider.getStyle {
+    delegateProvider.getStyle(false) {
       initLayerAndSource(it)
     }
   }

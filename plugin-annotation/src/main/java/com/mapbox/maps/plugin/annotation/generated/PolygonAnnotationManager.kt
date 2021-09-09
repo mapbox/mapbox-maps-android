@@ -33,7 +33,7 @@ class PolygonAnnotationManager(
   override val dragLayerId = annotationConfig?.layerId ?: "mapbox-android-polygonAnnotation-draglayer"
   override val dragSourceId = annotationConfig?.sourceId ?: "mapbox-android-polygonAnnotation-dragsource"
   init {
-    delegateProvider.getStyle {
+    delegateProvider.getStyle(false) {
       initLayerAndSource(it)
     }
   }

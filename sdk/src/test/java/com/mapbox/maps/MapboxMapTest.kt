@@ -190,8 +190,15 @@ class MapboxMapTest {
     mapboxMap.style = style
     every { style.isStyleLoaded } returns true
     val styleLoadCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
-    mapboxMap.getStyle(styleLoadCallback)
+    mapboxMap.getStyle(true, styleLoadCallback)
     verify { styleLoadCallback.onStyleLoaded(style) }
+
+    every { style.isStyleLoaded } returns false
+    val styleLoadCallback2 = mockk<Style.OnStyleLoaded>(relaxed = true)
+    mapboxMap.getStyle(true, styleLoadCallback2)
+    verify(exactly = 0) { styleLoadCallback2.onStyleLoaded(style) }
+    mapboxMap.getStyle(false, styleLoadCallback2)
+    verify(exactly = 1) { styleLoadCallback2.onStyleLoaded(style) }
   }
 
   @Test

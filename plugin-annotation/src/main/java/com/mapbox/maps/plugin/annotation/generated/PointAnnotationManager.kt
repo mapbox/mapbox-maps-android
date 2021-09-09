@@ -33,7 +33,7 @@ class PointAnnotationManager(
   override val dragLayerId = annotationConfig?.layerId ?: "mapbox-android-pointAnnotation-draglayer"
   override val dragSourceId = annotationConfig?.sourceId ?: "mapbox-android-pointAnnotation-dragsource"
   init {
-    delegateProvider.getStyle {
+    delegateProvider.getStyle(false) {
       initLayerAndSource(it)
       // Show all icons and texts by default. 
       iconAllowOverlap = true

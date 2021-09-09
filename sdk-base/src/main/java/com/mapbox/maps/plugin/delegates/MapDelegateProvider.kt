@@ -29,8 +29,10 @@ interface MapDelegateProvider {
 
   /**
    * Delegate used to interact with map's plugins.
+   * @param checkLoaded whether check the load state of the style. If set to true will only get the callback while style is loaded
+   * @param callback the callback to be invoked when the style is initialized or fully loaded
    */
-  fun getStyle(callback: (StyleInterface) -> Unit)
+  fun getStyle(checkLoaded: Boolean = true, callback: (StyleInterface) -> Unit)
 
   /**
    * Delegate used to interact with map's plugins.
