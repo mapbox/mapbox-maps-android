@@ -12,23 +12,25 @@ import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 interface ViewAnnotationPlugin: MapPlugin, ContextBinder, OnCameraChangeListener {
 
   /**
-   * Add annotation view inflated from [id] synchronously.
+   * Add annotation view inflated from [resId] synchronously.
    *
    * Annotation [options] must include Geometry where we want to bind our annotation view.
    *
    * Width and height could be specified explicitly but better idea will be not specifying them
    * as they will be calculated automatically based on view layout.
    *
-   * @return id for given view annotation. Actual [View] could be obtained by [findViewById].
+   * If view gets resized based on resized view's content - this will be handled automatically.
+   *
+   * @return id for given view annotation. Actual [View] could be obtained by [getViewAnnotationById].
    * @throws [RuntimeException] if options did not include geometry.
    */
   fun addViewAnnotation(
-    @LayoutRes id: Int,
+    @LayoutRes resId: Int,
     options: ViewAnnotationOptions
   ): String
 
   /**
-   * Add annotation view inflated from [id] asynchronously.
+   * Add annotation view inflated from [resId] asynchronously.
    * Inflated [View] will be delivered in [result] callback.
    *
    * Annotation [options] must include Geometry where we want to bind our annotation view.
@@ -36,10 +38,12 @@ interface ViewAnnotationPlugin: MapPlugin, ContextBinder, OnCameraChangeListener
    * Width and height could be specified explicitly but better idea will be not specifying them
    * as they will be calculated automatically based on view layout.
    *
+   * If view gets resized based on resized view's content - this will be handled automatically.
+   *
    * @throws [RuntimeException] if options did not include geometry.
    */
   fun addViewAnnotation(
-    @LayoutRes id: Int,
+    @LayoutRes resId: Int,
     options: ViewAnnotationOptions,
     result: (String) -> Unit
   )
@@ -64,16 +68,26 @@ interface ViewAnnotationPlugin: MapPlugin, ContextBinder, OnCameraChangeListener
    *
    * @return [View] if view was found and NULL otherwise.
    */
-  fun findViewAnnotationByMarkerId(
-    markerId: String
-  ): View?
+  fun getViewAnnotationByMarkerId(markerId: String): View?
 
   /**
    * Find [View] by view annotation id.
    *
    * @return [View] if view was found and NULL otherwise.
    */
-  fun findViewAnnotationById(
-    id: String
-  ): View?
+  fun getViewAnnotationById(id: String): View?
+
+  /**
+   * Get current [ViewAnnotationOptions] by icon id if it was specified as part of [ViewAnnotationOptions.iconIdentifier].
+   *
+   * @return [ViewAnnotationOptions] if view was found and NULL otherwise.
+   */
+  fun getViewAnnotationOptionsByMarkerId(markerId: String): ViewAnnotationOptions?
+
+  /**
+   * Get current [ViewAnnotationOptions] by view annotation id.
+   *
+   * @return [ViewAnnotationOptions] if view was found and NULL otherwise.
+   */
+  fun getViewAnnotationOptionsById(id: String): ViewAnnotationOptions?
 }

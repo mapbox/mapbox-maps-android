@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
+import com.mapbox.common.Logger
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ViewAnnotationAnchor
 import com.mapbox.maps.ViewAnnotationOptions
@@ -43,13 +44,14 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
 
   // synchronous method
   override fun addViewAnnotation(
-    @LayoutRes id: Int,
+    @LayoutRes resId: Int,
     options: ViewAnnotationOptions
   ): String {
     if (options.geometry == null) {
       throw RuntimeException("Geometry can not be null!")
     }
-    val nativeView = LayoutInflater.from(mapView.context).inflate(id, mapView, false)
+    // TODO add support for WRAP_CONTENT dimensions and not concrete ones
+    val nativeView = LayoutInflater.from(mapView.context).inflate(resId, mapView, false)
     val nativeViewLayout = nativeView.layoutParams as FrameLayout.LayoutParams
     val updatedOptions = options.toBuilder()
       .anchor(if (options.anchor == null) ViewAnnotationAnchor.CENTER else options.anchor)
@@ -61,27 +63,29 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
       viewLayoutParams = nativeViewLayout,
       options = updatedOptions
     )
-    val viewId = annotation.hashCode().toString()
-    annotations[viewId] = annotation
+    val id = annotation.hashCode().toString()
+    annotations[id] = annotation
     delegateMapViewAnnotations.apply {
-      addViewAnnotation(viewId, updatedOptions)
+      addViewAnnotation(id, updatedOptions)
       calculateViewAnnotationsPosition {
         redrawAnnotations(it, !options.allowViewAnnotationsCollision)
       }
     }
-    return viewId
+    addViewSizeChangeListener(id, nativeView)
+    return id
   }
 
   // asynchronous method
   override fun addViewAnnotation(
-    @LayoutRes id: Int,
+    @LayoutRes resId: Int,
     options: ViewAnnotationOptions,
     result: (String) -> Unit
   ) {
     if (options.geometry == null) {
       throw RuntimeException("Geometry can not be null!")
     }
-    asyncInflater.inflate(id, mapView) { view, _, _ ->
+    asyncInflater.inflate(resId, mapView) { view, _, _ ->
+      // TODO add support for WRAP_CONTENT dimensions and not concrete ones
       val nativeViewLayout = view.layoutParams as FrameLayout.LayoutParams
       val updatedOptions = options.toBuilder()
         .anchor(if (options.anchor == null) ViewAnnotationAnchor.CENTER else options.anchor)
@@ -93,15 +97,35 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
         viewLayoutParams = nativeViewLayout,
         options = updatedOptions
       )
-      val viewId = annotation.hashCode().toString()
-      annotations[viewId] = annotation
+      val id = annotation.hashCode().toString()
+      annotations[id] = annotation
       delegateMapViewAnnotations.apply {
-        addViewAnnotation(viewId, updatedOptions)
+        addViewAnnotation(id, updatedOptions)
         calculateViewAnnotationsPosition {
           redrawAnnotations(it, !options.allowViewAnnotationsCollision)
         }
       }
-      result.invoke(viewId)
+      addViewSizeChangeListener(id, view)
+      result.invoke(id)
+    }
+  }
+
+  private fun addViewSizeChangeListener(id: String, view: View) {
+    view.addOnLayoutChangeListener { _, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+      val oldW = oldRight - oldLeft
+      val oldH = oldBottom - oldTop
+      val newW = right - left
+      val newH = bottom - top
+      if (oldW != newW || oldH != newH) {
+        Logger.e("KIRYLDD", "oldW=$oldW, newW=$newW, oldH=$oldH, newH=$newH")
+        updateViewAnnotation(
+          id,
+          ViewAnnotationOptions.Builder()
+            .width(if (oldW != newW) newW else oldW)
+            .height(if (oldH != newH) newH else oldH)
+            .build()
+        )
+      }
     }
   }
 
@@ -117,6 +141,8 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
     for (viewPosition in positionsToUpdate) {
       annotations[viewPosition.identifier]?.let { annotation ->
         mapView.removeView(annotation.view)
+        annotation.viewLayoutParams.width = annotation.options.width
+        annotation.viewLayoutParams.height = annotation.options.height
         annotation.viewLayoutParams.setMargins(
           viewPosition.leftTopCoordinate.x.toInt(),
           viewPosition.leftTopCoordinate.y.toInt(),
@@ -129,7 +155,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
   }
 
   override fun removeViewAnnotation(id: String) {
-    mapView.removeView(findViewAnnotationById(id))
+    mapView.removeView(getViewAnnotationById(id))
     annotations.remove(id)
     delegateMapViewAnnotations.apply {
       removeViewAnnotation(id)
@@ -147,18 +173,16 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
     annotations[id]?.let {
       val updatedOptions = ViewAnnotationOptions.Builder()
         .geometry(if (options.geometry != null) options.geometry else it.options.geometry)
-        .allowViewAnnotationsCollision(
-          if (!options.allowViewAnnotationsCollision)
-            options.allowViewAnnotationsCollision
-          else
-            it.options.allowViewAnnotationsCollision
-        )
+        .allowViewAnnotationsCollision(options.allowViewAnnotationsCollision)
         .anchor(if (options.anchor != null) options.anchor else it.options.anchor)
         .width(if (options.width != 0) options.width else it.options.width)
         .height(if (options.height != 0) options.height else it.options.height)
         .offsetX(if (options.offsetX != 0) options.offsetX else it.options.offsetX)
         .offsetY(if (options.offsetY != 0) options.offsetY else it.options.offsetY)
+        .iconIdentifier(if (options.iconIdentifier != null) options.iconIdentifier else it.options.iconIdentifier)
+        .selected(options.selected)
         .build()
+      it.options = updatedOptions
       delegateMapViewAnnotations.apply {
         updateViewAnnotation(id, updatedOptions)
         calculateViewAnnotationsPosition { positions ->
@@ -168,7 +192,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
     }
   }
 
-  override fun findViewAnnotationByMarkerId(markerId: String): View? {
+  override fun getViewAnnotationByMarkerId(markerId: String): View? {
     annotations.forEach {
       if (it.value.options.iconIdentifier == markerId) {
         return it.value.view
@@ -177,7 +201,18 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
     return null
   }
 
-  override fun findViewAnnotationById(id: String) = annotations[id]?.view
+  override fun getViewAnnotationById(id: String) = annotations[id]?.view
+
+  override fun getViewAnnotationOptionsByMarkerId(markerId: String): ViewAnnotationOptions? {
+    annotations.forEach {
+      if (it.value.options.iconIdentifier == markerId) {
+        return it.value.options
+      }
+    }
+    return null
+  }
+
+  override fun getViewAnnotationOptionsById(id: String) = annotations[id]?.options
 
   override fun cleanup() {
     super.cleanup()
