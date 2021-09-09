@@ -12,6 +12,7 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.animation.animator.*
+import com.mapbox.maps.plugin.annotation.Annotation
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.toCameraOptions
 import java.util.concurrent.CopyOnWriteArraySet
@@ -153,6 +154,11 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     }
     // move native map to new position
     try {
+      Log.d(TAG, cameraOptions.toString())
+      if (!isValidCameraLngLat(cameraOptions)) {
+        Log.e(TAG, "Invalid Latitude, Longitude provided")
+        return
+      }
       mapCameraManagerDelegate.setCamera(cameraOptions)
       // notify listeners with actual values
       notifyListeners(cameraOptions)
@@ -168,6 +174,14 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         "Error while setting camera options : ${error.message} CameraOptions = $cameraOptions"
       )
     }
+  }
+
+  private fun isValidCameraLngLat(cameraOptions: CameraOptions): Boolean {
+    cameraOptions.center?.let {
+      return (it.latitude() < MAX_MERCATOR_LATITUDE && it.latitude() > MIN_MERCATOR_LATITUDE
+        && it.longitude() < MAX_MERCATOR_LONGITUDE && it.longitude() > MIN_MERCATOR_LONGITUDE)
+    }
+    return true
   }
 
   private fun updateAnimatorValues(cameraAnimator: CameraAnimator<*>): Boolean {
@@ -792,6 +806,10 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
    */
   companion object {
     private const val TAG = "Mbgl-CameraManager"
+    private const val MAX_MERCATOR_LATITUDE = 85.05112877980659
+    private const val MIN_MERCATOR_LATITUDE = -85.05112877980659
+    private const val MAX_MERCATOR_LONGITUDE = 180.0
+    private const val MIN_MERCATOR_LONGITUDE = -180.0
   }
 }
 
