@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
-import com.mapbox.common.Logger
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ViewAnnotationAnchor
 import com.mapbox.maps.ViewAnnotationOptions
@@ -50,7 +49,6 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
     if (options.geometry == null) {
       throw RuntimeException("Geometry can not be null!")
     }
-    // TODO add support for WRAP_CONTENT dimensions and not concrete ones
     val nativeView = LayoutInflater.from(mapView.context).inflate(resId, mapView, false)
     val nativeViewLayout = nativeView.layoutParams as FrameLayout.LayoutParams
     val updatedOptions = options.toBuilder()
@@ -71,7 +69,6 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
         redrawAnnotations(it, !options.allowViewAnnotationsCollision)
       }
     }
-    addViewSizeChangeListener(id, nativeView)
     return id
   }
 
@@ -85,7 +82,6 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
       throw RuntimeException("Geometry can not be null!")
     }
     asyncInflater.inflate(resId, mapView) { view, _, _ ->
-      // TODO add support for WRAP_CONTENT dimensions and not concrete ones
       val nativeViewLayout = view.layoutParams as FrameLayout.LayoutParams
       val updatedOptions = options.toBuilder()
         .anchor(if (options.anchor == null) ViewAnnotationAnchor.CENTER else options.anchor)
@@ -105,27 +101,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
           redrawAnnotations(it, !options.allowViewAnnotationsCollision)
         }
       }
-      addViewSizeChangeListener(id, view)
       result.invoke(id)
-    }
-  }
-
-  private fun addViewSizeChangeListener(id: String, view: View) {
-    view.addOnLayoutChangeListener { _, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
-      val oldW = oldRight - oldLeft
-      val oldH = oldBottom - oldTop
-      val newW = right - left
-      val newH = bottom - top
-      if (oldW != newW || oldH != newH) {
-        Logger.e("KIRYLDD", "oldW=$oldW, newW=$newW, oldH=$oldH, newH=$newH")
-        updateViewAnnotation(
-          id,
-          ViewAnnotationOptions.Builder()
-            .width(if (oldW != newW) newW else oldW)
-            .height(if (oldH != newH) newH else oldH)
-            .build()
-        )
-      }
     }
   }
 
@@ -160,7 +136,6 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
     delegateMapViewAnnotations.apply {
       removeViewAnnotation(id)
       calculateViewAnnotationsPosition {
-        // TODO may be optimized to do full redraw only when top level visible annotation was not allowing collisions
         redrawAnnotations(it, true)
       }
     }

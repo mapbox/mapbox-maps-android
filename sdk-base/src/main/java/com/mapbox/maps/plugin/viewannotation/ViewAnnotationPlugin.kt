@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.viewannotation
 
 import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ViewAnnotationOptions
@@ -13,13 +14,12 @@ interface ViewAnnotationPlugin: MapPlugin, ContextBinder, OnCameraChangeListener
 
   /**
    * Add annotation view inflated from [resId] synchronously.
+   * Parent layout must have fixed dimensions and should not use [ViewGroup.LayoutParams.WRAP_CONTENT].
    *
    * Annotation [options] must include Geometry where we want to bind our annotation view.
    *
    * Width and height could be specified explicitly but better idea will be not specifying them
    * as they will be calculated automatically based on view layout.
-   *
-   * If view gets resized based on resized view's content - this will be handled automatically.
    *
    * @return id for given view annotation. Actual [View] could be obtained by [getViewAnnotationById].
    * @throws [RuntimeException] if options did not include geometry.
@@ -31,14 +31,13 @@ interface ViewAnnotationPlugin: MapPlugin, ContextBinder, OnCameraChangeListener
 
   /**
    * Add annotation view inflated from [resId] asynchronously.
+   * Parent layout must have fixed dimensions and should not use [ViewGroup.LayoutParams.WRAP_CONTENT].
    * Inflated [View] will be delivered in [result] callback.
    *
    * Annotation [options] must include Geometry where we want to bind our annotation view.
    *
    * Width and height could be specified explicitly but better idea will be not specifying them
    * as they will be calculated automatically based on view layout.
-   *
-   * If view gets resized based on resized view's content - this will be handled automatically.
    *
    * @throws [RuntimeException] if options did not include geometry.
    */
