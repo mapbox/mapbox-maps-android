@@ -65,8 +65,9 @@ class PointAnnotation(
     set(value) {
       value?.let {
         field = it
-        if (iconImage == null) {
-          iconImage = ICON_DEFAULT_NAME_PREFIX + it.generationId
+        if (iconImage == null || iconImage!!.startsWith(ICON_DEFAULT_NAME_PREFIX)) {
+          // User does not set iconImage, update iconImage to this new bitmap
+          iconImage = ICON_DEFAULT_NAME_PREFIX + it.hashCode()
         }
       }
     }
