@@ -1064,5 +1064,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
         </activity>
+
+        <activity
+            android:name=".TestMapActivity"
+            android:exported="true" />
     </application>
 </manifest>

@@ -101,14 +101,6 @@ internal class NativeObserver(
     }
   }
 
-  internal fun onStop() {
-    observable.get()?.unsubscribe(this)
-  }
-
-  internal fun onStart() {
-    observable.get()?.subscribe(this, observedEvents)
-  }
-
   //
   // Add / Remove
   //
@@ -309,7 +301,9 @@ internal class NativeObserver(
     }
   }
 
-  fun clearListeners() {
+  fun onDestroy() {
+    observable.get()?.unsubscribe(this)
+
     onCameraChangeListeners.clear()
 
     onMapIdleListeners.clear()
