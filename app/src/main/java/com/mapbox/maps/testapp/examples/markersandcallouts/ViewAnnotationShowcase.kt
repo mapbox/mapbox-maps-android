@@ -41,8 +41,8 @@ class ViewAnnotationShowcase : AppCompatActivity(), OnMapClickListener, OnMapLon
   private val pointList = mutableListOf<Feature>()
   private var id = "0"
 
-  private var width = 0
-  private var height = 0
+  private var markerWidth = 0
+  private var markerHeight = 0
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -62,14 +62,14 @@ class ViewAnnotationShowcase : AppCompatActivity(), OnMapClickListener, OnMapLon
       styleExtension = style(Style.MAPBOX_STREETS) {
         +image(BLUE_ICON_ID) {
           val bitmap = BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view)
-          width = bitmap.width
-          height = bitmap.height
+          markerWidth = bitmap.width
+          markerHeight = bitmap.height
           bitmap(bitmap)
         }
         +geoJsonSource(SOURCE_ID)
         +symbolLayer(LAYER_ID, SOURCE_ID) {
           iconImage(BLUE_ICON_ID)
-          iconAnchor(IconAnchor.CENTER)
+          iconAnchor(IconAnchor.BOTTOM)
           iconAllowOverlap(true)
         }
       }
@@ -123,16 +123,17 @@ class ViewAnnotationShowcase : AppCompatActivity(), OnMapClickListener, OnMapLon
       ViewAnnotationOptions.Builder()
         .geometry(point)
         .iconIdentifier(markerId)
+        .anchor(ViewAnnotationAnchor.BOTTOM)
         .allowViewAnnotationsCollision(true)
         .build()
     )
     viewAnnotationPlugin.getViewAnnotationById(id)?.let { view ->
       view.visibility = View.GONE
-      // calculate offsetY manually taking into account that both icon and view annotation have anchor = center
+      // calculate offsetY manually taking into account icon height only because of bottom anchoring
       viewAnnotationPlugin.updateViewAnnotation(
         id,
         ViewAnnotationOptions.Builder()
-          .offsetY(height / 2 + viewAnnotationPlugin.getViewAnnotationOptionsById(id)?.height!! / 2)
+          .offsetY(markerHeight)
           .build()
       )
       view.findViewById<TextView>(R.id.textNativeView).text =
@@ -149,7 +150,6 @@ class ViewAnnotationShowcase : AppCompatActivity(), OnMapClickListener, OnMapLon
             ViewAnnotationOptions.Builder()
               .width(viewAnnotationPlugin.getViewAnnotationOptionsById(id)?.width!! + SELECTED_ADD_COEF_PX)
               .height(viewAnnotationPlugin.getViewAnnotationOptionsById(id)?.height!! + SELECTED_ADD_COEF_PX)
-              .offsetY(viewAnnotationPlugin.getViewAnnotationOptionsById(id)?.offsetY!! + SELECTED_ADD_COEF_PX / 2)
               .selected(true)
               .build()
           )
@@ -160,7 +160,6 @@ class ViewAnnotationShowcase : AppCompatActivity(), OnMapClickListener, OnMapLon
             ViewAnnotationOptions.Builder()
               .width(viewAnnotationPlugin.getViewAnnotationOptionsById(id)?.width!! - SELECTED_ADD_COEF_PX)
               .height(viewAnnotationPlugin.getViewAnnotationOptionsById(id)?.height!! - SELECTED_ADD_COEF_PX)
-              .offsetY(viewAnnotationPlugin.getViewAnnotationOptionsById(id)?.offsetY!! - SELECTED_ADD_COEF_PX / 2)
               .selected(false)
               .build()
           )
