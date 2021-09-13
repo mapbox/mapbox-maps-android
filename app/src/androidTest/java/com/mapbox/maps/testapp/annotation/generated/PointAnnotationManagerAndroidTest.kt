@@ -130,6 +130,14 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testSymbolZOrder() {
+    val testValue = SymbolZOrder.AUTO
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    pointAnnotationManager.symbolZOrder = testValue
+    assertEquals(testValue, pointAnnotationManager.symbolZOrder)
+  }
+
+  @Test
   fun testTextAllowOverlap() {
     val testValue = true
     val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
