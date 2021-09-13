@@ -30,9 +30,6 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   private val onGeoJsonParsedListenerList = mutableListOf<OnGeoJsonParsed>()
   private val scope = MainScope()
   private var pendingData: Pair<GeoJson, ((GeoJsonSource) -> Unit)>? = null
-  // Use a shared single thread to get a better performance for multi sources.
-  @ObsoleteCoroutinesApi
-  private val dispatcher = newSingleThreadContext("GeoJsonSourceParseThread")
 
   private constructor(
     builder: Builder,
@@ -656,6 +653,10 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * Static variables and methods.
    */
   companion object {
+    // Use a shared single thread to get a better performance for multi sources.
+    @ObsoleteCoroutinesApi
+    private val dispatcher = newSingleThreadContext("GeoJsonSourceParseThread")
+
     /** Registry to control if we need to ignore parsed result for given sourceId. */
     private val ignoreParsedGeoJsonRegistry = hashMapOf<String, Boolean>()
 
