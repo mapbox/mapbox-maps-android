@@ -1,12 +1,12 @@
 package com.mapbox.maps.util
 
+import com.mapbox.maps.util.MathUtils.prepareOptimalBearingPath
+import com.mapbox.maps.util.MathUtils.shortestRotation
 import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
-import com.mapbox.maps.util.MathUtils.prepareOptimalBearingPath
-import com.mapbox.maps.util.MathUtils.shortestRotation
 
 private const val EPS = 0.0001
 
@@ -20,8 +20,10 @@ class PrepareOptimalBearingPathTest(
     @JvmStatic
     @Parameterized.Parameters
     fun data() = listOf(
-      arrayOf(doubleArrayOf(-0.0, -10.0, 10.0, 270.0, 560.0),
-        doubleArrayOf(0.0, -10.0, 10.0, -90.0, -160.0)),
+      arrayOf(
+        doubleArrayOf(-0.0, -10.0, 10.0, 270.0, 560.0),
+        doubleArrayOf(0.0, -10.0, 10.0, -90.0, -160.0)
+      ),
       arrayOf(doubleArrayOf(0.0, 90.0, 270.0), doubleArrayOf(0.0, 90.0, 270.0)),
       arrayOf(doubleArrayOf(20.0, 720.0, 0.0), doubleArrayOf(20.0, 0.0, 0.0)),
     )

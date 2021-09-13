@@ -18,8 +18,10 @@ private val commonLanguageList = listOf(
   arrayOf(NAME_JA, Locale.JAPANESE),
   arrayOf(NAME_KO, Locale.KOREA),
   arrayOf(NAME_ZH_HANS, Locale.SIMPLIFIED_CHINESE),
-  arrayOf(NAME_ZH_HANS,
-    Locale.Builder().setLanguage("zh").setRegion("CN").setScript("Hans").build()),
+  arrayOf(
+    NAME_ZH_HANS,
+    Locale.Builder().setLanguage("zh").setRegion("CN").setScript("Hans").build()
+  ),
 )
 
 @RunWith(Parameterized::class)
@@ -32,8 +34,10 @@ class LanguageNameV7Test(
     @Parameterized.Parameters(name = "Language for locale {1} should be {0}")
     fun data() = commonLanguageList + listOf(
       arrayOf(NAME_ZH, Locale.TAIWAN),
-      arrayOf(NAME_ZH,
-        Locale.Builder().setLanguage("zh").setRegion("HK").setScript("Hant").build()),
+      arrayOf(
+        NAME_ZH,
+        Locale.Builder().setLanguage("zh").setRegion("HK").setScript("Hant").build()
+      ),
     )
   }
 
@@ -55,8 +59,10 @@ class LanguageNameV8Test(
     fun data() = commonLanguageList + listOf(
       arrayOf(NAME_IT, Locale.ITALIAN),
       arrayOf(NAME_ZH_HANT, Locale.TAIWAN),
-      arrayOf(NAME_ZH_HANT,
-        Locale.Builder().setLanguage("zh").setRegion("HK").setScript("Hant").build()),
+      arrayOf(
+        NAME_ZH_HANT,
+        Locale.Builder().setLanguage("zh").setRegion("HK").setScript("Hant").build()
+      ),
     )
   }
 
