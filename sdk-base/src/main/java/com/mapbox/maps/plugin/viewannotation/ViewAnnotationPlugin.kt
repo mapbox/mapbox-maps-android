@@ -63,7 +63,7 @@ interface ViewAnnotationPlugin: MapPlugin, ContextBinder, OnCameraChangeListener
   )
 
   /**
-   * Find [View] by icon id if it was specified as part of [ViewAnnotationOptions.iconIdentifier].
+   * Find [View] by feature id if it was specified as part of [ViewAnnotationOptions.featureIdentifier].
    *
    * @return [View] if view was found and NULL otherwise.
    */
@@ -77,7 +77,7 @@ interface ViewAnnotationPlugin: MapPlugin, ContextBinder, OnCameraChangeListener
   fun getViewAnnotationById(id: String): View?
 
   /**
-   * Get current [ViewAnnotationOptions] by icon id if it was specified as part of [ViewAnnotationOptions.iconIdentifier].
+   * Get current [ViewAnnotationOptions] by feature id if it was specified as part of [ViewAnnotationOptions.featureIdentifier].
    *
    * @return [ViewAnnotationOptions] if view was found and NULL otherwise.
    */
