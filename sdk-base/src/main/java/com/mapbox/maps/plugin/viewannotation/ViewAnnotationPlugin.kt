@@ -67,7 +67,7 @@ interface ViewAnnotationPlugin: MapPlugin, ContextBinder, OnCameraChangeListener
    *
    * @return [View] if view was found and NULL otherwise.
    */
-  fun getViewAnnotationByMarkerId(markerId: String): View?
+  fun getViewAnnotationByFeatureId(featureId: String): View?
 
   /**
    * Find [View] by view annotation id.
@@ -81,7 +81,7 @@ interface ViewAnnotationPlugin: MapPlugin, ContextBinder, OnCameraChangeListener
    *
    * @return [ViewAnnotationOptions] if view was found and NULL otherwise.
    */
-  fun getViewAnnotationOptionsByMarkerId(markerId: String): ViewAnnotationOptions?
+  fun getViewAnnotationOptionsByFeatureId(featureId: String): ViewAnnotationOptions?
 
   /**
    * Get current [ViewAnnotationOptions] by view annotation id.

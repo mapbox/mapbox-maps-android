@@ -31,7 +31,7 @@ import com.mapbox.maps.testapp.R
  * Example how to add view annotations to the map.
  *
  * Specifically view annotations will be associated with marker icons
- * showcasing how to implement something similar to MarkerView from Maps v9.
+ * showcasing how to implement functionality similar to MarkerView from Maps v9.
  */
 class ViewAnnotationShowcase : AppCompatActivity(), OnMapClickListener, OnMapLongClickListener {
 
@@ -94,7 +94,7 @@ class ViewAnnotationShowcase : AppCompatActivity(), OnMapClickListener, OnMapLon
       if (it.isValue && it.value?.size!! > 0) {
         it.value?.get(0)?.feature?.let { feature ->
           if (feature.id() != null) {
-            val annotationView = viewAnnotationPlugin.getViewAnnotationByMarkerId(feature.id()!!)
+            val annotationView = viewAnnotationPlugin.getViewAnnotationByFeatureId(feature.id()!!)
             if (annotationView?.visibility == View.VISIBLE) {
               annotationView.visibility = View.GONE
             } else {
@@ -122,7 +122,7 @@ class ViewAnnotationShowcase : AppCompatActivity(), OnMapClickListener, OnMapLon
       R.layout.item_callout_view,
       ViewAnnotationOptions.Builder()
         .geometry(point)
-        .iconIdentifier(markerId)
+        .featureIdentifier(markerId)
         .anchor(ViewAnnotationAnchor.BOTTOM)
         .allowViewAnnotationsCollision(true)
         .build()

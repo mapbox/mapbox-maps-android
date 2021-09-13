@@ -154,7 +154,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
         .height(if (options.height != 0) options.height else it.options.height)
         .offsetX(if (options.offsetX != 0) options.offsetX else it.options.offsetX)
         .offsetY(if (options.offsetY != 0) options.offsetY else it.options.offsetY)
-        .iconIdentifier(if (options.iconIdentifier != null) options.iconIdentifier else it.options.iconIdentifier)
+        .featureIdentifier(if (options.featureIdentifier != null) options.featureIdentifier else it.options.featureIdentifier)
         .selected(options.selected)
         .build()
       it.options = updatedOptions
@@ -167,9 +167,9 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
     }
   }
 
-  override fun getViewAnnotationByMarkerId(markerId: String): View? {
+  override fun getViewAnnotationByFeatureId(featureId: String): View? {
     annotations.forEach {
-      if (it.value.options.iconIdentifier == markerId) {
+      if (it.value.options.featureIdentifier == featureId) {
         return it.value.view
       }
     }
@@ -178,9 +178,9 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
 
   override fun getViewAnnotationById(id: String) = annotations[id]?.view
 
-  override fun getViewAnnotationOptionsByMarkerId(markerId: String): ViewAnnotationOptions? {
+  override fun getViewAnnotationOptionsByFeatureId(featureId: String): ViewAnnotationOptions? {
     annotations.forEach {
-      if (it.value.options.iconIdentifier == markerId) {
+      if (it.value.options.featureIdentifier == featureId) {
         return it.value.options
       }
     }
