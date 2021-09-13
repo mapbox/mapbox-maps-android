@@ -1069,7 +1069,7 @@
             android:name=".TestMapActivity"
             android:exported="true" />
         <activity
-            android:name=".examples.markersandcallouts.ViewAnnotationShowcase"
+            android:name=".examples.markersandcallouts.ViewAnnotationShowcaseActivity"
             android:description="@string/description_view_annotation"
             android:exported="true"
             android:label="@string/activity_view_annotations">

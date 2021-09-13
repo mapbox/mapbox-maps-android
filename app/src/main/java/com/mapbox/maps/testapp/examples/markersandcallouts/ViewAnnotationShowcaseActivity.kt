@@ -33,7 +33,7 @@ import com.mapbox.maps.testapp.R
  * Specifically view annotations will be associated with marker icons
  * showcasing how to implement functionality similar to MarkerView from Maps v9.
  */
-class ViewAnnotationShowcase : AppCompatActivity(), OnMapClickListener, OnMapLongClickListener {
+class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, OnMapLongClickListener {
 
   private lateinit var mapboxMap: MapboxMap
   private lateinit var viewAnnotationPlugin: ViewAnnotationPlugin
