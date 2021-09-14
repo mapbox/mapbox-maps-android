@@ -47,9 +47,12 @@ class PolygonAnnotationManagerTest {
   private val style: StyleInterface = mockk()
   private val mapCameraManagerDelegate: MapCameraManagerDelegate = mockk()
   private val mapFeatureQueryDelegate: MapFeatureQueryDelegate = mockk()
+  private val mapListenerDelegate: MapListenerDelegate = mockk()
   private val gesturesPlugin: GesturesPlugin = mockk()
   private val layer: FillLayer = mockk()
   private val source: GeoJsonSource = mockk()
+  private val dragLayer: FillLayer = mockk()
+  private val dragSource: GeoJsonSource = mockk()
   private val mapView: View = mockk()
   private val queriedFeatures = mockk<Expected<String, List<QueriedFeature>>>()
   private val queriedFeature = mockk<QueriedFeature>()
@@ -93,6 +96,8 @@ class PolygonAnnotationManagerTest {
     every { delegateProvider.mapPluginProviderDelegate.getPlugin<GesturesPlugin>(any()) } returns gesturesPlugin
     every { delegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
     every { delegateProvider.mapFeatureQueryDelegate } returns mapFeatureQueryDelegate
+    every { delegateProvider.mapListenerDelegate } returns mapListenerDelegate
+    every { mapListenerDelegate.addOnMapIdleListener(any()) } just Runs
     every { mapCameraManagerDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
     every { mapCameraManagerDelegate.pixelForCoordinate(any()) } returns ScreenCoordinate(1.0, 1.0)
     every { mapView.scrollX } returns 0
@@ -120,11 +125,18 @@ class PolygonAnnotationManagerTest {
     manager = PolygonAnnotationManager(mapView, delegateProvider)
     manager.layer = layer
     manager.source = source
+    manager.dragLayer = dragLayer
+    manager.dragSource = dragSource
     every { layer.fillSortKey(any<Expression>()) } answers { layer }
+    every { dragLayer.fillSortKey(any<Expression>()) } answers { dragLayer }
     every { layer.fillColor(any<Expression>()) } answers { layer }
+    every { dragLayer.fillColor(any<Expression>()) } answers { dragLayer }
     every { layer.fillOpacity(any<Expression>()) } answers { layer }
+    every { dragLayer.fillOpacity(any<Expression>()) } answers { dragLayer }
     every { layer.fillOutlineColor(any<Expression>()) } answers { layer }
+    every { dragLayer.fillOutlineColor(any<Expression>()) } answers { dragLayer }
     every { layer.fillPattern(any<Expression>()) } answers { layer }
+    every { dragLayer.fillPattern(any<Expression>()) } answers { dragLayer }
   }
 
   @Test
@@ -397,8 +409,10 @@ class PolygonAnnotationManagerTest {
       .withFillSortKey(1.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.fillSortKey(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY)) }
+    verify(exactly = 1) { manager.dragLayer?.fillSortKey(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.fillSortKey(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY)) }
+    verify(exactly = 1) { manager.dragLayer?.fillSortKey(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY)) }
   }
 
   @Test
@@ -423,8 +437,10 @@ class PolygonAnnotationManagerTest {
       .withFillColor("rgba(0, 0, 0, 1)")
     manager.create(options)
     verify(exactly = 1) { manager.layer?.fillColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer?.fillColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.fillColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer?.fillColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR)) }
   }
 
   @Test
@@ -436,8 +452,10 @@ class PolygonAnnotationManagerTest {
       .withFillOpacity(1.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.fillOpacity(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OPACITY)) }
+    verify(exactly = 1) { manager.dragLayer?.fillOpacity(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OPACITY)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.fillOpacity(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OPACITY)) }
+    verify(exactly = 1) { manager.dragLayer?.fillOpacity(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OPACITY)) }
   }
 
   @Test
@@ -462,8 +480,10 @@ class PolygonAnnotationManagerTest {
       .withFillOutlineColor("rgba(0, 0, 0, 1)")
     manager.create(options)
     verify(exactly = 1) { manager.layer?.fillOutlineColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer?.fillOutlineColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.fillOutlineColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer?.fillOutlineColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
   }
 
   @Test
@@ -475,7 +495,9 @@ class PolygonAnnotationManagerTest {
       .withFillPattern("pedestrian-polygon")
     manager.create(options)
     verify(exactly = 1) { manager.layer?.fillPattern(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN)) }
+    verify(exactly = 1) { manager.dragLayer?.fillPattern(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.fillPattern(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN)) }
+    verify(exactly = 1) { manager.dragLayer?.fillPattern(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN)) }
   }
 }

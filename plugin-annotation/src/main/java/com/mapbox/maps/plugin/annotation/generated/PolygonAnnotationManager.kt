@@ -154,6 +154,7 @@ class PolygonAnnotationManager(
     set(value) {
       value?.let {
         layer?.fillAntialias(it)
+        dragLayer?.fillAntialias(it)
       }
     }
 
@@ -178,6 +179,7 @@ class PolygonAnnotationManager(
     set(value) {
       value?.let {
         layer?.fillTranslate(it)
+        dragLayer?.fillTranslate(it)
       }
     }
 
@@ -202,6 +204,7 @@ class PolygonAnnotationManager(
     set(value) {
       value?.let {
         layer?.fillTranslateAnchor(it)
+        dragLayer?.fillTranslateAnchor(it)
       }
     }
 
@@ -234,7 +237,10 @@ class PolygonAnnotationManager(
      * @param expression expression
      */
     set(value) {
-      value?.let { layer?.filter(it) }
+      value?.let {
+        layer?.filter(it)
+        dragLayer?.filter(it)
+      }
     }
 
   /**
