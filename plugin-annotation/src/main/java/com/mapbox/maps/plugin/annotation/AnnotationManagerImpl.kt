@@ -1,6 +1,8 @@
 package com.mapbox.maps.plugin.annotation
 
 import android.graphics.PointF
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.annotation.VisibleForTesting
 import com.mapbox.android.gestures.MoveGestureDetector
@@ -34,10 +36,8 @@ import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_GESTURES_PLUGIN_ID
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
-import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
-import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate
-import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
+import com.mapbox.maps.plugin.delegates.*
+import com.mapbox.maps.plugin.delegates.listeners.OnMapIdleListener
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
@@ -61,6 +61,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   private var mapFeatureQueryDelegate: MapFeatureQueryDelegate =
     delegateProvider.mapFeatureQueryDelegate
   private var styleStateDelegate: MapStyleStateDelegate = delegateProvider.styleStateDelegate
+  private var mapListenerDelegate: MapListenerDelegate = delegateProvider.mapListenerDelegate
   protected val dataDrivenPropertyUsageMap: MutableMap<String, Boolean> = HashMap()
   private var currentId = 0L
   private var width = 0
@@ -76,6 +77,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   protected abstract val sourceId: String
   protected abstract val dragLayerId: String
   protected abstract val dragSourceId: String
+  private val handler = Handler(Looper.getMainLooper())
 
   @Suppress("UNCHECKED_CAST")
   private var gesturesPlugin: GesturesPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
@@ -488,6 +490,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Invoked when Mapview or Annotation manager is destroyed.
    */
   override fun onDestroy() {
+    handler.removeCallbacksAndMessages(null)
     delegateProvider.getStyle { style ->
       layer?.let {
         if (style.styleLayerExists(it.layerId)) {
@@ -663,15 +666,28 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
       return false
     }
 
+    private val onMapIdleListener: OnMapIdleListener = object : OnMapIdleListener {
+      override fun onMapIdle() {
+        mapListenerDelegate.removeOnMapIdleListener(this)
+        // Remove dragging annotation from drag layer
+        handler.postDelayed(
+          {
+            // Delay 1 second to avoid blink issue.
+            delegateProvider.getStyle { style ->
+              updateDragSource(style)
+            }
+          },
+          UPDATE_DELAY_MS
+        )
+      }
+    }
+
     private fun stopDragging() {
       draggingAnnotation?.let { annotation ->
         dragListeners.forEach { it.onAnnotationDragFinished(annotation) }
         draggingAnnotation = null
+        mapListenerDelegate.addOnMapIdleListener(onMapIdleListener)
         addAnnotation(annotation)
-      }
-      // Remove dragging annotation from drag layer
-      delegateProvider.getStyle { style ->
-        updateDragSource(style)
       }
     }
   }
@@ -763,5 +779,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     private const val QUERY_WAIT_TIME = 2L
     private const val CLUSTER_TEXT_LAYER_ID = "mapbox-android-cluster-text-layer"
     private val DEFAULT_TEXT_FIELD = get("point_count")
+    /** The delay time when updating drag source */
+    private const val UPDATE_DELAY_MS = 1000L
   }
 }
