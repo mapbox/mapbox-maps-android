@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import nl.jqno.equalsverifier.EqualsVerifier
@@ -18,6 +19,15 @@ class EqualHashCodeTest {
   fun `MapAnimationOptions hashCode and equals test`() {
     val clazz = MapAnimationOptions::class.java
     EqualsVerifier.forClass(clazz)
+      .usingGetClass()
+      .verify()
+  }
+
+  @Test
+  fun `Plugin hashCode and equals test`() {
+    val clazz = Plugin::class.java
+    EqualsVerifier.forClass(clazz)
+      .withIgnoredFields("instance")
       .usingGetClass()
       .verify()
   }

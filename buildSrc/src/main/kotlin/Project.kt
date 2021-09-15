@@ -64,7 +64,6 @@ object Dependencies {
   const val hamcrest = "org.hamcrest:hamcrest:${Versions.hamcrest}"
   const val annotations = androidxAnnotations
   const val equalsVerifier = "nl.jqno.equalsverifier:equalsverifier:${Versions.equalsVerifier}"
-
 }
 
 object Versions {
