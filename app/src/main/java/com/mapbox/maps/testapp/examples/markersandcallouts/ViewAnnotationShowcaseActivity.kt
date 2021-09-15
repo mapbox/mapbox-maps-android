@@ -23,6 +23,8 @@ import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapLongClickListener
+import com.mapbox.maps.plugin.viewannotation.ViewAnnotationAnchor
+import com.mapbox.maps.plugin.viewannotation.ViewAnnotationOptions
 import com.mapbox.maps.plugin.viewannotation.ViewAnnotationPlugin
 import com.mapbox.maps.plugin.viewannotation.viewAnnotation
 import com.mapbox.maps.testapp.R
@@ -143,7 +145,7 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
       }
       view.findViewById<Button>(R.id.selectButton).setOnClickListener { b ->
         val button = b as Button
-        if (button.text.contentEquals("SELECT", true)) {
+        if (button.text == "SELECT") {
           button.text = "DESELECT"
           viewAnnotationPlugin.updateViewAnnotation(
             id,

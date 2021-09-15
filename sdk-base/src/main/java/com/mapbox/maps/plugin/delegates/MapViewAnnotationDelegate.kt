@@ -1,7 +1,7 @@
 package com.mapbox.maps.plugin.delegates
 
-import com.mapbox.maps.ViewAnnotationOptions
-import com.mapbox.maps.ViewAnnotationsPositionCallback
+import com.mapbox.maps.plugin.viewannotation.ViewAnnotationOptions
+import com.mapbox.maps.plugin.viewannotation.ViewAnnotationsPositionCallback
 
 interface MapViewAnnotationDelegate {
 

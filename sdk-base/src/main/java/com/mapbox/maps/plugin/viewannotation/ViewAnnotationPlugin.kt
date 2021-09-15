@@ -4,7 +4,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.ViewAnnotationOptions
 import com.mapbox.maps.plugin.ContextBinder
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener

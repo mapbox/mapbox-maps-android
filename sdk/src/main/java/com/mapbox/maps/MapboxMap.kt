@@ -19,6 +19,9 @@ import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.GesturesPluginImpl
+import com.mapbox.maps.plugin.viewannotation.ViewAnnotationOptions
+import com.mapbox.maps.plugin.viewannotation.ViewAnnotationsPositionCallback
+import com.mapbox.maps.plugin.viewannotation.core.ViewAnnotationCore
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -53,6 +56,8 @@ class MapboxMap internal constructor(
   internal var isStyleLoadInitiated = false
   private val styleObserver = StyleObserver(this, nativeMapWeakRef, nativeObserver, pixelRatio)
   internal var renderHandler: Handler? = null
+
+  private val viewAnnotationCore by lazy { ViewAnnotationCore() }
 
   /**
    * Represents current camera state.
@@ -1307,18 +1312,18 @@ class MapboxMap internal constructor(
   }
 
   override fun addViewAnnotation(viewId: String, options: ViewAnnotationOptions) {
-    nativeMapWeakRef.call { this.addViewAnnotation(viewId, options) }
+    viewAnnotationCore.addViewAnnotation(viewId, options)
   }
 
   override fun updateViewAnnotation(viewId: String, options: ViewAnnotationOptions) {
-    nativeMapWeakRef.call { this.updateViewAnnotation(viewId, options) }
+    viewAnnotationCore.updateViewAnnotation(viewId, options)
   }
 
   override fun removeViewAnnotation(viewId: String) {
-    nativeMapWeakRef.call { this.removeViewAnnotation(viewId) }
+    viewAnnotationCore.removeViewAnnotation(viewId)
   }
 
   override fun calculateViewAnnotationsPosition(callback: ViewAnnotationsPositionCallback) {
-    nativeMapWeakRef.call { this.calculateViewAnnotationsPosition(callback) }
+    viewAnnotationCore.calculateViewAnnotationsPosition(callback)
   }
 }

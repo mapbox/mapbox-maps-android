@@ -2,7 +2,6 @@
 package com.mapbox.maps.plugin.viewannotation
 
 import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.ViewAnnotationOptions
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 
