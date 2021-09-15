@@ -10,7 +10,7 @@ import com.mapbox.maps.plugin.animation.CameraAnimatorType
 /**
  * Base generic class for all camera animators.
  */
-abstract class CameraAnimator<out T> (
+abstract class CameraAnimator<out T>(
   /**
    * [TypeEvaluator] for generic type
    */
@@ -26,10 +26,12 @@ abstract class CameraAnimator<out T> (
    */
   var owner = cameraAnimatorOptions.owner
     internal set
+
   /**
    * Start animation value, will use current map value option from [CameraOptions] if null.
    */
   val startValue = cameraAnimatorOptions.startValue
+
   /**
    * Sets the values to animate between for this animation (except start value).
    */
@@ -42,6 +44,7 @@ abstract class CameraAnimator<out T> (
   private val userUpdateListeners = mutableListOf<AnimatorUpdateListener?>()
   private val userListeners = mutableListOf<AnimatorListener?>()
 
+  internal var canceled = false
   internal var isInternal = false
 
   init {
@@ -77,6 +80,7 @@ abstract class CameraAnimator<out T> (
    */
   final override fun start() {
     if (registered) {
+      canceled = false
       super.start()
     } else {
       Logger.w(
@@ -159,6 +163,24 @@ abstract class CameraAnimator<out T> (
     }
     userListeners.clear()
   }
+
+  /**
+   * Cancels the animation. Unlike end(), cancel() causes the animation to stop in its tracks,
+   * sending an Animator.AnimatorListener.onAnimationCancel(Animator) to its listeners,
+   * followed by an Animator.AnimatorListener.onAnimationEnd(Animator) message.
+   *
+   * This method must be called on the thread that is running the animation.
+   */
+  final override fun cancel() {
+    canceled = true
+    super.cancel()
+  }
+
+  /**
+   * true if CameraAnimator have any external listeners registered.
+   */
+  internal val hasUserListeners: Boolean
+    get() = userUpdateListeners.isNotEmpty()
 
   internal fun addInternalUpdateListener(listener: AnimatorUpdateListener) {
     super.removeAllUpdateListeners()

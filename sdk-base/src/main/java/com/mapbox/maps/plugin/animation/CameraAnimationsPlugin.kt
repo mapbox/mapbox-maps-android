@@ -11,6 +11,11 @@ import com.mapbox.maps.plugin.MapPlugin
  * Interface to interact with Camera Animations plugin
  */
 interface CameraAnimationsPlugin : MapPlugin {
+  /**
+   * If debug mode is enabled extra logs will be written about animation lifecycle and
+   * some other events that may be useful for debugging.
+   */
+  var debugMode: Boolean
 
   /**
    * Map camera anchor value.
