@@ -67,7 +67,7 @@ class CameraAnimatorOptions<T> private constructor(
    * Hash code method.
    */
   override fun hashCode(): Int {
-    var result = targets.hashCode()
+    var result = targets.contentHashCode()
     result = 31 * result + (owner?.hashCode() ?: 0)
     result = 31 * result + (startValue?.hashCode() ?: 0)
     return result

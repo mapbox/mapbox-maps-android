@@ -99,6 +99,12 @@ internal class PerformanceEvent(
       return false
     }
     val that = other as PerformanceEvent
+    if (event != that.event) {
+      return false
+    }
+    if (created != that.created) {
+      return false
+    }
     if (sessionId != that.sessionId) {
       return false
     }
@@ -112,6 +118,8 @@ internal class PerformanceEvent(
 
   override fun hashCode(): Int {
     var result = sessionId?.hashCode() ?: 0
+    result = 31 * result + event.hashCode()
+    result = 31 * result + created.hashCode()
     result = 31 * result + (attributes?.hashCode() ?: 0)
     result = 31 * result + (counters?.hashCode() ?: 0)
     result = 31 * result + (metadata?.hashCode() ?: 0)
