@@ -57,7 +57,13 @@ class MapboxMap internal constructor(
   private val styleObserver = StyleObserver(this, nativeMapWeakRef, nativeObserver, pixelRatio)
   internal var renderHandler: Handler? = null
 
-  private val viewAnnotationCore by lazy { ViewAnnotationCore() }
+  private val viewAnnotationCore by lazy {
+    ViewAnnotationCore(
+      mapFeatureQueryDelegate = this,
+      mapCameraManagerDelegate = this,
+      mapTransformDelegate = this
+    )
+  }
 
   /**
    * Represents current camera state.
