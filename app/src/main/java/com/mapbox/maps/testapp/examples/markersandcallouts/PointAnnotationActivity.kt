@@ -17,6 +17,7 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression.Companio
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.not
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.toNumber
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
+import com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder
 import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
 import com.mapbox.maps.plugin.annotation.Annotation
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
@@ -248,6 +249,18 @@ class PointAnnotationActivity : AppCompatActivity() {
           )
         }
         return true
+      }
+      R.id.z_order_auto -> {
+        item.isChecked = true
+        pointAnnotationManager?.symbolZOrder = SymbolZOrder.AUTO
+      }
+      R.id.z_order_viewport_y -> {
+        item.isChecked = true
+        pointAnnotationManager?.symbolZOrder = SymbolZOrder.VIEWPORT_Y
+      }
+      R.id.z_order_source -> {
+        item.isChecked = true
+        pointAnnotationManager?.symbolZOrder = SymbolZOrder.SOURCE
       }
       else -> return super.onOptionsItemSelected(item)
     }

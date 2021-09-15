@@ -137,4 +137,7 @@
     <string name="magnitude">Magnitude:</string>
     <string name="location">Location:</string>
     <string name="date">Date:</string>
+    <string name="z_order_auto">SymbolZOrderAuto</string>
+    <string name="z_order_viewport_y">SymbolZOrderViewportY</string>
+    <string name="z_order_source">SymbolZOrderSource</string>
 </resources>

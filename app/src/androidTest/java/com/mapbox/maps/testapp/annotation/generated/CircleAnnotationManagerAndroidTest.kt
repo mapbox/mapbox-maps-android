@@ -35,34 +35,34 @@ class CircleAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun testCirclePitchAlignment() {
-    val testValue = CirclePitchAlignment.MAP
+    val expectedValue = CirclePitchAlignment.MAP
     val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager(mapView)
-    circleAnnotationManager.circlePitchAlignment = testValue
-    assertEquals(testValue, circleAnnotationManager.circlePitchAlignment)
+    circleAnnotationManager.circlePitchAlignment = expectedValue
+    assertEquals(expectedValue, circleAnnotationManager.circlePitchAlignment)
   }
 
   @Test
   fun testCirclePitchScale() {
-    val testValue = CirclePitchScale.MAP
+    val expectedValue = CirclePitchScale.MAP
     val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager(mapView)
-    circleAnnotationManager.circlePitchScale = testValue
-    assertEquals(testValue, circleAnnotationManager.circlePitchScale)
+    circleAnnotationManager.circlePitchScale = expectedValue
+    assertEquals(expectedValue, circleAnnotationManager.circlePitchScale)
   }
 
   @Test
   fun testCircleTranslate() {
-    val testValue = listOf(0.0, 1.0)
+    val expectedValue = listOf(0.0, 1.0)
     val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager(mapView)
-    circleAnnotationManager.circleTranslate = testValue
-    assertEquals(testValue, circleAnnotationManager.circleTranslate)
+    circleAnnotationManager.circleTranslate = expectedValue
+    assertEquals(expectedValue, circleAnnotationManager.circleTranslate)
   }
 
   @Test
   fun testCircleTranslateAnchor() {
-    val testValue = CircleTranslateAnchor.MAP
+    val expectedValue = CircleTranslateAnchor.MAP
     val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager(mapView)
-    circleAnnotationManager.circleTranslateAnchor = testValue
-    assertEquals(testValue, circleAnnotationManager.circleTranslateAnchor)
+    circleAnnotationManager.circleTranslateAnchor = expectedValue
+    assertEquals(expectedValue, circleAnnotationManager.circleTranslateAnchor)
   }
 
   @Test

@@ -62,4 +62,22 @@
         android:id="@+id/menu_action_animate"
         android:title="@string/animate_symbol"
         app:showAsAction="never" />
+    <group
+        android:id="@+id/group"
+        android:checkableBehavior="single">
+    <item
+        android:id="@+id/z_order_auto"
+        android:title="@string/z_order_auto"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/z_order_viewport_y"
+        android:title="@string/z_order_viewport_y"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/z_order_source"
+        android:title="@string/z_order_source"
+        app:showAsAction="never" />
+    </group>
 </menu>

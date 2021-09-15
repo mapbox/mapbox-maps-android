@@ -574,6 +574,30 @@ class PointAnnotationManager(
     }
 
   /**
+   * The SymbolZOrder property
+   *
+   * Determines whether overlapping symbols in the same layer are rendered in the order that they appear in the data source or by their y-position relative to the viewport. To control the order and prioritization of symbols otherwise, use {@link PropertyFactory#symbolSortKey}.
+   */
+  var symbolZOrder: SymbolZOrder?
+    /**
+     * Get the SymbolZOrder property
+     *
+     * @return property wrapper value around SymbolZOrder
+     */
+    get(): SymbolZOrder? {
+      return layer?.symbolZOrder
+    }
+    /**
+     * Set the SymbolZOrder property
+     * @param value property wrapper value around SymbolZOrder
+     */
+    set(value) {
+      value?.let {
+        layer?.symbolZOrder(it)
+      }
+    }
+
+  /**
    * The TextAllowOverlap property
    *
    * If true, the text will be visible even if it collides with other previously drawn symbols.
