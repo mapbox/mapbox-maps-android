@@ -36,26 +36,26 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun testFillAntialias() {
-    val testValue = true
+    val expectedValue = true
     val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager(mapView)
-    polygonAnnotationManager.fillAntialias = testValue
-    assertEquals(testValue, polygonAnnotationManager.fillAntialias)
+    polygonAnnotationManager.fillAntialias = expectedValue
+    assertEquals(expectedValue, polygonAnnotationManager.fillAntialias)
   }
 
   @Test
   fun testFillTranslate() {
-    val testValue = listOf(0.0, 1.0)
+    val expectedValue = listOf(0.0, 1.0)
     val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager(mapView)
-    polygonAnnotationManager.fillTranslate = testValue
-    assertEquals(testValue, polygonAnnotationManager.fillTranslate)
+    polygonAnnotationManager.fillTranslate = expectedValue
+    assertEquals(expectedValue, polygonAnnotationManager.fillTranslate)
   }
 
   @Test
   fun testFillTranslateAnchor() {
-    val testValue = FillTranslateAnchor.MAP
+    val expectedValue = FillTranslateAnchor.MAP
     val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager(mapView)
-    polygonAnnotationManager.fillTranslateAnchor = testValue
-    assertEquals(testValue, polygonAnnotationManager.fillTranslateAnchor)
+    polygonAnnotationManager.fillTranslateAnchor = expectedValue
+    assertEquals(expectedValue, polygonAnnotationManager.fillTranslateAnchor)
   }
 
   @Test

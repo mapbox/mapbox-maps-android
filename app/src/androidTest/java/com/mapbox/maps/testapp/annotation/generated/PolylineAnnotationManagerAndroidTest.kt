@@ -36,50 +36,50 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun testLineCap() {
-    val testValue = LineCap.BUTT
+    val expectedValue = LineCap.BUTT
     val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
-    polylineAnnotationManager.lineCap = testValue
-    assertEquals(testValue, polylineAnnotationManager.lineCap)
+    polylineAnnotationManager.lineCap = expectedValue
+    assertEquals(expectedValue, polylineAnnotationManager.lineCap)
   }
 
   @Test
   fun testLineMiterLimit() {
-    val testValue = 1.0
+    val expectedValue = 1.0
     val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
-    polylineAnnotationManager.lineMiterLimit = testValue
-    assertEquals(testValue, polylineAnnotationManager.lineMiterLimit)
+    polylineAnnotationManager.lineMiterLimit = expectedValue
+    assertEquals(expectedValue, polylineAnnotationManager.lineMiterLimit)
   }
 
   @Test
   fun testLineRoundLimit() {
-    val testValue = 1.0
+    val expectedValue = 1.0
     val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
-    polylineAnnotationManager.lineRoundLimit = testValue
-    assertEquals(testValue, polylineAnnotationManager.lineRoundLimit)
+    polylineAnnotationManager.lineRoundLimit = expectedValue
+    assertEquals(expectedValue, polylineAnnotationManager.lineRoundLimit)
   }
 
   @Test
   fun testLineDasharray() {
-    val testValue = listOf(1.0, 2.0)
+    val expectedValue = listOf(1.0, 2.0)
     val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
-    polylineAnnotationManager.lineDasharray = testValue
-    assertEquals(testValue, polylineAnnotationManager.lineDasharray)
+    polylineAnnotationManager.lineDasharray = expectedValue
+    assertEquals(expectedValue, polylineAnnotationManager.lineDasharray)
   }
 
   @Test
   fun testLineTranslate() {
-    val testValue = listOf(0.0, 1.0)
+    val expectedValue = listOf(0.0, 1.0)
     val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
-    polylineAnnotationManager.lineTranslate = testValue
-    assertEquals(testValue, polylineAnnotationManager.lineTranslate)
+    polylineAnnotationManager.lineTranslate = expectedValue
+    assertEquals(expectedValue, polylineAnnotationManager.lineTranslate)
   }
 
   @Test
   fun testLineTranslateAnchor() {
-    val testValue = LineTranslateAnchor.MAP
+    val expectedValue = LineTranslateAnchor.MAP
     val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
-    polylineAnnotationManager.lineTranslateAnchor = testValue
-    assertEquals(testValue, polylineAnnotationManager.lineTranslateAnchor)
+    polylineAnnotationManager.lineTranslateAnchor = expectedValue
+    assertEquals(expectedValue, polylineAnnotationManager.lineTranslateAnchor)
   }
 
   @Test
