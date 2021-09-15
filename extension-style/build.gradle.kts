@@ -27,6 +27,7 @@ dependencies {
   testImplementation(Dependencies.mockk)
   testImplementation(Dependencies.androidxTestCore)
   testImplementation(Dependencies.robolectric)
+  testImplementation(Dependencies.equalsVerifier)
   androidTestImplementation(Dependencies.androidxTestRunner)
   androidTestImplementation(Dependencies.androidxJUnitTestRules)
   androidTestImplementation(Dependencies.androidxEspresso)
