@@ -1,7 +1,7 @@
 package com.mapbox.maps.plugin.delegates.listeners
 
 /**
- * Definition for listener invoked whenever the camera position changes.
+ * Definition for listener invoked whenever the Map has entered the idle state.
  */
 fun interface OnMapIdleListener {
 

@@ -226,14 +226,14 @@ interface CameraAnimationsPlugin : MapPlugin {
   /**
    * Add camera pitch change listener
    *
-   * @param listener to be invoked when camera bearing value changes
+   * @param listener to be invoked when camera pitch value changes
    */
   fun addCameraPitchChangeListener(listener: CameraAnimatorChangeListener<Double>)
 
   /**
    * Add camera zoom change listener
    *
-   * @param listener to be invoked when camera bearing value changes
+   * @param listener to be invoked when camera zoom value changes
    */
   fun addCameraZoomChangeListener(listener: CameraAnimatorChangeListener<Double>)
 
@@ -247,7 +247,7 @@ interface CameraAnimationsPlugin : MapPlugin {
   /**
    * Add camera center change listener
    *
-   * @param listener to be invoked when camera bearing value changes
+   * @param listener to be invoked when camera center value changes
    */
   fun addCameraCenterChangeListener(listener: CameraAnimatorChangeListener<Point>)
 
@@ -275,7 +275,7 @@ interface CameraAnimationsPlugin : MapPlugin {
   /**
    * Add camera anchor change listener
    *
-   * @param listener to be invoked when camera bearing value changes
+   * @param listener to be invoked when camera anchor value changes
    */
   fun addCameraAnchorChangeListener(listener: CameraAnimatorNullableChangeListener<ScreenCoordinate?>)
 
