@@ -557,7 +557,7 @@ class MapIntegrationTest {
         }
         // load a large feature collection
         source.featureCollection(getFeatureCollection())
-        // change geometry immediately
+        // change geometry async
         source.geometry(Point.fromLngLat(0.0, 0.0)) {}
 
         style.addSource(source)
@@ -567,12 +567,10 @@ class MapIntegrationTest {
             circleRadius(10.0)
           }
         )
-        val min = ScreenCoordinate(mapView.width / 2.0 - 10, mapView.height / 2.0 - 10)
-        val max = ScreenCoordinate(mapView.width / 2.0 + 10, mapView.height / 2.0 + 10)
         mapView.postDelayed(
           {
             mapboxMap.queryRenderedFeatures(
-              ScreenBox(min, max),
+              ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0),
               RenderedQueryOptions(listOf("layer"), null)
             ) { result ->
               if (result.value?.size == 1) {

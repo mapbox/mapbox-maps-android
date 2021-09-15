@@ -49,15 +49,19 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
             it.onGeoJsonParsed(this@GeoJsonSource)
           }
         }
-        pendingData?.let {
-          // have data waiting to parse, continue parse this data
-          parseData(it.first, it.second)
-          // clear waitingData, so that if new data coming could wait.
-          pendingData = null
-        }
+        parsePendingData()
       }
     } ?: run {
       geoJsonParsed = true
+    }
+  }
+
+  private fun parsePendingData() {
+    pendingData?.let {
+      // have data waiting to parse, continue parse this data
+      parseData(it.first, it.second)
+      // clear waitingData, so that if new data coming could wait.
+      pendingData = null
     }
   }
 
@@ -385,12 +389,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
         setProperty(property, throwRuntimeException = false)
         listener.invoke(this@GeoJsonSource)
       }
-      pendingData?.let {
-        // have data waiting to parse, continue parse this data
-        parseData(it.first, it.second)
-        // clear waitingData, so that if new data coming could wait.
-        pendingData = null
-      }
+      parsePendingData()
     }
   }
 
