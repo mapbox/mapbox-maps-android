@@ -63,6 +63,7 @@ object Dependencies {
   const val testUtils = "com.android.tools:testutils:${Versions.lint}"
   const val hamcrest = "org.hamcrest:hamcrest:${Versions.hamcrest}"
   const val annotations = androidxAnnotations
+  const val equalsVerifier = "nl.jqno.equalsverifier:equalsverifier:${Versions.equalsVerifier}"
 }
 
 object Versions {
@@ -104,4 +105,5 @@ object Versions {
   const val robolectricEgl = "gl1.1-android-2.1_r1"
   const val lint = "27.2.2"
   const val hamcrest = "2.1"
+  const val equalsVerifier = "3.7"
 }

@@ -35,6 +35,7 @@ dependencies {
   testImplementation(Dependencies.junit)
   testImplementation(Dependencies.mockk)
   testImplementation(Dependencies.androidxTestCore)
+  testImplementation(Dependencies.equalsVerifier)
 }
 
 tasks.withType<DokkaTask>().configureEach {

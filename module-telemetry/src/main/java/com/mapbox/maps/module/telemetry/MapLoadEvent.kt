@@ -63,6 +63,12 @@ internal class MapLoadEvent(
       return false
     }
     val that = other as MapLoadEvent
+    if (event != that.event) {
+      return false
+    }
+    if (created != that.created) {
+      return false
+    }
     if (that.resolution.compareTo(resolution) != 0) {
       return false
     }
@@ -81,6 +87,12 @@ internal class MapLoadEvent(
     if (operatingSystem != that.operatingSystem) {
       return false
     }
+    if (sdkIdentifier != that.sdkIdentifier) {
+      return false
+    }
+    if (sdkVersion != that.sdkVersion) {
+      return false
+    }
     if (model != that.model) {
       return false
     }
@@ -97,6 +109,8 @@ internal class MapLoadEvent(
 
   override fun hashCode(): Int {
     var result = operatingSystem?.hashCode() ?: 0
+    result = 31 * result + event.hashCode()
+    result = 31 * result + created.hashCode()
     result = 31 * result + sdkIdentifier.hashCode()
     result = 31 * result + sdkVersion.hashCode()
     result = 31 * result + model.hashCode()
