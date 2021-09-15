@@ -74,7 +74,7 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
    * If debug mode is enabled extra logs will be written about animation lifecycle and
    * some other events that may be useful for debugging.
    */
-  override var debugMode: Boolean = false
+  override var debugMode: Boolean = true
 
   private var center by Delegates.observable<Point?>(null) { _, old, new ->
     new?.let {
