@@ -48,6 +48,7 @@ class PolylineAnnotationManagerTest {
   private val style: StyleInterface = mockk()
   private val mapCameraManagerDelegate: MapCameraManagerDelegate = mockk()
   private val mapFeatureQueryDelegate: MapFeatureQueryDelegate = mockk()
+  private val mapListenerDelegate: MapListenerDelegate = mockk()
   private val gesturesPlugin: GesturesPlugin = mockk()
   private val layer: LineLayer = mockk()
   private val source: GeoJsonSource = mockk()
@@ -94,6 +95,8 @@ class PolylineAnnotationManagerTest {
     every { delegateProvider.mapPluginProviderDelegate.getPlugin<GesturesPlugin>(any()) } returns gesturesPlugin
     every { delegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
     every { delegateProvider.mapFeatureQueryDelegate } returns mapFeatureQueryDelegate
+    every { delegateProvider.mapListenerDelegate } returns mapListenerDelegate
+    every { mapListenerDelegate.addOnMapIdleListener(any()) } just Runs
     every { mapCameraManagerDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
     every { mapCameraManagerDelegate.pixelForCoordinate(any()) } returns ScreenCoordinate(1.0, 1.0)
     every { mapView.scrollX } returns 0

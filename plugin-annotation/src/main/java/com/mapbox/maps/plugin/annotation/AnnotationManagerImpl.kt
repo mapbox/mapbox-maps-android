@@ -490,6 +490,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Invoked when Mapview or Annotation manager is destroyed.
    */
   override fun onDestroy() {
+    handler.removeCallbacksAndMessages(null)
     delegateProvider.getStyle { style ->
       layer?.let {
         if (style.styleLayerExists(it.layerId)) {
@@ -676,7 +677,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
               updateDragSource(style)
             }
           },
-          UPDATE_DELAY
+          UPDATE_DELAY_MS
         )
       }
     }
@@ -779,6 +780,6 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     private const val CLUSTER_TEXT_LAYER_ID = "mapbox-android-cluster-text-layer"
     private val DEFAULT_TEXT_FIELD = get("point_count")
     /** The delay time when updating drag source */
-    private const val UPDATE_DELAY = 1000L
+    private const val UPDATE_DELAY_MS = 1000L
   }
 }
