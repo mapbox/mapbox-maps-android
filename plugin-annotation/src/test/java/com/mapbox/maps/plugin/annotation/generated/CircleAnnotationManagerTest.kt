@@ -50,6 +50,8 @@ class CircleAnnotationManagerTest {
   private val gesturesPlugin: GesturesPlugin = mockk()
   private val layer: CircleLayer = mockk()
   private val source: GeoJsonSource = mockk()
+  private val dragLayer: CircleLayer = mockk()
+  private val dragSource: GeoJsonSource = mockk()
   private val mapView: View = mockk()
   private val queriedFeatures = mockk<Expected<String, List<QueriedFeature>>>()
   private val queriedFeature = mockk<QueriedFeature>()
@@ -122,14 +124,24 @@ class CircleAnnotationManagerTest {
     manager = CircleAnnotationManager(mapView, delegateProvider)
     manager.layer = layer
     manager.source = source
+    manager.dragLayer = dragLayer
+    manager.dragSource = dragSource
     every { layer.circleSortKey(any<Expression>()) } answers { layer }
+    every { dragLayer.circleSortKey(any<Expression>()) } answers { dragLayer }
     every { layer.circleBlur(any<Expression>()) } answers { layer }
+    every { dragLayer.circleBlur(any<Expression>()) } answers { dragLayer }
     every { layer.circleColor(any<Expression>()) } answers { layer }
+    every { dragLayer.circleColor(any<Expression>()) } answers { dragLayer }
     every { layer.circleOpacity(any<Expression>()) } answers { layer }
+    every { dragLayer.circleOpacity(any<Expression>()) } answers { dragLayer }
     every { layer.circleRadius(any<Expression>()) } answers { layer }
+    every { dragLayer.circleRadius(any<Expression>()) } answers { dragLayer }
     every { layer.circleStrokeColor(any<Expression>()) } answers { layer }
+    every { dragLayer.circleStrokeColor(any<Expression>()) } answers { dragLayer }
     every { layer.circleStrokeOpacity(any<Expression>()) } answers { layer }
+    every { dragLayer.circleStrokeOpacity(any<Expression>()) } answers { dragLayer }
     every { layer.circleStrokeWidth(any<Expression>()) } answers { layer }
+    every { dragLayer.circleStrokeWidth(any<Expression>()) } answers { dragLayer }
   }
 
   @Test
@@ -402,8 +414,10 @@ class CircleAnnotationManagerTest {
       .withCircleSortKey(1.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.circleSortKey(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY)) }
+    verify(exactly = 1) { manager.dragLayer?.circleSortKey(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.circleSortKey(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY)) }
+    verify(exactly = 1) { manager.dragLayer?.circleSortKey(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY)) }
   }
 
   @Test
@@ -415,8 +429,10 @@ class CircleAnnotationManagerTest {
       .withCircleBlur(0.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.circleBlur(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR)) }
+    verify(exactly = 1) { manager.dragLayer?.circleBlur(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.circleBlur(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR)) }
+    verify(exactly = 1) { manager.dragLayer?.circleBlur(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR)) }
   }
 
   @Test
@@ -441,8 +457,10 @@ class CircleAnnotationManagerTest {
       .withCircleColor("rgba(0, 0, 0, 1)")
     manager.create(options)
     verify(exactly = 1) { manager.layer?.circleColor(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer?.circleColor(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.circleColor(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer?.circleColor(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR)) }
   }
 
   @Test
@@ -454,8 +472,10 @@ class CircleAnnotationManagerTest {
       .withCircleOpacity(1.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.circleOpacity(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY)) }
+    verify(exactly = 1) { manager.dragLayer?.circleOpacity(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.circleOpacity(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY)) }
+    verify(exactly = 1) { manager.dragLayer?.circleOpacity(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY)) }
   }
 
   @Test
@@ -467,8 +487,10 @@ class CircleAnnotationManagerTest {
       .withCircleRadius(5.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.circleRadius(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS)) }
+    verify(exactly = 1) { manager.dragLayer?.circleRadius(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.circleRadius(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS)) }
+    verify(exactly = 1) { manager.dragLayer?.circleRadius(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS)) }
   }
 
   @Test
@@ -493,8 +515,10 @@ class CircleAnnotationManagerTest {
       .withCircleStrokeColor("rgba(0, 0, 0, 1)")
     manager.create(options)
     verify(exactly = 1) { manager.layer?.circleStrokeColor(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer?.circleStrokeColor(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.circleStrokeColor(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer?.circleStrokeColor(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
   }
 
   @Test
@@ -506,8 +530,10 @@ class CircleAnnotationManagerTest {
       .withCircleStrokeOpacity(1.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.circleStrokeOpacity(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY)) }
+    verify(exactly = 1) { manager.dragLayer?.circleStrokeOpacity(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.circleStrokeOpacity(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY)) }
+    verify(exactly = 1) { manager.dragLayer?.circleStrokeOpacity(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY)) }
   }
 
   @Test
@@ -519,7 +545,9 @@ class CircleAnnotationManagerTest {
       .withCircleStrokeWidth(0.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.circleStrokeWidth(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
+    verify(exactly = 1) { manager.dragLayer?.circleStrokeWidth(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.circleStrokeWidth(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
+    verify(exactly = 1) { manager.dragLayer?.circleStrokeWidth(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
   }
 }

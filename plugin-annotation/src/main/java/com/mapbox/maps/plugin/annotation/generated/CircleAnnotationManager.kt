@@ -175,6 +175,7 @@ class CircleAnnotationManager(
     set(value) {
       value?.let {
         layer?.circlePitchAlignment(it)
+        dragLayer?.circlePitchAlignment(it)
       }
     }
 
@@ -199,6 +200,7 @@ class CircleAnnotationManager(
     set(value) {
       value?.let {
         layer?.circlePitchScale(it)
+        dragLayer?.circlePitchScale(it)
       }
     }
 
@@ -223,6 +225,7 @@ class CircleAnnotationManager(
     set(value) {
       value?.let {
         layer?.circleTranslate(it)
+        dragLayer?.circleTranslate(it)
       }
     }
 
@@ -247,6 +250,7 @@ class CircleAnnotationManager(
     set(value) {
       value?.let {
         layer?.circleTranslateAnchor(it)
+        dragLayer?.circleTranslateAnchor(it)
       }
     }
 
@@ -279,7 +283,10 @@ class CircleAnnotationManager(
      * @param expression expression
      */
     set(value) {
-      value?.let { layer?.filter(it) }
+      value?.let {
+        layer?.filter(it)
+        dragLayer?.filter(it)
+      }
     }
 
   /**

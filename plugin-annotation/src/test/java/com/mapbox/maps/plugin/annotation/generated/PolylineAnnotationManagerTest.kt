@@ -52,6 +52,8 @@ class PolylineAnnotationManagerTest {
   private val gesturesPlugin: GesturesPlugin = mockk()
   private val layer: LineLayer = mockk()
   private val source: GeoJsonSource = mockk()
+  private val dragLayer: LineLayer = mockk()
+  private val dragSource: GeoJsonSource = mockk()
   private val mapView: View = mockk()
   private val queriedFeatures = mockk<Expected<String, List<QueriedFeature>>>()
   private val queriedFeature = mockk<QueriedFeature>()
@@ -124,15 +126,26 @@ class PolylineAnnotationManagerTest {
     manager = PolylineAnnotationManager(mapView, delegateProvider)
     manager.layer = layer
     manager.source = source
+    manager.dragLayer = dragLayer
+    manager.dragSource = dragSource
     every { layer.lineJoin(any<Expression>()) } answers { layer }
+    every { dragLayer.lineJoin(any<Expression>()) } answers { dragLayer }
     every { layer.lineSortKey(any<Expression>()) } answers { layer }
+    every { dragLayer.lineSortKey(any<Expression>()) } answers { dragLayer }
     every { layer.lineBlur(any<Expression>()) } answers { layer }
+    every { dragLayer.lineBlur(any<Expression>()) } answers { dragLayer }
     every { layer.lineColor(any<Expression>()) } answers { layer }
+    every { dragLayer.lineColor(any<Expression>()) } answers { dragLayer }
     every { layer.lineGapWidth(any<Expression>()) } answers { layer }
+    every { dragLayer.lineGapWidth(any<Expression>()) } answers { dragLayer }
     every { layer.lineOffset(any<Expression>()) } answers { layer }
+    every { dragLayer.lineOffset(any<Expression>()) } answers { dragLayer }
     every { layer.lineOpacity(any<Expression>()) } answers { layer }
+    every { dragLayer.lineOpacity(any<Expression>()) } answers { dragLayer }
     every { layer.linePattern(any<Expression>()) } answers { layer }
+    every { dragLayer.linePattern(any<Expression>()) } answers { dragLayer }
     every { layer.lineWidth(any<Expression>()) } answers { layer }
+    every { dragLayer.lineWidth(any<Expression>()) } answers { dragLayer }
   }
 
   @Test
@@ -405,8 +418,10 @@ class PolylineAnnotationManagerTest {
       .withLineJoin(LineJoin.MITER)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.lineJoin(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_JOIN)) }
+    verify(exactly = 1) { manager.dragLayer?.lineJoin(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_JOIN)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.lineJoin(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_JOIN)) }
+    verify(exactly = 1) { manager.dragLayer?.lineJoin(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_JOIN)) }
   }
 
   @Test
@@ -418,8 +433,10 @@ class PolylineAnnotationManagerTest {
       .withLineSortKey(1.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.lineSortKey(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY)) }
+    verify(exactly = 1) { manager.dragLayer?.lineSortKey(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.lineSortKey(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY)) }
+    verify(exactly = 1) { manager.dragLayer?.lineSortKey(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY)) }
   }
 
   @Test
@@ -431,8 +448,10 @@ class PolylineAnnotationManagerTest {
       .withLineBlur(0.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.lineBlur(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR)) }
+    verify(exactly = 1) { manager.dragLayer?.lineBlur(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.lineBlur(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR)) }
+    verify(exactly = 1) { manager.dragLayer?.lineBlur(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_BLUR)) }
   }
 
   @Test
@@ -457,8 +476,10 @@ class PolylineAnnotationManagerTest {
       .withLineColor("rgba(0, 0, 0, 1)")
     manager.create(options)
     verify(exactly = 1) { manager.layer?.lineColor(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer?.lineColor(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.lineColor(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer?.lineColor(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_COLOR)) }
   }
 
   @Test
@@ -470,8 +491,10 @@ class PolylineAnnotationManagerTest {
       .withLineGapWidth(0.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.lineGapWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH)) }
+    verify(exactly = 1) { manager.dragLayer?.lineGapWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.lineGapWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH)) }
+    verify(exactly = 1) { manager.dragLayer?.lineGapWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH)) }
   }
 
   @Test
@@ -483,8 +506,10 @@ class PolylineAnnotationManagerTest {
       .withLineOffset(0.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.lineOffset(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_OFFSET)) }
+    verify(exactly = 1) { manager.dragLayer?.lineOffset(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_OFFSET)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.lineOffset(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_OFFSET)) }
+    verify(exactly = 1) { manager.dragLayer?.lineOffset(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_OFFSET)) }
   }
 
   @Test
@@ -496,8 +521,10 @@ class PolylineAnnotationManagerTest {
       .withLineOpacity(1.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.lineOpacity(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY)) }
+    verify(exactly = 1) { manager.dragLayer?.lineOpacity(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.lineOpacity(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY)) }
+    verify(exactly = 1) { manager.dragLayer?.lineOpacity(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY)) }
   }
 
   @Test
@@ -509,8 +536,10 @@ class PolylineAnnotationManagerTest {
       .withLinePattern("pedestrian-polygon")
     manager.create(options)
     verify(exactly = 1) { manager.layer?.linePattern(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_PATTERN)) }
+    verify(exactly = 1) { manager.dragLayer?.linePattern(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_PATTERN)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.linePattern(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_PATTERN)) }
+    verify(exactly = 1) { manager.dragLayer?.linePattern(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_PATTERN)) }
   }
 
   @Test
@@ -522,7 +551,9 @@ class PolylineAnnotationManagerTest {
       .withLineWidth(1.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.lineWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH)) }
+    verify(exactly = 1) { manager.dragLayer?.lineWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.lineWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH)) }
+    verify(exactly = 1) { manager.dragLayer?.lineWidth(Expression.get(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH)) }
   }
 }

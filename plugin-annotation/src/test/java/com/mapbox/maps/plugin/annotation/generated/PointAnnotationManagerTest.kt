@@ -53,6 +53,8 @@ class PointAnnotationManagerTest {
   private val gesturesPlugin: GesturesPlugin = mockk()
   private val layer: SymbolLayer = mockk()
   private val source: GeoJsonSource = mockk()
+  private val dragLayer: SymbolLayer = mockk()
+  private val dragSource: GeoJsonSource = mockk()
   private val mapView: View = mockk()
   private val queriedFeatures = mockk<Expected<String, List<QueriedFeature>>>()
   private val queriedFeature = mockk<QueriedFeature>()
@@ -126,35 +128,63 @@ class PointAnnotationManagerTest {
     manager = PointAnnotationManager(mapView, delegateProvider)
     manager.layer = layer
     manager.source = source
+    manager.dragLayer = dragLayer
+    manager.dragSource = dragSource
     val expected = mockk<Expected<String, None>>(relaxUnitFun = true, relaxed = true)
     every { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) } returns expected
     every { expected.error } returns null
     every { layer.iconAnchor(any<Expression>()) } answers { layer }
+    every { dragLayer.iconAnchor(any<Expression>()) } answers { dragLayer }
     every { layer.iconImage(any<Expression>()) } answers { layer }
+    every { dragLayer.iconImage(any<Expression>()) } answers { dragLayer }
     every { layer.iconOffset(any<Expression>()) } answers { layer }
+    every { dragLayer.iconOffset(any<Expression>()) } answers { dragLayer }
     every { layer.iconRotate(any<Expression>()) } answers { layer }
+    every { dragLayer.iconRotate(any<Expression>()) } answers { dragLayer }
     every { layer.iconSize(any<Expression>()) } answers { layer }
+    every { dragLayer.iconSize(any<Expression>()) } answers { dragLayer }
     every { layer.symbolSortKey(any<Expression>()) } answers { layer }
+    every { dragLayer.symbolSortKey(any<Expression>()) } answers { dragLayer }
     every { layer.textAnchor(any<Expression>()) } answers { layer }
+    every { dragLayer.textAnchor(any<Expression>()) } answers { dragLayer }
     every { layer.textField(any<Expression>()) } answers { layer }
+    every { dragLayer.textField(any<Expression>()) } answers { dragLayer }
     every { layer.textJustify(any<Expression>()) } answers { layer }
+    every { dragLayer.textJustify(any<Expression>()) } answers { dragLayer }
     every { layer.textLetterSpacing(any<Expression>()) } answers { layer }
+    every { dragLayer.textLetterSpacing(any<Expression>()) } answers { dragLayer }
     every { layer.textMaxWidth(any<Expression>()) } answers { layer }
+    every { dragLayer.textMaxWidth(any<Expression>()) } answers { dragLayer }
     every { layer.textOffset(any<Expression>()) } answers { layer }
+    every { dragLayer.textOffset(any<Expression>()) } answers { dragLayer }
     every { layer.textRadialOffset(any<Expression>()) } answers { layer }
+    every { dragLayer.textRadialOffset(any<Expression>()) } answers { dragLayer }
     every { layer.textRotate(any<Expression>()) } answers { layer }
+    every { dragLayer.textRotate(any<Expression>()) } answers { dragLayer }
     every { layer.textSize(any<Expression>()) } answers { layer }
+    every { dragLayer.textSize(any<Expression>()) } answers { dragLayer }
     every { layer.textTransform(any<Expression>()) } answers { layer }
+    every { dragLayer.textTransform(any<Expression>()) } answers { dragLayer }
     every { layer.iconColor(any<Expression>()) } answers { layer }
+    every { dragLayer.iconColor(any<Expression>()) } answers { dragLayer }
     every { layer.iconHaloBlur(any<Expression>()) } answers { layer }
+    every { dragLayer.iconHaloBlur(any<Expression>()) } answers { dragLayer }
     every { layer.iconHaloColor(any<Expression>()) } answers { layer }
+    every { dragLayer.iconHaloColor(any<Expression>()) } answers { dragLayer }
     every { layer.iconHaloWidth(any<Expression>()) } answers { layer }
+    every { dragLayer.iconHaloWidth(any<Expression>()) } answers { dragLayer }
     every { layer.iconOpacity(any<Expression>()) } answers { layer }
+    every { dragLayer.iconOpacity(any<Expression>()) } answers { dragLayer }
     every { layer.textColor(any<Expression>()) } answers { layer }
+    every { dragLayer.textColor(any<Expression>()) } answers { dragLayer }
     every { layer.textHaloBlur(any<Expression>()) } answers { layer }
+    every { dragLayer.textHaloBlur(any<Expression>()) } answers { dragLayer }
     every { layer.textHaloColor(any<Expression>()) } answers { layer }
+    every { dragLayer.textHaloColor(any<Expression>()) } answers { dragLayer }
     every { layer.textHaloWidth(any<Expression>()) } answers { layer }
+    every { dragLayer.textHaloWidth(any<Expression>()) } answers { dragLayer }
     every { layer.textOpacity(any<Expression>()) } answers { layer }
+    every { dragLayer.textOpacity(any<Expression>()) } answers { dragLayer }
   }
 
   @Test
@@ -514,8 +544,10 @@ class PointAnnotationManagerTest {
       .withIconAnchor(IconAnchor.CENTER)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.iconAnchor(Expression.get(PointAnnotationOptions.PROPERTY_ICON_ANCHOR)) }
+    verify(exactly = 1) { manager.dragLayer?.iconAnchor(Expression.get(PointAnnotationOptions.PROPERTY_ICON_ANCHOR)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.iconAnchor(Expression.get(PointAnnotationOptions.PROPERTY_ICON_ANCHOR)) }
+    verify(exactly = 1) { manager.dragLayer?.iconAnchor(Expression.get(PointAnnotationOptions.PROPERTY_ICON_ANCHOR)) }
   }
 
   @Test
@@ -527,8 +559,10 @@ class PointAnnotationManagerTest {
       .withIconImage("")
     manager.create(options)
     verify(exactly = 1) { manager.layer?.iconImage(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE)) }
+    verify(exactly = 1) { manager.dragLayer?.iconImage(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.iconImage(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE)) }
+    verify(exactly = 1) { manager.dragLayer?.iconImage(Expression.get(PointAnnotationOptions.PROPERTY_ICON_IMAGE)) }
   }
 
   @Test
@@ -540,8 +574,10 @@ class PointAnnotationManagerTest {
       .withIconOffset(listOf(0.0, 0.0))
     manager.create(options)
     verify(exactly = 1) { manager.layer?.iconOffset(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OFFSET)) }
+    verify(exactly = 1) { manager.dragLayer?.iconOffset(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OFFSET)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.iconOffset(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OFFSET)) }
+    verify(exactly = 1) { manager.dragLayer?.iconOffset(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OFFSET)) }
   }
 
   @Test
@@ -553,8 +589,10 @@ class PointAnnotationManagerTest {
       .withIconRotate(0.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.iconRotate(Expression.get(PointAnnotationOptions.PROPERTY_ICON_ROTATE)) }
+    verify(exactly = 1) { manager.dragLayer?.iconRotate(Expression.get(PointAnnotationOptions.PROPERTY_ICON_ROTATE)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.iconRotate(Expression.get(PointAnnotationOptions.PROPERTY_ICON_ROTATE)) }
+    verify(exactly = 1) { manager.dragLayer?.iconRotate(Expression.get(PointAnnotationOptions.PROPERTY_ICON_ROTATE)) }
   }
 
   @Test
@@ -566,8 +604,10 @@ class PointAnnotationManagerTest {
       .withIconSize(1.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.iconSize(Expression.get(PointAnnotationOptions.PROPERTY_ICON_SIZE)) }
+    verify(exactly = 1) { manager.dragLayer?.iconSize(Expression.get(PointAnnotationOptions.PROPERTY_ICON_SIZE)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.iconSize(Expression.get(PointAnnotationOptions.PROPERTY_ICON_SIZE)) }
+    verify(exactly = 1) { manager.dragLayer?.iconSize(Expression.get(PointAnnotationOptions.PROPERTY_ICON_SIZE)) }
   }
 
   @Test
@@ -579,8 +619,10 @@ class PointAnnotationManagerTest {
       .withSymbolSortKey(1.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.symbolSortKey(Expression.get(PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY)) }
+    verify(exactly = 1) { manager.dragLayer?.symbolSortKey(Expression.get(PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.symbolSortKey(Expression.get(PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY)) }
+    verify(exactly = 1) { manager.dragLayer?.symbolSortKey(Expression.get(PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY)) }
   }
 
   @Test
@@ -592,8 +634,10 @@ class PointAnnotationManagerTest {
       .withTextAnchor(TextAnchor.CENTER)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textAnchor(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_ANCHOR)) }
+    verify(exactly = 1) { manager.dragLayer?.textAnchor(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_ANCHOR)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textAnchor(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_ANCHOR)) }
+    verify(exactly = 1) { manager.dragLayer?.textAnchor(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_ANCHOR)) }
   }
 
   @Test
@@ -605,8 +649,10 @@ class PointAnnotationManagerTest {
       .withTextField("")
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textField(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_FIELD)) }
+    verify(exactly = 1) { manager.dragLayer?.textField(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_FIELD)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textField(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_FIELD)) }
+    verify(exactly = 1) { manager.dragLayer?.textField(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_FIELD)) }
   }
 
   @Test
@@ -618,8 +664,10 @@ class PointAnnotationManagerTest {
       .withTextJustify(TextJustify.CENTER)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textJustify(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY)) }
+    verify(exactly = 1) { manager.dragLayer?.textJustify(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textJustify(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY)) }
+    verify(exactly = 1) { manager.dragLayer?.textJustify(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY)) }
   }
 
   @Test
@@ -631,8 +679,10 @@ class PointAnnotationManagerTest {
       .withTextLetterSpacing(0.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textLetterSpacing(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING)) }
+    verify(exactly = 1) { manager.dragLayer?.textLetterSpacing(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textLetterSpacing(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING)) }
+    verify(exactly = 1) { manager.dragLayer?.textLetterSpacing(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING)) }
   }
 
   @Test
@@ -644,8 +694,10 @@ class PointAnnotationManagerTest {
       .withTextMaxWidth(10.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textMaxWidth(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH)) }
+    verify(exactly = 1) { manager.dragLayer?.textMaxWidth(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textMaxWidth(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH)) }
+    verify(exactly = 1) { manager.dragLayer?.textMaxWidth(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH)) }
   }
 
   @Test
@@ -657,8 +709,10 @@ class PointAnnotationManagerTest {
       .withTextOffset(listOf(0.0, 0.0))
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textOffset(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OFFSET)) }
+    verify(exactly = 1) { manager.dragLayer?.textOffset(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OFFSET)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textOffset(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OFFSET)) }
+    verify(exactly = 1) { manager.dragLayer?.textOffset(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OFFSET)) }
   }
 
   @Test
@@ -670,8 +724,10 @@ class PointAnnotationManagerTest {
       .withTextRadialOffset(0.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textRadialOffset(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET)) }
+    verify(exactly = 1) { manager.dragLayer?.textRadialOffset(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textRadialOffset(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET)) }
+    verify(exactly = 1) { manager.dragLayer?.textRadialOffset(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET)) }
   }
 
   @Test
@@ -683,8 +739,10 @@ class PointAnnotationManagerTest {
       .withTextRotate(0.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textRotate(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_ROTATE)) }
+    verify(exactly = 1) { manager.dragLayer?.textRotate(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_ROTATE)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textRotate(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_ROTATE)) }
+    verify(exactly = 1) { manager.dragLayer?.textRotate(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_ROTATE)) }
   }
 
   @Test
@@ -696,8 +754,10 @@ class PointAnnotationManagerTest {
       .withTextSize(16.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textSize(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_SIZE)) }
+    verify(exactly = 1) { manager.dragLayer?.textSize(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_SIZE)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textSize(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_SIZE)) }
+    verify(exactly = 1) { manager.dragLayer?.textSize(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_SIZE)) }
   }
 
   @Test
@@ -709,8 +769,10 @@ class PointAnnotationManagerTest {
       .withTextTransform(TextTransform.NONE)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textTransform(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM)) }
+    verify(exactly = 1) { manager.dragLayer?.textTransform(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textTransform(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM)) }
+    verify(exactly = 1) { manager.dragLayer?.textTransform(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM)) }
   }
 
   @Test
@@ -735,8 +797,10 @@ class PointAnnotationManagerTest {
       .withIconColor("rgba(0, 0, 0, 1)")
     manager.create(options)
     verify(exactly = 1) { manager.layer?.iconColor(Expression.get(PointAnnotationOptions.PROPERTY_ICON_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer?.iconColor(Expression.get(PointAnnotationOptions.PROPERTY_ICON_COLOR)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.iconColor(Expression.get(PointAnnotationOptions.PROPERTY_ICON_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer?.iconColor(Expression.get(PointAnnotationOptions.PROPERTY_ICON_COLOR)) }
   }
 
   @Test
@@ -748,8 +812,10 @@ class PointAnnotationManagerTest {
       .withIconHaloBlur(0.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.iconHaloBlur(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR)) }
+    verify(exactly = 1) { manager.dragLayer?.iconHaloBlur(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.iconHaloBlur(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR)) }
+    verify(exactly = 1) { manager.dragLayer?.iconHaloBlur(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR)) }
   }
 
   @Test
@@ -774,8 +840,10 @@ class PointAnnotationManagerTest {
       .withIconHaloColor("rgba(0, 0, 0, 1)")
     manager.create(options)
     verify(exactly = 1) { manager.layer?.iconHaloColor(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer?.iconHaloColor(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.iconHaloColor(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer?.iconHaloColor(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR)) }
   }
 
   @Test
@@ -787,8 +855,10 @@ class PointAnnotationManagerTest {
       .withIconHaloWidth(0.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.iconHaloWidth(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH)) }
+    verify(exactly = 1) { manager.dragLayer?.iconHaloWidth(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.iconHaloWidth(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH)) }
+    verify(exactly = 1) { manager.dragLayer?.iconHaloWidth(Expression.get(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH)) }
   }
 
   @Test
@@ -800,8 +870,10 @@ class PointAnnotationManagerTest {
       .withIconOpacity(1.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.iconOpacity(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OPACITY)) }
+    verify(exactly = 1) { manager.dragLayer?.iconOpacity(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OPACITY)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.iconOpacity(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OPACITY)) }
+    verify(exactly = 1) { manager.dragLayer?.iconOpacity(Expression.get(PointAnnotationOptions.PROPERTY_ICON_OPACITY)) }
   }
 
   @Test
@@ -826,8 +898,10 @@ class PointAnnotationManagerTest {
       .withTextColor("rgba(0, 0, 0, 1)")
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textColor(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer?.textColor(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_COLOR)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textColor(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer?.textColor(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_COLOR)) }
   }
 
   @Test
@@ -839,8 +913,10 @@ class PointAnnotationManagerTest {
       .withTextHaloBlur(0.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textHaloBlur(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR)) }
+    verify(exactly = 1) { manager.dragLayer?.textHaloBlur(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textHaloBlur(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR)) }
+    verify(exactly = 1) { manager.dragLayer?.textHaloBlur(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR)) }
   }
 
   @Test
@@ -865,8 +941,10 @@ class PointAnnotationManagerTest {
       .withTextHaloColor("rgba(0, 0, 0, 1)")
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textHaloColor(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer?.textHaloColor(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textHaloColor(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR)) }
+    verify(exactly = 1) { manager.dragLayer?.textHaloColor(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR)) }
   }
 
   @Test
@@ -878,8 +956,10 @@ class PointAnnotationManagerTest {
       .withTextHaloWidth(0.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textHaloWidth(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH)) }
+    verify(exactly = 1) { manager.dragLayer?.textHaloWidth(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textHaloWidth(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH)) }
+    verify(exactly = 1) { manager.dragLayer?.textHaloWidth(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH)) }
   }
 
   @Test
@@ -891,7 +971,9 @@ class PointAnnotationManagerTest {
       .withTextOpacity(1.0)
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textOpacity(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OPACITY)) }
+    verify(exactly = 1) { manager.dragLayer?.textOpacity(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OPACITY)) }
     manager.create(options)
     verify(exactly = 1) { manager.layer?.textOpacity(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OPACITY)) }
+    verify(exactly = 1) { manager.dragLayer?.textOpacity(Expression.get(PointAnnotationOptions.PROPERTY_TEXT_OPACITY)) }
   }
 }

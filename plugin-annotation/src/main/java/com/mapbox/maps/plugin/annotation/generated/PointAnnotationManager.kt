@@ -306,6 +306,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.iconAllowOverlap(it)
+        dragLayer?.iconAllowOverlap(it)
       }
     }
 
@@ -330,6 +331,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.iconIgnorePlacement(it)
+        dragLayer?.iconIgnorePlacement(it)
       }
     }
 
@@ -354,6 +356,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.iconKeepUpright(it)
+        dragLayer?.iconKeepUpright(it)
       }
     }
 
@@ -378,6 +381,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.iconOptional(it)
+        dragLayer?.iconOptional(it)
       }
     }
 
@@ -402,6 +406,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.iconPadding(it)
+        dragLayer?.iconPadding(it)
       }
     }
 
@@ -426,6 +431,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.iconPitchAlignment(it)
+        dragLayer?.iconPitchAlignment(it)
       }
     }
 
@@ -450,6 +456,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.iconRotationAlignment(it)
+        dragLayer?.iconRotationAlignment(it)
       }
     }
 
@@ -474,6 +481,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.iconTextFit(it)
+        dragLayer?.iconTextFit(it)
       }
     }
 
@@ -498,6 +506,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.iconTextFitPadding(it)
+        dragLayer?.iconTextFitPadding(it)
       }
     }
 
@@ -522,6 +531,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.symbolAvoidEdges(it)
+        dragLayer?.symbolAvoidEdges(it)
       }
     }
 
@@ -546,6 +556,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.symbolPlacement(it)
+        dragLayer?.symbolPlacement(it)
       }
     }
 
@@ -570,6 +581,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.symbolSpacing(it)
+        dragLayer?.symbolSpacing(it)
       }
     }
 
@@ -618,6 +630,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.textAllowOverlap(it)
+        dragLayer?.textAllowOverlap(it)
       }
     }
 
@@ -642,6 +655,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.textFont(it)
+        dragLayer?.textFont(it)
       }
     }
 
@@ -666,6 +680,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.textIgnorePlacement(it)
+        dragLayer?.textIgnorePlacement(it)
       }
     }
 
@@ -690,6 +705,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.textKeepUpright(it)
+        dragLayer?.textKeepUpright(it)
       }
     }
 
@@ -714,6 +730,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.textLineHeight(it)
+        dragLayer?.textLineHeight(it)
       }
     }
 
@@ -738,6 +755,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.textMaxAngle(it)
+        dragLayer?.textMaxAngle(it)
       }
     }
 
@@ -762,6 +780,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.textOptional(it)
+        dragLayer?.textOptional(it)
       }
     }
 
@@ -786,6 +805,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.textPadding(it)
+        dragLayer?.textPadding(it)
       }
     }
 
@@ -810,6 +830,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.textPitchAlignment(it)
+        dragLayer?.textPitchAlignment(it)
       }
     }
 
@@ -834,6 +855,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.textRotationAlignment(it)
+        dragLayer?.textRotationAlignment(it)
       }
     }
 
@@ -858,6 +880,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.textVariableAnchor(it)
+        dragLayer?.textVariableAnchor(it)
       }
     }
 
@@ -882,6 +905,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.textWritingMode(it)
+        dragLayer?.textWritingMode(it)
       }
     }
 
@@ -906,6 +930,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.iconTranslate(it)
+        dragLayer?.iconTranslate(it)
       }
     }
 
@@ -930,6 +955,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.iconTranslateAnchor(it)
+        dragLayer?.iconTranslateAnchor(it)
       }
     }
 
@@ -954,6 +980,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.textTranslate(it)
+        dragLayer?.textTranslate(it)
       }
     }
 
@@ -978,6 +1005,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.textTranslateAnchor(it)
+        dragLayer?.textTranslateAnchor(it)
       }
     }
 
@@ -1010,7 +1038,10 @@ class PointAnnotationManager(
      * @param expression expression
      */
     set(value) {
-      value?.let { layer?.filter(it) }
+      value?.let {
+        layer?.filter(it)
+        dragLayer?.filter(it)
+      }
     }
 
   /**

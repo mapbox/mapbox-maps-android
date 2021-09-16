@@ -182,6 +182,7 @@ class PolylineAnnotationManager(
     set(value) {
       value?.let {
         layer?.lineCap(it)
+        dragLayer?.lineCap(it)
       }
     }
 
@@ -206,6 +207,7 @@ class PolylineAnnotationManager(
     set(value) {
       value?.let {
         layer?.lineMiterLimit(it)
+        dragLayer?.lineMiterLimit(it)
       }
     }
 
@@ -230,6 +232,7 @@ class PolylineAnnotationManager(
     set(value) {
       value?.let {
         layer?.lineRoundLimit(it)
+        dragLayer?.lineRoundLimit(it)
       }
     }
 
@@ -254,6 +257,7 @@ class PolylineAnnotationManager(
     set(value) {
       value?.let {
         layer?.lineDasharray(it)
+        dragLayer?.lineDasharray(it)
       }
     }
 
@@ -278,6 +282,7 @@ class PolylineAnnotationManager(
     set(value) {
       value?.let {
         layer?.lineTranslate(it)
+        dragLayer?.lineTranslate(it)
       }
     }
 
@@ -302,6 +307,7 @@ class PolylineAnnotationManager(
     set(value) {
       value?.let {
         layer?.lineTranslateAnchor(it)
+        dragLayer?.lineTranslateAnchor(it)
       }
     }
 
@@ -334,7 +340,10 @@ class PolylineAnnotationManager(
      * @param expression expression
      */
     set(value) {
-      value?.let { layer?.filter(it) }
+      value?.let {
+        layer?.filter(it)
+        dragLayer?.filter(it)
+      }
     }
 
   /**
