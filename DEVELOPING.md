@@ -64,7 +64,7 @@ The token configuration can be found in the root `build.gradle.kts` of the proje
 
 The MAPBOX_ACCESS_TOKEN is a mapbox access token, packaged as part of test application, to load Mapbox tiles and resources.
 This token can be configured on https://account.mapbox.com/ and doesn't require any specific scopes.
-After first compilation, a gitignored file, is generated in `app/src/main/values/developer-config.xml`.
+After first compilation, a gitignored file, is generated in `app/src/main/res/values/developer-config.xml`.
 
 ### Initial build
 
