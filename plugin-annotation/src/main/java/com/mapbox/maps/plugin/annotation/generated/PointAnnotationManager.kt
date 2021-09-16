@@ -606,6 +606,7 @@ class PointAnnotationManager(
     set(value) {
       value?.let {
         layer?.symbolZOrder(it)
+        dragLayer?.symbolZOrder(it)
       }
     }
 
