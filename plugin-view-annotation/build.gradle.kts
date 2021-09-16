@@ -22,7 +22,8 @@ android {
 
 dependencies {
   implementation(project(":sdk-base"))
-  implementation("androidx.asynclayoutinflater:asynclayoutinflater:1.0.0")
+  implementation(project(":extension-style"))
+  implementation(Dependencies.asyncInflater)
   implementation(Dependencies.mapboxBase)
   implementation(Dependencies.kotlin)
   implementation(Dependencies.androidxAppCompat)

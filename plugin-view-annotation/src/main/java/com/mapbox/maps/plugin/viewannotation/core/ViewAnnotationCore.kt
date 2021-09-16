@@ -18,15 +18,18 @@ class ViewAnnotationCore(
 ) {
 
   private val annotations = LinkedHashMap<String, ViewAnnotationOptions>()
+  private val updateTempList = mutableListOf<ViewAnnotationPositionDescriptor>()
   private val updateList = mutableListOf<ViewAnnotationPositionDescriptor>()
 
   fun addViewAnnotation(viewId: String, options: ViewAnnotationOptions) {
     annotations[viewId] = options
+    addBackupSymbolLayerIfNeeded(options)
   }
 
   fun updateViewAnnotation(viewId: String, options: ViewAnnotationOptions) {
     annotations[viewId]?.let {
       annotations[viewId] = options
+      addBackupSymbolLayerIfNeeded(options)
     }
   }
 
@@ -35,13 +38,34 @@ class ViewAnnotationCore(
   }
 
   fun calculateViewAnnotationsPosition(callback: ViewAnnotationsPositionCallback) {
+    updateTempList.clear()
     updateList.clear()
     for (annotation in annotations) {
       calculateSimpleSingePosition(annotation.key, annotation.value)?.let {
-        updateList.add(it)
+        updateTempList.add(it)
       }
     }
+    sortBySelected()
     callback.run(updateList)
+  }
+
+  private fun addBackupSymbolLayerIfNeeded(options: ViewAnnotationOptions) {
+    if (!options.allowViewAnnotationsCollision || options.featureIdentifier != null) {
+
+    }
+  }
+
+  private fun sortBySelected() {
+    val iterator = updateTempList.iterator()
+    while (iterator.hasNext()) {
+      val descriptor = iterator.next()
+      if (annotations[descriptor.identifier]?.selected != true) {
+        updateList.add(descriptor)
+        iterator.remove()
+      }
+    }
+    // we add leftover where actually 'selected' elements are left so that they are displayed on top
+    updateList.addAll(updateTempList)
   }
 
   private fun calculateSimpleSingePosition(

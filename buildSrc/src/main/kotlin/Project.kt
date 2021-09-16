@@ -1,3 +1,5 @@
+import Versions.androidxAsyncInflater
+
 object AndroidVersions {
   const val minSdkVersion = 21
   const val minAndroidAutoSdkVersion = 23
@@ -64,6 +66,7 @@ object Dependencies {
   const val hamcrest = "org.hamcrest:hamcrest:${Versions.hamcrest}"
   const val annotations = androidxAnnotations
   const val equalsVerifier = "nl.jqno.equalsverifier:equalsverifier:${Versions.equalsVerifier}"
+  const val asyncInflater = "androidx.asynclayoutinflater:asynclayoutinflater:${androidxAsyncInflater}"
 }
 
 object Versions {
@@ -106,4 +109,5 @@ object Versions {
   const val lint = "27.2.2"
   const val hamcrest = "2.1"
   const val equalsVerifier = "3.7"
+  const val androidxAsyncInflater = "1.0.0"
 }
