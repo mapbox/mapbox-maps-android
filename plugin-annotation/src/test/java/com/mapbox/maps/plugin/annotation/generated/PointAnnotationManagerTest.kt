@@ -303,7 +303,7 @@ class PointAnnotationManagerTest {
         .withIconImage(bitmap)
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
-    assertEquals(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.generationId, annotation.iconImage)
+    assertEquals(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.hashCode(), annotation.iconImage)
 
     verify(exactly = 1) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
   }
@@ -316,18 +316,18 @@ class PointAnnotationManagerTest {
         .withIconImage(bitmap)
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
-    assertEquals(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.generationId, annotation.iconImage)
+    assertEquals(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.hashCode(), annotation.iconImage)
 
-    verify(exactly = 1) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
+    verify(exactly = 1) { style.addStyleImage(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.hashCode(), any(), any(), any(), any(), any(), any()) }
 
     val annotation2 = manager.create(
       PointAnnotationOptions()
         .withIconImage(bitmap)
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
-    assertEquals(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.generationId, annotation2.iconImage)
+    assertEquals(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.hashCode(), annotation2.iconImage)
     // The first one will trigger twice and the second one once.
-    verify(exactly = 3) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
+    verify(exactly = 3) { style.addStyleImage(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.hashCode(), any(), any(), any(), any(), any(), any()) }
   }
 
   @Test
@@ -335,12 +335,15 @@ class PointAnnotationManagerTest {
     every { style.styleSourceExists(any()) } returns true
     val annotation = manager.create(
       PointAnnotationOptions()
+        .withIconImage(bitmap)
         .withPoint(Point.fromLngLat(0.0, 0.0))
     )
-    verify(exactly = 0) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
-    annotation.iconImageBitmap = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888)
+    verify(exactly = 1) { style.addStyleImage(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.hashCode(), any(), any(), any(), any(), any(), any()) }
+    val createBitmap = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888)
+    annotation.iconImageBitmap = createBitmap
     manager.update(annotation)
-    verify(exactly = 1) { style.addStyleImage(any(), any(), any(), any(), any(), any(), any()) }
+    assertEquals(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + createBitmap.hashCode(), annotation.iconImage)
+    verify(exactly = 1) { style.addStyleImage(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + createBitmap.hashCode(), any(), any(), any(), any(), any(), any()) }
   }
   @Test
   fun create() {

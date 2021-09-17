@@ -1,6 +1,7 @@
 package com.mapbox.maps.testapp.examples.markersandcallouts
 
 import android.animation.ValueAnimator
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
@@ -46,7 +47,7 @@ class PointAnnotationActivity : AppCompatActivity() {
       return AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]
     }
   private lateinit var annotationPlugin: AnnotationPlugin
-
+  private lateinit var blueBitmap: Bitmap
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     val binding = ActivityAnnotationBinding.inflate(layoutInflater)
@@ -142,12 +143,25 @@ class PointAnnotationActivity : AppCompatActivity() {
             .withSymbolSortKey(10.0)
             .withDraggable(true)
           pointAnnotation = create(pointAnnotationOptions)
+
+          // random add symbols across the globe
+          val pointAnnotationOptionsList: MutableList<PointAnnotationOptions> = ArrayList()
+          for (i in 0..5) {
+            pointAnnotationOptionsList.add(
+              PointAnnotationOptions()
+                .withPoint(AnnotationUtils.createRandomPoint())
+                .withIconImage(it)
+                .withDraggable(true)
+            )
+          }
+          create(pointAnnotationOptionsList)
         }
 
         bitmapFromDrawableRes(
           this@PointAnnotationActivity,
           R.drawable.mapbox_user_icon
         )?.let {
+          blueBitmap = it
           // create nearby symbols
           val nearbyOptions: PointAnnotationOptions = PointAnnotationOptions()
             .withPoint(Point.fromLngLat(NEARBY_LONGITUDE, NEARBY_LATITUDE))
@@ -225,6 +239,7 @@ class PointAnnotationActivity : AppCompatActivity() {
         }
       }
       R.id.menu_action_icon -> pointAnnotation?.iconImage = MAKI_ICON_CAFE
+      R.id.menu_action_bitmap_blue -> pointAnnotation?.iconImageBitmap = blueBitmap
       R.id.menu_action_rotation -> pointAnnotation?.iconRotate = 45.0
       R.id.menu_action_text -> pointAnnotation?.textField = "Hello world!"
       R.id.menu_action_anchor -> pointAnnotation?.iconAnchor = IconAnchor.BOTTOM

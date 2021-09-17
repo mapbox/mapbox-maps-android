@@ -15,6 +15,10 @@
         android:title="@string/change_icon_to_coffee"
         app:showAsAction="never" />
     <item
+        android:id="@+id/menu_action_bitmap_blue"
+        android:title="@string/change_icon_to_bitmap_blue"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/menu_action_rotation"
         android:title="@string/set_icon_rotation_to_45"
         app:showAsAction="never" />
