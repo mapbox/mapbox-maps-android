@@ -73,7 +73,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   private val annotationMap = ConcurrentHashMap<Long, T>()
   protected var touchAreaShiftX: Int = mapView.scrollX
   protected var touchAreaShiftY: Int = mapView.scrollY
-  protected abstract val layerId: String
+  abstract val layerId: String
   protected abstract val sourceId: String
   protected abstract val dragLayerId: String
   protected abstract val dragSourceId: String

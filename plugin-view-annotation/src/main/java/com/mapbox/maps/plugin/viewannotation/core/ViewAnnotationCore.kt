@@ -33,13 +33,17 @@ class ViewAnnotationCore(
 
   fun addViewAnnotation(viewId: String, options: ViewAnnotationOptions) {
     annotations[viewId] = EnhancedViewAnnotationOptions(options)
-    updateBackupSymbol(viewId, options)
+    if (!options.allowViewAnnotationsCollision || options.featureIdentifier != null) {
+      backupSymbolLayerManager.createBackupSymbol(viewId, options)
+    }
   }
 
   fun updateViewAnnotation(viewId: String, options: ViewAnnotationOptions) {
     annotations[viewId]?.let {
       annotations[viewId] = EnhancedViewAnnotationOptions(options)
-      updateBackupSymbol(viewId, options)
+      if (!options.allowViewAnnotationsCollision || options.featureIdentifier != null) {
+        backupSymbolLayerManager.updateBackupSymbol(viewId, options)
+      }
     }
   }
 
@@ -58,12 +62,6 @@ class ViewAnnotationCore(
     }
     sortBySelected()
     callback.run(updateList)
-  }
-
-  private fun updateBackupSymbol(id: String, options: ViewAnnotationOptions) {
-    if (!options.allowViewAnnotationsCollision || options.featureIdentifier != null) {
-      backupSymbolLayerManager.updateBackupSymbol(id, options)
-    }
   }
 
   private fun sortBySelected() {

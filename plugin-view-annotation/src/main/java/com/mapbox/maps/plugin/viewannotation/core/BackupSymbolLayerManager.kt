@@ -1,34 +1,38 @@
 package com.mapbox.maps.plugin.viewannotation.core
 
+import android.graphics.Bitmap
+import android.graphics.Color
 import android.os.Handler
 import android.os.Looper
 import android.view.View
 import com.mapbox.bindgen.Value
 import com.mapbox.common.Logger
+import com.mapbox.geojson.Point
 import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.ScreenCoordinate
-import com.mapbox.maps.extension.style.layers.generated.symbolLayer
-import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
+import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate
-import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
-import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import com.mapbox.maps.plugin.viewannotation.ViewAnnotationOptions
 
 internal class BackupSymbolLayerManager(
   private val coreAnnotations: LinkedHashMap<String, EnhancedViewAnnotationOptions>,
   mapDelegateProvider: MapDelegateProvider
 ) {
-  private val backupAnnotations = hashMapOf<String, ViewAnnotationOptions>()
+  private val backupAnnotations = hashMapOf<String, BackupSymbol>()
   private val workHandler = Handler(Looper.getMainLooper())
   private var detectorRunning = false
 
   private val mapFeatureQueryDelegate = mapDelegateProvider.mapFeatureQueryDelegate
   private val mapTransformDelegate = mapDelegateProvider.mapTransformDelegate
   private val annotationPlugin: AnnotationPlugin
+
+  private var pointAnnotationManager: PointAnnotationManager? = null
+  private val pixelRatio = mapDelegateProvider.mapTransformDelegate.getMapOptions().pixelRatio
 
   init {
     @Suppress("UNCHECKED_CAST")
@@ -41,16 +45,54 @@ internal class BackupSymbolLayerManager(
   }
 
   fun createAnnotationManager(view: View) {
-
+    pointAnnotationManager = annotationPlugin.createPointAnnotationManager(view)
   }
 
-  fun updateBackupSymbol(id: String, options: ViewAnnotationOptions) {
-    backupAnnotations[id] = options
+  fun createBackupSymbol(id: String, options: ViewAnnotationOptions) {
+    val bitmap = Bitmap.createBitmap(
+      options.width,
+      options.height,
+      Bitmap.Config.ARGB_8888
+    )
+    bitmap.eraseColor(Color.RED)
+    val pointAnnotationOptions = PointAnnotationOptions()
+      .withPoint(options.geometry as Point)
+      .withIconAnchor(options.anchor!!.mapToIconAnchor())
+      .withIconImage(bitmap)
+      .withIconOffset(
+        listOf(
+          options.offsetX.toDouble() / pixelRatio,
+          -options.offsetY.toDouble() / pixelRatio
+        )
+      )
+    backupAnnotations[id] = BackupSymbol(options, pointAnnotationManager?.create(pointAnnotationOptions))
     if (detectorRunning) {
       return
     }
     detectorRunning = true
     runCollisionDetectorLoop()
+  }
+
+  fun updateBackupSymbol(id: String, options: ViewAnnotationOptions) {
+    Logger.e("KIRYLDD", "updateBackupSymbol $id, options $options")
+    backupAnnotations[id]?.let {
+      val bitmap = Bitmap.createBitmap(
+        options.width,
+        options.height,
+        Bitmap.Config.ARGB_8888
+      )
+      bitmap.eraseColor(Color.RED)
+      it.pointAnnotation?.let { annotation ->
+        annotation.iconAnchor = options.anchor!!.mapToIconAnchor()
+        annotation.point = options.geometry as Point
+        annotation.iconImageBitmap = bitmap
+        annotation.iconOffset = listOf(
+          options.offsetX.toDouble() / pixelRatio,
+          -options.offsetY.toDouble() / pixelRatio
+        )
+        pointAnnotationManager?.update(annotation)
+      }
+    }
   }
 
   fun removeBackupSymbol(id: String) {
@@ -82,19 +124,20 @@ internal class BackupSymbolLayerManager(
         ScreenCoordinate(0.0, 0.0),
         ScreenCoordinate(viewportSize.width.toDouble(), viewportSize.height.toDouble())
       ),
-      RenderedQueryOptions(listOf("layer_id"), Value.nullValue())
+      // TODO refactor filter to use ids only
+      RenderedQueryOptions(listOf("layer_id", pointAnnotationManager?.layerId), Value.nullValue())
     ) {
       Logger.e("KIRYLDD", "QRF")
       if (it.isValue && it.value?.size!! > 0) {
         val list = it.value!!
-        Logger.e("KIRYLDD", list.map { qf -> qf.feature.id() }.joinToString(", "))
+        Logger.e("KIRYLDD", list.map {
+            qf -> qf.feature.properties()?.getAsJsonPrimitive("PointAnnotation")?.asString
+        }.joinToString(", "))
       }
     }
   }
 
   companion object {
-    private const val SOURCE_ID = "backup_callout_view_source"
-    private const val LAYER_ID = "backup_callout_view_layer"
     private const val DETECTOR_FREQUENCY_MS = 500L
   }
 }
