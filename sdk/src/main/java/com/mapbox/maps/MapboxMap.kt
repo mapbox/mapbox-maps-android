@@ -19,9 +19,6 @@ import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.GesturesPluginImpl
-import com.mapbox.maps.plugin.viewannotation.ViewAnnotationOptions
-import com.mapbox.maps.plugin.viewannotation.ViewAnnotationsPositionCallback
-import com.mapbox.maps.plugin.viewannotation.core.ViewAnnotationCore
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -48,22 +45,13 @@ class MapboxMap internal constructor(
   MapListenerDelegate,
   MapPluginExtensionsDelegate,
   MapCameraManagerDelegate,
-  MapStyleStateDelegate,
-  MapViewAnnotationDelegate {
+  MapStyleStateDelegate {
 
   private val nativeMapWeakRef = WeakReference(nativeMap)
   internal lateinit var style: Style
   internal var isStyleLoadInitiated = false
   private val styleObserver = StyleObserver(this, nativeMapWeakRef, nativeObserver, pixelRatio)
   internal var renderHandler: Handler? = null
-
-  private val viewAnnotationCore by lazy {
-    ViewAnnotationCore(
-      mapFeatureQueryDelegate = this,
-      mapCameraManagerDelegate = this,
-      mapTransformDelegate = this
-    )
-  }
 
   /**
    * Represents current camera state.
@@ -1315,21 +1303,5 @@ class MapboxMap internal constructor(
     fun clearData(resourceOptions: ResourceOptions, callback: AsyncOperationResultCallback) {
       Map.clearData(resourceOptions, callback)
     }
-  }
-
-  override fun addViewAnnotation(viewId: String, options: ViewAnnotationOptions) {
-    viewAnnotationCore.addViewAnnotation(viewId, options)
-  }
-
-  override fun updateViewAnnotation(viewId: String, options: ViewAnnotationOptions) {
-    viewAnnotationCore.updateViewAnnotation(viewId, options)
-  }
-
-  override fun removeViewAnnotation(viewId: String) {
-    viewAnnotationCore.removeViewAnnotation(viewId)
-  }
-
-  override fun calculateViewAnnotationsPosition(callback: ViewAnnotationsPositionCallback) {
-    viewAnnotationCore.calculateViewAnnotationsPosition(callback)
   }
 }

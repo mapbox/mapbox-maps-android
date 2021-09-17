@@ -22,7 +22,7 @@ android {
 
 dependencies {
   implementation(project(":sdk-base"))
-  implementation(project(":extension-style"))
+  implementation(project(":plugin-annotation"))
   implementation(Dependencies.asyncInflater)
   implementation(Dependencies.mapboxBase)
   implementation(Dependencies.kotlin)

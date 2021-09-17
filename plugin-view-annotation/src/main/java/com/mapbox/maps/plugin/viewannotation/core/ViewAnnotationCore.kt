@@ -1,39 +1,50 @@
 package com.mapbox.maps.plugin.viewannotation.core
 
+import android.view.View
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.ScreenCoordinate
-import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
-import com.mapbox.maps.plugin.delegates.MapFeatureQueryDelegate
-import com.mapbox.maps.plugin.delegates.MapTransformDelegate
+import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.viewannotation.ViewAnnotationAnchor
 import com.mapbox.maps.plugin.viewannotation.ViewAnnotationOptions
 import com.mapbox.maps.plugin.viewannotation.ViewAnnotationPositionDescriptor
 import com.mapbox.maps.plugin.viewannotation.ViewAnnotationsPositionCallback
 
 class ViewAnnotationCore(
-  private val mapFeatureQueryDelegate: MapFeatureQueryDelegate,
-  private val mapCameraManagerDelegate: MapCameraManagerDelegate,
-  private val mapTransformDelegate: MapTransformDelegate,
+  delegateProvider: MapDelegateProvider
 ) {
-
-  private val annotations = LinkedHashMap<String, ViewAnnotationOptions>()
+  private val annotations = LinkedHashMap<String, EnhancedViewAnnotationOptions>()
   private val updateTempList = mutableListOf<ViewAnnotationPositionDescriptor>()
   private val updateList = mutableListOf<ViewAnnotationPositionDescriptor>()
 
+  private val mapCameraManagerDelegate = delegateProvider.mapCameraManagerDelegate
+  private val mapTransformDelegate = delegateProvider.mapTransformDelegate
+
+  private val backupSymbolLayerManager by lazy {
+    BackupSymbolLayerManager(
+      annotations,
+      delegateProvider
+    )
+  }
+
+  fun setView(mapView: View) {
+    backupSymbolLayerManager.createAnnotationManager(mapView)
+  }
+
   fun addViewAnnotation(viewId: String, options: ViewAnnotationOptions) {
-    annotations[viewId] = options
-    addBackupSymbolLayerIfNeeded(options)
+    annotations[viewId] = EnhancedViewAnnotationOptions(options)
+    updateBackupSymbol(viewId, options)
   }
 
   fun updateViewAnnotation(viewId: String, options: ViewAnnotationOptions) {
     annotations[viewId]?.let {
-      annotations[viewId] = options
-      addBackupSymbolLayerIfNeeded(options)
+      annotations[viewId] = EnhancedViewAnnotationOptions(options)
+      updateBackupSymbol(viewId, options)
     }
   }
 
   fun removeViewAnnotation(viewId: String) {
+    backupSymbolLayerManager.removeBackupSymbol(viewId)
     annotations.remove(viewId)
   }
 
@@ -49,9 +60,9 @@ class ViewAnnotationCore(
     callback.run(updateList)
   }
 
-  private fun addBackupSymbolLayerIfNeeded(options: ViewAnnotationOptions) {
+  private fun updateBackupSymbol(id: String, options: ViewAnnotationOptions) {
     if (!options.allowViewAnnotationsCollision || options.featureIdentifier != null) {
-
+      backupSymbolLayerManager.updateBackupSymbol(id, options)
     }
   }
 
@@ -59,7 +70,7 @@ class ViewAnnotationCore(
     val iterator = updateTempList.iterator()
     while (iterator.hasNext()) {
       val descriptor = iterator.next()
-      if (annotations[descriptor.identifier]?.selected != true) {
+      if (annotations[descriptor.identifier]?.options?.selected != true) {
         updateList.add(descriptor)
         iterator.remove()
       }
@@ -70,8 +81,9 @@ class ViewAnnotationCore(
 
   private fun calculateSimpleSingePosition(
     id: String,
-    options: ViewAnnotationOptions
+    enhancedOptions: EnhancedViewAnnotationOptions
   ): ViewAnnotationPositionDescriptor? {
+    val options = enhancedOptions.options
     val geometry = options.geometry
     if (geometry !is Point) {
       Logger.w(TAG, "View Annotation (id = $id) supports only point geometry for now!")
@@ -123,7 +135,7 @@ class ViewAnnotationCore(
     // apply offsets
     resultOffsetX += options.offsetX
     resultOffsetY -= options.offsetY
-    // calculate if result coordinates belong to viewport
+    // calculate if result coordinates belong to the viewport
     val visibleX = resultOffsetX >= -options.width && resultOffsetX <= mapTransformDelegate.getSize().width
     val visibleY = resultOffsetY >= -options.height && resultOffsetY <= mapTransformDelegate.getSize().height
     if (visibleX && visibleY) {

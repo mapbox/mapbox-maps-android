@@ -9,7 +9,7 @@ import androidx.annotation.LayoutRes
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.delegates.MapViewAnnotationDelegate
+import com.mapbox.maps.plugin.viewannotation.core.ViewAnnotationCore
 
 @MapboxExperimental
 class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
@@ -21,12 +21,12 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
   private val annotations = HashMap<String, ViewAnnotation>()
 
   private lateinit var delegateProvider: MapDelegateProvider
-  private lateinit var delegateMapViewAnnotations: MapViewAnnotationDelegate
+  private lateinit var core: ViewAnnotationCore
 
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     this.delegateProvider = delegateProvider
     delegateProvider.mapListenerDelegate.addOnCameraChangeListener(this)
-    delegateMapViewAnnotations = delegateProvider.mapViewAnnotationDelegate
+    core = ViewAnnotationCore(delegateProvider)
   }
 
   override fun bind(context: Context, attrs: AttributeSet?, pixelRatio: Float) {
@@ -36,6 +36,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
   override fun bind(view: FrameLayout) {
     mapView = view
     mapView.requestDisallowInterceptTouchEvent(false)
+    core.setView(view)
   }
 
   // synchronous method
@@ -60,7 +61,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
     )
     val id = annotation.hashCode().toString()
     annotations[id] = annotation
-    delegateMapViewAnnotations.apply {
+    core.apply {
       addViewAnnotation(id, updatedOptions)
       calculateViewAnnotationsPosition {
         redrawAnnotations(it, !options.allowViewAnnotationsCollision)
@@ -92,7 +93,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
       )
       val id = annotation.hashCode().toString()
       annotations[id] = annotation
-      delegateMapViewAnnotations.apply {
+      core.apply {
         addViewAnnotation(id, updatedOptions)
         calculateViewAnnotationsPosition {
           redrawAnnotations(it, !options.allowViewAnnotationsCollision)
@@ -130,7 +131,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
   override fun removeViewAnnotation(id: String) {
     mapView.removeView(getViewAnnotationById(id))
     annotations.remove(id)
-    delegateMapViewAnnotations.apply {
+    core.apply {
       removeViewAnnotation(id)
       calculateViewAnnotationsPosition {
         redrawAnnotations(it, true)
@@ -155,7 +156,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
         .selected(options.selected)
         .build()
       it.options = updatedOptions
-      delegateMapViewAnnotations.apply {
+      core.apply {
         updateViewAnnotation(id, updatedOptions)
         calculateViewAnnotationsPosition { positions ->
           redrawAnnotations(positions, !updatedOptions.allowViewAnnotationsCollision)
@@ -196,7 +197,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
   }
 
   override fun onCameraChanged() {
-    delegateMapViewAnnotations.calculateViewAnnotationsPosition {
+    core.calculateViewAnnotationsPosition {
       redrawAnnotations(it, true)
     }
   }
