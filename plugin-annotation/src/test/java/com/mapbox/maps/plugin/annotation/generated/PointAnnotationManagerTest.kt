@@ -27,6 +27,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
+import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.*
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
@@ -34,8 +35,7 @@ import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.OnMoveListener
 import io.mockk.*
-import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -382,6 +382,166 @@ class PointAnnotationManagerTest {
     annotation.point = Point.fromLngLat(1.0, 1.0)
     manager.update(annotation)
     assertEquals(annotation, manager.annotations[0])
+  }
+
+  @Test
+  fun annotationPropertiesUpdate() {
+    val annotation = manager.create(PointAnnotationOptions().withPoint(Point.fromLngLat(0.0, 0.0)))
+
+    annotation.iconImageBitmap = bitmap
+    assertEquals(PointAnnotation.ICON_DEFAULT_NAME_PREFIX + bitmap.hashCode(), annotation.iconImage)
+    annotation.iconImageBitmap = null
+    assertNull(annotation.iconImage)
+
+    annotation.iconAnchor = IconAnchor.CENTER
+    assertEquals(IconAnchor.CENTER, annotation.iconAnchor)
+    annotation.iconAnchor = null
+    assertNull(annotation.iconAnchor)
+
+    annotation.iconImage = ""
+    assertEquals("", annotation.iconImage)
+    annotation.iconImage = null
+    assertNull(annotation.iconImage)
+
+    annotation.iconOffset = listOf(0.0, 0.0)
+    assertEquals(listOf(0.0, 0.0), annotation.iconOffset)
+    annotation.iconOffset = null
+    assertNull(annotation.iconOffset)
+
+    annotation.iconRotate = 0.0
+    assertEquals(0.0, annotation.iconRotate)
+    annotation.iconRotate = null
+    assertNull(annotation.iconRotate)
+
+    annotation.iconSize = 1.0
+    assertEquals(1.0, annotation.iconSize)
+    annotation.iconSize = null
+    assertNull(annotation.iconSize)
+
+    annotation.symbolSortKey = 1.0
+    assertEquals(1.0, annotation.symbolSortKey)
+    annotation.symbolSortKey = null
+    assertNull(annotation.symbolSortKey)
+
+    annotation.textAnchor = TextAnchor.CENTER
+    assertEquals(TextAnchor.CENTER, annotation.textAnchor)
+    annotation.textAnchor = null
+    assertNull(annotation.textAnchor)
+
+    annotation.textField = ""
+    assertEquals("", annotation.textField)
+    annotation.textField = null
+    assertNull(annotation.textField)
+
+    annotation.textJustify = TextJustify.AUTO
+    assertEquals(TextJustify.AUTO, annotation.textJustify)
+    annotation.textJustify = null
+    assertNull(annotation.textJustify)
+
+    annotation.textLetterSpacing = 0.0
+    assertEquals(0.0, annotation.textLetterSpacing)
+    annotation.textLetterSpacing = null
+    assertNull(annotation.textLetterSpacing)
+
+    annotation.textMaxWidth = 10.0
+    assertEquals(10.0, annotation.textMaxWidth)
+    annotation.textMaxWidth = null
+    assertNull(annotation.textMaxWidth)
+
+    annotation.textOffset = listOf(0.0, 0.0)
+    assertEquals(listOf(0.0, 0.0), annotation.textOffset)
+    annotation.textOffset = null
+    assertNull(annotation.textOffset)
+
+    annotation.textRadialOffset = 0.0
+    assertEquals(0.0, annotation.textRadialOffset)
+    annotation.textRadialOffset = null
+    assertNull(annotation.textRadialOffset)
+
+    annotation.textRotate = 0.0
+    assertEquals(0.0, annotation.textRotate)
+    annotation.textRotate = null
+    assertNull(annotation.textRotate)
+
+    annotation.textSize = 16.0
+    assertEquals(16.0, annotation.textSize)
+    annotation.textSize = null
+    assertNull(annotation.textSize)
+
+    annotation.textTransform = TextTransform.NONE
+    assertEquals(TextTransform.NONE, annotation.textTransform)
+    annotation.textTransform = null
+    assertNull(annotation.textTransform)
+
+    annotation.iconColorInt = Color.BLACK
+    assertEquals(Color.BLACK, annotation.iconColorInt)
+    annotation.iconColorInt = null
+    assertNull(annotation.iconColorInt)
+
+    annotation.iconColorString = ColorUtils.colorToRgbaString(Color.YELLOW)
+    assertEquals(ColorUtils.colorToRgbaString(Color.YELLOW), annotation.iconColorString)
+    annotation.iconColorString = null
+    assertNull(annotation.iconColorString)
+
+    annotation.iconHaloBlur = 0.0
+    assertEquals(0.0, annotation.iconHaloBlur)
+    annotation.iconHaloBlur = null
+    assertNull(annotation.iconHaloBlur)
+
+    annotation.iconHaloColorInt = Color.BLACK
+    assertEquals(Color.BLACK, annotation.iconHaloColorInt)
+    annotation.iconHaloColorInt = null
+    assertNull(annotation.iconHaloColorInt)
+
+    annotation.iconHaloColorString = ColorUtils.colorToRgbaString(Color.YELLOW)
+    assertEquals(ColorUtils.colorToRgbaString(Color.YELLOW), annotation.iconHaloColorString)
+    annotation.iconHaloColorString = null
+    assertNull(annotation.iconHaloColorString)
+
+    annotation.iconHaloWidth = 0.0
+    assertEquals(0.0, annotation.iconHaloWidth)
+    annotation.iconHaloWidth = null
+    assertNull(annotation.iconHaloWidth)
+
+    annotation.iconOpacity = 1.0
+    assertEquals(1.0, annotation.iconOpacity)
+    annotation.iconOpacity = null
+    assertNull(annotation.iconOpacity)
+
+    annotation.textColorInt = Color.BLACK
+    assertEquals(Color.BLACK, annotation.textColorInt)
+    annotation.textColorInt = null
+    assertNull(annotation.textColorInt)
+
+    annotation.textColorString = ColorUtils.colorToRgbaString(Color.YELLOW)
+    assertEquals(ColorUtils.colorToRgbaString(Color.YELLOW), annotation.textColorString)
+    annotation.textColorString = null
+    assertNull(annotation.textColorString)
+
+    annotation.textHaloBlur = 0.0
+    assertEquals(0.0, annotation.textHaloBlur)
+    annotation.textHaloBlur = null
+    assertNull(annotation.textHaloBlur)
+
+    annotation.textHaloColorInt = Color.BLACK
+    assertEquals(Color.BLACK, annotation.textHaloColorInt)
+    annotation.textHaloColorInt = null
+    assertNull(annotation.textHaloColorInt)
+
+    annotation.textHaloColorString = ColorUtils.colorToRgbaString(Color.YELLOW)
+    assertEquals(ColorUtils.colorToRgbaString(Color.YELLOW), annotation.textHaloColorString)
+    annotation.textHaloColorString = null
+    assertNull(annotation.textHaloColorString)
+
+    annotation.textHaloWidth = 0.0
+    assertEquals(0.0, annotation.textHaloWidth)
+    annotation.textHaloWidth = null
+    assertNull(annotation.textHaloWidth)
+
+    annotation.textOpacity = 1.0
+    assertEquals(1.0, annotation.textOpacity)
+    annotation.textOpacity = null
+    assertNull(annotation.textOpacity)
   }
 
   @Test

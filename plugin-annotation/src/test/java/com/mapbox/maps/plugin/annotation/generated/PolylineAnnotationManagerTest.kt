@@ -26,6 +26,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
+import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.*
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
@@ -33,8 +34,7 @@ import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.OnMoveListener
 import io.mockk.*
-import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -253,6 +253,61 @@ class PolylineAnnotationManagerTest {
     annotation.points = listOf(Point.fromLngLat(1.0, 1.0), Point.fromLngLat(1.0, 1.0))
     manager.update(annotation)
     assertEquals(annotation, manager.annotations[0])
+  }
+
+  @Test
+  fun annotationPropertiesUpdate() {
+    val annotation = manager.create(PolylineAnnotationOptions().withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0))))
+
+    annotation.lineJoin = LineJoin.BEVEL
+    assertEquals(LineJoin.BEVEL, annotation.lineJoin)
+    annotation.lineJoin = null
+    assertNull(annotation.lineJoin)
+
+    annotation.lineSortKey = 1.0
+    assertEquals(1.0, annotation.lineSortKey)
+    annotation.lineSortKey = null
+    assertNull(annotation.lineSortKey)
+
+    annotation.lineBlur = 0.0
+    assertEquals(0.0, annotation.lineBlur)
+    annotation.lineBlur = null
+    assertNull(annotation.lineBlur)
+
+    annotation.lineColorInt = Color.BLACK
+    assertEquals(Color.BLACK, annotation.lineColorInt)
+    annotation.lineColorInt = null
+    assertNull(annotation.lineColorInt)
+
+    annotation.lineColorString = ColorUtils.colorToRgbaString(Color.YELLOW)
+    assertEquals(ColorUtils.colorToRgbaString(Color.YELLOW), annotation.lineColorString)
+    annotation.lineColorString = null
+    assertNull(annotation.lineColorString)
+
+    annotation.lineGapWidth = 0.0
+    assertEquals(0.0, annotation.lineGapWidth)
+    annotation.lineGapWidth = null
+    assertNull(annotation.lineGapWidth)
+
+    annotation.lineOffset = 0.0
+    assertEquals(0.0, annotation.lineOffset)
+    annotation.lineOffset = null
+    assertNull(annotation.lineOffset)
+
+    annotation.lineOpacity = 1.0
+    assertEquals(1.0, annotation.lineOpacity)
+    annotation.lineOpacity = null
+    assertNull(annotation.lineOpacity)
+
+    annotation.linePattern = "pedestrian-polygon"
+    assertEquals("pedestrian-polygon", annotation.linePattern)
+    annotation.linePattern = null
+    assertNull(annotation.linePattern)
+
+    annotation.lineWidth = 1.0
+    assertEquals(1.0, annotation.lineWidth)
+    annotation.lineWidth = null
+    assertNull(annotation.lineWidth)
   }
 
   @Test

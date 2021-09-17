@@ -76,8 +76,10 @@ class PolygonAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY, it)
+      if (value != null) {
+        jsonObject.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY, value)
+      } else {
+        jsonObject.remove(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY)
       }
     }
 
@@ -107,10 +109,12 @@ class PolygonAnnotation(
      * @param color value for String
      */
     set(@ColorInt value) {
-      value?.let {
+      if (value != null) {
         jsonObject.addProperty(
           PolygonAnnotationOptions.PROPERTY_FILL_COLOR, ColorUtils.colorToRgbaString(value)
         )
+      } else {
+        jsonObject.remove(PolygonAnnotationOptions.PROPERTY_FILL_COLOR)
       }
     }
 
@@ -138,7 +142,11 @@ class PolygonAnnotation(
      * @param color value for String
      */
     set(value) {
-      jsonObject.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_COLOR, value)
+      if (value != null) {
+        jsonObject.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_COLOR, value)
+      } else {
+        jsonObject.remove(PolygonAnnotationOptions.PROPERTY_FILL_COLOR)
+      }
     }
 
   /**
@@ -167,8 +175,10 @@ class PolygonAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_OPACITY, it)
+      if (value != null) {
+        jsonObject.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_OPACITY, value)
+      } else {
+        jsonObject.remove(PolygonAnnotationOptions.PROPERTY_FILL_OPACITY)
       }
     }
 
@@ -198,10 +208,12 @@ class PolygonAnnotation(
      * @param color value for String
      */
     set(@ColorInt value) {
-      value?.let {
+      if (value != null) {
         jsonObject.addProperty(
           PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR, ColorUtils.colorToRgbaString(value)
         )
+      } else {
+        jsonObject.remove(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR)
       }
     }
 
@@ -229,7 +241,11 @@ class PolygonAnnotation(
      * @param color value for String
      */
     set(value) {
-      jsonObject.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR, value)
+      if (value != null) {
+        jsonObject.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR, value)
+      } else {
+        jsonObject.remove(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR)
+      }
     }
 
   /**
@@ -258,8 +274,10 @@ class PolygonAnnotation(
      * @param value constant property value for String
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN, it)
+      if (value != null) {
+        jsonObject.addProperty(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN, value)
+      } else {
+        jsonObject.remove(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN)
       }
     }
 

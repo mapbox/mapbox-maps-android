@@ -63,12 +63,14 @@ class PointAnnotation(
      * @param value the iconBitmap
      */
     set(value) {
-      value?.let {
-        field = it
+      if (value != null) {
+        field = value
         if (iconImage == null || iconImage!!.startsWith(ICON_DEFAULT_NAME_PREFIX)) {
           // User does not set iconImage, update iconImage to this new bitmap
-          iconImage = ICON_DEFAULT_NAME_PREFIX + it.hashCode()
+          iconImage = ICON_DEFAULT_NAME_PREFIX + value.hashCode()
         }
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_IMAGE)
       }
     }
   // Property accessors
@@ -98,8 +100,10 @@ class PointAnnotation(
      * @param value constant property value for IconAnchor
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_ANCHOR, it.value)
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_ANCHOR, value.value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_ANCHOR)
       }
     }
 
@@ -129,8 +133,10 @@ class PointAnnotation(
      * @param value constant property value for String
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_IMAGE, it)
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_IMAGE, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_IMAGE)
       }
     }
 
@@ -157,10 +163,12 @@ class PointAnnotation(
      * To update the pointAnnotation on the map use {@link PointAnnotationManager#update(Annotation)}.
      */
     set(value) {
-      val jsonArray = JsonArray()
-      value?.let {
-        it.forEach { jsonArray.add(it) }
+      if (value != null) {
+        val jsonArray = JsonArray()
+        value.forEach { jsonArray.add(it) }
         jsonObject.add(PointAnnotationOptions.PROPERTY_ICON_OFFSET, jsonArray)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_OFFSET)
       }
     }
 
@@ -190,8 +198,10 @@ class PointAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_ROTATE, it)
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_ROTATE, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_ROTATE)
       }
     }
 
@@ -221,8 +231,10 @@ class PointAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_SIZE, it)
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_SIZE, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_SIZE)
       }
     }
 
@@ -252,8 +264,10 @@ class PointAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY, it)
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_SYMBOL_SORT_KEY)
       }
     }
 
@@ -283,8 +297,10 @@ class PointAnnotation(
      * @param value constant property value for TextAnchor
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_ANCHOR, it.value)
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_ANCHOR, value.value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_TEXT_ANCHOR)
       }
     }
 
@@ -314,8 +330,10 @@ class PointAnnotation(
      * @param value constant property value for String
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_FIELD, it)
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_FIELD, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_TEXT_FIELD)
       }
     }
 
@@ -345,8 +363,10 @@ class PointAnnotation(
      * @param value constant property value for TextJustify
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY, it.value)
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY, value.value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_TEXT_JUSTIFY)
       }
     }
 
@@ -376,8 +396,10 @@ class PointAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING, it)
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_TEXT_LETTER_SPACING)
       }
     }
 
@@ -407,8 +429,10 @@ class PointAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH, it)
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_TEXT_MAX_WIDTH)
       }
     }
 
@@ -435,10 +459,12 @@ class PointAnnotation(
      * To update the pointAnnotation on the map use {@link PointAnnotationManager#update(Annotation)}.
      */
     set(value) {
-      val jsonArray = JsonArray()
-      value?.let {
-        it.forEach { jsonArray.add(it) }
+      if (value != null) {
+        val jsonArray = JsonArray()
+        value.forEach { jsonArray.add(it) }
         jsonObject.add(PointAnnotationOptions.PROPERTY_TEXT_OFFSET, jsonArray)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_TEXT_OFFSET)
       }
     }
 
@@ -468,8 +494,10 @@ class PointAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET, it)
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_TEXT_RADIAL_OFFSET)
       }
     }
 
@@ -499,8 +527,10 @@ class PointAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_ROTATE, it)
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_ROTATE, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_TEXT_ROTATE)
       }
     }
 
@@ -530,8 +560,10 @@ class PointAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_SIZE, it)
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_SIZE, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_TEXT_SIZE)
       }
     }
 
@@ -561,8 +593,10 @@ class PointAnnotation(
      * @param value constant property value for TextTransform
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM, it.value)
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM, value.value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_TEXT_TRANSFORM)
       }
     }
 
@@ -592,10 +626,12 @@ class PointAnnotation(
      * @param color value for String
      */
     set(@ColorInt value) {
-      value?.let {
+      if (value != null) {
         jsonObject.addProperty(
           PointAnnotationOptions.PROPERTY_ICON_COLOR, ColorUtils.colorToRgbaString(value)
         )
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_COLOR)
       }
     }
 
@@ -623,7 +659,11 @@ class PointAnnotation(
      * @param color value for String
      */
     set(value) {
-      jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_COLOR, value)
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_COLOR, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_COLOR)
+      }
     }
 
   /**
@@ -652,8 +692,10 @@ class PointAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR, it)
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_HALO_BLUR)
       }
     }
 
@@ -683,10 +725,12 @@ class PointAnnotation(
      * @param color value for String
      */
     set(@ColorInt value) {
-      value?.let {
+      if (value != null) {
         jsonObject.addProperty(
           PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR, ColorUtils.colorToRgbaString(value)
         )
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR)
       }
     }
 
@@ -714,7 +758,11 @@ class PointAnnotation(
      * @param color value for String
      */
     set(value) {
-      jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR, value)
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_HALO_COLOR)
+      }
     }
 
   /**
@@ -743,8 +791,10 @@ class PointAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH, it)
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_HALO_WIDTH)
       }
     }
 
@@ -774,8 +824,10 @@ class PointAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_OPACITY, it)
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_ICON_OPACITY, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_ICON_OPACITY)
       }
     }
 
@@ -805,10 +857,12 @@ class PointAnnotation(
      * @param color value for String
      */
     set(@ColorInt value) {
-      value?.let {
+      if (value != null) {
         jsonObject.addProperty(
           PointAnnotationOptions.PROPERTY_TEXT_COLOR, ColorUtils.colorToRgbaString(value)
         )
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_TEXT_COLOR)
       }
     }
 
@@ -836,7 +890,11 @@ class PointAnnotation(
      * @param color value for String
      */
     set(value) {
-      jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_COLOR, value)
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_COLOR, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_TEXT_COLOR)
+      }
     }
 
   /**
@@ -865,8 +923,10 @@ class PointAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR, it)
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_TEXT_HALO_BLUR)
       }
     }
 
@@ -896,10 +956,12 @@ class PointAnnotation(
      * @param color value for String
      */
     set(@ColorInt value) {
-      value?.let {
+      if (value != null) {
         jsonObject.addProperty(
           PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR, ColorUtils.colorToRgbaString(value)
         )
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR)
       }
     }
 
@@ -927,7 +989,11 @@ class PointAnnotation(
      * @param color value for String
      */
     set(value) {
-      jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR, value)
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_TEXT_HALO_COLOR)
+      }
     }
 
   /**
@@ -956,8 +1022,10 @@ class PointAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH, it)
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_TEXT_HALO_WIDTH)
       }
     }
 
@@ -987,8 +1055,10 @@ class PointAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_OPACITY, it)
+      if (value != null) {
+        jsonObject.addProperty(PointAnnotationOptions.PROPERTY_TEXT_OPACITY, value)
+      } else {
+        jsonObject.remove(PointAnnotationOptions.PROPERTY_TEXT_OPACITY)
       }
     }
 

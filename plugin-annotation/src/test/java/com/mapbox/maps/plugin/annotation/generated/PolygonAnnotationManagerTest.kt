@@ -25,6 +25,7 @@ import com.mapbox.maps.extension.style.layers.generated.FillLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
+import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.*
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
@@ -32,8 +33,7 @@ import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.OnMoveListener
 import io.mockk.*
-import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -244,6 +244,46 @@ class PolygonAnnotationManagerTest {
     annotation.points = listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))
     manager.update(annotation)
     assertEquals(annotation, manager.annotations[0])
+  }
+
+  @Test
+  fun annotationPropertiesUpdate() {
+    val annotation = manager.create(PolygonAnnotationOptions().withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))))
+
+    annotation.fillSortKey = 1.0
+    assertEquals(1.0, annotation.fillSortKey)
+    annotation.fillSortKey = null
+    assertNull(annotation.fillSortKey)
+
+    annotation.fillColorInt = Color.BLACK
+    assertEquals(Color.BLACK, annotation.fillColorInt)
+    annotation.fillColorInt = null
+    assertNull(annotation.fillColorInt)
+
+    annotation.fillColorString = ColorUtils.colorToRgbaString(Color.YELLOW)
+    assertEquals(ColorUtils.colorToRgbaString(Color.YELLOW), annotation.fillColorString)
+    annotation.fillColorString = null
+    assertNull(annotation.fillColorString)
+
+    annotation.fillOpacity = 1.0
+    assertEquals(1.0, annotation.fillOpacity)
+    annotation.fillOpacity = null
+    assertNull(annotation.fillOpacity)
+
+    annotation.fillOutlineColorInt = Color.BLACK
+    assertEquals(Color.BLACK, annotation.fillOutlineColorInt)
+    annotation.fillOutlineColorInt = null
+    assertNull(annotation.fillOutlineColorInt)
+
+    annotation.fillOutlineColorString = ColorUtils.colorToRgbaString(Color.YELLOW)
+    assertEquals(ColorUtils.colorToRgbaString(Color.YELLOW), annotation.fillOutlineColorString)
+    annotation.fillOutlineColorString = null
+    assertNull(annotation.fillOutlineColorString)
+
+    annotation.fillPattern = "pedestrian-polygon"
+    assertEquals("pedestrian-polygon", annotation.fillPattern)
+    annotation.fillPattern = null
+    assertNull(annotation.fillPattern)
   }
 
   @Test
