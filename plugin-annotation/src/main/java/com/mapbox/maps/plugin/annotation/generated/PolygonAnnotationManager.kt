@@ -4,16 +4,19 @@ package com.mapbox.maps.plugin.annotation.generated
 
 import android.view.View
 import com.mapbox.geojson.*
+import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
 import com.mapbox.maps.extension.style.layers.generated.FillLayer
 import com.mapbox.maps.extension.style.layers.generated.fillLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
+import com.mapbox.maps.extension.style.utils.silentUnwrap
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationManagerImpl
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.AnnotationType
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
+import java.util.*
 import java.util.concurrent.atomic.AtomicLong
 
 /**
@@ -152,7 +155,8 @@ class PolygonAnnotationManager(
      * @param value property wrapper value around Boolean
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-antialias").silentUnwrap()
+      newValue?.let {
         layer?.fillAntialias(it)
         dragLayer?.fillAntialias(it)
       }
@@ -177,7 +181,8 @@ class PolygonAnnotationManager(
      * @param value property wrapper value around List<Double>
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-translate").silentUnwrap()
+      newValue?.let {
         layer?.fillTranslate(it)
         dragLayer?.fillTranslate(it)
       }
@@ -202,7 +207,8 @@ class PolygonAnnotationManager(
      * @param value property wrapper value around FillTranslateAnchor
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: FillTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-translate-anchor").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      newValue?.let {
         layer?.fillTranslateAnchor(it)
         dragLayer?.fillTranslateAnchor(it)
       }
