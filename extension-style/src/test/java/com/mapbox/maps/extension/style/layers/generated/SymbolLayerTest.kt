@@ -1626,6 +1626,7 @@ class SymbolLayerTest {
       }
     }
     every { styleProperty.value } returns formatExpression
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
 
     val layer = symbolLayer("id", "source") { }
     layer.bindTo(style)
@@ -1712,10 +1713,11 @@ class SymbolLayerTest {
       }
     }
     every { styleProperty.value } returns formatExpression
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
 
     val layer = symbolLayer("id", "source") { }
     layer.bindTo(style)
-    assertEquals("[[cyan, {text-color=rgba(0, 255, 255, 1), font-scale=0.9, text-font=[Open Sans Regular, Arial Unicode MS Regular]}], [black, {text-color=rgba(0, 0, 0, 1), font-scale=2.0, text-font=[Open Sans Regular, Arial Unicode MS Regular]}]]", layer.textFieldAsExpression.toString())
+    assertEquals(formatExpression.toString(), layer.textFieldAsExpression.toString())
     val expectedValue = formatted {
       formattedSection("cyan") {
         fontScale = 0.9
@@ -1753,6 +1755,7 @@ class SymbolLayerTest {
       formatSection("abc")
     }
     every { styleProperty.value } returns formatExpression
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
 
     val layer = symbolLayer("id", "source") { }
     layer.bindTo(style)
@@ -5399,6 +5402,7 @@ class SymbolLayerTest {
       }
     }
     every { styleProperty.value } returns formatExpression
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
 
     val expectedValue = formatted {
       formattedSection("cyan") {
@@ -5461,8 +5465,9 @@ class SymbolLayerTest {
       }
     }
     every { styleProperty.value } returns formatExpression
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
 
-    assertEquals("[[cyan, {text-color=rgba(0, 255, 255, 1), font-scale=0.9, text-font=[Open Sans Regular, Arial Unicode MS Regular]}], [black, {text-color=rgba(0, 0, 0, 1), font-scale=2.0, text-font=[Open Sans Regular, Arial Unicode MS Regular]}]]", SymbolLayer.defaultTextFieldAsExpression.toString())
+    assertEquals(formatExpression.toString(), SymbolLayer.defaultTextFieldAsExpression.toString())
     val expectedValue = formatted {
       formattedSection("cyan") {
         fontScale = 0.9
@@ -5491,6 +5496,7 @@ class SymbolLayerTest {
       formatSection("abc")
     }
     every { styleProperty.value } returns formatExpression
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
 
     assertEquals("abc", SymbolLayer.defaultTextFieldAsString)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-field") }
