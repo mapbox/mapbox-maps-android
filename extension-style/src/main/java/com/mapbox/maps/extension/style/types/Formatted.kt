@@ -2,7 +2,9 @@ package com.mapbox.maps.extension.style.types
 
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.extension.style.expressions.dsl.generated.rgba
+import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.utils.ColorUtils
+import com.mapbox.maps.extension.style.utils.unwrapToTyped
 import java.lang.StringBuilder
 
 /**
@@ -51,6 +53,12 @@ class Formatted : ArrayList<FormattedSection>() {
    * Static variables and methods.
    */
   companion object {
+    /**
+     * Construct a [Formatted] object from a format expression.
+     */
+    fun fromExpression(expression: Expression): Formatted {
+      return fromProperty(expression.unwrapToTyped<ArrayList<Any>>())
+    }
 
     /**
      * Construct a [Formatted] object from a Formatted List (Returned from the Core).
