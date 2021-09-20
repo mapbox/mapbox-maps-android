@@ -39,14 +39,14 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     onGeoJsonParsed: OnGeoJsonParsed
   ) : this(builder) {
     rawGeoJson?.let {
-      updateParsedGeoJsonRegistry.add(sourceId + it.hashCode())
+      ignoreParsedGeoJsonRegistry[sourceId] = false
       onGeoJsonParsedListenerList.add(onGeoJsonParsed)
       workerHandler.post {
         val property = it.toPropertyValue()
         mainHandler.post {
           geoJsonParsed = true
           // we set parsed data when sync setter was not called during background work
-          if (updateParsedGeoJsonRegistry.remove(sourceId + it.hashCode())) {
+          if (ignoreParsedGeoJsonRegistry[sourceId] == false) {
             setProperty(property, throwRuntimeException = false)
             onGeoJsonParsedListenerList.forEach {
               it.onGeoJsonParsed(this)
@@ -97,8 +97,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * apply when data is parsed.
    */
   fun data(value: String) = apply {
-    // Clear all asynchronous data
-    updateParsedGeoJsonRegistry.clear()
+    ignoreParsedGeoJsonRegistry[sourceId] = true
     workerHandler.removeCallbacksAndMessages(null)
     setProperty(PropertyValue("data", TypeUtils.wrapToValue(value)))
   }
@@ -344,23 +343,22 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     onDataParsed: ((GeoJsonSource) -> Unit)?
   ): GeoJsonSource = apply {
     onDataParsed?.let { listener ->
-      updateParsedGeoJsonRegistry.add(sourceId + data.hashCode())
+      ignoreParsedGeoJsonRegistry[sourceId] = false
       // remove any events from queue before posting this task
       workerHandler.removeCallbacksAndMessages(null)
       workerHandler.post {
         val property = data.toPropertyValue()
         mainHandler.post {
           // we set parsed data when sync setter was not called during background work
-          if (updateParsedGeoJsonRegistry.remove(sourceId + data.hashCode())) {
+          if (ignoreParsedGeoJsonRegistry[sourceId] == false) {
             setProperty(property, throwRuntimeException = false)
             listener.invoke(this)
           }
         }
       }
     } ?: run {
-      // if any task is running or waiting- skip all of them
-      updateParsedGeoJsonRegistry.clear()
-
+      // if any task is running - set flag to skip it when it is finished
+      ignoreParsedGeoJsonRegistry[sourceId] = true
       // remove any events from queue - they should not overwrite data set synchronously
       workerHandler.removeCallbacksAndMessages(null)
       setProperty(data.toPropertyValue())
@@ -634,8 +632,8 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     }
 
     private val mainHandler = Handler(Looper.getMainLooper())
-    /** Registry to control if we need to update parsed result for given sourceId. */
-    private val updateParsedGeoJsonRegistry = hashSetOf<String>()
+    /** Registry to control if we need to ignore parsed result for given sourceId. */
+    private val ignoreParsedGeoJsonRegistry = hashMapOf<String, Boolean>()
 
     /**
      * Maximum zoom level at which to create vector tiles (higher means greater detail at high zoom
