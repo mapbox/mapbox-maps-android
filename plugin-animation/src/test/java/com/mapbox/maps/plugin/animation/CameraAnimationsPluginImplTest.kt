@@ -30,6 +30,8 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.LooperMode
 import org.robolectric.shadows.ShadowLog
+import java.lang.Error
+import java.lang.Exception
 import java.time.Duration
 
 @RunWith(RobolectricTestRunner::class)
@@ -970,6 +972,35 @@ class CameraAnimationsPluginImplTest {
     shadowOf(getMainLooper()).idle()
     verify(exactly = 0) { ShadowLogger.d(TAG, any()) }
     unmockkStatic(ShadowLogger::class)
+  }
+
+  @Test
+  fun catchErrorOnSetCameraTest() {
+    executeSetCameraTest(Error("Invalid camera options"))
+  }
+
+  @Test
+  fun catchExceptionOnSetCameraTest() {
+    executeSetCameraTest(Exception("Invalid camera options"))
+  }
+
+  private fun executeSetCameraTest(error: Throwable) {
+    val lastCameraOptions = cameraState.toCameraOptions()
+    val targetCameraOptions = CameraOptions.Builder().center(
+      Point.fromLngLat(50.0, 50.0)
+    ).pitch(50.0)
+      .bearing(50.0)
+      .zoom(5.0).build()
+    cameraAnimationsPluginImpl.lastCameraOptions = lastCameraOptions
+    every { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) } throws error
+
+    cameraAnimationsPluginImpl.performMapJump(targetCameraOptions)
+    // assert camera options did not change
+    assertNotEquals(targetCameraOptions, cameraAnimationsPluginImpl.lastCameraOptions)
+
+    // assert camera states
+    assertNotNull(cameraAnimationsPluginImpl.lastCameraOptions)
+    assertEquals(lastCameraOptions, cameraAnimationsPluginImpl.lastCameraOptions)
   }
 
   class LifecycleListener : CameraAnimationsLifecycleListener {
