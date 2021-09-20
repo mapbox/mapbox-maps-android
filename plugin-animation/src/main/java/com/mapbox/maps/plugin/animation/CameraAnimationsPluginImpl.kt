@@ -187,7 +187,6 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     }
     // move native map to new position
     try {
-      Log.d(TAG, "CameraOptions = $cameraOptions")
       if (!isValidCameraLngLat(cameraOptions)) {
         Log.e(TAG, "Invalid Latitude, Longitude provided")
         return
