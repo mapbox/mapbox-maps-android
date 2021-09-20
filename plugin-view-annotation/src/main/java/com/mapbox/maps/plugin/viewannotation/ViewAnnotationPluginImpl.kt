@@ -64,7 +64,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
     core.apply {
       addViewAnnotation(id, updatedOptions)
       calculateViewAnnotationsPosition {
-        redrawAnnotations(it, !options.allowViewAnnotationsCollision)
+        redrawAnnotations(it)
       }
     }
     return id
@@ -96,25 +96,20 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
       core.apply {
         addViewAnnotation(id, updatedOptions)
         calculateViewAnnotationsPosition {
-          redrawAnnotations(it, !options.allowViewAnnotationsCollision)
+          redrawAnnotations(it)
         }
       }
       result.invoke(id)
     }
   }
 
-  private fun redrawAnnotations(
-    positionsToUpdate: List<ViewAnnotationPositionDescriptor>,
-    fullRedraw: Boolean
-  ) {
-    if (fullRedraw) {
-      annotations.forEach {
-        mapView.removeView(it.value.view)
-      }
+  // TODO revisit optimization for partial redraw on CRUD operations based on collision flag
+  private fun redrawAnnotations(positionsToUpdate: List<ViewAnnotationPositionDescriptor>) {
+    annotations.forEach {
+      mapView.removeView(it.value.view)
     }
     for (viewPosition in positionsToUpdate) {
       annotations[viewPosition.identifier]?.let { annotation ->
-        mapView.removeView(annotation.view)
         annotation.viewLayoutParams.width = annotation.options.width
         annotation.viewLayoutParams.height = annotation.options.height
         annotation.viewLayoutParams.setMargins(
@@ -134,7 +129,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
     core.apply {
       removeViewAnnotation(id)
       calculateViewAnnotationsPosition {
-        redrawAnnotations(it, true)
+        redrawAnnotations(it)
       }
     }
   }
@@ -159,7 +154,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
       core.apply {
         updateViewAnnotation(id, updatedOptions)
         calculateViewAnnotationsPosition { positions ->
-          redrawAnnotations(positions, !updatedOptions.allowViewAnnotationsCollision)
+          redrawAnnotations(positions)
         }
       }
     }
@@ -197,8 +192,11 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
   }
 
   override fun onCameraChanged() {
+    if (annotations.isEmpty()) {
+      return
+    }
     core.calculateViewAnnotationsPosition {
-      redrawAnnotations(it, true)
+      redrawAnnotations(it)
     }
   }
 }

@@ -20,7 +20,7 @@ import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.viewannotation.ViewAnnotationOptions
 
 internal class BackupSymbolLayerManager(
-  private val coreAnnotations: LinkedHashMap<String, EnhancedViewAnnotationOptions>,
+  private val collisionsCallback: CollisionDetectorCallback,
   mapDelegateProvider: MapDelegateProvider
 ) {
   private val backupAnnotations = hashMapOf<String, BackupSymbol>()
@@ -54,7 +54,7 @@ internal class BackupSymbolLayerManager(
       options.height,
       Bitmap.Config.ARGB_8888
     )
-    bitmap.eraseColor(Color.RED)
+    bitmap.eraseColor(Color.TRANSPARENT)
     val pointAnnotationOptions = PointAnnotationOptions()
       .withPoint(options.geometry as Point)
       .withIconAnchor(options.anchor!!.mapToIconAnchor())
@@ -65,7 +65,8 @@ internal class BackupSymbolLayerManager(
           -options.offsetY.toDouble() / pixelRatio
         )
       )
-    backupAnnotations[id] = BackupSymbol(options, pointAnnotationManager?.create(pointAnnotationOptions))
+    backupAnnotations[id] =
+      BackupSymbol(options, pointAnnotationManager?.create(pointAnnotationOptions))
     if (detectorRunning) {
       return
     }
@@ -74,14 +75,13 @@ internal class BackupSymbolLayerManager(
   }
 
   fun updateBackupSymbol(id: String, options: ViewAnnotationOptions) {
-    Logger.e("KIRYLDD", "updateBackupSymbol $id, options $options")
     backupAnnotations[id]?.let {
       val bitmap = Bitmap.createBitmap(
         options.width,
         options.height,
         Bitmap.Config.ARGB_8888
       )
-      bitmap.eraseColor(Color.RED)
+      bitmap.eraseColor(Color.TRANSPARENT)
       it.pointAnnotation?.let { annotation ->
         annotation.iconAnchor = options.anchor!!.mapToIconAnchor()
         annotation.point = options.geometry as Point
@@ -124,20 +124,26 @@ internal class BackupSymbolLayerManager(
         ScreenCoordinate(0.0, 0.0),
         ScreenCoordinate(viewportSize.width.toDouble(), viewportSize.height.toDouble())
       ),
-      // TODO refactor filter to use ids only
+      // TODO refactor filter to use ids only and remove hardcoded `layer_id`
       RenderedQueryOptions(listOf("layer_id", pointAnnotationManager?.layerId), Value.nullValue())
     ) {
-      Logger.e("KIRYLDD", "QRF")
       if (it.isValue && it.value?.size!! > 0) {
-        val list = it.value!!
-        Logger.e("KIRYLDD", list.map {
-            qf -> qf.feature.properties()?.getAsJsonPrimitive("PointAnnotation")?.asString
-        }.joinToString(", "))
+        val visibleViewIds = mutableListOf<String>()
+        it.value!!.forEach { qf ->
+          val backupSymbolId = qf.feature.properties()?.getAsJsonPrimitive(BACKUP_SYMBOL_LAYER_ID)?.asString
+          backupAnnotations.forEach { backupAnnotation ->
+            if (backupAnnotation.value.pointAnnotation?.id.toString() == backupSymbolId) {
+              visibleViewIds.add(backupAnnotation.key)
+            }
+          }
+        }
+        collisionsCallback.onCollisionDetected(visibleViewIds)
       }
     }
   }
 
   companion object {
     private const val DETECTOR_FREQUENCY_MS = 500L
+    private const val BACKUP_SYMBOL_LAYER_ID = "PointAnnotation"
   }
 }

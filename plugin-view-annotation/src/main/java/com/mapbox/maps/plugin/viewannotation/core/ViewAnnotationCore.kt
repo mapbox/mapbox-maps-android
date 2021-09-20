@@ -12,17 +12,20 @@ import com.mapbox.maps.plugin.viewannotation.ViewAnnotationsPositionCallback
 
 class ViewAnnotationCore(
   delegateProvider: MapDelegateProvider
-) {
-  private val annotations = LinkedHashMap<String, EnhancedViewAnnotationOptions>()
+): CollisionDetectorCallback {
+  private val annotations = LinkedHashMap<String, ViewAnnotationOptions>()
   private val updateTempList = mutableListOf<ViewAnnotationPositionDescriptor>()
   private val updateList = mutableListOf<ViewAnnotationPositionDescriptor>()
+
+  private var visibleViewList: List<String>? = null
+  private var callback: ViewAnnotationsPositionCallback? = null
 
   private val mapCameraManagerDelegate = delegateProvider.mapCameraManagerDelegate
   private val mapTransformDelegate = delegateProvider.mapTransformDelegate
 
   private val backupSymbolLayerManager by lazy {
     BackupSymbolLayerManager(
-      annotations,
+      this,
       delegateProvider
     )
   }
@@ -32,7 +35,7 @@ class ViewAnnotationCore(
   }
 
   fun addViewAnnotation(viewId: String, options: ViewAnnotationOptions) {
-    annotations[viewId] = EnhancedViewAnnotationOptions(options)
+    annotations[viewId] = options
     if (!options.allowViewAnnotationsCollision || options.featureIdentifier != null) {
       backupSymbolLayerManager.createBackupSymbol(viewId, options)
     }
@@ -40,7 +43,7 @@ class ViewAnnotationCore(
 
   fun updateViewAnnotation(viewId: String, options: ViewAnnotationOptions) {
     annotations[viewId]?.let {
-      annotations[viewId] = EnhancedViewAnnotationOptions(options)
+      annotations[viewId] = options
       if (!options.allowViewAnnotationsCollision || options.featureIdentifier != null) {
         backupSymbolLayerManager.updateBackupSymbol(viewId, options)
       }
@@ -61,14 +64,30 @@ class ViewAnnotationCore(
       }
     }
     sortBySelected()
+    visibleViewList?.let {
+      processCollisionsAndFeatures(it)
+    }
     callback.run(updateList)
+    this.callback = callback
+  }
+
+  private fun processCollisionsAndFeatures(visibleViewList: List<String>) {
+    val iterator = updateList.iterator()
+    while (iterator.hasNext()) {
+      val descriptor = iterator.next()
+      if (!visibleViewList.contains(descriptor.identifier) &&
+        annotations[descriptor.identifier]?.selected != true &&
+        annotations[descriptor.identifier]?.allowViewAnnotationsCollision != false) {
+        iterator.remove()
+      }
+    }
   }
 
   private fun sortBySelected() {
     val iterator = updateTempList.iterator()
     while (iterator.hasNext()) {
       val descriptor = iterator.next()
-      if (annotations[descriptor.identifier]?.options?.selected != true) {
+      if (annotations[descriptor.identifier]?.selected != true) {
         updateList.add(descriptor)
         iterator.remove()
       }
@@ -79,9 +98,8 @@ class ViewAnnotationCore(
 
   private fun calculateSimpleSingePosition(
     id: String,
-    enhancedOptions: EnhancedViewAnnotationOptions
+    options: ViewAnnotationOptions
   ): ViewAnnotationPositionDescriptor? {
-    val options = enhancedOptions.options
     val geometry = options.geometry
     if (geometry !is Point) {
       Logger.w(TAG, "View Annotation (id = $id) supports only point geometry for now!")
@@ -143,6 +161,13 @@ class ViewAnnotationCore(
       )
     }
     return null
+  }
+
+  override fun onCollisionDetected(visibleViewList: List<String>) {
+    this.visibleViewList = visibleViewList
+    callback?.let {
+      calculateViewAnnotationsPosition(it)
+    }
   }
 
   companion object {
