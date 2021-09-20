@@ -8,6 +8,7 @@ import android.view.View
 import com.mapbox.bindgen.Value
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
+import com.mapbox.maps.QueriedFeature
 import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
@@ -23,7 +24,7 @@ internal class BackupSymbolLayerManager(
   private val collisionsCallback: CollisionDetectorCallback,
   mapDelegateProvider: MapDelegateProvider
 ) {
-  private val backupAnnotations = hashMapOf<String, BackupSymbol>()
+  private val backupSymbolIcons = hashMapOf<String, BackupSymbol>()
   private val workHandler = Handler(Looper.getMainLooper())
   private var detectorRunning = false
 
@@ -65,8 +66,7 @@ internal class BackupSymbolLayerManager(
           -options.offsetY.toDouble() / pixelRatio
         )
       )
-    backupAnnotations[id] =
-      BackupSymbol(options, pointAnnotationManager?.create(pointAnnotationOptions))
+    backupSymbolIcons[id] = BackupSymbol(options, pointAnnotationManager?.create(pointAnnotationOptions))
     if (detectorRunning) {
       return
     }
@@ -75,7 +75,7 @@ internal class BackupSymbolLayerManager(
   }
 
   fun updateBackupSymbol(id: String, options: ViewAnnotationOptions) {
-    backupAnnotations[id]?.let {
+    backupSymbolIcons[id]?.let {
       val bitmap = Bitmap.createBitmap(
         options.width,
         options.height,
@@ -96,8 +96,8 @@ internal class BackupSymbolLayerManager(
   }
 
   fun removeBackupSymbol(id: String) {
-    backupAnnotations.remove(id)
-    if (backupAnnotations.isEmpty()) {
+    backupSymbolIcons.remove(id)
+    if (backupSymbolIcons.isEmpty()) {
       stopCollisionDetectorLoop()
     }
   }
@@ -128,18 +128,44 @@ internal class BackupSymbolLayerManager(
       RenderedQueryOptions(listOf("layer_id", pointAnnotationManager?.layerId), Value.nullValue())
     ) {
       if (it.isValue && it.value?.size!! > 0) {
-        val visibleViewIds = mutableListOf<String>()
-        it.value!!.forEach { qf ->
-          val backupSymbolId = qf.feature.properties()?.getAsJsonPrimitive(BACKUP_SYMBOL_LAYER_ID)?.asString
-          backupAnnotations.forEach { backupAnnotation ->
-            if (backupAnnotation.value.pointAnnotation?.id.toString() == backupSymbolId) {
-              visibleViewIds.add(backupAnnotation.key)
-            }
-          }
-        }
-        collisionsCallback.onCollisionDetected(visibleViewIds)
+        val visibleViewsAfterCollisionDetection = calculateCollisionVisibility(it.value!!)
+        val visibleViewsAfterFeatureCollisionDetection = calculateFeatureVisibility(it.value!!)
+        Logger.e("KIRYLDD", "1: " + visibleViewsAfterCollisionDetection.joinToString(", "))
+        Logger.e("KIRYLDD", "2: " + visibleViewsAfterFeatureCollisionDetection.joinToString(", "))
+        collisionsCallback.onCollisionDetected(
+          visibleViewsAfterCollisionDetection,
+          visibleViewsAfterFeatureCollisionDetection
+        )
       }
     }
+  }
+
+  private fun calculateCollisionVisibility(qfList: List<QueriedFeature>): List<String> {
+    val visibleViewIds = mutableListOf<String>()
+    qfList.forEach { qf ->
+      val backupSymbolId = qf.feature.properties()?.getAsJsonPrimitive(BACKUP_SYMBOL_LAYER_ID)?.asString
+      backupSymbolIcons.forEach { backupIcon ->
+        if (backupIcon.value.pointAnnotation?.id.toString() == backupSymbolId) {
+          visibleViewIds.add(backupIcon.key)
+        }
+      }
+    }
+    return visibleViewIds
+  }
+
+  private fun calculateFeatureVisibility(qfList: List<QueriedFeature>): List<String> {
+    val visibleViewIds = mutableListOf<String>()
+    val visibleFeatureList = qfList
+      .filter { it.feature.id() != null }
+      .map { it.feature.id() }
+    backupSymbolIcons.forEach { entry ->
+      entry.value.viewAnnotationOptions.featureIdentifier?.let {
+        if (visibleFeatureList.contains(it)) {
+          visibleViewIds.add(entry.key)
+        }
+      }
+    }
+    return visibleViewIds
   }
 
   companion object {

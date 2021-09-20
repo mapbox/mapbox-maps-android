@@ -141,14 +141,14 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
     annotations[id]?.let {
       val updatedOptions = ViewAnnotationOptions.Builder()
         .geometry(if (options.geometry != null) options.geometry else it.options.geometry)
-        .allowViewAnnotationsCollision(options.allowViewAnnotationsCollision)
+        .allowViewAnnotationsCollision(if (options.allowViewAnnotationsCollision != true) options.allowViewAnnotationsCollision else it.options.allowViewAnnotationsCollision)
         .anchor(if (options.anchor != null) options.anchor else it.options.anchor)
         .width(if (options.width != 0) options.width else it.options.width)
         .height(if (options.height != 0) options.height else it.options.height)
         .offsetX(if (options.offsetX != 0) options.offsetX else it.options.offsetX)
         .offsetY(if (options.offsetY != 0) options.offsetY else it.options.offsetY)
         .featureIdentifier(if (options.featureIdentifier != null) options.featureIdentifier else it.options.featureIdentifier)
-        .selected(options.selected)
+        .selected(if (options.selected != false) options.selected else it.options.selected)
         .build()
       it.options = updatedOptions
       core.apply {

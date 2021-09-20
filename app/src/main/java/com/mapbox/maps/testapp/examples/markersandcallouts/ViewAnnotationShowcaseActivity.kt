@@ -28,6 +28,7 @@ import com.mapbox.maps.plugin.viewannotation.ViewAnnotationOptions
 import com.mapbox.maps.plugin.viewannotation.ViewAnnotationPlugin
 import com.mapbox.maps.plugin.viewannotation.viewAnnotation
 import com.mapbox.maps.testapp.R
+import java.util.*
 
 /**
  * Example how to add view annotations to the map.
@@ -41,7 +42,6 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
   private lateinit var viewAnnotationPlugin: ViewAnnotationPlugin
   private lateinit var style: Style
   private val pointList = mutableListOf<Feature>()
-  private var id = "0"
 
   private var markerWidth = 0
   private var markerHeight = 0
@@ -72,7 +72,6 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
         +symbolLayer(LAYER_ID, SOURCE_ID) {
           iconImage(BLUE_ICON_ID)
           iconAnchor(IconAnchor.BOTTOM)
-          iconAllowOverlap(true)
         }
       }
     ) {
@@ -110,12 +109,11 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
   }
 
   private fun addMarker(point: Point): String {
-    val intId = id.toInt()
-    id = (intId + 1).toString()
-    pointList.add(Feature.fromGeometry(point, null, id))
+    val intId = Random().nextInt(Int.MAX_VALUE)
+    pointList.add(Feature.fromGeometry(point, null, intId.toString()))
     val featureCollection = FeatureCollection.fromFeatures(pointList)
     style.getSourceAs<GeoJsonSource>(SOURCE_ID)?.featureCollection(featureCollection)
-    return id
+    return intId.toString()
   }
 
   @SuppressLint("SetTextI18n")
@@ -126,7 +124,7 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
         .geometry(point)
         .featureIdentifier(markerId)
         .anchor(ViewAnnotationAnchor.BOTTOM)
-        .allowViewAnnotationsCollision(true)
+        .allowViewAnnotationsCollision(false)
         .build()
     )
     viewAnnotationPlugin.getViewAnnotationById(id)?.let { view ->
@@ -135,7 +133,7 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
       viewAnnotationPlugin.updateViewAnnotation(
         id,
         ViewAnnotationOptions.Builder()
-          .offsetY(markerHeight)
+          .offsetY(markerHeight + EXTRA_OFFSET_PX)
           .build()
       )
       view.findViewById<TextView>(R.id.textNativeView).text =
@@ -175,5 +173,6 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
     private const val SOURCE_ID = "source_id"
     private const val LAYER_ID = "layer_id"
     private const val SELECTED_ADD_COEF_PX = 50
+    private const val EXTRA_OFFSET_PX = 20
   }
 }

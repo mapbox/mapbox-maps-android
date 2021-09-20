@@ -10,6 +10,7 @@ import com.mapbox.maps.plugin.viewannotation.ViewAnnotationOptions
 import com.mapbox.maps.plugin.viewannotation.ViewAnnotationPositionDescriptor
 import com.mapbox.maps.plugin.viewannotation.ViewAnnotationsPositionCallback
 
+// TODO this class will become part of gl-native eventually
 class ViewAnnotationCore(
   delegateProvider: MapDelegateProvider
 ): CollisionDetectorCallback {
@@ -17,7 +18,8 @@ class ViewAnnotationCore(
   private val updateTempList = mutableListOf<ViewAnnotationPositionDescriptor>()
   private val updateList = mutableListOf<ViewAnnotationPositionDescriptor>()
 
-  private var visibleViewList: List<String>? = null
+  private var visibleViewsAfterCollisionDetection: List<String>? = null
+  private var visibleViewsAfterFeatureCollisionDetection: List<String>? = null
   private var callback: ViewAnnotationsPositionCallback? = null
 
   private val mapCameraManagerDelegate = delegateProvider.mapCameraManagerDelegate
@@ -64,21 +66,39 @@ class ViewAnnotationCore(
       }
     }
     sortBySelected()
-    visibleViewList?.let {
-      processCollisionsAndFeatures(it)
+    visibleViewsAfterCollisionDetection?.let {
+      processCollisions(it)
+    }
+    visibleViewsAfterFeatureCollisionDetection?.let {
+      processFeatures(it)
     }
     callback.run(updateList)
     this.callback = callback
   }
 
-  private fun processCollisionsAndFeatures(visibleViewList: List<String>) {
+  private fun processCollisions(visibleViews: List<String>) {
     val iterator = updateList.iterator()
     while (iterator.hasNext()) {
       val descriptor = iterator.next()
-      if (!visibleViewList.contains(descriptor.identifier) &&
-        annotations[descriptor.identifier]?.selected != true &&
-        annotations[descriptor.identifier]?.allowViewAnnotationsCollision != false) {
-        iterator.remove()
+      annotations[descriptor.identifier]?.let { options ->
+        if (!options.selected &&
+          !options.allowViewAnnotationsCollision &&
+          !visibleViews.contains(descriptor.identifier)
+        ) {
+          iterator.remove()
+        }
+      }
+    }
+  }
+
+  private fun processFeatures(visibleViews: List<String>) {
+    val iterator = updateList.iterator()
+    while (iterator.hasNext()) {
+      val descriptor = iterator.next()
+      annotations[descriptor.identifier]?.let { options ->
+        if (!options.selected && !visibleViews.contains(descriptor.identifier)) {
+          iterator.remove()
+        }
       }
     }
   }
@@ -163,8 +183,12 @@ class ViewAnnotationCore(
     return null
   }
 
-  override fun onCollisionDetected(visibleViewList: List<String>) {
-    this.visibleViewList = visibleViewList
+  override fun onCollisionDetected(
+    visibleViewsAfterCollisionDetection: List<String>,
+    visibleViewsAfterFeatureCollisionDetection: List<String>
+  ) {
+    this.visibleViewsAfterCollisionDetection = visibleViewsAfterCollisionDetection
+    this.visibleViewsAfterFeatureCollisionDetection = visibleViewsAfterFeatureCollisionDetection
     callback?.let {
       calculateViewAnnotationsPosition(it)
     }
