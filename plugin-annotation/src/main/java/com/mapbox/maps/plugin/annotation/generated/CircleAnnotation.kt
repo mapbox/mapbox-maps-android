@@ -76,8 +76,10 @@ class CircleAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY, it)
+      if (value != null) {
+        jsonObject.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY, value)
+      } else {
+        jsonObject.remove(CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY)
       }
     }
 
@@ -107,8 +109,10 @@ class CircleAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR, it)
+      if (value != null) {
+        jsonObject.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR, value)
+      } else {
+        jsonObject.remove(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR)
       }
     }
 
@@ -138,10 +142,12 @@ class CircleAnnotation(
      * @param color value for String
      */
     set(@ColorInt value) {
-      value?.let {
+      if (value != null) {
         jsonObject.addProperty(
           CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR, ColorUtils.colorToRgbaString(value)
         )
+      } else {
+        jsonObject.remove(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR)
       }
     }
 
@@ -169,7 +175,11 @@ class CircleAnnotation(
      * @param color value for String
      */
     set(value) {
-      jsonObject.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR, value)
+      if (value != null) {
+        jsonObject.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR, value)
+      } else {
+        jsonObject.remove(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR)
+      }
     }
 
   /**
@@ -198,8 +208,10 @@ class CircleAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY, it)
+      if (value != null) {
+        jsonObject.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY, value)
+      } else {
+        jsonObject.remove(CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY)
       }
     }
 
@@ -229,8 +241,10 @@ class CircleAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS, it)
+      if (value != null) {
+        jsonObject.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS, value)
+      } else {
+        jsonObject.remove(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS)
       }
     }
 
@@ -260,10 +274,12 @@ class CircleAnnotation(
      * @param color value for String
      */
     set(@ColorInt value) {
-      value?.let {
+      if (value != null) {
         jsonObject.addProperty(
           CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR, ColorUtils.colorToRgbaString(value)
         )
+      } else {
+        jsonObject.remove(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR)
       }
     }
 
@@ -291,7 +307,11 @@ class CircleAnnotation(
      * @param color value for String
      */
     set(value) {
-      jsonObject.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR, value)
+      if (value != null) {
+        jsonObject.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR, value)
+      } else {
+        jsonObject.remove(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR)
+      }
     }
 
   /**
@@ -320,8 +340,10 @@ class CircleAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY, it)
+      if (value != null) {
+        jsonObject.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY, value)
+      } else {
+        jsonObject.remove(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY)
       }
     }
 
@@ -351,8 +373,10 @@ class CircleAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH, it)
+      if (value != null) {
+        jsonObject.addProperty(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH, value)
+      } else {
+        jsonObject.remove(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH)
       }
     }
 

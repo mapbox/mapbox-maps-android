@@ -9,7 +9,9 @@ import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.geojson.Polygon
 import com.mapbox.maps.R
+import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.layers.properties.generated.*
+import com.mapbox.maps.extension.style.utils.silentUnwrap
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPolygonAnnotationManager
@@ -18,6 +20,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.*
 
 /**
  * Basic smoke tests for PolygonAnnotationManager
@@ -40,6 +43,8 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
     val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager(mapView)
     polygonAnnotationManager.fillAntialias = expectedValue
     assertEquals(expectedValue, polygonAnnotationManager.fillAntialias)
+    polygonAnnotationManager.fillAntialias = null
+    assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-antialias").silentUnwrap(), polygonAnnotationManager.fillAntialias)
   }
 
   @Test
@@ -48,6 +53,8 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
     val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager(mapView)
     polygonAnnotationManager.fillTranslate = expectedValue
     assertEquals(expectedValue, polygonAnnotationManager.fillTranslate)
+    polygonAnnotationManager.fillTranslate = null
+    assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-translate").silentUnwrap(), polygonAnnotationManager.fillTranslate)
   }
 
   @Test
@@ -56,6 +63,9 @@ class PolygonAnnotationManagerAndroidTest : BaseMapTest() {
     val polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager(mapView)
     polygonAnnotationManager.fillTranslateAnchor = expectedValue
     assertEquals(expectedValue, polygonAnnotationManager.fillTranslateAnchor)
+    polygonAnnotationManager.fillTranslateAnchor = null
+    val expectedDefaultValue = FillTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("fill", "fill-translate-anchor").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+    assertEquals(expectedDefaultValue, polygonAnnotationManager.fillTranslateAnchor)
   }
 
   @Test

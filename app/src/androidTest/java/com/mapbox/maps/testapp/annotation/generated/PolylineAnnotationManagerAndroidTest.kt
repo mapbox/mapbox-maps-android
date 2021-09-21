@@ -9,7 +9,9 @@ import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.R
+import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.layers.properties.generated.*
+import com.mapbox.maps.extension.style.utils.silentUnwrap
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPolylineAnnotationManager
@@ -18,6 +20,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.*
 
 /**
  * Basic smoke tests for PolylineAnnotationManager
@@ -40,6 +43,9 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
     val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
     polylineAnnotationManager.lineCap = expectedValue
     assertEquals(expectedValue, polylineAnnotationManager.lineCap)
+    polylineAnnotationManager.lineCap = null
+    val expectedDefaultValue = LineCap.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cap").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+    assertEquals(expectedDefaultValue, polylineAnnotationManager.lineCap)
   }
 
   @Test
@@ -48,6 +54,8 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
     val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
     polylineAnnotationManager.lineMiterLimit = expectedValue
     assertEquals(expectedValue, polylineAnnotationManager.lineMiterLimit)
+    polylineAnnotationManager.lineMiterLimit = null
+    assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-miter-limit").silentUnwrap(), polylineAnnotationManager.lineMiterLimit)
   }
 
   @Test
@@ -56,6 +64,8 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
     val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
     polylineAnnotationManager.lineRoundLimit = expectedValue
     assertEquals(expectedValue, polylineAnnotationManager.lineRoundLimit)
+    polylineAnnotationManager.lineRoundLimit = null
+    assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-round-limit").silentUnwrap(), polylineAnnotationManager.lineRoundLimit)
   }
 
   @Test
@@ -64,6 +74,8 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
     val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
     polylineAnnotationManager.lineDasharray = expectedValue
     assertEquals(expectedValue, polylineAnnotationManager.lineDasharray)
+    polylineAnnotationManager.lineDasharray = null
+    assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-dasharray").silentUnwrap(), polylineAnnotationManager.lineDasharray)
   }
 
   @Test
@@ -72,6 +84,8 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
     val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
     polylineAnnotationManager.lineTranslate = expectedValue
     assertEquals(expectedValue, polylineAnnotationManager.lineTranslate)
+    polylineAnnotationManager.lineTranslate = null
+    assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-translate").silentUnwrap(), polylineAnnotationManager.lineTranslate)
   }
 
   @Test
@@ -80,6 +94,9 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
     val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
     polylineAnnotationManager.lineTranslateAnchor = expectedValue
     assertEquals(expectedValue, polylineAnnotationManager.lineTranslateAnchor)
+    polylineAnnotationManager.lineTranslateAnchor = null
+    val expectedDefaultValue = LineTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-translate-anchor").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+    assertEquals(expectedDefaultValue, polylineAnnotationManager.lineTranslateAnchor)
   }
 
   @Test

@@ -24,6 +24,7 @@ import com.mapbox.maps.extension.style.layers.generated.CircleLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
+import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.*
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
@@ -31,8 +32,7 @@ import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.OnMoveListener
 import io.mockk.*
-import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -249,6 +249,61 @@ class CircleAnnotationManagerTest {
     annotation.point = Point.fromLngLat(1.0, 1.0)
     manager.update(annotation)
     assertEquals(annotation, manager.annotations[0])
+  }
+
+  @Test
+  fun annotationPropertiesUpdate() {
+    val annotation = manager.create(CircleAnnotationOptions().withPoint(Point.fromLngLat(0.0, 0.0)))
+
+    annotation.circleSortKey = 1.0
+    assertEquals(1.0, annotation.circleSortKey)
+    annotation.circleSortKey = null
+    assertNull(annotation.circleSortKey)
+
+    annotation.circleBlur = 0.0
+    assertEquals(0.0, annotation.circleBlur)
+    annotation.circleBlur = null
+    assertNull(annotation.circleBlur)
+
+    annotation.circleColorInt = Color.BLACK
+    assertEquals(Color.BLACK, annotation.circleColorInt)
+    annotation.circleColorInt = null
+    assertNull(annotation.circleColorInt)
+
+    annotation.circleColorString = ColorUtils.colorToRgbaString(Color.YELLOW)
+    assertEquals(ColorUtils.colorToRgbaString(Color.YELLOW), annotation.circleColorString)
+    annotation.circleColorString = null
+    assertNull(annotation.circleColorString)
+
+    annotation.circleOpacity = 1.0
+    assertEquals(1.0, annotation.circleOpacity)
+    annotation.circleOpacity = null
+    assertNull(annotation.circleOpacity)
+
+    annotation.circleRadius = 5.0
+    assertEquals(5.0, annotation.circleRadius)
+    annotation.circleRadius = null
+    assertNull(annotation.circleRadius)
+
+    annotation.circleStrokeColorInt = Color.BLACK
+    assertEquals(Color.BLACK, annotation.circleStrokeColorInt)
+    annotation.circleStrokeColorInt = null
+    assertNull(annotation.circleStrokeColorInt)
+
+    annotation.circleStrokeColorString = ColorUtils.colorToRgbaString(Color.YELLOW)
+    assertEquals(ColorUtils.colorToRgbaString(Color.YELLOW), annotation.circleStrokeColorString)
+    annotation.circleStrokeColorString = null
+    assertNull(annotation.circleStrokeColorString)
+
+    annotation.circleStrokeOpacity = 1.0
+    assertEquals(1.0, annotation.circleStrokeOpacity)
+    annotation.circleStrokeOpacity = null
+    assertNull(annotation.circleStrokeOpacity)
+
+    annotation.circleStrokeWidth = 0.0
+    assertEquals(0.0, annotation.circleStrokeWidth)
+    annotation.circleStrokeWidth = null
+    assertNull(annotation.circleStrokeWidth)
   }
 
   @Test

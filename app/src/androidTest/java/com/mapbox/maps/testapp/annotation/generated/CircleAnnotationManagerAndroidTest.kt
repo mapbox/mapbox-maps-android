@@ -8,7 +8,9 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.maps.R
+import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.layers.properties.generated.*
+import com.mapbox.maps.extension.style.utils.silentUnwrap
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
@@ -17,6 +19,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.*
 
 /**
  * Basic smoke tests for CircleAnnotationManager
@@ -39,6 +42,9 @@ class CircleAnnotationManagerAndroidTest : BaseMapTest() {
     val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager(mapView)
     circleAnnotationManager.circlePitchAlignment = expectedValue
     assertEquals(expectedValue, circleAnnotationManager.circlePitchAlignment)
+    circleAnnotationManager.circlePitchAlignment = null
+    val expectedDefaultValue = CirclePitchAlignment.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-pitch-alignment").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+    assertEquals(expectedDefaultValue, circleAnnotationManager.circlePitchAlignment)
   }
 
   @Test
@@ -47,6 +53,9 @@ class CircleAnnotationManagerAndroidTest : BaseMapTest() {
     val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager(mapView)
     circleAnnotationManager.circlePitchScale = expectedValue
     assertEquals(expectedValue, circleAnnotationManager.circlePitchScale)
+    circleAnnotationManager.circlePitchScale = null
+    val expectedDefaultValue = CirclePitchScale.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-pitch-scale").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+    assertEquals(expectedDefaultValue, circleAnnotationManager.circlePitchScale)
   }
 
   @Test
@@ -55,6 +64,8 @@ class CircleAnnotationManagerAndroidTest : BaseMapTest() {
     val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager(mapView)
     circleAnnotationManager.circleTranslate = expectedValue
     assertEquals(expectedValue, circleAnnotationManager.circleTranslate)
+    circleAnnotationManager.circleTranslate = null
+    assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-translate").silentUnwrap(), circleAnnotationManager.circleTranslate)
   }
 
   @Test
@@ -63,6 +74,9 @@ class CircleAnnotationManagerAndroidTest : BaseMapTest() {
     val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager(mapView)
     circleAnnotationManager.circleTranslateAnchor = expectedValue
     assertEquals(expectedValue, circleAnnotationManager.circleTranslateAnchor)
+    circleAnnotationManager.circleTranslateAnchor = null
+    val expectedDefaultValue = CircleTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-translate-anchor").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+    assertEquals(expectedDefaultValue, circleAnnotationManager.circleTranslateAnchor)
   }
 
   @Test

@@ -4,16 +4,19 @@ package com.mapbox.maps.plugin.annotation.generated
 
 import android.view.View
 import com.mapbox.geojson.*
+import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
 import com.mapbox.maps.extension.style.layers.generated.LineLayer
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
+import com.mapbox.maps.extension.style.utils.silentUnwrap
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationManagerImpl
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.AnnotationType
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
+import java.util.*
 import java.util.concurrent.atomic.AtomicLong
 
 /**
@@ -180,7 +183,8 @@ class PolylineAnnotationManager(
      * @param value property wrapper value around LineCap
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: LineCap.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-cap").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      newValue?.let {
         layer?.lineCap(it)
         dragLayer?.lineCap(it)
       }
@@ -205,7 +209,8 @@ class PolylineAnnotationManager(
      * @param value property wrapper value around Double
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("line", "line-miter-limit").silentUnwrap()
+      newValue?.let {
         layer?.lineMiterLimit(it)
         dragLayer?.lineMiterLimit(it)
       }
@@ -230,7 +235,8 @@ class PolylineAnnotationManager(
      * @param value property wrapper value around Double
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("line", "line-round-limit").silentUnwrap()
+      newValue?.let {
         layer?.lineRoundLimit(it)
         dragLayer?.lineRoundLimit(it)
       }
@@ -255,7 +261,8 @@ class PolylineAnnotationManager(
      * @param value property wrapper value around List<Double>
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("line", "line-dasharray").silentUnwrap()
+      newValue?.let {
         layer?.lineDasharray(it)
         dragLayer?.lineDasharray(it)
       }
@@ -280,7 +287,8 @@ class PolylineAnnotationManager(
      * @param value property wrapper value around List<Double>
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("line", "line-translate").silentUnwrap()
+      newValue?.let {
         layer?.lineTranslate(it)
         dragLayer?.lineTranslate(it)
       }
@@ -305,7 +313,8 @@ class PolylineAnnotationManager(
      * @param value property wrapper value around LineTranslateAnchor
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: LineTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-translate-anchor").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      newValue?.let {
         layer?.lineTranslateAnchor(it)
         dragLayer?.lineTranslateAnchor(it)
       }

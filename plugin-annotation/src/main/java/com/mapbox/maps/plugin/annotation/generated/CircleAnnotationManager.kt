@@ -4,16 +4,19 @@ package com.mapbox.maps.plugin.annotation.generated
 
 import android.view.View
 import com.mapbox.geojson.*
+import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
 import com.mapbox.maps.extension.style.layers.generated.CircleLayer
 import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
+import com.mapbox.maps.extension.style.utils.silentUnwrap
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationManagerImpl
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.AnnotationType
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
+import java.util.*
 import java.util.concurrent.atomic.AtomicLong
 
 /**
@@ -173,7 +176,8 @@ class CircleAnnotationManager(
      * @param value property wrapper value around CirclePitchAlignment
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: CirclePitchAlignment.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-pitch-alignment").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      newValue?.let {
         layer?.circlePitchAlignment(it)
         dragLayer?.circlePitchAlignment(it)
       }
@@ -198,7 +202,8 @@ class CircleAnnotationManager(
      * @param value property wrapper value around CirclePitchScale
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: CirclePitchScale.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-pitch-scale").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      newValue?.let {
         layer?.circlePitchScale(it)
         dragLayer?.circlePitchScale(it)
       }
@@ -223,7 +228,8 @@ class CircleAnnotationManager(
      * @param value property wrapper value around List<Double>
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-translate").silentUnwrap()
+      newValue?.let {
         layer?.circleTranslate(it)
         dragLayer?.circleTranslate(it)
       }
@@ -248,7 +254,8 @@ class CircleAnnotationManager(
      * @param value property wrapper value around CircleTranslateAnchor
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: CircleTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("circle", "circle-translate-anchor").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      newValue?.let {
         layer?.circleTranslateAnchor(it)
         dragLayer?.circleTranslateAnchor(it)
       }

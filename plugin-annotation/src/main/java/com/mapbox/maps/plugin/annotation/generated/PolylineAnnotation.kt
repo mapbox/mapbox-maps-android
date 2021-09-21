@@ -77,8 +77,10 @@ class PolylineAnnotation(
      * @param value constant property value for LineJoin
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_JOIN, it.value)
+      if (value != null) {
+        jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_JOIN, value.value)
+      } else {
+        jsonObject.remove(PolylineAnnotationOptions.PROPERTY_LINE_JOIN)
       }
     }
 
@@ -108,8 +110,10 @@ class PolylineAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY, it)
+      if (value != null) {
+        jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY, value)
+      } else {
+        jsonObject.remove(PolylineAnnotationOptions.PROPERTY_LINE_SORT_KEY)
       }
     }
 
@@ -139,8 +143,10 @@ class PolylineAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_BLUR, it)
+      if (value != null) {
+        jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_BLUR, value)
+      } else {
+        jsonObject.remove(PolylineAnnotationOptions.PROPERTY_LINE_BLUR)
       }
     }
 
@@ -170,10 +176,12 @@ class PolylineAnnotation(
      * @param color value for String
      */
     set(@ColorInt value) {
-      value?.let {
+      if (value != null) {
         jsonObject.addProperty(
           PolylineAnnotationOptions.PROPERTY_LINE_COLOR, ColorUtils.colorToRgbaString(value)
         )
+      } else {
+        jsonObject.remove(PolylineAnnotationOptions.PROPERTY_LINE_COLOR)
       }
     }
 
@@ -201,7 +209,11 @@ class PolylineAnnotation(
      * @param color value for String
      */
     set(value) {
-      jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_COLOR, value)
+      if (value != null) {
+        jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_COLOR, value)
+      } else {
+        jsonObject.remove(PolylineAnnotationOptions.PROPERTY_LINE_COLOR)
+      }
     }
 
   /**
@@ -230,8 +242,10 @@ class PolylineAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH, it)
+      if (value != null) {
+        jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH, value)
+      } else {
+        jsonObject.remove(PolylineAnnotationOptions.PROPERTY_LINE_GAP_WIDTH)
       }
     }
 
@@ -261,8 +275,10 @@ class PolylineAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_OFFSET, it)
+      if (value != null) {
+        jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_OFFSET, value)
+      } else {
+        jsonObject.remove(PolylineAnnotationOptions.PROPERTY_LINE_OFFSET)
       }
     }
 
@@ -292,8 +308,10 @@ class PolylineAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY, it)
+      if (value != null) {
+        jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY, value)
+      } else {
+        jsonObject.remove(PolylineAnnotationOptions.PROPERTY_LINE_OPACITY)
       }
     }
 
@@ -323,8 +341,10 @@ class PolylineAnnotation(
      * @param value constant property value for String
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_PATTERN, it)
+      if (value != null) {
+        jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_PATTERN, value)
+      } else {
+        jsonObject.remove(PolylineAnnotationOptions.PROPERTY_LINE_PATTERN)
       }
     }
 
@@ -354,8 +374,10 @@ class PolylineAnnotation(
      * @param value constant property value for Double
      */
     set(value) {
-      value?.let {
-        jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH, it)
+      if (value != null) {
+        jsonObject.addProperty(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH, value)
+      } else {
+        jsonObject.remove(PolylineAnnotationOptions.PROPERTY_LINE_WIDTH)
       }
     }
 

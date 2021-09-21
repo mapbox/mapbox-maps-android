@@ -4,16 +4,19 @@ package com.mapbox.maps.plugin.annotation.generated
 
 import android.view.View
 import com.mapbox.geojson.*
+import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.*
+import com.mapbox.maps.extension.style.utils.silentUnwrap
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationManagerImpl
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.AnnotationType
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
+import java.util.*
 import java.util.concurrent.atomic.AtomicLong
 
 /**
@@ -304,7 +307,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around Boolean
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-allow-overlap").silentUnwrap()
+      newValue?.let {
         layer?.iconAllowOverlap(it)
         dragLayer?.iconAllowOverlap(it)
       }
@@ -329,7 +333,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around Boolean
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-ignore-placement").silentUnwrap()
+      newValue?.let {
         layer?.iconIgnorePlacement(it)
         dragLayer?.iconIgnorePlacement(it)
       }
@@ -354,7 +359,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around Boolean
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-keep-upright").silentUnwrap()
+      newValue?.let {
         layer?.iconKeepUpright(it)
         dragLayer?.iconKeepUpright(it)
       }
@@ -379,7 +385,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around Boolean
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-optional").silentUnwrap()
+      newValue?.let {
         layer?.iconOptional(it)
         dragLayer?.iconOptional(it)
       }
@@ -404,7 +411,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around Double
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-padding").silentUnwrap()
+      newValue?.let {
         layer?.iconPadding(it)
         dragLayer?.iconPadding(it)
       }
@@ -429,7 +437,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around IconPitchAlignment
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: IconPitchAlignment.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-pitch-alignment").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      newValue?.let {
         layer?.iconPitchAlignment(it)
         dragLayer?.iconPitchAlignment(it)
       }
@@ -454,7 +463,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around IconRotationAlignment
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: IconRotationAlignment.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-rotation-alignment").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      newValue?.let {
         layer?.iconRotationAlignment(it)
         dragLayer?.iconRotationAlignment(it)
       }
@@ -479,7 +489,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around IconTextFit
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: IconTextFit.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-text-fit").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      newValue?.let {
         layer?.iconTextFit(it)
         dragLayer?.iconTextFit(it)
       }
@@ -504,7 +515,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around List<Double>
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-text-fit-padding").silentUnwrap()
+      newValue?.let {
         layer?.iconTextFitPadding(it)
         dragLayer?.iconTextFitPadding(it)
       }
@@ -529,7 +541,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around Boolean
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-avoid-edges").silentUnwrap()
+      newValue?.let {
         layer?.symbolAvoidEdges(it)
         dragLayer?.symbolAvoidEdges(it)
       }
@@ -554,7 +567,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around SymbolPlacement
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: SymbolPlacement.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-placement").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      newValue?.let {
         layer?.symbolPlacement(it)
         dragLayer?.symbolPlacement(it)
       }
@@ -579,7 +593,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around Double
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-spacing").silentUnwrap()
+      newValue?.let {
         layer?.symbolSpacing(it)
         dragLayer?.symbolSpacing(it)
       }
@@ -604,7 +619,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around SymbolZOrder
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: SymbolZOrder.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "symbol-z-order").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      newValue?.let {
         layer?.symbolZOrder(it)
         dragLayer?.symbolZOrder(it)
       }
@@ -629,7 +645,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around Boolean
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-allow-overlap").silentUnwrap()
+      newValue?.let {
         layer?.textAllowOverlap(it)
         dragLayer?.textAllowOverlap(it)
       }
@@ -654,7 +671,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around List<String>
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-font").silentUnwrap()
+      newValue?.let {
         layer?.textFont(it)
         dragLayer?.textFont(it)
       }
@@ -679,7 +697,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around Boolean
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-ignore-placement").silentUnwrap()
+      newValue?.let {
         layer?.textIgnorePlacement(it)
         dragLayer?.textIgnorePlacement(it)
       }
@@ -704,7 +723,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around Boolean
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-keep-upright").silentUnwrap()
+      newValue?.let {
         layer?.textKeepUpright(it)
         dragLayer?.textKeepUpright(it)
       }
@@ -729,7 +749,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around Double
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-line-height").silentUnwrap()
+      newValue?.let {
         layer?.textLineHeight(it)
         dragLayer?.textLineHeight(it)
       }
@@ -754,7 +775,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around Double
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-max-angle").silentUnwrap()
+      newValue?.let {
         layer?.textMaxAngle(it)
         dragLayer?.textMaxAngle(it)
       }
@@ -779,7 +801,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around Boolean
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-optional").silentUnwrap()
+      newValue?.let {
         layer?.textOptional(it)
         dragLayer?.textOptional(it)
       }
@@ -804,7 +827,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around Double
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-padding").silentUnwrap()
+      newValue?.let {
         layer?.textPadding(it)
         dragLayer?.textPadding(it)
       }
@@ -829,7 +853,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around TextPitchAlignment
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: TextPitchAlignment.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-pitch-alignment").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      newValue?.let {
         layer?.textPitchAlignment(it)
         dragLayer?.textPitchAlignment(it)
       }
@@ -854,7 +879,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around TextRotationAlignment
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: TextRotationAlignment.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-rotation-alignment").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      newValue?.let {
         layer?.textRotationAlignment(it)
         dragLayer?.textRotationAlignment(it)
       }
@@ -879,7 +905,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around List<String>
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-variable-anchor").silentUnwrap()
+      newValue?.let {
         layer?.textVariableAnchor(it)
         dragLayer?.textVariableAnchor(it)
       }
@@ -904,7 +931,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around List<String>
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-writing-mode").silentUnwrap()
+      newValue?.let {
         layer?.textWritingMode(it)
         dragLayer?.textWritingMode(it)
       }
@@ -929,7 +957,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around List<Double>
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-translate").silentUnwrap()
+      newValue?.let {
         layer?.iconTranslate(it)
         dragLayer?.iconTranslate(it)
       }
@@ -954,7 +983,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around IconTranslateAnchor
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: IconTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "icon-translate-anchor").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      newValue?.let {
         layer?.iconTranslateAnchor(it)
         dragLayer?.iconTranslateAnchor(it)
       }
@@ -979,7 +1009,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around List<Double>
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-translate").silentUnwrap()
+      newValue?.let {
         layer?.textTranslate(it)
         dragLayer?.textTranslate(it)
       }
@@ -1004,7 +1035,8 @@ class PointAnnotationManager(
      * @param value property wrapper value around TextTranslateAnchor
      */
     set(value) {
-      value?.let {
+      val newValue = value ?: TextTranslateAnchor.valueOf(StyleManager.getStyleLayerPropertyDefaultValue("symbol", "text-translate-anchor").silentUnwrap<String>()!!.toUpperCase(Locale.US).replace('-', '_'))
+      newValue?.let {
         layer?.textTranslateAnchor(it)
         dragLayer?.textTranslateAnchor(it)
       }
