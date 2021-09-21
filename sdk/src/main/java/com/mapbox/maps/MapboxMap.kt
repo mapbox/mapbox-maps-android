@@ -52,6 +52,7 @@ class MapboxMap internal constructor(
   internal var isStyleLoadInitiated = false
   private val styleObserver = StyleObserver(this, nativeMapWeakRef, nativeObserver, pixelRatio)
   internal var renderHandler: Handler? = null
+  internal var styleLoaded = false
 
   /**
    * Represents current camera state.
@@ -209,8 +210,15 @@ class MapboxMap internal constructor(
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
   ) {
     // clear listeners from previous invocation
-    styleObserver.onNewStyleLoad(onStyleLoaded, onMapLoadErrorListener)
+    styleObserver.onNewStyleLoad(
+      {
+        styleLoaded = true
+        onStyleLoaded?.onStyleLoaded(it)
+      },
+      onMapLoadErrorListener
+    )
     isStyleLoadInitiated = true
+    styleLoaded = false
   }
 
   /**
@@ -220,7 +228,7 @@ class MapboxMap internal constructor(
    */
   fun getStyle(onStyleLoaded: Style.OnStyleLoaded) {
     if (::style.isInitialized) {
-      if (style.isStyleLoaded) {
+      if (styleLoaded) {
         // style has loaded, notify callback immediately
         onStyleLoaded.onStyleLoaded(style)
       } else {
@@ -237,7 +245,7 @@ class MapboxMap internal constructor(
    * Get the Style of the map synchronously, will return null is style is not loaded yet.
    */
   fun getStyle(): Style? {
-    if (::style.isInitialized && style.isStyleLoaded) {
+    if (::style.isInitialized && styleLoaded) {
       // style has loaded, return it immediately
       return style
     }
