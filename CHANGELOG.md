@@ -11,7 +11,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Add support for SymbolZOrder in PointAnnotationManager ([#638](https://github.com/mapbox/mapbox-maps-android/pull/638))
 * Add support for PromoteId to be used with Feature State API. ([#636](https://github.com/mapbox/mapbox-maps-android/pull/636))
 * Expose optimizeForTerrain flag ([#654](https://github.com/mapbox/mapbox-maps-android/pull/654))
-* Enable instant transitions for data driven symbol layer properties.
+* Enable instant transitions for data driven symbol layer properties. ([#646](https://github.com/mapbox/mapbox-maps-android/pull/646))
 
 ## Bug fixes 🐞
 * OnStyleLoaded / OnMapLoaded callbacks are invoked even if hosting fragment/activity is in stopped state. ([#629](https://github.com/mapbox/mapbox-maps-android/pull/629))
@@ -21,13 +21,13 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix `MapboxMap#getStyle` returning null after adding a new source when style was loaded before. ([#643](https://github.com/mapbox/mapbox-maps-android/pull/643))
 * Enable annotations to set null value to nullable properties. ([#650](https://github.com/mapbox/mapbox-maps-android/pull/650))
 * Fix set camera crash bug. ([#652](https://github.com/mapbox/mapbox-maps-android/pull/652))
-* Fix transition between layers with all constant properties.
-* Fix rendering artifact for a line layer, when its `line-gradient` property is set at runtime.
-* Don't draw SDF images in `text-field` and issue warning for it.
-* Fix incorrect return from StyleManager#getStyleLayerPropertyDefaultValue for `text-field`, now the default value is set to `["format", "" , {}]`.
+* Fix transition between layers with all constant properties. ([#646](https://github.com/mapbox/mapbox-maps-android/pull/646))
+* Fix rendering artifact for a line layer, when its `line-gradient` property is set at runtime. ([#646](https://github.com/mapbox/mapbox-maps-android/pull/646))
+* Don't draw SDF images in `text-field` and issue warning for it. ([#646](https://github.com/mapbox/mapbox-maps-android/pull/646))
+* Fix incorrect return from StyleManager#getStyleLayerPropertyDefaultValue for `text-field`, now the default value is set to `["format", "" , {}]`. ([#646](https://github.com/mapbox/mapbox-maps-android/pull/646))
 
 ## Dependencies
-* Bump gl-native to 10.0.0-rc.9, common to 19.0.0.  ([#646](https://github.com/mapbox/mapbox-maps-android/pull/646))
+* Bump gl-native to 10.0.0-rc.9, common to 19.0.0. ([#646](https://github.com/mapbox/mapbox-maps-android/pull/646))
 
 # 10.0.0-rc.8 September 8, 2021
 
