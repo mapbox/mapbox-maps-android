@@ -16,6 +16,7 @@ import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.dsl.generated.get
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.dsl.generated.sum
+import com.mapbox.maps.extension.style.types.PromoteId
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import io.mockk.*
 import org.junit.Assert.*
@@ -383,6 +384,27 @@ class GeoJsonSourceTest {
   }
 
   @Test
+  fun promoteIdSet() {
+    val testSource = geoJsonSource("testId") {
+      promoteId(PromoteId(propertyName = "abc"))
+    }
+    testSource.bindTo(style)
+
+    verify { style.addStyleSource("testId", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("promoteId=abc"))
+  }
+
+  @Test
+  fun promoteIdGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("abc")
+    val testSource = geoJsonSource("testId") {}
+    testSource.bindTo(style)
+
+    assertEquals(PromoteId(propertyName = "abc"), testSource.promoteId)
+    verify { style.getStyleSourceProperty("testId", "promoteId") }
+  }
+
+  @Test
   fun prefetchZoomDeltaSet() {
     val testSource = geoJsonSource("testId") {
       prefetchZoomDelta(1L)
@@ -645,6 +667,15 @@ class GeoJsonSourceTest {
 
     assertEquals(true.toString(), GeoJsonSource.defaultGenerateId?.toString())
     verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "generateId") }
+  }
+
+  @Test
+  fun defaultPromoteIdGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("abc")
+
+    val expectedValue = PromoteId(propertyName = "abc")
+    assertEquals(expectedValue.toValue().toString(), GeoJsonSource.defaultPromoteId?.toValue().toString())
+    verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "promoteId") }
   }
 
   @Test

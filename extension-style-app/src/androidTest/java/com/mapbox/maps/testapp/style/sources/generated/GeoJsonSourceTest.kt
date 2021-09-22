@@ -8,6 +8,7 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.maps.extension.style.expressions.dsl.generated.*
 import com.mapbox.maps.extension.style.sources.generated.*
+import com.mapbox.maps.extension.style.types.PromoteId
 import com.mapbox.maps.testapp.style.BaseStyleTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -247,6 +248,17 @@ class GeoJsonSourceTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun promoteIdTest() {
+    val testSource = geoJsonSource("testId") {
+      url(TEST_URI)
+      promoteId(PromoteId(propertyName = "abc"))
+    }
+    setupSource(testSource)
+    assertEquals(PromoteId(propertyName = "abc"), testSource.promoteId)
+  }
+
+  @Test
+  @UiThreadTest
   fun prefetchZoomDeltaTest() {
     val testSource = geoJsonSource("testId") {
       url(TEST_URI)
@@ -455,6 +467,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     assertNotNull("defaultClusterMaxZoom should not be null", GeoJsonSource.defaultClusterMaxZoom)
     assertNotNull("defaultLineMetrics should not be null", GeoJsonSource.defaultLineMetrics)
     assertNotNull("defaultGenerateId should not be null", GeoJsonSource.defaultGenerateId)
+    assertNotNull("defaultPromoteId should not be null", GeoJsonSource.defaultPromoteId)
     assertNotNull("defaultPrefetchZoomDelta should not be null", GeoJsonSource.defaultPrefetchZoomDelta)
   }
 

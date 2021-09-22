@@ -16,6 +16,7 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.sources.OnGeoJsonParsed
 import com.mapbox.maps.extension.style.sources.Source
+import com.mapbox.maps.extension.style.types.PromoteId
 import com.mapbox.maps.extension.style.types.SourceDsl
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.extension.style.utils.silentUnwrap
@@ -253,6 +254,24 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * @return Boolean
      */
     get() = getPropertyValue("generateId")
+
+  /**
+   * A property to use as a feature id (for feature state). Either a property name, or
+   * an object of the form `{<sourceLayer>: <propertyName>}`.
+   */
+  val promoteId: PromoteId?
+    /**
+     * Get the PromoteId property
+     *
+     * @return PromoteId
+     */
+    get() {
+      val propertyValue = getPropertyValue<Any>("promoteId")
+      propertyValue?.let {
+        return PromoteId.fromProperty(it)
+      }
+      return null
+    }
 
   /**
    * When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map
@@ -561,6 +580,15 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     }
 
     /**
+     * A property to use as a feature id (for feature state). Either a property name, or
+     * an object of the form `{<sourceLayer>: <propertyName>}`.
+     */
+    fun promoteId(value: PromoteId) = apply {
+      val propertyValue = PropertyValue("promoteId", value.toValue())
+      properties[propertyValue.propertyName] = propertyValue
+    }
+
+    /**
      * When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map
      * will first request a tile at zoom level lower than zoom - delta, but so that
      * the zoom level is multiple of delta, in an attempt to display a full map at
@@ -735,6 +763,24 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
        * @return Boolean
        */
       get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "generateId").silentUnwrap()
+
+    /**
+     * A property to use as a feature id (for feature state). Either a property name, or
+     * an object of the form `{<sourceLayer>: <propertyName>}`.
+     */
+    val defaultPromoteId: PromoteId?
+      /**
+       * Get the PromoteId property
+       *
+       * @return PromoteId
+       */
+      get() {
+        val propertyValue = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "promoteId").silentUnwrap<Any>()
+        propertyValue?.let {
+          return PromoteId.fromProperty(it)
+        }
+        return null
+      }
 
     /**
      * When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map

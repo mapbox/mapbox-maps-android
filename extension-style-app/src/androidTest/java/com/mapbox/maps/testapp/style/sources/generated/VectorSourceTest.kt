@@ -6,6 +6,7 @@ import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mapbox.maps.extension.style.sources.TileSet
 import com.mapbox.maps.extension.style.sources.generated.*
+import com.mapbox.maps.extension.style.types.PromoteId
 import com.mapbox.maps.testapp.style.BaseStyleTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -146,6 +147,17 @@ class VectorSourceTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun promoteIdTest() {
+    val testSource = vectorSource("testId") {
+      url(TEST_URI)
+      promoteId(PromoteId(propertyName = "abc"))
+    }
+    setupSource(testSource)
+    assertEquals(PromoteId(propertyName = "abc"), testSource.promoteId)
+  }
+
+  @Test
+  @UiThreadTest
   fun volatileTest() {
     val testSource = vectorSource("testId") {
       url(TEST_URI)
@@ -262,6 +274,7 @@ class VectorSourceTest : BaseStyleTest() {
     assertNotNull("defaultScheme should not be null", VectorSource.defaultScheme)
     assertNotNull("defaultMinzoom should not be null", VectorSource.defaultMinzoom)
     assertNotNull("defaultMaxzoom should not be null", VectorSource.defaultMaxzoom)
+    assertNotNull("defaultPromoteId should not be null", VectorSource.defaultPromoteId)
     assertNotNull("defaultVolatile should not be null", VectorSource.defaultVolatile)
     assertNotNull("defaultPrefetchZoomDelta should not be null", VectorSource.defaultPrefetchZoomDelta)
     assertNotNull("defaultMinimumTileUpdateInterval should not be null", VectorSource.defaultMinimumTileUpdateInterval)

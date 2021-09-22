@@ -11,6 +11,7 @@ import com.mapbox.maps.StylePropertyValueKind
 import com.mapbox.maps.extension.style.ShadowStyleManager
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.sources.TileSet
+import com.mapbox.maps.extension.style.types.PromoteId
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import io.mockk.*
 import org.junit.Assert.*
@@ -237,6 +238,27 @@ class VectorSourceTest {
   }
 
   @Test
+  fun promoteIdSet() {
+    val testSource = vectorSource("testId") {
+      promoteId(PromoteId(propertyName = "abc"))
+    }
+    testSource.bindTo(style)
+
+    verify { style.addStyleSource("testId", capture(valueSlot)) }
+    assertTrue(valueSlot.captured.toString().contains("promoteId=abc"))
+  }
+
+  @Test
+  fun promoteIdGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("abc")
+    val testSource = vectorSource("testId") {}
+    testSource.bindTo(style)
+
+    assertEquals(PromoteId(propertyName = "abc"), testSource.promoteId)
+    verify { style.getStyleSourceProperty("testId", "promoteId") }
+  }
+
+  @Test
   fun volatileSet() {
     val testSource = vectorSource("testId") {
       volatile(true)
@@ -415,6 +437,15 @@ class VectorSourceTest {
 
     assertEquals(1L.toString(), VectorSource.defaultMaxzoom?.toString())
     verify { StyleManager.getStyleSourcePropertyDefaultValue("vector", "maxzoom") }
+  }
+
+  @Test
+  fun defaultPromoteIdGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue("abc")
+
+    val expectedValue = PromoteId(propertyName = "abc")
+    assertEquals(expectedValue.toValue().toString(), VectorSource.defaultPromoteId?.toValue().toString())
+    verify { StyleManager.getStyleSourcePropertyDefaultValue("vector", "promoteId") }
   }
 
   @Test

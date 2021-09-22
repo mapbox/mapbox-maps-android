@@ -6,6 +6,7 @@ import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.sources.Source
 import com.mapbox.maps.extension.style.sources.TileSet
+import com.mapbox.maps.extension.style.types.PromoteId
 import com.mapbox.maps.extension.style.types.SourceDsl
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.extension.style.utils.silentUnwrap
@@ -144,6 +145,25 @@ class VectorSource(builder: Builder) : Source(builder.sourceId) {
      * @return String
      */
     get() = getPropertyValue("attribution")
+
+  /**
+   * A property to use as a feature id (for feature state). Either a property name, or
+   * an object of the form `{<sourceLayer>: <propertyName>}`. If specified as a string for a vector tile
+   * source, the same property is used across all its source layers.
+   */
+  val promoteId: PromoteId?
+    /**
+     * Get the PromoteId property
+     *
+     * @return PromoteId
+     */
+    get() {
+      val propertyValue = getPropertyValue<Any>("promoteId")
+      propertyValue?.let {
+        return PromoteId.fromProperty(it)
+      }
+      return null
+    }
 
   /**
    * A setting to determine whether a source's tiles are cached locally.
@@ -302,6 +322,16 @@ class VectorSource(builder: Builder) : Source(builder.sourceId) {
     }
 
     /**
+     * A property to use as a feature id (for feature state). Either a property name, or
+     * an object of the form `{<sourceLayer>: <propertyName>}`. If specified as a string for a vector tile
+     * source, the same property is used across all its source layers.
+     */
+    fun promoteId(value: PromoteId) = apply {
+      val propertyValue = PropertyValue("promoteId", value.toValue())
+      properties[propertyValue.propertyName] = propertyValue
+    }
+
+    /**
      * A setting to determine whether a source's tiles are cached locally.
      */
     fun volatile(value: Boolean = false) = apply {
@@ -417,6 +447,25 @@ class VectorSource(builder: Builder) : Source(builder.sourceId) {
        * @return Long
        */
       get() = StyleManager.getStyleSourcePropertyDefaultValue("vector", "maxzoom").silentUnwrap()
+
+    /**
+     * A property to use as a feature id (for feature state). Either a property name, or
+     * an object of the form `{<sourceLayer>: <propertyName>}`. If specified as a string for a vector tile
+     * source, the same property is used across all its source layers.
+     */
+    val defaultPromoteId: PromoteId?
+      /**
+       * Get the PromoteId property
+       *
+       * @return PromoteId
+       */
+      get() {
+        val propertyValue = StyleManager.getStyleSourcePropertyDefaultValue("vector", "promoteId").silentUnwrap<Any>()
+        propertyValue?.let {
+          return PromoteId.fromProperty(it)
+        }
+        return null
+      }
 
     /**
      * A setting to determine whether a source's tiles are cached locally.
