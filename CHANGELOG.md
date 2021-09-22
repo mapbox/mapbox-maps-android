@@ -2,6 +2,33 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.0.0-rc.9 September 22, 2021
+
+**The Mapbox Maps SDK for Android has moved to release candidate status and is now ready for production use.**
+
+## Features ✨ and improvements 🏁
+* [docs] Fix documentation for OnMapIdleListener and CameraChangeListeners. ([#645](https://github.com/mapbox/mapbox-maps-android/pull/645))
+* Add support for SymbolZOrder in PointAnnotationManager ([#638](https://github.com/mapbox/mapbox-maps-android/pull/638))
+* Add support for PromoteId to be used with Feature state API. ([#636](https://github.com/mapbox/mapbox-maps-android/pull/636))
+* Expose optimizeForTerrain flag ([#654](https://github.com/mapbox/mapbox-maps-android/pull/654))
+* Enable instant transitions for data driven symbol layer properties.
+
+## Bug fixes 🐞
+* onStyleLoaded/onMapLoaded callbacks are called even if hosting fragment/activity is stopped ([#629](https://github.com/mapbox/mapbox-maps-android/pull/629))
+* Fix drag annotation blink issue ([#639](https://github.com/mapbox/mapbox-maps-android/pull/639))
+* Apply annotation manager properties to drag layer to keep annotations the same while dragging ([#640](https://github.com/mapbox/mapbox-maps-android/pull/640))
+* Fix point annotation update bitmap affect others issue. ([#633](https://github.com/mapbox/mapbox-maps-android/pull/633))
+* Fix getStyle returns null after adding a source ([#643](https://github.com/mapbox/mapbox-maps-android/pull/643))
+* Enable annotations to set null value to nullable properties. ([#650](https://github.com/mapbox/mapbox-maps-android/pull/650))
+* Fix set camera crash bug. ([#652](https://github.com/mapbox/mapbox-maps-android/pull/652))
+* Fix transition between layers with all constant properties.
+* Fix rendering artifact for a line layer, when its `line-gradient` property is set at runtime.
+* Don't draw SDF images in `text-field` and issue warning for it.
+* Fix incorrect return from StyleManager#getStyleLayerPropertyDefaultValue for `text-field`, now the default value is set to `["format", "" , {}]`.
+
+## Dependencies
+* Bump gl-native to 10.0.0-rc.9, common to 19.0.0.  ([#646](https://github.com/mapbox/mapbox-maps-android/pull/646))
+
 # 10.0.0-rc.8 September 8, 2021
 
 **The Mapbox Maps SDK for Android has moved to release candidate status and is now ready for production use.**
