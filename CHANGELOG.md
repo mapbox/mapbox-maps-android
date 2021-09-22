@@ -20,7 +20,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix point annotation updating all same content bitmaps instead of one particular. ([#633](https://github.com/mapbox/mapbox-maps-android/pull/633))
 * Fix `MapboxMap#getStyle` returning null after adding a new source when style was loaded before. ([#643](https://github.com/mapbox/mapbox-maps-android/pull/643))
 * Enable annotations to set null value to nullable properties. ([#650](https://github.com/mapbox/mapbox-maps-android/pull/650))
-* Fix set camera crash bug. ([#652](https://github.com/mapbox/mapbox-maps-android/pull/652))
+* Fix `std::exception` happing rarely when `MapboxMap#setCamera()` is called inside animation plugin. ([#652](https://github.com/mapbox/mapbox-maps-android/pull/652))
 * Fix transition between layers with all constant properties. ([#646](https://github.com/mapbox/mapbox-maps-android/pull/646))
 * Fix rendering artifact for a line layer, when its `line-gradient` property is set at runtime. ([#646](https://github.com/mapbox/mapbox-maps-android/pull/646))
 * Don't draw SDF images in `text-field` and issue warning for it. ([#646](https://github.com/mapbox/mapbox-maps-android/pull/646))
