@@ -1282,7 +1282,7 @@ class MapboxMap internal constructor(
    */
   override fun gesturesPlugin(function: (GesturesPlugin.() -> Any?)): Any? {
     checkNotNull(gesturesPlugin?.get()) {
-      "Gesture plugin is not added as part MapInitOptions for given MapView."
+      "Gesture plugin is not added as the part of MapInitOptions for given MapView."
     }.let {
       return function.invoke(it)
     }

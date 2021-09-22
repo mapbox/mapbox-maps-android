@@ -895,7 +895,7 @@ class MapboxMapTest {
       mapboxMap.gesturesPlugin { addOnMoveListener(moveListener) }
     }
     assertEquals(
-      "Gesture plugin is not added as part MapInitOptions for given MapView.",
+      "Gesture plugin is not added as the part of MapInitOptions for given MapView.",
       exception.message
     )
     verify(exactly = 0) {

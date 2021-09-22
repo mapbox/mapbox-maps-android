@@ -21,6 +21,7 @@ val MapPluginProviderDelegate.gestures: GesturesPlugin
  * Gesture plugin with id = [Plugin.MAPBOX_GESTURES_PLUGIN_ID] must be added while constructing
  * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
  *
+ * @throws IllegalStateException if gestures plugin was not added.
  * @see [com.mapbox.maps.MapInitOptions]
  */
 fun MapPluginExtensionsDelegate.addOnMapClickListener(onMapClickListener: OnMapClickListener) {
@@ -32,6 +33,7 @@ fun MapPluginExtensionsDelegate.addOnMapClickListener(onMapClickListener: OnMapC
  * Gesture plugin with id = [Plugin.MAPBOX_GESTURES_PLUGIN_ID] must be added while constructing
  * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
  *
+ * @throws IllegalStateException if gestures plugin was not added.
  * @see [com.mapbox.maps.MapInitOptions]
  */
 fun MapPluginExtensionsDelegate.removeOnMapClickListener(onMapClickListener: OnMapClickListener) {
@@ -43,6 +45,7 @@ fun MapPluginExtensionsDelegate.removeOnMapClickListener(onMapClickListener: OnM
  * Gesture plugin with id = [Plugin.MAPBOX_GESTURES_PLUGIN_ID] must be added while constructing
  * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
  *
+ * @throws IllegalStateException if gestures plugin was not added.
  * @see [com.mapbox.maps.MapInitOptions]
  */
 fun MapPluginExtensionsDelegate.addOnMapLongClickListener(onMapLongClickListener: OnMapLongClickListener) {
@@ -54,6 +57,7 @@ fun MapPluginExtensionsDelegate.addOnMapLongClickListener(onMapLongClickListener
  * Gesture plugin with id = [Plugin.MAPBOX_GESTURES_PLUGIN_ID] must be added while constructing
  * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
  *
+ * @throws IllegalStateException if gestures plugin was not added.
  * @see [com.mapbox.maps.MapInitOptions]
  */
 fun MapPluginExtensionsDelegate.removeOnMapLongClickListener(onMapLongClickListener: OnMapLongClickListener) {
@@ -65,6 +69,7 @@ fun MapPluginExtensionsDelegate.removeOnMapLongClickListener(onMapLongClickListe
  * Gesture plugin with id = [Plugin.MAPBOX_GESTURES_PLUGIN_ID] must be added while constructing
  * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
  *
+ * @throws IllegalStateException if gestures plugin was not added.
  * @see [com.mapbox.maps.MapInitOptions]
  */
 fun MapPluginExtensionsDelegate.addOnFlingListener(onFlingListener: OnFlingListener) {
@@ -76,6 +81,7 @@ fun MapPluginExtensionsDelegate.addOnFlingListener(onFlingListener: OnFlingListe
  * Gesture plugin with id = [Plugin.MAPBOX_GESTURES_PLUGIN_ID] must be added while constructing
  * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
  *
+ * @throws IllegalStateException if gestures plugin was not added.
  * @see [com.mapbox.maps.MapInitOptions]
  */
 fun MapPluginExtensionsDelegate.removeOnFlingListener(onFlingListener: OnFlingListener) {
@@ -87,6 +93,7 @@ fun MapPluginExtensionsDelegate.removeOnFlingListener(onFlingListener: OnFlingLi
  * Gesture plugin with id = [Plugin.MAPBOX_GESTURES_PLUGIN_ID] must be added while constructing
  * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
  *
+ * @throws IllegalStateException if gestures plugin was not added.
  * @see [com.mapbox.maps.MapInitOptions]
  */
 fun MapPluginExtensionsDelegate.addOnMoveListener(listener: OnMoveListener) {
@@ -98,6 +105,7 @@ fun MapPluginExtensionsDelegate.addOnMoveListener(listener: OnMoveListener) {
  * Gesture plugin with id = [Plugin.MAPBOX_GESTURES_PLUGIN_ID] must be added while constructing
  * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
  *
+ * @throws IllegalStateException if gestures plugin was not added.
  * @see [com.mapbox.maps.MapInitOptions]
  */
 fun MapPluginExtensionsDelegate.removeOnMoveListener(listener: OnMoveListener) {
@@ -109,6 +117,7 @@ fun MapPluginExtensionsDelegate.removeOnMoveListener(listener: OnMoveListener) {
  * Gesture plugin with id = [Plugin.MAPBOX_GESTURES_PLUGIN_ID] must be added while constructing
  * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
  *
+ * @throws IllegalStateException if gestures plugin was not added.
  * @see [com.mapbox.maps.MapInitOptions]
  */
 fun MapPluginExtensionsDelegate.addOnRotateListener(listener: OnRotateListener) {
@@ -120,6 +129,7 @@ fun MapPluginExtensionsDelegate.addOnRotateListener(listener: OnRotateListener) 
  * Gesture plugin with id = [Plugin.MAPBOX_GESTURES_PLUGIN_ID] must be added while constructing
  * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
  *
+ * @throws IllegalStateException if gestures plugin was not added.
  * @see [com.mapbox.maps.MapInitOptions]
  */
 fun MapPluginExtensionsDelegate.removeOnRotateListener(listener: OnRotateListener) {
@@ -131,6 +141,7 @@ fun MapPluginExtensionsDelegate.removeOnRotateListener(listener: OnRotateListene
  * Gesture plugin with id = [Plugin.MAPBOX_GESTURES_PLUGIN_ID] must be added while constructing
  * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
  *
+ * @throws IllegalStateException if gestures plugin was not added.
  * @see [com.mapbox.maps.MapInitOptions]
  */
 fun MapPluginExtensionsDelegate.addOnScaleListener(listener: OnScaleListener) {
@@ -142,6 +153,7 @@ fun MapPluginExtensionsDelegate.addOnScaleListener(listener: OnScaleListener) {
  * Gesture plugin with id = [Plugin.MAPBOX_GESTURES_PLUGIN_ID] must be added while constructing
  * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
  *
+ * @throws IllegalStateException if gestures plugin was not added.
  * @see [com.mapbox.maps.MapInitOptions]
  */
 fun MapPluginExtensionsDelegate.removeOnScaleListener(listener: OnScaleListener) {
@@ -153,6 +165,7 @@ fun MapPluginExtensionsDelegate.removeOnScaleListener(listener: OnScaleListener)
  * Gesture plugin with id = [Plugin.MAPBOX_GESTURES_PLUGIN_ID] must be added while constructing
  * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
  *
+ * @throws IllegalStateException if gestures plugin was not added.
  * @see [com.mapbox.maps.MapInitOptions]
  */
 fun MapPluginExtensionsDelegate.addOnShoveListener(listener: OnShoveListener) {
@@ -164,6 +177,7 @@ fun MapPluginExtensionsDelegate.addOnShoveListener(listener: OnShoveListener) {
  * Gesture plugin with id = [Plugin.MAPBOX_GESTURES_PLUGIN_ID] must be added while constructing
  * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
  *
+ * @throws IllegalStateException if gestures plugin was not added.
  * @see [com.mapbox.maps.MapInitOptions]
  */
 fun MapPluginExtensionsDelegate.removeOnShoveListener(listener: OnShoveListener) {
@@ -175,6 +189,7 @@ fun MapPluginExtensionsDelegate.removeOnShoveListener(listener: OnShoveListener)
  * Gesture plugin with id = [Plugin.MAPBOX_GESTURES_PLUGIN_ID] must be added while constructing
  * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
  *
+ * @throws IllegalStateException if gestures plugin was not added.
  * @see [com.mapbox.maps.MapInitOptions]
  */
 fun MapPluginExtensionsDelegate.getGesturesManager(): AndroidGesturesManager? {
@@ -186,6 +201,7 @@ fun MapPluginExtensionsDelegate.getGesturesManager(): AndroidGesturesManager? {
  * Gesture plugin with id = [Plugin.MAPBOX_GESTURES_PLUGIN_ID] must be added while constructing
  * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
  *
+ * @throws IllegalStateException if gestures plugin was not added.
  * @see [com.mapbox.maps.MapInitOptions]
  */
 fun MapPluginExtensionsDelegate.setGesturesManager(
@@ -207,6 +223,7 @@ fun MapPluginExtensionsDelegate.setGesturesManager(
  * Gesture plugin with id = [Plugin.MAPBOX_GESTURES_PLUGIN_ID] must be added while constructing
  * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
  *
+ * @throws IllegalStateException if gestures plugin was not added.
  * @see [com.mapbox.maps.MapInitOptions]
  */
 fun MapPluginExtensionsDelegate.getGesturesSettings() =
