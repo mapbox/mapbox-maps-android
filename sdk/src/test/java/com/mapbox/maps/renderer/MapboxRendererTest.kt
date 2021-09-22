@@ -233,7 +233,7 @@ internal abstract class MapboxRendererTest {
     every { renderThread.fpsChangedListener } returns listener
     mapboxRenderer.setOnFpsChangedListener(listener)
     mapboxRenderer.onDestroy()
-    Assert.assertEquals(true, mapboxRenderer.needDestroy)
+    verify { renderThread.destroy() }
     verify { renderThread.fpsChangedListener = null }
   }
 }

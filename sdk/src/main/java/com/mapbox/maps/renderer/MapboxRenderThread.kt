@@ -31,8 +31,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   private val eglCore: EGLCore
 
   private val lock = ReentrantLock()
-  private val destroyCondition = lock.newCondition()
   private val createCondition = lock.newCondition()
+  private val destroyCondition = lock.newCondition()
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val renderEventQueue = CopyOnWriteArrayList<Runnable>()
@@ -211,6 +211,13 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     eglSurface = null
   }
 
+  private fun releaseAll() {
+    mapboxRenderer.onSurfaceDestroyed()
+    nativeRenderCreated = false
+    releaseEgl()
+    surface?.release()
+  }
+
   private fun prepareRenderFrame() {
     // Check first if we have to stop rendering at all (even if there was no EGL config) and cleanup EGL.
     // We need to check it ASAP in order not to block thread that is calling `onSurfaceTextureDestroyed`.
@@ -248,26 +255,23 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @UiThread
   fun onSurfaceDestroyed() {
     lock.withLock {
-      handlerThread.post {
-        awaitingNextVsync.set(false)
-        Choreographer.getInstance().removeFrameCallback(this)
-        shouldExit = true
-        lock.withLock {
-          // TODO https://github.com/mapbox/mapbox-maps-android/issues/607
-          if (mapboxRenderer.needDestroy || mapboxRenderer is MapboxTextureViewRenderer) {
-            mapboxRenderer.onSurfaceDestroyed()
-            releaseEgl()
-            surface?.release()
-          } else {
-            releaseEglSurface()
+      // in some situations `destroy` is called earlier than onSurfaceDestroyed - in that case no need to clean up
+      if (handlerThread.started) {
+        handlerThread.post {
+          awaitingNextVsync.set(false)
+          Choreographer.getInstance().removeFrameCallback(this)
+          shouldExit = true
+          lock.withLock {
+            // TODO https://github.com/mapbox/mapbox-maps-android/issues/607
+            if (nativeRenderCreated && mapboxRenderer is MapboxTextureViewRenderer) {
+              releaseAll()
+            } else {
+              releaseEglSurface()
+            }
+            destroyCondition.signal()
           }
-          handlerThread.clearMessageQueue()
-          destroyCondition.signal()
         }
-      }
-      destroyCondition.await()
-      if (mapboxRenderer.needDestroy) {
-        destroy()
+        destroyCondition.await()
       }
     }
   }
@@ -286,6 +290,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         shouldExit = false
         eventQueue.clear()
         renderEventQueue.clear()
+        handlerThread.clearMessageQueue()
         prepareRenderFrame()
       }
       createCondition.await()
@@ -359,6 +364,20 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @UiThread
   internal fun destroy() {
+    lock.withLock {
+      // do nothing if destroy for some reason called more than once to avoid deadlock
+      if (handlerThread.started) {
+        handlerThread.post {
+          lock.withLock {
+            if (nativeRenderCreated) {
+              releaseAll()
+            }
+            destroyCondition.signal()
+          }
+        }
+        destroyCondition.await()
+      }
+    }
     handlerThread.apply {
       clearMessageQueue()
       stop()

@@ -12,6 +12,9 @@ internal class WorkerHandlerThread {
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var handler: Handler? = null
 
+  internal val started
+    get() = handlerThread.isAlive
+
   fun post(task: () -> Unit) {
     handler?.let {
       it.post { task.invoke() }
