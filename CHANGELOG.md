@@ -9,7 +9,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 * Fix documentation for `OnMapIdleListener` and `CameraChangeListeners`. ([#645](https://github.com/mapbox/mapbox-maps-android/pull/645))
 * Add support for `SymbolZOrder` property in PointAnnotationManager. ([#638](https://github.com/mapbox/mapbox-maps-android/pull/638))
-* Add support for PromoteId to be used with Feature State API. ([#636](https://github.com/mapbox/mapbox-maps-android/pull/636))
+* Add support for `PromoteId` to be used with Feature State API. ([#636](https://github.com/mapbox/mapbox-maps-android/pull/636))
 * Expose optimizeForTerrain flag ([#654](https://github.com/mapbox/mapbox-maps-android/pull/654))
 * Enable instant transitions for data driven symbol layer properties. ([#646](https://github.com/mapbox/mapbox-maps-android/pull/646))
 
