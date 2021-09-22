@@ -12,8 +12,8 @@ internal class WorkerHandlerThread {
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var handler: Handler? = null
 
-  internal var started = false
-    private set
+  internal val started
+    get() = handlerThread.isAlive
 
   fun post(task: () -> Unit) {
     handler?.let {
@@ -27,7 +27,6 @@ internal class WorkerHandlerThread {
       start()
       handler = Handler(this.looper)
     }
-    started = true
   }
 
   fun stop() {
@@ -37,7 +36,6 @@ internal class WorkerHandlerThread {
     } catch (e: InterruptedException) {
     } finally {
       handler = null
-      started = false
     }
   }
 

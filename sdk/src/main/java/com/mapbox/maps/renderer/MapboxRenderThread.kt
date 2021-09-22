@@ -365,15 +365,18 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @UiThread
   internal fun destroy() {
     lock.withLock {
-      handlerThread.post {
-        lock.withLock {
-          if (nativeRenderCreated) {
-            releaseAll()
+      // do nothing if destroy for some reason called more than once to avoid deadlock
+      if (handlerThread.started) {
+        handlerThread.post {
+          lock.withLock {
+            if (nativeRenderCreated) {
+              releaseAll()
+            }
+            destroyCondition.signal()
           }
-          destroyCondition.signal()
         }
+        destroyCondition.await()
       }
-      destroyCondition.await()
     }
     handlerThread.apply {
       clearMessageQueue()

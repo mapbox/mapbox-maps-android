@@ -140,7 +140,7 @@ class MapboxRenderThreadTest {
     }
     assert(!mapboxRenderThread.eglPrepared)
     verify { mapboxRenderer.onSurfaceDestroyed() }
-    assert(!workerThread.handlerThread.isAlive)
+    assert(!workerThread.started)
   }
 
   @Test
@@ -159,7 +159,7 @@ class MapboxRenderThreadTest {
     }
     assert(!mapboxRenderThread.eglPrepared)
     verify { mapboxRenderer.onSurfaceDestroyed() }
-    assert(!workerThread.handlerThread.isAlive)
+    assert(!workerThread.started)
   }
 
   @Test
@@ -347,7 +347,7 @@ class MapboxRenderThreadTest {
   @Test
   fun destroyTest() {
     mapboxRenderThread.destroy()
-    assert(!workerThread.handlerThread.isAlive)
+    assert(!workerThread.started)
   }
 
   @Test
