@@ -449,25 +449,6 @@ class VectorSource(builder: Builder) : Source(builder.sourceId) {
       get() = StyleManager.getStyleSourcePropertyDefaultValue("vector", "maxzoom").silentUnwrap()
 
     /**
-     * A property to use as a feature id (for feature state). Either a property name, or
-     * an object of the form `{<sourceLayer>: <propertyName>}`. If specified as a string for a vector tile
-     * source, the same property is used across all its source layers.
-     */
-    val defaultPromoteId: PromoteId?
-      /**
-       * Get the PromoteId property
-       *
-       * @return PromoteId
-       */
-      get() {
-        val propertyValue = StyleManager.getStyleSourcePropertyDefaultValue("vector", "promoteId").silentUnwrap<Any>()
-        propertyValue?.let {
-          return PromoteId.fromProperty(it)
-        }
-        return null
-      }
-
-    /**
      * A setting to determine whether a source's tiles are cached locally.
      */
     val defaultVolatile: Boolean?

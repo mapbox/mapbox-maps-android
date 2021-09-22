@@ -765,24 +765,6 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
       get() = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "generateId").silentUnwrap()
 
     /**
-     * A property to use as a feature id (for feature state). Either a property name, or
-     * an object of the form `{<sourceLayer>: <propertyName>}`.
-     */
-    val defaultPromoteId: PromoteId?
-      /**
-       * Get the PromoteId property
-       *
-       * @return PromoteId
-       */
-      get() {
-        val propertyValue = StyleManager.getStyleSourcePropertyDefaultValue("geojson", "promoteId").silentUnwrap<Any>()
-        propertyValue?.let {
-          return PromoteId.fromProperty(it)
-        }
-        return null
-      }
-
-    /**
      * When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map
      * will first request a tile at zoom level lower than zoom - delta, but so that
      * the zoom level is multiple of delta, in an attempt to display a full map at

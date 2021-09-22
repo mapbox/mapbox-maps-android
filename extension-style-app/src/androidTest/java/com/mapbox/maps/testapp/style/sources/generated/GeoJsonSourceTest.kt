@@ -467,7 +467,6 @@ class GeoJsonSourceTest : BaseStyleTest() {
     assertNotNull("defaultClusterMaxZoom should not be null", GeoJsonSource.defaultClusterMaxZoom)
     assertNotNull("defaultLineMetrics should not be null", GeoJsonSource.defaultLineMetrics)
     assertNotNull("defaultGenerateId should not be null", GeoJsonSource.defaultGenerateId)
-    assertNotNull("defaultPromoteId should not be null", GeoJsonSource.defaultPromoteId)
     assertNotNull("defaultPrefetchZoomDelta should not be null", GeoJsonSource.defaultPrefetchZoomDelta)
   }
 
