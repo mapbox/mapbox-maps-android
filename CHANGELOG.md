@@ -17,7 +17,7 @@ Mapbox welcomes participation and contributions from everyone.
 * OnStyleLoaded / OnMapLoaded callbacks are invoked even if hosting fragment/activity is in stopped state. ([#629](https://github.com/mapbox/mapbox-maps-android/pull/629))
 * Fix drag annotation blink issue ([#639](https://github.com/mapbox/mapbox-maps-android/pull/639))
 * Apply annotation manager properties to drag layer to keep annotations the same while dragging ([#640](https://github.com/mapbox/mapbox-maps-android/pull/640))
-* Fix point annotation update bitmap affect others issue. ([#633](https://github.com/mapbox/mapbox-maps-android/pull/633))
+* Fix point annotation updating all same content bitmaps instead of one particular. ([#633](https://github.com/mapbox/mapbox-maps-android/pull/633))
 * Fix getStyle returns null after adding a source ([#643](https://github.com/mapbox/mapbox-maps-android/pull/643))
 * Enable annotations to set null value to nullable properties. ([#650](https://github.com/mapbox/mapbox-maps-android/pull/650))
 * Fix set camera crash bug. ([#652](https://github.com/mapbox/mapbox-maps-android/pull/652))
