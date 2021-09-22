@@ -125,32 +125,20 @@ class MapboxRenderThreadTest {
   }
 
   @Test
-  fun onSurfaceOnlyDestroyedTest() {
-    every { mapboxRenderer.needDestroy } returns false
-    val surface = mockk<Surface>(relaxUnitFun = true)
-    every { surface.isValid } returns true
-    every { eglCore.eglStatusSuccess } returns true
-    every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
-    mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
-    mapboxRenderThread.onSurfaceDestroyed()
-    verify(exactly = 0) { mapboxRenderer.onSurfaceDestroyed() }
-    assert(workerThread.handlerThread.isAlive)
-  }
-
-  @Test
   fun onSurfaceWithActivityDestroyedTest() {
     val latch = CountDownLatch(1)
     every { mapboxRenderer.onSurfaceDestroyed() } answers { latch.countDown() }
-    every { mapboxRenderer.needDestroy } returns true
     val surface = mockk<Surface>(relaxUnitFun = true)
     every { surface.isValid } returns true
     every { eglCore.eglStatusSuccess } returns true
     every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
     mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
     mapboxRenderThread.onSurfaceDestroyed()
+    mapboxRenderThread.destroy()
     if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
+    assert(!mapboxRenderThread.eglPrepared)
     verify { mapboxRenderer.onSurfaceDestroyed() }
     assert(!workerThread.handlerThread.isAlive)
   }
@@ -165,7 +153,6 @@ class MapboxRenderThreadTest {
     ).apply {
       workerThread.start()
     }
-    every { mapboxRenderer.needDestroy } returns false
     val surface = mockk<Surface>(relaxUnitFun = true)
     every { surface.isValid } returns true
     every { eglCore.eglStatusSuccess } returns true
@@ -195,7 +182,6 @@ class MapboxRenderThreadTest {
     ).apply {
       workerThread.start()
     }
-    every { mapboxRenderer.needDestroy } returns false
     val latch = CountDownLatch(1)
     every { mapboxRenderer.onSurfaceDestroyed() } answers { latch.countDown() }
     val surface = mockk<Surface>(relaxUnitFun = true)

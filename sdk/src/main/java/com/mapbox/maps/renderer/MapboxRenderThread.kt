@@ -31,8 +31,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   private val eglCore: EGLCore
 
   private val lock = ReentrantLock()
-  private val destroyCondition = lock.newCondition()
   private val createCondition = lock.newCondition()
+  private val destroyCondition = lock.newCondition()
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val renderEventQueue = CopyOnWriteArrayList<Runnable>()
@@ -211,6 +211,12 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     eglSurface = null
   }
 
+  private fun releaseAll() {
+    mapboxRenderer.onSurfaceDestroyed()
+    releaseEgl()
+    surface?.release()
+  }
+
   private fun prepareRenderFrame() {
     // Check first if we have to stop rendering at all (even if there was no EGL config) and cleanup EGL.
     // We need to check it ASAP in order not to block thread that is calling `onSurfaceTextureDestroyed`.
@@ -254,21 +260,15 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         shouldExit = true
         lock.withLock {
           // TODO https://github.com/mapbox/mapbox-maps-android/issues/607
-          if (mapboxRenderer.needDestroy || mapboxRenderer is MapboxTextureViewRenderer) {
-            mapboxRenderer.onSurfaceDestroyed()
-            releaseEgl()
-            surface?.release()
+          if (mapboxRenderer is MapboxTextureViewRenderer) {
+            releaseAll()
           } else {
             releaseEglSurface()
           }
-          handlerThread.clearMessageQueue()
           destroyCondition.signal()
         }
       }
       destroyCondition.await()
-      if (mapboxRenderer.needDestroy) {
-        destroy()
-      }
     }
   }
 
@@ -286,6 +286,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         shouldExit = false
         eventQueue.clear()
         renderEventQueue.clear()
+        handlerThread.clearMessageQueue()
         prepareRenderFrame()
       }
       createCondition.await()
@@ -359,6 +360,17 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @UiThread
   internal fun destroy() {
+    lock.withLock {
+      handlerThread.post {
+        lock.withLock {
+          if (eglPrepared) {
+            releaseAll()
+          }
+          destroyCondition.signal()
+        }
+      }
+      destroyCondition.await()
+    }
     handlerThread.apply {
       clearMessageQueue()
       stop()
