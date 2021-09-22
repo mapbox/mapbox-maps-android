@@ -7,7 +7,7 @@ Mapbox welcomes participation and contributions from everyone.
 **The Mapbox Maps SDK for Android has moved to release candidate status and is now ready for production use.**
 
 ## Features ✨ and improvements 🏁
-* [docs] Fix documentation for OnMapIdleListener and CameraChangeListeners. ([#645](https://github.com/mapbox/mapbox-maps-android/pull/645))
+* Fix documentation for OnMapIdleListener and CameraChangeListeners. ([#645](https://github.com/mapbox/mapbox-maps-android/pull/645))
 * Add support for SymbolZOrder in PointAnnotationManager ([#638](https://github.com/mapbox/mapbox-maps-android/pull/638))
 * Add support for PromoteId to be used with Feature state API. ([#636](https://github.com/mapbox/mapbox-maps-android/pull/636))
 * Expose optimizeForTerrain flag ([#654](https://github.com/mapbox/mapbox-maps-android/pull/654))
