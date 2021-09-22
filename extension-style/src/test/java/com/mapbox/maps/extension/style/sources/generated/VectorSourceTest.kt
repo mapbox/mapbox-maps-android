@@ -440,15 +440,6 @@ class VectorSourceTest {
   }
 
   @Test
-  fun defaultPromoteIdGet() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue("abc")
-
-    val expectedValue = PromoteId(propertyName = "abc")
-    assertEquals(expectedValue.toValue().toString(), VectorSource.defaultPromoteId?.toValue().toString())
-    verify { StyleManager.getStyleSourcePropertyDefaultValue("vector", "promoteId") }
-  }
-
-  @Test
   fun defaultVolatileGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(true)
 

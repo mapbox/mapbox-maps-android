@@ -274,7 +274,6 @@ class VectorSourceTest : BaseStyleTest() {
     assertNotNull("defaultScheme should not be null", VectorSource.defaultScheme)
     assertNotNull("defaultMinzoom should not be null", VectorSource.defaultMinzoom)
     assertNotNull("defaultMaxzoom should not be null", VectorSource.defaultMaxzoom)
-    assertNotNull("defaultPromoteId should not be null", VectorSource.defaultPromoteId)
     assertNotNull("defaultVolatile should not be null", VectorSource.defaultVolatile)
     assertNotNull("defaultPrefetchZoomDelta should not be null", VectorSource.defaultPrefetchZoomDelta)
     assertNotNull("defaultMinimumTileUpdateInterval should not be null", VectorSource.defaultMinimumTileUpdateInterval)

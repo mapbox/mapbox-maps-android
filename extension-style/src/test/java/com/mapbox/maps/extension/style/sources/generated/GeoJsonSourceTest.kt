@@ -670,15 +670,6 @@ class GeoJsonSourceTest {
   }
 
   @Test
-  fun defaultPromoteIdGet() {
-    every { styleProperty.value } returns TypeUtils.wrapToValue("abc")
-
-    val expectedValue = PromoteId(propertyName = "abc")
-    assertEquals(expectedValue.toValue().toString(), GeoJsonSource.defaultPromoteId?.toValue().toString())
-    verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "promoteId") }
-  }
-
-  @Test
   fun defaultPrefetchZoomDeltaGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
 
