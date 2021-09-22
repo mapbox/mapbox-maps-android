@@ -132,14 +132,15 @@ class SantaCatalinaActivity : AppCompatActivity() {
         response: Response<DirectionsResponse>
       ) {
         response.body()?.let { body ->
-          body.routes()[0].geometry()?.let {
-            animateRoute(
-              LineString.fromPolyline(it, PRECISION_6)
-            )
-            return
+          if (body.routes().isNotEmpty()) {
+            body.routes()[0].geometry()?.let {
+              animateRoute(
+                LineString.fromPolyline(it, PRECISION_6)
+              )
+              return
+            }
           }
-        }
-        throw RuntimeException("Not able to retrieve a directions route")
+        } ?: throw RuntimeException("Not able to retrieve a directions route")
       }
 
       override fun onFailure(call: Call<DirectionsResponse>, t: Throwable) {}
