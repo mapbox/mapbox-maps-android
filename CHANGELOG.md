@@ -14,7 +14,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Enable instant transitions for data driven symbol layer properties.
 
 ## Bug fixes 🐞
-* onStyleLoaded/onMapLoaded callbacks are called even if hosting fragment/activity is stopped ([#629](https://github.com/mapbox/mapbox-maps-android/pull/629))
+* OnStyleLoaded / OnMapLoaded callbacks are invoked even if hosting fragment/activity is in stopped state. ([#629](https://github.com/mapbox/mapbox-maps-android/pull/629))
 * Fix drag annotation blink issue ([#639](https://github.com/mapbox/mapbox-maps-android/pull/639))
 * Apply annotation manager properties to drag layer to keep annotations the same while dragging ([#640](https://github.com/mapbox/mapbox-maps-android/pull/640))
 * Fix point annotation update bitmap affect others issue. ([#633](https://github.com/mapbox/mapbox-maps-android/pull/633))
