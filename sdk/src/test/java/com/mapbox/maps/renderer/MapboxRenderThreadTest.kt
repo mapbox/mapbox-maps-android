@@ -125,7 +125,7 @@ class MapboxRenderThreadTest {
   }
 
   @Test
-  fun onSurfaceWithActivityDestroyedTest() {
+  fun onSurfaceWithActivityDestroyedAfterSurfaceTest() {
     val latch = CountDownLatch(1)
     every { mapboxRenderer.onSurfaceDestroyed() } answers { latch.countDown() }
     val surface = mockk<Surface>(relaxUnitFun = true)
@@ -135,6 +135,25 @@ class MapboxRenderThreadTest {
     mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
     mapboxRenderThread.onSurfaceDestroyed()
     mapboxRenderThread.destroy()
+    if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
+    }
+    assert(!mapboxRenderThread.eglPrepared)
+    verify { mapboxRenderer.onSurfaceDestroyed() }
+    assert(!workerThread.handlerThread.isAlive)
+  }
+
+  @Test
+  fun onSurfaceWithActivityDestroyedBeforeSurfaceTest() {
+    val latch = CountDownLatch(1)
+    every { mapboxRenderer.onSurfaceDestroyed() } answers { latch.countDown() }
+    val surface = mockk<Surface>(relaxUnitFun = true)
+    every { surface.isValid } returns true
+    every { eglCore.eglStatusSuccess } returns true
+    every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
+    mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
+    mapboxRenderThread.destroy()
+    mapboxRenderThread.onSurfaceDestroyed()
     if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
