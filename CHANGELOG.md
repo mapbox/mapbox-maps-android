@@ -32,8 +32,6 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 10.0.0-rc.8 September 8, 2021
 
-**The Mapbox Maps SDK for Android has moved to release candidate status and is now ready for production use.**
-
 ## Breaking changes ⚠️
 * In offline mode (set by either mapbox::common::OfflineSwitch API or on platform side), the error notifications are send if the required resources are not present locally. The volatile tiles are not considered to be required in offline.([#604](https://github.com/mapbox/mapbox-maps-android/pull/604))
 * Adapt setBounds to gl-js behavior: constraining of coordinates and zoom level is now stricter to prevent out of bounds map area to be visible in the viewport.([#604](https://github.com/mapbox/mapbox-maps-android/pull/604))
