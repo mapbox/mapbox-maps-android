@@ -19,7 +19,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Apply annotation manager properties to drag layer to keep annotations the same while dragging ([#640](https://github.com/mapbox/mapbox-maps-android/pull/640))
 * Fix point annotation updating all same content bitmaps instead of one particular. ([#633](https://github.com/mapbox/mapbox-maps-android/pull/633))
 * Fix `MapboxMap#getStyle` returning null after adding a new source when style was loaded before. ([#643](https://github.com/mapbox/mapbox-maps-android/pull/643))
-* Enable annotations to set null value to nullable properties. ([#650](https://github.com/mapbox/mapbox-maps-android/pull/650))
+* Allow setting null explicitly to annotation nullable properties. ([#650](https://github.com/mapbox/mapbox-maps-android/pull/650))
 * Fix `std::exception` happing rarely when `MapboxMap#setCamera()` is called inside animation plugin. ([#652](https://github.com/mapbox/mapbox-maps-android/pull/652))
 * Fix memory leak in renderer destroy. ([#657](https://github.com/mapbox/mapbox-maps-android/pull/657))
 * Fix transition between layers with all constant properties. ([#646](https://github.com/mapbox/mapbox-maps-android/pull/646))
