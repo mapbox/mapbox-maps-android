@@ -43,6 +43,12 @@ object MapAttributeParser {
           true
         )
       )
+      .optimizeForTerrain(
+        attrs.getBoolean(
+          R.styleable.mapbox_MapView_mapbox_optimizeForTerrainEnabled,
+          true
+        )
+      )
       .pixelRatio(attrs.getFloat(R.styleable.mapbox_MapView_mapbox_mapPixelRatio, pixelRatio))
       .glyphsRasterizationOptions(
         GlyphsRasterizationOptions.Builder()
