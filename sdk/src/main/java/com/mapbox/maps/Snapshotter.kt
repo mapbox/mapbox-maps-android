@@ -37,6 +37,7 @@ open class Snapshotter {
   private val observer: Observer
   private val snapshotOverlayOptions: SnapshotOverlayOptions
 
+  @JvmOverloads
   constructor(
     context: Context,
     options: MapSnapshotOptions,

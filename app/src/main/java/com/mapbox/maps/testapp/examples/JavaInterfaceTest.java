@@ -1,25 +1,50 @@
 package com.mapbox.maps.testapp.examples;
 
+import static com.mapbox.maps.extension.style.expressions.generated.Expression.division;
+import static com.mapbox.maps.extension.style.expressions.generated.Expression.literal;
+import static com.mapbox.maps.extension.style.expressions.generated.Expression.pi;
+import static com.mapbox.maps.extension.style.expressions.generated.Expression.rgba;
+
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.util.AttributeSet;
+import android.view.Surface;
+
 import com.mapbox.android.gestures.AndroidGesturesManager;
 import com.mapbox.android.gestures.MoveGestureDetector;
 import com.mapbox.android.gestures.RotateGestureDetector;
 import com.mapbox.android.gestures.ShoveGestureDetector;
 import com.mapbox.android.gestures.StandardScaleGestureDetector;
+import com.mapbox.bindgen.Value;
 import com.mapbox.maps.CameraOptions;
+import com.mapbox.maps.CameraState;
+import com.mapbox.maps.ExtensionUtils;
+import com.mapbox.maps.MapInitOptions;
+import com.mapbox.maps.MapOptions;
+import com.mapbox.maps.MapSnapshotOptions;
+import com.mapbox.maps.MapSurface;
 import com.mapbox.maps.MapView;
 import com.mapbox.maps.MapboxMap;
+import com.mapbox.maps.QueryFeatureStateCallback;
+import com.mapbox.maps.ResourceOptions;
 import com.mapbox.maps.ScreenCoordinate;
+import com.mapbox.maps.SnapshotOverlayOptions;
+import com.mapbox.maps.Snapshotter;
 import com.mapbox.maps.Style;
+import com.mapbox.maps.extension.style.StyleContract;
 import com.mapbox.maps.extension.style.expressions.generated.Expression;
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer;
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor;
 import com.mapbox.maps.extension.style.types.Formatted;
 import com.mapbox.maps.extension.style.types.FormattedSection;
+import com.mapbox.maps.plugin.LocationPuck2D;
+import com.mapbox.maps.plugin.LocationPuck3D;
+import com.mapbox.maps.plugin.Plugin;
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin;
 import com.mapbox.maps.plugin.animation.CameraAnimationsUtils;
 import com.mapbox.maps.plugin.animation.MapAnimationOptions;
+import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener;
 import com.mapbox.maps.plugin.gestures.GesturesPlugin;
-import com.mapbox.maps.plugin.gestures.GesturesUtils;
 import com.mapbox.maps.plugin.gestures.GesturesUtils;
 import com.mapbox.maps.plugin.gestures.OnMoveListener;
 import com.mapbox.maps.plugin.gestures.OnRotateListener;
@@ -37,13 +62,83 @@ import com.mapbox.maps.plugin.scalebar.ScaleBarUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.division;
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.literal;
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.pi;
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.rgba;
+import java.util.List;
 
 public class JavaInterfaceTest {
+
+    private void featureState(MapboxMap mapboxMap, QueryFeatureStateCallback callback, Value state, String sourceId, String featureId, String sourceLayerId) {
+        mapboxMap.getFeatureState(sourceId, featureId, callback);
+        mapboxMap.getFeatureState(sourceId, sourceLayerId, featureId, callback);
+        mapboxMap.setFeatureState(sourceId, featureId, state);
+        mapboxMap.setFeatureState(sourceId, sourceLayerId, featureId, state);
+        mapboxMap.removeFeatureState(sourceId, featureId);
+        mapboxMap.removeFeatureState(sourceId, sourceLayerId, featureId);
+        mapboxMap.removeFeatureState(sourceId, sourceLayerId, featureId, "stateKey");
+    }
+
+    private void mapSurface(Context context, Surface surface, MapInitOptions mapInitOptions) {
+        MapSurface mapSurface = new MapSurface(context, surface);
+        mapSurface = new MapSurface(context, surface, mapInitOptions);
+    }
+
+    private void locationPuck(Drawable image, List<Float> floatList) {
+        LocationPuck2D locationPuck2D = new LocationPuck2D();
+        locationPuck2D = new LocationPuck2D(image);
+        locationPuck2D = new LocationPuck2D(image, image);
+        locationPuck2D = new LocationPuck2D(image, image, image);
+        locationPuck2D = new LocationPuck2D(image, image, image, "scale");
+
+        LocationPuck3D locationPuck3D = new LocationPuck3D("uri");
+        locationPuck3D = new LocationPuck3D("uri", floatList);
+        locationPuck3D = new LocationPuck3D("uri", floatList, 1.0f);
+        locationPuck3D = new LocationPuck3D("uri", floatList, 1.0f, floatList);
+        locationPuck3D = new LocationPuck3D("uri", floatList, 1.0f, floatList, "scale");
+        locationPuck3D = new LocationPuck3D("uri", floatList, 1.0f, floatList, "scale", floatList);
+        locationPuck3D = new LocationPuck3D("uri", floatList, 1.0f, floatList, "scale", floatList, floatList);
+    }
+
+    private void mapboxMapOverLoad(MapView mapView, StyleContract.StyleExtension styleExtension, Style.OnStyleLoaded onStyleLoaded,
+                                   OnMapLoadErrorListener onMapLoadErrorListener) {
+        final MapboxMap mapboxMap = mapView.getMapboxMap();
+        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS);
+        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS, onStyleLoaded);
+        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS, onStyleLoaded, onMapLoadErrorListener);
+        mapboxMap.loadStyleJson("json");
+        mapboxMap.loadStyleJson("json", onStyleLoaded);
+        mapboxMap.loadStyleJson("json", onStyleLoaded, onMapLoadErrorListener);
+        mapboxMap.loadStyle(styleExtension);
+        mapboxMap.loadStyle(styleExtension, onStyleLoaded);
+        mapboxMap.loadStyle(styleExtension, onStyleLoaded, onMapLoadErrorListener);
+    }
+
+    private void mapInitOptionsOverloads(Context context,
+                                         ResourceOptions resourceOptions,
+                                         MapOptions mapOptions, List<Plugin> plugins,
+                                         CameraOptions cameraOptions,
+                                         AttributeSet attrs) {
+        MapInitOptions mapInitOptions = new MapInitOptions(context);
+        mapInitOptions = new MapInitOptions(context, resourceOptions);
+        mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions);
+        mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins);
+        mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions);
+        mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions, false);
+        mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions, false, Style.MAPBOX_STREETS);
+        mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions, false, Style.MAPBOX_STREETS, attrs);
+    }
+
+    private void snapshotter(Context context, MapSnapshotOptions options) {
+        SnapshotOverlayOptions overlayOptions = new SnapshotOverlayOptions();
+        overlayOptions = new SnapshotOverlayOptions(false);
+        overlayOptions = new SnapshotOverlayOptions(false, false);
+        Snapshotter snapshotter = new Snapshotter(context, options);
+        snapshotter = new Snapshotter(context, options, overlayOptions);
+
+    }
+
+    private void cameraState(CameraState state, ScreenCoordinate screenCoordinate) {
+        CameraOptions options = ExtensionUtils.toCameraOptions(state);
+        options = ExtensionUtils.toCameraOptions(state, screenCoordinate);
+    }
 
     private void addSymbolLayer(Style style) {
         Formatted formatted = new Formatted();

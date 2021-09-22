@@ -21,7 +21,7 @@ import com.mapbox.maps.plugin.*
  * @property styleUri The styleUri will applied for the MapView in the onStart lifecycle event if no style is set. Default is [Style.MAPBOX_STREETS]. If set to null, then there is no default style will be loaded.
  * @property attrs The [AttributeSet] object that init the MapView.
  */
-data class MapInitOptions constructor(
+data class MapInitOptions @JvmOverloads constructor(
   val context: Context,
   var resourceOptions: ResourceOptions = getDefaultResourceOptions(context),
   var mapOptions: MapOptions = getDefaultMapOptions(context),

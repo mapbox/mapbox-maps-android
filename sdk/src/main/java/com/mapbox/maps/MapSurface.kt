@@ -25,7 +25,7 @@ import com.mapbox.maps.renderer.OnFpsChangedListener
  * @param surface the surface that will display map
  * @param mapInitOptions the init options to for map
  */
-class MapSurface(
+class MapSurface @JvmOverloads constructor(
   context: Context,
   private val surface: Surface,
   mapInitOptions: MapInitOptions = MapInitOptions(context)

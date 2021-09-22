@@ -113,6 +113,15 @@ class MapboxMap internal constructor(
   ) = loadStyleUri(styleUri, onStyleLoaded, null)
 
   /**
+   * Will load a new map style asynchronous from the specified URI.
+   *
+   * @param styleUri The style URI
+   */
+  fun loadStyleUri(
+    styleUri: String,
+  ) = loadStyleUri(styleUri, null, null)
+
+  /**
    * Load style JSON
    */
   fun loadStyleJson(
@@ -133,6 +142,13 @@ class MapboxMap internal constructor(
     styleJson: String,
     onStyleLoaded: Style.OnStyleLoaded
   ) = loadStyleJson(styleJson, onStyleLoaded, null)
+
+  /**
+   * Load style JSON.
+   */
+  fun loadStyleJson(
+    styleJson: String
+  ) = loadStyleJson(styleJson, null, null)
 
   /**
    * Load the style from Style Extension.
@@ -156,6 +172,13 @@ class MapboxMap internal constructor(
     styleExtension: StyleContract.StyleExtension,
     onStyleLoaded: Style.OnStyleLoaded
   ) = loadStyle(styleExtension, onStyleLoaded, null)
+
+  /**
+   * Load the style from Style Extension.
+   */
+  fun loadStyle(
+    styleExtension: StyleContract.StyleExtension
+  ) = loadStyle(styleExtension, null, null)
 
   /**
    * Handle the style loading from Style Extension.
@@ -829,6 +852,7 @@ class MapboxMap internal constructor(
    * @param featureId Identifier of the feature whose state should be updated.
    * @param state Map of entries to update with their respective new values.
    */
+  @JvmOverloads
   fun setFeatureState(
     sourceId: String,
     sourceLayerId: String? = null,
@@ -848,6 +872,7 @@ class MapboxMap internal constructor(
    * @param featureId Identifier of the feature whose state should be queried.
    * @return Feature's state map or an empty map if the feature could not be found.
    */
+  @JvmOverloads
   fun getFeatureState(
     sourceId: String,
     sourceLayerId: String? = null,
@@ -870,6 +895,7 @@ class MapboxMap internal constructor(
    * @param featureId Identifier of the feature whose state should be removed.
    * @param stateKey Key of the entry to remove. If empty, the entire state is removed.
    */
+  @JvmOverloads
   fun removeFeatureState(
     sourceId: String,
     sourceLayerId: String? = null,

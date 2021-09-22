@@ -6,7 +6,8 @@ package com.mapbox.maps
  * @param showLogo whether show Mapbox logo on the taken snapshot
  * @param showAttributes whether show attribution on the taken snapshot
  */
-data class SnapshotOverlayOptions(
+
+data class SnapshotOverlayOptions @JvmOverloads constructor(
   val showLogo: Boolean = true,
   val showAttributes: Boolean = true
 )
