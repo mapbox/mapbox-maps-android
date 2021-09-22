@@ -2,9 +2,35 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 10.0.0-rc.8 September 8, 2021
+# 10.0.0-rc.9 September 22, 2021
 
 **The Mapbox Maps SDK for Android has moved to release candidate status and is now ready for production use.**
+
+## Features ✨ and improvements 🏁
+* Fix documentation for `OnMapIdleListener` and `CameraChangeListeners`. ([#645](https://github.com/mapbox/mapbox-maps-android/pull/645))
+* Add support for `SymbolZOrder` property in PointAnnotationManager. ([#638](https://github.com/mapbox/mapbox-maps-android/pull/638))
+* Add support for `PromoteId` to be used with Feature State API. ([#636](https://github.com/mapbox/mapbox-maps-android/pull/636))
+* Expose `optimizeForTerrain` flag that could be applied to the `MapView` in xml. ([#654](https://github.com/mapbox/mapbox-maps-android/pull/654))
+* Enable instant transitions for data driven symbol layer properties. ([#646](https://github.com/mapbox/mapbox-maps-android/pull/646))
+
+## Bug fixes 🐞
+* `OnStyleLoaded` / `OnMapLoaded` callbacks are invoked even if hosting fragment/activity is in stopped state. ([#629](https://github.com/mapbox/mapbox-maps-android/pull/629))
+* Fix drag annotation blink when drag ends. ([#639](https://github.com/mapbox/mapbox-maps-android/pull/639))
+* Apply annotation manager properties to the drag layer to keep annotations the same while dragging. ([#640](https://github.com/mapbox/mapbox-maps-android/pull/640))
+* Fix point annotation updating all same content bitmaps instead of one particular. ([#633](https://github.com/mapbox/mapbox-maps-android/pull/633))
+* Fix `MapboxMap#getStyle` returning null after adding a new source when style was loaded before. ([#643](https://github.com/mapbox/mapbox-maps-android/pull/643))
+* Allow setting null explicitly to annotation nullable properties. ([#650](https://github.com/mapbox/mapbox-maps-android/pull/650))
+* Fix `std::exception` happing rarely when `MapboxMap#setCamera()` is called inside animation plugin. ([#652](https://github.com/mapbox/mapbox-maps-android/pull/652))
+* Fix memory leak in renderer destroy. ([#657](https://github.com/mapbox/mapbox-maps-android/pull/657))
+* Fix transition between layers with all constant properties. ([#646](https://github.com/mapbox/mapbox-maps-android/pull/646))
+* Fix rendering artifact for a line layer, when its `line-gradient` property is set at runtime. ([#646](https://github.com/mapbox/mapbox-maps-android/pull/646))
+* Don't draw SDF images in `text-field` and issue warning for it. ([#646](https://github.com/mapbox/mapbox-maps-android/pull/646))
+* Fix incorrect return from StyleManager#getStyleLayerPropertyDefaultValue for `text-field`, now the default value is set to `["format", "" , {}]`. ([#646](https://github.com/mapbox/mapbox-maps-android/pull/646))
+
+## Dependencies
+* Bump gl-native to 10.0.0-rc.9, common to 19.0.0. ([#646](https://github.com/mapbox/mapbox-maps-android/pull/646))
+
+# 10.0.0-rc.8 September 8, 2021
 
 ## Breaking changes ⚠️
 * In offline mode (set by either mapbox::common::OfflineSwitch API or on platform side), the error notifications are send if the required resources are not present locally. The volatile tiles are not considered to be required in offline.([#604](https://github.com/mapbox/mapbox-maps-android/pull/604))
