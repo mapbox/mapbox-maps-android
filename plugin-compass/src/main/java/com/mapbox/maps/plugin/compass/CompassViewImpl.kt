@@ -23,7 +23,8 @@ open class CompassViewImpl
 @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
-  defStyleAttr: Int = 0): CompassView, AppCompatImageView(context, attrs, defStyleAttr) {
+  defStyleAttr: Int = 0
+) : CompassView, AppCompatImageView(context, attrs, defStyleAttr) {
 
   private lateinit var presenter: CompassPlugin
 
