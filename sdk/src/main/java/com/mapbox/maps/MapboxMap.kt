@@ -1281,10 +1281,11 @@ class MapboxMap internal constructor(
    * In most cases should not be called directly.
    */
   override fun gesturesPlugin(function: (GesturesPlugin.() -> Any?)): Any? {
-    gesturesPlugin?.get()?.let {
+    checkNotNull(gesturesPlugin?.get()) {
+      "Gesture plugin is not added as the part of MapInitOptions for given MapView."
+    }.let {
       return function.invoke(it)
     }
-    return null
   }
 
   internal fun onDestroy() {

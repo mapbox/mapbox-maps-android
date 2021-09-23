@@ -14,6 +14,7 @@ import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.OnMoveListener
 import io.mockk.*
 import junit.framework.Assert.*
+import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -890,7 +891,13 @@ class MapboxMapTest {
     mapboxMap.gesturesPlugin = WeakReference(gestures)
     val moveListener = mockk<OnMoveListener>(relaxed = true)
     mapboxMap.gesturesPlugin?.clear()
-    mapboxMap.gesturesPlugin { addOnMoveListener(moveListener) }
+    val exception = assertThrows(IllegalStateException::class.java) {
+      mapboxMap.gesturesPlugin { addOnMoveListener(moveListener) }
+    }
+    assertEquals(
+      "Gesture plugin is not added as the part of MapInitOptions for given MapView.",
+      exception.message
+    )
     verify(exactly = 0) {
       gestures.addOnMoveListener(moveListener)
     }
