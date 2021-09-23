@@ -103,7 +103,7 @@ import kotlin.Pair;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
-public class JavaInterfaceTest {
+public class JavaInterfaceChecker {
     private void scaleBarSettings() {
         ScaleBarSettings scaleBarSettings = new ScaleBarSettings();
         scaleBarSettings = new ScaleBarSettings(true);
