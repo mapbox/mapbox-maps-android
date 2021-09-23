@@ -3,7 +3,7 @@ package com.mapbox.maps.plugin.attribution
 /**
  * Config class for Attribution
  */
-class AttributionParserConfig(
+class AttributionParserConfig @JvmOverloads constructor(
   /**
    * Whether contains improve map attribution
    */

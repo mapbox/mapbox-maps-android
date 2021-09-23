@@ -27,6 +27,7 @@ fun StyleInterface.addImage(image: StyleContract.StyleImageExtension) {
  * @param bitmap [Bitmap] that must be be in 9-patch format or [RuntimeException] will be thrown.
  * @param block optional block for additional parameters
  */
+@JvmOverloads
 fun image9Patch(imageId: String, bitmap: Bitmap, block: (ImageNinePatchExtensionImpl.Builder.() -> Unit)? = null): ImageNinePatchExtensionImpl =
   block?.let {
     ImageNinePatchExtensionImpl.Builder(imageId, bitmap).apply(it).build()

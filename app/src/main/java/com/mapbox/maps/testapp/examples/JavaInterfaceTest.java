@@ -1,11 +1,19 @@
 package com.mapbox.maps.testapp.examples;
 
+import static com.mapbox.maps.extension.localization.StyleInterfaceExtensionKt.localizeLabels;
 import static com.mapbox.maps.extension.style.expressions.generated.Expression.division;
 import static com.mapbox.maps.extension.style.expressions.generated.Expression.literal;
 import static com.mapbox.maps.extension.style.expressions.generated.Expression.pi;
 import static com.mapbox.maps.extension.style.expressions.generated.Expression.rgba;
+import static com.mapbox.maps.extension.style.image.ImageUtils.image9Patch;
+import static com.mapbox.maps.extension.style.image.NinePatchUtils.addImage9Patch;
+import static com.mapbox.maps.extension.style.layers.LayerUtils.addPersistentLayer;
+import static com.mapbox.maps.extension.style.terrain.generated.TerrainKt.terrain;
+import static com.mapbox.maps.plugin.animation.CameraAnimationsUtils.easeTo;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.Surface;
@@ -16,9 +24,13 @@ import com.mapbox.android.gestures.RotateGestureDetector;
 import com.mapbox.android.gestures.ShoveGestureDetector;
 import com.mapbox.android.gestures.StandardScaleGestureDetector;
 import com.mapbox.bindgen.Value;
+import com.mapbox.geojson.Feature;
+import com.mapbox.geojson.FeatureCollection;
+import com.mapbox.geojson.Geometry;
 import com.mapbox.maps.CameraOptions;
 import com.mapbox.maps.CameraState;
 import com.mapbox.maps.ExtensionUtils;
+import com.mapbox.maps.LayerPosition;
 import com.mapbox.maps.MapInitOptions;
 import com.mapbox.maps.MapOptions;
 import com.mapbox.maps.MapSnapshotOptions;
@@ -32,9 +44,14 @@ import com.mapbox.maps.SnapshotOverlayOptions;
 import com.mapbox.maps.Snapshotter;
 import com.mapbox.maps.Style;
 import com.mapbox.maps.extension.style.StyleContract;
+import com.mapbox.maps.extension.style.StyleInterface;
 import com.mapbox.maps.extension.style.expressions.generated.Expression;
+import com.mapbox.maps.extension.style.expressions.types.FormatSection;
+import com.mapbox.maps.extension.style.layers.Layer;
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer;
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor;
+import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource;
+import com.mapbox.maps.extension.style.terrain.generated.TerrainDslReceiver;
 import com.mapbox.maps.extension.style.types.Formatted;
 import com.mapbox.maps.extension.style.types.FormattedSection;
 import com.mapbox.maps.plugin.LocationPuck2D;
@@ -43,6 +60,10 @@ import com.mapbox.maps.plugin.Plugin;
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin;
 import com.mapbox.maps.plugin.animation.CameraAnimationsUtils;
 import com.mapbox.maps.plugin.animation.MapAnimationOptions;
+import com.mapbox.maps.plugin.annotation.AnnotationConfig;
+import com.mapbox.maps.plugin.annotation.AnnotationSourceOptions;
+import com.mapbox.maps.plugin.annotation.ClusterOptions;
+import com.mapbox.maps.plugin.attribution.AttributionParserConfig;
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener;
 import com.mapbox.maps.plugin.gestures.GesturesPlugin;
 import com.mapbox.maps.plugin.gestures.GesturesUtils;
@@ -62,9 +83,105 @@ import com.mapbox.maps.plugin.scalebar.ScaleBarUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+
+import kotlin.Pair;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
+
 
 public class JavaInterfaceTest {
+
+    private void attribution() {
+        AttributionParserConfig attributionParserConfig = new AttributionParserConfig();
+        attributionParserConfig = new AttributionParserConfig(true);
+        attributionParserConfig = new AttributionParserConfig(true, true);
+        attributionParserConfig = new AttributionParserConfig(true, true, true);
+        attributionParserConfig = new AttributionParserConfig(true, true, true, true);
+    }
+
+    private void annotation(String belowLayerId, String layerId, String sourceId, Value expression, List<Pair<Integer, Integer>> colorLevels, HashMap<String, Object> clusterProperties) {
+        ClusterOptions clusterOptions = new ClusterOptions();
+        clusterOptions = new ClusterOptions(true);
+        clusterOptions = new ClusterOptions(true, 1L);
+        clusterOptions = new ClusterOptions(true, 1L, expression);
+        clusterOptions = new ClusterOptions(true, 1L, expression, 1.0);
+        clusterOptions = new ClusterOptions(true, 1L, expression, 1.0, expression);
+        clusterOptions = new ClusterOptions(true, 1L, expression, 1.0, expression, Color.BLACK);
+        clusterOptions = new ClusterOptions(true, 1L, expression, 1.0, expression, Color.BLACK, expression);
+        clusterOptions = new ClusterOptions(true, 1L, expression, 1.0, expression, Color.BLACK, expression, 1.0);
+        clusterOptions = new ClusterOptions(true, 1L, expression, 1.0, expression, Color.BLACK, expression, 1.0, expression);
+        clusterOptions = new ClusterOptions(true, 1L, expression, 1.0, expression, Color.BLACK, expression, 1.0, expression, 1L);
+        clusterOptions = new ClusterOptions(true, 1L, expression, 1.0, expression, Color.BLACK, expression, 1.0, expression, 1L, colorLevels);
+        clusterOptions = new ClusterOptions(true, 1L, expression, 1.0, expression, Color.BLACK, expression, 1.0, expression, 1L, colorLevels, clusterProperties);
+
+        AnnotationSourceOptions options = new AnnotationSourceOptions();
+        options = new AnnotationSourceOptions(1L);
+        options = new AnnotationSourceOptions(1L, 1L);
+        options = new AnnotationSourceOptions(1L, 1L, true);
+        options = new AnnotationSourceOptions(1L, 1L, true, 1.0);
+        options = new AnnotationSourceOptions(1L, 1L, true, 1.0, clusterOptions);
+
+        AnnotationConfig config = new AnnotationConfig();
+        config = new AnnotationConfig(belowLayerId);
+        config = new AnnotationConfig(belowLayerId, layerId);
+        config = new AnnotationConfig(belowLayerId, layerId, sourceId);
+        config = new AnnotationConfig(belowLayerId, layerId, sourceId, options);
+    }
+
+    private void cameraTest(MapboxMap mapboxMap, CameraOptions cameraOptions, MapAnimationOptions mapAnimationOptions, ScreenCoordinate screenCoordinate) {
+        CameraAnimationsUtils.easeTo(mapboxMap, cameraOptions);
+        CameraAnimationsUtils.easeTo(mapboxMap, cameraOptions, mapAnimationOptions);
+        CameraAnimationsUtils.flyTo(mapboxMap, cameraOptions);
+        CameraAnimationsUtils.flyTo(mapboxMap, cameraOptions, mapAnimationOptions);
+        CameraAnimationsUtils.moveBy(mapboxMap, screenCoordinate, mapAnimationOptions);
+        CameraAnimationsUtils.moveBy(mapboxMap, screenCoordinate);
+        CameraAnimationsUtils.pitchBy(mapboxMap, 1.0, mapAnimationOptions);
+        CameraAnimationsUtils.pitchBy(mapboxMap, 1.0);
+        CameraAnimationsUtils.rotateBy(mapboxMap, screenCoordinate, screenCoordinate);
+        CameraAnimationsUtils.rotateBy(mapboxMap, screenCoordinate, screenCoordinate, mapAnimationOptions);
+    }
+
+    private void terrainTest() {
+        terrain("id");
+        terrain("id", receiver -> null);
+    }
+
+    private void geoJsonSource(GeoJsonSource geoJsonSource, Geometry geometry, FeatureCollection featureCollection, Feature feature, Function1<? super GeoJsonSource, Unit> onDataParsed) {
+        geoJsonSource.feature(feature);
+        geoJsonSource.feature(feature, onDataParsed);
+        geoJsonSource.featureCollection(featureCollection);
+        geoJsonSource.featureCollection(featureCollection, onDataParsed);
+        geoJsonSource.geometry(geometry);
+        geoJsonSource.geometry(geometry, onDataParsed);
+    }
+
+    private void addLayer(StyleInterface style, Layer layer, LayerPosition position) {
+        addPersistentLayer(style, layer);
+        addPersistentLayer(style, layer, position);
+    }
+
+    private void image9PatchTest(StyleInterface style, Bitmap bitmap) {
+        image9Patch("id", bitmap);
+        image9Patch("id", bitmap, builder -> null);
+        addImage9Patch(style, "id", bitmap);
+        addImage9Patch(style, "id", bitmap, 1.0f);
+        addImage9Patch(style, "id", bitmap, 1.0f, true);
+    }
+
+    private void formatSection(Expression expression) {
+        FormatSection formatSection = new FormatSection(expression);
+        formatSection = new FormatSection(expression, expression);
+        formatSection = new FormatSection(expression, expression, expression);
+        formatSection = new FormatSection(expression, expression, expression, expression);
+    }
+
+    private void localization(StyleInterface style, Locale locale, List<String> layerId) {
+        localizeLabels(style, locale);
+        localizeLabels(style, locale, layerId);
+    }
 
     private void featureState(MapboxMap mapboxMap, QueryFeatureStateCallback callback, Value state, String sourceId, String featureId, String sourceLayerId) {
         mapboxMap.getFeatureState(sourceId, featureId, callback);
@@ -171,7 +288,7 @@ public class JavaInterfaceTest {
         plugin.rotateBy(new ScreenCoordinate(0.0, 1.1), new ScreenCoordinate(1.1, 0.0), mapAnimationOptions);
 
         // animation utils
-        CameraAnimationsUtils.easeTo(mapboxMap, cameraOptions, mapAnimationOptions);
+        easeTo(mapboxMap, cameraOptions, mapAnimationOptions);
         CameraAnimationsUtils.flyTo(mapboxMap, cameraOptions, mapAnimationOptions);
         CameraAnimationsUtils.moveBy(mapboxMap, new ScreenCoordinate(0.0, 1.1), mapAnimationOptions);
         CameraAnimationsUtils.pitchBy(mapboxMap, 1, mapAnimationOptions);
