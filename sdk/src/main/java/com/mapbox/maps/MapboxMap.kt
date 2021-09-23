@@ -11,6 +11,7 @@ import com.mapbox.common.Logger
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapProjectionUtils.toValue
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.sources.OnGeoJsonParsed
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
@@ -1321,7 +1322,6 @@ class MapboxMap internal constructor(
     styleObserver.onDestroy()
   }
 
-
   @MapboxExperimental
   override fun setMapProjection(mapProjection: MapProjection) {
     val expected = nativeMapWeakRef.call { this.setMapProjection(mapProjection.toValue()) }
@@ -1333,7 +1333,7 @@ class MapboxMap internal constructor(
   @MapboxExperimental
   override fun getMapProjection(): MapProjection {
     val value = nativeMapWeakRef.call { this.mapProjection }
-    return MapProjection.fromValue(value)
+    return MapProjectionUtils.fromValue(value)
   }
 
   /**

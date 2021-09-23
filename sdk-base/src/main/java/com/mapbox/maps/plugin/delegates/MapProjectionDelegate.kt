@@ -80,7 +80,7 @@ interface MapProjectionDelegate {
   /**
    * Set map projection for Mapbox map.
    *
-   * @param mapProjection map projection that will be applied to Mapbox map.
+   * @param mapProjection either [MapProjection.Globe] or [MapProjection.Mercator] projection that will be applied to Mapbox map.
    */
   @MapboxExperimental
   fun setMapProjection(mapProjection: MapProjection)
@@ -89,7 +89,7 @@ interface MapProjectionDelegate {
    * Get current map projection for Mapbox map.
    *
    * Please note that even if MapboxMap is configured to use [MapProjection.Globe]
-   * starting from [MapProjection.TRANSITION_ZOOM_LEVEL] this method could still return [MapProjection.Mercator].
+   * starting from [MapProjection.TRANSITION_ZOOM_LEVEL] and above this method will return [MapProjection.Mercator].
    *
    * @see [MapProjection.TRANSITION_ZOOM_LEVEL]
    * @return [MapProjection] map is using.

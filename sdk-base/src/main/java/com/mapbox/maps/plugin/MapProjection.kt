@@ -1,9 +1,7 @@
 package com.mapbox.maps.plugin
 
-import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
-import java.lang.RuntimeException
 
 /**
  * Describes projection map is using.
@@ -11,25 +9,42 @@ import java.lang.RuntimeException
  * MapboxMap supports Mercator and Globe projections.
  */
 @MapboxExperimental
-sealed class MapProjection(
-  private val projectionName: String
-) {
+sealed class MapProjection {
 
   /**
    * Mercator projection.
    *
    * @see [Mercator projection description](https://en.wikipedia.org/wiki/Mercator_projection)
    */
-  object Mercator: MapProjection(MERCATOR_PROJECTION_NAME)
+  object Mercator : MapProjection()
 
   /**
-   * Globe projection. Map surface is represented as the globe sphere.
+   * Globe projection is a custom map projection model for rendering the map wrapped around a full 3D globe.
+   * Conceptually it is the undistorted and unskewed “ground truth” view of the map
+   * that preserves true proportions between different areas of the map.
+   *
+   * Some layers are not supported when map is in Globe projection:
+   *  - circle
+   *  - custom
+   *  - fill extrusion
+   *  - heatmap
+   *  - model
+   *  - location indicator
+   *
+   * If Globe projection is set it will be switched automatically to Mercator projection
+   * when passing [TRANSITION_ZOOM_LEVEL] during zooming in.
    *
    * @see [TRANSITION_ZOOM_LEVEL] for more details what projection will be used depending on current zoom level.
    */
-  object Globe: MapProjection(GLOBE_PROJECTION_NAME)
+  object Globe : MapProjection()
 
-  fun toValue() = Value.valueOf(hashMapOf(NAME_KEY to Value(projectionName)))
+  /**
+   * Custom toString method.
+   */
+  override fun toString() = when (this) {
+    Globe -> "Globe"
+    Mercator -> "Mercator"
+  }
 
   /**
    * Static methods and variables.
@@ -40,34 +55,15 @@ sealed class MapProjection(
      * from [MapProjection.Mercator] to [MapProjection.Globe] or vice-versa
      * if [MapProjectionDelegate.setMapProjection] was configured to use [MapProjection.Globe].
      *
-     * If MapboxMap is using [MapProjection.Globe] and current map zoom level is < [TRANSITION_ZOOM_LEVEL] -
+     * If MapboxMap is using [MapProjection.Globe] and current map zoom level is >= [TRANSITION_ZOOM_LEVEL] -
      * map will use [MapProjection.Mercator] and [MapProjectionDelegate.getMapProjection] will return [MapProjection.Mercator].
      *
-     * If MapboxMap is using [MapProjection.Globe] and current map zoom level is > [TRANSITION_ZOOM_LEVEL] -
+     * If MapboxMap is using [MapProjection.Globe] and current map zoom level is < [TRANSITION_ZOOM_LEVEL] -
      * map will use [MapProjection.Globe] and [MapProjectionDelegate.getMapProjection] will return [MapProjection.Globe].
      *
      * If MapboxMap is using [MapProjection.Mercator] - map will use [MapProjection.Mercator] for any zoom level and
      * [MapProjectionDelegate.getMapProjection] will return [MapProjection.Mercator].
      */
     const val TRANSITION_ZOOM_LEVEL = 5.0
-
-    /**
-     * Constructs [MapProjection] from [Value].
-     *
-     * @throws [RuntimeException] if given [value] could not be casted to [MapProjection].
-     */
-    fun fromValue(value: Value): MapProjection {
-      @Suppress("UNCHECKED_CAST")
-      val map = value.contents as? HashMap<String, Value>
-      return when(map?.get(NAME_KEY)?.contents as? String) {
-        MERCATOR_PROJECTION_NAME -> Mercator
-        GLOBE_PROJECTION_NAME -> Globe
-        else -> throw RuntimeException("Could not cast given Value to valid MapProjection!")
-      }
-    }
-
-    private const val NAME_KEY = "name"
-    private const val MERCATOR_PROJECTION_NAME = "mercator"
-    private const val GLOBE_PROJECTION_NAME = "globe"
   }
 }
