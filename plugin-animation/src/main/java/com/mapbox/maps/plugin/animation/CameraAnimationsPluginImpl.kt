@@ -150,10 +150,22 @@ internal class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       return
     }
     // move native map to new position
-    mapCameraManagerDelegate.setCamera(cameraOptions)
-    // notify listeners with actual values
-    notifyListeners(cameraOptions)
-    lastCameraOptions = cameraOptions
+    try {
+      mapCameraManagerDelegate.setCamera(cameraOptions)
+      // notify listeners with actual values
+      notifyListeners(cameraOptions)
+      lastCameraOptions = cameraOptions
+    } catch (e: Exception) {
+      Logger.e(
+        TAG,
+        "Exception while setting camera options : ${e.message} CameraOptions = $cameraOptions"
+      )
+    } catch (error: Error) {
+      Logger.e(
+        TAG,
+        "Error while setting camera options : ${error.message} CameraOptions = $cameraOptions"
+      )
+    }
   }
 
   private fun updateAnimatorValues(cameraAnimator: CameraAnimator<*>): Boolean {

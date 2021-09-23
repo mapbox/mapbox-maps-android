@@ -2,6 +2,10 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.0.0-beta.19.1 Hotfix - Sep 23, 2021
+## Bug fixes 🐞
+* Fix `std::exception` happening rarely when `MapboxMap#setCamera()` is called inside animation plugin. ([#652](https://github.com/mapbox/mapbox-maps-android/pull/652))
+
 # 10.0.0-beta.19 - May 5, 2021
 ## Breaking changes ⚠️
 * Remove temporary CustomMapInterface used for testing, obsolete with having interface inheritance from upstream. ([#296](https://github.com/mapbox/mapbox-maps-android/pull/296))
