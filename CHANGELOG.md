@@ -10,7 +10,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix documentation for `OnMapIdleListener` and `CameraChangeListeners`. ([#645](https://github.com/mapbox/mapbox-maps-android/pull/645))
 * Add support for `SymbolZOrder` property in PointAnnotationManager. ([#638](https://github.com/mapbox/mapbox-maps-android/pull/638))
 * Add support for `PromoteId` to be used with Feature State API. ([#636](https://github.com/mapbox/mapbox-maps-android/pull/636))
-* Expose `optimizeForTerrain` flag that could be applied to the `MapView` in xml. ([#654](https://github.com/mapbox/mapbox-maps-android/pull/654))
+* Expose `optimizeForTerrain` flag (default to true) that could be applied to the `MapView` in xml. When optimizeForTerrain is enabled, layers could get reordered to achieve the best performance. ([#654](https://github.com/mapbox/mapbox-maps-android/pull/654))
 * Enable instant transitions for data driven symbol layer properties. ([#646](https://github.com/mapbox/mapbox-maps-android/pull/646))
 
 ## Bug fixes 🐞
