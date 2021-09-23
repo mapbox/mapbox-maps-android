@@ -868,7 +868,13 @@ class MapboxMapTest {
     mapboxMap.cameraAnimationsPlugin = WeakReference(animations)
     val options = CameraOptions.Builder().build()
     mapboxMap.cameraAnimationsPlugin?.clear()
-    mapboxMap.cameraAnimationsPlugin { easeTo(options) }
+    val exception = assertThrows(IllegalStateException::class.java) {
+      mapboxMap.cameraAnimationsPlugin { easeTo(options) }
+    }
+    assertEquals(
+      "Camera plugin is not added as the part of MapInitOptions for given MapView.",
+      exception.message
+    )
     verify(exactly = 0) {
       animations.easeTo(options, null)
     }

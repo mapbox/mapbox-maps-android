@@ -3,6 +3,7 @@ package com.mapbox.maps.plugin.animation
 
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
 import com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
@@ -16,12 +17,18 @@ val MapPluginProviderDelegate.camera: CameraAnimationsPlugin
 
 /**
  * Extension easeTo() for [MapPluginExtensionsDelegate]
- * Ease the map camera to a given camera options and animation options.
+ * Ease the map camera to a given camera options and animation options
+ *
+ * Camera plugin with id = [Plugin.MAPBOX_CAMERA_PLUGIN_ID] must be added while constructing
+ * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
  *
  * @param cameraOptions The camera options to ease to
  * @param animationOptions Transition options (animation duration, listeners etc)
  *
  * @return [Cancelable] animator set object or null if associated map object was garbage collected.
+ *
+ * @throws IllegalStateException if gestures plugin was not added.
+ * @see [com.mapbox.maps.MapInitOptions]
  */
 fun MapPluginExtensionsDelegate.easeTo(
   cameraOptions: CameraOptions,
@@ -32,10 +39,16 @@ fun MapPluginExtensionsDelegate.easeTo(
  * Extension flyTo() function for [MapPluginExtensionsDelegate]
  * Fly the map camera to a given camera options.
  *
+ * Camera plugin with id = [Plugin.MAPBOX_CAMERA_PLUGIN_ID] must be added while constructing
+ * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
+ *
  * @param cameraOptions The camera options to fly to
  * @param animationOptions Transition options (animation duration, listeners etc)
  *
  * @return [Cancelable] animator set object or null if associated map object was garbage collected.
+ *
+ * @throws IllegalStateException if gestures plugin was not added.
+ * @see [com.mapbox.maps.MapInitOptions]
  */
 fun MapPluginExtensionsDelegate.flyTo(
   cameraOptions: CameraOptions,
@@ -46,10 +59,16 @@ fun MapPluginExtensionsDelegate.flyTo(
  * Extension pitchBy() function for [MapPluginExtensionsDelegate]
  * Pitch the map by with optional animation.
  *
+ * Camera plugin with id = [Plugin.MAPBOX_CAMERA_PLUGIN_ID] must be added while constructing
+ * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
+ *
  * @param pitch The amount to pitch by
  * @param animationOptions Transition options (animation duration, listeners etc)
  *
  * @return [Cancelable] animator set object or null if associated map object was garbage collected.
+ *
+ * @throws IllegalStateException if gestures plugin was not added.
+ * @see [com.mapbox.maps.MapInitOptions]
  */
 fun MapPluginExtensionsDelegate.pitchBy(
   pitch: Double,
@@ -60,11 +79,17 @@ fun MapPluginExtensionsDelegate.pitchBy(
  * Extension scaleBy() function for [MapPluginExtensionsDelegate]
  * Scale the map by with optional animation.
  *
+ * Camera plugin with id = [Plugin.MAPBOX_CAMERA_PLUGIN_ID] must be added while constructing
+ * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
+ *
  * @param amount The amount to scale by
  * @param screenCoordinate The optional focal point to scale on
  * @param animationOptions Transition options (animation duration, listeners etc)
  *
  * @return [Cancelable] animator set object or null if associated map object was garbage collected.
+ *
+ * @throws IllegalStateException if gestures plugin was not added.
+ * @see [com.mapbox.maps.MapInitOptions]
  */
 fun MapPluginExtensionsDelegate.scaleBy(
   amount: Double,
@@ -76,10 +101,16 @@ fun MapPluginExtensionsDelegate.scaleBy(
  * Extension moveBy() function for [MapPluginExtensionsDelegate]
  * Move the map by a given screen coordinate with optional animation.
  *
+ * Camera plugin with id = [Plugin.MAPBOX_CAMERA_PLUGIN_ID] must be added while constructing
+ * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
+ *
  * @param screenCoordinate The screen coordinate distance to move by
  * @param animationOptions Transition options (animation duration, listeners etc)
  *
  * @return [Cancelable] animator set object or null if associated map object was garbage collected.
+ *
+ * @throws IllegalStateException if gestures plugin was not added.
+ * @see [com.mapbox.maps.MapInitOptions]
  */
 fun MapPluginExtensionsDelegate.moveBy(
   screenCoordinate: ScreenCoordinate,
@@ -90,11 +121,17 @@ fun MapPluginExtensionsDelegate.moveBy(
  * Extension rotateBy() function for [MapPluginExtensionsDelegate]
  * Rotate the map by with optional animation.
  *
+ * Camera plugin with id = [Plugin.MAPBOX_CAMERA_PLUGIN_ID] must be added while constructing
+ * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
+ *
  * @param first The first pointer to rotate on
  * @param second The second pointer to rotate on
  * @param animationOptions Transition options (animation duration, listeners etc)
  *
  * @return [Cancelable] animator set object or null if associated map object was garbage collected.
+ *
+ * @throws IllegalStateException if gestures plugin was not added.
+ * @see [com.mapbox.maps.MapInitOptions]
  */
 fun MapPluginExtensionsDelegate.rotateBy(
   first: ScreenCoordinate,
