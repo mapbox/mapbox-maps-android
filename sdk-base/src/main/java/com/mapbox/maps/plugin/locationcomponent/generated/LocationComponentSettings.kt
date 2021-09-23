@@ -7,7 +7,7 @@ import com.mapbox.maps.plugin.LocationPuck
 /**
  * Shows a location puck on the map.
  */
-data class LocationComponentSettings(
+data class LocationComponentSettings @JvmOverloads constructor(
 
   /**
    * Whether the user location is visible on the map.

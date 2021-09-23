@@ -7,7 +7,7 @@ import android.view.Gravity
 /**
  * Shows the attribution icon on the map.
  */
-data class AttributionSettings(
+data class AttributionSettings @JvmOverloads constructor(
 
   /**
    * Whether the attribution icon is visible on the map.

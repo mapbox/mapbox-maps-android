@@ -7,7 +7,7 @@ import com.mapbox.maps.plugin.PanScrollMode
 /**
  * Gesture configuration allows to control the user touch interaction.
  */
-data class GesturesSettings(
+data class GesturesSettings @JvmOverloads constructor(
 
   /**
    * Whether rotation gestures are enabled.

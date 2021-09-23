@@ -7,7 +7,7 @@ import android.view.Gravity
 /**
  * Shows the compass on the map.
  */
-data class CompassSettings(
+data class CompassSettings @JvmOverloads constructor(
 
   /**
    * Whether the compass is visible on the map.

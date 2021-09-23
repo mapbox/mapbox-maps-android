@@ -261,6 +261,7 @@ class PolygonAnnotationManager(
 /**
  * Extension function to create a PolygonAnnotationManager instance.
  */
+@JvmOverloads
 fun AnnotationPlugin.createPolygonAnnotationManager(
   mapView: View,
   annotationConfig: AnnotationConfig? = null

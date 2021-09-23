@@ -6,7 +6,7 @@ import android.view.Gravity
 /**
  * Shows the Mapbox logo on the map.
  */
-data class LogoSettings(
+data class LogoSettings @JvmOverloads constructor(
 
   /**
    * Whether the logo is visible on the map.

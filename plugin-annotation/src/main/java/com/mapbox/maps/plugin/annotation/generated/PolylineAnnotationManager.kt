@@ -367,6 +367,7 @@ class PolylineAnnotationManager(
 /**
  * Extension function to create a PolylineAnnotationManager instance.
  */
+@JvmOverloads
 fun AnnotationPlugin.createPolylineAnnotationManager(
   mapView: View,
   annotationConfig: AnnotationConfig? = null

@@ -10,6 +10,10 @@ import static com.mapbox.maps.extension.style.image.NinePatchUtils.addImage9Patc
 import static com.mapbox.maps.extension.style.layers.LayerUtils.addPersistentLayer;
 import static com.mapbox.maps.extension.style.terrain.generated.TerrainKt.terrain;
 import static com.mapbox.maps.plugin.animation.CameraAnimationsUtils.easeTo;
+import static com.mapbox.maps.plugin.annotation.generated.CircleAnnotationManagerKt.createCircleAnnotationManager;
+import static com.mapbox.maps.plugin.annotation.generated.PointAnnotationManagerKt.createPointAnnotationManager;
+import static com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationManagerKt.createPolygonAnnotationManager;
+import static com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManagerKt.createPolylineAnnotationManager;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -51,19 +55,23 @@ import com.mapbox.maps.extension.style.layers.Layer;
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer;
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor;
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource;
-import com.mapbox.maps.extension.style.terrain.generated.TerrainDslReceiver;
 import com.mapbox.maps.extension.style.types.Formatted;
 import com.mapbox.maps.extension.style.types.FormattedSection;
+import com.mapbox.maps.plugin.LocationPuck;
 import com.mapbox.maps.plugin.LocationPuck2D;
 import com.mapbox.maps.plugin.LocationPuck3D;
+import com.mapbox.maps.plugin.PanScrollMode;
 import com.mapbox.maps.plugin.Plugin;
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin;
 import com.mapbox.maps.plugin.animation.CameraAnimationsUtils;
 import com.mapbox.maps.plugin.animation.MapAnimationOptions;
 import com.mapbox.maps.plugin.annotation.AnnotationConfig;
+import com.mapbox.maps.plugin.annotation.AnnotationPlugin;
 import com.mapbox.maps.plugin.annotation.AnnotationSourceOptions;
 import com.mapbox.maps.plugin.annotation.ClusterOptions;
 import com.mapbox.maps.plugin.attribution.AttributionParserConfig;
+import com.mapbox.maps.plugin.attribution.generated.AttributionSettings;
+import com.mapbox.maps.plugin.compass.generated.CompassSettings;
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener;
 import com.mapbox.maps.plugin.gestures.GesturesPlugin;
 import com.mapbox.maps.plugin.gestures.GesturesUtils;
@@ -71,14 +79,18 @@ import com.mapbox.maps.plugin.gestures.OnMoveListener;
 import com.mapbox.maps.plugin.gestures.OnRotateListener;
 import com.mapbox.maps.plugin.gestures.OnScaleListener;
 import com.mapbox.maps.plugin.gestures.OnShoveListener;
+import com.mapbox.maps.plugin.gestures.generated.GesturesSettings;
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin;
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentUtils;
+import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings;
 import com.mapbox.maps.plugin.logo.LogoPlugin;
 import com.mapbox.maps.plugin.logo.LogoUtils;
+import com.mapbox.maps.plugin.logo.generated.LogoSettings;
 import com.mapbox.maps.plugin.overlay.MapOverlayPlugin;
 import com.mapbox.maps.plugin.overlay.MapOverlayUtils;
 import com.mapbox.maps.plugin.scalebar.ScaleBarPlugin;
 import com.mapbox.maps.plugin.scalebar.ScaleBarUtils;
+import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -91,8 +103,108 @@ import kotlin.Pair;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
-
 public class JavaInterfaceTest {
+    private void scaleBarSettings() {
+        ScaleBarSettings scaleBarSettings = new ScaleBarSettings();
+        scaleBarSettings = new ScaleBarSettings(true);
+        scaleBarSettings = new ScaleBarSettings(true, 1);
+        scaleBarSettings = new ScaleBarSettings(true, 1, 1f);
+        scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f);
+        scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f);
+        scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f);
+        scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK);
+        scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK, Color.BLACK);
+        scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK, Color.BLACK, Color.BLACK);
+        scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK, Color.BLACK, Color.BLACK, 1f);
+        scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK, Color.BLACK, Color.BLACK, 1f, 1f);
+        scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK, Color.BLACK, Color.BLACK, 1f, 1f, 1f);
+        scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK, Color.BLACK, Color.BLACK, 1f, 1f, 1f, 1f);
+        scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK, Color.BLACK, Color.BLACK, 1f, 1f, 1f, 1f, 1f);
+        scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK, Color.BLACK, Color.BLACK, 1f, 1f, 1f, 1f, 1f, true);
+        scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK, Color.BLACK, Color.BLACK, 1f, 1f, 1f, 1f, 1f, true, 1L);
+        scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK, Color.BLACK, Color.BLACK, 1f, 1f, 1f, 1f, 1f, true, 1L, true);
+        scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK, Color.BLACK, Color.BLACK, 1f, 1f, 1f, 1f, 1f, true, 1L, true, 1f);
+        scaleBarSettings = new ScaleBarSettings(true, 1, 1f, 1f, 1f, 1f, Color.BLACK, Color.BLACK, Color.BLACK, 1f, 1f, 1f, 1f, 1f, true, 1L, true, 1f, true);
+    }
+
+    private void logoSettings() {
+        LogoSettings logoSettings = new LogoSettings();
+        logoSettings = new LogoSettings(true);
+        logoSettings = new LogoSettings(true, 1);
+        logoSettings = new LogoSettings(true, 1, 1f);
+        logoSettings = new LogoSettings(true, 1, 1f, 1f);
+        logoSettings = new LogoSettings(true, 1, 1f, 1f, 1f);
+        logoSettings = new LogoSettings(true, 1, 1f, 1f, 1f, 1f);
+    }
+
+    private void locationComponentSettings(LocationPuck locationPuck) {
+        LocationComponentSettings locationComponentSettings = new LocationComponentSettings(locationPuck);
+        locationComponentSettings = new LocationComponentSettings(true, locationPuck);
+        locationComponentSettings = new LocationComponentSettings(true, true, locationPuck);
+        locationComponentSettings = new LocationComponentSettings(true, true, Color.BLACK, locationPuck);
+        locationComponentSettings = new LocationComponentSettings(true, true, Color.BLACK, 1f, locationPuck);
+        locationComponentSettings = new LocationComponentSettings(true, true, Color.BLACK, 1f, "id", locationPuck);
+        locationComponentSettings = new LocationComponentSettings(true, true, Color.BLACK, 1f, "id", "id", locationPuck);
+    }
+
+    private void gesturesSettings(PanScrollMode panScrollMode, ScreenCoordinate screenCoordinate) {
+        GesturesSettings gesturesSettings = new GesturesSettings();
+        gesturesSettings = new GesturesSettings(true);
+        gesturesSettings = new GesturesSettings(true, true);
+        gesturesSettings = new GesturesSettings(true, true, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, panScrollMode);
+        gesturesSettings = new GesturesSettings(true, true, true, true, panScrollMode, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, panScrollMode, true, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, panScrollMode, true, true, screenCoordinate);
+        gesturesSettings = new GesturesSettings(true, true, true, true, panScrollMode, true, true, screenCoordinate, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, panScrollMode, true, true, screenCoordinate, true, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, panScrollMode, true, true, screenCoordinate, true, true, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, panScrollMode, true, true, screenCoordinate, true, true, true, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, panScrollMode, true, true, screenCoordinate, true, true, true, true, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, panScrollMode, true, true, screenCoordinate, true, true, true, true, true, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, panScrollMode, true, true, screenCoordinate, true, true, true, true, true, true, 1f);
+        gesturesSettings = new GesturesSettings(true, true, true, true, panScrollMode, true, true, screenCoordinate, true, true, true, true, true, true, 1f, 1f);
+    }
+
+    private void compassSettings(Drawable drawable) {
+        CompassSettings compassSettings = new CompassSettings();
+        compassSettings = new CompassSettings(true);
+        compassSettings = new CompassSettings(true, 0);
+        compassSettings = new CompassSettings(true, 0, 1f);
+        compassSettings = new CompassSettings(true, 0, 1f, 1f);
+        compassSettings = new CompassSettings(true, 0, 1f, 1f, 1f);
+        compassSettings = new CompassSettings(true, 0, 1f, 1f, 1f, 1f);
+        compassSettings = new CompassSettings(true, 0, 1f, 1f, 1f, 1f, 0f);
+        compassSettings = new CompassSettings(true, 0, 1f, 1f, 1f, 1f, 0f, 0f);
+        compassSettings = new CompassSettings(true, 0, 1f, 1f, 1f, 1f, 0f, 0f, true);
+        compassSettings = new CompassSettings(true, 0, 1f, 1f, 1f, 1f, 0f, 0f, true, true);
+        compassSettings = new CompassSettings(true, 0, 1f, 1f, 1f, 1f, 0f, 0f, true, true, true);
+        compassSettings = new CompassSettings(true, 0, 1f, 1f, 1f, 1f, 0f, 0f, true, true, true, drawable);
+    }
+
+    private void attributionSettings() {
+        AttributionSettings attributionSettings = new AttributionSettings();
+        attributionSettings = new AttributionSettings(true);
+        attributionSettings = new AttributionSettings(true, Color.BLACK);
+        attributionSettings = new AttributionSettings(true, Color.BLACK, 0);
+        attributionSettings = new AttributionSettings(true, Color.BLACK, 0, 1f);
+        attributionSettings = new AttributionSettings(true, Color.BLACK, 0, 1f, 1f);
+        attributionSettings = new AttributionSettings(true, Color.BLACK, 0, 1f, 1f, 1f);
+        attributionSettings = new AttributionSettings(true, Color.BLACK, 0, 1f, 1f, 1f, 1f);
+        attributionSettings = new AttributionSettings(true, Color.BLACK, 0, 1f, 1f, 1f, 1f, true);
+    }
+
+    private void annotationManager(AnnotationPlugin annotationPlugin, MapView mapView, AnnotationConfig annotationConfig) {
+        createPolylineAnnotationManager(annotationPlugin, mapView);
+        createPolylineAnnotationManager(annotationPlugin, mapView, annotationConfig);
+        createPolygonAnnotationManager(annotationPlugin, mapView);
+        createPolygonAnnotationManager(annotationPlugin, mapView, annotationConfig);
+        createPointAnnotationManager(annotationPlugin, mapView);
+        createPointAnnotationManager(annotationPlugin, mapView, annotationConfig);
+        createCircleAnnotationManager(annotationPlugin, mapView);
+        createCircleAnnotationManager(annotationPlugin, mapView, annotationConfig);
+    }
 
     private void attribution() {
         AttributionParserConfig attributionParserConfig = new AttributionParserConfig();

@@ -308,6 +308,7 @@ class CircleAnnotationManager(
 /**
  * Extension function to create a CircleAnnotationManager instance.
  */
+@JvmOverloads
 fun AnnotationPlugin.createCircleAnnotationManager(
   mapView: View,
   annotationConfig: AnnotationConfig? = null
