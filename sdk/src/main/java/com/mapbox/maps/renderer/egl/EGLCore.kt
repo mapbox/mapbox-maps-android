@@ -91,6 +91,14 @@ internal class EGLCore(
    */
   fun releaseSurface(eglSurface: EGLSurface) {
     if (eglSurface != EGL10.EGL_NO_SURFACE && eglDisplay != EGL10.EGL_NO_DISPLAY) {
+      if (egl.eglGetCurrentSurface(EGL10.EGL_DRAW) == eglSurface) {
+        egl.eglMakeCurrent(
+          eglDisplay,
+          EGL10.EGL_NO_SURFACE,
+          EGL10.EGL_NO_SURFACE,
+          EGL10.EGL_NO_CONTEXT
+        )
+      }
       egl.eglDestroySurface(eglDisplay, eglSurface)
     }
   }
