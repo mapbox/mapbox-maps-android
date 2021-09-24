@@ -18,7 +18,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
-import com.mapbox.maps.plugin.PanScrollMode
+import com.mapbox.maps.plugin.ScrollMode
 import com.mapbox.maps.plugin.gestures.*
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityGesturesBinding
@@ -178,15 +178,15 @@ class GesturesActivity : AppCompatActivity() {
         item.isChecked = focalPointLatLng == null
       }
       R.id.menu_gesture_animation -> {
-        gesturesPlugin.scaleVelocityAnimationEnabled =
-          !gesturesPlugin.scaleVelocityAnimationEnabled
-        gesturesPlugin.rotateVelocityAnimationEnabled =
-          !gesturesPlugin.rotateVelocityAnimationEnabled
-        gesturesPlugin.flingVelocityAnimationEnabled =
-          !gesturesPlugin.flingVelocityAnimationEnabled
-        item.isChecked = gesturesPlugin.scaleVelocityAnimationEnabled &&
-          gesturesPlugin.rotateVelocityAnimationEnabled &&
-          gesturesPlugin.flingVelocityAnimationEnabled
+        gesturesPlugin.pinchToZoomDecelerationEnabled =
+          !gesturesPlugin.pinchToZoomDecelerationEnabled
+        gesturesPlugin.rotateDecelerationEnabled =
+          !gesturesPlugin.rotateDecelerationEnabled
+        gesturesPlugin.scrollDecelerationEnabled =
+          !gesturesPlugin.scrollDecelerationEnabled
+        item.isChecked = gesturesPlugin.pinchToZoomDecelerationEnabled &&
+          gesturesPlugin.rotateDecelerationEnabled &&
+          gesturesPlugin.scrollDecelerationEnabled
       }
       R.id.menu_gesture_rotate -> {
         gesturesPlugin.rotateEnabled = !gesturesPlugin.rotateEnabled
@@ -197,16 +197,20 @@ class GesturesActivity : AppCompatActivity() {
         item.isChecked = gesturesPlugin.pitchEnabled
       }
       R.id.menu_gesture_zoom -> {
-        gesturesPlugin.zoomEnabled = !gesturesPlugin.zoomEnabled
-        item.isChecked = gesturesPlugin.zoomEnabled
+        gesturesPlugin.pinchToZoomEnabled = !gesturesPlugin.pinchToZoomEnabled
+        item.isChecked = gesturesPlugin.pinchToZoomEnabled
       }
       R.id.menu_gesture_scroll -> {
         gesturesPlugin.scrollEnabled = !gesturesPlugin.scrollEnabled
         item.isChecked = gesturesPlugin.scrollEnabled
       }
       R.id.menu_gesture_double_tap -> {
-        gesturesPlugin.doubleTapToZoomEnabled = !gesturesPlugin.doubleTapToZoomEnabled
-        item.isChecked = gesturesPlugin.doubleTapToZoomEnabled
+        gesturesPlugin.doubleTapToZoomInEnabled = !gesturesPlugin.doubleTapToZoomInEnabled
+        item.isChecked = gesturesPlugin.doubleTapToZoomInEnabled
+      }
+      R.id.menu_gesture_double_touch -> {
+        gesturesPlugin.doubleTouchToZoomOutEnabled = !gesturesPlugin.doubleTouchToZoomOutEnabled
+        item.isChecked = gesturesPlugin.doubleTouchToZoomOutEnabled
       }
       R.id.menu_gesture_quick_zoom -> {
         gesturesPlugin.quickZoomEnabled = !gesturesPlugin.quickZoomEnabled
@@ -214,18 +218,21 @@ class GesturesActivity : AppCompatActivity() {
       }
       R.id.menu_gesture_pan_scroll_horizontal_vertical -> {
         binding.mapView.gestures.updateSettings {
-          panScrollMode = PanScrollMode.HORIZONTAL_AND_VERTICAL
+          scrollMode = ScrollMode.HORIZONTAL_AND_VERTICAL
         }
+        item.isChecked = true
       }
       R.id.menu_gesture_pan_scroll_horizontal -> {
         binding.mapView.gestures.updateSettings {
-          panScrollMode = PanScrollMode.HORIZONTAL
+          scrollMode = ScrollMode.HORIZONTAL
         }
+        item.isChecked = true
       }
       R.id.menu_gesture_pan_scroll_vertical -> {
         binding.mapView.gestures.updateSettings {
-          panScrollMode = PanScrollMode.VERTICAL
+          scrollMode = ScrollMode.VERTICAL
         }
+        item.isChecked = true
       }
     }
     return true

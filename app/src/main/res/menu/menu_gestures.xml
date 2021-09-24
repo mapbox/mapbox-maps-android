@@ -36,17 +36,26 @@
         android:checked="true"
         android:title="@string/toggle_double_tap_enabled" />
     <item
+        android:id="@+id/menu_gesture_double_touch"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/toggle_double_touch_enabled" />
+    <item
         android:id="@+id/menu_gesture_quick_zoom"
         android:checkable="true"
         android:checked="true"
         android:title="@string/toggle_quick_zoom_enabled" />
-    <item
-        android:id="@+id/menu_gesture_pan_scroll_horizontal_vertical"
-        android:title="@string/pan_scroll_horizontal_vertical" />
-    <item
-        android:id="@+id/menu_gesture_pan_scroll_horizontal"
-        android:title="@string/pan_scroll_horizontal" />
-    <item
-        android:id="@+id/menu_gesture_pan_scroll_vertical"
-        android:title="@string/pan_scroll_vertical" />
+    <group android:id="@+id/group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_gesture_pan_scroll_horizontal_vertical"
+            android:title="@string/pan_scroll_horizontal_vertical"
+            android:checked="true" />
+        <item
+            android:id="@+id/menu_gesture_pan_scroll_horizontal"
+            android:title="@string/pan_scroll_horizontal" />
+        <item
+            android:id="@+id/menu_gesture_pan_scroll_vertical"
+            android:title="@string/pan_scroll_vertical" />
+    </group>
 </menu>

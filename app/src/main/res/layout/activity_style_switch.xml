@@ -40,7 +40,7 @@
         app:mapbox_compassMarginLeft="32dp"
         app:mapbox_compassMarginRight="32dp"
         app:mapbox_compassMarginTop="32dp"
-        app:mapbox_gesturesDoubleTapToZoomEnabled="false"
+        app:mapbox_gesturesDoubleTapToZoomInEnabled="false"
         app:mapbox_logoEnabled="true"
         app:mapbox_logoGravity="bottom|right"
         app:mapbox_logoMarginBottom="32dp"
@@ -51,7 +51,7 @@
         app:mapbox_gesturesRotateEnabled="true"
         app:mapbox_gesturesScrollEnabled="false"
         app:mapbox_gesturesPitchEnabled="false"
-        app:mapbox_gesturesZoomEnabled="false" />
+        app:mapbox_gesturesPinchToZoomEnabled="false" />
 
     <Button
         android:id="@+id/satellite_streets_button"
