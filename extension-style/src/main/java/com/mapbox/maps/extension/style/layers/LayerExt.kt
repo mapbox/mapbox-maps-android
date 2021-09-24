@@ -32,7 +32,7 @@ fun StyleManagerInterface.getLayer(layerId: String): Layer? {
       "raster" -> RasterLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
       "symbol" -> SymbolLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
       else -> {
-        Logger.e("StyleLayerPlugin", "Layer type: $type unknown.")
+        Logger.e(TAG, "Layer type: $type unknown.")
         null
       }
     }
@@ -46,9 +46,9 @@ fun StyleManagerInterface.getLayer(layerId: String): Layer? {
  * @return T if layer is T, otherwise null
  */
 inline fun <reified T : Layer> StyleManagerInterface.getLayerAs(layerId: String): T? {
-  val layer = getLayer(layerId)
-  if (layer !is T) {
-    Logger.e("StyleLayerPlugin", "Given layerId = $layerId is not requested type in Layer")
+  val layer = getLayer(layerId) as? T
+  if (layer == null) {
+    Logger.e(TAG, "Given layerId = $layerId is not requested type in Layer")
     return null
   }
   return layer
@@ -150,3 +150,6 @@ fun StyleInterface.addPersistentLayer(layer: Layer, position: LayerPosition? = n
 fun Layer.isPersistent(): Boolean? {
   return delegate?.isStyleLayerPersistent(layerId)?.value
 }
+
+@PublishedApi
+internal const val TAG = "Mbgl-LayerUtils"
