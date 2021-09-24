@@ -40,14 +40,18 @@ fun StyleManagerInterface.getLayer(layerId: String): Layer? {
 }
 
 /**
- * Tries to cast the Layer to T, throws ClassCastException if it's another type.
+ * Tries to cast the Layer to T.
  *
  * @param layerId the layer id
- * @return T
+ * @return T if layer is T, otherwise null
  */
-fun <T : Layer> StyleManagerInterface.getLayerAs(layerId: String): T {
-  @Suppress("UNCHECKED_CAST")
-  return getLayer(layerId) as T
+inline fun <reified T : Layer> StyleManagerInterface.getLayerAs(layerId: String): T? {
+  val layer = getLayer(layerId)
+  if (layer !is T) {
+    Logger.e("StyleLayerPlugin", "Given layerId = $layerId is not requested type in Layer")
+    return null
+  }
+  return layer
 }
 
 /**

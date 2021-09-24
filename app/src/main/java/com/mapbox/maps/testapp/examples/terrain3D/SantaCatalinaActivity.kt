@@ -101,7 +101,7 @@ class SantaCatalinaActivity : AppCompatActivity() {
       }
     ) { style ->
       // hide road labels
-      style.getLayerAs<SymbolLayer>(LAYER_ROAD_ID).visibility(Visibility.NONE)
+      style.getLayerAs<SymbolLayer>(LAYER_ROAD_ID)?.visibility(Visibility.NONE)
 
       // execute direction request
       executeDirectionsRequestForRoute {
@@ -209,7 +209,7 @@ class SantaCatalinaActivity : AppCompatActivity() {
           val elevation = (ELEVATION_MAX * phase) + ELEVATION_MIN
 
           // Update location indicator
-          locationLayer.location(
+          locationLayer?.location(
             listOf(
               cameraLookingAt.latitude(),
               cameraLookingAt.longitude(),

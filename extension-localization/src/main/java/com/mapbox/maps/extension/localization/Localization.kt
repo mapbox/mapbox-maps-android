@@ -29,13 +29,15 @@ internal fun setMapLanguage(locale: Locale, style: StyleInterface, layerIds: Lis
         }
         .forEach { layer ->
           val symbolLayer = style.getLayerAs<SymbolLayer>(layer.id)
-          symbolLayer.textFieldAsExpression?.let { textFieldExpression ->
-            if (BuildConfig.DEBUG) {
-              Logger.i(TAG, "Localize layer id: ${symbolLayer.layerId}")
+          symbolLayer?.let {
+            it.textFieldAsExpression?.let { textFieldExpression ->
+              if (BuildConfig.DEBUG) {
+                Logger.i(TAG, "Localize layer id: ${it.layerId}")
+              }
+              val language = if (sourceIsStreetsV8(style, source)) getLanguageNameV8(locale)
+              else getLanguageNameV7(locale)
+              convertExpression(language, it, textFieldExpression)
             }
-            val language = if (sourceIsStreetsV8(style, source)) getLanguageNameV8(locale)
-            else getLanguageNameV7(locale)
-            convertExpression(language, symbolLayer, textFieldExpression)
           }
         }
     }
