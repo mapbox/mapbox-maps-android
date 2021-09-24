@@ -267,6 +267,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
               releaseAll()
             } else {
               releaseEglSurface()
+
+              surface?.release()
+              surface = null
             }
             destroyCondition.signal()
           }
