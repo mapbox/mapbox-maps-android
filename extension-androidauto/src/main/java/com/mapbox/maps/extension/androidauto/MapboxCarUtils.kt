@@ -52,6 +52,7 @@ fun interface OnMapScaleListener {
  * @param mapSurfaceReadyCallback
  */
 @MapboxExperimental
+@JvmOverloads
 fun Session.initMapSurface(
   mapInitOptions: MapInitOptions = MapInitOptions(carContext),
   scrollListener: OnMapScrollListener? = null,

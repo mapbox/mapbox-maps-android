@@ -7,7 +7,7 @@ import android.view.Gravity
 /**
  * Shows the scale bar on the map.
  */
-data class ScaleBarSettings(
+data class ScaleBarSettings @JvmOverloads constructor(
 
   /**
    * Whether the scale is visible on the map.

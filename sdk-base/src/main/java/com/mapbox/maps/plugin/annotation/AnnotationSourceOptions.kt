@@ -4,7 +4,7 @@ package com.mapbox.maps.plugin.annotation
  * Configure class for composing GeoJsonSource objects that included in Annotation
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/#geojson)
  */
-data class AnnotationSourceOptions(
+data class AnnotationSourceOptions @JvmOverloads constructor(
   /**
    * Maximum zoom level at which to create vector tiles (higher means greater detail at high zoom
    * levels).

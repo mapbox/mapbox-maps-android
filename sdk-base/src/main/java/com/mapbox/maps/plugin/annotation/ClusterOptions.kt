@@ -10,7 +10,7 @@ import com.mapbox.bindgen.Value
  * using CircleLayer and SymbolLayers directly.
  *
  */
-data class ClusterOptions(
+data class ClusterOptions @JvmOverloads constructor(
 
   /**
    * If the data is a collection of point features, setting this to true clusters the points

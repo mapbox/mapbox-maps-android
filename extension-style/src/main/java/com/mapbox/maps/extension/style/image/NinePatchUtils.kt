@@ -20,6 +20,7 @@ import java.nio.ByteOrder
  *
  * @return A string describing an error if the operation was not successful, empty otherwise.
  */
+@JvmOverloads
 fun StyleInterface.addImage9Patch(
   imageId: String,
   bitmap: Bitmap,

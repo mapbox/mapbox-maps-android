@@ -5,7 +5,7 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression
 /**
  * Holds format entries used in a format expression.
  */
-data class FormatSection(
+data class FormatSection @JvmOverloads constructor(
 
   /**
    * The visible text or image as an expression for this format section.

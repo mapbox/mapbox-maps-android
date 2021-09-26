@@ -23,6 +23,7 @@ val MapPluginProviderDelegate.camera: CameraAnimationsPlugin
  *
  * @return [Cancelable] animator set object or null if associated map object was garbage collected.
  */
+@JvmOverloads
 fun MapPluginExtensionsDelegate.easeTo(
   cameraOptions: CameraOptions,
   animationOptions: MapAnimationOptions? = null
@@ -37,6 +38,7 @@ fun MapPluginExtensionsDelegate.easeTo(
  *
  * @return [Cancelable] animator set object or null if associated map object was garbage collected.
  */
+@JvmOverloads
 fun MapPluginExtensionsDelegate.flyTo(
   cameraOptions: CameraOptions,
   animationOptions: MapAnimationOptions? = null
@@ -51,6 +53,7 @@ fun MapPluginExtensionsDelegate.flyTo(
  *
  * @return [Cancelable] animator set object or null if associated map object was garbage collected.
  */
+@JvmOverloads
 fun MapPluginExtensionsDelegate.pitchBy(
   pitch: Double,
   animationOptions: MapAnimationOptions? = null
@@ -66,6 +69,7 @@ fun MapPluginExtensionsDelegate.pitchBy(
  *
  * @return [Cancelable] animator set object or null if associated map object was garbage collected.
  */
+@JvmOverloads
 fun MapPluginExtensionsDelegate.scaleBy(
   amount: Double,
   screenCoordinate: ScreenCoordinate?,
@@ -81,6 +85,7 @@ fun MapPluginExtensionsDelegate.scaleBy(
  *
  * @return [Cancelable] animator set object or null if associated map object was garbage collected.
  */
+@JvmOverloads
 fun MapPluginExtensionsDelegate.moveBy(
   screenCoordinate: ScreenCoordinate,
   animationOptions: MapAnimationOptions? = null
@@ -96,6 +101,7 @@ fun MapPluginExtensionsDelegate.moveBy(
  *
  * @return [Cancelable] animator set object or null if associated map object was garbage collected.
  */
+@JvmOverloads
 fun MapPluginExtensionsDelegate.rotateBy(
   first: ScreenCoordinate,
   second: ScreenCoordinate,

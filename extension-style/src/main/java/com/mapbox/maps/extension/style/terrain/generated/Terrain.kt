@@ -158,6 +158,7 @@ interface TerrainDslReceiver {
 /**
  * DSL function for [Terrain].
  */
+@JvmOverloads
 fun terrain(sourceId: String, block: (TerrainDslReceiver.() -> Unit)? = null): Terrain {
   return if (block != null) {
     Terrain(sourceId).apply(block)

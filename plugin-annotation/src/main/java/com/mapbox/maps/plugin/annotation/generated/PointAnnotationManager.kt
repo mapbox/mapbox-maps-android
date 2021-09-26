@@ -1089,6 +1089,7 @@ class PointAnnotationManager(
 /**
  * Extension function to create a PointAnnotationManager instance.
  */
+@JvmOverloads
 fun AnnotationPlugin.createPointAnnotationManager(
   mapView: View,
   annotationConfig: AnnotationConfig? = null

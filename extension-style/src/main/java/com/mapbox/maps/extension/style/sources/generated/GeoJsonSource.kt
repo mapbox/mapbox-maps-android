@@ -310,6 +310,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * @param value the feature collection
    * @param onDataParsed optional callback notifying when data is parsed on a worker thread
    */
+  @JvmOverloads
   fun feature(
     value: Feature,
     onDataParsed: ((GeoJsonSource) -> Unit)? = null
@@ -326,6 +327,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * @param value the feature collection
    * @param onDataParsed optional callback notifying when data is parsed on a worker thread
    */
+  @JvmOverloads
   fun featureCollection(
     value: FeatureCollection,
     onDataParsed: ((GeoJsonSource) -> Unit)? = null
@@ -342,6 +344,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * @param value the feature collection
    * @param onDataParsed optional callback notifying when data is parsed on a worker thread
    */
+  @JvmOverloads
   fun geometry(
     value: Geometry,
     onDataParsed: ((GeoJsonSource) -> Unit)? = null

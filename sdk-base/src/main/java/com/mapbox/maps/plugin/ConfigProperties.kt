@@ -32,7 +32,7 @@ sealed class LocationPuck
 /**
  * Definition of a location_puck_2_d.
  */
-data class LocationPuck2D(
+data class LocationPuck2D @JvmOverloads constructor(
   /**
    * Name of image in sprite to use as the top of the location indicator.
    */
@@ -54,7 +54,7 @@ data class LocationPuck2D(
 /**
  * Definition of a location_puck_3_d.
  */
-data class LocationPuck3D(
+data class LocationPuck3D @JvmOverloads constructor(
   /**
    * An URL for the model file in gltf format.
    */

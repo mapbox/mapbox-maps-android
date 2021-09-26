@@ -7,7 +7,7 @@ import java.util.*
 /**
  * Utility class for parsing [AttributeSet] to [MapSettings].
  */
-object MapAttributeParser {
+internal object MapAttributeParser {
 
   private const val CONSTRAIN_MODE_HEIGHT_ONLY = 1
   private const val NO_GLYPHS_RASTERIZED_LOCALLY = 0

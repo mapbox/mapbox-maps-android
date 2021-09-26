@@ -133,6 +133,7 @@ internal fun Layer.bindPersistentlyTo(style: StyleInterface, position: LayerPosi
  * @param position the position that the current layer is added to
  */
 @MapboxExperimental
+@JvmOverloads
 fun StyleInterface.addPersistentLayer(layer: Layer, position: LayerPosition? = null) {
   layer.bindPersistentlyTo(this, position)
 }
