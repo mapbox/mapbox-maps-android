@@ -525,7 +525,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     return if (quickZoom) {
       // around center
-      centerScreen
+      doubleTapFocalPoint
     } else {
       // around gesture
       val pointF = detector.focalPoint
