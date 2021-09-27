@@ -19,7 +19,8 @@ import com.mapbox.maps.testapp.utils.BitmapUtils.bitmapFromDrawableRes
 import java.nio.ByteBuffer
 
 /**
- * Example of using an ImageSource and RasterLayer to animate weather data.
+ * Load a raster image to a style using ImageSource and display it on a map as
+ * animated weather data using RasterLayer.
  */
 class AnimatedImageSourceActivity : AppCompatActivity() {
 

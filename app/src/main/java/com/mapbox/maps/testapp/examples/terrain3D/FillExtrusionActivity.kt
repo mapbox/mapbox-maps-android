@@ -15,7 +15,8 @@ import com.mapbox.maps.extension.style.light.generated.getLight
 import com.mapbox.maps.testapp.databinding.ActivityFillExtrusionBinding
 
 /**
- * Test activity showcasing fill extrusions
+ * Extrude the building layer in the Mapbox Light style using FillExtrusionLayer
+ * and set up the light position.
  */
 class FillExtrusionActivity : AppCompatActivity() {
 

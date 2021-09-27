@@ -12,7 +12,7 @@ import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.databinding.ActivityShowHideLayersBinding
 
 /**
- * Example for showing / hiding layers on button click.
+ * Allow the user to toggle the visibility of a CircleLayer on a map.
  */
 class ShowHideLayersActivity : AppCompatActivity() {
 

@@ -13,7 +13,7 @@ import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 
 /**
- * Draw a polyline by parsing a GeoJSON file with the Mapbox Android SDK.
+ * Load a polyline to a style using GeoJsonSource and display it on a map using LineLayer.
  */
 class DrawGeoJsonLineActivity : AppCompatActivity() {
 
