@@ -40,6 +40,7 @@ import kotlin.math.*
 class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
   private val context: Context
+  private var pixelRatio: Float = 1f
 
   private lateinit var gesturesManager: AndroidGesturesManager
 
@@ -129,6 +130,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     pixelRatio: Float
   ) {
     this.context = context
+    this.pixelRatio = pixelRatio
     internalSettings = GesturesAttributeParser.parseGesturesSettings(context, null, pixelRatio)
     mainHandler = Handler(Looper.getMainLooper())
   }
@@ -139,6 +141,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     pixelRatio: Float
   ) {
     this.context = context
+    this.pixelRatio = pixelRatio
     internalSettings =
       GesturesAttributeParser.parseGesturesSettings(context, attributeSet, pixelRatio)
     mainHandler = Handler(Looper.getMainLooper())
@@ -152,6 +155,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     handler: Handler
   ) {
     this.context = context
+    this.pixelRatio = pixelRatio
     internalSettings =
       GesturesAttributeParser.parseGesturesSettings(context, attributeSet, pixelRatio)
     mainHandler = handler
@@ -631,7 +635,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   internal fun handleScaleBegin(detector: StandardScaleGestureDetector): Boolean {
     quickZoom = detector.pointersCount == 1
 
-    if (!internalSettings.pinchToZoomDecelerationEnabled && !internalSettings.quickZoomEnabled) {
+    if (!internalSettings.pinchToZoomEnabled && !internalSettings.quickZoomEnabled) {
       return false
     }
 
@@ -1167,7 +1171,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       return false
     }
 
-    val screenDensity = 1f
+    val screenDensity = pixelRatio
 
     // calculate velocity vector for xy dimensions, independent from screen size
     val velocityXY =
@@ -1549,6 +1553,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     pixelRatio: Float
   ) {
     this.gesturesManager = gesturesManager
+    this.pixelRatio = pixelRatio
     internalSettings = GesturesAttributeParser.parseGesturesSettings(context, attrs, pixelRatio)
   }
 

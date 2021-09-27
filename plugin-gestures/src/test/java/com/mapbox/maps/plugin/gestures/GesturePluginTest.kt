@@ -16,7 +16,7 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
-import com.mapbox.maps.plugin.PanScrollMode
+import com.mapbox.maps.plugin.ScrollMode
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.*
@@ -149,7 +149,7 @@ class GesturePluginTest {
 
   @Test
   fun verifyOnGenericMoveEventIgnore() {
-    presenter.zoomEnabled = false
+    presenter.pinchToZoomEnabled = false
     assertFalse(presenter.onGenericMotionEvent(obtainMotionEventButton(BUTTON_SECONDARY)))
     verify(exactly = 0) { mapCameraManagerDelegate.setCamera(any<CameraOptions>()) }
   }
@@ -253,7 +253,7 @@ class GesturePluginTest {
 
   @Test
   fun verifyDoubleTapEventIgnoreZoomGesturesDisabled() {
-    presenter.zoomEnabled = false
+    presenter.doubleTapToZoomInEnabled = false
 
     // verify initial tap
     val downEvent = obtainMotionEventAction(ACTION_DOWN)
@@ -269,7 +269,7 @@ class GesturePluginTest {
 
   @Test
   fun verifyDoubleTapEventIgnoreDoubleTapGesturesDisabled() {
-    presenter.doubleTapToZoomEnabled = false
+    presenter.doubleTapToZoomInEnabled = false
 
     // verify initial tap
     val downEvent = obtainMotionEventAction(ACTION_DOWN)
