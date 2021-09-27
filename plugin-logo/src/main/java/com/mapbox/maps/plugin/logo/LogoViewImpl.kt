@@ -91,11 +91,11 @@ class LogoViewImpl : LogoView, AppCompatImageView {
    * @param bottom Margin to the bottom in pixel
    */
   override fun setLogoMargins(left: Int, top: Int, right: Int, bottom: Int) {
-    (layoutParams as FrameLayout.LayoutParams).apply{
+    (layoutParams as FrameLayout.LayoutParams).apply {
       marginStart = left
-      setTop(top)
+      topMargin = top
       marginEnd = right
-      setBottom(bottom)
+      bottomMargin = bottom
     }
   }
 
