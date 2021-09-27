@@ -15,10 +15,12 @@ import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.extension.style.style
 import org.junit.After
+import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.*
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
@@ -33,6 +35,25 @@ class MapIntegrationTest {
   private lateinit var mapView: MapView
   private lateinit var mapboxMap: MapboxMap
   private lateinit var countDownLatch: CountDownLatch
+
+  private val pointCount = 10000
+
+  private fun createRandomPoint(): Point {
+    val random = Random()
+    return Point.fromLngLat(
+      random.nextDouble() * -360.0 + 180.0,
+      random.nextDouble() * -180.0 + 90.0
+    )
+  }
+
+  private fun getFeatureCollection(): FeatureCollection {
+    val pointList = mutableListOf<Feature>()
+    for (i in 0..pointCount) {
+      val point = createRandomPoint()
+      pointList.add(Feature.fromGeometry(point))
+    }
+    return FeatureCollection.fromFeatures(pointList)
+  }
 
   @Before
   @UiThreadTest
@@ -476,6 +497,40 @@ class MapIntegrationTest {
       }
     }
     if (!countDownLatch.await(5, TimeUnit.SECONDS)) {
+      throw TimeoutException()
+    }
+  }
+
+  @Test
+  fun testApplyLargeDataAfterCreate() {
+    countDownLatch = CountDownLatch(1)
+    rule.scenario.onActivity {
+      mapView = MapView(it)
+      mapboxMap = mapView.getMapboxMap()
+      it.frameLayout.addView(mapView)
+      mapboxMap.setCamera(
+        CameraOptions.Builder()
+          .center(Point.fromLngLat(0.0, 0.0))
+          .zoom(9.0)
+          .build()
+      )
+      mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) {
+        val source = geoJsonSource("source") {
+          geometry(Point.fromLngLat(0.0, 0.0))
+        }
+        // Set a large data async
+        source.featureCollection(getFeatureCollection()) {
+          fail("This callback should not be invoked")
+        }
+        // change geometry immediately, this should cancel the last large data update
+        source.geometry(Point.fromLngLat(0.0, 0.0))
+        // Set a large data async, this should update correctly.
+        source.featureCollection(getFeatureCollection()) {
+          countDownLatch.countDown()
+        }
+      }
+    }
+    if (!countDownLatch.await(10, TimeUnit.SECONDS)) {
       throw TimeoutException()
     }
   }
