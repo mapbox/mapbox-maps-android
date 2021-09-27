@@ -123,13 +123,13 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       addOnStyleDataLoadedListener(onStyleDataLoadedListener)
     }
     renderer.onStart()
-    pluginRegistry.onStart()
     if (!mapboxMap.isStyleLoadInitiated) {
       // Load the style in mapInitOptions if no style has loaded yet.
       mapInitOptions.styleUri?.let {
         mapboxMap.loadStyleUri(it)
       }
     }
+    pluginRegistry.onStart()
   }
 
   override fun onStop() {
