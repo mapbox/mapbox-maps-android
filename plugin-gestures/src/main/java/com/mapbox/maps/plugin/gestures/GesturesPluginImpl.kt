@@ -635,10 +635,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   internal fun handleScaleBegin(detector: StandardScaleGestureDetector): Boolean {
     quickZoom = detector.pointersCount == 1
 
-    if (!internalSettings.pinchToZoomEnabled && !internalSettings.quickZoomEnabled) {
-      return false
-    }
-
     if (quickZoom) {
       if (!internalSettings.quickZoomEnabled) {
         return false
@@ -646,6 +642,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       // re-try disabling the move detector in case double tap has been interrupted before quickzoom started
       gesturesManager.moveGestureDetector.isEnabled = false
     } else {
+      if (!internalSettings.pinchToZoomEnabled) {
+        return false
+      }
       if (detector.previousSpan > 0) {
         val currSpan = detector.currentSpan
         val prevSpan = detector.previousSpan
