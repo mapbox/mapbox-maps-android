@@ -19,9 +19,14 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.ScrollMode
+import com.mapbox.maps.plugin.annotation.annotations
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
+import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
 import com.mapbox.maps.plugin.gestures.*
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityGesturesBinding
+import com.mapbox.maps.testapp.utils.BitmapUtils
 import java.util.*
 
 /**
@@ -34,6 +39,7 @@ class GesturesActivity : AppCompatActivity() {
   private lateinit var gesturesManager: AndroidGesturesManager
   private lateinit var gestureAlertsAdapter: GestureAlertsAdapter
   private var focalPointLatLng: Point? = null
+  private var pointAnnotationManager: PointAnnotationManager? = null
   private lateinit var binding: ActivityGesturesBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -242,16 +248,26 @@ class GesturesActivity : AppCompatActivity() {
 
     if (enabled) {
       focalPointLatLng = Point.fromLngLat(-0.12968, 51.50325)
-      // TODO add marker
-      // marker = mapboxMap.addMarker(MarkerOptions().position(focalPointLatLng))
+      pointAnnotationManager =
+        binding.mapView.annotations.createPointAnnotationManager(binding.mapView).apply {
+          BitmapUtils.bitmapFromDrawableRes(
+            this@GesturesActivity,
+            R.drawable.red_marker
+          )?.let {
+            create(
+              PointAnnotationOptions()
+                .withPoint(focalPointLatLng!!)
+                .withIconImage(it)
+            )
+          }
+        }
       mapboxMap.setCamera(CameraOptions.Builder().center(focalPointLatLng).zoom(16.0).build())
       recalculateFocalPoint()
     } else {
-      // TODO add marker
-      // if (marker != null) {
-      //    mapboxMap.removeMarker(marker)
-      //    marker = null
-      // }
+      pointAnnotationManager?.let {
+        binding.mapView.annotations.removeAnnotationManager(it)
+      }
+      pointAnnotationManager = null
       focalPointLatLng = null
       gesturesPlugin.focalPoint = null
     }
