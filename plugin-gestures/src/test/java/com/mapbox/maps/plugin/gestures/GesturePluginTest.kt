@@ -16,8 +16,8 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
-import com.mapbox.maps.plugin.ScrollMode
 import com.mapbox.maps.plugin.Plugin
+import com.mapbox.maps.plugin.ScrollMode
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
@@ -60,7 +60,7 @@ class GesturePluginTest {
 
   @Before
   fun setUp() {
-    mockkObject(GesturesAttributeParser::class)
+    mockkObject(GesturesAttributeParser)
     every {
       GesturesAttributeParser.parseGesturesSettings(
         context,
@@ -252,7 +252,7 @@ class GesturePluginTest {
   }
 
   @Test
-  fun verifyDoubleTapEventIgnoreZoomGesturesDisabled() {
+  fun verifyDoubleTapEventIgnorePinchToZoomGesturesDisabled() {
     presenter.doubleTapToZoomInEnabled = false
 
     // verify initial tap
@@ -370,7 +370,7 @@ class GesturePluginTest {
         any()
       )
     } returns CameraOptions.Builder().build()
-    presenter.updateSettings { panScrollMode = PanScrollMode.VERTICAL }
+    presenter.updateSettings { scrollMode = ScrollMode.VERTICAL }
     val motionEvent = mockk<MotionEvent>()
     every { motionEvent.x } returns 0.0f
     every { motionEvent.y } returns 0.0f
@@ -400,7 +400,7 @@ class GesturePluginTest {
         any()
       )
     } returns CameraOptions.Builder().build()
-    presenter.updateSettings { panScrollMode = PanScrollMode.HORIZONTAL }
+    presenter.updateSettings { scrollMode = ScrollMode.HORIZONTAL }
     val motionEvent = mockk<MotionEvent>()
     every { motionEvent.x } returns 0.0f
     every { motionEvent.y } returns 0.0f
@@ -485,11 +485,11 @@ class GesturePluginTest {
   }
 
   @Test
-  fun verifyScaleDisabled() {
-    presenter.zoomEnabled = false
+  fun verifyPinchToZoomDisabled() {
+    presenter.pinchToZoomEnabled = false
 
     val scaleDetector = mockk<StandardScaleGestureDetector>()
-    every { scaleDetector.pointersCount } returns 1
+    every { scaleDetector.pointersCount } returns 2
     every { scaleDetector.currentSpan } returns 100.0f
     every { scaleDetector.previousSpan } returns 80.0f
     every { mapCameraManagerDelegate.cameraState.zoom } returns 1.0
