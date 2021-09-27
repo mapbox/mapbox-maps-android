@@ -39,14 +39,15 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     onGeoJsonParsed: OnGeoJsonParsed
   ) : this(builder) {
     rawGeoJson?.let {
-      updateParsedGeoJsonRegistry.add(sourceId + it.hashCode())
+      val dataKey = sourceId + it.hashCode()
+      updateParsedGeoJsonRegistry.add(dataKey)
       onGeoJsonParsedListenerList.add(onGeoJsonParsed)
       workerHandler.post {
         val property = it.toPropertyValue()
         mainHandler.post {
           geoJsonParsed = true
           // we set parsed data when sync setter was not called during background work
-          if (updateParsedGeoJsonRegistry.remove(sourceId + it.hashCode())) {
+          if (updateParsedGeoJsonRegistry.remove(dataKey)) {
             setProperty(property, throwRuntimeException = false)
             onGeoJsonParsedListenerList.forEach { onGeoJsonParsed ->
               onGeoJsonParsed.onGeoJsonParsed(this)
@@ -344,14 +345,15 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     onDataParsed: ((GeoJsonSource) -> Unit)?
   ): GeoJsonSource = apply {
     onDataParsed?.let { listener ->
-      updateParsedGeoJsonRegistry.add(sourceId + data.hashCode())
+      val dataKey = sourceId + data.hashCode()
+      updateParsedGeoJsonRegistry.add(dataKey)
       // remove any events from queue before posting this task
       workerHandler.removeCallbacksAndMessages(null)
       workerHandler.post {
         val property = data.toPropertyValue()
         mainHandler.post {
           // we set parsed data when sync setter was not called during background work
-          if (updateParsedGeoJsonRegistry.remove(sourceId + data.hashCode())) {
+          if (updateParsedGeoJsonRegistry.remove(dataKey)) {
             setProperty(property, throwRuntimeException = false)
             listener.invoke(this)
           }
