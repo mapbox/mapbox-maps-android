@@ -12,6 +12,7 @@ Fixes: < Link to related issues that will be fixed by this pull request, if they
  - [ ] Briefly describe the changes in this PR.
  - [ ] Include before/after visuals or gifs if this PR includes visual changes.
  - [ ] Write tests for all new functionality. If tests were not written, please explain why.
+ - [ ] Optimize code for java consumption (`@JvmOverloads`, `@file:JvmName`, etc).
  - [ ] Add example if relevant.
  - [ ] Document any changes to public APIs.
  - [ ] Apply changelog label ('breaking change', 'bug :beetle:', 'build', 'docs', 'feature :green_apple:', 'performance :zap:', 'testing :100:') or use the label 'skip changelog'
