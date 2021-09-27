@@ -1289,10 +1289,11 @@ class MapboxMap internal constructor(
    * In most cases should not be called directly.
    */
   override fun cameraAnimationsPlugin(function: (CameraAnimationsPlugin.() -> Any?)): Any? {
-    cameraAnimationsPlugin?.get()?.let {
+    checkNotNull(cameraAnimationsPlugin?.get()) {
+      "Camera plugin is not added as the part of MapInitOptions for given MapView."
+    }.let {
       return function.invoke(it)
     }
-    return null
   }
 
   internal fun setGesturesAnimationPlugin(gesturesPlugin: GesturesPlugin?) {
