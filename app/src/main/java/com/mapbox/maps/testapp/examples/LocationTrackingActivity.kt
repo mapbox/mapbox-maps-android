@@ -7,7 +7,6 @@ import androidx.appcompat.content.res.AppCompatResources
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
-import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.gestures.OnMoveListener
@@ -52,9 +51,7 @@ class LocationTrackingActivity : AppCompatActivity() {
     mapView = MapView(this)
     setContentView(mapView)
     locationPermissionHelper = LocationPermissionHelper(this)
-    locationPermissionHelper.checkPermissions {
-      onMapReady()
-    }
+    locationPermissionHelper.checkPermissions(::onMapReady)
   }
 
   private fun onMapReady() {
@@ -63,12 +60,8 @@ class LocationTrackingActivity : AppCompatActivity() {
         .zoom(14.0)
         .build()
     )
-    mapView.getMapboxMap().loadStyleUri(
-      Style.MAPBOX_STREETS
-    ) {
-      initLocationComponent()
-      setupGesturesListener()
-    }
+    initLocationComponent()
+    setupGesturesListener()
   }
 
   private fun setupGesturesListener() {

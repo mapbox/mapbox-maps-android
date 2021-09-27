@@ -17,7 +17,5 @@ internal class MapDelegateProviderImpl constructor(val mapboxMap: MapboxMap, map
   override val mapListenerDelegate: MapListenerDelegate by lazy { mapboxMap }
   override val styleStateDelegate: MapStyleStateDelegate by lazy { mapboxMap }
 
-  override fun getStyle(callback: (StyleInterface) -> Unit) {
-    mapboxMap.getStyle { style -> callback(style) }
-  }
+  override fun getStyle(callback: (StyleInterface) -> Unit) = mapboxMap.getStyle(callback)
 }

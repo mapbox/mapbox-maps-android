@@ -152,36 +152,38 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
 
   private fun activateLocationComponent() {
     if (internalSettings.enabled) {
-      delegateProvider.getStyle { style ->
-        if (locationPuckManager?.isLayerInitialised() == true && isLocationComponentActivated) {
-          return@getStyle
-        }
-        if (locationPuckManager == null) {
-          locationPuckManager = LocationPuckManager(
-            settings = internalSettings,
-            delegateProvider = delegateProvider,
-            positionManager = LocationComponentPositionManager(
-              style,
-              internalSettings.layerAbove,
-              internalSettings.layerBelow
-            ),
-            layerSourceProvider = LayerSourceProvider(),
-            animationManager = PuckAnimatorManager(
-              indicatorPositionChangedListener,
-              indicatorBearingChangedListener
-            )
-          )
-        }
-        locationPuckManager?.let {
-          if (!it.isLayerInitialised()) {
-            it.initialize(style)
-          }
-        }
-        locationPuckManager?.onStart()
-        locationProvider?.registerLocationConsumer(this)
-        isLocationComponentActivated = true
+      delegateProvider.getStyle(::updateStyle)
+    }
+  }
+
+  private fun updateStyle(style: StyleInterface) {
+    if (locationPuckManager?.isLayerInitialised() == true && isLocationComponentActivated) {
+      return
+    }
+    if (locationPuckManager == null) {
+      locationPuckManager = LocationPuckManager(
+        settings = internalSettings,
+        delegateProvider = delegateProvider,
+        positionManager = LocationComponentPositionManager(
+          style,
+          internalSettings.layerAbove,
+          internalSettings.layerBelow
+        ),
+        layerSourceProvider = LayerSourceProvider(),
+        animationManager = PuckAnimatorManager(
+          indicatorPositionChangedListener,
+          indicatorBearingChangedListener
+        )
+      )
+    }
+    locationPuckManager?.let {
+      if (!it.isLayerInitialised()) {
+        it.initialize(style)
       }
     }
+    locationPuckManager?.onStart()
+    locationProvider?.registerLocationConsumer(this)
+    isLocationComponentActivated = true
   }
 
   /**
@@ -283,9 +285,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
    *
    * @param styleDelegate
    */
-  override fun onStyleChanged(styleDelegate: StyleInterface) {
-    // no-ops
-  }
+  override fun onStyleChanged(styleDelegate: StyleInterface) = updateStyle(styleDelegate)
 
   override lateinit var internalSettings: LocationComponentSettings
 
