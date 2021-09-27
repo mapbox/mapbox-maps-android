@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import androidx.annotation.VisibleForTesting
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.plugin.MapProjection
 import java.lang.RuntimeException
@@ -21,7 +22,10 @@ internal object MapProjectionUtils {
     }
   }
 
-  private const val NAME_KEY = "name"
-  private const val MERCATOR_PROJECTION_NAME = "mercator"
-  private const val GLOBE_PROJECTION_NAME = "globe"
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  const val NAME_KEY = "name"
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  const val MERCATOR_PROJECTION_NAME = "mercator"
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  const val GLOBE_PROJECTION_NAME = "globe"
 }

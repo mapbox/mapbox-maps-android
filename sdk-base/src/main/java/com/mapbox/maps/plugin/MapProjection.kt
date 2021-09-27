@@ -19,7 +19,7 @@ sealed class MapProjection {
   object Mercator : MapProjection()
 
   /**
-   * Globe projection is a custom map projection model for rendering the map wrapped around a full 3D globe.
+   * Globe projection is a custom map projection mode for rendering the map wrapped around a full 3D globe.
    * Conceptually it is the undistorted and unskewed “ground truth” view of the map
    * that preserves true proportions between different areas of the map.
    *
@@ -28,7 +28,6 @@ sealed class MapProjection {
    *  - custom
    *  - fill extrusion
    *  - heatmap
-   *  - model
    *  - location indicator
    *
    * If Globe projection is set it will be switched automatically to Mercator projection
