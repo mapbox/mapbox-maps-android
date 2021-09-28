@@ -18,16 +18,12 @@ import java.nio.ByteBuffer
  * Note: Similar to a View object, a [Style] should only be read and modified
  * from the main thread.
  *
- *
- * @property fullyLoaded true is style is fully loaded, false if a new style is being loaded
  * @property pixelRatio the scale ratio of the style, default the device pixel ratio
  */
 class Style internal constructor(
-  styleManager: StyleManagerInterface,
+  private val styleManagerRef: WeakReference<StyleManagerInterface>,
   override val pixelRatio: Float
 ) : StyleInterface {
-  private val styleManagerRef = WeakReference(styleManager)
-
   /**
    * Subscribes an Observer to a provided list of event types.
    * Observable will hold a strong reference to an Observer instance, therefore,

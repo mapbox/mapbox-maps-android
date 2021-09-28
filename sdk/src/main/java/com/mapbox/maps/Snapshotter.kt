@@ -57,11 +57,19 @@ open class Snapshotter {
             coreSnapshotter.unsubscribe(observer)
           }
           MapEvents.STYLE_DATA_LOADED -> if (event.getStyleDataLoadedEventData().styleDataType == StyleDataType.STYLE) {
-            snapshotStyleCallback?.onDidFinishLoadingStyle(Style(coreSnapshotter, pixelRatio))
+            snapshotStyleCallback?.onDidFinishLoadingStyle(
+              Style(
+                WeakReference(coreSnapshotter as StyleManagerInterface),
+                pixelRatio
+              )
+            )
           }
           MapEvents.STYLE_LOADED -> {
             snapshotStyleCallback?.onDidFullyLoadStyle(
-              Style(coreSnapshotter, pixelRatio)
+              Style(
+                WeakReference(coreSnapshotter as StyleManagerInterface),
+                pixelRatio
+              )
             )
             coreSnapshotter.unsubscribe(observer)
           }

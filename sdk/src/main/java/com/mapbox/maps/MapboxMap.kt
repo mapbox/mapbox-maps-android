@@ -35,7 +35,7 @@ import java.util.*
  * @property style the map style.
  */
 class MapboxMap internal constructor(
-  nativeMap: MapInterface,
+  internal val nativeMapWeakRef: WeakReference<MapInterface>,
   private val nativeObserver: NativeObserver,
   pixelRatio: Float
 ) : MapTransformDelegate,
@@ -47,10 +47,9 @@ class MapboxMap internal constructor(
   MapCameraManagerDelegate,
   MapStyleStateDelegate {
 
-  private val nativeMapWeakRef = WeakReference(nativeMap)
   internal lateinit var style: Style
   internal var isStyleLoadInitiated = false
-  private val styleObserver = StyleObserver(this, nativeMapWeakRef, nativeObserver, pixelRatio)
+  private val styleObserver = StyleObserver(this, nativeObserver, pixelRatio)
   internal var renderHandler: Handler? = null
   internal var styleLoaded = false
 

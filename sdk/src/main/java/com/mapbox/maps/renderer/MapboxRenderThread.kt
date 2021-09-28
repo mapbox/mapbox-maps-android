@@ -390,6 +390,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       }
     }
     handlerThread.stop()
+    mapboxRenderer.map = null
   }
 
   companion object {

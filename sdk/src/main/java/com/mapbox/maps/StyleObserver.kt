@@ -13,7 +13,6 @@ import java.util.concurrent.CopyOnWriteArrayList
  */
 internal class StyleObserver(
   private val mapboxMap: MapboxMap,
-  private val nativeMap: WeakReference<MapInterface>,
   private val nativeObserver: NativeObserver,
   private val pixelRatio: Float
 ) : OnStyleLoadedListener, OnMapLoadErrorListener {
@@ -48,8 +47,8 @@ internal class StyleObserver(
    * Invoked when a style has loaded
    */
   override fun onStyleLoaded() {
-    nativeMap.get()?.let {
-      mapboxMap.style = Style(it as StyleManagerInterface, pixelRatio)
+    mapboxMap.nativeMapWeakRef.get()?.let {
+      mapboxMap.style = Style(WeakReference(it as StyleManagerInterface), pixelRatio)
       val iterator = awaitingStyleLoadListeners.iterator()
       while (iterator.hasNext()) {
         iterator.next().onStyleLoaded(mapboxMap.style)
