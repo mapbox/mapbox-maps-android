@@ -53,7 +53,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val awaitingNextVsync = AtomicBoolean(false)
   private var sizeChanged = false
-  private var paused = false
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal var paused = false
   private var shouldExit = false
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var eglPrepared = false

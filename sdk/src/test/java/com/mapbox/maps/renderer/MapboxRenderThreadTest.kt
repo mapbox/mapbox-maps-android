@@ -448,4 +448,22 @@ class MapboxRenderThreadTest {
       listener.onFpsChanged(any())
     }
   }
+
+  @Test
+  fun surfaceCreatedCalledBeforeActivityStartTest() {
+    val latch = CountDownLatch(1)
+    every { mapboxRenderer.onSurfaceCreated() } answers { latch.countDown() }
+    val surface = mockk<Surface>()
+    every { surface.isValid } returns true
+    every { eglCore.eglStatusSuccess } returns true
+    every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
+    mapboxRenderThread.paused = true
+    mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
+    if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
+    }
+    verify { mapboxRenderer.onSurfaceCreated() }
+    // EGL should be prepared
+    assert(mapboxRenderThread.eglPrepared)
+  }
 }
