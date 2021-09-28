@@ -33,7 +33,8 @@ class ScaleBarImplTest {
   @Before
   fun setUp() {
     scaleBarView = ScaleBarImpl(context)
-    scaleBarView.layoutParams = mockk<FrameLayout.LayoutParams>(relaxed = true)
+    val layoutParams = mockk<FrameLayout.LayoutParams>(relaxed = true)
+    scaleBarView.layoutParams = layoutParams
     scaleBarView.settings = scaleBarSettings
   }
 
