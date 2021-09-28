@@ -61,7 +61,7 @@ class LifecycleMethodDetectorTest {
       .run()
       .expect(
         """
-         |src/com/foo/TestClass.java:6: Warning: No need to invoke onStart/onStop/onDestroy/onLowMemory with Mapbox Lifecycle Plugin. [Lifecycle]
+         |src/com/foo/TestClass.java:6: Warning: ${LifecycleMethodDetector.REPORT_MESSAGE} [Lifecycle]
          |        mapView.onStart();
          |        ~~~~~~~~~~~~~~~~~
          |0 errors, 1 warnings
@@ -92,7 +92,7 @@ class LifecycleMethodDetectorTest {
       .run()
       .expect(
         """
-         |src/com/foo/TestClass.java:6: Warning: No need to invoke onStart/onStop/onDestroy/onLowMemory with Mapbox Lifecycle Plugin. [Lifecycle]
+         |src/com/foo/TestClass.java:6: Warning: ${LifecycleMethodDetector.REPORT_MESSAGE} [Lifecycle]
          |        mapView.onStop();
          |        ~~~~~~~~~~~~~~~~
          |0 errors, 1 warnings
@@ -123,7 +123,7 @@ class LifecycleMethodDetectorTest {
       .run()
       .expect(
         """
-         |src/com/foo/TestClass.java:6: Warning: No need to invoke onStart/onStop/onDestroy/onLowMemory with Mapbox Lifecycle Plugin. [Lifecycle]
+         |src/com/foo/TestClass.java:6: Warning: ${LifecycleMethodDetector.REPORT_MESSAGE} [Lifecycle]
          |        mapView.onDestroy();
          |        ~~~~~~~~~~~~~~~~~~~
          |0 errors, 1 warnings
@@ -154,7 +154,7 @@ class LifecycleMethodDetectorTest {
       .run()
       .expect(
         """
-         |src/com/foo/TestClass.java:6: Warning: No need to invoke onStart/onStop/onDestroy/onLowMemory with Mapbox Lifecycle Plugin. [Lifecycle]
+         |src/com/foo/TestClass.java:6: Warning: ${LifecycleMethodDetector.REPORT_MESSAGE} [Lifecycle]
          |        mapView.onLowMemory();
          |        ~~~~~~~~~~~~~~~~~~~~~
          |0 errors, 1 warnings
