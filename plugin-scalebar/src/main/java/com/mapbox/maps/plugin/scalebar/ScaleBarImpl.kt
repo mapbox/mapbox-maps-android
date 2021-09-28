@@ -62,7 +62,7 @@ class ScaleBarImpl : ScaleBar, View {
   override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
     val width = mapViewWidth / 2
     val height =
-      settings.textBarMargin + settings.textSize + settings.height + settings.borderWidth * 2
+      settings.textBarMargin + settings.textSize + settings.height + (settings.borderWidth * 2)
     setMeasuredDimension(width.toInt(), height.toInt())
   }
 
@@ -244,16 +244,16 @@ class ScaleBarImpl : ScaleBar, View {
     barPaint.color = settings.secondaryColor
     canvas.drawRect(
       0f,
-      settings.textBarMargin + settings.textSize - settings.borderWidth * 2,
-      unitBarWidth * pair.second + settings.borderWidth * 2,
-      settings.textBarMargin + settings.textSize + settings.height + settings.borderWidth * 2,
+      settings.textBarMargin + settings.textSize - (settings.borderWidth * 2),
+      (unitBarWidth * pair.second) + (settings.borderWidth * 2),
+      settings.textBarMargin + settings.textSize + settings.height + (settings.borderWidth * 2),
       barPaint
     )
     barPaint.color = settings.primaryColor
     canvas.drawRect(
       settings.borderWidth,
       settings.textBarMargin + settings.textSize - settings.borderWidth,
-      unitBarWidth * pair.second + settings.borderWidth,
+      (unitBarWidth * pair.second) + settings.borderWidth,
       settings.textBarMargin + settings.textSize + settings.height + settings.borderWidth,
       barPaint
     )
@@ -265,10 +265,20 @@ class ScaleBarImpl : ScaleBar, View {
       val distanceText = getDistanceText(unitDistance * i)
       // Make the first text shift to right with borderWidth, the most right text shift to left with INTERNAL_PADDING
       val xPositionShitForText =
-        if (i == 0) settings.borderWidth else if (i == pair.second - 1) -INTERNAL_PADDING.toFloat() else 0f
+        when (i) {
+          0 -> {
+            settings.borderWidth
+          }
+          pair.second - 1 -> {
+            -INTERNAL_PADDING.toFloat()
+          }
+          else -> {
+            0f
+          }
+        }
 
       textPaint.getTextPath(
-        distanceText, 0, distanceText.length, unitBarWidth * i + xPositionShitForText,
+        distanceText, 0, distanceText.length, (unitBarWidth * i) + xPositionShitForText,
         settings.textSize, path
       )
       if (settings.showTextBorder) {
@@ -276,7 +286,7 @@ class ScaleBarImpl : ScaleBar, View {
       }
       canvas.drawPath(path, textPaint)
       canvas.drawRect(
-        settings.borderWidth * 2 + unitBarWidth * i,
+        (settings.borderWidth * 2) + (unitBarWidth * i),
         settings.textBarMargin + settings.textSize,
         unitBarWidth * (1 + i),
         settings.textBarMargin + settings.textSize + settings.height,
@@ -285,7 +295,7 @@ class ScaleBarImpl : ScaleBar, View {
     }
     val distanceText = getDistanceText(unitDistance * pair.second)
     textPaint.getTextPath(
-      distanceText, 0, distanceText.length, +unitBarWidth * pair.second,
+      distanceText, 0, distanceText.length, unitBarWidth * pair.second,
       settings.textSize, path
     )
     if (settings.showTextBorder) {
