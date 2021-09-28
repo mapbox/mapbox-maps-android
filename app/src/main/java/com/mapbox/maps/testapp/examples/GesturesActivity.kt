@@ -1,6 +1,7 @@
 package com.mapbox.maps.testapp.examples
 
 import android.annotation.SuppressLint
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Handler
 import android.view.*
@@ -26,7 +27,6 @@ import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
 import com.mapbox.maps.plugin.gestures.*
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityGesturesBinding
-import com.mapbox.maps.testapp.utils.BitmapUtils
 import java.util.*
 
 /**
@@ -53,7 +53,9 @@ class GesturesActivity : AppCompatActivity() {
         .zoom(15.0)
         .build()
     )
-    mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
+    mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) {
+      it.addImage(MARKER_IMAGE_ID, BitmapFactory.decodeResource(resources, R.drawable.red_marker))
+    }
 
     binding.mapView.waitForLayout {
       initializeMap()
@@ -250,16 +252,11 @@ class GesturesActivity : AppCompatActivity() {
       focalPointLatLng = Point.fromLngLat(-0.12968, 51.50325)
       pointAnnotationManager =
         binding.mapView.annotations.createPointAnnotationManager(binding.mapView).apply {
-          BitmapUtils.bitmapFromDrawableRes(
-            this@GesturesActivity,
-            R.drawable.red_marker
-          )?.let {
-            create(
-              PointAnnotationOptions()
-                .withPoint(focalPointLatLng!!)
-                .withIconImage(it)
-            )
-          }
+          create(
+            PointAnnotationOptions()
+              .withPoint(focalPointLatLng!!)
+              .withIconImage(MARKER_IMAGE_ID)
+          )
         }
       mapboxMap.setCamera(CameraOptions.Builder().center(focalPointLatLng).zoom(16.0).build())
       recalculateFocalPoint()
@@ -399,6 +396,7 @@ class GesturesActivity : AppCompatActivity() {
 
   companion object {
     private const val MAX_NUMBER_OF_ALERTS = 30
+    private const val MARKER_IMAGE_ID = "MARKER_IMAGE_ID"
   }
 }
 
