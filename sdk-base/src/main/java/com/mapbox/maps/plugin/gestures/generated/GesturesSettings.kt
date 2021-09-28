@@ -80,9 +80,9 @@ data class GesturesSettings(
   var increasePinchToZoomThresholdWhenRotating: Boolean = true,
 
   /**
-   * The amount by which the zoom level increases or decreases. 1.0 by default. Must be positive.
+   * The amount by which the zoom level increases or decreases during a double-tap-to-zoom-in or double-touch-to-zoom-out gesture. 1.0 by default. Must be positive.
    */
-  var doubleTapToZoomAmount: Float = 1f,
+  var zoomAnimationAmount: Float = 1f,
 )
 
 // End of generated file.

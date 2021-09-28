@@ -46,7 +46,7 @@
     <!-- Whether pinch to zoom threshold increases when rotating. true by default. -->
     <public name="mapbox_gesturesIncreasePinchToZoomThresholdWhenRotating" type="attr" />
 
-    <!-- The amount by which the zoom level increases or decreases. 1.0 by default. Must be positive. -->
-    <public name="mapbox_gesturesDoubleTapToZoomAmount" type="attr" />
+    <!-- The amount by which the zoom level increases or decreases during a double-tap-to-zoom-in or double-touch-to-zoom-out gesture. 1.0 by default. Must be positive. -->
+    <public name="mapbox_gesturesZoomAnimationAmount" type="attr" />
 </resources>
 <!-- End of generated file. -->

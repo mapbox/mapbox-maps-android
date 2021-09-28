@@ -103,9 +103,9 @@ class GesturesAttributeParserTest : BaseMapTest() {
       mapView.gestures.getSettings().increasePinchToZoomThresholdWhenRotating
     )
     assertEquals(
-      "doubleTapToZoomAmount test failed..",
+      "zoomAnimationAmount test failed..",
       0.9f,
-      mapView.gestures.getSettings().doubleTapToZoomAmount
+      mapView.gestures.getSettings().zoomAnimationAmount
     )
   }
 }

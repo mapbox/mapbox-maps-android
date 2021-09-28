@@ -94,9 +94,9 @@ interface GesturesSettingsInterface {
   var increasePinchToZoomThresholdWhenRotating: Boolean
 
   /**
-   * The amount by which the zoom level increases or decreases. 1.0 by default. Must be positive.
+   * The amount by which the zoom level increases or decreases during a double-tap-to-zoom-in or double-touch-to-zoom-out gesture. 1.0 by default. Must be positive.
    */
-  var doubleTapToZoomAmount: Float
+  var zoomAnimationAmount: Float
 }
 
 // End of generated file.

@@ -231,10 +231,10 @@ class GesturesAttributeParserTest {
   }
 
   @Test
-  fun doubleTapToZoomAmountTest() {
+  fun zoomAnimationAmountTest() {
     every { typedArray.getFloat(any(), any()) } returns 1f
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
-    assertEquals(1f, settings.doubleTapToZoomAmount)
+    assertEquals(1f, settings.zoomAnimationAmount)
   }
 }
 

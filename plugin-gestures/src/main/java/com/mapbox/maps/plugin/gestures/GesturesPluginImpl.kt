@@ -602,7 +602,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       // calculate target zoom and adjust for a multiplier
       var targetZoom =
         if (zoomedOut) startZoom - normalizedDeltaChange else startZoom + normalizedDeltaChange
-      targetZoom *= internalSettings.doubleTapToZoomAmount.toDouble()
+      targetZoom *= internalSettings.zoomAnimationAmount.toDouble()
       easeToImmediately(
         CameraOptions.Builder()
           .zoom(targetZoom)
@@ -616,7 +616,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       )
     } else {
       val zoomBy =
-        ln(detector.scaleFactor.toDouble()) / ln(PI / 2) * ZOOM_RATE.toDouble() * internalSettings.doubleTapToZoomAmount.toDouble()
+        ln(detector.scaleFactor.toDouble()) / ln(PI / 2) * ZOOM_RATE.toDouble() * internalSettings.zoomAnimationAmount.toDouble()
       easeToImmediately(
         CameraOptions.Builder()
           .zoom(mapCameraManagerDelegate.cameraState.zoom + zoomBy)

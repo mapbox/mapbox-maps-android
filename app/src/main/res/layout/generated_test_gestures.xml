@@ -18,7 +18,7 @@
     mapbox:mapbox_gesturesScrollDecelerationEnabled = "false"
     mapbox:mapbox_gesturesIncreaseRotateThresholdWhenPinchingToZoom = "false"
     mapbox:mapbox_gesturesIncreasePinchToZoomThresholdWhenRotating = "false"
-    mapbox:mapbox_gesturesDoubleTapToZoomAmount = "0.9"
+    mapbox:mapbox_gesturesZoomAnimationAmount = "0.9"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
 <!-- End of generated file. -->
