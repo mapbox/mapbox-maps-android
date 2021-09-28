@@ -28,7 +28,7 @@ class LifecycleMethodDetector : Detector(), Detector.UastScanner {
     private const val ISSUE_ID = "Lifecycle"
     private const val BRIEF_DESCRIPTION = "Redundant method call"
     private const val PRIORITY = 8
-    internal const val REPORT_MESSAGE =
+    private const val REPORT_MESSAGE =
       "It's no longer required to manually invoke onStart/onStop/onDestroy/onLowMemory MapView lifecycle methods explicitly. The Mapbox Maps SDK for Android depends on the plugin-lifecycle that leverages androidx.lifecycle to make the MapView a lifecycle aware component. This behavior is automatically enforced when appcompact 1.3.0+ is used. The plugin-lifecycle can be removed from class path to opt-out of the associated behavior."
 
     private val IMPLEMENTATION = Implementation(
