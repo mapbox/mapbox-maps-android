@@ -218,7 +218,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     surface?.release()
   }
 
-  private fun prepareRenderFrame() {
+  private fun prepareRenderFrame(creatingSurface: Boolean = false) {
     // Check first if we have to stop rendering at all (even if there was no EGL config) and cleanup EGL.
     // We need to check it ASAP in order not to block thread that is calling `onSurfaceTextureDestroyed`.
     // After that check MapView could be actually rendered on this device (has valid EGL config).
@@ -227,7 +227,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       if (paused) {
         needRenderOnResume = true
       }
-      return
+      // at least on Android 8 devices we create surface before Activity#onStart
+      // so we need to proceed to EGL creation in any case to avoid deadlock
+      if (!creatingSurface) {
+        return
+      }
     }
     if (!checkSurfaceReady()) {
       return
@@ -291,7 +295,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         eventQueue.clear()
         renderEventQueue.clear()
         handlerThread.clearMessageQueue()
-        prepareRenderFrame()
+        prepareRenderFrame(creatingSurface = true)
       }
       createCondition.await()
     }
