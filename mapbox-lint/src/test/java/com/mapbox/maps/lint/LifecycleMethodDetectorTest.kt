@@ -62,8 +62,7 @@ class LifecycleMethodDetectorTest {
       .run()
       .expect(
         """
-         |src/com/foo/TestClass.java:6: Warning: ${LifecycleMethodDetector.ISSUE.getExplanation(
-          TextFormat.RAW)} [Lifecycle]
+         |src/com/foo/TestClass.java:6: Warning: ${LifecycleMethodDetector.ISSUE.getExplanation(TextFormat.RAW)} [Lifecycle]
          |        mapView.onStart();
          |        ~~~~~~~~~~~~~~~~~
          |0 errors, 1 warnings
@@ -95,8 +94,7 @@ class LifecycleMethodDetectorTest {
       .run()
       .expect(
         """
-         |src/com/foo/TestClass.java:6: Warning: ${LifecycleMethodDetector.ISSUE.getExplanation(
-          TextFormat.RAW)} [Lifecycle]
+         |src/com/foo/TestClass.java:6: Warning: ${LifecycleMethodDetector.ISSUE.getExplanation(TextFormat.RAW)} [Lifecycle]
          |        mapView.onStop();
          |        ~~~~~~~~~~~~~~~~
          |0 errors, 1 warnings
@@ -128,8 +126,7 @@ class LifecycleMethodDetectorTest {
       .run()
       .expect(
         """
-         |src/com/foo/TestClass.java:6: Warning: ${LifecycleMethodDetector.ISSUE.getExplanation(
-          TextFormat.RAW)} [Lifecycle]
+         |src/com/foo/TestClass.java:6: Warning: ${LifecycleMethodDetector.ISSUE.getExplanation(TextFormat.RAW)} [Lifecycle]
          |        mapView.onDestroy();
          |        ~~~~~~~~~~~~~~~~~~~
          |0 errors, 1 warnings
@@ -161,8 +158,7 @@ class LifecycleMethodDetectorTest {
       .run()
       .expect(
         """
-         |src/com/foo/TestClass.java:6: Warning: ${LifecycleMethodDetector.ISSUE.getExplanation(
-          TextFormat.RAW)} [Lifecycle]
+         |src/com/foo/TestClass.java:6: Warning: ${LifecycleMethodDetector.ISSUE.getExplanation(TextFormat.RAW)} [Lifecycle]
          |        mapView.onLowMemory();
          |        ~~~~~~~~~~~~~~~~~~~~~
          |0 errors, 1 warnings
