@@ -2,6 +2,7 @@ package com.mapbox.maps.lint
 
 import com.android.tools.lint.checks.infrastructure.TestFiles
 import com.android.tools.lint.checks.infrastructure.TestLintTask
+import com.android.tools.lint.detector.api.TextFormat
 import org.junit.Test
 
 class LifecycleMethodDetectorTest {
@@ -61,12 +62,13 @@ class LifecycleMethodDetectorTest {
       .run()
       .expect(
         """
-         |src/com/foo/TestClass.java:6: Warning: No need to invoke onStart/onStop/onDestroy/onLowMemory with Mapbox Lifecycle Plugin. [Lifecycle]
+         |src/com/foo/TestClass.java:6: Warning: ${LifecycleMethodDetector.ISSUE.getExplanation(TextFormat.RAW)} [Lifecycle]
          |        mapView.onStart();
          |        ~~~~~~~~~~~~~~~~~
          |0 errors, 1 warnings
         """.trimMargin()
       )
+      .expectWarningCount(1)
   }
 
   @Test
@@ -92,12 +94,13 @@ class LifecycleMethodDetectorTest {
       .run()
       .expect(
         """
-         |src/com/foo/TestClass.java:6: Warning: No need to invoke onStart/onStop/onDestroy/onLowMemory with Mapbox Lifecycle Plugin. [Lifecycle]
+         |src/com/foo/TestClass.java:6: Warning: ${LifecycleMethodDetector.ISSUE.getExplanation(TextFormat.RAW)} [Lifecycle]
          |        mapView.onStop();
          |        ~~~~~~~~~~~~~~~~
          |0 errors, 1 warnings
         """.trimMargin()
       )
+      .expectWarningCount(1)
   }
 
   @Test
@@ -123,12 +126,13 @@ class LifecycleMethodDetectorTest {
       .run()
       .expect(
         """
-         |src/com/foo/TestClass.java:6: Warning: No need to invoke onStart/onStop/onDestroy/onLowMemory with Mapbox Lifecycle Plugin. [Lifecycle]
+         |src/com/foo/TestClass.java:6: Warning: ${LifecycleMethodDetector.ISSUE.getExplanation(TextFormat.RAW)} [Lifecycle]
          |        mapView.onDestroy();
          |        ~~~~~~~~~~~~~~~~~~~
          |0 errors, 1 warnings
         """.trimMargin()
       )
+      .expectWarningCount(1)
   }
 
   @Test
@@ -154,12 +158,13 @@ class LifecycleMethodDetectorTest {
       .run()
       .expect(
         """
-         |src/com/foo/TestClass.java:6: Warning: No need to invoke onStart/onStop/onDestroy/onLowMemory with Mapbox Lifecycle Plugin. [Lifecycle]
+         |src/com/foo/TestClass.java:6: Warning: ${LifecycleMethodDetector.ISSUE.getExplanation(TextFormat.RAW)} [Lifecycle]
          |        mapView.onLowMemory();
          |        ~~~~~~~~~~~~~~~~~~~~~
          |0 errors, 1 warnings
         """.trimMargin()
       )
+      .expectWarningCount(1)
   }
 
   @Test
