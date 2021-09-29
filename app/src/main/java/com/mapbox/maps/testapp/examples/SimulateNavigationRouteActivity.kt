@@ -95,23 +95,41 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
 
   private fun setCameraToOverview(easeTo: Boolean = true) {
     cameraFollowMode = CameraFollowMode.OVERVIEW
-    mapView.getMapboxMap().apply {
-      val camera = cameraForCoordinates(
-        locationProvider.route.coordinates(),
-        bearing = 0.0,
-        pitch = 0.0,
-        padding = EdgeInsets(100.0, 100.0, 100.0, 100.0)
-      )
-      if (easeTo) {
-        easeTo(
-          camera,
-          MapAnimationOptions.mapAnimationOptions {
-            duration(EASE_TO_PUCK_DURATION)
-          }
+    val camera = mapView.getMapboxMap().cameraForCoordinates(
+      locationProvider.route.coordinates(),
+      bearing = 0.0,
+      pitch = 0.0,
+      padding = EdgeInsets(100.0, 100.0, 100.0, 100.0)
+    )
+    if (easeTo) {
+      mapView.camera.apply {
+        val zoom = createZoomAnimator(
+          cameraAnimatorOptions(camera.zoom!!)
+        ) {
+          duration = EASE_TO_PUCK_DURATION / 3
+          interpolator = AccelerateDecelerateInterpolator()
+        }
+        val bearing = createBearingAnimator(
+          cameraAnimatorOptions(camera.bearing!!)
+        ) {
+          duration = EASE_TO_PUCK_DURATION / 3
+          interpolator = AccelerateDecelerateInterpolator()
+        }
+        playAnimatorsSequentially(zoom, bearing)
+        handler.postDelayed(
+          {
+            easeTo(
+              camera,
+              MapAnimationOptions.mapAnimationOptions {
+                duration(EASE_TO_PUCK_DURATION / 3)
+              }
+            )
+          },
+          EASE_TO_PUCK_DURATION * 2 / 3
         )
-      } else {
-        setCamera(camera)
       }
+    } else {
+      mapView.getMapboxMap().setCamera(camera)
     }
   }
 
@@ -130,18 +148,21 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
         interpolator = AccelerateDecelerateInterpolator()
       }
       playAnimatorsSequentially(center, zoom)
-      handler.postDelayed({
-        easeTo(
-          cameraOptions {
-            center(locationProvider.lastLocation)
-            bearing(locationProvider.lastBearing)
-            pitch(CAMERA_TRACKING_PITCH)
-          },
-          MapAnimationOptions.mapAnimationOptions {
-            duration(EASE_TO_PUCK_DURATION / 3)
-          }
-        )
-      }, EASE_TO_PUCK_DURATION * 2 / 3)
+      handler.postDelayed(
+        {
+          easeTo(
+            cameraOptions {
+              center(locationProvider.lastLocation)
+              bearing(locationProvider.lastBearing)
+              pitch(CAMERA_TRACKING_PITCH)
+            },
+            MapAnimationOptions.mapAnimationOptions {
+              duration(EASE_TO_PUCK_DURATION / 3)
+            }
+          )
+        },
+        EASE_TO_PUCK_DURATION * 2 / 3
+      )
     }
 
     handler.postDelayed(callback, EASE_TO_PUCK_DURATION)
@@ -193,12 +214,7 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
       initLocationComponent()
       setupGestures()
       setCameraToOverview(false)
-      handler.postDelayed(
-        {
-          setCameraToFollowPuck()
-        },
-        INITIAL_OVERVIEW_TIME
-      )
+      playScripts()
       handler.postDelayed(
         {
           Toast.makeText(
@@ -211,6 +227,27 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
         ACTIVITY_RUN_TIME
       )
     }
+  }
+
+  private fun playScripts() {
+    handler.postDelayed(
+      {
+        setCameraToFollowPuck()
+      },
+      INITIAL_OVERVIEW_TIME
+    )
+    handler.postDelayed(
+      {
+        setCameraToOverview(true)
+      },
+      INITIAL_OVERVIEW_TIME + CAMERA_ACTION_INTERVAL * 2
+    )
+    handler.postDelayed(
+      {
+        setCameraToFollowPuck()
+      },
+      INITIAL_OVERVIEW_TIME + CAMERA_ACTION_INTERVAL * 3
+    )
   }
 
   private fun setupGestures() {
@@ -320,6 +357,7 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
   companion object {
     private const val STYLE = Style.MAPBOX_STREETS
     private const val INITIAL_OVERVIEW_TIME = 3000L
+    private const val CAMERA_ACTION_INTERVAL = 3000L
     private const val EASE_TO_PUCK_DURATION = 2000L
     private const val LOCATION_UPDATE_INTERVAL = 1000L
     private const val ACTIVITY_RUN_TIME = 20000L
