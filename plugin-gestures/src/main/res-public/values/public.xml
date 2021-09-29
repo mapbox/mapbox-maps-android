@@ -28,7 +28,7 @@
 
     <!-- By default, gestures rotate and zoom around the center of the gesture. Set this property to rotate and zoom around a fixed point instead. -->
     <public name="mapbox_gesturesFocalPointX" type="attr" />
-    <public name="mapbox_gesturesFocalPointX" type="attr" />
+    <public name="mapbox_gesturesFocalPointY" type="attr" />
 
 
     <!-- Whether a deceleration animation following a pinch-to-zoom gesture is enabled. True by default. -->
