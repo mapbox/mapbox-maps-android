@@ -60,7 +60,7 @@ import com.mapbox.maps.extension.style.types.FormattedSection;
 import com.mapbox.maps.plugin.LocationPuck;
 import com.mapbox.maps.plugin.LocationPuck2D;
 import com.mapbox.maps.plugin.LocationPuck3D;
-import com.mapbox.maps.plugin.PanScrollMode;
+import com.mapbox.maps.plugin.ScrollMode;
 import com.mapbox.maps.plugin.Plugin;
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin;
 import com.mapbox.maps.plugin.animation.CameraAnimationsUtils;
@@ -147,24 +147,23 @@ public class JavaInterfaceChecker {
         locationComponentSettings = new LocationComponentSettings(true, true, Color.BLACK, 1f, "id", "id", locationPuck);
     }
 
-    private void gesturesSettings(PanScrollMode panScrollMode, ScreenCoordinate screenCoordinate) {
+    private void gesturesSettings(ScrollMode scrollMode, ScreenCoordinate screenCoordinate) {
         GesturesSettings gesturesSettings = new GesturesSettings();
         gesturesSettings = new GesturesSettings(true);
         gesturesSettings = new GesturesSettings(true, true);
         gesturesSettings = new GesturesSettings(true, true, true);
         gesturesSettings = new GesturesSettings(true, true, true, true);
-        gesturesSettings = new GesturesSettings(true, true, true, true, panScrollMode);
-        gesturesSettings = new GesturesSettings(true, true, true, true, panScrollMode, true);
-        gesturesSettings = new GesturesSettings(true, true, true, true, panScrollMode, true, true);
-        gesturesSettings = new GesturesSettings(true, true, true, true, panScrollMode, true, true, screenCoordinate);
-        gesturesSettings = new GesturesSettings(true, true, true, true, panScrollMode, true, true, screenCoordinate, true);
-        gesturesSettings = new GesturesSettings(true, true, true, true, panScrollMode, true, true, screenCoordinate, true, true);
-        gesturesSettings = new GesturesSettings(true, true, true, true, panScrollMode, true, true, screenCoordinate, true, true, true);
-        gesturesSettings = new GesturesSettings(true, true, true, true, panScrollMode, true, true, screenCoordinate, true, true, true, true);
-        gesturesSettings = new GesturesSettings(true, true, true, true, panScrollMode, true, true, screenCoordinate, true, true, true, true, true);
-        gesturesSettings = new GesturesSettings(true, true, true, true, panScrollMode, true, true, screenCoordinate, true, true, true, true, true, true);
-        gesturesSettings = new GesturesSettings(true, true, true, true, panScrollMode, true, true, screenCoordinate, true, true, true, true, true, true, 1f);
-        gesturesSettings = new GesturesSettings(true, true, true, true, panScrollMode, true, true, screenCoordinate, true, true, true, true, true, true, 1f, 1f);
+        gesturesSettings = new GesturesSettings(true, true, true, true, scrollMode);
+        gesturesSettings = new GesturesSettings(true, true, true, true, scrollMode, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, scrollMode, true, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, scrollMode, true, true, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, scrollMode, true, true, true, screenCoordinate);
+        gesturesSettings = new GesturesSettings(true, true, true, true, scrollMode, true, true, true, screenCoordinate, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true, true, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true, true, true, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true, true, true, true, 1f);
     }
 
     private void compassSettings(Drawable drawable) {
