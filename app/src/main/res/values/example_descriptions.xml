@@ -25,7 +25,7 @@
     <string name="description_restrict_bounds">Restrict the map\'s viewport to a specified set of coordinates for gesture-based camera changes. The viewport can still be changed programmatically.</string>
     <string name="description_texture_view">Use TextureView as render surface</string>
     <string name="description_texture_view_animation">Apply ViewAnimation on a TextureView</string>
-    <string name="description_style_circles_categorically">Add point data to a style from a vector tileset and use the match and get expressions to assign the color of each point in a Circle Layer based on a data property.</string>
+    <string name="description_style_circles_categorically">Add point data to a style from a vector tileset and use the match and get expressions to assign the color of each point in a CircleLayer based on a data property.</string>
     <string name="description_space_station_location">See the International Space Station location in real time.</string>
     <string name="description_inset_map">Show a smaller inset map fragment and link it to a larger map for two map interaction. Great for gaming!</string>
     <string name="description_dds_gradient_line">Style a line with colored gradient</string>

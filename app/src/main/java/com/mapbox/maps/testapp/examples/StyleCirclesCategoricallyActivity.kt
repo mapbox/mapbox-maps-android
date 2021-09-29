@@ -16,7 +16,7 @@ import com.mapbox.maps.testapp.R
 
 /**
  * Add point data to a style from a vector tileset and use the match and
- * get expressions to assign the color of each point in a Circle Layer
+ * get expressions to assign the color of each point in a CircleLayer
  * based on a data property.
  */
 class StyleCirclesCategoricallyActivity : AppCompatActivity() {
