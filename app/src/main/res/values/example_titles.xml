@@ -23,6 +23,7 @@
     <string name="activity_snapshotter_dds">DDS MapSnapshotter</string>
     <string name="activity_snapshotter_local">Local Style MapSnapshotter</string>
     <string name="activity_location_tracking">Display the user\'s location	</string>
+    <string name="activity_simulate_navigation_route">Simulate a navigation route</string>
     <string name="activity_basic_location_pulsing_circle">Basic Pulsing Circle</string>
     <string name="activity_restrict_bounds">Restrict map panning</string>
     <string name="activity_texture_view">TextureView</string>
