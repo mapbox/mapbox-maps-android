@@ -334,7 +334,7 @@
             android:name=".examples.SimulateNavigationRouteActivity"
             android:description="@string/description_simulate_navigation_route"
             android:exported="true"
-            android:label="@string/activity_location_tracking">
+            android:label="@string/activity_simulate_navigation_route">
             <meta-data
                 android:name="@string/category"
                 android:value="@string/category_location" />

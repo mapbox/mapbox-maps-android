@@ -3,6 +3,8 @@ package com.mapbox.maps.testapp.examples
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
+import android.util.Log
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -12,10 +14,7 @@ import com.mapbox.api.directions.v5.MapboxDirections
 import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.core.constants.Constants
 import com.mapbox.geojson.*
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.EdgeInsets
-import com.mapbox.maps.MapView
-import com.mapbox.maps.Style
+import com.mapbox.maps.*
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
@@ -27,7 +26,6 @@ import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.camera
-import com.mapbox.maps.plugin.animation.easeTo
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMoveListener
 import com.mapbox.maps.plugin.gestures.gestures
@@ -44,10 +42,14 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
   private lateinit var mapboxDirectionsClient: MapboxDirections
   private lateinit var mapView: MapView
   private lateinit var routePoints: LineString
-  private val fpsRecords = mutableListOf<Double>()
+  private var renderFrameStartCount = 0
+  private var renderFrameFinishCount = 0
+  private var overtimeFrameCount = 0
   private val locationProvider by lazy { FakeLocationProvider(routePoints) }
   private var cameraFollowMode = CameraFollowMode.OVERVIEW
   private val handler = Handler(Looper.getMainLooper())
+  private var startBenchmarkTime = 0L
+  private var lastRenderedFrameTime = 0L
 
   private val onIndicatorBearingChangedListener = OnIndicatorBearingChangedListener {
     if (cameraFollowMode == CameraFollowMode.FOLLOW) {
@@ -115,7 +117,7 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
           duration = EASE_TO_PUCK_DURATION / 3
           interpolator = AccelerateDecelerateInterpolator()
         }
-        playAnimatorsSequentially(zoom, bearing)
+        playAnimatorsSequentially(bearing, zoom)
         handler.postDelayed(
           {
             easeTo(
@@ -187,14 +189,37 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
       ).routes()[0].geometry()!!,
       Constants.PRECISION_6
     )
-    initFpsCounter()
     initMapboxMap()
   }
 
-  private fun initFpsCounter() {
-    mapView.setOnFpsChangedListener {
-      fpsRecords.add(it)
+  private val renderFrameObserver = object : Observer() {
+    override fun notify(event: Event) {
+      if (event.type == MapEvents.RENDER_FRAME_STARTED) {
+        renderFrameStartCount++
+      }
+      if (event.type == MapEvents.RENDER_FRAME_FINISHED) {
+        renderFrameFinishCount++
+        val now = SystemClock.elapsedRealtimeNanos()
+        if (lastRenderedFrameTime != 0L) {
+          Log.e(
+            TAG,
+            "missed frame: ${((now - lastRenderedFrameTime) / (1000_000L * TARGET_FRAME_TIME_MS)).toInt()}"
+          )
+          if (now - lastRenderedFrameTime > 1000_000L * TARGET_FRAME_TIME_MS) {
+            overtimeFrameCount++
+          }
+        }
+        lastRenderedFrameTime = now
+      }
     }
+  }
+
+  private fun initFpsCounter() {
+    mapView.getMapboxMap().subscribe(
+      renderFrameObserver,
+      listOf(MapEvents.RENDER_FRAME_STARTED, MapEvents.RENDER_FRAME_FINISHED)
+    )
+    startBenchmarkTime = SystemClock.elapsedRealtimeNanos()
   }
 
   private fun initMapboxMap() {
@@ -211,15 +236,17 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
         }
       }
     ) {
+      initFpsCounter()
       initLocationComponent()
       setupGestures()
       setCameraToOverview(false)
       playScripts()
       handler.postDelayed(
         {
+          val endBenchmarkTime = SystemClock.elapsedRealtimeNanos()
           Toast.makeText(
             this,
-            "FPS stats: Average: ${fpsRecords.average()}, Max: ${fpsRecords.maxOrNull()}, Min: ${fpsRecords.minOrNull()} ",
+            "Total average FPS: ${renderFrameFinishCount.toDouble() * 1e9 / (endBenchmarkTime - startBenchmarkTime).toDouble()}, over time frames: $overtimeFrameCount, over time frames ratio: ${overtimeFrameCount * 100f / renderFrameFinishCount} %",
             Toast.LENGTH_LONG
           ).show()
           finish()
@@ -355,9 +382,11 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
   }
 
   companion object {
+    private const val TAG = "NavigationRouteActivity"
+    private const val TARGET_FRAME_TIME_MS = 1000f / 30f
     private const val STYLE = Style.MAPBOX_STREETS
     private const val INITIAL_OVERVIEW_TIME = 3000L
-    private const val CAMERA_ACTION_INTERVAL = 3000L
+    private const val CAMERA_ACTION_INTERVAL = 4000L
     private const val EASE_TO_PUCK_DURATION = 2000L
     private const val LOCATION_UPDATE_INTERVAL = 1000L
     private const val ACTIVITY_RUN_TIME = 20000L
