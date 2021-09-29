@@ -87,12 +87,12 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     handlerThread.post { prepareRenderFrame() }
   }
 
-  private fun checkSurfaceReady(): Boolean {
+  private fun checkSurfaceReady(creatingSurface: Boolean): Boolean {
     lock.withLock {
       try {
         surface?.let {
           if (eglSurface == null || eglSurface == EGL10.EGL_NO_SURFACE) {
-            return prepareEglSurface(it)
+            return prepareEglSurface(it, creatingSurface)
           }
         } ?: return false
         return true
@@ -102,7 +102,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
-  private fun prepareEglSurface(surface: Surface): Boolean {
+  private fun prepareEglSurface(surface: Surface, creatingSurface: Boolean): Boolean {
     if (!eglPrepared) {
       eglCore.prepareEgl()
       if (eglCore.eglStatusSuccess) {
@@ -117,6 +117,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       Logger.w(TAG, "EGL was configured but surface is not valid.")
       postPrepareRenderFrame()
       return false
+    }
+    // on Android SDK <= 23 at least on x86 emulators we need to force set EGL10.EGL_NO_CONTEXT
+    // when resuming activity
+    if (creatingSurface) {
+      eglCore.makeNothingCurrent()
     }
     eglSurface = eglCore.createWindowSurface(surface)
     if (!eglCore.eglStatusSuccess) {
@@ -234,7 +239,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         return
       }
     }
-    if (!checkSurfaceReady()) {
+    if (!checkSurfaceReady(creatingSurface)) {
       return
     }
     checkSurfaceSizeChanged()
@@ -377,16 +382,14 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
             if (nativeRenderCreated) {
               releaseAll()
             }
+            handlerThread.clearMessageQueue()
             destroyCondition.signal()
           }
         }
         destroyCondition.await()
       }
     }
-    handlerThread.apply {
-      clearMessageQueue()
-      stop()
-    }
+    handlerThread.stop()
   }
 
   companion object {

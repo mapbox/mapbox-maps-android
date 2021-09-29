@@ -62,6 +62,7 @@ class MapboxRenderThreadTest {
     }
     verify {
       mapboxRenderer.onSurfaceCreated()
+      eglCore.makeNothingCurrent()
       mapboxRenderer.onSurfaceChanged(1, 1)
     }
   }
@@ -242,6 +243,10 @@ class MapboxRenderThreadTest {
     // one swap buffer for surface creation, two for not squashed render requests
     verify(exactly = 3) {
       eglCore.swapBuffers(any())
+    }
+    // make EGL context current only once when creating surface
+    verify(exactly = 1) {
+      eglCore.makeNothingCurrent()
     }
   }
 
