@@ -12,13 +12,15 @@ import com.mapbox.android.core.location.LocationEngineResult
 import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
+import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArrayList
 
 /**
  * Default Location Provider implementation, it can be overwritten by users.
  */
-internal class LocationProviderImpl(private val context: Context) :
+internal class LocationProviderImpl(context: Context) :
   LocationProvider, LocationEngineCallback<LocationEngineResult> {
+  private val contextWeekRef: WeakReference<Context> = WeakReference(context)
   private val locationEngine = LocationEngineProvider.getBestLocationEngine(context)
 
   private val locationEngineRequest =
@@ -35,7 +37,7 @@ internal class LocationProviderImpl(private val context: Context) :
 
   @SuppressLint("MissingPermission")
   private fun requestLocationUpdates() {
-    if (PermissionsManager.areLocationPermissionsGranted(context)) {
+    if (PermissionsManager.areLocationPermissionsGranted(contextWeekRef.get())) {
       locationEngine.requestLocationUpdates(
         locationEngineRequest, this, Looper.getMainLooper()
       )
@@ -100,7 +102,7 @@ internal class LocationProviderImpl(private val context: Context) :
       requestLocationUpdates()
     }
     locationConsumers.add(locationConsumer)
-    if (PermissionsManager.areLocationPermissionsGranted(context)) {
+    if (PermissionsManager.areLocationPermissionsGranted(contextWeekRef.get())) {
       locationEngine.getLastLocation(this)
     } else {
       Logger.w(
