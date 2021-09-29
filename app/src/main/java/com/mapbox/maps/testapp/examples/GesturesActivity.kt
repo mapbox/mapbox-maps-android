@@ -1,6 +1,7 @@
 package com.mapbox.maps.testapp.examples
 
 import android.annotation.SuppressLint
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Handler
 import android.view.*
@@ -18,7 +19,11 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
-import com.mapbox.maps.plugin.PanScrollMode
+import com.mapbox.maps.plugin.ScrollMode
+import com.mapbox.maps.plugin.annotation.annotations
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
+import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
 import com.mapbox.maps.plugin.gestures.*
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityGesturesBinding
@@ -34,6 +39,7 @@ class GesturesActivity : AppCompatActivity() {
   private lateinit var gesturesManager: AndroidGesturesManager
   private lateinit var gestureAlertsAdapter: GestureAlertsAdapter
   private var focalPointLatLng: Point? = null
+  private var pointAnnotationManager: PointAnnotationManager? = null
   private lateinit var binding: ActivityGesturesBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +53,9 @@ class GesturesActivity : AppCompatActivity() {
         .zoom(15.0)
         .build()
     )
-    mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
+    mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) {
+      it.addImage(MARKER_IMAGE_ID, BitmapFactory.decodeResource(resources, R.drawable.red_marker))
+    }
 
     binding.mapView.waitForLayout {
       initializeMap()
@@ -178,15 +186,15 @@ class GesturesActivity : AppCompatActivity() {
         item.isChecked = focalPointLatLng == null
       }
       R.id.menu_gesture_animation -> {
-        gesturesPlugin.scaleVelocityAnimationEnabled =
-          !gesturesPlugin.scaleVelocityAnimationEnabled
-        gesturesPlugin.rotateVelocityAnimationEnabled =
-          !gesturesPlugin.rotateVelocityAnimationEnabled
-        gesturesPlugin.flingVelocityAnimationEnabled =
-          !gesturesPlugin.flingVelocityAnimationEnabled
-        item.isChecked = gesturesPlugin.scaleVelocityAnimationEnabled &&
-          gesturesPlugin.rotateVelocityAnimationEnabled &&
-          gesturesPlugin.flingVelocityAnimationEnabled
+        gesturesPlugin.pinchToZoomDecelerationEnabled =
+          !gesturesPlugin.pinchToZoomDecelerationEnabled
+        gesturesPlugin.rotateDecelerationEnabled =
+          !gesturesPlugin.rotateDecelerationEnabled
+        gesturesPlugin.scrollDecelerationEnabled =
+          !gesturesPlugin.scrollDecelerationEnabled
+        item.isChecked = gesturesPlugin.pinchToZoomDecelerationEnabled &&
+          gesturesPlugin.rotateDecelerationEnabled &&
+          gesturesPlugin.scrollDecelerationEnabled
       }
       R.id.menu_gesture_rotate -> {
         gesturesPlugin.rotateEnabled = !gesturesPlugin.rotateEnabled
@@ -197,16 +205,20 @@ class GesturesActivity : AppCompatActivity() {
         item.isChecked = gesturesPlugin.pitchEnabled
       }
       R.id.menu_gesture_zoom -> {
-        gesturesPlugin.zoomEnabled = !gesturesPlugin.zoomEnabled
-        item.isChecked = gesturesPlugin.zoomEnabled
+        gesturesPlugin.pinchToZoomEnabled = !gesturesPlugin.pinchToZoomEnabled
+        item.isChecked = gesturesPlugin.pinchToZoomEnabled
       }
       R.id.menu_gesture_scroll -> {
         gesturesPlugin.scrollEnabled = !gesturesPlugin.scrollEnabled
         item.isChecked = gesturesPlugin.scrollEnabled
       }
       R.id.menu_gesture_double_tap -> {
-        gesturesPlugin.doubleTapToZoomEnabled = !gesturesPlugin.doubleTapToZoomEnabled
-        item.isChecked = gesturesPlugin.doubleTapToZoomEnabled
+        gesturesPlugin.doubleTapToZoomInEnabled = !gesturesPlugin.doubleTapToZoomInEnabled
+        item.isChecked = gesturesPlugin.doubleTapToZoomInEnabled
+      }
+      R.id.menu_gesture_double_touch -> {
+        gesturesPlugin.doubleTouchToZoomOutEnabled = !gesturesPlugin.doubleTouchToZoomOutEnabled
+        item.isChecked = gesturesPlugin.doubleTouchToZoomOutEnabled
       }
       R.id.menu_gesture_quick_zoom -> {
         gesturesPlugin.quickZoomEnabled = !gesturesPlugin.quickZoomEnabled
@@ -214,18 +226,21 @@ class GesturesActivity : AppCompatActivity() {
       }
       R.id.menu_gesture_pan_scroll_horizontal_vertical -> {
         binding.mapView.gestures.updateSettings {
-          panScrollMode = PanScrollMode.HORIZONTAL_AND_VERTICAL
+          scrollMode = ScrollMode.HORIZONTAL_AND_VERTICAL
         }
+        item.isChecked = true
       }
       R.id.menu_gesture_pan_scroll_horizontal -> {
         binding.mapView.gestures.updateSettings {
-          panScrollMode = PanScrollMode.HORIZONTAL
+          scrollMode = ScrollMode.HORIZONTAL
         }
+        item.isChecked = true
       }
       R.id.menu_gesture_pan_scroll_vertical -> {
         binding.mapView.gestures.updateSettings {
-          panScrollMode = PanScrollMode.VERTICAL
+          scrollMode = ScrollMode.VERTICAL
         }
+        item.isChecked = true
       }
     }
     return true
@@ -234,17 +249,22 @@ class GesturesActivity : AppCompatActivity() {
   private fun fixedFocalPointEnabled(enabled: Boolean) {
 
     if (enabled) {
-      focalPointLatLng = Point.fromLngLat(-0.12968, 51.50325)
-      // TODO add marker
-      // marker = mapboxMap.addMarker(MarkerOptions().position(focalPointLatLng))
+      focalPointLatLng = FOCAL_POINT
+      pointAnnotationManager =
+        binding.mapView.annotations.createPointAnnotationManager(binding.mapView).apply {
+          create(
+            PointAnnotationOptions()
+              .withPoint(FOCAL_POINT)
+              .withIconImage(MARKER_IMAGE_ID)
+          )
+        }
       mapboxMap.setCamera(CameraOptions.Builder().center(focalPointLatLng).zoom(16.0).build())
       recalculateFocalPoint()
     } else {
-      // TODO add marker
-      // if (marker != null) {
-      //    mapboxMap.removeMarker(marker)
-      //    marker = null
-      // }
+      pointAnnotationManager?.let {
+        binding.mapView.annotations.removeAnnotationManager(it)
+      }
+      pointAnnotationManager = null
       focalPointLatLng = null
       gesturesPlugin.focalPoint = null
     }
@@ -376,6 +396,8 @@ class GesturesActivity : AppCompatActivity() {
 
   companion object {
     private const val MAX_NUMBER_OF_ALERTS = 30
+    private const val MARKER_IMAGE_ID = "MARKER_IMAGE_ID"
+    private val FOCAL_POINT = Point.fromLngLat(-0.12968, 51.50325)
   }
 }
 

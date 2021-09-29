@@ -8,7 +8,7 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import com.mapbox.maps.ScreenCoordinate
-import com.mapbox.maps.plugin.PanScrollMode
+import com.mapbox.maps.plugin.ScrollMode
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
@@ -64,17 +64,17 @@ class GesturesAttributeParserTest {
   }
 
   @Test
-  fun zoomEnabledTestTrue() {
+  fun pinchToZoomEnabledTestTrue() {
     every { typedArray.getBoolean(any(), any()) } returns true
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
-    assertEquals(true, settings.zoomEnabled)
+    assertEquals(true, settings.pinchToZoomEnabled)
   }
 
   @Test
-  fun zoomEnabledTestFalse() {
+  fun pinchToZoomEnabledTestFalse() {
     every { typedArray.getBoolean(any(), any()) } returns false
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
-    assertEquals(false, settings.zoomEnabled)
+    assertEquals(false, settings.pinchToZoomEnabled)
   }
 
   @Test
@@ -105,24 +105,38 @@ class GesturesAttributeParserTest {
     assertEquals(false, settings.pitchEnabled)
   }
   @Test
-  fun panScrollModeTest() {
-    every { typedArray.getInt(any(), any()) } returns PanScrollMode.HORIZONTAL_AND_VERTICAL.ordinal
+  fun scrollModeTest() {
+    every { typedArray.getInt(any(), any()) } returns ScrollMode.HORIZONTAL_AND_VERTICAL.ordinal
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
-    assertEquals(PanScrollMode.HORIZONTAL_AND_VERTICAL, settings.panScrollMode)
+    assertEquals(ScrollMode.HORIZONTAL_AND_VERTICAL, settings.scrollMode)
   }
 
   @Test
-  fun doubleTapToZoomEnabledTestTrue() {
+  fun doubleTapToZoomInEnabledTestTrue() {
     every { typedArray.getBoolean(any(), any()) } returns true
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
-    assertEquals(true, settings.doubleTapToZoomEnabled)
+    assertEquals(true, settings.doubleTapToZoomInEnabled)
   }
 
   @Test
-  fun doubleTapToZoomEnabledTestFalse() {
+  fun doubleTapToZoomInEnabledTestFalse() {
     every { typedArray.getBoolean(any(), any()) } returns false
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
-    assertEquals(false, settings.doubleTapToZoomEnabled)
+    assertEquals(false, settings.doubleTapToZoomInEnabled)
+  }
+
+  @Test
+  fun doubleTouchToZoomOutEnabledTestTrue() {
+    every { typedArray.getBoolean(any(), any()) } returns true
+    val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
+    assertEquals(true, settings.doubleTouchToZoomOutEnabled)
+  }
+
+  @Test
+  fun doubleTouchToZoomOutEnabledTestFalse() {
+    every { typedArray.getBoolean(any(), any()) } returns false
+    val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
+    assertEquals(false, settings.doubleTouchToZoomOutEnabled)
   }
 
   @Test
@@ -147,94 +161,80 @@ class GesturesAttributeParserTest {
   }
 
   @Test
-  fun scaleVelocityAnimationEnabledTestTrue() {
+  fun pinchToZoomDecelerationEnabledTestTrue() {
     every { typedArray.getBoolean(any(), any()) } returns true
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
-    assertEquals(true, settings.scaleVelocityAnimationEnabled)
+    assertEquals(true, settings.pinchToZoomDecelerationEnabled)
   }
 
   @Test
-  fun scaleVelocityAnimationEnabledTestFalse() {
+  fun pinchToZoomDecelerationEnabledTestFalse() {
     every { typedArray.getBoolean(any(), any()) } returns false
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
-    assertEquals(false, settings.scaleVelocityAnimationEnabled)
+    assertEquals(false, settings.pinchToZoomDecelerationEnabled)
   }
 
   @Test
-  fun rotateVelocityAnimationEnabledTestTrue() {
+  fun rotateDecelerationEnabledTestTrue() {
     every { typedArray.getBoolean(any(), any()) } returns true
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
-    assertEquals(true, settings.rotateVelocityAnimationEnabled)
+    assertEquals(true, settings.rotateDecelerationEnabled)
   }
 
   @Test
-  fun rotateVelocityAnimationEnabledTestFalse() {
+  fun rotateDecelerationEnabledTestFalse() {
     every { typedArray.getBoolean(any(), any()) } returns false
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
-    assertEquals(false, settings.rotateVelocityAnimationEnabled)
+    assertEquals(false, settings.rotateDecelerationEnabled)
   }
 
   @Test
-  fun flingVelocityAnimationEnabledTestTrue() {
+  fun scrollDecelerationEnabledTestTrue() {
     every { typedArray.getBoolean(any(), any()) } returns true
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
-    assertEquals(true, settings.flingVelocityAnimationEnabled)
+    assertEquals(true, settings.scrollDecelerationEnabled)
   }
 
   @Test
-  fun flingVelocityAnimationEnabledTestFalse() {
+  fun scrollDecelerationEnabledTestFalse() {
     every { typedArray.getBoolean(any(), any()) } returns false
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
-    assertEquals(false, settings.flingVelocityAnimationEnabled)
+    assertEquals(false, settings.scrollDecelerationEnabled)
   }
 
   @Test
-  fun increaseRotateThresholdWhenScalingTestTrue() {
+  fun increaseRotateThresholdWhenPinchingToZoomTestTrue() {
     every { typedArray.getBoolean(any(), any()) } returns true
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
-    assertEquals(true, settings.increaseRotateThresholdWhenScaling)
+    assertEquals(true, settings.increaseRotateThresholdWhenPinchingToZoom)
   }
 
   @Test
-  fun increaseRotateThresholdWhenScalingTestFalse() {
+  fun increaseRotateThresholdWhenPinchingToZoomTestFalse() {
     every { typedArray.getBoolean(any(), any()) } returns false
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
-    assertEquals(false, settings.increaseRotateThresholdWhenScaling)
+    assertEquals(false, settings.increaseRotateThresholdWhenPinchingToZoom)
   }
 
   @Test
-  fun disableRotateWhenScalingTestTrue() {
+  fun increasePinchToZoomThresholdWhenRotatingTestTrue() {
     every { typedArray.getBoolean(any(), any()) } returns true
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
-    assertEquals(true, settings.disableRotateWhenScaling)
+    assertEquals(true, settings.increasePinchToZoomThresholdWhenRotating)
   }
 
   @Test
-  fun disableRotateWhenScalingTestFalse() {
+  fun increasePinchToZoomThresholdWhenRotatingTestFalse() {
     every { typedArray.getBoolean(any(), any()) } returns false
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
-    assertEquals(false, settings.disableRotateWhenScaling)
+    assertEquals(false, settings.increasePinchToZoomThresholdWhenRotating)
   }
 
   @Test
-  fun increaseScaleThresholdWhenRotatingTestTrue() {
-    every { typedArray.getBoolean(any(), any()) } returns true
-    val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
-    assertEquals(true, settings.increaseScaleThresholdWhenRotating)
-  }
-
-  @Test
-  fun increaseScaleThresholdWhenRotatingTestFalse() {
-    every { typedArray.getBoolean(any(), any()) } returns false
-    val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
-    assertEquals(false, settings.increaseScaleThresholdWhenRotating)
-  }
-
-  @Test
-  fun zoomRateTest() {
+  fun zoomAnimationAmountTest() {
     every { typedArray.getFloat(any(), any()) } returns 1f
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
-    assertEquals(1f, settings.zoomRate)
+    assertEquals(1f, settings.zoomAnimationAmount)
   }
 }
 

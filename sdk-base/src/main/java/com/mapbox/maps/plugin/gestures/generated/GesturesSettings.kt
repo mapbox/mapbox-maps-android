@@ -3,91 +3,86 @@
 package com.mapbox.maps.plugin.gestures.generated
 
 import com.mapbox.maps.ScreenCoordinate
-import com.mapbox.maps.plugin.PanScrollMode
+import com.mapbox.maps.plugin.ScrollMode
 /**
  * Gesture configuration allows to control the user touch interaction.
  */
 data class GesturesSettings @JvmOverloads constructor(
 
   /**
-   * Whether rotation gestures are enabled.
+   * Whether the rotate gesture is enabled.
    */
   var rotateEnabled: Boolean = true,
 
   /**
-   * Whether zoom gestures are enabled.
+   * Whether the pinch to zoom gesture is enabled.
    */
-  var zoomEnabled: Boolean = true,
+  var pinchToZoomEnabled: Boolean = true,
 
   /**
-   * Whether scroll gestures are enabled.
+   * Whether the single-touch scroll gesture is enabled.
    */
   var scrollEnabled: Boolean = true,
 
   /**
-   * Whether pitch gestures are enabled.
+   * Whether the pitch gesture is enabled.
    */
   var pitchEnabled: Boolean = true,
 
   /**
-   * Whether the user is restricted in which direction the map is scrolled.
+   * Configures the directions in which the map is allowed to move during a scroll gesture.
    */
-  var panScrollMode: PanScrollMode = PanScrollMode.HORIZONTAL_AND_VERTICAL,
+  var scrollMode: ScrollMode = ScrollMode.HORIZONTAL_AND_VERTICAL,
 
   /**
-   * Whether double tapping the map results in a zoom gesture.
+   * Whether double tapping the map with one touch results in a zoom-in animation.
    */
-  var doubleTapToZoomEnabled: Boolean = true,
+  var doubleTapToZoomInEnabled: Boolean = true,
 
   /**
-   * Whether quick zoom gesture is enabled.
+   * Whether single tapping the map with two touches results in a zoom-out animation.
+   */
+  var doubleTouchToZoomOutEnabled: Boolean = true,
+
+  /**
+   * Whether the quick zoom gesture is enabled.
    */
   var quickZoomEnabled: Boolean = true,
 
   /**
-   * Whether a gesture executes around a fixed focal point or the center of the gesture.
+   * By default, gestures rotate and zoom around the center of the gesture. Set this property to rotate and zoom around a fixed point instead.
    */
   var focalPoint: ScreenCoordinate? = null,
 
   /**
-   * Whether scale velocity animations are enabled, true by default.
+   * Whether a deceleration animation following a pinch-to-zoom gesture is enabled. True by default.
    */
-  var scaleVelocityAnimationEnabled: Boolean = true,
+  var pinchToZoomDecelerationEnabled: Boolean = true,
 
   /**
-   * Whether rotate velocity animations are enabled, true by default.
+   * Whether a deceleration animation following a rotate gesture is enabled. True by default.
    */
-  var rotateVelocityAnimationEnabled: Boolean = true,
+  var rotateDecelerationEnabled: Boolean = true,
 
   /**
-   * Whether fling velocity animations are enabled, true by default.
+   * Whether a deceleration animation following a scroll gesture is enabled. True by default.
    */
-  var flingVelocityAnimationEnabled: Boolean = true,
+  var scrollDecelerationEnabled: Boolean = true,
 
   /**
-   * Whether rotate threshold increases when scaling. true by default.
+   * Whether rotate threshold increases when pinching to zoom. true by default.
    */
-  var increaseRotateThresholdWhenScaling: Boolean = true,
+  var increaseRotateThresholdWhenPinchingToZoom: Boolean = true,
 
   /**
-   * Whether rotate is disabled when scaling. true by default.
+   * Whether pinch to zoom threshold increases when rotating. true by default.
    */
-  var disableRotateWhenScaling: Boolean = true,
+  var increasePinchToZoomThresholdWhenRotating: Boolean = true,
 
   /**
-   * Whether scale threshold increases when rotating. true by default.
+   * The amount by which the zoom level increases or decreases during a double-tap-to-zoom-in or double-touch-to-zoom-out gesture. 1.0 by default. Must be positive.
    */
-  var increaseScaleThresholdWhenRotating: Boolean = true,
-
-  /**
-   * The rate at which the zoom level increases. 1.0 by default
-   */
-  var zoomRate: Float = 1f,
-
-  /**
-   * The pixel ratio of the device that the gestures will take in account.
-   */
-  var pixelRatio: Float = 1f,
+  var zoomAnimationAmount: Float = 1f,
 )
 
 // End of generated file.

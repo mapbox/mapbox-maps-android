@@ -40,6 +40,7 @@ import kotlin.math.*
 class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
   private val context: Context
+  private var pixelRatio: Float = 1f
 
   private lateinit var gesturesManager: AndroidGesturesManager
 
@@ -129,6 +130,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     pixelRatio: Float
   ) {
     this.context = context
+    this.pixelRatio = pixelRatio
     internalSettings = GesturesAttributeParser.parseGesturesSettings(context, null, pixelRatio)
     mainHandler = Handler(Looper.getMainLooper())
   }
@@ -139,6 +141,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     pixelRatio: Float
   ) {
     this.context = context
+    this.pixelRatio = pixelRatio
     internalSettings =
       GesturesAttributeParser.parseGesturesSettings(context, attributeSet, pixelRatio)
     mainHandler = Handler(Looper.getMainLooper())
@@ -152,6 +155,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     handler: Handler
   ) {
     this.context = context
+    this.pixelRatio = pixelRatio
     internalSettings =
       GesturesAttributeParser.parseGesturesSettings(context, attributeSet, pixelRatio)
     mainHandler = handler
@@ -346,7 +350,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       when (event.actionMasked) {
         // Mouse scrolls
         MotionEvent.ACTION_SCROLL -> {
-          if (!internalSettings.zoomEnabled) {
+          if (!internalSettings.pinchToZoomEnabled) {
             return false
           }
 
@@ -521,7 +525,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     return if (quickZoom) {
       // around center
-      centerScreen
+      doubleTapFocalPoint
     } else {
       // around gesture
       val pointF = detector.focalPoint
@@ -554,7 +558,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     notifyOnScaleEndListeners(detector)
 
     val velocityXY = abs(velocityX) + abs(velocityY)
-    if (!internalSettings.scaleVelocityAnimationEnabled || velocityXY < minimumVelocity || spanSinceLast / velocityXY < scaleVelocityRatioThreshold
+    if (!internalSettings.pinchToZoomDecelerationEnabled || velocityXY < minimumVelocity || spanSinceLast / velocityXY < scaleVelocityRatioThreshold
     ) {
       return
     }
@@ -584,7 +588,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     val focalPoint = getScaleFocalPoint(detector)
     scaleCachedAnchor = cameraAnimationsPlugin.anchor
     if (quickZoom) {
-      internalSettings.zoomRate
       val pixelDeltaChange = abs(detector.currentEvent.y - doubleTapFocalPoint.y)
       val zoomedOut = detector.currentEvent.y < doubleTapFocalPoint.y
 
@@ -599,7 +602,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       // calculate target zoom and adjust for a multiplier
       var targetZoom =
         if (zoomedOut) startZoom - normalizedDeltaChange else startZoom + normalizedDeltaChange
-      targetZoom *= internalSettings.zoomRate.toDouble()
+      targetZoom *= internalSettings.zoomAnimationAmount.toDouble()
       easeToImmediately(
         CameraOptions.Builder()
           .zoom(targetZoom)
@@ -613,7 +616,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       )
     } else {
       val zoomBy =
-        ln(detector.scaleFactor.toDouble()) / ln(PI / 2) * ZOOM_RATE.toDouble() * internalSettings.zoomRate.toDouble()
+        ln(detector.scaleFactor.toDouble()) / ln(PI / 2) * ZOOM_RATE.toDouble() * internalSettings.zoomAnimationAmount.toDouble()
       easeToImmediately(
         CameraOptions.Builder()
           .zoom(mapCameraManagerDelegate.cameraState.zoom + zoomBy)
@@ -632,10 +635,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   internal fun handleScaleBegin(detector: StandardScaleGestureDetector): Boolean {
     quickZoom = detector.pointersCount == 1
 
-    if (!internalSettings.zoomEnabled) {
-      return false
-    }
-
     if (quickZoom) {
       if (!internalSettings.quickZoomEnabled) {
         return false
@@ -643,6 +642,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       // re-try disabling the move detector in case double tap has been interrupted before quickzoom started
       gesturesManager.moveGestureDetector.isEnabled = false
     } else {
+      if (!internalSettings.pinchToZoomEnabled) {
+        return false
+      }
       if (detector.previousSpan > 0) {
         val currSpan = detector.currentSpan
         val prevSpan = detector.previousSpan
@@ -662,10 +664,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
             return false
           }
 
-          if (internalSettings.disableRotateWhenScaling) {
-            // disable rotate gesture when scale is detected first
-            gesturesManager.rotateGestureDetector.isEnabled = false
-          }
+          // disable rotate gesture when scale is detected first
+          gesturesManager.rotateGestureDetector.isEnabled = false
         }
       } else {
         return false
@@ -791,7 +791,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     angularVelocityEvent: Float
   ) {
     var angularVelocity = angularVelocityEvent
-    if (internalSettings.increaseScaleThresholdWhenRotating) {
+    if (internalSettings.increasePinchToZoomThresholdWhenRotating) {
       // resetting default scale threshold values
       gesturesManager.standardScaleGestureDetector.spanSinceStartThreshold =
         defaultSpanSinceStartThreshold
@@ -810,7 +810,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     val delta = abs(detector.deltaSinceLast)
     val ratio = (delta / velocityXY).toDouble()
 
-    if (!internalSettings.rotateVelocityAnimationEnabled || abs(angularVelocity) < minimumAngularVelocity || gesturesManager.standardScaleGestureDetector.isInProgress() && ratio < rotateVelocityRatioThreshold) {
+    if (!internalSettings.rotateDecelerationEnabled || abs(angularVelocity) < minimumAngularVelocity || gesturesManager.standardScaleGestureDetector.isInProgress() && ratio < rotateVelocityRatioThreshold) {
       // notifying listeners that camera is idle only if there is no follow-up animation
       return
     }
@@ -881,7 +881,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       return false
     }
 
-    if (internalSettings.increaseScaleThresholdWhenRotating) {
+    if (internalSettings.increasePinchToZoomThresholdWhenRotating) {
       // when rotation starts, interrupting scale and increasing the threshold
       // to make rotation without scaling easier
       gesturesManager.standardScaleGestureDetector.spanSinceStartThreshold =
@@ -971,7 +971,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       detector: MultiFingerTapGestureDetector,
       pointersCount: Int
     ): Boolean {
-      if (!internalSettings.zoomEnabled || pointersCount != 2) {
+      if (!internalSettings.doubleTouchToZoomOutEnabled || pointersCount != 2) {
         return false
       }
 
@@ -1088,7 +1088,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   private fun noGesturesInProgress(): Boolean {
     return (
       (!internalSettings.scrollEnabled || !gesturesManager.moveGestureDetector.isInProgress) &&
-        (!internalSettings.zoomEnabled || !gesturesManager.standardScaleGestureDetector.isInProgress)
+        ((!internalSettings.pinchToZoomEnabled && !internalSettings.doubleTouchToZoomOutEnabled && !internalSettings.doubleTapToZoomInEnabled) || !gesturesManager.standardScaleGestureDetector.isInProgress)
       ) &&
       (!internalSettings.rotateEnabled || !gesturesManager.rotateGestureDetector.isInProgress) &&
       (!internalSettings.pitchEnabled || !gesturesManager.shoveGestureDetector.isInProgress)
@@ -1138,7 +1138,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         return false
       }
 
-      if (!internalSettings.zoomEnabled || !internalSettings.doubleTapToZoomEnabled) {
+      if (!internalSettings.doubleTapToZoomInEnabled) {
         return false
       }
 
@@ -1166,11 +1166,11 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     notifyOnFlingListeners()
 
-    if (!internalSettings.flingVelocityAnimationEnabled) {
+    if (!internalSettings.scrollDecelerationEnabled) {
       return false
     }
 
-    val screenDensity = internalSettings.pixelRatio
+    val screenDensity = pixelRatio
 
     // calculate velocity vector for xy dimensions, independent from screen size
     val velocityXY =
@@ -1184,8 +1184,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
 
-    val offsetX = if (internalSettings.isPanHorizontallyLimited()) 0.0 else velocityX / FLING_LIMITING_FACTOR
-    val offsetY = if (internalSettings.isPanVerticallyLimited()) 0.0 else velocityY / FLING_LIMITING_FACTOR
+    val offsetX = if (internalSettings.isScrollHorizontallyLimited()) 0.0 else velocityX / FLING_LIMITING_FACTOR
+    val offsetY = if (internalSettings.isScrollVerticallyLimited()) 0.0 else velocityY / FLING_LIMITING_FACTOR
 
     // calculate animation time based on displacement
     // velocityXY ranges from VELOCITY_THRESHOLD_IGNORE_FLING to ~5000
@@ -1240,9 +1240,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       val fromY = focalPoint.y.toDouble()
 
       val resolvedDistanceX =
-        if (internalSettings.isPanHorizontallyLimited()) 0.0 else distanceX.toDouble()
+        if (internalSettings.isScrollHorizontallyLimited()) 0.0 else distanceX.toDouble()
       val resolvedDistanceY =
-        if (internalSettings.isPanVerticallyLimited()) 0.0 else distanceY.toDouble()
+        if (internalSettings.isScrollVerticallyLimited()) 0.0 else distanceY.toDouble()
 
       val toX = fromX - resolvedDistanceX
       val toY = fromY - resolvedDistanceY
@@ -1552,6 +1552,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     pixelRatio: Float
   ) {
     this.gesturesManager = gesturesManager
+    this.pixelRatio = pixelRatio
     internalSettings = GesturesAttributeParser.parseGesturesSettings(context, attrs, pixelRatio)
   }
 

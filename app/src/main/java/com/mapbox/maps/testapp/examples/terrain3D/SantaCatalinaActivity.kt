@@ -270,6 +270,8 @@ fun MapView.disablePlugins() {
 
   gestures.pitchEnabled = false
   gestures.rotateEnabled = false
-  gestures.zoomEnabled = false
+  gestures.pinchToZoomEnabled = false
+  gestures.doubleTouchToZoomOutEnabled = false
+  gestures.doubleTapToZoomInEnabled = false
   gestures.scrollEnabled = false
 }

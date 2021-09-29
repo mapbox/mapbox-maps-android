@@ -2,46 +2,44 @@
 <!-- This file is generated. -->
 <resources>
     <declare-styleable name="mapbox_MapView">
-        <!-- Whether rotation gestures are enabled. -->
+        <!-- Whether the rotate gesture is enabled. -->
         <attr name="mapbox_gesturesRotateEnabled" format="boolean"/>
-        <!-- Whether zoom gestures are enabled. -->
-        <attr name="mapbox_gesturesZoomEnabled" format="boolean"/>
-        <!-- Whether scroll gestures are enabled. -->
+        <!-- Whether the pinch to zoom gesture is enabled. -->
+        <attr name="mapbox_gesturesPinchToZoomEnabled" format="boolean"/>
+        <!-- Whether the single-touch scroll gesture is enabled. -->
         <attr name="mapbox_gesturesScrollEnabled" format="boolean"/>
-        <!-- Whether pitch gestures are enabled. -->
+        <!-- Whether the pitch gesture is enabled. -->
         <attr name="mapbox_gesturesPitchEnabled" format="boolean"/>
-        <!-- Whether the user is restricted in which direction the map is scrolled. -->
-        <attr name="mapbox_gesturesPanScrollMode" format="enum">
-          <!-- The map allows the user to only scroll horizontally. -->
+        <!-- Configures the directions in which the map is allowed to move during a scroll gesture. -->
+        <attr name="mapbox_gesturesScrollMode" format="enum">
+          <!-- The map may only move horizontally. -->
           <enum name="horizontal" value="0"/>
-          <!-- The map allows the user to only scroll vertically. -->
+          <!-- The map may only move vertically. -->
           <enum name="vertical" value="1"/>
-          <!-- The map allows the user to scroll both horizontally and vertically. -->
+          <!-- The map may move both horizontally and vertically. -->
           <enum name="horizontal_and_vertical" value="2"/>
         </attr>
-        <!-- Whether double tapping the map results in a zoom gesture. -->
-        <attr name="mapbox_gesturesDoubleTapToZoomEnabled" format="boolean"/>
-        <!-- Whether quick zoom gesture is enabled. -->
+        <!-- Whether double tapping the map with one touch results in a zoom-in animation. -->
+        <attr name="mapbox_gesturesDoubleTapToZoomInEnabled" format="boolean"/>
+        <!-- Whether single tapping the map with two touches results in a zoom-out animation. -->
+        <attr name="mapbox_gesturesDoubleTouchToZoomOutEnabled" format="boolean"/>
+        <!-- Whether the quick zoom gesture is enabled. -->
         <attr name="mapbox_gesturesQuickZoomEnabled" format="boolean"/>
-        <!-- Whether a gesture executes around a fixed focal point or the center of the gesture. -->
+        <!-- By default, gestures rotate and zoom around the center of the gesture. Set this property to rotate and zoom around a fixed point instead. -->
         <attr name="mapbox_gesturesFocalPointX" format="float"/>
         <attr name="mapbox_gesturesFocalPointY" format="float"/>
-        <!-- Whether scale velocity animations are enabled, true by default. -->
-        <attr name="mapbox_gesturesScaleVelocityAnimationEnabled" format="boolean"/>
-        <!-- Whether rotate velocity animations are enabled, true by default. -->
-        <attr name="mapbox_gesturesRotateVelocityAnimationEnabled" format="boolean"/>
-        <!-- Whether fling velocity animations are enabled, true by default. -->
-        <attr name="mapbox_gesturesFlingVelocityAnimationEnabled" format="boolean"/>
-        <!-- Whether rotate threshold increases when scaling. true by default. -->
-        <attr name="mapbox_gesturesIncreaseRotateThresholdWhenScaling" format="boolean"/>
-        <!-- Whether rotate is disabled when scaling. true by default. -->
-        <attr name="mapbox_gesturesDisableRotateWhenScaling" format="boolean"/>
-        <!-- Whether scale threshold increases when rotating. true by default. -->
-        <attr name="mapbox_gesturesIncreaseScaleThresholdWhenRotating" format="boolean"/>
-        <!-- The rate at which the zoom level increases. 1.0 by default -->
-        <attr name="mapbox_gesturesZoomRate" format="float"/>
-        <!-- The pixel ratio of the device that the gestures will take in account. -->
-        <attr name="mapbox_gesturesPixelRatio" format="float"/>
+        <!-- Whether a deceleration animation following a pinch-to-zoom gesture is enabled. True by default. -->
+        <attr name="mapbox_gesturesPinchToZoomDecelerationEnabled" format="boolean"/>
+        <!-- Whether a deceleration animation following a rotate gesture is enabled. True by default. -->
+        <attr name="mapbox_gesturesRotateDecelerationEnabled" format="boolean"/>
+        <!-- Whether a deceleration animation following a scroll gesture is enabled. True by default. -->
+        <attr name="mapbox_gesturesScrollDecelerationEnabled" format="boolean"/>
+        <!-- Whether rotate threshold increases when pinching to zoom. true by default. -->
+        <attr name="mapbox_gesturesIncreaseRotateThresholdWhenPinchingToZoom" format="boolean"/>
+        <!-- Whether pinch to zoom threshold increases when rotating. true by default. -->
+        <attr name="mapbox_gesturesIncreasePinchToZoomThresholdWhenRotating" format="boolean"/>
+        <!-- The amount by which the zoom level increases or decreases during a double-tap-to-zoom-in or double-touch-to-zoom-out gesture. 1.0 by default. Must be positive. -->
+        <attr name="mapbox_gesturesZoomAnimationAmount" format="float"/>
     </declare-styleable>
 </resources>
 <!-- End of generated file. -->

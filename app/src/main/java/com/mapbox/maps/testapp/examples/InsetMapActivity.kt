@@ -81,7 +81,7 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
 
           gestures.updateSettings {
             scrollEnabled = false
-            zoomEnabled = false
+            pinchToZoomEnabled = false
           }
         }
       }

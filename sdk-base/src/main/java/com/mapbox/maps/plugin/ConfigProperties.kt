@@ -5,21 +5,21 @@ package com.mapbox.maps.plugin
 import android.graphics.drawable.Drawable
 
 /**
- * Whether the user is restricted in which direction the map is scrolled.
+ * Configures the directions in which the map is allowed to move during a scroll gesture.
  *
  * @param value String value of this property
  */
-enum class PanScrollMode(val value: String) {
+enum class ScrollMode(val value: String) {
   /**
-   * The map allows the user to only scroll horizontally.
+   * The map may only move horizontally.
    */
   HORIZONTAL("horizontal"),
   /**
-   * The map allows the user to only scroll vertically.
+   * The map may only move vertically.
    */
   VERTICAL("vertical"),
   /**
-   * The map allows the user to scroll both horizontally and vertically.
+   * The map may move both horizontally and vertically.
    */
   HORIZONTAL_AND_VERTICAL("horizontal-and-vertical"),
 }

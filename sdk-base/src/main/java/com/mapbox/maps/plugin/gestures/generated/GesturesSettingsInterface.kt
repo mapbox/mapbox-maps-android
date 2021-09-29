@@ -3,7 +3,7 @@
 package com.mapbox.maps.plugin.gestures.generated
 
 import com.mapbox.maps.ScreenCoordinate
-import com.mapbox.maps.plugin.PanScrollMode
+import com.mapbox.maps.plugin.ScrollMode
 
 /**
  * Interface that defines the public settings interface for GesturesPlugin.
@@ -24,84 +24,79 @@ interface GesturesSettingsInterface {
   fun updateSettings(block: GesturesSettings.() -> Unit)
 
   /**
-   * Whether rotation gestures are enabled.
+   * Whether the rotate gesture is enabled.
    */
   var rotateEnabled: Boolean
 
   /**
-   * Whether zoom gestures are enabled.
+   * Whether the pinch to zoom gesture is enabled.
    */
-  var zoomEnabled: Boolean
+  var pinchToZoomEnabled: Boolean
 
   /**
-   * Whether scroll gestures are enabled.
+   * Whether the single-touch scroll gesture is enabled.
    */
   var scrollEnabled: Boolean
 
   /**
-   * Whether pitch gestures are enabled.
+   * Whether the pitch gesture is enabled.
    */
   var pitchEnabled: Boolean
 
   /**
-   * Whether the user is restricted in which direction the map is scrolled.
+   * Configures the directions in which the map is allowed to move during a scroll gesture.
    */
-  var panScrollMode: PanScrollMode
+  var scrollMode: ScrollMode
 
   /**
-   * Whether double tapping the map results in a zoom gesture.
+   * Whether double tapping the map with one touch results in a zoom-in animation.
    */
-  var doubleTapToZoomEnabled: Boolean
+  var doubleTapToZoomInEnabled: Boolean
 
   /**
-   * Whether quick zoom gesture is enabled.
+   * Whether single tapping the map with two touches results in a zoom-out animation.
+   */
+  var doubleTouchToZoomOutEnabled: Boolean
+
+  /**
+   * Whether the quick zoom gesture is enabled.
    */
   var quickZoomEnabled: Boolean
 
   /**
-   * Whether a gesture executes around a fixed focal point or the center of the gesture.
+   * By default, gestures rotate and zoom around the center of the gesture. Set this property to rotate and zoom around a fixed point instead.
    */
   var focalPoint: ScreenCoordinate?
 
   /**
-   * Whether scale velocity animations are enabled, true by default.
+   * Whether a deceleration animation following a pinch-to-zoom gesture is enabled. True by default.
    */
-  var scaleVelocityAnimationEnabled: Boolean
+  var pinchToZoomDecelerationEnabled: Boolean
 
   /**
-   * Whether rotate velocity animations are enabled, true by default.
+   * Whether a deceleration animation following a rotate gesture is enabled. True by default.
    */
-  var rotateVelocityAnimationEnabled: Boolean
+  var rotateDecelerationEnabled: Boolean
 
   /**
-   * Whether fling velocity animations are enabled, true by default.
+   * Whether a deceleration animation following a scroll gesture is enabled. True by default.
    */
-  var flingVelocityAnimationEnabled: Boolean
+  var scrollDecelerationEnabled: Boolean
 
   /**
-   * Whether rotate threshold increases when scaling. true by default.
+   * Whether rotate threshold increases when pinching to zoom. true by default.
    */
-  var increaseRotateThresholdWhenScaling: Boolean
+  var increaseRotateThresholdWhenPinchingToZoom: Boolean
 
   /**
-   * Whether rotate is disabled when scaling. true by default.
+   * Whether pinch to zoom threshold increases when rotating. true by default.
    */
-  var disableRotateWhenScaling: Boolean
+  var increasePinchToZoomThresholdWhenRotating: Boolean
 
   /**
-   * Whether scale threshold increases when rotating. true by default.
+   * The amount by which the zoom level increases or decreases during a double-tap-to-zoom-in or double-touch-to-zoom-out gesture. 1.0 by default. Must be positive.
    */
-  var increaseScaleThresholdWhenRotating: Boolean
-
-  /**
-   * The rate at which the zoom level increases. 1.0 by default
-   */
-  var zoomRate: Float
-
-  /**
-   * The pixel ratio of the device that the gestures will take in account.
-   */
-  var pixelRatio: Float
+  var zoomAnimationAmount: Float
 }
 
 // End of generated file.
