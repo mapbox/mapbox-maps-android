@@ -74,10 +74,7 @@ internal class EGLCore(
     if (eglDisplay != EGL10.EGL_NO_DISPLAY) {
       // Android is unusual in that it uses a reference-counted EGLDisplay.  So for
       // every eglInitialize() we need an eglTerminate().
-      egl.eglMakeCurrent(
-        eglDisplay, EGL10.EGL_NO_SURFACE, EGL10.EGL_NO_SURFACE,
-        EGL10.EGL_NO_CONTEXT
-      )
+      makeNothingCurrent()
       egl.eglDestroyContext(eglDisplay, eglContext)
       egl.eglTerminate(eglDisplay)
     }
@@ -91,14 +88,6 @@ internal class EGLCore(
    */
   fun releaseSurface(eglSurface: EGLSurface) {
     if (eglSurface != EGL10.EGL_NO_SURFACE && eglDisplay != EGL10.EGL_NO_DISPLAY) {
-      if (egl.eglGetCurrentSurface(EGL10.EGL_DRAW) == eglSurface) {
-        egl.eglMakeCurrent(
-          eglDisplay,
-          EGL10.EGL_NO_SURFACE,
-          EGL10.EGL_NO_SURFACE,
-          EGL10.EGL_NO_CONTEXT
-        )
-      }
       egl.eglDestroySurface(eglDisplay, eglSurface)
     }
   }
@@ -124,22 +113,12 @@ internal class EGLCore(
   }
 
   /**
-   * Creates an EGL surface associated with an offscreen buffer.
+   * Makes no context current.
    */
-  fun createOffscreenSurface(width: Int, height: Int): EGLSurface? {
-    val surfaceAttribs =
-      intArrayOf(EGL10.EGL_WIDTH, width, EGL10.EGL_HEIGHT, height, EGL10.EGL_NONE)
-    val eglSurface = egl.eglCreatePbufferSurface(
-      eglDisplay,
-      eglConfig,
-      surfaceAttribs
-    )
-    checkEglErrorNoException("eglCreatePbufferSurface")
-    if (eglSurface == null) {
-      Logger.e(TAG, "surface was null")
-      eglStatusSuccess = false
+  fun makeNothingCurrent() {
+    if (!egl.eglMakeCurrent(eglDisplay, EGL10.EGL_NO_SURFACE, EGL10.EGL_NO_SURFACE, EGL10.EGL_NO_CONTEXT)) {
+      checkEglErrorNoException("eglMakeNothingCurrent")
     }
-    return eglSurface
   }
 
   /**
