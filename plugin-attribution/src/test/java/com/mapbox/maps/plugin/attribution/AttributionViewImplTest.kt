@@ -54,9 +54,9 @@ class AttributionViewImplTest {
   fun setMargin() {
     attributionView.setAttributionMargins(1, 2, 3, 4)
     val layoutParams = attributionView.layoutParams as FrameLayout.LayoutParams
-    assertEquals(1, layoutParams.leftMargin)
+    assertEquals(1, layoutParams.marginStart)
     assertEquals(2, layoutParams.topMargin)
-    assertEquals(3, layoutParams.rightMargin)
+    assertEquals(3, layoutParams.marginEnd)
     assertEquals(4, layoutParams.bottomMargin)
   }
 
