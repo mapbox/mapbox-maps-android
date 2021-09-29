@@ -16,6 +16,7 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.LineCap
@@ -128,13 +129,19 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
         duration = EASE_TO_PUCK_DURATION / 3
         interpolator = AccelerateDecelerateInterpolator()
       }
-      val bearing = createBearingAnimator(
-        cameraAnimatorOptions(locationProvider.lastBearing)
-      ) {
-        duration = EASE_TO_PUCK_DURATION / 3
-        interpolator = AccelerateDecelerateInterpolator()
-      }
-      playAnimatorsSequentially(center, zoom, bearing)
+      playAnimatorsSequentially(center, zoom)
+      handler.postDelayed({
+        easeTo(
+          cameraOptions {
+            center(locationProvider.lastLocation)
+            bearing(locationProvider.lastBearing)
+            pitch(CAMERA_TRACKING_PITCH)
+          },
+          MapAnimationOptions.mapAnimationOptions {
+            duration(EASE_TO_PUCK_DURATION / 3)
+          }
+        )
+      }, EASE_TO_PUCK_DURATION * 2 / 3)
     }
 
     handler.postDelayed(callback, EASE_TO_PUCK_DURATION)
@@ -312,7 +319,7 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
 
   companion object {
     private const val STYLE = Style.MAPBOX_STREETS
-    private const val INITIAL_OVERVIEW_TIME = 5000L
+    private const val INITIAL_OVERVIEW_TIME = 3000L
     private const val EASE_TO_PUCK_DURATION = 2000L
     private const val LOCATION_UPDATE_INTERVAL = 1000L
     private const val ACTIVITY_RUN_TIME = 20000L
