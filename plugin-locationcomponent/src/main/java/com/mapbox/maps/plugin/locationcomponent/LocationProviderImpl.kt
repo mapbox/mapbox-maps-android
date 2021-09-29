@@ -20,7 +20,7 @@ import java.util.concurrent.CopyOnWriteArrayList
  */
 internal class LocationProviderImpl(context: Context) :
   LocationProvider, LocationEngineCallback<LocationEngineResult> {
-  private var context: WeakReference<Context> = WeakReference(context)
+  private val contextWeekRef: WeakReference<Context> = WeakReference(context)
   private val locationEngine = LocationEngineProvider.getBestLocationEngine(context)
 
   private val locationEngineRequest =
@@ -37,7 +37,7 @@ internal class LocationProviderImpl(context: Context) :
 
   @SuppressLint("MissingPermission")
   private fun requestLocationUpdates() {
-    if (PermissionsManager.areLocationPermissionsGranted(context.get())) {
+    if (PermissionsManager.areLocationPermissionsGranted(contextWeekRef.get())) {
       locationEngine.requestLocationUpdates(
         locationEngineRequest, this, Looper.getMainLooper()
       )
@@ -102,7 +102,7 @@ internal class LocationProviderImpl(context: Context) :
       requestLocationUpdates()
     }
     locationConsumers.add(locationConsumer)
-    if (PermissionsManager.areLocationPermissionsGranted(context.get())) {
+    if (PermissionsManager.areLocationPermissionsGranted(contextWeekRef.get())) {
       locationEngine.getLastLocation(this)
     } else {
       Logger.w(
