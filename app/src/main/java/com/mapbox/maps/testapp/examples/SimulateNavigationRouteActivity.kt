@@ -43,6 +43,7 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
   private lateinit var mapboxDirectionsClient: MapboxDirections
   private lateinit var mapView: MapView
   private lateinit var routePoints: LineString
+  private val fpsRecords = mutableListOf<Double>()
   private val locationProvider by lazy { FakeLocationProvider(routePoints) }
   private var cameraFollowMode = CameraFollowMode.OVERVIEW
   private val handler = Handler(Looper.getMainLooper())
@@ -101,9 +102,12 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
         padding = EdgeInsets(100.0, 100.0, 100.0, 100.0)
       )
       if (easeTo) {
-        easeTo(camera, MapAnimationOptions.mapAnimationOptions {
-          duration(EASE_TO_PUCK_DURATION)
-        })
+        easeTo(
+          camera,
+          MapAnimationOptions.mapAnimationOptions {
+            duration(EASE_TO_PUCK_DURATION)
+          }
+        )
       } else {
         setCamera(camera)
       }
@@ -155,7 +159,14 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
       ).routes()[0].geometry()!!,
       Constants.PRECISION_6
     )
+    initFpsCounter()
     initMapboxMap()
+  }
+
+  private fun initFpsCounter() {
+    mapView.setOnFpsChangedListener {
+      fpsRecords.add(it)
+    }
   }
 
   private fun initMapboxMap() {
@@ -173,18 +184,30 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
       }
     ) {
       initLocationComponent()
-      setupGesturesListener()
+      setupGestures()
       setCameraToOverview(false)
-      handler.postDelayed({
-        setCameraToFollowPuck()
-      }, INITIAL_OVERVIEW_TIME)
-      handler.postDelayed({
-        finish()
-      }, ACTIVITY_RUN_TIME)
+      handler.postDelayed(
+        {
+          setCameraToFollowPuck()
+        },
+        INITIAL_OVERVIEW_TIME
+      )
+      handler.postDelayed(
+        {
+          Toast.makeText(
+            this,
+            "FPS stats: Average: ${fpsRecords.average()}, Max: ${fpsRecords.maxOrNull()}, Min: ${fpsRecords.minOrNull()} ",
+            Toast.LENGTH_LONG
+          ).show()
+          finish()
+        },
+        ACTIVITY_RUN_TIME
+      )
     }
   }
 
-  private fun setupGesturesListener() {
+  private fun setupGestures() {
+    // Disable all the gestures
     mapView.gestures.apply {
 //      addOnMoveListener(onMoveListener)
 //      addOnMapClickListener(onMapClickListener)
