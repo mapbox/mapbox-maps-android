@@ -243,56 +243,25 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
 
   override fun <T : MapPlugin> getPlugin(id: String): T? = pluginRegistry.getPlugin(id)
 
-  fun createPlugin(
-    mapView: MapView?,
-    plugin: Plugin
-  ) = pluginRegistry.createPlugin(mapView, mapInitOptions, plugin)
+  fun createPlugin(mapView: MapView?, plugin: Plugin) =
+    pluginRegistry.createPlugin(mapView, mapInitOptions, plugin)
 
-  fun initializePlugins(
-    options: MapInitOptions,
-    mapView: MapView? = null,
-  ) {
+  fun initializePlugins(options: MapInitOptions, mapView: MapView? = null) {
     for (plugin in options.plugins) {
       try {
         val pluginObject = when (plugin.id) {
-          MAPBOX_GESTURES_PLUGIN_ID -> {
-            val attrs = options.attrs
-            if (attrs != null) {
-              GesturesPluginImpl(options.context, attrs, options.mapOptions.pixelRatio)
-            } else {
-              GesturesPluginImpl(options.context, options.mapOptions.pixelRatio)
-            }
-          }
-          MAPBOX_CAMERA_PLUGIN_ID -> {
-            CameraAnimationsPluginImpl()
-          }
-          MAPBOX_ANNOTATION_PLUGIN_ID -> {
-            AnnotationPluginImpl()
-          }
-          MAPBOX_COMPASS_PLUGIN_ID -> {
-            CompassViewPlugin()
-          }
-          MAPBOX_ATTRIBUTION_PLUGIN_ID -> {
-            AttributionViewPlugin()
-          }
-          MAPBOX_LIFECYCLE_PLUGIN_ID -> {
-            MapboxLifecyclePluginImpl()
-          }
-          MAPBOX_LOCATION_COMPONENT_PLUGIN_ID -> {
-            LocationComponentPluginImpl()
-          }
-          MAPBOX_LOGO_PLUGIN_ID -> {
-            LogoViewPlugin()
-          }
-          MAPBOX_MAP_OVERLAY_PLUGIN_ID -> {
-            MapOverlayPluginImpl()
-          }
-          MAPBOX_SCALEBAR_PLUGIN_ID -> {
-            ScaleBarPluginImpl()
-          }
-          else -> {
-            plugin.instance ?: throw RuntimeException("Custom non Mapbox plugins must have non-null `instance` parameter!")
-          }
+          MAPBOX_GESTURES_PLUGIN_ID ->
+            GesturesPluginImpl(options.context, options.attrs, options.mapOptions.pixelRatio)
+          MAPBOX_CAMERA_PLUGIN_ID -> CameraAnimationsPluginImpl()
+          MAPBOX_ANNOTATION_PLUGIN_ID -> AnnotationPluginImpl()
+          MAPBOX_COMPASS_PLUGIN_ID -> CompassViewPlugin()
+          MAPBOX_ATTRIBUTION_PLUGIN_ID -> AttributionViewPlugin()
+          MAPBOX_LIFECYCLE_PLUGIN_ID -> MapboxLifecyclePluginImpl()
+          MAPBOX_LOCATION_COMPONENT_PLUGIN_ID -> LocationComponentPluginImpl()
+          MAPBOX_LOGO_PLUGIN_ID -> LogoViewPlugin()
+          MAPBOX_MAP_OVERLAY_PLUGIN_ID -> MapOverlayPluginImpl()
+          MAPBOX_SCALEBAR_PLUGIN_ID -> ScaleBarPluginImpl()
+          else -> plugin.instance ?: throw RuntimeException(CUSTOM_PLUGIN_ERROR_MESSAGE)
         }
         createPlugin(mapView, Plugin.Custom(plugin.id, pluginObject))
         if (pluginObject is CameraAnimationsPluginImpl) {
@@ -309,9 +278,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     }
   }
 
-  internal fun onAttachedToWindow(mapView: MapView) {
-    pluginRegistry.onAttachedToWindow(mapView)
-  }
+  internal fun onAttachedToWindow(mapView: MapView) = pluginRegistry.onAttachedToWindow(mapView)
 
   private enum class LifecycleState {
     STATE_STOPPED,
@@ -325,6 +292,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       "Add %s plugin dependency to the classpath take automatically load the plugin implementation."
     private const val VIEW_HIERARCHY_MISSING_TEMPLATE =
       "%s plugin requires a View hierarchy to be injected, plugin is ignored."
+    private const val CUSTOM_PLUGIN_ERROR_MESSAGE =
+      "Custom non Mapbox plugins must have non-null `instance` parameter!"
 
     init {
       MapboxMapStaticInitializer.loadMapboxMapNativeLib()
