@@ -249,12 +249,12 @@ class GesturesActivity : AppCompatActivity() {
   private fun fixedFocalPointEnabled(enabled: Boolean) {
 
     if (enabled) {
-      focalPointLatLng = Point.fromLngLat(-0.12968, 51.50325)
+      focalPointLatLng = FOCAL_POINT
       pointAnnotationManager =
         binding.mapView.annotations.createPointAnnotationManager(binding.mapView).apply {
           create(
             PointAnnotationOptions()
-              .withPoint(focalPointLatLng!!)
+              .withPoint(FOCAL_POINT)
               .withIconImage(MARKER_IMAGE_ID)
           )
         }
@@ -397,6 +397,7 @@ class GesturesActivity : AppCompatActivity() {
   companion object {
     private const val MAX_NUMBER_OF_ALERTS = 30
     private const val MARKER_IMAGE_ID = "MARKER_IMAGE_ID"
+    private val FOCAL_POINT = Point.fromLngLat(-0.12968, 51.50325)
   }
 }
 
