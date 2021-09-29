@@ -1029,18 +1029,6 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.StyleCrossFadeAnimationActivity"
-            android:description="@string/description_style_cross_fade"
-            android:exported="true"
-            android:label="@string/activity_style_crossfade">
-            <meta-data
-                android:name="@string/category"
-                android:value="@string/category_lab" />
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ExampleOverviewActivity" />
-        </activity>
-        <activity
             android:name=".examples.NinePatchImageActivity"
             android:description="@string/description_nine_patch"
             android:exported="true"
