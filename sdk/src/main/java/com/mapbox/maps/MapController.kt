@@ -2,6 +2,7 @@ package com.mapbox.maps
 
 import android.content.Context
 import android.view.MotionEvent
+import androidx.annotation.VisibleForTesting
 import com.mapbox.annotation.module.MapboxModuleType
 import com.mapbox.common.Logger
 import com.mapbox.common.module.provider.MapboxModuleProvider
@@ -86,6 +87,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     }
   }
 
+  @VisibleForTesting(otherwise = VisibleForTesting.NONE)
   constructor(
     renderer: MapboxRenderer,
     nativeObserver: NativeObserver,
@@ -100,7 +102,6 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.mapInitOptions = mapInitOptions
     this.nativeMap = nativeMap
     this.mapboxMap = mapboxMap
-    this.mapboxMap.renderHandler = renderer.renderThread.handlerThread.handler
     this.pluginRegistry = pluginRegistry
     this.onCameraChangedListener = OnCameraChangeListener {
       pluginRegistry.onCameraMove(nativeMap.cameraState)
@@ -311,6 +312,11 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
 
   internal fun onAttachedToWindow(mapView: MapView) {
     pluginRegistry.onAttachedToWindow(mapView)
+  }
+
+  @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+  internal fun simulateStartedState() {
+    lifecycleState = LifecycleState.STATE_STARTED
   }
 
   private enum class LifecycleState {
