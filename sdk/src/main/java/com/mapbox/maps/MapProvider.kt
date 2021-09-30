@@ -3,6 +3,7 @@ package com.mapbox.maps
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.MapDelegateProviderImpl
 import com.mapbox.maps.plugin.MapPluginRegistry
+import java.lang.ref.WeakReference
 
 internal object MapProvider {
 
@@ -18,11 +19,11 @@ internal object MapProvider {
   )
 
   fun getMapboxMap(
-    nativeMap: MapInterface,
+    nativeMapWeakRef: WeakReference<MapInterface>,
     nativeObserver: NativeObserver,
     pixelRatio: Float
   ) =
-    MapboxMap(nativeMap, nativeObserver, pixelRatio)
+    MapboxMap(nativeMapWeakRef, nativeObserver, pixelRatio)
 
   fun getMapPluginRegistry(
     mapboxMap: MapboxMap,
