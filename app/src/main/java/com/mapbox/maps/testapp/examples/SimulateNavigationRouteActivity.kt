@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import com.mapbox.android.gestures.MoveGestureDetector
-import com.mapbox.api.directions.v5.MapboxDirections
 import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.core.constants.Constants
 import com.mapbox.geojson.*
@@ -39,12 +38,11 @@ import com.mapbox.turf.TurfMeasurement
  */
 class SimulateNavigationRouteActivity : AppCompatActivity() {
 
-  private lateinit var mapboxDirectionsClient: MapboxDirections
   private lateinit var mapView: MapView
   private lateinit var routePoints: LineString
-  private var renderFrameStartCount = 0
   private var renderFrameFinishCount = 0
   private var overtimeFrameCount = 0
+  private val renderFrameIntervalsMs = mutableListOf<Float>()
   private val locationProvider by lazy { FakeLocationProvider(routePoints) }
   private var cameraFollowMode = CameraFollowMode.OVERVIEW
   private val handler = Handler(Looper.getMainLooper())
@@ -194,9 +192,6 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
 
   private val renderFrameObserver = object : Observer() {
     override fun notify(event: Event) {
-      if (event.type == MapEvents.RENDER_FRAME_STARTED) {
-        renderFrameStartCount++
-      }
       if (event.type == MapEvents.RENDER_FRAME_FINISHED) {
         renderFrameFinishCount++
         val now = SystemClock.elapsedRealtimeNanos()
@@ -205,6 +200,7 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
             TAG,
             "missed frame: ${((now - lastRenderedFrameTime) / (1000_000L * TARGET_FRAME_TIME_MS)).toInt()}"
           )
+          renderFrameIntervalsMs.add((now - lastRenderedFrameTime) * 1e-6f)
           if (now - lastRenderedFrameTime > 1000_000L * TARGET_FRAME_TIME_MS) {
             overtimeFrameCount++
           }
@@ -217,7 +213,7 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
   private fun initFpsCounter() {
     mapView.getMapboxMap().subscribe(
       renderFrameObserver,
-      listOf(MapEvents.RENDER_FRAME_STARTED, MapEvents.RENDER_FRAME_FINISHED)
+      listOf(MapEvents.RENDER_FRAME_FINISHED)
     )
     startBenchmarkTime = SystemClock.elapsedRealtimeNanos()
   }
@@ -246,7 +242,13 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
           val endBenchmarkTime = SystemClock.elapsedRealtimeNanos()
           Toast.makeText(
             this,
-            "Total average FPS: ${renderFrameFinishCount.toDouble() * 1e9 / (endBenchmarkTime - startBenchmarkTime).toDouble()}, over time frames: $overtimeFrameCount, over time frames ratio: ${overtimeFrameCount * 100f / renderFrameFinishCount} %",
+            """
+              Average FPS: ${(renderFrameFinishCount * 1e9f / (endBenchmarkTime - startBenchmarkTime)).format()}
+              Over time frames: $overtimeFrameCount
+              Over time frames ratio: ${(overtimeFrameCount * 100f / renderFrameFinishCount).format()}%
+              Max frame interval: ${renderFrameIntervalsMs.maxOrNull().format()}ms
+              Min frame interval: ${renderFrameIntervalsMs.minOrNull().format()}ms
+            """.trimIndent(),
             Toast.LENGTH_LONG
           ).show()
           finish()
@@ -328,14 +330,12 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
 
   override fun onDestroy() {
     super.onDestroy()
-    if (this::mapboxDirectionsClient.isInitialized) {
-      mapboxDirectionsClient.cancelCall()
-    }
     mapView.location
       .removeOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener)
     mapView.location
       .removeOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
     mapView.gestures.removeOnMoveListener(onMoveListener)
+    mapView.getMapboxMap().unsubscribe(renderFrameObserver)
   }
 
   private enum class CameraFollowMode {
@@ -381,10 +381,14 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
     }
   }
 
+  private fun Float?.format(): String {
+    return "%.2f".format(this)
+  }
+
   companion object {
     private const val TAG = "NavigationRouteActivity"
-    private const val TARGET_FRAME_TIME_MS = 1000f / 30f
     private const val STYLE = Style.MAPBOX_STREETS
+    private const val TARGET_FRAME_TIME_MS = 1000f / 30f
     private const val INITIAL_OVERVIEW_TIME = 3000L
     private const val CAMERA_ACTION_INTERVAL = 4000L
     private const val EASE_TO_PUCK_DURATION = 2000L
