@@ -63,7 +63,14 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * A URL to a GeoJSON file, or inline GeoJSON.
    */
   fun data(value: String) = apply {
-    setProperty(PropertyValue("data", TypeUtils.wrapToValue(value)))
+    // remove any events from queue before posting this task
+    workerHandler.removeCallbacksAndMessages(null)
+    workerHandler.post {
+      mainHandler.post {
+        // we set parsed data when sync setter was not called during background work
+        setProperty(PropertyValue("data", Value(value)), throwRuntimeException = false)
+      }
+    }
   }
 
   /**
@@ -344,6 +351,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      * A URL to a GeoJSON file, or inline GeoJSON.
      */
     fun data(value: String) = apply {
+      rawGeoJson = null
       val propertyValue = PropertyValue("data", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
