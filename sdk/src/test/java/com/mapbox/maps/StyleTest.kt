@@ -9,6 +9,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
+import java.lang.ref.WeakReference
 
 class StyleTest {
 
@@ -17,7 +18,7 @@ class StyleTest {
 
   @Before
   fun setUp() {
-    style = Style(nativeMap, 1.0f)
+    style = Style(WeakReference(nativeMap as StyleManagerInterface), 1.0f)
   }
 
   @Test

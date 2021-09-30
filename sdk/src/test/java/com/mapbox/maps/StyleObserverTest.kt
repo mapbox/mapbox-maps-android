@@ -5,7 +5,6 @@ import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
 import com.mapbox.maps.plugin.delegates.listeners.eventdata.MapLoadErrorType
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -16,21 +15,13 @@ import java.lang.ref.WeakReference
 @Config(shadows = [ShadowLogger::class])
 class StyleObserverTest {
 
-  lateinit var map: WeakReference<MapInterface>
-
-  @Before
-  fun setUp() {
-    val mapInterface = mockk<MapInterface>()
-    map = WeakReference(mapInterface)
-  }
-
   /**
    * Verifies if the correct listeners are attached to NativeMapObserver when StyleObserver is created
    */
   @Test
   fun onStyleObserverCreate() {
     val nativeObserver = mockk<NativeObserver>(relaxed = true)
-    StyleObserver(mockk(), mockk(), nativeObserver, 1.0f)
+    StyleObserver(mockk(), nativeObserver, 1.0f)
     verify { nativeObserver.addOnStyleLoadedListener(any()) }
     verify { nativeObserver.addOnMapLoadErrorListener(any()) }
   }
@@ -41,7 +32,7 @@ class StyleObserverTest {
   @Test
   fun onStyleObserverDestroy() {
     val nativeObserver = mockk<NativeObserver>(relaxed = true)
-    StyleObserver(mockk(), mockk(), nativeObserver, 1.0f).onDestroy()
+    StyleObserver(mockk(), nativeObserver, 1.0f).onDestroy()
     verify { nativeObserver.removeOnStyleLoadedListener(any()) }
     verify { nativeObserver.removeOnMapLoadErrorListener(any()) }
   }
@@ -51,7 +42,11 @@ class StyleObserverTest {
    */
   @Test
   fun onStyleLoadSuccess() {
-    val styleObserver = StyleObserver(mockk(relaxed = true), map, mockk(relaxed = true), 1.0f)
+    val styleObserver = StyleObserver(
+      mapboxMap = MapboxMap(WeakReference(mockk(relaxed = true)), mockk(relaxed = true), 1.0f),
+      nativeObserver = mockk(relaxed = true),
+      pixelRatio = 1.0f
+    )
     val styleLoaded = mockk<Style.OnStyleLoaded>(relaxed = true)
     styleObserver.onNewStyleLoad(styleLoaded, null)
     styleObserver.onStyleLoaded()
@@ -63,7 +58,11 @@ class StyleObserverTest {
    */
   @Test
   fun onStyleLoadSuccessMulti() {
-    val styleObserver = StyleObserver(mockk(relaxed = true), map, mockk(relaxed = true), 1.0f)
+    val styleObserver = StyleObserver(
+      mapboxMap = MapboxMap(WeakReference(mockk(relaxed = true)), mockk(relaxed = true), 1.0f),
+      nativeObserver = mockk(relaxed = true),
+      pixelRatio = 1.0f
+    )
     val styleLoaded = mockk<Style.OnStyleLoaded>(relaxed = true)
     styleObserver.onNewStyleLoad(styleLoaded, null)
     val styleLoaded2 = mockk<Style.OnStyleLoaded>(relaxed = true)
@@ -78,7 +77,11 @@ class StyleObserverTest {
    */
   @Test
   fun onStyleLoadSuccessNotCalled() {
-    val styleObserver = StyleObserver(mockk(relaxed = true), map, mockk(relaxed = true), 1.0f)
+    val styleObserver = StyleObserver(
+      mapboxMap = MapboxMap(WeakReference(mockk(relaxed = true)), mockk(relaxed = true), 1.0f),
+      nativeObserver = mockk(relaxed = true),
+      pixelRatio = 1.0f
+    )
     val styleLoadedFail = mockk<Style.OnStyleLoaded>(relaxed = true)
     styleObserver.onNewStyleLoad(styleLoadedFail, null)
     val styleLoadedSucces = mockk<Style.OnStyleLoaded>(relaxed = true)
@@ -93,7 +96,7 @@ class StyleObserverTest {
    */
   @Test
   fun onStyleLoadError() {
-    val styleObserver = StyleObserver(mockk(relaxed = true), map, mockk(relaxed = true), 1.0f)
+    val styleObserver = StyleObserver(mockk(relaxed = true), mockk(relaxed = true), 1.0f)
     val errorListener = mockk<OnMapLoadErrorListener>(relaxed = true)
     styleObserver.onNewStyleLoad(mockk(relaxed = true), errorListener)
     styleObserver.onMapLoadError(MapLoadErrorType.GLYPHS, "foobar")
@@ -105,7 +108,7 @@ class StyleObserverTest {
    */
   @Test
   fun onStyleLoadErrorNotCalled() {
-    val styleObserver = StyleObserver(mockk(relaxed = true), map, mockk(relaxed = true), 1.0f)
+    val styleObserver = StyleObserver(mockk(relaxed = true), mockk(relaxed = true), 1.0f)
     val errorListenerFail = mockk<OnMapLoadErrorListener>(relaxed = true)
     styleObserver.onNewStyleLoad(mockk(relaxed = true), errorListenerFail)
     val errorListenerSuccess = mockk<OnMapLoadErrorListener>(relaxed = true)

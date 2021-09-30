@@ -19,6 +19,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import java.io.File
+import java.lang.ref.WeakReference
 
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowLogger::class])
@@ -76,7 +77,7 @@ class MapControllerTest {
     } answers { nativeMap }
     every { nativeMap.cameraState } returns cameraState
 
-    every { MapProvider.getMapboxMap(nativeMap, nativeObserver, 1.0f) } answers { mapboxMap }
+    every { MapProvider.getMapboxMap(WeakReference(nativeMap), nativeObserver, 1.0f) } answers { mapboxMap }
     every { MapProvider.getMapPluginRegistry(any(), any(), any()) } returns pluginRegistry
     every { mapboxMap.isStyleLoadInitiated } returns false
     every { renderer.renderThread.handlerThread.handler } returns mockk()

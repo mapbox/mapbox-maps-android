@@ -40,7 +40,7 @@ class MapboxMapTest {
     mockkStatic(Map::class)
     every { Map.clearData(any(), any()) } just runs
     every { nativeMap.resourceOptions } returns resourceOptions
-    mapboxMap = MapboxMap(nativeMap, nativeObserver, 1.0f)
+    mapboxMap = MapboxMap(WeakReference(nativeMap), nativeObserver, 1.0f)
   }
 
   @Test
