@@ -329,7 +329,6 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * Builder for GeoJsonSource.
    *
    * @param sourceId the ID of the source
-   * @param onGeoJsonParsed callback invoked when data is parsed
    */
   @SourceDsl
   class Builder(
