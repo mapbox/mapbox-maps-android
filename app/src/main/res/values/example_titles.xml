@@ -47,7 +47,7 @@
     <string name="activity_lab_moving_icon_with_trailing_line_title">Line behind moving icon</string>
     <string name="activity_labs_snaking_directions_route_title">Animate a line</string>
     <string name="activity_animate_marker_position">Animate Marker Position</string>
-    <string name="activity_styles_show_hide_layers_title">Toggle the visibility of a layer</string>
+    <string name="activity_styles_show_hide_layers_title">Show and hide layers</string>
     <string name="activity_styles_dds_geojson_circle_layer_clusters_title">Cluster points within a layer</string>
     <string name="activity_style_change_icon_size_title">Change icon size</string>
     <string name="activity_basic_add_marker_title">Add markers to map</string>
