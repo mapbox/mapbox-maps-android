@@ -267,6 +267,10 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * Data will be parsed from collection to [String] in a worker thread and
    * use main thread to pass this data to gl-native.
    *
+   * In order to capture events when actual data is drawn on the map please refer to [Observer] API
+   * and listen to [MapEvents.STYLE_DATA_LOADED] or [MapEvents.MAP_LOADING_ERROR] with `type = source`
+   * if data parsing error has occurred.
+   *
    * @param value the feature
    */
   fun feature(value: Feature) = applyGeoJsonData(value)
@@ -276,6 +280,10 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * Data will be parsed from collection to [String] in a worker thread and
    * use main thread to pass this data to gl-native.
    *
+   * In order to capture events when actual data is drawn on the map please refer to [Observer] API
+   * and listen to [MapEvents.STYLE_DATA_LOADED] or [MapEvents.MAP_LOADING_ERROR] with `type = source`
+   * if data parsing error has occurred.
+   *
    * @param value the feature collection
    */
   fun featureCollection(value: FeatureCollection) = applyGeoJsonData(value)
@@ -284,6 +292,10 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * Add a Geometry to the GeojsonSource.
    * Data will be parsed from collection to [String] in a worker thread and
    * use main thread to pass this data to gl-native.
+   *
+   * In order to capture events when actual data is drawn on the map please refer to [Observer] API
+   * and listen to [MapEvents.STYLE_DATA_LOADED] or [MapEvents.MAP_LOADING_ERROR] with `type = source`
+   * if data parsing error has occurred.
    *
    * @param value the geometry
    */
@@ -708,7 +720,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
 
 /**
  * DSL function for [GeoJsonSource] accepting empty data source.
- * Immediately returns [GeoJsonSource] with no data set
+ * Immediately returns [GeoJsonSource] with no data set.
  */
 fun geoJsonSource(
   id: String
@@ -733,10 +745,9 @@ fun geoJsonSource(
  * [Style.OnStyleLoaded] will be emitted without waiting to draw [GeoJsonSource.feature],
  * [GeoJsonSource.featureCollection] or [GeoJsonSource.geometry] on the map.
  *
- * In order to capture events when actual geojson is drawn on the map please refer to [Observer] API
+ * In order to capture events when actual data is drawn on the map please refer to [Observer] API
  * and listen to [MapEvents.STYLE_DATA_LOADED] or [MapEvents.MAP_LOADING_ERROR] with `type = source`
- * if geojson parsing error has occurred.
- *
+ * if data parsing error has occurred.
  */
 fun geoJsonSource(
   id: String,
