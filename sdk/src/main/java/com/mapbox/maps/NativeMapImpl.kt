@@ -508,4 +508,8 @@ internal class NativeMapImpl(private val map: MapInterface) :
   override fun unsubscribe(observer: Observer) {
     map.unsubscribe(observer)
   }
+
+  override fun setMapProjection(value: Value) = map.setMapProjection(value)
+
+  override fun getMapProjection() = map.mapProjection
 }

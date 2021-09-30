@@ -49,28 +49,26 @@ open class Snapshotter {
     pixelRatio = context.resources.displayMetrics.density
     coreSnapshotter = MapSnapshotter(options)
     val weakSelf = WeakReference(this)
-    observer = object : Observer() {
-      override fun notify(event: Event) {
-        weakSelf.get()?.apply {
-          when (event.type) {
-            MapEvents.MAP_LOADING_ERROR -> {
-              snapshotStyleCallback?.onDidFailLoadingStyle(event.getMapLoadingErrorEventData().message)
-              coreSnapshotter.unsubscribe(observer)
-            }
-            MapEvents.STYLE_DATA_LOADED -> if (event.getStyleDataLoadedEventData().styleDataType == StyleDataType.STYLE) {
-              snapshotStyleCallback?.onDidFinishLoadingStyle(Style(coreSnapshotter, pixelRatio))
-            }
-            MapEvents.STYLE_LOADED -> {
-              snapshotStyleCallback?.onDidFullyLoadStyle(
-                Style(coreSnapshotter, pixelRatio)
-              )
-              coreSnapshotter.unsubscribe(observer)
-            }
-            MapEvents.STYLE_IMAGE_MISSING -> {
-              snapshotStyleCallback?.onStyleImageMissing(event.getStyleImageMissingEventData().id)
-            }
-            else -> Unit
+    observer = Observer { event ->
+      weakSelf.get()?.apply {
+        when (event.type) {
+          MapEvents.MAP_LOADING_ERROR -> {
+            snapshotStyleCallback?.onDidFailLoadingStyle(event.getMapLoadingErrorEventData().message)
+            coreSnapshotter.unsubscribe(observer)
           }
+          MapEvents.STYLE_DATA_LOADED -> if (event.getStyleDataLoadedEventData().styleDataType == StyleDataType.STYLE) {
+            snapshotStyleCallback?.onDidFinishLoadingStyle(Style(coreSnapshotter, pixelRatio))
+          }
+          MapEvents.STYLE_LOADED -> {
+            snapshotStyleCallback?.onDidFullyLoadStyle(
+              Style(coreSnapshotter, pixelRatio)
+            )
+            coreSnapshotter.unsubscribe(observer)
+          }
+          MapEvents.STYLE_IMAGE_MISSING -> {
+            snapshotStyleCallback?.onStyleImageMissing(event.getStyleImageMissingEventData().id)
+          }
+          else -> Unit
         }
       }
     }

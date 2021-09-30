@@ -11,7 +11,7 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import kotlin.math.pow
 
-class TriangleCustomLayer : CustomLayerHost() {
+class TriangleCustomLayer : CustomLayerHost {
   private var program = 0
   private var vertexShader = 0
   private var fragmentShader = 0

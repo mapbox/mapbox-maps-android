@@ -9,7 +9,7 @@ import java.util.concurrent.CopyOnWriteArrayList
 @UiThread
 internal class NativeObserver(
   private val observable: WeakReference<ObservableInterface>
-) : Observer() {
+) : Observer {
   val onCameraChangeListeners = CopyOnWriteArrayList<OnCameraChangeListener>()
 
   val onMapIdleListeners = CopyOnWriteArrayList<OnMapIdleListener>()
