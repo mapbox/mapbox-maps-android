@@ -16,12 +16,7 @@ class NativeMapTest {
   fun subscribe() {
     val nativeMap = NativeMapImpl(map)
     val list = mutableListOf("foobar")
-    nativeMap.subscribe(
-      object : Observer() {
-        override fun notify(event: Event) {}
-      },
-      list
-    )
+    nativeMap.subscribe({ }, list)
     verify { map.subscribe(any(), list) }
   }
 
@@ -29,21 +24,14 @@ class NativeMapTest {
   fun unsubscribe() {
     val nativeMap = NativeMapImpl(map)
     val list = mutableListOf("foobar")
-    nativeMap.unsubscribe(
-      object : Observer() {
-        override fun notify(event: Event) {}
-      },
-      list
-    )
+    nativeMap.unsubscribe({ }, list)
     verify { map.unsubscribe(any(), list) }
   }
 
   @Test
   fun unsubscribeSingle() {
     val nativeMap = NativeMapImpl(map)
-    nativeMap.unsubscribe(object : Observer() {
-      override fun notify(event: Event) {}
-    })
+    nativeMap.unsubscribe { }
     verify { map.unsubscribe(any()) }
   }
 
