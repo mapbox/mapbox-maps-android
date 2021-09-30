@@ -5,7 +5,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.Event
 import com.mapbox.maps.Observer
 import com.mapbox.maps.extension.observable.subscribeResourceRequest
 import com.mapbox.maps.extension.observable.unsubscribeResourceRequest
@@ -36,11 +35,9 @@ class ObservableExtensionTest : BaseMapTest() {
   fun subscribeResourceRequest() {
     val latch = CountDownLatch(1)
 
-    val observer = object : Observer() {
-      override fun notify(event: Event) {
-        assertEquals("resource-request", event.type)
-        latch.countDown()
-      }
+    val observer = Observer { event ->
+      assertEquals("resource-request", event.type)
+      latch.countDown()
     }
     rule.scenario.onActivity {
       it.runOnUiThread {

@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 
-internal abstract class MapboxRenderer : MapClient() {
+internal abstract class MapboxRenderer : MapClient {
 
   @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
   internal lateinit var renderThread: MapboxRenderThread
@@ -34,13 +34,11 @@ internal abstract class MapboxRenderer : MapClient() {
   // when map is rendered fully
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var readyForSnapshot = AtomicBoolean(false)
-  private val observer = object : Observer() {
-    override fun notify(event: Event) {
-      if (event.type == MapEvents.RENDER_FRAME_FINISHED) {
-        val data = event.getRenderFrameFinishedEventData()
-        if (data.renderMode == RenderMode.FULL) {
-          readyForSnapshot.set(true)
-        }
+  private val observer = Observer { event ->
+    if (event.type == MapEvents.RENDER_FRAME_FINISHED) {
+      val data = event.getRenderFrameFinishedEventData()
+      if (data.renderMode == RenderMode.FULL) {
+        readyForSnapshot.set(true)
       }
     }
   }

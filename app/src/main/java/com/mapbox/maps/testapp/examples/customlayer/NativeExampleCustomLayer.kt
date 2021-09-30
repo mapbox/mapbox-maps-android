@@ -5,7 +5,7 @@ import com.mapbox.maps.CustomLayerHost
 import com.mapbox.maps.CustomLayerRenderParameters
 
 @Keep
-class NativeExampleCustomLayer : CustomLayerHost() {
+class NativeExampleCustomLayer : CustomLayerHost {
   external override fun initialize()
 
   external override fun render(parameters: CustomLayerRenderParameters)

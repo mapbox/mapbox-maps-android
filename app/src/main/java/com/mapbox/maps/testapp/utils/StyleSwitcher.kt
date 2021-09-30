@@ -22,7 +22,7 @@ class StyleSwitcher(
 
   private fun addOnMapLoadedObserver() {
     mapboxMap.subscribe(
-      object : Observer() {
+      object : Observer {
         override fun notify(event: Event) {
           when (event.type) {
             // when map loaded, fade-in layers using original values

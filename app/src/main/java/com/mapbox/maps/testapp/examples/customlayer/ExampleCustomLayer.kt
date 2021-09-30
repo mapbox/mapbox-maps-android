@@ -9,7 +9,7 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
 
-class ExampleCustomLayer : CustomLayerHost() {
+class ExampleCustomLayer : CustomLayerHost {
   private var program = 0
   private var positionHandle = 0
   private var colorHandle = 0

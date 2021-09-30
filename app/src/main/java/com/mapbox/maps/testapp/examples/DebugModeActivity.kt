@@ -29,23 +29,19 @@ class DebugModeActivity : AppCompatActivity() {
     MapDebugOptions.STENCIL_CLIP,
     MapDebugOptions.DEPTH_BUFFER
   )
-  private val extensionObservable = object : Observer() {
-    override fun notify(event: Event) {
-      val data = event.getResourceEventData()
-      Logger.i(
-        TAG,
-        "extensionObservable DataSource: ${data.dataSource}\nRequest: ${data.request}\nResponse: ${data.response}\nCancelled: ${data.cancelled}"
-      )
-    }
+  private val extensionObservable = Observer { event ->
+    val data = event.getResourceEventData()
+    Logger.i(
+      TAG,
+      "extensionObservable DataSource: ${data.dataSource}\nRequest: ${data.request}\nResponse: ${data.response}\nCancelled: ${data.cancelled}"
+    )
   }
 
-  private val observable = object : Observer() {
-    override fun notify(event: Event) {
-      Logger.i(
-        TAG,
-        "Type: ${event.type}\nValue: ${event.data.contents}"
-      )
-    }
+  private val observable = Observer { event ->
+    Logger.i(
+      TAG,
+      "Type: ${event.type}\nValue: ${event.data.contents}"
+    )
   }
 
   private lateinit var binding: ActivityDebugBinding

@@ -19,7 +19,7 @@ class LegacyOfflineActivity : AppCompatActivity() {
   private var mapView: MapView? = null
   private lateinit var binding: ActivityLegacyOfflineBinding
 
-  private val regionObserver: OfflineRegionObserver = object : OfflineRegionObserver() {
+  private val regionObserver: OfflineRegionObserver = object : OfflineRegionObserver {
     override fun mapboxTileCountLimitExceeded(limit: Long) {
       Logger.e(TAG, "Mapbox tile count max (= $limit) has exceeded!")
     }
