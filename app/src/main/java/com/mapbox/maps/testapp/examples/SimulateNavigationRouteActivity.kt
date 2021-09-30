@@ -1,14 +1,12 @@
 package com.mapbox.maps.testapp.examples
 
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.SystemClock
-import android.util.Log
+import android.os.*
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.core.constants.Constants
@@ -31,10 +29,13 @@ import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.*
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
+import com.mapbox.maps.testapp.utils.StorageUtils
 import com.mapbox.turf.TurfMeasurement
 
 /**
- * Simulate a navigation route with pre-defined route (from LA to San Francisco) with location puck, route line and camera tracking. The activity has disabled gestures and will run for 20 seconds. At the end of the activity, there will be a toast showing the average fps, overtime frames
+ * Simulate a navigation route with pre-defined route (from LA to San Francisco) with location puck,
+ * route line and camera tracking. The activity has disabled gestures and will run for 20 seconds.
+ * At the end of the activity, there will be a toast showing the average fps, overtime frames
  */
 class SimulateNavigationRouteActivity : AppCompatActivity() {
 
@@ -43,6 +44,7 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
   private var renderFrameFinishCount = 0
   private var overtimeFrameCount = 0
   private val renderFrameIntervalsMs = mutableListOf<Float>()
+  private val frameReport = mutableListOf<JsonObject>()
   private val locationProvider by lazy { FakeLocationProvider(routePoints) }
   private var cameraFollowMode = CameraFollowMode.OVERVIEW
   private val handler = Handler(Looper.getMainLooper())
@@ -190,23 +192,23 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
     initMapboxMap()
   }
 
-  private val renderFrameObserver = object : Observer() {
-    override fun notify(event: Event) {
-      if (event.type == MapEvents.RENDER_FRAME_FINISHED) {
-        renderFrameFinishCount++
-        val now = SystemClock.elapsedRealtimeNanos()
-        if (lastRenderedFrameTime != 0L) {
-          Log.e(
-            TAG,
-            "missed frame: ${((now - lastRenderedFrameTime) / (1000_000L * TARGET_FRAME_TIME_MS)).toInt()}"
-          )
-          renderFrameIntervalsMs.add((now - lastRenderedFrameTime) * 1e-6f)
-          if (now - lastRenderedFrameTime > 1000_000L * TARGET_FRAME_TIME_MS) {
-            overtimeFrameCount++
+  private val renderFrameObserver = Observer { event ->
+    if (event.type == MapEvents.RENDER_FRAME_FINISHED) {
+      renderFrameFinishCount++
+      val now = SystemClock.elapsedRealtimeNanos()
+      if (lastRenderedFrameTime != 0L) {
+        renderFrameIntervalsMs.add((now - lastRenderedFrameTime) * 1e-6f)
+        frameReport.add(
+          JsonObject().apply {
+            addProperty("time_from_start", (now - startBenchmarkTime) * 1e-6f)
+            addProperty("interval_from_last_frame", (now - lastRenderedFrameTime)  * 1e-6f)
           }
+        )
+        if (now - lastRenderedFrameTime > 1000_000L * TARGET_FRAME_TIME_MS) {
+          overtimeFrameCount++
         }
-        lastRenderedFrameTime = now
       }
+      lastRenderedFrameTime = now
     }
   }
 
@@ -248,9 +250,11 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
               Over time frames ratio: ${(overtimeFrameCount * 100f / renderFrameFinishCount).format()}%
               Max frame interval: ${renderFrameIntervalsMs.maxOrNull().format()}ms
               Min frame interval: ${renderFrameIntervalsMs.minOrNull().format()}ms
+              Logs have been saved to $filesDir/logs/frame_log.json.
             """.trimIndent(),
             Toast.LENGTH_LONG
           ).show()
+          StorageUtils(this).writeToFile("frame_log.json", Gson().toJson(frameReport))
           finish()
         },
         ACTIVITY_RUN_TIME
