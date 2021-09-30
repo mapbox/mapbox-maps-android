@@ -34,7 +34,7 @@ import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.turf.TurfMeasurement
 
 /**
- * Simulate a navigation route with pre-defined route.
+ * Simulate a navigation route with pre-defined route (from LA to San Francisco) with location puck, route line and camera tracking. The activity has disabled gestures and will run for 20 seconds. At the end of the activity, there will be a toast showing the average fps, overtime frames
  */
 class SimulateNavigationRouteActivity : AppCompatActivity() {
 
