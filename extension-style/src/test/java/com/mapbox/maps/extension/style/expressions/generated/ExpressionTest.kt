@@ -1670,6 +1670,34 @@ class ExpressionTest {
     val expression = varExpression("foo")
     assertEquals("[var, foo]", expression.toString())
   }
+
+  @Test
+  fun expression_convenience_stop_overloadDouble() {
+    val expression = interpolate {
+      linear()
+      stop(1.0) { color(Color.RED) }
+      stop(5.0) { color(Color.BLUE) }
+    }
+    assertEquals(
+      "assert stop convenience overload double",
+      "[interpolate, [linear], 1.0, [rgba, 255.0, 0.0, 0.0, 1.0], 5.0, [rgba, 0.0, 0.0, 255.0, 1.0]]",
+      expression.toString()
+    )
+  }
+
+  @Test
+  fun expression_convenience_stop_overloadString() {
+    val expression = interpolate {
+      linear()
+      stop("Asian") { color(Color.RED) }
+      stop("Ethnic") { color(Color.BLUE) }
+    }
+    assertEquals(
+      "assert stop convenience overload string",
+      "[interpolate, [linear], Asian, [rgba, 255.0, 0.0, 0.0, 1.0], Ethnic, [rgba, 0.0, 0.0, 255.0, 1.0]]",
+      expression.toString()
+    )
+  }
 }
 
 // End of generated file.
