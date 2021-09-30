@@ -314,9 +314,10 @@ class MapIntegrationTest {
           val source = geoJsonSource("source") {
             geometry(Point.fromLngLat(0.0, 0.0))
           }
-          // this should not take effect
           source.geometry(Point.fromLngLat(0.1, 0.1))
-          // follow up with new async that must take effect
+          source.geometry(Point.fromLngLat(0.3, 0.3))
+          source.geometry(Point.fromLngLat(0.4, 0.4))
+          // follow up with new async that must take effect (last in the queue)
           source.geometry(Point.fromLngLat(0.2, 0.2))
           style.addSource(source)
           style.addLayer(layer)
