@@ -2,6 +2,7 @@ package com.mapbox.maps.renderer
 
 import android.os.Handler
 import android.os.HandlerThread
+import android.os.Process
 import androidx.annotation.VisibleForTesting
 import com.mapbox.common.Logger
 
@@ -23,7 +24,7 @@ internal class WorkerHandlerThread {
 
   fun start() {
     handlerThread = HandlerThread(HANDLE_THREAD_NAME).apply {
-      priority = Thread.MAX_PRIORITY
+      priority = Process.THREAD_PRIORITY_DISPLAY
       start()
       handler = Handler(this.looper)
     }
