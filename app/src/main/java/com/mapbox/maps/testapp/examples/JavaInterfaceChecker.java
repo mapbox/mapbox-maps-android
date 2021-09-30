@@ -260,15 +260,6 @@ public class JavaInterfaceChecker {
         terrain("id", receiver -> null);
     }
 
-    private void geoJsonSource(GeoJsonSource geoJsonSource, Geometry geometry, FeatureCollection featureCollection, Feature feature, Function1<? super GeoJsonSource, Unit> onDataParsed) {
-        geoJsonSource.feature(feature);
-        geoJsonSource.feature(feature, onDataParsed);
-        geoJsonSource.featureCollection(featureCollection);
-        geoJsonSource.featureCollection(featureCollection, onDataParsed);
-        geoJsonSource.geometry(geometry);
-        geoJsonSource.geometry(geometry, onDataParsed);
-    }
-
     private void addLayer(StyleInterface style, Layer layer, LayerPosition position) {
         addPersistentLayer(style, layer);
         addPersistentLayer(style, layer, position);

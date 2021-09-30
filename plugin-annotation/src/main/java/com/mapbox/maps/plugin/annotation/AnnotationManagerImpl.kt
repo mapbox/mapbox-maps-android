@@ -404,7 +404,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         features.add(Feature.fromGeometry(it.geometry, it.getJsonObjectCopy()))
       }
 
-      geoJsonSource.featureCollection(FeatureCollection.fromFeatures(features), onDataParsed = {})
+      geoJsonSource.featureCollection(FeatureCollection.fromFeatures(features))
     }
   }
 
@@ -446,7 +446,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         annotation
       }
 
-      geoJsonSource.featureCollection(FeatureCollection.fromFeatures(features), onDataParsed = {})
+      geoJsonSource.featureCollection(FeatureCollection.fromFeatures(features))
     }
   }
 

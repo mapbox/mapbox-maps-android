@@ -17,15 +17,6 @@ class StyleExtensionImpl private constructor(
 ) : StyleContract.StyleExtension {
 
   /**
-   * Total resource count including all sources, layers, images, terrain and light.
-   */
-  override val resourceCount: Int
-    get() = sources.size +
-      images.size +
-      layers.size +
-      if (light != null) 1 else 0 + if (terrain != null) 1 else 0
-
-  /**
    * The style's Uri.
    */
   override val styleUri: String = builder.styleUri
