@@ -19,21 +19,14 @@ class TextureViewOrientationChangeTest : BaseIntegrationTest() {
   @Test
   @LargeTest
   fun rotateTextureMap() {
-    device.setOrientationLeft()
-    device.waitForIdle()
-    device.setOrientationNatural()
-    device.waitForIdle()
-    device.setOrientationRight()
-    device.waitForIdle()
-    device.setOrientationNatural()
     device.waitForIdle()
     device.setOrientationLeft()
-    device.waitForIdle()
     device.setOrientationNatural()
-    device.waitForIdle()
     device.setOrientationRight()
-    device.waitForIdle()
     device.setOrientationNatural()
-    device.waitForIdle()
+    device.setOrientationLeft()
+    device.setOrientationNatural()
+    device.setOrientationRight()
+    device.setOrientationNatural()
   }
 }

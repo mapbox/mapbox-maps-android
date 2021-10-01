@@ -13,26 +13,20 @@ import org.junit.runner.RunWith
 class SurfaceViewOrientationChangeTest : BaseIntegrationTest() {
 
   @get:Rule
-  var activityRule: ActivityScenarioRule<SimpleMapActivity> = ActivityScenarioRule(SimpleMapActivity::class.java)
+  var activityRule: ActivityScenarioRule<SimpleMapActivity> =
+    ActivityScenarioRule(SimpleMapActivity::class.java)
 
   @Test
   @LargeTest
   fun rotateSurfaceMap() {
-    device.setOrientationLeft()
-    device.waitForIdle()
-    device.setOrientationNatural()
-    device.waitForIdle()
-    device.setOrientationRight()
-    device.waitForIdle()
-    device.setOrientationNatural()
     device.waitForIdle()
     device.setOrientationLeft()
-    device.waitForIdle()
     device.setOrientationNatural()
-    device.waitForIdle()
     device.setOrientationRight()
-    device.waitForIdle()
     device.setOrientationNatural()
-    device.waitForIdle()
+    device.setOrientationLeft()
+    device.setOrientationNatural()
+    device.setOrientationRight()
+    device.setOrientationNatural()
   }
 }
