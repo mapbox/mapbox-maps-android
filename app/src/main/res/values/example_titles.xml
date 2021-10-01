@@ -82,4 +82,5 @@
     <string name="activity_large_geojson">Geojson performance</string>
     <string name="activity_nine_patch">9-patch image</string>
     <string name="activity_feature_state">Feature state</string>
+    <string name="activity_globe">3D globe</string>
 </resources>

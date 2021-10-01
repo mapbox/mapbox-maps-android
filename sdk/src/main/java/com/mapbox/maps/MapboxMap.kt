@@ -7,12 +7,15 @@ import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
+import com.mapbox.common.Logger
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapProjectionUtils.toValue
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.sources.OnGeoJsonParsed
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
+import com.mapbox.maps.plugin.MapProjection
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl
 import com.mapbox.maps.plugin.delegates.*
@@ -1319,6 +1322,34 @@ class MapboxMap internal constructor(
   }
 
   /**
+   * Set map projection for Mapbox map.
+   *
+   * @param mapProjection either [MapProjection.Globe] or [MapProjection.Mercator] projection that will be applied to Mapbox map.
+   */
+  @MapboxExperimental
+  override fun setMapProjection(mapProjection: MapProjection) {
+    val expected = nativeMapWeakRef.call { this.setMapProjection(mapProjection.toValue()) }
+    if (expected.isError) {
+      Logger.e(TAG_PROJECTION, "Map projection is not supported!")
+    }
+  }
+
+  /**
+   * Get current map projection for Mapbox map.
+   *
+   * Please note that even if MapboxMap is configured to use [MapProjection.Globe]
+   * starting from [MapProjection.TRANSITION_ZOOM_LEVEL] and above this method will return [MapProjection.Mercator].
+   *
+   * @see [MapProjection.TRANSITION_ZOOM_LEVEL]
+   * @return [MapProjection] map is using.
+   */
+  @MapboxExperimental
+  override fun getMapProjection(): MapProjection {
+    val value = nativeMapWeakRef.call { this.mapProjection }
+    return MapProjectionUtils.fromValue(value)
+  }
+
+  /**
    * A convenience object to access MapboxMap's static utilities.
    */
   companion object {
@@ -1338,5 +1369,7 @@ class MapboxMap internal constructor(
     fun clearData(resourceOptions: ResourceOptions, callback: AsyncOperationResultCallback) {
       Map.clearData(resourceOptions, callback)
     }
+
+    private const val TAG_PROJECTION = "MbxProjection"
   }
 }
