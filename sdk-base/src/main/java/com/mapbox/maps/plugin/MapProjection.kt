@@ -4,9 +4,9 @@ import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
 
 /**
- * Describes projection map is using.
+ * Describes the projection used to render the map.
  *
- * MapboxMap supports Mercator and Globe projections.
+ * Mapbox map supports Mercator and Globe projections.
  */
 @MapboxExperimental
 sealed class MapProjection {

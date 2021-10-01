@@ -68,7 +68,7 @@ class GlobeActivity : AppCompatActivity() {
             skyType(SkyType.ATMOSPHERE)
             skyAtmosphereSun(listOf(15.0, 89.5))
           }
-          initLocationLayer(binding.mapView)
+          initLocationComponent(binding.mapView)
         }
       )
     }
@@ -114,7 +114,7 @@ class GlobeActivity : AppCompatActivity() {
     }
   }
 
-  private fun initLocationLayer(mapView: MapView) {
+  private fun initLocationComponent(mapView: MapView) {
     mapView.location.apply {
       enabled = true
       locationPuck = LocationPuck3D(
