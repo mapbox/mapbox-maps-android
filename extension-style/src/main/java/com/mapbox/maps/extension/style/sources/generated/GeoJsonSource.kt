@@ -280,7 +280,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    *
    * @param value the feature
    */
-  fun feature(value: Feature) = applyGeoJsonData(value)
+  fun feature(value: Feature): GeoJsonSource = applyGeoJsonData(value)
 
   /**
    * Add a Feature Collection to the GeojsonSource.
@@ -293,7 +293,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    *
    * @param value the feature collection
    */
-  fun featureCollection(value: FeatureCollection) = applyGeoJsonData(value)
+  fun featureCollection(value: FeatureCollection): GeoJsonSource = applyGeoJsonData(value)
 
   /**
    * Add a Geometry to the GeojsonSource.
@@ -306,7 +306,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    *
    * @param value the geometry
    */
-  fun geometry(value: Geometry) = applyGeoJsonData(value)
+  fun geometry(value: Geometry): GeoJsonSource = applyGeoJsonData(value)
 
   private fun GeoJson.toPropertyValue() = PropertyValue(
     "data",
