@@ -198,8 +198,8 @@ class MapboxMap internal constructor(
     styleExtension.images.forEach {
       it.bindTo(style)
     }
-    styleExtension.layers.forEach {
-      it.first.bindTo(style, it.second)
+    styleExtension.layers.forEach { (layer, layerPosition) ->
+      layer.bindTo(style, layerPosition)
     }
     styleExtension.light?.bindTo(style)
     styleExtension.terrain?.bindTo(style)
