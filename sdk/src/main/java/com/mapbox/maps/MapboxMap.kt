@@ -189,17 +189,14 @@ class MapboxMap internal constructor(
     onStyleLoaded: Style.OnStyleLoaded? = null
   ) {
     this.style = style
-    styleExtension.images.forEach {
-      it.bindTo(style)
-    }
     styleExtension.sources.forEach {
-      it.bindTo(style)
-    }
-    styleExtension.images.forEach {
       it.bindTo(style)
     }
     styleExtension.layers.forEach { (layer, layerPosition) ->
       layer.bindTo(style, layerPosition)
+    }
+    styleExtension.images.forEach {
+      it.bindTo(style)
     }
     styleExtension.light?.bindTo(style)
     styleExtension.terrain?.bindTo(style)
