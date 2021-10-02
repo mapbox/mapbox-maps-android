@@ -11,10 +11,11 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.GeoJson
 import com.mapbox.geojson.Geometry
+import com.mapbox.maps.MapEvents
+import com.mapbox.maps.Observer
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
-import com.mapbox.maps.extension.style.sources.OnGeoJsonParsed
 import com.mapbox.maps.extension.style.sources.Source
 import com.mapbox.maps.extension.style.types.PromoteId
 import com.mapbox.maps.extension.style.types.SourceDsl
@@ -29,54 +30,21 @@ import com.mapbox.maps.extension.style.utils.toValue
  *
  */
 class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
-  private var geoJsonParsed = false
-  private val onGeoJsonParsedListenerList = mutableListOf<OnGeoJsonParsed>()
   private val workerHandler by lazy {
     Handler(workerThread.looper)
   }
   private constructor(
     builder: Builder,
-    rawGeoJson: GeoJson?,
-    onGeoJsonParsed: OnGeoJsonParsed
+    rawGeoJson: GeoJson?
   ) : this(builder) {
     rawGeoJson?.let {
-      ignoreParsedGeoJsonRegistry[sourceId] = false
-      onGeoJsonParsedListenerList.add(onGeoJsonParsed)
       workerHandler.post {
         val property = it.toPropertyValue()
         mainHandler.post {
-          geoJsonParsed = true
-          // we set parsed data when sync setter was not called during background work
-          if (ignoreParsedGeoJsonRegistry[sourceId] == false) {
-            setProperty(property, throwRuntimeException = false)
-            onGeoJsonParsedListenerList.forEach {
-              it.onGeoJsonParsed(this)
-            }
-          }
+          setProperty(property, throwRuntimeException = false)
         }
       }
-    } ?: run { geoJsonParsed = true }
-  }
-
-  /**
-   * Add listener that gets invoked when feature, featureCollection or geometry data is parsed.
-   *
-   * @param listener Listener returning GeoJsonSource when data is parsed.
-   */
-  fun addOnGeoJsonParsedListener(listener: OnGeoJsonParsed) {
-    onGeoJsonParsedListenerList.add(listener)
-    if (geoJsonParsed) {
-      listener.onGeoJsonParsed(this)
     }
-  }
-
-  /**
-   * Remove listener that gets invoked when feature, featureCollection or geometry data is parsed.
-   *
-   * @param listener Listener to be removed.
-   */
-  fun removeOnGeoJsonParsedListener(listener: OnGeoJsonParsed) {
-    onGeoJsonParsedListenerList.remove(listener)
   }
 
   init {
@@ -93,14 +61,16 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
 
   /**
    * A URL to a GeoJSON file, or inline GeoJSON.
-   *
-   * If method is called while another asynchronous method is parsing data - asynchronous method will not
-   * apply when data is parsed.
    */
   fun data(value: String) = apply {
-    ignoreParsedGeoJsonRegistry[sourceId] = true
+    // remove any events from queue before posting this task
     workerHandler.removeCallbacksAndMessages(null)
-    setProperty(PropertyValue("data", TypeUtils.wrapToValue(value)))
+    workerHandler.post {
+      mainHandler.post {
+        // we set parsed data when sync setter was not called during background work
+        setProperty(PropertyValue("data", Value(value)), throwRuntimeException = false)
+      }
+    }
   }
 
   /**
@@ -301,54 +271,42 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
 
   /**
    * Add a Feature to the GeojsonSource.
-   * If [onDataParsed] is provided and not null - data will be loaded in async mode.
-   * Otherwise method will be synchronous.
+   * Data will be parsed from collection to [String] in a worker thread and
+   * use main thread to pass this data to gl-native.
    *
-   * If synchronous method is called while another asynchronous method is parsing data -
-   * asynchronous method will not apply when data is parsed.
+   * In order to capture events when actual data is drawn on the map please refer to [Observer] API
+   * and listen to [MapEvents.STYLE_DATA_LOADED] or [MapEvents.MAP_LOADING_ERROR] with `type = source`
+   * if data parsing error has occurred.
    *
-   * @param value the feature collection
-   * @param onDataParsed optional callback notifying when data is parsed on a worker thread
+   * @param value the feature
    */
-  @JvmOverloads
-  fun feature(
-    value: Feature,
-    onDataParsed: ((GeoJsonSource) -> Unit)? = null
-  ) = applyGeoJsonData(value, onDataParsed)
+  fun feature(value: Feature): GeoJsonSource = applyGeoJsonData(value)
 
   /**
-   * Add a FeatureCollection to the GeojsonSource.
-   * If [onDataParsed] is provided and not null - data will be loaded in async mode.
-   * Otherwise method will be synchronous.
+   * Add a Feature Collection to the GeojsonSource.
+   * Data will be parsed from collection to [String] in a worker thread and
+   * use main thread to pass this data to gl-native.
    *
-   * If synchronous method is called while another asynchronous method is parsing data -
-   * asynchronous method will not apply when data is parsed.
+   * In order to capture events when actual data is drawn on the map please refer to [Observer] API
+   * and listen to [MapEvents.STYLE_DATA_LOADED] or [MapEvents.MAP_LOADING_ERROR] with `type = source`
+   * if data parsing error has occurred.
    *
    * @param value the feature collection
-   * @param onDataParsed optional callback notifying when data is parsed on a worker thread
    */
-  @JvmOverloads
-  fun featureCollection(
-    value: FeatureCollection,
-    onDataParsed: ((GeoJsonSource) -> Unit)? = null
-  ) = applyGeoJsonData(value, onDataParsed)
+  fun featureCollection(value: FeatureCollection): GeoJsonSource = applyGeoJsonData(value)
 
   /**
    * Add a Geometry to the GeojsonSource.
-   * If [onDataParsed] is provided and not null - data will be loaded in async mode.
-   * Otherwise method will be synchronous.
+   * Data will be parsed from collection to [String] in a worker thread and
+   * use main thread to pass this data to gl-native.
    *
-   * If synchronous method is called while another asynchronous method is parsing data -
-   * asynchronous method will not apply when data is parsed.
+   * In order to capture events when actual data is drawn on the map please refer to [Observer] API
+   * and listen to [MapEvents.STYLE_DATA_LOADED] or [MapEvents.MAP_LOADING_ERROR] with `type = source`
+   * if data parsing error has occurred.
    *
-   * @param value the feature collection
-   * @param onDataParsed optional callback notifying when data is parsed on a worker thread
+   * @param value the geometry
    */
-  @JvmOverloads
-  fun geometry(
-    value: Geometry,
-    onDataParsed: ((GeoJsonSource) -> Unit)? = null
-  ) = applyGeoJsonData(value, onDataParsed)
+  fun geometry(value: Geometry): GeoJsonSource = applyGeoJsonData(value)
 
   private fun GeoJson.toPropertyValue() = PropertyValue(
     "data",
@@ -361,29 +319,16 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
   )
 
   private fun applyGeoJsonData(
-    data: GeoJson,
-    onDataParsed: ((GeoJsonSource) -> Unit)?
+    data: GeoJson
   ): GeoJsonSource = apply {
-    onDataParsed?.let { listener ->
-      ignoreParsedGeoJsonRegistry[sourceId] = false
-      // remove any events from queue before posting this task
-      workerHandler.removeCallbacksAndMessages(null)
-      workerHandler.post {
-        val property = data.toPropertyValue()
-        mainHandler.post {
-          // we set parsed data when sync setter was not called during background work
-          if (ignoreParsedGeoJsonRegistry[sourceId] == false) {
-            setProperty(property, throwRuntimeException = false)
-            listener.invoke(this)
-          }
-        }
+    // remove any events from queue before posting this task
+    workerHandler.removeCallbacksAndMessages(null)
+    workerHandler.post {
+      val property = data.toPropertyValue()
+      mainHandler.post {
+        // we set parsed data when sync setter was not called during background work
+        setProperty(property, throwRuntimeException = false)
       }
-    } ?: run {
-      // if any task is running - set flag to skip it when it is finished
-      ignoreParsedGeoJsonRegistry[sourceId] = true
-      // remove any events from queue - they should not overwrite data set synchronously
-      workerHandler.removeCallbacksAndMessages(null)
-      setProperty(data.toPropertyValue())
     }
   }
 
@@ -391,12 +336,10 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * Builder for GeoJsonSource.
    *
    * @param sourceId the ID of the source
-   * @param onGeoJsonParsed callback invoked when data is parsed
    */
   @SourceDsl
   class Builder(
-    val sourceId: String,
-    private val onGeoJsonParsed: OnGeoJsonParsed
+    val sourceId: String
   ) {
 
     private var rawGeoJson: GeoJson? = null
@@ -648,7 +591,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
      *
      * @return the GeoJsonSource
      */
-    fun build() = GeoJsonSource(this, rawGeoJson, onGeoJsonParsed)
+    fun build() = GeoJsonSource(this, rawGeoJson)
   }
 
   /**
@@ -663,8 +606,6 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     }
 
     private val mainHandler = Handler(Looper.getMainLooper())
-    /** Registry to control if we need to ignore parsed result for given sourceId. */
-    private val ignoreParsedGeoJsonRegistry = hashMapOf<String, Boolean>()
 
     /**
      * Maximum zoom level at which to create vector tiles (higher means greater detail at high zoom
@@ -786,19 +727,18 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
 
 /**
  * DSL function for [GeoJsonSource] accepting empty data source.
- * Immediately returns [GeoJsonSource] with no data set
- *
- * Using this method means that it is user's responsibility to proceed with adding data,
- * layers or other style objects in [onGeoJsonParsed] callback.
+ * Immediately returns [GeoJsonSource] with no data set.
  */
 fun geoJsonSource(
   id: String
-) = GeoJsonSource.Builder(id) {}.build()
+) = GeoJsonSource.Builder(id).build()
 
 /**
- * DSL function for [GeoJsonSource] performing parsing using background thread.
+ * DSL function for [GeoJsonSource].
+ *
  * Immediately returns [GeoJsonSource] with no data set and starts preparing actual data
- * using a worker thread.
+ * using a worker thread if [GeoJsonSource.Builder.feature],
+ * [GeoJsonSource.Builder.featureCollection] or [GeoJsonSource.Builder.geometry] were applied.
  *
  * If using runtime styling:
  *
@@ -809,30 +749,16 @@ fun geoJsonSource(
  *   ...
  * }
  *
- * compositing style will be performed correctly under the hood and
- * [Style.OnStyleLoaded] will be emitted in correct moment of time when all sources are parsed.
+ * [Style.OnStyleLoaded] will be emitted without waiting to draw [GeoJsonSource.feature],
+ * [GeoJsonSource.featureCollection] or [GeoJsonSource.geometry] on the map.
  *
- * If creating geojson sources for already loaded Style please consider using overloaded
- * geoJsonSource(String, GeoJsonSource.Builder.() -> Unit, onGeoJsonParsed: (GeoJsonSource) -> Unit) function
- * and use fully prepared [GeoJsonSource] in onGeoJsonParsed callback.
+ * In order to capture events when actual data is drawn on the map please refer to [Observer] API
+ * and listen to [MapEvents.STYLE_DATA_LOADED] or [MapEvents.MAP_LOADING_ERROR] with `type = source`
+ * if data parsing error has occurred.
  */
 fun geoJsonSource(
   id: String,
   block: GeoJsonSource.Builder.() -> Unit
-): GeoJsonSource = GeoJsonSource.Builder(id) {}.apply(block).build()
-
-/**
- * DSL function for [GeoJsonSource] performing parsing using a worker thread.
- * Immediately returns [GeoJsonSource] with no data set,
- * fully parsed [GeoJsonSource] is returned in [onGeoJsonParsed] callback.
- *
- * Using this method means that it is user's responsibility to proceed with adding this source,
- * layers or other style objects in [onGeoJsonParsed] callback.
- */
-fun geoJsonSource(
-  id: String,
-  config: GeoJsonSource.Builder.() -> Unit,
-  onGeoJsonParsed: OnGeoJsonParsed
-): GeoJsonSource = GeoJsonSource.Builder(id, onGeoJsonParsed).apply(config).build()
+): GeoJsonSource = GeoJsonSource.Builder(id).apply(block).build()
 
 // End of generated file.

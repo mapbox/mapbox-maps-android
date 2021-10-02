@@ -91,18 +91,26 @@ abstract class Source(
 
   private fun updateProperty(property: PropertyValue<*>, throwRuntimeException: Boolean = true) {
     delegate?.let { styleDelegate ->
-      val expected = styleDelegate.setStyleSourceProperty(
-        sourceId,
-        property.propertyName,
-        property.value
-      )
-      expected.error?.let { error ->
-        "Set source property \"${property.propertyName}\" failed:\nError: $error\nValue set: ${property.value}".let {
-          if (throwRuntimeException) {
-            throw RuntimeException(it)
-          } else {
-            Logger.e(TAG, it)
+      try {
+        val expected = styleDelegate.setStyleSourceProperty(
+          sourceId,
+          property.propertyName,
+          property.value
+        )
+        expected.error?.let { error ->
+          "Set source property \"${property.propertyName}\" failed:\nError: $error\nValue set: ${property.value}".let {
+            if (throwRuntimeException) {
+              throw RuntimeException(it)
+            } else {
+              Logger.e(TAG, it)
+            }
           }
+        }
+      } catch (e: IllegalStateException) {
+        if (throwRuntimeException) {
+          throw e
+        } else {
+          Logger.e(TAG, e.message ?: "")
         }
       }
     }

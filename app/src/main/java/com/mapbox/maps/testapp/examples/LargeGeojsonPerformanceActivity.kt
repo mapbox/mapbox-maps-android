@@ -100,32 +100,15 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() {
   }
 
   private fun loadAdditionalGeoJsonAfter(style: Style) {
-    // async method with adding layer in callback when geojson is completely parsed
-    geoJsonSource(
-      id = "${SOURCE}_$LARGE_SOURCE_COUNT",
-      config = {
-        featureCollection(routePoints)
-      },
-      onGeoJsonParsed = {
-        style.addSource(it)
-        style.addLayer(
-          lineLayer("${LAYER}_$LARGE_SOURCE_COUNT", "${SOURCE}_$LARGE_SOURCE_COUNT") {
-            lineColor("green")
-            lineOffset(5.0 * LARGE_SOURCE_COUNT)
-          }
-        )
-      }
-    )
-    // async method with adding layer instantly without waiting for geojson to actually parse
     style.addSource(
-      geoJsonSource(id = "${SOURCE}_${LARGE_SOURCE_COUNT + 1}") {
+      geoJsonSource("${SOURCE}_$LARGE_SOURCE_COUNT") {
         featureCollection(routePoints)
       }
     )
     style.addLayer(
-      lineLayer("${LAYER}_${LARGE_SOURCE_COUNT + 1}", "${SOURCE}_${LARGE_SOURCE_COUNT + 1}") {
-        lineColor("red")
-        lineOffset(5.0 * (LARGE_SOURCE_COUNT + 1))
+      lineLayer("${LAYER}_$LARGE_SOURCE_COUNT", "${SOURCE}_$LARGE_SOURCE_COUNT") {
+        lineColor("green")
+        lineOffset(5.0 * LARGE_SOURCE_COUNT)
       }
     )
   }

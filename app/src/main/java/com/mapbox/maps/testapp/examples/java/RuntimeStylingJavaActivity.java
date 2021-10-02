@@ -235,8 +235,8 @@ public class RuntimeStylingJavaActivity extends AppCompatActivity {
 
     private void addSymbolSource(Style style) {
         final FeatureCollection featureCollection = FeatureCollection.fromJson(SYMBOL_SOURCE_FEATURECOLLECTION);
-        final GeoJsonSource geoJsonSource = new GeoJsonSource.Builder(GEOJSON_SOURCE_ID, source -> {
-        }).featureCollection(featureCollection)
+        final GeoJsonSource geoJsonSource = new GeoJsonSource.Builder(GEOJSON_SOURCE_ID)
+                .featureCollection(featureCollection)
                 .cluster(true)
                 .prefetchZoomDelta(1)
                 .build();
@@ -277,8 +277,9 @@ public class RuntimeStylingJavaActivity extends AppCompatActivity {
     }
 
     private void addFillSource(Style style) {
-        final GeoJsonSource polygon = new GeoJsonSource.Builder(POLYGON_SOURCE_ID, source -> {
-        }).featureCollection(FeatureCollection.fromJson(FILL_FEATURE_COLLECTION)).build();
+        final GeoJsonSource polygon = new GeoJsonSource.Builder(POLYGON_SOURCE_ID)
+                .featureCollection(FeatureCollection.fromJson(FILL_FEATURE_COLLECTION))
+                .build();
         Logger.i(TAG, polygon.toString());
         SourceUtils.addSource(style, polygon);
     }

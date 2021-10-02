@@ -156,8 +156,11 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
         // Add a image source
         builder.addSource(new ImageSource.Builder(IMAGE_URL).coordinates(POINT_LIST).build());
         // Add the earthquake source
-        builder.addSource(new GeoJsonSource.Builder(SOURCE_ID, source -> {
-        }).url(GEOJSON_URL).cluster(false).build());
+        builder.addSource(new GeoJsonSource.Builder(SOURCE_ID)
+                .url(GEOJSON_URL)
+                .cluster(false)
+                .build()
+        );
 
         // Add circleLayer which will show the earthquake locations
         CircleLayer circleLayer = new CircleLayer(CIRCLE_LAYER_ID, SOURCE_ID);

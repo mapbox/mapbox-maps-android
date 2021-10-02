@@ -3,6 +3,7 @@
 package com.mapbox.maps.extension.style.sources.generated
 
 import android.os.HandlerThread
+import android.os.Looper
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
@@ -24,6 +25,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
@@ -75,7 +77,11 @@ class GeoJsonSourceTest {
   fun dataSetAfterBind() {
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
     testSource.data(TEST_GEOJSON)
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
 
     verify { style.setStyleSourceProperty("testId", "data", capture(valueSlot)) }
     assertEquals(valueSlot.captured.toString(), "{\"type\":\"FeatureCollection\",\"features\":[]}")
@@ -106,7 +112,11 @@ class GeoJsonSourceTest {
   fun urlSetAfterBindTest() {
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
     testSource.url("testUrl")
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
 
     verify { style.setStyleSourceProperty("testId", "data", capture(valueSlot)) }
     assertEquals(valueSlot.captured.toString(), "testUrl")
@@ -462,7 +472,11 @@ class GeoJsonSourceTest {
     )
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
     testSource.feature(feature)
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { style.setStyleSourceProperty("testId", "data", any()) }
   }
 
@@ -495,7 +509,11 @@ class GeoJsonSourceTest {
     )
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
     testSource.featureCollection(featureCollection)
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { style.setStyleSourceProperty("testId", "data", any()) }
   }
 
@@ -517,7 +535,11 @@ class GeoJsonSourceTest {
     )
     val testSource = geoJsonSource("testId") {}
     testSource.bindTo(style)
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
     testSource.geometry(feature.geometry()!!)
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).idle()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { style.setStyleSourceProperty("testId", "data", any()) }
   }
 

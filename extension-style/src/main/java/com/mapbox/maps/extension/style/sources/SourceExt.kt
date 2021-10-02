@@ -18,7 +18,7 @@ fun StyleManagerInterface.getSource(sourceId: String): Source? {
   return this.getStyleSourceProperty(sourceId, "type").silentUnwrap<String>()?.let { type ->
     when (type) {
       "vector" -> VectorSource.Builder(sourceId).build().also { it.delegate = this }
-      "geojson" -> GeoJsonSource.Builder(sourceId) {}.build().also { it.delegate = this }
+      "geojson" -> GeoJsonSource.Builder(sourceId).build().also { it.delegate = this }
       "image" -> ImageSource.Builder(sourceId).build().also { it.delegate = this }
       "raster-dem" -> RasterDemSource.Builder(sourceId).build().also { it.delegate = this }
       "raster" -> RasterSource.Builder(sourceId).build().also { it.delegate = this }

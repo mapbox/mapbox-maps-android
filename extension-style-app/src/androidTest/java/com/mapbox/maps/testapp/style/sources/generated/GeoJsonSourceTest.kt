@@ -2,6 +2,8 @@
 
 package com.mapbox.maps.testapp.style.sources.generated
 
+import android.os.Handler
+import android.os.Looper
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mapbox.geojson.Feature
@@ -41,7 +43,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     }
     setupSource(testSource)
     testSource.data(TEST_GEOJSON)
-    assertEquals(null, testSource.data)
+    Handler(Looper.getMainLooper()).postDelayed({ assertEquals(null, testSource.data) }, 10L)
   }
 
   @Test
@@ -301,7 +303,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     }
     setupSource(testSource)
     // Plain json string data getter is not supported due to performance consideration.
-    assertEquals(null, testSource.data)
+    Handler(Looper.getMainLooper()).postDelayed({ assertEquals(null, testSource.data) }, 10L)
   }
 
   @Test
@@ -337,7 +339,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     }
     setupSource(testSource)
     // Plain json string data getter is not supported due to performance consideration.
-    assertEquals(null, testSource.data)
+    Handler(Looper.getMainLooper()).postDelayed({ assertEquals(null, testSource.data) }, 10L)
   }
 
   @Test
@@ -362,7 +364,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     }
     setupSource(testSource)
     // Plain json string data getter is not supported due to performance consideration.
-    assertEquals(null, testSource.data)
+    Handler(Looper.getMainLooper()).postDelayed({ assertEquals(null, testSource.data) }, 10L)
   }
 
   @Test
@@ -388,7 +390,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     setupSource(testSource)
     testSource.feature(feature)
     // Plain json string data getter is not supported due to performance consideration.
-    assertEquals(null, testSource.data)
+    Handler(Looper.getMainLooper()).postDelayed({ assertEquals(null, testSource.data) }, 10L)
   }
 
   @Test
@@ -425,7 +427,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     setupSource(testSource)
     testSource.featureCollection(featureCollection)
     // Plain json string data getter is not supported due to performance consideration.
-    assertEquals(null, testSource.data)
+    Handler(Looper.getMainLooper()).postDelayed({ assertEquals(null, testSource.data) }, 10L)
   }
 
   @Test
@@ -451,7 +453,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     setupSource(testSource)
     testSource.geometry(feature.geometry()!!)
     // Plain json string data getter is not supported due to performance consideration.
-    assertEquals(null, testSource.data)
+    Handler(Looper.getMainLooper()).postDelayed({ assertEquals(null, testSource.data) }, 10L)
   }
 
   // Default source properties getter tests

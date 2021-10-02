@@ -107,7 +107,7 @@ class PointAnnotationManagerTest {
     every { mapView.scrollY } returns 0
     every { layer.layerId } returns "layer0"
     every { source.sourceId } returns "source0"
-    every { source.featureCollection(any(), any()) } answers { source }
+    every { source.featureCollection(any()) } answers { source }
 
     every { queriedFeature.feature } returns feature
     every { queriedFeatures.value } returns queriedFeatureList

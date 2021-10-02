@@ -15,7 +15,6 @@ import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.extension.style.style
 import org.junit.After
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -33,11 +32,6 @@ class MapIntegrationTest {
   private lateinit var mapView: MapView
   private lateinit var mapboxMap: MapboxMap
   private lateinit var countDownLatch: CountDownLatch
-
-  @Before
-  @UiThreadTest
-  fun setUp() {
-  }
 
   @Test
   fun testSetCameraOnStart() {
@@ -115,11 +109,10 @@ class MapIntegrationTest {
               circleColor("red")
               circleRadius(10.0)
             }
-            // async loading
             +geoJsonSource("source") {
               // set geometry
               geometry(Point.fromLngLat(0.0, 0.0))
-              // and then set data - data must overwrite geometry despite geometry being async
+              // and then set data - it will be applied after geometry
               data(
                 """
             {
@@ -188,12 +181,11 @@ class MapIntegrationTest {
             circleColor("red")
             circleRadius(10.0)
           }
-          // async loading
           val source = geoJsonSource("source") {
             geometry(Point.fromLngLat(0.0, 0.0))
           }
-          source.geometry(Point.fromLngLat(0.0, 0.0)) {}
-          source.feature(Feature.fromGeometry(Point.fromLngLat(0.0, 0.0))) {}
+          source.geometry(Point.fromLngLat(0.0, 0.0))
+          source.feature(Feature.fromGeometry(Point.fromLngLat(0.0, 0.0)))
           source.featureCollection(
             FeatureCollection.fromFeature(
               Feature.fromGeometry(
@@ -203,8 +195,7 @@ class MapIntegrationTest {
                 )
               )
             )
-          ) {}
-          // sync method must clear async queue and not allow current running async task apply changes
+          )
           source.geometry(Point.fromLngLat(0.1, 0.1))
           style.addSource(source)
           style.addLayer(layer)
@@ -250,11 +241,9 @@ class MapIntegrationTest {
             circleColor("red")
             circleRadius(10.0)
           }
-          // async loading
           val source = geoJsonSource("source") {
             geometry(Point.fromLngLat(0.0, 0.0))
           }
-          // sync method must clear async queue and not allow current running async task apply changes
           source.data(
             """
             {
@@ -322,14 +311,14 @@ class MapIntegrationTest {
             circleColor("red")
             circleRadius(10.0)
           }
-          // async loading
           val source = geoJsonSource("source") {
             geometry(Point.fromLngLat(0.0, 0.0))
           }
-          // sync method must clear async queue and not allow current running async task apply changes
           source.geometry(Point.fromLngLat(0.1, 0.1))
-          // follow up with new async that must take effect
-          source.geometry(Point.fromLngLat(0.2, 0.2)) {}
+          source.geometry(Point.fromLngLat(0.3, 0.3))
+          source.geometry(Point.fromLngLat(0.4, 0.4))
+          // follow up with new async that must take effect (last in the queue)
+          source.geometry(Point.fromLngLat(0.2, 0.2))
           style.addSource(source)
           style.addLayer(layer)
           mapView.postDelayed(
@@ -345,62 +334,6 @@ class MapIntegrationTest {
             },
             1_000L
           )
-        }
-        mapView.onStart()
-      }
-    }
-    if (!countDownLatch.await(5, TimeUnit.SECONDS)) {
-      throw TimeoutException()
-    }
-  }
-
-  @Test
-  fun testApplySyncDataToGeoJson4() {
-    countDownLatch = CountDownLatch(1)
-    rule.scenario.onActivity {
-      it.runOnUiThread {
-        mapView = MapView(it)
-        mapboxMap = mapView.getMapboxMap()
-        it.frameLayout.addView(mapView)
-        mapboxMap.setCamera(
-          CameraOptions.Builder()
-            .center(Point.fromLngLat(0.2, 0.2))
-            .zoom(9.0)
-            .build()
-        )
-        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) { style ->
-          // prepare layer
-          val layer = circleLayer("layer", "source") {
-            circleColor("red")
-            circleRadius(10.0)
-          }
-          // async loading, but we proceed after parsing
-          geoJsonSource(
-            "source",
-            config = {
-              geometry(Point.fromLngLat(0.0, 0.0))
-            }
-          ) { source ->
-            // sync method
-            source.geometry(Point.fromLngLat(0.1, 0.1))
-            // follow up with new async that must take effect
-            source.geometry(Point.fromLngLat(0.2, 0.2)) {}
-            style.addSource(source)
-            style.addLayer(layer)
-            mapView.postDelayed(
-              {
-                mapboxMap.queryRenderedFeatures(
-                  ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0),
-                  RenderedQueryOptions(listOf("layer"), null)
-                ) { result ->
-                  if (result.value?.size == 1) {
-                    countDownLatch.countDown()
-                  }
-                }
-              },
-              1_000L
-            )
-          }
         }
         mapView.onStart()
       }
