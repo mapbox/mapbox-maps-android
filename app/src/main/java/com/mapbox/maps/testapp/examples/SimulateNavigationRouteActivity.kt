@@ -31,6 +31,8 @@ import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.testapp.utils.StorageUtils
 import com.mapbox.turf.TurfMeasurement
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 /**
  * Simulate a navigation route with pre-defined route (from LA to San Francisco) with location puck,
@@ -80,7 +82,7 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
     override fun onMoveEnd(detector: MoveGestureDetector) {}
   }
 
-  private val onMapClickListener = OnMapClickListener { point ->
+  private val onMapClickListener = OnMapClickListener {
     when (cameraFollowMode) {
       CameraFollowMode.OVERVIEW -> {
         setCameraToFollowPuck()
@@ -201,7 +203,7 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
         frameReport.add(
           JsonObject().apply {
             addProperty("time_from_start", (now - startBenchmarkTime) * 1e-6f)
-            addProperty("interval_from_last_frame", (now - lastRenderedFrameTime)  * 1e-6f)
+            addProperty("interval_from_last_frame", (now - lastRenderedFrameTime) * 1e-6f)
           }
         )
         if (now - lastRenderedFrameTime > 1000_000L * TARGET_FRAME_TIME_MS) {
@@ -236,66 +238,84 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
     ) {
       initFpsCounter()
       initLocationComponent()
-      setupGestures()
       setCameraToOverview(false)
-      playScripts()
-      handler.postDelayed(
-        {
-          val endBenchmarkTime = SystemClock.elapsedRealtimeNanos()
-          Toast.makeText(
-            this,
-            """
-              Average FPS: ${(renderFrameFinishCount * 1e9f / (endBenchmarkTime - startBenchmarkTime)).format()}
-              Over time frames: $overtimeFrameCount
-              Over time frames ratio: ${(overtimeFrameCount * 100f / renderFrameFinishCount).format()}%
-              Max frame interval: ${renderFrameIntervalsMs.maxOrNull().format()}ms
-              Min frame interval: ${renderFrameIntervalsMs.minOrNull().format()}ms
-              Logs have been saved to $filesDir/logs/frame_log.json.
-            """.trimIndent(),
-            Toast.LENGTH_LONG
-          ).show()
-          StorageUtils(this).writeToFile("frame_log.json", Gson().toJson(frameReport))
-          finish()
-        },
-        ACTIVITY_RUN_TIME
-      )
+      setupGestures()
+      playBenchmarkScripts()
     }
   }
 
-  private fun playScripts() {
+  /**
+   * Play a pre-defined script to simulate a navigation route with switching between follow and overview mode.
+   */
+  private fun playBenchmarkScripts() {
+    disableGestures()
+    // Ease camera to follow puck
     handler.postDelayed(
       {
         setCameraToFollowPuck()
       },
       INITIAL_OVERVIEW_TIME
     )
+    // Ease camera to route overview
     handler.postDelayed(
       {
         setCameraToOverview(true)
       },
       INITIAL_OVERVIEW_TIME + CAMERA_ACTION_INTERVAL * 2
     )
+    // Ease camera to follow puck
     handler.postDelayed(
       {
         setCameraToFollowPuck()
       },
       INITIAL_OVERVIEW_TIME + CAMERA_ACTION_INTERVAL * 3
     )
+    // Post toast message on activity ends.
+    handler.postDelayed(
+      {
+        val endBenchmarkTime = SystemClock.elapsedRealtimeNanos()
+        Toast.makeText(
+          this,
+          """
+              Average FPS: ${(renderFrameFinishCount * 1e9f / (endBenchmarkTime - startBenchmarkTime)).format()}
+              Over time frames: $overtimeFrameCount
+              Over time frames ratio: ${(overtimeFrameCount * 100f / renderFrameFinishCount).format()}%
+              Max frame interval: ${renderFrameIntervalsMs.maxOrNull().format()}ms
+              Min frame interval: ${renderFrameIntervalsMs.minOrNull().format()}ms
+              Frame interval SD: ${renderFrameIntervalsMs.sd().format()}ms
+              Logs have been saved to $filesDir/logs/$FRAME_LOG_JSON_NAME.
+          """.trimIndent(),
+          Toast.LENGTH_LONG
+        ).show()
+        StorageUtils(this).writeToFile(FRAME_LOG_JSON_NAME, Gson().toJson(frameReport))
+        finish()
+      },
+      ACTIVITY_RUN_TIME
+    )
   }
 
   private fun setupGestures() {
-    // Disable all the gestures
     mapView.gestures.apply {
-//      addOnMoveListener(onMoveListener)
-//      addOnMapClickListener(onMapClickListener)
-      updateSettings {
-        scrollEnabled = false
-        pinchToZoomEnabled = false
-        pitchEnabled = false
-        rotateEnabled = false
-        doubleTapToZoomInEnabled = false
-        doubleTouchToZoomOutEnabled = false
-      }
+      addOnMoveListener(onMoveListener)
+      addOnMapClickListener(onMapClickListener)
+    }
+  }
+
+  /**
+   * Disable gestures in order to get stable benchmark result.
+   */
+  private fun disableGestures() {
+    mapView.gestures.apply {
+      removeOnMoveListener(onMoveListener)
+      removeOnMapClickListener(onMapClickListener)
+    }
+    mapView.gestures.updateSettings {
+      scrollEnabled = false
+      pinchToZoomEnabled = false
+      pitchEnabled = false
+      rotateEnabled = false
+      doubleTapToZoomInEnabled = false
+      doubleTouchToZoomOutEnabled = false
     }
   }
 
@@ -334,11 +354,14 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
 
   override fun onDestroy() {
     super.onDestroy()
-    mapView.location
-      .removeOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener)
-    mapView.location
-      .removeOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
-    mapView.gestures.removeOnMoveListener(onMoveListener)
+    mapView.location.apply {
+      removeOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener)
+      removeOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
+    }
+    mapView.gestures.apply {
+      removeOnMoveListener(onMoveListener)
+      removeOnMapClickListener(onMapClickListener)
+    }
     mapView.getMapboxMap().unsubscribe(renderFrameObserver)
   }
 
@@ -385,8 +408,18 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
     }
   }
 
-  private fun Float?.format(): String {
+  private fun Number?.format(): String {
     return "%.2f".format(this)
+  }
+
+  private fun List<Float>.sd(): Double {
+    val mean = average()
+    return sqrt(
+      fold(
+        0.0,
+        { accumulator, next -> accumulator + (next - mean).pow(2.0) }
+      ) / size
+    )
   }
 
   companion object {
@@ -403,5 +436,6 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
     private const val GEOJSON_SOURCE_ID = "source_id"
     private const val ROUTE_LINE_LAYER_ID = "route_line_layer_id"
     private const val NAVIGATION_ROUTE_JSON_NAME = "navigation_route.json"
+    private const val FRAME_LOG_JSON_NAME = "frame_log.json"
   }
 }
