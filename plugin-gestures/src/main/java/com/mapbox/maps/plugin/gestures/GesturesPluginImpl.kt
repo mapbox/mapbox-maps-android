@@ -13,9 +13,11 @@ import android.view.MotionEvent
 import androidx.annotation.VisibleForTesting
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.android.gestures.*
+import com.mapbox.common.Logger
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
+import com.mapbox.maps.plugin.MapProjection
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
@@ -23,10 +25,7 @@ import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAn
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
-import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
-import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
-import com.mapbox.maps.plugin.delegates.MapTransformDelegate
+import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettingsBase
@@ -48,6 +47,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
   private lateinit var mapPluginProviderDelegate: MapPluginProviderDelegate
   private lateinit var cameraAnimationsPlugin: CameraAnimationsPlugin
+  private lateinit var mapProjectionDelegate: MapProjectionDelegate
 
   private val protectedCameraAnimatorOwnerList = CopyOnWriteArrayList<String>()
 
@@ -1562,6 +1562,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     this.mapTransformDelegate = delegateProvider.mapTransformDelegate
     this.mapCameraManagerDelegate = delegateProvider.mapCameraManagerDelegate
+    this.mapProjectionDelegate = delegateProvider.mapProjectionDelegate
     this.mapPluginProviderDelegate = delegateProvider.mapPluginProviderDelegate
     @Suppress("UNCHECKED_CAST")
     this.cameraAnimationsPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
@@ -1570,6 +1571,29 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       "Can't look up an instance of plugin, " +
         "is it available on the clazz path and loaded through the map?"
     )
+    val pitchAnimator = cameraAnimationsPlugin.createPitchAnimator(
+        cameraAnimatorOptions(0.0) {
+        owner("globe")
+      }
+    ) {
+      duration = 500L
+    }
+    cameraAnimationsPlugin.registerAnimators(pitchAnimator)
+    addProtectedAnimationOwner("globe")
+    delegateProvider.mapListenerDelegate.addOnMapIdleListener {
+      val cameraState = mapCameraManagerDelegate.cameraState
+      if (cameraState.zoom >= 1.55 && pitchAnimator.isRunning) {
+        pitchAnimator.cancel()
+      }
+      if (cameraState.zoom < 1.55
+        && mapProjectionDelegate.getMapProjection() === MapProjection.Globe
+        && cameraState.pitch >= 0) {
+        if (pitchAnimator.isRunning) {
+          return@addOnMapIdleListener
+        }
+        pitchAnimator.start()
+      }
+    }
   }
 
   /**
