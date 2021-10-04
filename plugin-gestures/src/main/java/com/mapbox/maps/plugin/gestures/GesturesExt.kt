@@ -3,6 +3,7 @@
 package com.mapbox.maps.plugin.gestures
 
 import com.mapbox.android.gestures.AndroidGesturesManager
+import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.ScrollMode
 import com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate
@@ -244,3 +245,41 @@ fun GesturesSettings.isScrollHorizontallyLimited(): Boolean {
 fun GesturesSettings.isScrollVerticallyLimited(): Boolean {
   return scrollMode == ScrollMode.HORIZONTAL
 }
+
+inline fun GesturesPlugin.addOnMoveListener(
+  crossinline onMoveBegin: (detector: MoveGestureDetector) -> Unit = {},
+  crossinline onMove: (detector: MoveGestureDetector) -> Boolean = { false },
+  crossinline onMoveEnd: (detector: MoveGestureDetector) -> Unit = {}
+): OnMoveListener {
+  val listener = object : OnMoveListener {
+    override fun onMoveBegin(detector: MoveGestureDetector) = onMoveBegin(detector)
+    override fun onMove(detector: MoveGestureDetector): Boolean = onMove(detector)
+    override fun onMoveEnd(detector: MoveGestureDetector) = onMoveEnd(detector)
+  }
+  addOnMoveListener(listener)
+  return listener
+}
+
+/**
+ * Add an action which will be invoked when the move gesture is starting.
+ * @return the [OnMoveListener] added to the [GesturesPlugin]
+ * @see [MoveGestureDetector.OnMoveGestureListener.onMoveBegin]
+ */
+inline fun GesturesPlugin.doOnMoveBegin(crossinline action: (detector: MoveGestureDetector) -> Unit) =
+  addOnMoveListener(onMoveBegin = action)
+
+/**
+ * Add an action which will be invoked when the move gesture is executing.
+ * @return the [OnMoveListener] added to the [GesturesPlugin]
+ * @see [MoveGestureDetector.OnMoveGestureListener.onMove]
+ */
+inline fun GesturesPlugin.doOnMove(crossinline action: (detector: MoveGestureDetector) -> Boolean) =
+  addOnMoveListener(onMove = action)
+
+/**
+ * Add an action which will be invoked when the move gesture is ending.
+ * @return the [OnMoveListener] added to the [GesturesPlugin]
+ * @see [MoveGestureDetector.OnMoveGestureListener.onMoveEnd]
+ */
+inline fun GesturesPlugin.doOnMoveEnd(crossinline action: (detector: MoveGestureDetector) -> Unit) =
+  addOnMoveListener(onMoveEnd = action)
