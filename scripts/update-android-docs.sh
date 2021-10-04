@@ -61,19 +61,6 @@ fi
 array=(`echo $MAPS_SDK_VERSION | tr 'v' ' '` )
 MAPS_SDK_VERSION=${array[1]}
 
-function generate_docs() {
-  make dokka-html || dokka_result=1
-
-  if [ ${dokka_result:-0} -eq 1 ]; then
-    echo "dokka failed, ignoring."
-  fi
-
-  if [ ! -d $DOKKA_OUTPUT_DIR ]; then
-    echo "Directory with docs doesn't exist."
-    exit 1
-  fi
-}
-
 function prepare_branch_with_documentation() {
   INTERIM_BRANCH_WITH_DOCUMENTATION="${BRANCH_WITH_DOCUMENTATION}_${1}"
   git checkout -f $BRANCH_WITH_DOCUMENTATION
@@ -145,7 +132,6 @@ function create_pull_request() {
 gh auth login --with-token < gh_token.txt
 
 # Generate docs, create branch and make PR with API documentation in the SDK repo.
-generate_docs
 prepare_branch_with_documentation $MAPS_SDK_VERSION
 #create_pull_request "Add ${MAPS_SDK_VERSION} API documentation." $BRANCH_WITH_DOCUMENTATION
 
