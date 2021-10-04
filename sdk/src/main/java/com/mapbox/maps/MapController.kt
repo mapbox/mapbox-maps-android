@@ -56,7 +56,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   ) {
     this.renderer = renderer
     this.mapInitOptions = mapInitOptions
-    AssetManagerProvider().initialize(mapInitOptions.context.assets)
+    if (assetsManagerNeedInit) {
+      assetsManagerNeedInit = false
+      AssetManagerProvider().initialize(mapInitOptions.context.applicationContext.assets)
+    }
     this.nativeMap = MapProvider.getNativeMap(
       mapInitOptions,
       renderer,
@@ -325,6 +328,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       "Add %s plugin dependency to the classpath take automatically load the plugin implementation."
     private const val VIEW_HIERARCHY_MISSING_TEMPLATE =
       "%s plugin requires a View hierarchy to be injected, plugin is ignored."
+    private var assetsManagerNeedInit = true
 
     init {
       MapboxMapStaticInitializer.loadMapboxMapNativeLib()
