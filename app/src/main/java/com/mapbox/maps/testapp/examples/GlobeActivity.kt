@@ -14,13 +14,9 @@ import com.mapbox.maps.extension.style.layers.generated.fillExtrusionLayer
 import com.mapbox.maps.extension.style.layers.generated.skyLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.SkyType
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.MapProjection
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.camera
-import com.mapbox.maps.plugin.locationcomponent.LocationConsumer
-import com.mapbox.maps.plugin.locationcomponent.LocationProvider
-import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityGlobeViewBinding
 
@@ -68,7 +64,6 @@ class GlobeActivity : AppCompatActivity() {
             skyType(SkyType.ATMOSPHERE)
             skyAtmosphereSun(listOf(15.0, 89.5))
           }
-          initLocationComponent(binding.mapView)
         }
       )
     }
@@ -111,31 +106,6 @@ class GlobeActivity : AppCompatActivity() {
     updateInfoText(mapboxMap.cameraState.zoom)
     binding.mapView.camera.addCameraZoomChangeListener {
       updateInfoText(it)
-    }
-  }
-
-  private fun initLocationComponent(mapView: MapView) {
-    mapView.location.apply {
-      enabled = true
-      locationPuck = LocationPuck3D(
-        modelUri = "asset://race_car_model.gltf",
-        modelScale = listOf(0.1f, 0.1f, 0.1f),
-        modelTranslation = listOf(0.1f, 0.1f, 0.1f)
-      )
-      setLocationProvider(object : LocationProvider {
-
-        override fun registerLocationConsumer(locationConsumer: LocationConsumer) {
-          locationConsumer.apply {
-            onLocationUpdated(TARGET_POINT)
-            // trigger second update to make model visible
-            onLocationUpdated(MODEL_POINT)
-            onBearingUpdated(TARGET_BEARING)
-          }
-        }
-
-        override fun unRegisterLocationConsumer(locationConsumer: LocationConsumer) {
-        }
-      })
     }
   }
 

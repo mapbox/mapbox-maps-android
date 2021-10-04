@@ -118,9 +118,10 @@ class LocationComponentActivity : AppCompatActivity() {
           }.toJson()
         )
         is LocationPuck2D -> it.locationPuck = LocationPuck3D(
-          modelUri = "asset://race_car_model.gltf",
+          modelUri = "asset://sportcar.glb",
           modelScale = listOf(0.1f, 0.1f, 0.1f),
-          modelTranslation = listOf(0.1f, 0.1f, 0.1f)
+          modelTranslation = listOf(0.1f, 0.1f, 0.1f),
+          modelRotation = listOf(0.0f, 0.0f, 180.0f)
         )
       }
     }
