@@ -278,7 +278,7 @@ commands:
                 --device model=AOP_sprout,version=28,locale=en,orientation=portrait \
                 --device model=harpia,version=23,locale=en,orientation=portrait \
                 --device model=Pixel2,version=30,locale=en,orientation=portrait \
-                --device model=mata,version=25,locale=en,orientation=portrait \
+                --device model=G8142,version=25,locale=en,orientation=portrait \
                 --timeout 90s
             fi
 
