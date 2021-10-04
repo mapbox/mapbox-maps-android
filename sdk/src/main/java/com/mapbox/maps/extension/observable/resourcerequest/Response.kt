@@ -9,7 +9,7 @@ data class Response(
   /**
    * "etag" property
    */
-  @SerializedName("etag") val eTag: String,
+  @SerializedName("etag") val eTag: String?,
   /**
    * "must-revalidate" property
    */
@@ -21,7 +21,7 @@ data class Response(
   /**
    * "modified" property
    */
-  @SerializedName("modified") val modified: String,
+  @SerializedName("modified") val modified: String?,
   /**
    * "source" property
    */
@@ -33,7 +33,7 @@ data class Response(
   /**
    * "expires" property
    */
-  @SerializedName("expires") val expires: String,
+  @SerializedName("expires") val expires: String?,
   /**
    * "size" property
    */

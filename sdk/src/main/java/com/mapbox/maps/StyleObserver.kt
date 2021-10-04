@@ -4,6 +4,7 @@ import com.mapbox.common.Logger
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
 import com.mapbox.maps.plugin.delegates.listeners.OnStyleLoadedListener
 import com.mapbox.maps.plugin.delegates.listeners.eventdata.MapLoadErrorType
+import com.mapbox.maps.plugin.delegates.listeners.eventdata.TileID
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArrayList
 
@@ -28,7 +29,10 @@ internal class StyleObserver(
   /**
    * Clears previous added listeners and setup to receive callback for new style loaded or error events.
    */
-  fun onNewStyleLoad(loadedListener: Style.OnStyleLoaded?, onMapLoadErrorListener: OnMapLoadErrorListener?) {
+  fun onNewStyleLoad(
+    loadedListener: Style.OnStyleLoaded?,
+    onMapLoadErrorListener: OnMapLoadErrorListener?
+  ) {
     awaitingStyleLoadListeners.clear()
     loadedListener?.let {
       awaitingStyleLoadListeners.add(loadedListener)
@@ -57,9 +61,14 @@ internal class StyleObserver(
     }
   }
 
-  override fun onMapLoadError(mapLoadErrorType: MapLoadErrorType, message: String) {
+  override fun onMapLoadError(
+    mapLoadErrorType: MapLoadErrorType,
+    message: String,
+    sourceId: String?,
+    tileId: TileID?
+  ) {
     Logger.e(TAG, "OnMapLoadError: $mapLoadErrorType: $message")
-    awaitingStyleErrorListener?.onMapLoadError(mapLoadErrorType, message)
+    awaitingStyleErrorListener?.onMapLoadError(mapLoadErrorType, message, sourceId, tileId)
   }
 
   fun onDestroy() {

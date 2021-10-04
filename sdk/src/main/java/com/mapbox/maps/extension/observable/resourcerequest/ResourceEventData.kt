@@ -17,7 +17,7 @@ data class ResourceEventData(
   /**
    * "response" property
    */
-  @SerializedName("response") val response: Response,
+  @SerializedName("response") val response: Response?,
   /**
    * "cancelled" property
    */

@@ -43,7 +43,12 @@ internal class NativeObserver(
       MapEvents.MAP_LOADING_ERROR -> if (onMapLoadErrorListeners.isNotEmpty()) {
         val loadingError = event.getMapLoadingErrorEventData()
         onMapLoadErrorListeners.forEach {
-          it.onMapLoadError(loadingError.type, loadingError.message)
+          it.onMapLoadError(
+            loadingError.type,
+            loadingError.message,
+            loadingError.sourceId,
+            loadingError.tileId
+          )
         }
       }
       MapEvents.MAP_LOADED -> onMapLoadedListeners.forEach { it.onMapLoaded() }

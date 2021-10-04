@@ -106,7 +106,7 @@ class NativeObserverTest {
     verify { observableInterface.subscribe(any(), listOf(MapEvents.MAP_LOADING_ERROR)) }
     assertTrue(nativeObserver.observedEvents.contains(MapEvents.MAP_LOADING_ERROR))
     notifyEvents(MapEvents.MAP_LOADING_ERROR)
-    verify { listener.onMapLoadError(any(), any()) }
+    verify { listener.onMapLoadError(any(), any(), any(), any()) }
 
     val listener2 = mockk<OnMapLoadErrorListener>(relaxUnitFun = true)
     nativeObserver.addOnMapLoadErrorListener(listener2)
@@ -118,7 +118,7 @@ class NativeObserverTest {
       )
     }
     notifyEvents(MapEvents.MAP_LOADING_ERROR)
-    verify { listener2.onMapLoadError(any(), any()) }
+    verify { listener2.onMapLoadError(any(), any(), any(), any()) }
   }
 
   @Test
@@ -141,8 +141,8 @@ class NativeObserverTest {
     assertFalse(nativeObserver.observedEvents.contains(MapEvents.MAP_LOADING_ERROR))
     verify { observableInterface.unsubscribe(any(), listOf(MapEvents.MAP_LOADING_ERROR)) }
     notifyEvents(MapEvents.MAP_IDLE)
-    verify(exactly = 0) { listener.onMapLoadError(any(), any()) }
-    verify(exactly = 0) { listener2.onMapLoadError(any(), any()) }
+    verify(exactly = 0) { listener.onMapLoadError(any(), any(), any(), any()) }
+    verify(exactly = 0) { listener2.onMapLoadError(any(), any(), any(), any()) }
   }
 
   @Test
