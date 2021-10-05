@@ -2,7 +2,6 @@ package com.mapbox.maps.plugin.delegates.listeners
 
 import com.mapbox.maps.extension.observable.eventdata.MapLoadingErrorEventData
 import com.mapbox.maps.extension.observable.model.MapLoadErrorType
-import com.mapbox.maps.extension.observable.model.TileID
 
 /**
  * Definition for listener invoked whenever the map load errors out.

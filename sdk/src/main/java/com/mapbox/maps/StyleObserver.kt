@@ -5,8 +5,6 @@ import com.mapbox.maps.extension.observable.eventdata.MapLoadingErrorEventData
 import com.mapbox.maps.extension.observable.eventdata.StyleLoadedEventData
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
 import com.mapbox.maps.plugin.delegates.listeners.OnStyleLoadedListener
-import com.mapbox.maps.extension.observable.model.MapLoadErrorType
-import com.mapbox.maps.extension.observable.model.TileID
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArrayList
 

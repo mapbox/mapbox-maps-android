@@ -190,7 +190,7 @@ class MapControllerTest {
 
     testMapController.onStart()
     val onCameraChangeListener = onCameraChangeListenerSlot.captured
-    onCameraChangeListener.onCameraChanged()
+    onCameraChangeListener.onCameraChanged(mockk())
 
     verifySequence {
       mockPluginRegistry.onStart()

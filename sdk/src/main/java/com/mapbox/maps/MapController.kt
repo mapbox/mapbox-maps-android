@@ -8,6 +8,7 @@ import com.mapbox.common.Logger
 import com.mapbox.common.module.provider.MapboxModuleProvider
 import com.mapbox.common.module.provider.ModuleProviderArgument
 import com.mapbox.maps.assets.AssetManagerProvider
+import com.mapbox.maps.extension.observable.model.StyleDataType
 import com.mapbox.maps.loader.MapboxMapStaticInitializer
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.*
@@ -28,7 +29,6 @@ import com.mapbox.maps.plugin.compass.CompassViewPlugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener
-import com.mapbox.maps.extension.observable.model.StyleDataType
 import com.mapbox.maps.plugin.gestures.GesturesPluginImpl
 import com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePluginImpl
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentPluginImpl

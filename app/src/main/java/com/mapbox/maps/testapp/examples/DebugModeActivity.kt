@@ -12,8 +12,6 @@ import com.mapbox.maps.extension.observable.subscribeResourceRequest
 import com.mapbox.maps.extension.observable.unsubscribeResourceRequest
 import com.mapbox.maps.plugin.compass.compass
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
-import com.mapbox.maps.extension.observable.model.MapLoadErrorType
-import com.mapbox.maps.extension.observable.model.TileID
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityDebugBinding
 
@@ -54,7 +52,7 @@ class DebugModeActivity : AppCompatActivity() {
     setContentView(binding.root)
 
     mapboxMap = binding.mapView.getMapboxMap()
-    mapboxMap.subscribe(observable, listOf("resource-request"))
+    mapboxMap.subscribe(observable, listOf(MapEvents.RESOURCE_REQUEST))
     // Using the extension method
     mapboxMap.subscribeResourceRequest(extensionObservable)
     mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
@@ -65,7 +63,7 @@ class DebugModeActivity : AppCompatActivity() {
 
   private fun registerListeners(mapboxMap: MapboxMap) {
     mapboxMap.addOnStyleLoadedListener {
-      Logger.i(TAG, "OnStyleLoadedListener")
+      Logger.i(TAG, "OnStyleLoadedListener: $it")
     }
     mapboxMap.addOnStyleDataLoadedListener {
       Logger.i(TAG, "OnStyleDataLoadedListener: $it")
@@ -77,7 +75,7 @@ class DebugModeActivity : AppCompatActivity() {
       Logger.i(TAG, "OnStyleImageUnusedListener: $it")
     }
     mapboxMap.addOnMapIdleListener {
-      Logger.i(TAG, "OnMapIdleListener")
+      Logger.i(TAG, "OnMapIdleListener: $it")
     }
     mapboxMap.addOnMapLoadErrorListener(object : OnMapLoadErrorListener {
       override fun onMapLoadError(eventData: MapLoadingErrorEventData) {
@@ -85,18 +83,18 @@ class DebugModeActivity : AppCompatActivity() {
       }
     })
     mapboxMap.addOnMapLoadedListener {
-      Logger.i(TAG, "OnMapLoadedListener")
+      Logger.i(TAG, "OnMapLoadedListener: $it")
     }
     mapboxMap.addOnCameraChangeListener {
-      Logger.i(TAG, "OnCameraChangeListener")
+      Logger.i(TAG, "OnCameraChangeListener: $it")
     }
     mapboxMap.addOnRenderFrameStartedListener {
-      Logger.i(TAG, "OnRenderFrameStartedListener")
+      Logger.i(TAG, "OnRenderFrameStartedListener: $it")
     }
-    mapboxMap.addOnRenderFrameFinishedListener { eventData ->
+    mapboxMap.addOnRenderFrameFinishedListener {
       Logger.i(
         TAG,
-        "OnRenderFrameFinishedListener: $eventData"
+        "OnRenderFrameFinishedListener: $it"
       )
     }
     mapboxMap.addOnSourceAddedListener {
@@ -105,10 +103,10 @@ class DebugModeActivity : AppCompatActivity() {
         "OnSourceAddedListener: $it"
       )
     }
-    mapboxMap.addOnSourceDataLoadedListener { eventData ->
+    mapboxMap.addOnSourceDataLoadedListener {
       Logger.i(
         TAG,
-        "OnSourceDataLoadedListener: $eventData"
+        "OnSourceDataLoadedListener: $it"
       )
     }
     mapboxMap.addOnSourceRemovedListener {
