@@ -46,7 +46,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
   private lateinit var mapPluginProviderDelegate: MapPluginProviderDelegate
   private lateinit var cameraAnimationsPlugin: CameraAnimationsPlugin
-  private lateinit var mapProjectionDelegate: MapProjectionDelegate
 
   private val protectedCameraAnimatorOwnerList = CopyOnWriteArrayList<String>()
 
@@ -1391,8 +1390,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         pitchAnimator.cancel()
       }
       if (cameraState.zoom < internalSettings.globeResetPitchZoomThreshold &&
-        mapProjectionDelegate.getMapProjection() === MapProjection.Globe &&
-        cameraState.pitch >= 0
+        delegateProvider.mapProjectionDelegate.getMapProjection() === MapProjection.Globe &&
+        cameraState.pitch > 0
       ) {
         if (pitchAnimator.isRunning) {
           return@addOnMapIdleListener
@@ -1591,7 +1590,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     this.mapTransformDelegate = delegateProvider.mapTransformDelegate
     this.mapCameraManagerDelegate = delegateProvider.mapCameraManagerDelegate
-    this.mapProjectionDelegate = delegateProvider.mapProjectionDelegate
     this.mapPluginProviderDelegate = delegateProvider.mapPluginProviderDelegate
     @Suppress("UNCHECKED_CAST")
     this.cameraAnimationsPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
