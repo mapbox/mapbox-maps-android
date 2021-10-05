@@ -8,6 +8,7 @@ import androidx.test.filters.LargeTest
 import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
 import com.mapbox.maps.plugin.delegates.listeners.eventdata.MapLoadErrorType
+import com.mapbox.maps.plugin.delegates.listeners.eventdata.TileID
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -38,8 +39,13 @@ class LoadStyleCallbackTest {
           latch.countDown()
         },
         onMapLoadErrorListener = object : OnMapLoadErrorListener {
-          override fun onMapLoadError(mapLoadErrorType: MapLoadErrorType, message: String) {
-            throw AssertionError("Load $mapLoadErrorType failed with $message")
+          override fun onMapLoadError(
+            mapLoadErrorType: MapLoadErrorType,
+            message: String,
+            sourceId: String?,
+            tileId: TileID?
+          ) {
+            throw AssertionError("Load $mapLoadErrorType failed with $message, sourceId: $sourceId, tileId: $tileId")
           }
         }
       )
@@ -66,8 +72,13 @@ class LoadStyleCallbackTest {
           latch.countDown()
         },
         onMapLoadErrorListener = object : OnMapLoadErrorListener {
-          override fun onMapLoadError(mapLoadErrorType: MapLoadErrorType, message: String) {
-            throw AssertionError("Load $mapLoadErrorType failed with $message")
+          override fun onMapLoadError(
+            mapLoadErrorType: MapLoadErrorType,
+            message: String,
+            sourceId: String?,
+            tileId: TileID?
+          ) {
+            throw AssertionError("Load $mapLoadErrorType failed with $message, sourceId: $sourceId, tileId: $tileId")
           }
         }
       )
@@ -110,8 +121,13 @@ class LoadStyleCallbackTest {
           latch.countDown()
         },
         onMapLoadErrorListener = object : OnMapLoadErrorListener {
-          override fun onMapLoadError(mapLoadErrorType: MapLoadErrorType, message: String) {
-            throw AssertionError("Load $mapLoadErrorType failed with $message")
+          override fun onMapLoadError(
+            mapLoadErrorType: MapLoadErrorType,
+            message: String,
+            sourceId: String?,
+            tileId: TileID?
+          ) {
+            throw AssertionError("Load $mapLoadErrorType failed with $message, sourceId: $sourceId, tileId: $tileId")
           }
         }
       )

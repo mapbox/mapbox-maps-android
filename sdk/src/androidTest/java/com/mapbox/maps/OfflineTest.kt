@@ -12,6 +12,8 @@ import com.mapbox.bindgen.Value
 import com.mapbox.common.*
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.observable.getResourceEventData
+import com.mapbox.maps.extension.observable.resourcerequest.eventdata.DataSourceType
+import com.mapbox.maps.extension.observable.resourcerequest.eventdata.RequestType
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.*
@@ -290,7 +292,7 @@ class OfflineTest {
     val observer = Observer { event ->
       Logger.e(TAG, "type ${event.type}, data ${event.data.toJson()}")
       val data = event.getResourceEventData()
-      if (!data.cancelled && data.dataSource == "database" && data.request.kind == "tile") {
+      if (!data.cancelled && data.dataSource == DataSourceType.DATABASE && data.request.kind == RequestType.TILE) {
         resourceRequests++
       }
       if (event.type == MapEvents.MAP_LOADING_ERROR) {
@@ -333,7 +335,7 @@ class OfflineTest {
     val observer = Observer { event ->
       Logger.e(TAG, "type ${event.type}, data ${event.data.toJson()}")
       val data = event.getResourceEventData()
-      if (!data.cancelled && data.dataSource == "database" && data.request.kind == "tile") {
+      if (!data.cancelled && data.dataSource == DataSourceType.DATABASE && data.request.kind == RequestType.TILE) {
         resourceRequests++
       }
       if (event.type == MapEvents.MAP_LOADING_ERROR) {

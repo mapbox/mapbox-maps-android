@@ -12,6 +12,7 @@ import com.mapbox.maps.extension.observable.unsubscribeResourceRequest
 import com.mapbox.maps.plugin.compass.compass
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
 import com.mapbox.maps.plugin.delegates.listeners.eventdata.MapLoadErrorType
+import com.mapbox.maps.plugin.delegates.listeners.eventdata.TileID
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityDebugBinding
 
@@ -78,8 +79,13 @@ class DebugModeActivity : AppCompatActivity() {
       Logger.i(TAG, "OnMapIdleListener")
     }
     mapboxMap.addOnMapLoadErrorListener(object : OnMapLoadErrorListener {
-      override fun onMapLoadError(mapLoadErrorType: MapLoadErrorType, message: String) {
-        Logger.i(TAG, "OnMapLoadErrorListener: $mapLoadErrorType, $message")
+      override fun onMapLoadError(
+        mapLoadErrorType: MapLoadErrorType,
+        message: String,
+        sourceId: String?,
+        tileId: TileID?
+      ) {
+        Logger.i(TAG, "OnMapLoadErrorListener: $mapLoadErrorType, $message, sourceId: $sourceId, tileId: $tileId")
       }
     })
     mapboxMap.addOnMapLoadedListener {

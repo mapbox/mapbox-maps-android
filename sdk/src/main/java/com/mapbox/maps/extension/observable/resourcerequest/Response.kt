@@ -1,6 +1,7 @@
 package com.mapbox.maps.extension.observable.resourcerequest
 
 import com.google.gson.annotations.SerializedName
+import com.mapbox.maps.extension.observable.resourcerequest.eventdata.ResponseSourceType
 
 /**
  * The response data class that included in EventData
@@ -9,7 +10,7 @@ data class Response(
   /**
    * "etag" property
    */
-  @SerializedName("etag") val eTag: String,
+  @SerializedName("etag") val eTag: String?,
   /**
    * "must-revalidate" property
    */
@@ -21,11 +22,11 @@ data class Response(
   /**
    * "modified" property
    */
-  @SerializedName("modified") val modified: String,
+  @SerializedName("modified") val modified: String?,
   /**
    * "source" property
    */
-  @SerializedName("source") val source: String,
+  @SerializedName("source") val source: ResponseSourceType,
   /**
    * "not-modified" property
    */
@@ -33,7 +34,7 @@ data class Response(
   /**
    * "expires" property
    */
-  @SerializedName("expires") val expires: String,
+  @SerializedName("expires") val expires: String?,
   /**
    * "size" property
    */
