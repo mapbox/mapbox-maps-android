@@ -60,14 +60,6 @@ clean:
 codecoverage:
 	./gradlew sdk:jacocoTestDebugUnitTestReport && google-chrome sdk/build/jacoco/jacocoHtml/index.html
 
-.PHONY: dokka-html
-dokka-html:
-	./gradlew dokkaHtmlCollector
-
-.PHONY: dokka-javadoc
-dokka-javadoc:
-	./gradlew dokkaJavadocCollector
-
 # Use `make generate-changelog TAG=LastReleaseTag` while running locally.
 .PHONY: generate-changelog
 generate-changelog:
@@ -76,6 +68,7 @@ generate-changelog:
 	changelog-draft -b main -p $(TAG) -o CHANGELOG.md
 
 # Use `make update-android-docs TAG=YourReleaseTag` while running locally.
+# Run `make prepare-release-doc` first in the internal repository,
 .PHONY: update-android-docs
 update-android-docs:
 	unset GITHUB_TOKEN; \
@@ -83,16 +76,6 @@ update-android-docs:
 	mbx-ci github writer opt-in android-docs; \
 	echo "$(shell mbx-ci github reader token)" > gh_token.txt;\
 	sh scripts/update-android-docs.sh -s $(TAG)
-
-.PHONY: prepare-release-doc
-prepare-release-doc: dokka-html
-	mkdir -p release-docs;
-	cd build/dokka && zip -r dokka-docs.zip htmlCollector && cd -;
-	rm -r app/build;
-	zip -r examples.zip app;
-	cp examples.zip release-docs/;
-	cp build/dokka/dokka-docs.zip release-docs/;
-	zip -r release-docs.zip release-docs;
 
 .PHONY: unit-tests
 unit-tests:

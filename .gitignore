@@ -22,3 +22,6 @@ sdk/src/main/res/values/developer-config.xml
 node_modules/
 gh_token.txt
 android-docs-repo
+examples.zip
+release-docs/
+release-docs.zip
