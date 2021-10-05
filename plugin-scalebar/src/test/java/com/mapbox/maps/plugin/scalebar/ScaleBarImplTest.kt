@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Looper
 import android.view.Gravity
+import android.widget.FrameLayout
 import com.mapbox.maps.plugin.scalebar.ScaleBarImpl.Companion.MSG_RENDER_CONTINUOUS
 import com.mapbox.maps.plugin.scalebar.ScaleBarImpl.Companion.MSG_RENDER_ON_DEMAND
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings
@@ -32,6 +33,8 @@ class ScaleBarImplTest {
   @Before
   fun setUp() {
     scaleBarView = ScaleBarImpl(context)
+    val layoutParams = mockk<FrameLayout.LayoutParams>(relaxed = true)
+    scaleBarView.layoutParams = layoutParams
     scaleBarView.settings = scaleBarSettings
   }
 
@@ -58,18 +61,6 @@ class ScaleBarImplTest {
   fun strokePaint() {
     assertEquals(2f, scaleBarView.strokePaint.strokeWidth)
     assertEquals(8f, scaleBarView.strokePaint.textSize)
-  }
-
-  @Test
-  fun maxBarWidth() {
-    assertEquals(0f, scaleBarView.mapViewWidth)
-    assertEquals(0f, scaleBarView.maxBarWidth)
-    scaleBarView.mapViewWidth = 100f
-    assertEquals(46f, scaleBarView.maxBarWidth)
-    scaleBarSettings.ratio = 1.0f
-    scaleBarView.settings = scaleBarSettings
-    assertEquals(96f, scaleBarView.maxBarWidth)
-    scaleBarSettings.ratio = 0.5f
   }
 
   @Test
