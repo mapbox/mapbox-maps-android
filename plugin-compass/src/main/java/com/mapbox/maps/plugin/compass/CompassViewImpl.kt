@@ -11,36 +11,22 @@ import androidx.core.content.res.ResourcesCompat
 /**
  * Concrete implementation of CompassView.
  */
-open class CompassViewImpl : CompassView, AppCompatImageView {
+open class CompassViewImpl
+/**
+ * Constructor with context, attribute set and defStyleAttr.
+ *
+ * @param context
+ * @param attrs The attribution set.
+ * @param defStyleAttr An attribute in the current theme that contains a reference to a style
+ *  resource that supplies defaults values for the StyledAttributes. Can be 0 to not look for defaults.
+ */
+@JvmOverloads constructor(
+  context: Context,
+  attrs: AttributeSet? = null,
+  defStyleAttr: Int = 0
+) : CompassView, AppCompatImageView(context, attrs, defStyleAttr) {
 
   private lateinit var presenter: CompassPlugin
-
-  /**
-   * Constructor with context.
-   *
-   * @param context
-   */
-  constructor(context: Context) : super(context)
-  /**
-   * Constructor with context and attribute set.
-   *
-   * @param context
-   * @param attrs
-   */
-  constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-  /**
-   * Constructor with context, attribute set and defStyleAttr.
-   *
-   * @param context
-   * @param attrs The attribution set.
-   * @param defStyleAttr An attribute in the current theme that contains a reference to a style
-   *  resource that supplies defaults values for the StyledAttributes. Can be 0 to not look for defaults.
-   */
-  constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
-    context,
-    attrs,
-    defStyleAttr
-  )
 
   init {
     ResourcesCompat.getDrawable(
@@ -50,8 +36,8 @@ open class CompassViewImpl : CompassView, AppCompatImageView {
     )?.let { compassImage = it }
 
     // Layout params
-    val screenDensity = context.resources.displayMetrics.density
-    layoutParams = FrameLayout.LayoutParams((48 * screenDensity).toInt(), (48 * screenDensity).toInt())
+    val compassViewSize = resources.getDimensionPixelSize(R.dimen.compass_view_size)
+    layoutParams = FrameLayout.LayoutParams(compassViewSize, compassViewSize)
 
     // click listener
     setOnClickListener { presenter.onCompassClicked() }

@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.compass
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
@@ -8,7 +9,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.core.animation.addListener
+import androidx.core.animation.doOnEnd
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
@@ -30,14 +31,14 @@ import kotlin.math.abs
  */
 open class CompassViewPlugin(
   private val viewImplProvider: (Context) -> CompassViewImpl = { CompassViewImpl(it) },
+  @SuppressLint("Recycle")
   private val fadeAnimator: ValueAnimator = ValueAnimator.ofFloat(1f, 0f),
   private val mainHandler: Handler = Handler(Looper.getMainLooper())
-) :
-  CompassPlugin, CompassSettingsBase() {
+) : CompassPlugin, CompassSettingsBase() {
 
   private lateinit var compassView: CompassView
   private lateinit var mapCameraManager: MapCameraManagerDelegate
-  internal var bearing: Double = 0.0
+  internal var bearing: Double = DEFAULT_BEARING
   private var animationPlugin: CameraAnimationsPlugin? = null
 
   private var isHidden = false
@@ -48,38 +49,39 @@ open class CompassViewPlugin(
     CopyOnWriteArrayList()
 
   init {
-    fadeAnimator.duration = TIME_FADE_ANIMATION
-    fadeAnimator.startDelay = TIME_WAIT_IDLE
-    fadeAnimator.addListener(
-      {
-        // onEnd
+    fadeAnimator.apply {
+      duration = TIME_FADE_ANIMATION
+      startDelay = TIME_WAIT_IDLE
+      doOnEnd {
         compassView.isCompassVisible = false
       }
-    )
-    fadeAnimator.addUpdateListener {
-      val value = it.animatedValue as Float
-      if (value < internalSettings.opacity) {
-        compassView.setCompassAlpha(value)
+      addUpdateListener {
+        val value = it.animatedValue as Float
+        if (value < internalSettings.opacity) {
+          compassView.setCompassAlpha(value)
+        }
       }
     }
   }
 
   override fun applySettings() {
-    compassView.compassGravity = internalSettings.position
-    internalSettings.image?.let {
-      compassView.compassImage = it
+    compassView.apply {
+      compassGravity = internalSettings.position
+      internalSettings.image?.let { drawable ->
+        compassImage = drawable
+      }
+      compassRotation = internalSettings.rotation
+      isCompassEnabled = internalSettings.enabled
+      setCompassAlpha(internalSettings.opacity)
+      setCompassMargins(
+        internalSettings.marginLeft.toInt(),
+        internalSettings.marginTop.toInt(),
+        internalSettings.marginRight.toInt(),
+        internalSettings.marginBottom.toInt()
+      )
+      update(bearing)
+      requestLayout()
     }
-    compassView.compassRotation = internalSettings.rotation
-    compassView.isCompassEnabled = internalSettings.enabled
-    compassView.setCompassAlpha(internalSettings.opacity)
-    compassView.setCompassMargins(
-      internalSettings.marginLeft.toInt(),
-      internalSettings.marginTop.toInt(),
-      internalSettings.marginRight.toInt(),
-      internalSettings.marginBottom.toInt()
-    )
-    update(bearing)
-    compassView.requestLayout()
   }
 
   /**
@@ -95,7 +97,7 @@ open class CompassViewPlugin(
         compassView.setCompassAlpha(internalSettings.opacity)
         compassView.isCompassVisible = true
       } else {
-        compassView.setCompassAlpha(0.0f)
+        compassView.setCompassAlpha(0f)
         compassView.isCompassVisible = false
       }
     }
@@ -149,7 +151,7 @@ open class CompassViewPlugin(
    */
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     mapCameraManager = delegateProvider.mapCameraManagerDelegate
-    bearing = delegateProvider.mapCameraManagerDelegate.cameraState.bearing
+    bearing = mapCameraManager.cameraState.bearing
     animationPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(MAPBOX_CAMERA_PLUGIN_ID)
       ?: throw InvalidPluginConfigurationException(
         "Can't look up an instance of plugin, " +
@@ -212,12 +214,12 @@ open class CompassViewPlugin(
   override fun onCompassClicked() {
     if (internalSettings.clickable) {
       animationPlugin?.flyTo(
-        CameraOptions.Builder().bearing(0.0).build(),
+        CameraOptions.Builder().bearing(DEFAULT_BEARING).build(),
         mapAnimationOptions {
           owner(MapAnimationOwnerRegistry.COMPASS)
           duration(BEARING_NORTH_ANIMATION_DURATION)
         }
-      ) ?: mapCameraManager.setCamera(CameraOptions.Builder().bearing(0.0).build())
+      ) ?: mapCameraManager.setCamera(CameraOptions.Builder().bearing(DEFAULT_BEARING).build())
       compassClickListeners.forEach { it.onCompassClick() }
     }
   }
@@ -242,7 +244,7 @@ open class CompassViewPlugin(
         fadeAnimator.start()
       } else {
         compassView.isCompassVisible = false
-        compassView.setCompassAlpha(0.0f)
+        compassView.setCompassAlpha(0f)
       }
     } else {
       isHidden = false
@@ -265,6 +267,7 @@ open class CompassViewPlugin(
    * Static variables and methods.
    */
   companion object {
+    private const val DEFAULT_BEARING = 0.0
     private const val TIME_WAIT_IDLE = 500L
     private const val TIME_FADE_ANIMATION = TIME_WAIT_IDLE
     private const val BEARING_NORTH_ANIMATION_DURATION = 300L
