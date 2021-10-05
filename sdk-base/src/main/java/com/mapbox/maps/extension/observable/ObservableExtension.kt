@@ -8,6 +8,10 @@ import com.mapbox.maps.Observer
 import com.mapbox.maps.extension.observable.eventdata.*
 import com.mapbox.maps.extension.observable.eventdata.ResourceEventData
 
+private val gson by lazy {
+  Gson()
+}
+
 /**
  * Subscribes an Observer for of event type "resource-request".
  *
@@ -299,7 +303,7 @@ fun ObservableInterface.unsubscribeSourceRemoved(observer: Observer) =
  */
 fun Event.getResourceEventData(): ResourceEventData {
   val json = data.toJson()
-  return Gson().fromJson(json, ResourceEventData::class.java)
+  return gson.fromJson(json, ResourceEventData::class.java)
 }
 
 /**
@@ -308,7 +312,7 @@ fun Event.getResourceEventData(): ResourceEventData {
  */
 fun Event.getMapLoadedEventData(): MapLoadedEventData {
   val json = data.toJson()
-  return Gson().fromJson(json, MapLoadedEventData::class.java)
+  return gson.fromJson(json, MapLoadedEventData::class.java)
 }
 
 /**
@@ -317,7 +321,7 @@ fun Event.getMapLoadedEventData(): MapLoadedEventData {
  */
 fun Event.getMapLoadingErrorEventData(): MapLoadingErrorEventData {
   val json = data.toJson()
-  return Gson().fromJson(json, MapLoadingErrorEventData::class.java)
+  return gson.fromJson(json, MapLoadingErrorEventData::class.java)
 }
 
 /**
@@ -326,7 +330,7 @@ fun Event.getMapLoadingErrorEventData(): MapLoadingErrorEventData {
  */
 fun Event.getMapIdleEventData(): MapIdleEventData {
   val json = data.toJson()
-  return Gson().fromJson(json, MapIdleEventData::class.java)
+  return gson.fromJson(json, MapIdleEventData::class.java)
 }
 
 /**
@@ -335,7 +339,7 @@ fun Event.getMapIdleEventData(): MapIdleEventData {
  */
 fun Event.getStyleDataLoadedEventData(): StyleDataLoadedEventData {
   val json = data.toJson()
-  return Gson().fromJson(json, StyleDataLoadedEventData::class.java)
+  return gson.fromJson(json, StyleDataLoadedEventData::class.java)
 }
 
 /**
@@ -344,7 +348,7 @@ fun Event.getStyleDataLoadedEventData(): StyleDataLoadedEventData {
  */
 fun Event.getStyleLoadedEventData(): StyleLoadedEventData {
   val json = data.toJson()
-  return Gson().fromJson(json, StyleLoadedEventData::class.java)
+  return gson.fromJson(json, StyleLoadedEventData::class.java)
 }
 
 /**
@@ -353,7 +357,7 @@ fun Event.getStyleLoadedEventData(): StyleLoadedEventData {
  */
 fun Event.getSourceDataLoadedEventData(): SourceDataLoadedEventData {
   val json = data.toJson()
-  return Gson().fromJson(json, SourceDataLoadedEventData::class.java)
+  return gson.fromJson(json, SourceDataLoadedEventData::class.java)
 }
 
 /**
@@ -362,7 +366,7 @@ fun Event.getSourceDataLoadedEventData(): SourceDataLoadedEventData {
  */
 fun Event.getStyleImageMissingEventData(): StyleImageMissingEventData {
   val json = data.toJson()
-  return Gson().fromJson(json, StyleImageMissingEventData::class.java)
+  return gson.fromJson(json, StyleImageMissingEventData::class.java)
 }
 
 /**
@@ -371,7 +375,7 @@ fun Event.getStyleImageMissingEventData(): StyleImageMissingEventData {
  */
 fun Event.getStyleImageUnusedEventData(): StyleImageUnusedEventData {
   val json = data.toJson()
-  return Gson().fromJson(json, StyleImageUnusedEventData::class.java)
+  return gson.fromJson(json, StyleImageUnusedEventData::class.java)
 }
 
 /**
@@ -380,7 +384,7 @@ fun Event.getStyleImageUnusedEventData(): StyleImageUnusedEventData {
  */
 fun Event.getSourceAddedEventData(): SourceAddedEventData {
   val json = data.toJson()
-  return Gson().fromJson(json, SourceAddedEventData::class.java)
+  return gson.fromJson(json, SourceAddedEventData::class.java)
 }
 
 /**
@@ -389,7 +393,7 @@ fun Event.getSourceAddedEventData(): SourceAddedEventData {
  */
 fun Event.getSourceRemovedEventData(): SourceRemovedEventData {
   val json = data.toJson()
-  return Gson().fromJson(json, SourceRemovedEventData::class.java)
+  return gson.fromJson(json, SourceRemovedEventData::class.java)
 }
 
 /**
@@ -398,7 +402,7 @@ fun Event.getSourceRemovedEventData(): SourceRemovedEventData {
  */
 fun Event.getRenderFrameStartedEventData(): RenderFrameStartedEventData {
   val json = data.toJson()
-  return Gson().fromJson(json, RenderFrameStartedEventData::class.java)
+  return gson.fromJson(json, RenderFrameStartedEventData::class.java)
 }
 
 /**
@@ -407,7 +411,7 @@ fun Event.getRenderFrameStartedEventData(): RenderFrameStartedEventData {
  */
 fun Event.getRenderFrameFinishedEventData(): RenderFrameFinishedEventData {
   val json = data.toJson()
-  return Gson().fromJson(json, RenderFrameFinishedEventData::class.java)
+  return gson.fromJson(json, RenderFrameFinishedEventData::class.java)
 }
 
 /**
@@ -416,5 +420,5 @@ fun Event.getRenderFrameFinishedEventData(): RenderFrameFinishedEventData {
  */
 fun Event.getCameraChangedEventData(): CameraChangedEventData {
   val json = data.toJson()
-  return Gson().fromJson(json, CameraChangedEventData::class.java)
+  return gson.fromJson(json, CameraChangedEventData::class.java)
 }
