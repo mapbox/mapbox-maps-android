@@ -1,6 +1,7 @@
 package com.mapbox.maps.extension.observable.resourcerequest
 
 import com.google.gson.annotations.SerializedName
+import com.mapbox.maps.extension.observable.resourcerequest.eventdata.ResponseSourceType
 
 /**
  * The response data class that included in EventData
@@ -25,7 +26,7 @@ data class Response(
   /**
    * "source" property
    */
-  @SerializedName("source") val source: String,
+  @SerializedName("source") val source: ResponseSourceType,
   /**
    * "not-modified" property
    */

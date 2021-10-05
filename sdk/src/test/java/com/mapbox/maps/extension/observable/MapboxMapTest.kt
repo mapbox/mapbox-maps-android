@@ -5,6 +5,10 @@ import com.mapbox.maps.Event
 import com.mapbox.maps.ObservableInterface
 import com.mapbox.maps.Observer
 import com.mapbox.maps.extension.observable.resourcerequest.*
+import com.mapbox.maps.extension.observable.resourcerequest.eventdata.RequestPriority
+import com.mapbox.maps.extension.observable.resourcerequest.eventdata.RequestType
+import com.mapbox.maps.extension.observable.resourcerequest.eventdata.ResponseErrorType
+import com.mapbox.maps.extension.observable.resourcerequest.eventdata.ResponseSourceType
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Assert.assertEquals
@@ -32,17 +36,17 @@ class MapboxMapTest {
 
   @Test
   fun getEventData() {
-    val request = Request(listOf("network"), "https://api.mapbox.com", "tile", "regular")
+    val request = Request(listOf("network"), "https://api.mapbox.com", RequestType.TILE, RequestPriority.REGULAR)
     val response = Response(
       eTag = "d8abd8d10bee6b45b4dbf5c05496587a",
       mustRevalidate = false,
       noContent = false,
       modified = "Mon, 05 Oct 2020 14:23:52 GMT",
-      source = "network",
+      source = ResponseSourceType.NETWORK,
       notModified = false,
       expires = "Thu, 15 Oct 2020 14:32:23 GMT",
       size = 181576,
-      error = Error("not-found", "error message")
+      error = Error(ResponseErrorType.NOT_FOUND, "error message")
     )
     val requestMap = hashMapOf(
       Pair("loading-method", Value(listOf(Value("network")))),
@@ -94,7 +98,7 @@ class MapboxMapTest {
     assertEquals(false, response.notModified)
     assertEquals("Thu, 15 Oct 2020 14:32:23 GMT", response.expires)
     assertEquals(181576, response.size)
-    assertEquals(Error("not-found", "error message"), response.error)
+    assertEquals(Error(ResponseErrorType.NOT_FOUND, "error message"), response.error)
 
     assertEquals("not-found", response.error!!.reason)
     assertEquals("error message", response.error!!.message)
