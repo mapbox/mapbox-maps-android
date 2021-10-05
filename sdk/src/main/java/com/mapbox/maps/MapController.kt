@@ -49,7 +49,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   private val pluginRegistry: MapPluginRegistry
   private val onStyleDataLoadedListener: OnStyleDataLoadedListener
   private val onCameraChangedListener: OnCameraChangeListener
-  private var lifecycleState: LifecycleState = LifecycleState.STATE_STOPPED
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal var lifecycleState: LifecycleState = LifecycleState.STATE_STOPPED
 
   constructor(
     renderer: MapboxRenderer,
@@ -314,12 +315,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     pluginRegistry.onAttachedToWindow(mapView)
   }
 
-  @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-  internal fun simulateStartedState() {
-    lifecycleState = LifecycleState.STATE_STARTED
-  }
-
-  private enum class LifecycleState {
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal enum class LifecycleState {
     STATE_STOPPED,
     STATE_STARTED,
     STATE_DESTROYED

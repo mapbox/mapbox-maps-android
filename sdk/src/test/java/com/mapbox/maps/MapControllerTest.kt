@@ -104,7 +104,7 @@ class MapControllerTest {
     every { mockNativeObserver.removeOnCameraChangeListener(any()) } just Runs
     every { mockNativeObserver.removeOnStyleDataLoadedListener(any()) } just Runs
 
-    testMapController.simulateStartedState()
+    testMapController.lifecycleState = MapController.LifecycleState.STATE_STARTED
     testMapController.onStop()
 
     verifySequence {
