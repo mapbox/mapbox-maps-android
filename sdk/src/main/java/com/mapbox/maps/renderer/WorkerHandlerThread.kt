@@ -22,8 +22,7 @@ internal class WorkerHandlerThread {
   }
 
   fun start() {
-    handlerThread = HandlerThread(HANDLE_THREAD_NAME).apply {
-      priority = Thread.MAX_PRIORITY
+    handlerThread = HandlerThread(HANDLE_THREAD_NAME, -10).apply {
       start()
       handler = Handler(this.looper)
     }
