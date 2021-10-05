@@ -1600,6 +1600,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       "Can't look up an instance of plugin, " +
         "is it available on the clazz path and loaded through the map?"
     )
+    enableGlobeProperties(delegateProvider)
   }
 
   /**
