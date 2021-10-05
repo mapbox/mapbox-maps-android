@@ -299,6 +299,33 @@ class ObservableExtensionTest : BaseMapTest() {
 
   @Test
   @UiThread
+  fun subscribeSourceDataLoadedEvent() {
+    val latch = CountDownLatch(1)
+
+    val listener = OnSourceDataLoadedListener { id, type, loaded, tileID ->
+      assertNotNull(id)
+      assertNotNull(type)
+      latch.countDown()
+    }
+
+    rule.scenario.onActivity { activity ->
+      activity.runOnUiThread {
+        mapboxMap.apply {
+          addOnSourceDataLoadedListener(listener)
+          printAllEventsForDebug()
+          setCamera(targetCameraOptions)
+          loadTestStyle()
+        }
+      }
+    }
+    if (!latch.await(20000, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
+    }
+    mapboxMap.removeOnSourceDataLoadedListener(listener)
+  }
+
+  @Test
+  @UiThread
   fun subscribeSourceAddedEvent() {
     val latch = CountDownLatch(1)
 
