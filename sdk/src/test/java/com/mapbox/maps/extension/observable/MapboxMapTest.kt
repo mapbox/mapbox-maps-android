@@ -42,7 +42,7 @@ class MapboxMapTest {
       notModified = false,
       expires = "Thu, 15 Oct 2020 14:32:23 GMT",
       size = 181576,
-      error = Error(ResponseErrorType.NOT_FOUND, "error message")
+      error = Error(ResponseErrorReason.NOT_FOUND, "error message")
     )
     val requestMap = hashMapOf(
       Pair("loading-method", Value(listOf(Value("network")))),
@@ -94,9 +94,9 @@ class MapboxMapTest {
     assertEquals(false, response.notModified)
     assertEquals("Thu, 15 Oct 2020 14:32:23 GMT", response.expires)
     assertEquals(181576, response.size)
-    assertEquals(Error(ResponseErrorType.NOT_FOUND, "error message"), response.error)
+    assertEquals(Error(ResponseErrorReason.NOT_FOUND, "error message"), response.error)
 
-    assertEquals(ResponseErrorType.NOT_FOUND, response.error!!.reason)
+    assertEquals(ResponseErrorReason.NOT_FOUND, response.error!!.reason)
     assertEquals("error message", response.error!!.message)
   }
 }

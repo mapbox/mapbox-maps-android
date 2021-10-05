@@ -9,7 +9,7 @@ data class Error(
   /**
    * "reason" property
    */
-  @SerializedName("reason") val reason: ResponseErrorType,
+  @SerializedName("reason") val reason: ResponseErrorReason,
   /**
    * "message" property
    */

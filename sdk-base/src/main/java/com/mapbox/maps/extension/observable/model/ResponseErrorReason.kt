@@ -3,9 +3,21 @@ package com.mapbox.maps.extension.observable.model
 import com.google.gson.annotations.SerializedName
 
 /**
- * Describes type of Error for response object.
+ * Describes the qreason of Error for response object.
  */
-enum class ResponseErrorType {
+enum class ResponseErrorReason {
+  /**
+   * Error type success.
+   */
+  @SerializedName("success")
+  SUCCESS,
+
+  /**
+   * Error type not-found.
+   */
+  @SerializedName("not-found")
+  NOT_FOUND,
+
   /**
    * Error type server.
    */
@@ -25,20 +37,14 @@ enum class ResponseErrorType {
   RATE_LIMIT,
 
   /**
-   * Error type not-found.
+   * Error type in-offline-mode.
    */
-  @SerializedName("not-found")
-  NOT_FOUND,
+  @SerializedName("in-offline-mode")
+  IN_OFFLINE_MODE,
 
   /**
    * Error type other.
    */
   @SerializedName("other")
-  OTHER,
-
-  /**
-   * Error type success.
-   */
-  @SerializedName("success")
-  SUCCESS,
+  OTHER
 }
