@@ -45,7 +45,7 @@ class LoadStyleCallbackTest {
             sourceId: String?,
             tileId: TileID?
           ) {
-            throw AssertionError("Load $mapLoadErrorType failed with $message")
+            throw AssertionError("Load $mapLoadErrorType failed with $message, sourceId: $sourceId, tileId: $tileId")
           }
         }
       )
@@ -78,7 +78,7 @@ class LoadStyleCallbackTest {
             sourceId: String?,
             tileId: TileID?
           ) {
-            throw AssertionError("Load $mapLoadErrorType failed with $message")
+            throw AssertionError("Load $mapLoadErrorType failed with $message, sourceId: $sourceId, tileId: $tileId")
           }
         }
       )
@@ -127,7 +127,7 @@ class LoadStyleCallbackTest {
             sourceId: String?,
             tileId: TileID?
           ) {
-            throw AssertionError("Load $mapLoadErrorType failed with $message")
+            throw AssertionError("Load $mapLoadErrorType failed with $message, sourceId: $sourceId, tileId: $tileId")
           }
         }
       )

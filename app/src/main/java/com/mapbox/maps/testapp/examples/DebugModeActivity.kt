@@ -85,7 +85,7 @@ class DebugModeActivity : AppCompatActivity() {
         sourceId: String?,
         tileId: TileID?
       ) {
-        Logger.i(TAG, "OnMapLoadErrorListener: $mapLoadErrorType, $message")
+        Logger.i(TAG, "OnMapLoadErrorListener: $mapLoadErrorType, $message, sourceId: $sourceId, tileId: $tileId")
       }
     })
     mapboxMap.addOnMapLoadedListener {
