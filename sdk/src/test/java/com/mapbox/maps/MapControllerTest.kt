@@ -8,250 +8,310 @@ import com.mapbox.maps.loader.MapboxMapStaticInitializer
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.MapPluginRegistry
 import com.mapbox.maps.plugin.Plugin
+import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
+import com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener
 import com.mapbox.maps.renderer.MapboxRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import io.mockk.*
-import org.junit.Assert
+import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import java.io.File
-import java.lang.ref.WeakReference
 
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowLogger::class])
 class MapControllerTest {
 
-  private val renderer: MapboxRenderer = mockk(relaxUnitFun = true)
+  private val mockRenderer: MapboxRenderer = mockk()
+  private val mockNativeObserver: NativeObserver = mockk()
+  private val mockNativeMap: MapInterface = mockk()
+  private val mockMapboxMap: MapboxMap = mockk()
+  private val mockPluginRegistry: MapPluginRegistry = mockk()
+  private val mockMapInitOptions: MapInitOptions = mockk()
+  private val mockCameraState: CameraState = mockk()
+  private val mockMotionEvent: MotionEvent = mockk()
+  private val mockContext: Context = mockk()
+  private val mockMapView: MapView = mockk()
+  private val mockOnStyleDataLoadedListener: OnStyleDataLoadedListener = mockk()
 
-  private val nativeObserver: NativeObserver = mockk(relaxUnitFun = true)
-
-  private val nativeMap: MapInterface = mockk(relaxUnitFun = true)
-
-  private lateinit var mapView: MapView
-
-  private val mapboxMap: MapboxMap = mockk(relaxUnitFun = true)
-
-  private val pluginRegistry: MapPluginRegistry = mockk(relaxed = true)
-
-  private val mapInitOptions: MapInitOptions = mockk(relaxed = true)
-
-  private val cameraState: CameraState = mockk(relaxed = true)
-
-  private val motionEvent: MotionEvent = mockk(relaxed = true)
-
-  private lateinit var mapController: MapController
-
-  private val context: Context = mockk(relaxUnitFun = true)
+  private lateinit var testMapController: MapController
 
   @Before
   fun setUp() {
     mockkStatic(MapboxMapStaticInitializer::class)
     every { MapboxMapStaticInitializer.loadMapboxMapNativeLib() } just Runs
-    every { context.getString(-1) } returns "token"
-    every {
-      context.resources.getIdentifier(
-        "mapbox_access_token",
-        "string",
-        "com.mapbox.maps"
-      )
-    } returns -1
-    every { context.packageName } returns "com.mapbox.maps"
-    every { context.filesDir } returns File("foobar")
-    ResourceOptionsManager.getDefault(context).update { accessToken("foobar") }
-    mapView = mockk(relaxUnitFun = true)
-    val token = "pk.123"
-    val resourceOptions = mockk<ResourceOptions>()
-    mockkObject(MapProvider)
-    every { mapInitOptions.resourceOptions } answers { resourceOptions }
-    every { mapInitOptions.styleUri } answers { Style.MAPBOX_STREETS }
-    every { resourceOptions.accessToken } answers { token }
-    every {
-      MapProvider.getNativeMap(
-        mapInitOptions,
-        renderer
-      )
-    } answers { nativeMap }
-    every { nativeMap.cameraState } returns cameraState
+    every { mockContext.packageName } returns "com.mapbox.maps"
 
-    every { MapProvider.getMapboxMap(WeakReference(nativeMap), nativeObserver, 1.0f) } answers { mapboxMap }
-    every { MapProvider.getMapPluginRegistry(any(), any(), any()) } returns pluginRegistry
-    every { mapboxMap.isStyleLoadInitiated } returns false
-    every { renderer.renderThread.handlerThread.handler } returns mockk()
-    mapController =
-      MapController(
-        renderer,
-        nativeObserver,
-        mapInitOptions,
-        nativeMap,
-        mapboxMap,
-        pluginRegistry,
-        mockk()
-      )
+    testMapController = MapController(
+      mockRenderer,
+      mockNativeObserver,
+      mockMapInitOptions,
+      mockNativeMap,
+      mockMapboxMap,
+      mockPluginRegistry,
+      mockOnStyleDataLoadedListener
+    )
+  }
+
+  @After
+  fun shutDown() {
+    unmockkAll()
   }
 
   @Test
   fun onStart() {
-    mapController.onStart()
-    verify { renderer.onStart() }
-    verify { pluginRegistry.onStart() }
-    verify { mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) }
+    every { mockPluginRegistry.onStart() } just Runs
+    every { mockMapboxMap.loadStyleUri(Style.MAPBOX_STREETS) } just Runs
+    every { mockNativeObserver.addOnCameraChangeListener(any()) } just Runs
+    every { mockNativeObserver.addOnStyleDataLoadedListener(any()) } just Runs
+    every { mockRenderer.onStart() } just Runs
+    every { mockMapboxMap.isStyleLoadInitiated } returns false
+    every { mockMapInitOptions.styleUri } answers { Style.MAPBOX_STREETS }
+
+    testMapController.onStart()
+
+    verifySequence {
+      mockNativeObserver.addOnCameraChangeListener(any())
+      mockNativeObserver.addOnStyleDataLoadedListener(any())
+      mockRenderer.onStart()
+      mockMapboxMap.isStyleLoadInitiated
+      mockMapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
+      mockPluginRegistry.onStart()
+    }
   }
 
   @Test
   fun onStartWithStyleLoaded() {
-    every { mapboxMap.isStyleLoadInitiated } returns true
-    mapController.onStart()
-    verify(exactly = 0) { mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) }
+    every { mockMapboxMap.isStyleLoadInitiated } returns true
+    every { mockPluginRegistry.onStart() } just Runs
+    every { mockRenderer.onStart() } just Runs
+    every { mockNativeObserver.addOnCameraChangeListener(any()) } just Runs
+    every { mockNativeObserver.addOnStyleDataLoadedListener(any()) } just Runs
+
+    testMapController.onStart()
+
+    verify(exactly = 0) { mockMapboxMap.loadStyleUri(Style.MAPBOX_STREETS) }
   }
 
   @Test
   fun onStop() {
-    mapController.onStart()
-    mapController.onStop()
-    verify { renderer.onStop() }
-    verify { pluginRegistry.onStop() }
+    every { mockPluginRegistry.onStop() } just Runs
+    every { mockRenderer.onStop() } just Runs
+    every { mockNativeObserver.removeOnCameraChangeListener(any()) } just Runs
+    every { mockNativeObserver.removeOnStyleDataLoadedListener(any()) } just Runs
+
+    testMapController.lifecycleState = MapController.LifecycleState.STATE_STARTED
+    testMapController.onStop()
+
+    verifySequence {
+      mockNativeObserver.removeOnCameraChangeListener(any())
+      mockNativeObserver.removeOnStyleDataLoadedListener(any())
+      mockRenderer.onStop()
+      mockPluginRegistry.onStop()
+    }
   }
 
   @Test
   fun onReduceMemoryUse() {
-    mapController.onLowMemory()
-    verify { mapboxMap.reduceMemoryUse() }
+    every { mockMapboxMap.reduceMemoryUse() } just Runs
+
+    testMapController.onLowMemory()
+
+    verify { mockMapboxMap.reduceMemoryUse() }
   }
 
   @Test
   fun onDestroy() {
-    mapController.onDestroy()
-    verify { nativeObserver.onDestroy() }
+    every { mockMapboxMap.onDestroy() } just Runs
+    every { mockPluginRegistry.cleanup() } just Runs
+    every { mockNativeObserver.onDestroy() } just Runs
+    every { mockRenderer.onDestroy() } just Runs
+
+    testMapController.onDestroy()
+
+    verifySequence {
+      mockMapboxMap.onDestroy()
+      mockNativeObserver.onDestroy()
+      mockRenderer.onDestroy()
+      mockPluginRegistry.cleanup()
+    }
   }
 
   @Test
   fun onTouch() {
-    mapController.onTouchEvent(motionEvent)
-    verify { pluginRegistry.onTouch(motionEvent) }
+    every { mockPluginRegistry.onTouch(mockMotionEvent) } returns true
+
+    testMapController.onTouchEvent(mockMotionEvent)
+
+    verify { mockPluginRegistry.onTouch(mockMotionEvent) }
   }
 
   @Test
   fun onGenericMotionEvent() {
-    mapController.onGenericMotionEvent(motionEvent)
-    verify { pluginRegistry.onGenericMotionEvent(motionEvent) }
+    val expectedValue = true
+    every { mockPluginRegistry.onGenericMotionEvent(mockMotionEvent) } returns expectedValue
+
+    val actualValue = testMapController.onGenericMotionEvent(mockMotionEvent)
+
+    assertEquals(expectedValue, actualValue)
+    verify { mockPluginRegistry.onGenericMotionEvent(mockMotionEvent) }
   }
 
   @Test
   fun onSizeChanged() {
-    mapController.onSizeChanged(0, 0)
-    verify { pluginRegistry.onSizeChanged(0, 0) }
+    every { mockPluginRegistry.onSizeChanged(0, 0) } just Runs
+
+    testMapController.onSizeChanged(0, 0)
+
+    verify { mockPluginRegistry.onSizeChanged(0, 0) }
   }
 
   @Test
   fun mapboxMapRequest() {
-    Assert.assertEquals(mapboxMap, mapController.getMapboxMap())
+    assertEquals(mockMapboxMap, testMapController.getMapboxMap())
   }
 
   @Test
   fun cameraPluginNotified() {
     val onCameraChangeListenerSlot = slot<OnCameraChangeListener>()
-    every { nativeObserver.addOnCameraChangeListener(capture(onCameraChangeListenerSlot)) } answers {}
-    mapController.onStart()
-    val onCameraChangeListener = onCameraChangeListenerSlot.captured
+    every { mockNativeObserver.addOnCameraChangeListener(capture(onCameraChangeListenerSlot)) } just Runs
+    every { mockNativeObserver.addOnStyleDataLoadedListener(any()) } just Runs
+    every { mockPluginRegistry.onStart() } just Runs
+    every { mockRenderer.onStart() } just Runs
+    every { mockPluginRegistry.onCameraMove(mockCameraState) } just Runs
+    every { mockMapboxMap.loadStyleUri(Style.MAPBOX_STREETS) } just Runs
+    every { mockNativeMap.cameraState } returns mockCameraState
+    every { mockMapboxMap.isStyleLoadInitiated } returns false
+    every { mockMapInitOptions.styleUri } answers { Style.MAPBOX_STREETS }
 
+    testMapController.onStart()
+    val onCameraChangeListener = onCameraChangeListenerSlot.captured
     onCameraChangeListener.onCameraChanged()
-    verify { nativeMap.cameraState }
-    verify { pluginRegistry.onCameraMove(cameraState) }
+
+    verifySequence {
+      mockPluginRegistry.onStart()
+      mockNativeMap.cameraState
+      mockPluginRegistry.onCameraMove(mockCameraState)
+    }
   }
 
   @Test
   fun createPlugin() {
-    val plugin = Plugin.Custom("id", mockk())
-    mapController.createPlugin(mapView, plugin)
-    verify { pluginRegistry.createPlugin(mapView, mapInitOptions, plugin) }
+    val mockPlugin = mockk<Plugin.Custom>()
+    every { mockPluginRegistry.createPlugin(mockMapView, mockMapInitOptions, mockPlugin) } just Runs
+
+    testMapController.createPlugin(mockMapView, mockPlugin)
+
+    verify { mockPluginRegistry.createPlugin(mockMapView, mockMapInitOptions, mockPlugin) }
   }
 
   @Test
   fun getPlugin() {
     val plugin = mockk<MapPlugin>()
-    every { pluginRegistry.getPlugin<MapPlugin>("id") } returns plugin
-    Assert.assertEquals(plugin, mapController.getPlugin("id"))
-    verify { pluginRegistry.getPlugin<MapPlugin>("id") }
+    every { mockPluginRegistry.getPlugin<MapPlugin>("id") } returns plugin
+
+    assertEquals(plugin, testMapController.getPlugin("id"))
+    verify { mockPluginRegistry.getPlugin<MapPlugin>("id") }
   }
 
   @Test
   fun queueEvent() {
     val event = mockk<Runnable>()
-    mapController.queueEvent(event, false)
-    verify { renderer.queueEvent(event) }
-    mapController.queueEvent(event, true)
-    verify { renderer.queueRenderEvent(event) }
+    every { mockRenderer.queueEvent(event) } just Runs
+    every { mockRenderer.queueRenderEvent(event) } just Runs
+
+    testMapController.queueEvent(event, false)
+    testMapController.queueEvent(event, true)
+
+    verifySequence {
+      mockRenderer.queueEvent(event)
+      mockRenderer.queueRenderEvent(event)
+    }
   }
 
   @Test
   fun snapshotSync() {
-    every { renderer.snapshot() } answers { Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888) }
-    mapController.snapshot()
-    verify { renderer.snapshot() }
+    every { mockRenderer.snapshot() } answers { Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888) }
+
+    testMapController.snapshot()
+
+    verify { mockRenderer.snapshot() }
   }
 
   @Test
   fun snapshotAsync() {
     val listener = mockk<MapView.OnSnapshotReady>()
-    mapController.snapshot(listener)
-    verify { renderer.snapshot(listener) }
+    every { mockRenderer.snapshot(listener) } just Runs
+
+    testMapController.snapshot(listener)
+
+    verify { mockRenderer.snapshot(listener) }
   }
 
   @Test
   fun setMaximumFpsValid() {
-    mapController.setMaximumFps(60)
-    verify { renderer.setMaximumFps(60) }
+    every { mockRenderer.setMaximumFps(60) } just Runs
+
+    testMapController.setMaximumFps(60)
+
+    verify { mockRenderer.setMaximumFps(60) }
   }
 
   @Test
   fun setMaximumFpsInvalid() {
-    mapController.setMaximumFps(-1)
-    verify(exactly = 0) { renderer.setMaximumFps(any()) }
+    testMapController.setMaximumFps(-1)
+
+    verify(exactly = 0) { mockRenderer.setMaximumFps(any()) }
   }
 
   @Test
   fun setOnFpsChangedListener() {
     val listener = mockk<OnFpsChangedListener>()
-    mapController.setOnFpsChangedListener(listener)
-    verify { renderer.setOnFpsChangedListener(listener) }
+    every { mockRenderer.setOnFpsChangedListener(listener) } just Runs
+
+    testMapController.setOnFpsChangedListener(listener)
+
+    verifyAll { mockRenderer.setOnFpsChangedListener(listener) }
   }
 
   @Test
   fun initializePluginsEmpty() {
-    val mapController =
-      MapController(
-        renderer,
-        nativeObserver,
-        mapInitOptions,
-        nativeMap,
-        mapboxMap,
-        MapPluginRegistry(mockk()),
-        mockk()
-      )
-    val mapInitOptions = MapInitOptions(mockk(relaxed = true))
-    mapInitOptions.plugins = listOf()
-    mapController.initializePlugins(mapInitOptions)
+    every { mockMapInitOptions.plugins } answers { emptyList() }
+
+    testMapController.initializePlugins(mockMapInitOptions)
+
+    verify(exactly = 0) {
+      mockPluginRegistry.createPlugin(any(), mockMapInitOptions, any())
+      mockMapboxMap.setCameraAnimationPlugin(any())
+      mockMapboxMap.setGesturesAnimationPlugin(any())
+    }
   }
 
   @Test
   fun initializePluginsCamera() {
-    val mapController =
-      MapController(
-        renderer,
-        nativeObserver,
-        mapInitOptions,
-        nativeMap,
-        mapboxMap,
-        MapPluginRegistry(mockk(relaxed = true)),
-        mockk()
+    every { mockMapboxMap.setCameraAnimationPlugin(any()) } just Runs
+    every { mockMapInitOptions.plugins } answers { listOf(Plugin.Mapbox(Plugin.MAPBOX_CAMERA_PLUGIN_ID)) }
+    val createPluginSlot = slot<Plugin>()
+    every {
+      mockPluginRegistry.createPlugin(
+        mockMapView,
+        mockMapInitOptions,
+        capture(createPluginSlot)
       )
-    val mapInitOptions = MapInitOptions(mockk(relaxed = true))
-    mapInitOptions.plugins = listOf(Plugin.Mapbox(Plugin.MAPBOX_CAMERA_PLUGIN_ID))
-    mapController.initializePlugins(mapInitOptions)
-    verify { mapboxMap.setCameraAnimationPlugin(any()) }
+    } just Runs
+
+    testMapController.initializePlugins(mockMapInitOptions, mockMapView)
+
+    val createdPlugin = createPluginSlot.captured
+    assertEquals(Plugin.MAPBOX_CAMERA_PLUGIN_ID, createdPlugin.id)
+    verifySequence {
+      mockMapInitOptions.plugins
+      mockPluginRegistry.createPlugin(mockMapView, mockMapInitOptions, createdPlugin)
+      mockMapboxMap.setCameraAnimationPlugin(createdPlugin.instance as CameraAnimationsPlugin)
+    }
   }
 }

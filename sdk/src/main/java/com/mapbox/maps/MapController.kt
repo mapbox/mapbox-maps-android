@@ -2,6 +2,7 @@ package com.mapbox.maps
 
 import android.content.Context
 import android.view.MotionEvent
+import androidx.annotation.VisibleForTesting
 import com.mapbox.annotation.module.MapboxModuleType
 import com.mapbox.common.Logger
 import com.mapbox.common.module.provider.MapboxModuleProvider
@@ -48,7 +49,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   private val pluginRegistry: MapPluginRegistry
   private val onStyleDataLoadedListener: OnStyleDataLoadedListener
   private val onCameraChangedListener: OnCameraChangeListener
-  private var lifecycleState: LifecycleState = LifecycleState.STATE_STOPPED
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal var lifecycleState: LifecycleState = LifecycleState.STATE_STOPPED
 
   constructor(
     renderer: MapboxRenderer,
@@ -86,6 +88,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     }
   }
 
+  @VisibleForTesting(otherwise = VisibleForTesting.NONE)
   constructor(
     renderer: MapboxRenderer,
     nativeObserver: NativeObserver,
@@ -100,7 +103,6 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.mapInitOptions = mapInitOptions
     this.nativeMap = nativeMap
     this.mapboxMap = mapboxMap
-    this.mapboxMap.renderHandler = renderer.renderThread.handlerThread.handler
     this.pluginRegistry = pluginRegistry
     this.onCameraChangedListener = OnCameraChangeListener {
       pluginRegistry.onCameraMove(nativeMap.cameraState)
@@ -123,13 +125,13 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       addOnStyleDataLoadedListener(onStyleDataLoadedListener)
     }
     renderer.onStart()
-    pluginRegistry.onStart()
     if (!mapboxMap.isStyleLoadInitiated) {
       // Load the style in mapInitOptions if no style has loaded yet.
       mapInitOptions.styleUri?.let {
         mapboxMap.loadStyleUri(it)
       }
     }
+    pluginRegistry.onStart()
   }
 
   override fun onStop() {
@@ -313,7 +315,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     pluginRegistry.onAttachedToWindow(mapView)
   }
 
-  private enum class LifecycleState {
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal enum class LifecycleState {
     STATE_STOPPED,
     STATE_STARTED,
     STATE_DESTROYED
