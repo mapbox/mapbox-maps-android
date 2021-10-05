@@ -32,7 +32,7 @@ fun StyleManagerInterface.getLayer(layerId: String): Layer? {
       "raster" -> RasterLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
       "symbol" -> SymbolLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
       else -> {
-        Logger.e("StyleLayerPlugin", "Layer type: $type unknown.")
+        Logger.e(TAG, "Layer type: $type unknown.")
         null
       }
     }
@@ -40,14 +40,18 @@ fun StyleManagerInterface.getLayer(layerId: String): Layer? {
 }
 
 /**
- * Tries to cast the Layer to T, throws ClassCastException if it's another type.
+ * Tries to cast the Layer to T.
  *
  * @param layerId the layer id
- * @return T
+ * @return T if layer is T, otherwise null
  */
-fun <T : Layer> StyleManagerInterface.getLayerAs(layerId: String): T {
-  @Suppress("UNCHECKED_CAST")
-  return getLayer(layerId) as T
+inline fun <reified T : Layer> StyleManagerInterface.getLayerAs(layerId: String): T? {
+  val layer = getLayer(layerId) as? T
+  if (layer == null) {
+    Logger.e(TAG, "Given layerId = $layerId is not requested type in Layer")
+    return null
+  }
+  return layer
 }
 
 /**
@@ -147,3 +151,6 @@ fun StyleInterface.addPersistentLayer(layer: Layer, position: LayerPosition? = n
 fun Layer.isPersistent(): Boolean? {
   return delegate?.isStyleLayerPersistent(layerId)?.value
 }
+
+@PublishedApi
+internal const val TAG = "Mbgl-LayerUtils"
