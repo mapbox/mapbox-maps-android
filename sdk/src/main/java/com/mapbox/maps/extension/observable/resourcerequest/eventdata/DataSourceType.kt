@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Describes data source of request for resource-request event.
  */
-enum class RequestDataSourceType {
+enum class DataSourceType {
   /**
    * data source as resource-loader.
    */
