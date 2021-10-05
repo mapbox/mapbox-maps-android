@@ -12,6 +12,7 @@ import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.dsl.cameraOptions
+import com.mapbox.maps.extension.observable.eventdata.CameraChangedEventData
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.dsl.generated.switchCase
 import com.mapbox.maps.extension.style.layers.generated.circleLayer
@@ -53,7 +54,7 @@ class FeatureStateActivity : AppCompatActivity(), OnCameraChangeListener {
     mapboxMap.addOnCameraChangeListener(this)
   }
 
-  override fun onCameraChanged() {
+  override fun onCameraChanged(eventData: CameraChangedEventData) {
     val offsetViewBounds = Rect()
     crosshair.getDrawingRect(offsetViewBounds)
     binding.mapView.offsetDescendantRectToMyCoords(crosshair, offsetViewBounds)

@@ -1,7 +1,9 @@
-package com.mapbox.maps.extension.observable.resourcerequest
+package com.mapbox.maps.extension.observable.eventdata
 
 import com.google.gson.annotations.SerializedName
-import com.mapbox.maps.extension.observable.resourcerequest.eventdata.DataSourceType
+import com.mapbox.maps.extension.observable.model.Request
+import com.mapbox.maps.extension.observable.model.Response
+import com.mapbox.maps.extension.observable.model.DataSourceType
 
 /**
  *The data class for event data in Observer

@@ -6,13 +6,14 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.common.Logger
 import com.mapbox.maps.*
+import com.mapbox.maps.extension.observable.eventdata.MapLoadingErrorEventData
 import com.mapbox.maps.extension.observable.getResourceEventData
 import com.mapbox.maps.extension.observable.subscribeResourceRequest
 import com.mapbox.maps.extension.observable.unsubscribeResourceRequest
 import com.mapbox.maps.plugin.compass.compass
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.MapLoadErrorType
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.TileID
+import com.mapbox.maps.extension.observable.model.MapLoadErrorType
+import com.mapbox.maps.extension.observable.model.TileID
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityDebugBinding
 
@@ -79,13 +80,8 @@ class DebugModeActivity : AppCompatActivity() {
       Logger.i(TAG, "OnMapIdleListener")
     }
     mapboxMap.addOnMapLoadErrorListener(object : OnMapLoadErrorListener {
-      override fun onMapLoadError(
-        mapLoadErrorType: MapLoadErrorType,
-        message: String,
-        sourceId: String?,
-        tileId: TileID?
-      ) {
-        Logger.i(TAG, "OnMapLoadErrorListener: $mapLoadErrorType, $message, sourceId: $sourceId, tileId: $tileId")
+      override fun onMapLoadError(eventData: MapLoadingErrorEventData) {
+        Logger.i(TAG, "OnMapLoadErrorListener: $eventData")
       }
     })
     mapboxMap.addOnMapLoadedListener {
@@ -97,10 +93,10 @@ class DebugModeActivity : AppCompatActivity() {
     mapboxMap.addOnRenderFrameStartedListener {
       Logger.i(TAG, "OnRenderFrameStartedListener")
     }
-    mapboxMap.addOnRenderFrameFinishedListener { renderMode, needsRepaint, placementChanged ->
+    mapboxMap.addOnRenderFrameFinishedListener { eventData ->
       Logger.i(
         TAG,
-        "OnRenderFrameFinishedListener: $renderMode, $needsRepaint, $placementChanged"
+        "OnRenderFrameFinishedListener: $eventData"
       )
     }
     mapboxMap.addOnSourceAddedListener {
@@ -109,10 +105,10 @@ class DebugModeActivity : AppCompatActivity() {
         "OnSourceAddedListener: $it"
       )
     }
-    mapboxMap.addOnSourceDataLoadedListener { id, type, loaded, tileID ->
+    mapboxMap.addOnSourceDataLoadedListener { eventData ->
       Logger.i(
         TAG,
-        "OnSourceDataLoadedListener: $id, $type, $loaded, $tileID"
+        "OnSourceDataLoadedListener: $eventData"
       )
     }
     mapboxMap.addOnSourceRemovedListener {

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.addListener
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.extension.observable.eventdata.MapLoadedEventData
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadedListener
@@ -54,7 +55,7 @@ class AnimatePointAnnotationActivity : AppCompatActivity(), OnMapLoadedListener 
     binding.changeStyle.visibility = View.GONE
   }
 
-  override fun onMapLoaded() {
+  override fun onMapLoaded(eventData: MapLoadedEventData) {
     pointAnnotationManager = binding.mapView.annotations.createPointAnnotationManager(binding.mapView).apply {
       bitmapFromDrawableRes(
         this@AnimatePointAnnotationActivity,

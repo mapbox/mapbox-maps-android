@@ -1,5 +1,7 @@
 package com.mapbox.maps.plugin.delegates.listeners
 
+import com.mapbox.maps.extension.observable.eventdata.StyleImageMissingEventData
+
 /**
  * Definition for listener invoked when the style has a missing image.
  */
@@ -10,7 +12,7 @@ fun interface OnStyleImageMissingListener {
    * one of the required images is missing in the sprite sheet. Subscriber has to provide the missing image
    * by calling StyleManager#addStyleImage method.
    *
-   * @param id the id of the missing style image
+   * @param eventData StyleImageMissingEventData
    */
-  fun onStyleImageMissing(id: String)
+  fun onStyleImageMissing(eventData: StyleImageMissingEventData)
 }

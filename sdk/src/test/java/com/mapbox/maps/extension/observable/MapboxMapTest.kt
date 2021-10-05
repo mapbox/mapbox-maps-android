@@ -4,8 +4,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.maps.Event
 import com.mapbox.maps.ObservableInterface
 import com.mapbox.maps.Observer
-import com.mapbox.maps.extension.observable.resourcerequest.*
-import com.mapbox.maps.extension.observable.resourcerequest.eventdata.*
+import com.mapbox.maps.extension.observable.model.*
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Assert.assertEquals

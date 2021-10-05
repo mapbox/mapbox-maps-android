@@ -7,8 +7,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.MapLoadErrorType
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.TileID
+import com.mapbox.maps.extension.observable.model.MapLoadErrorType
+import com.mapbox.maps.extension.observable.model.TileID
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith

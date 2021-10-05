@@ -2,7 +2,7 @@ package com.mapbox.maps
 
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.MapLoadErrorType
+import com.mapbox.maps.extension.observable.model.MapLoadErrorType
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Test

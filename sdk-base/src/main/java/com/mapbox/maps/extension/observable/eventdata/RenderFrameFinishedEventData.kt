@@ -1,10 +1,10 @@
-package com.mapbox.maps.extension.observable.model
+package com.mapbox.maps.extension.observable.eventdata
 
 import com.google.gson.annotations.SerializedName
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.RenderMode
+import com.mapbox.maps.extension.observable.model.RenderMode
 
 /**
- *The data class for Map Loading Error event data in Observer
+ * The data class for render-frame-finished event data in Observer
  */
 data class RenderFrameFinishedEventData(
   /**

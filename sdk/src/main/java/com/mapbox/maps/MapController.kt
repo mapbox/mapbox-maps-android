@@ -28,7 +28,7 @@ import com.mapbox.maps.plugin.compass.CompassViewPlugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 import com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.StyleDataType
+import com.mapbox.maps.extension.observable.model.StyleDataType
 import com.mapbox.maps.plugin.gestures.GesturesPluginImpl
 import com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePluginImpl
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentPluginImpl
@@ -75,8 +75,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.onCameraChangedListener = OnCameraChangeListener {
       pluginRegistry.onCameraMove(nativeMap.cameraState)
     }
-    this.onStyleDataLoadedListener = OnStyleDataLoadedListener { type ->
-      if (type == StyleDataType.STYLE) {
+    this.onStyleDataLoadedListener = OnStyleDataLoadedListener { eventData ->
+      if (eventData.type == StyleDataType.STYLE) {
         mapboxMap.getStyle { style ->
           pluginRegistry.onStyleChanged(style)
         }

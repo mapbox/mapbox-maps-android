@@ -16,8 +16,8 @@ import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.delegates.listeners.*
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.MapLoadErrorType
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.TileID
+import com.mapbox.maps.extension.observable.model.MapLoadErrorType
+import com.mapbox.maps.extension.observable.model.TileID
 import com.mapbox.maps.testapp.BaseMapTest
 import com.mapbox.maps.testapp.R
 import org.junit.Assert.assertEquals

@@ -1,11 +1,11 @@
-package com.mapbox.maps.extension.observable.model
+package com.mapbox.maps.extension.observable.eventdata
 
 import com.google.gson.annotations.SerializedName
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.MapLoadErrorType
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.TileID
+import com.mapbox.maps.extension.observable.model.MapLoadErrorType
+import com.mapbox.maps.extension.observable.model.TileID
 
 /**
- *The data class for Map Loading Error event data in Observer
+ * The data class for map-loading-error event data in Observer
  */
 data class MapLoadingErrorEventData(
   /**

@@ -7,6 +7,7 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
+import com.mapbox.maps.extension.observable.eventdata.CameraChangedEventData
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
 import com.mapbox.maps.extension.style.layers.getLayer
@@ -101,7 +102,7 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
     }
   }
 
-  override fun onCameraChanged() {
+  override fun onCameraChanged(eventData: CameraChangedEventData) {
     val mainCameraPosition = mainMapboxMap.cameraState
     val insetCameraPosition = CameraOptions.Builder()
       .zoom(mainCameraPosition.zoom.minus(ZOOM_DISTANCE_BETWEEN_MAIN_AND_INSET_MAPS))
