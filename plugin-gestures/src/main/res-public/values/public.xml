@@ -48,5 +48,11 @@
 
     <!-- The amount by which the zoom level increases or decreases during a double-tap-to-zoom-in or double-touch-to-zoom-out gesture. 1.0 by default. Must be positive. -->
     <public name="mapbox_gesturesZoomAnimationAmount" type="attr" />
+
+    <!-- Whether to adjust pitch to 0.0 automatically depending on zoom threshold when globe projection is used to improve overall gesture experience. Defaults to true. -->
+    <public name="mapbox_gesturesGlobeResetPitchEnabled" type="attr" />
+
+    <!-- Zoom threshold used when globe projection is used and globe reset pitch is enabled. When map zoom is less or equal than threshold pitch animator will be started adjusting pitch to 0.0. -->
+    <public name="mapbox_gesturesGlobeResetPitchZoomThreshold" type="attr" />
 </resources>
 <!-- End of generated file. -->

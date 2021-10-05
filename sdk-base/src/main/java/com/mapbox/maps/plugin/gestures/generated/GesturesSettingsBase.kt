@@ -219,6 +219,30 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
       this.internalSettings.zoomAnimationAmount = value
       applySettings()
     }
+
+  /**
+   * Whether to adjust pitch to 0.0 automatically depending on zoom threshold when globe projection is used to improve overall gesture experience. Defaults to true.
+   */
+  override var globeResetPitchEnabled: Boolean
+    get() {
+      return this.internalSettings.globeResetPitchEnabled
+    }
+    set(value) {
+      this.internalSettings.globeResetPitchEnabled = value
+      applySettings()
+    }
+
+  /**
+   * Zoom threshold used when globe projection is used and globe reset pitch is enabled. When map zoom is less or equal than threshold pitch animator will be started adjusting pitch to 0.0.
+   */
+  override var globeResetPitchZoomThreshold: Float
+    get() {
+      return this.internalSettings.globeResetPitchZoomThreshold
+    }
+    set(value) {
+      this.internalSettings.globeResetPitchZoomThreshold = value
+      applySettings()
+    }
 }
 
 // End of generated file.

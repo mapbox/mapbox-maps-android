@@ -83,6 +83,16 @@ data class GesturesSettings @JvmOverloads constructor(
    * The amount by which the zoom level increases or decreases during a double-tap-to-zoom-in or double-touch-to-zoom-out gesture. 1.0 by default. Must be positive.
    */
   var zoomAnimationAmount: Float = 1f,
+
+  /**
+   * Whether to adjust pitch to 0.0 automatically depending on zoom threshold when globe projection is used to improve overall gesture experience. Defaults to true.
+   */
+  var globeResetPitchEnabled: Boolean = true,
+
+  /**
+   * Zoom threshold used when globe projection is used and globe reset pitch is enabled. When map zoom is less or equal than threshold pitch animator will be started adjusting pitch to 0.0.
+   */
+  var globeResetPitchZoomThreshold: Float = 1.55f,
 )
 
 // End of generated file.

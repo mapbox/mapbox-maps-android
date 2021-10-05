@@ -13,7 +13,6 @@ import android.view.MotionEvent
 import androidx.annotation.VisibleForTesting
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.android.gestures.*
-import com.mapbox.common.Logger
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
@@ -1373,6 +1372,36 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     }
   }
 
+  private fun enableGlobeProperties(delegateProvider: MapDelegateProvider) {
+    val pitchAnimator = cameraAnimationsPlugin.createPitchAnimator(
+      cameraAnimatorOptions(0.0) {
+        owner(GLOBE_ANIMATION_OWNER)
+      }
+    ) {
+      duration = GLOBE_PITCH_TRANSITION_DURATION_MS
+    }
+    cameraAnimationsPlugin.registerAnimators(pitchAnimator)
+    addProtectedAnimationOwner(GLOBE_ANIMATION_OWNER)
+    delegateProvider.mapListenerDelegate.addOnMapIdleListener {
+      if (!internalSettings.globeResetPitchEnabled) {
+        return@addOnMapIdleListener
+      }
+      val cameraState = mapCameraManagerDelegate.cameraState
+      if (cameraState.zoom >= internalSettings.globeResetPitchZoomThreshold && pitchAnimator.isRunning) {
+        pitchAnimator.cancel()
+      }
+      if (cameraState.zoom < internalSettings.globeResetPitchZoomThreshold &&
+        mapProjectionDelegate.getMapProjection() === MapProjection.Globe &&
+        cameraState.pitch >= 0
+      ) {
+        if (pitchAnimator.isRunning) {
+          return@addOnMapIdleListener
+        }
+        pitchAnimator.start()
+      }
+    }
+  }
+
   /**
    * Add a callback that is invoked when the map is clicked.
    */
@@ -1571,29 +1600,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       "Can't look up an instance of plugin, " +
         "is it available on the clazz path and loaded through the map?"
     )
-    val pitchAnimator = cameraAnimationsPlugin.createPitchAnimator(
-        cameraAnimatorOptions(0.0) {
-        owner("globe")
-      }
-    ) {
-      duration = 500L
-    }
-    cameraAnimationsPlugin.registerAnimators(pitchAnimator)
-    addProtectedAnimationOwner("globe")
-    delegateProvider.mapListenerDelegate.addOnMapIdleListener {
-      val cameraState = mapCameraManagerDelegate.cameraState
-      if (cameraState.zoom >= 1.55 && pitchAnimator.isRunning) {
-        pitchAnimator.cancel()
-      }
-      if (cameraState.zoom < 1.55
-        && mapProjectionDelegate.getMapProjection() === MapProjection.Globe
-        && cameraState.pitch >= 0) {
-        if (pitchAnimator.isRunning) {
-          return@addOnMapIdleListener
-        }
-        pitchAnimator.start()
-      }
-    }
   }
 
   /**
@@ -1602,5 +1608,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   override fun initialize() {
     initializeGesturesManager(gesturesManager, true)
     initializeGestureListeners(context, true)
+  }
+
+  companion object {
+    private const val GLOBE_ANIMATION_OWNER = "globe"
+    private const val GLOBE_PITCH_TRANSITION_DURATION_MS = 500L
   }
 }

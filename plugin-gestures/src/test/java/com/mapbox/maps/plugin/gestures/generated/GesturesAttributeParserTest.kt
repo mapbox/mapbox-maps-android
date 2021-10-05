@@ -236,6 +236,27 @@ class GesturesAttributeParserTest {
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
     assertEquals(1f, settings.zoomAnimationAmount)
   }
+
+  @Test
+  fun globeResetPitchEnabledTestTrue() {
+    every { typedArray.getBoolean(any(), any()) } returns true
+    val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
+    assertEquals(true, settings.globeResetPitchEnabled)
+  }
+
+  @Test
+  fun globeResetPitchEnabledTestFalse() {
+    every { typedArray.getBoolean(any(), any()) } returns false
+    val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
+    assertEquals(false, settings.globeResetPitchEnabled)
+  }
+
+  @Test
+  fun globeResetPitchZoomThresholdTest() {
+    every { typedArray.getFloat(any(), any()) } returns 1.55f
+    val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
+    assertEquals(1.55f, settings.globeResetPitchZoomThreshold)
+  }
 }
 
 // End of generated file.

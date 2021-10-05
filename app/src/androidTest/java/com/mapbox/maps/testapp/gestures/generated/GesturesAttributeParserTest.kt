@@ -107,6 +107,16 @@ class GesturesAttributeParserTest : BaseMapTest() {
       0.9f,
       mapView.gestures.getSettings().zoomAnimationAmount
     )
+    assertEquals(
+      "globeResetPitchEnabled test failed..",
+      false,
+      mapView.gestures.getSettings().globeResetPitchEnabled
+    )
+    assertEquals(
+      "globeResetPitchZoomThreshold test failed..",
+      0.9f,
+      mapView.gestures.getSettings().globeResetPitchZoomThreshold
+    )
   }
 }
 
