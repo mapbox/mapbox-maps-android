@@ -303,6 +303,15 @@ fun Event.getResourceEventData(): ResourceEventData {
 }
 
 /**
+ * Get the parsed event data for map loaded event.
+ * @return a parsed MapLoadedEventData object.
+ */
+fun Event.getMapLoadedEventData(): MapLoadedEventData {
+  val json = data.toJson()
+  return Gson().fromJson(json, MapLoadedEventData::class.java)
+}
+
+/**
  * Get the parsed event data for map loading error event.
  * @return a parsed MapLoadingErrorEventData object.
  */
@@ -312,12 +321,30 @@ fun Event.getMapLoadingErrorEventData(): MapLoadingErrorEventData {
 }
 
 /**
+ * Get the parsed event data for map idle event.
+ * @return a parsed MapIdleEventData object.
+ */
+fun Event.getMapIdleEventData(): MapIdleEventData {
+  val json = data.toJson()
+  return Gson().fromJson(json, MapIdleEventData::class.java)
+}
+
+/**
  * Get the parsed event data for style data loaded event.
  * @return a parsed StyleDataLoadedEventData object.
  */
 fun Event.getStyleDataLoadedEventData(): StyleDataLoadedEventData {
   val json = data.toJson()
   return Gson().fromJson(json, StyleDataLoadedEventData::class.java)
+}
+
+/**
+ * Get the parsed event data for style loaded event.
+ * @return a parsed StyleLoadedEventData object.
+ */
+fun Event.getStyleLoadedEventData(): StyleLoadedEventData {
+  val json = data.toJson()
+  return Gson().fromJson(json, StyleLoadedEventData::class.java)
 }
 
 /**
@@ -366,10 +393,28 @@ fun Event.getSourceRemovedEventData(): SourceRemovedEventData {
 }
 
 /**
+ * Get the parsed event data for render frame started event.
+ * @return a parsed RenderFrameStartedEventData.
+ */
+fun Event.getRenderFrameStartedEventData(): RenderFrameStartedEventData {
+  val json = data.toJson()
+  return Gson().fromJson(json, RenderFrameStartedEventData::class.java)
+}
+
+/**
  * Get the parsed event data for render frame finished event.
  * @return a parsed RenderFrameFinishedEventData.
  */
 fun Event.getRenderFrameFinishedEventData(): RenderFrameFinishedEventData {
   val json = data.toJson()
   return Gson().fromJson(json, RenderFrameFinishedEventData::class.java)
+}
+
+/**
+ * Get the parsed event data for camera changed event.
+ * @return a parsed CameraChangedEventData.
+ */
+fun Event.getCameraChangedEventData(): CameraChangedEventData {
+  val json = data.toJson()
+  return Gson().fromJson(json, CameraChangedEventData::class.java)
 }

@@ -10,6 +10,15 @@ import com.mapbox.maps.extension.observable.model.DataSourceType
  */
 data class ResourceEventData(
   /**
+   * Representing timestamp taken at the time of an event creation, in microseconds, since the epoch.
+   */
+  @SerializedName("begin") val begin: Long,
+  /**
+   * For an interval events, an optional `end` property will be present that represents timestamp taken at the time
+   * of an event completion.
+   */
+  @SerializedName("end") val end: Long?,
+  /**
    * "data-source" property
    */
   @SerializedName("data-source") val dataSource: DataSourceType,
