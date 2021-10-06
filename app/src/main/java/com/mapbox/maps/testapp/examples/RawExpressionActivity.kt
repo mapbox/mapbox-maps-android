@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import java.lang.RuntimeException
 
@@ -33,16 +32,13 @@ import java.lang.RuntimeException
  */
 class RawExpressionActivity : AppCompatActivity() {
 
-  private lateinit var mapboxMap: MapboxMap
-
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     val mapView = MapView(this)
     setContentView(mapView)
-    mapboxMap = mapView.getMapboxMap()
-    mapboxMap.loadStyleUri(
-      Style.MAPBOX_STREETS
-    ) { addExpressionToStyle(it) }
+    mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
+      addExpressionToStyle(it)
+    }
   }
 
   private fun addExpressionToStyle(style: Style) {

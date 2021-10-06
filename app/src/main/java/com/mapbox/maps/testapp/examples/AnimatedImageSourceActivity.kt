@@ -4,8 +4,10 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.maps.Image
+import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.layers.generated.rasterLayer
 import com.mapbox.maps.extension.style.sources.generated.ImageSource
@@ -24,16 +26,16 @@ import java.nio.ByteBuffer
  */
 class AnimatedImageSourceActivity : AppCompatActivity() {
 
-  private val handler: Handler = Handler()
+  private val handler: Handler = Handler(Looper.getMainLooper())
+  private lateinit var mapboxMap: MapboxMap
   private lateinit var runnable: Runnable
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     val binding = ActivityAnimatedImagesourceBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    val map = binding.mapView.getMapboxMap()
-
-    map.loadStyle(
+    mapboxMap = binding.mapView.getMapboxMap()
+    mapboxMap.loadStyle(
       style(styleUri = Style.MAPBOX_STREETS) {
         +imageSource(ID_IMAGE_SOURCE) {
           coordinates(
@@ -47,7 +49,12 @@ class AnimatedImageSourceActivity : AppCompatActivity() {
         }
         +rasterLayer(ID_IMAGE_LAYER, ID_IMAGE_SOURCE) { }
       }
-    ) {
+    )
+  }
+
+  override fun onStart() {
+    super.onStart()
+    mapboxMap.getStyle {
       val imageSource: ImageSource = it.getSourceAs(ID_IMAGE_SOURCE)!!
       runnable = RefreshImageRunnable(applicationContext, imageSource, handler)
       handler.postDelayed(runnable, 100)
@@ -56,7 +63,9 @@ class AnimatedImageSourceActivity : AppCompatActivity() {
 
   override fun onStop() {
     super.onStop()
-    handler.removeCallbacks(runnable)
+    if (::runnable.isInitialized) {
+      handler.removeCallbacks(runnable)
+    }
   }
 
   private class RefreshImageRunnable constructor(

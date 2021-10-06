@@ -3,6 +3,8 @@ package com.mapbox.maps.testapp.examples
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.bindgen.Value
+import com.mapbox.geojson.Point
+import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 
@@ -12,16 +14,16 @@ import com.mapbox.maps.Style
  * Source:
  * ```
  * {
- * "type": "geojson",
+ *    "type": "geojson",
  *    "data": {
- *    "type": "Feature",
+ *        "type": "Feature",
  *        "geometry": {
- *            "type": "Point",
- *            "coordinates": [-77.0323, 38.9131]
+ *        "type": "Point",
+ *          "coordinates": [-77.032667, 38.913175]
  *        },
  *        "properties": {
- *            "title": "Mapbox DC",
- *            "marker-symbol": "monument"
+ *          "title": "Mapbox DC",
+ *          "marker-symbol": "monument"
  *        }
  *    }
  * }
@@ -35,7 +37,11 @@ import com.mapbox.maps.Style
  *    "source": "source",
  *    "source-layer": "",
  *    "layout": {},
- *    "paint": {}
+ *    "paint": {
+ *        "circle-radius": 20,
+ *        "circle-color": "#FF3300",
+ *        "circle-pitch-alignment": "map"
+ *    }
  * }
  * ```
  */
@@ -45,9 +51,15 @@ class RawSourceLayerActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val mapView = MapView(this)
     setContentView(mapView)
-    mapView.getMapboxMap().loadStyleUri(
-      Style.MAPBOX_STREETS
-    ) { addGeoJsonSource(it) }
+    mapView.getMapboxMap().apply {
+      setCamera(
+        CameraOptions.Builder()
+          .center(Point.fromLngLat(-77.032667, 38.913175))
+          .zoom(16.0)
+          .build()
+      )
+      loadStyleUri(Style.MAPBOX_STREETS) { addGeoJsonSource(it) }
+    }
   }
 
   private fun addGeoJsonSource(style: Style) {
@@ -59,10 +71,10 @@ class RawSourceLayerActivity : AppCompatActivity() {
             "type": "Feature",
             "geometry": {
               "type": "Point",
-              "coordinates": [-77.0323, 38.9131]
+              "coordinates": [-77.032667, 38.913175]
             },
             "properties": {
-              "title": "Mapbox DC",
+              "title": "Mapbox Garage",
               "marker-symbol": "monument"
             }
           }
@@ -87,7 +99,11 @@ class RawSourceLayerActivity : AppCompatActivity() {
             "source": "source",
             "source-layer": "",
             "layout": {},
-            "paint": {}
+            "paint": {
+                "circle-radius": 20,
+                "circle-color": "#FF3300",
+                "circle-pitch-alignment": "map"
+            }
         }
       """.trimIndent()
     )

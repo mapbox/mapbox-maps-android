@@ -3,6 +3,7 @@ package com.mapbox.maps.testapp.examples.linesandpolygons
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.api.directions.v5.DirectionsCriteria
@@ -40,7 +41,7 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
 
   private lateinit var mapboxDirectionsClient: MapboxDirections
   private lateinit var drawRouteRunnable: Runnable
-  private val handler = Handler()
+  private val handler = Handler(Looper.getMainLooper())
   private val drivingRoutePolyLineFeatureList = mutableListOf<Feature>()
   private var counterIndex = 0
   private lateinit var binding: ActivityJavaservicesSnakingDirectionsRouteBinding
@@ -60,7 +61,7 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
             FeatureCollection.fromFeatures(
               listOf(
                 Feature.fromGeometry(PARIS_ORIGIN_POINT),
-                Feature.fromGeometry(LYON_DESTINATION_POINT)
+                Feature.fromGeometry(TULLINS_DESTINATION_POINT)
               )
             )
           )
@@ -93,7 +94,7 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
   private fun requestDirectionRoute() {
     mapboxDirectionsClient = MapboxDirections.builder()
       .origin(PARIS_ORIGIN_POINT)
-      .destination(LYON_DESTINATION_POINT)
+      .destination(TULLINS_DESTINATION_POINT)
       .overview(DirectionsCriteria.OVERVIEW_FULL)
       .profile(DirectionsCriteria.PROFILE_DRIVING)
       .geometries(GEOMETRY_POLYLINE)
@@ -175,6 +176,6 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
     private const val DRIVING_ROUTE_POLYLINE_SOURCE_ID = "DRIVING_ROUTE_POLYLINE_SOURCE_ID"
     private const val DRAW_SPEED_MILLISECONDS = 500L
     private val PARIS_ORIGIN_POINT = Point.fromLngLat(2.35222, 48.856614)
-    private val LYON_DESTINATION_POINT = Point.fromLngLat(4.83565, 45.76404)
+    private val TULLINS_DESTINATION_POINT = Point.fromLngLat(5.486011, 45.299410)
   }
 }

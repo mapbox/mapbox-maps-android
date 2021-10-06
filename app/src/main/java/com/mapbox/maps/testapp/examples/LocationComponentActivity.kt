@@ -17,6 +17,7 @@ import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityLocationComponentBinding
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
+import java.lang.ref.WeakReference
 
 class LocationComponentActivity : AppCompatActivity() {
 
@@ -34,7 +35,7 @@ class LocationComponentActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = ActivityLocationComponentBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    locationPermissionHelper = LocationPermissionHelper(this)
+    locationPermissionHelper = LocationPermissionHelper(WeakReference(this))
     locationPermissionHelper.checkPermissions {
       binding.mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
         // Disable scroll gesture, since we are updating the camera position based on the indicator location.
