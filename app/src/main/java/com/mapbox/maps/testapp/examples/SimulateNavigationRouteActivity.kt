@@ -5,7 +5,6 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
-import com.google.gson.Gson
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.core.constants.Constants
@@ -27,8 +26,7 @@ import com.mapbox.maps.plugin.gestures.OnMoveListener
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.*
 import com.mapbox.maps.testapp.R
-import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
-import com.mapbox.maps.testapp.utils.StorageUtils
+import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils\
 import com.mapbox.turf.TurfMeasurement
 
 /**
