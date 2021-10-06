@@ -14,7 +14,9 @@ import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityIconPropertyBinding
 
 /**
- * Example displaying multiple images in a symbol layer
+ * Add point data and several images to a style and use the switchCase and
+ * get expressions to choose which image to display at each point in a SymbolLayer
+ * based on a data property.
  */
 class IconPropertyActivity : AppCompatActivity() {
 

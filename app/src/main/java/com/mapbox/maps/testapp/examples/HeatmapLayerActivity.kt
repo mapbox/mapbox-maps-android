@@ -16,6 +16,10 @@ import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.testapp.databinding.ActivityHeatmapLayerBinding
 
+/**
+ * Add earthquake frequency data to a style from a GeoJSON file and render
+ * it on a map using a HeatmapLayer.
+ */
 class HeatmapLayerActivity : AppCompatActivity() {
 
   private lateinit var mapboxMap: MapboxMap

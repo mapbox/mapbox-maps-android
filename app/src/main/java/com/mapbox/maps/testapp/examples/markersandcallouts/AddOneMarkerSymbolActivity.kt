@@ -15,7 +15,8 @@ import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.R
 
 /**
- * Example showing how to add a marker on map with symbol layer
+ * Add a blue teardrop-shaped marker image to a style and display it on the
+ * map using a SymbolLayer.
  */
 class AddOneMarkerSymbolActivity : AppCompatActivity() {
 

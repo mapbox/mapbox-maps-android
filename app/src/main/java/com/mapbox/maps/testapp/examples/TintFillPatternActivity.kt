@@ -14,7 +14,8 @@ import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityRtsFillPatternTintBinding
 
 /**
- * Tint a fill pattern and change it's color on button click.
+ * Add an image to a style and use it to display a pattern in the landuse
+ * FillLayer in the Mapbox Streets style.
  */
 class TintFillPatternActivity : AppCompatActivity() {
 
