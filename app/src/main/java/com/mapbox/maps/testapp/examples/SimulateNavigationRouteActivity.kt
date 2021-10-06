@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.core.constants.Constants
@@ -31,8 +30,6 @@ import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.testapp.utils.StorageUtils
 import com.mapbox.turf.TurfMeasurement
-import kotlin.math.pow
-import kotlin.math.sqrt
 
 /**
  * Simulate a navigation route with pre-defined route (from LA to San Francisco) with location puck,
@@ -41,17 +38,12 @@ import kotlin.math.sqrt
  */
 class SimulateNavigationRouteActivity : AppCompatActivity() {
 
+  private lateinit var performanceRecorder: PerformanceRecorder
   private lateinit var mapView: MapView
   private lateinit var routePoints: LineString
-  private var renderFrameFinishCount = 0
-  private var overtimeFrameCount = 0
-  private val renderFrameIntervalsMs = mutableListOf<Float>()
-  private val frameReport = mutableListOf<JsonObject>()
   private val locationProvider by lazy { FakeLocationProvider(routePoints) }
   private var cameraFollowMode = CameraFollowMode.OVERVIEW
   private val handler = Handler(Looper.getMainLooper())
-  private var startBenchmarkTime = 0L
-  private var lastRenderedFrameTime = 0L
 
   private val onIndicatorBearingChangedListener = OnIndicatorBearingChangedListener {
     if (cameraFollowMode == CameraFollowMode.FOLLOW) {
@@ -191,35 +183,10 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
       ).routes()[0].geometry()!!,
       Constants.PRECISION_6
     )
+
+    performanceRecorder = PerformanceRecorder(mapView, TARGET_FRAME_TIME_MS)
     initMapboxMap()
-  }
 
-  private val renderFrameObserver = Observer { event ->
-    if (event.type == MapEvents.RENDER_FRAME_FINISHED) {
-      renderFrameFinishCount++
-      val now = SystemClock.elapsedRealtimeNanos()
-      if (lastRenderedFrameTime != 0L) {
-        renderFrameIntervalsMs.add((now - lastRenderedFrameTime) * 1e-6f)
-        frameReport.add(
-          JsonObject().apply {
-            addProperty("time_from_start", (now - startBenchmarkTime) * 1e-6f)
-            addProperty("interval_from_last_frame", (now - lastRenderedFrameTime) * 1e-6f)
-          }
-        )
-        if (now - lastRenderedFrameTime > 1000_000L * TARGET_FRAME_TIME_MS) {
-          overtimeFrameCount++
-        }
-      }
-      lastRenderedFrameTime = now
-    }
-  }
-
-  private fun initFpsCounter() {
-    mapView.getMapboxMap().subscribe(
-      renderFrameObserver,
-      listOf(MapEvents.RENDER_FRAME_FINISHED)
-    )
-    startBenchmarkTime = SystemClock.elapsedRealtimeNanos()
   }
 
   private fun initMapboxMap() {
@@ -236,7 +203,7 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
         }
       }
     ) {
-      initFpsCounter()
+      performanceRecorder.startRecording()
       initLocationComponent()
       setCameraToOverview(false)
       setupGestures()
@@ -273,21 +240,12 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
     // Post toast message on activity ends.
     handler.postDelayed(
       {
-        val endBenchmarkTime = SystemClock.elapsedRealtimeNanos()
         Toast.makeText(
           this,
-          """
-              Average FPS: ${(renderFrameFinishCount * 1e9f / (endBenchmarkTime - startBenchmarkTime)).format()}
-              Over time frames: $overtimeFrameCount
-              Over time frames ratio: ${(overtimeFrameCount * 100f / renderFrameFinishCount).format()}%
-              Max frame interval: ${renderFrameIntervalsMs.maxOrNull().format()}ms
-              Min frame interval: ${renderFrameIntervalsMs.minOrNull().format()}ms
-              Frame interval SD: ${renderFrameIntervalsMs.sd().format()}ms
-              Logs have been saved to $filesDir/logs/$FRAME_LOG_JSON_NAME.
-          """.trimIndent(),
+          performanceRecorder.stopRecording(),
           Toast.LENGTH_LONG
         ).show()
-        StorageUtils(this).writeToFile(FRAME_LOG_JSON_NAME, Gson().toJson(frameReport))
+        performanceRecorder.writeToFile(this, FRAME_LOG_JSON_NAME)
         finish()
       },
       ACTIVITY_RUN_TIME
@@ -362,7 +320,7 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
       removeOnMoveListener(onMoveListener)
       removeOnMapClickListener(onMapClickListener)
     }
-    mapView.getMapboxMap().unsubscribe(renderFrameObserver)
+    performanceRecorder.onDestroy()
   }
 
   private enum class CameraFollowMode {
@@ -406,20 +364,6 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
       this.locationConsumer = null
       handler.removeCallbacksAndMessages(null)
     }
-  }
-
-  private fun Number?.format(): String {
-    return "%.2f".format(this)
-  }
-
-  private fun List<Float>.sd(): Double {
-    val mean = average()
-    return sqrt(
-      fold(
-        0.0,
-        { accumulator, next -> accumulator + (next - mean).pow(2.0) }
-      ) / size
-    )
   }
 
   companion object {
