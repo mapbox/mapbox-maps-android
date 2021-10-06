@@ -17,7 +17,7 @@ import com.mapbox.maps.attribution.AttributionParser
 import com.mapbox.maps.extension.observable.getMapLoadingErrorEventData
 import com.mapbox.maps.extension.observable.getStyleDataLoadedEventData
 import com.mapbox.maps.extension.observable.getStyleImageMissingEventData
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.StyleDataType
+import com.mapbox.maps.extension.observable.model.StyleDataType
 import java.lang.ref.WeakReference
 import kotlin.math.min
 
@@ -56,7 +56,7 @@ open class Snapshotter {
             snapshotStyleCallback?.onDidFailLoadingStyle(event.getMapLoadingErrorEventData().message)
             coreSnapshotter.unsubscribe(observer)
           }
-          MapEvents.STYLE_DATA_LOADED -> if (event.getStyleDataLoadedEventData().styleDataType == StyleDataType.STYLE) {
+          MapEvents.STYLE_DATA_LOADED -> if (event.getStyleDataLoadedEventData().type == StyleDataType.STYLE) {
             snapshotStyleCallback?.onDidFinishLoadingStyle(
               Style(
                 WeakReference(coreSnapshotter as StyleManagerInterface),

@@ -12,8 +12,8 @@ import com.mapbox.bindgen.Value
 import com.mapbox.common.*
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.observable.getResourceEventData
-import com.mapbox.maps.extension.observable.resourcerequest.eventdata.DataSourceType
-import com.mapbox.maps.extension.observable.resourcerequest.eventdata.RequestType
+import com.mapbox.maps.extension.observable.model.DataSourceType
+import com.mapbox.maps.extension.observable.model.RequestType
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.*

@@ -1,16 +1,15 @@
 package com.mapbox.maps.plugin.delegates.listeners
 
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.StyleDataType
+import com.mapbox.maps.extension.observable.eventdata.StyleDataLoadedEventData
 
 /**
  * Definition for listener invoked when the requested style data has been loaded.
  */
 fun interface OnStyleDataLoadedListener {
-
   /**
    * Invoked when the requested style data has been loaded.
    *
-   * @param type defines what kind of style data has been loaded.
+   * @param eventData StyleDataLoadedEventData
    */
-  fun onStyleDataLoaded(type: StyleDataType)
+  fun onStyleDataLoaded(eventData: StyleDataLoadedEventData)
 }

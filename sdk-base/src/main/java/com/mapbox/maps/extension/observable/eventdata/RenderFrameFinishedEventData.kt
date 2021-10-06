@@ -1,12 +1,21 @@
-package com.mapbox.maps.extension.observable.model
+package com.mapbox.maps.extension.observable.eventdata
 
 import com.google.gson.annotations.SerializedName
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.RenderMode
+import com.mapbox.maps.extension.observable.model.RenderMode
 
 /**
- *The data class for Map Loading Error event data in Observer
+ * The data class for render-frame-finished event data in Observer
  */
 data class RenderFrameFinishedEventData(
+  /**
+   * Representing timestamp taken at the time of an event creation, in microseconds, since the epoch.
+   */
+  @SerializedName("begin") val begin: Long,
+  /**
+   * For an interval events, an optional `end` property will be present that represents timestamp taken at the time
+   * of an event completion.
+   */
+  @SerializedName("end") val end: Long?,
   /**
    * The render-mode value tells whether the Map has all data ("full") required to render the visible viewport.
    */

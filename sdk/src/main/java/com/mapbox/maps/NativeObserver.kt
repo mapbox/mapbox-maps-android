@@ -2,6 +2,7 @@ package com.mapbox.maps
 
 import androidx.annotation.UiThread
 import com.mapbox.maps.extension.observable.*
+import com.mapbox.maps.extension.observable.eventdata.*
 import com.mapbox.maps.plugin.delegates.listeners.*
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArrayList
@@ -37,70 +38,61 @@ internal class NativeObserver(
   override fun notify(event: Event) {
     when (event.type) {
       // Camera events
-      MapEvents.CAMERA_CHANGED -> onCameraChangeListeners.forEach { it.onCameraChanged() }
+      MapEvents.CAMERA_CHANGED -> onCameraChangeListeners.forEach {
+        it.onCameraChanged(
+          event.getCameraChangedEventData()
+        )
+      }
       // Map events
-      MapEvents.MAP_IDLE -> onMapIdleListeners.forEach { it.onMapIdle() }
+      MapEvents.MAP_IDLE -> onMapIdleListeners.forEach { it.onMapIdle(event.getMapIdleEventData()) }
       MapEvents.MAP_LOADING_ERROR -> if (onMapLoadErrorListeners.isNotEmpty()) {
-        val loadingError = event.getMapLoadingErrorEventData()
         onMapLoadErrorListeners.forEach {
-          it.onMapLoadError(
-            loadingError.type,
-            loadingError.message,
-            loadingError.sourceId,
-            loadingError.tileId
-          )
+          it.onMapLoadError(event.getMapLoadingErrorEventData())
         }
       }
-      MapEvents.MAP_LOADED -> onMapLoadedListeners.forEach { it.onMapLoaded() }
+      MapEvents.MAP_LOADED -> onMapLoadedListeners.forEach { it.onMapLoaded(event.getMapLoadedEventData()) }
       // Style events
       MapEvents.STYLE_DATA_LOADED -> if (onStyleDataLoadedListeners.isNotEmpty()) {
-        val eventData = event.getStyleDataLoadedEventData()
         onStyleDataLoadedListeners.forEach {
-          it.onStyleDataLoaded(eventData.styleDataType)
+          it.onStyleDataLoaded(event.getStyleDataLoadedEventData())
         }
       }
-      MapEvents.STYLE_LOADED -> onStyleLoadedListeners.forEach { it.onStyleLoaded() }
+      MapEvents.STYLE_LOADED -> onStyleLoadedListeners.forEach {
+        it.onStyleLoaded(event.getStyleLoadedEventData())
+      }
       MapEvents.STYLE_IMAGE_MISSING -> if (onStyleImageMissingListeners.isNotEmpty()) {
-        val eventData = event.getStyleImageMissingEventData()
         onStyleImageMissingListeners.forEach {
-          it.onStyleImageMissing(eventData.id)
+          it.onStyleImageMissing(event.getStyleImageMissingEventData())
         }
       }
       MapEvents.STYLE_IMAGE_REMOVE_UNUSED -> if (onStyleImageUnusedListeners.isNotEmpty()) {
-        val eventData = event.getStyleImageUnusedEventData()
         onStyleImageUnusedListeners.forEach {
-          it.onStyleImageUnused(eventData.id)
+          it.onStyleImageUnused(event.getStyleImageUnusedEventData())
         }
       }
       // Render frame events
-      MapEvents.RENDER_FRAME_STARTED -> onRenderFrameStartedListeners.forEach { it.onRenderFrameStarted() }
+      MapEvents.RENDER_FRAME_STARTED -> onRenderFrameStartedListeners.forEach {
+        it.onRenderFrameStarted(event.getRenderFrameStartedEventData())
+      }
       MapEvents.RENDER_FRAME_FINISHED -> if (onRenderFrameFinishedListeners.isNotEmpty()) {
-        val eventData = event.getRenderFrameFinishedEventData()
         onRenderFrameFinishedListeners.forEach {
-          it.onRenderFrameFinished(
-            eventData.renderMode,
-            eventData.needsRepaint,
-            eventData.placementChanged
-          )
+          it.onRenderFrameFinished(event.getRenderFrameFinishedEventData())
         }
       }
       // Source events
       MapEvents.SOURCE_ADDED -> if (onSourceAddedListeners.isNotEmpty()) {
-        val eventData = event.getSourceAddedEventData()
         onSourceAddedListeners.forEach {
-          it.onSourceAdded(eventData.id)
+          it.onSourceAdded(event.getSourceAddedEventData())
         }
       }
       MapEvents.SOURCE_DATA_LOADED -> if (onSourceDataLoadedListeners.isNotEmpty()) {
-        val eventData = event.getSourceDataLoadedEventData()
         onSourceDataLoadedListeners.forEach {
-          it.onSourceDataLoaded(eventData.id, eventData.type, eventData.loaded, eventData.tileID)
+          it.onSourceDataLoaded(event.getSourceDataLoadedEventData())
         }
       }
       MapEvents.SOURCE_REMOVED -> if (onSourceRemovedListeners.isNotEmpty()) {
-        val eventData = event.getSourceRemovedEventData()
         onSourceRemovedListeners.forEach {
-          it.onSourceRemoved(eventData.id)
+          it.onSourceRemoved(event.getSourceRemovedEventData())
         }
       }
     }

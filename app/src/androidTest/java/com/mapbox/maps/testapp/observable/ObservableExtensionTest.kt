@@ -8,7 +8,9 @@ import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.dsl.cameraOptions
+import com.mapbox.maps.extension.observable.eventdata.MapLoadingErrorEventData
 import com.mapbox.maps.extension.observable.getResourceEventData
+import com.mapbox.maps.extension.observable.model.MapLoadErrorType
 import com.mapbox.maps.extension.observable.subscribeResourceRequest
 import com.mapbox.maps.extension.observable.unsubscribeResourceRequest
 import com.mapbox.maps.extension.style.image.image
@@ -16,8 +18,6 @@ import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.delegates.listeners.*
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.MapLoadErrorType
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.TileID
 import com.mapbox.maps.testapp.BaseMapTest
 import com.mapbox.maps.testapp.R
 import org.junit.Assert.assertEquals
@@ -73,6 +73,7 @@ class ObservableExtensionTest : BaseMapTest() {
     val observer = Observer { event ->
       assertEquals("resource-request", event.type)
       assertNotNull(event.getResourceEventData())
+      assertNotNull(event.getResourceEventData().begin)
       latch.countDown()
     }
     rule.scenario.onActivity {
@@ -94,6 +95,7 @@ class ObservableExtensionTest : BaseMapTest() {
     val latch = CountDownLatch(1)
 
     val listener = OnMapLoadedListener {
+      assertNotNull(it.begin)
       latch.countDown()
     }
 
@@ -118,18 +120,14 @@ class ObservableExtensionTest : BaseMapTest() {
     val latch = CountDownLatch(1)
 
     val listener = object : OnMapLoadErrorListener {
-      override fun onMapLoadError(
-        mapLoadErrorType: MapLoadErrorType,
-        message: String,
-        sourceId: String?,
-        tileId: TileID?
-      ) {
-        assertNotNull(mapLoadErrorType)
-        assertNotNull(message)
-        assertEquals(MapLoadErrorType.STYLE, mapLoadErrorType)
+      override fun onMapLoadError(eventData: MapLoadingErrorEventData) {
+        assertNotNull(eventData.type)
+        assertNotNull(eventData.message)
+        assertNotNull(eventData.begin)
+        assertEquals(MapLoadErrorType.STYLE, eventData.type)
         assertEquals(
           "Failed to load style: Unable to resolve host \"wrongurl\": No address associated with hostname",
-          message
+          eventData.message
         )
         latch.countDown()
       }
@@ -154,6 +152,7 @@ class ObservableExtensionTest : BaseMapTest() {
     val latch = CountDownLatch(1)
 
     val listener = OnMapIdleListener {
+      assertNotNull(it.begin)
       latch.countDown()
     }
 
@@ -177,8 +176,9 @@ class ObservableExtensionTest : BaseMapTest() {
   fun subscribeStyleDataLoadedEvent() {
     val latch = CountDownLatch(3)
 
-    val listener = OnStyleDataLoadedListener { type ->
-      assertNotNull(type)
+    val listener = OnStyleDataLoadedListener {
+      assertNotNull(it.type)
+      assertNotNull(it.begin)
       latch.countDown()
     }
 
@@ -203,6 +203,7 @@ class ObservableExtensionTest : BaseMapTest() {
     val latch = CountDownLatch(1)
 
     val listener = OnStyleLoadedListener {
+      assertNotNull(it.begin)
       latch.countDown()
     }
 
@@ -227,7 +228,8 @@ class ObservableExtensionTest : BaseMapTest() {
     val latch = CountDownLatch(1)
 
     val listener = OnStyleImageMissingListener {
-      assertEquals(IMAGE_ID, it)
+      assertNotNull(it.begin)
+      assertEquals(IMAGE_ID, it.id)
       latch.countDown()
     }
 
@@ -261,7 +263,8 @@ class ObservableExtensionTest : BaseMapTest() {
     val latch = CountDownLatch(1)
 
     val listener = OnStyleImageUnusedListener {
-      assertEquals(IMAGE_ID, it)
+      assertNotNull(it.begin)
+      assertEquals(IMAGE_ID, it.id)
       latch.countDown()
     }
 
@@ -302,9 +305,10 @@ class ObservableExtensionTest : BaseMapTest() {
   fun subscribeSourceDataLoadedEvent() {
     val latch = CountDownLatch(1)
 
-    val listener = OnSourceDataLoadedListener { id, type, loaded, tileID ->
-      assertNotNull(id)
-      assertNotNull(type)
+    val listener = OnSourceDataLoadedListener { eventData ->
+      assertNotNull(eventData.id)
+      assertNotNull(eventData.type)
+      assertNotNull(eventData.begin)
       latch.countDown()
     }
 
@@ -330,7 +334,8 @@ class ObservableExtensionTest : BaseMapTest() {
     val latch = CountDownLatch(1)
 
     val listener = OnSourceAddedListener {
-      assertEquals(SOURCE_ID, it)
+      assertNotNull(it.begin)
+      assertEquals(SOURCE_ID, it.id)
       latch.countDown()
     }
 
@@ -372,7 +377,8 @@ class ObservableExtensionTest : BaseMapTest() {
     val latch = CountDownLatch(1)
 
     val listener = OnSourceRemovedListener {
-      assertEquals(SOURCE_ID, it)
+      assertNotNull(it.begin)
+      assertEquals(SOURCE_ID, it.id)
       latch.countDown()
     }
 
@@ -420,6 +426,7 @@ class ObservableExtensionTest : BaseMapTest() {
     val latch = CountDownLatch(1)
 
     val listener = OnRenderFrameStartedListener {
+      assertNotNull(it.begin)
       latch.countDown()
     }
 
@@ -443,10 +450,11 @@ class ObservableExtensionTest : BaseMapTest() {
   fun subscribeRenderFrameFinishedEvent() {
     val latch = CountDownLatch(1)
 
-    val listener = OnRenderFrameFinishedListener { renderMode, needsRepaint, placementChanged ->
-      assertNotNull(renderMode)
-      assertNotNull(needsRepaint)
-      assertNotNull(placementChanged)
+    val listener = OnRenderFrameFinishedListener { eventData ->
+      assertNotNull(eventData.begin)
+      assertNotNull(eventData.renderMode)
+      assertNotNull(eventData.needsRepaint)
+      assertNotNull(eventData.placementChanged)
       latch.countDown()
     }
 
@@ -471,6 +479,7 @@ class ObservableExtensionTest : BaseMapTest() {
     val latch = CountDownLatch(1)
 
     val listener = OnCameraChangeListener {
+      assertNotNull(it.begin)
       latch.countDown()
     }
 

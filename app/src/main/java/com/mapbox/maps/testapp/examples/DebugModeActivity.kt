@@ -6,13 +6,12 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.common.Logger
 import com.mapbox.maps.*
+import com.mapbox.maps.extension.observable.eventdata.MapLoadingErrorEventData
 import com.mapbox.maps.extension.observable.getResourceEventData
 import com.mapbox.maps.extension.observable.subscribeResourceRequest
 import com.mapbox.maps.extension.observable.unsubscribeResourceRequest
 import com.mapbox.maps.plugin.compass.compass
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.MapLoadErrorType
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.TileID
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityDebugBinding
 
@@ -53,7 +52,7 @@ class DebugModeActivity : AppCompatActivity() {
     setContentView(binding.root)
 
     mapboxMap = binding.mapView.getMapboxMap()
-    mapboxMap.subscribe(observable, listOf("resource-request"))
+    mapboxMap.subscribe(observable, listOf(MapEvents.RESOURCE_REQUEST))
     // Using the extension method
     mapboxMap.subscribeResourceRequest(extensionObservable)
     mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
@@ -64,7 +63,7 @@ class DebugModeActivity : AppCompatActivity() {
 
   private fun registerListeners(mapboxMap: MapboxMap) {
     mapboxMap.addOnStyleLoadedListener {
-      Logger.i(TAG, "OnStyleLoadedListener")
+      Logger.i(TAG, "OnStyleLoadedListener: $it")
     }
     mapboxMap.addOnStyleDataLoadedListener {
       Logger.i(TAG, "OnStyleDataLoadedListener: $it")
@@ -76,31 +75,26 @@ class DebugModeActivity : AppCompatActivity() {
       Logger.i(TAG, "OnStyleImageUnusedListener: $it")
     }
     mapboxMap.addOnMapIdleListener {
-      Logger.i(TAG, "OnMapIdleListener")
+      Logger.i(TAG, "OnMapIdleListener: $it")
     }
     mapboxMap.addOnMapLoadErrorListener(object : OnMapLoadErrorListener {
-      override fun onMapLoadError(
-        mapLoadErrorType: MapLoadErrorType,
-        message: String,
-        sourceId: String?,
-        tileId: TileID?
-      ) {
-        Logger.i(TAG, "OnMapLoadErrorListener: $mapLoadErrorType, $message, sourceId: $sourceId, tileId: $tileId")
+      override fun onMapLoadError(eventData: MapLoadingErrorEventData) {
+        Logger.i(TAG, "OnMapLoadErrorListener: $eventData")
       }
     })
     mapboxMap.addOnMapLoadedListener {
-      Logger.i(TAG, "OnMapLoadedListener")
+      Logger.i(TAG, "OnMapLoadedListener: $it")
     }
     mapboxMap.addOnCameraChangeListener {
-      Logger.i(TAG, "OnCameraChangeListener")
+      Logger.i(TAG, "OnCameraChangeListener: $it")
     }
     mapboxMap.addOnRenderFrameStartedListener {
-      Logger.i(TAG, "OnRenderFrameStartedListener")
+      Logger.i(TAG, "OnRenderFrameStartedListener: $it")
     }
-    mapboxMap.addOnRenderFrameFinishedListener { renderMode, needsRepaint, placementChanged ->
+    mapboxMap.addOnRenderFrameFinishedListener {
       Logger.i(
         TAG,
-        "OnRenderFrameFinishedListener: $renderMode, $needsRepaint, $placementChanged"
+        "OnRenderFrameFinishedListener: $it"
       )
     }
     mapboxMap.addOnSourceAddedListener {
@@ -109,10 +103,10 @@ class DebugModeActivity : AppCompatActivity() {
         "OnSourceAddedListener: $it"
       )
     }
-    mapboxMap.addOnSourceDataLoadedListener { id, type, loaded, tileID ->
+    mapboxMap.addOnSourceDataLoadedListener {
       Logger.i(
         TAG,
-        "OnSourceDataLoadedListener: $id, $type, $loaded, $tileID"
+        "OnSourceDataLoadedListener: $it"
       )
     }
     mapboxMap.addOnSourceRemovedListener {

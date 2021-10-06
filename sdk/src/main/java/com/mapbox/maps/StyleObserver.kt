@@ -1,10 +1,10 @@
 package com.mapbox.maps
 
 import com.mapbox.common.Logger
+import com.mapbox.maps.extension.observable.eventdata.MapLoadingErrorEventData
+import com.mapbox.maps.extension.observable.eventdata.StyleLoadedEventData
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
 import com.mapbox.maps.plugin.delegates.listeners.OnStyleLoadedListener
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.MapLoadErrorType
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.TileID
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArrayList
 
@@ -50,7 +50,7 @@ internal class StyleObserver(
   /**
    * Invoked when a style has loaded
    */
-  override fun onStyleLoaded() {
+  override fun onStyleLoaded(eventData: StyleLoadedEventData) {
     mapboxMap.nativeMapWeakRef.get()?.let {
       mapboxMap.style = Style(WeakReference(it as StyleManagerInterface), pixelRatio)
       val iterator = awaitingStyleLoadListeners.iterator()
@@ -61,14 +61,12 @@ internal class StyleObserver(
     }
   }
 
-  override fun onMapLoadError(
-    mapLoadErrorType: MapLoadErrorType,
-    message: String,
-    sourceId: String?,
-    tileId: TileID?
-  ) {
-    Logger.e(TAG, "OnMapLoadError: $mapLoadErrorType: $message")
-    awaitingStyleErrorListener?.onMapLoadError(mapLoadErrorType, message, sourceId, tileId)
+  override fun onMapLoadError(eventData: MapLoadingErrorEventData) {
+    Logger.e(
+      TAG,
+      "OnMapLoadError: ${eventData.type}, message: ${eventData.message}, sourceID: ${eventData.sourceId}, tileID: ${eventData.tileId}"
+    )
+    awaitingStyleErrorListener?.onMapLoadError(eventData)
   }
 
   fun onDestroy() {

@@ -9,7 +9,7 @@ import com.mapbox.maps.*
 import com.mapbox.maps.MapView.OnSnapshotReady
 import com.mapbox.maps.Size
 import com.mapbox.maps.extension.observable.getRenderFrameFinishedEventData
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.RenderMode
+import com.mapbox.maps.extension.observable.model.RenderMode
 import com.mapbox.maps.renderer.gl.PixelReader
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean

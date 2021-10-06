@@ -2,7 +2,6 @@ package com.mapbox.maps
 
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.MapLoadErrorType
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Test
@@ -49,7 +48,7 @@ class StyleObserverTest {
     )
     val styleLoaded = mockk<Style.OnStyleLoaded>(relaxed = true)
     styleObserver.onNewStyleLoad(styleLoaded, null)
-    styleObserver.onStyleLoaded()
+    styleObserver.onStyleLoaded(mockk())
     verify { styleLoaded.onStyleLoaded(any()) }
   }
 
@@ -67,7 +66,7 @@ class StyleObserverTest {
     styleObserver.onNewStyleLoad(styleLoaded, null)
     val styleLoaded2 = mockk<Style.OnStyleLoaded>(relaxed = true)
     styleObserver.addOnStyleLoadListener(styleLoaded2)
-    styleObserver.onStyleLoaded()
+    styleObserver.onStyleLoaded(mockk())
     verify { styleLoaded.onStyleLoaded(any()) }
     verify { styleLoaded2.onStyleLoaded(any()) }
   }
@@ -86,7 +85,7 @@ class StyleObserverTest {
     styleObserver.onNewStyleLoad(styleLoadedFail, null)
     val styleLoadedSucces = mockk<Style.OnStyleLoaded>(relaxed = true)
     styleObserver.onNewStyleLoad(styleLoadedSucces, null)
-    styleObserver.onStyleLoaded()
+    styleObserver.onStyleLoaded(mockk())
     verify(exactly = 0) { styleLoadedFail.onStyleLoaded(any()) }
     verify { styleLoadedSucces.onStyleLoaded(any()) }
   }
@@ -99,8 +98,8 @@ class StyleObserverTest {
     val styleObserver = StyleObserver(mockk(relaxed = true), mockk(relaxed = true), 1.0f)
     val errorListener = mockk<OnMapLoadErrorListener>(relaxed = true)
     styleObserver.onNewStyleLoad(mockk(relaxed = true), errorListener)
-    styleObserver.onMapLoadError(MapLoadErrorType.GLYPHS, "foobar", null, null)
-    verify { errorListener.onMapLoadError(MapLoadErrorType.GLYPHS, "foobar", null, null) }
+    styleObserver.onMapLoadError(mockk(relaxed = true))
+    verify { errorListener.onMapLoadError(any()) }
   }
 
   /**
@@ -113,8 +112,8 @@ class StyleObserverTest {
     styleObserver.onNewStyleLoad(mockk(relaxed = true), errorListenerFail)
     val errorListenerSuccess = mockk<OnMapLoadErrorListener>(relaxed = true)
     styleObserver.onNewStyleLoad(mockk(relaxed = true), errorListenerSuccess)
-    styleObserver.onMapLoadError(MapLoadErrorType.GLYPHS, "foobar", null, null)
-    verify(exactly = 0) { errorListenerFail.onMapLoadError(MapLoadErrorType.GLYPHS, "foobar", null, null) }
-    verify { errorListenerSuccess.onMapLoadError(MapLoadErrorType.GLYPHS, "foobar", null, null) }
+    styleObserver.onMapLoadError(mockk(relaxed = true))
+    verify(exactly = 0) { errorListenerFail.onMapLoadError(any()) }
+    verify { errorListenerSuccess.onMapLoadError(any()) }
   }
 }

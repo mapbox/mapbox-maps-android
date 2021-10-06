@@ -5,8 +5,12 @@ import com.mapbox.maps.Event
 import com.mapbox.maps.MapEvents
 import com.mapbox.maps.ObservableInterface
 import com.mapbox.maps.Observer
-import com.mapbox.maps.extension.observable.model.*
-import com.mapbox.maps.extension.observable.resourcerequest.ResourceEventData
+import com.mapbox.maps.extension.observable.eventdata.*
+import com.mapbox.maps.extension.observable.eventdata.ResourceEventData
+
+private val gson by lazy {
+  Gson()
+}
 
 /**
  * Subscribes an Observer for of event type "resource-request".
@@ -299,7 +303,16 @@ fun ObservableInterface.unsubscribeSourceRemoved(observer: Observer) =
  */
 fun Event.getResourceEventData(): ResourceEventData {
   val json = data.toJson()
-  return Gson().fromJson(json, ResourceEventData::class.java)
+  return gson.fromJson(json, ResourceEventData::class.java)
+}
+
+/**
+ * Get the parsed event data for map loaded event.
+ * @return a parsed MapLoadedEventData object.
+ */
+fun Event.getMapLoadedEventData(): MapLoadedEventData {
+  val json = data.toJson()
+  return gson.fromJson(json, MapLoadedEventData::class.java)
 }
 
 /**
@@ -308,7 +321,16 @@ fun Event.getResourceEventData(): ResourceEventData {
  */
 fun Event.getMapLoadingErrorEventData(): MapLoadingErrorEventData {
   val json = data.toJson()
-  return Gson().fromJson(json, MapLoadingErrorEventData::class.java)
+  return gson.fromJson(json, MapLoadingErrorEventData::class.java)
+}
+
+/**
+ * Get the parsed event data for map idle event.
+ * @return a parsed MapIdleEventData object.
+ */
+fun Event.getMapIdleEventData(): MapIdleEventData {
+  val json = data.toJson()
+  return gson.fromJson(json, MapIdleEventData::class.java)
 }
 
 /**
@@ -317,7 +339,16 @@ fun Event.getMapLoadingErrorEventData(): MapLoadingErrorEventData {
  */
 fun Event.getStyleDataLoadedEventData(): StyleDataLoadedEventData {
   val json = data.toJson()
-  return Gson().fromJson(json, StyleDataLoadedEventData::class.java)
+  return gson.fromJson(json, StyleDataLoadedEventData::class.java)
+}
+
+/**
+ * Get the parsed event data for style loaded event.
+ * @return a parsed StyleLoadedEventData object.
+ */
+fun Event.getStyleLoadedEventData(): StyleLoadedEventData {
+  val json = data.toJson()
+  return gson.fromJson(json, StyleLoadedEventData::class.java)
 }
 
 /**
@@ -326,37 +357,53 @@ fun Event.getStyleDataLoadedEventData(): StyleDataLoadedEventData {
  */
 fun Event.getSourceDataLoadedEventData(): SourceDataLoadedEventData {
   val json = data.toJson()
-  return Gson().fromJson(json, SourceDataLoadedEventData::class.java)
-}
-
-internal fun Event.getIDStringEventData(): IDStringEventData {
-  val json = data.toJson()
-  return Gson().fromJson(json, IDStringEventData::class.java)
+  return gson.fromJson(json, SourceDataLoadedEventData::class.java)
 }
 
 /**
  * Get the parsed event data for style missing event.
- * @return a parsed IDStringEventData.
+ * @return a parsed StyleImageMissingEventData.
  */
-fun Event.getStyleImageMissingEventData(): IDStringEventData = getIDStringEventData()
+fun Event.getStyleImageMissingEventData(): StyleImageMissingEventData {
+  val json = data.toJson()
+  return gson.fromJson(json, StyleImageMissingEventData::class.java)
+}
 
 /**
  * Get the parsed event data for style image unused event.
- * @return a parsed IDStringEventData.
+ * @return a parsed StyleImageUnusedEventData.
  */
-fun Event.getStyleImageUnusedEventData(): IDStringEventData = getIDStringEventData()
+fun Event.getStyleImageUnusedEventData(): StyleImageUnusedEventData {
+  val json = data.toJson()
+  return gson.fromJson(json, StyleImageUnusedEventData::class.java)
+}
 
 /**
  * Get the parsed event data for source added event.
  * @return a parsed IDStringEventData.
  */
-fun Event.getSourceAddedEventData(): IDStringEventData = getIDStringEventData()
+fun Event.getSourceAddedEventData(): SourceAddedEventData {
+  val json = data.toJson()
+  return gson.fromJson(json, SourceAddedEventData::class.java)
+}
 
 /**
  * Get the parsed event data for source removed event.
- * @return a parsed IDStringEventData.
+ * @return a parsed SourceRemovedEventData.
  */
-fun Event.getSourceRemovedEventData(): IDStringEventData = getIDStringEventData()
+fun Event.getSourceRemovedEventData(): SourceRemovedEventData {
+  val json = data.toJson()
+  return gson.fromJson(json, SourceRemovedEventData::class.java)
+}
+
+/**
+ * Get the parsed event data for render frame started event.
+ * @return a parsed RenderFrameStartedEventData.
+ */
+fun Event.getRenderFrameStartedEventData(): RenderFrameStartedEventData {
+  val json = data.toJson()
+  return gson.fromJson(json, RenderFrameStartedEventData::class.java)
+}
 
 /**
  * Get the parsed event data for render frame finished event.
@@ -364,5 +411,14 @@ fun Event.getSourceRemovedEventData(): IDStringEventData = getIDStringEventData(
  */
 fun Event.getRenderFrameFinishedEventData(): RenderFrameFinishedEventData {
   val json = data.toJson()
-  return Gson().fromJson(json, RenderFrameFinishedEventData::class.java)
+  return gson.fromJson(json, RenderFrameFinishedEventData::class.java)
+}
+
+/**
+ * Get the parsed event data for camera changed event.
+ * @return a parsed CameraChangedEventData.
+ */
+fun Event.getCameraChangedEventData(): CameraChangedEventData {
+  val json = data.toJson()
+  return gson.fromJson(json, CameraChangedEventData::class.java)
 }

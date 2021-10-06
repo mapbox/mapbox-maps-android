@@ -14,6 +14,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.extension.observable.eventdata.MapIdleEventData
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -667,7 +668,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     }
 
     private val onMapIdleListener: OnMapIdleListener = object : OnMapIdleListener {
-      override fun onMapIdle() {
+      override fun onMapIdle(eventData: MapIdleEventData) {
         mapListenerDelegate.removeOnMapIdleListener(this)
         // Remove dragging annotation from drag layer
         handler.postDelayed(

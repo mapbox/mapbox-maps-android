@@ -1,7 +1,6 @@
-package com.mapbox.maps.extension.observable.resourcerequest
+package com.mapbox.maps.extension.observable.model
 
 import com.google.gson.annotations.SerializedName
-import com.mapbox.maps.extension.observable.resourcerequest.eventdata.ResponseErrorType
 
 /**
  *The data class for error in Observer
@@ -10,7 +9,7 @@ data class Error(
   /**
    * "reason" property
    */
-  @SerializedName("reason") val reason: ResponseErrorType,
+  @SerializedName("reason") val reason: ResponseErrorReason,
   /**
    * "message" property
    */

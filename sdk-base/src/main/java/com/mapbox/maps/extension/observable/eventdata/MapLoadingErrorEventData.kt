@@ -1,13 +1,22 @@
-package com.mapbox.maps.extension.observable.model
+package com.mapbox.maps.extension.observable.eventdata
 
 import com.google.gson.annotations.SerializedName
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.MapLoadErrorType
-import com.mapbox.maps.plugin.delegates.listeners.eventdata.TileID
+import com.mapbox.maps.extension.observable.model.MapLoadErrorType
+import com.mapbox.maps.extension.observable.model.TileID
 
 /**
- *The data class for Map Loading Error event data in Observer
+ * The data class for map-loading-error event data in Observer
  */
 data class MapLoadingErrorEventData(
+  /**
+   * Representing timestamp taken at the time of an event creation, in microseconds, since the epoch.
+   */
+  @SerializedName("begin") val begin: Long,
+  /**
+   * For an interval events, an optional `end` property will be present that represents timestamp taken at the time
+   * of an event completion.
+   */
+  @SerializedName("end") val end: Long?,
   /**
    * Defines what resource could not be loaded.
    */
