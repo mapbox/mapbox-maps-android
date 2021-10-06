@@ -4,6 +4,8 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.bindgen.Value
+import com.mapbox.geojson.Point
+import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
@@ -40,10 +42,15 @@ class RawGeoJsonActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val mapView = MapView(this)
     setContentView(mapView)
-    mapboxMap = mapView.getMapboxMap()
-    mapboxMap.loadStyleUri(
-      Style.MAPBOX_STREETS
-    ) { addGeoJsonSource(it) }
+    mapboxMap = mapView.getMapboxMap().apply {
+      setCamera(
+        CameraOptions.Builder()
+          .center(Point.fromLngLat(6.0033416748046875, 43.70908256335716))
+          .zoom(16.0)
+          .build()
+      )
+      loadStyleUri(Style.MAPBOX_STREETS) { addGeoJsonSource(it) }
+    }
   }
 
   private fun addGeoJsonSource(style: Style) {

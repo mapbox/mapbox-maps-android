@@ -4,18 +4,19 @@ import android.app.Activity
 import android.widget.Toast
 import com.mapbox.android.core.permissions.PermissionsListener
 import com.mapbox.android.core.permissions.PermissionsManager
+import java.lang.ref.WeakReference
 
-class LocationPermissionHelper(val activity: Activity) {
+class LocationPermissionHelper(val activity: WeakReference<Activity>) {
   private lateinit var permissionsManager: PermissionsManager
 
   fun checkPermissions(onMapReady: () -> Unit) {
-    if (PermissionsManager.areLocationPermissionsGranted(activity)) {
+    if (PermissionsManager.areLocationPermissionsGranted(activity.get())) {
       onMapReady()
     } else {
       permissionsManager = PermissionsManager(object : PermissionsListener {
         override fun onExplanationNeeded(permissionsToExplain: List<String>) {
           Toast.makeText(
-            activity, "You need to accept location permissions.",
+            activity.get(), "You need to accept location permissions.",
             Toast.LENGTH_SHORT
           ).show()
         }
@@ -24,11 +25,11 @@ class LocationPermissionHelper(val activity: Activity) {
           if (granted) {
             onMapReady()
           } else {
-            activity.finish()
+            activity.get()?.finish()
           }
         }
       })
-      permissionsManager.requestLocationPermissions(activity)
+      permissionsManager.requestLocationPermissions(activity.get())
     }
   }
 

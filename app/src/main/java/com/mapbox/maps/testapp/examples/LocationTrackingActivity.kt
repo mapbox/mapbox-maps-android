@@ -17,6 +17,7 @@ import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListen
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
+import java.lang.ref.WeakReference
 
 /**
  * Tracks the user location on screen, simulates a navigation session.
@@ -51,7 +52,7 @@ class LocationTrackingActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     mapView = MapView(this)
     setContentView(mapView)
-    locationPermissionHelper = LocationPermissionHelper(this)
+    locationPermissionHelper = LocationPermissionHelper(WeakReference(this))
     locationPermissionHelper.checkPermissions {
       onMapReady()
     }

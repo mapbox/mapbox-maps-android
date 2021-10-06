@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityLocationLayerBasicPulsingCircleBinding
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
+import java.lang.ref.WeakReference
 
 /**
  * This activity shows a basic usage of the LocationComponent's pulsing circle. There's no
@@ -28,7 +30,10 @@ class BasicLocationPulsingCircleActivity : AppCompatActivity() {
     binding = ActivityLocationLayerBasicPulsingCircleBinding.inflate(layoutInflater)
     setContentView(binding.root)
     mapboxMap = binding.mapView.getMapboxMap()
-    locationPermissionHelper = LocationPermissionHelper(this)
+    binding.mapView.location.addOnIndicatorPositionChangedListener() {
+      mapboxMap.setCamera(CameraOptions.Builder().center(it).zoom(12.0).build())
+    }
+    locationPermissionHelper = LocationPermissionHelper(WeakReference(this))
     locationPermissionHelper.checkPermissions {
       onMapReady()
     }
