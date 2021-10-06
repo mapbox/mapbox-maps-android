@@ -25,7 +25,7 @@ import kotlin.math.pow
  */
 internal class MapboxRenderThread : Choreographer.FrameCallback {
 
-  internal val handlerThread: WorkerHandlerThread
+  internal val handlerThread: RenderHandlerThread
   private val translucentSurface: Boolean
   private val mapboxRenderer: MapboxRenderer
   private val eglCore: EGLCore
@@ -68,13 +68,13 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     this.translucentSurface = translucentSurface
     this.mapboxRenderer = mapboxRenderer
     this.eglCore = EGLCore(translucentSurface)
-    handlerThread = WorkerHandlerThread().apply { start() }
+    handlerThread = RenderHandlerThread().apply { start() }
   }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   constructor(
     mapboxRenderer: MapboxRenderer,
-    handlerThread: WorkerHandlerThread,
+    handlerThread: RenderHandlerThread,
     eglCore: EGLCore
   ) {
     this.translucentSurface = false

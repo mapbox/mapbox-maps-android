@@ -6,7 +6,7 @@ import android.os.Process.THREAD_PRIORITY_DISPLAY
 import androidx.annotation.VisibleForTesting
 import com.mapbox.common.Logger
 
-internal class WorkerHandlerThread {
+internal class RenderHandlerThread {
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal lateinit var handlerThread: HandlerThread
