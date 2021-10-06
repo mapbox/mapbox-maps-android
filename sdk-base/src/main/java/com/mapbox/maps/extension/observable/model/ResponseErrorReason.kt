@@ -3,7 +3,7 @@ package com.mapbox.maps.extension.observable.model
 import com.google.gson.annotations.SerializedName
 
 /**
- * Describes the qreason of Error for response object.
+ * Describes the reason of Error for response object.
  */
 enum class ResponseErrorReason {
   /**

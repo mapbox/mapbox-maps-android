@@ -10,15 +10,15 @@ data class TileID(
    * The zoom level.
    */
   @SerializedName("z")
-  val zoom: Double,
+  val zoom: Long,
   /**
    * The x coordinate of the tile
    */
   @SerializedName("x")
-  val x: Double,
+  val x: Long,
   /**
    * The y coordinate of the tile
    */
   @SerializedName("y")
-  val y: Double
+  val y: Long
 )
