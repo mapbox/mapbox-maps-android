@@ -26,7 +26,7 @@ import com.mapbox.maps.plugin.gestures.OnMoveListener
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.*
 import com.mapbox.maps.testapp.R
-import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils\
+import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.turf.TurfMeasurement
 
 /**
