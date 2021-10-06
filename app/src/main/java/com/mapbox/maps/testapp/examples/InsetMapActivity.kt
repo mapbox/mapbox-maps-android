@@ -2,6 +2,7 @@ package com.mapbox.maps.testapp.examples
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.SurfaceView
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.LineString
@@ -58,6 +59,12 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
         insetMapboxMap.loadStyleUri(
           styleUri = STYLE_URL
         ) { style ->
+
+          insetMapFragment.getMapView()?.apply {
+            val surfaceView:SurfaceView = findViewById(R.id.surfaceView)
+            surfaceView.setZOrderOnTop(true)
+          }
+
           val source = geoJsonSource(BOUNDS_LINE_LAYER_SOURCE_ID) {
             feature(Feature.fromGeometry(LineString.fromLngLats(getRectanglePoints())))
           }
@@ -74,6 +81,7 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
           style.addLayer(layer)
           updateInsetMapLineLayerBounds(style)
         }
+
         insetMapFragment.getMapView()?.apply {
           logo.enabled = false
           scalebar.enabled = false

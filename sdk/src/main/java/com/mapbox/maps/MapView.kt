@@ -89,6 +89,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     } else {
       SurfaceView(context, attrs)
     }
+    view.id = R.id.surfaceView
     mapController = MapController(
       when (view) {
         is SurfaceView -> MapboxSurfaceHolderRenderer(view.holder)
