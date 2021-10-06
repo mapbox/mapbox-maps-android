@@ -22,6 +22,7 @@ class PerformanceRecorder(private val mapView: MapView, private val TARGET_FRAME
     private set
   var endBenchmarkTime: Long? = null
     private set
+  private var started = false
 
   private val renderFrameIntervalsMs = mutableListOf<Float>()
   fun getRenderFrameIntervalsMs() = mutableListOf<Float>().apply { this.addAll(renderFrameIntervalsMs) }
@@ -50,6 +51,12 @@ class PerformanceRecorder(private val mapView: MapView, private val TARGET_FRAME
   }
 
   fun startRecording() {
+    if (started) {
+      return
+    } else {
+      started = true
+    }
+
     mapView.getMapboxMap().subscribe(
       renderFrameObserver,
       listOf(MapEvents.RENDER_FRAME_FINISHED)
