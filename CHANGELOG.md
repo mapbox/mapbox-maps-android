@@ -4,25 +4,24 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 10.0.0 October 6, 2021
 
-**The Mapbox Maps SDK for Android is now ready for production use.**
-
 ## Breaking changes ⚠️
 * Add `@JvmOverloads` where applicable to provide better experience for Java users. ([#656](https://github.com/mapbox/mapbox-maps-android/pull/656))
 * Refactor gestures configuration options to be aligned better across platforms. ([#672](https://github.com/mapbox/mapbox-maps-android/pull/672))
-* Apply geojson data (using data, url, feature, featureCollection, geometry functions) is fully async now. ([#699](https://github.com/mapbox/mapbox-maps-android/pull/699))
-* Update `getLayerAs` function to return nullable Layer type. ([#673](https://github.com/mapbox/mapbox-maps-android/pull/673))
+* Apply geojson data (using `data`, `url`, `feature`, `featureCollection`, `geometry` functions) is fully async now. ([#699](https://github.com/mapbox/mapbox-maps-android/pull/699))
+* Update `getLayerAs` function to return nullable `Layer` type. ([#673](https://github.com/mapbox/mapbox-maps-android/pull/673))
 * Update map events data models. ([#712](https://github.com/mapbox/mapbox-maps-android/pull/712))
 * Refactor MapEvents listeners, so that each listener will include one event data property. ([#718](https://github.com/mapbox/mapbox-maps-android/pull/718))
-* Some abstract classes like `Observer()`, `CustomLayerHost()`, `MapClient()`, `OfflineRegionObserver()` have become interfaces. ([#697](https://github.com/mapbox/mapbox-maps-android/pull/697))
+* Abstract classes `CustomLayerHost`, `ElevationData`, `MapClient`, `Observer`, `OfflineRegionObserver`, `HttpServiceInterceptorInterface`, `HttpServiceInterface`, `LogWriterBackend`, `OfflineSwitchObserver`, `ReachabilityInterface`, `TileStoreObserver` have become interfaces. ([#697](https://github.com/mapbox/mapbox-maps-android/pull/697))
 
 ## Features ✨ and improvements 🏁
-* Throw exception when gestures plugin functionality is used but plugin was not created. ([#653](https://github.com/mapbox/mapbox-maps-android/pull/653))
-* Throw exception when camera plugin functionality is used but plugin was not created. ([#668](https://github.com/mapbox/mapbox-maps-android/pull/668))
-* Introduce 3D globe. ([#667](https://github.com/mapbox/mapbox-maps-android/pull/667))
+* Introduce 3D globe (experimental). ([#667](https://github.com/mapbox/mapbox-maps-android/pull/667))
 * Append gl-native and common API reference documentation to the output of Dokka documentation generation. ([#711](https://github.com/mapbox/mapbox-maps-android/pull/711))
 * Set `Process.THREAD_PRIORITY_DISPLAY` as render thread priority to improve overall performance. ([#701](https://github.com/mapbox/mapbox-maps-android/pull/701))
+* Add `HttpServiceFactory.reset()` to release the HTTP service implementation. ([#697](https://github.com/mapbox/mapbox-maps-android/pull/697))
 
 ## Bug fixes 🐞
+* Throw exception when gestures plugin functionality is used but plugin was not created. ([#653](https://github.com/mapbox/mapbox-maps-android/pull/653))
+* Throw exception when camera plugin functionality is used but plugin was not created. ([#668](https://github.com/mapbox/mapbox-maps-android/pull/668))
 * Fix black screen when resuming activity with `MapView` on x86 emulator, Android API <= 23. ([#671](https://github.com/mapbox/mapbox-maps-android/pull/671))
 * Fix map render deadlock on Android 8 on power on button. ([#688](https://github.com/mapbox/mapbox-maps-android/pull/688))
 * Fix context leak in `LocationProviderImpl`. ([#690](https://github.com/mapbox/mapbox-maps-android/pull/690))
@@ -31,9 +30,9 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix applying position property to scale bar plugin. ([#677](https://github.com/mapbox/mapbox-maps-android/pull/677))
 * Fix initialisation location puck when no style loaded from code by changing `Plugin#onStart()` call after style loaded started. ([#680](https://github.com/mapbox/mapbox-maps-android/pull/680))
 * Fix attribution/logo jumble when RTL layout is configured. ([#674](https://github.com/mapbox/mapbox-maps-android/pull/674))
-* Fix rendering when using model layer opacity parameter. ([#697](https://github.com/mapbox/mapbox-maps-android/pull/697))
-* Fix not to relayout cached tiles reducing CPU usage when zooming in / out. ([#697](https://github.com/mapbox/mapbox-maps-android/pull/697))
-* Fix `onResponse` for okhttp interceptor. ([#697](https://github.com/mapbox/mapbox-maps-android/pull/697))
+* Fix rendering artifacts for a model layer when `model-opacity` property is used. ([#697](https://github.com/mapbox/mapbox-maps-android/pull/697))
+* Improve rendering performance by avoiding unnecessary re-layout for cached tiles. ([#697](https://github.com/mapbox/mapbox-maps-android/pull/697))
+* Fix `onResponse` callback for `HttpInterceptor` never being called. ([#697](https://github.com/mapbox/mapbox-maps-android/pull/697))
 
 ## Dependencies
 * Bump gl-native to v10.0.0, common to v20.0.0. ([#697](https://github.com/mapbox/mapbox-maps-android/pull/697))
