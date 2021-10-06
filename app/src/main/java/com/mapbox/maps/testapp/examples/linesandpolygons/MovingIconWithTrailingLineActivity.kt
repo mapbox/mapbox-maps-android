@@ -38,6 +38,7 @@ import com.mapbox.turf.TurfMeasurement
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.concurrent.CopyOnWriteArrayList
 
 /**
  * Make a directions request with the Mapbox Directions API and then draw a line behind a moving
@@ -48,10 +49,11 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
   private lateinit var pointSource: GeoJsonSource
   private lateinit var lineSource: GeoJsonSource
   private lateinit var routeCoordinateList: MutableList<Point>
-  private var markerLinePointList = ArrayList<Point>()
+  private var markerLinePointList = CopyOnWriteArrayList<Point>()
 
   private var routeIndex: Int = 0
   private lateinit var currentAnimator: Animator
+  private var directionsClient: MapboxDirections? = null
 
   private var count = 0
   private lateinit var binding: ActivityDdsMovingIconWithTrailingLineBinding
@@ -128,7 +130,7 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
   }
 
   private fun getRoute() {
-    val client = MapboxDirections.builder()
+    directionsClient = MapboxDirections.builder()
       .origin(originPoint)
       .destination(destinationPoint)
       .overview(DirectionsCriteria.OVERVIEW_FULL)
@@ -136,7 +138,7 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
       .accessToken(getString(R.string.mapbox_access_token))
       .build()
 
-    client.enqueueCall(object : Callback<DirectionsResponse> {
+    directionsClient?.enqueueCall(object : Callback<DirectionsResponse> {
       override fun onResponse(
         call: Call<DirectionsResponse>,
         response: Response<DirectionsResponse>
@@ -237,6 +239,14 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
       },
       below = "road-label"
     )
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    directionsClient?.cancelCall()
+    if (::currentAnimator.isInitialized) {
+      currentAnimator.cancel()
+    }
   }
 
   companion object {

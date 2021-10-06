@@ -278,6 +278,9 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * and listen to [MapEvents.STYLE_DATA_LOADED] or [MapEvents.MAP_LOADING_ERROR] with `type = source`
    * if data parsing error has occurred.
    *
+   * Note: This method is not thread-safe. The Feature is parsed on a worker thread, please make sure
+   * the Feature is immutable.
+   *
    * @param value the feature
    */
   fun feature(value: Feature): GeoJsonSource = applyGeoJsonData(value)
@@ -291,6 +294,9 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * and listen to [MapEvents.STYLE_DATA_LOADED] or [MapEvents.MAP_LOADING_ERROR] with `type = source`
    * if data parsing error has occurred.
    *
+   * Note: This method is not thread-safe. The FeatureCollection is parsed on a worker thread, please make sure
+   * the FeatureCollection is immutable.
+   *
    * @param value the feature collection
    */
   fun featureCollection(value: FeatureCollection): GeoJsonSource = applyGeoJsonData(value)
@@ -303,6 +309,9 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * In order to capture events when actual data is drawn on the map please refer to [Observer] API
    * and listen to [MapEvents.STYLE_DATA_LOADED] or [MapEvents.MAP_LOADING_ERROR] with `type = source`
    * if data parsing error has occurred.
+   *
+   * Note: This method is not thread-safe. The Geometry is parsed on a worker thread, please make sure
+   * the Geometry is immutable.
    *
    * @param value the geometry
    */
