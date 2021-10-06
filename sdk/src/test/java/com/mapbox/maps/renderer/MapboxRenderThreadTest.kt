@@ -25,27 +25,27 @@ class MapboxRenderThreadTest {
   private lateinit var mapboxRenderThread: MapboxRenderThread
   private lateinit var mapboxRenderer: MapboxRenderer
   private lateinit var eglCore: EGLCore
-  private lateinit var workerThread: WorkerHandlerThread
+  private lateinit var renderHandlerThread: RenderHandlerThread
   private val waitTime = 200L
 
   @Before
   fun setUp() {
     mapboxRenderer = mockk(relaxUnitFun = true)
     eglCore = mockk(relaxed = true)
-    workerThread = WorkerHandlerThread()
+    renderHandlerThread = RenderHandlerThread()
     mapboxRenderThread = MapboxRenderThread(
       mapboxRenderer,
-      workerThread,
+      renderHandlerThread,
       eglCore
     ).apply {
-      workerThread.start()
+      renderHandlerThread.start()
     }
   }
 
   @After
   fun cleanup() {
     unmockkAll()
-    workerThread.stop()
+    renderHandlerThread.stop()
   }
 
   @Test
@@ -91,9 +91,9 @@ class MapboxRenderThreadTest {
     every { eglCore.eglStatusSuccess } returns true
     every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
     mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
-    Shadows.shadowOf(workerThread.handler?.looper).pause()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
     mapboxRenderThread.onSurfaceSizeChanged(2, 2)
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
@@ -113,9 +113,9 @@ class MapboxRenderThreadTest {
     every { eglCore.eglStatusSuccess } returns true
     every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
     mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
-    Shadows.shadowOf(workerThread.handler?.looper).pause()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
     mapboxRenderThread.onSurfaceSizeChanged(1, 1)
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
@@ -141,7 +141,7 @@ class MapboxRenderThreadTest {
     }
     assert(!mapboxRenderThread.eglPrepared)
     verify { mapboxRenderer.onSurfaceDestroyed() }
-    assert(!workerThread.started)
+    assert(!renderHandlerThread.started)
   }
 
   @Test
@@ -160,7 +160,7 @@ class MapboxRenderThreadTest {
     }
     assert(!mapboxRenderThread.eglPrepared)
     verify { mapboxRenderer.onSurfaceDestroyed() }
-    assert(!workerThread.started)
+    assert(!renderHandlerThread.started)
   }
 
   @Test
@@ -168,10 +168,10 @@ class MapboxRenderThreadTest {
     mapboxRenderer = mockk<MapboxSurfaceRenderer>(relaxed = true)
     mapboxRenderThread = MapboxRenderThread(
       mapboxRenderer,
-      workerThread,
+      renderHandlerThread,
       eglCore
     ).apply {
-      workerThread.start()
+      renderHandlerThread.start()
     }
     val surface = mockk<Surface>(relaxUnitFun = true)
     every { surface.isValid } returns true
@@ -179,9 +179,9 @@ class MapboxRenderThreadTest {
     every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
     mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
     mapboxRenderThread.onSurfaceDestroyed()
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     mapboxRenderThread.requestRender()
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     // we do not destroy native renderer if it's stop and not destroy
     verify(exactly = 0) {
       mapboxRenderer.onSurfaceDestroyed()
@@ -197,10 +197,10 @@ class MapboxRenderThreadTest {
     mapboxRenderer = mockk<MapboxTextureViewRenderer>(relaxed = true)
     mapboxRenderThread = MapboxRenderThread(
       mapboxRenderer,
-      workerThread,
+      renderHandlerThread,
       eglCore
     ).apply {
-      workerThread.start()
+      renderHandlerThread.start()
     }
     val latch = CountDownLatch(1)
     every { mapboxRenderer.onSurfaceDestroyed() } answers { latch.countDown() }
@@ -210,9 +210,9 @@ class MapboxRenderThreadTest {
     every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
     mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
     mapboxRenderThread.onSurfaceDestroyed()
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     mapboxRenderThread.requestRender()
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
@@ -234,11 +234,11 @@ class MapboxRenderThreadTest {
     every { eglCore.eglStatusSuccess } returns true
     every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
     mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
-    Shadows.shadowOf(workerThread.handler?.looper).pause()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
     mapboxRenderThread.requestRender()
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     mapboxRenderThread.requestRender()
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     latch.await(waitTime, TimeUnit.MILLISECONDS)
     // one swap buffer for surface creation, two for not squashed render requests
     verify(exactly = 3) {
@@ -258,10 +258,10 @@ class MapboxRenderThreadTest {
     every { eglCore.eglStatusSuccess } returns true
     every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
     mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
-    Shadows.shadowOf(workerThread.handler?.looper).pause()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
     mapboxRenderThread.requestRender()
     mapboxRenderThread.requestRender()
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     latch.await(waitTime, TimeUnit.MILLISECONDS)
     // one swap buffer for surface creation, 2 render requests squash in one swap buffers call
     verify(exactly = 2) {
@@ -283,13 +283,13 @@ class MapboxRenderThreadTest {
     every { eglCore.eglStatusSuccess } returns true
     every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
     mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
-    Shadows.shadowOf(workerThread.handler?.looper).pause()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
     mapboxRenderThread.requestRender()
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     mapboxRenderThread.pause()
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     mapboxRenderThread.requestRender()
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     latch.await(waitTime, TimeUnit.MILLISECONDS)
     // one swap buffer for surface creation, one request render after pause is omitted
     verify(exactly = 2) {
@@ -305,19 +305,19 @@ class MapboxRenderThreadTest {
     every { eglCore.eglStatusSuccess } returns true
     every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
     mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
-    Shadows.shadowOf(workerThread.handler?.looper).pause()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
     mapboxRenderThread.requestRender()
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     mapboxRenderThread.pause()
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     mapboxRenderThread.requestRender()
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     mapboxRenderThread.requestRender()
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     mapboxRenderThread.resume()
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     mapboxRenderThread.requestRender()
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     latch.await(waitTime, TimeUnit.MILLISECONDS)
     // render requests after pause do not swap buffer, we do it on resume if needed once
     verify(exactly = 4) {
@@ -333,15 +333,15 @@ class MapboxRenderThreadTest {
     every { eglCore.eglStatusSuccess } returns true
     every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
     mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
-    Shadows.shadowOf(workerThread.handler?.looper).pause()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
     mapboxRenderThread.requestRender()
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     mapboxRenderThread.pause()
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     mapboxRenderThread.resume()
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     mapboxRenderThread.requestRender()
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     latch.await(waitTime, TimeUnit.MILLISECONDS)
     // no actual swap buffer after resume as no calls were done after pause
     verify(exactly = 3) {
@@ -352,7 +352,7 @@ class MapboxRenderThreadTest {
   @Test
   fun destroyTest() {
     mapboxRenderThread.destroy()
-    assert(!workerThread.started)
+    assert(!renderHandlerThread.started)
   }
 
   @Test
@@ -365,9 +365,9 @@ class MapboxRenderThreadTest {
     mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
     val runnable = mockk<Runnable>(relaxUnitFun = true)
     every { runnable.run() } answers { latch.countDown() }
-    Shadows.shadowOf(workerThread.handler?.looper).pause()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
     mapboxRenderThread.queueRenderEvent(runnable)
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
@@ -389,11 +389,11 @@ class MapboxRenderThreadTest {
     mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
     val runnable = mockk<Runnable>(relaxUnitFun = true)
     mapboxRenderThread.awaitingNextVsync.set(true)
-    Shadows.shadowOf(workerThread.handler?.looper).pause()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
     mapboxRenderThread.queueEvent(runnable)
     Assert.assertEquals(1, mapboxRenderThread.eventQueue.size)
     mapboxRenderThread.requestRender()
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     latch.await(waitTime, TimeUnit.MILLISECONDS)
     assert(mapboxRenderThread.eventQueue.isEmpty())
     verify { runnable.run() }
@@ -414,10 +414,10 @@ class MapboxRenderThreadTest {
     val runnable = mockk<Runnable>(relaxUnitFun = true)
     every { runnable.run() } answers { latch.countDown() }
     mapboxRenderThread.awaitingNextVsync.set(false)
-    Shadows.shadowOf(workerThread.handler?.looper).pause()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
     mapboxRenderThread.queueEvent(runnable)
     Assert.assertEquals(0, mapboxRenderThread.eventQueue.size)
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
@@ -440,12 +440,12 @@ class MapboxRenderThreadTest {
     every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
     mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
     mapboxRenderThread.fpsChangedListener = listener
-    Shadows.shadowOf(workerThread.handler?.looper).pause()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
     mapboxRenderThread.requestRender()
     mapboxRenderThread.requestRender()
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     mapboxRenderThread.requestRender()
-    Shadows.shadowOf(workerThread.handler?.looper).idle()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }

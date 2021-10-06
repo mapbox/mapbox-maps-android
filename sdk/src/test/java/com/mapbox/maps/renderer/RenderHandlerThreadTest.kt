@@ -17,44 +17,44 @@ import java.time.Duration
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowLogger::class])
 @LooperMode(LooperMode.Mode.PAUSED)
-class WorkerHandlerThreadTest {
+class RenderHandlerThreadTest {
 
-  private lateinit var workerHandlerThread: WorkerHandlerThread
+  private lateinit var renderHandlerThread: RenderHandlerThread
 
   @Before
   fun setUp() {
-    workerHandlerThread = WorkerHandlerThread()
+    renderHandlerThread = RenderHandlerThread()
   }
 
   @Test
   fun startTest() {
-    workerHandlerThread.start()
-    assert(workerHandlerThread.handler != null)
-    assert(workerHandlerThread.handlerThread.isAlive)
+    renderHandlerThread.start()
+    assert(renderHandlerThread.handler != null)
+    assert(renderHandlerThread.handlerThread.isAlive)
   }
 
   @Test
   fun stopTest() {
-    workerHandlerThread.start()
-    workerHandlerThread.stop()
-    assert(workerHandlerThread.handler == null)
-    assert(!workerHandlerThread.handlerThread.isAlive)
+    renderHandlerThread.start()
+    renderHandlerThread.stop()
+    assert(renderHandlerThread.handler == null)
+    assert(!renderHandlerThread.handlerThread.isAlive)
   }
 
   @Test
   fun clearMessageQueueTest() {
-    workerHandlerThread.start()
+    renderHandlerThread.start()
     val handler = mockk<Handler>(relaxed = true)
-    workerHandlerThread.handler = handler
-    workerHandlerThread.clearMessageQueue()
-    verify { workerHandlerThread.handler?.removeCallbacksAndMessages(null) }
+    renderHandlerThread.handler = handler
+    renderHandlerThread.clearMessageQueue()
+    verify { renderHandlerThread.handler?.removeCallbacksAndMessages(null) }
   }
 
   @Test
   fun postThreadNotStarted() {
     val action = mockk<() -> Unit>(relaxed = true)
     Shadows.shadowOf(Looper.getMainLooper()).pause()
-    workerHandlerThread.post { action() }
+    renderHandlerThread.post { action() }
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify(exactly = 0) { action.invoke() }
   }
@@ -64,7 +64,7 @@ class WorkerHandlerThreadTest {
     val actionOne = mockk<() -> Unit>(relaxed = true)
     val actionTwo = mockk<() -> Unit>(relaxed = true)
     Shadows.shadowOf(Looper.getMainLooper()).pause()
-    workerHandlerThread.apply {
+    renderHandlerThread.apply {
       start()
       post { actionOne() }
       post { actionTwo() }

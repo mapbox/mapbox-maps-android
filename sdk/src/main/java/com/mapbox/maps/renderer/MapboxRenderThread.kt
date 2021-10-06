@@ -25,7 +25,7 @@ import kotlin.math.pow
  */
 internal class MapboxRenderThread : Choreographer.FrameCallback {
 
-  internal val handlerThread: WorkerHandlerThread
+  internal val renderHandlerThread: RenderHandlerThread
   private val translucentSurface: Boolean
   private val mapboxRenderer: MapboxRenderer
   private val eglCore: EGLCore
@@ -68,23 +68,23 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     this.translucentSurface = translucentSurface
     this.mapboxRenderer = mapboxRenderer
     this.eglCore = EGLCore(translucentSurface)
-    handlerThread = WorkerHandlerThread().apply { start() }
+    renderHandlerThread = RenderHandlerThread().apply { start() }
   }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   constructor(
     mapboxRenderer: MapboxRenderer,
-    handlerThread: WorkerHandlerThread,
+    handlerThread: RenderHandlerThread,
     eglCore: EGLCore
   ) {
     this.translucentSurface = false
     this.mapboxRenderer = mapboxRenderer
-    this.handlerThread = handlerThread
+    this.renderHandlerThread = handlerThread
     this.eglCore = eglCore
   }
 
   private fun postPrepareRenderFrame() {
-    handlerThread.post { prepareRenderFrame() }
+    renderHandlerThread.post { prepareRenderFrame() }
   }
 
   private fun checkSurfaceReady(creatingSurface: Boolean): Boolean {
@@ -253,7 +253,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @UiThread
   fun onSurfaceSizeChanged(width: Int, height: Int) {
     if (this.width != width || this.height != height) {
-      handlerThread.post {
+      renderHandlerThread.post {
         this.width = width
         this.height = height
         sizeChanged = true
@@ -266,8 +266,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   fun onSurfaceDestroyed() {
     lock.withLock {
       // in some situations `destroy` is called earlier than onSurfaceDestroyed - in that case no need to clean up
-      if (handlerThread.started) {
-        handlerThread.post {
+      if (renderHandlerThread.started) {
+        renderHandlerThread.post {
           awaitingNextVsync.set(false)
           Choreographer.getInstance().removeFrameCallback(this)
           shouldExit = true
@@ -289,7 +289,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @UiThread
   fun onSurfaceCreated(surface: Surface, width: Int, height: Int) {
     lock.withLock {
-      handlerThread.post {
+      renderHandlerThread.post {
         if (this.surface != surface) {
           releaseEgl()
           this.surface?.release()
@@ -300,7 +300,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         shouldExit = false
         eventQueue.clear()
         renderEventQueue.clear()
-        handlerThread.clearMessageQueue()
+        renderHandlerThread.clearMessageQueue()
         prepareRenderFrame(creatingSurface = true)
       }
       createCondition.await()
@@ -345,7 +345,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     if (awaitingNextVsync.get()) {
       eventQueue.add(runnable)
     } else {
-      handlerThread.post {
+      renderHandlerThread.post {
         // at the time we start executing surface may be already destroyed
         if (!shouldExit) {
           runnable.run()
@@ -356,14 +356,14 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @UiThread
   fun pause() {
-    handlerThread.post {
+    renderHandlerThread.post {
       paused = true
     }
   }
 
   @UiThread
   fun resume() {
-    handlerThread.post {
+    renderHandlerThread.post {
       paused = false
       if (needRenderOnResume) {
         prepareRenderFrame()
@@ -376,20 +376,20 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   internal fun destroy() {
     lock.withLock {
       // do nothing if destroy for some reason called more than once to avoid deadlock
-      if (handlerThread.started) {
-        handlerThread.post {
+      if (renderHandlerThread.started) {
+        renderHandlerThread.post {
           lock.withLock {
             if (nativeRenderCreated) {
               releaseAll()
             }
-            handlerThread.clearMessageQueue()
+            renderHandlerThread.clearMessageQueue()
             destroyCondition.signal()
           }
         }
         destroyCondition.await()
       }
     }
-    handlerThread.stop()
+    renderHandlerThread.stop()
     mapboxRenderer.map = null
   }
 
