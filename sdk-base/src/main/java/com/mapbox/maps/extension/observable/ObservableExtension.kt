@@ -1,15 +1,22 @@
 package com.mapbox.maps.extension.observable
 
-import com.google.gson.Gson
+import com.google.gson.*
+import com.google.gson.reflect.TypeToken
+import com.mapbox.bindgen.Value
 import com.mapbox.maps.Event
 import com.mapbox.maps.MapEvents
 import com.mapbox.maps.ObservableInterface
 import com.mapbox.maps.Observer
 import com.mapbox.maps.extension.observable.eventdata.*
 import com.mapbox.maps.extension.observable.eventdata.ResourceEventData
+import java.lang.reflect.Type
 
-private val gson by lazy {
-  Gson()
+private val gson: Gson by lazy {
+  GsonBuilder().apply {
+    val valueType = object : TypeToken<Value>() {}.type
+    val serializer = ValueSerializer()
+    registerTypeAdapter(valueType, serializer)
+  }.create()
 }
 
 /**
@@ -301,124 +308,119 @@ fun ObservableInterface.unsubscribeSourceRemoved(observer: Observer) =
  * Get the parsed event data for resource-request event.
  * @return a parsed ResourceEventData object.
  */
-fun Event.getResourceEventData(): ResourceEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, ResourceEventData::class.java)
-}
+fun Event.getResourceEventData(): ResourceEventData = gson.fromValue(data)
 
 /**
  * Get the parsed event data for map loaded event.
  * @return a parsed MapLoadedEventData object.
  */
-fun Event.getMapLoadedEventData(): MapLoadedEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, MapLoadedEventData::class.java)
-}
+fun Event.getMapLoadedEventData(): MapLoadedEventData = gson.fromValue(data)
 
 /**
  * Get the parsed event data for map loading error event.
  * @return a parsed MapLoadingErrorEventData object.
  */
-fun Event.getMapLoadingErrorEventData(): MapLoadingErrorEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, MapLoadingErrorEventData::class.java)
-}
+fun Event.getMapLoadingErrorEventData(): MapLoadingErrorEventData = gson.fromValue(data)
 
 /**
  * Get the parsed event data for map idle event.
  * @return a parsed MapIdleEventData object.
  */
-fun Event.getMapIdleEventData(): MapIdleEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, MapIdleEventData::class.java)
-}
+fun Event.getMapIdleEventData(): MapIdleEventData = gson.fromValue(data)
 
 /**
  * Get the parsed event data for style data loaded event.
  * @return a parsed StyleDataLoadedEventData object.
  */
-fun Event.getStyleDataLoadedEventData(): StyleDataLoadedEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, StyleDataLoadedEventData::class.java)
-}
+fun Event.getStyleDataLoadedEventData(): StyleDataLoadedEventData = gson.fromValue(data)
 
 /**
  * Get the parsed event data for style loaded event.
  * @return a parsed StyleLoadedEventData object.
  */
-fun Event.getStyleLoadedEventData(): StyleLoadedEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, StyleLoadedEventData::class.java)
-}
+fun Event.getStyleLoadedEventData(): StyleLoadedEventData = gson.fromValue(data)
 
 /**
  * Get the parsed event data for source data loaded event.
  * @return a parsed SourceDataLoadedEventData object.
  */
-fun Event.getSourceDataLoadedEventData(): SourceDataLoadedEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, SourceDataLoadedEventData::class.java)
-}
+fun Event.getSourceDataLoadedEventData(): SourceDataLoadedEventData = gson.fromValue(data)
 
 /**
  * Get the parsed event data for style missing event.
  * @return a parsed StyleImageMissingEventData.
  */
-fun Event.getStyleImageMissingEventData(): StyleImageMissingEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, StyleImageMissingEventData::class.java)
-}
+fun Event.getStyleImageMissingEventData(): StyleImageMissingEventData = gson.fromValue(data)
 
 /**
  * Get the parsed event data for style image unused event.
  * @return a parsed StyleImageUnusedEventData.
  */
-fun Event.getStyleImageUnusedEventData(): StyleImageUnusedEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, StyleImageUnusedEventData::class.java)
-}
+fun Event.getStyleImageUnusedEventData(): StyleImageUnusedEventData = gson.fromValue(data)
 
 /**
  * Get the parsed event data for source added event.
  * @return a parsed IDStringEventData.
  */
-fun Event.getSourceAddedEventData(): SourceAddedEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, SourceAddedEventData::class.java)
-}
+fun Event.getSourceAddedEventData(): SourceAddedEventData = gson.fromValue(data)
 
 /**
  * Get the parsed event data for source removed event.
  * @return a parsed SourceRemovedEventData.
  */
-fun Event.getSourceRemovedEventData(): SourceRemovedEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, SourceRemovedEventData::class.java)
-}
+fun Event.getSourceRemovedEventData(): SourceRemovedEventData = gson.fromValue(data)
 
 /**
  * Get the parsed event data for render frame started event.
  * @return a parsed RenderFrameStartedEventData.
  */
-fun Event.getRenderFrameStartedEventData(): RenderFrameStartedEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, RenderFrameStartedEventData::class.java)
-}
+fun Event.getRenderFrameStartedEventData(): RenderFrameStartedEventData = gson.fromValue(data)
 
 /**
  * Get the parsed event data for render frame finished event.
  * @return a parsed RenderFrameFinishedEventData.
  */
-fun Event.getRenderFrameFinishedEventData(): RenderFrameFinishedEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, RenderFrameFinishedEventData::class.java)
-}
+fun Event.getRenderFrameFinishedEventData(): RenderFrameFinishedEventData = gson.fromValue(data)
 
 /**
  * Get the parsed event data for camera changed event.
  * @return a parsed CameraChangedEventData.
  */
-fun Event.getCameraChangedEventData(): CameraChangedEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, CameraChangedEventData::class.java)
+fun Event.getCameraChangedEventData(): CameraChangedEventData = gson.fromValue(data)
+
+inline fun <reified T : Any> Gson.fromValue(value: Value): T {
+  return fromJson(toJsonTree(value), T::class.java)
+}
+
+class ValueSerializer : JsonSerializer<Value> {
+  override fun serialize(
+    src: Value,
+    typeOfSrc: Type,
+    context: JsonSerializationContext
+  ): JsonElement {
+    return when (src.contents) {
+      is Map<*, *> -> {
+        JsonObject().apply {
+          val map = src.contents as HashMap<String, Value>
+          for ((key, value) in map) {
+            add(key, serialize(value, typeOfSrc, context))
+          }
+        }
+      }
+      is List<*> -> {
+        JsonArray().apply {
+          val list = src.contents as List<Value>
+          for (v in list) {
+            add(serialize(v, typeOfSrc, context))
+          }
+        }
+      }
+      is Double -> JsonPrimitive(src.contents as Double)
+      is String -> JsonPrimitive(src.contents as String)
+      is Boolean -> JsonPrimitive(src.contents as Boolean)
+      is Long -> JsonPrimitive(src.contents as Long)
+      null -> JsonNull.INSTANCE
+      else -> context.serialize(src.contents)
+    }
+  }
 }
