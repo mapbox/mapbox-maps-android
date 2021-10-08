@@ -1,23 +1,17 @@
 package com.mapbox.maps.testapp.utils
 
 import android.content.Context
-import com.google.gson.JsonObject
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
 
 class StorageUtils(context: Context) {
-  private val directory: File = File(context.filesDir, "logs")
+  private val directory: File = File(context.filesDir, LOG_DIR)
     .apply { mkdirs() }
 
   fun fileExists(fileName: String): Boolean {
     val deviceInfo = File(directory, fileName)
     return deviceInfo.exists() && deviceInfo.length() > 0
-  }
-
-  fun writeJsonToFile(fileName: String, jsonObject: JsonObject) {
-    val saveFilePath = File(directory, fileName).apply { delete() }
-    saveFilePath.write(jsonObject.toString())
   }
 
   fun writeToFile(fileName: String, content: String) {
@@ -31,5 +25,9 @@ class StorageUtils(context: Context) {
     writer.write(results)
     writer.close()
     fw.close()
+  }
+
+  companion object {
+    const val LOG_DIR = "logs"
   }
 }

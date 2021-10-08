@@ -5,8 +5,6 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
-import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.core.constants.Constants
@@ -29,10 +27,8 @@ import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.*
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
-import com.mapbox.maps.testapp.utils.StorageUtils
+import com.mapbox.maps.testapp.utils.recordFrameStats
 import com.mapbox.turf.TurfMeasurement
-import kotlin.math.pow
-import kotlin.math.sqrt
 
 /**
  * Simulate a navigation route with pre-defined route (from LA to San Francisco) with location puck,
@@ -43,15 +39,9 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
 
   private lateinit var mapView: MapView
   private lateinit var routePoints: LineString
-  private var renderFrameFinishCount = 0
-  private var overtimeFrameCount = 0
-  private val renderFrameIntervalsMs = mutableListOf<Float>()
-  private val frameReport = mutableListOf<JsonObject>()
   private val locationProvider by lazy { FakeLocationProvider(routePoints) }
   private var cameraFollowMode = CameraFollowMode.OVERVIEW
   private val handler = Handler(Looper.getMainLooper())
-  private var startBenchmarkTime = 0L
-  private var lastRenderedFrameTime = 0L
 
   private val onIndicatorBearingChangedListener = OnIndicatorBearingChangedListener {
     if (cameraFollowMode == CameraFollowMode.FOLLOW) {
@@ -110,13 +100,13 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
         val zoom = createZoomAnimator(
           cameraAnimatorOptions(camera.zoom!!)
         ) {
-          duration = EASE_TO_PUCK_DURATION / 3
+          duration = EASE_TO_PUCK_DURATION_MS / 3
           interpolator = AccelerateDecelerateInterpolator()
         }
         val bearing = createBearingAnimator(
           cameraAnimatorOptions(camera.bearing!!)
         ) {
-          duration = EASE_TO_PUCK_DURATION / 3
+          duration = EASE_TO_PUCK_DURATION_MS / 3
           interpolator = AccelerateDecelerateInterpolator()
         }
         playAnimatorsSequentially(bearing, zoom)
@@ -125,11 +115,11 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
             easeTo(
               camera,
               MapAnimationOptions.mapAnimationOptions {
-                duration(EASE_TO_PUCK_DURATION / 3)
+                duration(EASE_TO_PUCK_DURATION_MS / 3)
               }
             )
           },
-          EASE_TO_PUCK_DURATION * 2 / 3
+          EASE_TO_PUCK_DURATION_MS * 2 / 3
         )
       }
     } else {
@@ -142,13 +132,13 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
       val zoom = createZoomAnimator(
         cameraAnimatorOptions(CAMERA_TRACKING_ZOOM)
       ) {
-        duration = EASE_TO_PUCK_DURATION / 3
+        duration = EASE_TO_PUCK_DURATION_MS / 3
         interpolator = AccelerateDecelerateInterpolator()
       }
       val center = createCenterAnimator(
         cameraAnimatorOptions(locationProvider.lastLocation)
       ) {
-        duration = EASE_TO_PUCK_DURATION / 3
+        duration = EASE_TO_PUCK_DURATION_MS / 3
         interpolator = AccelerateDecelerateInterpolator()
       }
       playAnimatorsSequentially(center, zoom)
@@ -161,15 +151,15 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
               pitch(CAMERA_TRACKING_PITCH)
             },
             MapAnimationOptions.mapAnimationOptions {
-              duration(EASE_TO_PUCK_DURATION / 3)
+              duration(EASE_TO_PUCK_DURATION_MS / 3)
             }
           )
         },
-        EASE_TO_PUCK_DURATION * 2 / 3
+        EASE_TO_PUCK_DURATION_MS * 2 / 3
       )
     }
 
-    handler.postDelayed(callback, EASE_TO_PUCK_DURATION)
+    handler.postDelayed(callback, EASE_TO_PUCK_DURATION_MS)
   }
 
   private fun setCameraToFollowPuck() {
@@ -194,34 +184,6 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
     initMapboxMap()
   }
 
-  private val renderFrameObserver = Observer { event ->
-    if (event.type == MapEvents.RENDER_FRAME_FINISHED) {
-      renderFrameFinishCount++
-      val now = SystemClock.elapsedRealtimeNanos()
-      if (lastRenderedFrameTime != 0L) {
-        renderFrameIntervalsMs.add((now - lastRenderedFrameTime) * 1e-6f)
-        frameReport.add(
-          JsonObject().apply {
-            addProperty("time_from_start", (now - startBenchmarkTime) * 1e-6f)
-            addProperty("interval_from_last_frame", (now - lastRenderedFrameTime) * 1e-6f)
-          }
-        )
-        if (now - lastRenderedFrameTime > 1000_000L * TARGET_FRAME_TIME_MS) {
-          overtimeFrameCount++
-        }
-      }
-      lastRenderedFrameTime = now
-    }
-  }
-
-  private fun initFpsCounter() {
-    mapView.getMapboxMap().subscribe(
-      renderFrameObserver,
-      listOf(MapEvents.RENDER_FRAME_FINISHED)
-    )
-    startBenchmarkTime = SystemClock.elapsedRealtimeNanos()
-  }
-
   private fun initMapboxMap() {
     mapView.getMapboxMap().loadStyle(
       style(STYLE) {
@@ -236,7 +198,7 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
         }
       }
     ) {
-      initFpsCounter()
+      mapView.recordFrameStats()
       initLocationComponent()
       setCameraToOverview(false)
       setupGestures()
@@ -254,43 +216,28 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
       {
         setCameraToFollowPuck()
       },
-      INITIAL_OVERVIEW_TIME
+      INITIAL_OVERVIEW_TIME_MS
     )
     // Ease camera to route overview
     handler.postDelayed(
       {
         setCameraToOverview(true)
       },
-      INITIAL_OVERVIEW_TIME + CAMERA_ACTION_INTERVAL * 2
+      INITIAL_OVERVIEW_TIME_MS + CAMERA_ACTION_INTERVAL_MS * 2
     )
     // Ease camera to follow puck
     handler.postDelayed(
       {
         setCameraToFollowPuck()
       },
-      INITIAL_OVERVIEW_TIME + CAMERA_ACTION_INTERVAL * 3
+      INITIAL_OVERVIEW_TIME_MS + CAMERA_ACTION_INTERVAL_MS * 3
     )
     // Post toast message on activity ends.
     handler.postDelayed(
       {
-        val endBenchmarkTime = SystemClock.elapsedRealtimeNanos()
-        Toast.makeText(
-          this,
-          """
-              Average FPS: ${(renderFrameFinishCount * 1e9f / (endBenchmarkTime - startBenchmarkTime)).format()}
-              Over time frames: $overtimeFrameCount
-              Over time frames ratio: ${(overtimeFrameCount * 100f / renderFrameFinishCount).format()}%
-              Max frame interval: ${renderFrameIntervalsMs.maxOrNull().format()}ms
-              Min frame interval: ${renderFrameIntervalsMs.minOrNull().format()}ms
-              Frame interval SD: ${renderFrameIntervalsMs.sd().format()}ms
-              Logs have been saved to $filesDir/logs/$FRAME_LOG_JSON_NAME.
-          """.trimIndent(),
-          Toast.LENGTH_LONG
-        ).show()
-        StorageUtils(this).writeToFile(FRAME_LOG_JSON_NAME, Gson().toJson(frameReport))
         finish()
       },
-      ACTIVITY_RUN_TIME
+      ACTIVITY_RUN_TIME_MS
     )
   }
 
@@ -362,7 +309,6 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
       removeOnMoveListener(onMoveListener)
       removeOnMapClickListener(onMapClickListener)
     }
-    mapView.getMapboxMap().unsubscribe(renderFrameObserver)
   }
 
   private enum class CameraFollowMode {
@@ -393,7 +339,7 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
           }
           emitFakeLocations()
         },
-        LOCATION_UPDATE_INTERVAL
+        LOCATION_UPDATE_INTERVAL_MS
       )
     }
 
@@ -408,34 +354,18 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
     }
   }
 
-  private fun Number?.format(): String {
-    return "%.2f".format(this)
-  }
-
-  private fun List<Float>.sd(): Double {
-    val mean = average()
-    return sqrt(
-      fold(
-        0.0,
-        { accumulator, next -> accumulator + (next - mean).pow(2.0) }
-      ) / size
-    )
-  }
-
   companion object {
     private const val TAG = "NavigationRouteActivity"
     private const val STYLE = Style.MAPBOX_STREETS
-    private const val TARGET_FRAME_TIME_MS = 1000f / 30f
-    private const val INITIAL_OVERVIEW_TIME = 3000L
-    private const val CAMERA_ACTION_INTERVAL = 4000L
-    private const val EASE_TO_PUCK_DURATION = 2000L
-    private const val LOCATION_UPDATE_INTERVAL = 1000L
-    private const val ACTIVITY_RUN_TIME = 20000L
+    private const val INITIAL_OVERVIEW_TIME_MS = 3000L
+    private const val CAMERA_ACTION_INTERVAL_MS = 4000L
+    private const val EASE_TO_PUCK_DURATION_MS = 2000L
+    private const val LOCATION_UPDATE_INTERVAL_MS = 1000L
+    private const val ACTIVITY_RUN_TIME_MS = 20000L
     private const val CAMERA_TRACKING_PITCH = 40.0
     private const val CAMERA_TRACKING_ZOOM = 16.5
     private const val GEOJSON_SOURCE_ID = "source_id"
     private const val ROUTE_LINE_LAYER_ID = "route_line_layer_id"
     private const val NAVIGATION_ROUTE_JSON_NAME = "navigation_route.json"
-    private const val FRAME_LOG_JSON_NAME = "frame_log.json"
   }
 }
