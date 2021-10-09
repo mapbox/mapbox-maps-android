@@ -152,20 +152,6 @@ class CircleAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
-  fun deleteAndAdd() {
-    val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager(mapView)
-    val annotation = circleAnnotationManager.create(
-      CircleAnnotationOptions()
-        .withPoint(Point.fromLngLat(0.0, 0.0))
-    )
-    assertEquals(annotation, circleAnnotationManager.annotations[0])
-    circleAnnotationManager.delete(annotation)
-    assertTrue(circleAnnotationManager.annotations.isEmpty())
-    circleAnnotationManager.addAnnotation(annotation)
-    assertEquals(annotation, circleAnnotationManager.annotations[0])
-  }
-
-  @Test
   fun deleteList() {
     val circleAnnotationManager = mapView.annotations.createCircleAnnotationManager(mapView)
     val list = listOf(

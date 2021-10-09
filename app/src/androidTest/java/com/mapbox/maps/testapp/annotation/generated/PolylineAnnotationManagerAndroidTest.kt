@@ -174,20 +174,6 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
-  fun deleteAndAdd() {
-    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
-    val annotation = polylineAnnotationManager.create(
-      PolylineAnnotationOptions()
-        .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
-    )
-    assertEquals(annotation, polylineAnnotationManager.annotations[0])
-    polylineAnnotationManager.delete(annotation)
-    assertTrue(polylineAnnotationManager.annotations.isEmpty())
-    polylineAnnotationManager.addAnnotation(annotation)
-    assertEquals(annotation, polylineAnnotationManager.annotations[0])
-  }
-
-  @Test
   fun deleteList() {
     val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
     val list = listOf(
