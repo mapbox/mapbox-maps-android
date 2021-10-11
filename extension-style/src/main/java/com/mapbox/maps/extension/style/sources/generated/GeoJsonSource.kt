@@ -5,7 +5,6 @@ package com.mapbox.maps.extension.style.sources.generated
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.Looper
-import androidx.annotation.VisibleForTesting
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
@@ -608,9 +607,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    */
   companion object {
     /** A worker thread to parse large geojson data. */
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    var workerThread = HandlerThread("STYLE_WORKER").apply {
-      priority = Thread.MAX_PRIORITY
+    internal val workerThread = HandlerThread("GEOJSON_PARSER").apply {
       start()
     }
 

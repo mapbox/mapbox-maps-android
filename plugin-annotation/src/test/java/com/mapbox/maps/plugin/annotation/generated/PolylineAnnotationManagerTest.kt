@@ -65,11 +65,6 @@ class PolylineAnnotationManagerTest {
   private lateinit var manager: PolylineAnnotationManager
   @Before
   fun setUp() {
-    GeoJsonSource.workerThread =
-      HandlerThread("STYLE_WORKER").apply {
-        priority = Thread.MAX_PRIORITY
-        start()
-      }
     mockkStatic("com.mapbox.maps.extension.style.layers.LayerUtils")
     mockkStatic("com.mapbox.maps.extension.style.sources.SourceUtils")
     val captureCallback = slot<(StyleInterface) -> Unit>()
