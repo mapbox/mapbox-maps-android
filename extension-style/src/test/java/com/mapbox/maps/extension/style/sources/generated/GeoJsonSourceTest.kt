@@ -21,6 +21,7 @@ import com.mapbox.maps.extension.style.expressions.dsl.generated.sum
 import com.mapbox.maps.extension.style.types.PromoteId
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import io.mockk.*
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -53,6 +54,14 @@ class GeoJsonSourceTest {
     // For default property getters
     mockkStatic(StyleManager::class)
     every { StyleManager.getStyleSourcePropertyDefaultValue(any(), any()) } returns styleProperty
+  }
+
+  @After
+  fun tearDown() {
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).run {
+      if (isPaused)
+        unPause()
+    }
   }
 
   @Test
