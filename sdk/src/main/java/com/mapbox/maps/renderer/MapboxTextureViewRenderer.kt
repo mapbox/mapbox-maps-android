@@ -4,13 +4,15 @@ import android.graphics.SurfaceTexture
 import android.view.Surface
 import android.view.TextureView
 import androidx.annotation.VisibleForTesting
+import com.mapbox.maps.renderer.egl.ConfigMSAA
 
 internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTextureListener {
 
-  constructor(textureView: TextureView) {
+  constructor(textureView: TextureView, configMSAA: ConfigMSAA) {
     renderThread = MapboxRenderThread(
       mapboxRenderer = this,
-      translucentSurface = true
+      translucentSurface = true,
+      configMSAA = configMSAA
     )
     textureView.let {
       it.isOpaque = false

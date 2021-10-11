@@ -91,6 +91,7 @@ import com.mapbox.maps.plugin.overlay.MapOverlayUtils;
 import com.mapbox.maps.plugin.scalebar.ScaleBarPlugin;
 import com.mapbox.maps.plugin.scalebar.ScaleBarUtils;
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings;
+import com.mapbox.maps.renderer.egl.ConfigMSAA;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -341,8 +342,8 @@ public class JavaInterfaceChecker {
         mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins);
         mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions);
         mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions, false);
-        mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions, false, Style.MAPBOX_STREETS);
-        mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions, false, Style.MAPBOX_STREETS, attrs);
+//        mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions, false, new ConfigMSAA.On4X(), Style.MAPBOX_STREETS);
+//        mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions, false, new ConfigMSAA.On4X(), Style.MAPBOX_STREETS, attrs);
     }
 
     private void snapshotter(Context context, MapSnapshotOptions options) {

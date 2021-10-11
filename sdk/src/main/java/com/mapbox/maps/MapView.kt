@@ -91,8 +91,8 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     }
     mapController = MapController(
       when (view) {
-        is SurfaceView -> MapboxSurfaceHolderRenderer(view.holder)
-        is TextureView -> MapboxTextureViewRenderer(view)
+        is SurfaceView -> MapboxSurfaceHolderRenderer(view.holder, resolvedMapInitOptions.renderConfigMSAA)
+        is TextureView -> MapboxTextureViewRenderer(view, resolvedMapInitOptions.renderConfigMSAA)
         else -> throw IllegalArgumentException("Provided view has to be a texture or a surface.")
       },
       resolvedMapInitOptions

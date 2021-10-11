@@ -3,6 +3,7 @@ package com.mapbox.maps
 import android.content.Context
 import android.util.AttributeSet
 import com.mapbox.maps.plugin.*
+import com.mapbox.maps.renderer.egl.ConfigMSAA
 
 /**
  * Defines configuration [MapInitOptions] for a [MapboxMap]. These options can be used when adding a
@@ -28,6 +29,7 @@ data class MapInitOptions @JvmOverloads constructor(
   var plugins: List<Plugin> = defaultPluginList,
   var cameraOptions: CameraOptions? = null,
   var textureView: Boolean = false,
+  var renderConfigMSAA: ConfigMSAA = ConfigMSAA.On4X,
   val styleUri: String? = Style.MAPBOX_STREETS,
   var attrs: AttributeSet? = null
 ) {

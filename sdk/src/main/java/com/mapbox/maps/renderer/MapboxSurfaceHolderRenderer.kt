@@ -2,10 +2,11 @@ package com.mapbox.maps.renderer
 
 import android.view.SurfaceHolder
 import androidx.annotation.VisibleForTesting
+import com.mapbox.maps.renderer.egl.ConfigMSAA
 
 internal class MapboxSurfaceHolderRenderer : MapboxSurfaceRenderer, SurfaceHolder.Callback {
 
-  constructor(surfaceHolder: SurfaceHolder) : super() {
+  constructor(surfaceHolder: SurfaceHolder, configMSAA: ConfigMSAA) : super(configMSAA) {
     surfaceHolder.addCallback(this)
   }
 

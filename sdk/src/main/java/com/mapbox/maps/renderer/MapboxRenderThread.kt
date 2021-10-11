@@ -8,6 +8,7 @@ import androidx.annotation.UiThread
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import com.mapbox.common.Logger
+import com.mapbox.maps.renderer.egl.ConfigMSAA
 import com.mapbox.maps.renderer.egl.EGLCore
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicBoolean
@@ -64,10 +65,14 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   internal var fpsChangedListener: OnFpsChangedListener? = null
   private var timeElapsed = 0L
 
-  constructor(mapboxRenderer: MapboxRenderer, translucentSurface: Boolean) {
+  constructor(
+    mapboxRenderer: MapboxRenderer,
+    translucentSurface: Boolean,
+    configMSAA: ConfigMSAA
+  ) {
     this.translucentSurface = translucentSurface
     this.mapboxRenderer = mapboxRenderer
-    this.eglCore = EGLCore(translucentSurface)
+    this.eglCore = EGLCore(translucentSurface, configMSAA)
     renderHandlerThread = RenderHandlerThread().apply { start() }
   }
 

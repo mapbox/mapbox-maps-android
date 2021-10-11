@@ -2,15 +2,17 @@ package com.mapbox.maps.renderer
 
 import android.view.Surface
 import androidx.annotation.VisibleForTesting
+import com.mapbox.maps.renderer.egl.ConfigMSAA
 
 internal open class MapboxSurfaceRenderer : MapboxRenderer {
 
   private var createSurface = false
 
-  constructor() {
+  constructor(configMSAA: ConfigMSAA) {
     renderThread = MapboxRenderThread(
       mapboxRenderer = this,
-      translucentSurface = false
+      translucentSurface = false,
+      configMSAA = configMSAA
     )
   }
 

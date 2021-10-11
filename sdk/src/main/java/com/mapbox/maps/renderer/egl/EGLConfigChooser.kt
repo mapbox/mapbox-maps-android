@@ -12,7 +12,8 @@ import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.egl.EGLDisplay
 
 internal class EGLConfigChooser constructor(
-  private val translucentSurface: Boolean
+  private val translucentSurface: Boolean,
+  private val configMSAA: ConfigMSAA
 ) {
   // Get all configs at least RGB 565 with 16 depth and 8 stencil
   private val configAttributes: IntArray
@@ -20,30 +21,26 @@ internal class EGLConfigChooser constructor(
       val emulator = inEmulator() || inGenymotion()
       Logger.i(TAG, "In emulator: $emulator")
       return intArrayOf(
-        EGL_CONFIG_CAVEAT,
-        EGL_NONE,
-        EGL_SURFACE_TYPE,
-        EGL_WINDOW_BIT,
-        EGL_BUFFER_SIZE,
-        16,
-        EGL_RED_SIZE,
-        5,
-        EGL_GREEN_SIZE,
-        6,
-        EGL_BLUE_SIZE,
-        5,
-        EGL_ALPHA_SIZE,
-        if (translucentSurface) 8 else 0,
-        EGL_DEPTH_SIZE,
-        16,
-        EGL_STENCIL_SIZE,
-        8,
-        if (emulator) EGL_NONE else EGL_CONFORMANT,
-        EGL_OPENGL_ES2_BIT,
-        if (emulator) EGL_NONE else EGL_COLOR_BUFFER_TYPE,
-        EGL_RGB_BUFFER,
-        EGL_RENDERABLE_TYPE,
-        EGL_OPENGL_ES2_BIT,
+        EGL_CONFIG_CAVEAT, EGL_NONE,
+        EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+        EGL_BUFFER_SIZE, 16,
+        EGL_RED_SIZE, 5,
+        EGL_GREEN_SIZE, 6,
+        EGL_BLUE_SIZE, 5,
+        EGL_ALPHA_SIZE, if (translucentSurface) 8 else 0,
+        EGL_DEPTH_SIZE, 16,
+        when (configMSAA) {
+          ConfigMSAA.Off -> EGL_NONE
+          else -> EGL_SAMPLE_BUFFERS
+        }, configMSAA.sampleBuffers,
+        when (configMSAA) {
+          ConfigMSAA.Off -> EGL_NONE
+          else -> EGL_SAMPLES
+        }, configMSAA.samples,
+        EGL_STENCIL_SIZE, 8,
+        if (emulator) EGL_NONE else EGL_CONFORMANT, EGL_OPENGL_ES2_BIT,
+        if (emulator) EGL_NONE else EGL_COLOR_BUFFER_TYPE, EGL_RGB_BUFFER,
+        EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
         EGL_NONE
       )
     }
@@ -203,8 +200,6 @@ internal class EGLConfigChooser constructor(
 
       var configOk = depth == 24 || depth == 16
       configOk = configOk and (stencil == 8)
-      configOk = configOk and (sampleBuffers == 0)
-      configOk = configOk and (samples == 0)
 
       // Filter our configs first for depth, stencil and anti-aliasing
       if (configOk) {
