@@ -1,5 +1,7 @@
 package com.mapbox.maps.renderer
 
+import android.opengl.EGL14
+import android.opengl.EGLSurface
 import android.os.SystemClock
 import android.view.Choreographer
 import android.view.Surface
@@ -13,9 +15,9 @@ import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicLong
 import java.util.concurrent.locks.ReentrantLock
-import javax.microedition.khronos.egl.EGL10
-import javax.microedition.khronos.egl.EGL11
-import javax.microedition.khronos.egl.EGLSurface
+//import javax.microedition.khronos.egl.EGL10
+//import javax.microedition.khronos.egl.EGL11
+//import javax.microedition.khronos.egl.EGLSurface
 import kotlin.concurrent.withLock
 import kotlin.math.pow
 
@@ -91,7 +93,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     lock.withLock {
       try {
         surface?.let {
-          if (eglSurface == null || eglSurface == EGL10.EGL_NO_SURFACE) {
+          if (eglSurface == null || eglSurface == EGL14.EGL_NO_SURFACE) {
             return prepareEglSurface(it, creatingSurface)
           }
         } ?: return false
@@ -126,7 +128,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     eglSurface = eglCore.createWindowSurface(surface)
     if (!eglCore.eglStatusSuccess) {
       // Set EGL Surface as EGL_NO_SURFACE and try recreate it in next iteration.
-      eglSurface = EGL10.EGL_NO_SURFACE
+      eglSurface = EGL14.EGL_NO_SURFACE
       postPrepareRenderFrame()
       return false
     }
@@ -176,8 +178,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     mapboxRenderer.onDrawFrame()
     eglSurface?.let {
       when (val swapStatus = eglCore.swapBuffers(it)) {
-        EGL10.EGL_SUCCESS -> {}
-        EGL11.EGL_CONTEXT_LOST -> {
+        EGL14.EGL_SUCCESS -> {}
+        EGL14.EGL_CONTEXT_LOST -> {
           Logger.w(TAG, "Context lost. Waiting for re-acquire")
           releaseEgl()
         }
