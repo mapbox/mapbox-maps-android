@@ -180,7 +180,7 @@ class SpaceStationLocationActivity : AppCompatActivity() {
     super.onStop()
     // When the user leaves the activity, there is no need in calling the API since the map
     // isn't in view.
-    handler.removeCallbacks(runnable)
+    handler.removeCallbacksAndMessages(null)
   }
 
   companion object {
