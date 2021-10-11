@@ -99,7 +99,7 @@ tasks.withType<DokkaTask>().configureEach {
       if (buildFromSource.toBoolean()) {
         File("upstream-api-doc-list.txt").forEachLine {
           if (!it.startsWith("//")) {
-            sourceRoots.from(file(it))
+            sourceRoots.from(file("../../$it"))
           }
         }
       }
