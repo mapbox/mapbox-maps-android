@@ -97,12 +97,11 @@ tasks.withType<DokkaTask>().configureEach {
       // https://github.com/mapbox/mapbox-maps-android/issues/301#issuecomment-712736885
       failOnWarning.set(false)
       if (buildFromSource.toBoolean()) {
-        sourceRoots.from(file("../../mapbox-gl-native-internal/internal/vendor/common/platform/android/okhttp/src/main/java"))
-        sourceRoots.from(file("../../mapbox-gl-native-internal/internal/vendor/common/platform/android/common/src/main/java"))
-        sourceRoots.from(file("../../mapbox-gl-native-internal/internal/vendor/common/generated/java"))
-        sourceRoots.from(file("../../mapbox-gl-native-internal/internal/vendor/common/vendor/mapbox-bindgen/src/support/java/src/main/java"))
-        sourceRoots.from(file("../../mapbox-gl-native-internal/internal/platform/android/sdk/src/main/java"))
-        sourceRoots.from(file("../../mapbox-gl-native-internal/internal/bindings/generated/java"))
+        File("upstream-api-doc-list.txt").forEachLine {
+          if (!it.startsWith("//")) {
+            sourceRoots.from(file("../../$it"))
+          }
+        }
       }
     }
   }
