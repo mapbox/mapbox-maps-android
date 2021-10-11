@@ -2,10 +2,8 @@ $dokka.format:html-v1
 $dokka.linkExtension:html
 
 com.mapbox.bindgen
-com.mapbox.common.core.module
-com.mapbox.common.module.okhttp
+com.mapbox.common
 com.mapbox.maps
-com.mapbox.maps.assets
 com.mapbox.maps.attribution
 com.mapbox.maps.dsl
 com.mapbox.maps.extension.androidauto
@@ -29,7 +27,6 @@ com.mapbox.maps.extension.style.sources.generated
 com.mapbox.maps.extension.style.terrain.generated
 com.mapbox.maps.extension.style.types
 com.mapbox.maps.extension.style.utils
-com.mapbox.maps.loader
 com.mapbox.maps.module
 com.mapbox.maps.module.telemetry
 com.mapbox.maps.plugin
@@ -54,6 +51,5 @@ com.mapbox.maps.plugin.overlay
 com.mapbox.maps.plugin.scalebar
 com.mapbox.maps.plugin.scalebar.generated
 com.mapbox.maps.renderer
-com.mapbox.maps.text
 com.mapbox.maps.util
 
