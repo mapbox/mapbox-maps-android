@@ -463,8 +463,11 @@ class GesturePluginTest {
     every {
       moveGestureDetector.focalPoint
     } returns PointF(0.0f, 0.0f)
-
-    val handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
+    every { moveGestureDetector.pointersCount } returns 2
+    var handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
+    assertFalse(handled)
+    every { moveGestureDetector.pointersCount } returns 1
+    handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
     assert(handled)
     verify { listener.onMove(any()) }
     verify {

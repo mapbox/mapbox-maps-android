@@ -73,8 +73,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   private var spanSinceLast: Float = 0.0f
   private var screenHeight: Double = 0.0
   private var startZoom: Double = 0.0
-  private var flingInProcess: Boolean = false
   private var scaleCachedAnchor: ScreenCoordinate? = null
+  private var dragInProgress: Boolean = false
 
   // Rotate
   private var minimumScaleSpanWhenRotating: Float = 0f
@@ -257,12 +257,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     if (motionEvent.actionMasked == MotionEvent.ACTION_DOWN) {
       unregisterScheduledAnimators()
       mapTransformDelegate.setGestureInProgress(true)
-      mapCameraManagerDelegate.dragStart(
-        ScreenCoordinate(
-          motionEvent.x.toDouble(),
-          motionEvent.y.toDouble()
-        )
-      )
     }
 
     val result = gesturesManager.onTouchEvent(motionEvent)
@@ -279,10 +273,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
           },
           50
         )
-        // if fling happens after dragging then `dragEnd` will be called after fling animation is finished
-        if (!flingInProcess) {
-          mapCameraManagerDelegate.dragEnd()
-        }
 
         if (scheduledAnimators.isNotEmpty()) {
           // Start all awaiting velocity animations
@@ -1179,9 +1169,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       // ignore short flings, these can occur when other gestures just have finished executing
       return false
     }
-
-    flingInProcess = true
-
     cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
 
     val offsetX = if (internalSettings.isScrollHorizontallyLimited()) 0.0 else velocityX / FLING_LIMITING_FACTOR
@@ -1205,7 +1192,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
           override fun onAnimationEnd(animation: Animator?) {
             super.onAnimationEnd(animation)
-            flingInProcess = false
             mapCameraManagerDelegate.dragEnd()
           }
         })
@@ -1235,10 +1221,18 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         return true
       }
 
+      if (detector.pointersCount > 1) {
+        return false
+      }
+
       val focalPoint = detector.focalPoint
       val fromX = focalPoint.x.toDouble()
       val fromY = focalPoint.y.toDouble()
 
+      if (!dragInProgress) {
+        dragInProgress = true
+        mapCameraManagerDelegate.dragStart(ScreenCoordinate(fromX, fromY))
+      }
       val resolvedDistanceX =
         if (internalSettings.isScrollHorizontallyLimited()) 0.0 else distanceX.toDouble()
       val resolvedDistanceY =
@@ -1258,6 +1252,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   }
 
   internal fun handleMoveEnd(detector: MoveGestureDetector) {
+    dragInProgress = false
     notifyOnMoveEndListeners(detector)
   }
 
