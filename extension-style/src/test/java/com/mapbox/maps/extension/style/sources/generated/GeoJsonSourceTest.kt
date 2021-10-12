@@ -2,8 +2,9 @@
 
 package com.mapbox.maps.extension.style.sources.generated
 
-import android.os.HandlerThread
+import android.os.Handler
 import android.os.Looper
+import android.os.Process
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
@@ -20,6 +21,7 @@ import com.mapbox.maps.extension.style.expressions.dsl.generated.sum
 import com.mapbox.maps.extension.style.types.PromoteId
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import io.mockk.*
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -27,6 +29,9 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
 import org.robolectric.annotation.Config
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeoutException
 
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowStyleManager::class])
@@ -49,11 +54,14 @@ class GeoJsonSourceTest {
     // For default property getters
     mockkStatic(StyleManager::class)
     every { StyleManager.getStyleSourcePropertyDefaultValue(any(), any()) } returns styleProperty
-    GeoJsonSource.workerThread =
-      HandlerThread("STYLE_WORKER").apply {
-        priority = Thread.MAX_PRIORITY
-        start()
-      }
+  }
+
+  @After
+  fun tearDown() {
+    Shadows.shadowOf(GeoJsonSource.workerThread.looper).run {
+      if (isPaused)
+        unPause()
+    }
   }
 
   @Test
@@ -697,6 +705,20 @@ class GeoJsonSourceTest {
 
     assertEquals(1L.toString(), GeoJsonSource.defaultPrefetchZoomDelta?.toString())
     verify { StyleManager.getStyleSourcePropertyDefaultValue("geojson", "prefetch-zoom-delta") }
+  }
+
+  @Test
+  fun testWorkerThread() {
+    val latch = CountDownLatch(1)
+    Handler(GeoJsonSource.workerThread.looper).post {
+      val actualPriority = Process.getThreadPriority(Process.myTid())
+      assertEquals(Process.THREAD_PRIORITY_DEFAULT, actualPriority)
+      assertEquals("GEOJSON_PARSER", Thread.currentThread().name)
+      latch.countDown()
+    }
+    if (!latch.await(2, TimeUnit.SECONDS)) {
+      throw TimeoutException()
+    }
   }
 
   companion object {
