@@ -313,9 +313,7 @@ commands:
 
 jobs:
   verify-code:
-    docker:
-      - image: mbgl/android-ndk-r21e:latest
-
+    executor: ubuntu
     steps:
       - checkout
       - add_ssh_keys:
@@ -331,9 +329,7 @@ jobs:
       - store-results
 
   verify-docs:
-    docker:
-      - image: mbgl/android-ndk-r21e:latest
-
+    executor: ubuntu
     steps:
       - checkout
       - restore-gradle-cache
@@ -343,9 +339,7 @@ jobs:
           command: sh scripts/kdoc-validate.sh
 
   verify-api:
-    docker:
-      - image: mbgl/android-ndk-r21e:latest
-
+    executor: ubuntu
     steps:
       - checkout
       - restore-gradle-cache
@@ -362,9 +356,7 @@ jobs:
             fi
 
   verify-internal:
-    docker:
-      - image: mbgl/android-ndk-r21e:latest
-
+    executor: ubuntu
     steps:
       - checkout
       - add_ssh_keys:
@@ -374,23 +366,18 @@ jobs:
       - validate-internal-ci
 
   run-unit-test:
-    docker:
-      - image: mbgl/android-ndk-r21e:latest
-    resource_class: xlarge
-    environment:
-      JVM_OPTS: -Xmx3200m
-      BUILDTYPE: Debug
-      GRADLE_OPTS: -Xmx4096m -Dorg.gradle.daemon=false -Dkotlin.compiler.execution.strategy=in-process
-
+    executor:
+      name: ubuntu
+      machine: xlarge
     steps:
       - checkout
       - restore-gradle-cache
       - jvm-unit-tests
 
   run-lint:
-    docker:
-      - image: mbgl/android-ndk-r21e:latest
-
+    executor:
+      name: ubuntu
+      machine: xlarge
     steps:
       - checkout
       - restore-gradle-cache
@@ -399,13 +386,9 @@ jobs:
           command: ./gradlew lint
 
   run-robo-test:
-    docker:
-      - image: mbgl/android-ndk-r21e:latest
-    resource_class: xlarge
-    environment:
-      JVM_OPTS: -Xmx3200m
-      GRADLE_OPTS: -Xmx4096m -Dorg.gradle.daemon=false -Dkotlin.compiler.execution.strategy=in-process
-
+    executor:
+      name: ubuntu
+      machine: xlarge
     steps:
       - checkout
       - restore-gradle-cache
@@ -416,9 +399,7 @@ jobs:
       - run-firebase-robo
 
   run-app-test:
-    docker:
-      - image: mbgl/android-ndk-r21e:latest
-
+    executor: ubuntu
     steps:
       - checkout
       - restore-gradle-cache
@@ -436,9 +417,7 @@ jobs:
           module_target: "app"
 
   run-sdk-test:
-    docker:
-      - image: mbgl/android-ndk-r21e:latest
-
+    executor: ubuntu
     steps:
       - checkout
       - mapbox-gl-native-begin
@@ -454,9 +433,7 @@ jobs:
       - mapbox-gl-native-end
 
   run-style-test:
-    docker:
-      - image: mbgl/android-ndk-r21e:latest
-
+    executor: ubuntu
     steps:
       - checkout
       - restore-gradle-cache
@@ -474,9 +451,7 @@ jobs:
           app_target: "extension-style-app"
 
   build-sdk-from-source:
-    docker:
-      - image: mbgl/android-ndk-r21e:latest
-
+    executor: ubuntu
     steps:
       - checkout
       - restore-gradle-cache
@@ -485,9 +460,7 @@ jobs:
           variant: "Release"
 
   build-android-auto-app:
-    docker:
-      - image: mbgl/android-ndk-r21e:latest
-
+    executor: ubuntu
     steps:
       - checkout
       - restore-gradle-cache
@@ -496,13 +469,9 @@ jobs:
           variant: "Release"
 
   build-sdk-release:
-    docker:
-      - image: mbgl/android-ndk-r21e:latest
-    resource_class: xlarge
-    environment:
-      JVM_OPTS: -Xmx3200m
-      GRADLE_OPTS: -Xmx4096m -Dorg.gradle.daemon=false -Dkotlin.compiler.execution.strategy=in-process
-
+    executor:
+      name: ubuntu
+      machine: xlarge
     steps:
       - checkout
       - add_ssh_keys:
@@ -517,3 +486,18 @@ jobs:
       - init-aws
       - publish-sdk-registry
       - publish-sdk-registry-named-snapshot
+
+executors:
+  ubuntu:
+    parameters:
+      machine:
+        type: string
+        default: medium
+    docker:
+      - image: mbgl/android-ndk-r21e:latest
+    resource_class: << parameters.machine >>
+    working_directory: /src
+    environment:
+      JVM_OPTS: -Xmx3200m
+      BUILDTYPE: Debug
+      GRADLE_OPTS: -Xmx4096m -Dorg.gradle.daemon=false -Dkotlin.compiler.execution.strategy=in-process
