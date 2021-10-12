@@ -15,6 +15,7 @@
     <string name="category_sky">Sky</string>
     <string name="category_annotation">Annotation</string>
     <string name="category_3D">3D</string>
+    <string name="category_viewport">Viewport</string>
     <string name="category_lines_and_polygons">Lines and polygons</string>
     <string name="category_markers_and_callouts">Markers and callouts</string>
     <string name="category_data_visualization">Data Visualization</string>

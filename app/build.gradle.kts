@@ -66,6 +66,7 @@ android {
 
 dependencies {
   implementation(project(":sdk"))
+  implementation(project(":plugin-viewport"))
   implementation(Dependencies.kotlin)
   implementation(Dependencies.mapboxJavaTurf)
   implementation(Dependencies.mapboxJavaGeoJSON)

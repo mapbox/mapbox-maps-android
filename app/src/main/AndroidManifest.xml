@@ -1108,6 +1108,13 @@
             <meta-data
                 android:name="@string/category"
                 android:value="@string/category_markers_and_callouts" />
+            android:name=".examples.viewport.ViewportShowcaseActivity"
+            android:description="@string/description_viewport"
+            android:exported="true"
+            android:label="@string/activity_viewport">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_viewport" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExampleOverviewActivity" />
