@@ -45,6 +45,7 @@ class NavigationSimulator(
   private val locationProvider by lazy { FakeLocationProvider(routePoints) }
   private var cameraFollowMode = CameraFollowMode.OVERVIEW
   private val handler = Handler(Looper.getMainLooper())
+  private var gesturesEnabled = true
 
   init {
     initMapboxMap()
@@ -104,19 +105,27 @@ class NavigationSimulator(
     )
     if (easeTo) {
       mapView.camera.apply {
+        easeTo(
+          cameraOptions {
+            pitch(camera.pitch!!)
+            bearing(camera.bearing!!)
+          },
+          MapAnimationOptions.mapAnimationOptions {
+            duration(EASE_TO_PUCK_DURATION_MS / 3)
+          }
+        )
         val zoom = createZoomAnimator(
           CameraAnimatorOptions.cameraAnimatorOptions(camera.zoom!!)
         ) {
           duration = EASE_TO_PUCK_DURATION_MS / 3
           interpolator = AccelerateDecelerateInterpolator()
         }
-        val bearing = createBearingAnimator(
-          CameraAnimatorOptions.cameraAnimatorOptions(camera.bearing!!)
-        ) {
-          duration = EASE_TO_PUCK_DURATION_MS / 3
-          interpolator = AccelerateDecelerateInterpolator()
-        }
-        playAnimatorsSequentially(bearing, zoom)
+        handler.postDelayed(
+          {
+            playAnimatorsSequentially(zoom)
+          },
+          EASE_TO_PUCK_DURATION_MS / 3
+        )
         handler.postDelayed(
           {
             easeTo(
@@ -199,7 +208,7 @@ class NavigationSimulator(
   /**
    * Play a pre-defined 20 seconds script to simulate a navigation route with switching between follow and overview mode.
    */
-  fun playDefaultBenchmarkScripts(finishCallback: () -> Unit) {
+  fun playDefaultNavigationScripts(finishCallback: () -> Unit) {
     disableGestures()
     playCustomNavigationScripts(
       NavigationStep(DEFAULT_CAMERA_MODE_SWITCH_INTERVAL_MS) {
@@ -210,6 +219,9 @@ class NavigationSimulator(
       },
       NavigationStep(DEFAULT_CAMERA_MODE_SWITCH_INTERVAL_MS) {
         setCameraTrackingMode(CameraFollowMode.FOLLOW)
+      },
+      NavigationStep(DEFAULT_CAMERA_MODE_SWITCH_INTERVAL_MS) {
+        setCameraTrackingMode(CameraFollowMode.OVERVIEW)
       }
     )
     // Invoke callback when the simulation finishes.
@@ -219,6 +231,15 @@ class NavigationSimulator(
       },
       DEFAULT_SCRIPT_DURATION_MS
     )
+  }
+
+  /**
+   * Play a repeated script to simulate a navigation route with switching between follow and overview mode.
+   */
+  fun playDefaultNavigationScriptsInLoop() {
+    playDefaultNavigationScripts {
+      playDefaultNavigationScriptsInLoop()
+    }
   }
 
   /**
@@ -252,6 +273,7 @@ class NavigationSimulator(
       addOnMoveListener(onMoveListener)
       addOnMapClickListener(onMapClickListener)
     }
+    gesturesEnabled = true
   }
 
   override fun setCameraTrackingMode(cameraMode: CameraFollowMode) {
@@ -266,18 +288,21 @@ class NavigationSimulator(
    * Disable gestures in order to get stable benchmark result.
    */
   override fun disableGestures() {
-    mapView.gestures.apply {
-      removeOnMoveListener(onMoveListener)
-      removeOnMapClickListener(onMapClickListener)
+    if (gesturesEnabled) {
+      mapView.gestures.apply {
+        removeOnMoveListener(onMoveListener)
+        removeOnMapClickListener(onMapClickListener)
+      }
+      mapView.gestures.updateSettings {
+        scrollEnabled = false
+        pinchToZoomEnabled = false
+        pitchEnabled = false
+        rotateEnabled = false
+        doubleTapToZoomInEnabled = false
+        doubleTouchToZoomOutEnabled = false
+      }
     }
-    mapView.gestures.updateSettings {
-      scrollEnabled = false
-      pinchToZoomEnabled = false
-      pitchEnabled = false
-      rotateEnabled = false
-      doubleTapToZoomInEnabled = false
-      doubleTouchToZoomOutEnabled = false
-    }
+    gesturesEnabled = false
   }
 
   private fun initLocationComponent() {
@@ -392,7 +417,7 @@ class NavigationSimulator(
   companion object {
     private const val TAG = "NavigationSimulator"
     private const val DEFAULT_STYLE = Style.MAPBOX_STREETS
-    private const val DEFAULT_CAMERA_MODE_SWITCH_INTERVAL_MS = 3000L
+    private const val DEFAULT_CAMERA_MODE_SWITCH_INTERVAL_MS = 5000L
     private const val DEFAULT_SCRIPT_DURATION_MS = 20000L
     private const val EASE_TO_PUCK_DURATION_MS = 2000L
     private const val LOCATION_UPDATE_INTERVAL_MS = 1000L
