@@ -3,10 +3,12 @@ package com.mapbox.maps.plugin.viewport.transition
 /**
  * Options that impact the transition animation.
  *
- * The styling of the animation is determined by the [ViewportCameraStateTransition] and [ViewportCameraTransition] implementations,
- * but options here provide higher-level constraints that those implementations need to obey.
+ * The styling of the animation is determined by the [ViewportCameraStateTransition]
+ * and [ViewportCameraTransition] implementations, but options here provide higher-level
+ * constraints that those implementations need to obey.
  *
- * @param maxDuration maximum duration of the generated transitions set, including delays between animators and their respective durations.
+ * @param maxDuration maximum duration of the generated transitions set,
+ * including delays between animators and their respective durations.
  */
 class ViewportCameraTransitionOptions private constructor(
   val maxDuration: Long
@@ -52,7 +54,8 @@ class ViewportCameraTransitionOptions private constructor(
     private var maxDuration: Long = 1000L
 
     /**
-     * Sets maximum duration of the generated transitions set in milliseconds, including delays between animators and their respective durations.
+     * Sets maximum duration of the generated transitions set in milliseconds,
+     * including delays between animators and their respective durations.
      *
      * Defaults to 1000 milliseconds.
      */
