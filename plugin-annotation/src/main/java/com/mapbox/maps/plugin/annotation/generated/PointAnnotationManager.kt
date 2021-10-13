@@ -33,8 +33,8 @@ class PointAnnotationManager(
   private val id = ID_GENERATOR.incrementAndGet()
   override val layerId = annotationConfig?.layerId ?: "mapbox-android-pointAnnotation-layer-$id"
   override val sourceId = annotationConfig?.sourceId ?: "mapbox-android-pointAnnotation-source-$id"
-  override val dragLayerId = annotationConfig?.layerId ?: "mapbox-android-pointAnnotation-draglayer"
-  override val dragSourceId = annotationConfig?.sourceId ?: "mapbox-android-pointAnnotation-dragsource"
+  override val dragLayerId = "mapbox-android-pointAnnotation-draglayer-$id"
+  override val dragSourceId = "mapbox-android-pointAnnotation-dragsource-$id"
   init {
     delegateProvider.getStyle {
       initLayerAndSource(it)

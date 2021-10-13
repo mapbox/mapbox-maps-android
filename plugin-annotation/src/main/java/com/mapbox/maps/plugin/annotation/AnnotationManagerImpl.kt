@@ -4,7 +4,6 @@ import android.graphics.PointF
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import androidx.annotation.VisibleForTesting
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Feature
@@ -14,7 +13,6 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.ScreenCoordinate
-import com.mapbox.maps.extension.observable.eventdata.MapIdleEventData
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -38,7 +36,6 @@ import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_GESTURES_PLUGIN_ID
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
 import com.mapbox.maps.plugin.delegates.*
-import com.mapbox.maps.plugin.delegates.listeners.OnMapIdleListener
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
@@ -72,6 +69,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   private val mapMoveResolver = MapMove()
   private var draggingAnnotation: T? = null
   private val annotationMap = ConcurrentHashMap<Long, T>()
+  private val dragAnnotationMap = ConcurrentHashMap<Long, T>()
   protected var touchAreaShiftX: Int = mapView.scrollX
   protected var touchAreaShiftY: Int = mapView.scrollY
   protected abstract val layerId: String
@@ -105,7 +103,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    */
   override val annotations: List<T>
     get() {
-      return annotationMap.values.toList()
+      return annotationMap.values.toList().plus(dragAnnotationMap.values.toList())
     }
 
   /**
@@ -247,7 +245,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
       // Only apply cluster for SymbolManager
       initClusterLayers(style)
     }
-    updateSource(style)
+    updateSource()
   }
 
   private fun initClusterLayers(style: StyleInterface) {
@@ -313,22 +311,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     return option.build(currentId, this).also {
       annotationMap[it.id] = it
       currentId++
-      delegateProvider.getStyle { style ->
-        updateSource(style)
-      }
-    }
-  }
-
-  /**
-   * Add an annotation to MapView.
-   *
-   * @param annotation the annotation added to MapView.
-   */
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  fun addAnnotation(annotation: T) {
-    annotationMap[annotation.id] = annotation
-    delegateProvider.getStyle { style ->
-      updateSource(style)
+      updateSource()
     }
   }
 
@@ -342,9 +325,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         currentId++
       }
     }
-    delegateProvider.getStyle { style ->
-      updateSource(style)
-    }
+    updateSource()
     return list
   }
 
@@ -352,9 +333,21 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Delete the annotation
    */
   override fun delete(annotation: T) {
-    annotationMap.remove(annotation.id)
-    delegateProvider.getStyle { style ->
-      updateSource(style)
+    when {
+      annotationMap.containsKey(annotation.id) -> {
+        annotationMap.remove(annotation.id)
+        updateSource()
+      }
+      dragAnnotationMap.containsKey(annotation.id) -> {
+        dragAnnotationMap.remove(annotation.id)
+        updateDragSource()
+      }
+      else -> {
+        Logger.e(
+          TAG,
+          "Can't delete annotation: $annotation, the annotation isn't an active annotation."
+        )
+      }
     }
   }
 
@@ -362,11 +355,22 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Delete annotations in the list
    */
   override fun delete(annotations: List<T>) {
+    var needUpdateSource = false
+    var needUpdateDragSource = false
     annotations.forEach {
-      this.annotationMap.remove(it.id)
+      if (annotationMap.containsKey(it.id)) {
+        annotationMap.remove(it.id)
+        needUpdateSource = true
+      } else if (dragAnnotationMap.containsKey(it.id)) {
+        dragAnnotationMap.remove(it.id)
+        needUpdateDragSource = true
+      }
     }
-    delegateProvider.getStyle { style ->
-      updateSource(style)
+    if (needUpdateSource) {
+      updateSource()
+    }
+    if (needUpdateDragSource) {
+      updateDragSource()
     }
   }
 
@@ -374,97 +378,98 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Delete all the added annotations
    */
   override fun deleteAll() {
-    annotationMap.clear()
-    delegateProvider.getStyle { style ->
-      updateSource(style)
+    if (annotationMap.isNotEmpty()) {
+      annotationMap.clear()
+      updateSource()
+    }
+    if (dragAnnotationMap.isNotEmpty()) {
+      dragAnnotationMap.clear()
+      updateDragSource()
     }
   }
 
-  private fun updateDragSource(style: StyleInterface) {
-    dragSource?.let { geoJsonSource ->
-      if (!style.styleSourceExists(geoJsonSource.sourceId)) {
-        Logger.e(TAG, "Can't update dragSource: source has not been added to style.")
-        return
-      }
-      val features = mutableListOf<Feature>()
-      draggingAnnotation?.let {
-        if (it.getType() == AnnotationType.PointAnnotation) {
-          val symbol = it as PointAnnotation
-          symbol.iconImage?.let { image ->
-            if (image.startsWith(PointAnnotation.ICON_DEFAULT_NAME_PREFIX)) {
-              // User set the bitmap icon, add the icon to style
-              symbol.iconImageBitmap?.let { bitmap ->
-                val imagePlugin = image(image) {
-                  bitmap(bitmap)
-                }
-                style.addImage(imagePlugin)
-              }
-            }
-          }
+  private fun updateDragSource() {
+    delegateProvider.getStyle { style ->
+      dragSource?.let { geoJsonSource ->
+        if (!style.styleSourceExists(geoJsonSource.sourceId)) {
+          Logger.e(TAG, "Can't update dragSource: source has not been added to style.")
+          return@getStyle
         }
-        features.add(Feature.fromGeometry(it.geometry, it.getJsonObjectCopy()))
+        addIconToStyle(style, dragAnnotationMap.values)
+        val features = convertAnnotationsToFeatures(dragAnnotationMap.values)
+        geoJsonSource.featureCollection(FeatureCollection.fromFeatures(features))
       }
-
-      geoJsonSource.featureCollection(FeatureCollection.fromFeatures(features))
     }
   }
 
   /**
    * Trigger an update to the underlying source
    */
-  private fun updateSource(style: StyleInterface) {
+  private fun updateSource() {
     if (!styleStateDelegate.isFullyLoaded()) {
       Logger.e(TAG, "Can't update source: style is not fully loaded.")
       return
     }
-    if (source == null || layer == null) {
-      initLayerAndSource(style)
-    }
-    source?.let { geoJsonSource ->
-      if (!style.styleSourceExists(geoJsonSource.sourceId)) {
-        Logger.e(TAG, "Can't update source: source has not been added to style.")
-        return
+    delegateProvider.getStyle { style ->
+      if (source == null || layer == null) {
+        initLayerAndSource(style)
       }
-      annotations
-        .filter { it.getType() == AnnotationType.PointAnnotation }
-        .forEach {
-          val symbol = it as PointAnnotation
-          symbol.iconImage?.let { image ->
-            if (image.startsWith(PointAnnotation.ICON_DEFAULT_NAME_PREFIX)) {
-              // User set the bitmap icon, add the icon to style
-              symbol.iconImageBitmap?.let { bitmap ->
-                val imagePlugin = image(image) {
-                  bitmap(bitmap)
-                }
-                style.addImage(imagePlugin)
+      source?.let { geoJsonSource ->
+        if (!style.styleSourceExists(geoJsonSource.sourceId)) {
+          Logger.e(TAG, "Can't update source: source has not been added to style.")
+          return@getStyle
+        }
+        addIconToStyle(style, annotationMap.values)
+        val features = convertAnnotationsToFeatures(annotationMap.values)
+        geoJsonSource.featureCollection(FeatureCollection.fromFeatures(features))
+      }
+    }
+  }
+
+  private fun addIconToStyle(style: StyleInterface, annotations: Collection<T>) {
+    annotations
+      .filter { it.getType() == AnnotationType.PointAnnotation }
+      .forEach {
+        val symbol = it as PointAnnotation
+        symbol.iconImage?.let { image ->
+          if (image.startsWith(PointAnnotation.ICON_DEFAULT_NAME_PREFIX)) {
+            // User set the bitmap icon, add the icon to style
+            symbol.iconImageBitmap?.let { bitmap ->
+              val imagePlugin = image(image) {
+                bitmap(bitmap)
               }
+              style.addImage(imagePlugin)
             }
           }
         }
-      val features = annotations.map {
-        val annotation = Feature.fromGeometry(it.geometry, it.getJsonObjectCopy())
-        it.setUsedDataDrivenProperties()
-        annotation
       }
-
-      geoJsonSource.featureCollection(FeatureCollection.fromFeatures(features))
-    }
   }
+
+  private fun convertAnnotationsToFeatures(annotations: Collection<T>): List<Feature> =
+    annotations.map {
+      it.setUsedDataDrivenProperties()
+      Feature.fromGeometry(it.geometry, it.getJsonObjectCopy())
+    }
 
   /**
    * Update the annotation
    */
   override fun update(annotation: T) {
-    if (annotationMap.containsKey(annotation.id)) {
-      annotationMap[annotation.id] = annotation
-      delegateProvider.getStyle { style ->
-        updateSource(style)
+    when {
+      annotationMap.containsKey(annotation.id) -> {
+        annotationMap[annotation.id] = annotation
+        updateSource()
       }
-    } else {
-      Logger.e(
-        TAG,
-        "Can't update annotation: $annotation.toString(), the annotation isn't an active annotation."
-      )
+      dragAnnotationMap.containsKey(annotation.id) -> {
+        dragAnnotationMap[annotation.id] = annotation
+        updateDragSource()
+      }
+      else -> {
+        Logger.e(
+          TAG,
+          "Can't update annotation: $annotation, the annotation isn't an active annotation."
+        )
+      }
     }
   }
 
@@ -472,18 +477,31 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Update annotations in the list
    */
   override fun update(annotations: List<T>) {
+    var needUpdateSource = false
+    var needUpdateDragSource = false
     annotations.forEach {
-      if (annotationMap.containsKey(it.id)) {
-        annotationMap[it.id] = it
-      } else {
-        Logger.e(
-          TAG,
-          "Can't update annotation: $it.toString(), the annotation isn't an active annotation."
-        )
+      when {
+        annotationMap.containsKey(it.id) -> {
+          annotationMap[it.id] = it
+          needUpdateSource = true
+        }
+        dragAnnotationMap.containsKey(it.id) -> {
+          dragAnnotationMap[it.id] = it
+          needUpdateDragSource = true
+        }
+        else -> {
+          Logger.e(
+            TAG,
+            "Can't update annotation: $it, the annotation isn't an active annotation."
+          )
+        }
       }
     }
-    delegateProvider.getStyle { style ->
-      updateSource(style)
+    if (needUpdateSource) {
+      updateSource()
+    }
+    if (needUpdateDragSource) {
+      updateDragSource()
     }
   }
 
@@ -499,6 +517,16 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         }
       }
       source?.let {
+        if (style.styleSourceExists(it.sourceId)) {
+          style.removeStyleSource(it.sourceId)
+        }
+      }
+      dragLayer?.let {
+        if (style.styleLayerExists(it.layerId)) {
+          style.removeStyleLayer(it.layerId)
+        }
+      }
+      dragSource?.let {
         if (style.styleSourceExists(it.sourceId)) {
           style.removeStyleSource(it.sourceId)
         }
@@ -521,15 +549,34 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * @param annotation: The annotation to select.
    */
   override fun selectAnnotation(annotation: T) {
-    if (annotationMap.containsKey(annotation.id)) {
-      annotation.isSelected = !annotation.isSelected
-      annotationMap[annotation.id] = annotation
-      interactionListener.forEach {
-        if (annotation.isSelected) {
-          it.onSelectAnnotation(annotation)
-        } else {
-          it.onDeselectAnnotation(annotation)
+    when {
+      annotationMap.containsKey(annotation.id) -> {
+        annotation.isSelected = !annotation.isSelected
+        annotationMap[annotation.id] = annotation
+        interactionListener.forEach {
+          if (annotation.isSelected) {
+            it.onSelectAnnotation(annotation)
+          } else {
+            it.onDeselectAnnotation(annotation)
+          }
         }
+      }
+      dragAnnotationMap.containsKey(annotation.id) -> {
+        annotation.isSelected = !annotation.isSelected
+        dragAnnotationMap[annotation.id] = annotation
+        interactionListener.forEach {
+          if (annotation.isSelected) {
+            it.onSelectAnnotation(annotation)
+          } else {
+            it.onDeselectAnnotation(annotation)
+          }
+        }
+      }
+      else -> {
+        Logger.e(
+          TAG,
+          "Can't select annotation: $annotation, the annotation isn't an active annotation."
+        )
       }
     }
   }
@@ -632,9 +679,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         }
         shiftedGeometry?.let { geometry ->
           annotation.geometry = geometry
-          delegateProvider.getStyle { style ->
-            updateDragSource(style)
-          }
+          updateDragSource()
           dragListeners.forEach {
             it.onAnnotationDrag(annotation)
           }
@@ -656,39 +701,22 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
       if (annotation.isDraggable) {
         dragListeners.forEach { it.onAnnotationDragStarted(annotation) }
         draggingAnnotation = annotation
-        // Delete the dragging annotation from original source
-        delete(annotation)
-        delegateProvider.getStyle { style ->
-          // Add the dragging annotation to drag layer
-          updateDragSource(style)
+        if (annotationMap.containsKey(annotation.id)) {
+          // Delete the dragging annotation from original source and add it to drag source
+          annotationMap.remove(annotation.id)
+          dragAnnotationMap[annotation.id] = annotation
+          updateSource()
+          updateDragSource()
         }
         return true
       }
       return false
     }
 
-    private val onMapIdleListener: OnMapIdleListener = object : OnMapIdleListener {
-      override fun onMapIdle(eventData: MapIdleEventData) {
-        mapListenerDelegate.removeOnMapIdleListener(this)
-        // Remove dragging annotation from drag layer
-        handler.postDelayed(
-          {
-            // Delay 1 second to avoid blink issue.
-            delegateProvider.getStyle { style ->
-              updateDragSource(style)
-            }
-          },
-          UPDATE_DELAY_MS
-        )
-      }
-    }
-
     private fun stopDragging() {
       draggingAnnotation?.let { annotation ->
         dragListeners.forEach { it.onAnnotationDragFinished(annotation) }
         draggingAnnotation = null
-        mapListenerDelegate.addOnMapIdleListener(onMapIdleListener)
-        addAnnotation(annotation)
       }
     }
   }
@@ -742,27 +770,45 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    */
   fun queryMapForFeatures(screenCoordinate: ScreenCoordinate): T? {
     var annotation: T? = null
+    val layerList = mutableListOf<String>()
     layer?.let {
-      val latch = CountDownLatch(1)
-      mapFeatureQueryDelegate.executeOnRenderThread {
-        mapFeatureQueryDelegate.queryRenderedFeatures(
-          screenCoordinate,
-          RenderedQueryOptions(
-            listOf(it.layerId),
-            literal(true)
-          )
-        ) { features ->
-          features.value?.let { queriedFeatureList ->
-            if (queriedFeatureList.isNotEmpty()) {
-              val id = queriedFeatureList.first().feature.getProperty(getAnnotationIdKey()).asLong
-              annotation = annotationMap[id]
+      layerList.add(it.layerId)
+    }
+    dragLayer?.let {
+      layerList.add(it.layerId)
+    }
+    val latch = CountDownLatch(1)
+    mapFeatureQueryDelegate.executeOnRenderThread {
+      mapFeatureQueryDelegate.queryRenderedFeatures(
+        screenCoordinate,
+        RenderedQueryOptions(
+          layerList,
+          literal(true)
+        )
+      ) { features ->
+        features.value?.let { queriedFeatureList ->
+          if (queriedFeatureList.isNotEmpty()) {
+            val id = queriedFeatureList.first().feature.getProperty(getAnnotationIdKey()).asLong
+            when {
+              annotationMap.containsKey(id) -> {
+                annotation = annotationMap[id]
+              }
+              dragAnnotationMap.containsKey(id) -> {
+                annotation = dragAnnotationMap[id]
+              }
+              else -> {
+                Logger.e(
+                  TAG,
+                  "The queried id: $id, doesn't belong to an active annotation."
+                )
+              }
             }
           }
-          latch.countDown()
         }
+        latch.countDown()
       }
-      latch.await(QUERY_WAIT_TIME, TimeUnit.SECONDS)
     }
+    latch.await(QUERY_WAIT_TIME, TimeUnit.SECONDS)
     return annotation
   }
 
@@ -780,7 +826,5 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     private const val QUERY_WAIT_TIME = 2L
     private const val CLUSTER_TEXT_LAYER_ID = "mapbox-android-cluster-text-layer"
     private val DEFAULT_TEXT_FIELD = get("point_count")
-    /** The delay time when updating drag source */
-    private const val UPDATE_DELAY_MS = 1000L
   }
 }

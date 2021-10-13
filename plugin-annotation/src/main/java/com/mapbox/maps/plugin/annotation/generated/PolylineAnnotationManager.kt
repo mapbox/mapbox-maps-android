@@ -33,8 +33,8 @@ class PolylineAnnotationManager(
   private val id = ID_GENERATOR.incrementAndGet()
   override val layerId = annotationConfig?.layerId ?: "mapbox-android-polylineAnnotation-layer-$id"
   override val sourceId = annotationConfig?.sourceId ?: "mapbox-android-polylineAnnotation-source-$id"
-  override val dragLayerId = annotationConfig?.layerId ?: "mapbox-android-polylineAnnotation-draglayer"
-  override val dragSourceId = annotationConfig?.sourceId ?: "mapbox-android-polylineAnnotation-dragsource"
+  override val dragLayerId = "mapbox-android-polylineAnnotation-draglayer-$id"
+  override val dragSourceId = "mapbox-android-polylineAnnotation-dragsource-$id"
   init {
     delegateProvider.getStyle {
       initLayerAndSource(it)

@@ -414,7 +414,7 @@ class PolygonAnnotationManagerTest {
 
     captureSlot.captured.onMoveBegin(moveGestureDetector)
     verify { listener.onAnnotationDragStarted(annotation) }
-    assertTrue(manager.annotations.isEmpty())
+    assertEquals(1, manager.annotations.size)
 
     val moveDistancesObject = mockk<MoveDistancesObject>()
     every { moveDistancesObject.currentX } returns 1f
@@ -424,7 +424,7 @@ class PolygonAnnotationManagerTest {
     every { moveGestureDetector.getMoveObject(any()) } returns moveDistancesObject
     captureSlot.captured.onMove(moveGestureDetector)
     verify { listener.onAnnotationDrag(annotation) }
-    assertTrue(manager.annotations.isEmpty())
+    assertEquals(1, manager.annotations.size)
 
     captureSlot.captured.onMoveEnd(moveGestureDetector)
     verify { listener.onAnnotationDragFinished(annotation) }
@@ -432,6 +432,15 @@ class PolygonAnnotationManagerTest {
     manager.removeDragListener(listener)
     assertTrue(manager.dragListeners.isEmpty())
     assertEquals(1, manager.annotations.size)
+
+    // Verify update after drag
+    annotation.points = listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0)))
+    manager.update(annotation)
+    assertEquals(annotation, manager.annotations[0])
+
+    // Verify delete after drag
+    manager.delete(annotation)
+    assertTrue(manager.annotations.isEmpty())
   }
 
   @Test
