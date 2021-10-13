@@ -29,6 +29,7 @@ dependencies {
   implementation(project(":sdk-base"))
   implementation(Dependencies.mapboxBase)
   implementation(Dependencies.kotlin)
+  testImplementation(Dependencies.equalsVerifier)
   testImplementation(Dependencies.junit)
   testImplementation(Dependencies.mockk)
   androidTestImplementation(Dependencies.androidxTestRunner)
