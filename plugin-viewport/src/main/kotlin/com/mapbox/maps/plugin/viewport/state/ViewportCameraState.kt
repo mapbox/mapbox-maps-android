@@ -11,14 +11,14 @@ sealed class ViewportCameraState {
    *
    * Set after invoking [ViewportCamera.requestViewportCameraToIdle]
    */
-  object Idle: ViewportCameraState()
+  object Idle : ViewportCameraState()
 
   /**
    * Describes state when `ViewportCamera` transitions to the [Following] state.
    *
    * Set after invoking [ViewportCamera.requestViewportCameraToFollowing].
    */
-  object TransitionToFollowing: ViewportCameraState()
+  object TransitionToFollowing : ViewportCameraState()
 
   /**
    * Describes state when `ViewportCamera` finished transition to the following state.
@@ -30,14 +30,14 @@ sealed class ViewportCameraState {
    * When in this state, each update to the [ViewportDataSource]
    * will automatically trigger another transition.
    */
-  object Following: ViewportCameraState()
+  object Following : ViewportCameraState()
 
   /**
    * Describes state when `ViewportCamera` transitions to the [Overview] state.
    *
    * Set after invoking [ViewportCamera.requestViewportCameraToOverview].
    */
-  object TransitionToOverview: ViewportCameraState()
+  object TransitionToOverview : ViewportCameraState()
 
   /**
    * Describes state when `ViewportCamera` finished transition to the overview state.
@@ -49,5 +49,5 @@ sealed class ViewportCameraState {
    * When in this state, each update to the [ViewportDataSource]
    * will automatically trigger another transition.
    */
-  object Overview: ViewportCameraState()
+  object Overview : ViewportCameraState()
 }
