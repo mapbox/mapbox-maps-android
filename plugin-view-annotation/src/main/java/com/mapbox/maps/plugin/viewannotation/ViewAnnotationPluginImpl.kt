@@ -182,10 +182,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
 
   override fun onCameraChanged(eventData: CameraChangedEventData) {
     delegateMapViewAnnotations.calculateViewAnnotationsPosition {
-      // TODO this should be fixed in gl-native, now onCameraChanged may be triggered from render thread
-      mapView.post {
-        redrawAnnotations(it)
-      }
+      redrawAnnotations(it)
     }
   }
 }
