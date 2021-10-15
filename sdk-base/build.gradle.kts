@@ -29,7 +29,12 @@ dependencies {
     api(project(":common"))
   } else {
     api(Dependencies.mapboxGlNative)
-    api(Dependencies.mapboxCoreCommon)
+    api("com.mapbox.common:common") {
+      version {
+        strictly("20.1-SNAPSHOT")
+      }
+      because("Use snapshot in order to support testing core telemetry")
+    }
   }
 
   testImplementation(Dependencies.junit)
