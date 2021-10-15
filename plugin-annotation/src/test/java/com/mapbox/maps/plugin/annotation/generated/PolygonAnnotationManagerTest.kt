@@ -336,6 +336,21 @@ class PolygonAnnotationManagerTest {
   }
 
   @Test
+  fun clickWithNoAnnotation() {
+    val captureSlot = slot<OnMapClickListener>()
+    every { gesturesPlugin.addOnMapClickListener(capture(captureSlot)) } just Runs
+    val manager = PolygonAnnotationManager(mapView, delegateProvider)
+
+    val listener = mockk<OnPolygonAnnotationClickListener>()
+    every { listener.onAnnotationClick(any()) } returns false
+    manager.addClickListener(listener)
+
+    every { feature.getProperty(any()) } returns null
+    captureSlot.captured.onMapClick(Point.fromLngLat(0.0, 0.0))
+    verify(exactly = 0) { listener.onAnnotationClick(any()) }
+  }
+
+  @Test
   fun click() {
     val captureSlot = slot<OnMapClickListener>()
     every { gesturesPlugin.addOnMapClickListener(capture(captureSlot)) } just Runs

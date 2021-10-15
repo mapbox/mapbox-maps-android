@@ -788,19 +788,21 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
       ) { features ->
         features.value?.let { queriedFeatureList ->
           if (queriedFeatureList.isNotEmpty()) {
-            val id = queriedFeatureList.first().feature.getProperty(getAnnotationIdKey()).asLong
-            when {
-              annotationMap.containsKey(id) -> {
-                annotation = annotationMap[id]
-              }
-              dragAnnotationMap.containsKey(id) -> {
-                annotation = dragAnnotationMap[id]
-              }
-              else -> {
-                Logger.e(
-                  TAG,
-                  "The queried id: $id, doesn't belong to an active annotation."
-                )
+            queriedFeatureList.first().feature.getProperty(getAnnotationIdKey())?.let {
+              val id = it.asLong
+              when {
+                annotationMap.containsKey(id) -> {
+                  annotation = annotationMap[id]
+                }
+                dragAnnotationMap.containsKey(id) -> {
+                  annotation = dragAnnotationMap[id]
+                }
+                else -> {
+                  Logger.e(
+                    TAG,
+                    "The queried id: $id, doesn't belong to an active annotation."
+                  )
+                }
               }
             }
           }
