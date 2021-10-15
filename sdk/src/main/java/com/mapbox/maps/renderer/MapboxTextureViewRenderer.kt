@@ -12,7 +12,7 @@ internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTe
     renderThread = MapboxRenderThread(
       mapboxRenderer = this,
       translucentSurface = true,
-      configMSAA = configMSAA
+      configMSAA = configMSAA,
     )
     textureView.let {
       it.isOpaque = false

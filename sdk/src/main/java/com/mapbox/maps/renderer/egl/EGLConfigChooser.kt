@@ -31,12 +31,14 @@ internal class EGLConfigChooser constructor(
         EGL_DEPTH_SIZE, 16,
         when (configMSAA) {
           ConfigMSAA.Off -> EGL_NONE
-          else -> EGL_SAMPLE_BUFFERS
-        }, configMSAA.sampleBuffers,
+          is ConfigMSAA.On -> EGL_SAMPLE_BUFFERS
+        },
+        configMSAA.sampleBuffers,
         when (configMSAA) {
           ConfigMSAA.Off -> EGL_NONE
-          else -> EGL_SAMPLES
-        }, configMSAA.samples,
+          is ConfigMSAA.On -> EGL_SAMPLES
+        },
+        configMSAA.samples,
         EGL_STENCIL_SIZE, 8,
         if (emulator) EGL_NONE else EGL_CONFORMANT, EGL_OPENGL_ES2_BIT,
         if (emulator) EGL_NONE else EGL_COLOR_BUFFER_TYPE, EGL_RGB_BUFFER,

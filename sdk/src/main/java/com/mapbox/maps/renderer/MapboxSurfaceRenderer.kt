@@ -12,7 +12,7 @@ internal open class MapboxSurfaceRenderer : MapboxRenderer {
     renderThread = MapboxRenderThread(
       mapboxRenderer = this,
       translucentSurface = false,
-      configMSAA = configMSAA
+      configMSAA = configMSAA,
     )
   }
 

@@ -342,8 +342,8 @@ public class JavaInterfaceChecker {
         mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins);
         mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions);
         mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions, false);
-//        mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions, false, new ConfigMSAA.On4X(), Style.MAPBOX_STREETS);
-//        mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions, false, new ConfigMSAA.On4X(), Style.MAPBOX_STREETS, attrs);
+        mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions, false, new ConfigMSAA.On(4), Style.MAPBOX_STREETS);
+        mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions, false, new ConfigMSAA.On(4), Style.MAPBOX_STREETS, attrs);
     }
 
     private void snapshotter(Context context, MapSnapshotOptions options) {

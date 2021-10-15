@@ -29,7 +29,7 @@ data class MapInitOptions @JvmOverloads constructor(
   var plugins: List<Plugin> = defaultPluginList,
   var cameraOptions: CameraOptions? = null,
   var textureView: Boolean = false,
-  var renderConfigMSAA: ConfigMSAA = ConfigMSAA.On4X,
+  var renderConfigMSAA: ConfigMSAA = ConfigMSAA.Off,
   val styleUri: String? = Style.MAPBOX_STREETS,
   var attrs: AttributeSet? = null
 ) {

@@ -33,6 +33,12 @@
     <!-- The view type used to render. -->
     <public name="mapbox_mapSurface" type="attr" />
 
+    <!-- To enable MSAA for map rendering or not. By default, it is set to false. -->
+    <public name="mapbox_mapMsaaEnabled" type="attr" />
+
+    <!-- MSAA samples. Takes effect only if MSAA option is enabled and then defaults to 4. Most common values are 2, 4 and 8. Higher values result in better quality, but may reduce overall performance. -->
+    <public name="mapbox_mapMsaaSamples" type="attr"/>
+
     <!-- Describes glyphs rasterization modes. -->
     <public name="mapbox_mapGlyphRasterizationMode" type="attr" />
 

@@ -8,7 +8,6 @@ import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.renderer.MapboxSurfaceRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
-import com.mapbox.maps.renderer.egl.ConfigMSAA
 
 /**
  * A [MapSurface] provides an embeddable map interface.
@@ -33,7 +32,7 @@ class MapSurface @JvmOverloads constructor(
 ) : MapPluginProviderDelegate, MapControllable {
 
   private val mapController: MapController
-  private val renderer: MapboxSurfaceRenderer = MapboxSurfaceRenderer(ConfigMSAA.On4X)
+  private val renderer: MapboxSurfaceRenderer = MapboxSurfaceRenderer(mapInitOptions.renderConfigMSAA)
 
   init {
     this.mapController = MapController(
