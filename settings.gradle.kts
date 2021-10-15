@@ -6,6 +6,27 @@ pluginManagement {
   }
 }
 
-include(":app", ":sdk", ":mapbox-lint", ":extension-style", ":plugin-lifecycle", ":plugin-overlay", ":extension-localization", ":plugin-compass", ":plugin-logo", ":plugin-scalebar", ":plugin-gestures", ":plugin-attribution", ":plugin-annotation", ":plugin-locationcomponent", ":plugin-animation", ":module-telemetry", ":sdk-base", ":extension-style-app", "extension-androidauto", "android-auto-app")
-rootProject.name="Mapbox Maps Android"
+include(
+  "android-auto-app",
+  ":app",
+  "extension-androidauto",
+  ":extension-style",
+  ":extension-localization",
+  ":extension-style-app",
+  ":mapbox-lint",
+  ":module-telemetry",
+  ":plugin-animation",
+  ":plugin-annotation",
+  ":plugin-attribution",
+  ":plugin-compass",
+  ":plugin-gestures",
+  ":plugin-lifecycle",
+  ":plugin-locationcomponent",
+  ":plugin-logo",
+  ":plugin-overlay",
+  ":plugin-scalebar",
+  ":sdk",
+  ":sdk-base"
+)
+rootProject.name = "Mapbox Maps Android"
 rootProject.buildFileName = "build.gradle.kts"

@@ -23,7 +23,7 @@ fi
 
 RELEATE_TAG=${1-""}
 echo "Release tag: $RELEATE_TAG"
-MODULES=$(cat ./settings.gradle.kts | grep include | sed 's/.*(\([^]]*\)).*/\1/g' | tr , \\n | sed 's/.*":\([^]]*\)".*/\1/g')
+MODULES=$(sed -e '/include(/,/)/!d' ./settings.gradle.kts | tr -d '\n' | sed 's/.*(\([^]]*\)).*/\1/g;s/,\n/\n/g' | tr , \\n | sed 's/.*":\([^]]*\)".*/\1/g')
 for i in $MODULES; do
   if [ -f "./$i/build/outputs/aar/$i-release.aar" ]; then
     MODULE_NAME=$i
