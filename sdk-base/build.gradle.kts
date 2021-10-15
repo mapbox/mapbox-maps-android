@@ -31,7 +31,7 @@ dependencies {
     api(Dependencies.mapboxGlNative)
     api("com.mapbox.common:common") {
       version {
-        strictly("20.1-SNAPSHOT")
+        strictly("20.1.0-rc.3-SNAPSHOT")
       }
       because("Use snapshot in order to support testing core telemetry")
     }

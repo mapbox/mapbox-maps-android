@@ -3,9 +3,14 @@ package com.mapbox.maps.module.telemetry
 import android.content.Context
 import android.os.Bundle
 import androidx.annotation.VisibleForTesting
+import com.google.gson.Gson
 import com.mapbox.android.telemetry.*
 import com.mapbox.annotation.module.MapboxModule
 import com.mapbox.annotation.module.MapboxModuleType
+import com.mapbox.bindgen.Value
+import com.mapbox.common.*
+import com.mapbox.common.Event
+import com.mapbox.common.ValueConverter
 import com.mapbox.maps.module.MapTelemetry
 import java.util.*
 
@@ -18,6 +23,8 @@ class MapTelemetryImpl : MapTelemetry {
   private val appContext: Context
   private val accessToken: String
   private val telemetry: MapboxTelemetry
+  // EventsService
+  private val eventsService: EventsService
 
   /**
    * Creates a map telemetry instance using appplication context and access token
@@ -34,6 +41,14 @@ class MapTelemetryImpl : MapTelemetry {
     if (TelemetryEnabler.State.ENABLED == telemetryState) {
       telemetry.enable()
     }
+
+    // EventsService
+    this.eventsService =
+      EventsService(EventsServiceOptions(accessToken, BuildConfig.MAPBOX_EVENTS_USER_AGENT, null))
+    val coreTelemetryState = EventsService.getEventsCollectionState()
+    if (coreTelemetryState == true) {
+      enableTelemetryCollection(true)
+    }
   }
 
   /**
@@ -44,10 +59,11 @@ class MapTelemetryImpl : MapTelemetry {
    * @param accessToken the mapbox access token
    */
   @VisibleForTesting
-  constructor(telemetry: MapboxTelemetry, appContext: Context, accessToken: String) {
+  constructor(telemetry: MapboxTelemetry, appContext: Context, accessToken: String, eventsService: EventsService) {
     this.appContext = appContext
     this.accessToken = accessToken
     this.telemetry = telemetry
+    this.eventsService = eventsService
   }
 
   /**
@@ -60,7 +76,34 @@ class MapTelemetryImpl : MapTelemetry {
     )
     turnstileEvent.setSkuId("00") // id MAUS MAPS
     telemetry.push(turnstileEvent)
-    telemetry.push(MapEventFactory.buildMapLoadEvent(PhoneState(appContext)))
+
+    val mapLoadEvent = MapEventFactory.buildMapLoadEvent(PhoneState(appContext))
+    telemetry.push(mapLoadEvent)
+
+    // EventsService
+    eventsService.sendTurnstileEvent(
+      TurnstileEvent(
+        SKUIdentifier.MAPS_MAUS,
+        BuildConfig.MAPBOX_SDK_IDENTIFIER,
+        BuildConfig.MAPBOX_SDK_VERSION
+      ), null)
+
+    // EventsService
+    sendEvent(Gson().toJson(mapLoadEvent))
+  }
+
+  // EventsService
+  private fun sendEvent(event: String) {
+    val eventAttributes = ValueConverter.fromJson(event)
+    val mapEvent = eventAttributes.value?.let { Event(EventPriority.IMMEDIATE, it) }
+    if (mapEvent != null) {
+      eventsService.sendEvent(mapEvent, null)
+    }
+  }
+
+  // EventsService
+  private fun enableTelemetryCollection(enabled: Boolean) {
+    EventsService.setEventsCollectionState(enabled, null)
   }
 
   /**
@@ -76,6 +119,9 @@ class MapTelemetryImpl : MapTelemetry {
       telemetry.disable()
       TelemetryEnabler.updateTelemetryState(TelemetryEnabler.State.DISABLED)
     }
+
+    // EventsService
+    enableTelemetryCollection(enabled)
   }
 
   /**
@@ -83,6 +129,9 @@ class MapTelemetryImpl : MapTelemetry {
    */
   override fun disableTelemetrySession() {
     telemetry.disable()
+
+    // EventsService
+    eventsService.pauseEventsCollection()
   }
 
   /**
@@ -110,11 +159,18 @@ class MapTelemetryImpl : MapTelemetry {
    * @param data performance event data
    */
   override fun onPerformanceEvent(data: Bundle?) {
-    telemetry.push(
-      MapEventFactory.buildPerformanceEvent(
-        PhoneState(appContext),
-        UUID.randomUUID().toString(), data ?: Bundle()
-      )
+    val performanceEvent = MapEventFactory.buildPerformanceEvent(
+      PhoneState(appContext),
+      UUID.randomUUID().toString(), data ?: Bundle()
     )
+
+    telemetry.push(performanceEvent)
+
+    // EventsService
+    sendEvent(Gson().toJson(performanceEvent))
+  }
+
+  companion object {
+    private const val TAG = "MapTelemetryImpl"
   }
 }

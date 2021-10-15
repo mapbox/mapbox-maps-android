@@ -9,7 +9,7 @@ import android.util.DisplayMetrics
 import android.view.WindowManager
 import androidx.annotation.VisibleForTesting
 import com.google.gson.annotations.SerializedName
-import com.mapbox.android.telemetry.TelemetryUtils
+import com.mapbox.common.TelemetryUtils
 
 /**
  * Class that holds kinds of states of the current phone.

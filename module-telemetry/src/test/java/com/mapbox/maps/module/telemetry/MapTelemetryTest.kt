@@ -4,7 +4,9 @@ import android.content.Context
 import android.telephony.TelephonyManager
 import android.view.Display
 import android.view.WindowManager
+import com.mapbox.android.telemetry.Event
 import com.mapbox.android.telemetry.MapboxTelemetry
+import com.mapbox.common.EventsService
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -18,6 +20,7 @@ class MapTelemetryTest {
 
   private lateinit var mapboxTelemetry: MapboxTelemetry
   private lateinit var telemetry: MapTelemetryImpl
+  private lateinit var eventsService: EventsService
 
   @Before
   fun setUp() {
@@ -33,7 +36,8 @@ class MapTelemetryTest {
     every { windowManager.defaultDisplay } returns display
 
     mapboxTelemetry = mockk(relaxed = true)
-    telemetry = MapTelemetryImpl(mapboxTelemetry, context, "sk.foobar")
+    eventsService = mockk<EventsService>()
+    telemetry = MapTelemetryImpl(mapboxTelemetry, context, "sk.foobar", eventsService)
   }
 
   @Test
