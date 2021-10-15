@@ -324,7 +324,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
      */
     @JvmStatic
     fun isRenderingSupported(): Boolean {
-      EGLCore(false).apply {
+      EGLCore(false, ConfigMSAA.Off).apply {
         prepareEgl()
         release()
         return eglStatusSuccess

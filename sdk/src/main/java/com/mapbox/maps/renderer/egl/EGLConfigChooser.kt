@@ -192,8 +192,6 @@ internal class EGLConfigChooser constructor(
       val alpha = getConfigAttr(egl, display, config, EGL_ALPHA_SIZE)
       val depth = getConfigAttr(egl, display, config, EGL_DEPTH_SIZE)
       val stencil = getConfigAttr(egl, display, config, EGL_STENCIL_SIZE)
-      val sampleBuffers = getConfigAttr(egl, display, config, EGL_SAMPLE_BUFFERS)
-      val samples = getConfigAttr(egl, display, config, EGL_SAMPLES)
 
       // validate every attribute is set correctly
       if (!eglChooserSuccess) {

@@ -21,6 +21,7 @@ import com.mapbox.maps.renderer.egl.ConfigMSAA
  * @property textureView Flag indicating to use a TextureView as render surface for the MapView. Default is false.
  * @property styleUri The styleUri will applied for the MapView in the onStart lifecycle event if no style is set. Default is [Style.MAPBOX_STREETS]. If set to null, then there is no default style will be loaded.
  * @property attrs The [AttributeSet] object that init the MapView.
+ * @property renderConfigMSAA configuration to control multisample anti-aliasing (MSAA) option for rendering.
  */
 data class MapInitOptions @JvmOverloads constructor(
   val context: Context,
@@ -29,9 +30,9 @@ data class MapInitOptions @JvmOverloads constructor(
   var plugins: List<Plugin> = defaultPluginList,
   var cameraOptions: CameraOptions? = null,
   var textureView: Boolean = false,
-  var renderConfigMSAA: ConfigMSAA = ConfigMSAA.Off,
   val styleUri: String? = Style.MAPBOX_STREETS,
-  var attrs: AttributeSet? = null
+  var attrs: AttributeSet? = null,
+  var renderConfigMSAA: ConfigMSAA = ConfigMSAA.Off,
 ) {
 
   /**

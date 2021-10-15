@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.DisplayMetrics
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.plugin.*
+import com.mapbox.maps.renderer.egl.ConfigMSAA
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.After
@@ -47,6 +48,13 @@ class MapInitOptionsTest {
   fun surfaceView() {
     assertEquals(false, MapInitOptions(context).textureView)
     assertEquals(true, MapInitOptions(context, textureView = true).textureView)
+  }
+
+  @Test
+  fun renderConfigMSAA() {
+    assertEquals(ConfigMSAA.Off, MapInitOptions(context).renderConfigMSAA)
+    assertEquals(ConfigMSAA.Off, MapInitOptions(context, renderConfigMSAA = ConfigMSAA.Off).renderConfigMSAA)
+    assertEquals(ConfigMSAA.On(8), MapInitOptions(context, renderConfigMSAA = ConfigMSAA.On(8)).renderConfigMSAA)
   }
 
   @Test

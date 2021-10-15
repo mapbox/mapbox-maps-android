@@ -13,7 +13,7 @@ import javax.microedition.khronos.egl.*
  */
 internal class EGLCore(
   private val translucentSurface: Boolean,
-  private val configMSAA: ConfigMSAA = ConfigMSAA.Off
+  private val configMSAA: ConfigMSAA
 ) {
   private lateinit var egl: EGL10
   private lateinit var eglConfig: EGLConfig
