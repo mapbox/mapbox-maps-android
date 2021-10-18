@@ -5,11 +5,10 @@ pitest {
     targetTests = ['**CompassAttributeParserTest**']
     pitestVersion = '1.7.2'
     avoidCallsTo = ['kotlin.jvm.internal']
-    testPlugin = "junit5"
     threads = Runtime.getRuntime().availableProcessors()
     outputFormats = ['XML', 'HTML']
     timestampedReports = false
-    jvmArgs = ['-Xmx1024m']
+    jvmArgs = ['-Xmx4096m']
     verbose = true
     exportLineCoverage = true
     mutators = ['DEFAULTS', 'CONSTRUCTOR_CALLS', 'EMPTY_RETURNS', 'FALSE_RETURNS',
