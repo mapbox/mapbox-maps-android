@@ -1,8 +1,6 @@
 package com.mapbox.maps.plugin.annotation
 
 import android.graphics.PointF
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.common.Logger
@@ -76,14 +74,12 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   protected abstract val sourceId: String
   protected abstract val dragLayerId: String
   protected abstract val dragSourceId: String
-  private val handler = Handler(Looper.getMainLooper())
 
   @Suppress("UNCHECKED_CAST")
   private var gesturesPlugin: GesturesPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
     MAPBOX_GESTURES_PLUGIN_ID
   ) ?: throw InvalidPluginConfigurationException(
-    "Can't look up an instance of plugin, " +
-      "is it available on the clazz path and loaded through the map?"
+    "Can't look up an instance of plugin, is it available on the clazz path and loaded through the map?"
   )
 
   /** The layer created by this manager. Annotations will be added to this layer.*/
@@ -147,7 +143,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   protected abstract fun createLayer(): L
 
   /**
-   * Create the drag layer for dragging annotation
+   * Create the drag layer for dragging annotations
    *
    * @return the layer created
    */
@@ -160,7 +156,6 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
 
   private fun createSource(): GeoJsonSource {
     return geoJsonSource(sourceId) {
-      featureCollection(FeatureCollection.fromFeatures(listOf()))
       annotationConfig?.annotationSourceOptions?.let { options ->
         options.maxZoom?.let {
           maxzoom(it)
@@ -188,7 +183,20 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
 
   private fun createDragSource(): GeoJsonSource {
     return geoJsonSource(dragSourceId) {
-      featureCollection(FeatureCollection.fromFeatures(listOf()))
+      annotationConfig?.annotationSourceOptions?.let { options ->
+        options.maxZoom?.let {
+          maxzoom(it)
+        }
+        options.buffer?.let {
+          buffer(it)
+        }
+        options.lineMetrics?.let {
+          lineMetrics(it)
+        }
+        options.tolerance?.let {
+          tolerance(it)
+        }
+      }
     }
   }
 
@@ -509,7 +517,6 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Invoked when Mapview or Annotation manager is destroyed.
    */
   override fun onDestroy() {
-    handler.removeCallbacksAndMessages(null)
     delegateProvider.getStyle { style ->
       layer?.let {
         if (style.styleLayerExists(it.layerId)) {
@@ -656,14 +663,13 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
      * Called when the move gesture is executing.
      */
     override fun onMove(detector: MoveGestureDetector): Boolean {
-      if (draggingAnnotation != null && (detector.pointersCount > 1 || !draggingAnnotation!!.isDraggable)) {
-        // Stopping the drag when we don't work with a simple, on-pointer move anymore
-        stopDragging()
-        return true
-      }
-
       // Updating symbol's position
       draggingAnnotation?.let { annotation ->
+        if (detector.pointersCount > 1 || !annotation.isDraggable) {
+          // Stopping the drag when we don't work with a simple, on-pointer move anymore
+          stopDragging()
+          return true
+        }
         val moveObject = detector.getMoveObject(0)
         val x = moveObject.currentX - touchAreaShiftX
         val y = moveObject.currentY - touchAreaShiftY
@@ -786,27 +792,24 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
           literal(true)
         )
       ) { features ->
-        features.value?.let { queriedFeatureList ->
-          if (queriedFeatureList.isNotEmpty()) {
-            queriedFeatureList.first().feature.getProperty(getAnnotationIdKey())?.let {
-              val id = it.asLong
-              when {
-                annotationMap.containsKey(id) -> {
-                  annotation = annotationMap[id]
-                }
-                dragAnnotationMap.containsKey(id) -> {
-                  annotation = dragAnnotationMap[id]
-                }
-                else -> {
-                  Logger.e(
-                    TAG,
-                    "The queried id: $id, doesn't belong to an active annotation."
-                  )
-                }
+        features.value?.firstOrNull()?.feature?.getProperty(getAnnotationIdKey())
+          ?.let { annotationId ->
+            val id = annotationId.asLong
+            when {
+              annotationMap.containsKey(id) -> {
+                annotation = annotationMap[id]
+              }
+              dragAnnotationMap.containsKey(id) -> {
+                annotation = dragAnnotationMap[id]
+              }
+              else -> {
+                Logger.e(
+                  TAG,
+                  "The queried id: $id, doesn't belong to an active annotation."
+                )
               }
             }
           }
-        }
         latch.countDown()
       }
     }
@@ -817,7 +820,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   /**
    * Static variables and methods.
    */
-  companion object {
+  private companion object {
     /**
      * Tag for log
      */
