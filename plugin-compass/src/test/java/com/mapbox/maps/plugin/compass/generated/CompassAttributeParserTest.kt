@@ -12,7 +12,9 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.mockkObject
+import io.mockk.mockkStatic
 import io.mockk.unmockkAll
+import io.mockk.verify
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
@@ -30,11 +32,13 @@ class CompassAttributeParserTest {
   @Before
   fun setUp() {
     mockkObject(CompassAttributeParser::class)
+    mockkStatic(Color::class)
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
     every { typedArray.getString(any()) } returns "pk.token"
     every { typedArray.getBoolean(any(), any()) } returns true
     every { typedArray.getInt(any(), any()) } returns 2
     every { typedArray.getColor(any(), any()) } returns Color.RED
+    every { Color.parseColor(any()) } returns Color.WHITE
     every { typedArray.getDimension(any(), any()) } returns 10.0f
     every { typedArray.getFloat(any(), any()) } returns 10.0f
     every { typedArray.getDrawable(any()) } returns drawable
@@ -45,6 +49,24 @@ class CompassAttributeParserTest {
   @After
   fun cleanUp() {
     unmockkAll()
+  }
+
+  @Test
+  fun testTypedArrayRecycle() {
+    every { typedArray.getBoolean(any(), any()) } returns true
+    val settings = CompassAttributeParser.parseCompassSettings(context, attrs, 1.2f)
+    verify { typedArray.recycle() }
+  }
+
+  @Test
+  fun testTypedArrayRecycleWithException() {
+    every { typedArray.getBoolean(any(), any()) }.throws(Exception(""))
+    try {
+      val settings = CompassAttributeParser.parseCompassSettings(context, attrs, 1.2f)
+    } catch (e: Exception) {
+      // do nothing
+    }
+    verify { typedArray.recycle() }
   }
 
   @Test
