@@ -16,9 +16,9 @@ android {
     targetSdkVersion(AndroidVersions.targetSdkVersion)
     consumerProguardFiles("proguard-rules.pro")
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    testInstrumentationRunnerArguments = mapOf(
+    testInstrumentationRunnerArguments.plusAssign(mapOf(
       "clearPackageData" to "true"
-    )
+    ))
 
     if (project.hasProperty("android.injected.invoked.from.ide")) {
       buildConfigField("boolean", "RUN_FROM_IDE", "true")
