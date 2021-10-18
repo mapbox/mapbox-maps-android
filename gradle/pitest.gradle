@@ -1,0 +1,21 @@
+apply plugin: 'pl.droidsonroids.pitest'
+
+pitest {
+    targetClasses = ['com.mapbox.maps.plugin.compass.generated**']
+    targetTests = ['**CompassAttributeParserTest**']
+    pitestVersion = '1.7.2'
+    avoidCallsTo = ['kotlin.jvm.internal']
+    testPlugin = "junit5"
+    threads = Runtime.getRuntime().availableProcessors()
+    outputFormats = ['XML', 'HTML']
+    timestampedReports = false
+    jvmArgs = ['-Xmx1024m']
+    verbose = true
+    exportLineCoverage = true
+    mutators = ['DEFAULTS', 'CONSTRUCTOR_CALLS', 'EMPTY_RETURNS', 'FALSE_RETURNS',
+            'NULL_RETURNS', 'REMOVE_CONDITIONALS', 'REMOVE_INCREMENTS', 'EXPERIMENTAL_SWITCH']
+
+    excludedClasses = []
+//     Use feature EXPORT for debug
+//     features = ["+EXPORT"]
+}

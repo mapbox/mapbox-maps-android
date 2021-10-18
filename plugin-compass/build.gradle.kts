@@ -4,6 +4,7 @@ plugins {
   id("com.android.library")
   kotlin("android")
   id("org.jetbrains.dokka")
+  id ("pl.droidsonroids.pitest")
 }
 
 android {
@@ -55,4 +56,5 @@ project.apply {
   from("${rootDir}/gradle/jacoco.gradle")
   from("$rootDir/gradle/sdk-registry.gradle")
   from("$rootDir/gradle/track-public-apis.gradle")
+  from("$rootDir/gradle/pitest.gradle")
 }
