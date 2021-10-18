@@ -7,17 +7,17 @@ package com.mapbox.maps.plugin.viewport.transition
  * and [ViewportCameraTransition] implementations, but options here provide higher-level
  * constraints that those implementations need to obey.
  *
- * @param maxDurationMS maximum duration of the generated transitions set,
+ * @param maxDurationMs maximum duration of the generated transitions set,
  * including delays between animators and their respective durations.
  */
 class ViewportCameraTransitionOptions private constructor(
-  val maxDurationMS: Long
+  val maxDurationMs: Long
 ) {
   /**
    * @return the builder that created the [ViewportCameraTransitionOptions]
    */
   fun toBuilder() = Builder()
-    .maxDuration(maxDurationMS)
+    .maxDuration(maxDurationMs)
 
   /**
    * Indicates whether some other object is "equal to" this one.
@@ -28,7 +28,7 @@ class ViewportCameraTransitionOptions private constructor(
 
     other as ViewportCameraTransitionOptions
 
-    if (maxDurationMS != other.maxDurationMS) return false
+    if (maxDurationMs != other.maxDurationMs) return false
 
     return true
   }
@@ -37,21 +37,21 @@ class ViewportCameraTransitionOptions private constructor(
    * Returns a hash code value for the object.
    */
   override fun hashCode(): Int {
-    return maxDurationMS.hashCode()
+    return maxDurationMs.hashCode()
   }
 
   /**
    * Returns a string representation of the object.
    */
   override fun toString(): String {
-    return "ViewportCameraTransitionOptions(maxDurationMS=$maxDurationMS)"
+    return "ViewportCameraTransitionOptions(maxDurationMs=$maxDurationMs)"
   }
 
   /**
    * Builder for [ViewportCameraTransitionOptions].
    */
   class Builder {
-    private var maxDurationMS: Long = 1000L
+    private var maxDurationMs: Long = 1000L
 
     /**
      * Sets maximum duration of the generated transitions set in milliseconds,
@@ -59,13 +59,17 @@ class ViewportCameraTransitionOptions private constructor(
      *
      * Defaults to 1000 milliseconds.
      */
-    fun maxDuration(maxDurationMS: Long) = apply {
-      this.maxDurationMS = maxDurationMS
+    fun maxDuration(maxDurationMs: Long) = apply {
+      this.maxDurationMs = maxDurationMs
     }
 
     /**
      * Builds [ViewportCameraTransitionOptions].
      */
-    fun build() = ViewportCameraTransitionOptions(maxDurationMS)
+    fun build() = ViewportCameraTransitionOptions(maxDurationMs)
+  }
+  companion object {
+    fun build(setUp: Builder.() -> Unit): ViewportCameraTransitionOptions =
+      Builder().apply(setUp).build()
   }
 }
