@@ -9,8 +9,8 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.ScrollMode
-import io.mockk.every
 import io.mockk.Runs
+import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.mockkObject
