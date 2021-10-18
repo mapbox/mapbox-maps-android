@@ -28,6 +28,7 @@ android {
 dependencies {
   implementation(project(":sdk-base"))
   implementation(Dependencies.androidxAppCompat)
+  implementation(Dependencies.androidxCoreKtx)
   implementation(Dependencies.kotlin)
   implementation(Dependencies.mapboxBase)
   testImplementation(Dependencies.equalsVerifier)
