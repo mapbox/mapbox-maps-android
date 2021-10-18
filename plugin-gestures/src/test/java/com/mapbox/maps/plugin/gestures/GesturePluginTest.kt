@@ -321,7 +321,7 @@ class GesturePluginTest {
     val listener: OnFlingListener = mockk(relaxed = true)
     presenter.addOnFlingListener(listener)
     presenter.scrollEnabled = false
-    val result = presenter.handleFlingEvent(mockk(), mockk(), 10000f, 10000f)
+    val result = presenter.handleFlingEvent(mockk(), mockk(), FLING_VELOCITY, FLING_VELOCITY)
     assertFalse(result)
     verify(exactly = 0) { listener.onFling() }
   }
@@ -344,11 +344,11 @@ class GesturePluginTest {
     val motionEvent = mockk<MotionEvent>()
     every { motionEvent.x } returns 0.0f
     every { motionEvent.y } returns 0.0f
-    val result = presenter.handleFlingEvent(motionEvent, mockk(), 10000f, 10000f)
+    val result = presenter.handleFlingEvent(motionEvent, mockk(), FLING_VELOCITY, FLING_VELOCITY)
     verify {
       mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),
-        ScreenCoordinate(1000.0, 1000.0)
+        ScreenCoordinate(FLING_DISPLACEMENT, FLING_DISPLACEMENT)
       )
     }
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
@@ -374,11 +374,11 @@ class GesturePluginTest {
     val motionEvent = mockk<MotionEvent>()
     every { motionEvent.x } returns 0.0f
     every { motionEvent.y } returns 0.0f
-    val result = presenter.handleFlingEvent(motionEvent, mockk(), 10000f, 10000f)
+    val result = presenter.handleFlingEvent(motionEvent, mockk(), FLING_VELOCITY, FLING_VELOCITY)
     verify {
       mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),
-        ScreenCoordinate(0.0, 1000.0)
+        ScreenCoordinate(0.0, FLING_DISPLACEMENT)
       )
     }
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
@@ -404,11 +404,11 @@ class GesturePluginTest {
     val motionEvent = mockk<MotionEvent>()
     every { motionEvent.x } returns 0.0f
     every { motionEvent.y } returns 0.0f
-    val result = presenter.handleFlingEvent(motionEvent, mockk(), 10000f, 10000f)
+    val result = presenter.handleFlingEvent(motionEvent, mockk(), FLING_VELOCITY, FLING_VELOCITY)
     verify {
       mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),
-        ScreenCoordinate(1000.0, 0.0)
+        ScreenCoordinate(FLING_DISPLACEMENT, 0.0)
       )
     }
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
@@ -867,5 +867,10 @@ class GesturePluginTest {
 
   fun obtainMotionEventActionLater(action: Int): MotionEvent {
     return MotionEvent.obtain(200, 500, action, 15.0f, 10.0f, 0)
+  }
+
+  private companion object {
+    const val FLING_DISPLACEMENT = 6666.666666666667
+    const val FLING_VELOCITY = 10000f
   }
 }
