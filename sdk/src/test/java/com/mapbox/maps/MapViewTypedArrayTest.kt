@@ -8,7 +8,8 @@ import android.util.DisplayMetrics
 import com.mapbox.maps.loader.MapboxMapStaticInitializer
 import com.mapbox.maps.renderer.egl.ConfigMSAA
 import io.mockk.*
-import org.junit.Assert
+import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -19,40 +20,15 @@ class MapViewTypedArrayTest(
   private val inputMsaaEnabled: Boolean,
   private val inputMsaaSamples: Int,
   private val inputMapSurfaceMode: Int,
+  private val inputMapStyle: String?,
   private val expectedConfigMSAA: ConfigMSAA,
-  private val expectedTextureMode: Boolean
+  private val expectedTextureMode: Boolean,
+  private val expectedStyle: String?,
 ) {
 
   private lateinit var attrs: AttributeSet
+  private lateinit var context: Context
   private lateinit var mapView: MapView
-
-  companion object {
-    @JvmStatic
-    @Parameterized.Parameters
-    fun data() = listOf(
-      arrayOf(
-        /* inputMsaaEnabled */ false,
-        /* inputMsaaSamples */ 8,
-        /* inputMapSurfaceMode */ 0,
-        /* expectedConfigMSAA */ ConfigMSAA.Off,
-        /* expectedTextureMode */ false
-      ),
-      arrayOf(
-        /* inputMsaaEnabled */ true,
-        /* inputMsaaSamples */ 8,
-        /* inputMapSurfaceMode */ 0,
-        /* expectedConfigMSAA */ ConfigMSAA.On(8),
-        /* expectedTextureMode */ false
-      ),
-      arrayOf(
-        /* inputMsaaEnabled */ true,
-        /* inputMsaaSamples */ 16,
-        /* inputMapSurfaceMode */ 1,
-        /* expectedConfigMSAA */ ConfigMSAA.On(16),
-        /* expectedTextureMode */ true
-      ),
-    )
-  }
 
   @Before
   fun setUp() {
@@ -67,12 +43,8 @@ class MapViewTypedArrayTest(
       mockk(relaxed = true),
       mapController
     )
-  }
-
-  @Test
-  fun parseTypedArray() {
-    val context: Context = mockk()
-    val typedArray: TypedArray = mockk()
+    context = mockk()
+    val typedArray = mockk<TypedArray>()
     val resources = mockk<Resources>()
     val displayMetrics: DisplayMetrics = mockk()
     mockkObject(ResourcesAttributeParser)
@@ -83,23 +55,59 @@ class MapViewTypedArrayTest(
     every { ResourcesAttributeParser.parseResourcesOptions(any(), any()) } returns mockk()
     every { MapAttributeParser.parseMapOptions(any(), any()) } returns mockk()
     every { CameraAttributeParser.parseCameraOptions(any()) } returns mockk()
+
     every { typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapSurface, 0) } returns inputMapSurfaceMode
     every { typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_mapMsaaEnabled, false) } returns inputMsaaEnabled
     every { typedArray.getInteger(R.styleable.mapbox_MapView_mapbox_mapMsaaSamples, 4) } returns inputMsaaSamples
-    every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) } returns Style.SATELLITE
+    every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) } returns inputMapStyle
     every { typedArray.recycle() } just Runs
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
-    var mapInitOptions = mapView.parseTypedArray(context, attrs)
-    Assert.assertEquals(expectedTextureMode, mapInitOptions.textureView)
-    Assert.assertEquals(expectedConfigMSAA, mapInitOptions.renderConfigMSAA)
-    Assert.assertEquals(Style.SATELLITE, mapInitOptions.styleUri)
+  }
 
-    every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) } returns null
-    mapInitOptions = mapView.parseTypedArray(context, attrs)
-    Assert.assertEquals(Style.MAPBOX_STREETS, mapInitOptions.styleUri)
+  @Test
+  fun parseTypedArray() {
+    val mapInitOptions = mapView.parseTypedArray(context, attrs)
+    assertEquals(expectedTextureMode, mapInitOptions.textureView)
+    assertEquals(expectedConfigMSAA, mapInitOptions.renderConfigMSAA)
+    assertEquals(expectedStyle, mapInitOptions.styleUri)
+  }
 
-    every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) } returns ""
-    mapInitOptions = mapView.parseTypedArray(context, attrs)
-    Assert.assertEquals(null, mapInitOptions.styleUri)
+  @After
+  fun shutDown() {
+    unmockkAll()
+  }
+
+  companion object {
+    @JvmStatic
+    @Parameterized.Parameters
+    fun data() = listOf(
+      arrayOf(
+        /* inputMsaaEnabled */ false,
+        /* inputMsaaSamples */ 8,
+        /* inputMapSurfaceMode */ 0,
+        /* inputMapStyle */ null,
+        /* expectedConfigMSAA */ ConfigMSAA.Off,
+        /* expectedTextureMode */ false,
+        /* expectedStyle */ Style.MAPBOX_STREETS,
+      ),
+      arrayOf(
+        /* inputMsaaEnabled */ true,
+        /* inputMsaaSamples */ 8,
+        /* inputMapSurfaceMode */ 0,
+        /* inputMapStyle */ "",
+        /* expectedConfigMSAA */ ConfigMSAA.On(8),
+        /* expectedTextureMode */ false,
+        /* expectedStyle */ null,
+      ),
+      arrayOf(
+        /* inputMsaaEnabled */ true,
+        /* inputMsaaSamples */ 16,
+        /* inputMapSurfaceMode */ 1,
+        /* inputMapStyle */ Style.SATELLITE,
+        /* expectedConfigMSAA */ ConfigMSAA.On(16),
+        /* expectedTextureMode */ true,
+        /* expectedStyle */ Style.SATELLITE,
+      ),
+    )
   }
 }

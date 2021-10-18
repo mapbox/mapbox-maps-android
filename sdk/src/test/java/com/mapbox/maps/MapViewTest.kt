@@ -7,6 +7,7 @@ import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import io.mockk.*
+import org.junit.After
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -35,6 +36,11 @@ class MapViewTest {
       mockk(relaxed = true),
       mapController
     )
+  }
+
+  @After
+  fun shutDown() {
+    unmockkAll()
   }
 
   @Test
