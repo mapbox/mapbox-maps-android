@@ -8,6 +8,8 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import io.mockk.every
+import io.mockk.Runs
+import io.mockk.just
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.unmockkAll
@@ -15,10 +17,7 @@ import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 
-@RunWith(RobolectricTestRunner::class)
 class CompassAttributeParserTest {
   private val context: Context = mockk(relaxed = true)
 
@@ -40,6 +39,7 @@ class CompassAttributeParserTest {
     every { typedArray.getFloat(any(), any()) } returns 10.0f
     every { typedArray.getDrawable(any()) } returns drawable
     every { typedArray.hasValue(any()) } returns true
+    every { typedArray.recycle() } just Runs
   }
 
   @After
@@ -70,39 +70,45 @@ class CompassAttributeParserTest {
 
   @Test
   fun marginLeftTest() {
-    every { typedArray.getDimension(any(), any()) } returns 4f
-    val settings = CompassAttributeParser.parseCompassSettings(context, attrs, 1.2f)
-    assertEquals(4f, settings.marginLeft)
+    val pixelRatio = 1.2f
+    val inputValue = 4f
+    every { typedArray.getDimension(any(), pixelRatio * inputValue) } returns pixelRatio * inputValue
+    val settings = CompassAttributeParser.parseCompassSettings(context, attrs, pixelRatio)
+    assertEquals(pixelRatio * inputValue, settings.marginLeft)
   }
 
   @Test
   fun marginTopTest() {
-    every { typedArray.getDimension(any(), any()) } returns 4f
-    val settings = CompassAttributeParser.parseCompassSettings(context, attrs, 1.2f)
-    assertEquals(4f, settings.marginTop)
+    val pixelRatio = 1.2f
+    val inputValue = 4f
+    every { typedArray.getDimension(any(), pixelRatio * inputValue) } returns pixelRatio * inputValue
+    val settings = CompassAttributeParser.parseCompassSettings(context, attrs, pixelRatio)
+    assertEquals(pixelRatio * inputValue, settings.marginTop)
   }
 
   @Test
   fun marginRightTest() {
-    every { typedArray.getDimension(any(), any()) } returns 4f
-    val settings = CompassAttributeParser.parseCompassSettings(context, attrs, 1.2f)
-    assertEquals(4f, settings.marginRight)
+    val pixelRatio = 1.2f
+    val inputValue = 4f
+    every { typedArray.getDimension(any(), pixelRatio * inputValue) } returns pixelRatio * inputValue
+    val settings = CompassAttributeParser.parseCompassSettings(context, attrs, pixelRatio)
+    assertEquals(pixelRatio * inputValue, settings.marginRight)
   }
 
   @Test
   fun marginBottomTest() {
-    every { typedArray.getDimension(any(), any()) } returns 4f
-    val settings = CompassAttributeParser.parseCompassSettings(context, attrs, 1.2f)
-    assertEquals(4f, settings.marginBottom)
+    val pixelRatio = 1.2f
+    val inputValue = 4f
+    every { typedArray.getDimension(any(), pixelRatio * inputValue) } returns pixelRatio * inputValue
+    val settings = CompassAttributeParser.parseCompassSettings(context, attrs, pixelRatio)
+    assertEquals(pixelRatio * inputValue, settings.marginBottom)
   }
-
   @Test
   fun opacityTest() {
     every { typedArray.getFloat(any(), any()) } returns 1f
     val settings = CompassAttributeParser.parseCompassSettings(context, attrs, 1.2f)
     assertEquals(1f, settings.opacity)
   }
-
   @Test
   fun rotationTest() {
     every { typedArray.getFloat(any(), any()) } returns 0f

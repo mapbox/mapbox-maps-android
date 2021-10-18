@@ -10,6 +10,8 @@ import android.util.AttributeSet
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.ScrollMode
 import io.mockk.every
+import io.mockk.Runs
+import io.mockk.just
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.unmockkAll
@@ -17,10 +19,7 @@ import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 
-@RunWith(RobolectricTestRunner::class)
 class GesturesAttributeParserTest {
   private val context: Context = mockk(relaxed = true)
 
@@ -42,6 +41,7 @@ class GesturesAttributeParserTest {
     every { typedArray.getFloat(any(), any()) } returns 10.0f
     every { typedArray.getDrawable(any()) } returns drawable
     every { typedArray.hasValue(any()) } returns true
+    every { typedArray.recycle() } just Runs
   }
 
   @After
@@ -229,7 +229,6 @@ class GesturesAttributeParserTest {
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
     assertEquals(false, settings.increasePinchToZoomThresholdWhenRotating)
   }
-
   @Test
   fun zoomAnimationAmountTest() {
     every { typedArray.getFloat(any(), any()) } returns 1f

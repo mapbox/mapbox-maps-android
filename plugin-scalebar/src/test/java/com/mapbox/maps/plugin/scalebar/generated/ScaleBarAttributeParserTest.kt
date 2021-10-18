@@ -8,6 +8,8 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import io.mockk.every
+import io.mockk.Runs
+import io.mockk.just
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.unmockkAll
@@ -15,10 +17,7 @@ import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 
-@RunWith(RobolectricTestRunner::class)
 class ScaleBarAttributeParserTest {
   private val context: Context = mockk(relaxed = true)
 
@@ -40,6 +39,7 @@ class ScaleBarAttributeParserTest {
     every { typedArray.getFloat(any(), any()) } returns 10.0f
     every { typedArray.getDrawable(any()) } returns drawable
     every { typedArray.hasValue(any()) } returns true
+    every { typedArray.recycle() } just Runs
   }
 
   @After
@@ -70,46 +70,51 @@ class ScaleBarAttributeParserTest {
 
   @Test
   fun marginLeftTest() {
-    every { typedArray.getDimension(any(), any()) } returns 4f
-    val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, 1.2f)
-    assertEquals(4f, settings.marginLeft)
+    val pixelRatio = 1.2f
+    val inputValue = 4f
+    every { typedArray.getDimension(any(), pixelRatio * inputValue) } returns pixelRatio * inputValue
+    val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, pixelRatio)
+    assertEquals(pixelRatio * inputValue, settings.marginLeft)
   }
 
   @Test
   fun marginTopTest() {
-    every { typedArray.getDimension(any(), any()) } returns 4f
-    val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, 1.2f)
-    assertEquals(4f, settings.marginTop)
+    val pixelRatio = 1.2f
+    val inputValue = 4f
+    every { typedArray.getDimension(any(), pixelRatio * inputValue) } returns pixelRatio * inputValue
+    val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, pixelRatio)
+    assertEquals(pixelRatio * inputValue, settings.marginTop)
   }
 
   @Test
   fun marginRightTest() {
-    every { typedArray.getDimension(any(), any()) } returns 4f
-    val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, 1.2f)
-    assertEquals(4f, settings.marginRight)
+    val pixelRatio = 1.2f
+    val inputValue = 4f
+    every { typedArray.getDimension(any(), pixelRatio * inputValue) } returns pixelRatio * inputValue
+    val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, pixelRatio)
+    assertEquals(pixelRatio * inputValue, settings.marginRight)
   }
 
   @Test
   fun marginBottomTest() {
-    every { typedArray.getDimension(any(), any()) } returns 4f
-    val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, 1.2f)
-    assertEquals(4f, settings.marginBottom)
+    val pixelRatio = 1.2f
+    val inputValue = 4f
+    every { typedArray.getDimension(any(), pixelRatio * inputValue) } returns pixelRatio * inputValue
+    val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, pixelRatio)
+    assertEquals(pixelRatio * inputValue, settings.marginBottom)
   }
-
   @Test
   fun textColorTest() {
     every { typedArray.getColor(any(), any()) } returns Color.BLACK
     val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, 1.2f)
     assertEquals(Color.BLACK, settings.textColor)
   }
-
   @Test
   fun primaryColorTest() {
     every { typedArray.getColor(any(), any()) } returns Color.BLACK
     val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, 1.2f)
     assertEquals(Color.BLACK, settings.primaryColor)
   }
-
   @Test
   fun secondaryColorTest() {
     every { typedArray.getColor(any(), any()) } returns Color.WHITE
@@ -119,37 +124,47 @@ class ScaleBarAttributeParserTest {
 
   @Test
   fun borderWidthTest() {
-    every { typedArray.getDimension(any(), any()) } returns 2f
-    val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, 1.2f)
-    assertEquals(2f, settings.borderWidth)
+    val pixelRatio = 1.2f
+    val inputValue = 2f
+    every { typedArray.getDimension(any(), pixelRatio * inputValue) } returns pixelRatio * inputValue
+    val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, pixelRatio)
+    assertEquals(pixelRatio * inputValue, settings.borderWidth)
   }
 
   @Test
   fun heightTest() {
-    every { typedArray.getDimension(any(), any()) } returns 2f
-    val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, 1.2f)
-    assertEquals(2f, settings.height)
+    val pixelRatio = 1.2f
+    val inputValue = 2f
+    every { typedArray.getDimension(any(), pixelRatio * inputValue) } returns pixelRatio * inputValue
+    val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, pixelRatio)
+    assertEquals(pixelRatio * inputValue, settings.height)
   }
 
   @Test
   fun textBarMarginTest() {
-    every { typedArray.getDimension(any(), any()) } returns 8f
-    val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, 1.2f)
-    assertEquals(8f, settings.textBarMargin)
+    val pixelRatio = 1.2f
+    val inputValue = 8f
+    every { typedArray.getDimension(any(), pixelRatio * inputValue) } returns pixelRatio * inputValue
+    val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, pixelRatio)
+    assertEquals(pixelRatio * inputValue, settings.textBarMargin)
   }
 
   @Test
   fun textBorderWidthTest() {
-    every { typedArray.getDimension(any(), any()) } returns 2f
-    val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, 1.2f)
-    assertEquals(2f, settings.textBorderWidth)
+    val pixelRatio = 1.2f
+    val inputValue = 2f
+    every { typedArray.getDimension(any(), pixelRatio * inputValue) } returns pixelRatio * inputValue
+    val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, pixelRatio)
+    assertEquals(pixelRatio * inputValue, settings.textBorderWidth)
   }
 
   @Test
   fun textSizeTest() {
-    every { typedArray.getDimension(any(), any()) } returns 8f
-    val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, 1.2f)
-    assertEquals(8f, settings.textSize)
+    val pixelRatio = 1.2f
+    val inputValue = 8f
+    every { typedArray.getDimension(any(), pixelRatio * inputValue) } returns pixelRatio * inputValue
+    val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, pixelRatio)
+    assertEquals(pixelRatio * inputValue, settings.textSize)
   }
 
   @Test
@@ -186,7 +201,6 @@ class ScaleBarAttributeParserTest {
     val settings = ScaleBarAttributeParser.parseScaleBarSettings(context, attrs, 1.2f)
     assertEquals(false, settings.showTextBorder)
   }
-
   @Test
   fun ratioTest() {
     every { typedArray.getFloat(any(), any()) } returns 0.5f
