@@ -1,19 +1,14 @@
 package com.mapbox.maps
 
-import android.content.Context
-import android.content.res.Resources
-import android.content.res.TypedArray
-import android.util.AttributeSet
-import android.util.DisplayMetrics
 import android.view.MotionEvent
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.loader.MapboxMapStaticInitializer
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.renderer.OnFpsChangedListener
-import com.mapbox.maps.renderer.egl.ConfigMSAA
 import io.mockk.*
-import junit.framework.Assert.*
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -24,7 +19,6 @@ import org.robolectric.annotation.Config
 @Config(shadows = [ShadowLogger::class])
 class MapViewTest {
 
-  private lateinit var attrs: AttributeSet
   private lateinit var mapController: MapController
   private lateinit var mapboxMap: MapboxMap
   private lateinit var mapView: MapView
@@ -33,7 +27,6 @@ class MapViewTest {
   fun setUp() {
     mockkStatic(MapboxMapStaticInitializer::class)
     every { MapboxMapStaticInitializer.loadMapboxMapNativeLib() } just Runs
-    attrs = mockk()
     mapController = mockk(relaxUnitFun = true)
     mapboxMap = mockk(relaxUnitFun = true)
     every { mapController.getMapboxMap() } returns mapboxMap
@@ -42,74 +35,6 @@ class MapViewTest {
       mockk(relaxed = true),
       mapController
     )
-  }
-
-  private fun setUpParsedArray(context: Context) {
-    val resources = mockk<Resources>()
-    val displayMetrics: DisplayMetrics = mockk()
-    mockkObject(ResourcesAttributeParser)
-    mockkObject(MapAttributeParser)
-    mockkObject(CameraAttributeParser)
-    every { context.resources } returns resources
-    every { resources.displayMetrics } returns displayMetrics
-    every { ResourcesAttributeParser.parseResourcesOptions(any(), any()) } returns mockk()
-    every { MapAttributeParser.parseMapOptions(any(), any()) } returns mockk()
-    every { CameraAttributeParser.parseCameraOptions(any()) } returns mockk()
-  }
-
-  @Test
-  fun parseTypedArray() {
-    val context: Context = mockk()
-    val typedArray: TypedArray = mockk()
-    setUpParsedArray(context)
-    every { typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapSurface, 0) } returns 1
-    every { typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_mapMsaaEnabled, false) } returns true
-    every { typedArray.getInteger(R.styleable.mapbox_MapView_mapbox_mapMsaaSamples, 4) } returns 4
-    every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) } returns Style.SATELLITE
-    every { typedArray.recycle() } just Runs
-    every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
-    var mapInitOptions = mapView.parseTypedArray(context, attrs)
-    assertEquals(true, mapInitOptions.textureView)
-    assertEquals(ConfigMSAA.On(4), mapInitOptions.renderConfigMSAA)
-    assertEquals(Style.SATELLITE, mapInitOptions.styleUri)
-
-    every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) } returns null
-    mapInitOptions = mapView.parseTypedArray(context, attrs)
-    assertEquals(Style.MAPBOX_STREETS, mapInitOptions.styleUri)
-
-    every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) } returns ""
-    mapInitOptions = mapView.parseTypedArray(context, attrs)
-    assertEquals(null, mapInitOptions.styleUri)
-  }
-
-  @Test
-  fun parseTypedArrayCustomMsaaOn() {
-    val context: Context = mockk()
-    val typedArray: TypedArray = mockk()
-    setUpParsedArray(context)
-    every { typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapSurface, 0) } returns 1
-    every { typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_mapMsaaEnabled, false) } returns true
-    every { typedArray.getInteger(R.styleable.mapbox_MapView_mapbox_mapMsaaSamples, 4) } returns 8
-    every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) } returns Style.SATELLITE
-    every { typedArray.recycle() } just Runs
-    every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
-    val mapInitOptions = mapView.parseTypedArray(context, attrs)
-    assertEquals(ConfigMSAA.On(8), mapInitOptions.renderConfigMSAA)
-  }
-
-  @Test
-  fun parseTypedArrayMsaaOff() {
-    val context: Context = mockk()
-    val typedArray: TypedArray = mockk()
-    setUpParsedArray(context)
-    every { typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapSurface, 0) } returns 1
-    every { typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_mapMsaaEnabled, false) } returns false
-    every { typedArray.getInteger(R.styleable.mapbox_MapView_mapbox_mapMsaaSamples, 4) } returns 16
-    every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) } returns Style.SATELLITE
-    every { typedArray.recycle() } just Runs
-    every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
-    val mapInitOptions = mapView.parseTypedArray(context, attrs)
-    assertEquals(ConfigMSAA.Off, mapInitOptions.renderConfigMSAA)
   }
 
   @Test

@@ -13,7 +13,7 @@ import javax.microedition.khronos.egl.EGLDisplay
 
 internal class EGLConfigChooser constructor(
   private val translucentSurface: Boolean,
-  private val configMSAA: ConfigMSAA
+  private val configMSAA: ConfigMSAA,
 ) {
   // Get all configs at least RGB 565 with 16 depth and 8 stencil
   private val configAttributes: IntArray

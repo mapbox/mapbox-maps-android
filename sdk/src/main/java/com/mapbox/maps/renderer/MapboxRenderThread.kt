@@ -68,7 +68,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   constructor(
     mapboxRenderer: MapboxRenderer,
     translucentSurface: Boolean,
-    configMSAA: ConfigMSAA
+    configMSAA: ConfigMSAA,
   ) {
     this.translucentSurface = translucentSurface
     this.mapboxRenderer = mapboxRenderer
