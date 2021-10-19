@@ -5,7 +5,6 @@ import com.mapbox.common.ShadowLogger
 import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.unmockkAll
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Before

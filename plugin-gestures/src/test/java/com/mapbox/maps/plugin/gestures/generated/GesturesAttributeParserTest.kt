@@ -10,11 +10,10 @@ import android.util.AttributeSet
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.ScrollMode
 import io.mockk.Runs
+import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
-import io.mockk.unmockkAll
-import io.mockk.clearAllMocks
 import io.mockk.verify
 import org.junit.After
 import org.junit.Assert.*
