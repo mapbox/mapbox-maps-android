@@ -2,17 +2,17 @@ package com.mapbox.maps.renderer
 
 import android.view.Surface
 import androidx.annotation.VisibleForTesting
-import com.mapbox.maps.renderer.egl.ConfigMSAA
+import com.mapbox.maps.renderer.egl.AntialiasingConfig
 
 internal open class MapboxSurfaceRenderer : MapboxRenderer {
 
   private var createSurface = false
 
-  constructor(configMSAA: ConfigMSAA) {
+  constructor(antialiasingConfig: AntialiasingConfig) {
     renderThread = MapboxRenderThread(
       mapboxRenderer = this,
       translucentSurface = false,
-      configMSAA = configMSAA,
+      antialiasingConfig = antialiasingConfig,
     )
   }
 

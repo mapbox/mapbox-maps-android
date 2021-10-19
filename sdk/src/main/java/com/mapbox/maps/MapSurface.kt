@@ -32,7 +32,7 @@ class MapSurface @JvmOverloads constructor(
 ) : MapPluginProviderDelegate, MapControllable {
 
   private val mapController: MapController
-  private val renderer: MapboxSurfaceRenderer = MapboxSurfaceRenderer(mapInitOptions.renderConfigMSAA)
+  private val renderer: MapboxSurfaceRenderer = MapboxSurfaceRenderer(mapInitOptions.antialiasingConfig)
 
   init {
     this.mapController = MapController(

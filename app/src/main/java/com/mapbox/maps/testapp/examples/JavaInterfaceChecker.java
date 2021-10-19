@@ -28,9 +28,6 @@ import com.mapbox.android.gestures.RotateGestureDetector;
 import com.mapbox.android.gestures.ShoveGestureDetector;
 import com.mapbox.android.gestures.StandardScaleGestureDetector;
 import com.mapbox.bindgen.Value;
-import com.mapbox.geojson.Feature;
-import com.mapbox.geojson.FeatureCollection;
-import com.mapbox.geojson.Geometry;
 import com.mapbox.maps.CameraOptions;
 import com.mapbox.maps.CameraState;
 import com.mapbox.maps.ExtensionUtils;
@@ -54,7 +51,6 @@ import com.mapbox.maps.extension.style.expressions.types.FormatSection;
 import com.mapbox.maps.extension.style.layers.Layer;
 import com.mapbox.maps.extension.style.layers.generated.SymbolLayer;
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor;
-import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource;
 import com.mapbox.maps.extension.style.types.Formatted;
 import com.mapbox.maps.extension.style.types.FormattedSection;
 import com.mapbox.maps.plugin.LocationPuck;
@@ -91,7 +87,7 @@ import com.mapbox.maps.plugin.overlay.MapOverlayUtils;
 import com.mapbox.maps.plugin.scalebar.ScaleBarPlugin;
 import com.mapbox.maps.plugin.scalebar.ScaleBarUtils;
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings;
-import com.mapbox.maps.renderer.egl.ConfigMSAA;
+import com.mapbox.maps.renderer.egl.AntialiasingConfig;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -101,8 +97,6 @@ import java.util.List;
 import java.util.Locale;
 
 import kotlin.Pair;
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
 
 public class JavaInterfaceChecker {
     private void scaleBarSettings() {
@@ -344,7 +338,7 @@ public class JavaInterfaceChecker {
         mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions, false);
         mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions, false, Style.MAPBOX_STREETS);
         mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions, false, Style.MAPBOX_STREETS, attrs);
-        mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions, false, Style.MAPBOX_STREETS, attrs, new ConfigMSAA.On(4));
+        mapInitOptions = new MapInitOptions(context, resourceOptions, mapOptions, plugins, cameraOptions, false, Style.MAPBOX_STREETS, attrs, new AntialiasingConfig.On(4));
     }
 
     private void snapshotter(Context context, MapSnapshotOptions options) {

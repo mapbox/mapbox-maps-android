@@ -50,9 +50,9 @@
             <enum name="texture_view" value="1" />
         </attr>
         <!-- To enable MSAA for map rendering or not. By default, it is set to false. -->
-        <attr name="mapbox_mapMsaaEnabled" format="boolean"/>
-        <!-- MSAA samples. Takes effect only if MSAA is enabled and then defaults to 4. Most common values are 2, 4 and 8. Higher values result in better quality, but may reduce overall performance. -->
-        <attr name="mapbox_mapMsaaSamples" format="integer"/>
+        <attr name="mapbox_mapAntialiasingEnabled" format="boolean"/>
+        <!-- MSAA sample count. Takes effect only if MSAA is enabled and then defaults to 4. Most common values are 2, 4 and 8. Higher values result in better quality, but may reduce overall performance. -->
+        <attr name="mapbox_mapAntialiasingSampleCount" format="integer"/>
 
         <!-- A JSON Web token to associate API requests with your Mapbox account. -->
         <attr name="mapbox_resourcesAccessToken" format="string" />

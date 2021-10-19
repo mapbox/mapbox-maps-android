@@ -2,11 +2,11 @@ package com.mapbox.maps.renderer
 
 import android.view.SurfaceHolder
 import androidx.annotation.VisibleForTesting
-import com.mapbox.maps.renderer.egl.ConfigMSAA
+import com.mapbox.maps.renderer.egl.AntialiasingConfig
 
 internal class MapboxSurfaceHolderRenderer : MapboxSurfaceRenderer, SurfaceHolder.Callback {
 
-  constructor(surfaceHolder: SurfaceHolder, configMSAA: ConfigMSAA) : super(configMSAA) {
+  constructor(surfaceHolder: SurfaceHolder, antialiasingConfig: AntialiasingConfig) : super(antialiasingConfig) {
     surfaceHolder.addCallback(this)
   }
 

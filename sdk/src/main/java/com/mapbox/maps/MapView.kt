@@ -19,7 +19,7 @@ import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.renderer.MapboxSurfaceHolderRenderer
 import com.mapbox.maps.renderer.MapboxTextureViewRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
-import com.mapbox.maps.renderer.egl.ConfigMSAA
+import com.mapbox.maps.renderer.egl.AntialiasingConfig
 import com.mapbox.maps.renderer.egl.EGLCore
 
 /**
@@ -92,8 +92,8 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     }
     mapController = MapController(
       when (view) {
-        is SurfaceView -> MapboxSurfaceHolderRenderer(view.holder, resolvedMapInitOptions.renderConfigMSAA)
-        is TextureView -> MapboxTextureViewRenderer(view, resolvedMapInitOptions.renderConfigMSAA)
+        is SurfaceView -> MapboxSurfaceHolderRenderer(view.holder, resolvedMapInitOptions.antialiasingConfig)
+        is TextureView -> MapboxTextureViewRenderer(view, resolvedMapInitOptions.antialiasingConfig)
         else -> throw IllegalArgumentException("Provided view has to be a texture or a surface.")
       },
       resolvedMapInitOptions
@@ -123,8 +123,8 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       val textureView = typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapSurface, 0) != 0
       val styleUri =
         typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) ?: Style.MAPBOX_STREETS
-      val msaaEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_mapMsaaEnabled, false)
-      val msaaSamples = typedArray.getInteger(R.styleable.mapbox_MapView_mapbox_mapMsaaSamples, 4)
+      val antialiasingEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_mapAntialiasingEnabled, false)
+      val antialiasingSampleCount = typedArray.getInteger(R.styleable.mapbox_MapView_mapbox_mapAntialiasingSampleCount, 4)
 
       return MapInitOptions(
         context,
@@ -136,10 +136,10 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
         } else {
           styleUri
         },
-        renderConfigMSAA = if (msaaEnabled) {
-          ConfigMSAA.On(msaaSamples)
+        antialiasingConfig = if (antialiasingEnabled) {
+          AntialiasingConfig.On(antialiasingSampleCount)
         } else {
-          ConfigMSAA.Off
+          AntialiasingConfig.Off
         }
       ).also {
         it.cameraOptions = cameraOptions
@@ -324,7 +324,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
      */
     @JvmStatic
     fun isRenderingSupported(): Boolean {
-      EGLCore(false, ConfigMSAA.Off).apply {
+      EGLCore(false, AntialiasingConfig.Off).apply {
         prepareEgl()
         release()
         return eglStatusSuccess
