@@ -5,6 +5,7 @@ import android.content.res.Resources
 import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.util.DisplayMetrics
+import com.mapbox.maps.MapView.Companion.DEFAULT_ANTIALIASING_SAMPLE_COUNT
 import com.mapbox.maps.loader.MapboxMapStaticInitializer
 import io.mockk.*
 import org.junit.After
@@ -55,7 +56,7 @@ class MapViewTypedArrayTest(
     every { CameraAttributeParser.parseCameraOptions(any()) } returns mockk()
 
     every { typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapSurface, 0) } returns inputMapSurfaceMode
-    every { typedArray.getInteger(R.styleable.mapbox_MapView_mapbox_mapAntialiasingSampleCount, 0) } returns inputAntialiasingSampleCount
+    every { typedArray.getInteger(R.styleable.mapbox_MapView_mapbox_mapAntialiasingSampleCount, DEFAULT_ANTIALIASING_SAMPLE_COUNT) } returns inputAntialiasingSampleCount
     every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) } returns inputMapStyle
     every { typedArray.recycle() } just Runs
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
@@ -87,10 +88,10 @@ class MapViewTypedArrayTest(
         /* expectedStyle */ Style.MAPBOX_STREETS,
       ),
       arrayOf(
-        /* inputAntialiasingSampleCount */ 0,
+        /* inputAntialiasingSampleCount */ DEFAULT_ANTIALIASING_SAMPLE_COUNT,
         /* inputMapSurfaceMode */ 0,
         /* inputMapStyle */ "",
-        /* expectedAntialiasingSampleCount */ 0,
+        /* expectedAntialiasingSampleCount */ DEFAULT_ANTIALIASING_SAMPLE_COUNT,
         /* expectedTextureMode */ false,
         /* expectedStyle */ null,
       ),

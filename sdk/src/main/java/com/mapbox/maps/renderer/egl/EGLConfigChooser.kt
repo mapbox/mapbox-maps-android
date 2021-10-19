@@ -3,6 +3,7 @@ package com.mapbox.maps.renderer.egl
 import android.os.Build
 import com.mapbox.common.Logger
 import com.mapbox.maps.MAPBOX_LOCALE
+import com.mapbox.maps.MapView.Companion.DEFAULT_ANTIALIASING_SAMPLE_COUNT
 import java.lang.Boolean.compare
 import java.lang.Integer.compare
 import java.util.*
@@ -15,6 +16,7 @@ internal class EGLConfigChooser constructor(
   private val translucentSurface: Boolean,
   private val antialiasingSampleCount: Int,
 ) {
+  private val antialiasingEnabled = antialiasingSampleCount > DEFAULT_ANTIALIASING_SAMPLE_COUNT
   // Get all configs at least RGB 565 with 16 depth and 8 stencil
   private val configAttributes: IntArray
     get() {
@@ -29,18 +31,8 @@ internal class EGLConfigChooser constructor(
         EGL_BLUE_SIZE, 5,
         EGL_ALPHA_SIZE, if (translucentSurface) 8 else 0,
         EGL_DEPTH_SIZE, 16,
-        if (antialiasingSampleCount > 0) {
-          EGL_SAMPLE_BUFFERS
-        } else {
-          EGL_NONE
-        },
-        1,
-        if (antialiasingSampleCount > 0) {
-          EGL_SAMPLES
-        } else {
-          EGL_NONE
-        },
-        antialiasingSampleCount,
+        if (antialiasingEnabled) { EGL_SAMPLE_BUFFERS } else { EGL_NONE }, 1,
+        if (antialiasingEnabled) { EGL_SAMPLES } else { EGL_NONE }, antialiasingSampleCount,
         EGL_STENCIL_SIZE, 8,
         if (emulator) EGL_NONE else EGL_CONFORMANT, EGL_OPENGL_ES2_BIT,
         if (emulator) EGL_NONE else EGL_COLOR_BUFFER_TYPE, EGL_RGB_BUFFER,
@@ -147,7 +139,8 @@ internal class EGLConfigChooser constructor(
       val isNotConformant: Boolean,
       val isCaveat: Boolean,
       val index: Int,
-      val config: EGLConfig
+      val config: EGLConfig,
+      val samples: Int,
     ) : Comparable<Config> {
 
       override fun compareTo(other: Config): Int {
@@ -194,6 +187,8 @@ internal class EGLConfigChooser constructor(
       val alpha = getConfigAttr(egl, display, config, EGL_ALPHA_SIZE)
       val depth = getConfigAttr(egl, display, config, EGL_DEPTH_SIZE)
       val stencil = getConfigAttr(egl, display, config, EGL_STENCIL_SIZE)
+      val sampleBuffers = getConfigAttr(egl, display, config, EGL_SAMPLE_BUFFERS)
+      val samples = getConfigAttr(egl, display, config, EGL_SAMPLES)
 
       // validate every attribute is set correctly
       if (!eglChooserSuccess) {
@@ -202,6 +197,13 @@ internal class EGLConfigChooser constructor(
 
       var configOk = depth == 24 || depth == 16
       configOk = configOk and (stencil == 8)
+      if (antialiasingEnabled) {
+        configOk = configOk and (sampleBuffers >= 1)
+        configOk = configOk and (samples >= antialiasingSampleCount)
+      } else {
+        configOk = configOk and (sampleBuffers == 0)
+        configOk = configOk and (samples == 0)
+      }
 
       // Filter our configs first for depth, stencil and anti-aliasing
       if (configOk) {
@@ -240,7 +242,8 @@ internal class EGLConfigChooser constructor(
               isNotConformant,
               isCaveat,
               i,
-              config
+              config,
+              samples,
             )
           )
         }
@@ -260,6 +263,13 @@ internal class EGLConfigChooser constructor(
     }
     if (bestMatch.isNotConformant) {
       Logger.w(TAG, "Chosen config is not conformant.")
+    }
+    if (antialiasingEnabled && bestMatch.samples != antialiasingSampleCount) {
+      Logger.w(
+        TAG,
+        "Antialiasing was specified with sample count = $antialiasingSampleCount" +
+          " but MSAA x${bestMatch.samples} was applied as closest one supported."
+      )
     }
     return bestMatch.config
   }

@@ -3,6 +3,7 @@ package com.mapbox.maps
 import android.content.Context
 import android.util.DisplayMetrics
 import com.mapbox.common.ShadowLogger
+import com.mapbox.maps.MapView.Companion.DEFAULT_ANTIALIASING_SAMPLE_COUNT
 import com.mapbox.maps.plugin.*
 import io.mockk.every
 import io.mockk.mockk
@@ -50,8 +51,8 @@ class MapInitOptionsTest {
   }
 
   @Test
-  fun renderConfigMSAA() {
-    assertEquals(0, MapInitOptions(context).antialiasingSampleCount)
+  fun antialiasingSampleCount() {
+    assertEquals(DEFAULT_ANTIALIASING_SAMPLE_COUNT, MapInitOptions(context).antialiasingSampleCount)
     assertEquals(0, MapInitOptions(context, antialiasingSampleCount = 0).antialiasingSampleCount)
     assertEquals(8, MapInitOptions(context, antialiasingSampleCount = 8).antialiasingSampleCount)
   }

@@ -122,7 +122,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       val textureView = typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapSurface, 0) != 0
       val styleUri =
         typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) ?: Style.MAPBOX_STREETS
-      val antialiasingSampleCount = typedArray.getInteger(R.styleable.mapbox_MapView_mapbox_mapAntialiasingSampleCount, 0)
+      val antialiasingSampleCount = typedArray.getInteger(R.styleable.mapbox_MapView_mapbox_mapAntialiasingSampleCount, DEFAULT_ANTIALIASING_SAMPLE_COUNT)
 
       return MapInitOptions(
         context,
@@ -310,6 +310,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    * Static variables and methods.
    */
   companion object {
+    internal const val DEFAULT_ANTIALIASING_SAMPLE_COUNT = 1
     /**
      * Static method to check if [MapView] could properly render on this device.
      * This method may take some time on slow devices.
@@ -318,7 +319,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
      */
     @JvmStatic
     fun isRenderingSupported(): Boolean {
-      EGLCore(false, 0).apply {
+      EGLCore(false, DEFAULT_ANTIALIASING_SAMPLE_COUNT).apply {
         prepareEgl()
         release()
         return eglStatusSuccess
