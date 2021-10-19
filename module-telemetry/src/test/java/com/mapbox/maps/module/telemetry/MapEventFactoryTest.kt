@@ -12,9 +12,12 @@ import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 import org.robolectric.util.ReflectionHelpers
 import java.util.*
 
+@RunWith(RobolectricTestRunner::class)
 class MapEventFactoryTest {
   private lateinit var phoneState: PhoneState
   private val gson = Gson()
