@@ -7,18 +7,18 @@ import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
+import io.mockk.Runs
 import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
-import io.mockk.mockkObject
+import io.mockk.mockkStatic
 import io.mockk.unmockkAll
+import io.mockk.verify
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 
-@RunWith(RobolectricTestRunner::class)
 class LocationComponentAttributeParserTest {
   private val context: Context = mockk(relaxed = true)
 
@@ -30,7 +30,8 @@ class LocationComponentAttributeParserTest {
 
   @Before
   fun setUp() {
-    mockkObject(LocationComponentAttributeParser::class)
+    mockkStatic(Color::class)
+    every { Color.parseColor(any()) } returns Color.WHITE
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
     every { typedArray.getString(any()) } returns "pk.token"
     every { typedArray.getBoolean(any(), any()) } returns true
@@ -40,11 +41,30 @@ class LocationComponentAttributeParserTest {
     every { typedArray.getFloat(any(), any()) } returns 10.0f
     every { typedArray.getDrawable(any()) } returns drawable
     every { typedArray.hasValue(any()) } returns true
+    every { typedArray.recycle() } just Runs
   }
 
   @After
   fun cleanUp() {
     unmockkAll()
+  }
+
+  @Test
+  fun testTypedArrayRecycle() {
+    every { typedArray.getBoolean(any(), any()) } returns true
+    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
+    verify { typedArray.recycle() }
+  }
+
+  @Test
+  fun testTypedArrayRecycleWithException() {
+    every { typedArray.getBoolean(any(), any()) }.throws(Exception(""))
+    try {
+      val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
+    } catch (e: Exception) {
+      // do nothing
+    }
+    verify { typedArray.recycle() }
   }
 
   @Test
@@ -74,7 +94,6 @@ class LocationComponentAttributeParserTest {
     val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
     assertEquals(false, settings.pulsingEnabled)
   }
-
   @Test
   fun pulsingColorTest() {
     every { typedArray.getColor(any(), any()) } returns Color.parseColor("#4A90E2")
@@ -84,9 +103,11 @@ class LocationComponentAttributeParserTest {
 
   @Test
   fun pulsingMaxRadiusTest() {
-    every { typedArray.getDimension(any(), any()) } returns 10f
-    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
-    assertEquals(10f, settings.pulsingMaxRadius)
+    val pixelRatio = 1.2f
+    val inputValue = 10f
+    every { typedArray.getDimension(any(), pixelRatio * inputValue) } returns pixelRatio * inputValue
+    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, pixelRatio)
+    assertEquals(pixelRatio * inputValue, settings.pulsingMaxRadius)
   }
 
   @Test

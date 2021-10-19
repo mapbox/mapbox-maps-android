@@ -7,18 +7,18 @@ import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
+import io.mockk.Runs
 import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
-import io.mockk.mockkObject
+import io.mockk.mockkStatic
 import io.mockk.unmockkAll
+import io.mockk.verify
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 
-@RunWith(RobolectricTestRunner::class)
 class AttributionAttributeParserTest {
   private val context: Context = mockk(relaxed = true)
 
@@ -30,7 +30,8 @@ class AttributionAttributeParserTest {
 
   @Before
   fun setUp() {
-    mockkObject(AttributionAttributeParser::class)
+    mockkStatic(Color::class)
+    every { Color.parseColor(any()) } returns Color.WHITE
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
     every { typedArray.getString(any()) } returns "pk.token"
     every { typedArray.getBoolean(any(), any()) } returns true
@@ -40,11 +41,30 @@ class AttributionAttributeParserTest {
     every { typedArray.getFloat(any(), any()) } returns 10.0f
     every { typedArray.getDrawable(any()) } returns drawable
     every { typedArray.hasValue(any()) } returns true
+    every { typedArray.recycle() } just Runs
   }
 
   @After
   fun cleanUp() {
     unmockkAll()
+  }
+
+  @Test
+  fun testTypedArrayRecycle() {
+    every { typedArray.getBoolean(any(), any()) } returns true
+    val settings = AttributionAttributeParser.parseAttributionSettings(context, attrs, 1.2f)
+    verify { typedArray.recycle() }
+  }
+
+  @Test
+  fun testTypedArrayRecycleWithException() {
+    every { typedArray.getBoolean(any(), any()) }.throws(Exception(""))
+    try {
+      val settings = AttributionAttributeParser.parseAttributionSettings(context, attrs, 1.2f)
+    } catch (e: Exception) {
+      // do nothing
+    }
+    verify { typedArray.recycle() }
   }
 
   @Test
@@ -60,7 +80,6 @@ class AttributionAttributeParserTest {
     val settings = AttributionAttributeParser.parseAttributionSettings(context, attrs, 1.2f)
     assertEquals(false, settings.enabled)
   }
-
   @Test
   fun iconColorTest() {
     every { typedArray.getColor(any(), any()) } returns Color.parseColor("#FF1E8CAB")
@@ -77,30 +96,38 @@ class AttributionAttributeParserTest {
 
   @Test
   fun marginLeftTest() {
-    every { typedArray.getDimension(any(), any()) } returns 92f
-    val settings = AttributionAttributeParser.parseAttributionSettings(context, attrs, 1.2f)
-    assertEquals(92f, settings.marginLeft)
+    val pixelRatio = 1.2f
+    val inputValue = 92f
+    every { typedArray.getDimension(any(), pixelRatio * inputValue) } returns pixelRatio * inputValue
+    val settings = AttributionAttributeParser.parseAttributionSettings(context, attrs, pixelRatio)
+    assertEquals(pixelRatio * inputValue, settings.marginLeft)
   }
 
   @Test
   fun marginTopTest() {
-    every { typedArray.getDimension(any(), any()) } returns 4f
-    val settings = AttributionAttributeParser.parseAttributionSettings(context, attrs, 1.2f)
-    assertEquals(4f, settings.marginTop)
+    val pixelRatio = 1.2f
+    val inputValue = 4f
+    every { typedArray.getDimension(any(), pixelRatio * inputValue) } returns pixelRatio * inputValue
+    val settings = AttributionAttributeParser.parseAttributionSettings(context, attrs, pixelRatio)
+    assertEquals(pixelRatio * inputValue, settings.marginTop)
   }
 
   @Test
   fun marginRightTest() {
-    every { typedArray.getDimension(any(), any()) } returns 4f
-    val settings = AttributionAttributeParser.parseAttributionSettings(context, attrs, 1.2f)
-    assertEquals(4f, settings.marginRight)
+    val pixelRatio = 1.2f
+    val inputValue = 4f
+    every { typedArray.getDimension(any(), pixelRatio * inputValue) } returns pixelRatio * inputValue
+    val settings = AttributionAttributeParser.parseAttributionSettings(context, attrs, pixelRatio)
+    assertEquals(pixelRatio * inputValue, settings.marginRight)
   }
 
   @Test
   fun marginBottomTest() {
-    every { typedArray.getDimension(any(), any()) } returns 4f
-    val settings = AttributionAttributeParser.parseAttributionSettings(context, attrs, 1.2f)
-    assertEquals(4f, settings.marginBottom)
+    val pixelRatio = 1.2f
+    val inputValue = 4f
+    every { typedArray.getDimension(any(), pixelRatio * inputValue) } returns pixelRatio * inputValue
+    val settings = AttributionAttributeParser.parseAttributionSettings(context, attrs, pixelRatio)
+    assertEquals(pixelRatio * inputValue, settings.marginBottom)
   }
 
   @Test

@@ -9,18 +9,17 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.ScrollMode
+import io.mockk.Runs
 import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
-import io.mockk.mockkObject
 import io.mockk.unmockkAll
+import io.mockk.verify
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 
-@RunWith(RobolectricTestRunner::class)
 class GesturesAttributeParserTest {
   private val context: Context = mockk(relaxed = true)
 
@@ -32,7 +31,6 @@ class GesturesAttributeParserTest {
 
   @Before
   fun setUp() {
-    mockkObject(GesturesAttributeParser::class)
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
     every { typedArray.getString(any()) } returns "pk.token"
     every { typedArray.getBoolean(any(), any()) } returns true
@@ -42,11 +40,30 @@ class GesturesAttributeParserTest {
     every { typedArray.getFloat(any(), any()) } returns 10.0f
     every { typedArray.getDrawable(any()) } returns drawable
     every { typedArray.hasValue(any()) } returns true
+    every { typedArray.recycle() } just Runs
   }
 
   @After
   fun cleanUp() {
     unmockkAll()
+  }
+
+  @Test
+  fun testTypedArrayRecycle() {
+    every { typedArray.getBoolean(any(), any()) } returns true
+    val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
+    verify { typedArray.recycle() }
+  }
+
+  @Test
+  fun testTypedArrayRecycleWithException() {
+    every { typedArray.getBoolean(any(), any()) }.throws(Exception(""))
+    try {
+      val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
+    } catch (e: Exception) {
+      // do nothing
+    }
+    verify { typedArray.recycle() }
   }
 
   @Test
@@ -229,7 +246,6 @@ class GesturesAttributeParserTest {
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
     assertEquals(false, settings.increasePinchToZoomThresholdWhenRotating)
   }
-
   @Test
   fun zoomAnimationAmountTest() {
     every { typedArray.getFloat(any(), any()) } returns 1f
