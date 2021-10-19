@@ -1,45 +1,36 @@
-package com.mapbox.maps.plugin.viewannotation
+package com.mapbox.maps.viewannotation
 
-import android.content.Context
-import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
-import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.ViewAnnotationOptions
-import com.mapbox.maps.ViewAnnotationPositionDescriptor
+import com.mapbox.maps.*
 import com.mapbox.maps.extension.observable.eventdata.CameraChangedEventData
-import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.delegates.MapViewAnnotationDelegate
+import java.util.concurrent.ConcurrentHashMap
 
-@MapboxExperimental
-class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
+internal class ViewAnnotationManagerImpl(
+  private val mapView: MapView,
+  private val mapboxMap: MapboxMap = mapView.getMapboxMap()
+) : ViewAnnotationManager {
 
-  private lateinit var mapView: FrameLayout
-  // using async inflater if needed to free up main thread a bit
-  private val asyncInflater by lazy { AsyncLayoutInflater(mapView.context) }
-
-  private val annotations = HashMap<String, ViewAnnotation>()
-
-  private lateinit var delegateProvider: MapDelegateProvider
-  private lateinit var delegateMapViewAnnotations: MapViewAnnotationDelegate
-
-  override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
-    this.delegateProvider = delegateProvider
-    delegateProvider.mapListenerDelegate.addOnCameraChangeListener(this)
-    delegateMapViewAnnotations = delegateProvider.mapViewAnnotationDelegate
-  }
-
-  override fun bind(context: Context, attrs: AttributeSet?, pixelRatio: Float) {
-    // no need as we need overloaded method
-  }
-
-  override fun bind(view: FrameLayout) {
-    mapView = view
+  init {
     mapView.requestDisallowInterceptTouchEvent(false)
+    mapboxMap.addOnCameraChangeListener(this)
   }
+
+  private val asyncInflater by lazy {
+    try {
+      AsyncLayoutInflater(mapView.context)
+    } catch (e: NoClassDefFoundError) {
+      throw RuntimeException(
+        "Please add https://mvnrepository.com/artifact/androidx.asynclayoutinflater/asynclayoutinflater/1.0.0 dependency " +
+          "to your project to make use of asynchronous view inflation when adding view annotation!"
+      )
+    }
+  }
+
+  private val annotations = ConcurrentHashMap<String, ViewAnnotation>()
 
   override fun addViewAnnotation(
     @LayoutRes resId: Int,
@@ -79,7 +70,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
       viewLayoutParams = inflatedViewLayout
     )
     annotations[id] = viewAnnotation
-    delegateMapViewAnnotations.apply {
+    mapboxMap.apply {
       addViewAnnotation(id, updatedOptions)
       calculateViewAnnotationsPosition {
         redrawAnnotations(it)
@@ -96,7 +87,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
     }
     for (viewPosition in positionsToUpdate) {
       annotations[viewPosition.identifier]?.let { annotation ->
-        val options = delegateMapViewAnnotations.getViewAnnotationOptions(viewPosition.identifier)
+        val options = mapboxMap.getViewAnnotationOptions(viewPosition.identifier)
         if (options.isValue) {
           annotation.viewLayoutParams.width = options.value?.width!!
           annotation.viewLayoutParams.height = options.value?.height!!
@@ -117,7 +108,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
       mapView.removeView(it.view)
     }
     annotations.remove(id)
-    delegateMapViewAnnotations.apply {
+    mapboxMap.apply {
       removeViewAnnotation(id)
       calculateViewAnnotationsPosition {
         redrawAnnotations(it)
@@ -130,7 +121,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
     options: ViewAnnotationOptions,
   ) {
     annotations[id]?.let {
-      delegateMapViewAnnotations.apply {
+      mapboxMap.apply {
         updateViewAnnotation(id, options)
         calculateViewAnnotationsPosition { positions ->
           redrawAnnotations(positions)
@@ -141,7 +132,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
 
   override fun getViewAnnotationByFeatureId(featureId: String): ViewAnnotation? {
     annotations.forEach {
-      val options = delegateMapViewAnnotations.getViewAnnotationOptions(it.key)
+      val options = mapboxMap.getViewAnnotationOptions(it.key)
       if (options.isValue && options.value!!.associatedFeatureId == featureId) {
         return annotations[it.key]
       }
@@ -151,7 +142,7 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
 
   override fun getViewAnnotationOptionsByFeatureId(featureId: String): ViewAnnotationOptions? {
     annotations.forEach {
-      val options = delegateMapViewAnnotations.getViewAnnotationOptions(it.key)
+      val options = mapboxMap.getViewAnnotationOptions(it.key)
       if (options.isValue && options.value!!.associatedFeatureId == featureId) {
         return options.value
       }
@@ -164,24 +155,24 @@ class ViewAnnotationPluginImpl: ViewAnnotationPlugin {
   }
 
   override fun getViewAnnotationOptionsById(id: String): ViewAnnotationOptions? {
-    val options = delegateMapViewAnnotations.getViewAnnotationOptions(id)
+    val options = mapboxMap.getViewAnnotationOptions(id)
     if (options.isValue) {
       return options.value
     }
     return null
   }
 
-  override fun cleanup() {
-    super.cleanup()
-    delegateProvider.mapListenerDelegate.removeOnCameraChangeListener(this)
+  fun destroy() {
+    mapboxMap.removeOnCameraChangeListener(this)
     annotations.forEach {
+      mapboxMap.removeViewAnnotation(it.key)
       mapView.removeView(it.value.view)
     }
     annotations.clear()
   }
 
   override fun onCameraChanged(eventData: CameraChangedEventData) {
-    delegateMapViewAnnotations.calculateViewAnnotationsPosition {
+    mapboxMap.calculateViewAnnotationsPosition {
       redrawAnnotations(it)
     }
   }

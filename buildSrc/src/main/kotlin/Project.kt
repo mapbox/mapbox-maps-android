@@ -64,6 +64,7 @@ object Dependencies {
   const val hamcrest = "org.hamcrest:hamcrest:${Versions.hamcrest}"
   const val annotations = androidxAnnotations
   const val equalsVerifier = "nl.jqno.equalsverifier:equalsverifier:${Versions.equalsVerifier}"
+  const val asyncInflater = "androidx.asynclayoutinflater:asynclayoutinflater:${Versions.asyncInflater}"
 }
 
 object Versions {
@@ -106,4 +107,5 @@ object Versions {
   const val lint = "27.2.2"
   const val hamcrest = "2.1"
   const val equalsVerifier = "3.7"
+  const val asyncInflater = "1.0.0"
 }

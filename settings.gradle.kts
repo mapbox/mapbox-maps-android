@@ -25,7 +25,6 @@ include(
   ":plugin-logo",
   ":plugin-overlay",
   ":plugin-scalebar",
-  ":plugin-view-annotation",
   ":sdk",
   ":sdk-base"
 )

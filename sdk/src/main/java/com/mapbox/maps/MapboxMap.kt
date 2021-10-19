@@ -46,8 +46,7 @@ class MapboxMap internal constructor(
   MapListenerDelegate,
   MapPluginExtensionsDelegate,
   MapCameraManagerDelegate,
-  MapStyleStateDelegate,
-  MapViewAnnotationDelegate {
+  MapStyleStateDelegate {
 
   internal lateinit var style: Style
   internal var isStyleLoadInitiated = false
@@ -1323,6 +1322,26 @@ class MapboxMap internal constructor(
     return MapProjectionUtils.fromValue(value)
   }
 
+  internal fun addViewAnnotation(viewId: String, options: ViewAnnotationOptions): Expected<String, None> {
+    return nativeMapWeakRef.call { this.addViewAnnotation(viewId, options) }
+  }
+
+  internal fun updateViewAnnotation(viewId: String, options: ViewAnnotationOptions): Expected<String, None> {
+    return nativeMapWeakRef.call { this.updateViewAnnotation(viewId, options) }
+  }
+
+  internal fun removeViewAnnotation(viewId: String): Expected<String, None> {
+    return nativeMapWeakRef.call { this.removeViewAnnotation(viewId) }
+  }
+
+  internal fun calculateViewAnnotationsPosition(callback: ViewAnnotationPositionsCallback) {
+    return nativeMapWeakRef.call { this.calculateViewAnnotationPositions(callback) }
+  }
+
+  internal fun getViewAnnotationOptions(identifier: String): Expected<String, ViewAnnotationOptions> {
+    return nativeMapWeakRef.call { this.getViewAnnotationOptions(identifier) }
+  }
+
   /**
    * A convenience object to access MapboxMap's static utilities.
    */
@@ -1345,25 +1364,5 @@ class MapboxMap internal constructor(
     }
 
     private const val TAG_PROJECTION = "MbxProjection"
-  }
-
-  override fun addViewAnnotation(viewId: String, options: ViewAnnotationOptions): Expected<String, None> {
-    return nativeMapWeakRef.call { this.addViewAnnotation(viewId, options) }
-  }
-
-  override fun updateViewAnnotation(viewId: String, options: ViewAnnotationOptions): Expected<String, None> {
-    return nativeMapWeakRef.call { this.updateViewAnnotation(viewId, options) }
-  }
-
-  override fun removeViewAnnotation(viewId: String): Expected<String, None> {
-    return nativeMapWeakRef.call { this.removeViewAnnotation(viewId) }
-  }
-
-  override fun calculateViewAnnotationsPosition(callback: ViewAnnotationPositionsCallback) {
-    return nativeMapWeakRef.call { this.calculateViewAnnotationPositions(callback) }
-  }
-
-  override fun getViewAnnotationOptions(identifier: String): Expected<String, ViewAnnotationOptions> {
-    return nativeMapWeakRef.call { this.getViewAnnotationOptions(identifier) }
   }
 }

@@ -2,25 +2,19 @@ package com.mapbox.maps.plugin
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.FrameLayout
 
 /**
- * Interface to bind any UI related instance to the MapView or context.
+ * Interface to bind a View and underlying context
  */
-interface ContextBinder {
+fun interface ContextBinder {
   /**
-   * Provide parameters needed to bind any UI related instance to the context.
+   * Bind the ViewPlugin with current map context. This will create a View that
+   * will be added to the MapView.
    *
    * @param context The hosting context
    * @param attrs parent attributes
    * @param pixelRatio the pixel ratio of the device
+   * @return View that will be added to the MapView
    */
   fun bind(context: Context, attrs: AttributeSet?, pixelRatio: Float)
-
-  /**
-   * Optional overload allowing to bind directly to MapView passed as FrameLayout.
-   *
-   * @param view hosting MapView
-   */
-  fun bind(view: FrameLayout) {}
 }

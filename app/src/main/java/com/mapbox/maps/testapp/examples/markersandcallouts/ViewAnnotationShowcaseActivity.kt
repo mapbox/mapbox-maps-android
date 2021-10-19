@@ -23,9 +23,8 @@ import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapLongClickListener
-import com.mapbox.maps.plugin.viewannotation.ViewAnnotationPlugin
-import com.mapbox.maps.plugin.viewannotation.viewAnnotation
 import com.mapbox.maps.testapp.R
+import com.mapbox.maps.viewannotation.ViewAnnotationManager
 
 /**
  * Example how to add view annotations to the map.
@@ -36,7 +35,7 @@ import com.mapbox.maps.testapp.R
 class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, OnMapLongClickListener {
 
   private lateinit var mapboxMap: MapboxMap
-  private lateinit var viewAnnotationPlugin: ViewAnnotationPlugin
+  private lateinit var viewAnnotationManager: ViewAnnotationManager
   private lateinit var style: Style
   private val pointList = mutableListOf<Feature>()
   private var markerId = "0"
@@ -55,7 +54,7 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
     )
     setContentView(mapView)
 
-    viewAnnotationPlugin = mapView.viewAnnotation
+    viewAnnotationManager = mapView.viewAnnotationManager
 
     mapboxMap = mapView.getMapboxMap()
     mapboxMap.loadStyle(
@@ -94,10 +93,10 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
       if (it.isValue && it.value?.size!! > 0) {
         it.value?.get(0)?.feature?.let { feature ->
           if (feature.id() != null) {
-            viewAnnotationPlugin.getViewAnnotationByFeatureId(feature.id()!!)?.let { viewAnnotation ->
+            viewAnnotationManager.getViewAnnotationByFeatureId(feature.id()!!)?.let { viewAnnotation ->
               if (viewAnnotation.view.visibility == View.VISIBLE) {
                 viewAnnotation.view.visibility = View.GONE
-                viewAnnotationPlugin.updateViewAnnotation(
+                viewAnnotationManager.updateViewAnnotation(
                   viewAnnotation.id,
                   ViewAnnotationOptions.Builder()
                     .visible(false)
@@ -105,7 +104,7 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
                 )
               } else {
                 viewAnnotation.view.visibility = View.VISIBLE
-                viewAnnotationPlugin.updateViewAnnotation(
+                viewAnnotationManager.updateViewAnnotation(
                   viewAnnotation.id,
                   ViewAnnotationOptions.Builder()
                     .visible(true)
@@ -131,7 +130,7 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
 
   @SuppressLint("SetTextI18n")
   private fun addViewAnnotation(point: Point, markerId: String) {
-    val viewAnnotation = viewAnnotationPlugin.addViewAnnotation(
+    val viewAnnotation = viewAnnotationManager.addViewAnnotation(
       R.layout.item_callout_view,
       ViewAnnotationOptions.Builder()
         .geometry(point)
@@ -142,7 +141,7 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
     )
     viewAnnotation.view.visibility = View.GONE
     // calculate offsetY manually taking into account icon height only because of bottom anchoring
-    viewAnnotationPlugin.updateViewAnnotation(
+    viewAnnotationManager.updateViewAnnotation(
       viewAnnotation.id,
       ViewAnnotationOptions.Builder()
         .offsetY(markerHeight)
@@ -152,27 +151,27 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
     viewAnnotation.view.findViewById<TextView>(R.id.textNativeView).text =
       "lat=%.2f\nlon=%.2f".format(point.latitude(), point.longitude())
     viewAnnotation.view.findViewById<ImageView>(R.id.closeNativeView).setOnClickListener { _ ->
-      viewAnnotationPlugin.removeViewAnnotation(viewAnnotation.id)
+      viewAnnotationManager.removeViewAnnotation(viewAnnotation.id)
     }
     viewAnnotation.view.findViewById<Button>(R.id.selectButton).setOnClickListener { b ->
       val button = b as Button
       if (button.text.contentEquals("SELECT", true)) {
         button.text = "DESELECT"
-        viewAnnotationPlugin.updateViewAnnotation(
+        viewAnnotationManager.updateViewAnnotation(
           viewAnnotation.id,
           ViewAnnotationOptions.Builder()
-            .width(viewAnnotationPlugin.getViewAnnotationOptionsById(viewAnnotation.id)?.width!! + SELECTED_ADD_COEF_PX)
-            .height(viewAnnotationPlugin.getViewAnnotationOptionsById(viewAnnotation.id)?.height!! + SELECTED_ADD_COEF_PX)
+            .width(viewAnnotationManager.getViewAnnotationOptionsById(viewAnnotation.id)?.width!! + SELECTED_ADD_COEF_PX)
+            .height(viewAnnotationManager.getViewAnnotationOptionsById(viewAnnotation.id)?.height!! + SELECTED_ADD_COEF_PX)
             .selected(true)
             .build()
         )
       } else {
         button.text = "SELECT"
-        viewAnnotationPlugin.updateViewAnnotation(
+        viewAnnotationManager.updateViewAnnotation(
           viewAnnotation.id,
           ViewAnnotationOptions.Builder()
-            .width(viewAnnotationPlugin.getViewAnnotationOptionsById(viewAnnotation.id)?.width!! - SELECTED_ADD_COEF_PX)
-            .height(viewAnnotationPlugin.getViewAnnotationOptionsById(viewAnnotation.id)?.height!! - SELECTED_ADD_COEF_PX)
+            .width(viewAnnotationManager.getViewAnnotationOptionsById(viewAnnotation.id)?.width!! - SELECTED_ADD_COEF_PX)
+            .height(viewAnnotationManager.getViewAnnotationOptionsById(viewAnnotation.id)?.height!! - SELECTED_ADD_COEF_PX)
             .selected(false)
             .build()
         )

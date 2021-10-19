@@ -1,16 +1,14 @@
-package com.mapbox.maps.plugin.viewannotation
+package com.mapbox.maps.viewannotation
 
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ViewAnnotationOptions
-import com.mapbox.maps.plugin.ContextBinder
-import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 
 @MapboxExperimental
-interface ViewAnnotationPlugin: MapPlugin, ContextBinder, OnCameraChangeListener {
+interface ViewAnnotationManager : OnCameraChangeListener {
 
   /**
    * Add annotation view inflated from [resId] synchronously.
@@ -33,10 +31,11 @@ interface ViewAnnotationPlugin: MapPlugin, ContextBinder, OnCameraChangeListener
     options: ViewAnnotationOptions
   ): ViewAnnotation
 
-
   /**
    * Add annotation view inflated from [resId] asynchronously.
    * Parent layout of [resId] must have fixed dimensions and should not use [ViewGroup.LayoutParams.WRAP_CONTENT].
+   *
+   * In order to use this function please add following [dependency](https://mvnrepository.com/artifact/androidx.asynclayoutinflater/asynclayoutinflater/1.0.0) to your project.
    *
    * Annotation [options] must include Geometry where we want to bind our annotation view.
    *
@@ -48,7 +47,7 @@ interface ViewAnnotationPlugin: MapPlugin, ContextBinder, OnCameraChangeListener
    * @param asyncInflateCallback callback triggered when [ViewAnnotation] containing id to manipulate with view annotation,
    * inflated [View] with layout params is added.
    *
-   * @throws [RuntimeException] if options did not include geometry.
+   * @throws [RuntimeException] if options did not include geometry or async inflater [dependency](https://mvnrepository.com/artifact/androidx.asynclayoutinflater/asynclayoutinflater/1.0.0) was not added.
    */
   fun addViewAnnotation(
     @LayoutRes resId: Int,
