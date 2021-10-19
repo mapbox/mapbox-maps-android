@@ -1169,10 +1169,31 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       // ignore short flings, these can occur when other gestures just have finished executing
       return false
     }
-    cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
 
-    val offsetX = if (internalSettings.isScrollHorizontallyLimited()) 0.0 else velocityX / FLING_LIMITING_FACTOR
-    val offsetY = if (internalSettings.isScrollVerticallyLimited()) 0.0 else velocityY / FLING_LIMITING_FACTOR
+    val pitch = mapCameraManagerDelegate.cameraState.pitch
+
+    // We limit the amount of fling displacement based on the camera pitch value.
+    val pitchFactorAdditionalComponent = when {
+      pitch == MINIMUM_PITCH -> {
+        0.0
+      }
+      pitch > MINIMUM_PITCH && pitch < NORMAL_MAX_PITCH -> {
+        pitch / 10.0
+      }
+      pitch in NORMAL_MAX_PITCH..MAXIMUM_PITCH -> {
+        val a = ln(NORMAL_MAX_PITCH / 10.0)
+        val b = ln(MAXIMUM_PITCH)
+        // exp(a) = pitch / 10.0
+        // exp(b) = pitch
+        exp((b - a) * (pitch - NORMAL_MAX_PITCH) / (MAXIMUM_PITCH - NORMAL_MAX_PITCH) + a)
+      }
+      else -> 0.0
+    }
+    val pitchFactor = (PITCH_BASE_FACTOR + pitchFactorAdditionalComponent) / screenDensity.toDouble()
+    val offsetX = if (internalSettings.isScrollHorizontallyLimited()) 0.0 else velocityX.toDouble() / pitchFactor
+    val offsetY = if (internalSettings.isScrollVerticallyLimited()) 0.0 else velocityY.toDouble() / pitchFactor
+
+    cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
 
     // calculate animation time based on displacement
     // velocityXY ranges from VELOCITY_THRESHOLD_IGNORE_FLING to ~5000
