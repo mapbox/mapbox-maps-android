@@ -399,13 +399,15 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   private fun updateDragSource() {
     delegateProvider.getStyle { style ->
       dragSource?.let { geoJsonSource ->
-        if (!style.styleSourceExists(geoJsonSource.sourceId)) {
-          Logger.e(TAG, "Can't update dragSource: source has not been added to style.")
-          return@getStyle
+        dragLayer?.let { layer ->
+          if (!style.styleSourceExists(geoJsonSource.sourceId) || !style.styleLayerExists(layer.layerId)) {
+            Logger.e(TAG, "Can't update dragSource: drag source or layer has not been added to style.")
+            return@getStyle
+          }
+          addIconToStyle(style, dragAnnotationMap.values)
+          val features = convertAnnotationsToFeatures(dragAnnotationMap.values)
+          geoJsonSource.featureCollection(FeatureCollection.fromFeatures(features))
         }
-        addIconToStyle(style, dragAnnotationMap.values)
-        val features = convertAnnotationsToFeatures(dragAnnotationMap.values)
-        geoJsonSource.featureCollection(FeatureCollection.fromFeatures(features))
       }
     }
   }
@@ -414,22 +416,20 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Trigger an update to the underlying source
    */
   private fun updateSource() {
-    if (!styleStateDelegate.isFullyLoaded()) {
-      Logger.e(TAG, "Can't update source: style is not fully loaded.")
-      return
-    }
     delegateProvider.getStyle { style ->
       if (source == null || layer == null) {
         initLayerAndSource(style)
       }
       source?.let { geoJsonSource ->
-        if (!style.styleSourceExists(geoJsonSource.sourceId)) {
-          Logger.e(TAG, "Can't update source: source has not been added to style.")
-          return@getStyle
+        layer?.let { layer ->
+          if (!style.styleSourceExists(geoJsonSource.sourceId) || !style.styleLayerExists(layer.layerId)) {
+            Logger.e(TAG, "Can't update source: source or layer has not been added to style.")
+            return@getStyle
+          }
+          addIconToStyle(style, annotationMap.values)
+          val features = convertAnnotationsToFeatures(annotationMap.values)
+          geoJsonSource.featureCollection(FeatureCollection.fromFeatures(features))
         }
-        addIconToStyle(style, annotationMap.values)
-        val features = convertAnnotationsToFeatures(annotationMap.values)
-        geoJsonSource.featureCollection(FeatureCollection.fromFeatures(features))
       }
     }
   }

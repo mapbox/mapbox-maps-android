@@ -71,7 +71,6 @@ class PolygonAnnotationManagerTest {
     }
     val styleStateDelegate = mockk<MapStyleStateDelegate>()
     every { delegateProvider.styleStateDelegate } returns styleStateDelegate
-    every { styleStateDelegate.isFullyLoaded() } returns true
     every { style.addSource(any()) } just Runs
     every { style.getSource(any()) } returns null
     every { style.addPersistentStyleLayer(any(), any()) } returns ExpectedFactory.createNone()
@@ -461,6 +460,7 @@ class PolygonAnnotationManagerTest {
   @Test
   fun testFillSortKeyLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.fillSortKey(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_SORT_KEY)) }
     val options = PolygonAnnotationOptions()
       .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -476,6 +476,7 @@ class PolygonAnnotationManagerTest {
   @Test
   fun testFillColorIntLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.fillColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR)) }
     val options = PolygonAnnotationOptions()
       .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -489,6 +490,7 @@ class PolygonAnnotationManagerTest {
   @Test
   fun testFillColorLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.fillColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_COLOR)) }
     val options = PolygonAnnotationOptions()
       .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -504,6 +506,7 @@ class PolygonAnnotationManagerTest {
   @Test
   fun testFillOpacityLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.fillOpacity(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OPACITY)) }
     val options = PolygonAnnotationOptions()
       .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -519,6 +522,7 @@ class PolygonAnnotationManagerTest {
   @Test
   fun testFillOutlineColorIntLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.fillOutlineColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
     val options = PolygonAnnotationOptions()
       .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -532,6 +536,7 @@ class PolygonAnnotationManagerTest {
   @Test
   fun testFillOutlineColorLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.fillOutlineColor(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_OUTLINE_COLOR)) }
     val options = PolygonAnnotationOptions()
       .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
@@ -547,6 +552,7 @@ class PolygonAnnotationManagerTest {
   @Test
   fun testFillPatternLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.fillPattern(Expression.get(PolygonAnnotationOptions.PROPERTY_FILL_PATTERN)) }
     val options = PolygonAnnotationOptions()
       .withPoints(listOf(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(1.0, 1.0))))
