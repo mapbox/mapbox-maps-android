@@ -6,7 +6,6 @@ import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import com.mapbox.maps.loader.MapboxMapStaticInitializer
-import com.mapbox.maps.renderer.egl.AntialiasingConfig
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -17,11 +16,10 @@ import org.junit.runners.Parameterized
 
 @RunWith(Parameterized::class)
 class MapViewTypedArrayTest(
-  private val inputAntialiasingEnabled: Boolean,
   private val inputAntialiasingSampleCount: Int,
   private val inputMapSurfaceMode: Int,
   private val inputMapStyle: String?,
-  private val expectedAntialiasingConfig: AntialiasingConfig,
+  private val expectedAntialiasingSampleCount: Int,
   private val expectedTextureMode: Boolean,
   private val expectedStyle: String?,
 ) {
@@ -57,8 +55,7 @@ class MapViewTypedArrayTest(
     every { CameraAttributeParser.parseCameraOptions(any()) } returns mockk()
 
     every { typedArray.getInt(R.styleable.mapbox_MapView_mapbox_mapSurface, 0) } returns inputMapSurfaceMode
-    every { typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_mapAntialiasingEnabled, false) } returns inputAntialiasingEnabled
-    every { typedArray.getInteger(R.styleable.mapbox_MapView_mapbox_mapAntialiasingSampleCount, 4) } returns inputAntialiasingSampleCount
+    every { typedArray.getInteger(R.styleable.mapbox_MapView_mapbox_mapAntialiasingSampleCount, 0) } returns inputAntialiasingSampleCount
     every { typedArray.getString(R.styleable.mapbox_MapView_mapbox_styleUri) } returns inputMapStyle
     every { typedArray.recycle() } just Runs
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
@@ -68,7 +65,7 @@ class MapViewTypedArrayTest(
   fun parseTypedArray() {
     val mapInitOptions = mapView.parseTypedArray(context, attrs)
     assertEquals(expectedTextureMode, mapInitOptions.textureView)
-    assertEquals(expectedAntialiasingConfig, mapInitOptions.antialiasingConfig)
+    assertEquals(expectedAntialiasingSampleCount, mapInitOptions.antialiasingSampleCount)
     assertEquals(expectedStyle, mapInitOptions.styleUri)
   }
 
@@ -82,29 +79,26 @@ class MapViewTypedArrayTest(
     @Parameterized.Parameters
     fun data() = listOf(
       arrayOf(
-        /* inputAntialiasingEnabled */ false,
         /* inputAntialiasingSampleCount */ 8,
         /* inputMapSurfaceMode */ 0,
         /* inputMapStyle */ null,
-        /* expectedConfigMSAA */ AntialiasingConfig.Off,
+        /* expectedAntialiasingSampleCount */ 8,
         /* expectedTextureMode */ false,
         /* expectedStyle */ Style.MAPBOX_STREETS,
       ),
       arrayOf(
-        /* inputAntialiasingEnabled */ true,
-        /* inputAntialiasingSampleCount */ 8,
+        /* inputAntialiasingSampleCount */ 0,
         /* inputMapSurfaceMode */ 0,
         /* inputMapStyle */ "",
-        /* expectedConfigMSAA */ AntialiasingConfig.On(8),
+        /* expectedAntialiasingSampleCount */ 0,
         /* expectedTextureMode */ false,
         /* expectedStyle */ null,
       ),
       arrayOf(
-        /* inputAntialiasingEnabled */ true,
         /* inputAntialiasingSampleCount */ 16,
         /* inputMapSurfaceMode */ 1,
         /* inputMapStyle */ Style.SATELLITE,
-        /* expectedConfigMSAA */ AntialiasingConfig.On(16),
+        /* expectedAntialiasingSampleCount */ 16,
         /* expectedTextureMode */ true,
         /* expectedStyle */ Style.SATELLITE,
       ),

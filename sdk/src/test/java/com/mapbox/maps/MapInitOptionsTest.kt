@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.DisplayMetrics
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.plugin.*
-import com.mapbox.maps.renderer.egl.AntialiasingConfig
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.After
@@ -52,9 +51,9 @@ class MapInitOptionsTest {
 
   @Test
   fun renderConfigMSAA() {
-    assertEquals(AntialiasingConfig.Off, MapInitOptions(context).antialiasingConfig)
-    assertEquals(AntialiasingConfig.Off, MapInitOptions(context, antialiasingConfig = AntialiasingConfig.Off).antialiasingConfig)
-    assertEquals(AntialiasingConfig.On(8), MapInitOptions(context, antialiasingConfig = AntialiasingConfig.On(8)).antialiasingConfig)
+    assertEquals(0, MapInitOptions(context).antialiasingSampleCount)
+    assertEquals(0, MapInitOptions(context, antialiasingSampleCount = 0).antialiasingSampleCount)
+    assertEquals(8, MapInitOptions(context, antialiasingSampleCount = 8).antialiasingSampleCount)
   }
 
   @Test

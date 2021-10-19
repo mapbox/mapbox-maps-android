@@ -8,7 +8,6 @@ import androidx.annotation.UiThread
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import com.mapbox.common.Logger
-import com.mapbox.maps.renderer.egl.AntialiasingConfig
 import com.mapbox.maps.renderer.egl.EGLCore
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicBoolean
@@ -68,11 +67,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   constructor(
     mapboxRenderer: MapboxRenderer,
     translucentSurface: Boolean,
-    antialiasingConfig: AntialiasingConfig,
+    antialiasingSampleCount: Int,
   ) {
     this.translucentSurface = translucentSurface
     this.mapboxRenderer = mapboxRenderer
-    this.eglCore = EGLCore(translucentSurface, antialiasingConfig)
+    this.eglCore = EGLCore(translucentSurface, antialiasingSampleCount)
     renderHandlerThread = RenderHandlerThread().apply { start() }
   }
 

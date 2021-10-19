@@ -13,7 +13,7 @@ import javax.microedition.khronos.egl.EGLDisplay
 
 internal class EGLConfigChooser constructor(
   private val translucentSurface: Boolean,
-  private val antialiasingConfig: AntialiasingConfig,
+  private val antialiasingSampleCount: Int,
 ) {
   // Get all configs at least RGB 565 with 16 depth and 8 stencil
   private val configAttributes: IntArray
@@ -29,16 +29,18 @@ internal class EGLConfigChooser constructor(
         EGL_BLUE_SIZE, 5,
         EGL_ALPHA_SIZE, if (translucentSurface) 8 else 0,
         EGL_DEPTH_SIZE, 16,
-        when (antialiasingConfig) {
-          AntialiasingConfig.Off -> EGL_NONE
-          is AntialiasingConfig.On -> EGL_SAMPLE_BUFFERS
+        if (antialiasingSampleCount > 0) {
+          EGL_SAMPLE_BUFFERS
+        } else {
+          EGL_NONE
         },
         1,
-        when (antialiasingConfig) {
-          AntialiasingConfig.Off -> EGL_NONE
-          is AntialiasingConfig.On -> EGL_SAMPLES
+        if (antialiasingSampleCount > 0) {
+          EGL_SAMPLES
+        } else {
+          EGL_NONE
         },
-        antialiasingConfig.sampleCount,
+        antialiasingSampleCount,
         EGL_STENCIL_SIZE, 8,
         if (emulator) EGL_NONE else EGL_CONFORMANT, EGL_OPENGL_ES2_BIT,
         if (emulator) EGL_NONE else EGL_COLOR_BUFFER_TYPE, EGL_RGB_BUFFER,

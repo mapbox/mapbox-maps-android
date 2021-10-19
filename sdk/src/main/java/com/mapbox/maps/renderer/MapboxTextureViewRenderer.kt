@@ -4,15 +4,14 @@ import android.graphics.SurfaceTexture
 import android.view.Surface
 import android.view.TextureView
 import androidx.annotation.VisibleForTesting
-import com.mapbox.maps.renderer.egl.AntialiasingConfig
 
 internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTextureListener {
 
-  constructor(textureView: TextureView, antialiasingConfig: AntialiasingConfig) {
+  constructor(textureView: TextureView, antialiasingSampleCount: Int) {
     renderThread = MapboxRenderThread(
       mapboxRenderer = this,
       translucentSurface = true,
-      antialiasingConfig = antialiasingConfig,
+      antialiasingSampleCount = antialiasingSampleCount,
     )
     textureView.let {
       it.isOpaque = false

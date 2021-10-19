@@ -13,7 +13,7 @@ import javax.microedition.khronos.egl.*
  */
 internal class EGLCore(
   private val translucentSurface: Boolean,
-  private val antialiasingConfig: AntialiasingConfig,
+  private val antialiasingSampleCount: Int,
 ) {
   private lateinit var egl: EGL10
   private lateinit var eglConfig: EGLConfig
@@ -38,7 +38,7 @@ internal class EGLCore(
       return
     }
 
-    EGLConfigChooser(translucentSurface, antialiasingConfig).chooseConfig(egl, eglDisplay)?.let {
+    EGLConfigChooser(translucentSurface, antialiasingSampleCount).chooseConfig(egl, eglDisplay)?.let {
       eglConfig = it
     } ?: run {
       eglStatusSuccess = false

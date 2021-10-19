@@ -3,7 +3,6 @@ package com.mapbox.maps
 import android.content.Context
 import android.util.AttributeSet
 import com.mapbox.maps.plugin.*
-import com.mapbox.maps.renderer.egl.AntialiasingConfig
 
 /**
  * Defines configuration [MapInitOptions] for a [MapboxMap]. These options can be used when adding a
@@ -21,7 +20,7 @@ import com.mapbox.maps.renderer.egl.AntialiasingConfig
  * @property textureView Flag indicating to use a TextureView as render surface for the MapView. Default is false.
  * @property styleUri The styleUri will applied for the MapView in the onStart lifecycle event if no style is set. Default is [Style.MAPBOX_STREETS]. If set to null, then there is no default style will be loaded.
  * @property attrs The [AttributeSet] object that init the MapView.
- * @property antialiasingConfig configuration to control multisample anti-aliasing (MSAA) option for rendering.
+ * @property antialiasingSampleCount sample count to control multisample anti-aliasing (MSAA) option for rendering. E.g. passing 4 enables MSAA x4 if it is supported. Default is 0 (MSAA turned off).
  */
 data class MapInitOptions @JvmOverloads constructor(
   val context: Context,
@@ -32,7 +31,7 @@ data class MapInitOptions @JvmOverloads constructor(
   var textureView: Boolean = false,
   val styleUri: String? = Style.MAPBOX_STREETS,
   var attrs: AttributeSet? = null,
-  var antialiasingConfig: AntialiasingConfig = AntialiasingConfig.Off,
+  var antialiasingSampleCount: Int = 0,
 ) {
 
   /**
