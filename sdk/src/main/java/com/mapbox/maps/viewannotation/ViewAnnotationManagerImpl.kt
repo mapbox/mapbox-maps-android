@@ -35,7 +35,7 @@ internal class ViewAnnotationManagerImpl(
   override fun addViewAnnotation(
     @LayoutRes resId: Int,
     options: ViewAnnotationOptions,
-    asyncInflateCallback: ((ViewAnnotation) -> Unit)
+    asyncInflateCallback: (View) -> Unit
   ) {
     if (options.geometry == null) {
       throw RuntimeException("Geometry can not be null!")
@@ -45,19 +45,19 @@ internal class ViewAnnotationManagerImpl(
     }
   }
 
-  override fun addViewAnnotation(resId: Int, options: ViewAnnotationOptions): ViewAnnotation {
+  override fun addViewAnnotation(resId: Int, options: ViewAnnotationOptions): View {
     val view = LayoutInflater.from(mapView.context).inflate(resId, mapView, false)
     return prepareViewAnnotation(view, options)
   }
 
-  override fun addViewAnnotation(view: View, options: ViewAnnotationOptions): ViewAnnotation {
+  override fun addViewAnnotation(view: View, options: ViewAnnotationOptions) {
     if (options.geometry == null) {
       throw RuntimeException("Geometry can not be null!")
     }
-    return prepareViewAnnotation(view, options)
+    prepareViewAnnotation(view, options)
   }
 
-  private fun prepareViewAnnotation(inflatedView: View, options: ViewAnnotationOptions): ViewAnnotation {
+  private fun prepareViewAnnotation(inflatedView: View, options: ViewAnnotationOptions): View {
     val inflatedViewLayout = inflatedView.layoutParams as FrameLayout.LayoutParams
     val updatedOptions = options.toBuilder()
       .width(if (options.width == null) inflatedViewLayout.width else options.width)
@@ -76,7 +76,7 @@ internal class ViewAnnotationManagerImpl(
         redrawAnnotations(it)
       }
     }
-    return viewAnnotation
+    return inflatedView
   }
 
   private fun redrawAnnotations(
@@ -103,23 +103,24 @@ internal class ViewAnnotationManagerImpl(
     }
   }
 
-  override fun removeViewAnnotation(id: String) {
-    getViewAnnotationById(id)?.let {
-      mapView.removeView(it.view)
-    }
-    annotations.remove(id)
+  override fun removeViewAnnotation(view: View): Boolean {
+    val id = view.hashCode().toString()
+    annotations.remove(id) ?: return false
+    mapView.removeView(view)
     mapboxMap.apply {
       removeViewAnnotation(id)
       calculateViewAnnotationsPosition {
         redrawAnnotations(it)
       }
     }
+    return true
   }
 
   override fun updateViewAnnotation(
-    id: String,
+    view: View,
     options: ViewAnnotationOptions,
-  ) {
+  ): Boolean {
+    val id = view.hashCode().toString()
     annotations[id]?.let {
       mapboxMap.apply {
         updateViewAnnotation(id, options)
@@ -127,14 +128,15 @@ internal class ViewAnnotationManagerImpl(
           redrawAnnotations(positions)
         }
       }
-    }
+      return true
+    } ?: return false
   }
 
-  override fun getViewAnnotationByFeatureId(featureId: String): ViewAnnotation? {
+  override fun getViewAnnotationByFeatureId(featureId: String): View? {
     annotations.forEach {
       val options = mapboxMap.getViewAnnotationOptions(it.key)
       if (options.isValue && options.value!!.associatedFeatureId == featureId) {
-        return annotations[it.key]
+        return annotations[it.key]?.view
       }
     }
     return null
@@ -150,11 +152,8 @@ internal class ViewAnnotationManagerImpl(
     return null
   }
 
-  override fun getViewAnnotationById(id: String): ViewAnnotation? {
-    return annotations[id]
-  }
-
-  override fun getViewAnnotationOptionsById(id: String): ViewAnnotationOptions? {
+  override fun getViewAnnotationOptionsByView(view: View): ViewAnnotationOptions? {
+    val id = view.hashCode().toString()
     val options = mapboxMap.getViewAnnotationOptions(id)
     if (options.isValue) {
       return options.value

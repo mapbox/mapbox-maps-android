@@ -94,18 +94,18 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
         it.value?.get(0)?.feature?.let { feature ->
           if (feature.id() != null) {
             viewAnnotationManager.getViewAnnotationByFeatureId(feature.id()!!)?.let { viewAnnotation ->
-              if (viewAnnotation.view.visibility == View.VISIBLE) {
-                viewAnnotation.view.visibility = View.GONE
+              if (viewAnnotation.visibility == View.VISIBLE) {
+                viewAnnotation.visibility = View.GONE
                 viewAnnotationManager.updateViewAnnotation(
-                  viewAnnotation.id,
+                  viewAnnotation,
                   ViewAnnotationOptions.Builder()
                     .visible(false)
                     .build()
                 )
               } else {
-                viewAnnotation.view.visibility = View.VISIBLE
+                viewAnnotation.visibility = View.VISIBLE
                 viewAnnotationManager.updateViewAnnotation(
-                  viewAnnotation.id,
+                  viewAnnotation,
                   ViewAnnotationOptions.Builder()
                     .visible(true)
                     .build()
@@ -139,39 +139,39 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
         .allowOverlap(false)
         .build()
     )
-    viewAnnotation.view.visibility = View.GONE
+    viewAnnotation.visibility = View.GONE
     // calculate offsetY manually taking into account icon height only because of bottom anchoring
     viewAnnotationManager.updateViewAnnotation(
-      viewAnnotation.id,
+      viewAnnotation,
       ViewAnnotationOptions.Builder()
         .offsetY(markerHeight)
         .visible(false)
         .build()
     )
-    viewAnnotation.view.findViewById<TextView>(R.id.textNativeView).text =
+    viewAnnotation.findViewById<TextView>(R.id.textNativeView).text =
       "lat=%.2f\nlon=%.2f".format(point.latitude(), point.longitude())
-    viewAnnotation.view.findViewById<ImageView>(R.id.closeNativeView).setOnClickListener { _ ->
-      viewAnnotationManager.removeViewAnnotation(viewAnnotation.id)
+    viewAnnotation.findViewById<ImageView>(R.id.closeNativeView).setOnClickListener { _ ->
+      viewAnnotationManager.removeViewAnnotation(viewAnnotation)
     }
-    viewAnnotation.view.findViewById<Button>(R.id.selectButton).setOnClickListener { b ->
+    viewAnnotation.findViewById<Button>(R.id.selectButton).setOnClickListener { b ->
       val button = b as Button
       if (button.text.contentEquals("SELECT", true)) {
         button.text = "DESELECT"
         viewAnnotationManager.updateViewAnnotation(
-          viewAnnotation.id,
+          viewAnnotation,
           ViewAnnotationOptions.Builder()
-            .width(viewAnnotationManager.getViewAnnotationOptionsById(viewAnnotation.id)?.width!! + SELECTED_ADD_COEF_PX)
-            .height(viewAnnotationManager.getViewAnnotationOptionsById(viewAnnotation.id)?.height!! + SELECTED_ADD_COEF_PX)
+            .width(viewAnnotationManager.getViewAnnotationOptionsByView(viewAnnotation)?.width!! + SELECTED_ADD_COEF_PX)
+            .height(viewAnnotationManager.getViewAnnotationOptionsByView(viewAnnotation)?.height!! + SELECTED_ADD_COEF_PX)
             .selected(true)
             .build()
         )
       } else {
         button.text = "SELECT"
         viewAnnotationManager.updateViewAnnotation(
-          viewAnnotation.id,
+          viewAnnotation,
           ViewAnnotationOptions.Builder()
-            .width(viewAnnotationManager.getViewAnnotationOptionsById(viewAnnotation.id)?.width!! - SELECTED_ADD_COEF_PX)
-            .height(viewAnnotationManager.getViewAnnotationOptionsById(viewAnnotation.id)?.height!! - SELECTED_ADD_COEF_PX)
+            .width(viewAnnotationManager.getViewAnnotationOptionsByView(viewAnnotation)?.width!! - SELECTED_ADD_COEF_PX)
+            .height(viewAnnotationManager.getViewAnnotationOptionsByView(viewAnnotation)?.height!! - SELECTED_ADD_COEF_PX)
             .selected(false)
             .build()
         )
