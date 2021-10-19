@@ -67,8 +67,26 @@ internal class ViewAnnotationManagerImpl(
     val viewAnnotation = ViewAnnotation(
       id = id,
       view = inflatedView,
+      handleVisibility = options.visible == null,
       viewLayoutParams = inflatedViewLayout
     )
+    inflatedView.viewTreeObserver.addOnGlobalLayoutListener {
+      if (!viewAnnotation.handleVisibility) {
+        return@addOnGlobalLayoutListener
+      }
+      val isVisibleNow = inflatedView.visibility == View.VISIBLE
+      if (mapboxMap.getViewAnnotationOptions(id).value?.visible != isVisibleNow) {
+        mapboxMap.updateViewAnnotation(
+          id,
+          ViewAnnotationOptions.Builder()
+            .visible(isVisibleNow)
+            .build()
+        )
+        mapboxMap.calculateViewAnnotationsPosition {
+          redrawAnnotations(it)
+        }
+      }
+    }
     annotations[id] = viewAnnotation
     mapboxMap.apply {
       addViewAnnotation(id, updatedOptions)
@@ -82,11 +100,15 @@ internal class ViewAnnotationManagerImpl(
   private fun redrawAnnotations(
     positionsToUpdate: List<ViewAnnotationPositionDescriptor>
   ) {
-    annotations.forEach {
-      mapView.removeView(it.value.view)
-    }
+    annotations
+      // filter out and remove explicitly only visible views
+      // we can't remove invisible / gone ones because global layout listener will stop getting notified
+      .filter { it.value.view.visibility == View.VISIBLE }
+      .forEach { mapView.removeView(it.value.view) }
     for (viewPosition in positionsToUpdate) {
       annotations[viewPosition.identifier]?.let { annotation ->
+        // remove invisible or gone view if needed
+        mapView.removeView(annotation.view)
         val options = mapboxMap.getViewAnnotationOptions(viewPosition.identifier)
         if (options.isValue) {
           annotation.viewLayoutParams.width = options.value?.width!!
@@ -122,6 +144,7 @@ internal class ViewAnnotationManagerImpl(
   ): Boolean {
     val id = view.hashCode().toString()
     annotations[id]?.let {
+      it.handleVisibility = options.visible == null
       mapboxMap.apply {
         updateViewAnnotation(id, options)
         calculateViewAnnotationsPosition { positions ->

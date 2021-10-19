@@ -53,16 +53,16 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
       )
     )
     setContentView(mapView)
-
     viewAnnotationManager = mapView.viewAnnotationManager
+
+    val bitmap = BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view)
+    markerWidth = bitmap.width
+    markerHeight = bitmap.height
 
     mapboxMap = mapView.getMapboxMap()
     mapboxMap.loadStyle(
       styleExtension = style(Style.MAPBOX_STREETS) {
         +image(BLUE_ICON_ID) {
-          val bitmap = BitmapFactory.decodeResource(resources, R.drawable.blue_marker_view)
-          markerWidth = bitmap.width
-          markerHeight = bitmap.height
           bitmap(bitmap)
         }
         +geoJsonSource(SOURCE_ID)
@@ -96,20 +96,8 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
             viewAnnotationManager.getViewAnnotationByFeatureId(feature.id()!!)?.let { viewAnnotation ->
               if (viewAnnotation.visibility == View.VISIBLE) {
                 viewAnnotation.visibility = View.GONE
-                viewAnnotationManager.updateViewAnnotation(
-                  viewAnnotation,
-                  ViewAnnotationOptions.Builder()
-                    .visible(false)
-                    .build()
-                )
               } else {
                 viewAnnotation.visibility = View.VISIBLE
-                viewAnnotationManager.updateViewAnnotation(
-                  viewAnnotation,
-                  ViewAnnotationOptions.Builder()
-                    .visible(true)
-                    .build()
-                )
               }
             }
           }
@@ -145,7 +133,6 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
       viewAnnotation,
       ViewAnnotationOptions.Builder()
         .offsetY(markerHeight)
-        .visible(false)
         .build()
     )
     viewAnnotation.findViewById<TextView>(R.id.textNativeView).text =
