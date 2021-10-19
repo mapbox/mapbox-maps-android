@@ -38,7 +38,7 @@ class LayerExtTest {
 
   @After
   fun cleanup() {
-    unmockkAll()
+    clearAllMocks()
   }
 
   @Test

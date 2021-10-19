@@ -30,7 +30,7 @@ class ImagePluginImplTest {
 
   @After
   fun cleanup() {
-    unmockkAll()
+    clearAllMocks()
   }
 
   @Test

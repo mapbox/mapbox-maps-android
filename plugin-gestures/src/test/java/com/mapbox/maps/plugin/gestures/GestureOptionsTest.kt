@@ -71,7 +71,7 @@ class GestureOptionsTest {
 
   @After
   fun cleanUp() {
-    unmockkAll()
+    clearAllMocks()
   }
 
   @Test

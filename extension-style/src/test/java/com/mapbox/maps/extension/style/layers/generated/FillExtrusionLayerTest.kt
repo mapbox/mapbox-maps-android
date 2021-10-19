@@ -50,7 +50,7 @@ class FillExtrusionLayerTest {
 
   @After
   fun cleanup() {
-    unmockkAll()
+    clearAllMocks()
   }
 
   @Test

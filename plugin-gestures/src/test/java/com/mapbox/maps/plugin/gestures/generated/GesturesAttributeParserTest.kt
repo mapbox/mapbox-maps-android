@@ -14,6 +14,7 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.unmockkAll
+import io.mockk.clearAllMocks
 import io.mockk.verify
 import org.junit.After
 import org.junit.Assert.*
@@ -45,7 +46,7 @@ class GesturesAttributeParserTest {
 
   @After
   fun cleanUp() {
-    unmockkAll()
+    clearAllMocks()
   }
 
   @Test

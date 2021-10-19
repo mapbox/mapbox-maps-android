@@ -44,7 +44,7 @@ class MapboxRenderThreadTest {
 
   @After
   fun cleanup() {
-    unmockkAll()
+    clearAllMocks()
     renderHandlerThread.stop()
   }
 

@@ -50,7 +50,7 @@ class LocationIndicatorLayerTest {
 
   @After
   fun cleanup() {
-    unmockkAll()
+    clearAllMocks()
   }
   // Property getters and setters
 
