@@ -13,8 +13,6 @@ import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
-import io.mockk.mockkObject
-import io.mockk.mockkStatic
 import io.mockk.unmockkAll
 import io.mockk.verify
 import org.junit.After
@@ -33,14 +31,11 @@ class GesturesAttributeParserTest {
 
   @Before
   fun setUp() {
-    mockkObject(GesturesAttributeParser::class)
-    mockkStatic(Color::class)
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
     every { typedArray.getString(any()) } returns "pk.token"
     every { typedArray.getBoolean(any(), any()) } returns true
     every { typedArray.getInt(any(), any()) } returns 2
     every { typedArray.getColor(any(), any()) } returns Color.RED
-    every { Color.parseColor(any()) } returns Color.WHITE
     every { typedArray.getDimension(any(), any()) } returns 10.0f
     every { typedArray.getFloat(any(), any()) } returns 10.0f
     every { typedArray.getDrawable(any()) } returns drawable
