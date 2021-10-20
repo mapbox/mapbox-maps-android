@@ -40,7 +40,7 @@ class LightTest {
 
   @After
   fun cleanup() {
-    unmockkAll()
+    clearAllMocks()
   }
 
   @Test

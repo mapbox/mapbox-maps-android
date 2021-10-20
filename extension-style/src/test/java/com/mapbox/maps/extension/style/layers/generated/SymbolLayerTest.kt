@@ -50,7 +50,7 @@ class SymbolLayerTest {
 
   @After
   fun cleanup() {
-    unmockkAll()
+    clearAllMocks()
   }
 
   @Test

@@ -36,7 +36,7 @@ class TerrainTest {
 
   @After
   fun cleanup() {
-    unmockkAll()
+    clearAllMocks()
   }
 
   @Test

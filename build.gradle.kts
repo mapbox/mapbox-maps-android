@@ -55,3 +55,6 @@ repositories {
 tasks.withType<org.jetbrains.dokka.gradle.DokkaTask>().configureEach {
   outputDirectory.set(buildDir.resolve(this.name))
 }
+tasks.withType<Test> {
+  maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).takeIf { it > 0 } ?: 1
+}

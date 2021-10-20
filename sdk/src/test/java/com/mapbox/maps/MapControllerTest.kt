@@ -59,7 +59,7 @@ class MapControllerTest {
 
   @After
   fun shutDown() {
-    unmockkAll()
+    clearAllMocks()
   }
 
   @Test

@@ -50,7 +50,7 @@ class HillshadeLayerTest {
 
   @After
   fun cleanup() {
-    unmockkAll()
+    clearAllMocks()
   }
 
   @Test

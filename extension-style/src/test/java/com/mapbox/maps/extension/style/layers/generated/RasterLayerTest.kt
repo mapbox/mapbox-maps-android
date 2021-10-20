@@ -49,7 +49,7 @@ class RasterLayerTest {
 
   @After
   fun cleanup() {
-    unmockkAll()
+    clearAllMocks()
   }
 
   @Test

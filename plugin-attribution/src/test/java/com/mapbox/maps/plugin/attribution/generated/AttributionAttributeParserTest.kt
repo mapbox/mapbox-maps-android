@@ -8,11 +8,11 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import io.mockk.Runs
+import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.mockkStatic
-import io.mockk.unmockkAll
 import io.mockk.verify
 import org.junit.After
 import org.junit.Assert.*
@@ -46,7 +46,7 @@ class AttributionAttributeParserTest {
 
   @After
   fun cleanUp() {
-    unmockkAll()
+    clearAllMocks()
   }
 
   @Test

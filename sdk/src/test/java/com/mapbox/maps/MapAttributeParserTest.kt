@@ -2,9 +2,9 @@ package com.mapbox.maps
 
 import android.content.res.TypedArray
 import com.mapbox.common.ShadowLogger
+import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.unmockkAll
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Before
@@ -21,7 +21,7 @@ class MapAttributeParserTest {
 
   @Before
   fun setUp() {
-    unmockkAll()
+    clearAllMocks()
     typedArray = mockk(relaxed = true)
     every { typedArray.getString(any()) } returns null
     every { typedArray.getBoolean(any(), any()) } returns true

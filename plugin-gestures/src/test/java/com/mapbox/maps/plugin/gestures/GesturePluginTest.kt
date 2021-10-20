@@ -110,7 +110,7 @@ class GesturePluginTest {
 
   @After
   fun cleanUp() {
-    unmockkAll()
+    clearAllMocks()
   }
 
   @Test

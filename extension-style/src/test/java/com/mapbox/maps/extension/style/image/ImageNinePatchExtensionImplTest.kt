@@ -43,7 +43,7 @@ class ImageNinePatchExtensionImplTest {
 
   @After
   fun cleanup() {
-    unmockkAll()
+    clearAllMocks()
   }
 
   @Test
