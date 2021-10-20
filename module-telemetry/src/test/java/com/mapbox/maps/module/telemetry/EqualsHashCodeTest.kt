@@ -4,7 +4,7 @@ import com.google.gson.JsonObject
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.junit.Test
 
-class EqualHashCodeTest {
+class EqualsHashCodeTest {
   @Test
   fun `MapLoadEvent hashCode and equals test`() {
     val clazz = MapLoadEvent::class.java

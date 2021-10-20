@@ -12,7 +12,8 @@ import javax.microedition.khronos.egl.*
  * Inspired by [Grafika](https://github.com/google/grafika/blob/master/app/src/main/java/com/android/grafika/gles/EglCore.java)
  */
 internal class EGLCore(
-  private val translucentSurface: Boolean
+  private val translucentSurface: Boolean,
+  private val antialiasingSampleCount: Int,
 ) {
   private lateinit var egl: EGL10
   private lateinit var eglConfig: EGLConfig
@@ -37,7 +38,7 @@ internal class EGLCore(
       return
     }
 
-    EGLConfigChooser(translucentSurface).chooseConfig(egl, eglDisplay)?.let {
+    EGLConfigChooser(translucentSurface, antialiasingSampleCount).chooseConfig(egl, eglDisplay)?.let {
       eglConfig = it
     } ?: run {
       eglStatusSuccess = false

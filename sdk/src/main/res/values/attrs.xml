@@ -49,6 +49,8 @@
             <!-- Map rendering on a TextureView with 8-byte alpha channel in EGL config. -->
             <enum name="texture_view" value="1" />
         </attr>
+        <!-- MSAA sample count. Defaults to 1 meaning MSAA is disabled. Most common values are 4, 8 etc (stand for MSAA x4, x8 etc). Higher values result in better quality, but may reduce overall performance. -->
+        <attr name="mapbox_mapAntialiasingSampleCount" format="integer"/>
 
         <!-- A JSON Web token to associate API requests with your Mapbox account. -->
         <attr name="mapbox_resourcesAccessToken" format="string" />

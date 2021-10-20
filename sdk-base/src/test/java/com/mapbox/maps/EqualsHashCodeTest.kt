@@ -6,7 +6,7 @@ import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.junit.Test
 
-class EqualHashCodeTest {
+class EqualsHashCodeTest {
   @Test
   fun `CameraAnimatorOptions hashCode and equals test`() {
     val clazz = CameraAnimatorOptions::class.java

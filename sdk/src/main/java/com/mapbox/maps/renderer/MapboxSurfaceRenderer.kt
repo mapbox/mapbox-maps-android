@@ -7,10 +7,11 @@ internal open class MapboxSurfaceRenderer : MapboxRenderer {
 
   private var createSurface = false
 
-  constructor() {
+  constructor(antialiasingSampleCount: Int) {
     renderThread = MapboxRenderThread(
       mapboxRenderer = this,
-      translucentSurface = false
+      translucentSurface = false,
+      antialiasingSampleCount = antialiasingSampleCount,
     )
   }
 

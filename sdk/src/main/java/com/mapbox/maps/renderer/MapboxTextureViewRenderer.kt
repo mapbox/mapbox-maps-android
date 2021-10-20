@@ -7,10 +7,11 @@ import androidx.annotation.VisibleForTesting
 
 internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTextureListener {
 
-  constructor(textureView: TextureView) {
+  constructor(textureView: TextureView, antialiasingSampleCount: Int) {
     renderThread = MapboxRenderThread(
       mapboxRenderer = this,
-      translucentSurface = true
+      translucentSurface = true,
+      antialiasingSampleCount = antialiasingSampleCount,
     )
     textureView.let {
       it.isOpaque = false

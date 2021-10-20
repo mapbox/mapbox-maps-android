@@ -64,10 +64,14 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   internal var fpsChangedListener: OnFpsChangedListener? = null
   private var timeElapsed = 0L
 
-  constructor(mapboxRenderer: MapboxRenderer, translucentSurface: Boolean) {
+  constructor(
+    mapboxRenderer: MapboxRenderer,
+    translucentSurface: Boolean,
+    antialiasingSampleCount: Int,
+  ) {
     this.translucentSurface = translucentSurface
     this.mapboxRenderer = mapboxRenderer
-    this.eglCore = EGLCore(translucentSurface)
+    this.eglCore = EGLCore(translucentSurface, antialiasingSampleCount)
     renderHandlerThread = RenderHandlerThread().apply { start() }
   }
 

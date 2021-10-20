@@ -33,6 +33,9 @@
     <!-- The view type used to render. -->
     <public name="mapbox_mapSurface" type="attr" />
 
+    <!-- MSAA sample count. Defaults to 1 meaning MSAA is disabled. Most common values are 4, 8 etc (stand for MSAA x4, x8 etc). Higher values result in better quality, but may reduce overall performance. -->
+    <public name="mapbox_mapAntialiasingSampleCount" type="attr"/>
+
     <!-- Describes glyphs rasterization modes. -->
     <public name="mapbox_mapGlyphRasterizationMode" type="attr" />
 
