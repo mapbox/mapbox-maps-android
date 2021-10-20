@@ -7,6 +7,9 @@ import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ViewAnnotationOptions
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 
+/**
+ * Public facing API to control view annotations.
+ */
 @MapboxExperimental
 interface ViewAnnotationManager : OnCameraChangeListener {
 
