@@ -63,7 +63,7 @@ internal class ViewAnnotationManagerImpl(
       .width(if (options.width == null) inflatedViewLayout.width else options.width)
       .height(if (options.height == null) inflatedViewLayout.height else options.height)
       .build()
-    val id = inflatedView.hashCode().toString()
+    val id = inflatedView.toString()
     val viewAnnotation = ViewAnnotation(
       id = id,
       view = inflatedView,
@@ -126,7 +126,7 @@ internal class ViewAnnotationManagerImpl(
   }
 
   override fun removeViewAnnotation(view: View): Boolean {
-    val id = view.hashCode().toString()
+    val id = view.toString()
     annotations.remove(id) ?: return false
     mapView.removeView(view)
     mapboxMap.apply {
@@ -142,7 +142,7 @@ internal class ViewAnnotationManagerImpl(
     view: View,
     options: ViewAnnotationOptions,
   ): Boolean {
-    val id = view.hashCode().toString()
+    val id = view.toString()
     annotations[id]?.let {
       it.handleVisibility = options.visible == null
       mapboxMap.apply {
@@ -176,7 +176,7 @@ internal class ViewAnnotationManagerImpl(
   }
 
   override fun getViewAnnotationOptionsByView(view: View): ViewAnnotationOptions? {
-    val id = view.hashCode().toString()
+    val id = view.toString()
     val options = mapboxMap.getViewAnnotationOptions(id)
     if (options.isValue) {
       return options.value

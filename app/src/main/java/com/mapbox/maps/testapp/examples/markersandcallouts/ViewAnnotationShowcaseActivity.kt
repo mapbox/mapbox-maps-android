@@ -25,6 +25,7 @@ import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapLongClickListener
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
+import com.mapbox.maps.viewannotation.viewAnnotationOptions
 
 /**
  * Example how to add view annotations to the map.
@@ -38,7 +39,7 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
   private lateinit var viewAnnotationManager: ViewAnnotationManager
   private lateinit var style: Style
   private val pointList = mutableListOf<Feature>()
-  private var markerId = "0"
+  private var markerId = 0
 
   private var markerWidth = 0
   private var markerHeight = 0
@@ -80,7 +81,7 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
   }
 
   override fun onMapLongClick(point: Point): Boolean {
-    val markerId = addMarker(point)
+    val markerId = addMarkerAndReturnId(point)
     addViewAnnotation(point, markerId)
     return true
   }
@@ -107,33 +108,32 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
     return true
   }
 
-  private fun addMarker(point: Point): String {
-    val intId = markerId.toInt()
-    markerId = (intId + 1).toString()
-    pointList.add(Feature.fromGeometry(point, null, markerId))
+  private fun addMarkerAndReturnId(point: Point): String {
+    val currentId = "${MARKER_ID_PREFIX}${(markerId++)}"
+    pointList.add(Feature.fromGeometry(point, null, currentId))
     val featureCollection = FeatureCollection.fromFeatures(pointList)
     style.getSourceAs<GeoJsonSource>(SOURCE_ID)?.featureCollection(featureCollection)
-    return markerId
+    return currentId
   }
 
   @SuppressLint("SetTextI18n")
   private fun addViewAnnotation(point: Point, markerId: String) {
     val viewAnnotation = viewAnnotationManager.addViewAnnotation(
       R.layout.item_callout_view,
-      ViewAnnotationOptions.Builder()
-        .geometry(point)
-        .associatedFeatureId(markerId)
-        .anchor(ViewAnnotationAnchor.BOTTOM)
-        .allowOverlap(false)
-        .build()
+      viewAnnotationOptions {
+        geometry(point)
+        associatedFeatureId(markerId)
+        anchor(ViewAnnotationAnchor.BOTTOM)
+        allowOverlap(false)
+      }
     )
     viewAnnotation.visibility = View.GONE
     // calculate offsetY manually taking into account icon height only because of bottom anchoring
     viewAnnotationManager.updateViewAnnotation(
       viewAnnotation,
-      ViewAnnotationOptions.Builder()
-        .offsetY(markerHeight)
-        .build()
+      viewAnnotationOptions {
+        offsetY(markerHeight)
+      }
     )
     viewAnnotation.findViewById<TextView>(R.id.textNativeView).text =
       "lat=%.2f\nlon=%.2f".format(point.latitude(), point.longitude())
@@ -142,27 +142,17 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
     }
     viewAnnotation.findViewById<Button>(R.id.selectButton).setOnClickListener { b ->
       val button = b as Button
-      if (button.text.contentEquals("SELECT", true)) {
-        button.text = "DESELECT"
-        viewAnnotationManager.updateViewAnnotation(
-          viewAnnotation,
-          ViewAnnotationOptions.Builder()
-            .width(viewAnnotationManager.getViewAnnotationOptionsByView(viewAnnotation)?.width!! + SELECTED_ADD_COEF_PX)
-            .height(viewAnnotationManager.getViewAnnotationOptionsByView(viewAnnotation)?.height!! + SELECTED_ADD_COEF_PX)
-            .selected(true)
-            .build()
-        )
-      } else {
-        button.text = "SELECT"
-        viewAnnotationManager.updateViewAnnotation(
-          viewAnnotation,
-          ViewAnnotationOptions.Builder()
-            .width(viewAnnotationManager.getViewAnnotationOptionsByView(viewAnnotation)?.width!! - SELECTED_ADD_COEF_PX)
-            .height(viewAnnotationManager.getViewAnnotationOptionsByView(viewAnnotation)?.height!! - SELECTED_ADD_COEF_PX)
-            .selected(false)
-            .build()
-        )
-      }
+      val isSelected = button.text.contentEquals("SELECT", true)
+      val pxDelta = if (isSelected) SELECTED_ADD_COEF_PX else -SELECTED_ADD_COEF_PX
+      button.text = if (isSelected) "DESELECT" else "SELECT"
+      viewAnnotationManager.updateViewAnnotation(
+        viewAnnotation,
+        viewAnnotationOptions {
+          width(viewAnnotationManager.getViewAnnotationOptionsByView(viewAnnotation)?.width!! + pxDelta)
+          height(viewAnnotationManager.getViewAnnotationOptionsByView(viewAnnotation)?.height!! + pxDelta)
+          selected(isSelected)
+        }
+      )
     }
   }
 
@@ -170,6 +160,7 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
     private const val BLUE_ICON_ID = "blue"
     private const val SOURCE_ID = "source_id"
     private const val LAYER_ID = "layer_id"
+    private const val MARKER_ID_PREFIX = "view_annotation_"
     private const val SELECTED_ADD_COEF_PX = 50
   }
 }
