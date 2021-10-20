@@ -70,7 +70,6 @@ class CircleAnnotationManagerTest {
     }
     val styleStateDelegate = mockk<MapStyleStateDelegate>()
     every { delegateProvider.styleStateDelegate } returns styleStateDelegate
-    every { styleStateDelegate.isFullyLoaded() } returns true
     every { style.addSource(any()) } just Runs
     every { style.getSource(any()) } returns null
     every { style.addPersistentStyleLayer(any(), any()) } returns ExpectedFactory.createNone()
@@ -481,6 +480,7 @@ class CircleAnnotationManagerTest {
   @Test
   fun testCircleSortKeyLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.circleSortKey(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_SORT_KEY)) }
     val options = CircleAnnotationOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -496,6 +496,7 @@ class CircleAnnotationManagerTest {
   @Test
   fun testCircleBlurLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.circleBlur(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_BLUR)) }
     val options = CircleAnnotationOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -511,6 +512,7 @@ class CircleAnnotationManagerTest {
   @Test
   fun testCircleColorIntLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.circleColor(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR)) }
     val options = CircleAnnotationOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -524,6 +526,7 @@ class CircleAnnotationManagerTest {
   @Test
   fun testCircleColorLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.circleColor(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_COLOR)) }
     val options = CircleAnnotationOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -539,6 +542,7 @@ class CircleAnnotationManagerTest {
   @Test
   fun testCircleOpacityLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.circleOpacity(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_OPACITY)) }
     val options = CircleAnnotationOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -554,6 +558,7 @@ class CircleAnnotationManagerTest {
   @Test
   fun testCircleRadiusLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.circleRadius(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_RADIUS)) }
     val options = CircleAnnotationOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -569,6 +574,7 @@ class CircleAnnotationManagerTest {
   @Test
   fun testCircleStrokeColorIntLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.circleStrokeColor(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
     val options = CircleAnnotationOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -582,6 +588,7 @@ class CircleAnnotationManagerTest {
   @Test
   fun testCircleStrokeColorLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.circleStrokeColor(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_COLOR)) }
     val options = CircleAnnotationOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -597,6 +604,7 @@ class CircleAnnotationManagerTest {
   @Test
   fun testCircleStrokeOpacityLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.circleStrokeOpacity(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_OPACITY)) }
     val options = CircleAnnotationOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -612,6 +620,7 @@ class CircleAnnotationManagerTest {
   @Test
   fun testCircleStrokeWidthLayerProperty() {
     every { style.styleSourceExists(any()) } returns true
+    every { style.styleLayerExists(any()) } returns true
     verify(exactly = 0) { manager.layer?.circleStrokeWidth(Expression.get(CircleAnnotationOptions.PROPERTY_CIRCLE_STROKE_WIDTH)) }
     val options = CircleAnnotationOptions()
       .withPoint(Point.fromLngLat(0.0, 0.0))
