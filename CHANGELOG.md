@@ -9,7 +9,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Fix map move using faster map offsetting after zoom-in or zoom-out gesture. ([#738](https://github.com/mapbox/mapbox-maps-android/pull/738))
-* Keep drag annotations in the drag layer to fix annotation flicker and disappear issues. ([#732](https://github.com/mapbox/mapbox-maps-android/pull/732))
+* Fix annotation flickering and disappearing during dragging. ([#732](https://github.com/mapbox/mapbox-maps-android/pull/732))
 * Fix ornaments margin not update issue ([#744](https://github.com/mapbox/mapbox-maps-android/pull/744))
 * Fix `NullPointerException` while querying annotations. ([#746](https://github.com/mapbox/mapbox-maps-android/pull/746))
 * Limit fast fling gesture in a downwards direction when map is pitched ([#754](https://github.com/mapbox/mapbox-maps-android/pull/754))
