@@ -49,7 +49,7 @@ If that dependency is available in your app build, the Maps SDK will automatical
 Customizing Mapbox Maps Location Component Plugin for Android could be done in two ways: by either providing your own version of the location component plugin or by updating the settings on the location component plugin. The former is documented in [DEVELOPING.md](https://github.com/mapbox/mapbox-maps-android/blob/master/DEVELOPING.md), the latter can be achieved with:
 
 ```kotlin
-val plugin = mapView.getLocationComponentPlugin()
+val plugin = mapView.location
 // Enable location component plugin
 plugin.enabled = true
 ```

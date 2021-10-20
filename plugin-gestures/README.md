@@ -43,7 +43,7 @@ Please note that Mapbox Maps Gestures Plugin uses on the Mapbox Gestures Android
 Customizing Mapbox Maps Gestures Plugin for Android could be done in two ways: by either providing your own version of the gestures plugin or by setting the GesturesSettings to the gestures plugin. The former is documented in [DEVELOPING.md](https://github.com/mapbox/mapbox-maps-android/blob/master/DEVELOPING.md), the latter can be achieved with:
 
 ```kotlin
-val plugin = mapView.getGesturesPlugin()
+val plugin = mapView.gestures
 plugin.gesturesSettings = GesturesSettings(...)
 ```
 
