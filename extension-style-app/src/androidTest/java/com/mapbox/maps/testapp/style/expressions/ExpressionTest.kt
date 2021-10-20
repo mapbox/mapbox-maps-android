@@ -1477,14 +1477,8 @@ class ExpressionTest : BaseStyleTest() {
     val expression = step {
       zoom()
       literal(0.0)
-      stop {
-        literal(1.0)
-        literal(2.5)
-      }
-      stop {
-        literal(10.0)
-        literal(5.0)
-      }
+      stop(1.0) { literal(2.5) }
+      stop(10.0) { literal(5.0) }
     }
     val layer = circleLayer("id", "source") {
       circleRadius(expression)
