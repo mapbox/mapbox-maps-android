@@ -382,8 +382,8 @@ jobs:
       - checkout
       - restore-gradle-cache
       - run:
-          name: lint
-          command: ./gradlew lint
+          name: lintRelease
+          command: ./gradlew lintRelease
 
   run-robo-test:
     executor:
