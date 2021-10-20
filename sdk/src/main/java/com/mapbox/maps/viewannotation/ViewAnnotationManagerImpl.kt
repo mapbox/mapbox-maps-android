@@ -30,16 +30,15 @@ internal class ViewAnnotationManagerImpl(
     }
   }
 
-  private val annotations = ConcurrentHashMap<String, ViewAnnotation>()
+  private val annotationMap = ConcurrentHashMap<String, ViewAnnotation>()
+  private val idLookupMap = HashMap<View, String>()
 
   override fun addViewAnnotation(
     @LayoutRes resId: Int,
     options: ViewAnnotationOptions,
     asyncInflateCallback: (View) -> Unit
   ) {
-    if (options.geometry == null) {
-      throw RuntimeException("Geometry can not be null!")
-    }
+    checkNotNull(options.geometry) { "Geometry can not be null!" }
     asyncInflater.inflate(resId, mapView) { view, _, _ ->
       asyncInflateCallback.invoke(prepareViewAnnotation(view, options))
     }
@@ -51,9 +50,7 @@ internal class ViewAnnotationManagerImpl(
   }
 
   override fun addViewAnnotation(view: View, options: ViewAnnotationOptions) {
-    if (options.geometry == null) {
-      throw RuntimeException("Geometry can not be null!")
-    }
+    checkNotNull(options.geometry) { "Geometry can not be null!" }
     prepareViewAnnotation(view, options)
   }
 
@@ -63,9 +60,7 @@ internal class ViewAnnotationManagerImpl(
       .width(if (options.width == null) inflatedViewLayout.width else options.width)
       .height(if (options.height == null) inflatedViewLayout.height else options.height)
       .build()
-    val id = inflatedView.toString()
     val viewAnnotation = ViewAnnotation(
-      id = id,
       view = inflatedView,
       handleVisibility = options.visible == null,
       viewLayoutParams = inflatedViewLayout
@@ -75,9 +70,9 @@ internal class ViewAnnotationManagerImpl(
         return@addOnGlobalLayoutListener
       }
       val isVisibleNow = inflatedView.visibility == View.VISIBLE
-      if (mapboxMap.getViewAnnotationOptions(id).value?.visible != isVisibleNow) {
+      if (mapboxMap.getViewAnnotationOptions(viewAnnotation.id).value?.visible != isVisibleNow) {
         mapboxMap.updateViewAnnotation(
-          id,
+          viewAnnotation.id,
           ViewAnnotationOptions.Builder()
             .visible(isVisibleNow)
             .build()
@@ -87,9 +82,10 @@ internal class ViewAnnotationManagerImpl(
         }
       }
     }
-    annotations[id] = viewAnnotation
+    annotationMap[viewAnnotation.id] = viewAnnotation
+    idLookupMap[inflatedView] = viewAnnotation.id
     mapboxMap.apply {
-      addViewAnnotation(id, updatedOptions)
+      addViewAnnotation(viewAnnotation.id, updatedOptions)
       calculateViewAnnotationsPosition {
         redrawAnnotations(it)
       }
@@ -100,13 +96,13 @@ internal class ViewAnnotationManagerImpl(
   private fun redrawAnnotations(
     positionsToUpdate: List<ViewAnnotationPositionDescriptor>
   ) {
-    annotations
+    annotationMap
       // filter out and remove explicitly only visible views
       // we can't remove invisible / gone ones because global layout listener will stop getting notified
       .filter { it.value.view.visibility == View.VISIBLE }
       .forEach { mapView.removeView(it.value.view) }
     for (viewPosition in positionsToUpdate) {
-      annotations[viewPosition.identifier]?.let { annotation ->
+      annotationMap[viewPosition.identifier]?.let { annotation ->
         // remove invisible or gone view if needed
         mapView.removeView(annotation.view)
         val options = mapboxMap.getViewAnnotationOptions(viewPosition.identifier)
@@ -126,8 +122,9 @@ internal class ViewAnnotationManagerImpl(
   }
 
   override fun removeViewAnnotation(view: View): Boolean {
-    val id = view.toString()
-    annotations.remove(id) ?: return false
+    val id = idLookupMap[view] ?: return false
+    annotationMap.remove(id) ?: return false
+    idLookupMap.remove(view)
     mapView.removeView(view)
     mapboxMap.apply {
       removeViewAnnotation(id)
@@ -142,8 +139,8 @@ internal class ViewAnnotationManagerImpl(
     view: View,
     options: ViewAnnotationOptions,
   ): Boolean {
-    val id = view.toString()
-    annotations[id]?.let {
+    val id = idLookupMap[view] ?: return false
+    annotationMap[id]?.let {
       it.handleVisibility = options.visible == null
       mapboxMap.apply {
         updateViewAnnotation(id, options)
@@ -156,17 +153,17 @@ internal class ViewAnnotationManagerImpl(
   }
 
   override fun getViewAnnotationByFeatureId(featureId: String): View? {
-    annotations.forEach {
+    annotationMap.forEach {
       val options = mapboxMap.getViewAnnotationOptions(it.key)
       if (options.isValue && options.value!!.associatedFeatureId == featureId) {
-        return annotations[it.key]?.view
+        return annotationMap[it.key]?.view
       }
     }
     return null
   }
 
   override fun getViewAnnotationOptionsByFeatureId(featureId: String): ViewAnnotationOptions? {
-    annotations.forEach {
+    annotationMap.forEach {
       val options = mapboxMap.getViewAnnotationOptions(it.key)
       if (options.isValue && options.value!!.associatedFeatureId == featureId) {
         return options.value
@@ -176,7 +173,7 @@ internal class ViewAnnotationManagerImpl(
   }
 
   override fun getViewAnnotationOptionsByView(view: View): ViewAnnotationOptions? {
-    val id = view.toString()
+    val id = idLookupMap[view] ?: return null
     val options = mapboxMap.getViewAnnotationOptions(id)
     if (options.isValue) {
       return options.value
@@ -186,11 +183,12 @@ internal class ViewAnnotationManagerImpl(
 
   fun destroy() {
     mapboxMap.removeOnCameraChangeListener(this)
-    annotations.forEach {
+    annotationMap.forEach {
       mapboxMap.removeViewAnnotation(it.key)
       mapView.removeView(it.value.view)
     }
-    annotations.clear()
+    annotationMap.clear()
+    idLookupMap.clear()
   }
 
   override fun onCameraChanged(eventData: CameraChangedEventData) {

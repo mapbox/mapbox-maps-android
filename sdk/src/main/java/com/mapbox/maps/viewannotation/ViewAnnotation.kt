@@ -2,12 +2,9 @@ package com.mapbox.maps.viewannotation
 
 import android.view.View
 import android.widget.FrameLayout
+import java.util.*
 
 internal data class ViewAnnotation(
-  /**
-   * String id needed to call functions from gl-native
-   */
-  val id: String,
   /**
    * Inflated Android view.
    */
@@ -21,4 +18,13 @@ internal data class ViewAnnotation(
    * Layout params needed to position Android view correctly on the screen.
    */
   var viewLayoutParams: FrameLayout.LayoutParams,
-)
+) {
+  /**
+   * String id needed to call functions from gl-native
+   */
+  val id: String = (VIEW_ANNOTATION_CURRENT_ID++).toString()
+
+  private companion object {
+    var VIEW_ANNOTATION_CURRENT_ID = 42
+  }
+}
