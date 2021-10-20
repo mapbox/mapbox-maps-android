@@ -45,7 +45,7 @@ Please note that Mapbox Maps Compass Plugin depends on the Mapbox Maps Animation
 Customizing Mapbox Maps Compass Plugin for Android could be done in two ways: by either providing your own version of the compass plugin or by setting the CompassSettings to the compass plugin. The former is documented in [DEVELOPING.md](https://github.com/mapbox/mapbox-maps-android/blob/master/DEVELOPING.md), the latter can be achieved with:
 
 ```kotlin
-val plugin = mapView.getCompassPlugin()
+val plugin = mapView.compass
 plugin.compassSettings = CompassSettings(...)
 ```
 

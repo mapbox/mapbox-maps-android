@@ -41,7 +41,7 @@ dependencies {
 Customizing Mapbox Maps Scale Plugin for Android could be done in two ways: by either providing your own version of the ScaleBar plugin or by setting the ScaleBarSettings to the ScaleBar plugin. The former is documented in [DEVELOPING.md](https://github.com/mapbox/mapbox-maps-android/blob/master/DEVELOPING.md), the latter can be achieved with:
 
 ```kotlin
-val scaleBarPlugin = mapView.getScaleBarPlugin()
+val scaleBarPlugin = mapView.scalebar
 val settings = scaleBarPlugin.getSettings()
 settings.textColor = ContextCompat.getColor(this, R.color.primary)
 // Update other properties if needed.

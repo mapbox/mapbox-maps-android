@@ -42,7 +42,7 @@ dependencies {
 Customizing Mapbox Maps Attribution Plugin for Android could be done in two ways: by either providing your own version of the attribution plugin or by providing a custom AttributionDialogManager. The former is documented in [DEVELOPING.md](https://github.com/mapbox/mapbox-maps-android/blob/master/DEVELOPING.md), the latter can be achieved with:
 
 ```kotlin
-val plugin = mapView.getAttributionViewPlugin()
+val plugin = mapView.attribution
 plugin.setCustomAttributionDialogManager(object : AttributionDialogManager {
   override fun showAttribution(attributionModel: AttributionModel) {
     // called when the attribution dialog should be shown using the AttributionModel data
