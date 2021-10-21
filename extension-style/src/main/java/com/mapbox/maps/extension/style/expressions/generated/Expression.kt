@@ -928,20 +928,6 @@ class Expression : Value {
      * Returns the output value of the stop just less than the input,
      * or the first output if the input is less than the first stop.
      *
-     * @param key input as a string
-     * It is to be used as part of parameters in the step expression.
-     */
-    fun stop(key: String, block: ExpressionBuilder.() -> Unit) {
-      this@ExpressionBuilder.addArgument(Companion.literal(key)).apply(block)
-    }
-
-    /**
-     * Add a pair of input and output values.
-     * The `input` may be any numeric expression (e.g., `["get", "population"]`).
-     * Stop inputs must be numeric literals in strictly ascending order.
-     * Returns the output value of the stop just less than the input,
-     * or the first output if the input is less than the first stop.
-     *
      * @param key input as a double
      * It is to be used as part of parameters in the step expression.
      */

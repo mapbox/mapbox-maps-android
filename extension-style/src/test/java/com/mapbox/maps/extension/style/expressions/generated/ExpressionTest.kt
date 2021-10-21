@@ -1684,20 +1684,6 @@ class ExpressionTest {
       expression.toString()
     )
   }
-
-  @Test
-  fun expression_convenience_stop_overloadString() {
-    val expression = interpolate {
-      linear()
-      stop("Asian") { color(Color.RED) }
-      stop("Ethnic") { color(Color.BLUE) }
-    }
-    assertEquals(
-      "assert stop convenience overload string",
-      "[interpolate, [linear], Asian, [rgba, 255.0, 0.0, 0.0, 1.0], Ethnic, [rgba, 0.0, 0.0, 255.0, 1.0]]",
-      expression.toString()
-    )
-  }
 }
 
 // End of generated file.

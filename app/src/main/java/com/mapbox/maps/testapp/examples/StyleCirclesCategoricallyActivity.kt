@@ -59,18 +59,17 @@ class StyleCirclesCategoricallyActivity : AppCompatActivity() {
               get {
                 literal("ethnicity")
               }
-              // use stop expressions as input, output format. where first expression is stop input
-              // and second expression is stop output for circleColor.
-              stop("white") { rgb(251.0, 176.0, 59.0) }
-              stop("Black") { rgb(34.0, 59.0, 83.0) }
-              stop("Hispanic") { rgb(229.0, 94.0, 94.0) }
-              stop("Asian") { rgb(59.0, 178.0, 208.0) }
-              stop("Other") { rgb(204.0, 204.0, 204.0) }
-              rgb {
-                literal(0)
-                literal(0)
-                literal(0)
-              }
+              literal("white")
+              rgb(251.0, 176.0, 59.0)
+              literal("Black")
+              rgb(34.0, 59.0, 83.0)
+              literal("Hispanic")
+              rgb(229.0, 94.0, 94.0)
+              literal("Asian")
+              rgb(59.0, 178.0, 208.0)
+              literal("Other")
+              rgb(204.0, 204.0, 204.0)
+              rgb(0.0, 0.0, 0.0)
             }
           )
         }
