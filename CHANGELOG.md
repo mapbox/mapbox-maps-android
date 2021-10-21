@@ -2,6 +2,29 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.1.0-beta.1 October 21, 2021
+
+## Features ✨ and improvements 🏁
+* Introduce option to enable Multisample anti-aliasing (MSAA) for map rendering. ([#741](https://github.com/mapbox/mapbox-maps-android/pull/741))
+* Add convenience methods for stop expression. ([#698](https://github.com/mapbox/mapbox-maps-android/pull/698), [#764](https://github.com/mapbox/mapbox-maps-android/pull/764))
+
+## Bug fixes 🐞
+* Fix map move using faster map offsetting after zoom-in or zoom-out gesture. ([#738](https://github.com/mapbox/mapbox-maps-android/pull/738))
+* Fix annotation flickering and disappearing during dragging. ([#732](https://github.com/mapbox/mapbox-maps-android/pull/732))
+* Fix logo and attribution margin update. ([#744](https://github.com/mapbox/mapbox-maps-android/pull/744))
+* Fix `NullPointerException` while querying annotations. ([#746](https://github.com/mapbox/mapbox-maps-android/pull/746))
+* Limit fast fling gesture in a downwards direction when map is highly pitched. ([#754](https://github.com/mapbox/mapbox-maps-android/pull/754))
+* Fixed an issue that caused annotations not being updated in some cases.. ([#753](https://github.com/mapbox/mapbox-maps-android/pull/753))
+* Fix glyph drawing issue when the 'high contrast' text feature is turned on. ([#752](https://github.com/mapbox/mapbox-maps-android/pull/752))
+* Fix `promoteId` parameter for VectorSource overwritten when source tilejson is loaded. ([#752](https://github.com/mapbox/mapbox-maps-android/pull/752))
+* Avoid spawning extra AssetManagerFileSource threads. ([#752](https://github.com/mapbox/mapbox-maps-android/pull/752))
+* Fix `NullPointerException` in `HttpResponseCallback`, when get an error message from the Exception. ([#752](https://github.com/mapbox/mapbox-maps-android/pull/752))
+* Restore the fling factor for slightly pitched maps. ([#762](https://github.com/mapbox/mapbox-maps-android/pull/762))
+
+## Dependencies
+* Bump gl-native to v10.1.0-beta, and common to v20.1.0-rc.1 ([#752](https://github.com/mapbox/mapbox-maps-android/pull/752))
+
+
 # 10.0.0 October 6, 2021
 
 ## Breaking changes ⚠️

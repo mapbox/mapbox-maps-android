@@ -32,7 +32,7 @@ allprojects {
 
 // In the app build.gradle file
 dependencies {
-  implementation 'com.mapbox.plugin:maps-overlay:10.0.0'
+  implementation 'com.mapbox.plugin:maps-overlay:10.1.0-beta.1'
 }
 ```
 
