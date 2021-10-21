@@ -327,7 +327,7 @@ class GesturePluginTest {
   }
 
   @Test
-  fun verifyFling() {
+  fun verifyFlingLarge() {
     every { mapCameraManagerDelegate.cameraState } returns CameraState(
       Point.fromLngLat(0.0, 0.0),
       EdgeInsets(0.0, 0.0, 0.0, 0.0),
@@ -349,6 +349,155 @@ class GesturePluginTest {
       mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),
         ScreenCoordinate(FLING_DISPLACEMENT, FLING_DISPLACEMENT)
+      )
+    }
+    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
+    assert(result)
+  }
+
+  @Test
+  fun verifyFlingLargeTiltedNormal() {
+    every { mapCameraManagerDelegate.cameraState } returns CameraState(
+      Point.fromLngLat(0.0, 0.0),
+      EdgeInsets(0.0, 0.0, 0.0, 0.0),
+      0.0,
+      0.0,
+      55.0
+    )
+    every {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        any(),
+        any()
+      )
+    } returns CameraOptions.Builder().build()
+    val motionEvent = mockk<MotionEvent>()
+    every { motionEvent.x } returns 0.0f
+    every { motionEvent.y } returns 0.0f
+    val result = presenter.handleFlingEvent(motionEvent, mockk(), FLING_VELOCITY, FLING_VELOCITY)
+    verify {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        ScreenCoordinate(0.0, 0.0),
+        // values should be smaller as verifyFlingLarge but larger as verifyFlingLargeTiltedLarge
+        ScreenCoordinate(588.2352941176471, 588.2352941176471)
+      )
+    }
+    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
+    assert(result)
+  }
+
+  @Test
+  fun verifyFlingLargeTiltedLarge() {
+    every { mapCameraManagerDelegate.cameraState } returns CameraState(
+      Point.fromLngLat(0.0, 0.0),
+      EdgeInsets(0.0, 0.0, 0.0, 0.0),
+      0.0,
+      0.0,
+      80.0
+    )
+    every {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        any(),
+        any()
+      )
+    } returns CameraOptions.Builder().build()
+    val motionEvent = mockk<MotionEvent>()
+    every { motionEvent.x } returns 0.0f
+    every { motionEvent.y } returns 0.0f
+    val result = presenter.handleFlingEvent(motionEvent, mockk(), FLING_VELOCITY, FLING_VELOCITY)
+    verify {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        ScreenCoordinate(0.0, 0.0),
+        // values should be smaller verifyFlingLargeTiltedNormal
+        ScreenCoordinate(194.08996167113608, 194.08996167113608)
+      )
+    }
+    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
+    assert(result)
+  }
+
+  @Test
+  fun verifyFlingSmall() {
+    every { mapCameraManagerDelegate.cameraState } returns CameraState(
+      Point.fromLngLat(0.0, 0.0),
+      EdgeInsets(0.0, 0.0, 0.0, 0.0),
+      0.0,
+      0.0,
+      0.0
+    )
+    every {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        any(),
+        any()
+      )
+    } returns CameraOptions.Builder().build()
+    val motionEvent = mockk<MotionEvent>()
+    every { motionEvent.x } returns 0.0f
+    every { motionEvent.y } returns 0.0f
+    val result = presenter.handleFlingEvent(motionEvent, mockk(), 800f, 750f)
+    verify {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        ScreenCoordinate(0.0, 0.0),
+        ScreenCoordinate(69.56521739130434, 65.21739130434783)
+      )
+    }
+    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
+    assert(result)
+  }
+
+  @Test
+  fun verifyFlingSmallTiltedNormal() {
+    every { mapCameraManagerDelegate.cameraState } returns CameraState(
+      Point.fromLngLat(0.0, 0.0),
+      EdgeInsets(0.0, 0.0, 0.0, 0.0),
+      0.0,
+      0.0,
+      55.0
+    )
+    every {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        any(),
+        any()
+      )
+    } returns CameraOptions.Builder().build()
+    val motionEvent = mockk<MotionEvent>()
+    every { motionEvent.x } returns 0.0f
+    every { motionEvent.y } returns 0.0f
+    val result = presenter.handleFlingEvent(motionEvent, mockk(), 800f, 750f)
+    verify {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        ScreenCoordinate(0.0, 0.0),
+        // values should be smaller as verifyFlingSmall but larger as verifyFlingSmallTiltedLarge
+        ScreenCoordinate(47.05882352941177, 44.11764705882353)
+      )
+    }
+    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
+    assert(result)
+  }
+
+  @Test
+  fun verifyFlingSmallTiltedLarge() {
+    every { mapCameraManagerDelegate.cameraState } returns CameraState(
+      Point.fromLngLat(0.0, 0.0),
+      EdgeInsets(0.0, 0.0, 0.0, 0.0),
+      0.0,
+      0.0,
+      80.0
+    )
+    every {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        any(),
+        any()
+      )
+    } returns CameraOptions.Builder().build()
+    val motionEvent = mockk<MotionEvent>()
+    every { motionEvent.x } returns 0.0f
+    every { motionEvent.y } returns 0.0f
+    val result = presenter.handleFlingEvent(motionEvent, mockk(), 800f, 750f)
+    verify {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        ScreenCoordinate(0.0, 0.0),
+        // values should be smaller as verifyFlingSmallTiltedNormal
+        ScreenCoordinate(15.527196933690886, 14.556747125335207)
       )
     }
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
@@ -870,7 +1019,7 @@ class GesturePluginTest {
   }
 
   private companion object {
-    const val FLING_DISPLACEMENT = 6666.666666666667
+    const val FLING_DISPLACEMENT = 869.5652173913044
     const val FLING_VELOCITY = 10000f
   }
 }

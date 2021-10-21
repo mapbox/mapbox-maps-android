@@ -39,7 +39,7 @@ dependencies {
 Customizing Mapbox Maps Logo Plugin for Android could be done in two ways: by setting the LogoSettings to the logo plugin. This can be achieved with:
 
 ```kotlin
-val plugin = mapView.getLogoPlugin()
+val plugin = mapView.logo
 plugin.logoSettings = LogoSettings(...)
 ```
 

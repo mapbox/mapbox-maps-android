@@ -64,7 +64,7 @@ Any number of animators extending `CameraAnimator` could be created and started 
 ```kotlin
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 
-mapView.getCameraAnimationsPlugin().apply {
+mapView.camera.apply {
     val bearing = createBearingAnimator(cameraAnimatorOptions(18.0, 20.0) { startValue = 15.0 }) {
           duration = 8500
           interpolator = AnticipateOvershootInterpolator()
@@ -83,7 +83,7 @@ Any number of animators extending `CameraAnimator` could be created but user sho
 ```kotlin
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 
-val plugin = mapView.getCameraAnimationsPlugin()
+val plugin = mapView.camera
 val bearing = plugin.createBearingAnimator(cameraAnimatorOptions(160.0) { startValue = 0.0 }) {
       duration = 8500
       interpolator = AnticipateOvershootInterpolator()

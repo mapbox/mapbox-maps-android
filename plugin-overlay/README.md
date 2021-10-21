@@ -47,7 +47,7 @@ private val provider = object : MapOverlayCoordinatesProvider {
     }
 }
 
-mapOverlayPlugin = mapView.getMapOverlayPlugin()
+mapOverlayPlugin = mapView.mapboxOverlay
 // Set displaying area margins if needed
 mapOverlayPlugin.setDisplayingAreaMargins(50, 50, 50, 50)
 

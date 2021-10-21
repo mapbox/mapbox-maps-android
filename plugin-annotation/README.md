@@ -39,7 +39,7 @@ dependencies {
 Customizing Mapbox Maps Annotation Plugin for Android could be done in two ways: by either providing your own version of the Annotation plugin or by setting the AnnotationOptions to the Annotation Managers. The former is documented in [DEVELOPING.md](https://github.com/mapbox/mapbox-maps-android/blob/master/DEVELOPING.md), the latter can be achieved with:
 
 ```kotlin
-val annotationPlugin = mapView.getAnnotationPlugin()
+val annotationPlugin = mapView.annotations
 // Take Circle for example here
 val circleManager = annotationPlugin.getCircleManager()
 val circleOptions: CircleOptions = CircleOptions()

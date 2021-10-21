@@ -1175,10 +1175,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     // We limit the amount of fling displacement based on the camera pitch value.
     val pitchFactorAdditionalComponent = when {
       pitch == MINIMUM_PITCH -> {
-        0.0
+        FLING_LIMITING_FACTOR
       }
       pitch > MINIMUM_PITCH && pitch < NORMAL_MAX_PITCH -> {
-        pitch / 10.0
+        FLING_LIMITING_FACTOR + (pitch / 10.0)
       }
       pitch in NORMAL_MAX_PITCH..MAXIMUM_PITCH -> {
         val a = ln(NORMAL_MAX_PITCH / 10.0)
