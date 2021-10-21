@@ -5,9 +5,8 @@ import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import androidx.core.animation.doOnEnd
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
-import com.mapbox.maps.plugin.animation.animator.CameraAnimator
+//import com.mapbox.maps.plugin.animation.animator.CameraAnimator
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
-import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.viewport.data.ViewportData
 import com.mapbox.maps.plugin.viewport.data.ViewportDataSource
 import com.mapbox.maps.plugin.viewport.data.ViewportDataSourceUpdateObserver

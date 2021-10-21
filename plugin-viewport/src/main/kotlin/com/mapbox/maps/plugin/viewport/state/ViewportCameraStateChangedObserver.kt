@@ -3,7 +3,7 @@ package com.mapbox.maps.plugin.viewport.state
 /**
  * Observer that gets notified whenever [ViewportCameraState] changes.
  */
-interface ViewportCameraStateChangedObserver {
+fun interface ViewportCameraStateChangedObserver {
   /**
    * Called whenever [ViewportCameraState] changes.
    * @param viewportCameraState current states
