@@ -60,40 +60,16 @@ class StyleCirclesCategoricallyActivity : AppCompatActivity() {
                 literal("ethnicity")
               }
               literal("white")
-              rgb {
-                literal(251)
-                literal(176)
-                literal(59)
-              }
+              rgb(251.0, 176.0, 59.0)
               literal("Black")
-              rgb {
-                literal(34)
-                literal(59)
-                literal(83)
-              }
+              rgb(34.0, 59.0, 83.0)
               literal("Hispanic")
-              rgb {
-                literal(229)
-                literal(94)
-                literal(94)
-              }
+              rgb(229.0, 94.0, 94.0)
               literal("Asian")
-              rgb {
-                literal(59)
-                literal(178)
-                literal(208)
-              }
+              rgb(59.0, 178.0, 208.0)
               literal("Other")
-              rgb {
-                literal(204)
-                literal(204)
-                literal(204)
-              }
-              rgb {
-                literal(0)
-                literal(0)
-                literal(0)
-              }
+              rgb(204.0, 204.0, 204.0)
+              rgb(0.0, 0.0, 0.0)
             }
           )
         }
