@@ -14,7 +14,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix logo and attribution margin update. ([#744](https://github.com/mapbox/mapbox-maps-android/pull/744))
 * Fix `NullPointerException` while querying annotations. ([#746](https://github.com/mapbox/mapbox-maps-android/pull/746))
 * Limit fast fling gesture in a downwards direction when map is highly pitched. ([#754](https://github.com/mapbox/mapbox-maps-android/pull/754))
-* Allow annotations to update asynchronously. ([#753](https://github.com/mapbox/mapbox-maps-android/pull/753))
+* Fixed an issue that caused annotations not being updated in some cases.. ([#753](https://github.com/mapbox/mapbox-maps-android/pull/753))
 * Fix glyph drawing issue when the 'high contrast' text feature is turned on. ([#752](https://github.com/mapbox/mapbox-maps-android/pull/752))
 * Fix `promoteId` parameter for VectorSource overwritten when source tilejson is loaded. ([#752](https://github.com/mapbox/mapbox-maps-android/pull/752))
 * Avoid spawning extra AssetManagerFileSource threads. ([#752](https://github.com/mapbox/mapbox-maps-android/pull/752))
