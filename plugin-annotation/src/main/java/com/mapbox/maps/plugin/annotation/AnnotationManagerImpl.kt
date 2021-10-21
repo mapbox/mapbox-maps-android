@@ -47,7 +47,7 @@ import java.util.concurrent.TimeUnit
  * Base class for annotation managers
  */
 abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : AnnotationOptions<G, T>, D : OnAnnotationDragListener<T>, U : OnAnnotationClickListener<T>, V : OnAnnotationLongClickListener<T>, I : OnAnnotationInteractionListener<T>, L : Layer>(
-  mapView: View,
+  mapView: View?,
   /** The delegateProvider */
   final override val delegateProvider: MapDelegateProvider,
   private val annotationConfig: AnnotationConfig?
@@ -68,8 +68,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   private var draggingAnnotation: T? = null
   private val annotationMap = ConcurrentHashMap<Long, T>()
   private val dragAnnotationMap = ConcurrentHashMap<Long, T>()
-  protected var touchAreaShiftX: Int = mapView.scrollX
-  protected var touchAreaShiftY: Int = mapView.scrollY
+  protected var touchAreaShiftX: Int = 0
+  protected var touchAreaShiftY: Int = 0
   protected abstract val layerId: String
   protected abstract val sourceId: String
   protected abstract val dragLayerId: String
@@ -126,6 +126,10 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     gesturesPlugin.addOnMapClickListener(mapClickResolver)
     gesturesPlugin.addOnMapLongClickListener(mapLongClickResolver)
     gesturesPlugin.addOnMoveListener(mapMoveResolver)
+    mapView?.let {
+      touchAreaShiftX = it.scrollX
+      touchAreaShiftY = it.scrollY
+    }
   }
 
   /**

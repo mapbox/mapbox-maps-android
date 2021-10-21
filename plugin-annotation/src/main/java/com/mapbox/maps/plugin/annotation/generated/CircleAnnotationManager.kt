@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicLong
  * The circleAnnotation manager allows to add circleAnnotations to a map.
  */
 class CircleAnnotationManager(
-  mapView: View,
+  mapView: View? = null,
   delegateProvider: MapDelegateProvider,
   annotationConfig: AnnotationConfig? = null
 ) :
@@ -310,7 +310,7 @@ class CircleAnnotationManager(
  */
 @JvmOverloads
 fun AnnotationPlugin.createCircleAnnotationManager(
-  mapView: View,
+  mapView: View? = null,
   annotationConfig: AnnotationConfig? = null
 ): CircleAnnotationManager {
   return createAnnotationManager(mapView, AnnotationType.CircleAnnotation, annotationConfig) as CircleAnnotationManager

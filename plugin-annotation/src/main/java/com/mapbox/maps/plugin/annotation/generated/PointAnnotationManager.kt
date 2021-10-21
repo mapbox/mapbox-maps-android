@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicLong
  * The pointAnnotation manager allows to add pointAnnotations to a map.
  */
 class PointAnnotationManager(
-  mapView: View,
+  mapView: View? = null,
   delegateProvider: MapDelegateProvider,
   annotationConfig: AnnotationConfig? = null
 ) :
@@ -1091,7 +1091,7 @@ class PointAnnotationManager(
  */
 @JvmOverloads
 fun AnnotationPlugin.createPointAnnotationManager(
-  mapView: View,
+  mapView: View? = null,
   annotationConfig: AnnotationConfig? = null
 ): PointAnnotationManager {
   return createAnnotationManager(mapView, AnnotationType.PointAnnotation, annotationConfig) as PointAnnotationManager

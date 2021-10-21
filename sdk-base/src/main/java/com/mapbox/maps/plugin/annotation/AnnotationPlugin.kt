@@ -10,15 +10,15 @@ import com.mapbox.maps.plugin.MapStyleObserverPlugin
  */
 interface AnnotationPlugin : MapPlugin, MapSizePlugin, MapStyleObserverPlugin {
   /**
-   * Get an annotation manger
+   * Create an annotation manger.
    *
-   * @param mapView the mapView
-   * @param type The type of he type of annotation manger
-   * @param annotationConfig the configuration for AnnotationManager
-   * @return the annotation manger
+   * @param mapView Default is null, pass in a MapView instance if need scrollX and scrollY support while dragging.
+   * @param type The type of the created annotation manger
+   * @param annotationConfig Default is null, used for some custom configs
+   * @return The created annotation manger
    */
   fun createAnnotationManager(
-    mapView: View,
+    mapView: View?,
     type: AnnotationType,
     annotationConfig: AnnotationConfig?
   ): AnnotationManager<*, *, *, *, *, *, *>

@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicLong
  * The polygonAnnotation manager allows to add polygonAnnotations to a map.
  */
 class PolygonAnnotationManager(
-  mapView: View,
+  mapView: View? = null,
   delegateProvider: MapDelegateProvider,
   annotationConfig: AnnotationConfig? = null
 ) :
@@ -263,7 +263,7 @@ class PolygonAnnotationManager(
  */
 @JvmOverloads
 fun AnnotationPlugin.createPolygonAnnotationManager(
-  mapView: View,
+  mapView: View? = null,
   annotationConfig: AnnotationConfig? = null
 ): PolygonAnnotationManager {
   return createAnnotationManager(mapView, AnnotationType.PolygonAnnotation, annotationConfig) as PolygonAnnotationManager

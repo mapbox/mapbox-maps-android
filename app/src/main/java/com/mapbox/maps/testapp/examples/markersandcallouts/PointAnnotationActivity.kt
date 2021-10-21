@@ -54,7 +54,7 @@ class PointAnnotationActivity : AppCompatActivity() {
     setContentView(binding.root)
     binding.mapView.getMapboxMap().loadStyleUri(nextStyle) {
       annotationPlugin = binding.mapView.annotations
-      circleAnnotationManager = annotationPlugin.createCircleAnnotationManager(binding.mapView).apply {
+      circleAnnotationManager = annotationPlugin.createCircleAnnotationManager().apply {
         val circleAnnotationOptions: CircleAnnotationOptions = CircleAnnotationOptions()
           .withPoint(Point.fromLngLat(AIRPORT_LONGITUDE, AIRPORT_LATITUDE))
           .withCircleColor(Color.YELLOW)

@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicLong
  * The polylineAnnotation manager allows to add polylineAnnotations to a map.
  */
 class PolylineAnnotationManager(
-  mapView: View,
+  mapView: View? = null,
   delegateProvider: MapDelegateProvider,
   annotationConfig: AnnotationConfig? = null
 ) :
@@ -369,7 +369,7 @@ class PolylineAnnotationManager(
  */
 @JvmOverloads
 fun AnnotationPlugin.createPolylineAnnotationManager(
-  mapView: View,
+  mapView: View? = null,
   annotationConfig: AnnotationConfig? = null
 ): PolylineAnnotationManager {
   return createAnnotationManager(mapView, AnnotationType.PolylineAnnotation, annotationConfig) as PolylineAnnotationManager
