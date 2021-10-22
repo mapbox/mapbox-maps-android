@@ -35,27 +35,28 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
       Constants.PRECISION_6
     )
     navigationSimulator = NavigationSimulator(mapView, routePoints)
-//    navigationSimulator.apply {
-//      disableGestures()
-//      playCustomNavigationScripts(
-//        NavigationSimulator.NavigationStep(INITIAL_OVERVIEW_DELAY_MS) {
-//          setCameraTrackingMode(NavigationSimulator.CameraFollowMode.FOLLOW)
-//        },
-//        NavigationSimulator.NavigationStep(FIRST_FOLLOW_MODE_DELAY_MS) {
-//          setCameraTrackingMode(NavigationSimulator.CameraFollowMode.OVERVIEW)
-//        },
-//        NavigationSimulator.NavigationStep(SECOND_OVERVIEW_MODE_DELAY_MS) {
-//          setCameraTrackingMode(NavigationSimulator.CameraFollowMode.FOLLOW)
-//        }
-//      )
-//    }
-//    handler.postDelayed(
-//      {
-//        finish()
-//      },
-//      SIMULATION_DURATION
-//    )
-    navigationSimulator.playDefaultNavigationScriptsInLoop()
+    navigationSimulator.apply {
+      disableGestures()
+      playCustomNavigationScripts(
+        NavigationSimulator.NavigationStep(INITIAL_OVERVIEW_DELAY_MS) {
+          setCameraTrackingMode(NavigationSimulator.CameraFollowMode.FOLLOW)
+        },
+        NavigationSimulator.NavigationStep(FIRST_FOLLOW_MODE_DELAY_MS) {
+          setCameraTrackingMode(NavigationSimulator.CameraFollowMode.OVERVIEW)
+        },
+        NavigationSimulator.NavigationStep(SECOND_OVERVIEW_MODE_DELAY_MS) {
+          setCameraTrackingMode(NavigationSimulator.CameraFollowMode.FOLLOW)
+        }
+      )
+    }
+    handler.postDelayed(
+      {
+        finish()
+      },
+      SIMULATION_DURATION
+    )
+    // Uncomment below to play the default navigation script in loop.
+    // navigationSimulator.playDefaultNavigationScriptsInLoop()
   }
 
   override fun onDestroy() {
