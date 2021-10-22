@@ -65,11 +65,6 @@ internal const val MINIMUM_PITCH = 0.0
 internal const val NORMAL_MAX_PITCH = 60.0
 
 /**
- * Pitch factor base.
- */
-internal const val PITCH_BASE_FACTOR = 1.5
-
-/**
  * The currently supported maximum unlocked pitch value.
  */
 internal const val MAXIMUM_PITCH = 85.0

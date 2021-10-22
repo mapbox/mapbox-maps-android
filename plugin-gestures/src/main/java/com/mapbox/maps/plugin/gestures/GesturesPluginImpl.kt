@@ -1175,10 +1175,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     // We limit the amount of fling displacement based on the camera pitch value.
     val pitchFactorAdditionalComponent = when {
       pitch == MINIMUM_PITCH -> {
-        FLING_LIMITING_FACTOR
+        0.0
       }
       pitch > MINIMUM_PITCH && pitch < NORMAL_MAX_PITCH -> {
-        FLING_LIMITING_FACTOR + (pitch / 10.0)
+        pitch / 10.0
       }
       pitch in NORMAL_MAX_PITCH..MAXIMUM_PITCH -> {
         val a = ln(NORMAL_MAX_PITCH / 10.0)
@@ -1189,7 +1189,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       }
       else -> 0.0
     }
-    val pitchFactor = (PITCH_BASE_FACTOR + pitchFactorAdditionalComponent) / screenDensity.toDouble()
+    val pitchFactor = FLING_LIMITING_FACTOR + pitchFactorAdditionalComponent / screenDensity.toDouble()
     val offsetX = if (internalSettings.isScrollHorizontallyLimited()) 0.0 else velocityX.toDouble() / pitchFactor
     val offsetY = if (internalSettings.isScrollVerticallyLimited()) 0.0 else velocityY.toDouble() / pitchFactor
 
