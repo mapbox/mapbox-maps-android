@@ -665,6 +665,78 @@ class MapboxMapTest {
   }
 
   @Test
+  fun getClusterLeaves() {
+    val feature = mockk<Feature>()
+    val mapSlot = slot<HashMap<String, Value>>()
+    val callback = mockk<QueryFeatureExtensionCallback>()
+    mapboxMap.getClusterLeaves("id", feature, callback = callback)
+    verify {
+      nativeMap.queryFeatureExtensions(
+        "id",
+        feature,
+        "supercluster",
+        "leaves",
+        capture(mapSlot),
+        callback
+      )
+    }
+    var captureMap = mapSlot.captured
+    assertEquals(2, captureMap.size)
+    assertEquals("10", captureMap["limit"]!!.contents.toString())
+    assertEquals("0", captureMap["offset"]!!.contents.toString())
+
+    mapboxMap.getClusterLeaves("id", feature, 1, 2, callback = callback)
+    verify {
+      nativeMap.queryFeatureExtensions(
+        "id",
+        feature,
+        "supercluster",
+        "leaves",
+        capture(mapSlot),
+        callback
+      )
+    }
+    captureMap = mapSlot.captured
+    assertEquals(2, captureMap.size)
+    assertEquals("1", captureMap["limit"]!!.contents.toString())
+    assertEquals("2", captureMap["offset"]!!.contents.toString())
+  }
+
+  @Test
+  fun getClusterChildren() {
+    val feature = mockk<Feature>()
+    val callback = mockk<QueryFeatureExtensionCallback>()
+    mapboxMap.getClusterChildren("id", feature, callback = callback)
+    verify {
+      nativeMap.queryFeatureExtensions(
+        "id",
+        feature,
+        "supercluster",
+        "children",
+        null,
+        callback
+      )
+    }
+  }
+
+  @Test
+  fun getClusterExpansionZoom() {
+    val feature = mockk<Feature>()
+    val callback = mockk<QueryFeatureExtensionCallback>()
+    mapboxMap.getClusterExpansionZoom("id", feature, callback = callback)
+    verify {
+      nativeMap.queryFeatureExtensions(
+        "id",
+        feature,
+        "supercluster",
+        "expansion-zoom",
+        null,
+        callback
+      )
+    }
+  }
+
+  @Test
   fun getCameraState() {
     mapboxMap.cameraState
     verify { nativeMap.cameraState }
