@@ -331,6 +331,18 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
+            android:name=".examples.SimulateNavigationRouteActivity"
+            android:description="@string/description_simulate_navigation_route"
+            android:exported="true"
+            android:label="@string/activity_simulate_navigation_route">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_location" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
+        <activity
             android:name=".examples.BasicLocationPulsingCircleActivity"
             android:description="@string/description_location_basic_pulsing_circle"
             android:exported="true"
