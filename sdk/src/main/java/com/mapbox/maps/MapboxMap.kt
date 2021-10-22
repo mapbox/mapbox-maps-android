@@ -788,7 +788,7 @@ class MapboxMap internal constructor(
    *        'limit': the number of points to return from the query (must use type 'uint64_t', set to maximum for all points)
    *        'offset': the amount of points to skip (for pagination, must use type 'uint64_t')
    *
-   * @return The result will be returned through the \link QueryFeatureExtensionCallback \endlink.
+   * @return The result will be returned through the [QueryFeatureExtensionCallback].
    *         The result could be a feature extension value containing either a value (expansion-zoom) or a feature collection (children or leaves).
    *         Or a string describing an error if the operation was not successful.
    */
@@ -811,6 +811,70 @@ class MapboxMap internal constructor(
       )
     }
   }
+
+  /**
+   * Returns all the leaves of a cluster (given its cluster_id), with pagination support: limit is the number of leaves
+   * to return (set to Infinity for all points), and offset is the amount of points to skip (for pagination).
+   *
+   * Requires configuring the source as a cluster by calling [GeoJsonSource.Builder#cluster(boolean)].
+   *
+   * @param sourceIdentifier The identifier of the source to query.
+   * @param cluster Cluster from which to retrieve leaves from
+   * @param limit   The number of points to return from the query (must use type 'uint64_t', set to maximum for all points). Defaults to 10.
+   * @param offset  The amount of points to skip (for pagination, must use type 'uint64_t'). Defaults to 0.
+   * @return The result will be returned through the [QueryFeatureExtensionCallback].
+   *         The result is a feature collection or a string describing an error if the operation was not successful.
+   */
+  @JvmOverloads
+  fun getClusterLeaves(
+    sourceIdentifier: String,
+    cluster: Feature,
+    limit: Long = 10,
+    offset: Long = 0,
+    callback: QueryFeatureExtensionCallback
+  ) =
+    queryFeatureExtensions(
+      sourceIdentifier, cluster, SUPER_CLUSTER, "leaves",
+      hashMapOf(Pair("limit", Value(limit)), Pair("offset", Value(offset))),
+      callback
+    )
+
+  /**
+   * Returns the children of a cluster (on the next zoom level) given its id (cluster_id value from feature properties).
+   *
+   * Requires configuring the source as a cluster by calling [GeoJsonSource.Builder#cluster(boolean)].
+   *
+   * @param sourceIdentifier Style source identifier.
+   * @param cluster cluster from which to retrieve children from
+   * @return The result will be returned through the [QueryFeatureExtensionCallback].
+   *         The result is a feature collection or a string describing an error if the operation was not successful.
+   */
+  fun getClusterChildren(
+    sourceIdentifier: String,
+    cluster: Feature,
+    callback: QueryFeatureExtensionCallback
+  ) = queryFeatureExtensions(
+    sourceIdentifier, cluster, SUPER_CLUSTER, "children", null, callback
+  )
+
+  /**
+   * Returns the zoom on which the cluster expands into several children (useful for "click to zoom" feature)
+   * given the cluster's cluster_id (cluster_id value from feature properties).
+   *
+   * Requires configuring the source as a cluster by calling [GeoJsonSource.Builder#cluster(boolean)].
+   *
+   * @param sourceIdentifier Style source identifier.
+   * @param cluster cluster from which to retrieve the expansion zoom from
+   * @return The result will be returned through the [QueryFeatureExtensionCallback].
+   *         The result is a feature extension value containing a value or a string describing an error if the operation was not successful.
+   */
+  fun getClusterExpansionZoom(
+    sourceIdentifier: String,
+    cluster: Feature,
+    callback: QueryFeatureExtensionCallback
+  ) = queryFeatureExtensions(
+    sourceIdentifier, cluster, SUPER_CLUSTER, "expansion-zoom", null, callback
+  )
 
   /**
    * Update the state map of a feature within a style source.
@@ -1344,5 +1408,6 @@ class MapboxMap internal constructor(
     }
 
     private const val TAG_PROJECTION = "MbxProjection"
+    private const val SUPER_CLUSTER = "supercluster"
   }
 }
