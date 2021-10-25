@@ -46,6 +46,7 @@ class MapboxMap internal constructor(
   MapListenerDelegate,
   MapPluginExtensionsDelegate,
   MapCameraManagerDelegate,
+  MapFeatureDelegate,
   MapStyleStateDelegate {
 
   internal lateinit var style: Style
@@ -189,6 +190,7 @@ class MapboxMap internal constructor(
     onStyleLoaded: Style.OnStyleLoaded? = null
   ) {
     this.style = style
+    style.featureDelegate = this
     styleExtension.sources.forEach {
       it.bindTo(style)
     }
@@ -792,7 +794,7 @@ class MapboxMap internal constructor(
    *         The result could be a feature extension value containing either a value (expansion-zoom) or a feature collection (children or leaves).
    *         Or a string describing an error if the operation was not successful.
    */
-  fun queryFeatureExtensions(
+  override fun queryFeatureExtensions(
     sourceIdentifier: String,
     feature: Feature,
     extension: String,
@@ -813,71 +815,6 @@ class MapboxMap internal constructor(
   }
 
   /**
-   * Returns all the leaves (original points) of a cluster (given its cluster_id), with pagination support: limit is the number of leaves
-   * to return (set to Infinity for all points), and offset is the amount of points to skip (for pagination).
-   *
-   * Requires configuring the source as a cluster by calling [GeoJsonSource.Builder#cluster(boolean)].
-   *
-   * @param sourceIdentifier The identifier of the source to query.
-   * @param cluster Cluster from which to retrieve leaves from
-   * @param limit   The number of points to return from the query (must use type 'uint64_t', set to maximum for all points). Defaults to 10.
-   * @param offset  The amount of points to skip (for pagination, must use type 'uint64_t'). Defaults to 0.
-   * @param callback The result will be returned through the [QueryFeatureExtensionCallback].
-   *         The result is a feature collection or a string describing an error if the operation was not successful.
-   */
-  @JvmOverloads
-  fun getClusterLeaves(
-    sourceIdentifier: String,
-    cluster: Feature,
-    limit: Long = 10,
-    offset: Long = 0,
-    callback: QueryFeatureExtensionCallback
-  ) =
-    queryFeatureExtensions(
-      sourceIdentifier, cluster, SUPER_CLUSTER, LEAVES,
-      hashMapOf(Pair(LIMIT, Value(limit)), Pair(OFFSET, Value(offset))),
-      callback
-    )
-
-  /**
-   * Returns the children (original points or clusters) of a cluster (on the next zoom level)
-   * given its id (cluster_id value from feature properties).
-   *
-   * Requires configuring the source as a cluster by calling [GeoJsonSource.Builder#cluster(boolean)].
-   *
-   * @param sourceIdentifier Style source identifier.
-   * @param cluster cluster from which to retrieve children from
-   * @param callback The result will be returned through the [QueryFeatureExtensionCallback].
-   *         The result is a feature collection or a string describing an error if the operation was not successful.
-   */
-  fun getClusterChildren(
-    sourceIdentifier: String,
-    cluster: Feature,
-    callback: QueryFeatureExtensionCallback
-  ) = queryFeatureExtensions(
-    sourceIdentifier, cluster, SUPER_CLUSTER, CHILDREN, null, callback
-  )
-
-  /**
-   * Returns the zoom on which the cluster expands into several children (useful for "click to zoom" feature)
-   * given the cluster's cluster_id (cluster_id value from feature properties).
-   *
-   * Requires configuring the source as a cluster by calling [GeoJsonSource.Builder#cluster(boolean)].
-   *
-   * @param sourceIdentifier Style source identifier.
-   * @param cluster cluster from which to retrieve the expansion zoom from
-   * @param callback The result will be returned through the [QueryFeatureExtensionCallback].
-   *         The result is a feature extension value containing a value or a string describing an error if the operation was not successful.
-   */
-  fun getClusterExpansionZoom(
-    sourceIdentifier: String,
-    cluster: Feature,
-    callback: QueryFeatureExtensionCallback
-  ) = queryFeatureExtensions(
-    sourceIdentifier, cluster, SUPER_CLUSTER, EXPANDSION_ZOOM, null, callback
-  )
-
-  /**
    * Update the state map of a feature within a style source.
    *
    * Update entries in the state map of a given feature within a style source. Only entries listed in the
@@ -893,9 +830,9 @@ class MapboxMap internal constructor(
    * @param state Map of entries to update with their respective new values.
    */
   @JvmOverloads
-  fun setFeatureState(
+  override fun setFeatureState(
     sourceId: String,
-    sourceLayerId: String? = null,
+    sourceLayerId: String?,
     featureId: String,
     state: Value
   ) =
@@ -913,9 +850,9 @@ class MapboxMap internal constructor(
    * @return Feature's state map or an empty map if the feature could not be found.
    */
   @JvmOverloads
-  fun getFeatureState(
+  override fun getFeatureState(
     sourceId: String,
-    sourceLayerId: String? = null,
+    sourceLayerId: String?,
     featureId: String,
     callback: QueryFeatureStateCallback
   ) {
@@ -936,11 +873,11 @@ class MapboxMap internal constructor(
    * @param stateKey Key of the entry to remove. If empty, the entire state is removed.
    */
   @JvmOverloads
-  fun removeFeatureState(
+  override fun removeFeatureState(
     sourceId: String,
-    sourceLayerId: String? = null,
+    sourceLayerId: String?,
     featureId: String,
-    stateKey: String? = null
+    stateKey: String?
   ) {
     nativeMapWeakRef.call {
       this.removeFeatureState(
@@ -1409,11 +1346,5 @@ class MapboxMap internal constructor(
     }
 
     private const val TAG_PROJECTION = "MbxProjection"
-    private const val SUPER_CLUSTER = "supercluster"
-    private const val LEAVES = "leaves"
-    private const val LIMIT = "limit"
-    private const val OFFSET = "offset"
-    private const val CHILDREN = "children"
-    private const val EXPANDSION_ZOOM = "expansion-zoom"
   }
 }

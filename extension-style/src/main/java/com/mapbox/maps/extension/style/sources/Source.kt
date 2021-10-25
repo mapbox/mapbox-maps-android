@@ -8,6 +8,7 @@ import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.utils.unwrap
+import com.mapbox.maps.plugin.delegates.MapFeatureDelegate
 
 /**
  * Base class for sources.
@@ -46,6 +47,7 @@ abstract class Source(
   }
 
   internal var delegate: StyleManagerInterface? = null
+  internal var featureDelegate: MapFeatureDelegate? = null
 
   /**
    * Add the source to the Style.
@@ -54,6 +56,7 @@ abstract class Source(
    */
   override fun bindTo(delegate: StyleInterface) {
     this.delegate = delegate
+    featureDelegate= delegate.featureDelegate
     val expected = delegate.addStyleSource(sourceId, getCachedSourceProperties())
     expected.error?.let {
       Log.e(TAG, getCachedSourceProperties().toString())

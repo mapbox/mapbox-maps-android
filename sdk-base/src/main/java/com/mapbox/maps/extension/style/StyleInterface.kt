@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.plugin.delegates.MapFeatureDelegate
 
 /**
  * Defines the style interface that can be used to interact with the map's style.
@@ -33,4 +34,6 @@ interface StyleInterface : StyleManagerInterface {
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
   fun addImage(imageId: String, bitmap: Bitmap): Expected<String, None>
+
+  var featureDelegate: MapFeatureDelegate?
 }

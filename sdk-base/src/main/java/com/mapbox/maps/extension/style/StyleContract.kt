@@ -1,6 +1,7 @@
 package com.mapbox.maps.extension.style
 
 import com.mapbox.maps.LayerPosition
+import com.mapbox.maps.plugin.delegates.MapFeatureDelegate
 
 /**
  * Define the common interfaces for the Style component.
@@ -81,7 +82,7 @@ interface StyleContract {
   /**
    * Define the interfaces for the source plugin.
    */
-  fun interface StyleSourceExtension {
+  interface StyleSourceExtension {
     /**
      * Bind the source to the Style.
      *

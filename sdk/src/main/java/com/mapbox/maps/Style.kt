@@ -6,6 +6,7 @@ import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.plugin.delegates.MapFeatureDelegate
 import java.lang.ref.WeakReference
 import java.nio.ByteBuffer
 
@@ -505,6 +506,8 @@ class Style internal constructor(
     imageId: String,
     bitmap: Bitmap
   ): Expected<String, None> = addImage(imageId, bitmap, false)
+
+  override var featureDelegate: MapFeatureDelegate? = null
 
   /**
    * Get an image from the style.
