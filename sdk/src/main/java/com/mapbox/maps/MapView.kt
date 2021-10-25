@@ -5,6 +5,9 @@ import android.annotation.TargetApi
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Build
+import android.os.Handler
+import android.os.HandlerThread
+import android.os.Process
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.SurfaceView
@@ -13,6 +16,8 @@ import android.widget.FrameLayout
 import androidx.annotation.IntRange
 import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
+import com.mapbox.common.Logger
+import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
@@ -98,7 +103,17 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
       resolvedMapInitOptions
     )
     addView(view, 0)
-    mapController.initializePlugins(resolvedMapInitOptions, this)
+    workerHandler.post {
+      Logger.d("MapView", "Init plugins in thread: ${Thread.currentThread().name}")
+      mapController.initializePlugins(resolvedMapInitOptions, this)
+    }
+  }
+
+  val workerThread = HandlerThread("InitPlugins", Process.THREAD_PRIORITY_DEFAULT).apply {
+    start()
+  }
+  val workerHandler by lazy {
+    Handler(workerThread.looper)
   }
 
   override fun onAttachedToWindow() {

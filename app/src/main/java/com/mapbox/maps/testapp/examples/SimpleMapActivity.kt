@@ -10,10 +10,10 @@ import com.mapbox.maps.MapView
  * Example of displaying a map.
  */
 class SimpleMapActivity : AppCompatActivity() {
-
+  lateinit var mapView: MapView
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val mapView = MapView(this)
+    mapView = MapView(this)
     setContentView(mapView)
     mapView.getMapboxMap()
       .apply {
@@ -26,6 +26,10 @@ class SimpleMapActivity : AppCompatActivity() {
       }
   }
 
+  override fun onStart() {
+    super.onStart()
+    mapView.onStart()
+  }
   companion object {
     private const val LATITUDE = 40.0
     private const val LONGITUDE = -74.5
