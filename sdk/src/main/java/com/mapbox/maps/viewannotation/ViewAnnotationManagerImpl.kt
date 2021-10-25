@@ -6,17 +6,16 @@ import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.maps.*
-import com.mapbox.maps.extension.observable.eventdata.CameraChangedEventData
 import java.util.concurrent.ConcurrentHashMap
 
 internal class ViewAnnotationManagerImpl(
   private val mapView: MapView,
   private val mapboxMap: MapboxMap = mapView.getMapboxMap()
-) : ViewAnnotationManager {
+) : ViewAnnotationManager, ViewAnnotationPositionsListener {
 
   init {
     mapView.requestDisallowInterceptTouchEvent(false)
-    mapboxMap.addOnCameraChangeListener(this)
+    mapboxMap.setViewAnnotationPositionsUpdateListener(this)
   }
 
   private val asyncInflater by lazy {
@@ -45,6 +44,7 @@ internal class ViewAnnotationManagerImpl(
   }
 
   override fun addViewAnnotation(resId: Int, options: ViewAnnotationOptions): View {
+    checkNotNull(options.geometry) { "Geometry can not be null!" }
     val view = LayoutInflater.from(mapView.context).inflate(resId, mapView, false)
     return prepareViewAnnotation(view, options)
   }
@@ -77,19 +77,11 @@ internal class ViewAnnotationManagerImpl(
             .visible(isVisibleNow)
             .build()
         )
-        mapboxMap.calculateViewAnnotationsPosition {
-          redrawAnnotations(it)
-        }
       }
     }
     annotationMap[viewAnnotation.id] = viewAnnotation
     idLookupMap[inflatedView] = viewAnnotation.id
-    mapboxMap.apply {
-      addViewAnnotation(viewAnnotation.id, updatedOptions)
-      calculateViewAnnotationsPosition {
-        redrawAnnotations(it)
-      }
-    }
+    mapboxMap.addViewAnnotation(viewAnnotation.id, updatedOptions)
     return inflatedView
   }
 
@@ -126,12 +118,7 @@ internal class ViewAnnotationManagerImpl(
     annotationMap.remove(id) ?: return false
     idLookupMap.remove(view)
     mapView.removeView(view)
-    mapboxMap.apply {
-      removeViewAnnotation(id)
-      calculateViewAnnotationsPosition {
-        redrawAnnotations(it)
-      }
-    }
+    mapboxMap.removeViewAnnotation(id)
     return true
   }
 
@@ -142,12 +129,7 @@ internal class ViewAnnotationManagerImpl(
     val id = idLookupMap[view] ?: return false
     annotationMap[id]?.let {
       it.handleVisibility = options.visible == null
-      mapboxMap.apply {
-        updateViewAnnotation(id, options)
-        calculateViewAnnotationsPosition { positions ->
-          redrawAnnotations(positions)
-        }
-      }
+      mapboxMap.updateViewAnnotation(id, options)
       return true
     } ?: return false
   }
@@ -182,7 +164,6 @@ internal class ViewAnnotationManagerImpl(
   }
 
   fun destroy() {
-    mapboxMap.removeOnCameraChangeListener(this)
     annotationMap.forEach {
       mapboxMap.removeViewAnnotation(it.key)
       mapView.removeView(it.value.view)
@@ -191,9 +172,7 @@ internal class ViewAnnotationManagerImpl(
     idLookupMap.clear()
   }
 
-  override fun onCameraChanged(eventData: CameraChangedEventData) {
-    mapboxMap.calculateViewAnnotationsPosition {
-      redrawAnnotations(it)
-    }
+  override fun onViewAnnotationPositionsUpdate(positions: MutableList<ViewAnnotationPositionDescriptor>) {
+    redrawAnnotations(positions)
   }
 }

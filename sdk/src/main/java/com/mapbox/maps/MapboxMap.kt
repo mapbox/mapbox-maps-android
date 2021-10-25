@@ -1334,8 +1334,8 @@ class MapboxMap internal constructor(
     return nativeMapWeakRef.call { this.removeViewAnnotation(viewId) }
   }
 
-  internal fun calculateViewAnnotationsPosition(callback: ViewAnnotationPositionsCallback) {
-    return nativeMapWeakRef.call { this.calculateViewAnnotationPositions(callback) }
+  internal fun setViewAnnotationPositionsUpdateListener(listener: ViewAnnotationPositionsListener) {
+    return nativeMapWeakRef.call { this.setViewAnnotationPositionsUpdateListener(listener) }
   }
 
   internal fun getViewAnnotationOptions(identifier: String): Expected<String, ViewAnnotationOptions> {

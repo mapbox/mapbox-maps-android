@@ -128,6 +128,10 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.renderCacheOptions
   }
 
+  override fun setViewAnnotationPositionsUpdateListener(listener: ViewAnnotationPositionsListener) {
+    return map.setViewAnnotationPositionsUpdateListener(listener)
+  }
+
   override fun setMapProjection(value: Value) = map.setMapProjection(value)
 
   override fun getMapProjection(): Value = map.mapProjection
@@ -511,10 +515,6 @@ internal class NativeMapImpl(private val map: MapInterface) :
 
   override fun unsubscribe(observer: Observer) {
     map.unsubscribe(observer)
-  }
-
-  override fun calculateViewAnnotationPositions(callback: ViewAnnotationPositionsCallback) {
-    map.calculateViewAnnotationPositions(callback)
   }
 
   override fun addViewAnnotation(id: String, options: ViewAnnotationOptions): Expected<String, None> {
