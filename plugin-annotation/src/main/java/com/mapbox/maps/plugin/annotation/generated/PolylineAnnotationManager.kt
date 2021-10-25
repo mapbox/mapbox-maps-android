@@ -367,10 +367,21 @@ class PolylineAnnotationManager(
 /**
  * Extension function to create a PolylineAnnotationManager instance.
  */
+@Deprecated(
+  "No need mapView parameter",
+  ReplaceWith("createPolylineAnnotationManager(annotationConfig)")
+)
 @JvmOverloads
 fun AnnotationPlugin.createPolylineAnnotationManager(
-  mapView: View? = null,
+  mapView: View,
+  annotationConfig: AnnotationConfig? = null
+): PolylineAnnotationManager = createPolylineAnnotationManager(annotationConfig)
+
+/**
+ * Extension function to create a PolylineAnnotationManager instance.
+ */
+fun AnnotationPlugin.createPolylineAnnotationManager(
   annotationConfig: AnnotationConfig? = null
 ): PolylineAnnotationManager {
-  return createAnnotationManager(mapView, AnnotationType.PolylineAnnotation, annotationConfig) as PolylineAnnotationManager
+  return createAnnotationManager(AnnotationType.PolylineAnnotation, annotationConfig) as PolylineAnnotationManager
 }

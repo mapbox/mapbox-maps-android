@@ -4,21 +4,39 @@ import android.view.View
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.MapSizePlugin
 import com.mapbox.maps.plugin.MapStyleObserverPlugin
+import com.mapbox.maps.plugin.ViewBinder
 
 /**
  * Plugin interface for the annotation.
  */
-interface AnnotationPlugin : MapPlugin, MapSizePlugin, MapStyleObserverPlugin {
+interface AnnotationPlugin : MapPlugin, MapSizePlugin, MapStyleObserverPlugin, ViewBinder {
+
   /**
    * Create an annotation manger.
    *
-   * @param mapView Default is null, pass in a MapView instance if need scrollX and scrollY support while dragging.
+   * @param mapView The MapView instance.
+   * @param type The type of the created annotation manger
+   * @param annotationConfig Default is null, used for some custom configs
+   * @return The created annotation manger
+   */
+  @Deprecated(
+    "No need mapView parameter",
+    ReplaceWith("createAnnotationManager(AnnotationType, annotationConfig)")
+  )
+  fun createAnnotationManager(
+    mapView: View,
+    type: AnnotationType,
+    annotationConfig: AnnotationConfig?
+  ): AnnotationManager<*, *, *, *, *, *, *>
+
+  /**
+   * Create an annotation manger.
+   *
    * @param type The type of the created annotation manger
    * @param annotationConfig Default is null, used for some custom configs
    * @return The created annotation manger
    */
   fun createAnnotationManager(
-    mapView: View?,
     type: AnnotationType,
     annotationConfig: AnnotationConfig?
   ): AnnotationManager<*, *, *, *, *, *, *>

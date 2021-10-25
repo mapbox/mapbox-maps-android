@@ -308,10 +308,21 @@ class CircleAnnotationManager(
 /**
  * Extension function to create a CircleAnnotationManager instance.
  */
+@Deprecated(
+  "No need mapView parameter",
+  ReplaceWith("createCircleAnnotationManager(annotationConfig)")
+)
 @JvmOverloads
 fun AnnotationPlugin.createCircleAnnotationManager(
-  mapView: View? = null,
+  mapView: View,
+  annotationConfig: AnnotationConfig? = null
+): CircleAnnotationManager = createCircleAnnotationManager(annotationConfig)
+
+/**
+ * Extension function to create a CircleAnnotationManager instance.
+ */
+fun AnnotationPlugin.createCircleAnnotationManager(
   annotationConfig: AnnotationConfig? = null
 ): CircleAnnotationManager {
-  return createAnnotationManager(mapView, AnnotationType.CircleAnnotation, annotationConfig) as CircleAnnotationManager
+  return createAnnotationManager(AnnotationType.CircleAnnotation, annotationConfig) as CircleAnnotationManager
 }

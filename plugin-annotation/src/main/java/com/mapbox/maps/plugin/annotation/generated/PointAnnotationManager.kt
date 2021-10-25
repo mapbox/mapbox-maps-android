@@ -1089,10 +1089,21 @@ class PointAnnotationManager(
 /**
  * Extension function to create a PointAnnotationManager instance.
  */
+@Deprecated(
+  "No need mapView parameter",
+  ReplaceWith("createPointAnnotationManager(annotationConfig)")
+)
 @JvmOverloads
 fun AnnotationPlugin.createPointAnnotationManager(
-  mapView: View? = null,
+  mapView: View,
+  annotationConfig: AnnotationConfig? = null
+): PointAnnotationManager = createPointAnnotationManager(annotationConfig)
+
+/**
+ * Extension function to create a PointAnnotationManager instance.
+ */
+fun AnnotationPlugin.createPointAnnotationManager(
   annotationConfig: AnnotationConfig? = null
 ): PointAnnotationManager {
-  return createAnnotationManager(mapView, AnnotationType.PointAnnotation, annotationConfig) as PointAnnotationManager
+  return createAnnotationManager(AnnotationType.PointAnnotation, annotationConfig) as PointAnnotationManager
 }

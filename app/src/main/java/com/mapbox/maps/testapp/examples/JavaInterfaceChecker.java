@@ -189,16 +189,12 @@ public class JavaInterfaceChecker {
     }
 
     private void annotationManager(AnnotationPlugin annotationPlugin, MapView mapView, AnnotationConfig annotationConfig) {
-        createPolylineAnnotationManager(annotationPlugin);
         createPolylineAnnotationManager(annotationPlugin, mapView);
         createPolylineAnnotationManager(annotationPlugin, mapView, annotationConfig);
-        createPolygonAnnotationManager(annotationPlugin);
         createPolygonAnnotationManager(annotationPlugin, mapView);
         createPolygonAnnotationManager(annotationPlugin, mapView, annotationConfig);
-        createPointAnnotationManager(annotationPlugin);
         createPointAnnotationManager(annotationPlugin, mapView);
         createPointAnnotationManager(annotationPlugin, mapView, annotationConfig);
-        createCircleAnnotationManager(annotationPlugin);
         createCircleAnnotationManager(annotationPlugin, mapView);
         createCircleAnnotationManager(annotationPlugin, mapView, annotationConfig);
     }

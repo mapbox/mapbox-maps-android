@@ -96,6 +96,15 @@ class MapPluginRegistryTest {
   }
 
   @Test
+  fun createPlugin_viewBinder() {
+    val mapView = mockk<MapView>(relaxed = true)
+    val viewBinder = mockk<ViewBinderPlugin>(relaxUnitFun = true)
+    val plugin = Plugin.Custom("id", viewBinder)
+    mapPluginRegistry.createPlugin(mapView, mapInitOptions, plugin)
+    verify { viewBinder.bind(mapView) }
+  }
+
+  @Test
   fun createPlugin_gesturePlugin() {
     val mapView = mockk<MapView>(relaxed = true)
     val gesturesPlugin = mockk<GesturesPlugin>(relaxUnitFun = true)
@@ -262,6 +271,11 @@ class MapPluginRegistryTest {
 
     verify {
       stylePlugin.onStyleChanged(style)
+    }
+  }
+
+  class ViewBinderPlugin : ViewBinder, MapPlugin {
+    override fun bind(mapView: View) {
     }
   }
 

@@ -261,10 +261,21 @@ class PolygonAnnotationManager(
 /**
  * Extension function to create a PolygonAnnotationManager instance.
  */
+@Deprecated(
+  "No need mapView parameter",
+  ReplaceWith("createPolygonAnnotationManager(annotationConfig)")
+)
 @JvmOverloads
 fun AnnotationPlugin.createPolygonAnnotationManager(
-  mapView: View? = null,
+  mapView: View,
+  annotationConfig: AnnotationConfig? = null
+): PolygonAnnotationManager = createPolygonAnnotationManager(annotationConfig)
+
+/**
+ * Extension function to create a PolygonAnnotationManager instance.
+ */
+fun AnnotationPlugin.createPolygonAnnotationManager(
   annotationConfig: AnnotationConfig? = null
 ): PolygonAnnotationManager {
-  return createAnnotationManager(mapView, AnnotationType.PolygonAnnotation, annotationConfig) as PolygonAnnotationManager
+  return createAnnotationManager(AnnotationType.PolygonAnnotation, annotationConfig) as PolygonAnnotationManager
 }
