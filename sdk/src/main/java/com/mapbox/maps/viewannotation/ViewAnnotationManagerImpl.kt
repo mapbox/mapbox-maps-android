@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
+import com.mapbox.common.Logger
 import com.mapbox.maps.*
 import java.util.concurrent.ConcurrentHashMap
 
@@ -31,6 +32,7 @@ internal class ViewAnnotationManagerImpl(
 
   private val annotationMap = ConcurrentHashMap<String, ViewAnnotation>()
   private val idLookupMap = HashMap<View, String>()
+  private val visibleViews = HashMap<String, ScreenCoordinate>()
 
   override fun addViewAnnotation(
     @LayoutRes resId: Int,
@@ -88,29 +90,85 @@ internal class ViewAnnotationManagerImpl(
   private fun redrawAnnotations(
     positionsToUpdate: List<ViewAnnotationPositionDescriptor>
   ) {
-    annotationMap
-      // filter out and remove explicitly only visible views
-      // we can't remove invisible / gone ones because global layout listener will stop getting notified
-      .filter { it.value.view.visibility == View.VISIBLE }
-      .forEach { mapView.removeView(it.value.view) }
-    for (viewPosition in positionsToUpdate) {
-      annotationMap[viewPosition.identifier]?.let { annotation ->
-        // remove invisible or gone view if needed
-        mapView.removeView(annotation.view)
-        val options = mapboxMap.getViewAnnotationOptions(viewPosition.identifier)
+    val positionIdsToUpdate = positionsToUpdate.map { it.identifier }
+    val viewsToReposition = positionIdsToUpdate.intersect(visibleViews.keys)
+    val viewsToAdd = positionIdsToUpdate.minus(visibleViews.keys)
+    val viewsToDelete = visibleViews.keys.minus(positionIdsToUpdate)
+
+    Logger.e("KIRYLDD", "viewsToReposition: ${viewsToReposition.joinToString(", ")}")
+    Logger.e("KIRYLDD", "viewsToAdd: ${viewsToAdd.joinToString(", ")}")
+    Logger.e("KIRYLDD", "viewsToDelete: ${viewsToDelete.joinToString(", ")}")
+
+    viewsToDelete.forEach {
+      annotationMap[it]?.let { annotation ->
+        if (annotation.view.visibility == View.VISIBLE) {
+          mapView.removeView(annotation.view)
+        }
+      }
+    }
+
+    viewsToReposition.forEach { id ->
+      annotationMap[id]?.let { annotation ->
+        val options = mapboxMap.getViewAnnotationOptions(id)
         if (options.isValue) {
           annotation.viewLayoutParams.width = options.value?.width!!
           annotation.viewLayoutParams.height = options.value?.height!!
           annotation.viewLayoutParams.setMargins(
-            viewPosition.leftTopCoordinate.x.toInt(),
-            viewPosition.leftTopCoordinate.y.toInt(),
+            visibleViews[id]!!.x.toInt(),
+            visibleViews[id]!!.y.toInt(),
             0,
             0
           )
+        }
+      }
+    }
+
+    viewsToAdd.forEach { id ->
+      annotationMap[id]?.let { annotation ->
+        val options = mapboxMap.getViewAnnotationOptions(id)
+        if (options.isValue) {
+          annotation.viewLayoutParams.width = options.value?.width!!
+          annotation.viewLayoutParams.height = options.value?.height!!
+          annotation.viewLayoutParams.setMargins(
+            visibleViews[id]!!.x.toInt(),
+            visibleViews[id]!!.y.toInt(),
+            0,
+            0
+          )
+          mapView.removeView(annotation.view)
           mapView.addView(annotation.view, annotation.viewLayoutParams)
         }
       }
     }
+
+    visibleViews.clear()
+    visibleViews.putAll(positionsToUpdate.map { Map.Entry(it.identifier, it.leftTopCoordinate) })
+
+
+
+//    annotationMap
+//      // filter out and remove explicitly only visible views
+//      // we can't remove invisible / gone ones because global layout listener will stop getting notified
+//      .filter { it.value.view.visibility == View.VISIBLE }
+//      .forEach { mapView.removeView(it.value.view) }
+//    for (viewPosition in positionsToUpdate) {
+//      annotationMap[viewPosition.identifier]?.let { annotation ->
+//        // remove invisible or gone view if needed
+//        mapView.removeView(annotation.view)
+//        val options = mapboxMap.getViewAnnotationOptions(viewPosition.identifier)
+//        if (options.isValue) {
+//          annotation.viewLayoutParams.width = options.value?.width!!
+//          annotation.viewLayoutParams.height = options.value?.height!!
+//          annotation.viewLayoutParams.setMargins(
+//            viewPosition.leftTopCoordinate.x.toInt(),
+//            viewPosition.leftTopCoordinate.y.toInt(),
+//            0,
+//            0
+//          )
+//          mapView.addView(annotation.view, annotation.viewLayoutParams)
+//        }
+//      }
+//    }
   }
 
   override fun removeViewAnnotation(view: View): Boolean {

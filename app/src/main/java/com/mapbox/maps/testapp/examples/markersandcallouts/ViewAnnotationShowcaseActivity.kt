@@ -1,6 +1,7 @@
 package com.mapbox.maps.testapp.examples.markersandcallouts
 
 import android.annotation.SuppressLint
+import android.content.ComponentCallbacks2
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.common.Logger
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
@@ -75,6 +77,19 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
         }
       }
     }
+
+//    binding.mapView.postDelayed({
+//      for (i in 0 until 100) {
+//        viewAnnotationManager.addViewAnnotation(
+//          R.layout.item_callout_view,
+//          viewAnnotationOptions {
+//            geometry(Point.fromLngLat(27.56667 + 0.01 * i, 53.9 + 0.01 * i))
+//            anchor(ViewAnnotationAnchor.BOTTOM)
+//            allowOverlap(false)
+//          }
+//        )
+//      }
+//    }, 3000L)
   }
 
   private fun prepareStyle(styleUri: String, bitmap: Bitmap) = style(styleUri) {
@@ -144,6 +159,7 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
         allowOverlap(false)
       }
     )
+    Logger.e("KIRYLDD", "GONE")
     viewAnnotation.visibility = View.GONE
     // calculate offsetY manually taking into account icon height only because of bottom anchoring
     viewAnnotationManager.updateViewAnnotation(
