@@ -1,6 +1,6 @@
 package com.mapbox.maps.extension.lifecycle
 
-import android.content.ComponentCallbacks
+import android.content.ComponentCallbacks2
 import android.content.Context
 import android.widget.FrameLayout
 import androidx.lifecycle.LifecycleOwner
@@ -17,7 +17,7 @@ class MapboxLifecyclePluginImplTest {
   private val mapView: FrameLayout = mockk(relaxed = true)
   private val context: Context = mockk(relaxed = true)
   private val lifecycleOwner: LifecycleOwner = mockk(relaxed = true)
-  private val slot = slot<ComponentCallbacks>()
+  private val slot = slot<ComponentCallbacks2>()
 
   @Before
   fun setUp() {

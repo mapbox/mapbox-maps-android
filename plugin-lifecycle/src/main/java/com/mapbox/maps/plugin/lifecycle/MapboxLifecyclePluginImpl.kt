@@ -1,6 +1,6 @@
 package com.mapbox.maps.plugin.lifecycle
 
-import android.content.ComponentCallbacks
+import android.content.ComponentCallbacks2
 import android.content.res.Configuration
 import android.view.View
 import androidx.lifecycle.Lifecycle
@@ -33,13 +33,39 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
           you need manually invoke the corresponding lifecycle methods in onStart/onStop/onDestroy/onLowMemory methods of the host Activity"""
       )
     } else {
-      val componentCallback = object : ComponentCallbacks {
+      val componentCallback = object : ComponentCallbacks2 {
         override fun onConfigurationChanged(newConfig: Configuration) {
           // no need
         }
 
         override fun onLowMemory() {
           observer.onLowMemory()
+        }
+
+        override fun onTrimMemory(level: Int) {
+          when(level) {
+            ComponentCallbacks2.TRIM_MEMORY_BACKGROUND -> {
+              observer.onLowMemory()
+            }
+            ComponentCallbacks2.TRIM_MEMORY_COMPLETE -> {
+              observer.onLowMemory()
+            }
+            ComponentCallbacks2.TRIM_MEMORY_MODERATE -> {
+              observer.onLowMemory()
+            }
+            ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL -> {
+              observer.onLowMemory()
+            }
+            ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW -> {
+              observer.onLowMemory()
+            }
+            ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE -> {
+              observer.onLowMemory()
+            }
+            ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN -> {
+              observer.onLowMemory()
+            }
+          }
         }
       }
       mapView.context.registerComponentCallbacks(componentCallback)
