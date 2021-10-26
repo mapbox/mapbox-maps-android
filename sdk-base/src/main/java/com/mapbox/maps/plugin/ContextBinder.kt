@@ -8,8 +8,7 @@ import android.util.AttributeSet
  */
 fun interface ContextBinder {
   /**
-   * Bind the ViewPlugin with current map context. This will create a View that
-   * will be added to the MapView.
+   * Bind the plugin with current map context.
    *
    * @param context The hosting context
    * @param attrs parent attributes

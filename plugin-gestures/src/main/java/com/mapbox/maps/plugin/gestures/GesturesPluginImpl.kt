@@ -10,9 +10,13 @@ import android.os.Looper
 import android.util.AttributeSet
 import android.view.InputDevice
 import android.view.MotionEvent
+import android.widget.FrameLayout
+import android.widget.OverScroller
 import androidx.annotation.VisibleForTesting
+import androidx.core.view.ViewCompat
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.android.gestures.*
+import com.mapbox.common.Logger
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
@@ -30,6 +34,7 @@ import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettingsBase
+import java.lang.ref.WeakReference
 import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.math.*
@@ -38,9 +43,11 @@ import kotlin.math.*
  * Manages gestures events on a MapView.
  */
 class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
-
-  private val context: Context
+  private val contextWeakReference: WeakReference<Context>
+  private lateinit var viewWeakReference: WeakReference<FrameLayout>
   private var pixelRatio: Float = 1f
+
+  private var lastFlingPosition = ScreenCoordinate(0.0, 0.0)
 
   private lateinit var gesturesManager: AndroidGesturesManager
 
@@ -88,7 +95,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   private var scaleAnimators: Array<ValueAnimator>? = null
   private var rotateAnimators: Array<ValueAnimator>? = null
   private val scheduledAnimators = ArrayList<ValueAnimator>()
-  private val gesturesInterpolator = LinearOutSlowInInterpolator()
+  private var gesturesInterpolator = LinearOutSlowInInterpolator()
+  private var gesturesDecelerationFactor = 1.0f
+
+  private val scroller: OverScroller
 
   // needed most likely for devices with API <= 23 only
   // duration = 0 will still make animation end / cancel not immediately
@@ -129,8 +139,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     context: Context,
     pixelRatio: Float
   ) {
-    this.context = context
+    this.contextWeakReference = WeakReference(context)
     this.pixelRatio = pixelRatio
+    this.scroller = OverScroller(context)
     internalSettings = GesturesAttributeParser.parseGesturesSettings(context, null, pixelRatio)
     mainHandler = Handler(Looper.getMainLooper())
   }
@@ -140,8 +151,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     attributeSet: AttributeSet,
     pixelRatio: Float
   ) {
-    this.context = context
+    this.contextWeakReference = WeakReference(context)
     this.pixelRatio = pixelRatio
+    this.scroller = OverScroller(context)
     internalSettings =
       GesturesAttributeParser.parseGesturesSettings(context, attributeSet, pixelRatio)
     mainHandler = Handler(Looper.getMainLooper())
@@ -154,8 +166,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     pixelRatio: Float,
     handler: Handler
   ) {
-    this.context = context
+    this.contextWeakReference = WeakReference(context)
     this.pixelRatio = pixelRatio
+    this.scroller = OverScroller(context)
     internalSettings =
       GesturesAttributeParser.parseGesturesSettings(context, attributeSet, pixelRatio)
     mainHandler = handler
@@ -372,6 +385,28 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     // We are not interested in this event
     return false
+  }
+
+  override fun computeScroll() {
+    if (scroller.computeScrollOffset()) {
+      Logger.d(
+        TAG,
+        "${scroller.startX}, ${scroller.startY}, ${scroller.currX}, ${scroller.currY}"
+      )
+      val cameraOptions = mapCameraManagerDelegate.getDragCameraOptions(
+        lastFlingPosition,
+        ScreenCoordinate(scroller.currX.toDouble(), scroller.currY.toDouble()),
+      )
+      lastFlingPosition = ScreenCoordinate(scroller.currX.toDouble(), scroller.currY.toDouble())
+      mapCameraManagerDelegate.setCamera(
+        cameraOptions
+      )
+      viewWeakReference.get()?.let {
+        ViewCompat.postInvalidateOnAnimation(it)
+      }
+    } else {
+      mapCameraManagerDelegate.dragEnd()
+    }
   }
 
   /**
@@ -1160,64 +1195,32 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       return false
     }
 
-    val screenDensity = pixelRatio
-
-    // calculate velocity vector for xy dimensions, independent from screen size
-    val velocityXY =
-      hypot((velocityX / screenDensity).toDouble(), (velocityY / screenDensity).toDouble())
-    if (velocityXY < VELOCITY_THRESHOLD_IGNORE_FLING) {
-      // ignore short flings, these can occur when other gestures just have finished executing
-      return false
-    }
-
-    val pitch = mapCameraManagerDelegate.cameraState.pitch
-
-    // We limit the amount of fling displacement based on the camera pitch value.
-    val pitchFactorAdditionalComponent = when {
-      pitch == MINIMUM_PITCH -> {
-        FLING_LIMITING_FACTOR
-      }
-      pitch > MINIMUM_PITCH && pitch < NORMAL_MAX_PITCH -> {
-        FLING_LIMITING_FACTOR + (pitch / 10.0)
-      }
-      pitch in NORMAL_MAX_PITCH..MAXIMUM_PITCH -> {
-        val a = ln(NORMAL_MAX_PITCH / 10.0)
-        val b = ln(MAXIMUM_PITCH)
-        // exp(a) = pitch / 10.0
-        // exp(b) = pitch
-        exp((b - a) * (pitch - NORMAL_MAX_PITCH) / (MAXIMUM_PITCH - NORMAL_MAX_PITCH) + a)
-      }
-      else -> 0.0
-    }
-    val pitchFactor = (PITCH_BASE_FACTOR + pitchFactorAdditionalComponent) / screenDensity.toDouble()
-    val offsetX = if (internalSettings.isScrollHorizontallyLimited()) 0.0 else velocityX.toDouble() / pitchFactor
-    val offsetY = if (internalSettings.isScrollVerticallyLimited()) 0.0 else velocityY.toDouble() / pitchFactor
-
-    cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
-
-    // calculate animation time based on displacement
-    // velocityXY ranges from VELOCITY_THRESHOLD_IGNORE_FLING to ~5000
-    // limit animation time to Android SDK default animation time
-    val animationTime = (velocityXY / FLING_LIMITING_FACTOR).toLong()
-
-    cameraAnimationsPlugin.easeTo(
-      mapCameraManagerDelegate.getDragCameraOptions(
-        ScreenCoordinate(e1.x.toDouble(), e1.y.toDouble()),
-        ScreenCoordinate(e1.x + offsetX, e1.y + offsetY)
-      ),
-      mapAnimationOptions {
-        owner(MapAnimationOwnerRegistry.GESTURES)
-        duration(animationTime)
-        interpolator(gesturesInterpolator)
-        animatorListener(object : AnimatorListenerAdapter() {
-
-          override fun onAnimationEnd(animation: Animator?) {
-            super.onAnimationEnd(animation)
-            mapCameraManagerDelegate.dragEnd()
-          }
-        })
-      }
+    // Aborts any active scroll animations and invalidates.
+    scroller.forceFinished(true)
+    scroller.fling(
+      e1.x.toInt(),
+      e1.y.toInt(),
+      velocityX.toInt(),
+      velocityY.toInt(),
+      /*
+       * Minimum and maximum scroll positions. The minimum scroll
+       * position is generally negative infinite and the maximum scroll position
+       * is generally infinite on maps.
+       */
+      Int.MIN_VALUE, Int.MAX_VALUE,
+      Int.MIN_VALUE, Int.MAX_VALUE,
+      // overX and overY set to 0 since we don't allow Overfling
+      0,
+      0
     )
+    Logger.d(
+      TAG,
+      "${scroller.startX}, ${scroller.startY}, ${scroller.finalX}, ${scroller.finalY}"
+    )
+    lastFlingPosition = ScreenCoordinate(scroller.startX.toDouble(), scroller.startY.toDouble())
+    viewWeakReference.get()?.let {
+      ViewCompat.postInvalidateOnAnimation(it)
+    }
     return true
   }
 
@@ -1521,7 +1524,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     setDefaultMutuallyExclusives: Boolean
   ) {
     initializeGesturesManager(internalGesturesManager, setDefaultMutuallyExclusives)
-    initializeGestureListeners(context, attachDefaultListeners)
+    contextWeakReference.get()?.let {
+      initializeGestureListeners(it, attachDefaultListeners)
+    }
   }
 
   private fun clamp(value: Double, min: Double, max: Double): Double {
@@ -1560,6 +1565,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     bind(context, AndroidGesturesManager(context), attrs, pixelRatio)
   }
 
+  override fun bind(view: FrameLayout) {
+    this.viewWeakReference = WeakReference(view)
+  }
+
   // For internal testing.
   internal fun bind(
     context: Context,
@@ -1593,6 +1602,12 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
    */
   override fun initialize() {
     initializeGesturesManager(gesturesManager, true)
-    initializeGestureListeners(context, true)
+    contextWeakReference.get()?.let {
+      initializeGestureListeners(it, true)
+    }
+  }
+
+  private companion object {
+    private const val TAG = "GesturesPluginImpl"
   }
 }
