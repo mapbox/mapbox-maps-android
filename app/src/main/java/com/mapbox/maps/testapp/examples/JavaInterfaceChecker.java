@@ -101,9 +101,9 @@ import kotlin.Pair;
 
 public class JavaInterfaceChecker {
     private void getClusterLeaves(MapboxMap mapboxMap, String sourcdId, Feature cluster, QueryFeatureExtensionCallback callback) {
-        mapboxMap.getClusterLeaves(sourcdId, cluster, callback);
-        mapboxMap.getClusterLeaves(sourcdId, cluster, 1, callback);
-        mapboxMap.getClusterLeaves(sourcdId, cluster, 1, 2, callback);
+        mapboxMap.getGeoJsonClusterLeaves(sourcdId, cluster, callback);
+        mapboxMap.getGeoJsonClusterLeaves(sourcdId, cluster, 1, callback);
+        mapboxMap.getGeoJsonClusterLeaves(sourcdId, cluster, 1, 2, callback);
     }
 
     private void scaleBarSettings() {

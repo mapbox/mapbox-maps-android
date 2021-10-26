@@ -813,25 +813,25 @@ class MapboxMap internal constructor(
   }
 
   /**
-   * Returns all the leaves (original points) of a cluster (given its cluster_id), with pagination support: limit is the number of leaves
+   * Returns all the leaves (original points) of a cluster (given its cluster_id) from a GeoJsonSource, with pagination support: limit is the number of leaves
    * to return (set to Infinity for all points), and offset is the amount of points to skip (for pagination).
    *
    * Requires configuring the source as a cluster by calling [GeoJsonSource.Builder#cluster(boolean)].
    *
-   * @param sourceIdentifier The identifier of the source to query.
+   * @param sourceIdentifier GeoJsonSource identifier.
    * @param cluster Cluster from which to retrieve leaves from
-   * @param limit   The number of points to return from the query (must use type 'uint64_t', set to maximum for all points). Defaults to 10.
-   * @param offset  The amount of points to skip (for pagination, must use type 'uint64_t'). Defaults to 0.
+   * @param limit The number of points to return from the query (must use type 'uint64_t', set to maximum for all points). Defaults to 10.
+   * @param offset The amount of points to skip (for pagination, must use type 'uint64_t'). Defaults to 0.
    * @param callback The result will be returned through the [QueryFeatureExtensionCallback].
    *         The result is a feature collection or a string describing an error if the operation was not successful.
    */
   @JvmOverloads
-  fun getClusterLeaves(
+  fun getGeoJsonClusterLeaves(
     sourceIdentifier: String,
     cluster: Feature,
     limit: Long = 10,
     offset: Long = 0,
-    callback: QueryFeatureExtensionCallback
+    callback: QueryFeatureExtensionCallback,
   ) =
     queryFeatureExtensions(
       sourceIdentifier, cluster, SUPER_CLUSTER, LEAVES,
@@ -841,38 +841,38 @@ class MapboxMap internal constructor(
 
   /**
    * Returns the children (original points or clusters) of a cluster (on the next zoom level)
-   * given its id (cluster_id value from feature properties).
+   * given its id (cluster_id value from feature properties) from a GeoJsonSource.
    *
    * Requires configuring the source as a cluster by calling [GeoJsonSource.Builder#cluster(boolean)].
    *
-   * @param sourceIdentifier Style source identifier.
+   * @param sourceIdentifier GeoJsonSource identifier.
    * @param cluster cluster from which to retrieve children from
    * @param callback The result will be returned through the [QueryFeatureExtensionCallback].
    *         The result is a feature collection or a string describing an error if the operation was not successful.
    */
-  fun getClusterChildren(
+  fun getGeoJsonClusterChildren(
     sourceIdentifier: String,
     cluster: Feature,
-    callback: QueryFeatureExtensionCallback
+    callback: QueryFeatureExtensionCallback,
   ) = queryFeatureExtensions(
     sourceIdentifier, cluster, SUPER_CLUSTER, CHILDREN, null, callback
   )
 
   /**
    * Returns the zoom on which the cluster expands into several children (useful for "click to zoom" feature)
-   * given the cluster's cluster_id (cluster_id value from feature properties).
+   * given the cluster's cluster_id (cluster_id value from feature properties) from a GeoJsonSource.
    *
    * Requires configuring the source as a cluster by calling [GeoJsonSource.Builder#cluster(boolean)].
    *
-   * @param sourceIdentifier Style source identifier.
+   * @param sourceIdentifier GeoJsonSource identifier.
    * @param cluster cluster from which to retrieve the expansion zoom from
    * @param callback The result will be returned through the [QueryFeatureExtensionCallback].
    *         The result is a feature extension value containing a value or a string describing an error if the operation was not successful.
    */
-  fun getClusterExpansionZoom(
+  fun getGeoJsonClusterExpansionZoom(
     sourceIdentifier: String,
     cluster: Feature,
-    callback: QueryFeatureExtensionCallback
+    callback: QueryFeatureExtensionCallback,
   ) = queryFeatureExtensions(
     sourceIdentifier, cluster, SUPER_CLUSTER, EXPANDSION_ZOOM, null, callback
   )

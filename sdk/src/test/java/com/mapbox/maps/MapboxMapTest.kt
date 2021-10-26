@@ -665,11 +665,33 @@ class MapboxMapTest {
   }
 
   @Test
+  fun getClusterLeavesDefaultParam() {
+    val feature = mockk<Feature>()
+    val mapSlot = slot<HashMap<String, Value>>()
+    val callback = mockk<QueryFeatureExtensionCallback>()
+    mapboxMap.getGeoJsonClusterLeaves("id", feature, callback = callback)
+    verify {
+      nativeMap.queryFeatureExtensions(
+        "id",
+        feature,
+        "supercluster",
+        "leaves",
+        capture(mapSlot),
+        callback
+      )
+    }
+    val captureMap = mapSlot.captured
+    assertEquals(2, captureMap.size)
+    assertEquals("10", captureMap["limit"]!!.contents.toString())
+    assertEquals("0", captureMap["offset"]!!.contents.toString())
+  }
+
+  @Test
   fun getClusterLeaves() {
     val feature = mockk<Feature>()
     val mapSlot = slot<HashMap<String, Value>>()
     val callback = mockk<QueryFeatureExtensionCallback>()
-    mapboxMap.getClusterLeaves("id", feature, callback = callback)
+    mapboxMap.getGeoJsonClusterLeaves("id", feature, 1, 2, callback = callback)
     verify {
       nativeMap.queryFeatureExtensions(
         "id",
@@ -680,23 +702,7 @@ class MapboxMapTest {
         callback
       )
     }
-    var captureMap = mapSlot.captured
-    assertEquals(2, captureMap.size)
-    assertEquals("10", captureMap["limit"]!!.contents.toString())
-    assertEquals("0", captureMap["offset"]!!.contents.toString())
-
-    mapboxMap.getClusterLeaves("id", feature, 1, 2, callback = callback)
-    verify {
-      nativeMap.queryFeatureExtensions(
-        "id",
-        feature,
-        "supercluster",
-        "leaves",
-        capture(mapSlot),
-        callback
-      )
-    }
-    captureMap = mapSlot.captured
+    val captureMap = mapSlot.captured
     assertEquals(2, captureMap.size)
     assertEquals("1", captureMap["limit"]!!.contents.toString())
     assertEquals("2", captureMap["offset"]!!.contents.toString())
@@ -706,7 +712,7 @@ class MapboxMapTest {
   fun getClusterChildren() {
     val feature = mockk<Feature>()
     val callback = mockk<QueryFeatureExtensionCallback>()
-    mapboxMap.getClusterChildren("id", feature, callback = callback)
+    mapboxMap.getGeoJsonClusterChildren("id", feature, callback = callback)
     verify {
       nativeMap.queryFeatureExtensions(
         "id",
@@ -723,7 +729,7 @@ class MapboxMapTest {
   fun getClusterExpansionZoom() {
     val feature = mockk<Feature>()
     val callback = mockk<QueryFeatureExtensionCallback>()
-    mapboxMap.getClusterExpansionZoom("id", feature, callback = callback)
+    mapboxMap.getGeoJsonClusterExpansionZoom("id", feature, callback = callback)
     verify {
       nativeMap.queryFeatureExtensions(
         "id",
