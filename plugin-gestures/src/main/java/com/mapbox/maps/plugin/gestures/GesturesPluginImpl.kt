@@ -10,9 +10,11 @@ import android.os.Looper
 import android.util.AttributeSet
 import android.view.InputDevice
 import android.view.MotionEvent
+import android.view.animation.DecelerateInterpolator
 import androidx.annotation.VisibleForTesting
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.android.gestures.*
+import com.mapbox.common.Logger
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
@@ -88,7 +90,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   private var scaleAnimators: Array<ValueAnimator>? = null
   private var rotateAnimators: Array<ValueAnimator>? = null
   private val scheduledAnimators = ArrayList<ValueAnimator>()
-  private val gesturesInterpolator = LinearOutSlowInInterpolator()
+  private var gesturesInterpolator = LinearOutSlowInInterpolator()
+  private var gesturesDecelerationFactor = 1.0f
 
   // needed most likely for devices with API <= 23 only
   // duration = 0 will still make animation end / cancel not immediately
@@ -1171,27 +1174,13 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     }
 
     val pitch = mapCameraManagerDelegate.cameraState.pitch
+    this.gesturesDecelerationFactor = 1f - (pitch.toFloat() / MAXIMUM_PITCH.toFloat()) * 0.5f
+    Logger.e("testtest", "pitch: $pitch, decelerationFactor: $gesturesDecelerationFactor")
 
-    // We limit the amount of fling displacement based on the camera pitch value.
-    val pitchFactorAdditionalComponent = when {
-      pitch == MINIMUM_PITCH -> {
-        0.0
-      }
-      pitch > MINIMUM_PITCH && pitch < NORMAL_MAX_PITCH -> {
-        pitch / 10.0
-      }
-      pitch in NORMAL_MAX_PITCH..MAXIMUM_PITCH -> {
-        val a = ln(NORMAL_MAX_PITCH / 10.0)
-        val b = ln(MAXIMUM_PITCH)
-        // exp(a) = pitch / 10.0
-        // exp(b) = pitch
-        exp((b - a) * (pitch - NORMAL_MAX_PITCH) / (MAXIMUM_PITCH - NORMAL_MAX_PITCH) + a)
-      }
-      else -> 0.0
-    }
-    val pitchFactor = FLING_LIMITING_FACTOR + pitchFactorAdditionalComponent / screenDensity.toDouble()
-    val offsetX = if (internalSettings.isScrollHorizontallyLimited()) 0.0 else velocityX.toDouble() / pitchFactor
-    val offsetY = if (internalSettings.isScrollVerticallyLimited()) 0.0 else velocityY.toDouble() / pitchFactor
+    val offsetX =
+      if (internalSettings.isScrollHorizontallyLimited()) 0.0 else velocityX.toDouble() / FLING_LIMITING_FACTOR * gesturesDecelerationFactor
+    val offsetY =
+      if (internalSettings.isScrollVerticallyLimited()) 0.0 else velocityY.toDouble() / FLING_LIMITING_FACTOR * gesturesDecelerationFactor
 
     cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
 
@@ -1208,7 +1197,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       mapAnimationOptions {
         owner(MapAnimationOwnerRegistry.GESTURES)
         duration(animationTime)
-        interpolator(gesturesInterpolator)
+        interpolator(DecelerateInterpolator(gesturesDecelerationFactor))
         animatorListener(object : AnimatorListenerAdapter() {
 
           override fun onAnimationEnd(animation: Animator?) {
