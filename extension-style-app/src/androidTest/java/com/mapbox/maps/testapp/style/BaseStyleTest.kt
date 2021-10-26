@@ -13,7 +13,6 @@ import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.light.generated.setLight
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.terrain.generated.setTerrain
-import com.mapbox.maps.extension.testapp.R
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -31,7 +30,7 @@ abstract class BaseStyleTest {
 
   private lateinit var mapView: MapView
   private lateinit var mapboxMap: MapboxMap
-  protected lateinit var style: Style
+  private lateinit var style: Style
 
   @get:Rule
   var rule = ActivityScenarioRule(AppCompatActivity::class.java)
@@ -43,8 +42,6 @@ abstract class BaseStyleTest {
       it.runOnUiThread {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         mapView = MapView(context)
-        mapView.id = R.id.mapView
-        it.setContentView(mapView)
 
         mapboxMap = mapView.getMapboxMap()
         mapboxMap.loadStyleUri(
