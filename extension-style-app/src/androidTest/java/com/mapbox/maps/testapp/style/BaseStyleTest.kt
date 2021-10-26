@@ -31,7 +31,7 @@ abstract class BaseStyleTest {
 
   private lateinit var mapView: MapView
   private lateinit var mapboxMap: MapboxMap
-  protected lateinit var style: Style
+  private lateinit var style: Style
 
   @get:Rule
   var rule = ActivityScenarioRule(AppCompatActivity::class.java)
