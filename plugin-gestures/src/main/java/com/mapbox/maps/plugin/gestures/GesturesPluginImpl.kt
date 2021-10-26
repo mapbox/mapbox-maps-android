@@ -141,7 +141,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   ) {
     this.contextWeakReference = WeakReference(context)
     this.pixelRatio = pixelRatio
-    this.scroller = OverScroller(context)
+    this.scroller = OverScroller(context).also { it.setFriction(MINIMUM_FLING_FRICTION) }
     internalSettings = GesturesAttributeParser.parseGesturesSettings(context, null, pixelRatio)
     mainHandler = Handler(Looper.getMainLooper())
   }
@@ -153,7 +153,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   ) {
     this.contextWeakReference = WeakReference(context)
     this.pixelRatio = pixelRatio
-    this.scroller = OverScroller(context)
+    this.scroller = OverScroller(context).also { it.setFriction(MINIMUM_FLING_FRICTION) }
     internalSettings =
       GesturesAttributeParser.parseGesturesSettings(context, attributeSet, pixelRatio)
     mainHandler = Handler(Looper.getMainLooper())
@@ -168,7 +168,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   ) {
     this.contextWeakReference = WeakReference(context)
     this.pixelRatio = pixelRatio
-    this.scroller = OverScroller(context)
+    this.scroller = OverScroller(context).also { it.setFriction(MINIMUM_FLING_FRICTION) }
     internalSettings =
       GesturesAttributeParser.parseGesturesSettings(context, attributeSet, pixelRatio)
     mainHandler = handler
@@ -1195,6 +1195,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       return false
     }
 
+    val pitch = mapCameraManagerDelegate.cameraState.pitch
+    scroller.setFriction(MINIMUM_FLING_FRICTION + (pitch / MAXIMUM_PITCH).toFloat() * (MAXIMUM_FLING_FRICTION - MINIMUM_FLING_FRICTION))
     // Aborts any active scroll animations and invalidates.
     scroller.forceFinished(true)
     scroller.fling(

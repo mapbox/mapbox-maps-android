@@ -69,6 +69,10 @@ internal const val NORMAL_MAX_PITCH = 60.0
  */
 internal const val MAXIMUM_PITCH = 85.0
 
+internal const val MAXIMUM_FLING_FRICTION = 1f
+
+internal const val MINIMUM_FLING_FRICTION = 0.07f
+
 /**
  * Default animation time
  */
