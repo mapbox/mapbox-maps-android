@@ -19,7 +19,7 @@ import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
  */
 class CircleAnnotation(
   id: Long,
-  /** The annotation manger that manipulate this annotation */
+  /** The annotation manager that manipulate this annotation */
   private val annotationManager: AnnotationManager<Point, CircleAnnotation, *, *, *, *, *>,
   jsonObject: JsonObject,
   geometry: Point
@@ -385,14 +385,12 @@ class CircleAnnotation(
    */
   override fun getOffsetGeometry(
     mapCameraManagerDelegate: MapCameraManagerDelegate,
-    moveDistancesObject: MoveDistancesObject,
-    touchAreaShiftX: Int,
-    touchAreaShiftY: Int
+    moveDistancesObject: MoveDistancesObject
   ): Point? {
     val point = mapCameraManagerDelegate.coordinateForPixel(
       ScreenCoordinate(
-        (moveDistancesObject.currentX - touchAreaShiftX).toDouble(),
-        (moveDistancesObject.currentY - touchAreaShiftY).toDouble(),
+        moveDistancesObject.currentX.toDouble(),
+        moveDistancesObject.currentY.toDouble(),
       )
     )
     if (point.latitude() > MAX_MERCATOR_LATITUDE || point.latitude() < MIN_MERCATOR_LATITUDE) {

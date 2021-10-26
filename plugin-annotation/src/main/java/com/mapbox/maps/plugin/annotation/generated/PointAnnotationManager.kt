@@ -23,12 +23,11 @@ import java.util.concurrent.atomic.AtomicLong
  * The pointAnnotation manager allows to add pointAnnotations to a map.
  */
 class PointAnnotationManager(
-  mapView: View? = null,
   delegateProvider: MapDelegateProvider,
   annotationConfig: AnnotationConfig? = null
 ) :
   AnnotationManagerImpl<Point, PointAnnotation, PointAnnotationOptions, OnPointAnnotationDragListener, OnPointAnnotationClickListener, OnPointAnnotationLongClickListener, OnPointAnnotationInteractionListener, SymbolLayer>(
-    mapView, delegateProvider, annotationConfig
+    delegateProvider, annotationConfig
   ) {
   private val id = ID_GENERATOR.incrementAndGet()
   override val layerId = annotationConfig?.layerId ?: "mapbox-android-pointAnnotation-layer-$id"

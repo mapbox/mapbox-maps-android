@@ -79,12 +79,6 @@ internal class MapPluginRegistry(
           )
         }
 
-        mapView?.let {
-          if (mapPlugin is ViewBinder) {
-            mapPlugin.bind(it)
-          }
-        }
-
         if (mapPlugin is MapSizePlugin) {
           mapSizePlugins.add(mapPlugin)
         }

@@ -33,9 +33,7 @@ abstract class Annotation<T : Geometry>(
    */
   abstract fun getOffsetGeometry(
     mapCameraManagerDelegate: MapCameraManagerDelegate,
-    moveDistancesObject: MoveDistancesObject,
-    touchAreaShiftX: Int,
-    touchAreaShiftY: Int
+    moveDistancesObject: MoveDistancesObject
   ): T?
 
   /**

@@ -14,7 +14,6 @@ import java.lang.ref.WeakReference
  */
 class AnnotationPluginImpl : AnnotationPlugin {
   private lateinit var delegateProvider: MapDelegateProvider
-  private var mapViewWeakReference: WeakReference<View>? = null
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val managerList = mutableListOf<WeakReference<AnnotationManager<*, *, *, *, *, *, *>>>()
@@ -22,12 +21,12 @@ class AnnotationPluginImpl : AnnotationPlugin {
   private var height = 0
 
   /**
-   * Create an annotation manger.
+   * Create an annotation manager.
    *
    * @param mapView The MapView instance.
-   * @param type The type of the created annotation manger
+   * @param type The type of the created annotation manager
    * @param annotationConfig Default is null, used for some custom configs
-   * @return The created annotation manger
+   * @return The created annotation manager
    */
   override fun createAnnotationManager(
     mapView: View,
@@ -36,11 +35,11 @@ class AnnotationPluginImpl : AnnotationPlugin {
   ): AnnotationManager<*, *, *, *, *, *, *> = createAnnotationManager(type, annotationConfig)
 
   /**
-   * Create an annotation manger.
+   * Create an annotation manager.
    *
-   * @param type The type of the created annotation manger
+   * @param type The type of the created annotation manager
    * @param annotationConfig Default is null, used for some custom configs
-   * @return The created annotation manger
+   * @return The created annotation manager
    */
   override fun createAnnotationManager(
     type: AnnotationType,
@@ -48,22 +47,18 @@ class AnnotationPluginImpl : AnnotationPlugin {
   ): AnnotationManager<*, *, *, *, *, *, *> {
     val manager = when (type) {
       AnnotationType.PolygonAnnotation -> PolygonAnnotationManager(
-        mapViewWeakReference?.get(),
         delegateProvider,
         annotationConfig
       )
       AnnotationType.CircleAnnotation -> CircleAnnotationManager(
-        mapViewWeakReference?.get(),
         delegateProvider,
         annotationConfig
       )
       AnnotationType.PolylineAnnotation -> PolylineAnnotationManager(
-        mapViewWeakReference?.get(),
         delegateProvider,
         annotationConfig
       )
       AnnotationType.PointAnnotation -> PointAnnotationManager(
-        mapViewWeakReference?.get(),
         delegateProvider,
         annotationConfig
       )
@@ -75,7 +70,7 @@ class AnnotationPluginImpl : AnnotationPlugin {
 
   /**
    * Removes an annotation manager, this will remove the underlying layer and source from the style.
-   * A removed annotation manager will not be able to reuse anymore, users need to create new annotation manger
+   * A removed annotation manager will not be able to reuse anymore, users need to create new annotation manager
    * to add annotations.
    */
   override fun removeAnnotationManager(annotationManager: AnnotationManager<*, *, *, *, *, *, *>) {
@@ -108,15 +103,6 @@ class AnnotationPluginImpl : AnnotationPlugin {
    */
   override fun onStyleChanged(styleDelegate: StyleInterface) {
     // no-ops
-  }
-
-  /**
-   * Bind the ViewBinder with current MapView.
-   *
-   * @param mapView The hosting MapView
-   */
-  override fun bind(mapView: View) {
-    mapViewWeakReference = WeakReference(mapView)
   }
 
   /**

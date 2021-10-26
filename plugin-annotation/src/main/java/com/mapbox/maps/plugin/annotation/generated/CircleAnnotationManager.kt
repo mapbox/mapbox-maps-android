@@ -23,12 +23,11 @@ import java.util.concurrent.atomic.AtomicLong
  * The circleAnnotation manager allows to add circleAnnotations to a map.
  */
 class CircleAnnotationManager(
-  mapView: View? = null,
   delegateProvider: MapDelegateProvider,
   annotationConfig: AnnotationConfig? = null
 ) :
   AnnotationManagerImpl<Point, CircleAnnotation, CircleAnnotationOptions, OnCircleAnnotationDragListener, OnCircleAnnotationClickListener, OnCircleAnnotationLongClickListener, OnCircleAnnotationInteractionListener, CircleLayer>(
-    mapView, delegateProvider, annotationConfig
+    delegateProvider, annotationConfig
   ) {
   private val id = ID_GENERATOR.incrementAndGet()
   override val layerId = annotationConfig?.layerId ?: "mapbox-android-circleAnnotation-layer-$id"

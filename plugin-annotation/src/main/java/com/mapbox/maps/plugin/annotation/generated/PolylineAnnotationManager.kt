@@ -23,12 +23,11 @@ import java.util.concurrent.atomic.AtomicLong
  * The polylineAnnotation manager allows to add polylineAnnotations to a map.
  */
 class PolylineAnnotationManager(
-  mapView: View? = null,
   delegateProvider: MapDelegateProvider,
   annotationConfig: AnnotationConfig? = null
 ) :
   AnnotationManagerImpl<LineString, PolylineAnnotation, PolylineAnnotationOptions, OnPolylineAnnotationDragListener, OnPolylineAnnotationClickListener, OnPolylineAnnotationLongClickListener, OnPolylineAnnotationInteractionListener, LineLayer>(
-    mapView, delegateProvider, annotationConfig
+    delegateProvider, annotationConfig
   ) {
   private val id = ID_GENERATOR.incrementAndGet()
   override val layerId = annotationConfig?.layerId ?: "mapbox-android-polylineAnnotation-layer-$id"

@@ -23,12 +23,11 @@ import java.util.concurrent.atomic.AtomicLong
  * The polygonAnnotation manager allows to add polygonAnnotations to a map.
  */
 class PolygonAnnotationManager(
-  mapView: View? = null,
   delegateProvider: MapDelegateProvider,
   annotationConfig: AnnotationConfig? = null
 ) :
   AnnotationManagerImpl<Polygon, PolygonAnnotation, PolygonAnnotationOptions, OnPolygonAnnotationDragListener, OnPolygonAnnotationClickListener, OnPolygonAnnotationLongClickListener, OnPolygonAnnotationInteractionListener, FillLayer>(
-    mapView, delegateProvider, annotationConfig
+    delegateProvider, annotationConfig
   ) {
   private val id = ID_GENERATOR.incrementAndGet()
   override val layerId = annotationConfig?.layerId ?: "mapbox-android-polygonAnnotation-layer-$id"
