@@ -32,7 +32,9 @@ workflows:
       - run-lint:
           requires:
             - verify-code
-      - run-unit-test
+      - run-unit-test:
+          requires:
+            - verify-code
       - run-robo-test:
           requires:
             - verify-code
