@@ -93,6 +93,10 @@ class MapSurface @JvmOverloads constructor(
     return mapController.onGenericMotionEvent(event)
   }
 
+  override fun computeScroll() {
+    mapController.computeScroll()
+  }
+
   /**
    * Called when the size has changed.
    *

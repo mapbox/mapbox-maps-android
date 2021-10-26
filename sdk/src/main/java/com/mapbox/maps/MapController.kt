@@ -171,6 +171,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     return pluginRegistry.onGenericMotionEvent(event)
   }
 
+  override fun computeScroll() {
+    pluginRegistry.computeScroll()
+  }
+
   override fun onSizeChanged(w: Int, h: Int) {
     pluginRegistry.onSizeChanged(w, h)
   }

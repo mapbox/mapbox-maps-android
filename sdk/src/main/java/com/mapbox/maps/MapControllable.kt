@@ -33,6 +33,14 @@ interface MapControllable : MapboxLifecycleObserver {
   fun onGenericMotionEvent(event: MotionEvent): Boolean
 
   /**
+   * Called by a parent to request that a child update its values for mScrollX
+   * and mScrollY if necessary. This will typically be done if the child is
+   * animating a scroll using a {@link android.widget.Scroller Scroller}
+   * object.
+   */
+  fun computeScroll()
+
+  /**
    * Called when the size has changed.
    *
    * @param w width of the viewport

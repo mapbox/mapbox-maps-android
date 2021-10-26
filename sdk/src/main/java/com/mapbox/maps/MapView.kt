@@ -300,6 +300,17 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   }
 
   /**
+   * Called by a parent to request that a child update its values for mScrollX
+   * and mScrollY if necessary. This will typically be done if the child is
+   * animating a scroll using a {@link android.widget.Scroller Scroller}
+   * object.
+   */
+  override fun computeScroll() {
+    super.computeScroll()
+    mapController.computeScroll()
+  }
+
+  /**
    * Set [OnFpsChangedListener] to get map rendering FPS.
    */
   override fun setOnFpsChangedListener(listener: OnFpsChangedListener) {

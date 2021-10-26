@@ -5,6 +5,7 @@ import com.mapbox.android.gestures.AndroidGesturesManager
 import com.mapbox.maps.plugin.ContextBinder
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.MapSizePlugin
+import com.mapbox.maps.plugin.ViewBinder
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettingsInterface
@@ -12,7 +13,7 @@ import com.mapbox.maps.plugin.gestures.generated.GesturesSettingsInterface
 /**
  * Define the interfaces for the Layer plugin.
  */
-interface GesturesPlugin : MapPlugin, ContextBinder, MapSizePlugin, GesturesSettingsInterface {
+interface GesturesPlugin : MapPlugin, ContextBinder, ViewBinder, MapSizePlugin, GesturesSettingsInterface {
 
   /**
    * Called when user touches the screen, all positions are absolute.
@@ -37,6 +38,14 @@ interface GesturesPlugin : MapPlugin, ContextBinder, MapSizePlugin, GesturesSett
    * @return True is the event is handled
    */
   fun onGenericMotionEvent(event: MotionEvent): Boolean
+
+  /**
+   * Called by a parent to request that a child update its values for mScrollX
+   * and mScrollY if necessary. This will typically be done if the child is
+   * animating a scroll using a {@link android.widget.Scroller Scroller}
+   * object.
+   */
+  fun computeScroll()
 
   /**
    * Add a map click listener that is invoked when a map is clicked.

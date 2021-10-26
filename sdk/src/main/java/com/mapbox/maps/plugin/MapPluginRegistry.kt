@@ -71,6 +71,12 @@ internal class MapPluginRegistry(
           viewPlugins[mapPlugin] = pluginView
         }
 
+        if (mapPlugin is ViewBinder) {
+          mapView?.let {
+            mapPlugin.bind(it)
+          }
+        }
+
         if (mapPlugin is ContextBinder) {
           mapPlugin.bind(
             mapInitOptions.context,
@@ -136,6 +142,12 @@ internal class MapPluginRegistry(
       onGenericMotionEventResult = it.onGenericMotionEvent(event) || onGenericMotionEventResult
     }
     return onGenericMotionEventResult
+  }
+
+  fun computeScroll() {
+    gesturePlugins.forEach {
+      it.computeScroll()
+    }
   }
 
   fun onSizeChanged(width: Int, height: Int) {
