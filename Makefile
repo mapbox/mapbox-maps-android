@@ -74,7 +74,7 @@ update-android-docs:
 	unset GITHUB_TOKEN; \
 	mbx-ci github writer opt-in mapbox-maps-android; \
 	mbx-ci github writer opt-in android-docs; \
-	echo "$(shell mbx-ci github reader token)" > gh_token.txt;\
+	echo "$(shell mbx-ci github writer token)" > gh_token.txt;\
 	sh scripts/update-android-docs.sh -s $(TAG)
 
 .PHONY: unit-tests
