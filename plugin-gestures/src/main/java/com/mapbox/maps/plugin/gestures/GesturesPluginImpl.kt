@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
 import android.util.AttributeSet
 import android.view.InputDevice
 import android.view.MotionEvent
@@ -15,8 +16,10 @@ import androidx.annotation.VisibleForTesting
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.android.gestures.*
 import com.mapbox.common.Logger
+import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
@@ -43,6 +46,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
   private val context: Context
   private var pixelRatio: Float = 1f
+
+  private val movePointList = CopyOnWriteArrayList<Point>()
+  private val moveTimeList = CopyOnWriteArrayList<Long>()
 
   private lateinit var gesturesManager: AndroidGesturesManager
 
@@ -1163,50 +1169,96 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       return false
     }
 
-    val screenDensity = pixelRatio
+    val moveEndPoints = movePointList.takeLast(20)
+    val moveEndTimes = moveTimeList.takeLast(20)
+    if (moveEndPoints.size > 2 && moveEndTimes.size >2) {
+      val end = moveEndPoints.last()
+      val start = moveEndPoints.first()
+      val translationLng = end.longitude() - start.longitude()
+      val translationLat = end.latitude() - start.latitude()
+      val distance = hypot(translationLng, translationLat)
+      val velocity = distance / ((moveEndTimes.last() - moveEndTimes.first()) * 1e9f)
 
-    // calculate velocity vector for xy dimensions, independent from screen size
-    val velocityXY =
-      hypot((velocityX / screenDensity).toDouble(), (velocityY / screenDensity).toDouble())
-    if (velocityXY < VELOCITY_THRESHOLD_IGNORE_FLING) {
-      // ignore short flings, these can occur when other gestures just have finished executing
-      return false
+      val flingDistance = FLING_STRENGTH * velocity * 1e18f
+      val animDuration = FLING_STRENGTH * ANIMATION_DURATION_COEFF * 1e3
+      val endLocationLng = end.longitude() + translationLng / distance * flingDistance
+      val endLocationLat =
+        max(min(end.latitude() + translationLat / distance * flingDistance, 90.0), -90.0)
+      val endLocationPoint = Point.fromLngLat(endLocationLng, endLocationLat)
+
+      Logger.e("testtest", "moveStart: $start, moveEnd: $end")
+      Logger.e("testtest", "distance: $distance, velocity: $velocity")
+      Logger.e("testtest", "time: ${(moveEndTimes.last() - moveEndTimes.first()) * 1e9f}")
+      Logger.e("testtest", "animDuration: $animDuration, flingDistance: $flingDistance")
+      Logger.e("testtest", "endLocationPoint: $endLocationPoint")
+
+      cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
+
+      cameraAnimationsPlugin.easeTo(
+        cameraOptions {
+          center(endLocationPoint)
+        },
+        mapAnimationOptions {
+          owner(MapAnimationOwnerRegistry.GESTURES)
+          duration(animDuration.toLong())
+          interpolator(DecelerateInterpolator(gesturesDecelerationFactor))
+          animatorListener(object : AnimatorListenerAdapter() {
+
+            override fun onAnimationEnd(animation: Animator?) {
+              super.onAnimationEnd(animation)
+              mapCameraManagerDelegate.dragEnd()
+            }
+          })
+        }
+      )
     }
 
-    val pitch = mapCameraManagerDelegate.cameraState.pitch
-    this.gesturesDecelerationFactor = 1f - (pitch.toFloat() / MAXIMUM_PITCH.toFloat()) * 0.5f
-    Logger.e("testtest", "pitch: $pitch, decelerationFactor: $gesturesDecelerationFactor")
-
-    val offsetX =
-      if (internalSettings.isScrollHorizontallyLimited()) 0.0 else velocityX.toDouble() / FLING_LIMITING_FACTOR * gesturesDecelerationFactor
-    val offsetY =
-      if (internalSettings.isScrollVerticallyLimited()) 0.0 else velocityY.toDouble() / FLING_LIMITING_FACTOR * gesturesDecelerationFactor
-
-    cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
-
-    // calculate animation time based on displacement
-    // velocityXY ranges from VELOCITY_THRESHOLD_IGNORE_FLING to ~5000
-    // limit animation time to Android SDK default animation time
-    val animationTime = (velocityXY / FLING_LIMITING_FACTOR).toLong()
-
-    cameraAnimationsPlugin.easeTo(
-      mapCameraManagerDelegate.getDragCameraOptions(
-        ScreenCoordinate(e1.x.toDouble(), e1.y.toDouble()),
-        ScreenCoordinate(e1.x + offsetX, e1.y + offsetY)
-      ),
-      mapAnimationOptions {
-        owner(MapAnimationOwnerRegistry.GESTURES)
-        duration(animationTime)
-        interpolator(DecelerateInterpolator(gesturesDecelerationFactor))
-        animatorListener(object : AnimatorListenerAdapter() {
-
-          override fun onAnimationEnd(animation: Animator?) {
-            super.onAnimationEnd(animation)
-            mapCameraManagerDelegate.dragEnd()
-          }
-        })
-      }
-    )
+// val screenDensity = pixelRatio
+//
+//    // calculate velocity vector for xy dimensions, independent from screen size
+//    val velocityXY =
+//      hypot((velocityX).toDouble(), (velocityY).toDouble())
+//    if (velocityXY < VELOCITY_THRESHOLD_IGNORE_FLING) {
+//      // ignore short flings, these can occur when other gestures just have finished executing
+//      return false
+//    }
+//
+//
+//    val pitch = mapCameraManagerDelegate.cameraState.pitch
+//
+//    this.gesturesDecelerationFactor = 1f - (pitch.toFloat() / MAXIMUM_PITCH.toFloat()) * 0.5f
+//    Logger.e("testtest", "pitch: $pitch, decelerationFactor: $gesturesDecelerationFactor")
+//
+//    val offsetX =
+//      if (internalSettings.isScrollHorizontallyLimited()) 0.0 else velocityX.toDouble() / FLING_LIMITING_FACTOR * gesturesDecelerationFactor
+//    val offsetY =
+//      if (internalSettings.isScrollVerticallyLimited()) 0.0 else velocityY.toDouble() / FLING_LIMITING_FACTOR * gesturesDecelerationFactor
+//
+//    cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
+//
+//    // calculate animation time based on displacement
+//    // velocityXY ranges from VELOCITY_THRESHOLD_IGNORE_FLING to ~5000
+//    // limit animation time to Android SDK default animation time
+//    val animationTime = (velocityXY / FLING_LIMITING_FACTOR).toLong()
+//
+//    cameraAnimationsPlugin.easeTo(
+//      mapCameraManagerDelegate.getDragCameraOptions(
+//        ScreenCoordinate(e1.x.toDouble(), e1.y.toDouble()),
+//        ScreenCoordinate(e1.x + offsetX, e1.y + offsetY)
+//      ),
+//      mapAnimationOptions {
+//        owner(MapAnimationOwnerRegistry.GESTURES)
+//        duration(animationTime)
+//        interpolator(DecelerateInterpolator(gesturesDecelerationFactor))
+//        animatorListener(object : AnimatorListenerAdapter() {
+//
+//          override fun onAnimationEnd(animation: Animator?) {
+//            super.onAnimationEnd(animation)
+//            mapCameraManagerDelegate.dragEnd()
+//          }
+//        })
+//      }
+//    )
     return true
   }
 
@@ -1217,6 +1269,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     cancelTransitionsIfRequired()
     notifyOnMoveBeginListeners(detector)
+    movePointList.clear()
+    moveTimeList.clear()
+
     return true
   }
 
@@ -1251,12 +1306,13 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       val toX = fromX - resolvedDistanceX
       val toY = fromY - resolvedDistanceY
 
-      easeToImmediately(
-        mapCameraManagerDelegate.getDragCameraOptions(
-          ScreenCoordinate(fromX, fromY),
-          ScreenCoordinate(toX, toY)
-        )
+      val cameraOptions = mapCameraManagerDelegate.getDragCameraOptions(
+        ScreenCoordinate(fromX, fromY),
+        ScreenCoordinate(toX, toY)
       )
+      easeToImmediately(cameraOptions)
+      movePointList.add(cameraOptions.center)
+      moveTimeList.add(SystemClock.elapsedRealtimeNanos())
     }
     return true
   }
@@ -1583,5 +1639,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   override fun initialize() {
     initializeGesturesManager(gesturesManager, true)
     initializeGestureListeners(context, true)
+  }
+
+  private companion object {
+    private const val FLING_STRENGTH = 0.075f
+    private const val ANIMATION_DURATION_COEFF = 3.0
   }
 }
