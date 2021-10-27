@@ -1315,11 +1315,11 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       val translationLng = targetCenter!!.longitude() - currentCenter.longitude()
       val translationLat = targetCenter!!.latitude() - currentCenter.latitude()
 
-      val maximumDistance = 100f
-      val currentDistance = hypot(translationLng, translationLat) * 2.0.pow(mapCameraManagerDelegate.cameraState.zoom)
+      val maximumDistance = 100f / 2.0.pow(mapCameraManagerDelegate.cameraState.zoom)
+      val currentDistance = hypot(translationLng, translationLat)
       Logger.e(
         "testtest",
-        "translationLng: ${translationLng}, translationLat: ${translationLat}, current distance: ${currentDistance}"
+        "translationLng: ${translationLng}, translationLat: ${translationLat}, current distance: ${currentDistance}, maximum distance $maximumDistance"
       )
       if (currentDistance > maximumDistance) {
         cameraOptions = cameraOptions.toBuilder().center(
@@ -1331,7 +1331,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       }
       Logger.e(
         "testtest",
-        "executed distance: ${hypot(cameraOptions.center!!.longitude() - currentCenter.longitude(), cameraOptions.center!!.latitude() - currentCenter.latitude()) * 2.0.pow(mapCameraManagerDelegate.cameraState.zoom)}"
+        "executed distance: ${hypot(cameraOptions.center!!.longitude() - currentCenter.longitude(), cameraOptions.center!!.latitude() - currentCenter.latitude())}"
       )
 
       easeToImmediately(cameraOptions)
