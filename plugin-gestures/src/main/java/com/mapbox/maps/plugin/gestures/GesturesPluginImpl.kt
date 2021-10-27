@@ -389,18 +389,12 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
   override fun computeScroll() {
     if (scroller.computeScrollOffset()) {
-      Logger.d(
-        TAG,
-        "${scroller.startX}, ${scroller.startY}, ${scroller.currX}, ${scroller.currY}"
-      )
       val cameraOptions = mapCameraManagerDelegate.getDragCameraOptions(
         lastFlingPosition,
         ScreenCoordinate(scroller.currX.toDouble(), scroller.currY.toDouble()),
       )
       lastFlingPosition = ScreenCoordinate(scroller.currX.toDouble(), scroller.currY.toDouble())
-      mapCameraManagerDelegate.setCamera(
-        cameraOptions
-      )
+      easeToImmediately(cameraOptions)
       viewWeakReference.get()?.let {
         ViewCompat.postInvalidateOnAnimation(it)
       }
@@ -1194,16 +1188,17 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     if (!internalSettings.scrollDecelerationEnabled) {
       return false
     }
-
     val pitch = mapCameraManagerDelegate.cameraState.pitch
-    scroller.setFriction(MINIMUM_FLING_FRICTION + (pitch / MAXIMUM_PITCH).toFloat() * (MAXIMUM_FLING_FRICTION - MINIMUM_FLING_FRICTION))
+    val friction = MINIMUM_FLING_FRICTION + (pitch / MAXIMUM_PITCH).toFloat() * (MAXIMUM_FLING_FRICTION - MINIMUM_FLING_FRICTION)
+    Logger.d(TAG, "pitch: $pitch, friction: $friction")
+    scroller.setFriction(friction)
     // Aborts any active scroll animations and invalidates.
     scroller.forceFinished(true)
     scroller.fling(
       e1.x.toInt(),
       e1.y.toInt(),
-      velocityX.toInt(),
-      velocityY.toInt(),
+      if (internalSettings.isScrollHorizontallyLimited()) 0 else velocityX.toInt(),
+      if (internalSettings.isScrollVerticallyLimited()) 0 else velocityY.toInt(),
       /*
        * Minimum and maximum scroll positions. The minimum scroll
        * position is generally negative infinite and the maximum scroll position
