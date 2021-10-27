@@ -261,7 +261,7 @@ class PolygonAnnotationManager(
  * Extension function to create a PolygonAnnotationManager instance.
  */
 @Deprecated(
-  "No need mapView parameter",
+  "mapView parameter is not needed",
   ReplaceWith("createPolygonAnnotationManager(annotationConfig)")
 )
 @JvmOverloads

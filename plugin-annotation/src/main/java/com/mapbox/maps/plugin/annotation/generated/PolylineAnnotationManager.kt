@@ -367,7 +367,7 @@ class PolylineAnnotationManager(
  * Extension function to create a PolylineAnnotationManager instance.
  */
 @Deprecated(
-  "No need mapView parameter",
+  "mapView parameter is not needed",
   ReplaceWith("createPolylineAnnotationManager(annotationConfig)")
 )
 @JvmOverloads

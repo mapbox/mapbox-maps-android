@@ -14,12 +14,12 @@ interface AnnotationPlugin : MapPlugin, MapSizePlugin, MapStyleObserverPlugin {
    * Create an annotation manager.
    *
    * @param mapView The MapView instance.
-   * @param type The type of the created annotation manager
-   * @param annotationConfig Default is null, used for some custom configs
-   * @return The created annotation manager
+   * @param type annotation manager [AnnotationType] type
+   * @param annotationConfig custom [AnnotationConfig] config, defaults to null
+   * @return annotation manager instance
    */
   @Deprecated(
-    "No need mapView parameter",
+    "mapView parameter is not needed",
     ReplaceWith("createAnnotationManager(AnnotationType, annotationConfig)")
   )
   fun createAnnotationManager(

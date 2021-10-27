@@ -1089,7 +1089,7 @@ class PointAnnotationManager(
  * Extension function to create a PointAnnotationManager instance.
  */
 @Deprecated(
-  "No need mapView parameter",
+  "mapView parameter is not needed",
   ReplaceWith("createPointAnnotationManager(annotationConfig)")
 )
 @JvmOverloads
