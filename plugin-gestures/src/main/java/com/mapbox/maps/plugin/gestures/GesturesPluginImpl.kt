@@ -1171,7 +1171,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     val moveEndPoints = movePointList.takeLast(20)
     val moveEndTimes = moveTimeList.takeLast(20)
-    if (moveEndPoints.size > 2 && moveEndTimes.size >2) {
+    if (moveEndPoints.size > 2 && moveEndTimes.size > 2) {
       val end = moveEndPoints.last()
       val start = moveEndPoints.first()
       val translationLng = end.longitude() - start.longitude()
@@ -1306,10 +1306,34 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       val toX = fromX - resolvedDistanceX
       val toY = fromY - resolvedDistanceY
 
-      val cameraOptions = mapCameraManagerDelegate.getDragCameraOptions(
+      var cameraOptions = mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(fromX, fromY),
         ScreenCoordinate(toX, toY)
       )
+      val currentCenter = mapCameraManagerDelegate.cameraState.center
+      val targetCenter = cameraOptions.center
+      val translationLng = targetCenter!!.longitude() - currentCenter.longitude()
+      val translationLat = targetCenter!!.latitude() - currentCenter.latitude()
+
+      val maximumDistance = 1e-2f
+      val currentDistance = hypot(translationLng, translationLat)
+      Logger.e(
+        "testtest",
+        "translationLng: ${translationLng}, translationLat: ${translationLat}, current distance: ${currentDistance}"
+      )
+      if (currentDistance > maximumDistance) {
+        cameraOptions = cameraOptions.toBuilder().center(
+          Point.fromLngLat(
+            currentCenter.longitude() + translationLng * (maximumDistance / currentDistance),
+            currentCenter.latitude() + translationLat * (maximumDistance / currentDistance)
+          )
+        ).build()
+      }
+      Logger.e(
+        "testtest",
+        "executed distance: ${hypot(cameraOptions.center!!.longitude() - currentCenter.longitude(), cameraOptions.center!!.latitude() - currentCenter.latitude())}"
+      )
+
       easeToImmediately(cameraOptions)
       movePointList.add(cameraOptions.center)
       moveTimeList.add(SystemClock.elapsedRealtimeNanos())
