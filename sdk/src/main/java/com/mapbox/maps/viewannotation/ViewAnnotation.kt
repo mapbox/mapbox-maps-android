@@ -1,6 +1,7 @@
 package com.mapbox.maps.viewannotation
 
 import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import java.util.*
 
@@ -23,6 +24,11 @@ internal data class ViewAnnotation(
    * String id needed to call functions from gl-native
    */
   val id: String = (VIEW_ANNOTATION_CURRENT_ID++).toString()
+
+  /**
+   * Global layout listener to control positioning on the screen based on view's actual visibility.
+   */
+  var globalLayoutListener: ViewTreeObserver.OnGlobalLayoutListener? = null
 
   private companion object {
     var VIEW_ANNOTATION_CURRENT_ID = 42

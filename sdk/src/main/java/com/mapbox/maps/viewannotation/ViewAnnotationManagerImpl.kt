@@ -2,10 +2,10 @@ package com.mapbox.maps.viewannotation
 
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
-import com.mapbox.common.Logger
 import com.mapbox.maps.*
 import java.util.concurrent.ConcurrentHashMap
 
@@ -32,7 +32,13 @@ internal class ViewAnnotationManagerImpl(
 
   private val annotationMap = ConcurrentHashMap<String, ViewAnnotation>()
   private val idLookupMap = HashMap<View, String>()
-  private val visibleViews = HashMap<String, ScreenCoordinate>()
+
+  // structs needed to for drawing, declare them only once
+  private val currentViewsDrawnMap = HashMap<String, ScreenCoordinate>()
+  private val positionDescriptorMap = HashMap<String, ViewPosition>()
+  private val idsToRepositionSet = HashSet<String>()
+  private val idsToAddSet = HashSet<String>()
+  private val idsToDeleteSet = HashSet<String>()
 
   override fun addViewAnnotation(
     @LayoutRes resId: Int,
@@ -65,22 +71,23 @@ internal class ViewAnnotationManagerImpl(
     val viewAnnotation = ViewAnnotation(
       view = inflatedView,
       handleVisibility = options.visible == null,
-      viewLayoutParams = inflatedViewLayout
+      viewLayoutParams = inflatedViewLayout,
     )
-    inflatedView.viewTreeObserver.addOnGlobalLayoutListener {
-      if (!viewAnnotation.handleVisibility) {
-        return@addOnGlobalLayoutListener
-      }
-      val isVisibleNow = inflatedView.visibility == View.VISIBLE
-      if (mapboxMap.getViewAnnotationOptions(viewAnnotation.id).value?.visible != isVisibleNow) {
-        mapboxMap.updateViewAnnotation(
-          viewAnnotation.id,
-          ViewAnnotationOptions.Builder()
-            .visible(isVisibleNow)
-            .build()
-        )
+    val globalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
+      if (viewAnnotation.handleVisibility) {
+        val isVisibleNow = inflatedView.visibility == View.VISIBLE
+        if (mapboxMap.getViewAnnotationOptions(viewAnnotation.id).value?.visible != isVisibleNow) {
+          mapboxMap.updateViewAnnotation(
+            viewAnnotation.id,
+            ViewAnnotationOptions.Builder()
+              .visible(isVisibleNow)
+              .build()
+          )
+        }
       }
     }
+    viewAnnotation.globalLayoutListener = globalLayoutListener
+    inflatedView.viewTreeObserver.addOnGlobalLayoutListener(globalLayoutListener)
     annotationMap[viewAnnotation.id] = viewAnnotation
     idLookupMap[inflatedView] = viewAnnotation.id
     mapboxMap.addViewAnnotation(viewAnnotation.id, updatedOptions)
@@ -88,93 +95,80 @@ internal class ViewAnnotationManagerImpl(
   }
 
   private fun redrawAnnotations(
-    positionsToUpdate: List<ViewAnnotationPositionDescriptor>
+    positionDescriptorList: List<ViewAnnotationPositionDescriptor>
   ) {
-    val positionIdsToUpdate = positionsToUpdate.map { it.identifier }
-    val viewsToReposition = positionIdsToUpdate.intersect(visibleViews.keys)
-    val viewsToAdd = positionIdsToUpdate.minus(visibleViews.keys)
-    val viewsToDelete = visibleViews.keys.minus(positionIdsToUpdate)
+    positionDescriptorMap.clear()
+    idsToRepositionSet.clear()
+    idsToAddSet.clear()
+    idsToDeleteSet.clear()
 
-    Logger.e("KIRYLDD", "viewsToReposition: ${viewsToReposition.joinToString(", ")}")
-    Logger.e("KIRYLDD", "viewsToAdd: ${viewsToAdd.joinToString(", ")}")
-    Logger.e("KIRYLDD", "viewsToDelete: ${viewsToDelete.joinToString(", ")}")
+    positionDescriptorList.forEachIndexed { i, descriptor ->
+      positionDescriptorMap[descriptor.identifier] = ViewPosition(descriptor.leftTopCoordinate, i.toFloat())
+    }
+    idsToRepositionSet.addAll(positionDescriptorMap.keys.intersect(currentViewsDrawnMap.keys))
+    idsToAddSet.addAll(positionDescriptorMap.keys.minus(currentViewsDrawnMap.keys))
+    idsToDeleteSet.addAll(currentViewsDrawnMap.keys.minus(positionDescriptorMap.keys))
 
-    viewsToDelete.forEach {
+    // firstly delete views that do not belong to the viewport
+    idsToDeleteSet.forEach {
       annotationMap[it]?.let { annotation ->
+        // if view is invisible / gone we don't remove it so that visibility logic could
+        // still be handled by OnGlobalLayoutListener
         if (annotation.view.visibility == View.VISIBLE) {
           mapView.removeView(annotation.view)
         }
       }
     }
-
-    viewsToReposition.forEach { id ->
+    // reposition existing views modifying layout parameters
+    idsToRepositionSet.forEach { id ->
       annotationMap[id]?.let { annotation ->
         val options = mapboxMap.getViewAnnotationOptions(id)
         if (options.isValue) {
           annotation.viewLayoutParams.width = options.value?.width!!
           annotation.viewLayoutParams.height = options.value?.height!!
           annotation.viewLayoutParams.setMargins(
-            visibleViews[id]!!.x.toInt(),
-            visibleViews[id]!!.y.toInt(),
+            positionDescriptorMap[id]!!.leftTopCoordinate.x.toInt(),
+            positionDescriptorMap[id]!!.leftTopCoordinate.y.toInt(),
             0,
             0
           )
+          annotation.view.translationZ = positionDescriptorMap[id]!!.zIndex
+          annotation.view.requestLayout()
         }
       }
     }
-
-    viewsToAdd.forEach { id ->
+    // add views on screen that were not present before
+    idsToAddSet.forEach { id ->
       annotationMap[id]?.let { annotation ->
         val options = mapboxMap.getViewAnnotationOptions(id)
         if (options.isValue) {
           annotation.viewLayoutParams.width = options.value?.width!!
           annotation.viewLayoutParams.height = options.value?.height!!
           annotation.viewLayoutParams.setMargins(
-            visibleViews[id]!!.x.toInt(),
-            visibleViews[id]!!.y.toInt(),
+            positionDescriptorMap[id]!!.leftTopCoordinate.x.toInt(),
+            positionDescriptorMap[id]!!.leftTopCoordinate.y.toInt(),
             0,
             0
           )
           mapView.removeView(annotation.view)
+          // removing shadowing effect brought in by setting z-index / elevation
+          annotation.view.outlineProvider = null
+          annotation.view.translationZ = positionDescriptorMap[id]!!.zIndex
           mapView.addView(annotation.view, annotation.viewLayoutParams)
         }
       }
     }
-
-    visibleViews.clear()
-    visibleViews.putAll(positionsToUpdate.map { Map.Entry(it.identifier, it.leftTopCoordinate) })
-
-
-
-//    annotationMap
-//      // filter out and remove explicitly only visible views
-//      // we can't remove invisible / gone ones because global layout listener will stop getting notified
-//      .filter { it.value.view.visibility == View.VISIBLE }
-//      .forEach { mapView.removeView(it.value.view) }
-//    for (viewPosition in positionsToUpdate) {
-//      annotationMap[viewPosition.identifier]?.let { annotation ->
-//        // remove invisible or gone view if needed
-//        mapView.removeView(annotation.view)
-//        val options = mapboxMap.getViewAnnotationOptions(viewPosition.identifier)
-//        if (options.isValue) {
-//          annotation.viewLayoutParams.width = options.value?.width!!
-//          annotation.viewLayoutParams.height = options.value?.height!!
-//          annotation.viewLayoutParams.setMargins(
-//            viewPosition.leftTopCoordinate.x.toInt(),
-//            viewPosition.leftTopCoordinate.y.toInt(),
-//            0,
-//            0
-//          )
-//          mapView.addView(annotation.view, annotation.viewLayoutParams)
-//        }
-//      }
-//    }
+    currentViewsDrawnMap.clear()
+    positionDescriptorList.forEach {
+      currentViewsDrawnMap[it.identifier] = it.leftTopCoordinate
+    }
   }
 
   override fun removeViewAnnotation(view: View): Boolean {
     val id = idLookupMap[view] ?: return false
-    annotationMap.remove(id) ?: return false
+    val annotation = annotationMap.remove(id) ?: return false
     idLookupMap.remove(view)
+    view.viewTreeObserver.removeOnGlobalLayoutListener(annotation.globalLayoutListener)
     mapView.removeView(view)
     mapboxMap.removeViewAnnotation(id)
     return true
@@ -222,10 +216,17 @@ internal class ViewAnnotationManagerImpl(
   }
 
   fun destroy() {
+    mapboxMap.setViewAnnotationPositionsUpdateListener(null)
     annotationMap.forEach {
       mapboxMap.removeViewAnnotation(it.key)
+      it.value.view.viewTreeObserver.removeOnGlobalLayoutListener(it.value.globalLayoutListener)
       mapView.removeView(it.value.view)
     }
+    currentViewsDrawnMap.clear()
+    positionDescriptorMap.clear()
+    idsToRepositionSet.clear()
+    idsToAddSet.clear()
+    idsToDeleteSet.clear()
     annotationMap.clear()
     idLookupMap.clear()
   }

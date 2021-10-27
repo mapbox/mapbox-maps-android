@@ -1,7 +1,6 @@
 package com.mapbox.maps.testapp.examples.markersandcallouts
 
 import android.annotation.SuppressLint
-import android.content.ComponentCallbacks2
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -77,19 +76,6 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
         }
       }
     }
-
-//    binding.mapView.postDelayed({
-//      for (i in 0 until 100) {
-//        viewAnnotationManager.addViewAnnotation(
-//          R.layout.item_callout_view,
-//          viewAnnotationOptions {
-//            geometry(Point.fromLngLat(27.56667 + 0.01 * i, 53.9 + 0.01 * i))
-//            anchor(ViewAnnotationAnchor.BOTTOM)
-//            allowOverlap(false)
-//          }
-//        )
-//      }
-//    }, 3000L)
   }
 
   private fun prepareStyle(styleUri: String, bitmap: Bitmap) = style(styleUri) {
