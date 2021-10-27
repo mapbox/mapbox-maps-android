@@ -7,6 +7,7 @@ import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.maps.*
+import com.mapbox.maps.plugin.ViewPlugin
 import java.util.concurrent.ConcurrentHashMap
 
 internal class ViewAnnotationManagerImpl(
@@ -134,7 +135,11 @@ internal class ViewAnnotationManagerImpl(
     idsToDeleteSet.clear()
 
     positionDescriptorList.forEachIndexed { i, descriptor ->
-      positionDescriptorMap[descriptor.identifier] = ViewPosition(descriptor.leftTopCoordinate, i.toFloat())
+      positionDescriptorMap[descriptor.identifier] =
+        ViewPosition(
+          descriptor.leftTopCoordinate,
+          ViewPlugin.VIEW_PLUGIN_Z_TRANSLATION - 1f + i.toFloat() / positionDescriptorList.size
+        )
     }
     idsToRepositionSet.addAll(positionDescriptorMap.keys.intersect(currentViewsDrawnMap.keys))
     idsToAddSet.addAll(positionDescriptorMap.keys.minus(currentViewsDrawnMap.keys))
