@@ -51,7 +51,10 @@ internal class ViewAnnotationManagerImpl(
     }
   }
 
-  override fun addViewAnnotation(resId: Int, options: ViewAnnotationOptions): View {
+  override fun addViewAnnotation(
+    @LayoutRes resId: Int,
+    options: ViewAnnotationOptions
+  ): View {
     checkNotNull(options.geometry) { "Geometry can not be null!" }
     val view = LayoutInflater.from(mapView.context).inflate(resId, mapView, false)
     return prepareViewAnnotation(view, options)
@@ -94,6 +97,34 @@ internal class ViewAnnotationManagerImpl(
     return inflatedView
   }
 
+  private fun addViews(idsSet: HashSet<String>, needsRepositionOnly: Boolean) {
+    idsSet.forEach { id ->
+      annotationMap[id]?.let { annotation ->
+        val options = mapboxMap.getViewAnnotationOptions(id)
+        if (options.isValue) {
+          annotation.viewLayoutParams.width = options.value?.width!!
+          annotation.viewLayoutParams.height = options.value?.height!!
+          annotation.viewLayoutParams.setMargins(
+            positionDescriptorMap[id]!!.leftTopCoordinate.x.toInt(),
+            positionDescriptorMap[id]!!.leftTopCoordinate.y.toInt(),
+            0,
+            0
+          )
+          if (needsRepositionOnly) {
+            annotation.view.requestLayout()
+          } else {
+            // remove view to as it may have been not removed before due to visibility
+            mapView.removeView(annotation.view)
+            // removing shadowing effect brought in by setting z-index / elevation
+            annotation.view.outlineProvider = null
+            mapView.addView(annotation.view, annotation.viewLayoutParams)
+          }
+          annotation.view.translationZ = positionDescriptorMap[id]!!.zIndex
+        }
+      }
+    }
+  }
+
   private fun redrawAnnotations(
     positionDescriptorList: List<ViewAnnotationPositionDescriptor>
   ) {
@@ -120,44 +151,9 @@ internal class ViewAnnotationManagerImpl(
       }
     }
     // reposition existing views modifying layout parameters
-    idsToRepositionSet.forEach { id ->
-      annotationMap[id]?.let { annotation ->
-        val options = mapboxMap.getViewAnnotationOptions(id)
-        if (options.isValue) {
-          annotation.viewLayoutParams.width = options.value?.width!!
-          annotation.viewLayoutParams.height = options.value?.height!!
-          annotation.viewLayoutParams.setMargins(
-            positionDescriptorMap[id]!!.leftTopCoordinate.x.toInt(),
-            positionDescriptorMap[id]!!.leftTopCoordinate.y.toInt(),
-            0,
-            0
-          )
-          annotation.view.translationZ = positionDescriptorMap[id]!!.zIndex
-          annotation.view.requestLayout()
-        }
-      }
-    }
+    addViews(idsToRepositionSet, needsRepositionOnly = true)
     // add views on screen that were not present before
-    idsToAddSet.forEach { id ->
-      annotationMap[id]?.let { annotation ->
-        val options = mapboxMap.getViewAnnotationOptions(id)
-        if (options.isValue) {
-          annotation.viewLayoutParams.width = options.value?.width!!
-          annotation.viewLayoutParams.height = options.value?.height!!
-          annotation.viewLayoutParams.setMargins(
-            positionDescriptorMap[id]!!.leftTopCoordinate.x.toInt(),
-            positionDescriptorMap[id]!!.leftTopCoordinate.y.toInt(),
-            0,
-            0
-          )
-          mapView.removeView(annotation.view)
-          // removing shadowing effect brought in by setting z-index / elevation
-          annotation.view.outlineProvider = null
-          annotation.view.translationZ = positionDescriptorMap[id]!!.zIndex
-          mapView.addView(annotation.view, annotation.viewLayoutParams)
-        }
-      }
-    }
+    addViews(idsToAddSet, needsRepositionOnly = false)
     currentViewsDrawnMap.clear()
     positionDescriptorList.forEach {
       currentViewsDrawnMap[it.identifier] = it.leftTopCoordinate
@@ -186,24 +182,24 @@ internal class ViewAnnotationManagerImpl(
     } ?: return false
   }
 
-  override fun getViewAnnotationByFeatureId(featureId: String): View? {
+  private fun findByFeatureId(featureId: String): Pair<View?, ViewAnnotationOptions?> {
     annotationMap.forEach {
       val options = mapboxMap.getViewAnnotationOptions(it.key)
       if (options.isValue && options.value!!.associatedFeatureId == featureId) {
-        return annotationMap[it.key]?.view
+        return Pair(it.value.view, options.value)
       }
     }
-    return null
+    return Pair(null, null)
+  }
+
+  override fun getViewAnnotationByFeatureId(featureId: String): View? {
+    val (view, _) = findByFeatureId(featureId)
+    return view
   }
 
   override fun getViewAnnotationOptionsByFeatureId(featureId: String): ViewAnnotationOptions? {
-    annotationMap.forEach {
-      val options = mapboxMap.getViewAnnotationOptions(it.key)
-      if (options.isValue && options.value!!.associatedFeatureId == featureId) {
-        return options.value
-      }
-    }
-    return null
+    val (_, options) = findByFeatureId(featureId)
+    return options
   }
 
   override fun getViewAnnotationOptionsByView(view: View): ViewAnnotationOptions? {

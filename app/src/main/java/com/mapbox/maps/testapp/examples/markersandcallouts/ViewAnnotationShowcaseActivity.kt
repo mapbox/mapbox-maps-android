@@ -9,7 +9,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
@@ -23,10 +22,7 @@ import com.mapbox.maps.extension.style.sources.generated.rasterDemSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.extension.style.terrain.generated.terrain
-import com.mapbox.maps.plugin.gestures.OnMapClickListener
-import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
-import com.mapbox.maps.plugin.gestures.addOnMapClickListener
-import com.mapbox.maps.plugin.gestures.addOnMapLongClickListener
+import com.mapbox.maps.plugin.gestures.*
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityViewAnnotationShowcaseBinding
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
@@ -76,6 +72,14 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
         }
       }
     }
+
+    // code to verify performance, leaving for now, will remove later
+
+//    binding.mapView.postDelayed({
+//      for (i in 0 until 100) {
+//        addViewAnnotation(Point.fromLngLat(27.56667 + i * 0.01, 53.9 + i * 0.01), "1")
+//      }
+//    }, 5_000L)
   }
 
   private fun prepareStyle(styleUri: String, bitmap: Bitmap) = style(styleUri) {
@@ -136,7 +140,7 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
 
   @SuppressLint("SetTextI18n")
   private fun addViewAnnotation(point: Point, markerId: String) {
-    val viewAnnotation = viewAnnotationManager.addViewAnnotation(
+    viewAnnotationManager.addViewAnnotation(
       R.layout.item_callout_view,
       viewAnnotationOptions {
         geometry(point)
@@ -144,34 +148,34 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
         anchor(ViewAnnotationAnchor.BOTTOM)
         allowOverlap(false)
       }
-    )
-    Logger.e("KIRYLDD", "GONE")
-    viewAnnotation.visibility = View.GONE
-    // calculate offsetY manually taking into account icon height only because of bottom anchoring
-    viewAnnotationManager.updateViewAnnotation(
-      viewAnnotation,
-      viewAnnotationOptions {
-        offsetY(markerHeight)
-      }
-    )
-    viewAnnotation.findViewById<TextView>(R.id.textNativeView).text =
-      "lat=%.2f\nlon=%.2f".format(point.latitude(), point.longitude())
-    viewAnnotation.findViewById<ImageView>(R.id.closeNativeView).setOnClickListener { _ ->
-      viewAnnotationManager.removeViewAnnotation(viewAnnotation)
-    }
-    viewAnnotation.findViewById<Button>(R.id.selectButton).setOnClickListener { b ->
-      val button = b as Button
-      val isSelected = button.text.contentEquals("SELECT", true)
-      val pxDelta = if (isSelected) SELECTED_ADD_COEF_PX else -SELECTED_ADD_COEF_PX
-      button.text = if (isSelected) "DESELECT" else "SELECT"
+    ) { viewAnnotation ->
+      viewAnnotation.visibility = View.GONE
+      // calculate offsetY manually taking into account icon height only because of bottom anchoring
       viewAnnotationManager.updateViewAnnotation(
         viewAnnotation,
         viewAnnotationOptions {
-          width(viewAnnotationManager.getViewAnnotationOptionsByView(viewAnnotation)?.width!! + pxDelta)
-          height(viewAnnotationManager.getViewAnnotationOptionsByView(viewAnnotation)?.height!! + pxDelta)
-          selected(isSelected)
+          offsetY(markerHeight)
         }
       )
+      viewAnnotation.findViewById<TextView>(R.id.textNativeView).text =
+        "lat=%.2f\nlon=%.2f".format(point.latitude(), point.longitude())
+      viewAnnotation.findViewById<ImageView>(R.id.closeNativeView).setOnClickListener { _ ->
+        viewAnnotationManager.removeViewAnnotation(viewAnnotation)
+      }
+      viewAnnotation.findViewById<Button>(R.id.selectButton).setOnClickListener { b ->
+        val button = b as Button
+        val isSelected = button.text.contentEquals("SELECT", true)
+        val pxDelta = if (isSelected) SELECTED_ADD_COEF_PX else -SELECTED_ADD_COEF_PX
+        button.text = if (isSelected) "DESELECT" else "SELECT"
+        viewAnnotationManager.updateViewAnnotation(
+          viewAnnotation,
+          viewAnnotationOptions {
+            width(viewAnnotationManager.getViewAnnotationOptionsByView(viewAnnotation)?.width!! + pxDelta)
+            height(viewAnnotationManager.getViewAnnotationOptionsByView(viewAnnotation)?.height!! + pxDelta)
+            selected(isSelected)
+          }
+        )
+      }
     }
   }
 
@@ -179,8 +183,8 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
     const val BLUE_ICON_ID = "blue"
     const val SOURCE_ID = "source_id"
     const val LAYER_ID = "layer_id"
-    private const val TERRAIN_SOURCE = "TERRAIN_SOURCE"
-    private const val TERRAIN_URL_TILE_RESOURCE = "mapbox://mapbox.mapbox-terrain-dem-v1"
+    const val TERRAIN_SOURCE = "TERRAIN_SOURCE"
+    const val TERRAIN_URL_TILE_RESOURCE = "mapbox://mapbox.mapbox-terrain-dem-v1"
     const val MARKER_ID_PREFIX = "view_annotation_"
     const val SELECTED_ADD_COEF_PX = 50
   }
