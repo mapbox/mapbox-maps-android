@@ -5,7 +5,7 @@ Mapbox welcomes participation and contributions from everyone.
 # 10.1.0-rc.1 October 28, 2021
 
 ## Bug fixes 🐞
-* Fix gesture at high pitch level. ([#775](https://github.com/mapbox/mapbox-maps-android/pull/775))
+* Fix unexpectedly rapid map panning at high pitch level. ([#775](https://github.com/mapbox/mapbox-maps-android/pull/775))
 * Set thread priorities and set thread CPU affinity based on the thread's priority. ([#774](https://github.com/mapbox/mapbox-maps-android/pull/774))
 
 ## Dependencies
