@@ -1182,7 +1182,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       }
       pitch in NORMAL_MAX_PITCH..MAXIMUM_PITCH -> {
         val a = ln(NORMAL_MAX_PITCH / 10.0)
-        val b = ln(MAXIMUM_PITCH)
+        val b = ln(MAX_FLING_PITCH_FACTOR)
         // exp(a) = pitch / 10.0
         // exp(b) = pitch
         exp((b - a) * (pitch - NORMAL_MAX_PITCH) / (MAXIMUM_PITCH - NORMAL_MAX_PITCH) + a)
@@ -1190,6 +1190,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       else -> 0.0
     }
     val pitchFactor = FLING_LIMITING_FACTOR + pitchFactorAdditionalComponent / screenDensity.toDouble()
+
     val offsetX = if (internalSettings.isScrollHorizontallyLimited()) 0.0 else velocityX.toDouble() / pitchFactor
     val offsetY = if (internalSettings.isScrollVerticallyLimited()) 0.0 else velocityY.toDouble() / pitchFactor
 
@@ -1198,7 +1199,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     // calculate animation time based on displacement
     // velocityXY ranges from VELOCITY_THRESHOLD_IGNORE_FLING to ~5000
     // limit animation time to Android SDK default animation time
-    val animationTime = (velocityXY / FLING_LIMITING_FACTOR).toLong()
+    val animationTime = (velocityXY / pitchFactor).toLong()
 
     cameraAnimationsPlugin.easeTo(
       mapCameraManagerDelegate.getDragCameraOptions(

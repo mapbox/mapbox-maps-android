@@ -71,6 +71,11 @@ internal const val MINIMUM_PITCH = 0.0
 internal const val NORMAL_MAX_PITCH = 60.0
 
 /**
+ * Maximum pitch additional component for the fling gesture.
+ */
+internal const val MAX_FLING_PITCH_FACTOR = 300.0
+
+/**
  * The currently supported maximum unlocked pitch value.
  */
 internal const val MAXIMUM_PITCH = 85.0
