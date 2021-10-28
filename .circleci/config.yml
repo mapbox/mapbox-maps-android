@@ -16,48 +16,7 @@ workflows:
     when:
       not: << pipeline.parameters.mapbox_upstream >>
     jobs:
-      - verify-code:
-          filters:
-            tags:
-              only: /android-v.*/
-      - verify-docs:
-          requires:
-            - verify-code
-      - verify-api:
-          requires:
-            - verify-code
-      - verify-internal:
-            requires:
-              - verify-code
-      - run-lint:
-          requires:
-            - verify-code
-      - run-unit-test:
-          requires:
-            - verify-code
-      - run-robo-test:
-          requires:
-            - verify-code
-      - run-app-test:
-          requires:
-            - verify-code
-      - run-sdk-test:
-          requires:
-            - verify-code
-      - start-run-style-test:
-          type: approval
-      - run-style-test:
-          requires:
-            - start-run-style-test
-      - build-sdk-from-source:
-          requires:
-            - verify-code
-      - build-android-auto-app:
-          requires:
-            - verify-code
       - build-sdk-release:
-          requires:
-            - verify-code
           filters:
             tags:
               only: /android-v.*/
@@ -199,9 +158,9 @@ commands:
             - run:
                 name: Publish the SDK
                 command: |
-                  if [[ $CIRCLE_TAG == android-v* ||  $CIRCLE_BRANCH == main ]]; then
-                    make sdkRegistryUpload
-                  fi
+                  export GITHUB_TOKEN=$(./mbx-ci github writer token)
+                  echo $GITHUB_TOKEN
+                  make sdkRegistryPublish
 
   publish-sdk-registry-named-snapshot:
     steps:
