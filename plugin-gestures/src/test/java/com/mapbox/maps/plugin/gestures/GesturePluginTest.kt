@@ -408,7 +408,7 @@ class GesturePluginTest {
       mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),
         // values should be smaller verifyFlingLargeTiltedNormal
-        ScreenCoordinate(166.60419081331085, 166.60419081331085)
+        ScreenCoordinate(67.93869850933991, 67.93869850933991)
       )
     }
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
@@ -497,7 +497,7 @@ class GesturePluginTest {
       mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),
         // values should be smaller as verifyFlingSmallTiltedNormal
-        ScreenCoordinate(13.328335265064869, 12.495314310998314)
+        ScreenCoordinate(5.435095880747194, 5.095402388200494)
       )
     }
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
