@@ -10,13 +10,12 @@ import android.os.Looper
 import android.util.AttributeSet
 import android.view.InputDevice
 import android.view.MotionEvent
-import android.view.animation.DecelerateInterpolator
 import androidx.annotation.VisibleForTesting
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.android.gestures.*
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraState
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
@@ -1174,10 +1173,25 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       return false
     }
 
-    val offsetX =
-      if (internalSettings.isScrollHorizontallyLimited()) 0.0 else velocityX.toDouble() / FLING_LIMITING_FACTOR
-    val offsetY =
-      if (internalSettings.isScrollVerticallyLimited()) 0.0 else velocityY.toDouble() / FLING_LIMITING_FACTOR
+    val pitch = mapCameraManagerDelegate.cameraState.pitch
+
+    // We limit the amount of fling displacement based on the camera pitch value.
+    val pitchFactorAdditionalComponent = when {
+      pitch < NORMAL_MAX_PITCH -> {
+        pitch / 10.0
+      }
+      pitch in NORMAL_MAX_PITCH..MAXIMUM_PITCH -> {
+        val a = ln(NORMAL_MAX_PITCH / 10.0)
+        val b = ln(MAXIMUM_PITCH)
+        // exp(a) = pitch / 10.0
+        // exp(b) = pitch
+        exp((b - a) * (pitch - NORMAL_MAX_PITCH) / (MAXIMUM_PITCH - NORMAL_MAX_PITCH) + a)
+      }
+      else -> 0.0
+    }
+    val pitchFactor = FLING_LIMITING_FACTOR + pitchFactorAdditionalComponent / screenDensity.toDouble()
+    val offsetX = if (internalSettings.isScrollHorizontallyLimited()) 0.0 else velocityX.toDouble() / pitchFactor
+    val offsetY = if (internalSettings.isScrollVerticallyLimited()) 0.0 else velocityY.toDouble() / pitchFactor
 
     cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
 
@@ -1194,7 +1208,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       mapAnimationOptions {
         owner(MapAnimationOwnerRegistry.GESTURES)
         duration(animationTime)
-        interpolator(DecelerateInterpolator(gesturesDecelerationFactor))
+        interpolator(gesturesInterpolator)
         animatorListener(object : AnimatorListenerAdapter() {
 
           override fun onAnimationEnd(animation: Animator?) {
@@ -1248,30 +1262,38 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       val toX = fromX - resolvedDistanceX
       val toY = fromY - resolvedDistanceY
 
-      var cameraOptions = mapCameraManagerDelegate.getDragCameraOptions(
-        ScreenCoordinate(fromX, fromY),
-        ScreenCoordinate(toX, toY)
+      val cameraOptions = getAdjustedCameraCenter(
+        mapCameraManagerDelegate.cameraState,
+        mapCameraManagerDelegate.getDragCameraOptions(
+          ScreenCoordinate(fromX, fromY),
+          ScreenCoordinate(toX, toY)
+        )
       )
-      val currentCenter = mapCameraManagerDelegate.cameraState.center
-      val targetCenter = cameraOptions.center
-      val translationLng = targetCenter!!.longitude() - currentCenter.longitude()
-      val translationLat = targetCenter!!.latitude() - currentCenter.latitude()
-
-      val maximumDistance = SCROLL_LIMITING_FACTOR / 2.0.pow(mapCameraManagerDelegate.cameraState.zoom)
-      val currentDistance = hypot(translationLng, translationLat)
-
-      if (currentDistance > maximumDistance) {
-        cameraOptions = cameraOptions.toBuilder().center(
-          Point.fromLngLat(
-            currentCenter.longitude() + translationLng * (maximumDistance / currentDistance),
-            currentCenter.latitude() + translationLat * (maximumDistance / currentDistance)
-          )
-        ).build()
-      }
 
       easeToImmediately(cameraOptions)
     }
     return true
+  }
+
+  private fun getAdjustedCameraCenter(
+    currentCamera: CameraState,
+    targetCamera: CameraOptions
+  ): CameraOptions {
+    val translationLng = targetCamera.center!!.longitude() - currentCamera.center.longitude()
+    val translationLat = targetCamera.center!!.latitude() - currentCamera.center.latitude()
+    val maximumDistance =
+      SCROLL_LIMITING_FACTOR / 2.0.pow(currentCamera.zoom)
+    val currentDistance = hypot(translationLng, translationLat)
+    return if (currentDistance > maximumDistance) {
+      targetCamera.toBuilder().center(
+        Point.fromLngLat(
+          currentCamera.center.longitude() + translationLng * (maximumDistance / currentDistance),
+          currentCamera.center.latitude() + translationLat * (maximumDistance / currentDistance)
+        )
+      ).build()
+    } else {
+      targetCamera
+    }
   }
 
   internal fun handleMoveEnd(detector: MoveGestureDetector) {
