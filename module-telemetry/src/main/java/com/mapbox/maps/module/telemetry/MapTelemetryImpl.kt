@@ -7,7 +7,6 @@ import com.google.gson.Gson
 import com.mapbox.android.telemetry.*
 import com.mapbox.annotation.module.MapboxModule
 import com.mapbox.annotation.module.MapboxModuleType
-import com.mapbox.bindgen.Value
 import com.mapbox.common.*
 import com.mapbox.common.Event
 import com.mapbox.common.ValueConverter
@@ -43,8 +42,16 @@ class MapTelemetryImpl : MapTelemetry {
     }
 
     // EventsService
-    this.eventsService =
-      EventsService(EventsServiceOptions(accessToken, BuildConfig.MAPBOX_EVENTS_USER_AGENT, null))
+    // check in the resources
+    val eventsTokenResId = getEventsResId(appContext, EVENTS_ACCESS_TOKEN_RESOURCE_NAME)
+    val eventsToken =
+      if (eventsTokenResId != 0) appContext.getString(eventsTokenResId) else accessToken
+    val eventsUrlResId = getEventsResId(appContext, EVENTS_URL_RESOURCE_NAME)
+    val eventsUrl = if (eventsUrlResId != 0) appContext.getString(eventsUrlResId) else null
+
+    val eventsServiceOptions = EventsServiceOptions(eventsToken, BuildConfig.MAPBOX_EVENTS_USER_AGENT, eventsUrl)
+    this.eventsService = EventsService(eventsServiceOptions)
+
     val coreTelemetryState = EventsService.getEventsCollectionState()
     if (coreTelemetryState == true) {
       enableTelemetryCollection(true)
@@ -91,6 +98,12 @@ class MapTelemetryImpl : MapTelemetry {
     // EventsService
     sendEvent(Gson().toJson(mapLoadEvent))
   }
+
+  private fun getEventsResId(context: Context, resourceName: String): Int = context.resources.getIdentifier(
+    resourceName,
+    "string",
+    context.packageName
+  )
 
   // EventsService
   private fun sendEvent(event: String) {
@@ -172,5 +185,7 @@ class MapTelemetryImpl : MapTelemetry {
 
   companion object {
     private const val TAG = "MapTelemetryImpl"
+    private const val EVENTS_ACCESS_TOKEN_RESOURCE_NAME = "mapbox_events_access_token"
+    private val EVENTS_URL_RESOURCE_NAME = "mapbox_events_url"
   }
 }
