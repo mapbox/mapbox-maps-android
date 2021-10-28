@@ -6,7 +6,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Fix unexpectedly rapid map panning at high pitch level. ([#775](https://github.com/mapbox/mapbox-maps-android/pull/775))
-* Set thread priorities and set thread CPU affinity based on the thread's priority. ([#774](https://github.com/mapbox/mapbox-maps-android/pull/774))
+* Improve rendering performance by setting thread priorities and set thread CPU affinity based on the thread's priority. ([#774](https://github.com/mapbox/mapbox-maps-android/pull/774))
 
 ## Dependencies
 * Bump gl-native to v10.1.0-rc, and common to v20.1.0-rc.2 ([#774](https://github.com/mapbox/mapbox-maps-android/pull/774))
