@@ -606,7 +606,7 @@ class GesturePluginTest {
         any(),
         any()
       )
-    } returns CameraOptions.Builder().build()
+    } returns CameraOptions.Builder().center(Point.fromLngLat(0.0, 0.0)).build()
 
     val moveGestureDetector = mockk<MoveGestureDetector>()
     every {
