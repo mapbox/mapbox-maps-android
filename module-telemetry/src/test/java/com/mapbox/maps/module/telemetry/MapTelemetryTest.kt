@@ -6,21 +6,40 @@ import android.view.Display
 import android.view.WindowManager
 import com.mapbox.android.telemetry.Event
 import com.mapbox.android.telemetry.MapboxTelemetry
-import com.mapbox.common.EventsService
+import com.mapbox.common.*
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkStatic
 import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
+import org.robolectric.annotation.Implementation
+import org.robolectric.annotation.Implements
 
+@Implements(EventsService::class)
+object ShadowEventsService {
+  @Implementation
+  open fun setEventsCollectionState(
+    enableCollection: Boolean,
+    callback: EventsServiceResponseCallback?
+  ) {}
+
+  @Implementation
+  open fun getEventsCollectionState(): Boolean {
+    return true
+  }
+}
+
+@Config(shadows = [ShadowEventsService::class])
 @RunWith(RobolectricTestRunner::class)
 class MapTelemetryTest {
 
   private lateinit var mapboxTelemetry: MapboxTelemetry
   private lateinit var telemetry: MapTelemetryImpl
-  private lateinit var eventsService: EventsService
+  private lateinit var eventsService: EventsServiceInterface
 
   @Before
   fun setUp() {
@@ -36,8 +55,34 @@ class MapTelemetryTest {
     every { windowManager.defaultDisplay } returns display
 
     mapboxTelemetry = mockk(relaxed = true)
-    eventsService = mockk<EventsService>()
+    eventsService = mockk<EventsServiceInterface>()
+
+    val eventsService: EventsServiceInterface = mockk()
     telemetry = MapTelemetryImpl(mapboxTelemetry, context, "sk.foobar", eventsService)
+    every { eventsService.sendEvent(any(), any()) } returns Unit
+    every { eventsService.pauseEventsCollection() } returns Unit
+    mockkStatic(EventsService::class)
+    every { EventsService.setEventsCollectionState(any(), any()) } returns Unit
+  }
+
+  private var eventsServiceMock = object : EventsServiceInterface {
+    override fun registerObserver(observer: EventsServiceObserver) {}
+
+    override fun unregisterObserver(observer: EventsServiceObserver) {}
+
+    override fun sendTurnstileEvent(
+      turnstileEvent: TurnstileEvent,
+      callback: EventsServiceResponseCallback?
+    ) {}
+
+    override fun sendEvent(
+      event: com.mapbox.common.Event,
+      callback: EventsServiceResponseCallback?
+    ) {}
+
+    override fun pauseEventsCollection() {}
+
+    override fun resumeEventsCollection() {}
   }
 
   @Test

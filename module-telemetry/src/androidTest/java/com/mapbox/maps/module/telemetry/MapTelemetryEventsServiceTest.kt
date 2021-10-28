@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
 @RunWith(AndroidJUnit4::class)
-class MapTelemetryEventServieTest {
+class MapTelemetryEventsServiceTest {
   private lateinit var eventsService: EventsService
   private lateinit var mapboxTelemetry: MapboxTelemetry
   private lateinit var telemetry: MapTelemetryImpl

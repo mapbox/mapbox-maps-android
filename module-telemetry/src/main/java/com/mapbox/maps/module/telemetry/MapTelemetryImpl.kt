@@ -7,9 +7,9 @@ import com.google.gson.Gson
 import com.mapbox.android.telemetry.*
 import com.mapbox.annotation.module.MapboxModule
 import com.mapbox.annotation.module.MapboxModuleType
+import com.mapbox.bindgen.Value
 import com.mapbox.common.*
 import com.mapbox.common.Event
-import com.mapbox.common.ValueConverter
 import com.mapbox.maps.module.MapTelemetry
 import java.util.*
 
@@ -23,7 +23,7 @@ class MapTelemetryImpl : MapTelemetry {
   private val accessToken: String
   private val telemetry: MapboxTelemetry
   // EventsService
-  private val eventsService: EventsService
+  private val eventsService: EventsServiceInterface
 
   /**
    * Creates a map telemetry instance using appplication context and access token
@@ -66,7 +66,7 @@ class MapTelemetryImpl : MapTelemetry {
    * @param accessToken the mapbox access token
    */
   @VisibleForTesting
-  constructor(telemetry: MapboxTelemetry, appContext: Context, accessToken: String, eventsService: EventsService) {
+  constructor(telemetry: MapboxTelemetry, appContext: Context, accessToken: String, eventsService: EventsServiceInterface) {
     this.appContext = appContext
     this.accessToken = accessToken
     this.telemetry = telemetry
@@ -93,7 +93,9 @@ class MapTelemetryImpl : MapTelemetry {
         SKUIdentifier.MAPS_MAUS,
         BuildConfig.MAPBOX_SDK_IDENTIFIER,
         BuildConfig.MAPBOX_SDK_VERSION
-      ), null)
+      ),
+      null
+    )
 
     // EventsService
     sendEvent(Gson().toJson(mapLoadEvent))
@@ -107,7 +109,7 @@ class MapTelemetryImpl : MapTelemetry {
 
   // EventsService
   private fun sendEvent(event: String) {
-    val eventAttributes = ValueConverter.fromJson(event)
+    val eventAttributes = Value.fromJson(event)
     val mapEvent = eventAttributes.value?.let { Event(EventPriority.IMMEDIATE, it) }
     if (mapEvent != null) {
       eventsService.sendEvent(mapEvent, null)
