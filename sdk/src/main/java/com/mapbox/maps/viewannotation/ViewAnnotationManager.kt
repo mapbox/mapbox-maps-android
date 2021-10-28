@@ -3,20 +3,34 @@ package com.mapbox.maps.viewannotation
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import com.mapbox.geojson.Feature
+import com.mapbox.geojson.Geometry
+import com.mapbox.geojson.Point
+import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ViewAnnotationOptions
 
 /**
- * Public facing API to control view annotations.
+ * Manager API to control View Annotations.
+ *
+ * View annotations are Android [View]'s that are drawn on top of the [MapView] and bound to some [Geometry] (only [Point] is supported for now).
+ * In case some view annotations intersect on the screen Z-index is based on addition order.
+ *
+ * View annotations are invariant to map camera transformations however such properties as size, visibility etc
+ * could be controlled by the user using update operation.
+ *
+ * View annotations are not explicitly bound to any sources however [ViewAnnotationOptions.associatedFeatureId] could be
+ * used to bind given view annotation with some [Feature] by [Feature.id] meaning visibility of view annotation will be driven
+ * by visibility of given feature.
  */
 @MapboxExperimental
 interface ViewAnnotationManager {
 
   /**
-   * Add annotation view inflated from [resId] synchronously.
+   * Add view annotation inflated from [resId] synchronously.
    * Parent layout of [resId] must have fixed dimensions and should not use [ViewGroup.LayoutParams.WRAP_CONTENT].
    *
-   * Annotation [options] must include Geometry where we want to bind our annotation view.
+   * Annotation [options] must include Geometry where we want to bind our view annotation.
    *
    * Width and height could be specified explicitly but better idea will be not specifying them
    * as they will be calculated automatically based on view layout.
@@ -34,12 +48,12 @@ interface ViewAnnotationManager {
   ): View
 
   /**
-   * Add annotation view inflated from [resId] asynchronously.
+   * Add view annotation inflated from [resId] asynchronously.
    * Parent layout of [resId] must have fixed dimensions and should not use [ViewGroup.LayoutParams.WRAP_CONTENT].
    *
    * In order to use this function please add following [dependency](https://mvnrepository.com/artifact/androidx.asynclayoutinflater/asynclayoutinflater/1.0.0) to your project.
    *
-   * Annotation [options] must include Geometry where we want to bind our annotation view.
+   * Annotation [options] must include Geometry where we want to bind our view annotation.
    *
    * Width and height could be specified explicitly but better idea will be not specifying them
    * as they will be calculated automatically based on view layout.
@@ -61,7 +75,7 @@ interface ViewAnnotationManager {
    * View dimensions will be taken as width / height from view's layout params
    * unless they are not specified explicitly with [ViewAnnotationOptions.Builder.width] and [ViewAnnotationOptions.Builder.height].
    *
-   * Annotation [options] must include Geometry where we want to bind our annotation view.
+   * Annotation [options] must include Geometry where we want to bind our view annotation.
    *
    * Width and height could be specified explicitly but better idea will be not specifying them
    * as they will be calculated automatically based on view layout.
