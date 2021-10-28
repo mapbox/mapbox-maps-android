@@ -15,6 +15,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.android.gestures.*
 import com.mapbox.common.Logger
+import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
@@ -1173,14 +1174,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       return false
     }
 
-    val pitch = mapCameraManagerDelegate.cameraState.pitch
-    this.gesturesDecelerationFactor = 1f - (pitch.toFloat() / MAXIMUM_PITCH.toFloat()) * 0.5f
-    Logger.e("testtest", "pitch: $pitch, decelerationFactor: $gesturesDecelerationFactor")
-
     val offsetX =
-      if (internalSettings.isScrollHorizontallyLimited()) 0.0 else velocityX.toDouble() / FLING_LIMITING_FACTOR * gesturesDecelerationFactor
+      if (internalSettings.isScrollHorizontallyLimited()) 0.0 else velocityX.toDouble() / FLING_LIMITING_FACTOR
     val offsetY =
-      if (internalSettings.isScrollVerticallyLimited()) 0.0 else velocityY.toDouble() / FLING_LIMITING_FACTOR * gesturesDecelerationFactor
+      if (internalSettings.isScrollVerticallyLimited()) 0.0 else velocityY.toDouble() / FLING_LIMITING_FACTOR
 
     cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
 
@@ -1191,8 +1188,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     cameraAnimationsPlugin.easeTo(
       mapCameraManagerDelegate.getDragCameraOptions(
-        ScreenCoordinate(e1.x.toDouble(), e1.y.toDouble()),
-        ScreenCoordinate(e1.x + offsetX, e1.y + offsetY)
+        centerScreen,
+        ScreenCoordinate(centerScreen.x + offsetX, centerScreen.y + offsetY)
       ),
       mapAnimationOptions {
         owner(MapAnimationOwnerRegistry.GESTURES)
@@ -1251,12 +1248,28 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       val toX = fromX - resolvedDistanceX
       val toY = fromY - resolvedDistanceY
 
-      easeToImmediately(
-        mapCameraManagerDelegate.getDragCameraOptions(
-          ScreenCoordinate(fromX, fromY),
-          ScreenCoordinate(toX, toY)
-        )
+      var cameraOptions = mapCameraManagerDelegate.getDragCameraOptions(
+        ScreenCoordinate(fromX, fromY),
+        ScreenCoordinate(toX, toY)
       )
+      val currentCenter = mapCameraManagerDelegate.cameraState.center
+      val targetCenter = cameraOptions.center
+      val translationLng = targetCenter!!.longitude() - currentCenter.longitude()
+      val translationLat = targetCenter!!.latitude() - currentCenter.latitude()
+
+      val maximumDistance = SCROLL_LIMITING_FACTOR / 2.0.pow(mapCameraManagerDelegate.cameraState.zoom)
+      val currentDistance = hypot(translationLng, translationLat)
+
+      if (currentDistance > maximumDistance) {
+        cameraOptions = cameraOptions.toBuilder().center(
+          Point.fromLngLat(
+            currentCenter.longitude() + translationLng * (maximumDistance / currentDistance),
+            currentCenter.latitude() + translationLat * (maximumDistance / currentDistance)
+          )
+        ).build()
+      }
+
+      easeToImmediately(cameraOptions)
     }
     return true
   }

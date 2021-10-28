@@ -15,6 +15,12 @@ internal const val VELOCITY_THRESHOLD_IGNORE_FLING: Long = 1000
 internal const val FLING_LIMITING_FACTOR: Double = 10.0
 
 /**
+ * Scroll limiting factor. This limit factor is used to limit the maximum scroll speed that's generated
+ * by the native drag API.
+ */
+internal const val SCROLL_LIMITING_FACTOR: Double = 100.0
+
+/**
  * Last scale span delta to XY velocity ratio required to execute scale velocity animation.
  */
 internal const val SCALE_VELOCITY_RATIO_THRESHOLD = 4 * 1e-3
