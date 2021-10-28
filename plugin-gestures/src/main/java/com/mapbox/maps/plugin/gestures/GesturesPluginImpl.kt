@@ -91,7 +91,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   private var rotateAnimators: Array<ValueAnimator>? = null
   private val scheduledAnimators = ArrayList<ValueAnimator>()
   private var gesturesInterpolator = LinearOutSlowInInterpolator()
-  private var gesturesDecelerationFactor = 1.0f
 
   // needed most likely for devices with API <= 23 only
   // duration = 0 will still make animation end / cancel not immediately
