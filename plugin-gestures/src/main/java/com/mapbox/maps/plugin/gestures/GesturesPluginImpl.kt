@@ -13,7 +13,9 @@ import android.view.MotionEvent
 import androidx.annotation.VisibleForTesting
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.android.gestures.*
+import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraState
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
@@ -88,7 +90,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   private var scaleAnimators: Array<ValueAnimator>? = null
   private var rotateAnimators: Array<ValueAnimator>? = null
   private val scheduledAnimators = ArrayList<ValueAnimator>()
-  private val gesturesInterpolator = LinearOutSlowInInterpolator()
+  private var gesturesInterpolator = LinearOutSlowInInterpolator()
 
   // needed most likely for devices with API <= 23 only
   // duration = 0 will still make animation end / cancel not immediately
@@ -1174,22 +1176,20 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     // We limit the amount of fling displacement based on the camera pitch value.
     val pitchFactorAdditionalComponent = when {
-      pitch == MINIMUM_PITCH -> {
-        FLING_LIMITING_FACTOR
-      }
-      pitch > MINIMUM_PITCH && pitch < NORMAL_MAX_PITCH -> {
-        FLING_LIMITING_FACTOR + (pitch / 10.0)
+      pitch < NORMAL_MAX_PITCH -> {
+        pitch / 10.0
       }
       pitch in NORMAL_MAX_PITCH..MAXIMUM_PITCH -> {
         val a = ln(NORMAL_MAX_PITCH / 10.0)
-        val b = ln(MAXIMUM_PITCH)
+        val b = ln(MAX_FLING_PITCH_FACTOR)
         // exp(a) = pitch / 10.0
         // exp(b) = pitch
         exp((b - a) * (pitch - NORMAL_MAX_PITCH) / (MAXIMUM_PITCH - NORMAL_MAX_PITCH) + a)
       }
       else -> 0.0
     }
-    val pitchFactor = (PITCH_BASE_FACTOR + pitchFactorAdditionalComponent) / screenDensity.toDouble()
+    val pitchFactor = FLING_LIMITING_FACTOR + pitchFactorAdditionalComponent / screenDensity.toDouble()
+
     val offsetX = if (internalSettings.isScrollHorizontallyLimited()) 0.0 else velocityX.toDouble() / pitchFactor
     val offsetY = if (internalSettings.isScrollVerticallyLimited()) 0.0 else velocityY.toDouble() / pitchFactor
 
@@ -1198,12 +1198,12 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     // calculate animation time based on displacement
     // velocityXY ranges from VELOCITY_THRESHOLD_IGNORE_FLING to ~5000
     // limit animation time to Android SDK default animation time
-    val animationTime = (velocityXY / FLING_LIMITING_FACTOR).toLong()
+    val animationTime = (velocityXY / pitchFactor).toLong()
 
     cameraAnimationsPlugin.easeTo(
       mapCameraManagerDelegate.getDragCameraOptions(
-        ScreenCoordinate(e1.x.toDouble(), e1.y.toDouble()),
-        ScreenCoordinate(e1.x + offsetX, e1.y + offsetY)
+        centerScreen,
+        ScreenCoordinate(centerScreen.x + offsetX, centerScreen.y + offsetY)
       ),
       mapAnimationOptions {
         owner(MapAnimationOwnerRegistry.GESTURES)
@@ -1262,14 +1262,38 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       val toX = fromX - resolvedDistanceX
       val toY = fromY - resolvedDistanceY
 
-      easeToImmediately(
+      val cameraOptions = getAdjustedCameraCenter(
+        mapCameraManagerDelegate.cameraState,
         mapCameraManagerDelegate.getDragCameraOptions(
           ScreenCoordinate(fromX, fromY),
           ScreenCoordinate(toX, toY)
         )
       )
+
+      easeToImmediately(cameraOptions)
     }
     return true
+  }
+
+  private fun getAdjustedCameraCenter(
+    currentCamera: CameraState,
+    targetCamera: CameraOptions
+  ): CameraOptions {
+    val translationLng = targetCamera.center!!.longitude() - currentCamera.center.longitude()
+    val translationLat = targetCamera.center!!.latitude() - currentCamera.center.latitude()
+    val maximumDistance =
+      SCROLL_LIMITING_FACTOR / 2.0.pow(currentCamera.zoom)
+    val currentDistance = hypot(translationLng, translationLat)
+    return if (currentDistance > maximumDistance) {
+      targetCamera.toBuilder().center(
+        Point.fromLngLat(
+          currentCamera.center.longitude() + translationLng * (maximumDistance / currentDistance),
+          currentCamera.center.latitude() + translationLat * (maximumDistance / currentDistance)
+        )
+      ).build()
+    } else {
+      targetCamera
+    }
   }
 
   internal fun handleMoveEnd(detector: MoveGestureDetector) {

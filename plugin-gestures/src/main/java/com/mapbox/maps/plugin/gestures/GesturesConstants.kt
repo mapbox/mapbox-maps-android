@@ -15,6 +15,12 @@ internal const val VELOCITY_THRESHOLD_IGNORE_FLING: Long = 1000
 internal const val FLING_LIMITING_FACTOR: Double = 10.0
 
 /**
+ * Scroll limiting factor. This limit factor is used to limit the maximum scroll speed that's generated
+ * by the native drag API.
+ */
+internal const val SCROLL_LIMITING_FACTOR: Double = 100.0
+
+/**
  * Last scale span delta to XY velocity ratio required to execute scale velocity animation.
  */
 internal const val SCALE_VELOCITY_RATIO_THRESHOLD = 4 * 1e-3
@@ -65,9 +71,9 @@ internal const val MINIMUM_PITCH = 0.0
 internal const val NORMAL_MAX_PITCH = 60.0
 
 /**
- * Pitch factor base.
+ * Maximum pitch additional component for the fling gesture.
  */
-internal const val PITCH_BASE_FACTOR = 1.5
+internal const val MAX_FLING_PITCH_FACTOR = 300.0
 
 /**
  * The currently supported maximum unlocked pitch value.

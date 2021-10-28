@@ -378,7 +378,7 @@ class GesturePluginTest {
       mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),
         // values should be smaller as verifyFlingLarge but larger as verifyFlingLargeTiltedLarge
-        ScreenCoordinate(588.2352941176471, 588.2352941176471)
+        ScreenCoordinate(645.1612903225806, 645.1612903225806)
       )
     }
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
@@ -408,7 +408,7 @@ class GesturePluginTest {
       mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),
         // values should be smaller verifyFlingLargeTiltedNormal
-        ScreenCoordinate(194.08996167113608, 194.08996167113608)
+        ScreenCoordinate(67.93869850933991, 67.93869850933991)
       )
     }
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
@@ -437,7 +437,7 @@ class GesturePluginTest {
     verify {
       mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),
-        ScreenCoordinate(69.56521739130434, 65.21739130434783)
+        ScreenCoordinate(80.0, 75.0)
       )
     }
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
@@ -467,7 +467,7 @@ class GesturePluginTest {
       mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),
         // values should be smaller as verifyFlingSmall but larger as verifyFlingSmallTiltedLarge
-        ScreenCoordinate(47.05882352941177, 44.11764705882353)
+        ScreenCoordinate(51.61290322580645, 48.38709677419355)
       )
     }
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
@@ -497,7 +497,7 @@ class GesturePluginTest {
       mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),
         // values should be smaller as verifyFlingSmallTiltedNormal
-        ScreenCoordinate(15.527196933690886, 14.556747125335207)
+        ScreenCoordinate(5.435095880747194, 5.095402388200494)
       )
     }
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
@@ -606,7 +606,7 @@ class GesturePluginTest {
         any(),
         any()
       )
-    } returns CameraOptions.Builder().build()
+    } returns CameraOptions.Builder().center(Point.fromLngLat(0.0, 0.0)).build()
 
     val moveGestureDetector = mockk<MoveGestureDetector>()
     every {
@@ -1019,7 +1019,7 @@ class GesturePluginTest {
   }
 
   private companion object {
-    const val FLING_DISPLACEMENT = 869.5652173913044
+    const val FLING_DISPLACEMENT = 1000.0
     const val FLING_VELOCITY = 10000f
   }
 }
