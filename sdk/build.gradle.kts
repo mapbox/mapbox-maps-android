@@ -16,8 +16,10 @@ android {
     targetSdkVersion(AndroidVersions.targetSdkVersion)
     consumerProguardFiles("proguard-rules.pro")
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    testInstrumentationRunnerArguments = mapOf(
-      "clearPackageData" to "true"
+    testInstrumentationRunnerArguments(
+      mapOf(
+        "clearPackageData" to "true"
+      )
     )
 
     if (project.hasProperty("android.injected.invoked.from.ide")) {

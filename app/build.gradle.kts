@@ -16,8 +16,10 @@ android {
     versionName = "0.1.0"
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    testInstrumentationRunnerArguments = mapOf(
-      "clearPackageData" to "true"
+    testInstrumentationRunnerArguments(
+      mapOf(
+        "clearPackageData" to "true"
+      )
     )
   }
   buildTypes {
@@ -104,5 +106,7 @@ project.apply {
   from("$rootDir/gradle/lint.gradle")
 }
 
-val localPath:String = org.apache.commons.io.FilenameUtils.getFullPathNoEndSeparator(project.buildscript.sourceFile.toString())
-the<com.mapbox.AccessTokenExtension>().file = "${localPath}/src/main/res/values/developer-config.xml"
+val localPath: String =
+  org.apache.commons.io.FilenameUtils.getFullPathNoEndSeparator(project.buildscript.sourceFile.toString())
+the<com.mapbox.AccessTokenExtension>().file =
+  "${localPath}/src/main/res/values/developer-config.xml"
