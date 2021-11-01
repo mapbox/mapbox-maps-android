@@ -84,10 +84,10 @@ function prepare_branch_with_empty() {
 
 function clone_android_docs_repo() {
    if [ ! -d $ANDROID_DOCS_DIRECTORY ]; then
-    git clone $ANDROID_DOCS_REPO $ANDROID_DOCS_DIRECTORY
+    gh repo clone $ANDROID_DOCS_REPO $ANDROID_DOCS_DIRECTORY
    fi
    git checkout $BRANCH_WITH_DOCUMENTATION
-   git pull --force origin $BRANCH_WITH_DOCUMENTATION:$BRANCH_WITH_DOCUMENTATION
+#   git pull --force origin $BRANCH_WITH_DOCUMENTATION:$BRANCH_WITH_DOCUMENTATION
 }
 
 function update_constants_and_map_version_numbers() {
@@ -112,7 +112,7 @@ function prepare_android_docs_branch() {
   git checkout -b $BRANCH_NAME
   git add -A
   git commit -m "Carbon Maps SDK bump to $1"
-  git push --set-upstream origin $BRANCH_NAME
+#  git push --set-upstream origin $BRANCH_NAME
   cd -
 }
 
@@ -133,11 +133,11 @@ gh auth login --with-token < gh_token.txt
 
 # Generate docs, create branch and make PR with API documentation in the SDK repo.
 #prepare_branch_with_documentation $MAPS_SDK_VERSION
-create_pull_request "Add ${MAPS_SDK_VERSION} API documentation." $BRANCH_WITH_DOCUMENTATION
+#create_pull_request "Add ${MAPS_SDK_VERSION} API documentation." $BRANCH_WITH_DOCUMENTATION
 
 # Create a pr with empty commit to trigger dos deploy
 #prepare_branch_with_empty $MAPS_SDK_VERSION
-create_pull_request "Trigger ${MAPS_SDK_VERSION} deploy." $BRANCH_WITH_DOCUMENTATION
+#create_pull_request "Trigger ${MAPS_SDK_VERSION} deploy." $BRANCH_WITH_DOCUMENTATION
 
 ## Update config files in Android Docs Repo.
 clone_android_docs_repo

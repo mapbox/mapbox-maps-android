@@ -111,13 +111,13 @@ commands:
   generate-docs:
     steps:
       - run:
-          name: Generate docs and create PR for review
+          name: Generate android docs and create PR for review.
           command: |
-            if [[ $CIRCLE_TAG == android-v* ]]; then
-              echo "$GH_LOGIN_TOKEN" > gh_token.txt
-              git config --global user.email no-reply@mapbox.com && git config --global user.name mapbox-ci
-              ./scripts/update-android-docs.sh -s $CIRCLE_TAG
-            fi
+            echo "$(./mbx-ci github writer token)" > gh_token.txt
+            cat gh_token.txt
+            git config --global user.email no-reply@mapbox.com && git config --global user.name mapbox-ci
+            ./scripts/update-android-docs.sh -s "android-v10.1.0-rc.test"
+
   track-metrics:
     steps:
       - unless:
@@ -441,14 +441,15 @@ jobs:
           fingerprints:
             - "3b:cd:47:bf:57:9c:e5:36:b0:4d:5f:12:5e:d3:b3:3e"
       - restore-gradle-cache
-      - build-module:
-          module_target: "sdk"
-          variant: "Release"
-      - update-version-name
-      - track-metrics
+#      - build-module:
+#          module_target: "sdk"
+#          variant: "Release"
+#      - update-version-name
+#      - track-metrics
       - init-aws
-      - publish-sdk-registry
-      - publish-sdk-registry-named-snapshot
+      - generate-docs
+#      - publish-sdk-registry
+#      - publish-sdk-registry-named-snapshot
 
 executors:
   ubuntu:
