@@ -18,7 +18,6 @@ readonly ANDROID_DOCS_DIRECTORY="android-docs-repo"
 readonly CONSTANTS_FILE="./src/constants.json"
 readonly MAP_VERSION_NUMBERS_FILE="./src/data/map-version-numbers.json"
 readonly BRANCH_WITH_DOCUMENTATION="publisher-production"
-readonly ANDROID_DOCS_REPO="git@github.com:mapbox/android-docs.git"
 
 MAPS_SDK_VERSION=
 REVIEWERS=
@@ -60,38 +59,37 @@ fi
 #Split version name to remove the "android-v" prefix
 array=(`echo $MAPS_SDK_VERSION | tr 'v' ' '` )
 MAPS_SDK_VERSION=${array[1]}
+read GITHUB_TOKEN < gh_token.txt
 
 function prepare_branch_with_documentation() {
+  git remote set-url origin https://x-access-token:"$GITHUB_TOKEN"@github.com/mapbox/mapbox-maps-android.git
+
   INTERIM_BRANCH_WITH_DOCUMENTATION="${BRANCH_WITH_DOCUMENTATION}_${1}"
-  git checkout -f $BRANCH_WITH_DOCUMENTATION
-  git pull --force origin $BRANCH_WITH_DOCUMENTATION:$BRANCH_WITH_DOCUMENTATION
+  git checkout -b $INTERIM_BRANCH_WITH_DOCUMENTATION origin/$BRANCH_WITH_DOCUMENTATION
+
   mkdir -p $1
   cp -r $DOKKA_OUTPUT_DIR/* $1
   git add $1
   git commit -m "Add $1 API documentation."
-  git checkout -b $INTERIM_BRANCH_WITH_DOCUMENTATION
-  git push --set-upstream origin $INTERIM_BRANCH_WITH_DOCUMENTATION
+  git push --set-upstream origin $INTERIM_BRANCH_WITH_DOCUMENTATION --force
 }
 
 function prepare_branch_with_empty() {
   INTERIM_BRANCH_WITH_DOCUMENTATION="${BRANCH_WITH_DOCUMENTATION}_${1}_empty"
-  git checkout -f $BRANCH_WITH_DOCUMENTATION
-  git pull --force origin $BRANCH_WITH_DOCUMENTATION:$BRANCH_WITH_DOCUMENTATION
-  git checkout -b $INTERIM_BRANCH_WITH_DOCUMENTATION
+  git checkout -b $INTERIM_BRANCH_WITH_DOCUMENTATION origin/$BRANCH_WITH_DOCUMENTATION
   git commit --allow-empty -m "empty commit"
-  git push --set-upstream origin $INTERIM_BRANCH_WITH_DOCUMENTATION
+  git push --set-upstream origin $INTERIM_BRANCH_WITH_DOCUMENTATION --force
 }
 
 function clone_android_docs_repo() {
    if [ ! -d $ANDROID_DOCS_DIRECTORY ]; then
-    git clone $ANDROID_DOCS_REPO $ANDROID_DOCS_DIRECTORY
+    git clone https://x-access-token:"$GITHUB_TOKEN"@github.com/mapbox/android-docs.git $ANDROID_DOCS_DIRECTORY
    fi
-   git checkout $BRANCH_WITH_DOCUMENTATION
-   git pull --force origin $BRANCH_WITH_DOCUMENTATION:$BRANCH_WITH_DOCUMENTATION
 }
 
 function update_constants_and_map_version_numbers() {
   cd $ANDROID_DOCS_DIRECTORY
+  git remote set-url origin https://x-access-token:"$GITHUB_TOKEN"@github.com/mapbox/android-docs.git
   CONSTANTS_FILE_TMP="${CONSTANTS_FILE}.tmp"
   jq --arg version $1 '.MAP_SDK_v10_VERSION=$version' $CONSTANTS_FILE >$CONSTANTS_FILE_TMP
   mv $CONSTANTS_FILE_TMP $CONSTANTS_FILE
@@ -109,10 +107,10 @@ function update_constants_and_map_version_numbers() {
 function prepare_android_docs_branch() {
   cd $ANDROID_DOCS_DIRECTORY
   BRANCH_NAME="maps_android_sdk_v$1"
-  git checkout -b $BRANCH_NAME
+  git checkout -b $BRANCH_NAME origin/$BRANCH_WITH_DOCUMENTATION
   git add -A
   git commit -m "Carbon Maps SDK bump to $1"
-  git push --set-upstream origin $BRANCH_NAME
+  git push --set-upstream origin $BRANCH_NAME --force
   cd -
 }
 
@@ -132,11 +130,11 @@ function create_pull_request() {
 gh auth login --with-token < gh_token.txt
 
 # Generate docs, create branch and make PR with API documentation in the SDK repo.
-#prepare_branch_with_documentation $MAPS_SDK_VERSION
+prepare_branch_with_documentation $MAPS_SDK_VERSION
 create_pull_request "Add ${MAPS_SDK_VERSION} API documentation." $BRANCH_WITH_DOCUMENTATION
 
 # Create a pr with empty commit to trigger dos deploy
-#prepare_branch_with_empty $MAPS_SDK_VERSION
+prepare_branch_with_empty $MAPS_SDK_VERSION
 create_pull_request "Trigger ${MAPS_SDK_VERSION} deploy." $BRANCH_WITH_DOCUMENTATION
 
 ## Update config files in Android Docs Repo.
@@ -145,4 +143,9 @@ update_constants_and_map_version_numbers $MAPS_SDK_VERSION
 prepare_android_docs_branch $MAPS_SDK_VERSION
 cd $ANDROID_DOCS_DIRECTORY
 create_pull_request "Carbon Maps SDK bump to ${MAPS_SDK_VERSION}" $BRANCH_WITH_DOCUMENTATION
+# Rollback the remote url when run the script locally
+git remote set-url origin git@github.com:mapbox/android-docs.git
 cd -
+
+# Rollback the remote url when run the script locally
+git remote set-url origin git@github.com:mapbox/mapbox-maps-android.git
