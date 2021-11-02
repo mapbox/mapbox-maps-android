@@ -62,6 +62,12 @@ internal class ViewAnnotationManagerImpl(
   }
 
   override fun addViewAnnotation(view: View, options: ViewAnnotationOptions) {
+    idLookupMap[view]?.let {
+      throw RuntimeException(
+        "Trying to add view annotation that was already added before! " +
+          "Please consider deleting annotation view ($view) beforehand."
+      )
+    }
     validateOptions(options)
     prepareViewAnnotation(view, options)
   }
@@ -169,7 +175,6 @@ internal class ViewAnnotationManagerImpl(
         if (options.associatedFeatureId == featureId) {
           return annotation.view to options
         }
-
       }
     }
     return null to null

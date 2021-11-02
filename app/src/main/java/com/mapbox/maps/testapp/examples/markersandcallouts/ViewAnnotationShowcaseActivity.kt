@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -64,22 +65,13 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
         addOnMapClickListener(this@ViewAnnotationShowcaseActivity)
         addOnMapLongClickListener(this@ViewAnnotationShowcaseActivity)
         binding.fabStyleToggle.setOnClickListener {
-          if (getStyle()?.styleURI == Style.MAPBOX_STREETS) {
-            loadStyle(prepareStyle(Style.SATELLITE_STREETS, bitmap))
-          } else if (getStyle()?.styleURI == Style.SATELLITE_STREETS) {
-            loadStyle(prepareStyle(Style.MAPBOX_STREETS, bitmap))
+          when (getStyle()?.styleURI) {
+            Style.MAPBOX_STREETS -> loadStyle(prepareStyle(Style.SATELLITE_STREETS, bitmap))
+            Style.SATELLITE_STREETS -> loadStyle(prepareStyle(Style.MAPBOX_STREETS, bitmap))
           }
         }
       }
     }
-
-    // code to verify performance, leaving for now, will remove later
-
-//    binding.mapView.postDelayed({
-//      for (i in 0 until 100) {
-//        addViewAnnotation(Point.fromLngLat(27.56667 + i * 0.01, 53.9 + i * 0.01), "1")
-//      }
-//    }, 5_000L)
   }
 
   private fun prepareStyle(styleUri: String, bitmap: Bitmap) = style(styleUri) {
@@ -117,17 +109,21 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
         it.value?.get(0)?.feature?.let { feature ->
           if (feature.id() != null) {
             viewAnnotationManager.getViewAnnotationByFeatureId(feature.id()!!)?.let { viewAnnotation ->
-              if (viewAnnotation.visibility == View.VISIBLE) {
-                viewAnnotation.visibility = View.GONE
-              } else {
-                viewAnnotation.visibility = View.VISIBLE
-              }
+              reverseViewVisibility(viewAnnotation)
             }
           }
         }
       }
     }
     return true
+  }
+
+  private fun reverseViewVisibility(view: View) {
+    if (view.visibility == View.VISIBLE) {
+      view.visibility = View.GONE
+    } else {
+      view.visibility = View.VISIBLE
+    }
   }
 
   private fun addMarkerAndReturnId(point: Point): String {
@@ -165,7 +161,7 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
       viewAnnotation.findViewById<Button>(R.id.selectButton).setOnClickListener { b ->
         val button = b as Button
         val isSelected = button.text.contentEquals("SELECT", true)
-        val pxDelta = if (isSelected) SELECTED_ADD_COEF_PX else -SELECTED_ADD_COEF_PX
+        val pxDelta = (if (isSelected) SELECTED_ADD_COEF_DP.dpToPx() else -SELECTED_ADD_COEF_DP.dpToPx()).toInt()
         button.text = if (isSelected) "DESELECT" else "SELECT"
         viewAnnotationManager.updateViewAnnotation(
           viewAnnotation,
@@ -179,6 +175,12 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
     }
   }
 
+  private fun Float.dpToPx() = TypedValue.applyDimension(
+    TypedValue.COMPLEX_UNIT_DIP,
+    this,
+    this@ViewAnnotationShowcaseActivity.resources.displayMetrics
+  )
+
   private companion object {
     const val BLUE_ICON_ID = "blue"
     const val SOURCE_ID = "source_id"
@@ -186,6 +188,6 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
     const val TERRAIN_SOURCE = "TERRAIN_SOURCE"
     const val TERRAIN_URL_TILE_RESOURCE = "mapbox://mapbox.mapbox-terrain-dem-v1"
     const val MARKER_ID_PREFIX = "view_annotation_"
-    const val SELECTED_ADD_COEF_PX = 50
+    const val SELECTED_ADD_COEF_DP: Float = 15f
   }
 }
