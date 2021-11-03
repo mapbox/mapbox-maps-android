@@ -49,9 +49,6 @@ workflows:
       - run-style-test:
           requires:
             - start-run-style-test
-      - build-sdk-from-source:
-          requires:
-            - verify-code
       - build-android-auto-app:
           requires:
             - verify-code
@@ -453,15 +450,6 @@ jobs:
       - run-firebase-instrumentation:
           module_target: "extension-style-app"
           app_target: "extension-style-app"
-
-  build-sdk-from-source:
-    executor: ubuntu
-    steps:
-      - checkout
-      - restore-gradle-cache
-      - build-module:
-          module_target: "sdk"
-          variant: "Release"
 
   build-android-auto-app:
     executor: ubuntu
