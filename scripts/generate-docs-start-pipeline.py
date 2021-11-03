@@ -65,7 +65,7 @@ def main():
         "mapbox_release_tag": args.release_tag
     }
 
-    TriggerPipeline(args.target_slug, args.token, args.branch, params)
+    TriggerPipeline(slug = args.target_slug, token = args.token, branch = args.branch, params = params)
 
     return 0
 
