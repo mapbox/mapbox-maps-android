@@ -10,7 +10,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Add convenience methods for `stop` expression in Style DSL. ([#698](https://github.com/mapbox/mapbox-maps-android/pull/698), [#764](https://github.com/mapbox/mapbox-maps-android/pull/764))
 
 ## Bug fixes 🐞
-* Avoid spawning extra AssetManagerFileSource threads when multiple instances of a MapView is created during application lifecycle ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
+* Avoid spawning extra AssetManagerFileSource threads when multiple instances of a MapView is created during application lifecycle. ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
 * Fix rendering artifact when some of the model layer models may have wrong placement when globe view projection is used ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
 * Fix rare heatmap flickering when zooming the map ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
 * Fix an issue where an Observable event could be dispatched on a thread, different from the subscription thread ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
