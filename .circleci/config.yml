@@ -67,17 +67,19 @@ workflows:
 commands:
   restore-gradle-cache:
     steps:
+      - run:
+          name: Generate cache key
+          command: ./scripts/checksum.sh ./tmp/checksum.txt
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "build.gradle.kts" }}-{{ checksum "app/build.gradle.kts" }}-{{ checksum "sdk/build.gradle.kts" }}-{{ checksum "buildSrc/src/main/kotlin/Project.kt" }}
-            - v1-dependencies-
+            - v1-dependencies-{{ checksum "./tmp/checksum.txt" }}
       - run:
           name: Download dependencies
           command: ./gradlew dependencies
       - save_cache:
           paths:
             - ~/.gradle
-          key: v1-dependencies-{{ checksum "build.gradle.kts" }}-{{ checksum "app/build.gradle.kts" }}-{{ checksum "sdk/build.gradle.kts" }}-{{ checksum "buildSrc/src/main/kotlin/Project.kt" }}
+          key: v1-dependencies-{{ checksum "./tmp/checksum.txt" }}
 
   jvm-unit-tests:
     steps:
