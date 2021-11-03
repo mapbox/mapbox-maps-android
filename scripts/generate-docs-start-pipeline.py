@@ -54,7 +54,7 @@ def main():
 
     args = parser.parse_args()
 
-    if not args.token:
+    if not args.token or args.token.strip():
         print("CircleCI token not set. Use --token or set CIRCLE_API_TOKEN.")
         sys.exit(1)
 
