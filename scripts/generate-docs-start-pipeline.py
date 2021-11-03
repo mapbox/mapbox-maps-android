@@ -8,7 +8,7 @@ import requests
 import sys
 
 
-def TriggerPipeline(slug, token, branch, params):
+def triggerPipeline(slug, token, branch, params):
     url = "https://circleci.com/api/v2/project/github/%s/pipeline" % (slug)
 
     headers = {
