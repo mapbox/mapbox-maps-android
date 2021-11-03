@@ -5,12 +5,12 @@ Mapbox welcomes participation and contributions from everyone.
 # 10.1.0 November 3, 2021
 
 ## Features ✨ and improvements 🏁
-* Set thread priorities and set thread CPU affinity based on the thread's priority ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
-* Avoid spawning extra AssetManagerFileSource threads when multiple instances of a MapView is created during application lifecycle ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
-* Introduce option to enable Multisample anti-aliasing (MSAA) for map rendering. ([#741](https://github.com/mapbox/mapbox-maps-android/pull/741))
+* Set thread priorities and set thread CPU affinity based on the thread's priority to improve overall map performance.([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
+* Introduce option to enable multisample anti-aliasing (MSAA) for map rendering. ([#741](https://github.com/mapbox/mapbox-maps-android/pull/741))
 * Add convenience methods for stop expression. ([#698](https://github.com/mapbox/mapbox-maps-android/pull/698), [#764](https://github.com/mapbox/mapbox-maps-android/pull/764))
 
 ## Bug fixes 🐞
+* Avoid spawning extra AssetManagerFileSource threads when multiple instances of a MapView is created during application lifecycle ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
 * Fix rendering artifact when some of the model layer models may have wrong placement when globe view projection is used ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
 * Fix rare heatmap flickering when zooming the map ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
 * Fix an issue where an Observable event could be dispatched on a thread, different from the subscription thread ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
@@ -22,7 +22,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix logo and attribution margin update. ([#744](https://github.com/mapbox/mapbox-maps-android/pull/744))
 * Fix `NullPointerException` while querying annotations. ([#746](https://github.com/mapbox/mapbox-maps-android/pull/746))
 * Limit fast fling gesture in a downwards direction when map is highly pitched. ([#754](https://github.com/mapbox/mapbox-maps-android/pull/754))
-* Fixed an issue that caused annotations not being updated in some cases. ([#753](https://github.com/mapbox/mapbox-maps-android/pull/753))
+* Fix an issue that caused annotations not being updated when style is loading other resources. ([#753](https://github.com/mapbox/mapbox-maps-android/pull/753))
 * Restore the fling factor for slightly pitched maps. ([#762](https://github.com/mapbox/mapbox-maps-android/pull/762))
 
 ## Dependencies
