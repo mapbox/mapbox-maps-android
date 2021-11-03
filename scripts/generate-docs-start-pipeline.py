@@ -49,7 +49,7 @@ def main():
             help="Commit git hash that triggered the pipeline, otherwise environment CIRCLE_SHA1.")
     parser.add_argument("--branch",
             help="Build a specific branch, otherwise it will build the default branch.")
-    parser.add_argument("--release_tag",
+    parser.add_argument("--release_tag", required=True,
             help="The release tag name, must provide.")
 
     args = parser.parse_args()
