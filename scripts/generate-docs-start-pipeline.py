@@ -54,7 +54,7 @@ def main():
 
     args = parser.parse_args()
 
-    if not args.token or args.token.strip():
+    if not (args.token or args.token.strip()):
         print("CircleCI token not set. Use --token or set CIRCLE_API_TOKEN.")
         sys.exit(1)
 
@@ -65,10 +65,10 @@ def main():
         "mapbox_release_tag": args.release_tag
     }
 
-    TriggerPipeline(slug = args.target_slug, token = args.token, branch = args.branch, params = params)
+    triggerPipeline(slug = args.target_slug, token = args.token, branch = args.branch, params = params)
 
     return 0
 
 
 if __name__ == "__main__":
-    Main()
+    main()
