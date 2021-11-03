@@ -152,10 +152,9 @@ commands:
           name: Generate android docs and create PR for review.
           command: |
             if [[ $CIRCLE_TAG == android-v* ]]; then
-              git config --global user.email no-reply@mapbox.com && git config --global user.name mapbox-ci
-              echo "$(./mbx-ci github writer token)" > gh_token.txt
-              ./scripts/update-android-docs.sh -s $CIRCLE_TAG
+              python3 scripts/generate-docs-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} --origin-slug mapbox/mapbox-maps-android --target-slug mapbox/mapbox-maps-android-internal --release_tag $CIRCLE_TAG
             fi
+
   track-metrics:
     steps:
       - unless:
@@ -476,6 +475,7 @@ jobs:
       - update-version-name
       - track-metrics
       - init-aws
+      - generate-docs
       - publish-sdk-registry
       - publish-sdk-registry-named-snapshot
 
