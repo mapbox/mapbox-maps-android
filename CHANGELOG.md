@@ -2,7 +2,7 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 10.1.0 November 3, 2021
+# 10.1.0 November 4, 2021
 
 ## Features ✨ and improvements 🏁
 * Set thread priorities and set thread CPU affinity based on the thread's priority to improve overall map performance.([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
