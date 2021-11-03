@@ -2,6 +2,22 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.1.0 November 3, 2021
+
+## Features ✨ and improvements 🏁
+* Set thread priorities and set thread CPU affinity based on the thread's priority ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
+* Avoid spawning extra AssetManagerFileSource threads when multiple instances of a MapView is created during application lifecycle ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
+
+## Bug fixes 🐞
+* Fix rendering artifact when some of the model layer models may have wrong placement when globe view projection is used ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
+* Fix rare heatmap flickering when zooming the map ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
+* Fix an issue where an Observable event could be dispatched on a thread, different from the subscription thread ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
+* Fix an issue where promoteId parameter for VectorSource was overwritten when source tilejson is loaded ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
+* Fix android glyph drawing issue when 'high contrast' text accessibility feature is turned on ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
+
+## Dependencies
+* Bump gl-native to 10.1.0, common to 20.1.0. ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
+
 # 10.1.0-rc.1 October 28, 2021
 
 ## Bug fixes 🐞
