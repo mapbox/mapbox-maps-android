@@ -59,7 +59,7 @@ workflows:
   validation:
     when: << pipeline.parameters.mapbox_upstream >>
     jobs:
-      - run-sdk-test
+      - run-sdk-instrumentation-test
 
 commands:
   save-to-workspace:
