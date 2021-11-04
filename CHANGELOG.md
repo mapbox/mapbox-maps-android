@@ -2,6 +2,32 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.1.0 November 4, 2021
+
+## Features ✨ and improvements 🏁
+* Set thread priorities and set thread CPU affinity based on the thread's priority to improve overall map performance.([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
+* Introduce option to enable multisample anti-aliasing (MSAA) for map rendering. ([#741](https://github.com/mapbox/mapbox-maps-android/pull/741))
+* Add convenience methods for `stop` expression in Style DSL. ([#698](https://github.com/mapbox/mapbox-maps-android/pull/698), [#764](https://github.com/mapbox/mapbox-maps-android/pull/764))
+
+## Bug fixes 🐞
+* Avoid spawning extra AssetManagerFileSource threads when multiple instances of a MapView is created during application lifecycle. ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
+* Fix rendering artifact when some of the model layer models may have wrong placement when globe view projection is used. ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
+* Fix rare heatmap flickering when zooming the map. ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
+* Fix an issue where an Observable event could be dispatched on a thread, different from the subscription thread. ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
+* Fix an issue where promoteId parameter for VectorSource was overwritten when source tilejson is loaded ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
+* Fix android glyph drawing issue when 'high contrast' text accessibility feature is turned on. ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
+* Fix unexpectedly rapid map panning at high pitch level. ([#775](https://github.com/mapbox/mapbox-maps-android/pull/775))
+* Fix map move using faster map offsetting after zoom-in or zoom-out gesture. ([#738](https://github.com/mapbox/mapbox-maps-android/pull/738))
+* Fix annotation flickering and disappearing during dragging. ([#732](https://github.com/mapbox/mapbox-maps-android/pull/732))
+* Fix logo and attribution margin update. ([#744](https://github.com/mapbox/mapbox-maps-android/pull/744))
+* Fix `NullPointerException` while querying annotations. ([#746](https://github.com/mapbox/mapbox-maps-android/pull/746))
+* Limit fast fling gesture in a downwards direction when map is highly pitched. ([#754](https://github.com/mapbox/mapbox-maps-android/pull/754))
+* Fix an issue that caused annotations not being updated when style is loading other resources. ([#753](https://github.com/mapbox/mapbox-maps-android/pull/753))
+* Restore the fling factor for slightly pitched maps. ([#762](https://github.com/mapbox/mapbox-maps-android/pull/762))
+
+## Dependencies
+* Bump gl-native to 10.1.0, common to 20.1.0. ([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
+
 # 10.1.0-rc.1 October 28, 2021
 
 ## Bug fixes 🐞
