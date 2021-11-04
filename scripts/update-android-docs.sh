@@ -91,7 +91,7 @@ function update_constants_and_map_version_numbers() {
   cd $ANDROID_DOCS_DIRECTORY
   git remote set-url origin https://x-access-token:"$GITHUB_TOKEN"@github.com/mapbox/android-docs.git
   CONSTANTS_FILE_TMP="${CONSTANTS_FILE}.tmp"
-  jq --arg version $1 '.MAP_SDK_v10_VERSION=$version' $CONSTANTS_FILE >$CONSTANTS_FILE_TMP
+  jq --arg version $1 '.MAP_SDK_VERSION=$version' $CONSTANTS_FILE >$CONSTANTS_FILE_TMP
   mv $CONSTANTS_FILE_TMP $CONSTANTS_FILE
 
   MAP_VERSION_NUMBERS_FILE_TMP="${MAP_VERSION_NUMBERS_FILE}.tmp"
