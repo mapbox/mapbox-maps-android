@@ -1,0 +1,727 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>CameraAnimationsPluginImpl</title>
+<link href="../../../../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script><script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script><link href="../../../styles/style.css" rel="Stylesheet"><link href="../../../styles/logo-styles.css" rel="Stylesheet"><link href="../../../styles/jetbrains-mono.css" rel="Stylesheet"><link href="../../../styles/main.css" rel="Stylesheet"><script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script><script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script><script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script><script type="text/javascript" src="../../../scripts/main.js" async="async"></script>  </head>
+  <body>
+    <div id="container">
+      <div id="leftColumn"><a href="../../../index.html">
+          <div id="logo"></div>
+        </a>
+        <div id="paneSearch"></div>
+        <div id="sideMenu"></div>
+      </div>
+      <div id="main">
+        <div id="leftToggler"><span class="icon-toggler"></span></div>
+<script type="text/javascript" src="../../../scripts/main.js"></script>        <div class="main-content" id="content" pageIds="mapbox-maps-android::com.mapbox.maps.plugin.animation/CameraAnimationsPluginImpl///PointingToDeclaration//540127926">
+          <div class="navigation-wrapper" id="navigation-wrapper">
+            <div class="breadcrumbs"><a href="../../../index.html">mapbox-maps-android</a>/<a href="../index.html">com.mapbox.maps.plugin.animation</a>/<a href="index.html">CameraAnimationsPluginImpl</a></div>
+            <div class="pull-right d-flex">
+              <div id="searchBar"></div>
+            </div>
+          </div>
+          <div class="cover ">
+            <h1 class="cover"><span>Camera</span><wbr></wbr><span>Animations</span><wbr></wbr><span>Plugin</span><wbr></wbr><span>Impl</span></h1>
+            <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">class <a href="index.html">CameraAnimationsPluginImpl</a> : <a href="../-camera-animations-plugin/index.html">CameraAnimationsPlugin</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><p class="paragraph"><a href="index.html">CameraAnimationsPluginImpl</a> is designed to rule all the animations happening to the map driven by changing <a href="../../com.mapbox.maps/[android-jvm]-camera-options/index.html">CameraOptions</a>. It is responsible for:</p><ul><li><p class="paragraph">Storing all the <a href="https://developer.android.com/reference/kotlin/android/animation/ValueAnimator.html">ValueAnimator</a>'s that could be run. Only specific camera animators could be used in this plugin.</p></li><li><p class="paragraph">Controlling animation execution - only one <a href="https://developer.android.com/reference/kotlin/android/animation/ValueAnimator.html">ValueAnimator</a> of certain type could be run at a time.     If some another animation with same <a href="../../com.mapbox.maps.plugin.animation.animator/-camera-animator/type.html">CameraAnimator.type</a> is about to start previous one will be cancelled.</p></li><li><p class="paragraph">Giving possibility to listen to <a href="../../com.mapbox.maps/[android-jvm]-camera-options/index.html">CameraOptions</a> values changes during animations via listeners.</p></li><li><p class="paragraph">If several animations of different <a href="../../com.mapbox.maps.plugin.animation.animator/-camera-animator/type.html">CameraAnimator.type</a> are running simultaneously map camera     will be updated only on oldest animation update (the oldest is the one that was started first).     That actually means that animation start order matters. High-level animations <a href="fly-to.html">flyTo</a> and <a href="ease-to.html">easeTo</a>     will always trigger camera center animator first.</p></li></ul><p class="paragraph"><a href="index.html">CameraAnimationsPluginImpl</a> is NOT thread-safe meaning all animations must be started from one thread. However, it doesn't have to be the UI thread.</p></div></div>
+          </div>
+          <div class="tabbedcontent">
+            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button><button class="section-tab" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
+            <div class="tabs-section-body">
+              <h2 class="tabbedcontent">Constructors</h2>
+              <div class="table" data-togglable="Constructors"><a data-name="163849007%2FConstructors%2F540127926" anchor-label="CameraAnimationsPluginImpl" id="163849007%2FConstructors%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue TabbedContent">
+                    <div class=""><span class="inline-flex"><a href="-camera-animations-plugin-impl.html">CameraAnimationsPluginImpl</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="163849007%2FConstructors%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">fun <a href="-camera-animations-plugin-impl.html">CameraAnimationsPluginImpl</a>()<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="">Types</h2>
+              <div class="table" data-togglable="Types"><a data-name="-901464917%2FClasslikes%2F540127926" anchor-label="Companion" id="-901464917%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-companion/index.html">Companion</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-901464917%2FClasslikes%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">object <a href="-companion/index.html">Companion</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-901464917%2FClasslikes%2F540127926" anchor-label="Companion" id="-901464917%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-901464917%2FClasslikes%2F540127926" anchor-label="Companion" id="-901464917%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Static variables and methods.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="">Functions</h2>
+              <div class="table" data-togglable="Functions"><a data-name="67469812%2FFunctions%2F540127926" anchor-label="addCameraAnchorChangeListener" id="67469812%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="add-camera-anchor-change-listener.html">addCameraAnchorChangeListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="67469812%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="add-camera-anchor-change-listener.html">addCameraAnchorChangeListener</a>(listener: <a href="../-camera-animator-nullable-change-listener/index.html">CameraAnimatorNullableChangeListener</a>&lt;<a href="../../com.mapbox.maps/[android-jvm]-screen-coordinate/index.html">ScreenCoordinate</a>?&gt;)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="67469812%2FFunctions%2F540127926" anchor-label="addCameraAnchorChangeListener" id="67469812%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="67469812%2FFunctions%2F540127926" anchor-label="addCameraAnchorChangeListener" id="67469812%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Add <a href="../-camera-animator-nullable-change-listener/index.html">CameraAnimatorNullableChangeListener</a> to receive map anchor updates.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1526602909%2FFunctions%2F540127926" anchor-label="addCameraAnimationsLifecycleListener" id="-1526602909%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="add-camera-animations-lifecycle-listener.html">addCameraAnimationsLifecycleListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1526602909%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="add-camera-animations-lifecycle-listener.html">addCameraAnimationsLifecycleListener</a>(listener: <a href="../-camera-animations-lifecycle-listener/index.html">CameraAnimationsLifecycleListener</a>)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-1526602909%2FFunctions%2F540127926" anchor-label="addCameraAnimationsLifecycleListener" id="-1526602909%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-1526602909%2FFunctions%2F540127926" anchor-label="addCameraAnimationsLifecycleListener" id="-1526602909%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Add given <a href="../-camera-animations-lifecycle-listener/index.html">CameraAnimationsLifecycleListener</a> for capturing all events about animators lifecycle.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1442658432%2FFunctions%2F540127926" anchor-label="addCameraBearingChangeListener" id="-1442658432%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="add-camera-bearing-change-listener.html">addCameraBearingChangeListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1442658432%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="add-camera-bearing-change-listener.html">addCameraBearingChangeListener</a>(listener: <a href="../-camera-animator-change-listener/index.html">CameraAnimatorChangeListener</a>&lt;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a>&gt;)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-1442658432%2FFunctions%2F540127926" anchor-label="addCameraBearingChangeListener" id="-1442658432%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-1442658432%2FFunctions%2F540127926" anchor-label="addCameraBearingChangeListener" id="-1442658432%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Add <a href="../-camera-animator-change-listener/index.html">CameraAnimatorChangeListener</a> to receive map bearing updates.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-200405516%2FFunctions%2F540127926" anchor-label="addCameraCenterChangeListener" id="-200405516%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="add-camera-center-change-listener.html">addCameraCenterChangeListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-200405516%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="add-camera-center-change-listener.html">addCameraCenterChangeListener</a>(listener: <a href="../-camera-animator-change-listener/index.html">CameraAnimatorChangeListener</a>&lt;<span data-unresolved-link="com.mapbox.geojson/Point///PointingToDeclaration/">Point</span>&gt;)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-200405516%2FFunctions%2F540127926" anchor-label="addCameraCenterChangeListener" id="-200405516%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-200405516%2FFunctions%2F540127926" anchor-label="addCameraCenterChangeListener" id="-200405516%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Add <a href="../-camera-animator-change-listener/index.html">CameraAnimatorChangeListener</a> to receive map center updates.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-15734207%2FFunctions%2F540127926" anchor-label="addCameraPaddingChangeListener" id="-15734207%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="add-camera-padding-change-listener.html">addCameraPaddingChangeListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-15734207%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="add-camera-padding-change-listener.html">addCameraPaddingChangeListener</a>(listener: <a href="../-camera-animator-change-listener/index.html">CameraAnimatorChangeListener</a>&lt;<a href="../../com.mapbox.maps/[android-jvm]-edge-insets/index.html">EdgeInsets</a>&gt;)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-15734207%2FFunctions%2F540127926" anchor-label="addCameraPaddingChangeListener" id="-15734207%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-15734207%2FFunctions%2F540127926" anchor-label="addCameraPaddingChangeListener" id="-15734207%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Add <a href="../-camera-animator-change-listener/index.html">CameraAnimatorChangeListener</a> to receive map padding updates.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-178623890%2FFunctions%2F540127926" anchor-label="addCameraPitchChangeListener" id="-178623890%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="add-camera-pitch-change-listener.html">addCameraPitchChangeListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-178623890%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="add-camera-pitch-change-listener.html">addCameraPitchChangeListener</a>(listener: <a href="../-camera-animator-change-listener/index.html">CameraAnimatorChangeListener</a>&lt;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a>&gt;)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-178623890%2FFunctions%2F540127926" anchor-label="addCameraPitchChangeListener" id="-178623890%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-178623890%2FFunctions%2F540127926" anchor-label="addCameraPitchChangeListener" id="-178623890%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Add <a href="../-camera-animator-change-listener/index.html">CameraAnimatorChangeListener</a> to receive map pitch updates.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-786869859%2FFunctions%2F540127926" anchor-label="addCameraZoomChangeListener" id="-786869859%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="add-camera-zoom-change-listener.html">addCameraZoomChangeListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-786869859%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="add-camera-zoom-change-listener.html">addCameraZoomChangeListener</a>(listener: <a href="../-camera-animator-change-listener/index.html">CameraAnimatorChangeListener</a>&lt;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a>&gt;)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-786869859%2FFunctions%2F540127926" anchor-label="addCameraZoomChangeListener" id="-786869859%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-786869859%2FFunctions%2F540127926" anchor-label="addCameraZoomChangeListener" id="-786869859%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Add <a href="../-camera-animator-change-listener/index.html">CameraAnimatorChangeListener</a> to receive map zoom updates.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="624350446%2FFunctions%2F540127926" anchor-label="calculateScaleBy" id="624350446%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="calculate-scale-by.html">calculateScaleBy</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="624350446%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="calculate-scale-by.html">calculateScaleBy</a>(amount: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a>, currentZoom: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a>): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="624350446%2FFunctions%2F540127926" anchor-label="calculateScaleBy" id="624350446%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="624350446%2FFunctions%2F540127926" anchor-label="calculateScaleBy" id="624350446%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Calculate target zoom by applying scale</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1055504069%2FFunctions%2F540127926" anchor-label="cancelAllAnimators" id="-1055504069%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="cancel-all-animators.html">cancelAllAnimators</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1055504069%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="cancel-all-animators.html">cancelAllAnimators</a>(exceptOwnerList: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>&gt;)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-1055504069%2FFunctions%2F540127926" anchor-label="cancelAllAnimators" id="-1055504069%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-1055504069%2FFunctions%2F540127926" anchor-label="cancelAllAnimators" id="-1055504069%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Cancel all animators except ones owned by <a href="cancel-all-animators.html">exceptOwnerList</a> list.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1810387712%2FFunctions%2F540127926" anchor-label="cleanup" id="1810387712%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="cleanup.html">cleanup</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1810387712%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="cleanup.html">cleanup</a>()<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="1810387712%2FFunctions%2F540127926" anchor-label="cleanup" id="1810387712%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="1810387712%2FFunctions%2F540127926" anchor-label="cleanup" id="1810387712%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Called when the map is destroyed.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-642608987%2FFunctions%2F540127926" anchor-label="createAnchorAnimator" id="-642608987%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="create-anchor-animator.html">createAnchorAnimator</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-642608987%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="create-anchor-animator.html">createAnchorAnimator</a>(options: <a href="../-camera-animator-options/index.html">CameraAnimatorOptions</a>&lt;<a href="../../com.mapbox.maps/[android-jvm]-screen-coordinate/index.html">ScreenCoordinate</a>&gt;, block: <a href="https://developer.android.com/reference/kotlin/android/animation/ValueAnimator.html">ValueAnimator</a>.() -&gt; <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a>?): <a href="https://developer.android.com/reference/kotlin/android/animation/ValueAnimator.html">ValueAnimator</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-642608987%2FFunctions%2F540127926" anchor-label="createAnchorAnimator" id="-642608987%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-642608987%2FFunctions%2F540127926" anchor-label="createAnchorAnimator" id="-642608987%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Create CameraAnchorAnimator</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1701693085%2FFunctions%2F540127926" anchor-label="createBearingAnimator" id="-1701693085%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="create-bearing-animator.html">createBearingAnimator</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1701693085%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="create-bearing-animator.html">createBearingAnimator</a>(options: <a href="../-camera-animator-options/index.html">CameraAnimatorOptions</a>&lt;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a>&gt;, useShortestPath: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>, block: <a href="https://developer.android.com/reference/kotlin/android/animation/ValueAnimator.html">ValueAnimator</a>.() -&gt; <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a>?): <a href="https://developer.android.com/reference/kotlin/android/animation/ValueAnimator.html">ValueAnimator</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-1701693085%2FFunctions%2F540127926" anchor-label="createBearingAnimator" id="-1701693085%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-1701693085%2FFunctions%2F540127926" anchor-label="createBearingAnimator" id="-1701693085%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Create CameraBearingAnimator.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1326556955%2FFunctions%2F540127926" anchor-label="createCenterAnimator" id="-1326556955%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="create-center-animator.html">createCenterAnimator</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1326556955%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="create-center-animator.html">createCenterAnimator</a>(options: <a href="../-camera-animator-options/index.html">CameraAnimatorOptions</a>&lt;<span data-unresolved-link="com.mapbox.geojson/Point///PointingToDeclaration/">Point</span>&gt;, block: <a href="https://developer.android.com/reference/kotlin/android/animation/ValueAnimator.html">ValueAnimator</a>.() -&gt; <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a>?): <a href="https://developer.android.com/reference/kotlin/android/animation/ValueAnimator.html">ValueAnimator</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-1326556955%2FFunctions%2F540127926" anchor-label="createCenterAnimator" id="-1326556955%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-1326556955%2FFunctions%2F540127926" anchor-label="createCenterAnimator" id="-1326556955%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Create CameraCenterAnimator.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="634034604%2FFunctions%2F540127926" anchor-label="createPaddingAnimator" id="634034604%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="create-padding-animator.html">createPaddingAnimator</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="634034604%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="create-padding-animator.html">createPaddingAnimator</a>(options: <a href="../-camera-animator-options/index.html">CameraAnimatorOptions</a>&lt;<a href="../../com.mapbox.maps/[android-jvm]-edge-insets/index.html">EdgeInsets</a>&gt;, block: <a href="https://developer.android.com/reference/kotlin/android/animation/ValueAnimator.html">ValueAnimator</a>.() -&gt; <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a>?): <a href="https://developer.android.com/reference/kotlin/android/animation/ValueAnimator.html">ValueAnimator</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="634034604%2FFunctions%2F540127926" anchor-label="createPaddingAnimator" id="634034604%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="634034604%2FFunctions%2F540127926" anchor-label="createPaddingAnimator" id="634034604%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Create CameraPaddingAnimator.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-962238569%2FFunctions%2F540127926" anchor-label="createPitchAnimator" id="-962238569%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="create-pitch-animator.html">createPitchAnimator</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-962238569%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="create-pitch-animator.html">createPitchAnimator</a>(options: <a href="../-camera-animator-options/index.html">CameraAnimatorOptions</a>&lt;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a>&gt;, block: <a href="https://developer.android.com/reference/kotlin/android/animation/ValueAnimator.html">ValueAnimator</a>.() -&gt; <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a>?): <a href="https://developer.android.com/reference/kotlin/android/animation/ValueAnimator.html">ValueAnimator</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-962238569%2FFunctions%2F540127926" anchor-label="createPitchAnimator" id="-962238569%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-962238569%2FFunctions%2F540127926" anchor-label="createPitchAnimator" id="-962238569%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Create CameraPitchAnimator.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="829888382%2FFunctions%2F540127926" anchor-label="createZoomAnimator" id="829888382%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="create-zoom-animator.html">createZoomAnimator</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="829888382%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="create-zoom-animator.html">createZoomAnimator</a>(options: <a href="../-camera-animator-options/index.html">CameraAnimatorOptions</a>&lt;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a>&gt;, block: <a href="https://developer.android.com/reference/kotlin/android/animation/ValueAnimator.html">ValueAnimator</a>.() -&gt; <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a>?): <a href="https://developer.android.com/reference/kotlin/android/animation/ValueAnimator.html">ValueAnimator</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="829888382%2FFunctions%2F540127926" anchor-label="createZoomAnimator" id="829888382%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="829888382%2FFunctions%2F540127926" anchor-label="createZoomAnimator" id="829888382%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Create CameraZoomAnimator</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-928579109%2FFunctions%2F540127926" anchor-label="easeTo" id="-928579109%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="ease-to.html">easeTo</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-928579109%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="ease-to.html">easeTo</a>(cameraOptions: <a href="../../com.mapbox.maps/[android-jvm]-camera-options/index.html">CameraOptions</a>, animationOptions: <a href="../-map-animation-options/index.html">MapAnimationOptions</a>?): <a href="../-cancelable/index.html">Cancelable</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-928579109%2FFunctions%2F540127926" anchor-label="easeTo" id="-928579109%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-928579109%2FFunctions%2F540127926" anchor-label="easeTo" id="-928579109%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Ease the map camera to a given camera options and animation options.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="2133806450%2FFunctions%2F540127926" anchor-label="flyTo" id="2133806450%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="fly-to.html">flyTo</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2133806450%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="fly-to.html">flyTo</a>(cameraOptions: <a href="../../com.mapbox.maps/[android-jvm]-camera-options/index.html">CameraOptions</a>, animationOptions: <a href="../-map-animation-options/index.html">MapAnimationOptions</a>?): <a href="../-cancelable/index.html">Cancelable</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="2133806450%2FFunctions%2F540127926" anchor-label="flyTo" id="2133806450%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="2133806450%2FFunctions%2F540127926" anchor-label="flyTo" id="2133806450%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Fly the map camera to a given camera options.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1379737258%2FFunctions%2F540127926" anchor-label="initialize" id="-1379737258%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../../com.mapbox.maps.plugin/-map-plugin/initialize.html">initialize</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1379737258%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="../../com.mapbox.maps.plugin/-map-plugin/initialize.html">initialize</a>()<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1423126815%2FFunctions%2F540127926" anchor-label="moveBy" id="1423126815%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="move-by.html">moveBy</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1423126815%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="move-by.html">moveBy</a>(screenCoordinate: <a href="../../com.mapbox.maps/[android-jvm]-screen-coordinate/index.html">ScreenCoordinate</a>, animationOptions: <a href="../-map-animation-options/index.html">MapAnimationOptions</a>?): <a href="../-cancelable/index.html">Cancelable</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="1423126815%2FFunctions%2F540127926" anchor-label="moveBy" id="1423126815%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="1423126815%2FFunctions%2F540127926" anchor-label="moveBy" id="1423126815%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Move the map by a given screen coordinate with optional animation.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1407772133%2FFunctions%2F540127926" anchor-label="onDelegateProvider" id="1407772133%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="on-delegate-provider.html">onDelegateProvider</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1407772133%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="on-delegate-provider.html">onDelegateProvider</a>(delegateProvider: <a href="../../com.mapbox.maps.plugin.delegates/-map-delegate-provider/index.html">MapDelegateProvider</a>)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="1407772133%2FFunctions%2F540127926" anchor-label="onDelegateProvider" id="1407772133%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="1407772133%2FFunctions%2F540127926" anchor-label="onDelegateProvider" id="1407772133%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Provides all map delegate instances.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1219578479%2FFunctions%2F540127926" anchor-label="pitchBy" id="-1219578479%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="pitch-by.html">pitchBy</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1219578479%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="pitch-by.html">pitchBy</a>(pitch: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a>, animationOptions: <a href="../-map-animation-options/index.html">MapAnimationOptions</a>?): <a href="../-cancelable/index.html">Cancelable</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-1219578479%2FFunctions%2F540127926" anchor-label="pitchBy" id="-1219578479%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-1219578479%2FFunctions%2F540127926" anchor-label="pitchBy" id="-1219578479%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Pitch the map by with optional animation.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1976186523%2FFunctions%2F540127926" anchor-label="playAnimatorsSequentially" id="-1976186523%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="play-animators-sequentially.html">playAnimatorsSequentially</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1976186523%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="play-animators-sequentially.html">playAnimatorsSequentially</a>(vararg animators: <a href="https://developer.android.com/reference/kotlin/android/animation/ValueAnimator.html">ValueAnimator</a>)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-1976186523%2FFunctions%2F540127926" anchor-label="playAnimatorsSequentially" id="-1976186523%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-1976186523%2FFunctions%2F540127926" anchor-label="playAnimatorsSequentially" id="-1976186523%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Play given <a href="https://developer.android.com/reference/kotlin/android/animation/ValueAnimator.html">ValueAnimator</a>'s sequentially</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="162760403%2FFunctions%2F540127926" anchor-label="playAnimatorsTogether" id="162760403%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="play-animators-together.html">playAnimatorsTogether</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="162760403%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="play-animators-together.html">playAnimatorsTogether</a>(vararg animators: <a href="https://developer.android.com/reference/kotlin/android/animation/ValueAnimator.html">ValueAnimator</a>)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="162760403%2FFunctions%2F540127926" anchor-label="playAnimatorsTogether" id="162760403%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="162760403%2FFunctions%2F540127926" anchor-label="playAnimatorsTogether" id="162760403%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Play given <a href="https://developer.android.com/reference/kotlin/android/animation/ValueAnimator.html">ValueAnimator</a>'s together</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1798447402%2FFunctions%2F540127926" anchor-label="registerAnimators" id="1798447402%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="register-animators.html">registerAnimators</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1798447402%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="register-animators.html">registerAnimators</a>(vararg cameraAnimators: <a href="https://developer.android.com/reference/kotlin/android/animation/ValueAnimator.html">ValueAnimator</a>)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="1798447402%2FFunctions%2F540127926" anchor-label="registerAnimators" id="1798447402%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="1798447402%2FFunctions%2F540127926" anchor-label="registerAnimators" id="1798447402%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Register given <a href="https://developer.android.com/reference/kotlin/android/animation/ValueAnimator.html">ValueAnimator</a>'s.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-781275005%2FFunctions%2F540127926" anchor-label="removeCameraAnchorChangeListener" id="-781275005%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="remove-camera-anchor-change-listener.html">removeCameraAnchorChangeListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-781275005%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="remove-camera-anchor-change-listener.html">removeCameraAnchorChangeListener</a>(listener: <a href="../-camera-animator-nullable-change-listener/index.html">CameraAnimatorNullableChangeListener</a>&lt;<a href="../../com.mapbox.maps/[android-jvm]-screen-coordinate/index.html">ScreenCoordinate</a>?&gt;)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-781275005%2FFunctions%2F540127926" anchor-label="removeCameraAnchorChangeListener" id="-781275005%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-781275005%2FFunctions%2F540127926" anchor-label="removeCameraAnchorChangeListener" id="-781275005%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Remove <a href="../-camera-animator-nullable-change-listener/index.html">CameraAnimatorNullableChangeListener</a>.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1378350412%2FFunctions%2F540127926" anchor-label="removeCameraAnimationsLifecycleListener" id="-1378350412%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="remove-camera-animations-lifecycle-listener.html">removeCameraAnimationsLifecycleListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1378350412%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="remove-camera-animations-lifecycle-listener.html">removeCameraAnimationsLifecycleListener</a>(listener: <a href="../-camera-animations-lifecycle-listener/index.html">CameraAnimationsLifecycleListener</a>)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-1378350412%2FFunctions%2F540127926" anchor-label="removeCameraAnimationsLifecycleListener" id="-1378350412%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-1378350412%2FFunctions%2F540127926" anchor-label="removeCameraAnimationsLifecycleListener" id="-1378350412%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Remove given <a href="../-camera-animations-lifecycle-listener/index.html">CameraAnimationsLifecycleListener</a> for capturing all events about animators lifecycle.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-2115838383%2FFunctions%2F540127926" anchor-label="removeCameraBearingChangeListener" id="-2115838383%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="remove-camera-bearing-change-listener.html">removeCameraBearingChangeListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2115838383%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="remove-camera-bearing-change-listener.html">removeCameraBearingChangeListener</a>(listener: <a href="../-camera-animator-change-listener/index.html">CameraAnimatorChangeListener</a>&lt;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a>&gt;)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-2115838383%2FFunctions%2F540127926" anchor-label="removeCameraBearingChangeListener" id="-2115838383%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-2115838383%2FFunctions%2F540127926" anchor-label="removeCameraBearingChangeListener" id="-2115838383%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Remove <a href="../-camera-animator-change-listener/index.html">CameraAnimatorChangeListener</a>.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1442802811%2FFunctions%2F540127926" anchor-label="removeCameraCenterChangeListener" id="-1442802811%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="remove-camera-center-change-listener.html">removeCameraCenterChangeListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1442802811%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="remove-camera-center-change-listener.html">removeCameraCenterChangeListener</a>(listener: <a href="../-camera-animator-change-listener/index.html">CameraAnimatorChangeListener</a>&lt;<span data-unresolved-link="com.mapbox.geojson/Point///PointingToDeclaration/">Point</span>&gt;)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-1442802811%2FFunctions%2F540127926" anchor-label="removeCameraCenterChangeListener" id="-1442802811%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-1442802811%2FFunctions%2F540127926" anchor-label="removeCameraCenterChangeListener" id="-1442802811%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Remove <a href="../-camera-animator-change-listener/index.html">CameraAnimatorChangeListener</a>.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1754607376%2FFunctions%2F540127926" anchor-label="removeCameraPaddingChangeListener" id="1754607376%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="remove-camera-padding-change-listener.html">removeCameraPaddingChangeListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1754607376%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="remove-camera-padding-change-listener.html">removeCameraPaddingChangeListener</a>(listener: <a href="../-camera-animator-change-listener/index.html">CameraAnimatorChangeListener</a>&lt;<a href="../../com.mapbox.maps/[android-jvm]-edge-insets/index.html">EdgeInsets</a>&gt;)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="1754607376%2FFunctions%2F540127926" anchor-label="removeCameraPaddingChangeListener" id="1754607376%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="1754607376%2FFunctions%2F540127926" anchor-label="removeCameraPaddingChangeListener" id="1754607376%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Remove <a href="../-camera-animator-change-listener/index.html">CameraAnimatorChangeListener</a>.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="558104959%2FFunctions%2F540127926" anchor-label="removeCameraPitchChangeListener" id="558104959%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="remove-camera-pitch-change-listener.html">removeCameraPitchChangeListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="558104959%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="remove-camera-pitch-change-listener.html">removeCameraPitchChangeListener</a>(listener: <a href="../-camera-animator-change-listener/index.html">CameraAnimatorChangeListener</a>&lt;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a>&gt;)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="558104959%2FFunctions%2F540127926" anchor-label="removeCameraPitchChangeListener" id="558104959%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="558104959%2FFunctions%2F540127926" anchor-label="removeCameraPitchChangeListener" id="558104959%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Remove <a href="../-camera-animator-change-listener/index.html">CameraAnimatorChangeListener</a>.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-486009748%2FFunctions%2F540127926" anchor-label="removeCameraZoomChangeListener" id="-486009748%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="remove-camera-zoom-change-listener.html">removeCameraZoomChangeListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-486009748%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="remove-camera-zoom-change-listener.html">removeCameraZoomChangeListener</a>(listener: <a href="../-camera-animator-change-listener/index.html">CameraAnimatorChangeListener</a>&lt;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a>&gt;)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-486009748%2FFunctions%2F540127926" anchor-label="removeCameraZoomChangeListener" id="-486009748%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-486009748%2FFunctions%2F540127926" anchor-label="removeCameraZoomChangeListener" id="-486009748%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Remove <a href="../-camera-animator-change-listener/index.html">CameraAnimatorChangeListener</a>.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="664144629%2FFunctions%2F540127926" anchor-label="rotateBy" id="664144629%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="rotate-by.html">rotateBy</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="664144629%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="rotate-by.html">rotateBy</a>(first: <a href="../../com.mapbox.maps/[android-jvm]-screen-coordinate/index.html">ScreenCoordinate</a>, second: <a href="../../com.mapbox.maps/[android-jvm]-screen-coordinate/index.html">ScreenCoordinate</a>, animationOptions: <a href="../-map-animation-options/index.html">MapAnimationOptions</a>?): <a href="../-cancelable/index.html">Cancelable</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="664144629%2FFunctions%2F540127926" anchor-label="rotateBy" id="664144629%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="664144629%2FFunctions%2F540127926" anchor-label="rotateBy" id="664144629%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Rotate the map by with optional animation.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-256443256%2FFunctions%2F540127926" anchor-label="scaleBy" id="-256443256%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="scale-by.html">scaleBy</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-256443256%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="scale-by.html">scaleBy</a>(amount: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a>, screenCoordinate: <a href="../../com.mapbox.maps/[android-jvm]-screen-coordinate/index.html">ScreenCoordinate</a>?, animationOptions: <a href="../-map-animation-options/index.html">MapAnimationOptions</a>?): <a href="../-cancelable/index.html">Cancelable</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-256443256%2FFunctions%2F540127926" anchor-label="scaleBy" id="-256443256%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-256443256%2FFunctions%2F540127926" anchor-label="scaleBy" id="-256443256%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Scale the map by with optional animation.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-59317969%2FFunctions%2F540127926" anchor-label="unregisterAllAnimators" id="-59317969%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="unregister-all-animators.html">unregisterAllAnimators</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-59317969%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">fun <a href="unregister-all-animators.html">unregisterAllAnimators</a>()<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-59317969%2FFunctions%2F540127926" anchor-label="unregisterAllAnimators" id="-59317969%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-59317969%2FFunctions%2F540127926" anchor-label="unregisterAllAnimators" id="-59317969%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Unregister all previously registered <a href="https://developer.android.com/reference/kotlin/android/animation/ValueAnimator.html">ValueAnimator</a>'s.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="653809459%2FFunctions%2F540127926" anchor-label="unregisterAnimators" id="653809459%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="unregister-animators.html">unregisterAnimators</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="653809459%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="unregister-animators.html">unregisterAnimators</a>(vararg cameraAnimators: <a href="https://developer.android.com/reference/kotlin/android/animation/ValueAnimator.html">ValueAnimator</a>, cancelAnimators: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="653809459%2FFunctions%2F540127926" anchor-label="unregisterAnimators" id="653809459%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="653809459%2FFunctions%2F540127926" anchor-label="unregisterAnimators" id="653809459%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Unregister given <a href="https://developer.android.com/reference/kotlin/android/animation/ValueAnimator.html">ValueAnimator</a>'s.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="">Properties</h2>
+              <div class="table" data-togglable="Properties"><a data-name="-1167779743%2FProperties%2F540127926" anchor-label="anchor" id="-1167779743%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="anchor.html">anchor</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1167779743%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1167779743%2FProperties%2F540127926" anchor-label="anchor" id="-1167779743%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">open override var <a href="anchor.html">anchor</a>: <a href="../../com.mapbox.maps/[android-jvm]-screen-coordinate/index.html">ScreenCoordinate</a>?<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="-1167779743%2FProperties%2F540127926" anchor-label="anchor" id="-1167779743%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Map camera anchor value.</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="71854062%2FProperties%2F540127926" anchor-label="cameraAnimationsFactory" id="71854062%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="camera-animations-factory.html">cameraAnimationsFactory</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="71854062%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="71854062%2FProperties%2F540127926" anchor-label="cameraAnimationsFactory" id="71854062%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">lateinit var <a href="camera-animations-factory.html">cameraAnimationsFactory</a>: <a href="../-camera-animators-factory/index.html">CameraAnimatorsFactory</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="71854062%2FProperties%2F540127926" anchor-label="cameraAnimationsFactory" id="71854062%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Factory to provide animators for the default animations like easeTo, scaleBy, moveBy, rotateBy, pitchBy</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1263207026%2FProperties%2F540127926" anchor-label="debugMode" id="-1263207026%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="debug-mode.html">debugMode</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1263207026%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1263207026%2FProperties%2F540127926" anchor-label="debugMode" id="-1263207026%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">open override var <a href="debug-mode.html">debugMode</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a> = false<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="-1263207026%2FProperties%2F540127926" anchor-label="debugMode" id="-1263207026%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>If debug mode is enabled extra logs will be written about animation lifecycle and some other events that may be useful for debugging.</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="go-to-top-icon"><a href="#content"></a></span><span>© 2021 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span></div>
+      </div>
+    </div>
+  </body>
+</html>
+
