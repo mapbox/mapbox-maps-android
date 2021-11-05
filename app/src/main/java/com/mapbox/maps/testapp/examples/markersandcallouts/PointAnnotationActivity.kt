@@ -9,17 +9,20 @@ import android.view.MenuItem
 import android.view.animation.LinearInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
+import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapDebugOptions
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.eq
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.not
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.toNumber
-import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
-import com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder
-import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
+import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.plugin.annotation.Annotation
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.annotations
@@ -48,84 +51,31 @@ class PointAnnotationActivity : AppCompatActivity() {
     }
   private lateinit var annotationPlugin: AnnotationPlugin
   private lateinit var blueBitmap: Bitmap
+  private val CENTER_POINT = Point.fromLngLat(23.760833, 61.498056)
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     val binding = ActivityAnnotationBinding.inflate(layoutInflater)
     setContentView(binding.root)
+    val debugOptions: MutableList<MapDebugOptions> = mutableListOf(
+      MapDebugOptions.COLLISION
+    )
+    binding.mapView.getMapboxMap().setDebug(debugOptions,true)
+    binding.mapView.getMapboxMap().setCamera(
+      CameraOptions.Builder()
+        .center(CENTER_POINT)
+        .zoom(18.0)
+        .build()
+    )
     binding.mapView.getMapboxMap().loadStyleUri(nextStyle) {
       annotationPlugin = binding.mapView.annotations
-      circleAnnotationManager = annotationPlugin.createCircleAnnotationManager().apply {
-        val circleAnnotationOptions: CircleAnnotationOptions = CircleAnnotationOptions()
-          .withPoint(Point.fromLngLat(AIRPORT_LONGITUDE, AIRPORT_LATITUDE))
-          .withCircleColor(Color.YELLOW)
-          .withCircleRadius(12.0)
-          .withDraggable(false)
-        circleAnnotation = create(circleAnnotationOptions)
-      }
+
       pointAnnotationManager = annotationPlugin.createPointAnnotationManager(binding.mapView).apply {
-        textFont = listOf("Arial Unicode MS Bold", "Open Sans Regular")
-
-        addDragListener(object : OnPointAnnotationDragListener {
-          override fun onAnnotationDragStarted(annotation: Annotation<*>) {}
-
-          override fun onAnnotationDrag(annotation: Annotation<*>) {
-            circleAnnotation?.let {
-              it.point = (annotation as PointAnnotation).point
-              circleAnnotationManager?.update(it)
-            }
-          }
-
-          override fun onAnnotationDragFinished(annotation: Annotation<*>) {}
-        })
-        addClickListener(
-          OnPointAnnotationClickListener {
-            Toast.makeText(this@PointAnnotationActivity, "Click1: ${it.id}", Toast.LENGTH_SHORT)
-              .show()
-            consumeClickEvent
-          }
-        )
-
-        addClickListener(
-          OnPointAnnotationClickListener {
-            Toast.makeText(this@PointAnnotationActivity, "Click2: ${it.id}", Toast.LENGTH_SHORT)
-              .show()
-            consumeClickEvent
-          }
-        )
-
-        addLongClickListener(
-          OnPointAnnotationLongClickListener {
-            Toast.makeText(this@PointAnnotationActivity, "LongClick1: ${it.id}", Toast.LENGTH_SHORT)
-              .show()
-            consumeClickEvent
-          }
-        )
-
-        addLongClickListener(
-          OnPointAnnotationLongClickListener {
-            Toast.makeText(this@PointAnnotationActivity, "LongClick2: ${it.id}", Toast.LENGTH_SHORT)
-              .show()
-            consumeClickEvent
-          }
-        )
-
-        addInteractionListener(object : OnPointAnnotationInteractionListener {
-          override fun onSelectAnnotation(annotation: PointAnnotation) {
-            Toast.makeText(
-              this@PointAnnotationActivity,
-              "onSelectAnnotation: ${annotation.id}",
-              Toast.LENGTH_SHORT
-            ).show()
-          }
-
-          override fun onDeselectAnnotation(annotation: PointAnnotation) {
-            Toast.makeText(
-              this@PointAnnotationActivity,
-              "onDeselectAnnotation: ${annotation.id}",
-              Toast.LENGTH_SHORT
-            ).show()
-          }
-        })
+        iconAllowOverlap = true
+        iconIgnorePlacement = true
+        iconOptional = false
+        iconRotationAlignment = IconRotationAlignment.MAP
+        iconPitchAlignment = IconPitchAlignment.MAP
 
         bitmapFromDrawableRes(
           this@PointAnnotationActivity,
@@ -133,68 +83,12 @@ class PointAnnotationActivity : AppCompatActivity() {
         )?.let {
           // create a symbol
           val pointAnnotationOptions: PointAnnotationOptions = PointAnnotationOptions()
-            .withPoint(Point.fromLngLat(AIRPORT_LONGITUDE, AIRPORT_LATITUDE))
+            .withPoint(CENTER_POINT)
             .withIconImage(it)
-            .withTextField(ID_ICON_AIRPORT)
-            .withTextOffset(listOf(0.0, -2.0))
-            .withTextColor(Color.RED)
-            .withIconSize(1.3)
-            .withIconOffset(listOf(0.0, -5.0))
-            .withSymbolSortKey(10.0)
-            .withDraggable(true)
+
           pointAnnotation = create(pointAnnotationOptions)
 
-          // random add symbols across the globe
-          val pointAnnotationOptionsList: MutableList<PointAnnotationOptions> = ArrayList()
-          for (i in 0..5) {
-            pointAnnotationOptionsList.add(
-              PointAnnotationOptions()
-                .withPoint(AnnotationUtils.createRandomPoint())
-                .withIconImage(it)
-                .withDraggable(true)
-            )
-          }
-          create(pointAnnotationOptionsList)
         }
-
-        bitmapFromDrawableRes(
-          this@PointAnnotationActivity,
-          R.drawable.mapbox_user_icon
-        )?.let {
-          blueBitmap = it
-          // create nearby symbols
-          val nearbyOptions: PointAnnotationOptions = PointAnnotationOptions()
-            .withPoint(Point.fromLngLat(NEARBY_LONGITUDE, NEARBY_LATITUDE))
-            .withIconImage(it)
-            .withIconSize(2.5)
-            .withTextField(ID_ICON_AIRPORT)
-            .withSymbolSortKey(5.0)
-            .withDraggable(true)
-          create(nearbyOptions)
-        }
-        // random add symbols across the globe
-        val pointAnnotationOptionsList: MutableList<PointAnnotationOptions> = ArrayList()
-        for (i in 0..20) {
-          pointAnnotationOptionsList.add(
-            PointAnnotationOptions()
-              .withPoint(AnnotationUtils.createRandomPoint())
-              .withIconImage(MAKI_ICON_CAR)
-              .withDraggable(true)
-          )
-        }
-        create(pointAnnotationOptionsList)
-
-        AnnotationUtils.loadStringFromAssets(
-          this@PointAnnotationActivity,
-          "annotations.json"
-        )?.let {
-          create(FeatureCollection.fromJson(it))
-        }
-      }
-
-      binding.mapView.getMapboxMap().addOnMapClickListener {
-        Toast.makeText(this@PointAnnotationActivity, "OnMapClick", Toast.LENGTH_SHORT).show()
-        true
       }
     }
 
