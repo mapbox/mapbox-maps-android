@@ -35,15 +35,6 @@ workflows:
       - run-unit-test:
           requires:
             - verify-code
-      - run-robo-test:
-          requires:
-            - verify-code
-      - run-app-test:
-          requires:
-            - verify-code
-      - run-sdk-test:
-          requires:
-            - verify-code
       - start-run-style-test:
           type: approval
       - run-style-test:
@@ -52,19 +43,40 @@ workflows:
       - build-android-auto-app:
           requires:
             - verify-code
-      - build-sdk-release:
+      - build-modules-and-instrumentation-tests:
           requires:
             - verify-code
-          filters:
-            tags:
-              only: /android-v.*/
+      - run-app-instrumentation-test:
+          requires:
+            - build-modules-and-instrumentation-tests
+      - run-sdk-instrumentation-test:
+          requires:
+            - build-modules-and-instrumentation-tests
+      - run-robo-test:
+          requires:
+            - build-modules-and-instrumentation-tests
 
   validation:
     when: << pipeline.parameters.mapbox_upstream >>
     jobs:
-      - run-sdk-test
+      - run-sdk-instrumentation-test
 
 commands:
+  save-to-workspace:
+    parameters:
+      path:
+        type: string
+    steps:
+      - persist_to_workspace:
+          root: .
+          paths:
+            - << parameters.path >>
+
+  read-from-workspace:
+    steps:
+      - attach_workspace:
+          at: .
+
   restore-gradle-cache:
     steps:
       - run:
@@ -111,7 +123,7 @@ commands:
               echo "${MAPBOX_DEVELOPER_CONFIG_XML}" > sdk/src/androidTest/res/values/developer-config.xml
             fi
       - run:
-          name: Build instrumentation test apk
+          name: Build << parameters.module_target >> instrumentation test apk
           no_output_timeout: 30m
           command: ./gradlew << parameters.module_target >>:assembleAndroidTest
 
@@ -264,7 +276,7 @@ commands:
                 --device model=harpia,version=23,locale=en,orientation=portrait \
                 --device model=AOP_sprout,version=28,locale=en,orientation=portrait \
                 --timeout 45m --use-orchestrator --no-record-video --num-flaky-test-attempts 3 \
-                --num-uniform-shards 3
+                --num-uniform-shards 4
               fi
             fi
 
@@ -390,45 +402,29 @@ jobs:
   run-robo-test:
     executor:
       name: ubuntu
-      machine: xlarge
+      machine: small
     steps:
-      - checkout
-      - restore-gradle-cache
-      - build-module:
-          module_target: "app"
-          variant: "Release"
+      - read-from-workspace
       - login-google-cloud-platform
       - run-firebase-robo
 
-  run-app-test:
-    executor: ubuntu
+  run-app-instrumentation-test:
+    executor:
+      name: ubuntu
+      machine: small
     steps:
-      - checkout
-      - restore-gradle-cache
-      - generate-sanity-test
-      - build-instrumentation-test:
-          module_target: "app"
-      - build-module:
-          module_target: "app"
-          variant: "Debug"
-      - store_artifacts:
-          path: app/build/outputs/apk
-          destination: .
+      - read-from-workspace
       - login-google-cloud-platform
       - run-firebase-instrumentation:
           module_target: "app"
 
-  run-sdk-test:
-    executor: ubuntu
+  run-sdk-instrumentation-test:
+    executor:
+      name: ubuntu
+      machine: small
     steps:
-      - checkout
+      - read-from-workspace
       - mapbox-gl-native-begin
-      - restore-gradle-cache
-      - build-instrumentation-test:
-          module_target: "sdk"
-      - build-module:
-          module_target: "app"
-          variant: "Debug"
       - login-google-cloud-platform
       - run-firebase-instrumentation:
           module_target: "sdk"
@@ -461,7 +457,7 @@ jobs:
           module_target: "android-auto-app"
           variant: "Release"
 
-  build-sdk-release:
+  build-modules-and-instrumentation-tests:
     executor:
       name: ubuntu
       machine: xlarge
@@ -471,15 +467,34 @@ jobs:
           fingerprints:
             - "3b:cd:47:bf:57:9c:e5:36:b0:4d:5f:12:5e:d3:b3:3e"
       - restore-gradle-cache
+      - generate-sanity-test
       - build-module:
-          module_target: "sdk"
+          module_target: "app"
           variant: "Release"
+      - build-module:
+          module_target: "app"
+          variant: "Debug"
+      - build-instrumentation-test:
+          module_target: "app"
+      - build-instrumentation-test:
+          module_target: "sdk"
+      - store_artifacts:
+          path: app/build/outputs/apk
+          destination: .
       - update-version-name
       - track-metrics
       - init-aws
       - generate-docs
       - publish-sdk-registry
       - publish-sdk-registry-named-snapshot
+      - save-to-workspace:
+          path: "app/build/outputs/apk/release/app-release.apk"
+      - save-to-workspace:
+          path: "app/build/outputs/apk/debug/app-debug.apk"
+      - save-to-workspace:
+          path: "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk"
+      - save-to-workspace:
+          path: "sdk/build/outputs/apk/androidTest/debug/sdk-debug-androidTest.apk"
 
 executors:
   ubuntu:
