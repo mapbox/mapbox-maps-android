@@ -35,8 +35,7 @@ class PolylineAnnotationActivity : AppCompatActivity() {
     binding.mapView.getMapboxMap().loadStyleUri(nextStyle) {
       annotationPlugin = binding.mapView.annotations
       polylineAnnotationManager = annotationPlugin.createPolylineAnnotationManager(
-        binding.mapView,
-        AnnotationConfig(PITCH_OUTLINE, LAYER_ID, SOURCE_ID)
+        annotationConfig = AnnotationConfig(PITCH_OUTLINE, LAYER_ID, SOURCE_ID)
       ).apply {
         it.getLayer(LAYER_ID)?.let { layer ->
           Toast.makeText(this@PolylineAnnotationActivity, layer.layerId, Toast.LENGTH_LONG).show()

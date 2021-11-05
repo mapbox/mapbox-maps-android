@@ -1,7 +1,6 @@
 package com.mapbox.maps.plugin.annotation
 
 import android.graphics.PointF
-import android.view.View
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Feature
@@ -47,7 +46,6 @@ import java.util.concurrent.TimeUnit
  * Base class for annotation managers
  */
 abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : AnnotationOptions<G, T>, D : OnAnnotationDragListener<T>, U : OnAnnotationClickListener<T>, V : OnAnnotationLongClickListener<T>, I : OnAnnotationInteractionListener<T>, L : Layer>(
-  mapView: View,
   /** The delegateProvider */
   final override val delegateProvider: MapDelegateProvider,
   private val annotationConfig: AnnotationConfig?
@@ -68,8 +66,6 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   private var draggingAnnotation: T? = null
   private val annotationMap = ConcurrentHashMap<Long, T>()
   private val dragAnnotationMap = ConcurrentHashMap<Long, T>()
-  protected var touchAreaShiftX: Int = mapView.scrollX
-  protected var touchAreaShiftY: Int = mapView.scrollY
   protected abstract val layerId: String
   protected abstract val sourceId: String
   protected abstract val dragLayerId: String
@@ -671,8 +667,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
           return true
         }
         val moveObject = detector.getMoveObject(0)
-        val x = moveObject.currentX - touchAreaShiftX
-        val y = moveObject.currentY - touchAreaShiftY
+        val x = moveObject.currentX
+        val y = moveObject.currentY
         val pointF = PointF(x, y)
         if (pointF.x < 0 || pointF.y < 0 || pointF.x > width || pointF.y > height) {
           stopDragging()
@@ -680,7 +676,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         }
         val shiftedGeometry: G? = delegateProvider.let {
           annotation.getOffsetGeometry(
-            it.mapCameraManagerDelegate, moveObject, touchAreaShiftX, touchAreaShiftY
+            it.mapCameraManagerDelegate, moveObject
           )
         }
         shiftedGeometry?.let { geometry ->

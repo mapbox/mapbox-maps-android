@@ -19,7 +19,7 @@ import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
  */
 class PolygonAnnotation(
   id: Long,
-  /** The annotation manger that manipulate this annotation */
+  /** The annotation manager that manipulate this annotation */
   private val annotationManager: AnnotationManager<Polygon, PolygonAnnotation, *, *, *, *, *>,
   jsonObject: JsonObject,
   geometry: Polygon
@@ -286,9 +286,7 @@ class PolygonAnnotation(
    */
   override fun getOffsetGeometry(
     mapCameraManagerDelegate: MapCameraManagerDelegate,
-    moveDistancesObject: MoveDistancesObject,
-    touchAreaShiftX: Int,
-    touchAreaShiftY: Int
+    moveDistancesObject: MoveDistancesObject
   ): Polygon? {
     val points = geometry.coordinates()
       .map {

@@ -21,36 +21,44 @@ class AnnotationPluginImpl : AnnotationPlugin {
   private var height = 0
 
   /**
-   * Create an annotation manger instance.
+   * Create an annotation manager.
    *
-   * @param mapView the mapView
-   * @param type The type of he type of annotation manger
-   * @param annotationConfig the configuration for AnnotationManager
-   * @return the annotation manger
+   * @param mapView The MapView instance.
+   * @param type The type of the created annotation manager
+   * @param annotationConfig Default is null, used for some custom configs
+   * @return The created annotation manager
    */
   override fun createAnnotationManager(
     mapView: View,
     type: AnnotationType,
     annotationConfig: AnnotationConfig?
+  ): AnnotationManager<*, *, *, *, *, *, *> = createAnnotationManager(type, annotationConfig)
+
+  /**
+   * Create an annotation manager.
+   *
+   * @param type The type of the created annotation manager
+   * @param annotationConfig Default is null, used for some custom configs
+   * @return The created annotation manager
+   */
+  override fun createAnnotationManager(
+    type: AnnotationType,
+    annotationConfig: AnnotationConfig?
   ): AnnotationManager<*, *, *, *, *, *, *> {
     val manager = when (type) {
       AnnotationType.PolygonAnnotation -> PolygonAnnotationManager(
-        mapView,
         delegateProvider,
         annotationConfig
       )
       AnnotationType.CircleAnnotation -> CircleAnnotationManager(
-        mapView,
         delegateProvider,
         annotationConfig
       )
       AnnotationType.PolylineAnnotation -> PolylineAnnotationManager(
-        mapView,
         delegateProvider,
         annotationConfig
       )
       AnnotationType.PointAnnotation -> PointAnnotationManager(
-        mapView,
         delegateProvider,
         annotationConfig
       )
@@ -62,7 +70,7 @@ class AnnotationPluginImpl : AnnotationPlugin {
 
   /**
    * Removes an annotation manager, this will remove the underlying layer and source from the style.
-   * A removed annotation manager will not be able to reuse anymore, users need to create new annotation manger
+   * A removed annotation manager will not be able to reuse anymore, users need to create new annotation manager
    * to add annotations.
    */
   override fun removeAnnotationManager(annotationManager: AnnotationManager<*, *, *, *, *, *, *>) {

@@ -23,12 +23,11 @@ import java.util.concurrent.atomic.AtomicLong
  * The polylineAnnotation manager allows to add polylineAnnotations to a map.
  */
 class PolylineAnnotationManager(
-  mapView: View,
   delegateProvider: MapDelegateProvider,
   annotationConfig: AnnotationConfig? = null
 ) :
   AnnotationManagerImpl<LineString, PolylineAnnotation, PolylineAnnotationOptions, OnPolylineAnnotationDragListener, OnPolylineAnnotationClickListener, OnPolylineAnnotationLongClickListener, OnPolylineAnnotationInteractionListener, LineLayer>(
-    mapView, delegateProvider, annotationConfig
+    delegateProvider, annotationConfig
   ) {
   private val id = ID_GENERATOR.incrementAndGet()
   override val layerId = annotationConfig?.layerId ?: "mapbox-android-polylineAnnotation-layer-$id"
@@ -367,10 +366,21 @@ class PolylineAnnotationManager(
 /**
  * Extension function to create a PolylineAnnotationManager instance.
  */
+@Deprecated(
+  "mapView parameter is not needed",
+  ReplaceWith("createPolylineAnnotationManager(annotationConfig)")
+)
 @JvmOverloads
 fun AnnotationPlugin.createPolylineAnnotationManager(
   mapView: View,
   annotationConfig: AnnotationConfig? = null
+): PolylineAnnotationManager = createPolylineAnnotationManager(annotationConfig)
+
+/**
+ * Extension function to create a PolylineAnnotationManager instance.
+ */
+fun AnnotationPlugin.createPolylineAnnotationManager(
+  annotationConfig: AnnotationConfig? = null
 ): PolylineAnnotationManager {
-  return createAnnotationManager(mapView, AnnotationType.PolylineAnnotation, annotationConfig) as PolylineAnnotationManager
+  return createAnnotationManager(AnnotationType.PolylineAnnotation, annotationConfig) as PolylineAnnotationManager
 }

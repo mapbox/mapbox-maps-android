@@ -1,6 +1,5 @@
 package com.mapbox.maps.plugin.annotation
 
-import android.view.View
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.layers.addLayer
@@ -27,7 +26,6 @@ class AnnotationPluginImplTest {
   private val delegateProvider: MapDelegateProvider = mockk(relaxed = true)
   private val style: StyleInterface = mockk(relaxed = true)
   private val gesturesPlugin: GesturesPlugin = mockk(relaxed = true)
-  private val mapView: View = mockk(relaxed = true)
   private lateinit var annotationPluginImpl: AnnotationPluginImpl
 
   @Before
@@ -52,16 +50,16 @@ class AnnotationPluginImplTest {
   @Test
   fun createAndRemove() {
     val circleAnnotationManager =
-      annotationPluginImpl.createAnnotationManager(mapView, AnnotationType.CircleAnnotation, null)
+      annotationPluginImpl.createAnnotationManager(AnnotationType.CircleAnnotation, null)
     assert(circleAnnotationManager is CircleAnnotationManager)
     val pointAnnotationManager =
-      annotationPluginImpl.createAnnotationManager(mapView, AnnotationType.PointAnnotation, null)
+      annotationPluginImpl.createAnnotationManager(AnnotationType.PointAnnotation, null)
     assert(pointAnnotationManager is PointAnnotationManager)
     val polygonAnnotationManager =
-      annotationPluginImpl.createAnnotationManager(mapView, AnnotationType.PolygonAnnotation, null)
+      annotationPluginImpl.createAnnotationManager(AnnotationType.PolygonAnnotation, null)
     assert(polygonAnnotationManager is PolygonAnnotationManager)
     val polylineAnnotationManager =
-      annotationPluginImpl.createAnnotationManager(mapView, AnnotationType.PolylineAnnotation, null)
+      annotationPluginImpl.createAnnotationManager(AnnotationType.PolylineAnnotation, null)
     assert(polylineAnnotationManager is PolylineAnnotationManager)
     assertEquals(4, annotationPluginImpl.managerList.size)
 

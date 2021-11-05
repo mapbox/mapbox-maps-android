@@ -32,7 +32,7 @@ class CircleAnnotationActivity : AppCompatActivity() {
     binding = ActivityAnnotationBinding.inflate(layoutInflater)
     setContentView(binding.root)
     annotationPlugin = binding.mapView.annotations
-    circleAnnotationManager = annotationPlugin.createCircleAnnotationManager(binding.mapView).apply {
+    circleAnnotationManager = annotationPlugin.createCircleAnnotationManager().apply {
       addClickListener(
         OnCircleAnnotationClickListener {
           Toast.makeText(this@CircleAnnotationActivity, "click: ${it.id}", Toast.LENGTH_SHORT)

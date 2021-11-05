@@ -73,7 +73,7 @@ class PointAnnotationClusterActivity : AppCompatActivity(), CoroutineScope {
             )
           )
           pointAnnotationManager =
-            annotationPlugin.createPointAnnotationManager(binding.mapView, annotationConfig)
+            annotationPlugin.createPointAnnotationManager(annotationConfig)
           pointAnnotationManager?.addClickListener(
             OnPointAnnotationClickListener {
               Toast.makeText(

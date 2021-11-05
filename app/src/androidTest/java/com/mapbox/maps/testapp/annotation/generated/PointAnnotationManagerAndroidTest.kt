@@ -39,7 +39,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconAllowOverlap() {
     val expectedValue = true
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.iconAllowOverlap = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.iconAllowOverlap)
     pointAnnotationManager.iconAllowOverlap = null
@@ -49,7 +49,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconIgnorePlacement() {
     val expectedValue = true
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.iconIgnorePlacement = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.iconIgnorePlacement)
     pointAnnotationManager.iconIgnorePlacement = null
@@ -59,7 +59,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconKeepUpright() {
     val expectedValue = true
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.iconKeepUpright = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.iconKeepUpright)
     pointAnnotationManager.iconKeepUpright = null
@@ -69,7 +69,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconOptional() {
     val expectedValue = true
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.iconOptional = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.iconOptional)
     pointAnnotationManager.iconOptional = null
@@ -79,7 +79,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconPadding() {
     val expectedValue = 1.0
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.iconPadding = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.iconPadding)
     pointAnnotationManager.iconPadding = null
@@ -89,7 +89,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconPitchAlignment() {
     val expectedValue = IconPitchAlignment.MAP
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.iconPitchAlignment = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.iconPitchAlignment)
     pointAnnotationManager.iconPitchAlignment = null
@@ -100,7 +100,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconRotationAlignment() {
     val expectedValue = IconRotationAlignment.MAP
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.iconRotationAlignment = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.iconRotationAlignment)
     pointAnnotationManager.iconRotationAlignment = null
@@ -111,7 +111,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconTextFit() {
     val expectedValue = IconTextFit.NONE
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.iconTextFit = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.iconTextFit)
     pointAnnotationManager.iconTextFit = null
@@ -122,7 +122,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconTextFitPadding() {
     val expectedValue = listOf(0.0, 1.0, 2.0, 3.0)
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.iconTextFitPadding = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.iconTextFitPadding)
     pointAnnotationManager.iconTextFitPadding = null
@@ -132,7 +132,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testSymbolAvoidEdges() {
     val expectedValue = true
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.symbolAvoidEdges = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.symbolAvoidEdges)
     pointAnnotationManager.symbolAvoidEdges = null
@@ -142,7 +142,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testSymbolPlacement() {
     val expectedValue = SymbolPlacement.POINT
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.symbolPlacement = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.symbolPlacement)
     pointAnnotationManager.symbolPlacement = null
@@ -153,7 +153,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testSymbolSpacing() {
     val expectedValue = 1.0
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.symbolSpacing = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.symbolSpacing)
     pointAnnotationManager.symbolSpacing = null
@@ -163,7 +163,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testSymbolZOrder() {
     val expectedValue = SymbolZOrder.AUTO
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.symbolZOrder = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.symbolZOrder)
     pointAnnotationManager.symbolZOrder = null
@@ -174,7 +174,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextAllowOverlap() {
     val expectedValue = true
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.textAllowOverlap = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.textAllowOverlap)
     pointAnnotationManager.textAllowOverlap = null
@@ -184,7 +184,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextFont() {
     val expectedValue = listOf("a", "b", "c")
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.textFont = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.textFont)
     pointAnnotationManager.textFont = null
@@ -194,7 +194,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextIgnorePlacement() {
     val expectedValue = true
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.textIgnorePlacement = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.textIgnorePlacement)
     pointAnnotationManager.textIgnorePlacement = null
@@ -204,7 +204,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextKeepUpright() {
     val expectedValue = true
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.textKeepUpright = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.textKeepUpright)
     pointAnnotationManager.textKeepUpright = null
@@ -214,7 +214,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextLineHeight() {
     val expectedValue = 1.0
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.textLineHeight = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.textLineHeight)
     pointAnnotationManager.textLineHeight = null
@@ -224,7 +224,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextMaxAngle() {
     val expectedValue = 1.0
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.textMaxAngle = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.textMaxAngle)
     pointAnnotationManager.textMaxAngle = null
@@ -234,7 +234,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextOptional() {
     val expectedValue = true
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.textOptional = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.textOptional)
     pointAnnotationManager.textOptional = null
@@ -244,7 +244,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextPadding() {
     val expectedValue = 1.0
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.textPadding = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.textPadding)
     pointAnnotationManager.textPadding = null
@@ -254,7 +254,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextPitchAlignment() {
     val expectedValue = TextPitchAlignment.MAP
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.textPitchAlignment = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.textPitchAlignment)
     pointAnnotationManager.textPitchAlignment = null
@@ -265,7 +265,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextRotationAlignment() {
     val expectedValue = TextRotationAlignment.MAP
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.textRotationAlignment = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.textRotationAlignment)
     pointAnnotationManager.textRotationAlignment = null
@@ -276,7 +276,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextVariableAnchor() {
     val expectedValue = listOf("center", "left")
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.textVariableAnchor = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.textVariableAnchor)
     pointAnnotationManager.textVariableAnchor = null
@@ -286,7 +286,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextWritingMode() {
     val expectedValue = listOf("horizontal", "vertical")
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.textWritingMode = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.textWritingMode)
     pointAnnotationManager.textWritingMode = null
@@ -296,7 +296,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconTranslate() {
     val expectedValue = listOf(0.0, 1.0)
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.iconTranslate = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.iconTranslate)
     pointAnnotationManager.iconTranslate = null
@@ -306,7 +306,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testIconTranslateAnchor() {
     val expectedValue = IconTranslateAnchor.MAP
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.iconTranslateAnchor = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.iconTranslateAnchor)
     pointAnnotationManager.iconTranslateAnchor = null
@@ -317,7 +317,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextTranslate() {
     val expectedValue = listOf(0.0, 1.0)
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.textTranslate = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.textTranslate)
     pointAnnotationManager.textTranslate = null
@@ -327,7 +327,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
   @Test
   fun testTextTranslateAnchor() {
     val expectedValue = TextTranslateAnchor.MAP
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.textTranslateAnchor = expectedValue
     assertEquals(expectedValue, pointAnnotationManager.textTranslateAnchor)
     pointAnnotationManager.textTranslateAnchor = null
@@ -337,7 +337,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun create() {
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     val annotation = pointAnnotationManager.create(
       PointAnnotationOptions()
         .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -347,7 +347,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun createFromFeature() {
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     val featureCollection =
       FeatureCollection.fromFeature(Feature.fromGeometry(Point.fromLngLat(0.0, 0.0)))
     val annotations = pointAnnotationManager.create(featureCollection.toJson())
@@ -358,7 +358,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun createList() {
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     val list = listOf(
       PointAnnotationOptions().withPoint(Point.fromLngLat(0.0, 0.0)),
       PointAnnotationOptions().withPoint(Point.fromLngLat(0.0, 0.0))
@@ -370,7 +370,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun update() {
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     val annotation = pointAnnotationManager.create(PointAnnotationOptions().withPoint(Point.fromLngLat(0.0, 0.0)))
     assertEquals(annotation, pointAnnotationManager.annotations[0])
     annotation.point = Point.fromLngLat(1.0, 1.0)
@@ -388,7 +388,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun updateList() {
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     val list = listOf(
       PointAnnotationOptions().withPoint(Point.fromLngLat(0.0, 0.0)),
       PointAnnotationOptions().withPoint(Point.fromLngLat(0.0, 0.0))
@@ -405,7 +405,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun delete() {
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     val annotation = pointAnnotationManager.create(
       PointAnnotationOptions()
         .withPoint(Point.fromLngLat(0.0, 0.0))
@@ -417,7 +417,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun deleteList() {
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     val list = listOf(
       PointAnnotationOptions().withPoint(Point.fromLngLat(0.0, 0.0)),
       PointAnnotationOptions().withPoint(Point.fromLngLat(0.0, 0.0))
@@ -432,7 +432,7 @@ class PointAnnotationManagerAndroidTest : BaseMapTest() {
 
   @Test
   fun deleteAll() {
-    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    val pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     val list = listOf(
       PointAnnotationOptions().withPoint(Point.fromLngLat(0.0, 0.0)),
       PointAnnotationOptions().withPoint(Point.fromLngLat(0.0, 0.0))

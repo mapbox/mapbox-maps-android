@@ -4,7 +4,6 @@ package com.mapbox.maps.plugin.annotation.generated
 
 import android.graphics.Color
 import android.graphics.PointF
-import android.view.View
 import com.mapbox.android.gestures.MoveDistancesObject
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.bindgen.Expected
@@ -53,7 +52,6 @@ class PolylineAnnotationManagerTest {
   private val source: GeoJsonSource = mockk()
   private val dragLayer: LineLayer = mockk()
   private val dragSource: GeoJsonSource = mockk()
-  private val mapView: View = mockk()
   private val queriedFeatures = mockk<Expected<String, List<QueriedFeature>>>()
   private val queriedFeature = mockk<QueriedFeature>()
   private val feature = mockk<Feature>()
@@ -94,8 +92,6 @@ class PolylineAnnotationManagerTest {
     every { mapListenerDelegate.addOnMapIdleListener(any()) } just Runs
     every { mapCameraManagerDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
     every { mapCameraManagerDelegate.pixelForCoordinate(any()) } returns ScreenCoordinate(1.0, 1.0)
-    every { mapView.scrollX } returns 0
-    every { mapView.scrollY } returns 0
     every { layer.layerId } returns "layer0"
     every { source.sourceId } returns "source0"
     every { source.featureCollection(any()) } answers { source }
@@ -116,7 +112,7 @@ class PolylineAnnotationManagerTest {
       querySlot.captured.run(queriedFeatures)
     }
 
-    manager = PolylineAnnotationManager(mapView, delegateProvider)
+    manager = PolylineAnnotationManager(delegateProvider)
     manager.layer = layer
     manager.source = source
     manager.dragLayer = dragLayer
@@ -150,7 +146,7 @@ class PolylineAnnotationManagerTest {
     verify { style.addPersistentLayer(any(), null) }
     every { style.styleLayerExists("test_layer") } returns true
 
-    manager = PolylineAnnotationManager(mapView, delegateProvider, AnnotationConfig("test_layer"))
+    manager = PolylineAnnotationManager(delegateProvider, AnnotationConfig("test_layer"))
     verify { style.addPersistentLayer(any(), LayerPosition(null, "test_layer", null)) }
 
     manager.addClickListener(mockk())
@@ -177,7 +173,7 @@ class PolylineAnnotationManagerTest {
     every { style.styleLayerExists("test_layer") } returns true
     val captureCallback = slot<(StyleInterface) -> Unit>()
     every { delegateProvider.getStyle(capture(captureCallback)) } just Runs
-    manager = PolylineAnnotationManager(mapView, delegateProvider, AnnotationConfig("test_layer"))
+    manager = PolylineAnnotationManager(delegateProvider, AnnotationConfig("test_layer"))
     // Style is not loaded, can't create and add layer to style
     verify(exactly = 0) { style.addPersistentLayer(any(), LayerPosition(null, "test_layer", null)) }
     every { delegateProvider.getStyle(capture(captureCallback)) } answers {
@@ -194,7 +190,7 @@ class PolylineAnnotationManagerTest {
   @Test
   fun createWithGeoJsonOptions() {
     manager = PolylineAnnotationManager(
-      mapView, delegateProvider,
+      delegateProvider,
       AnnotationConfig(
         annotationSourceOptions = AnnotationSourceOptions(
           10, 20L, true, 10.0
@@ -362,7 +358,7 @@ class PolylineAnnotationManagerTest {
   fun clickWithNoAnnotation() {
     val captureSlot = slot<OnMapClickListener>()
     every { gesturesPlugin.addOnMapClickListener(capture(captureSlot)) } just Runs
-    val manager = PolylineAnnotationManager(mapView, delegateProvider)
+    val manager = PolylineAnnotationManager(delegateProvider)
 
     val listener = mockk<OnPolylineAnnotationClickListener>()
     every { listener.onAnnotationClick(any()) } returns false
@@ -377,7 +373,7 @@ class PolylineAnnotationManagerTest {
   fun click() {
     val captureSlot = slot<OnMapClickListener>()
     every { gesturesPlugin.addOnMapClickListener(capture(captureSlot)) } just Runs
-    val manager = PolylineAnnotationManager(mapView, delegateProvider)
+    val manager = PolylineAnnotationManager(delegateProvider)
     val annotation = manager.create(
       PolylineAnnotationOptions()
         .withPoints(listOf(Point.fromLngLat(0.0, 0.0), Point.fromLngLat(0.0, 0.0)))
@@ -409,7 +405,7 @@ class PolylineAnnotationManagerTest {
   fun longClick() {
     val captureSlot = slot<OnMapLongClickListener>()
     every { gesturesPlugin.addOnMapLongClickListener(capture(captureSlot)) } just Runs
-    val manager = PolylineAnnotationManager(mapView, delegateProvider)
+    val manager = PolylineAnnotationManager(delegateProvider)
 
     val annotation = manager.create(
       PolylineAnnotationOptions()
@@ -431,7 +427,7 @@ class PolylineAnnotationManagerTest {
   fun drag() {
     val captureSlot = slot<OnMoveListener>()
     every { gesturesPlugin.addOnMoveListener(capture(captureSlot)) } just Runs
-    val manager = PolylineAnnotationManager(mapView, delegateProvider)
+    val manager = PolylineAnnotationManager(delegateProvider)
     manager.onSizeChanged(100, 100)
     val annotation = manager.create(
       PolylineAnnotationOptions()

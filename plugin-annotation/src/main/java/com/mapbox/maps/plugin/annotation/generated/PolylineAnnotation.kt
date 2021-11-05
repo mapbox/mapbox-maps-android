@@ -20,7 +20,7 @@ import java.util.Locale
  */
 class PolylineAnnotation(
   id: Long,
-  /** The annotation manger that manipulate this annotation */
+  /** The annotation manager that manipulate this annotation */
   private val annotationManager: AnnotationManager<LineString, PolylineAnnotation, *, *, *, *, *>,
   jsonObject: JsonObject,
   geometry: LineString
@@ -386,9 +386,7 @@ class PolylineAnnotation(
    */
   override fun getOffsetGeometry(
     mapCameraManagerDelegate: MapCameraManagerDelegate,
-    moveDistancesObject: MoveDistancesObject,
-    touchAreaShiftX: Int,
-    touchAreaShiftY: Int
+    moveDistancesObject: MoveDistancesObject
   ): LineString? {
     val points = geometry.coordinates()
       .map {

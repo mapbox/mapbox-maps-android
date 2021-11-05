@@ -33,7 +33,7 @@ class PolygoneAnnotationActivity : AppCompatActivity() {
     setContentView(binding.root)
     binding.mapView.getMapboxMap().loadStyleUri(nextStyle) {
       annotationPlugin = binding.mapView.annotations
-      polygonAnnotationManager = annotationPlugin.createPolygonAnnotationManager(binding.mapView).apply {
+      polygonAnnotationManager = annotationPlugin.createPolygonAnnotationManager().apply {
         addClickListener(
           OnPolygonAnnotationClickListener {
             Toast.makeText(this@PolygoneAnnotationActivity, "click ${it.id}", Toast.LENGTH_SHORT)
