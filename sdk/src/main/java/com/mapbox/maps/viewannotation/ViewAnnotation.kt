@@ -3,6 +3,7 @@ package com.mapbox.maps.viewannotation
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
+import com.mapbox.maps.ViewAnnotationOptions
 import java.util.*
 
 internal data class ViewAnnotation(
@@ -14,7 +15,7 @@ internal data class ViewAnnotation(
    * We handle visibility automatically in the manager
    * if user did not specify [ViewAnnotationOptions.visible]  explicitly  during add / update operation
    */
-  var handleVisibility: Boolean,
+  var handleVisibilityAutomatically: Boolean,
   /**
    * Layout params needed to position Android view correctly on the screen.
    */

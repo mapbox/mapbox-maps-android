@@ -11,9 +11,10 @@ import com.mapbox.maps.plugin.ViewPlugin
 import java.util.concurrent.ConcurrentHashMap
 
 internal class ViewAnnotationManagerImpl(
-  private val mapView: MapView,
-  private val mapboxMap: MapboxMap = mapView.getMapboxMap()
+  private val mapView: MapView
 ) : ViewAnnotationManager, ViewAnnotationPositionsListener {
+
+  private val mapboxMap: MapboxMap = mapView.getMapboxMap()
 
   init {
     mapView.requestDisallowInterceptTouchEvent(false)
@@ -32,7 +33,7 @@ internal class ViewAnnotationManagerImpl(
   }
 
   private val annotationMap = ConcurrentHashMap<String, ViewAnnotation>()
-  private val idLookupMap = HashMap<View, String>()
+  private val idLookupMap = ConcurrentHashMap<View, String>()
 
   // structs needed for drawing, declare them only once
   private val currentViewsDrawnMap = HashMap<String, ScreenCoordinate>()
@@ -62,7 +63,7 @@ internal class ViewAnnotationManagerImpl(
   }
 
   override fun addViewAnnotation(view: View, options: ViewAnnotationOptions) {
-    idLookupMap[view]?.let {
+    if (idLookupMap.contains(view)) {
       throw RuntimeException(
         "Trying to add view annotation that was already added before! " +
           "Please consider deleting annotation view ($view) beforehand."
@@ -88,7 +89,7 @@ internal class ViewAnnotationManagerImpl(
   ): Boolean {
     val id = idLookupMap[view] ?: return false
     annotationMap[id]?.let {
-      it.handleVisibility = options.visible == null
+      it.handleVisibilityAutomatically = options.visible == null
       mapboxMap.updateViewAnnotation(id, options)
       return true
     } ?: return false
@@ -140,16 +141,16 @@ internal class ViewAnnotationManagerImpl(
   private fun prepareViewAnnotation(inflatedView: View, options: ViewAnnotationOptions): View {
     val inflatedViewLayout = inflatedView.layoutParams as FrameLayout.LayoutParams
     val updatedOptions = options.toBuilder()
-      .width(if (options.width == null) inflatedViewLayout.width else options.width)
-      .height(if (options.height == null) inflatedViewLayout.height else options.height)
+      .width(options.width ?: inflatedViewLayout.width)
+      .height(options.height ?: inflatedViewLayout.height)
       .build()
     val viewAnnotation = ViewAnnotation(
       view = inflatedView,
-      handleVisibility = options.visible == null,
+      handleVisibilityAutomatically = options.visible == null,
       viewLayoutParams = inflatedViewLayout,
     )
     val globalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
-      if (viewAnnotation.handleVisibility) {
+      if (viewAnnotation.handleVisibilityAutomatically) {
         val isVisibleNow = inflatedView.visibility == View.VISIBLE
         if (mapboxMap.getViewAnnotationOptions(viewAnnotation.id).value?.visible != isVisibleNow) {
           mapboxMap.updateViewAnnotation(
@@ -197,6 +198,7 @@ internal class ViewAnnotationManagerImpl(
           zIndex = ViewPlugin.VIEW_PLUGIN_Z_TRANSLATION - 1f + i.toFloat() / positionDescriptorList.size
         )
     }
+    // TODO rewrite to avoid spawning collections
     idsToRepositionSet.addAll(positionDescriptorMap.keys.intersect(currentViewsDrawnMap.keys))
     idsToAddSet.addAll(positionDescriptorMap.keys.minus(currentViewsDrawnMap.keys))
     idsToDeleteSet.addAll(currentViewsDrawnMap.keys.minus(positionDescriptorMap.keys))
@@ -234,6 +236,7 @@ internal class ViewAnnotationManagerImpl(
             0
           )
           if (needsRepositionOnly) {
+            // TODO recalculate actual view translation instead or re-requesting layout
             annotation.view.requestLayout()
           } else {
             // remove view to as it may have been not removed before due to visibility

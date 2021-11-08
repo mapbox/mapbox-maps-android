@@ -3,6 +3,7 @@ package com.mapbox.maps
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
+import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
@@ -372,6 +373,14 @@ internal class NativeMapImpl(private val map: MapInterface) :
     callback: QueryFeaturesCallback
   ) {
     map.queryRenderedFeatures(pixel, options, callback)
+  }
+
+  override fun queryRenderedFeatures(
+    geometry: RenderedQueryGeometry,
+    options: RenderedQueryOptions,
+    callback: QueryFeaturesCallback
+  ): Cancelable {
+    return map.queryRenderedFeatures(geometry, options, callback)
   }
 
   override fun querySourceFeatures(
