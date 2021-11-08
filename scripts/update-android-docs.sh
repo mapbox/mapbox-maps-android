@@ -12,8 +12,6 @@ set -Eeuxo pipefail
 #     - GNU getopt - cli option parser [man 1 getopt], out-of-the-box for GNU/Linux;
 #
 
-DOKKA_OUTPUT_DIR="./build/dokka/htmlCollector"
-
 readonly ANDROID_DOCS_DIRECTORY="android-docs-repo"
 readonly CONSTANTS_FILE="./src/constants.json"
 readonly MAP_VERSION_NUMBERS_FILE="./src/data/map-version-numbers.json"
@@ -66,9 +64,9 @@ function prepare_branch_with_documentation() {
 
   INTERIM_BRANCH_WITH_DOCUMENTATION="${BRANCH_WITH_DOCUMENTATION}_${1}"
   git checkout -b $INTERIM_BRANCH_WITH_DOCUMENTATION origin/$BRANCH_WITH_DOCUMENTATION
-
+  unzip -o -d release-docs release-docs/dokka-docs.zip
   mkdir -p $1
-  cp -r $DOKKA_OUTPUT_DIR/* $1
+  cp -fr release-docs/htmlCollector/* $1
   git add $1
   git commit -m "Add $1 API documentation."
   git push --set-upstream origin $INTERIM_BRANCH_WITH_DOCUMENTATION --force
@@ -137,7 +135,7 @@ create_pull_request "Add ${MAPS_SDK_VERSION} API documentation." $BRANCH_WITH_DO
 prepare_branch_with_empty $MAPS_SDK_VERSION
 create_pull_request "Trigger ${MAPS_SDK_VERSION} deploy." $BRANCH_WITH_DOCUMENTATION
 
-## Update config files in Android Docs Repo.
+# Update config files in Android Docs Repo.
 clone_android_docs_repo
 update_constants_and_map_version_numbers $MAPS_SDK_VERSION
 prepare_android_docs_branch $MAPS_SDK_VERSION
