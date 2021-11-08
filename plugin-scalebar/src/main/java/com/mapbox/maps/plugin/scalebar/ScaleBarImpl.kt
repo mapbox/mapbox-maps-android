@@ -60,7 +60,7 @@ class ScaleBarImpl : ScaleBar, View {
     }
 
   override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-    val width = mapViewWidth / 2
+    val width = mapViewWidth * settings.ratio
     val height = settings.run { textBarMargin + textSize + height + (borderWidth * 2) }
     setMeasuredDimension(width.toInt(), height.toInt())
   }
