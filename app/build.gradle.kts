@@ -88,6 +88,10 @@ dependencies {
   // Services, [we recommend adding the Google Play Location Services dependency to your project](https://developers.google.com/android/guides/setup).
   implementation(Dependencies.googlePlayServicesLocation)
 
+  // Maps SDK does not provide this dependency so adding explicitly to make use of
+  // async view inflation for view annotation manager example
+  implementation(Dependencies.asyncInflater)
+
   debugImplementation(Dependencies.squareLeakCanary)
   androidTestUtil(Dependencies.androidxOrchestrator)
   androidTestImplementation(Dependencies.androidxTestRunner)

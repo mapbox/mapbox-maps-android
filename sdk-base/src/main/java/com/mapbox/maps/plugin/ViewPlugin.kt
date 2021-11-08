@@ -34,4 +34,14 @@ fun interface ViewPlugin : MapPlugin {
    * @param pixelRatio the device pixel ratio
    */
   data class Initializer(val context: WeakReference<Context>, val attributes: TypedArray, val pixelRatio: Float)
+
+  /**
+   * Static methods and variables.
+   */
+  companion object {
+    /**
+     * All view plugins are added as child views to the MapView using this constant as [View.setTranslationZ].
+     */
+    const val VIEW_PLUGIN_Z_TRANSLATION = 2.0f
+  }
 }

@@ -3,6 +3,7 @@ package com.mapbox.maps
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
+import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
@@ -374,6 +375,14 @@ internal class NativeMapImpl(private val map: MapInterface) :
     map.queryRenderedFeatures(pixel, options, callback)
   }
 
+  override fun queryRenderedFeatures(
+    geometry: RenderedQueryGeometry,
+    options: RenderedQueryOptions,
+    callback: QueryFeaturesCallback
+  ): Cancelable {
+    return map.queryRenderedFeatures(geometry, options, callback)
+  }
+
   override fun querySourceFeatures(
     sourceId: String,
     options: SourceQueryOptions,
@@ -511,5 +520,25 @@ internal class NativeMapImpl(private val map: MapInterface) :
 
   override fun unsubscribe(observer: Observer) {
     map.unsubscribe(observer)
+  }
+
+  override fun addViewAnnotation(id: String, options: ViewAnnotationOptions): Expected<String, None> {
+    return map.addViewAnnotation(id, options)
+  }
+
+  override fun updateViewAnnotation(id: String, options: ViewAnnotationOptions): Expected<String, None> {
+    return map.updateViewAnnotation(id, options)
+  }
+
+  override fun removeViewAnnotation(id: String): Expected<String, None> {
+    return map.removeViewAnnotation(id)
+  }
+
+  override fun getViewAnnotationOptions(identifier: String): Expected<String, ViewAnnotationOptions> {
+    return map.getViewAnnotationOptions(identifier)
+  }
+
+  override fun setViewAnnotationPositionsUpdateListener(listener: ViewAnnotationPositionsListener?) {
+    return map.setViewAnnotationPositionsUpdateListener(listener)
   }
 }
