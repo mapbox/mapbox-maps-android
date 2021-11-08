@@ -5,13 +5,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.mapbox.geojson.Point;
 import com.mapbox.maps.MapView;
 import com.mapbox.maps.MapboxMap;
 import com.mapbox.maps.QueriedFeature;
+import com.mapbox.maps.RenderedQueryGeometry;
 import com.mapbox.maps.RenderedQueryOptions;
 import com.mapbox.maps.ScreenBox;
 import com.mapbox.maps.ScreenCoordinate;
@@ -19,6 +18,13 @@ import com.mapbox.maps.Style;
 import com.mapbox.maps.extension.style.StyleContract;
 import com.mapbox.maps.extension.style.StyleExtensionImpl;
 import com.mapbox.maps.extension.style.expressions.generated.Expression;
+import static com.mapbox.maps.extension.style.expressions.generated.Expression.concat;
+import static com.mapbox.maps.extension.style.expressions.generated.Expression.get;
+import static com.mapbox.maps.extension.style.expressions.generated.Expression.gt;
+import static com.mapbox.maps.extension.style.expressions.generated.Expression.literal;
+import static com.mapbox.maps.extension.style.expressions.generated.Expression.rgb;
+import static com.mapbox.maps.extension.style.expressions.generated.Expression.subtract;
+import static com.mapbox.maps.extension.style.expressions.generated.Expression.toNumber;
 import com.mapbox.maps.extension.style.image.ImageNinePatchExtensionImpl;
 import com.mapbox.maps.extension.style.image.ImageUtils;
 import com.mapbox.maps.extension.style.layers.generated.CircleLayer;
@@ -30,22 +36,12 @@ import com.mapbox.maps.extension.style.sources.generated.ImageSource;
 import com.mapbox.maps.plugin.gestures.GesturesUtils;
 import com.mapbox.maps.plugin.gestures.OnMapClickListener;
 import com.mapbox.maps.testapp.R;
-
-import org.jetbrains.annotations.NotNull;
-
 import java.text.DateFormat;
+import static java.text.DateFormat.getDateTimeInstance;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.concat;
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.get;
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.gt;
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.literal;
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.rgb;
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.subtract;
-import static com.mapbox.maps.extension.style.expressions.generated.Expression.toNumber;
-import static java.text.DateFormat.getDateTimeInstance;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Example showcasing usage of creating style with java codes.
@@ -124,10 +120,10 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
     public boolean onMapClick(@NotNull Point point) {
         ScreenCoordinate clicked = mapboxMap.pixelForCoordinate(point);
         mapboxMap.queryRenderedFeatures(
-                new ScreenBox(
+                new RenderedQueryGeometry(new ScreenBox(
                         new ScreenCoordinate(clicked.getX() - 50, clicked.getY() - 50),
                         new ScreenCoordinate(clicked.getX() + 50, clicked.getY() + 50)
-                ),
+                )),
                 new RenderedQueryOptions(QUERY_LIST, literal(true)), features -> {
                     List<QueriedFeature> featureList = features.getValue();
                     if (featureList != null && !featureList.isEmpty()) {

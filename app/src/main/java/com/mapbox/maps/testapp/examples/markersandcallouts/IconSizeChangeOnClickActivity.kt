@@ -4,6 +4,7 @@ import android.animation.ValueAnimator
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.bindgen.Expected
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
@@ -72,16 +73,14 @@ class IconSizeChangeOnClickActivity : AppCompatActivity(), OnMapClickListener {
       val selectedMarkerSymbolLayer = it.getLayer("selected-marker-layer") as SymbolLayer
       val pixel = mapboxMap.pixelForCoordinate(point)
       mapboxMap.queryRenderedFeatures(
-        screenBoxFromPixel(pixel),
-        RenderedQueryOptions(listOf("selected-marker-layer"), null)
-      ) { expected ->
+        RenderedQueryGeometry(screenBoxFromPixel(pixel)), RenderedQueryOptions(listOf("selected-marker-layer"), null)
+      ) { expected: Expected<String, MutableList<QueriedFeature>> ->
         if (expected.value!!.isNotEmpty() && markerSelected) {
           return@queryRenderedFeatures
         }
 
         mapboxMap.queryRenderedFeatures(
-          screenBoxFromPixel(pixel),
-          RenderedQueryOptions(listOf("marker-layer"), null)
+          RenderedQueryGeometry(screenBoxFromPixel(pixel)), RenderedQueryOptions(listOf("marker-layer"), null)
         ) InnerRenderedQueryOptions@{ expectedFeatures ->
           val queriedFeatures = expectedFeatures.value!!
           if (queriedFeatures.isEmpty()) {

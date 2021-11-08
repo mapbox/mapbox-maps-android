@@ -8,6 +8,7 @@ import com.mapbox.android.gestures.MoveDistancesObject
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
+import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
@@ -15,6 +16,7 @@ import com.mapbox.geojson.Polygon
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.QueriedFeature
 import com.mapbox.maps.QueryFeaturesCallback
+import com.mapbox.maps.RenderedQueryGeometry
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -53,6 +55,7 @@ class PolygonAnnotationManagerTest {
   private val dragSource: GeoJsonSource = mockk()
   private val queriedFeatures = mockk<Expected<String, List<QueriedFeature>>>()
   private val queriedFeature = mockk<QueriedFeature>()
+  private val cancelable = mockk<Cancelable>()
   private val feature = mockk<Feature>()
   private val queriedFeatureList = listOf(queriedFeature)
   private val querySlot = slot<QueryFeaturesCallback>()
@@ -103,12 +106,13 @@ class PolygonAnnotationManagerTest {
     }
     every {
       mapFeatureQueryDelegate.queryRenderedFeatures(
-        any<ScreenCoordinate>(),
+        any<RenderedQueryGeometry>(),
         any(),
         capture(querySlot)
       )
     } answers {
       querySlot.captured.run(queriedFeatures)
+      cancelable
     }
 
     manager = PolygonAnnotationManager(delegateProvider)
