@@ -3,6 +3,7 @@ package com.mapbox.maps.plugin
 import android.view.MotionEvent
 import android.view.View
 import com.mapbox.maps.*
+import com.mapbox.maps.plugin.ViewPlugin.Companion.VIEW_PLUGIN_Z_TRANSLATION
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePlugin
@@ -66,6 +67,8 @@ internal class MapPluginRegistry(
             mapInitOptions.attrs,
             mapInitOptions.mapOptions.pixelRatio
           )
+          // needed for correct placement when using view annotations
+          pluginView.translationZ = VIEW_PLUGIN_Z_TRANSLATION
           mapView.addView(pluginView)
           mapPlugin.onPluginView(pluginView)
           viewPlugins[mapPlugin] = pluginView
