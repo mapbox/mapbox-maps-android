@@ -785,8 +785,8 @@ class MapboxMap internal constructor(
    *        'leaves': returns all the leaves of a cluster (given its cluster_id)
    *        'expansion-zoom': returns the zoom on which the cluster expands into several children (useful for "click to zoom" feature).
    * @param args used for further query specification when using 'leaves' extensionField. Now only support following two args:
-   *        'limit': the number of points to return from the query (must use type 'uint64_t', set to maximum for all points)
-   *        'offset': the amount of points to skip (for pagination, must use type 'uint64_t')
+   *        'limit': the number of points to return from the query (must use type [Long], set to maximum for all points)
+   *        'offset': the amount of points to skip (for pagination, must use type [Long])
    *
    * @param callback The result will be returned through the [QueryFeatureExtensionCallback].
    *         The result could be a feature extension value containing either a value (expansion-zoom) or a feature collection (children or leaves).
@@ -820,8 +820,8 @@ class MapboxMap internal constructor(
    *
    * @param sourceIdentifier GeoJsonSource identifier.
    * @param cluster Cluster from which to retrieve leaves from
-   * @param limit The number of points to return from the query (must use type 'uint64_t', set to maximum for all points). Defaults to 10.
-   * @param offset The amount of points to skip (for pagination, must use type 'uint64_t'). Defaults to 0.
+   * @param limit The number of points to return from the query (must use type [Long], set to maximum for all points). Defaults to 10.
+   * @param offset The amount of points to skip (for pagination, must use type [Long]). Defaults to 0.
    * @param callback The result will be returned through the [QueryFeatureExtensionCallback].
    *         The result is a feature collection or a string describing an error if the operation was not successful.
    */
@@ -829,15 +829,14 @@ class MapboxMap internal constructor(
   fun getGeoJsonClusterLeaves(
     sourceIdentifier: String,
     cluster: Feature,
-    limit: Long = 10,
-    offset: Long = 0,
+    limit: Long = QFE_DEFAULT_LIMIT,
+    offset: Long = QFE_DEFAULT_OFFSET,
     callback: QueryFeatureExtensionCallback,
-  ) =
-    queryFeatureExtensions(
-      sourceIdentifier, cluster, SUPER_CLUSTER, LEAVES,
-      hashMapOf(Pair(LIMIT, Value(limit)), Pair(OFFSET, Value(offset))),
-      callback
-    )
+  ) = queryFeatureExtensions(
+    sourceIdentifier, cluster, QFE_SUPER_CLUSTER, QFE_LEAVES,
+    hashMapOf(QFE_LIMIT to Value(limit), QFE_OFFSET to Value(offset)),
+    callback
+  )
 
   /**
    * Returns the children (original points or clusters) of a cluster (on the next zoom level)
@@ -855,7 +854,7 @@ class MapboxMap internal constructor(
     cluster: Feature,
     callback: QueryFeatureExtensionCallback,
   ) = queryFeatureExtensions(
-    sourceIdentifier, cluster, SUPER_CLUSTER, CHILDREN, null, callback
+    sourceIdentifier, cluster, QFE_SUPER_CLUSTER, QFE_CHILDREN, null, callback
   )
 
   /**
@@ -874,7 +873,7 @@ class MapboxMap internal constructor(
     cluster: Feature,
     callback: QueryFeatureExtensionCallback,
   ) = queryFeatureExtensions(
-    sourceIdentifier, cluster, SUPER_CLUSTER, EXPANDSION_ZOOM, null, callback
+    sourceIdentifier, cluster, QFE_SUPER_CLUSTER, QFE_EXPANSION_ZOOM, null, callback
   )
 
   /**
@@ -1409,11 +1408,13 @@ class MapboxMap internal constructor(
     }
 
     private const val TAG_PROJECTION = "MbxProjection"
-    private const val SUPER_CLUSTER = "supercluster"
-    private const val LEAVES = "leaves"
-    private const val LIMIT = "limit"
-    private const val OFFSET = "offset"
-    private const val CHILDREN = "children"
-    private const val EXPANDSION_ZOOM = "expansion-zoom"
+    private const val QFE_SUPER_CLUSTER = "supercluster"
+    private const val QFE_LEAVES = "leaves"
+    private const val QFE_LIMIT = "limit"
+    private const val QFE_OFFSET = "offset"
+    private const val QFE_DEFAULT_LIMIT = 10L
+    private const val QFE_DEFAULT_OFFSET = 0L
+    private const val QFE_CHILDREN = "children"
+    private const val QFE_EXPANSION_ZOOM = "expansion-zoom"
   }
 }

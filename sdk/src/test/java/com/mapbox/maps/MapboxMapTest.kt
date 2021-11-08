@@ -680,10 +680,18 @@ class MapboxMapTest {
         callback
       )
     }
+    checkCapturedMap(mapSlot, "10", "0")
+  }
+
+  private fun checkCapturedMap(
+    mapSlot: CapturingSlot<HashMap<String, Value>>,
+    expectedLimit: String,
+    expectedOffset: String
+  ) {
     val captureMap = mapSlot.captured
     assertEquals(2, captureMap.size)
-    assertEquals("10", captureMap["limit"]!!.contents.toString())
-    assertEquals("0", captureMap["offset"]!!.contents.toString())
+    assertEquals(expectedLimit, captureMap["limit"]!!.contents.toString())
+    assertEquals(expectedOffset, captureMap["offset"]!!.contents.toString())
   }
 
   @Test
@@ -702,10 +710,7 @@ class MapboxMapTest {
         callback
       )
     }
-    val captureMap = mapSlot.captured
-    assertEquals(2, captureMap.size)
-    assertEquals("1", captureMap["limit"]!!.contents.toString())
-    assertEquals("2", captureMap["offset"]!!.contents.toString())
+    checkCapturedMap(mapSlot, "1", "2")
   }
 
   @Test
