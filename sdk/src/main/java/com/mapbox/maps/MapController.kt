@@ -45,7 +45,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   private val mapInitOptions: MapInitOptions
   private val nativeMap: MapInterface
   private val mapboxMap: MapboxMap
-  private val pluginRegistry: MapPluginRegistry
+  internal val pluginRegistry: MapPluginRegistry
   private val onStyleDataLoadedListener: OnStyleDataLoadedListener
   private val onCameraChangedListener: OnCameraChangeListener
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
