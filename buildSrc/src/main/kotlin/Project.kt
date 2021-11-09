@@ -73,7 +73,7 @@ object Versions {
   const val pluginDokka =  "1.4.32"
   const val pluginJacoco = "0.2"
   const val mapboxAccessToken="0.4.0"
-  const val mapboxSdkRegistry="0.6.0"
+  const val mapboxSdkRegistry="0.7.0"
   const val mapboxGestures = "0.7.0"
   const val mapboxJavaServices = "5.4.1"
   const val mapboxBase = "0.5.0"
