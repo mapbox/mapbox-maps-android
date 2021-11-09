@@ -37,6 +37,7 @@ import com.mapbox.maps.viewannotation.ViewAnnotationManagerImpl
  */
 open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   internal var mapController: MapController
+    private set
 
   private var isViewAnnotationManagerInitialized = false
   /**

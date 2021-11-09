@@ -39,7 +39,6 @@ internal class ViewAnnotationManagerImpl(
 
   // structs needed for drawing, declare them only once
   private val currentViewsDrawnMap = HashMap<String, ScreenCoordinate>()
-  private val positionDescriptorList = LinkedList<ViewPosition>()
 
   override fun addViewAnnotation(
     @LayoutRes resId: Int,
@@ -125,7 +124,6 @@ internal class ViewAnnotationManagerImpl(
       mapView.removeView(annotation.view)
     }
     currentViewsDrawnMap.clear()
-    positionDescriptorList.clear()
     annotationMap.clear()
     idLookupMap.clear()
   }
@@ -180,22 +178,10 @@ internal class ViewAnnotationManagerImpl(
   private fun drawAnnotationViews(
     positionDescriptorCoreList: List<ViewAnnotationPositionDescriptor>
   ) {
-    this.positionDescriptorList.clear()
     // TODO rewrite to avoid spawning collections
     val sortedKeyList = positionDescriptorCoreList.map { it.identifier }
     val idsToAddSet = sortedKeyList.minus(currentViewsDrawnMap.keys)
     val idsToDeleteSet = currentViewsDrawnMap.keys.minus(sortedKeyList)
-    positionDescriptorCoreList.forEach { descriptor ->
-      positionDescriptorList.add(
-        ViewPosition(
-          id = descriptor.identifier,
-          leftTopCoordinate = descriptor.leftTopCoordinate,
-          width = descriptor.width,
-          height = descriptor.height,
-          needAddToLayout = idsToAddSet.contains(descriptor.identifier),
-        )
-      )
-    }
     // firstly delete views that do not belong to the viewport
     idsToDeleteSet.forEach {
       annotationMap[it]?.let { annotation ->
@@ -206,19 +192,21 @@ internal class ViewAnnotationManagerImpl(
         }
       }
     }
-    positionDescriptorList.forEach { viewPosition ->
-      annotationMap[viewPosition.id]?.let { annotation ->
-        annotation.viewLayoutParams.width = viewPosition.width
-        annotation.viewLayoutParams.height = viewPosition.height
+    positionDescriptorCoreList.forEach { descriptor ->
+      annotationMap[descriptor.identifier]?.let { annotation ->
+        annotation.viewLayoutParams.width = descriptor.width
+        annotation.viewLayoutParams.height = descriptor.height
         annotation.viewLayoutParams.setMargins(
-          viewPosition.leftTopCoordinate.x.toInt(),
-          viewPosition.leftTopCoordinate.y.toInt(),
+          descriptor.leftTopCoordinate.x.toInt(),
+          descriptor.leftTopCoordinate.y.toInt(),
           0,
           0
         )
-        if (viewPosition.needAddToLayout) {
+        if (idsToAddSet.contains(descriptor.identifier)) {
           // remove view to as it may have been not removed before due to visibility
-          mapView.removeView(annotation.view)
+          if (annotation.view.visibility != View.VISIBLE) {
+            mapView.removeView(annotation.view)
+          }
           mapView.addView(annotation.view, annotation.viewLayoutParams)
         }
         // as we preserve correct order we bring each view to the front and correct order will be preserved
