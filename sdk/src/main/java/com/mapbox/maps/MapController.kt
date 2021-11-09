@@ -9,7 +9,6 @@ import com.mapbox.common.module.provider.MapboxModuleProvider
 import com.mapbox.common.module.provider.ModuleProviderArgument
 import com.mapbox.maps.assets.AssetManagerProvider
 import com.mapbox.maps.extension.observable.model.StyleDataType
-import com.mapbox.maps.loader.MapboxMapStaticInitializer
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.*
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_ANNOTATION_PLUGIN_ID
@@ -328,9 +327,5 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       "Add %s plugin dependency to the classpath take automatically load the plugin implementation."
     private const val VIEW_HIERARCHY_MISSING_TEMPLATE =
       "%s plugin requires a View hierarchy to be injected, plugin is ignored."
-
-    init {
-      MapboxMapStaticInitializer.loadMapboxMapNativeLib()
-    }
   }
 }
