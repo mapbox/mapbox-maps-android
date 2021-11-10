@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.Path
 import android.os.Handler
 import android.os.Message
 import android.util.AttributeSet
@@ -39,11 +38,6 @@ class ScaleBarImpl : ScaleBar, View {
    * The paint draw text border
    */
   internal val strokePaint = Paint()
-
-  /**
-   * The text path
-   */
-  internal val path = Path()
 
   /**
    * The unit for distance
@@ -277,14 +271,8 @@ class ScaleBarImpl : ScaleBar, View {
             }
           }
 
-        textPaint.getTextPath(
-          distanceText, 0, distanceText.length, (unitBarWidth * i) + xPositionShitForText,
-          textSize, path
-        )
-        if (showTextBorder) {
-          canvas.drawPath(path, strokePaint)
-        }
-        canvas.drawPath(path, textPaint)
+        drawText(canvas, distanceText, (unitBarWidth * i) + xPositionShitForText, textSize)
+
         canvas.drawRect(
           (borderWidth * 2) + (unitBarWidth * i),
           textBarMargin + textSize,
@@ -294,18 +282,18 @@ class ScaleBarImpl : ScaleBar, View {
         )
       }
       val distanceText = getDistanceText(unitDistance * pair.second)
-      textPaint.getTextPath(
-        distanceText, 0, distanceText.length, unitBarWidth * pair.second,
-        textSize, path
-      )
-      if (showTextBorder) {
-        canvas.drawPath(path, strokePaint)
-      }
-      canvas.drawPath(path, textPaint)
+      drawText(canvas, distanceText, unitBarWidth * pair.second, textSize)
     }
     if (useContinuousRendering) {
       reusableCanvas = canvas
     }
+  }
+
+  private fun drawText(canvas: Canvas, text: String, x: Float, y: Float) {
+    if (settings.showTextBorder) {
+      canvas.drawText(text, x, y, strokePaint)
+    }
+    canvas.drawText(text, x, y, textPaint)
   }
 
   /**
