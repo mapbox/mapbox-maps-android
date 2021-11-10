@@ -56,7 +56,7 @@ class AnimatePointAnnotationActivity : AppCompatActivity(), OnMapLoadedListener 
   }
 
   override fun onMapLoaded(eventData: MapLoadedEventData) {
-    pointAnnotationManager = binding.mapView.annotations.createPointAnnotationManager(binding.mapView).apply {
+    pointAnnotationManager = binding.mapView.annotations.createPointAnnotationManager().apply {
       bitmapFromDrawableRes(
         this@AnimatePointAnnotationActivity,
         R.drawable.ic_car_top

@@ -104,7 +104,7 @@ class OfflineActivity : AppCompatActivity() {
           mapboxMap.setCamera(CameraOptions.Builder().zoom(ZOOM).center(TOKYO).build())
           mapboxMap.loadStyleUri(Style.OUTDOORS) {
             // Add a circle annotation to the offline geometry.
-            mapview.annotations.createCircleAnnotationManager(mapview).create(
+            mapview.annotations.createCircleAnnotationManager().create(
               CircleAnnotationOptions()
                 .withPoint(TOKYO)
                 .withCircleColor(Color.RED)

@@ -61,7 +61,7 @@ class UpdateAnnotationTest : BaseMapTest() {
 
   override fun loadMap() {
     super.loadMap()
-    pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+    pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
     pointAnnotationManager.textFont = listOf("Open Sans Regular")
 
     pointAnnotation = pointAnnotationManager.create(

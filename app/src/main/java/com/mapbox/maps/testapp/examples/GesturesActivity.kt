@@ -251,7 +251,7 @@ class GesturesActivity : AppCompatActivity() {
     if (enabled) {
       focalPointLatLng = FOCAL_POINT
       pointAnnotationManager =
-        binding.mapView.annotations.createPointAnnotationManager(binding.mapView).apply {
+        binding.mapView.annotations.createPointAnnotationManager().apply {
           create(
             PointAnnotationOptions()
               .withPoint(FOCAL_POINT)
