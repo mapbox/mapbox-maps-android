@@ -401,8 +401,7 @@ jobs:
 
   run-robo-test:
     executor:
-      name: ubuntu
-      machine: small
+      name: instrumentation-test-runner
     steps:
       - read-from-workspace
       - login-google-cloud-platform
@@ -410,8 +409,7 @@ jobs:
 
   run-app-instrumentation-test:
     executor:
-      name: ubuntu
-      machine: small
+      name: instrumentation-test-runner
     steps:
       - read-from-workspace
       - login-google-cloud-platform
@@ -420,8 +418,7 @@ jobs:
 
   run-sdk-instrumentation-test:
     executor:
-      name: ubuntu
-      machine: small
+      name: instrumentation-test-runner
     steps:
       - read-from-workspace
       - mapbox-gl-native-begin
@@ -510,3 +507,15 @@ executors:
       JVM_OPTS: -Xmx3200m
       BUILDTYPE: Debug
       GRADLE_OPTS: -Xmx4096m -Dorg.gradle.daemon=false -Dkotlin.compiler.execution.strategy=in-process
+
+  instrumentation-test-runner:
+    parameters:
+      machine:
+        type: string
+        default: small
+    docker:
+      - image: cimg/base:2021.10
+    resource_class: << parameters.machine >>
+    working_directory: /src
+    environment:
+      BUILDTYPE: Debug
