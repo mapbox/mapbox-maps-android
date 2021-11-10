@@ -3,6 +3,7 @@ object AndroidVersions {
   const val minAndroidAutoSdkVersion = 23
   const val targetSdkVersion = 30
   const val compileSdkVersion = 30
+  const val ndkVersion = "21.4.7075529"
 }
 
 object Plugins {
