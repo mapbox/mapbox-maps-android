@@ -3,6 +3,7 @@ package com.mapbox.maps.viewannotation
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
@@ -60,13 +61,15 @@ interface ViewAnnotationManager {
    *
    * @param resId layout resource id
    * @param options view annotation options
+   * @param asyncInflater instance of [AsyncLayoutInflater] provided by the user
    * @param asyncInflateCallback callback triggered when [View] is inflated.
    *
-   * @throws [RuntimeException] if options did not include geometry or async inflater [dependency](https://mvnrepository.com/artifact/androidx.asynclayoutinflater/asynclayoutinflater/1.0.0) was not added.
+   * @throws [RuntimeException] if options did not include geometry.
    */
   fun addViewAnnotation(
     @LayoutRes resId: Int,
     options: ViewAnnotationOptions,
+    asyncInflater: AsyncLayoutInflater,
     asyncInflateCallback: (View) -> Unit
   )
 
