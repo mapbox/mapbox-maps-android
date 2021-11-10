@@ -7,7 +7,6 @@ import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.maps.*
-import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.collections.HashMap
 
@@ -23,17 +22,6 @@ internal class ViewAnnotationManagerImpl(
     mapboxMap.setViewAnnotationPositionsUpdateListener(this)
   }
 
-  private val asyncInflater by lazy {
-    try {
-      AsyncLayoutInflater(mapView.context)
-    } catch (e: NoClassDefFoundError) {
-      throw RuntimeException(
-        "Please add https://mvnrepository.com/artifact/androidx.asynclayoutinflater/asynclayoutinflater/1.0.0 dependency " +
-          "to your project to make use of asynchronous view inflation when adding view annotation!"
-      )
-    }
-  }
-
   private val annotationMap = ConcurrentHashMap<String, ViewAnnotation>()
   private val idLookupMap = ConcurrentHashMap<View, String>()
 
@@ -43,6 +31,7 @@ internal class ViewAnnotationManagerImpl(
   override fun addViewAnnotation(
     @LayoutRes resId: Int,
     options: ViewAnnotationOptions,
+    asyncInflater: AsyncLayoutInflater,
     asyncInflateCallback: (View) -> Unit
   ) {
     validateOptions(options)
