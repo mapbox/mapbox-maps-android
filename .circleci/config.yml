@@ -516,6 +516,5 @@ executors:
     docker:
       - image: cimg/base:2021.10
     resource_class: << parameters.machine >>
-    working_directory: /src
     environment:
       BUILDTYPE: Debug
