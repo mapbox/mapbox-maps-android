@@ -25,10 +25,8 @@ internal class ViewAnnotationManagerImpl(
   private val annotationMap = ConcurrentHashMap<String, ViewAnnotation>()
   private val idLookupMap = ConcurrentHashMap<View, String>()
 
-  // structs needed for drawing, declare them only once
+  // struct needed for drawing, declare it only once
   private val currentViewsDrawnMap = HashMap<String, ScreenCoordinate>()
-  private val idsToAddSet = HashSet<String>()
-  private val idsToRemoveSet = HashSet<String>()
 
   override fun addViewAnnotation(
     @LayoutRes resId: Int,
@@ -169,35 +167,19 @@ internal class ViewAnnotationManagerImpl(
   private fun drawAnnotationViews(
     positionDescriptorCoreList: List<ViewAnnotationPositionDescriptor>
   ) {
-    idsToAddSet.clear()
-    idsToRemoveSet.clear()
-    positionDescriptorCoreList.forEach {
-      if (!currentViewsDrawnMap.keys.contains(it.identifier)) {
-        idsToAddSet.add(it.identifier)
-      }
-    }
-    currentViewsDrawnMap.keys.forEach { id ->
-      var contains = false
-      for (descriptor in positionDescriptorCoreList) {
-        if (descriptor.identifier == id) {
-          contains = true
-          break
-        }
-      }
-      if (!contains) {
-        idsToRemoveSet.add(id)
-      }
-    }
     // firstly delete views that do not belong to the viewport
-    idsToRemoveSet.forEach {
-      annotationMap[it]?.let { annotation ->
-        // if view is invisible / gone we don't remove it so that visibility logic could
-        // still be handled by OnGlobalLayoutListener
-        if (annotation.view.visibility == View.VISIBLE) {
-          mapView.removeView(annotation.view)
+    currentViewsDrawnMap.keys.forEach { id ->
+      if (positionDescriptorCoreList.indexOfFirst { it.identifier == id } == -1) {
+        annotationMap[id]?.let { annotation ->
+          // if view is invisible / gone we don't remove it so that visibility logic could
+          // still be handled by OnGlobalLayoutListener
+          if (annotation.view.visibility == View.VISIBLE) {
+            mapView.removeView(annotation.view)
+          }
         }
       }
     }
+    // add and reposition new and existed views
     positionDescriptorCoreList.forEach { descriptor ->
       annotationMap[descriptor.identifier]?.let { annotation ->
         annotation.viewLayoutParams.width = descriptor.width
@@ -208,7 +190,7 @@ internal class ViewAnnotationManagerImpl(
           0,
           0
         )
-        if (idsToAddSet.contains(descriptor.identifier) && mapView.indexOfChild(annotation.view) == -1) {
+        if (!currentViewsDrawnMap.keys.contains(descriptor.identifier) && mapView.indexOfChild(annotation.view) == -1) {
           mapView.addView(annotation.view, annotation.viewLayoutParams)
         }
         // as we preserve correct order we bring each view to the front and correct order will be preserved
