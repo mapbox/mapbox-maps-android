@@ -1263,6 +1263,9 @@ class ExpressionTest : BaseStyleTest() {
   @UiThreadTest
   fun numberFormatTest() {
     val expression = numberFormat(literal(123.456789)) {
+      locale {
+        literal("en-US")
+      }
       minFractionDigits {
         literal(1)
       }
