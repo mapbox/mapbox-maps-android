@@ -57,7 +57,7 @@ class UpdateAnnotationWithMultiManagersTest : BaseMapTest() {
       handler = Handler(it.mainLooper)
       it.runOnUiThread {
         mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) {
-          pointAnnotationManager = mapView.annotations.createPointAnnotationManager(mapView)
+          pointAnnotationManager = mapView.annotations.createPointAnnotationManager()
           pointAnnotationManager.textFont = listOf("Open Sans Regular")
           pointAnnotation = pointAnnotationManager.create(
             PointAnnotationOptions()
@@ -65,7 +65,7 @@ class UpdateAnnotationWithMultiManagersTest : BaseMapTest() {
               .withIconImage("car-15")
               .withPoint(Point.fromLngLat(0.0, 0.0))
           )
-          circleAnnotationManager = mapView.annotations.createCircleAnnotationManager(mapView)
+          circleAnnotationManager = mapView.annotations.createCircleAnnotationManager()
           circleAnnotation = circleAnnotationManager.create(
             CircleAnnotationOptions()
               .withCircleColor(Color.RED)
@@ -73,7 +73,7 @@ class UpdateAnnotationWithMultiManagersTest : BaseMapTest() {
               .withPoint(Point.fromLngLat(0.0, 0.0))
           )
 
-          polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager(mapView)
+          polygonAnnotationManager = mapView.annotations.createPolygonAnnotationManager()
           polygonAnnotation = polygonAnnotationManager.create(
             PolygonAnnotationOptions()
               .withPoints(points)
@@ -81,7 +81,7 @@ class UpdateAnnotationWithMultiManagersTest : BaseMapTest() {
               .withFillColor(Color.RED)
           )
 
-          polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager(mapView)
+          polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
           polylineAnnotation = polylineAnnotationManager.create(
             PolylineAnnotationOptions()
               .withPoints(polylinePoints)

@@ -62,7 +62,7 @@ class PointAnnotationActivity : AppCompatActivity() {
           .withDraggable(false)
         circleAnnotation = create(circleAnnotationOptions)
       }
-      pointAnnotationManager = annotationPlugin.createPointAnnotationManager(binding.mapView).apply {
+      pointAnnotationManager = annotationPlugin.createPointAnnotationManager().apply {
         textFont = listOf("Arial Unicode MS Bold", "Open Sans Regular")
 
         addDragListener(object : OnPointAnnotationDragListener {
