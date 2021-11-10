@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
@@ -45,6 +46,8 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
 
   private var markerWidth = 0
   private var markerHeight = 0
+
+  private val asyncInflater by lazy { AsyncLayoutInflater(this) }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -137,13 +140,14 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
   @SuppressLint("SetTextI18n")
   private fun addViewAnnotation(point: Point, markerId: String) {
     viewAnnotationManager.addViewAnnotation(
-      R.layout.item_callout_view,
-      viewAnnotationOptions {
+      resId = R.layout.item_callout_view,
+      options = viewAnnotationOptions {
         geometry(point)
         associatedFeatureId(markerId)
         anchor(ViewAnnotationAnchor.BOTTOM)
         allowOverlap(false)
-      }
+      },
+      asyncInflater = asyncInflater
     ) { viewAnnotation ->
       viewAnnotation.visibility = View.GONE
       // calculate offsetY manually taking into account icon height only because of bottom anchoring
