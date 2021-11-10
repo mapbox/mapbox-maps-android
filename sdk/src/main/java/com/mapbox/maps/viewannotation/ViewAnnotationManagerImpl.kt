@@ -27,6 +27,8 @@ internal class ViewAnnotationManagerImpl(
 
   // structs needed for drawing, declare them only once
   private val currentViewsDrawnMap = HashMap<String, ScreenCoordinate>()
+  private val idsToAddSet = HashSet<String>()
+  private val idsToRemoveSet = HashSet<String>()
 
   override fun addViewAnnotation(
     @LayoutRes resId: Int,
@@ -167,12 +169,27 @@ internal class ViewAnnotationManagerImpl(
   private fun drawAnnotationViews(
     positionDescriptorCoreList: List<ViewAnnotationPositionDescriptor>
   ) {
-    // TODO rewrite to avoid spawning collections
-    val sortedKeyList = positionDescriptorCoreList.map { it.identifier }
-    val idsToAddSet = sortedKeyList.minus(currentViewsDrawnMap.keys)
-    val idsToDeleteSet = currentViewsDrawnMap.keys.minus(sortedKeyList)
+    idsToAddSet.clear()
+    idsToRemoveSet.clear()
+    positionDescriptorCoreList.forEach {
+      if (!currentViewsDrawnMap.keys.contains(it.identifier)) {
+        idsToAddSet.add(it.identifier)
+      }
+    }
+    currentViewsDrawnMap.keys.forEach { id ->
+      var contains = false
+      for (descriptor in positionDescriptorCoreList) {
+        if (descriptor.identifier == id) {
+          contains = true
+          break
+        }
+      }
+      if (!contains) {
+        idsToRemoveSet.add(id)
+      }
+    }
     // firstly delete views that do not belong to the viewport
-    idsToDeleteSet.forEach {
+    idsToRemoveSet.forEach {
       annotationMap[it]?.let { annotation ->
         // if view is invisible / gone we don't remove it so that visibility logic could
         // still be handled by OnGlobalLayoutListener
