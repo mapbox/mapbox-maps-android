@@ -7,14 +7,16 @@ import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.maps.*
-import com.mapbox.maps.plugin.ViewPlugin
+import java.util.*
 import java.util.concurrent.ConcurrentHashMap
+import kotlin.collections.HashMap
 
 internal class ViewAnnotationManagerImpl(
   private val mapView: MapView
 ) : ViewAnnotationManager, ViewAnnotationPositionsListener {
 
   private val mapboxMap: MapboxMap = mapView.getMapboxMap()
+  private val viewPlugins = mapView.mapController.pluginRegistry.viewPlugins
 
   init {
     mapView.requestDisallowInterceptTouchEvent(false)
@@ -37,10 +39,6 @@ internal class ViewAnnotationManagerImpl(
 
   // structs needed for drawing, declare them only once
   private val currentViewsDrawnMap = HashMap<String, ScreenCoordinate>()
-  private val positionDescriptorMap = HashMap<String, ViewPosition>()
-  private val idsToRepositionSet = HashSet<String>()
-  private val idsToAddSet = HashSet<String>()
-  private val idsToDeleteSet = HashSet<String>()
 
   override fun addViewAnnotation(
     @LayoutRes resId: Int,
@@ -126,10 +124,6 @@ internal class ViewAnnotationManagerImpl(
       mapView.removeView(annotation.view)
     }
     currentViewsDrawnMap.clear()
-    positionDescriptorMap.clear()
-    idsToRepositionSet.clear()
-    idsToAddSet.clear()
-    idsToDeleteSet.clear()
     annotationMap.clear()
     idLookupMap.clear()
   }
@@ -182,27 +176,12 @@ internal class ViewAnnotationManagerImpl(
   }
 
   private fun drawAnnotationViews(
-    positionDescriptorList: List<ViewAnnotationPositionDescriptor>
+    positionDescriptorCoreList: List<ViewAnnotationPositionDescriptor>
   ) {
-    positionDescriptorMap.clear()
-    idsToRepositionSet.clear()
-    idsToAddSet.clear()
-    idsToDeleteSet.clear()
-
-    positionDescriptorList.forEachIndexed { i, descriptor ->
-      positionDescriptorMap[descriptor.identifier] =
-        ViewPosition(
-          leftTopCoordinate = descriptor.leftTopCoordinate,
-          width = descriptor.width,
-          height = descriptor.height,
-          zIndex = ViewPlugin.VIEW_PLUGIN_Z_TRANSLATION - 1f + i.toFloat() / positionDescriptorList.size
-        )
-    }
     // TODO rewrite to avoid spawning collections
-    idsToRepositionSet.addAll(positionDescriptorMap.keys.intersect(currentViewsDrawnMap.keys))
-    idsToAddSet.addAll(positionDescriptorMap.keys.minus(currentViewsDrawnMap.keys))
-    idsToDeleteSet.addAll(currentViewsDrawnMap.keys.minus(positionDescriptorMap.keys))
-
+    val sortedKeyList = positionDescriptorCoreList.map { it.identifier }
+    val idsToAddSet = sortedKeyList.minus(currentViewsDrawnMap.keys)
+    val idsToDeleteSet = currentViewsDrawnMap.keys.minus(sortedKeyList)
     // firstly delete views that do not belong to the viewport
     idsToDeleteSet.forEach {
       annotationMap[it]?.let { annotation ->
@@ -213,41 +192,30 @@ internal class ViewAnnotationManagerImpl(
         }
       }
     }
-    // reposition existing views modifying layout parameters
-    addViews(idsToRepositionSet, needsRepositionOnly = true)
-    // add views on screen that were not present before
-    addViews(idsToAddSet, needsRepositionOnly = false)
-    currentViewsDrawnMap.clear()
-    positionDescriptorList.forEach {
-      currentViewsDrawnMap[it.identifier] = it.leftTopCoordinate
-    }
-  }
-
-  private fun addViews(idsSet: HashSet<String>, needsRepositionOnly: Boolean) {
-    idsSet.forEach { id ->
-      annotationMap[id]?.let { annotation ->
-        positionDescriptorMap[id]?.let { viewPosition ->
-          annotation.viewLayoutParams.width = viewPosition.width
-          annotation.viewLayoutParams.height = viewPosition.height
-          annotation.viewLayoutParams.setMargins(
-            viewPosition.leftTopCoordinate.x.toInt(),
-            viewPosition.leftTopCoordinate.y.toInt(),
-            0,
-            0
-          )
-          if (needsRepositionOnly) {
-            // TODO recalculate actual view translation instead or re-requesting layout
-            annotation.view.requestLayout()
-          } else {
-            // remove view to as it may have been not removed before due to visibility
-            mapView.removeView(annotation.view)
-            // removing shadowing effect brought in by setting z-index / elevation
-            annotation.view.outlineProvider = null
-            mapView.addView(annotation.view, annotation.viewLayoutParams)
-          }
-          annotation.view.translationZ = viewPosition.zIndex
+    positionDescriptorCoreList.forEach { descriptor ->
+      annotationMap[descriptor.identifier]?.let { annotation ->
+        annotation.viewLayoutParams.width = descriptor.width
+        annotation.viewLayoutParams.height = descriptor.height
+        annotation.viewLayoutParams.setMargins(
+          descriptor.leftTopCoordinate.x.toInt(),
+          descriptor.leftTopCoordinate.y.toInt(),
+          0,
+          0
+        )
+        if (idsToAddSet.contains(descriptor.identifier) && mapView.indexOfChild(annotation.view) == -1) {
+          mapView.addView(annotation.view, annotation.viewLayoutParams)
         }
+        // as we preserve correct order we bring each view to the front and correct order will be preserved
+        annotation.view.bringToFront()
       }
+    }
+    // bring to front map view plugins so that they are drawn on top of view annotations
+    viewPlugins.forEach {
+      it.value.bringToFront()
+    }
+    currentViewsDrawnMap.clear()
+    positionDescriptorCoreList.forEach {
+      currentViewsDrawnMap[it.identifier] = it.leftTopCoordinate
     }
   }
 }
