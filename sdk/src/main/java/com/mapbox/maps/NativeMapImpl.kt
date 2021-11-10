@@ -451,6 +451,10 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.removeFeatureState(sourceId, sourceLayerId, featureId, stateKey)
   }
 
+  override fun setMemoryBudget(memoryBudget: MapMemoryBudget?) {
+    map.setMemoryBudget(memoryBudget)
+  }
+
   override fun addStyleCustomGeometrySource(
     sourceId: String,
     options: CustomGeometrySourceOptions

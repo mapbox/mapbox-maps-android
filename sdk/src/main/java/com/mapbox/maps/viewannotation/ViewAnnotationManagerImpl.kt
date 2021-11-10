@@ -202,11 +202,7 @@ internal class ViewAnnotationManagerImpl(
           0,
           0
         )
-        if (idsToAddSet.contains(descriptor.identifier)) {
-          // remove view to as it may have been not removed before due to visibility
-          if (annotation.view.visibility != View.VISIBLE) {
-            mapView.removeView(annotation.view)
-          }
+        if (idsToAddSet.contains(descriptor.identifier) && mapView.indexOfChild(annotation.view) == -1) {
           mapView.addView(annotation.view, annotation.viewLayoutParams)
         }
         // as we preserve correct order we bring each view to the front and correct order will be preserved
