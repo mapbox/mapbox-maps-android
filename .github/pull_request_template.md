@@ -11,6 +11,13 @@ Fixes: < Link to related issues that will be fixed by this pull request, if they
 ## Pull request checklist:
  - [ ] Briefly describe the changes in this PR.
  - [ ] Include before/after visuals or gifs if this PR includes visual changes.
+    <!--
+        | Before | After |
+        | ----- | ----- |
+        | <img src="" width = 250/> | <img src="" width = 250/> |
+        or
+        | <video src="" width = 250/> | <video src="" width = 250/> |
+    -->
  - [ ] Write tests for all new functionality. If tests were not written, please explain why.
  - [ ] Optimize code for java consumption (`@JvmOverloads`, `@file:JvmName`, etc).
  - [ ] Add example if relevant.
