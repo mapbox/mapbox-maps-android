@@ -13,7 +13,7 @@ import kotlin.collections.HashMap
 
 internal class ViewAnnotationManagerImpl(
   private val mapView: MapView
-) : ViewAnnotationManager, ViewAnnotationPositionsListener {
+) : ViewAnnotationManager, ViewAnnotationPositionsUpdateListener {
 
   private val mapboxMap: MapboxMap = mapView.getMapboxMap()
   private val viewPlugins = mapView.mapController.pluginRegistry.viewPlugins
