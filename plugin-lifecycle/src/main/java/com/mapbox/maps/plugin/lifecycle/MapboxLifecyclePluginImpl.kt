@@ -43,28 +43,11 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
         }
 
         override fun onTrimMemory(level: Int) {
-          when(level) {
-            ComponentCallbacks2.TRIM_MEMORY_BACKGROUND -> {
+          when (level) {
+            ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL, ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW -> {
               observer.onLowMemory()
             }
-            ComponentCallbacks2.TRIM_MEMORY_COMPLETE -> {
-              observer.onLowMemory()
-            }
-            ComponentCallbacks2.TRIM_MEMORY_MODERATE -> {
-              observer.onLowMemory()
-            }
-            ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL -> {
-              observer.onLowMemory()
-            }
-            ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW -> {
-              observer.onLowMemory()
-            }
-            ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE -> {
-              observer.onLowMemory()
-            }
-            ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN -> {
-              observer.onLowMemory()
-            }
+            ComponentCallbacks2.TRIM_MEMORY_BACKGROUND, ComponentCallbacks2.TRIM_MEMORY_COMPLETE, ComponentCallbacks2.TRIM_MEMORY_MODERATE, ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE, ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN -> Unit
           }
         }
       }
