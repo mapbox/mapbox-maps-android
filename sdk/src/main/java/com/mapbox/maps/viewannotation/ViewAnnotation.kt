@@ -17,6 +17,10 @@ internal data class ViewAnnotation(
    */
   var handleVisibilityAutomatically: Boolean,
   /**
+   * Cached value if view was visible before OnGlobalLayoutListener was triggered.
+   */
+  var wasVisible: Boolean,
+  /**
    * Layout params needed to position Android view correctly on the screen.
    */
   var viewLayoutParams: FrameLayout.LayoutParams,
