@@ -150,6 +150,7 @@ commands:
               Build << parameters.module_target >> apk for all flavors
             else
               Build << parameters.module_target >> apk in << parameters.variant >> mode
+            fi
           command: |
             if [ << parameters.module_target >> == "All" ]; then
               ./gradlew << parameters.module_target >>:assemble
