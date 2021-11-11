@@ -1376,7 +1376,7 @@ class MapboxMap internal constructor(
     return nativeMapWeakRef.call { this.getViewAnnotationOptions(identifier) }
   }
 
-  internal fun setViewAnnotationPositionsUpdateListener(listener: ViewAnnotationPositionsListener?) {
+  internal fun setViewAnnotationPositionsUpdateListener(listener: ViewAnnotationPositionsUpdateListener?) {
     return nativeMapWeakRef.call { this.setViewAnnotationPositionsUpdateListener(listener) }
   }
 

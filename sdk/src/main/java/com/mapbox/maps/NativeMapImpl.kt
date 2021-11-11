@@ -568,7 +568,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.getViewAnnotationOptions(identifier)
   }
 
-  override fun setViewAnnotationPositionsUpdateListener(listener: ViewAnnotationPositionsListener?) {
+  override fun setViewAnnotationPositionsUpdateListener(listener: ViewAnnotationPositionsUpdateListener?) {
     return map.setViewAnnotationPositionsUpdateListener(listener)
   }
 }
