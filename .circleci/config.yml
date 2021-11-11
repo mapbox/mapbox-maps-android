@@ -146,13 +146,13 @@ commands:
             fi
       - run:
           name: |
-            if [ << parameters.module_target >> == "All" ]; then
+            if [ << parameters.variant >> == "All" ]; then
               Build << parameters.module_target >> apk for all flavors
             else
               Build << parameters.module_target >> apk in << parameters.variant >> mode
             fi
           command: |
-            if [ << parameters.module_target >> == "All" ]; then
+            if [ << parameters.variant >> == "All" ]; then
               ./gradlew << parameters.module_target >>:assemble
             else
               ./gradlew << parameters.module_target >>:assemble<< parameters.variant >>
