@@ -132,16 +132,16 @@ internal class ViewAnnotationManagerImpl(
     val viewAnnotation = ViewAnnotation(
       view = inflatedView,
       handleVisibilityAutomatically = options.visible == null,
-      wasVisible = inflatedView.visibility == View.VISIBLE,
+      visible = inflatedView.visibility == View.VISIBLE,
       viewLayoutParams = inflatedViewLayout,
     )
     val globalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
       if (viewAnnotation.handleVisibilityAutomatically) {
         val isVisibleNow = inflatedView.visibility == View.VISIBLE
-        if (isVisibleNow == viewAnnotation.wasVisible) {
+        if (isVisibleNow == viewAnnotation.visible) {
           return@OnGlobalLayoutListener
         }
-        viewAnnotation.wasVisible = isVisibleNow
+        viewAnnotation.visible = isVisibleNow
         // hide view below map surface and pull it back when new position from core will arrive
         if (isVisibleNow) {
           hiddenViewMap[inflatedView] = inflatedView.translationZ
