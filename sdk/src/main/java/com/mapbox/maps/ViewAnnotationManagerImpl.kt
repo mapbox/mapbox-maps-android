@@ -97,11 +97,7 @@ internal class ViewAnnotationManagerImpl(
 
   override fun getViewAnnotationOptionsByView(view: View): ViewAnnotationOptions? {
     val id = idLookupMap[view] ?: return null
-    val options = checkForError(mapboxMap.getViewAnnotationOptions(id))
-    if (options != null) {
-      return options
-    }
-    return null
+    return checkForError(mapboxMap.getViewAnnotationOptions(id))
   }
 
   override fun onViewAnnotationPositionsUpdate(positions: MutableList<ViewAnnotationPositionDescriptor>) {
