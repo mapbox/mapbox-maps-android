@@ -194,14 +194,14 @@ internal class ViewAnnotationManagerImpl(
     // add and reposition new and existed views
     positionDescriptorCoreList.forEach { descriptor ->
       annotationMap[descriptor.identifier]?.let { annotation ->
-        annotation.viewLayoutParams.width = descriptor.width
-        annotation.viewLayoutParams.height = descriptor.height
-        annotation.viewLayoutParams.setMargins(
-          descriptor.leftTopCoordinate.x.toInt(),
-          descriptor.leftTopCoordinate.y.toInt(),
-          0,
-          0
-        )
+        annotation.viewLayoutParams.apply {
+          width = descriptor.width
+          height = descriptor.height
+        }
+        annotation.view.apply {
+          translationX = descriptor.leftTopCoordinate.x.toFloat()
+          translationY = descriptor.leftTopCoordinate.y.toFloat()
+        }
         if (!currentViewsDrawnMap.keys.contains(descriptor.identifier) && mapView.indexOfChild(annotation.view) == -1) {
           mapView.addView(annotation.view, annotation.viewLayoutParams)
         }
