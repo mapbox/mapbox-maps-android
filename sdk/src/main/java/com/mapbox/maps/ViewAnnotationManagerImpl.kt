@@ -1,4 +1,4 @@
-package com.mapbox.maps.viewannotation
+package com.mapbox.maps
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,13 +6,14 @@ import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
-import com.mapbox.maps.*
+import com.mapbox.maps.viewannotation.ViewAnnotation
+import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.collections.HashMap
 
 internal class ViewAnnotationManagerImpl(
   private val mapView: MapView
-) : ViewAnnotationManager, ViewAnnotationPositionsListener {
+) : ViewAnnotationManager, ViewAnnotationPositionsUpdateListener {
 
   private val mapboxMap: MapboxMap = mapView.getMapboxMap()
   private val viewPlugins = mapView.mapController.pluginRegistry.viewPlugins
@@ -24,6 +25,7 @@ internal class ViewAnnotationManagerImpl(
 
   private val annotationMap = ConcurrentHashMap<String, ViewAnnotation>()
   private val idLookupMap = ConcurrentHashMap<View, String>()
+  private val hiddenViewMap = ConcurrentHashMap<View, Float>()
 
   // struct needed for drawing, declare it only once
   private val currentViewsDrawnMap = HashMap<String, ScreenCoordinate>()
@@ -130,11 +132,21 @@ internal class ViewAnnotationManagerImpl(
     val viewAnnotation = ViewAnnotation(
       view = inflatedView,
       handleVisibilityAutomatically = options.visible == null,
+      visible = inflatedView.visibility == View.VISIBLE,
       viewLayoutParams = inflatedViewLayout,
     )
     val globalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
       if (viewAnnotation.handleVisibilityAutomatically) {
         val isVisibleNow = inflatedView.visibility == View.VISIBLE
+        if (isVisibleNow == viewAnnotation.visible) {
+          return@OnGlobalLayoutListener
+        }
+        viewAnnotation.visible = isVisibleNow
+        // hide view below map surface and pull it back when new position from core will arrive
+        if (isVisibleNow) {
+          hiddenViewMap[inflatedView] = inflatedView.translationZ
+          inflatedView.translationZ = mapView.translationZ - 1f
+        }
         if (mapboxMap.getViewAnnotationOptions(viewAnnotation.id).value?.visible != isVisibleNow) {
           mapboxMap.updateViewAnnotation(
             viewAnnotation.id,
@@ -182,16 +194,20 @@ internal class ViewAnnotationManagerImpl(
     // add and reposition new and existed views
     positionDescriptorCoreList.forEach { descriptor ->
       annotationMap[descriptor.identifier]?.let { annotation ->
-        annotation.viewLayoutParams.width = descriptor.width
-        annotation.viewLayoutParams.height = descriptor.height
-        annotation.viewLayoutParams.setMargins(
-          descriptor.leftTopCoordinate.x.toInt(),
-          descriptor.leftTopCoordinate.y.toInt(),
-          0,
-          0
-        )
+        annotation.viewLayoutParams.apply {
+          width = descriptor.width
+          height = descriptor.height
+        }
+        annotation.view.apply {
+          translationX = descriptor.leftTopCoordinate.x.toFloat()
+          translationY = descriptor.leftTopCoordinate.y.toFloat()
+        }
         if (!currentViewsDrawnMap.keys.contains(descriptor.identifier) && mapView.indexOfChild(annotation.view) == -1) {
           mapView.addView(annotation.view, annotation.viewLayoutParams)
+        }
+        hiddenViewMap[annotation.view]?.let { zIndex ->
+          annotation.view.translationZ = zIndex
+          hiddenViewMap.remove(annotation.view)
         }
         // as we preserve correct order we bring each view to the front and correct order will be preserved
         annotation.view.bringToFront()
