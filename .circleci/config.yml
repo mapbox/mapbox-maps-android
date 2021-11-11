@@ -133,7 +133,7 @@ commands:
         description: module target
         type: string
       variant:
-        description: debug or release
+        description: debug or release or all
         type: string
     steps:
       - run:
@@ -145,8 +145,18 @@ commands:
               echo "${MAPBOX_DEVELOPER_CONFIG_XML}" > android-auto-app/src/main/res/values/developer-config.xml
             fi
       - run:
-          name: Build << parameters.module_target >> apk in << parameters.variant >> mode
-          command: ./gradlew << parameters.module_target >>:assemble<< parameters.variant >>
+          name: |
+            if [ << parameters.variant >> == "All" ]; then
+              Build << parameters.module_target >> apk for all flavors
+            else
+              Build << parameters.module_target >> apk in << parameters.variant >> mode
+            fi
+          command: |
+            if [ << parameters.variant >> == "All" ]; then
+              ./gradlew << parameters.module_target >>:assemble
+            else
+              ./gradlew << parameters.module_target >>:assemble<< parameters.variant >>
+            fi
 
   update-version-name:
     steps:
@@ -470,10 +480,7 @@ jobs:
       - generate-sanity-test
       - build-module:
           module_target: "app"
-          variant: "Release"
-      - build-module:
-          module_target: "app"
-          variant: "Debug"
+          variant: "All"
       - build-instrumentation-test:
           module_target: "app"
       - build-instrumentation-test:
