@@ -52,17 +52,16 @@ internal class LocationPuckManager(
     animationManager.setLocationLayerRenderer(locationLayerRenderer)
     animationManager.applyPulsingAnimationSettings(settings)
     locationLayerRenderer.addLayers(positionManager)
+    lastLocation?.let {
+      updateCurrentPosition(it)
+    }
+    updateCurrentBearing(lastBearing)
     locationLayerRenderer.initializeComponents(style)
     styleScaling(settings)
-    updateCurrentBearing(lastBearing)
-    if (lastLocation == null) {
-      hide()
+    if (lastLocation != null && settings.enabled) {
+      show()
     } else {
-      if (settings.enabled) {
-        show()
-      } else {
-        hide()
-      }
+      hide()
     }
   }
 
@@ -109,12 +108,12 @@ internal class LocationPuckManager(
   }
 
   fun updateCurrentPosition(vararg points: Point, options: (ValueAnimator.() -> Unit)? = null) {
-    val targets = if (lastLocation == null) arrayOf(*points, *points) else {
+    val targets = lastLocation?.let {
       show()
-      arrayOf(lastLocation, *points)
-    }
+      arrayOf(it, *points)
+    } ?: arrayOf(*points, *points)
     animationManager.animatePosition(
-      *targets as Array<out Point>,
+      *targets,
       options = options
     )
   }
