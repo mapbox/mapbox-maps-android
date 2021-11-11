@@ -1172,33 +1172,15 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       return false
     }
 
-    val pitch = mapCameraManagerDelegate.cameraState.pitch
-
-    // We limit the amount of fling displacement based on the camera pitch value.
-    val pitchFactorAdditionalComponent = when {
-      pitch < NORMAL_MAX_PITCH -> {
-        pitch / 10.0
-      }
-      pitch in NORMAL_MAX_PITCH..MAXIMUM_PITCH -> {
-        val a = ln(NORMAL_MAX_PITCH / 10.0)
-        val b = ln(MAX_FLING_PITCH_FACTOR)
-        // exp(a) = pitch / 10.0
-        // exp(b) = pitch
-        exp((b - a) * (pitch - NORMAL_MAX_PITCH) / (MAXIMUM_PITCH - NORMAL_MAX_PITCH) + a)
-      }
-      else -> 0.0
-    }
-    val pitchFactor = FLING_LIMITING_FACTOR + pitchFactorAdditionalComponent / screenDensity.toDouble()
-
-    val offsetX = if (internalSettings.isScrollHorizontallyLimited()) 0.0 else velocityX.toDouble() / pitchFactor
-    val offsetY = if (internalSettings.isScrollVerticallyLimited()) 0.0 else velocityY.toDouble() / pitchFactor
+    val offsetX = if (internalSettings.isScrollHorizontallyLimited()) 0.0 else velocityX.toDouble() / FLING_LIMITING_FACTOR
+    val offsetY = if (internalSettings.isScrollVerticallyLimited()) 0.0 else velocityY.toDouble() / FLING_LIMITING_FACTOR
 
     cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
 
     // calculate animation time based on displacement
     // velocityXY ranges from VELOCITY_THRESHOLD_IGNORE_FLING to ~5000
     // limit animation time to Android SDK default animation time
-    val animationTime = (velocityXY / pitchFactor).toLong()
+    val animationTime = (velocityXY / FLING_LIMITING_FACTOR).toLong()
 
     cameraAnimationsPlugin.easeTo(
       mapCameraManagerDelegate.getDragCameraOptions(
@@ -1262,38 +1244,14 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       val toX = fromX - resolvedDistanceX
       val toY = fromY - resolvedDistanceY
 
-      val cameraOptions = getAdjustedCameraCenter(
-        mapCameraManagerDelegate.cameraState,
+      easeToImmediately(
         mapCameraManagerDelegate.getDragCameraOptions(
           ScreenCoordinate(fromX, fromY),
           ScreenCoordinate(toX, toY)
         )
       )
-
-      easeToImmediately(cameraOptions)
     }
     return true
-  }
-
-  private fun getAdjustedCameraCenter(
-    currentCamera: CameraState,
-    targetCamera: CameraOptions
-  ): CameraOptions {
-    val translationLng = targetCamera.center!!.longitude() - currentCamera.center.longitude()
-    val translationLat = targetCamera.center!!.latitude() - currentCamera.center.latitude()
-    val maximumDistance =
-      SCROLL_LIMITING_FACTOR / 2.0.pow(currentCamera.zoom)
-    val currentDistance = hypot(translationLng, translationLat)
-    return if (currentDistance > maximumDistance) {
-      targetCamera.toBuilder().center(
-        Point.fromLngLat(
-          currentCamera.center.longitude() + translationLng * (maximumDistance / currentDistance),
-          currentCamera.center.latitude() + translationLat * (maximumDistance / currentDistance)
-        )
-      ).build()
-    } else {
-      targetCamera
-    }
   }
 
   internal fun handleMoveEnd(detector: MoveGestureDetector) {
