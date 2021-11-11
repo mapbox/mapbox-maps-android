@@ -132,7 +132,7 @@ internal class ViewAnnotationManagerImpl(
     val viewAnnotation = ViewAnnotation(
       view = inflatedView,
       handleVisibilityAutomatically = options.visible == null,
-      wasVisible = true,
+      wasVisible = inflatedView.visibility == View.VISIBLE,
       viewLayoutParams = inflatedViewLayout,
     )
     val globalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
