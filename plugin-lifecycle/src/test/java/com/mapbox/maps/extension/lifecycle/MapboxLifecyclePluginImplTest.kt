@@ -5,6 +5,7 @@ import android.content.Context
 import android.widget.FrameLayout
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewTreeLifecycleOwner
+import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.MapboxLifecycleObserver
 import com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePlugin
 import com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePluginImpl
@@ -13,6 +14,8 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
+import org.robolectric.ParameterizedRobolectricTestRunner
+import org.robolectric.annotation.Config
 
 class MapboxLifecyclePluginImplTest {
   private lateinit var mapboxLifecyclePlugin: MapboxLifecyclePlugin
@@ -41,7 +44,8 @@ class MapboxLifecyclePluginImplTest {
   }
 }
 
-@RunWith(Parameterized::class)
+@RunWith(ParameterizedRobolectricTestRunner::class)
+@Config(shadows = [ShadowLogger::class])
 class AcceptedTrimMemoryLevelTest(private val level: Int) {
   private lateinit var mapboxLifecyclePlugin: MapboxLifecyclePlugin
   private val mapView: FrameLayout = mockk(relaxed = true)
@@ -70,7 +74,7 @@ class AcceptedTrimMemoryLevelTest(private val level: Int) {
 
   companion object {
     @JvmStatic
-    @Parameterized.Parameters(name = "TrimMemoryLevel {0} should trigger onLowMemory")
+    @ParameterizedRobolectricTestRunner.Parameters(name = "TrimMemoryLevel {0} should trigger onLowMemory")
     fun data() = listOf(
       ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL,
       ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW
