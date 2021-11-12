@@ -101,7 +101,7 @@ object Versions {
   const val kotlinCoroutines = "1.3.9"
   const val junit = "4.13"
   const val mockk = "1.9.3"
-  const val robolectric = "4.6.1"
+  const val robolectric = "4.7"
   const val robolectricEgl = "gl1.1-android-2.1_r1"
   const val lint = "27.2.2"
   const val hamcrest = "2.1"
