@@ -7,6 +7,7 @@ import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
+import com.mapbox.common.Cancelable
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
@@ -738,6 +739,24 @@ class MapboxMap internal constructor(
   }
 
   /**
+   * Queries the map for rendered features.
+   *
+   * @param geometry The `screen pixel coordinates` (point, line string or box) to query for rendered features.
+   * @param options The `render query options` for querying rendered features.
+   * @param callback The `query features callback` called when the query completes.
+   * @return A `cancelable` object that could be used to cancel the pending query.
+   */
+  override fun queryRenderedFeatures(
+    geometry: RenderedQueryGeometry,
+    options: RenderedQueryOptions,
+    callback: QueryFeaturesCallback
+  ): Cancelable {
+    return nativeMapWeakRef.call {
+      this.queryRenderedFeatures(geometry, options, callback)
+    }
+  }
+
+  /**
    * Queries the map for source features.
    *
    * @param sourceId Style source identifier used to query for source features.
@@ -1209,6 +1228,25 @@ class MapboxMap internal constructor(
   @MapboxExperimental
   fun getRenderCacheOptions(): RenderCacheOptions {
     return nativeMapWeakRef.call { this.renderCacheOptions }
+  }
+
+  /**
+   * The memory budget hint to be used by the map. The budget can be given in
+   * tile units or in megabytes. A Map will do the best effort to keep memory
+   * allocations for a non essential resources within the budget.
+   *
+   * The memory budget distribution and resource
+   * eviction logic is a subject to change. Current implementation sets memory budget
+   * hint per data source.
+   *
+   * If null is set, the memory budget in tile units will be dynamically calculated based on
+   * the current viewport size.
+   *
+   * @param memoryBudget The memory budget hint to be used by the Map.
+   */
+  @MapboxExperimental
+  fun setMemoryBudget(memoryBudget: MapMemoryBudget?) {
+    nativeMapWeakRef.call { this.setMemoryBudget(memoryBudget) }
   }
 
   /**

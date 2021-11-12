@@ -6,7 +6,6 @@ import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import com.mapbox.maps.MapView.Companion.DEFAULT_ANTIALIASING_SAMPLE_COUNT
-import com.mapbox.maps.loader.MapboxMapStaticInitializer
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -31,8 +30,6 @@ class MapViewTypedArrayTest(
 
   @Before
   fun setUp() {
-    mockkStatic(MapboxMapStaticInitializer::class)
-    every { MapboxMapStaticInitializer.loadMapboxMapNativeLib() } just Runs
     attrs = mockk()
     val mapController = mockk<MapController>(relaxUnitFun = true)
     val mapboxMap = mockk<MapboxMap>(relaxUnitFun = true)

@@ -14,6 +14,7 @@ import com.mapbox.maps.extension.style.layers.generated.heatmapLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
+import com.mapbox.maps.plugin.MapProjection
 import com.mapbox.maps.testapp.databinding.ActivityHeatmapLayerBinding
 
 /**
@@ -29,10 +30,12 @@ class HeatmapLayerActivity : AppCompatActivity() {
     val binding = ActivityHeatmapLayerBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    mapboxMap = binding.mapView.getMapboxMap()
-    mapboxMap.loadStyleUri(
-      styleUri = Style.DARK
-    ) { style -> addRuntimeLayers(style) }
+    mapboxMap = binding.mapView.getMapboxMap().apply {
+      loadStyleUri(
+        styleUri = Style.DARK
+      ) { style -> addRuntimeLayers(style) }
+      setMapProjection(MapProjection.Globe)
+    }
   }
 
   private fun addRuntimeLayers(style: Style) {
