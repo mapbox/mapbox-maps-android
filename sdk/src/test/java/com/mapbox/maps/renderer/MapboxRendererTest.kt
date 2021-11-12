@@ -39,7 +39,7 @@ internal abstract class MapboxRendererTest {
 
   @Test
   fun setMapTest() {
-    val map = mockk<MapInterface>(relaxed = true)
+    val map = mockk<MapInterface>(relaxUnitFun = true)
     mapboxRenderer.setMap(map)
     assert(mapboxRenderer.map == map)
   }
