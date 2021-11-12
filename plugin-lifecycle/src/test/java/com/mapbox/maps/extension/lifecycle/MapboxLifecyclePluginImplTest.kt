@@ -1,6 +1,7 @@
 package com.mapbox.maps.extension.lifecycle
 
 import android.content.ComponentCallbacks2
+import android.content.ComponentCallbacks2.*
 import android.content.Context
 import android.widget.FrameLayout
 import androidx.lifecycle.LifecycleOwner
@@ -75,10 +76,7 @@ class AcceptedTrimMemoryLevelTest(private val level: Int) {
   companion object {
     @JvmStatic
     @ParameterizedRobolectricTestRunner.Parameters(name = "TrimMemoryLevel {0} should trigger onLowMemory")
-    fun data() = listOf(
-      ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL,
-      ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW
-    )
+    fun data() = listOf(TRIM_MEMORY_RUNNING_CRITICAL, TRIM_MEMORY_RUNNING_LOW)
   }
 }
 
@@ -113,11 +111,11 @@ class IgnoredTrimMemoryLevelTest(private val level: Int) {
     @JvmStatic
     @Parameterized.Parameters(name = "TrimMemoryLevel {0} should not trigger onLowMemory")
     fun data() = listOf(
-      ComponentCallbacks2.TRIM_MEMORY_BACKGROUND,
-      ComponentCallbacks2.TRIM_MEMORY_COMPLETE,
-      ComponentCallbacks2.TRIM_MEMORY_MODERATE,
-      ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE,
-      ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN
+      TRIM_MEMORY_BACKGROUND,
+      TRIM_MEMORY_COMPLETE,
+      TRIM_MEMORY_MODERATE,
+      TRIM_MEMORY_RUNNING_MODERATE,
+      TRIM_MEMORY_UI_HIDDEN
     )
   }
 }
