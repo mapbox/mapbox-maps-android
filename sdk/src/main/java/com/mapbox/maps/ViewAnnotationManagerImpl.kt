@@ -69,7 +69,7 @@ internal class ViewAnnotationManagerImpl(
     idLookupMap.remove(view)
     view.viewTreeObserver.removeOnGlobalLayoutListener(annotation.globalLayoutListener)
     mapView.removeView(view)
-    checkForError(mapboxMap.removeViewAnnotation(id))
+    getValue(mapboxMap.removeViewAnnotation(id))
     return true
   }
 
@@ -80,7 +80,7 @@ internal class ViewAnnotationManagerImpl(
     val id = idLookupMap[view] ?: return false
     annotationMap[id]?.let {
       it.handleVisibilityAutomatically = options.visible == null
-      checkForError(mapboxMap.updateViewAnnotation(id, options))
+      getValue(mapboxMap.updateViewAnnotation(id, options))
       return true
     } ?: return false
   }
@@ -97,7 +97,7 @@ internal class ViewAnnotationManagerImpl(
 
   override fun getViewAnnotationOptionsByView(view: View): ViewAnnotationOptions? {
     val id = idLookupMap[view] ?: return null
-    return checkForError(mapboxMap.getViewAnnotationOptions(id))
+    return getValue(mapboxMap.getViewAnnotationOptions(id))
   }
 
   override fun onViewAnnotationPositionsUpdate(positions: MutableList<ViewAnnotationPositionDescriptor>) {
@@ -107,7 +107,7 @@ internal class ViewAnnotationManagerImpl(
   fun destroy() {
     mapboxMap.setViewAnnotationPositionsUpdateListener(null)
     annotationMap.forEach { (id, annotation) ->
-      checkForError(mapboxMap.removeViewAnnotation(id))
+      getValue(mapboxMap.removeViewAnnotation(id))
       annotation.view.viewTreeObserver.removeOnGlobalLayoutListener(annotation.globalLayoutListener)
       mapView.removeView(annotation.view)
     }
@@ -144,13 +144,13 @@ internal class ViewAnnotationManagerImpl(
           hiddenViewMap[inflatedView] = inflatedView.translationZ
           inflatedView.translationZ = mapView.translationZ - 1f
         }
-        if (checkForError(mapboxMap.getViewAnnotationOptions(viewAnnotation.id))?.visible != isVisibleNow) {
-          checkForError(
+        if (getValue(mapboxMap.getViewAnnotationOptions(viewAnnotation.id))?.visible != isVisibleNow) {
+          getValue(
             mapboxMap.updateViewAnnotation(
               viewAnnotation.id,
               ViewAnnotationOptions.Builder()
-                .visible(isVisibleNow)
-                .build()
+                      .visible(isVisibleNow)
+                      .build()
             )
           )
         }
@@ -160,13 +160,13 @@ internal class ViewAnnotationManagerImpl(
     inflatedView.viewTreeObserver.addOnGlobalLayoutListener(globalLayoutListener)
     annotationMap[viewAnnotation.id] = viewAnnotation
     idLookupMap[inflatedView] = viewAnnotation.id
-    checkForError(mapboxMap.addViewAnnotation(viewAnnotation.id, updatedOptions))
+    getValue(mapboxMap.addViewAnnotation(viewAnnotation.id, updatedOptions))
     return inflatedView
   }
 
   private fun findByFeatureId(featureId: String): Pair<View?, ViewAnnotationOptions?> {
     annotationMap.forEach { (id, annotation) ->
-      checkForError(mapboxMap.getViewAnnotationOptions(id))?.let { options ->
+      getValue(mapboxMap.getViewAnnotationOptions(id))?.let { options ->
         if (options.associatedFeatureId == featureId) {
           return annotation.view to options
         }
@@ -222,7 +222,7 @@ internal class ViewAnnotationManagerImpl(
     }
   }
 
-  private inline fun <reified V> checkForError(expected: Expected<String, V>): V? {
+  private inline fun <reified V> getValue(expected: Expected<String, V>): V? {
     if (expected.isError) {
       throw RuntimeException(expected.error)
     }
