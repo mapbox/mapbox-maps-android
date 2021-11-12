@@ -1,7 +1,13 @@
 package com.mapbox.maps.plugin.lifecycle
 
 import android.content.ComponentCallbacks2
-import android.content.ComponentCallbacks2.*
+import android.content.ComponentCallbacks2.TRIM_MEMORY_BACKGROUND
+import android.content.ComponentCallbacks2.TRIM_MEMORY_COMPLETE
+import android.content.ComponentCallbacks2.TRIM_MEMORY_MODERATE
+import android.content.ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL
+import android.content.ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW
+import android.content.ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE
+import android.content.ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN
 import android.content.res.Configuration
 import android.view.View
 import androidx.lifecycle.Lifecycle
