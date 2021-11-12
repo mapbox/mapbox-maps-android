@@ -45,6 +45,7 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
         override fun onTrimMemory(level: Int) {
           when (level) {
             ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL, ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW -> {
+              Logger.w(TAG, "onTrimMemory with level $level is received, reduceMemoryUse will be called.")
               observer.onLowMemory()
             }
             ComponentCallbacks2.TRIM_MEMORY_BACKGROUND, ComponentCallbacks2.TRIM_MEMORY_COMPLETE, ComponentCallbacks2.TRIM_MEMORY_MODERATE, ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE, ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN -> Unit
