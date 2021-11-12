@@ -13,6 +13,7 @@ android {
     applicationId = "com.mapbox.maps.testapp.auto"
     minSdkVersion(AndroidVersions.minAndroidAutoSdkVersion)
     targetSdkVersion(AndroidVersions.targetSdkVersion)
+    ndkVersion = AndroidVersions.ndkVersion
     versionCode = 1
     versionName = "0.1.0"
     multiDexEnabled = true
