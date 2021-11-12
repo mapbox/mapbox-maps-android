@@ -401,6 +401,7 @@ class CameraAnimationsPluginImplTest {
 
   @Test
   fun testEaseToSequenceQuickDuration() {
+    cameraAnimationsPluginImpl.debugMode = true
     var cameraPosition = CameraState(
       Point.fromLngLat(90.0, 90.0),
       EdgeInsets(0.0, 0.0, 0.0, 0.0),
