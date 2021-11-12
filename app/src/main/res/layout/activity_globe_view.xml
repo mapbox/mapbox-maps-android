@@ -39,7 +39,8 @@
         android:src="@drawable/ic_cross"
         app:backgroundTint="@color/primary"
         app:layout_constraintBottom_toTopOf="@id/switchProjectionBtn"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:contentDescription="@string/fly_to_location" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/switchProjectionBtn"
@@ -50,6 +51,7 @@
         android:src="@drawable/ic_baseline_refresh_24"
         app:backgroundTint="@color/primary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/switch_projection" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

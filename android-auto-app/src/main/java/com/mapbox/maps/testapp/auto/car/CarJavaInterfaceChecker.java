@@ -5,12 +5,14 @@ import static com.mapbox.maps.extension.androidauto.MapboxCarUtilsKt.initMapSurf
 import androidx.car.app.Session;
 
 import com.mapbox.maps.MapInitOptions;
+import com.mapbox.maps.MapboxExperimental;
 import com.mapbox.maps.extension.androidauto.MapSurfaceReadyCallback;
 import com.mapbox.maps.extension.androidauto.OnMapScaleListener;
 import com.mapbox.maps.extension.androidauto.OnMapScrollListener;
 
 public class CarJavaInterfaceChecker {
 
+    @MapboxExperimental
     private void carSession(Session session, MapInitOptions mapInitOptions,
                             OnMapScrollListener scrollListener,
                             OnMapScaleListener scaleListener,

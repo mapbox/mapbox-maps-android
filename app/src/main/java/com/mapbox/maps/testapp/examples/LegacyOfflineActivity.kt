@@ -1,5 +1,6 @@
 package com.mapbox.maps.testapp.examples
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -70,7 +71,7 @@ class LegacyOfflineActivity : AppCompatActivity() {
       callback
     )
   }
-
+  @SuppressLint("Lifecycle")
   private fun downloadComplete() {
     binding.downloadProgress.visibility = View.GONE
     binding.showMapButton.visibility = View.VISIBLE
@@ -88,20 +89,9 @@ class LegacyOfflineActivity : AppCompatActivity() {
     }
   }
 
-  override fun onStart() {
-    super.onStart()
-    mapView?.onStart()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    mapView?.onStop()
-  }
-
   override fun onDestroy() {
     super.onDestroy()
     offlineRegion.invalidate { }
-    mapView?.onDestroy()
   }
 
   companion object {

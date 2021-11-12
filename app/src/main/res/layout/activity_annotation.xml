@@ -23,7 +23,8 @@
         android:layout_gravity="end|bottom"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:src="@drawable/ic_clear" />
+        android:src="@drawable/ic_clear"
+        android:contentDescription="@string/delete_all" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/changeStyle"
@@ -32,5 +33,6 @@
         android:layout_gravity="end|bottom"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="86dp"
-        android:src="@drawable/ic_layers" />
+        android:src="@drawable/ic_layers"
+        android:contentDescription="@string/change_style" />
 </FrameLayout>

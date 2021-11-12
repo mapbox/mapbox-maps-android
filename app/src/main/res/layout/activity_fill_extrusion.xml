@@ -18,7 +18,8 @@
         android:layout_marginBottom="82dp"
         android:src="@drawable/ic_clear"
         app:backgroundTint="@color/accent"
-        app:layout_anchorGravity="top" />
+        app:layout_anchorGravity="top"
+        android:contentDescription="@string/toggle_light_position" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabLightColor"
@@ -27,6 +28,7 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:src="@drawable/ic_paint"
-        app:backgroundTint="@color/primary" />
+        app:backgroundTint="@color/primary"
+        android:contentDescription="@string/toggle_light_color" />
 
 </FrameLayout>
