@@ -1,6 +1,13 @@
 package com.mapbox.maps.plugin.lifecycle
 
-import android.content.ComponentCallbacks
+import android.content.ComponentCallbacks2
+import android.content.ComponentCallbacks2.TRIM_MEMORY_BACKGROUND
+import android.content.ComponentCallbacks2.TRIM_MEMORY_COMPLETE
+import android.content.ComponentCallbacks2.TRIM_MEMORY_MODERATE
+import android.content.ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL
+import android.content.ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW
+import android.content.ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE
+import android.content.ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN
 import android.content.res.Configuration
 import android.view.View
 import androidx.lifecycle.Lifecycle
@@ -33,13 +40,23 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
           you need manually invoke the corresponding lifecycle methods in onStart/onStop/onDestroy/onLowMemory methods of the host Activity"""
       )
     } else {
-      val componentCallback = object : ComponentCallbacks {
+      val componentCallback = object : ComponentCallbacks2 {
         override fun onConfigurationChanged(newConfig: Configuration) {
           // no need
         }
 
         override fun onLowMemory() {
           observer.onLowMemory()
+        }
+
+        override fun onTrimMemory(level: Int) {
+          when (level) {
+            TRIM_MEMORY_RUNNING_CRITICAL, TRIM_MEMORY_RUNNING_LOW -> {
+              Logger.w(TAG, "onTrimMemory with level $level is received, reduceMemoryUse will be called.")
+              observer.onLowMemory()
+            }
+            TRIM_MEMORY_BACKGROUND, TRIM_MEMORY_COMPLETE, TRIM_MEMORY_MODERATE, TRIM_MEMORY_RUNNING_MODERATE, TRIM_MEMORY_UI_HIDDEN -> Unit
+          }
         }
       }
       mapView.context.registerComponentCallbacks(componentCallback)
