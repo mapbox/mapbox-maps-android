@@ -674,13 +674,13 @@ class MapboxMapTest {
       nativeMap.queryFeatureExtensions(
         "id",
         feature,
-        "supercluster",
-        "leaves",
+        MapboxMap.QFE_SUPER_CLUSTER,
+        MapboxMap.QFE_LEAVES,
         capture(mapSlot),
         callback
       )
     }
-    checkCapturedMap(mapSlot, "10", "0")
+    checkCapturedMap(mapSlot, MapboxMap.QFE_DEFAULT_LIMIT.toString(), MapboxMap.QFE_DEFAULT_OFFSET.toString())
   }
 
   private fun checkCapturedMap(
@@ -704,8 +704,8 @@ class MapboxMapTest {
       nativeMap.queryFeatureExtensions(
         "id",
         feature,
-        "supercluster",
-        "leaves",
+        MapboxMap.QFE_SUPER_CLUSTER,
+        MapboxMap.QFE_LEAVES,
         capture(mapSlot),
         callback
       )
@@ -722,8 +722,8 @@ class MapboxMapTest {
       nativeMap.queryFeatureExtensions(
         "id",
         feature,
-        "supercluster",
-        "children",
+        MapboxMap.QFE_SUPER_CLUSTER,
+        MapboxMap.QFE_CHILDREN,
         null,
         callback
       )
@@ -739,8 +739,8 @@ class MapboxMapTest {
       nativeMap.queryFeatureExtensions(
         "id",
         feature,
-        "supercluster",
-        "expansion-zoom",
+        MapboxMap.QFE_SUPER_CLUSTER,
+        MapboxMap.QFE_EXPANSION_ZOOM,
         null,
         callback
       )

@@ -792,6 +792,10 @@ class MapboxMap internal constructor(
    *         The result could be a feature extension value containing either a value (expansion-zoom) or a feature collection (children or leaves).
    *         Or a string describing an error if the operation was not successful.
    */
+  @Deprecated(
+    "The function of queryFeatureExtensions is covered by others.",
+    ReplaceWith("getGeoJsonClusterLeaves/getGeoJsonClusterChildren/getGeoJsonClusterExpansionZoom")
+  )
   fun queryFeatureExtensions(
     sourceIdentifier: String,
     feature: Feature,
@@ -1408,13 +1412,13 @@ class MapboxMap internal constructor(
     }
 
     private const val TAG_PROJECTION = "MbxProjection"
-    private const val QFE_SUPER_CLUSTER = "supercluster"
-    private const val QFE_LEAVES = "leaves"
-    private const val QFE_LIMIT = "limit"
-    private const val QFE_OFFSET = "offset"
-    private const val QFE_DEFAULT_LIMIT = 10L
-    private const val QFE_DEFAULT_OFFSET = 0L
-    private const val QFE_CHILDREN = "children"
-    private const val QFE_EXPANSION_ZOOM = "expansion-zoom"
+    internal const val QFE_SUPER_CLUSTER = "supercluster"
+    internal const val QFE_LEAVES = "leaves"
+    internal const val QFE_LIMIT = "limit"
+    internal const val QFE_OFFSET = "offset"
+    internal const val QFE_DEFAULT_LIMIT = 10L
+    internal const val QFE_DEFAULT_OFFSET = 0L
+    internal const val QFE_CHILDREN = "children"
+    internal const val QFE_EXPANSION_ZOOM = "expansion-zoom"
   }
 }
