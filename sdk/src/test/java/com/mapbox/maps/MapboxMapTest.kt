@@ -743,6 +743,15 @@ class MapboxMapTest {
   }
 
   @Test
+  fun queryRenderedFeaturesRenderedQueryGeometry() {
+    val queryCallback = mockk<QueryFeaturesCallback>()
+    val geometry = mockk<RenderedQueryGeometry>()
+    val renderedQueryOptions = mockk<RenderedQueryOptions>()
+    mapboxMap.queryRenderedFeatures(geometry, renderedQueryOptions, queryCallback)
+    verify { nativeMap.queryRenderedFeatures(geometry, renderedQueryOptions, queryCallback) }
+  }
+
+  @Test
   fun getSize() {
     mapboxMap.getSize()
     verify { nativeMap.size }
@@ -923,5 +932,12 @@ class MapboxMapTest {
       "Could not cast given Value to valid MapProjection!",
       exception.message
     )
+  }
+
+  @Test
+  fun setMemoryBudget() {
+    val memoryBudget = mockk<MapMemoryBudget>()
+    mapboxMap.setMemoryBudget(memoryBudget)
+    verify { nativeMap.setMemoryBudget(memoryBudget) }
   }
 }

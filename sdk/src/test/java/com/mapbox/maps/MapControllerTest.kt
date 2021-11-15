@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.view.MotionEvent
 import com.mapbox.common.ShadowLogger
-import com.mapbox.maps.loader.MapboxMapStaticInitializer
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.MapPluginRegistry
 import com.mapbox.maps.plugin.Plugin
@@ -42,8 +41,6 @@ class MapControllerTest {
 
   @Before
   fun setUp() {
-    mockkStatic(MapboxMapStaticInitializer::class)
-    every { MapboxMapStaticInitializer.loadMapboxMapNativeLib() } just Runs
     every { mockContext.packageName } returns "com.mapbox.maps"
 
     testMapController = MapController(

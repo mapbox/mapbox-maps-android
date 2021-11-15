@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.delegates
 
+import com.mapbox.common.Cancelable
 import com.mapbox.maps.*
 
 /**
@@ -13,6 +14,10 @@ interface MapFeatureQueryDelegate {
    * @param options Options for querying rendered features.
    * @param callback Callback called when the query completes
    */
+  @Deprecated(
+    "Should be replaced with cancelable overloaded function taking RenderedQueryGeometry",
+    ReplaceWith("queryRenderedFeatures(geometry, options, callback)")
+  )
   fun queryRenderedFeatures(
     shape: List<ScreenCoordinate?>,
     options: RenderedQueryOptions,
@@ -26,6 +31,10 @@ interface MapFeatureQueryDelegate {
    * @param options Options for querying rendered features.
    * @param callback Callback called when the query completes
    */
+  @Deprecated(
+    "Should be replaced with cancelable overloaded function taking RenderedQueryGeometry",
+    ReplaceWith("queryRenderedFeatures(geometry, options, callback)")
+  )
   fun queryRenderedFeatures(
     box: ScreenBox,
     options: RenderedQueryOptions,
@@ -39,11 +48,29 @@ interface MapFeatureQueryDelegate {
    * @param options Options for querying rendered features.
    * @param callback Callback called when the query completes
    */
+  @Deprecated(
+    "Should be replaced with cancelable overloaded function taking RenderedQueryGeometry",
+    ReplaceWith("queryRenderedFeatures(geometry, options, callback)")
+  )
   fun queryRenderedFeatures(
     pixel: ScreenCoordinate,
     options: RenderedQueryOptions,
     callback: QueryFeaturesCallback
   )
+
+  /**
+   * Queries the map for rendered features.
+   *
+   * @param geometry The `screen pixel coordinates` (point, line string or box) to query for rendered features.
+   * @param options The `render query options` for querying rendered features.
+   * @param callback The `query features callback` called when the query completes.
+   * @return A `cancelable` object that could be used to cancel the pending query.
+   */
+  fun queryRenderedFeatures(
+    geometry: RenderedQueryGeometry,
+    options: RenderedQueryOptions,
+    callback: QueryFeaturesCallback
+  ): Cancelable
 
   /**
    * Queries the map for source features.

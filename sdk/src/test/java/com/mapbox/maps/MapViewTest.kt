@@ -2,7 +2,6 @@ package com.mapbox.maps
 
 import android.view.MotionEvent
 import com.mapbox.common.ShadowLogger
-import com.mapbox.maps.loader.MapboxMapStaticInitializer
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.renderer.OnFpsChangedListener
@@ -26,8 +25,6 @@ class MapViewTest {
 
   @Before
   fun setUp() {
-    mockkStatic(MapboxMapStaticInitializer::class)
-    every { MapboxMapStaticInitializer.loadMapboxMapNativeLib() } just Runs
     mapController = mockk(relaxUnitFun = true)
     mapboxMap = mockk(relaxUnitFun = true)
     every { mapController.getMapboxMap() } returns mapboxMap
