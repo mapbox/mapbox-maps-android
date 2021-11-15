@@ -665,6 +665,89 @@ class MapboxMapTest {
   }
 
   @Test
+  fun getClusterLeavesDefaultParam() {
+    val feature = mockk<Feature>()
+    val mapSlot = slot<HashMap<String, Value>>()
+    val callback = mockk<QueryFeatureExtensionCallback>()
+    mapboxMap.getGeoJsonClusterLeaves("id", feature, callback = callback)
+    verify {
+      nativeMap.queryFeatureExtensions(
+        "id",
+        feature,
+        MapboxMap.QFE_SUPER_CLUSTER,
+        MapboxMap.QFE_LEAVES,
+        capture(mapSlot),
+        callback
+      )
+    }
+    checkCapturedMap(mapSlot, MapboxMap.QFE_DEFAULT_LIMIT.toString(), MapboxMap.QFE_DEFAULT_OFFSET.toString())
+  }
+
+  private fun checkCapturedMap(
+    mapSlot: CapturingSlot<HashMap<String, Value>>,
+    expectedLimit: String,
+    expectedOffset: String
+  ) {
+    val captureMap = mapSlot.captured
+    assertEquals(2, captureMap.size)
+    assertEquals(expectedLimit, captureMap["limit"]!!.contents.toString())
+    assertEquals(expectedOffset, captureMap["offset"]!!.contents.toString())
+  }
+
+  @Test
+  fun getClusterLeaves() {
+    val feature = mockk<Feature>()
+    val mapSlot = slot<HashMap<String, Value>>()
+    val callback = mockk<QueryFeatureExtensionCallback>()
+    mapboxMap.getGeoJsonClusterLeaves("id", feature, 1, 2, callback = callback)
+    verify {
+      nativeMap.queryFeatureExtensions(
+        "id",
+        feature,
+        MapboxMap.QFE_SUPER_CLUSTER,
+        MapboxMap.QFE_LEAVES,
+        capture(mapSlot),
+        callback
+      )
+    }
+    checkCapturedMap(mapSlot, "1", "2")
+  }
+
+  @Test
+  fun getClusterChildren() {
+    val feature = mockk<Feature>()
+    val callback = mockk<QueryFeatureExtensionCallback>()
+    mapboxMap.getGeoJsonClusterChildren("id", feature, callback = callback)
+    verify {
+      nativeMap.queryFeatureExtensions(
+        "id",
+        feature,
+        MapboxMap.QFE_SUPER_CLUSTER,
+        MapboxMap.QFE_CHILDREN,
+        null,
+        callback
+      )
+    }
+  }
+
+  @Test
+  fun getClusterExpansionZoom() {
+    val feature = mockk<Feature>()
+    val callback = mockk<QueryFeatureExtensionCallback>()
+    mapboxMap.getGeoJsonClusterExpansionZoom("id", feature, callback = callback)
+    verify {
+      nativeMap.queryFeatureExtensions(
+        "id",
+        feature,
+        MapboxMap.QFE_SUPER_CLUSTER,
+        MapboxMap.QFE_EXPANSION_ZOOM,
+        null,
+        callback
+      )
+    }
+  }
+
+  @Test
   fun getCameraState() {
     mapboxMap.cameraState
     verify { nativeMap.cameraState }

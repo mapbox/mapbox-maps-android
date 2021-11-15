@@ -28,6 +28,7 @@ import com.mapbox.android.gestures.RotateGestureDetector;
 import com.mapbox.android.gestures.ShoveGestureDetector;
 import com.mapbox.android.gestures.StandardScaleGestureDetector;
 import com.mapbox.bindgen.Value;
+import com.mapbox.geojson.Feature;
 import com.mapbox.maps.CameraOptions;
 import com.mapbox.maps.CameraState;
 import com.mapbox.maps.ExtensionUtils;
@@ -38,6 +39,7 @@ import com.mapbox.maps.MapSnapshotOptions;
 import com.mapbox.maps.MapSurface;
 import com.mapbox.maps.MapView;
 import com.mapbox.maps.MapboxMap;
+import com.mapbox.maps.QueryFeatureExtensionCallback;
 import com.mapbox.maps.QueryFeatureStateCallback;
 import com.mapbox.maps.ResourceOptions;
 import com.mapbox.maps.ScreenCoordinate;
@@ -98,6 +100,12 @@ import java.util.Locale;
 import kotlin.Pair;
 
 public class JavaInterfaceChecker {
+    private void getClusterLeaves(MapboxMap mapboxMap, String sourcdId, Feature cluster, QueryFeatureExtensionCallback callback) {
+        mapboxMap.getGeoJsonClusterLeaves(sourcdId, cluster, callback);
+        mapboxMap.getGeoJsonClusterLeaves(sourcdId, cluster, 1, callback);
+        mapboxMap.getGeoJsonClusterLeaves(sourcdId, cluster, 1, 2, callback);
+    }
+
     private void scaleBarSettings() {
         ScaleBarSettings scaleBarSettings = new ScaleBarSettings();
         scaleBarSettings = new ScaleBarSettings(true);

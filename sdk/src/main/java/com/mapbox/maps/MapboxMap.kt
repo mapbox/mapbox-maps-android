@@ -804,13 +804,17 @@ class MapboxMap internal constructor(
    *        'leaves': returns all the leaves of a cluster (given its cluster_id)
    *        'expansion-zoom': returns the zoom on which the cluster expands into several children (useful for "click to zoom" feature).
    * @param args used for further query specification when using 'leaves' extensionField. Now only support following two args:
-   *        'limit': the number of points to return from the query (must use type 'uint64_t', set to maximum for all points)
-   *        'offset': the amount of points to skip (for pagination, must use type 'uint64_t')
+   *        'limit': the number of points to return from the query (must use type [Long], set to maximum for all points)
+   *        'offset': the amount of points to skip (for pagination, must use type [Long])
    *
-   * @return The result will be returned through the \link QueryFeatureExtensionCallback \endlink.
+   * @param callback The result will be returned through the [QueryFeatureExtensionCallback].
    *         The result could be a feature extension value containing either a value (expansion-zoom) or a feature collection (children or leaves).
    *         Or a string describing an error if the operation was not successful.
    */
+  @Deprecated(
+    "The function of queryFeatureExtensions is covered by others.",
+    ReplaceWith("getGeoJsonClusterLeaves/getGeoJsonClusterChildren/getGeoJsonClusterExpansionZoom")
+  )
   fun queryFeatureExtensions(
     sourceIdentifier: String,
     feature: Feature,
@@ -830,6 +834,70 @@ class MapboxMap internal constructor(
       )
     }
   }
+
+  /**
+   * Returns all the leaves (original points) of a cluster (given its cluster_id) from a GeoJsonSource, with pagination support: limit is the number of leaves
+   * to return (set to Infinity for all points), and offset is the amount of points to skip (for pagination).
+   *
+   * Requires configuring the source as a cluster by calling [GeoJsonSource.Builder#cluster(boolean)].
+   *
+   * @param sourceIdentifier GeoJsonSource identifier.
+   * @param cluster Cluster from which to retrieve leaves from
+   * @param limit The number of points to return from the query (must use type [Long], set to maximum for all points). Defaults to 10.
+   * @param offset The amount of points to skip (for pagination, must use type [Long]). Defaults to 0.
+   * @param callback The result will be returned through the [QueryFeatureExtensionCallback].
+   *         The result is a feature collection or a string describing an error if the operation was not successful.
+   */
+  @JvmOverloads
+  fun getGeoJsonClusterLeaves(
+    sourceIdentifier: String,
+    cluster: Feature,
+    limit: Long = QFE_DEFAULT_LIMIT,
+    offset: Long = QFE_DEFAULT_OFFSET,
+    callback: QueryFeatureExtensionCallback,
+  ) = queryFeatureExtensions(
+    sourceIdentifier, cluster, QFE_SUPER_CLUSTER, QFE_LEAVES,
+    hashMapOf(QFE_LIMIT to Value(limit), QFE_OFFSET to Value(offset)),
+    callback
+  )
+
+  /**
+   * Returns the children (original points or clusters) of a cluster (on the next zoom level)
+   * given its id (cluster_id value from feature properties) from a GeoJsonSource.
+   *
+   * Requires configuring the source as a cluster by calling [GeoJsonSource.Builder#cluster(boolean)].
+   *
+   * @param sourceIdentifier GeoJsonSource identifier.
+   * @param cluster cluster from which to retrieve children from
+   * @param callback The result will be returned through the [QueryFeatureExtensionCallback].
+   *         The result is a feature collection or a string describing an error if the operation was not successful.
+   */
+  fun getGeoJsonClusterChildren(
+    sourceIdentifier: String,
+    cluster: Feature,
+    callback: QueryFeatureExtensionCallback,
+  ) = queryFeatureExtensions(
+    sourceIdentifier, cluster, QFE_SUPER_CLUSTER, QFE_CHILDREN, null, callback
+  )
+
+  /**
+   * Returns the zoom on which the cluster expands into several children (useful for "click to zoom" feature)
+   * given the cluster's cluster_id (cluster_id value from feature properties) from a GeoJsonSource.
+   *
+   * Requires configuring the source as a cluster by calling [GeoJsonSource.Builder#cluster(boolean)].
+   *
+   * @param sourceIdentifier GeoJsonSource identifier.
+   * @param cluster cluster from which to retrieve the expansion zoom from
+   * @param callback The result will be returned through the [QueryFeatureExtensionCallback].
+   *         The result is a feature extension value containing a value or a string describing an error if the operation was not successful.
+   */
+  fun getGeoJsonClusterExpansionZoom(
+    sourceIdentifier: String,
+    cluster: Feature,
+    callback: QueryFeatureExtensionCallback,
+  ) = queryFeatureExtensions(
+    sourceIdentifier, cluster, QFE_SUPER_CLUSTER, QFE_EXPANSION_ZOOM, null, callback
+  )
 
   /**
    * Update the state map of a feature within a style source.
@@ -1382,5 +1450,13 @@ class MapboxMap internal constructor(
     }
 
     private const val TAG_PROJECTION = "MbxProjection"
+    internal const val QFE_SUPER_CLUSTER = "supercluster"
+    internal const val QFE_LEAVES = "leaves"
+    internal const val QFE_LIMIT = "limit"
+    internal const val QFE_OFFSET = "offset"
+    internal const val QFE_DEFAULT_LIMIT = 10L
+    internal const val QFE_DEFAULT_OFFSET = 0L
+    internal const val QFE_CHILDREN = "children"
+    internal const val QFE_EXPANSION_ZOOM = "expansion-zoom"
   }
 }
