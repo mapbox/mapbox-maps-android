@@ -149,8 +149,8 @@ internal class ViewAnnotationManagerImpl(
             mapboxMap.updateViewAnnotation(
               viewAnnotation.id,
               ViewAnnotationOptions.Builder()
-                      .visible(isVisibleNow)
-                      .build()
+                .visible(isVisibleNow)
+                .build()
             )
           )
         }

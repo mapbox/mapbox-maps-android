@@ -551,24 +551,4 @@ internal class NativeMapImpl(private val map: MapInterface) :
   override fun unsubscribe(observer: Observer) {
     map.unsubscribe(observer)
   }
-
-  override fun addViewAnnotation(id: String, options: ViewAnnotationOptions): Expected<String, None> {
-    return map.addViewAnnotation(id, options)
-  }
-
-  override fun updateViewAnnotation(id: String, options: ViewAnnotationOptions): Expected<String, None> {
-    return map.updateViewAnnotation(id, options)
-  }
-
-  override fun removeViewAnnotation(id: String): Expected<String, None> {
-    return map.removeViewAnnotation(id)
-  }
-
-  override fun getViewAnnotationOptions(identifier: String): Expected<String, ViewAnnotationOptions> {
-    return map.getViewAnnotationOptions(identifier)
-  }
-
-  override fun setViewAnnotationPositionsUpdateListener(listener: ViewAnnotationPositionsUpdateListener?) {
-    return map.setViewAnnotationPositionsUpdateListener(listener)
-  }
 }

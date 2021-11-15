@@ -164,7 +164,7 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
       }
       viewAnnotation.findViewById<Button>(R.id.selectButton).setOnClickListener { b ->
         val button = b as Button
-        val isSelected = button.text.contentEquals("SELECT", true)
+        val isSelected = button.text.toString().equals("SELECT", true)
         val pxDelta = (if (isSelected) SELECTED_ADD_COEF_DP.dpToPx() else -SELECTED_ADD_COEF_DP.dpToPx()).toInt()
         button.text = if (isSelected) "DESELECT" else "SELECT"
         viewAnnotationManager.updateViewAnnotation(
