@@ -20,7 +20,7 @@ class ImageSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun urlTest() {
-    val testSource = imageSource("testId") {
+    val testSource = imageSource(SOURCE_ID) {
       url(TEST_URI)
       coordinates(TEST_COORDINATES)
       url("abc")
@@ -32,7 +32,7 @@ class ImageSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun urlAfterBindTest() {
-    val testSource = imageSource("testId") {
+    val testSource = imageSource(SOURCE_ID) {
       url(TEST_URI)
       coordinates(TEST_COORDINATES)
     }
@@ -44,7 +44,7 @@ class ImageSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun coordinatesTest() {
-    val testSource = imageSource("testId") {
+    val testSource = imageSource(SOURCE_ID) {
       url(TEST_URI)
       coordinates(TEST_COORDINATES)
       coordinates(listOf(listOf(0.0, 1.0), listOf(0.0, 1.0), listOf(0.0, 1.0), listOf(0.0, 1.0)))
@@ -56,7 +56,7 @@ class ImageSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun coordinatesAfterBindTest() {
-    val testSource = imageSource("testId") {
+    val testSource = imageSource(SOURCE_ID) {
       url(TEST_URI)
       coordinates(TEST_COORDINATES)
     }
@@ -68,7 +68,7 @@ class ImageSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun prefetchZoomDeltaTest() {
-    val testSource = imageSource("testId") {
+    val testSource = imageSource(SOURCE_ID) {
       url(TEST_URI)
       coordinates(TEST_COORDINATES)
       prefetchZoomDelta(1L)
@@ -80,7 +80,7 @@ class ImageSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun prefetchZoomDeltaAfterBindTest() {
-    val testSource = imageSource("testId") {
+    val testSource = imageSource(SOURCE_ID) {
       url(TEST_URI)
       coordinates(TEST_COORDINATES)
     }
@@ -97,9 +97,10 @@ class ImageSourceTest : BaseStyleTest() {
     assertNotNull("defaultPrefetchZoomDelta should not be null", ImageSource.defaultPrefetchZoomDelta)
   }
 
-  companion object {
-    private const val TEST_URI = "https://raw.githubusercontent.com/mapbox/mapbox-gl-native-android/master/MapboxGLAndroidSDKTestApp/src/main/assets/earthquakes.geojson"
-    private val TEST_COORDINATES = listOf(
+  private companion object {
+    const val TEST_URI = "https://raw.githubusercontent.com/mapbox/mapbox-gl-native-android/master/MapboxGLAndroidSDKTestApp/src/main/assets/earthquakes.geojson"
+    const val SOURCE_ID = "testId"
+    val TEST_COORDINATES = listOf(
       listOf(-35.859375, 58.44773280389084),
       listOf(-16.171875, 58.44773280389084),
       listOf(-16.171875, 54.7246201949245),

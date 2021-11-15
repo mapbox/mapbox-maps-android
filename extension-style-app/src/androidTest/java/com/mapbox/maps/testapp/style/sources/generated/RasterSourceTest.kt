@@ -22,7 +22,7 @@ class RasterSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun urlTest() {
-    val testSource = rasterSource("testId") {
+    val testSource = rasterSource(SOURCE_ID) {
       url(TEST_URI)
       url("abc")
     }
@@ -33,7 +33,7 @@ class RasterSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun urlAfterBindTest() {
-    val testSource = rasterSource("testId") {
+    val testSource = rasterSource(SOURCE_ID) {
       url(TEST_URI)
     }
     setupSource(testSource)
@@ -45,7 +45,7 @@ class RasterSourceTest : BaseStyleTest() {
   @UiThreadTest
   @Ignore("https://github.com/mapbox/mapbox-maps-android/issues/499")
   fun tilesTest() {
-    val testSource = rasterSource("testId") {
+    val testSource = rasterSource(SOURCE_ID) {
       url(TEST_URI)
       tiles(listOf("a", "b", "c"))
     }
@@ -56,7 +56,7 @@ class RasterSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun tilesAfterBindTest() {
-    val testSource = rasterSource("testId") {
+    val testSource = rasterSource(SOURCE_ID) {
       url(TEST_URI)
     }
     setupSource(testSource)
@@ -68,7 +68,7 @@ class RasterSourceTest : BaseStyleTest() {
   @UiThreadTest
   @Ignore("https://github.com/mapbox/mapbox-maps-android/issues/499")
   fun boundsTest() {
-    val testSource = rasterSource("testId") {
+    val testSource = rasterSource(SOURCE_ID) {
       url(TEST_URI)
       bounds(listOf(0.0, 1.0, 2.0, 3.0))
     }
@@ -79,7 +79,7 @@ class RasterSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun minzoomTest() {
-    val testSource = rasterSource("testId") {
+    val testSource = rasterSource(SOURCE_ID) {
       url(TEST_URI)
       minzoom(1L)
     }
@@ -90,7 +90,7 @@ class RasterSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun minzoomAfterBindTest() {
-    val testSource = rasterSource("testId") {
+    val testSource = rasterSource(SOURCE_ID) {
       url(TEST_URI)
     }
     setupSource(testSource)
@@ -101,7 +101,7 @@ class RasterSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun maxzoomTest() {
-    val testSource = rasterSource("testId") {
+    val testSource = rasterSource(SOURCE_ID) {
       url(TEST_URI)
       maxzoom(1L)
     }
@@ -112,7 +112,7 @@ class RasterSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun maxzoomAfterBindTest() {
-    val testSource = rasterSource("testId") {
+    val testSource = rasterSource(SOURCE_ID) {
       url(TEST_URI)
     }
     setupSource(testSource)
@@ -123,7 +123,7 @@ class RasterSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun tileSizeTest() {
-    val testSource = rasterSource("testId") {
+    val testSource = rasterSource(SOURCE_ID) {
       url(TEST_URI)
       tileSize(1L)
     }
@@ -135,7 +135,7 @@ class RasterSourceTest : BaseStyleTest() {
   @UiThreadTest
   @Ignore("https://github.com/mapbox/mapbox-maps-android/issues/499")
   fun schemeTest() {
-    val testSource = rasterSource("testId") {
+    val testSource = rasterSource(SOURCE_ID) {
       url(TEST_URI)
       scheme(Scheme.XYZ)
     }
@@ -147,7 +147,7 @@ class RasterSourceTest : BaseStyleTest() {
   @UiThreadTest
   @Ignore("https://github.com/mapbox/mapbox-maps-android/issues/499")
   fun attributionTest() {
-    val testSource = rasterSource("testId") {
+    val testSource = rasterSource(SOURCE_ID) {
       url(TEST_URI)
       attribution("abc")
     }
@@ -158,7 +158,7 @@ class RasterSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun volatileTest() {
-    val testSource = rasterSource("testId") {
+    val testSource = rasterSource(SOURCE_ID) {
       url(TEST_URI)
       volatile(true)
     }
@@ -169,7 +169,7 @@ class RasterSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun volatileAfterBindTest() {
-    val testSource = rasterSource("testId") {
+    val testSource = rasterSource(SOURCE_ID) {
       url(TEST_URI)
     }
     setupSource(testSource)
@@ -180,7 +180,7 @@ class RasterSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun prefetchZoomDeltaTest() {
-    val testSource = rasterSource("testId") {
+    val testSource = rasterSource(SOURCE_ID) {
       url(TEST_URI)
       prefetchZoomDelta(1L)
     }
@@ -191,7 +191,7 @@ class RasterSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun prefetchZoomDeltaAfterBindTest() {
-    val testSource = rasterSource("testId") {
+    val testSource = rasterSource(SOURCE_ID) {
       url(TEST_URI)
     }
     setupSource(testSource)
@@ -202,7 +202,7 @@ class RasterSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun minimumTileUpdateIntervalTest() {
-    val testSource = rasterSource("testId") {
+    val testSource = rasterSource(SOURCE_ID) {
       url(TEST_URI)
       minimumTileUpdateInterval(1.0)
     }
@@ -213,7 +213,7 @@ class RasterSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun minimumTileUpdateIntervalAfterBindTest() {
-    val testSource = rasterSource("testId") {
+    val testSource = rasterSource(SOURCE_ID) {
       url(TEST_URI)
     }
     setupSource(testSource)
@@ -224,7 +224,7 @@ class RasterSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun maxOverscaleFactorForParentTilesTest() {
-    val testSource = rasterSource("testId") {
+    val testSource = rasterSource(SOURCE_ID) {
       url(TEST_URI)
       maxOverscaleFactorForParentTiles(1L)
     }
@@ -235,7 +235,7 @@ class RasterSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun maxOverscaleFactorForParentTilesAfterBindTest() {
-    val testSource = rasterSource("testId") {
+    val testSource = rasterSource(SOURCE_ID) {
       url(TEST_URI)
     }
     setupSource(testSource)
@@ -246,7 +246,7 @@ class RasterSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun tileSetTest() {
-    val testSource = rasterSource("testId") {
+    val testSource = rasterSource(SOURCE_ID) {
       url(TEST_URI)
       tileSet(TileSet.Builder("abc", listOf("a", "b", "c")).build())
     }
@@ -256,7 +256,7 @@ class RasterSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun tileSetTestDsl() {
-    val testSource = rasterSource("testId") {
+    val testSource = rasterSource(SOURCE_ID) {
       url(TEST_URI)
       tileSet("abc", listOf("a", "b", "c")) {
         attribution("testattribution")
@@ -278,8 +278,9 @@ class RasterSourceTest : BaseStyleTest() {
     assertNotNull("defaultMinimumTileUpdateInterval should not be null", RasterSource.defaultMinimumTileUpdateInterval)
   }
 
-  companion object {
-    private const val TEST_URI = "https://raw.githubusercontent.com/mapbox/mapbox-gl-native-android/master/MapboxGLAndroidSDKTestApp/src/main/assets/earthquakes.geojson"
+  private companion object {
+    const val TEST_URI = "https://raw.githubusercontent.com/mapbox/mapbox-gl-native-android/master/MapboxGLAndroidSDKTestApp/src/main/assets/earthquakes.geojson"
+    const val SOURCE_ID = "testId"
   }
 }
 
