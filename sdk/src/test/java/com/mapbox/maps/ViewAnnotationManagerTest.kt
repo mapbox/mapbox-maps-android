@@ -3,14 +3,14 @@ package com.mapbox.maps
 import android.view.View
 import android.widget.FrameLayout
 import com.mapbox.bindgen.ExpectedFactory
+import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertThrows
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
@@ -49,14 +49,14 @@ class ViewAnnotationManagerTest {
     viewAnnotationManager.addViewAnnotation(
       view,
       viewAnnotationOptions {
-        geometry(Point.fromLngLat(0.0, 0.0))
+        geometry(DEFAULT_GEOMETRY)
       }
     )
     val exception = assertThrows(RuntimeException::class.java) {
       viewAnnotationManager.addViewAnnotation(
         view,
         viewAnnotationOptions {
-          geometry(Point.fromLngLat(0.0, 0.0))
+          geometry(DEFAULT_GEOMETRY)
         }
       )
     }
@@ -76,7 +76,7 @@ class ViewAnnotationManagerTest {
     viewAnnotationManager.addViewAnnotation(
       view,
       viewAnnotationOptions {
-        geometry(Point.fromLngLat(0.0, 0.0))
+        geometry(DEFAULT_GEOMETRY)
       }
     )
     val updateActualResult = viewAnnotationManager.updateViewAnnotation(view, updatedOptions)
@@ -89,7 +89,7 @@ class ViewAnnotationManagerTest {
   fun updateViewAnnotationFailure() {
     every { mapboxMap.updateViewAnnotation(any(), any()) } returns ExpectedFactory.createNone()
     val updatedOptions = viewAnnotationOptions {
-      offsetX(10)
+      offsetX(-10)
     }
     val updateActualResult = viewAnnotationManager.updateViewAnnotation(mockk(), updatedOptions)
     assertEquals(false, updateActualResult)
@@ -102,7 +102,7 @@ class ViewAnnotationManagerTest {
     viewAnnotationManager.addViewAnnotation(
       view,
       viewAnnotationOptions {
-        geometry(Point.fromLngLat(0.0, 0.0))
+        geometry(DEFAULT_GEOMETRY)
       }
     )
     val id = viewAnnotationManager.idLookupMap[view]
@@ -121,66 +121,64 @@ class ViewAnnotationManagerTest {
 
   @Test
   fun getViewAnnotationByFeatureIdSuccess() {
-    val featureId = "featureId"
     val viewAnnotationOptions = viewAnnotationOptions {
-      geometry(Point.fromLngLat(0.0, 0.0))
-      associatedFeatureId(featureId)
+      geometry(DEFAULT_GEOMETRY)
+      associatedFeatureId(FEATURE_ID)
     }
     viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
     val viewId = viewAnnotationManager.idLookupMap[view]
     every { mapboxMap.getViewAnnotationOptions(viewId!!) } returns ExpectedFactory.createValue(viewAnnotationOptions)
-    assertEquals(view, viewAnnotationManager.getViewAnnotationByFeatureId(featureId))
+    assertEquals(view, viewAnnotationManager.getViewAnnotationByFeatureId(FEATURE_ID))
   }
 
   @Test
   fun getViewAnnotationByFeatureIdFailureNoFeatureId() {
     val viewAnnotationOptions = viewAnnotationOptions {
-      geometry(Point.fromLngLat(0.0, 0.0))
+      geometry(DEFAULT_GEOMETRY)
     }
     viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
     val viewId = viewAnnotationManager.idLookupMap[view]
     every { mapboxMap.getViewAnnotationOptions(viewId!!) } returns ExpectedFactory.createValue(viewAnnotationOptions)
-    assertEquals(null, viewAnnotationManager.getViewAnnotationByFeatureId("featureId"))
+    assertNull(viewAnnotationManager.getViewAnnotationByFeatureId(FEATURE_ID))
   }
 
   @Test
   fun getViewAnnotationByFeatureIdFailureNoView() {
-    assertEquals(null, viewAnnotationManager.getViewAnnotationByFeatureId("featureId"))
+    assertNull(viewAnnotationManager.getViewAnnotationByFeatureId(FEATURE_ID))
   }
 
   @Test
   fun getViewAnnotationOptionsByFeatureIdSuccess() {
-    val featureId = "featureId"
     val viewAnnotationOptions = viewAnnotationOptions {
-      geometry(Point.fromLngLat(0.0, 0.0))
-      associatedFeatureId(featureId)
+      geometry(DEFAULT_GEOMETRY)
+      associatedFeatureId(FEATURE_ID)
     }
     viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
     val viewId = viewAnnotationManager.idLookupMap[view]
     every { mapboxMap.getViewAnnotationOptions(viewId!!) } returns ExpectedFactory.createValue(viewAnnotationOptions)
-    assertEquals(viewAnnotationOptions, viewAnnotationManager.getViewAnnotationOptionsByFeatureId(featureId))
+    assertEquals(viewAnnotationOptions, viewAnnotationManager.getViewAnnotationOptionsByFeatureId(FEATURE_ID))
   }
 
   @Test
   fun getViewAnnotationOptionsByFeatureIdFailureNoFeatureId() {
     val viewAnnotationOptions = viewAnnotationOptions {
-      geometry(Point.fromLngLat(0.0, 0.0))
+      geometry(DEFAULT_GEOMETRY)
     }
     viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
     val viewId = viewAnnotationManager.idLookupMap[view]
     every { mapboxMap.getViewAnnotationOptions(viewId!!) } returns ExpectedFactory.createValue(viewAnnotationOptions)
-    assertEquals(null, viewAnnotationManager.getViewAnnotationOptionsByFeatureId("featureId"))
+    assertNull(viewAnnotationManager.getViewAnnotationOptionsByFeatureId(FEATURE_ID))
   }
 
   @Test
   fun getViewAnnotationOptionsByFeatureIdFailureNoView() {
-    assertEquals(null, viewAnnotationManager.getViewAnnotationOptionsByFeatureId("featureId"))
+    assertNull(viewAnnotationManager.getViewAnnotationOptionsByFeatureId(FEATURE_ID))
   }
 
   @Test
   fun getViewAnnotationOptionsByViewSuccess() {
     val viewAnnotationOptions = viewAnnotationOptions {
-      geometry(Point.fromLngLat(0.0, 0.0))
+      geometry(DEFAULT_GEOMETRY)
     }
     viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
     every { mapboxMap.getViewAnnotationOptions(any()) } returns ExpectedFactory.createValue(viewAnnotationOptions)
@@ -189,6 +187,11 @@ class ViewAnnotationManagerTest {
 
   @Test
   fun getViewAnnotationOptionsByViewNoViewFailure() {
-    assertEquals(null, viewAnnotationManager.getViewAnnotationOptionsByView(view))
+    assertNull(viewAnnotationManager.getViewAnnotationOptionsByView(view))
+  }
+
+  private companion object {
+    const val FEATURE_ID = "featureId"
+    val DEFAULT_GEOMETRY: Geometry = Point.fromLngLat(0.0, 0.0)
   }
 }

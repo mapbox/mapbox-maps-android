@@ -9,7 +9,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import io.mockk.*
 import org.junit.After
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -60,8 +60,8 @@ class ViewAnnotationManagerAddTest(
         resIdActual,
         viewAnnotationOptionsActual
       )
-      Assert.assertEquals(runtimeExceptionThrown, false)
-      Assert.assertEquals(expectedView, actualView)
+      assertEquals(runtimeExceptionThrown, false)
+      assertEquals(expectedView, actualView)
       verify(exactly = 1) {
         mapboxMap.addViewAnnotation(
           any(),
@@ -69,7 +69,7 @@ class ViewAnnotationManagerAddTest(
         )
       }
     } catch (e: RuntimeException) {
-      Assert.assertEquals(runtimeExceptionThrown, true)
+      assertEquals(runtimeExceptionThrown, true)
     } finally {
       unmockkStatic(LayoutInflater::class)
     }
@@ -88,8 +88,8 @@ class ViewAnnotationManagerAddTest(
         viewAnnotationOptionsActual,
         asyncInflater,
       ) {
-        Assert.assertEquals(runtimeExceptionThrown, false)
-        Assert.assertEquals(expectedView, it)
+        assertEquals(runtimeExceptionThrown, false)
+        assertEquals(expectedView, it)
         verify(exactly = 1) {
           mapboxMap.addViewAnnotation(
             any(),
@@ -98,7 +98,7 @@ class ViewAnnotationManagerAddTest(
         }
       }
     } catch (e: RuntimeException) {
-      Assert.assertEquals(runtimeExceptionThrown, true)
+      assertEquals(runtimeExceptionThrown, true)
     }
   }
 
@@ -111,7 +111,7 @@ class ViewAnnotationManagerAddTest(
         actualView,
         viewAnnotationOptionsActual
       )
-      Assert.assertEquals(runtimeExceptionThrown, false)
+      assertEquals(runtimeExceptionThrown, false)
       verify(exactly = 1) {
         mapboxMap.addViewAnnotation(
           any(),
@@ -119,7 +119,7 @@ class ViewAnnotationManagerAddTest(
         )
       }
     } catch (e: RuntimeException) {
-      Assert.assertEquals(runtimeExceptionThrown, true)
+      assertEquals(runtimeExceptionThrown, true)
     }
   }
 
