@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
+import com.mapbox.bindgen.Expected
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
@@ -40,7 +41,6 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
 
   private lateinit var mapboxMap: MapboxMap
   private lateinit var viewAnnotationManager: ViewAnnotationManager
-  private lateinit var style: Style
   private val pointList = mutableListOf<Feature>()
   private var markerId = 0
 
@@ -64,7 +64,6 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
       loadStyle(
         styleExtension = prepareStyle(Style.MAPBOX_STREETS, bitmap)
       ) {
-        style = it
         addOnMapClickListener(this@ViewAnnotationShowcaseActivity)
         addOnMapLongClickListener(this@ViewAnnotationShowcaseActivity)
         binding.fabStyleToggle.setOnClickListener {
@@ -108,32 +107,37 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
       mapboxMap.pixelForCoordinate(point),
       RenderedQueryOptions(listOf(LAYER_ID), null)
     ) {
-      if (it.isValue && it.value?.size!! > 0) {
-        it.value?.get(0)?.feature?.let { feature ->
-          if (feature.id() != null) {
-            viewAnnotationManager.getViewAnnotationByFeatureId(feature.id()!!)?.let { viewAnnotation ->
-              reverseViewVisibility(viewAnnotation)
-            }
-          }
+      onFeatureClicked(it) { feature ->
+        if (feature.id() != null) {
+          viewAnnotationManager.getViewAnnotationByFeatureId(feature.id()!!)?.toggleViewVisibility()
         }
       }
     }
     return true
   }
 
-  private fun reverseViewVisibility(view: View) {
-    if (view.visibility == View.VISIBLE) {
-      view.visibility = View.GONE
-    } else {
-      view.visibility = View.VISIBLE
+  private fun onFeatureClicked(
+    expected: Expected<String, List<QueriedFeature>>,
+    onFeatureClicked: (Feature) -> Unit
+  ) {
+    if (expected.isValue && expected.value?.size!! > 0) {
+      expected.value?.get(0)?.feature?.let { feature ->
+        onFeatureClicked.invoke(feature)
+      }
     }
+  }
+
+  private fun View.toggleViewVisibility() {
+    visibility = if (visibility == View.VISIBLE) View.GONE else View.VISIBLE
   }
 
   private fun addMarkerAndReturnId(point: Point): String {
     val currentId = "${MARKER_ID_PREFIX}${(markerId++)}"
     pointList.add(Feature.fromGeometry(point, null, currentId))
     val featureCollection = FeatureCollection.fromFeatures(pointList)
-    style.getSourceAs<GeoJsonSource>(SOURCE_ID)?.featureCollection(featureCollection)
+    mapboxMap.getStyle { style ->
+      style.getSourceAs<GeoJsonSource>(SOURCE_ID)?.featureCollection(featureCollection)
+    }
     return currentId
   }
 

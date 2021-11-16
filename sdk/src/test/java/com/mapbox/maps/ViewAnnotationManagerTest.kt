@@ -108,7 +108,9 @@ class ViewAnnotationManagerTest {
     val id = viewAnnotationManager.idLookupMap[view]
     val removeActualResult = viewAnnotationManager.removeViewAnnotation(view)
     assertEquals(true, removeActualResult)
+    assertNull(viewAnnotationManager.idLookupMap[view])
     verify(exactly = 1) { mapboxMap.removeViewAnnotation(id!!) }
+    verify(exactly = 1) { mapView.removeView(view) }
   }
 
   @Test

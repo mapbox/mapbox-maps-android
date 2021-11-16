@@ -66,9 +66,8 @@ internal class ViewAnnotationManagerImpl(
   }
 
   override fun removeViewAnnotation(view: View): Boolean {
-    val id = idLookupMap[view] ?: return false
+    val id = idLookupMap.remove(view) ?: return false
     val annotation = annotationMap.remove(id) ?: return false
-    idLookupMap.remove(view)
     view.viewTreeObserver.removeOnGlobalLayoutListener(annotation.globalLayoutListener)
     mapView.removeView(view)
     getValue(mapboxMap.removeViewAnnotation(id))
@@ -81,7 +80,7 @@ internal class ViewAnnotationManagerImpl(
   ): Boolean {
     val id = idLookupMap[view] ?: return false
     annotationMap[id]?.let {
-      it.handleVisibilityAutomatically = options.visible == null
+      it.handleVisibilityAutomatically = (options.visible == null)
       getValue(mapboxMap.updateViewAnnotation(id, options))
       return true
     } ?: return false
@@ -130,13 +129,13 @@ internal class ViewAnnotationManagerImpl(
       .build()
     val viewAnnotation = ViewAnnotation(
       view = inflatedView,
-      handleVisibilityAutomatically = options.visible == null,
-      visible = inflatedView.visibility == View.VISIBLE,
+      handleVisibilityAutomatically = (options.visible == null),
+      visible = (inflatedView.visibility == View.VISIBLE),
       viewLayoutParams = inflatedViewLayout,
     )
     val globalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
       if (viewAnnotation.handleVisibilityAutomatically) {
-        val isVisibleNow = inflatedView.visibility == View.VISIBLE
+        val isVisibleNow = (inflatedView.visibility == View.VISIBLE)
         if (isVisibleNow == viewAnnotation.visible) {
           return@OnGlobalLayoutListener
         }

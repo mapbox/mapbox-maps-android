@@ -14,7 +14,7 @@ import com.mapbox.maps.ViewAnnotationOptions
 /**
  * Manager API to control View Annotations.
  *
- * View annotations are Android [View]'s that are drawn on top of the [MapView] and bound to some [Geometry] (only [Point] is supported for now).
+ * View annotations are Android [View]s that are drawn on top of the [MapView] and bound to some [Geometry] (only [Point] is supported for now).
  * In case some view annotations intersect on the screen Z-index is based on addition order.
  *
  * View annotations are invariant to map camera transformations however such properties as size, visibility etc
