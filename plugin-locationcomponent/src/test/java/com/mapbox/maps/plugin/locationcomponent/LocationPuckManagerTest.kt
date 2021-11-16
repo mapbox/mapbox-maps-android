@@ -83,6 +83,18 @@ class LocationPuckManagerTest {
   }
 
   @Test
+  fun testInitialiseSetsBearingAndLocationBeforeAddingLayers() {
+    locationPuckManager.lastLocation = Point.fromLngLat(10.0, 20.0)
+    locationPuckManager.initialize(style)
+    verifyOrder {
+      animationManager.animatePosition(targets = anyVararg(), options = null)
+      animationManager.animateBearing(targets = anyDoubleVararg(), options = null)
+      locationLayerRenderer.initializeComponents(style)
+      locationLayerRenderer.show()
+    }
+  }
+
+  @Test
   fun testInitialiseWithDisabled() {
     every { settings.enabled } returns false
     locationPuckManager.initialize(style)
@@ -103,7 +115,7 @@ class LocationPuckManagerTest {
   }
 
   @Test
-  fun testIsLayerInitilised() {
+  fun testIsLayerInitialised() {
     every { locationLayerRenderer.isRendererInitialised() } returns true
     assertTrue(locationPuckManager.isLayerInitialised())
     verify { locationLayerRenderer.isRendererInitialised() }
