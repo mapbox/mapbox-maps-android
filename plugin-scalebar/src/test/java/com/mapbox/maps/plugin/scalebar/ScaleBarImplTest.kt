@@ -39,6 +39,21 @@ class ScaleBarImplTest {
   }
 
   @Test
+  fun calculateWidthAndHeight() {
+    scaleBarView.mapViewWidth = 100f
+    val viewSize = scaleBarView.calculateWidthAndHeight()
+    assertEquals(50.0f, viewSize.first)
+    assertEquals(22.0f, viewSize.second)
+  }
+
+  @Test
+  fun pixelRatio() {
+    assertEquals(ScaleBarImpl.DEFAULT_PIXEL_RATIO, scaleBarView.pixelRatio)
+    scaleBarView.pixelRatio = 2.0f
+    assertEquals(2.0f, scaleBarView.pixelRatio)
+  }
+
+  @Test
   fun scaleTable() {
     assertEquals(metricTable, scaleBarView.scaleTable)
     scaleBarSettings.isMetricUnits = false

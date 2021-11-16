@@ -11,6 +11,8 @@ import android.util.Pair
 import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.VisibleForTesting
+import androidx.core.util.component1
+import androidx.core.util.component2
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings
 import java.lang.ref.WeakReference
 import java.text.DecimalFormat
@@ -53,10 +55,18 @@ class ScaleBarImpl : ScaleBar, View {
       post(::requestLayout)
     }
 
+  override var pixelRatio = DEFAULT_PIXEL_RATIO
+
   override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+    val (viewWidth, viewHeight) = calculateWidthAndHeight()
+    setMeasuredDimension(viewWidth.toInt(), viewHeight.toInt())
+  }
+
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal fun calculateWidthAndHeight(): Pair<Float, Float> {
     val width = mapViewWidth * settings.ratio
     val height = settings.run { textBarMargin + textSize + height + (borderWidth * 2) }
-    setMeasuredDimension(width.toInt(), height.toInt())
+    return Pair(width, height)
   }
 
   /**
@@ -220,18 +230,21 @@ class ScaleBarImpl : ScaleBar, View {
       var pair = scaleTable[0]
       for (i in 1 until scaleTable.size) {
         pair = scaleTable[i]
-        if (pair.first > maxDistance) {
+        val distance = pair.first
+        if (distance > maxDistance) {
           // use the last scale here, otherwise the scale will be too large
           pair = scaleTable[i - 1]
           break
         }
       }
-      var unitDistance = pair.first / pair.second
-      var unitBarWidth = (width / pair.second).toFloat()
+      val distance = pair.first
+      val rectCount = pair.second
+      var unitDistance = distance / rectCount
+      var unitBarWidth = (width / rectCount).toFloat()
       if (unitDistance == 0) {
         unitDistance = 1
       } else {
-        unitBarWidth = (unitDistance / distancePerPixel) - INTERNAL_PADDING
+        unitBarWidth = (unitDistance / distancePerPixel) - INTERNAL_PADDING_DP * pixelRatio
       }
       // Drawing the surrounding borders
       barPaint.style = Paint.Style.FILL_AND_STROKE
@@ -239,7 +252,7 @@ class ScaleBarImpl : ScaleBar, View {
       canvas.drawRect(
         0f,
         textBarMargin + textSize - (borderWidth * 2),
-        (unitBarWidth * pair.second) + (borderWidth * 2),
+        (unitBarWidth * rectCount) + (borderWidth * 2),
         textBarMargin + textSize + height + (borderWidth * 2),
         barPaint
       )
@@ -247,42 +260,41 @@ class ScaleBarImpl : ScaleBar, View {
       canvas.drawRect(
         borderWidth,
         textBarMargin + textSize - borderWidth,
-        (unitBarWidth * pair.second) + borderWidth,
+        (unitBarWidth * rectCount) + borderWidth,
         textBarMargin + textSize + height + borderWidth,
         barPaint
       )
 
       // Drawing the fill
       barPaint.style = Paint.Style.FILL
-      for (i in 0 until pair.second) {
-        barPaint.color = if (i % 2 == 0) primaryColor else secondaryColor
-        val distanceText = getDistanceText(unitDistance * i)
-        // Make the first text shift to right with borderWidth, the most right text shift to left with INTERNAL_PADDING
-        val xPositionShitForText =
-          when (i) {
-            0 -> {
-              borderWidth
-            }
-            pair.second - 1 -> {
-              -INTERNAL_PADDING.toFloat()
-            }
-            else -> {
-              0f
-            }
+
+      // Drawing texts
+      for (rectIndex in 0..rectCount) {
+        barPaint.color = if (rectIndex % 2 == 0) primaryColor else secondaryColor
+        val distanceText = getDistanceText(unitDistance * rectIndex)
+        when (rectIndex) {
+          0 -> {
+            textPaint.textAlign = Paint.Align.LEFT
+            strokePaint.textAlign = Paint.Align.LEFT
           }
+          else -> {
+            textPaint.textAlign = Paint.Align.CENTER
+            strokePaint.textAlign = Paint.Align.CENTER
+          }
+        }
 
-        drawText(canvas, distanceText, (unitBarWidth * i) + xPositionShitForText, textSize)
+        drawText(canvas, distanceText, (unitBarWidth * rectIndex), textSize)
 
-        canvas.drawRect(
-          (borderWidth * 2) + (unitBarWidth * i),
-          textBarMargin + textSize,
-          unitBarWidth * (1 + i),
-          textBarMargin + textSize + height,
-          barPaint
-        )
+        if (rectIndex != rectCount) {
+          canvas.drawRect(
+            (borderWidth * 2) + (unitBarWidth * rectIndex),
+            textBarMargin + textSize,
+            unitBarWidth * (1 + rectIndex),
+            textBarMargin + textSize + height,
+            barPaint
+          )
+        }
       }
-      val distanceText = getDistanceText(unitDistance * pair.second)
-      drawText(canvas, distanceText, unitBarWidth * pair.second, textSize)
     }
     if (useContinuousRendering) {
       reusableCanvas = canvas
@@ -348,6 +360,7 @@ class ScaleBarImpl : ScaleBar, View {
     internal const val MSG_RENDER_ON_DEMAND = 0
     internal const val MSG_RENDER_CONTINUOUS = 1
     internal const val DEFAULT_MAPVIEW_WIDTH = 0F
-    internal const val INTERNAL_PADDING = 20
+    internal const val DEFAULT_PIXEL_RATIO = 1.0F
+    internal const val INTERNAL_PADDING_DP = 10
   }
 }

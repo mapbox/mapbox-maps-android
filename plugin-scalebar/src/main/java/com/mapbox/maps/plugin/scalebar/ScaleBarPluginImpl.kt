@@ -60,7 +60,9 @@ open class ScaleBarPluginImpl(
   override fun bind(mapView: FrameLayout, attrs: AttributeSet?, pixelRatio: Float): View {
     internalSettings =
       ScaleBarAttributeParser.parseScaleBarSettings(mapView.context, attrs, pixelRatio)
-    return viewImplProvider(mapView.context)
+    val scaleBarImpl = viewImplProvider(mapView.context)
+    (scaleBarImpl as ScaleBar).pixelRatio = pixelRatio
+    return scaleBarImpl
   }
 
   /**
