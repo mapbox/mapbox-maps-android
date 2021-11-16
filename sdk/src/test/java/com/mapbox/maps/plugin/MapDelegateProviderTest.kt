@@ -5,7 +5,6 @@ import com.mapbox.maps.MapController
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
-import com.mapbox.maps.loader.MapboxMapStaticInitializer
 import io.mockk.*
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
@@ -24,8 +23,6 @@ class MapDelegateProviderTest {
 
   @Before
   fun setUp() {
-    mockkStatic(MapboxMapStaticInitializer::class)
-    every { MapboxMapStaticInitializer.loadMapboxMapNativeLib() } just Runs
     mapView = mockk(relaxed = true)
     every { mapView.getMapboxMap() } returns mapboxMap
   }

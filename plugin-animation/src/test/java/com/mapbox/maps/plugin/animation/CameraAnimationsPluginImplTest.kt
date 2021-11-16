@@ -433,10 +433,14 @@ class CameraAnimationsPluginImplTest {
 
     val handler = Handler(getMainLooper())
     cameraAnimationsPluginImpl.easeTo(cameraOptions1, mapAnimationOptions { duration(1) })
+    shadowOf(getMainLooper()).idleFor(Duration.ofMillis(0))
+    shadowOf(getMainLooper()).idle()
     handler.postDelayed({ cameraAnimationsPluginImpl.easeTo(cameraOptions2, mapAnimationOptions { duration(1) }) }, 2)
+    shadowOf(getMainLooper()).idleFor(Duration.ofMillis(2))
+    shadowOf(getMainLooper()).idle()
     handler.postDelayed({ cameraAnimationsPluginImpl.easeTo(cameraOptions3, mapAnimationOptions { duration(1) }) }, 8)
-
-    shadowOf(getMainLooper()).idleFor(Duration.ofMillis(10))
+    shadowOf(getMainLooper()).idleFor(Duration.ofMillis(8))
+    shadowOf(getMainLooper()).idle()
 
     assertEquals(targetPitchThird, cameraPosition.pitch, EPS)
     assertArrayEquals(expectedValues.toDoubleArray(), updatedValues.toDoubleArray(), EPS)
@@ -686,7 +690,8 @@ class CameraAnimationsPluginImplTest {
       5L
     )
 
-    shadowOf(getMainLooper()).idleFor(Duration.ofMillis(20L))
+    shadowOf(getMainLooper()).idleFor(Duration.ofMillis(5))
+    shadowOf(getMainLooper()).idle()
 
     assertEquals(true, listener.started)
     assertEquals(true, listener.canceled)
@@ -740,6 +745,7 @@ class CameraAnimationsPluginImplTest {
       5L
     )
     shadowOf(getMainLooper()).idleFor(Duration.ofMillis(20L))
+    shadowOf(getMainLooper()).idle()
 
     assertEquals(false, listenerOne.canceled)
     assertEquals(true, listenerTwo.canceled)
@@ -775,6 +781,7 @@ class CameraAnimationsPluginImplTest {
     )
 
     shadowOf(getMainLooper()).idleFor(Duration.ofMillis(20L))
+    shadowOf(getMainLooper()).idle()
 
     assertEquals(true, listenerOne.started)
     assertEquals(true, listenerOne.canceled)

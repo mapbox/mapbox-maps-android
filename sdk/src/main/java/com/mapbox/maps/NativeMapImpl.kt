@@ -3,6 +3,7 @@ package com.mapbox.maps
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
+import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
@@ -126,6 +127,32 @@ internal class NativeMapImpl(private val map: MapInterface) :
 
   override fun getRenderCacheOptions(): RenderCacheOptions {
     return map.renderCacheOptions
+  }
+
+  override fun setViewAnnotationPositionsUpdateListener(listener: ViewAnnotationPositionsUpdateListener?) {
+    map.setViewAnnotationPositionsUpdateListener(listener)
+  }
+
+  override fun addViewAnnotation(
+    identifier: String,
+    options: ViewAnnotationOptions
+  ): Expected<String, None> {
+    return map.addViewAnnotation(identifier, options)
+  }
+
+  override fun updateViewAnnotation(
+    identifier: String,
+    options: ViewAnnotationOptions
+  ): Expected<String, None> {
+    return map.updateViewAnnotation(identifier, options)
+  }
+
+  override fun removeViewAnnotation(identifier: String): Expected<String, None> {
+    return map.removeViewAnnotation(identifier)
+  }
+
+  override fun getViewAnnotationOptions(identifier: String): Expected<String, ViewAnnotationOptions> {
+    return map.getViewAnnotationOptions(identifier)
   }
 
   override fun setMapProjection(value: Value) = map.setMapProjection(value)
@@ -374,6 +401,14 @@ internal class NativeMapImpl(private val map: MapInterface) :
     map.queryRenderedFeatures(pixel, options, callback)
   }
 
+  override fun queryRenderedFeatures(
+    geometry: RenderedQueryGeometry,
+    options: RenderedQueryOptions,
+    callback: QueryFeaturesCallback
+  ): Cancelable {
+    return map.queryRenderedFeatures(geometry, options, callback)
+  }
+
   override fun querySourceFeatures(
     sourceId: String,
     options: SourceQueryOptions,
@@ -440,6 +475,10 @@ internal class NativeMapImpl(private val map: MapInterface) :
     stateKey: String?
   ) {
     return map.removeFeatureState(sourceId, sourceLayerId, featureId, stateKey)
+  }
+
+  override fun setMemoryBudget(memoryBudget: MapMemoryBudget?) {
+    map.setMemoryBudget(memoryBudget)
   }
 
   override fun addStyleCustomGeometrySource(

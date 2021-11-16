@@ -1065,7 +1065,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
    * @param runImmediately if true, animation will be started right away, otherwise it will wait until
    * [MotionEvent.ACTION_UP] is registered.
    */
-  private fun handleZoomAnimation(
+  internal fun handleZoomAnimation(
     zoomIn: Boolean,
     zoomFocalPoint: ScreenCoordinate,
     runImmediately: Boolean

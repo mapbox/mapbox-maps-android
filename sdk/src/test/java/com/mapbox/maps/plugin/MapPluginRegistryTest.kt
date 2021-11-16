@@ -8,7 +8,6 @@ import com.mapbox.common.ShadowLogger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.StyleInterface
-import com.mapbox.maps.loader.MapboxMapStaticInitializer
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import io.mockk.*
@@ -33,8 +32,6 @@ class MapPluginRegistryTest {
 
   @Before
   fun setUp() {
-    mockkStatic(MapboxMapStaticInitializer::class)
-    every { MapboxMapStaticInitializer.loadMapboxMapNativeLib() } just Runs
     mapPluginRegistry = MapPluginRegistry(delegateProvider)
     every { mapInitOptions.mapOptions } returns mapOptions
     every { mapInitOptions.resourceOptions } returns resourceOptions

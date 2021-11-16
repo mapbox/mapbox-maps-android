@@ -84,4 +84,6 @@
     <string name="description_nine_patch">Add 9-patch image to the style</string>
     <string name="description_feature_state">Create interactive hover effects with feature state</string>
     <string name="description_3d_globe">Showcasing 3D globe</string>
+    <string name="description_osm">Using raster source and layer to render OSM tiles with TileSet class</string>
+
 </resources>

@@ -7,6 +7,7 @@ import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
+import com.mapbox.common.Cancelable
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
@@ -738,6 +739,24 @@ class MapboxMap internal constructor(
   }
 
   /**
+   * Queries the map for rendered features.
+   *
+   * @param geometry The `screen pixel coordinates` (point, line string or box) to query for rendered features.
+   * @param options The `render query options` for querying rendered features.
+   * @param callback The `query features callback` called when the query completes.
+   * @return A `cancelable` object that could be used to cancel the pending query.
+   */
+  override fun queryRenderedFeatures(
+    geometry: RenderedQueryGeometry,
+    options: RenderedQueryOptions,
+    callback: QueryFeaturesCallback
+  ): Cancelable {
+    return nativeMapWeakRef.call {
+      this.queryRenderedFeatures(geometry, options, callback)
+    }
+  }
+
+  /**
    * Queries the map for source features.
    *
    * @param sourceId Style source identifier used to query for source features.
@@ -785,13 +804,17 @@ class MapboxMap internal constructor(
    *        'leaves': returns all the leaves of a cluster (given its cluster_id)
    *        'expansion-zoom': returns the zoom on which the cluster expands into several children (useful for "click to zoom" feature).
    * @param args used for further query specification when using 'leaves' extensionField. Now only support following two args:
-   *        'limit': the number of points to return from the query (must use type 'uint64_t', set to maximum for all points)
-   *        'offset': the amount of points to skip (for pagination, must use type 'uint64_t')
+   *        'limit': the number of points to return from the query (must use type [Long], set to maximum for all points)
+   *        'offset': the amount of points to skip (for pagination, must use type [Long])
    *
-   * @return The result will be returned through the \link QueryFeatureExtensionCallback \endlink.
+   * @param callback The result will be returned through the [QueryFeatureExtensionCallback].
    *         The result could be a feature extension value containing either a value (expansion-zoom) or a feature collection (children or leaves).
    *         Or a string describing an error if the operation was not successful.
    */
+  @Deprecated(
+    "The function of queryFeatureExtensions is covered by others.",
+    ReplaceWith("getGeoJsonClusterLeaves/getGeoJsonClusterChildren/getGeoJsonClusterExpansionZoom")
+  )
   fun queryFeatureExtensions(
     sourceIdentifier: String,
     feature: Feature,
@@ -811,6 +834,70 @@ class MapboxMap internal constructor(
       )
     }
   }
+
+  /**
+   * Returns all the leaves (original points) of a cluster (given its cluster_id) from a GeoJsonSource, with pagination support: limit is the number of leaves
+   * to return (set to Infinity for all points), and offset is the amount of points to skip (for pagination).
+   *
+   * Requires configuring the source as a cluster by calling [GeoJsonSource.Builder#cluster(boolean)].
+   *
+   * @param sourceIdentifier GeoJsonSource identifier.
+   * @param cluster Cluster from which to retrieve leaves from
+   * @param limit The number of points to return from the query (must use type [Long], set to maximum for all points). Defaults to 10.
+   * @param offset The amount of points to skip (for pagination, must use type [Long]). Defaults to 0.
+   * @param callback The result will be returned through the [QueryFeatureExtensionCallback].
+   *         The result is a feature collection or a string describing an error if the operation was not successful.
+   */
+  @JvmOverloads
+  fun getGeoJsonClusterLeaves(
+    sourceIdentifier: String,
+    cluster: Feature,
+    limit: Long = QFE_DEFAULT_LIMIT,
+    offset: Long = QFE_DEFAULT_OFFSET,
+    callback: QueryFeatureExtensionCallback,
+  ) = queryFeatureExtensions(
+    sourceIdentifier, cluster, QFE_SUPER_CLUSTER, QFE_LEAVES,
+    hashMapOf(QFE_LIMIT to Value(limit), QFE_OFFSET to Value(offset)),
+    callback
+  )
+
+  /**
+   * Returns the children (original points or clusters) of a cluster (on the next zoom level)
+   * given its id (cluster_id value from feature properties) from a GeoJsonSource.
+   *
+   * Requires configuring the source as a cluster by calling [GeoJsonSource.Builder#cluster(boolean)].
+   *
+   * @param sourceIdentifier GeoJsonSource identifier.
+   * @param cluster cluster from which to retrieve children from
+   * @param callback The result will be returned through the [QueryFeatureExtensionCallback].
+   *         The result is a feature collection or a string describing an error if the operation was not successful.
+   */
+  fun getGeoJsonClusterChildren(
+    sourceIdentifier: String,
+    cluster: Feature,
+    callback: QueryFeatureExtensionCallback,
+  ) = queryFeatureExtensions(
+    sourceIdentifier, cluster, QFE_SUPER_CLUSTER, QFE_CHILDREN, null, callback
+  )
+
+  /**
+   * Returns the zoom on which the cluster expands into several children (useful for "click to zoom" feature)
+   * given the cluster's cluster_id (cluster_id value from feature properties) from a GeoJsonSource.
+   *
+   * Requires configuring the source as a cluster by calling [GeoJsonSource.Builder#cluster(boolean)].
+   *
+   * @param sourceIdentifier GeoJsonSource identifier.
+   * @param cluster cluster from which to retrieve the expansion zoom from
+   * @param callback The result will be returned through the [QueryFeatureExtensionCallback].
+   *         The result is a feature extension value containing a value or a string describing an error if the operation was not successful.
+   */
+  fun getGeoJsonClusterExpansionZoom(
+    sourceIdentifier: String,
+    cluster: Feature,
+    callback: QueryFeatureExtensionCallback,
+  ) = queryFeatureExtensions(
+    sourceIdentifier, cluster, QFE_SUPER_CLUSTER, QFE_EXPANSION_ZOOM, null, callback
+  )
 
   /**
    * Update the state map of a feature within a style source.
@@ -1212,6 +1299,25 @@ class MapboxMap internal constructor(
   }
 
   /**
+   * The memory budget hint to be used by the map. The budget can be given in
+   * tile units or in megabytes. A Map will do the best effort to keep memory
+   * allocations for a non essential resources within the budget.
+   *
+   * The memory budget distribution and resource
+   * eviction logic is a subject to change. Current implementation sets memory budget
+   * hint per data source.
+   *
+   * If null is set, the memory budget in tile units will be dynamically calculated based on
+   * the current viewport size.
+   *
+   * @param memoryBudget The memory budget hint to be used by the Map.
+   */
+  @MapboxExperimental
+  fun setMemoryBudget(memoryBudget: MapMemoryBudget?) {
+    nativeMapWeakRef.call { this.setMemoryBudget(memoryBudget) }
+  }
+
+  /**
    * Returns if the style has been fully loaded.
    */
   override fun isFullyLoaded(): Boolean {
@@ -1344,5 +1450,13 @@ class MapboxMap internal constructor(
     }
 
     private const val TAG_PROJECTION = "MbxProjection"
+    internal const val QFE_SUPER_CLUSTER = "supercluster"
+    internal const val QFE_LEAVES = "leaves"
+    internal const val QFE_LIMIT = "limit"
+    internal const val QFE_OFFSET = "offset"
+    internal const val QFE_DEFAULT_LIMIT = 10L
+    internal const val QFE_DEFAULT_OFFSET = 0L
+    internal const val QFE_CHILDREN = "children"
+    internal const val QFE_EXPANSION_ZOOM = "expansion-zoom"
   }
 }
