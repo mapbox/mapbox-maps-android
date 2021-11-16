@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
+import androidx.annotation.VisibleForTesting
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.bindgen.Expected
 import com.mapbox.maps.viewannotation.ViewAnnotation
@@ -25,7 +26,8 @@ internal class ViewAnnotationManagerImpl(
   }
 
   private val annotationMap = ConcurrentHashMap<String, ViewAnnotation>()
-  private val idLookupMap = ConcurrentHashMap<View, String>()
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal val idLookupMap = ConcurrentHashMap<View, String>()
   private val hiddenViewMap = ConcurrentHashMap<View, Float>()
 
   // struct needed for drawing, declare it only once
@@ -53,7 +55,7 @@ internal class ViewAnnotationManagerImpl(
   }
 
   override fun addViewAnnotation(view: View, options: ViewAnnotationOptions) {
-    if (idLookupMap.contains(view)) {
+    if (idLookupMap.containsKey(view)) {
       throw RuntimeException(
         "Trying to add view annotation that was already added before! " +
           "Please consider deleting annotation view ($view) beforehand."
