@@ -6,6 +6,7 @@ import android.widget.FrameLayout
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.geojson.Point
+import com.mapbox.maps.viewannotation.ViewAnnotationManagerImpl
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import io.mockk.*
 import org.junit.After

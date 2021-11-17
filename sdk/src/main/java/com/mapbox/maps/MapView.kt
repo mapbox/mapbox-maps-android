@@ -21,6 +21,7 @@ import com.mapbox.maps.renderer.MapboxTextureViewRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
+import com.mapbox.maps.viewannotation.ViewAnnotationManagerImpl
 
 /**
  * A [MapView] provides an embeddable map interface.
