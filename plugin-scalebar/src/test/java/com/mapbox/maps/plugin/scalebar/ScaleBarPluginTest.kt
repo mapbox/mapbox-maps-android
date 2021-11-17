@@ -60,8 +60,8 @@ class ScaleBarPluginTest {
     every { typedArray.hasValue(any()) } returns true
 
     scaleBarPlugin = ScaleBarPluginImpl { scaleBarView }
-    scaleBarPlugin.onPluginView(scaleBarView)
     scaleBarPlugin.onDelegateProvider(delegateProvider)
+    scaleBarPlugin.onPluginView(scaleBarView)
     scaleBarPlugin.initialize()
   }
 

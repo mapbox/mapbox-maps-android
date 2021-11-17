@@ -27,6 +27,11 @@ interface ScaleBar {
   var mapViewWidth: Float
 
   /**
+   * Defines the pixel ratio in the current display.
+   */
+  var pixelRatio: Float
+
+  /**
    * If set to True scale bar will be triggering onDraw depending on [ScaleBarSettings.refreshInterval]
    * even if actual data did not change. If set to False scale bar will redraw only on demand.
    *
