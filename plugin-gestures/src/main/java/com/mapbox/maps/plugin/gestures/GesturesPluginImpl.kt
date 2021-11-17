@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
+import android.util.Size
 import android.view.Gravity
 import android.view.InputDevice
 import android.view.MotionEvent
@@ -82,6 +83,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   private val onRotateListenerList = CopyOnWriteArrayList<OnRotateListener>()
   private val onScaleListenerList = CopyOnWriteArrayList<OnScaleListener>()
   private val onShoveListenerList = CopyOnWriteArrayList<OnShoveListener>()
+
+  private var horizonLineFromTop = 0.0
+  private var mapSize = Size(0,0)
 
   // FocalPoint
   private var doubleTapFocalPoint = ScreenCoordinate(0.0, 0.0)
@@ -401,7 +405,11 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
    * Called when the size of the MapView has changed.
    */
   override fun onSizeChanged(width: Int, height: Int) {
+    Logger.e("testtest", "OnSizeChanged: $width, $height")
     centerScreen = ScreenCoordinate((width / 2).toDouble(), (height / 2).toDouble())
+    mapSize = Size(width, height)
+    mapTransformDelegate.getSize()
+    updateHorizonLinePosition()
   }
 
   /**
@@ -958,8 +966,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     detector: ShoveGestureDetector,
     deltaPixelsSinceLast: Float
   ): Boolean {
-    Logger.e("testtest", horizonLineFromTopOfMap().toString())
-    updateHorizonLinePosition()
     // Get pitch value (scale and clamp)
     var pitch = mapCameraManagerDelegate.cameraState.pitch
     val optimizedPitch = pitch - (SHOVE_PIXEL_CHANGE_FACTOR * deltaPixelsSinceLast).toDouble()
@@ -1185,6 +1191,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       return false
     }
 
+    if (e2.y.toDouble() < horizonLineFromTop + HORIZON_LINE_PADDING) {
+      return false
+    }
+
     val screenDensity = pixelRatio
 
     // calculate velocity vector for xy dimensions, independent from screen size
@@ -1264,7 +1274,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   ): Boolean {
     // first move event is often delivered with no displacement
     if (distanceX != 0f || distanceY != 0f) {
-      if (detector.focalPoint.y.toDouble() < horizonLineFromTopOfMap() + 100.0) {
+      if (detector.focalPoint.y.toDouble() < horizonLineFromTop + HORIZON_LINE_PADDING) {
         return true
       }
       if (notifyOnMoveListeners(detector)) {
@@ -1308,7 +1318,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   }
 
   private fun horizonLineFromTopOfMap(): Double {
-    val size = mapTransformDelegate.getSize()
     val cameraState = mapCameraManagerDelegate.cameraState
     val centerOffset =
       ScreenCoordinate(
@@ -1323,8 +1332,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     // `fov = 2 * arctan((height / 2) / (height * 1.5))`
     val fov = 0.6435011087932844
     // h is height of space above map center to horizon.
-    val h = size.height / 2.0 / tan(fov / 2.0) / tan(max(cameraState.pitch * PI / 180.0, 0.1) + centerOffset.y)
-    return size.height / 2.0 - h * (1.0 - kHorizonEpsilon)
+    val h = mapSize.height / 2.0 / tan(fov / 2.0) / tan(max(cameraState.pitch * PI / 180.0, 0.1) + centerOffset.y)
+    return mapSize.height / 2.0 - h * (1.0 - kHorizonEpsilon)
   }
 
   private fun getAdjustedCameraCenter(
@@ -1585,15 +1594,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     val horizontalLine = View(mapView.context)
     this.mapView = WeakReference(mapView)
     this.horizontalLine = WeakReference(horizontalLine)
-    horizontalLine.layoutParams = FrameLayout.LayoutParams(1000, 100, Gravity.TOP)
-      .also { it.topMargin = horizonLineFromTopOfMap().toInt() }
-    Logger.e("testtest", "initial horizonLineFromTop: ${horizonLineFromTopOfMap()}")
+    updateHorizonLinePosition()
     horizontalLine.setBackgroundColor(Color.RED)
     return horizontalLine
-  }
-
-  override fun onPluginView(view: View) {
-    updateHorizonLinePosition()
   }
 
   /**
@@ -1679,6 +1682,17 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     )
   }
 
+  override fun onCameraMove(
+    lat: Double,
+    lon: Double,
+    zoom: Double,
+    pitch: Double,
+    bearing: Double,
+    padding: Array<Double>
+  ) {
+    updateHorizonLinePosition()
+  }
+
   /**
    * Called when the plugin is first added to the map.
    */
@@ -1688,9 +1702,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   }
 
   private fun updateHorizonLinePosition() {
+    horizonLineFromTop = horizonLineFromTopOfMap()
     horizontalLine.get()?.let { it ->
       it.layoutParams = FrameLayout.LayoutParams(1000, 100, Gravity.TOP)
-        .also { it.topMargin = horizonLineFromTopOfMap().toInt() }
+        .also { it.topMargin = horizonLineFromTop.toInt() }
       it.invalidate()
     }
   }
