@@ -5,6 +5,7 @@ import com.mapbox.android.gestures.AndroidGesturesManager
 import com.mapbox.maps.plugin.ContextBinder
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.MapSizePlugin
+import com.mapbox.maps.plugin.ViewPlugin
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettingsInterface
@@ -12,7 +13,7 @@ import com.mapbox.maps.plugin.gestures.generated.GesturesSettingsInterface
 /**
  * Define the interfaces for the Layer plugin.
  */
-interface GesturesPlugin : MapPlugin, ContextBinder, MapSizePlugin, GesturesSettingsInterface {
+interface GesturesPlugin : ViewPlugin, ContextBinder, MapSizePlugin, GesturesSettingsInterface  {
 
   /**
    * Called when user touches the screen, all positions are absolute.
