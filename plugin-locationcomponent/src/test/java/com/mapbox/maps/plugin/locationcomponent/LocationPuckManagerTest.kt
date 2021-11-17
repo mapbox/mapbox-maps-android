@@ -12,8 +12,17 @@ import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
-import io.mockk.*
-import org.junit.Assert.*
+import com.mapbox.maps.util.captureVararg
+import io.mockk.CapturingSlot
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.verify
+import io.mockk.verifyOrder
+import org.junit.Assert.assertArrayEquals
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,6 +30,7 @@ import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
 class LocationPuckManagerTest {
+
   private val settings = mockk<LocationComponentSettings>(relaxed = true)
   private val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
   private val mapCameraDelegate = mockk<MapCameraManagerDelegate>(relaxed = true)
@@ -86,12 +96,25 @@ class LocationPuckManagerTest {
   fun testInitialiseSetsBearingAndLocationBeforeAddingLayers() {
     locationPuckManager.lastLocation = Point.fromLngLat(10.0, 20.0)
     locationPuckManager.initialize(style)
+
+    val locations = mutableListOf<Point>()
+    val bearings = mutableListOf<Double>()
+
     verifyOrder {
-      animationManager.animatePosition(targets = anyVararg(), options = null)
-      animationManager.animateBearing(targets = anyDoubleVararg(), options = null)
+      animationManager.animatePosition(targets = captureVararg(locations), options = null)
+      animationManager.animateBearing(targets = captureVararg(bearings).toDoubleArray(), options = null)
       locationLayerRenderer.initializeComponents(style)
       locationLayerRenderer.show()
     }
+
+    assertArrayEquals(
+      locations.toTypedArray(),
+      arrayOf(locationPuckManager.lastLocation, locationPuckManager.lastLocation)
+    )
+    assertArrayEquals(
+      bearings.toTypedArray(),
+      arrayOf(0.0, 0.0)
+    )
   }
 
   @Test
