@@ -55,6 +55,9 @@ class ScaleBarImpl : ScaleBar, View {
       post(::requestLayout)
     }
 
+  /**
+   * Defines the pixel ratio in the current display.
+   */
   override var pixelRatio = DEFAULT_PIXEL_RATIO
 
   override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
