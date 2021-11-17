@@ -974,14 +974,14 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       internalSettings.focalPoint?.let {
         // zoom in on user focal point
         zoomFocalPoint = it
-        zoomOutAnimated(zoomFocalPoint, false)
+        animateZoomOut(zoomFocalPoint, false)
         return true
       }
 
       // Zoom in on gesture
       val pointF = detector.focalPoint
       zoomFocalPoint = ScreenCoordinate(pointF.x.toDouble(), pointF.y.toDouble())
-      zoomOutAnimated(zoomFocalPoint, false)
+      animateZoomOut(zoomFocalPoint, false)
       return true
     }
   }
@@ -1003,6 +1003,19 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       interpolator = scaleInterpolator
       duration = animationTime
     }
+
+    zoomAnimator.addListener(object : AnimatorListenerAdapter() {
+      override fun onAnimationStart(animation: Animator?) {
+        super.onAnimationStart(animation)
+        // notify scale gesture started when zoom animation starts.
+        notifyOnScaleListeners(gesturesManager.standardScaleGestureDetector)
+      }
+
+      override fun onAnimationEnd(animation: Animator) {
+        // notify scale gesture ended when zoom animation finished.
+        notifyOnScaleEndListeners(gesturesManager.standardScaleGestureDetector)
+      }
+    })
 
     val anchorAnimator = cameraAnimationsPlugin.createAnchorAnimator(
       options = cameraAnimatorOptions(animationFocalPoint) {
@@ -1030,8 +1043,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
    * @param runImmediately if true, animation will be started right away, otherwise it will wait until
    * [MotionEvent.ACTION_UP] is registered.
    */
-  private fun zoomInAnimated(zoomFocalPoint: ScreenCoordinate, runImmediately: Boolean) {
-    zoomAnimated(true, zoomFocalPoint, runImmediately)
+  private fun animateZoomIn(zoomFocalPoint: ScreenCoordinate, runImmediately: Boolean) {
+    handleZoomAnimation(true, zoomFocalPoint, runImmediately)
   }
 
   /**
@@ -1041,18 +1054,26 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
    * @param runImmediately if true, animation will be started right away, otherwise it will wait until
    * [MotionEvent.ACTION_UP] is registered.
    */
-  internal fun zoomOutAnimated(zoomFocalPoint: ScreenCoordinate, runImmediately: Boolean) {
-    zoomAnimated(false, zoomFocalPoint, runImmediately)
+  internal fun animateZoomOut(zoomFocalPoint: ScreenCoordinate, runImmediately: Boolean) {
+    handleZoomAnimation(false, zoomFocalPoint, runImmediately)
   }
 
-  private fun zoomAnimated(
+  /**
+   * handle zoom animation and notify scale gesture events.
+   * @param zoomIn true for zoom-in, false for zoom-out
+   * @param zoomFocalPoint focal point of zoom animation
+   * @param runImmediately if true, animation will be started right away, otherwise it will wait until
+   * [MotionEvent.ACTION_UP] is registered.
+   */
+  internal fun handleZoomAnimation(
     zoomIn: Boolean,
     zoomFocalPoint: ScreenCoordinate,
     runImmediately: Boolean
   ) {
     // canceling here as well, because when using a button it will not be canceled automatically by onDown()
     unregisterScheduledAnimators(scaleAnimators)
-
+    // notify scale gesture is starting.
+    notifyOnScaleBeginListeners(gesturesManager.standardScaleGestureDetector)
     val currentZoom = mapCameraManagerDelegate.cameraState.zoom
     val animators = createScaleAnimators(
       currentZoom,
@@ -1139,7 +1160,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         doubleTapFocalPoint = it
       }
 
-      zoomInAnimated(doubleTapFocalPoint, false)
+      animateZoomIn(doubleTapFocalPoint, false)
       return true
     }
     return false
@@ -1188,10 +1209,13 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       }
       else -> 0.0
     }
-    val pitchFactor = FLING_LIMITING_FACTOR + pitchFactorAdditionalComponent / screenDensity.toDouble()
+    val pitchFactor =
+      FLING_LIMITING_FACTOR + pitchFactorAdditionalComponent / screenDensity.toDouble()
 
-    val offsetX = if (internalSettings.isScrollHorizontallyLimited()) 0.0 else velocityX.toDouble() / pitchFactor
-    val offsetY = if (internalSettings.isScrollVerticallyLimited()) 0.0 else velocityY.toDouble() / pitchFactor
+    val offsetX =
+      if (internalSettings.isScrollHorizontallyLimited()) 0.0 else velocityX.toDouble() / pitchFactor
+    val offsetY =
+      if (internalSettings.isScrollVerticallyLimited()) 0.0 else velocityY.toDouble() / pitchFactor
 
     cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
 
