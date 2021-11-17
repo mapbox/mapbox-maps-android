@@ -85,4 +85,5 @@
     <string name="activity_feature_state">Feature state</string>
     <string name="activity_globe">3D globe</string>
     <string name="activity_osm">TileJson</string>
+    <string name="activity_view_annotations">View annotations</string>
 </resources>

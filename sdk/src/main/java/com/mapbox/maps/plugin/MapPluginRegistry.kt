@@ -37,7 +37,7 @@ internal class MapPluginRegistry(
     }
 
   private val plugins = mutableMapOf<String, MapPlugin>()
-  private val viewPlugins = mutableMapOf<ViewPlugin, View>()
+  internal val viewPlugins = mutableMapOf<ViewPlugin, View>()
   private val cameraPlugins = CopyOnWriteArrayList<MapCameraPlugin>()
   private val gesturePlugins = CopyOnWriteArrayList<GesturesPlugin>()
   private val styleObserverPlugins = CopyOnWriteArrayList<MapStyleObserverPlugin>()

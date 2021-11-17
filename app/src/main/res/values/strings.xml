@@ -143,4 +143,7 @@
 
     <!--3D Globe Activity-->
     <string name="info_text">Current zoom:\n %1$s\n\nCurrent actual projection:\n %2$s\n\nCurrent selected projection:\n %3$s</string>
+
+    <!--View Annotations-->
+    <string name="content_description_close">Close callout</string>
 </resources>

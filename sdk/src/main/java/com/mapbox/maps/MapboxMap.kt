@@ -1428,6 +1428,26 @@ class MapboxMap internal constructor(
     return MapProjectionUtils.fromValue(value)
   }
 
+  internal fun addViewAnnotation(viewId: String, options: ViewAnnotationOptions): Expected<String, None> {
+    return nativeMapWeakRef.call { this.addViewAnnotation(viewId, options) }
+  }
+
+  internal fun updateViewAnnotation(viewId: String, options: ViewAnnotationOptions): Expected<String, None> {
+    return nativeMapWeakRef.call { this.updateViewAnnotation(viewId, options) }
+  }
+
+  internal fun removeViewAnnotation(viewId: String): Expected<String, None> {
+    return nativeMapWeakRef.call { this.removeViewAnnotation(viewId) }
+  }
+
+  internal fun getViewAnnotationOptions(identifier: String): Expected<String, ViewAnnotationOptions> {
+    return nativeMapWeakRef.call { this.getViewAnnotationOptions(identifier) }
+  }
+
+  internal fun setViewAnnotationPositionsUpdateListener(listener: ViewAnnotationPositionsUpdateListener?) {
+    return nativeMapWeakRef.call { this.setViewAnnotationPositionsUpdateListener(listener) }
+  }
+
   /**
    * A convenience object to access MapboxMap's static utilities.
    */
