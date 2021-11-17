@@ -6,7 +6,6 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
-import android.graphics.Rect
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
@@ -14,11 +13,16 @@ import android.view.Gravity
 import android.view.InputDevice
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.VisibleForTesting
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
-import com.mapbox.android.gestures.*
+import com.mapbox.android.gestures.AndroidGesturesManager
+import com.mapbox.android.gestures.MoveGestureDetector
+import com.mapbox.android.gestures.MultiFingerTapGestureDetector
+import com.mapbox.android.gestures.RotateGestureDetector
+import com.mapbox.android.gestures.ShoveGestureDetector
+import com.mapbox.android.gestures.StandardGestureDetector
+import com.mapbox.android.gestures.StandardScaleGestureDetector
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
@@ -42,7 +46,14 @@ import com.mapbox.maps.plugin.gestures.generated.GesturesSettingsBase
 import java.lang.ref.WeakReference
 import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
-import kotlin.math.*
+import kotlin.math.PI
+import kotlin.math.abs
+import kotlin.math.exp
+import kotlin.math.hypot
+import kotlin.math.ln
+import kotlin.math.max
+import kotlin.math.pow
+import kotlin.math.tan
 
 /**
  * Manages gestures events on a MapView.
@@ -391,11 +402,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
    */
   override fun onSizeChanged(width: Int, height: Int) {
     centerScreen = ScreenCoordinate((width / 2).toDouble(), (height / 2).toDouble())
-    horizontalLine.get()?.let { it ->
-      it.layoutParams = FrameLayout.LayoutParams(1000, 20, Gravity.TOP)
-        .also { it.topMargin = horizonLineFromTop().toInt() }
-      it.invalidate()
-    }
   }
 
   /**
@@ -952,12 +958,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     detector: ShoveGestureDetector,
     deltaPixelsSinceLast: Float
   ): Boolean {
-    Logger.e("testtest", horizonLineFromTop().toString())
-    horizontalLine.get()?.let { it ->
-      it.layoutParams = FrameLayout.LayoutParams(1000, 20, Gravity.TOP)
-        .also { it.topMargin = horizonLineFromTop().toInt() }
-      it.invalidate()
-    }
+    Logger.e("testtest", horizonLineFromTopOfMap().toString())
+    updateHorizonLinePosition()
     // Get pitch value (scale and clamp)
     var pitch = mapCameraManagerDelegate.cameraState.pitch
     val optimizedPitch = pitch - (SHOVE_PIXEL_CHANGE_FACTOR * deltaPixelsSinceLast).toDouble()
@@ -1262,6 +1264,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   ): Boolean {
     // first move event is often delivered with no displacement
     if (distanceX != 0f || distanceY != 0f) {
+      if (detector.focalPoint.y.toDouble() < horizonLineFromTopOfMap() + 100.0) {
+        return true
+      }
       if (notifyOnMoveListeners(detector)) {
         return true
       }
@@ -1286,20 +1291,23 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       val toX = fromX - resolvedDistanceX
       val toY = fromY - resolvedDistanceY
 
-      val cameraOptions = getAdjustedCameraCenter(
-        mapCameraManagerDelegate.cameraState,
-        mapCameraManagerDelegate.getDragCameraOptions(
-          ScreenCoordinate(fromX, fromY),
-          ScreenCoordinate(toX, toY)
-        )
-      )
+//      val cameraOptions = getAdjustedCameraCenter(
+//        mapCameraManagerDelegate.cameraState,
+//        mapCameraManagerDelegate.getDragCameraOptions(
+//          ScreenCoordinate(fromX, fromY),
+//          ScreenCoordinate(toX, toY)
+//        )
+//      )
 
-      easeToImmediately(cameraOptions)
+      easeToImmediately(mapCameraManagerDelegate.getDragCameraOptions(
+        ScreenCoordinate(fromX, fromY),
+        ScreenCoordinate(toX, toY)
+      ))
     }
     return true
   }
 
-  private fun horizonLineFromTop(): Double {
+  private fun horizonLineFromTopOfMap(): Double {
     val size = mapTransformDelegate.getSize()
     val cameraState = mapCameraManagerDelegate.cameraState
     val centerOffset =
@@ -1574,18 +1582,18 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   }
 
   override fun bind(mapView: FrameLayout, attrs: AttributeSet?, pixelRatio: Float): View {
-//    val offsetViewBounds = Rect()
-//    mapView.getDrawingRect(offsetViewBounds)
-//    (mapView.parent as ViewGroup).offsetDescendantRectToMyCoords(mapView, offsetViewBounds)
-
     val horizontalLine = View(mapView.context)
     this.mapView = WeakReference(mapView)
     this.horizontalLine = WeakReference(horizontalLine)
-    horizontalLine.layoutParams = FrameLayout.LayoutParams(10000, 20, Gravity.TOP)
-      .also { it.topMargin = horizonLineFromTop().toInt() }
-    Logger.e("testtest", "initial horizonLineFromTop: ${horizonLineFromTop()}")
+    horizontalLine.layoutParams = FrameLayout.LayoutParams(1000, 100, Gravity.TOP)
+      .also { it.topMargin = horizonLineFromTopOfMap().toInt() }
+    Logger.e("testtest", "initial horizonLineFromTop: ${horizonLineFromTopOfMap()}")
     horizontalLine.setBackgroundColor(Color.RED)
     return horizontalLine
+  }
+
+  override fun onPluginView(view: View) {
+    updateHorizonLinePosition()
   }
 
   /**
@@ -1677,5 +1685,13 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   override fun initialize() {
     initializeGesturesManager(gesturesManager, true)
     initializeGestureListeners(context, true)
+  }
+
+  private fun updateHorizonLinePosition() {
+    horizontalLine.get()?.let { it ->
+      it.layoutParams = FrameLayout.LayoutParams(1000, 100, Gravity.TOP)
+        .also { it.topMargin = horizonLineFromTopOfMap().toInt() }
+      it.invalidate()
+    }
   }
 }

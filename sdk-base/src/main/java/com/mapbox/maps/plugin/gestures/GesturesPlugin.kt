@@ -3,7 +3,6 @@ package com.mapbox.maps.plugin.gestures
 import android.view.MotionEvent
 import com.mapbox.android.gestures.AndroidGesturesManager
 import com.mapbox.maps.plugin.ContextBinder
-import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.MapSizePlugin
 import com.mapbox.maps.plugin.ViewPlugin
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
