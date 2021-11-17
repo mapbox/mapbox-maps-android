@@ -1,4 +1,4 @@
-package com.mapbox.maps
+package com.mapbox.maps.viewannotation
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,8 +6,9 @@ import android.widget.FrameLayout
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.geojson.Point
-import com.mapbox.maps.viewannotation.ViewAnnotationManagerImpl
-import com.mapbox.maps.viewannotation.viewAnnotationOptions
+import com.mapbox.maps.MapView
+import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.ViewAnnotationOptions
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.assertEquals

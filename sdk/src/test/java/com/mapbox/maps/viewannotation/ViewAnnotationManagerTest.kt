@@ -1,12 +1,12 @@
-package com.mapbox.maps
+package com.mapbox.maps.viewannotation
 
 import android.view.View
 import android.widget.FrameLayout
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
-import com.mapbox.maps.viewannotation.ViewAnnotationManagerImpl
-import com.mapbox.maps.viewannotation.viewAnnotationOptions
+import com.mapbox.maps.MapView
+import com.mapbox.maps.MapboxMap
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -159,7 +159,10 @@ class ViewAnnotationManagerTest {
     viewAnnotationManager.addViewAnnotation(view, viewAnnotationOptions)
     val viewId = viewAnnotationManager.idLookupMap[view]
     every { mapboxMap.getViewAnnotationOptions(viewId!!) } returns ExpectedFactory.createValue(viewAnnotationOptions)
-    assertEquals(viewAnnotationOptions, viewAnnotationManager.getViewAnnotationOptionsByFeatureId(FEATURE_ID))
+    assertEquals(
+      viewAnnotationOptions,
+      viewAnnotationManager.getViewAnnotationOptionsByFeatureId(FEATURE_ID)
+    )
   }
 
   @Test
