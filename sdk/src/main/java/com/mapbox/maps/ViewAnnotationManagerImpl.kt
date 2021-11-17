@@ -118,7 +118,7 @@ internal class ViewAnnotationManagerImpl(
   }
 
   private fun validateOptions(options: ViewAnnotationOptions) {
-    checkNotNull(options.geometry) { "Geometry can not be null!" }
+    checkNotNull(options.geometry) { EXCEPTION_TEXT_GEOMETRY_IS_NULL }
   }
 
   private fun prepareViewAnnotation(inflatedView: View, options: ViewAnnotationOptions): View {
@@ -228,5 +228,9 @@ internal class ViewAnnotationManagerImpl(
       throw RuntimeException(expected.error)
     }
     return expected.value
+  }
+
+  companion object {
+    internal val EXCEPTION_TEXT_GEOMETRY_IS_NULL = "Geometry can not be null!"
   }
 }

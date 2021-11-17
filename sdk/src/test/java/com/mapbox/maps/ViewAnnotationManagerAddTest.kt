@@ -6,10 +6,12 @@ import android.widget.FrameLayout
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.geojson.Point
+import com.mapbox.maps.ViewAnnotationManagerImpl.Companion.EXCEPTION_TEXT_GEOMETRY_IS_NULL
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -55,12 +57,19 @@ class ViewAnnotationManagerAddTest(
   fun addViewAnnotationWithSyncResId() {
     mockkStatic(LayoutInflater::class)
     every { LayoutInflater.from(any()).inflate(resIdActual, mapView, false) } returns expectedView
-    try {
+    if (runtimeExceptionThrown) {
+      val exception = assertThrows(RuntimeException::class.java) {
+        viewAnnotationManager.addViewAnnotation(
+          resIdActual,
+          viewAnnotationOptionsActual
+        )
+      }
+      assertEquals(EXCEPTION_TEXT_GEOMETRY_IS_NULL, exception.message)
+    } else {
       val actualView = viewAnnotationManager.addViewAnnotation(
         resIdActual,
         viewAnnotationOptionsActual
       )
-      assertEquals(runtimeExceptionThrown, false)
       assertEquals(expectedView, actualView)
       verify(exactly = 1) {
         mapboxMap.addViewAnnotation(
@@ -68,11 +77,8 @@ class ViewAnnotationManagerAddTest(
           viewAnnotationOptionsExpected
         )
       }
-    } catch (e: RuntimeException) {
-      assertEquals(runtimeExceptionThrown, true)
-    } finally {
-      unmockkStatic(LayoutInflater::class)
     }
+    unmockkStatic(LayoutInflater::class)
   }
 
   @Test
@@ -82,13 +88,21 @@ class ViewAnnotationManagerAddTest(
     every { asyncInflater.inflate(resIdActual, mapView, capture(callback)) } answers {
       callback.captured.onInflateFinished(expectedView, resIdActual, mapView)
     }
-    try {
+    if (runtimeExceptionThrown) {
+      val exception = assertThrows(RuntimeException::class.java) {
+        viewAnnotationManager.addViewAnnotation(
+          resIdActual,
+          viewAnnotationOptionsActual,
+          asyncInflater,
+        ) {}
+      }
+      assertEquals(EXCEPTION_TEXT_GEOMETRY_IS_NULL, exception.message)
+    } else {
       viewAnnotationManager.addViewAnnotation(
         resIdActual,
         viewAnnotationOptionsActual,
         asyncInflater,
       ) {
-        assertEquals(runtimeExceptionThrown, false)
         assertEquals(expectedView, it)
         verify(exactly = 1) {
           mapboxMap.addViewAnnotation(
@@ -97,29 +111,32 @@ class ViewAnnotationManagerAddTest(
           )
         }
       }
-    } catch (e: RuntimeException) {
-      assertEquals(runtimeExceptionThrown, true)
     }
   }
 
   @Test
   fun addViewAnnotationWithView() {
-    try {
-      val actualView = mockk<View>(relaxed = true)
-      every { actualView.layoutParams } returns frameLayoutParams
+    val actualView = mockk<View>(relaxed = true)
+    every { actualView.layoutParams } returns frameLayoutParams
+    if (runtimeExceptionThrown) {
+      val exception = assertThrows(RuntimeException::class.java) {
+        viewAnnotationManager.addViewAnnotation(
+          actualView,
+          viewAnnotationOptionsActual
+        )
+      }
+      assertEquals(EXCEPTION_TEXT_GEOMETRY_IS_NULL, exception.message)
+    } else {
       viewAnnotationManager.addViewAnnotation(
         actualView,
         viewAnnotationOptionsActual
       )
-      assertEquals(runtimeExceptionThrown, false)
       verify(exactly = 1) {
         mapboxMap.addViewAnnotation(
           any(),
           viewAnnotationOptionsExpected
         )
       }
-    } catch (e: RuntimeException) {
-      assertEquals(runtimeExceptionThrown, true)
     }
   }
 
