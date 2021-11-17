@@ -7,6 +7,8 @@ import os
 import requests
 import sys
 
+MAIN_BRANCH_NAME = "main"
+
 
 def TriggerPipeline(slug, token, branch, params):
     url = "https://circleci.com/api/v2/project/github/%s/pipeline" % (slug)
@@ -49,6 +51,8 @@ def Main():
             help="Commit git hash that triggered the pipeline, otherwise environment CIRCLE_SHA1.")
     parser.add_argument("--branch",
             help="Build a specific branch, otherwise it will build the default branch.")
+    parser.add_argument("--current-branch",
+            help="Current branch name.")
 
     args = parser.parse_args()
 
@@ -59,7 +63,8 @@ def Main():
     params = {
         "mapbox_android_upstream": True,
         "mapbox_slug": args.origin_slug,
-        "mapbox_android_hash": args.hash
+        "mapbox_android_hash": args.hash,
+        "mapbox_merge_main": args.current_branch == MAIN_BRANCH_NAME
     }
 
     TriggerPipeline(args.target_slug, args.token, args.branch, params)

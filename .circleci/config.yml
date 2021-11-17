@@ -201,7 +201,7 @@ commands:
       - run:
           name: Trigger generated code validation
           command: |
-            python3 scripts/ci-circleci-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} --origin-slug mapbox/mapbox-maps-android --target-slug mapbox/mapbox-maps-android-internal
+            python3 scripts/ci-circleci-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} --origin-slug mapbox/mapbox-maps-android --target-slug mapbox/mapbox-maps-android-internal --current-branch ${CIRCLE_BRANCH}
 
   init-aws:
     steps:
