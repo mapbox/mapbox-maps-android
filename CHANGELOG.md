@@ -2,6 +2,42 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.2.0-beta.1 November 18, 2021
+
+## Features ✨ and improvements 🏁
+* Enable AnnotationManager independent on MapView ([#766](https://github.com/mapbox/mapbox-maps-android/pull/766))
+* Use ComponentCallbacks2 instead ComponentCallbacks and hook into onTrimMemory callback. ([#780](https://github.com/mapbox/mapbox-maps-android/pull/780))
+* Implement cluster API on top of queryFeatureExtensions ([#773](https://github.com/mapbox/mapbox-maps-android/pull/773))
+* Introduce view annotation support which allows adding Android views on top of the MapView anchored to geo-point. ([#834](https://github.com/mapbox/mapbox-maps-android/pull/834))
+* Add heatmap layer support to globe view. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
+* Add circle layer support to globe. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
+* Improve performance for querying large number of features. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
+* Cache layer layout key inside layer, so that it is not re-evaluated at every parse of the every tile. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
+* Model layer now supports loading of external gltf files. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
+* Add cancelable Query Rendered Features API to the Map interface. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
+* Core renderer prints its version on initialization. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
+* Introduce experimental Map.setMemoryBudget method for setting memory budget for a Map and runtime "resource-budget" property for data sources. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
+* Improve performance by avoiding re-layout of invisible fading tiles. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
+* Reduce memory consumption of a model layer by avoiding duplicate texture uploads. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
+* Introduce ViewAnnotation API and corresponding support in gl-native. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
+
+## Bug fixes 🐞
+* Fix scale bar ratio setting not applied correctly issue. ([#827](https://github.com/mapbox/mapbox-maps-android/pull/827))
+* Fix scale bar texts missing on devices with Android 6 issue ([#839](https://github.com/mapbox/mapbox-maps-android/pull/839))
+* Fix Scale bar texts overlap and clipped issue ([#856](https://github.com/mapbox/mapbox-maps-android/pull/856))
+* Fix puck jumps to nullisland when location plugin settings are changed. ([#846](https://github.com/mapbox/mapbox-maps-android/pull/846))
+* Enable scale listener events for doubleTap and doubleTouch gesture. ([#858](https://github.com/mapbox/mapbox-maps-android/pull/858))
+* Release all unused resources when `Map.reduceMemoryUse` is invoked. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
+* Fix crash for the case when an empty fill extrusion bucket is tried to be rendered. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
+* Fix transparency issues with value < 0.5 for models rendered by the model layer. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
+* Fix regression where setting the same geojson source URL did not refresh the data. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
+* Fix symbol layers with variable anchor placement not being placed correctly on globe view. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
+* Fix crash in symbol reprojection code caused by division by zero. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
+* Fix issue with bounds constraining behavior when terrain is enabled. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
+
+## Dependencies
+* Bump gl-native to v10.2.0-beta.2 and common to v21.0.0-rc.1. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
+
 # 10.1.0 November 4, 2021
 
 ## Features ✨ and improvements 🏁
