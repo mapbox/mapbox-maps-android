@@ -5,18 +5,16 @@ Mapbox welcomes participation and contributions from everyone.
 # 10.2.0-beta.1 November 18, 2021
 
 ## Features ✨ and improvements 🏁
-* Remove `MapView` argument when constructing `AnnotationManager`. ([#766](https://github.com/mapbox/mapbox-maps-android/pull/766))
-* Implement cluster API on top of `MapboxMap.queryFeatureExtensions`. ([#773](https://github.com/mapbox/mapbox-maps-android/pull/773))
 * Introduce view annotation support which allows adding Android views on top of the `MapView` anchored to geo-point. ([#834](https://github.com/mapbox/mapbox-maps-android/pull/834))
+* Remove `MapView` argument when constructing `AnnotationManager`. Constructor taking `MapView` as parameter is marked as deprecated. ([#766](https://github.com/mapbox/mapbox-maps-android/pull/766))
+* Implement cluster API on top of `MapboxMap.queryFeatureExtensions` making it easier to use and providing better alignment with Mapbox Maps v9. ([#773](https://github.com/mapbox/mapbox-maps-android/pull/773))
 * Add heatmap and circle layer support to globe view. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
-* Improve performance for querying large number of features. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
-* Cache layer layout key inside layer, so that it is not re-evaluated at every parse of the every tile. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
-* Model layer now supports loading of external `gltf` files. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
 * Add cancelable Query Rendered Features API to `MapboxMap`. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
+* Improve `MapboxMap.queryRenderedFeatures` performance especially when querying large number of features. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
+* Cache layer layout key inside layer, so that it is not re-evaluated at every parse of the every tile improving rendering performance. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
 * Core renderer prints its version on initialization. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
 * Introduce experimental `MapboxMap.setMemoryBudget` method for setting memory budget for the map and runtime "resource-budget" property for data sources. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
 * Improve performance by avoiding re-layout of invisible fading tiles. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
-* Reduce memory consumption of a model layer by avoiding duplicate texture uploads. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
 
 ## Bug fixes 🐞
 * Fix `MapView.onLowMemory` not being called on low resources. ([#780](https://github.com/mapbox/mapbox-maps-android/pull/780))
@@ -27,7 +25,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix scale listener events not being called for quick zoom doubleTap and doubleTouch gestures. ([#858](https://github.com/mapbox/mapbox-maps-android/pull/858))
 * Release all unused resources when `MapboxMap.reduceMemoryUse` is invoked. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
 * Fix crash for the case when an empty fill extrusion bucket is tried to be rendered. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
-* Fix transparency issues with value < 0.5 for models rendered by the model layer. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
+* Fix transparency issues with value < 0.5 for 3D puck models. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
 * Fix regression where setting the same geojson source URL did not refresh the data. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
 * Fix symbol layers with variable anchor placement not being placed correctly on globe view. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
 * Fix crash in symbol reprojection code caused by division by zero. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
