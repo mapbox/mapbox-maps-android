@@ -39,9 +39,12 @@ $ ${ANDROID_HOME}/tools/bin/sdkmanager \
       "patcher;v4" \
       "extras;google;m2repository" \
       "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2" \
-      "ndk;22.0.7026061"\
+      "ndk;21.4.7075529"\
       "cmake;3.10.2.4988404"
 ```
+Optional : In case of errors related to ndk version, make sure the ndk path is set in Android Studio.
+You can set ndk path manually by navigating to `File -> Project Structure -> Android NDK Location`
+or follow the official guide [Install and configure NDK](https://developer.android.com/studio/projects/install-ndk)
 
 ### Opening the Maps SDK
 
