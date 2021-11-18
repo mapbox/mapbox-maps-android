@@ -46,6 +46,9 @@ workflows:
       - build-modules-and-instrumentation-tests:
           requires:
             - verify-code
+          filters:
+            tags:
+              only: /android-v.*/
       - run-app-instrumentation-test:
           requires:
             - build-modules-and-instrumentation-tests
