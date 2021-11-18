@@ -8,6 +8,7 @@ import android.content.res.Resources
 import android.graphics.Color
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
 import android.util.AttributeSet
 import android.util.Size
 import android.view.Gravity
@@ -29,6 +30,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
@@ -53,6 +55,7 @@ import kotlin.math.exp
 import kotlin.math.hypot
 import kotlin.math.ln
 import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.pow
 import kotlin.math.tan
 
@@ -65,6 +68,11 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   private var pixelRatio: Float = 1f
   private lateinit var horizontalLine: WeakReference<View>
   private lateinit var mapView: WeakReference<FrameLayout>
+
+  private val movePointList = CopyOnWriteArrayList<Point>()
+  private val moveTimeList = CopyOnWriteArrayList<Long>()
+
+  private var flingInProgress = false
 
   private lateinit var gesturesManager: AndroidGesturesManager
 
@@ -464,7 +472,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       velocityX: Float,
       velocityY: Float
     ): Boolean {
-      return handleFlingEvent(e1, e2, velocityX, velocityY)
+//      return handleFlingEvent(e1, e2, velocityX, velocityY)
+      startGeoVelocityBasedFling()
+      return false
     }
   }
 
@@ -1174,6 +1184,58 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     return false
   }
 
+  internal fun startGeoVelocityBasedFling() : Boolean {
+    if (flingInProgress) {
+      return false
+    } else {
+      flingInProgress = true
+    }
+    val moveEndPoints = movePointList.takeLast(20)
+    val moveEndTimes = moveTimeList.takeLast(20)
+    if (moveEndPoints.size > 2 && moveEndTimes.size > 2) {
+      val end = moveEndPoints.last()
+      val start = moveEndPoints.first()
+      val translationLng = end.longitude() - start.longitude()
+      val translationLat = end.latitude() - start.latitude()
+      val distance = hypot(translationLng, translationLat)
+      val velocity = distance / ((moveEndTimes.last() - moveEndTimes.first()) * 1e9f)
+
+      val flingDistance = FLING_STRENGTH * velocity * 1e18f
+      val animDuration = FLING_STRENGTH * ANIMATION_DURATION_COEFF * 1e3
+      val endLocationLng = end.longitude() + translationLng / distance * flingDistance
+      val endLocationLat =
+        max(min(end.latitude() + translationLat / distance * flingDistance, 90.0), -90.0)
+      val endLocationPoint = Point.fromLngLat(endLocationLng, endLocationLat)
+
+      Logger.e("testtest", "moveStart: $start, moveEnd: $end")
+      Logger.e("testtest", "distance: $distance, velocity: $velocity")
+      Logger.e("testtest", "time: ${(moveEndTimes.last() - moveEndTimes.first()) * 1e9f}")
+      Logger.e("testtest", "animDuration: $animDuration, flingDistance: $flingDistance")
+      Logger.e("testtest", "endLocationPoint: $endLocationPoint")
+
+      cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
+
+      cameraAnimationsPlugin.easeTo(
+        cameraOptions {
+          center(endLocationPoint)
+        },
+        mapAnimationOptions {
+          owner(MapAnimationOwnerRegistry.GESTURES)
+          duration(animDuration.toLong())
+          interpolator(gesturesInterpolator)
+          animatorListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator?) {
+              super.onAnimationEnd(animation)
+              mapCameraManagerDelegate.dragEnd()
+              flingInProgress = false
+            }
+          })
+        }
+      )
+    }
+    return true
+  }
+
   internal fun handleFlingEvent(
     e1: MotionEvent,
     e2: MotionEvent,
@@ -1238,8 +1300,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     cameraAnimationsPlugin.easeTo(
       mapCameraManagerDelegate.getDragCameraOptions(
-        centerScreen,
-        ScreenCoordinate(centerScreen.x + offsetX, centerScreen.y + offsetY)
+//        centerScreen,
+        ScreenCoordinate(centerScreen.x, centerScreen.y * 2.0),
+        ScreenCoordinate(centerScreen.x + offsetX, centerScreen.y * 2.0 + offsetY)
       ),
       mapAnimationOptions {
         owner(MapAnimationOwnerRegistry.GESTURES)
@@ -1264,6 +1327,11 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     cancelTransitionsIfRequired()
     notifyOnMoveBeginListeners(detector)
+
+    movePointList.clear()
+    moveTimeList.clear()
+    flingInProgress = false
+
     return true
   }
 
@@ -1275,6 +1343,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     // first move event is often delivered with no displacement
     if (distanceX != 0f || distanceY != 0f) {
       if (detector.focalPoint.y.toDouble() < horizonLineFromTop + HORIZON_LINE_PADDING) {
+        startGeoVelocityBasedFling()
         return true
       }
       if (notifyOnMoveListeners(detector)) {
@@ -1309,10 +1378,41 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 //        )
 //      )
 
-      easeToImmediately(mapCameraManagerDelegate.getDragCameraOptions(
+//      easeToImmediately(mapCameraManagerDelegate.getDragCameraOptions(
+//        ScreenCoordinate(fromX, fromY),
+//        ScreenCoordinate(toX, toY)
+//      ))
+      var cameraOptions = mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(fromX, fromY),
         ScreenCoordinate(toX, toY)
-      ))
+      )
+      val currentCenter = mapCameraManagerDelegate.cameraState.center
+      val targetCenter = cameraOptions.center
+      val translationLng = targetCenter!!.longitude() - currentCenter.longitude()
+      val translationLat = targetCenter!!.latitude() - currentCenter.latitude()
+
+      val maximumDistance = 100f / 2.0.pow(mapCameraManagerDelegate.cameraState.zoom)
+      val currentDistance = hypot(translationLng, translationLat)
+      Logger.e(
+        "testtest",
+        "translationLng: ${translationLng}, translationLat: ${translationLat}, current distance: ${currentDistance}, maximum distance $maximumDistance"
+      )
+      if (currentDistance > maximumDistance) {
+        cameraOptions = cameraOptions.toBuilder().center(
+          Point.fromLngLat(
+            currentCenter.longitude() + translationLng * (maximumDistance / currentDistance),
+            currentCenter.latitude() + translationLat * (maximumDistance / currentDistance)
+          )
+        ).build()
+      }
+      Logger.e(
+        "testtest",
+        "executed distance: ${hypot(cameraOptions.center!!.longitude() - currentCenter.longitude(), cameraOptions.center!!.latitude() - currentCenter.latitude())}"
+      )
+
+      easeToImmediately(cameraOptions)
+      movePointList.add(cameraOptions.center)
+      moveTimeList.add(SystemClock.elapsedRealtimeNanos())
     }
     return true
   }
@@ -1704,9 +1804,14 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   private fun updateHorizonLinePosition() {
     horizonLineFromTop = horizonLineFromTopOfMap()
     horizontalLine.get()?.let { it ->
-      it.layoutParams = FrameLayout.LayoutParams(1000, 100, Gravity.TOP)
+      it.layoutParams = FrameLayout.LayoutParams(1000, HORIZON_LINE_PADDING.toInt(), Gravity.TOP)
         .also { it.topMargin = horizonLineFromTop.toInt() }
       it.invalidate()
     }
+  }
+
+  private companion object {
+    private const val FLING_STRENGTH = 0.1f
+    private const val ANIMATION_DURATION_COEFF = 3.0
   }
 }

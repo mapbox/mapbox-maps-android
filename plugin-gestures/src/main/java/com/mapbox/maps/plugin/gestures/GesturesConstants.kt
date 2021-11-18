@@ -85,4 +85,4 @@ internal const val MAXIMUM_PITCH = 85.0
  */
 internal const val ANIMATION_DURATION = 300
 
-internal const val HORIZON_LINE_PADDING = 100.0
+internal const val HORIZON_LINE_PADDING = 10.0
