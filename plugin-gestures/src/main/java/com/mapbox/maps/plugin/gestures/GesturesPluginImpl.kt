@@ -231,7 +231,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         scaleLongPressSet
       )
     }
-    gesturesManager.rotateGestureDetector.angleThreshold = 3.0f
+    gesturesManager.rotateGestureDetector.angleThreshold = ROTATION_ANGLE_THRESHOLD
+    gesturesManager.shoveGestureDetector.maxShoveAngle = MAX_SHOVE_ANGLE
     this.gesturesManager = gesturesManager
   }
 
@@ -1642,5 +1643,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   override fun initialize() {
     initializeGesturesManager(gesturesManager, true)
     initializeGestureListeners(context, true)
+  }
+
+  private companion object {
+    const val ROTATION_ANGLE_THRESHOLD = 3.0f
+    const val MAX_SHOVE_ANGLE = 45.0f
   }
 }

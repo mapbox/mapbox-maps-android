@@ -74,8 +74,7 @@ class GesturesActivity : AppCompatActivity() {
   private fun initializeMap() {
     gesturesPlugin = binding.mapView.gestures
     gesturesManager = gesturesPlugin.getGesturesManager()
-    // enable map pitch at higher touch point angle (default 20.0f).
-    gesturesManager.shoveGestureDetector.maxShoveAngle = 60.0f
+
     val layoutParams = binding.recycler.layoutParams as RelativeLayout.LayoutParams
     layoutParams.height = (binding.mapView.height / 1.75).toInt()
     layoutParams.width = binding.mapView.width / 3
