@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.bindgen.Expected
@@ -72,6 +73,7 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
             Style.SATELLITE_STREETS -> loadStyle(prepareStyle(Style.MAPBOX_STREETS, bitmap))
           }
         }
+        Toast.makeText(this@ViewAnnotationShowcaseActivity, STARTUP_TEXT, Toast.LENGTH_LONG).show()
       }
     }
   }
@@ -197,5 +199,6 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
     const val TERRAIN_URL_TILE_RESOURCE = "mapbox://mapbox.mapbox-terrain-dem-v1"
     const val MARKER_ID_PREFIX = "view_annotation_"
     const val SELECTED_ADD_COEF_DP: Float = 15f
+    const val STARTUP_TEXT = "Long click on a map to add a marker and click on a marker to pop-up annotation."
   }
 }

@@ -85,5 +85,6 @@
     <string name="description_feature_state">Create interactive hover effects with feature state</string>
     <string name="description_3d_globe">Showcasing 3D globe</string>
     <string name="description_osm">Using raster source and layer to render OSM tiles with TileSet class</string>
-    <string name="description_view_annotation">Callout view anchored to the marker</string>
+    <string name="description_view_annotation">Add view annotation anchored to a symbol layer feature</string>
+    <string name="description_view_annotation_basic">Add view annotation on a map click</string>
 </resources>
