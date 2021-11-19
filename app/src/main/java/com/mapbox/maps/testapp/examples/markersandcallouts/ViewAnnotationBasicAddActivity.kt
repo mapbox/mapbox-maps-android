@@ -3,6 +3,7 @@ package com.mapbox.maps.testapp.examples.markersandcallouts
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
@@ -37,6 +38,7 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
             Style.SATELLITE_STREETS -> loadStyleUri(Style.MAPBOX_STREETS)
           }
         }
+        Toast.makeText(this@ViewAnnotationBasicAddActivity, STARTUP_TEXT, Toast.LENGTH_LONG).show()
       }
     }
   }
@@ -63,7 +65,7 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
       selectButton.setOnClickListener { b ->
         val button = b as Button
         val isSelected = button.text.toString().equals("SELECT", true)
-        val pxDelta = (if (isSelected) 50f else -50f).toInt()
+        val pxDelta = if (isSelected) SELECTED_ADD_COEF_PX else -SELECTED_ADD_COEF_PX
         button.text = if (isSelected) "DESELECT" else "SELECT"
         viewAnnotationManager.updateViewAnnotation(
           viewAnnotation,
@@ -75,5 +77,10 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
         )
       }
     }
+  }
+
+  private companion object {
+    const val SELECTED_ADD_COEF_PX = 50
+    const val STARTUP_TEXT = "Click on a map to add a view annotation."
   }
 }
