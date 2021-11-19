@@ -19,6 +19,8 @@ import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.ScrollMode
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
+import com.mapbox.maps.plugin.animation.MapAnimationOptions
+import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
@@ -28,6 +30,7 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
 import org.robolectric.annotation.LooperMode
@@ -35,7 +38,7 @@ import java.time.Duration
 
 @RunWith(RobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
-class GesturePluginTest {
+class GesturesPluginTest {
 
   private val context: Context = mockk(relaxed = true)
   private val attrs: AttributeSet = mockk(relaxUnitFun = true)
@@ -321,247 +324,9 @@ class GesturePluginTest {
     val listener: OnFlingListener = mockk(relaxed = true)
     presenter.addOnFlingListener(listener)
     presenter.scrollEnabled = false
-    val result = presenter.handleFlingEvent(mockk(), mockk(), FLING_VELOCITY, FLING_VELOCITY)
+    val result = presenter.handleFlingEvent(mockk(), mockk(), 0.1f, 0.1f)
     assertFalse(result)
     verify(exactly = 0) { listener.onFling() }
-  }
-
-  @Test
-  fun verifyFlingLarge() {
-    every { mapCameraManagerDelegate.cameraState } returns CameraState(
-      Point.fromLngLat(0.0, 0.0),
-      EdgeInsets(0.0, 0.0, 0.0, 0.0),
-      0.0,
-      0.0,
-      0.0
-    )
-    every {
-      mapCameraManagerDelegate.getDragCameraOptions(
-        any(),
-        any()
-      )
-    } returns CameraOptions.Builder().build()
-    val motionEvent = mockk<MotionEvent>()
-    every { motionEvent.x } returns 0.0f
-    every { motionEvent.y } returns 0.0f
-    val result = presenter.handleFlingEvent(motionEvent, mockk(), FLING_VELOCITY, FLING_VELOCITY)
-    verify {
-      mapCameraManagerDelegate.getDragCameraOptions(
-        ScreenCoordinate(0.0, 0.0),
-        ScreenCoordinate(FLING_DISPLACEMENT, FLING_DISPLACEMENT)
-      )
-    }
-    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
-    assert(result)
-  }
-
-  @Test
-  fun verifyFlingLargeTiltedNormal() {
-    every { mapCameraManagerDelegate.cameraState } returns CameraState(
-      Point.fromLngLat(0.0, 0.0),
-      EdgeInsets(0.0, 0.0, 0.0, 0.0),
-      0.0,
-      0.0,
-      55.0
-    )
-    every {
-      mapCameraManagerDelegate.getDragCameraOptions(
-        any(),
-        any()
-      )
-    } returns CameraOptions.Builder().build()
-    val motionEvent = mockk<MotionEvent>()
-    every { motionEvent.x } returns 0.0f
-    every { motionEvent.y } returns 0.0f
-    val result = presenter.handleFlingEvent(motionEvent, mockk(), FLING_VELOCITY, FLING_VELOCITY)
-    verify {
-      mapCameraManagerDelegate.getDragCameraOptions(
-        ScreenCoordinate(0.0, 0.0),
-        // values should be smaller as verifyFlingLarge but larger as verifyFlingLargeTiltedLarge
-        ScreenCoordinate(645.1612903225806, 645.1612903225806)
-      )
-    }
-    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
-    assert(result)
-  }
-
-  @Test
-  fun verifyFlingLargeTiltedLarge() {
-    every { mapCameraManagerDelegate.cameraState } returns CameraState(
-      Point.fromLngLat(0.0, 0.0),
-      EdgeInsets(0.0, 0.0, 0.0, 0.0),
-      0.0,
-      0.0,
-      80.0
-    )
-    every {
-      mapCameraManagerDelegate.getDragCameraOptions(
-        any(),
-        any()
-      )
-    } returns CameraOptions.Builder().build()
-    val motionEvent = mockk<MotionEvent>()
-    every { motionEvent.x } returns 0.0f
-    every { motionEvent.y } returns 0.0f
-    val result = presenter.handleFlingEvent(motionEvent, mockk(), FLING_VELOCITY, FLING_VELOCITY)
-    verify {
-      mapCameraManagerDelegate.getDragCameraOptions(
-        ScreenCoordinate(0.0, 0.0),
-        // values should be smaller verifyFlingLargeTiltedNormal
-        ScreenCoordinate(67.93869850933991, 67.93869850933991)
-      )
-    }
-    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
-    assert(result)
-  }
-
-  @Test
-  fun verifyFlingSmall() {
-    every { mapCameraManagerDelegate.cameraState } returns CameraState(
-      Point.fromLngLat(0.0, 0.0),
-      EdgeInsets(0.0, 0.0, 0.0, 0.0),
-      0.0,
-      0.0,
-      0.0
-    )
-    every {
-      mapCameraManagerDelegate.getDragCameraOptions(
-        any(),
-        any()
-      )
-    } returns CameraOptions.Builder().build()
-    val motionEvent = mockk<MotionEvent>()
-    every { motionEvent.x } returns 0.0f
-    every { motionEvent.y } returns 0.0f
-    val result = presenter.handleFlingEvent(motionEvent, mockk(), 800f, 750f)
-    verify {
-      mapCameraManagerDelegate.getDragCameraOptions(
-        ScreenCoordinate(0.0, 0.0),
-        ScreenCoordinate(80.0, 75.0)
-      )
-    }
-    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
-    assert(result)
-  }
-
-  @Test
-  fun verifyFlingSmallTiltedNormal() {
-    every { mapCameraManagerDelegate.cameraState } returns CameraState(
-      Point.fromLngLat(0.0, 0.0),
-      EdgeInsets(0.0, 0.0, 0.0, 0.0),
-      0.0,
-      0.0,
-      55.0
-    )
-    every {
-      mapCameraManagerDelegate.getDragCameraOptions(
-        any(),
-        any()
-      )
-    } returns CameraOptions.Builder().build()
-    val motionEvent = mockk<MotionEvent>()
-    every { motionEvent.x } returns 0.0f
-    every { motionEvent.y } returns 0.0f
-    val result = presenter.handleFlingEvent(motionEvent, mockk(), 800f, 750f)
-    verify {
-      mapCameraManagerDelegate.getDragCameraOptions(
-        ScreenCoordinate(0.0, 0.0),
-        // values should be smaller as verifyFlingSmall but larger as verifyFlingSmallTiltedLarge
-        ScreenCoordinate(51.61290322580645, 48.38709677419355)
-      )
-    }
-    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
-    assert(result)
-  }
-
-  @Test
-  fun verifyFlingSmallTiltedLarge() {
-    every { mapCameraManagerDelegate.cameraState } returns CameraState(
-      Point.fromLngLat(0.0, 0.0),
-      EdgeInsets(0.0, 0.0, 0.0, 0.0),
-      0.0,
-      0.0,
-      80.0
-    )
-    every {
-      mapCameraManagerDelegate.getDragCameraOptions(
-        any(),
-        any()
-      )
-    } returns CameraOptions.Builder().build()
-    val motionEvent = mockk<MotionEvent>()
-    every { motionEvent.x } returns 0.0f
-    every { motionEvent.y } returns 0.0f
-    val result = presenter.handleFlingEvent(motionEvent, mockk(), 800f, 750f)
-    verify {
-      mapCameraManagerDelegate.getDragCameraOptions(
-        ScreenCoordinate(0.0, 0.0),
-        // values should be smaller as verifyFlingSmallTiltedNormal
-        ScreenCoordinate(5.435095880747194, 5.095402388200494)
-      )
-    }
-    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
-    assert(result)
-  }
-
-  @Test
-  fun verifyFlingPanScrollHorizontal() {
-    every { mapCameraManagerDelegate.cameraState } returns CameraState(
-      Point.fromLngLat(0.0, 0.0),
-      EdgeInsets(0.0, 0.0, 0.0, 0.0),
-      0.0,
-      0.0,
-      0.0
-    )
-    every {
-      mapCameraManagerDelegate.getDragCameraOptions(
-        any(),
-        any()
-      )
-    } returns CameraOptions.Builder().build()
-    presenter.updateSettings { scrollMode = ScrollMode.VERTICAL }
-    val motionEvent = mockk<MotionEvent>()
-    every { motionEvent.x } returns 0.0f
-    every { motionEvent.y } returns 0.0f
-    val result = presenter.handleFlingEvent(motionEvent, mockk(), FLING_VELOCITY, FLING_VELOCITY)
-    verify {
-      mapCameraManagerDelegate.getDragCameraOptions(
-        ScreenCoordinate(0.0, 0.0),
-        ScreenCoordinate(0.0, FLING_DISPLACEMENT)
-      )
-    }
-    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
-    assert(result)
-  }
-
-  @Test
-  fun verifyFlingPanScrollVertical() {
-    every { mapCameraManagerDelegate.cameraState } returns CameraState(
-      Point.fromLngLat(0.0, 0.0),
-      EdgeInsets(0.0, 0.0, 0.0, 0.0),
-      0.0,
-      0.0,
-      0.0
-    )
-    every {
-      mapCameraManagerDelegate.getDragCameraOptions(
-        any(),
-        any()
-      )
-    } returns CameraOptions.Builder().build()
-    presenter.updateSettings { scrollMode = ScrollMode.HORIZONTAL }
-    val motionEvent = mockk<MotionEvent>()
-    every { motionEvent.x } returns 0.0f
-    every { motionEvent.y } returns 0.0f
-    val result = presenter.handleFlingEvent(motionEvent, mockk(), FLING_VELOCITY, FLING_VELOCITY)
-    verify {
-      mapCameraManagerDelegate.getDragCameraOptions(
-        ScreenCoordinate(0.0, 0.0),
-        ScreenCoordinate(FLING_DISPLACEMENT, 0.0)
-      )
-    }
-    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
-    assert(result)
   }
 
   @Test
@@ -1017,8 +782,165 @@ class GesturePluginTest {
   fun obtainMotionEventActionLater(action: Int): MotionEvent {
     return MotionEvent.obtain(200, 500, action, 15.0f, 10.0f, 0)
   }
+}
+
+@RunWith(ParameterizedRobolectricTestRunner::class)
+@LooperMode(LooperMode.Mode.PAUSED)
+class FlingGestureTest(
+  private val targetPitch: Double,
+  private val targetScrollMode: ScrollMode,
+  private val targetVelocity: Pair<Float, Float>,
+  private val expectedCoordinate: ScreenCoordinate,
+  private val expectedFlingDuration: Long
+) {
+  private val context: Context = mockk(relaxed = true)
+  private val attrs: AttributeSet = mockk(relaxUnitFun = true)
+  private val mapDelegateProvider: MapDelegateProvider = mockk(relaxUnitFun = true)
+  private val gesturesManager: AndroidGesturesManager = mockk(relaxed = true)
+  private val mapCameraManagerDelegate: MapCameraManagerDelegate = mockk(relaxUnitFun = true)
+  private val mapTransformDelegate: MapTransformDelegate = mockk(relaxUnitFun = true)
+  private val mapPluginProviderDelegate: MapPluginProviderDelegate = mockk(relaxUnitFun = true)
+  private val cameraAnimationsPlugin: CameraAnimationsPlugin = mockk(relaxed = true)
+
+  private lateinit var presenter: GesturesPluginImpl
+
+  private val typedArray: TypedArray = mockk(relaxed = true)
+  private val pack = "com.mapbox.maps"
+
+  private val motionEvent = mockk<MotionEvent>()
+  private val mapAnimationOptionsSlot = slot<MapAnimationOptions>()
+
+  @Before
+  fun prepare() {
+    mockkObject(GesturesAttributeParser)
+    every {
+      GesturesAttributeParser.parseGesturesSettings(
+        context,
+        attrs,
+        any()
+      )
+    } returns GesturesSettings()
+
+    every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
+    every { context.packageName } returns pack
+    every { typedArray.getString(any()) } returns "pk.token"
+    every { typedArray.getBoolean(any(), any()) } returns true
+    every { typedArray.getDimension(any(), any()) } returns 10.0f
+    every { typedArray.getFloat(any(), any()) } returns 10.0f
+    every { typedArray.getInt(any(), any()) } returns 2
+    every { typedArray.hasValue(any()) } returns true
+
+    every { mapDelegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
+    every { mapDelegateProvider.mapTransformDelegate } returns mapTransformDelegate
+    every { mapDelegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
+    every { mapPluginProviderDelegate.getPlugin<CameraAnimationsPlugin>(Plugin.MAPBOX_CAMERA_PLUGIN_ID) } returns cameraAnimationsPlugin
+
+    presenter = GesturesPluginImpl(context, attrs, mockk(relaxed = true))
+
+    presenter.bind(context, gesturesManager, attrs, 1f)
+    presenter.onDelegateProvider(mapDelegateProvider)
+    presenter.initialize()
+
+    every { mapCameraManagerDelegate.cameraState } returns CameraState(
+      Point.fromLngLat(0.0, 0.0),
+      EdgeInsets(0.0, 0.0, 0.0, 0.0),
+      0.0,
+      0.0,
+      targetPitch
+    )
+    every {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        any(),
+        any()
+      )
+    } returns CameraOptions.Builder().build()
+    presenter.updateSettings { scrollMode = targetScrollMode }
+    every { motionEvent.x } returns 0.0f
+    every { motionEvent.y } returns 0.0f
+  }
+
+  @Test
+  fun testFling() {
+    val result = presenter.handleFlingEvent(motionEvent, mockk(), targetVelocity.first, targetVelocity.second)
+    verify {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        ScreenCoordinate(0.0, 0.0),
+        expectedCoordinate
+      )
+    }
+    verify {
+      cameraAnimationsPlugin.easeTo(
+        CameraOptions.Builder().build(),
+        capture(mapAnimationOptionsSlot)
+      )
+    }
+    assert(result)
+    assertEquals(MapAnimationOwnerRegistry.GESTURES, mapAnimationOptionsSlot.captured.owner)
+    assertEquals(expectedFlingDuration, mapAnimationOptionsSlot.captured.duration)
+  }
 
   private companion object {
+    @JvmStatic
+    @ParameterizedRobolectricTestRunner.Parameters(name = "Fling at pitch {0} with scroll mode {1} and velocity {2} should end at screen coordinate {3} and fling duration should be {4}")
+    fun data() = listOf(
+      arrayOf(
+        0.0,
+        ScrollMode.HORIZONTAL_AND_VERTICAL,
+        Pair(FLING_VELOCITY, FLING_VELOCITY),
+        ScreenCoordinate(FLING_DISPLACEMENT, FLING_DISPLACEMENT),
+        1414L
+      ),
+      arrayOf(
+        55.0,
+        ScrollMode.HORIZONTAL_AND_VERTICAL,
+        Pair(FLING_VELOCITY, FLING_VELOCITY),
+        ScreenCoordinate(645.1612903225806, 645.1612903225806),
+        912L
+      ),
+      arrayOf(
+        80.0,
+        ScrollMode.HORIZONTAL_AND_VERTICAL,
+        Pair(FLING_VELOCITY, FLING_VELOCITY),
+        ScreenCoordinate(67.93869850933991, 67.93869850933991),
+        96L
+      ),
+      arrayOf(
+        0.0,
+        ScrollMode.HORIZONTAL_AND_VERTICAL,
+        Pair(800f, 750f),
+        ScreenCoordinate(80.0, 75.0),
+        109L
+      ),
+      arrayOf(
+        55.0,
+        ScrollMode.HORIZONTAL_AND_VERTICAL,
+        Pair(800f, 750f),
+        ScreenCoordinate(51.61290322580645, 48.38709677419355),
+        70L
+      ),
+      arrayOf(
+        80.0,
+        ScrollMode.HORIZONTAL_AND_VERTICAL,
+        Pair(800f, 750f),
+        ScreenCoordinate(5.435095880747194, 5.095402388200494),
+        7L
+      ),
+      arrayOf(
+        0.0,
+        ScrollMode.VERTICAL,
+        Pair(FLING_VELOCITY, FLING_VELOCITY),
+        ScreenCoordinate(0.0, FLING_DISPLACEMENT),
+        1414L
+      ),
+      arrayOf(
+        0.0,
+        ScrollMode.HORIZONTAL,
+        Pair(FLING_VELOCITY, FLING_VELOCITY),
+        ScreenCoordinate(FLING_DISPLACEMENT, 0.0),
+        1414L
+      ),
+    )
+
     const val FLING_DISPLACEMENT = 1000.0
     const val FLING_VELOCITY = 10000f
   }
