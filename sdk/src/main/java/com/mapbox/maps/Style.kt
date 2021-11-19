@@ -622,8 +622,6 @@ class Style internal constructor(
   /**
    * Adds a new [style layer](https://docs.mapbox.com/mapbox-gl-js/style-spec/#layers).
    *
-   * Note: This is an experimental API and is a subject to change.
-   *
    * Whenever a new style is being parsed and currently used style has persistent layers,
    * an engine will try to do following:
    *   - keep the persistent layer at its relative position
@@ -638,7 +636,6 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, or empty otherwise.
    */
-  @MapboxExperimental
   override fun addPersistentStyleLayer(
     properties: Value,
     layerPosition: LayerPosition?
@@ -650,8 +647,6 @@ class Style internal constructor(
 
   /**
    * Adds a new [style custom layer](https://docs.mapbox.com/mapbox-gl-js/style-spec/#layers).
-   *
-   * Note: This is an experimental API and is a subject to change.
    *
    * Whenever a new style is being parsed and currently used style has persistent layers,
    * an engine will try to do following:
@@ -668,7 +663,6 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, or empty otherwise.
    */
-  @MapboxExperimental
   override fun addPersistentStyleCustomLayer(
     layerId: String,
     layerHost: CustomLayerHost,
@@ -682,12 +676,9 @@ class Style internal constructor(
   /**
    * Checks if a style layer is persistent.
    *
-   * Note: This is an experimental API and is a subject to change.
-   *
    * @param layerId A style layer identifier.
    * @return A string describing an error if the operation was not successful, boolean representing state otherwise.
    */
-  @MapboxExperimental
   override fun isStyleLayerPersistent(layerId: String): Expected<String, Boolean> {
     return styleManagerRef.call {
       this.isStyleLayerPersistent(layerId)

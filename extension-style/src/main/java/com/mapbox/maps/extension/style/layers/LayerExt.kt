@@ -3,7 +3,6 @@ package com.mapbox.maps.extension.style.layers
 
 import com.mapbox.common.Logger
 import com.mapbox.maps.LayerPosition
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
@@ -96,8 +95,6 @@ fun StyleInterface.addLayer(layer: StyleContract.StyleLayerExtension) {
 /**
  * Bind the layer to the map controller persistently.
  *
- * Note: This is an experimental API and is a subject to change.
- *
  * Whenever a new style is being parsed and currently used style has persistent layers,
  * an engine will try to do following:
  *   - keep the persistent layer at its relative position
@@ -110,7 +107,6 @@ fun StyleInterface.addLayer(layer: StyleContract.StyleLayerExtension) {
  * @param style The style
  * @param position the position that the current layer is added to
  */
-@MapboxExperimental
 internal fun Layer.bindPersistentlyTo(style: StyleInterface, position: LayerPosition? = null) {
   this.delegate = style
   val expected = style.addPersistentStyleLayer(getCachedLayerProperties(), position)
@@ -121,8 +117,6 @@ internal fun Layer.bindPersistentlyTo(style: StyleInterface, position: LayerPosi
 
 /**
  * Add layer to the style persistently.
- *
- * Note: This is an experimental API and is a subject to change.
  *
  * Whenever a new style is being parsed and currently used style has persistent layers,
  * an engine will try to do following:
@@ -136,7 +130,6 @@ internal fun Layer.bindPersistentlyTo(style: StyleInterface, position: LayerPosi
  * @param layer The layer to be added to the style
  * @param position the position that the current layer is added to
  */
-@MapboxExperimental
 @JvmOverloads
 fun StyleInterface.addPersistentLayer(layer: Layer, position: LayerPosition? = null) {
   layer.bindPersistentlyTo(this, position)
@@ -147,7 +140,6 @@ fun StyleInterface.addPersistentLayer(layer: Layer, position: LayerPosition? = n
  *
  * If true, the layer will be persisted across style changes.
  */
-@MapboxExperimental
 fun Layer.isPersistent(): Boolean? {
   return delegate?.isStyleLayerPersistent(layerId)?.value
 }
