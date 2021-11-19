@@ -19,6 +19,8 @@ import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.ScrollMode
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
+import com.mapbox.maps.plugin.animation.MapAnimationOptions
+import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
 import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
@@ -787,8 +789,9 @@ class GesturesPluginTest {
 class FlingGestureTest(
   private val targetPitch: Double,
   private val targetScrollMode: ScrollMode,
-  private val velocity: Pair<Float, Float>,
-  private val expectedCoordinate: ScreenCoordinate
+  private val targetVelocity: Pair<Float, Float>,
+  private val expectedCoordinate: ScreenCoordinate,
+  private val expectedFlingDuration: Long
 ) {
   private val context: Context = mockk(relaxed = true)
   private val attrs: AttributeSet = mockk(relaxUnitFun = true)
@@ -803,6 +806,9 @@ class FlingGestureTest(
 
   private val typedArray: TypedArray = mockk(relaxed = true)
   private val pack = "com.mapbox.maps"
+
+  private val motionEvent = mockk<MotionEvent>()
+  private val mapAnimationOptionsSlot = slot<MapAnimationOptions>()
 
   @Before
   fun prepare() {
@@ -834,10 +840,7 @@ class FlingGestureTest(
     presenter.bind(context, gesturesManager, attrs, 1f)
     presenter.onDelegateProvider(mapDelegateProvider)
     presenter.initialize()
-  }
 
-  @Test
-  fun testFling() {
     every { mapCameraManagerDelegate.cameraState } returns CameraState(
       Point.fromLngLat(0.0, 0.0),
       EdgeInsets(0.0, 0.0, 0.0, 0.0),
@@ -852,71 +855,89 @@ class FlingGestureTest(
       )
     } returns CameraOptions.Builder().build()
     presenter.updateSettings { scrollMode = targetScrollMode }
-    val motionEvent = mockk<MotionEvent>()
     every { motionEvent.x } returns 0.0f
     every { motionEvent.y } returns 0.0f
-    val result = presenter.handleFlingEvent(motionEvent, mockk(), velocity.first, velocity.second)
+  }
+
+  @Test
+  fun testFling() {
+    val result = presenter.handleFlingEvent(motionEvent, mockk(), targetVelocity.first, targetVelocity.second)
     verify {
       mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),
         expectedCoordinate
       )
     }
-    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
+    verify {
+      cameraAnimationsPlugin.easeTo(
+        CameraOptions.Builder().build(),
+        capture(mapAnimationOptionsSlot)
+      )
+    }
     assert(result)
+    assertEquals(MapAnimationOwnerRegistry.GESTURES, mapAnimationOptionsSlot.captured.owner)
+    assertEquals(expectedFlingDuration, mapAnimationOptionsSlot.captured.duration)
   }
 
   private companion object {
     @JvmStatic
-    @ParameterizedRobolectricTestRunner.Parameters(name = "Fling at pitch {0} with scroll mode {1} and velocity {2} should end at screen coordinate {3}")
+    @ParameterizedRobolectricTestRunner.Parameters(name = "Fling at pitch {0} with scroll mode {1} and velocity {2} should end at screen coordinate {3} and fling duration should be {4}")
     fun data() = listOf(
       arrayOf(
         0.0,
         ScrollMode.HORIZONTAL_AND_VERTICAL,
         Pair(FLING_VELOCITY, FLING_VELOCITY),
-        ScreenCoordinate(FLING_DISPLACEMENT, FLING_DISPLACEMENT)
+        ScreenCoordinate(FLING_DISPLACEMENT, FLING_DISPLACEMENT),
+        1414L
       ),
       arrayOf(
         55.0,
         ScrollMode.HORIZONTAL_AND_VERTICAL,
         Pair(FLING_VELOCITY, FLING_VELOCITY),
-        ScreenCoordinate(645.1612903225806, 645.1612903225806)
+        ScreenCoordinate(645.1612903225806, 645.1612903225806),
+        912L
       ),
       arrayOf(
         80.0,
         ScrollMode.HORIZONTAL_AND_VERTICAL,
         Pair(FLING_VELOCITY, FLING_VELOCITY),
-        ScreenCoordinate(67.93869850933991, 67.93869850933991)
+        ScreenCoordinate(67.93869850933991, 67.93869850933991),
+        96L
       ),
       arrayOf(
         0.0,
         ScrollMode.HORIZONTAL_AND_VERTICAL,
         Pair(800f, 750f),
-        ScreenCoordinate(80.0, 75.0)
+        ScreenCoordinate(80.0, 75.0),
+        109L
       ),
       arrayOf(
         55.0,
         ScrollMode.HORIZONTAL_AND_VERTICAL,
         Pair(800f, 750f),
-        ScreenCoordinate(51.61290322580645, 48.38709677419355)
+        ScreenCoordinate(51.61290322580645, 48.38709677419355),
+        70L
       ),
       arrayOf(
         80.0,
         ScrollMode.HORIZONTAL_AND_VERTICAL,
         Pair(800f, 750f),
-        ScreenCoordinate(5.435095880747194, 5.095402388200494)
+        ScreenCoordinate(5.435095880747194, 5.095402388200494),
+        7L
       ),
       arrayOf(
         0.0,
         ScrollMode.VERTICAL,
         Pair(FLING_VELOCITY, FLING_VELOCITY),
-        ScreenCoordinate(0.0, FLING_DISPLACEMENT)
+        ScreenCoordinate(0.0, FLING_DISPLACEMENT),
+        1414L
       ),
       arrayOf(
         0.0,
         ScrollMode.HORIZONTAL,
         Pair(FLING_VELOCITY, FLING_VELOCITY),
-        ScreenCoordinate(FLING_DISPLACEMENT, 0.0)
+        ScreenCoordinate(FLING_DISPLACEMENT, 0.0),
+        1414L
       ),
     )
 
