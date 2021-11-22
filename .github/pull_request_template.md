@@ -24,6 +24,7 @@ Fixes: < Link to related issues that will be fixed by this pull request, if they
  - [ ] Document any changes to public APIs.
  - [ ] Apply changelog label ('breaking change', 'bug :beetle:', 'build', 'docs', 'feature :green_apple:', 'performance :zap:', 'testing :100:') or use the label 'skip changelog'
  - [ ] Add an entry inside this element for inclusion in the `mapbox-maps-android` changelog: `<changelog></changelog>`.
+ - [ ] Port this PR to `v10.[version]` release branch if this change should be included in upcoming `v10.[version]-rc.[number]` or `v10.[version]` stable release.
 
 ### Summary of changes
 
