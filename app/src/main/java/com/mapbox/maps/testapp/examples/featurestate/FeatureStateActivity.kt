@@ -65,7 +65,8 @@ class FeatureStateActivity : AppCompatActivity(), OnCameraChangeListener {
           ScreenCoordinate(offsetViewBounds.left.toDouble(), offsetViewBounds.top.toDouble()),
           ScreenCoordinate(offsetViewBounds.right.toDouble(), offsetViewBounds.bottom.toDouble())
         )
-      ), RenderedQueryOptions(listOf(LAYER_ID), literal(true))
+      ),
+      RenderedQueryOptions(listOf(LAYER_ID), literal(true))
     ) { expected: Expected<String, MutableList<QueriedFeature>> ->
       expected.value?.takeIf { it.isNotEmpty() }?.let {
         val selectedFeature = it.first().feature

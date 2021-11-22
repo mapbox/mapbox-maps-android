@@ -95,7 +95,8 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
    */
   override fun isLocatedAt(point: Point, listener: PuckLocatedAtPointListener) {
     delegateProvider.mapFeatureQueryDelegate.queryRenderedFeatures(
-      RenderedQueryGeometry(delegateProvider.mapCameraManagerDelegate.pixelForCoordinate(point)), RenderedQueryOptions(
+      RenderedQueryGeometry(delegateProvider.mapCameraManagerDelegate.pixelForCoordinate(point)),
+      RenderedQueryOptions(
         listOf(
           LOCATION_INDICATOR_LAYER,
           MODEL_LAYER

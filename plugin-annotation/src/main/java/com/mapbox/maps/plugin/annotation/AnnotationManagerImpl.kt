@@ -783,7 +783,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     val latch = CountDownLatch(1)
     mapFeatureQueryDelegate.executeOnRenderThread {
       mapFeatureQueryDelegate.queryRenderedFeatures(
-        RenderedQueryGeometry(screenCoordinate), RenderedQueryOptions(
+        RenderedQueryGeometry(screenCoordinate),
+        RenderedQueryOptions(
           layerList,
           literal(true)
         )
