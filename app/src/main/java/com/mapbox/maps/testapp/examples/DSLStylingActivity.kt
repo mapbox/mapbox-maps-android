@@ -45,7 +45,8 @@ class DSLStylingActivity : AppCompatActivity(), OnMapClickListener {
           ScreenCoordinate(clicked.x - 50, clicked.y - 50),
           ScreenCoordinate(clicked.x + 50, clicked.y + 50)
         )
-      ), RenderedQueryOptions(listOf("earthquakeCircle", "earthquakeText"), literal(true))
+      ),
+      RenderedQueryOptions(listOf("earthquakeCircle", "earthquakeText"), literal(true))
     ) { expected: Expected<String, MutableList<QueriedFeature>> ->
       val features = expected.value!!
       features.takeIf { it.isNotEmpty() }?.let {
