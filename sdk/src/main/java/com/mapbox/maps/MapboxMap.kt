@@ -693,7 +693,7 @@ class MapboxMap internal constructor(
   @Deprecated(
     "Should be replaced overloaded function taking RenderedQueryGeometry and returning cancelable",
     replaceWith = ReplaceWith(
-      "queryRenderedFeatures(RenderedQueryGeometry(shape), options, callback).let { cancelable -> }",
+      "queryRenderedFeatures(RenderedQueryGeometry(shape), options, callback)",
       imports = arrayOf("com.mapbox.maps.RenderedQueryGeometry")
     ),
   )
@@ -719,7 +719,7 @@ class MapboxMap internal constructor(
   @Deprecated(
     "Should be replaced overloaded function taking RenderedQueryGeometry and returning cancelable",
     replaceWith = ReplaceWith(
-      "queryRenderedFeatures(RenderedQueryGeometry(box), options, callback).let { cancelable -> }",
+      "queryRenderedFeatures(RenderedQueryGeometry(box), options, callback)",
       imports = arrayOf("com.mapbox.maps.RenderedQueryGeometry")
     ),
   )
@@ -745,7 +745,7 @@ class MapboxMap internal constructor(
   @Deprecated(
     "Should be replaced overloaded function taking RenderedQueryGeometry and returning cancelable",
     replaceWith = ReplaceWith(
-      "queryRenderedFeatures(RenderedQueryGeometry(pixel), options, callback).let { cancelable -> }",
+      "queryRenderedFeatures(RenderedQueryGeometry(pixel), options, callback)",
       imports = arrayOf("com.mapbox.maps.RenderedQueryGeometry")
     ),
   )
