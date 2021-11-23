@@ -25,6 +25,7 @@ internal object GesturesAttributeParser {
         rotateEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_gesturesRotateEnabled, true),
         pinchToZoomEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_gesturesPinchToZoomEnabled, true),
         scrollEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_gesturesScrollEnabled, true),
+        pinchRotateEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_gesturesPinchRotateEnabled, true),
         pitchEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_gesturesPitchEnabled, true),
         scrollMode = ScrollMode.values()[typedArray.getInt(R.styleable.mapbox_MapView_mapbox_gesturesScrollMode, ScrollMode.HORIZONTAL_AND_VERTICAL.ordinal)],
         doubleTapToZoomInEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_gesturesDoubleTapToZoomInEnabled, true),

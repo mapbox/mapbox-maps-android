@@ -77,6 +77,18 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
     }
 
   /**
+   * Whether rotation is enabled for the pinch gesture.
+   */
+  override var pinchRotateEnabled: Boolean
+    get() {
+      return this.internalSettings.pinchRotateEnabled
+    }
+    set(value) {
+      this.internalSettings.pinchRotateEnabled = value
+      applySettings()
+    }
+
+  /**
    * Whether the pitch gesture is enabled.
    */
   override var pitchEnabled: Boolean

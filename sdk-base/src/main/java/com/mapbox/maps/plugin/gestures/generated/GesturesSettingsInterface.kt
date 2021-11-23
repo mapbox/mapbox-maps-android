@@ -39,6 +39,11 @@ interface GesturesSettingsInterface {
   var scrollEnabled: Boolean
 
   /**
+   * Whether rotation is enabled for the pinch gesture.
+   */
+  var pinchRotateEnabled: Boolean
+
+  /**
    * Whether the pitch gesture is enabled.
    */
   var pitchEnabled: Boolean

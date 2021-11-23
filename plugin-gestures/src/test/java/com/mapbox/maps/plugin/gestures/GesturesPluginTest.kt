@@ -486,7 +486,8 @@ class GesturesPluginTest {
   }
 
   @Test
-  fun verifyScale() {
+  fun verifyScaleWithHighLevelAnimation() {
+    presenter.updateSettings { enablePinchToZoomWhenRotating = false }
     every { mapCameraManagerDelegate.cameraState } returns CameraState(
       Point.fromLngLat(0.0, 0.0),
       EdgeInsets(0.0, 0.0, 0.0, 0.0),
@@ -507,6 +508,29 @@ class GesturesPluginTest {
     assert(result)
     // setMoveDetectorEnabled
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
+  }
+
+  @Test
+  fun verifyScaleWithLowLevelAnimation() {
+    every { mapCameraManagerDelegate.cameraState } returns CameraState(
+      Point.fromLngLat(0.0, 0.0),
+      EdgeInsets(0.0, 0.0, 0.0, 0.0),
+      1.0,
+      0.0,
+      0.0
+    )
+    val scaleDetector = mockk<StandardScaleGestureDetector>()
+    every { scaleDetector.currentSpan } returns 100.0f
+    every { scaleDetector.previousSpan } returns 80.0f
+    every { scaleDetector.focalPoint } returns PointF(1.0f, 1.0f)
+    every { scaleDetector.scaleFactor } returns 2.0f
+    every { mapCameraManagerDelegate.cameraState.zoom } returns 1.0
+
+    val listener: OnScaleListener = mockk(relaxed = true)
+    presenter.addOnScaleListener(listener)
+    val result = presenter.handleScale(scaleDetector)
+    assert(result)
+    verify { cameraAnimationsPlugin.playAnimatorsSequentially(any()) }
   }
 
   @Test
@@ -623,7 +647,8 @@ class GesturesPluginTest {
   }
 
   @Test
-  fun verifyRotate() {
+  fun verifyRotateWithHighLevelAnimation() {
+    presenter.updateSettings { enablePinchToZoomWhenRotating = false }
     val rotateGestureDetector = mockk<RotateGestureDetector>()
     val listener: OnRotateListener = mockk(relaxed = true)
     presenter.addOnRotateListener(listener)
@@ -640,6 +665,15 @@ class GesturesPluginTest {
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
   }
 
+  @Test
+  fun verifyRotateWithLowLevelAnimation() {
+    val rotateGestureDetector = mockk<RotateGestureDetector>()
+    val listener: OnRotateListener = mockk(relaxed = true)
+    presenter.addOnRotateListener(listener)
+    val result = presenter.handleRotate(rotateGestureDetector, 34.0f)
+    assert(result)
+    verify { cameraAnimationsPlugin.playAnimatorsSequentially(any()) }
+  }
   @Test
   fun verifyRotateEnd() {
     val rotateGestureDetector = mockk<RotateGestureDetector>()

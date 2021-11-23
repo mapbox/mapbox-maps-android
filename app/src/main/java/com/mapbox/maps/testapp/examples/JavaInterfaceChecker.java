@@ -155,17 +155,18 @@ public class JavaInterfaceChecker {
         gesturesSettings = new GesturesSettings(true, true);
         gesturesSettings = new GesturesSettings(true, true, true);
         gesturesSettings = new GesturesSettings(true, true, true, true);
-        gesturesSettings = new GesturesSettings(true, true, true, true, scrollMode);
-        gesturesSettings = new GesturesSettings(true, true, true, true, scrollMode, true);
-        gesturesSettings = new GesturesSettings(true, true, true, true, scrollMode, true, true);
-        gesturesSettings = new GesturesSettings(true, true, true, true, scrollMode, true, true, true);
-        gesturesSettings = new GesturesSettings(true, true, true, true, scrollMode, true, true, true, screenCoordinate);
-        gesturesSettings = new GesturesSettings(true, true, true, true, scrollMode, true, true, true, screenCoordinate, true);
-        gesturesSettings = new GesturesSettings(true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true);
-        gesturesSettings = new GesturesSettings(true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true, true);
-        gesturesSettings = new GesturesSettings(true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true, true, true);
-        gesturesSettings = new GesturesSettings(true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true, true, true, true);
-        gesturesSettings = new GesturesSettings(true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true, true, true, true, 1f);
+        gesturesSettings = new GesturesSettings(true, true, true, true, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode);
+        gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true, true, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true, true, true, screenCoordinate);
+        gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true, true, true, screenCoordinate, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true, true, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true, true, true, true);
+        gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true, true, true, true, 1f);
     }
 
     private void compassSettings(Drawable drawable) {

@@ -109,6 +109,20 @@ class GesturesAttributeParserTest {
   }
 
   @Test
+  fun pinchRotateEnabledTestTrue() {
+    every { typedArray.getBoolean(any(), any()) } returns true
+    val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
+    assertEquals(true, settings.pinchRotateEnabled)
+  }
+
+  @Test
+  fun pinchRotateEnabledTestFalse() {
+    every { typedArray.getBoolean(any(), any()) } returns false
+    val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
+    assertEquals(false, settings.pinchRotateEnabled)
+  }
+
+  @Test
   fun pitchEnabledTestTrue() {
     every { typedArray.getBoolean(any(), any()) } returns true
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
