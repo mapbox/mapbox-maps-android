@@ -135,15 +135,17 @@ create_pull_request "Add ${MAPS_SDK_VERSION} API documentation." $BRANCH_WITH_DO
 prepare_branch_with_empty $MAPS_SDK_VERSION
 create_pull_request "Trigger ${MAPS_SDK_VERSION} deploy." $BRANCH_WITH_DOCUMENTATION
 
-# Update config files in Android Docs Repo.
-clone_android_docs_repo
-update_constants_and_map_version_numbers $MAPS_SDK_VERSION
-prepare_android_docs_branch $MAPS_SDK_VERSION
-cd $ANDROID_DOCS_DIRECTORY
-create_pull_request "Carbon Maps SDK bump to ${MAPS_SDK_VERSION}" $BRANCH_WITH_DOCUMENTATION
-# Rollback the remote url when run the script locally
-git remote set-url origin git@github.com:mapbox/android-docs.git
-cd -
+# Update config files in Android Docs Repo for stable release.
+if [[ $MAPS_SDK_VERSION != *beta* ]] && [[ $MAPS_SDK_VERSION != *alpha* ]] && [[ $MAPS_SDK_VERSION != *rc* ]]; then
+  clone_android_docs_repo
+  update_constants_and_map_version_numbers $MAPS_SDK_VERSION
+  prepare_android_docs_branch $MAPS_SDK_VERSION
+  cd $ANDROID_DOCS_DIRECTORY
+  create_pull_request "Carbon Maps SDK bump to ${MAPS_SDK_VERSION}" $BRANCH_WITH_DOCUMENTATION
+  # Rollback the remote url when run the script locally
+  git remote set-url origin git@github.com:mapbox/android-docs.git
+  cd -
+fi
 
 # Rollback the remote url when run the script locally
 git remote set-url origin git@github.com:mapbox/mapbox-maps-android.git
