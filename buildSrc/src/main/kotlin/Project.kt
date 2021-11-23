@@ -71,7 +71,7 @@ object Versions {
   const val pluginAndroidGradle = "4.0.1"
   const val pluginKotlin = "1.4.0"
   const val pluginLicense = "0.8.5"
-  const val pluginDokka =  "1.4.32"
+  const val pluginDokka =  "1.4.10.2"
   const val pluginJacoco = "0.2"
   const val mapboxAccessToken="0.2.1"
   const val mapboxSdkRegistry="0.4.0"
