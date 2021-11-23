@@ -592,6 +592,7 @@ class ViewAnnotationTest {
             geometry(CAMERA_CENTER)
             anchor(ViewAnnotationAnchor.BOTTOM)
             offsetY(50)
+            visible(true)
             associatedFeatureId(ASSOCIATED_FEATURE_ID)
           }
         )
@@ -621,6 +622,7 @@ class ViewAnnotationTest {
             geometry(CAMERA_CENTER)
             anchor(ViewAnnotationAnchor.BOTTOM)
             offsetY(50)
+            visible(true)
             associatedFeatureId(ASSOCIATED_FEATURE_ID)
           }
         )
@@ -632,6 +634,50 @@ class ViewAnnotationTest {
           VIEW_PLACEMENT_DELAY_MS
         )
       }
+    }
+    if (!latch.await(CONFIGURE_TIMEOUT_MS, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
+    }
+  }
+
+  // checking automatic view visibility handling
+
+  @Test
+  fun automaticViewVisibilityHandling() {
+    val latch = CountDownLatch(2)
+    mainHandler.post {
+      val firstView = viewAnnotationManager.addViewAnnotation(
+        resId = R.layout.view_annotation,
+        options = viewAnnotationOptions {
+          geometry(CAMERA_CENTER)
+          allowOverlap(false)
+        }
+      )
+      val secondView = viewAnnotationManager.addViewAnnotation(
+        resId = R.layout.view_annotation,
+        options = viewAnnotationOptions {
+          geometry(SHIFTED_CENTER)
+          allowOverlap(false)
+        }
+      )
+      mainHandler.postDelayed(
+        {
+          assertFalse(mapView.hasChildView(firstView))
+          assertTrue(mapView.hasChildView(secondView))
+          latch.countDown()
+          secondView.visibility = View.GONE
+          mainHandler.postDelayed(
+            {
+              // second view is not removed from parent MapView but as it's gone first view should appear now
+              assertTrue(mapView.hasChildView(secondView))
+              assertTrue(mapView.hasChildView(firstView))
+              latch.countDown()
+            },
+            VIEW_PLACEMENT_DELAY_MS
+          )
+        },
+        VIEW_PLACEMENT_DELAY_MS
+      )
     }
     if (!latch.await(CONFIGURE_TIMEOUT_MS, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
