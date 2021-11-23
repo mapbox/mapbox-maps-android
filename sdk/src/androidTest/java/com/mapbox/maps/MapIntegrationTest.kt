@@ -142,7 +142,7 @@ class MapIntegrationTest {
           mapView.postDelayed(
             {
               mapboxMap.queryRenderedFeatures(
-                ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0),
+                RenderedQueryGeometry(ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0)),
                 RenderedQueryOptions(listOf("layer"), null)
               ) { result ->
                 if (result.value?.size == 1) {
@@ -202,7 +202,7 @@ class MapIntegrationTest {
           mapView.postDelayed(
             {
               mapboxMap.queryRenderedFeatures(
-                ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0),
+                RenderedQueryGeometry(ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0)),
                 RenderedQueryOptions(listOf("layer"), null)
               ) { result ->
                 if (result.value?.size == 1) {
@@ -272,7 +272,7 @@ class MapIntegrationTest {
           mapView.postDelayed(
             {
               mapboxMap.queryRenderedFeatures(
-                ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0),
+                RenderedQueryGeometry(ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0)),
                 RenderedQueryOptions(listOf("layer"), null)
               ) { result ->
                 if (result.value?.size == 1) {
@@ -324,7 +324,7 @@ class MapIntegrationTest {
           mapView.postDelayed(
             {
               mapboxMap.queryRenderedFeatures(
-                ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0),
+                RenderedQueryGeometry(ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0)),
                 RenderedQueryOptions(listOf("layer"), null)
               ) { result ->
                 if (result.value?.size == 1) {
@@ -394,7 +394,7 @@ class MapIntegrationTest {
           mapView.postDelayed(
             {
               mapboxMap.queryRenderedFeatures(
-                ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0),
+                RenderedQueryGeometry(ScreenCoordinate(mapView.width / 2.0, mapView.height / 2.0)),
                 RenderedQueryOptions(listOf("layer"), null)
               ) { result ->
                 if (result.value?.size == 1) {

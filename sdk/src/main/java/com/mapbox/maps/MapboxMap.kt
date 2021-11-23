@@ -690,6 +690,13 @@ class MapboxMap internal constructor(
    *
    * @return An array of rendered features.
    */
+  @Deprecated(
+    "Should be replaced overloaded function taking RenderedQueryGeometry and returning cancelable",
+    replaceWith = ReplaceWith(
+      "queryRenderedFeatures(RenderedQueryGeometry(shape), options, callback)",
+      imports = arrayOf("com.mapbox.maps.RenderedQueryGeometry")
+    ),
+  )
   override fun queryRenderedFeatures(
     shape: List<ScreenCoordinate?>,
     options: RenderedQueryOptions,
@@ -709,6 +716,13 @@ class MapboxMap internal constructor(
    *
    * @return An array of rendered features.
    */
+  @Deprecated(
+    "Should be replaced overloaded function taking RenderedQueryGeometry and returning cancelable",
+    replaceWith = ReplaceWith(
+      "queryRenderedFeatures(RenderedQueryGeometry(box), options, callback)",
+      imports = arrayOf("com.mapbox.maps.RenderedQueryGeometry")
+    ),
+  )
   override fun queryRenderedFeatures(
     box: ScreenBox,
     options: RenderedQueryOptions,
@@ -728,6 +742,13 @@ class MapboxMap internal constructor(
    *
    * @return An array of rendered features.
    */
+  @Deprecated(
+    "Should be replaced overloaded function taking RenderedQueryGeometry and returning cancelable",
+    replaceWith = ReplaceWith(
+      "queryRenderedFeatures(RenderedQueryGeometry(pixel), options, callback)",
+      imports = arrayOf("com.mapbox.maps.RenderedQueryGeometry")
+    ),
+  )
   override fun queryRenderedFeatures(
     pixel: ScreenCoordinate,
     options: RenderedQueryOptions,

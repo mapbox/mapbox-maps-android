@@ -15,8 +15,11 @@ interface MapFeatureQueryDelegate {
    * @param callback Callback called when the query completes
    */
   @Deprecated(
-    "Should be replaced with cancelable overloaded function taking RenderedQueryGeometry",
-    ReplaceWith("queryRenderedFeatures(geometry, options, callback)")
+    "Should be replaced overloaded function taking RenderedQueryGeometry and returning cancelable",
+    replaceWith = ReplaceWith(
+      "queryRenderedFeatures(RenderedQueryGeometry(shape), options, callback)",
+      imports = arrayOf("com.mapbox.maps.RenderedQueryGeometry")
+    ),
   )
   fun queryRenderedFeatures(
     shape: List<ScreenCoordinate?>,
@@ -32,8 +35,11 @@ interface MapFeatureQueryDelegate {
    * @param callback Callback called when the query completes
    */
   @Deprecated(
-    "Should be replaced with cancelable overloaded function taking RenderedQueryGeometry",
-    ReplaceWith("queryRenderedFeatures(geometry, options, callback)")
+    "Should be replaced overloaded function taking RenderedQueryGeometry and returning cancelable",
+    replaceWith = ReplaceWith(
+      "queryRenderedFeatures(RenderedQueryGeometry(box), options, callback)",
+      imports = arrayOf("com.mapbox.maps.RenderedQueryGeometry")
+    ),
   )
   fun queryRenderedFeatures(
     box: ScreenBox,
@@ -49,8 +55,11 @@ interface MapFeatureQueryDelegate {
    * @param callback Callback called when the query completes
    */
   @Deprecated(
-    "Should be replaced with cancelable overloaded function taking RenderedQueryGeometry",
-    ReplaceWith("queryRenderedFeatures(geometry, options, callback)")
+    "Should be replaced overloaded function taking RenderedQueryGeometry and returning cancelable",
+    replaceWith = ReplaceWith(
+      "queryRenderedFeatures(RenderedQueryGeometry(pixel), options, callback)",
+      imports = arrayOf("com.mapbox.maps.RenderedQueryGeometry")
+    ),
   )
   fun queryRenderedFeatures(
     pixel: ScreenCoordinate,

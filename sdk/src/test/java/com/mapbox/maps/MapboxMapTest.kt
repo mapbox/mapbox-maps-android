@@ -817,12 +817,21 @@ class MapboxMapTest {
   }
 
   @Test
+  fun queryRenderedFeaturesShape() {
+    val queryCallback = mockk<QueryFeaturesCallback>()
+    val shape = mockk<List<ScreenCoordinate>>()
+    val renderedQueryOptions = mockk<RenderedQueryOptions>()
+    mapboxMap.queryRenderedFeatures(shape, renderedQueryOptions, queryCallback)
+    verify { nativeMap.queryRenderedFeatures(shape, renderedQueryOptions, queryCallback) }
+  }
+
+  @Test
   fun queryRenderedFeaturesGeometry() {
     val queryCallback = mockk<QueryFeaturesCallback>()
-    val point = mockk<ScreenCoordinate>()
+    val geometry = mockk<RenderedQueryGeometry>()
     val renderedQueryOptions = mockk<RenderedQueryOptions>()
-    mapboxMap.queryRenderedFeatures(point, renderedQueryOptions, queryCallback)
-    verify { nativeMap.queryRenderedFeatures(point, renderedQueryOptions, queryCallback) }
+    mapboxMap.queryRenderedFeatures(geometry, renderedQueryOptions, queryCallback)
+    verify { nativeMap.queryRenderedFeatures(geometry, renderedQueryOptions, queryCallback) }
   }
 
   @Test

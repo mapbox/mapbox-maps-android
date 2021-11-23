@@ -7,6 +7,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
@@ -59,12 +60,14 @@ class FeatureStateActivity : AppCompatActivity(), OnCameraChangeListener {
     crosshair.getDrawingRect(offsetViewBounds)
     binding.mapView.offsetDescendantRectToMyCoords(crosshair, offsetViewBounds)
     mapboxMap.queryRenderedFeatures(
-      ScreenBox(
-        ScreenCoordinate(offsetViewBounds.left.toDouble(), offsetViewBounds.top.toDouble()),
-        ScreenCoordinate(offsetViewBounds.right.toDouble(), offsetViewBounds.bottom.toDouble())
+      RenderedQueryGeometry(
+        ScreenBox(
+          ScreenCoordinate(offsetViewBounds.left.toDouble(), offsetViewBounds.top.toDouble()),
+          ScreenCoordinate(offsetViewBounds.right.toDouble(), offsetViewBounds.bottom.toDouble())
+        )
       ),
       RenderedQueryOptions(listOf(LAYER_ID), literal(true))
-    ) { expected ->
+    ) { expected: Expected<String, MutableList<QueriedFeature>> ->
       expected.value?.takeIf { it.isNotEmpty() }?.let {
         val selectedFeature = it.first().feature
         val featureId = selectedFeature.id()!!

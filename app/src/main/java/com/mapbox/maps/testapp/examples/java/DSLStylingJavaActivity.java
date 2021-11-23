@@ -6,12 +6,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.mapbox.geojson.Point;
 import com.mapbox.maps.MapView;
 import com.mapbox.maps.MapboxMap;
 import com.mapbox.maps.QueriedFeature;
+import com.mapbox.maps.RenderedQueryGeometry;
 import com.mapbox.maps.RenderedQueryOptions;
 import com.mapbox.maps.ScreenBox;
 import com.mapbox.maps.ScreenCoordinate;
@@ -37,6 +36,8 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import static com.mapbox.maps.extension.style.expressions.generated.Expression.concat;
 import static com.mapbox.maps.extension.style.expressions.generated.Expression.get;
@@ -124,10 +125,10 @@ public class DSLStylingJavaActivity extends AppCompatActivity implements OnMapCl
     public boolean onMapClick(@NotNull Point point) {
         ScreenCoordinate clicked = mapboxMap.pixelForCoordinate(point);
         mapboxMap.queryRenderedFeatures(
-                new ScreenBox(
+                new RenderedQueryGeometry(new ScreenBox(
                         new ScreenCoordinate(clicked.getX() - 50, clicked.getY() - 50),
                         new ScreenCoordinate(clicked.getX() + 50, clicked.getY() + 50)
-                ),
+                )),
                 new RenderedQueryOptions(QUERY_LIST, literal(true)), features -> {
                     List<QueriedFeature> featureList = features.getValue();
                     if (featureList != null && !featureList.isEmpty()) {
