@@ -6,6 +6,7 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
+import android.graphics.PointF
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
@@ -72,8 +73,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   private val movePointList = CopyOnWriteArrayList<Point>()
   private val moveTimeList = CopyOnWriteArrayList<Long>()
 
-  private var flingInProgress = false
-
   private lateinit var gesturesManager: AndroidGesturesManager
 
   private lateinit var mapTransformDelegate: MapTransformDelegate
@@ -93,7 +92,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   private val onShoveListenerList = CopyOnWriteArrayList<OnShoveListener>()
 
   private var horizonLineFromTop = 0.0
-  private var mapSize = Size(0,0)
+  private var mapSize = Size(0, 0)
+  private var isLastTouchPointAboveHorizon = false
 
   // FocalPoint
   private var doubleTapFocalPoint = ScreenCoordinate(0.0, 0.0)
@@ -473,7 +473,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       velocityY: Float
     ): Boolean {
 //      return handleFlingEvent(e1, e2, velocityX, velocityY)
-      startGeoVelocityBasedFling()
+//      startGeoVelocityBasedFling()
       return false
     }
   }
@@ -1184,12 +1184,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     return false
   }
 
-  internal fun startGeoVelocityBasedFling() : Boolean {
-    if (flingInProgress) {
-      return false
-    } else {
-      flingInProgress = true
-    }
+  internal fun startGeoVelocityBasedFling(): Boolean {
     val moveEndPoints = movePointList.takeLast(20)
     val moveEndTimes = moveTimeList.takeLast(20)
     if (moveEndPoints.size > 2 && moveEndTimes.size > 2) {
@@ -1227,7 +1222,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
             override fun onAnimationEnd(animation: Animator?) {
               super.onAnimationEnd(animation)
               mapCameraManagerDelegate.dragEnd()
-              flingInProgress = false
             }
           })
         }
@@ -1330,7 +1324,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
     movePointList.clear()
     moveTimeList.clear()
-    flingInProgress = false
+    isLastTouchPointAboveHorizon = isTouchPointAboveHorizon(detector.focalPoint)
 
     return true
   }
@@ -1342,10 +1336,18 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   ): Boolean {
     // first move event is often delivered with no displacement
     if (distanceX != 0f || distanceY != 0f) {
-      if (detector.focalPoint.y.toDouble() < horizonLineFromTop + HORIZON_LINE_PADDING) {
+      val isCurrentTouchPointAboveHorizon = isTouchPointAboveHorizon(detector.focalPoint)
+      if (!isLastTouchPointAboveHorizon && isCurrentTouchPointAboveHorizon) {
+        isLastTouchPointAboveHorizon = isCurrentTouchPointAboveHorizon
+        dragInProgress = false
         startGeoVelocityBasedFling()
         return true
       }
+      isLastTouchPointAboveHorizon = isCurrentTouchPointAboveHorizon
+      if (isCurrentTouchPointAboveHorizon) {
+        return true
+      }
+
       if (notifyOnMoveListeners(detector)) {
         return true
       }
@@ -1407,7 +1409,12 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       }
       Logger.e(
         "testtest",
-        "executed distance: ${hypot(cameraOptions.center!!.longitude() - currentCenter.longitude(), cameraOptions.center!!.latitude() - currentCenter.latitude())}"
+        "executed distance: ${
+          hypot(
+            cameraOptions.center!!.longitude() - currentCenter.longitude(),
+            cameraOptions.center!!.latitude() - currentCenter.latitude()
+          )
+        }"
       )
 
       easeToImmediately(cameraOptions)
@@ -1415,6 +1422,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       moveTimeList.add(SystemClock.elapsedRealtimeNanos())
     }
     return true
+  }
+
+  private fun isTouchPointAboveHorizon(point: PointF) : Boolean {
+    return (point.y.toDouble() < horizonLineFromTop + HORIZON_LINE_PADDING)
   }
 
   private fun horizonLineFromTopOfMap(): Double {
@@ -1432,7 +1443,12 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     // `fov = 2 * arctan((height / 2) / (height * 1.5))`
     val fov = 0.6435011087932844
     // h is height of space above map center to horizon.
-    val h = mapSize.height / 2.0 / tan(fov / 2.0) / tan(max(cameraState.pitch * PI / 180.0, 0.1) + centerOffset.y)
+    val h = mapSize.height / 2.0 / tan(fov / 2.0) / tan(
+      max(
+        cameraState.pitch * PI / 180.0,
+        0.1
+      ) + centerOffset.y
+    )
     return mapSize.height / 2.0 - h * (1.0 - kHorizonEpsilon)
   }
 
@@ -1460,6 +1476,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   internal fun handleMoveEnd(detector: MoveGestureDetector) {
     dragInProgress = false
     notifyOnMoveEndListeners(detector)
+    if (!isLastTouchPointAboveHorizon && !isTouchPointAboveHorizon(detector.focalPoint)) {
+      startGeoVelocityBasedFling()
+    }
   }
 
   internal fun handleSingleTapUpEvent(): Boolean {
@@ -1811,7 +1830,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   }
 
   private companion object {
-    private const val FLING_STRENGTH = 0.1f
+    private const val FLING_STRENGTH = 0.5f
     private const val ANIMATION_DURATION_COEFF = 3.0
   }
 }
