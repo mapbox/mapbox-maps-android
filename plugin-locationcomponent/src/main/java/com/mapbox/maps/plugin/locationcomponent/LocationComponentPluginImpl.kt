@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.geojson.Point
+import com.mapbox.maps.RenderedQueryGeometry
 import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
@@ -94,7 +95,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
    */
   override fun isLocatedAt(point: Point, listener: PuckLocatedAtPointListener) {
     delegateProvider.mapFeatureQueryDelegate.queryRenderedFeatures(
-      delegateProvider.mapCameraManagerDelegate.pixelForCoordinate(point),
+      RenderedQueryGeometry(delegateProvider.mapCameraManagerDelegate.pixelForCoordinate(point)),
       RenderedQueryOptions(
         listOf(
           LOCATION_INDICATOR_LAYER,

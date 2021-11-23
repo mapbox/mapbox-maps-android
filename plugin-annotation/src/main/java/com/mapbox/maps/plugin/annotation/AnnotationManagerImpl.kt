@@ -8,6 +8,7 @@ import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.LayerPosition
+import com.mapbox.maps.RenderedQueryGeometry
 import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.extension.style.StyleInterface
@@ -782,7 +783,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     val latch = CountDownLatch(1)
     mapFeatureQueryDelegate.executeOnRenderThread {
       mapFeatureQueryDelegate.queryRenderedFeatures(
-        screenCoordinate,
+        RenderedQueryGeometry(screenCoordinate),
         RenderedQueryOptions(
           layerList,
           literal(true)

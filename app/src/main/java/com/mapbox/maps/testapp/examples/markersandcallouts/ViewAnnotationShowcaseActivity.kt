@@ -106,8 +106,7 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
 
   override fun onMapClick(point: Point): Boolean {
     mapboxMap.queryRenderedFeatures(
-      mapboxMap.pixelForCoordinate(point),
-      RenderedQueryOptions(listOf(LAYER_ID), null)
+      RenderedQueryGeometry(mapboxMap.pixelForCoordinate(point)), RenderedQueryOptions(listOf(LAYER_ID), null)
     ) {
       onFeatureClicked(it) { feature ->
         if (feature.id() != null) {

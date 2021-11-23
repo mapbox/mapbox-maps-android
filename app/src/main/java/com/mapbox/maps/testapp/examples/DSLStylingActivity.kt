@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.bindgen.Expected
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.expressions.dsl.generated.*
@@ -39,12 +40,14 @@ class DSLStylingActivity : AppCompatActivity(), OnMapClickListener {
   override fun onMapClick(point: Point): Boolean {
     val clicked = mapboxMap.pixelForCoordinate(point)
     mapboxMap.queryRenderedFeatures(
-      ScreenBox(
-        ScreenCoordinate(clicked.x - 50, clicked.y - 50),
-        ScreenCoordinate(clicked.x + 50, clicked.y + 50)
+      RenderedQueryGeometry(
+        ScreenBox(
+          ScreenCoordinate(clicked.x - 50, clicked.y - 50),
+          ScreenCoordinate(clicked.x + 50, clicked.y + 50)
+        )
       ),
       RenderedQueryOptions(listOf("earthquakeCircle", "earthquakeText"), literal(true))
-    ) { expected ->
+    ) { expected: Expected<String, MutableList<QueriedFeature>> ->
       val features = expected.value!!
       features.takeIf { it.isNotEmpty() }?.let {
         val time = it.first().feature.getNumberProperty("time")
