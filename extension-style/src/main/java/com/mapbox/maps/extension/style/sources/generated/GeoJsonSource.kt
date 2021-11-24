@@ -276,7 +276,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * use main thread to pass this data to gl-native.
    *
    * In order to capture events when actual data is drawn on the map please refer to [Observer] API
-   * and listen to [MapEvents.STYLE_DATA_LOADED] or [MapEvents.MAP_LOADING_ERROR] with `type = source`
+   * and listen to [MapEvents.SOURCE_DATA_LOADED] or [MapEvents.MAP_LOADING_ERROR] with `type = metadata`
    * if data parsing error has occurred.
    *
    * Note: This method is not thread-safe. The Feature is parsed on a worker thread, please make sure
@@ -292,7 +292,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * use main thread to pass this data to gl-native.
    *
    * In order to capture events when actual data is drawn on the map please refer to [Observer] API
-   * and listen to [MapEvents.STYLE_DATA_LOADED] or [MapEvents.MAP_LOADING_ERROR] with `type = source`
+   * and listen to [MapEvents.SOURCE_DATA_LOADED] or [MapEvents.MAP_LOADING_ERROR] with `type = metadata`
    * if data parsing error has occurred.
    *
    * Note: This method is not thread-safe. The FeatureCollection is parsed on a worker thread, please make sure
@@ -308,7 +308,7 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * use main thread to pass this data to gl-native.
    *
    * In order to capture events when actual data is drawn on the map please refer to [Observer] API
-   * and listen to [MapEvents.STYLE_DATA_LOADED] or [MapEvents.MAP_LOADING_ERROR] with `type = source`
+   * and listen to [MapEvents.SOURCE_DATA_LOADED] or [MapEvents.MAP_LOADING_ERROR] with `type = metadata`
    * if data parsing error has occurred.
    *
    * Note: This method is not thread-safe. The Geometry is parsed on a worker thread, please make sure
@@ -762,7 +762,7 @@ fun geoJsonSource(
  * [GeoJsonSource.featureCollection] or [GeoJsonSource.geometry] on the map.
  *
  * In order to capture events when actual data is drawn on the map please refer to [Observer] API
- * and listen to [MapEvents.STYLE_DATA_LOADED] or [MapEvents.MAP_LOADING_ERROR] with `type = source`
+ * and listen to [MapEvents.SOURCE_DATA_LOADED] or [MapEvents.MAP_LOADING_ERROR] with `type = metadata`
  * if data parsing error has occurred.
  */
 fun geoJsonSource(
