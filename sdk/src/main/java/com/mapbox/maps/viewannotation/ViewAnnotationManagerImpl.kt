@@ -1,4 +1,4 @@
-package com.mapbox.maps
+package com.mapbox.maps.viewannotation
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +8,10 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.VisibleForTesting
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.bindgen.Expected
-import com.mapbox.maps.viewannotation.ViewAnnotation
-import com.mapbox.maps.viewannotation.ViewAnnotationManager
+import com.mapbox.maps.MapView
+import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.ViewAnnotationOptions
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.collections.HashMap
 
