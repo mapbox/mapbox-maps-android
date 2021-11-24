@@ -61,11 +61,11 @@ internal class LocationPuckManager(
       animationManager.setLocationLayerRenderer(locationLayerRenderer)
       animationManager.applyPulsingAnimationSettings(settings)
       animationManager.applySettings2(settings2)
-      locationLayerRenderer.addLayers(positionManager)
       lastLocation?.let {
         updateCurrentPosition(it)
       }
       updateCurrentBearing(lastBearing)
+      locationLayerRenderer.addLayers(positionManager)
       locationLayerRenderer.initializeComponents(style)
       styleScaling(settings)
       if (lastLocation != null && settings.enabled) {
