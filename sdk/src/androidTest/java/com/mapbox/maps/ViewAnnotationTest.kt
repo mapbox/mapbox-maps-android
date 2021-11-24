@@ -32,6 +32,9 @@ class ViewAnnotationTest {
   private lateinit var viewAnnotationManager: ViewAnnotationManager
   private lateinit var mainHandler: Handler
 
+  private lateinit var firstView: View
+  private lateinit var secondView: View
+
   @get:Rule
   var rule = ActivityScenarioRule(EmptyActivity::class.java)
 
@@ -83,549 +86,541 @@ class ViewAnnotationTest {
     latch.throwExceptionOnTimeoutMs()
   }
 
+  /**
+   * Helper function that performs some action and verifies result after some delay
+   * when view annotations are fixed in the viewport
+   */
+  private fun viewAnnotationTestHelper(
+    additionalLatchCount: Int = 0,
+    performAction: () -> Unit,
+    makeChecks: (CountDownLatch) -> Unit
+  ) {
+    val latch = CountDownLatch(1 + additionalLatchCount)
+    mainHandler.post {
+      performAction.invoke()
+      mainHandler.postDelayed(
+        {
+          makeChecks.invoke(latch)
+          latch.countDown()
+        },
+        VIEW_PLACEMENT_DELAY_MS
+      )
+    }
+    latch.throwExceptionOnTimeoutMs()
+  }
+
   // checking some use-cases when adding view annotation
 
   @Test
   fun addViewAnnotationNoOptions() {
-    val latch = CountDownLatch(1)
-    mainHandler.post {
-      val view = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(CAMERA_CENTER)
-        }
-      )
-      mainHandler.postDelayed(
-        {
-          assertTrue(mapView.hasChildView(view))
-          assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x - view.width / 2.0, view.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
-          assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y - view.height / 2.0, view.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
-          latch.countDown()
-        },
-        VIEW_PLACEMENT_DELAY_MS
-      )
-    }
-    latch.throwExceptionOnTimeoutMs()
+    viewAnnotationTestHelper(
+      performAction = {
+        firstView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(CAMERA_CENTER)
+          }
+        )
+      },
+      makeChecks = {
+        assertTrue(mapView.hasChildView(firstView))
+        assertEquals(
+          mapboxMap.pixelForCoordinate(CAMERA_CENTER).x - firstView.width / 2.0,
+          firstView.translationX.toDouble(),
+          ADMISSIBLE_ERROR_PX
+        )
+        assertEquals(
+          mapboxMap.pixelForCoordinate(CAMERA_CENTER).y - firstView.height / 2.0,
+          firstView.translationY.toDouble(),
+          ADMISSIBLE_ERROR_PX
+        )
+      }
+    )
   }
 
   @Test
   fun addViewAnnotationAnchor() {
-    val latch = CountDownLatch(1)
-    mainHandler.post {
-      val view = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(CAMERA_CENTER)
-          anchor(ViewAnnotationAnchor.TOP_LEFT)
-        }
-      )
-      mainHandler.postDelayed(
-        {
-          assertTrue(mapView.hasChildView(view))
-          assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, view.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
-          assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, view.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
-          latch.countDown()
-        },
-        VIEW_PLACEMENT_DELAY_MS
-      )
-    }
-    latch.throwExceptionOnTimeoutMs()
+    viewAnnotationTestHelper(
+      performAction = {
+        firstView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(CAMERA_CENTER)
+            anchor(ViewAnnotationAnchor.TOP_LEFT)
+          }
+        )
+      },
+      makeChecks = {
+        assertTrue(mapView.hasChildView(firstView))
+        assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, firstView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
+        assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, firstView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
+      }
+    )
   }
 
   @Test
   fun addViewAnnotationOffsets() {
-    val latch = CountDownLatch(1)
     val offsetX = 30
     val offsetY = 20
-    mainHandler.post {
-      val view = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(CAMERA_CENTER)
-          anchor(ViewAnnotationAnchor.TOP_LEFT)
-          offsetX(offsetX)
-          offsetY(offsetY)
-        }
-      )
-      mainHandler.postDelayed(
-        {
-          assertTrue(mapView.hasChildView(view))
-          assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x + offsetX, view.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
-          assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y - offsetY, view.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
-          latch.countDown()
-        },
-        VIEW_PLACEMENT_DELAY_MS
-      )
-    }
-    latch.throwExceptionOnTimeoutMs()
+    viewAnnotationTestHelper(
+      performAction = {
+        firstView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(CAMERA_CENTER)
+            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            offsetX(offsetX)
+            offsetY(offsetY)
+          }
+        )
+      },
+      makeChecks = {
+        assertTrue(mapView.hasChildView(firstView))
+        assertEquals(
+          mapboxMap.pixelForCoordinate(CAMERA_CENTER).x + offsetX,
+          firstView.translationX.toDouble(),
+          ADMISSIBLE_ERROR_PX
+        )
+        assertEquals(
+          mapboxMap.pixelForCoordinate(CAMERA_CENTER).y - offsetY,
+          firstView.translationY.toDouble(),
+          ADMISSIBLE_ERROR_PX
+        )
+      }
+    )
   }
 
   @Test
   fun addViewAnnotationVisible() {
-    val latch = CountDownLatch(1)
-    mainHandler.post {
-      val view = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(CAMERA_CENTER)
-          visible(false)
-        }
-      )
-      mainHandler.postDelayed(
-        {
-          assertFalse(mapView.hasChildView(view))
-          latch.countDown()
-        },
-        VIEW_PLACEMENT_DELAY_MS
-      )
-    }
-    latch.throwExceptionOnTimeoutMs()
+    viewAnnotationTestHelper(
+      performAction = {
+        firstView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(CAMERA_CENTER)
+            visible(false)
+          }
+        )
+      },
+      makeChecks = {
+        assertFalse(mapView.hasChildView(firstView))
+      }
+    )
   }
 
   @Test
   fun addTwoViewAnnotationsAllowOverlapTrue() {
-    val latch = CountDownLatch(1)
-    mainHandler.post {
-      val firstView = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(SHIFTED_CENTER)
-          anchor(ViewAnnotationAnchor.TOP_LEFT)
-          allowOverlap(true)
-        }
-      )
-      val secondView = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(CAMERA_CENTER)
-          anchor(ViewAnnotationAnchor.TOP_LEFT)
-          allowOverlap(true)
-        }
-      )
-      mainHandler.postDelayed(
-        {
-          assertTrue(mapView.hasChildView(firstView))
-          assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).x, firstView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
-          assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).y, firstView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
-          assertTrue(mapView.hasChildView(secondView))
-          assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, secondView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
-          assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
-          MatcherAssert.assertThat(
-            mapView.getChildViewIndex(secondView),
-            Matchers.greaterThan(mapView.getChildViewIndex(firstView))
-          )
-          latch.countDown()
-        },
-        VIEW_PLACEMENT_DELAY_MS
-      )
-    }
-    latch.throwExceptionOnTimeoutMs()
+    viewAnnotationTestHelper(
+      performAction = {
+        firstView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(SHIFTED_CENTER)
+            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            allowOverlap(true)
+          }
+        )
+        secondView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(CAMERA_CENTER)
+            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            allowOverlap(true)
+          }
+        )
+      },
+      makeChecks = {
+        assertTrue(mapView.hasChildView(firstView))
+        assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).x, firstView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
+        assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).y, firstView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
+        assertTrue(mapView.hasChildView(secondView))
+        assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, secondView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
+        assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
+        MatcherAssert.assertThat(
+          mapView.getChildViewIndex(secondView),
+          Matchers.greaterThan(mapView.getChildViewIndex(firstView))
+        )
+      }
+    )
   }
 
   @Test
   fun addTwoViewAnnotationsAllowOverlapFalse() {
-    val latch = CountDownLatch(1)
-    mainHandler.post {
-      val firstView = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(SHIFTED_CENTER)
-          anchor(ViewAnnotationAnchor.TOP_LEFT)
-          allowOverlap(false)
-        }
-      )
-      val secondView = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(CAMERA_CENTER)
-          anchor(ViewAnnotationAnchor.TOP_LEFT)
-          allowOverlap(false)
-        }
-      )
-      mainHandler.postDelayed(
-        {
-          assertFalse(mapView.hasChildView(firstView))
-          assertTrue(mapView.hasChildView(secondView))
-          assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, secondView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
-          assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
-          latch.countDown()
-        },
-        VIEW_PLACEMENT_DELAY_MS
-      )
-    }
-    latch.throwExceptionOnTimeoutMs()
+    viewAnnotationTestHelper(
+      performAction = {
+        firstView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(SHIFTED_CENTER)
+            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            allowOverlap(false)
+          }
+        )
+        secondView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(CAMERA_CENTER)
+            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            allowOverlap(false)
+          }
+        )
+      },
+      makeChecks = {
+        assertFalse(mapView.hasChildView(firstView))
+        assertTrue(mapView.hasChildView(secondView))
+        assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, secondView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
+        assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
+      }
+    )
   }
 
   @Test
   fun addTwoViewAnnotationsOneSelectedAllowOverlapTrue() {
-    val latch = CountDownLatch(1)
-    mainHandler.post {
-      val firstView = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(SHIFTED_CENTER)
-          anchor(ViewAnnotationAnchor.TOP_LEFT)
-          allowOverlap(true)
-          selected(true)
-        }
-      )
-      val secondView = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(CAMERA_CENTER)
-          anchor(ViewAnnotationAnchor.TOP_LEFT)
-          allowOverlap(true)
-        }
-      )
-      mainHandler.postDelayed(
-        {
-          assertTrue(mapView.hasChildView(firstView))
-          assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).x, firstView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
-          assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).y, firstView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
-          assertTrue(mapView.hasChildView(secondView))
-          assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, secondView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
-          assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
-          MatcherAssert.assertThat(
-            mapView.getChildViewIndex(secondView),
-            Matchers.lessThan(mapView.getChildViewIndex(firstView))
-          )
-          latch.countDown()
-        },
-        VIEW_PLACEMENT_DELAY_MS
-      )
-    }
-    latch.throwExceptionOnTimeoutMs()
+    viewAnnotationTestHelper(
+      performAction = {
+        firstView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(SHIFTED_CENTER)
+            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            allowOverlap(true)
+            selected(true)
+          }
+        )
+        secondView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(CAMERA_CENTER)
+            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            allowOverlap(true)
+          }
+        )
+      },
+      makeChecks = {
+        assertTrue(mapView.hasChildView(firstView))
+        assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).x, firstView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
+        assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).y, firstView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
+        assertTrue(mapView.hasChildView(secondView))
+        assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, secondView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
+        assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
+        MatcherAssert.assertThat(
+          mapView.getChildViewIndex(secondView),
+          Matchers.lessThan(mapView.getChildViewIndex(firstView))
+        )
+      }
+    )
   }
 
   @Test
   fun addTwoViewAnnotationsOneAllowOverlapTrueAnotherFalse() {
-    val latch = CountDownLatch(1)
-    mainHandler.post {
-      val firstView = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(SHIFTED_CENTER)
-          anchor(ViewAnnotationAnchor.TOP_LEFT)
-          allowOverlap(true)
-        }
-      )
-      val secondView = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(CAMERA_CENTER)
-          anchor(ViewAnnotationAnchor.TOP_LEFT)
-          allowOverlap(false)
-        }
-      )
-      mainHandler.postDelayed(
-        {
-          assertTrue(mapView.hasChildView(firstView))
-          assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).x, firstView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
-          assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).y, firstView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
-          assertTrue(mapView.hasChildView(secondView))
-          assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, secondView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
-          assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
-          MatcherAssert.assertThat(
-            mapView.getChildViewIndex(secondView),
-            Matchers.greaterThan(mapView.getChildViewIndex(firstView))
-          )
-          latch.countDown()
-        },
-        VIEW_PLACEMENT_DELAY_MS
-      )
-    }
-    latch.throwExceptionOnTimeoutMs()
+    viewAnnotationTestHelper(
+      performAction = {
+        firstView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(SHIFTED_CENTER)
+            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            allowOverlap(true)
+          }
+        )
+        secondView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(CAMERA_CENTER)
+            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            allowOverlap(false)
+          }
+        )
+      },
+      makeChecks = {
+        assertTrue(mapView.hasChildView(firstView))
+        assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).x, firstView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
+        assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).y, firstView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
+        assertTrue(mapView.hasChildView(secondView))
+        assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, secondView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
+        assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
+        MatcherAssert.assertThat(
+          mapView.getChildViewIndex(secondView),
+          Matchers.greaterThan(mapView.getChildViewIndex(firstView))
+        )
+      }
+    )
   }
 
   @Test
   fun addTwoViewAnnotationsOneAllowOverlapFalseAnotherTrue() {
-    val latch = CountDownLatch(1)
-    mainHandler.post {
-      val firstView = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(SHIFTED_CENTER)
-          anchor(ViewAnnotationAnchor.TOP_LEFT)
-          allowOverlap(false)
-        }
-      )
-      val secondView = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(CAMERA_CENTER)
-          anchor(ViewAnnotationAnchor.TOP_LEFT)
-          allowOverlap(true)
-        }
-      )
-      mainHandler.postDelayed(
-        {
-          assertFalse(mapView.hasChildView(firstView))
-          assertTrue(mapView.hasChildView(secondView))
-          assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, secondView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
-          assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
-          latch.countDown()
-        },
-        VIEW_PLACEMENT_DELAY_MS
-      )
-    }
-    latch.throwExceptionOnTimeoutMs()
+    viewAnnotationTestHelper(
+      performAction = {
+        firstView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(SHIFTED_CENTER)
+            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            allowOverlap(false)
+          }
+        )
+        secondView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(CAMERA_CENTER)
+            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            allowOverlap(true)
+          }
+        )
+      },
+      makeChecks = {
+        assertFalse(mapView.hasChildView(firstView))
+        assertTrue(mapView.hasChildView(secondView))
+        assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, secondView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
+        assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
+      }
+    )
   }
 
   @Test
   fun addTwoViewAnnotationsOneSelectedAllowOverlapFalse() {
-    val latch = CountDownLatch(1)
-    mainHandler.post {
-      val firstView = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(SHIFTED_CENTER)
-          anchor(ViewAnnotationAnchor.TOP_LEFT)
-          allowOverlap(false)
-          selected(true)
-        }
-      )
-      val secondView = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(CAMERA_CENTER)
-          anchor(ViewAnnotationAnchor.TOP_LEFT)
-          allowOverlap(false)
-        }
-      )
-      mainHandler.postDelayed(
-        {
-          assertTrue(mapView.hasChildView(firstView))
-          assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).x, firstView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
-          assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).y, firstView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
-          assertFalse(mapView.hasChildView(secondView))
-          latch.countDown()
-        },
-        VIEW_PLACEMENT_DELAY_MS
-      )
-    }
-    latch.throwExceptionOnTimeoutMs()
+    viewAnnotationTestHelper(
+      performAction = {
+        firstView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(SHIFTED_CENTER)
+            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            allowOverlap(false)
+            selected(true)
+          }
+        )
+        secondView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(CAMERA_CENTER)
+            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            allowOverlap(false)
+          }
+        )
+      },
+      makeChecks = {
+        assertTrue(mapView.hasChildView(firstView))
+        assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).x, firstView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
+        assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).y, firstView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
+        assertFalse(mapView.hasChildView(secondView))
+      }
+    )
   }
 
   @Test
   fun addTwoViewAnnotationsTwoSelectedAllowOverlapFalse() {
-    val latch = CountDownLatch(1)
-    mainHandler.post {
-      val firstView = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(SHIFTED_CENTER)
-          anchor(ViewAnnotationAnchor.TOP_LEFT)
-          allowOverlap(false)
-          selected(true)
-        }
-      )
-      val secondView = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(CAMERA_CENTER)
-          anchor(ViewAnnotationAnchor.TOP_LEFT)
-          allowOverlap(false)
-          selected(true)
-        }
-      )
-      mainHandler.postDelayed(
-        {
-          assertFalse(mapView.hasChildView(firstView))
-          assertTrue(mapView.hasChildView(secondView))
-          assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, secondView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
-          assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
-          latch.countDown()
-        },
-        VIEW_PLACEMENT_DELAY_MS
-      )
-    }
-    latch.throwExceptionOnTimeoutMs()
+    viewAnnotationTestHelper(
+      performAction = {
+        firstView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(SHIFTED_CENTER)
+            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            allowOverlap(false)
+            selected(true)
+          }
+        )
+        secondView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(CAMERA_CENTER)
+            anchor(ViewAnnotationAnchor.TOP_LEFT)
+            allowOverlap(false)
+            selected(true)
+          }
+        )
+      },
+      makeChecks = {
+        assertFalse(mapView.hasChildView(firstView))
+        assertTrue(mapView.hasChildView(secondView))
+        assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, secondView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
+        assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
+      }
+    )
   }
 
   // checking some use-cases when updating view annotations
 
   @Test
   fun updateViewAnnotation() {
-    val latch = CountDownLatch(1)
     val offsetY = 30
-    mainHandler.post {
-      val view = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(CAMERA_CENTER)
-        }
-      )
-      viewAnnotationManager.updateViewAnnotation(
-        view = view,
-        options = viewAnnotationOptions {
-          geometry(SHIFTED_CENTER)
-          offsetY(offsetY)
-        }
-      )
-      mainHandler.postDelayed(
-        {
-          assertTrue(mapView.hasChildView(view))
-          assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).x - view.width / 2.0, view.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
-          assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).y - view.height / 2.0 - offsetY, view.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
-          latch.countDown()
-        },
-        VIEW_PLACEMENT_DELAY_MS
-      )
-    }
-    latch.throwExceptionOnTimeoutMs()
+    viewAnnotationTestHelper(
+      performAction = {
+        firstView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(CAMERA_CENTER)
+          }
+        )
+        viewAnnotationManager.updateViewAnnotation(
+          view = firstView,
+          options = viewAnnotationOptions {
+            geometry(SHIFTED_CENTER)
+            offsetY(offsetY)
+          }
+        )
+      },
+      makeChecks = {
+        assertTrue(mapView.hasChildView(firstView))
+        assertEquals(
+          mapboxMap.pixelForCoordinate(SHIFTED_CENTER).x - firstView.width / 2.0,
+          firstView.translationX.toDouble(),
+          ADMISSIBLE_ERROR_PX
+        )
+        assertEquals(
+          mapboxMap.pixelForCoordinate(SHIFTED_CENTER).y - firstView.height / 2.0 - offsetY,
+          firstView.translationY.toDouble(),
+          ADMISSIBLE_ERROR_PX
+        )
+      }
+    )
   }
 
   @Test
   fun updateViewAnnotationDimensions() {
-    val latch = CountDownLatch(1)
     val updatedWidthPx = 120
     val updatedHeightPx = 150
-    mainHandler.post {
-      val view = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(CAMERA_CENTER)
-        }
-      )
-      viewAnnotationManager.updateViewAnnotation(
-        view = view,
-        options = viewAnnotationOptions {
-          width(updatedWidthPx)
-          height(updatedHeightPx)
-        }
-      )
-      mainHandler.postDelayed(
-        {
-          assertTrue(mapView.hasChildView(view))
-          assertEquals(updatedWidthPx, view.width)
-          assertEquals(updatedHeightPx, view.height)
-          assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x - view.width / 2.0, view.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
-          assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y - view.height / 2.0, view.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
-          latch.countDown()
-        },
-        VIEW_PLACEMENT_DELAY_MS
-      )
-    }
-    latch.throwExceptionOnTimeoutMs()
+    viewAnnotationTestHelper(
+      performAction = {
+        firstView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(CAMERA_CENTER)
+          }
+        )
+        viewAnnotationManager.updateViewAnnotation(
+          view = firstView,
+          options = viewAnnotationOptions {
+            width(updatedWidthPx)
+            height(updatedHeightPx)
+          }
+        )
+      },
+      makeChecks = {
+        assertTrue(mapView.hasChildView(firstView))
+        assertEquals(updatedWidthPx, firstView.width)
+        assertEquals(updatedHeightPx, firstView.height)
+        assertEquals(
+          mapboxMap.pixelForCoordinate(CAMERA_CENTER).x - firstView.width / 2.0,
+          firstView.translationX.toDouble(),
+          ADMISSIBLE_ERROR_PX
+        )
+        assertEquals(
+          mapboxMap.pixelForCoordinate(CAMERA_CENTER).y - firstView.height / 2.0,
+          firstView.translationY.toDouble(),
+          ADMISSIBLE_ERROR_PX
+        )
+      }
+    )
   }
 
   @Test
   fun updateViewAnnotationAllowOverlap() {
-    val latch = CountDownLatch(2)
-    mainHandler.post {
-      val firstView = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(CAMERA_CENTER)
-          allowOverlap(false)
-        }
-      )
-      val secondView = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(SHIFTED_CENTER)
-          allowOverlap(false)
-        }
-      )
-      mainHandler.postDelayed(
-        {
-          assertFalse(mapView.hasChildView(firstView))
-          assertTrue(mapView.hasChildView(secondView))
-          latch.countDown()
-          // update allowOverlap only for underlying view annotation
-          viewAnnotationManager.updateViewAnnotation(
-            firstView,
-            viewAnnotationOptions {
-              allowOverlap(true)
-            }
-          )
-          mainHandler.postDelayed(
-            {
-              assertTrue(mapView.hasChildView(firstView))
-              assertTrue(mapView.hasChildView(secondView))
-              latch.countDown()
-            },
-            VIEW_PLACEMENT_DELAY_MS
-          )
-        },
-        VIEW_PLACEMENT_DELAY_MS
-      )
-    }
-    latch.throwExceptionOnTimeoutMs()
+    viewAnnotationTestHelper(
+      additionalLatchCount = 1,
+      performAction = {
+        firstView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(CAMERA_CENTER)
+            allowOverlap(false)
+          }
+        )
+        secondView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(SHIFTED_CENTER)
+            allowOverlap(false)
+          }
+        )
+      },
+      makeChecks = {
+        assertFalse(mapView.hasChildView(firstView))
+        assertTrue(mapView.hasChildView(secondView))
+        // update allowOverlap only for underlying view annotation
+        viewAnnotationManager.updateViewAnnotation(
+          firstView,
+          viewAnnotationOptions {
+            allowOverlap(true)
+          }
+        )
+        mainHandler.postDelayed(
+          {
+            assertTrue(mapView.hasChildView(firstView))
+            assertTrue(mapView.hasChildView(secondView))
+            it.countDown()
+          },
+          VIEW_PLACEMENT_DELAY_MS
+        )
+      }
+    )
   }
 
   // checking some use-cases when deleting view annotations
 
   @Test
   fun removeViewAnnotation() {
-    val latch = CountDownLatch(1)
-    mainHandler.post {
-      val view = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(CAMERA_CENTER)
-        }
-      )
-      viewAnnotationManager.removeViewAnnotation(view)
-      mainHandler.postDelayed(
-        {
-          assertFalse(mapView.hasChildView(view))
-          latch.countDown()
-        },
-        VIEW_PLACEMENT_DELAY_MS
-      )
-    }
-    latch.throwExceptionOnTimeoutMs()
+    viewAnnotationTestHelper(
+      performAction = {
+        firstView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(CAMERA_CENTER)
+          }
+        )
+        viewAnnotationManager.removeViewAnnotation(firstView)
+      },
+      makeChecks = {
+        assertFalse(mapView.hasChildView(firstView))
+      }
+    )
   }
 
   @Test
   fun removeViewAnnotationWhenTwoOverlap() {
-    val latch = CountDownLatch(2)
-    mainHandler.post {
-      val firstView = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(CAMERA_CENTER)
-          allowOverlap(false)
-        }
-      )
-      val secondView = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(SHIFTED_CENTER)
-          allowOverlap(false)
-        }
-      )
-      mainHandler.postDelayed(
-        {
-          assertFalse(mapView.hasChildView(firstView))
-          assertTrue(mapView.hasChildView(secondView))
-          latch.countDown()
-          viewAnnotationManager.removeViewAnnotation(secondView)
-          mainHandler.postDelayed(
-            {
-              assertTrue(mapView.hasChildView(firstView))
-              assertFalse(mapView.hasChildView(secondView))
-              latch.countDown()
-            },
-            VIEW_PLACEMENT_DELAY_MS
-          )
-        },
-        VIEW_PLACEMENT_DELAY_MS
-      )
-    }
-    latch.throwExceptionOnTimeoutMs()
+    viewAnnotationTestHelper(
+      additionalLatchCount = 1,
+      performAction = {
+        firstView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(CAMERA_CENTER)
+            allowOverlap(false)
+          }
+        )
+        secondView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(SHIFTED_CENTER)
+            allowOverlap(false)
+          }
+        )
+      },
+      makeChecks = {
+        assertFalse(mapView.hasChildView(firstView))
+        assertTrue(mapView.hasChildView(secondView))
+        viewAnnotationManager.removeViewAnnotation(secondView)
+        mainHandler.postDelayed(
+          {
+            assertTrue(mapView.hasChildView(firstView))
+            assertFalse(mapView.hasChildView(secondView))
+            it.countDown()
+          },
+          VIEW_PLACEMENT_DELAY_MS
+        )
+      }
+    )
   }
 
   // checking some use-cases when using associatedFeatureId
 
   @Test
   fun associatedFeatureIdWhenFeatureVisible() {
-    val latch = CountDownLatch(1)
-    mainHandler.post {
-      mapboxMap.getStyle {
-        prepareStyle(it, Visibility.VISIBLE)
-        val view = viewAnnotationManager.addViewAnnotation(
+    viewAnnotationTestHelper(
+      performAction = {
+        prepareStyle(mapboxMap.getStyle()!!, Visibility.VISIBLE)
+        firstView = viewAnnotationManager.addViewAnnotation(
           resId = R.layout.view_annotation,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
@@ -635,25 +630,19 @@ class ViewAnnotationTest {
             associatedFeatureId(ASSOCIATED_FEATURE_ID)
           }
         )
-        mainHandler.postDelayed(
-          {
-            assertTrue(mapView.hasChildView(view))
-            latch.countDown()
-          },
-          VIEW_PLACEMENT_DELAY_MS
-        )
+      },
+      makeChecks = {
+        assertTrue(mapView.hasChildView(firstView))
       }
-    }
-    latch.throwExceptionOnTimeoutMs()
+    )
   }
 
   @Test
   fun associatedFeatureIdWhenFeatureGone() {
-    val latch = CountDownLatch(1)
-    mainHandler.post {
-      mapboxMap.getStyle {
-        prepareStyle(it, Visibility.NONE)
-        val view = viewAnnotationManager.addViewAnnotation(
+    viewAnnotationTestHelper(
+      performAction = {
+        prepareStyle(mapboxMap.getStyle()!!, Visibility.NONE)
+        firstView = viewAnnotationManager.addViewAnnotation(
           resId = R.layout.view_annotation,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
@@ -663,58 +652,50 @@ class ViewAnnotationTest {
             associatedFeatureId(ASSOCIATED_FEATURE_ID)
           }
         )
-        mainHandler.postDelayed(
-          {
-            assertFalse(mapView.hasChildView(view))
-            latch.countDown()
-          },
-          VIEW_PLACEMENT_DELAY_MS
-        )
+      },
+      makeChecks = {
+        assertFalse(mapView.hasChildView(firstView))
       }
-    }
-    latch.throwExceptionOnTimeoutMs()
+    )
   }
 
   // checking automatic view visibility handling
 
   @Test
   fun automaticViewVisibilityHandling() {
-    val latch = CountDownLatch(2)
-    mainHandler.post {
-      val firstView = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(CAMERA_CENTER)
-          allowOverlap(false)
-        }
-      )
-      val secondView = viewAnnotationManager.addViewAnnotation(
-        resId = R.layout.view_annotation,
-        options = viewAnnotationOptions {
-          geometry(SHIFTED_CENTER)
-          allowOverlap(false)
-        }
-      )
-      mainHandler.postDelayed(
-        {
-          assertFalse(mapView.hasChildView(firstView))
-          assertTrue(mapView.hasChildView(secondView))
-          latch.countDown()
-          secondView.visibility = View.GONE
-          mainHandler.postDelayed(
-            {
-              // second view is not removed from parent MapView but as it's gone first view should appear now
-              assertTrue(mapView.hasChildView(secondView))
-              assertTrue(mapView.hasChildView(firstView))
-              latch.countDown()
-            },
-            VIEW_PLACEMENT_DELAY_MS
-          )
-        },
-        VIEW_PLACEMENT_DELAY_MS
-      )
-    }
-    latch.throwExceptionOnTimeoutMs()
+    viewAnnotationTestHelper(
+      additionalLatchCount = 1,
+      performAction = {
+        firstView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(CAMERA_CENTER)
+            allowOverlap(false)
+          }
+        )
+        secondView = viewAnnotationManager.addViewAnnotation(
+          resId = R.layout.view_annotation,
+          options = viewAnnotationOptions {
+            geometry(SHIFTED_CENTER)
+            allowOverlap(false)
+          }
+        )
+      },
+      makeChecks = {
+        assertFalse(mapView.hasChildView(firstView))
+        assertTrue(mapView.hasChildView(secondView))
+        secondView.visibility = View.GONE
+        mainHandler.postDelayed(
+          {
+            // second view is not removed from parent MapView but as it's gone first view should appear now
+            assertTrue(mapView.hasChildView(secondView))
+            assertTrue(mapView.hasChildView(firstView))
+            it.countDown()
+          },
+          VIEW_PLACEMENT_DELAY_MS
+        )
+      }
+    )
   }
 
   private fun prepareStyle(style: Style, visibility: Visibility) {
