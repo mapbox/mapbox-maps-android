@@ -59,6 +59,7 @@ android {
   if (buildFromSource.toBoolean()) {
     packagingOptions {
       pickFirst("**/libc++_shared.so")
+      pickFirst("**/libmapbox-common.so")
     }
   }
 }
