@@ -487,7 +487,7 @@ class GesturesPluginTest {
 
   @Test
   fun verifyScaleWithHighLevelAnimation() {
-    presenter.updateSettings { enablePinchToZoomWhenRotating = false }
+    presenter.updateSettings { pinchRotateEnabled = false }
     every { mapCameraManagerDelegate.cameraState } returns CameraState(
       Point.fromLngLat(0.0, 0.0),
       EdgeInsets(0.0, 0.0, 0.0, 0.0),
@@ -648,7 +648,7 @@ class GesturesPluginTest {
 
   @Test
   fun verifyRotateWithHighLevelAnimation() {
-    presenter.updateSettings { enablePinchToZoomWhenRotating = false }
+    presenter.updateSettings { pinchRotateEnabled = false }
     val rotateGestureDetector = mockk<RotateGestureDetector>()
     val listener: OnRotateListener = mockk(relaxed = true)
     presenter.addOnRotateListener(listener)
