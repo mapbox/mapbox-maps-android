@@ -5,6 +5,7 @@ import android.widget.FrameLayout
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
+import com.mapbox.maps.ViewAnnotationManagerImpl.Companion.EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import io.mockk.every
 import io.mockk.mockk
@@ -63,6 +64,68 @@ class ViewAnnotationManagerTest {
     assertEquals(
       "Trying to add view annotation that was already added before! " +
         "Please consider deleting annotation view ($view) beforehand.",
+      exception.message
+    )
+  }
+
+  @Test
+  fun addViewAnnotationWithDuplicateAssociatedFeatureId() {
+    val associatedFeatureId = "associatedFeatureId"
+    val viewAnnotationOptions = viewAnnotationOptions {
+      geometry(DEFAULT_GEOMETRY)
+      associatedFeatureId(associatedFeatureId)
+    }
+    viewAnnotationManager.addViewAnnotation(
+      view,
+      viewAnnotationOptions
+    )
+    val id = viewAnnotationManager.idLookupMap[view]!!
+    val anotherView = mockk<View>()
+    every { anotherView.layoutParams } returns frameLayoutParams
+    every { anotherView.visibility } returns View.VISIBLE
+    every { anotherView.viewTreeObserver } returns mockk(relaxed = true)
+    every { mapboxMap.getViewAnnotationOptions(id) } returns ExpectedFactory.createValue(viewAnnotationOptions)
+    val exception = assertThrows(RuntimeException::class.java) {
+      viewAnnotationManager.addViewAnnotation(
+        anotherView,
+        viewAnnotationOptions
+      )
+    }
+    assertEquals(
+      String.format(
+        EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS,
+        associatedFeatureId
+      ),
+      exception.message
+    )
+  }
+
+  @Test
+  fun updateViewAnnotationWithDuplicateAssociatedFeatureId() {
+    val associatedFeatureId = "associatedFeatureId"
+    val viewAnnotationOptions = viewAnnotationOptions {
+      geometry(DEFAULT_GEOMETRY)
+      associatedFeatureId(associatedFeatureId)
+    }
+    viewAnnotationManager.addViewAnnotation(
+      view,
+      viewAnnotationOptions
+    )
+    val id = viewAnnotationManager.idLookupMap[view]!!
+    every { mapboxMap.getViewAnnotationOptions(id) } returns ExpectedFactory.createValue(viewAnnotationOptions)
+    val exception = assertThrows(RuntimeException::class.java) {
+      viewAnnotationManager.updateViewAnnotation(
+        view,
+        viewAnnotationOptions {
+          associatedFeatureId(associatedFeatureId)
+        }
+      )
+    }
+    assertEquals(
+      String.format(
+        EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS,
+        associatedFeatureId
+      ),
       exception.message
     )
   }
