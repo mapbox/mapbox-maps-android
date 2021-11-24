@@ -79,6 +79,7 @@ internal class ViewAnnotationManagerImpl(
     options: ViewAnnotationOptions,
   ): Boolean {
     val id = idLookupMap[view] ?: return false
+    checkAssociatedFeatureIdUniqueness(options)
     annotationMap[id]?.let {
       it.handleVisibilityAutomatically = (options.visible == null)
       getValue(mapboxMap.updateViewAnnotation(id, options))
@@ -121,7 +122,22 @@ internal class ViewAnnotationManagerImpl(
     checkNotNull(options.geometry) { EXCEPTION_TEXT_GEOMETRY_IS_NULL }
   }
 
+  private fun checkAssociatedFeatureIdUniqueness(options: ViewAnnotationOptions) {
+    options.associatedFeatureId?.let { associatedFeatureId ->
+      val (view, _) = findByFeatureId(associatedFeatureId)
+      if (view != null) {
+        throw RuntimeException(
+          String.format(
+            EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS,
+            associatedFeatureId
+          )
+        )
+      }
+    }
+  }
+
   private fun prepareViewAnnotation(inflatedView: View, options: ViewAnnotationOptions): View {
+    checkAssociatedFeatureIdUniqueness(options)
     val inflatedViewLayout = inflatedView.layoutParams as FrameLayout.LayoutParams
     val updatedOptions = options.toBuilder()
       .width(options.width ?: inflatedViewLayout.width)
@@ -231,6 +247,8 @@ internal class ViewAnnotationManagerImpl(
   }
 
   companion object {
-    internal val EXCEPTION_TEXT_GEOMETRY_IS_NULL = "Geometry can not be null!"
+    internal const val EXCEPTION_TEXT_GEOMETRY_IS_NULL = "Geometry can not be null!"
+    internal const val EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS =
+      "View annotation with associatedFeatureId=%s already exists!"
   }
 }
