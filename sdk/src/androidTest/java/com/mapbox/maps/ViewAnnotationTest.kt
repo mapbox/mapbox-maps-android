@@ -3,7 +3,6 @@ package com.mapbox.maps
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import androidx.core.view.children
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
@@ -24,8 +23,6 @@ import org.junit.*
 import org.junit.Assert.*
 import org.junit.runner.RunWith
 import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
-import java.util.concurrent.TimeoutException
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
@@ -55,9 +52,6 @@ class ViewAnnotationTest {
             Style.MAPBOX_STREETS
           ) {
             latch.countDown()
-            addOnMapIdleListener {
-              latch.countDown()
-            }
           }
           setCamera(
             CameraOptions.Builder()
@@ -65,13 +59,14 @@ class ViewAnnotationTest {
               .zoom(CAMERA_ZOOM)
               .build()
           )
+          addOnMapIdleListener {
+            latch.countDown()
+          }
         }
         mapView.onStart()
       }
     }
-    if (!latch.await(CONFIGURE_TIMEOUT_MS, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
-    }
+    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
   }
 
   @After
@@ -85,9 +80,7 @@ class ViewAnnotationTest {
         latch.countDown()
       }
     }
-    if (!latch.await(CONFIGURE_TIMEOUT_MS, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
-    }
+    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
   }
 
   // checking some use-cases when adding view annotation
@@ -112,9 +105,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    if (!latch.await(CONFIGURE_TIMEOUT_MS, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
-    }
+    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
   }
 
   @Test
@@ -138,9 +129,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    if (!latch.await(CONFIGURE_TIMEOUT_MS, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
-    }
+    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
   }
 
   @Test
@@ -168,9 +157,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    if (!latch.await(CONFIGURE_TIMEOUT_MS, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
-    }
+    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
   }
 
   @Test
@@ -192,9 +179,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    if (!latch.await(CONFIGURE_TIMEOUT_MS, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
-    }
+    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
   }
 
   @Test
@@ -234,9 +219,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    if (!latch.await(CONFIGURE_TIMEOUT_MS, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
-    }
+    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
   }
 
   @Test
@@ -270,9 +253,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    if (!latch.await(CONFIGURE_TIMEOUT_MS, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
-    }
+    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
   }
 
   @Test
@@ -313,9 +294,81 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    if (!latch.await(CONFIGURE_TIMEOUT_MS, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
+    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
+  }
+
+  @Test
+  fun addTwoViewAnnotationsOneAllowOverlapTrueAnotherFalse() {
+    val latch = CountDownLatch(1)
+    mainHandler.post {
+      val firstView = viewAnnotationManager.addViewAnnotation(
+        resId = R.layout.view_annotation,
+        options = viewAnnotationOptions {
+          geometry(SHIFTED_CENTER)
+          anchor(ViewAnnotationAnchor.TOP_LEFT)
+          allowOverlap(true)
+        }
+      )
+      val secondView = viewAnnotationManager.addViewAnnotation(
+        resId = R.layout.view_annotation,
+        options = viewAnnotationOptions {
+          geometry(CAMERA_CENTER)
+          anchor(ViewAnnotationAnchor.TOP_LEFT)
+          allowOverlap(false)
+        }
+      )
+      mainHandler.postDelayed(
+        {
+          assertTrue(mapView.hasChildView(firstView))
+          assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).x, firstView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
+          assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).y, firstView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
+          assertTrue(mapView.hasChildView(secondView))
+          assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, secondView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
+          assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
+          MatcherAssert.assertThat(
+            mapView.getChildViewIndex(secondView),
+            Matchers.greaterThan(mapView.getChildViewIndex(firstView))
+          )
+          latch.countDown()
+        },
+        VIEW_PLACEMENT_DELAY_MS
+      )
     }
+    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
+  }
+
+  @Test
+  fun addTwoViewAnnotationsOneAllowOverlapFalseAnotherTrue() {
+    val latch = CountDownLatch(1)
+    mainHandler.post {
+      val firstView = viewAnnotationManager.addViewAnnotation(
+        resId = R.layout.view_annotation,
+        options = viewAnnotationOptions {
+          geometry(SHIFTED_CENTER)
+          anchor(ViewAnnotationAnchor.TOP_LEFT)
+          allowOverlap(false)
+        }
+      )
+      val secondView = viewAnnotationManager.addViewAnnotation(
+        resId = R.layout.view_annotation,
+        options = viewAnnotationOptions {
+          geometry(CAMERA_CENTER)
+          anchor(ViewAnnotationAnchor.TOP_LEFT)
+          allowOverlap(true)
+        }
+      )
+      mainHandler.postDelayed(
+        {
+          assertFalse(mapView.hasChildView(firstView))
+          assertTrue(mapView.hasChildView(secondView))
+          assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, secondView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
+          assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
+          latch.countDown()
+        },
+        VIEW_PLACEMENT_DELAY_MS
+      )
+    }
+    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
   }
 
   @Test
@@ -350,9 +403,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    if (!latch.await(CONFIGURE_TIMEOUT_MS, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
-    }
+    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
   }
 
   @Test
@@ -388,9 +439,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    if (!latch.await(CONFIGURE_TIMEOUT_MS, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
-    }
+    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
   }
 
   // checking some use-cases when updating view annotations
@@ -423,9 +472,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    if (!latch.await(CONFIGURE_TIMEOUT_MS, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
-    }
+    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
   }
 
   @Test
@@ -459,9 +506,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    if (!latch.await(CONFIGURE_TIMEOUT_MS, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
-    }
+    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
   }
 
   @Test
@@ -506,9 +551,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    if (!latch.await(CONFIGURE_TIMEOUT_MS, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
-    }
+    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
   }
 
   // checking some use-cases when deleting view annotations
@@ -532,9 +575,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    if (!latch.await(CONFIGURE_TIMEOUT_MS, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
-    }
+    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
   }
 
   @Test
@@ -573,9 +614,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    if (!latch.await(CONFIGURE_TIMEOUT_MS, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
-    }
+    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
   }
 
   // checking some use-cases when using associatedFeatureId
@@ -605,9 +644,7 @@ class ViewAnnotationTest {
         )
       }
     }
-    if (!latch.await(CONFIGURE_TIMEOUT_MS, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
-    }
+    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
   }
 
   @Test
@@ -635,9 +672,7 @@ class ViewAnnotationTest {
         )
       }
     }
-    if (!latch.await(CONFIGURE_TIMEOUT_MS, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
-    }
+    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
   }
 
   // checking automatic view visibility handling
@@ -679,27 +714,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    if (!latch.await(CONFIGURE_TIMEOUT_MS, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
-    }
-  }
-
-  private fun MapView.hasChildView(view: View): Boolean {
-    children.forEach { v ->
-      if (v == view) {
-        return true
-      }
-    }
-    return false
-  }
-
-  private fun MapView.getChildViewIndex(view: View): Int {
-    children.forEachIndexed { i, v ->
-      if (v == view) {
-        return i
-      }
-    }
-    return -1
+    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
   }
 
   private fun prepareStyle(style: Style, visibility: Visibility) {
