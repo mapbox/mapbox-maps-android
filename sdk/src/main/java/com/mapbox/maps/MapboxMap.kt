@@ -21,6 +21,7 @@ import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.GesturesPluginImpl
+import com.mapbox.maps.viewannotation.ViewAnnotationPositionsUpdateListener
 import java.lang.ref.WeakReference
 import java.util.*
 

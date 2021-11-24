@@ -1,12 +1,13 @@
-package com.mapbox.maps
+package com.mapbox.maps.viewannotation
 
 import android.view.View
 import android.widget.FrameLayout
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
-import com.mapbox.maps.ViewAnnotationManagerImpl.Companion.EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS
-import com.mapbox.maps.viewannotation.viewAnnotationOptions
+import com.mapbox.maps.MapView
+import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.viewannotation.ViewAnnotationManagerImpl.Companion.EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

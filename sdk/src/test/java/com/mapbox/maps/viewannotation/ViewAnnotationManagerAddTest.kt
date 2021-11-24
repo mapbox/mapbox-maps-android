@@ -1,4 +1,4 @@
-package com.mapbox.maps
+package com.mapbox.maps.viewannotation
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,8 +6,10 @@ import android.widget.FrameLayout
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.geojson.Point
-import com.mapbox.maps.ViewAnnotationManagerImpl.Companion.EXCEPTION_TEXT_GEOMETRY_IS_NULL
-import com.mapbox.maps.viewannotation.viewAnnotationOptions
+import com.mapbox.maps.MapView
+import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.ViewAnnotationOptions
+import com.mapbox.maps.viewannotation.ViewAnnotationManagerImpl.Companion.EXCEPTION_TEXT_GEOMETRY_IS_NULL
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.assertEquals
