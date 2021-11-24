@@ -34,7 +34,7 @@ for i in $MODULES; do
     elif [[ $i == *telemetry* ]]; then
       continue
     fi
-    echo "Checking module: $i, module aar name: $MODULE_NAME"
+    echo "========================  Checking module: $i, module aar name: $MODULE_NAME  ===================================="
     "${CURRENT_DIR}"/java-api-check.sh "$RELEATE_TAG" "./$i/build/outputs/aar/$i-release.aar" "$MODULE_NAME"
   fi
 done

@@ -380,6 +380,8 @@ jobs:
             else
               ./scripts/java-api-check-all.sh ""
             fi
+      - store_artifacts:
+          path: api_compat_report
 
   verify-internal:
     executor: ubuntu
