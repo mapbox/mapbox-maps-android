@@ -1286,38 +1286,14 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       val toX = fromX - resolvedDistanceX
       val toY = fromY - resolvedDistanceY
 
-      val cameraOptions = getAdjustedCameraCenter(
-        mapCameraManagerDelegate.cameraState,
+      easeToImmediately(
         mapCameraManagerDelegate.getDragCameraOptions(
           ScreenCoordinate(fromX, fromY),
           ScreenCoordinate(toX, toY)
         )
       )
-
-      easeToImmediately(cameraOptions)
     }
     return true
-  }
-
-  private fun getAdjustedCameraCenter(
-    currentCamera: CameraState,
-    targetCamera: CameraOptions
-  ): CameraOptions {
-    val translationLng = targetCamera.center!!.longitude() - currentCamera.center.longitude()
-    val translationLat = targetCamera.center!!.latitude() - currentCamera.center.latitude()
-    val maximumDistance =
-      SCROLL_LIMITING_FACTOR / 2.0.pow(currentCamera.zoom)
-    val currentDistance = hypot(translationLng, translationLat)
-    return if (currentDistance > maximumDistance) {
-      targetCamera.toBuilder().center(
-        Point.fromLngLat(
-          currentCamera.center.longitude() + translationLng * (maximumDistance / currentDistance),
-          currentCamera.center.latitude() + translationLat * (maximumDistance / currentDistance)
-        )
-      ).build()
-    } else {
-      targetCamera
-    }
   }
 
   internal fun handleMoveEnd(detector: MoveGestureDetector) {
