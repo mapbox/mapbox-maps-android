@@ -782,6 +782,25 @@ class GesturesPluginTest {
   fun obtainMotionEventActionLater(action: Int): MotionEvent {
     return MotionEvent.obtain(200, 500, action, 15.0f, 10.0f, 0)
   }
+
+  @Test
+  fun verifyDefaultShoveGestureAngle() {
+    verify {
+      gesturesManager.shoveGestureDetector.maxShoveAngle = MAX_SHOVE_ANGLE
+    }
+  }
+
+  @Test
+  fun verifyDefaultRotationAngleThreshold() {
+    verify {
+      gesturesManager.rotateGestureDetector.angleThreshold = ROTATION_ANGLE_THRESHOLD
+    }
+  }
+
+  private companion object {
+    const val ROTATION_ANGLE_THRESHOLD = 3.0f
+    const val MAX_SHOVE_ANGLE = 45.0f
+  }
 }
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
