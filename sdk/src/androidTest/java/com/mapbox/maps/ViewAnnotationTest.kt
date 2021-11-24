@@ -66,7 +66,7 @@ class ViewAnnotationTest {
         mapView.onStart()
       }
     }
-    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
+    latch.throwExceptionOnTimeoutMs()
   }
 
   @After
@@ -80,7 +80,7 @@ class ViewAnnotationTest {
         latch.countDown()
       }
     }
-    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
+    latch.throwExceptionOnTimeoutMs()
   }
 
   // checking some use-cases when adding view annotation
@@ -105,7 +105,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
+    latch.throwExceptionOnTimeoutMs()
   }
 
   @Test
@@ -129,7 +129,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
+    latch.throwExceptionOnTimeoutMs()
   }
 
   @Test
@@ -157,7 +157,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
+    latch.throwExceptionOnTimeoutMs()
   }
 
   @Test
@@ -179,7 +179,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
+    latch.throwExceptionOnTimeoutMs()
   }
 
   @Test
@@ -219,7 +219,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
+    latch.throwExceptionOnTimeoutMs()
   }
 
   @Test
@@ -253,7 +253,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
+    latch.throwExceptionOnTimeoutMs()
   }
 
   @Test
@@ -294,7 +294,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
+    latch.throwExceptionOnTimeoutMs()
   }
 
   @Test
@@ -334,7 +334,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
+    latch.throwExceptionOnTimeoutMs()
   }
 
   @Test
@@ -368,7 +368,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
+    latch.throwExceptionOnTimeoutMs()
   }
 
   @Test
@@ -403,7 +403,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
+    latch.throwExceptionOnTimeoutMs()
   }
 
   @Test
@@ -439,7 +439,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
+    latch.throwExceptionOnTimeoutMs()
   }
 
   // checking some use-cases when updating view annotations
@@ -472,7 +472,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
+    latch.throwExceptionOnTimeoutMs()
   }
 
   @Test
@@ -506,7 +506,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
+    latch.throwExceptionOnTimeoutMs()
   }
 
   @Test
@@ -551,7 +551,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
+    latch.throwExceptionOnTimeoutMs()
   }
 
   // checking some use-cases when deleting view annotations
@@ -575,7 +575,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
+    latch.throwExceptionOnTimeoutMs()
   }
 
   @Test
@@ -614,7 +614,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
+    latch.throwExceptionOnTimeoutMs()
   }
 
   // checking some use-cases when using associatedFeatureId
@@ -644,7 +644,7 @@ class ViewAnnotationTest {
         )
       }
     }
-    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
+    latch.throwExceptionOnTimeoutMs()
   }
 
   @Test
@@ -672,7 +672,7 @@ class ViewAnnotationTest {
         )
       }
     }
-    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
+    latch.throwExceptionOnTimeoutMs()
   }
 
   // checking automatic view visibility handling
@@ -714,7 +714,7 @@ class ViewAnnotationTest {
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    latch.throwExceptionOnTimeoutMs(CONFIGURE_TIMEOUT_MS)
+    latch.throwExceptionOnTimeoutMs()
   }
 
   private fun prepareStyle(style: Style, visibility: Visibility) {
@@ -732,7 +732,6 @@ class ViewAnnotationTest {
   }
 
   private companion object {
-    const val CONFIGURE_TIMEOUT_MS = 5000L
     const val VIEW_PLACEMENT_DELAY_MS = 1000L
     const val ADMISSIBLE_ERROR_PX = 3.0
 
