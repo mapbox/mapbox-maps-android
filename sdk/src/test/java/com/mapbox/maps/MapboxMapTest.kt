@@ -6,6 +6,7 @@ import com.mapbox.common.ShadowLogger
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
+import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.MapProjection
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.listeners.*
@@ -79,6 +80,16 @@ class MapboxMapTest {
     mapboxMap.loadStyleJson("foo") {}
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     verify { nativeMap.styleJSON = "foo" }
+    assertTrue(mapboxMap.isStyleLoadInitiated)
+  }
+
+  @Test
+  fun loadEmptyStyle() {
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    assertFalse(mapboxMap.isStyleLoadInitiated)
+    mapboxMap.loadStyle(style("") {})
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    verify { nativeMap.styleJSON = "{}" }
     assertTrue(mapboxMap.isStyleLoadInitiated)
   }
 
