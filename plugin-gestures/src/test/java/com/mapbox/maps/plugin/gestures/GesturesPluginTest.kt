@@ -488,7 +488,7 @@ class GesturesPluginTest {
   }
 
   @Test
-  fun verifyScaleWithHighLevelAnimation() {
+  fun verifyScaleWithSimultaneousRotateAndPinchToZoomDisabled() {
     presenter.updateSettings { simultaneousRotateAndPinchToZoomEnabled = false }
     every { mapCameraManagerDelegate.cameraState } returns CameraState(
       Point.fromLngLat(0.0, 0.0),
@@ -513,7 +513,7 @@ class GesturesPluginTest {
   }
 
   @Test
-  fun verifyScaleWithLowLevelAnimation() {
+  fun verifyScaleWithSimultaneousRotateAndPinchToZoomEnabled() {
     val zoomAnimator = mockk<ValueAnimator>(relaxUnitFun = true)
     every { cameraAnimationsPlugin.createZoomAnimator(any(), any()) } returns zoomAnimator
     val endListenerSlot = slot<Animator.AnimatorListener>()
@@ -657,7 +657,7 @@ class GesturesPluginTest {
   }
 
   @Test
-  fun verifyRotateWithHighLevelAnimation() {
+  fun verifyRotateWithSimultaneousRotateAndPinchToZoomDisabled() {
     presenter.updateSettings { simultaneousRotateAndPinchToZoomEnabled = false }
     val rotateGestureDetector = mockk<RotateGestureDetector>()
     val listener: OnRotateListener = mockk(relaxed = true)
@@ -676,7 +676,7 @@ class GesturesPluginTest {
   }
 
   @Test
-  fun verifyRotateWithLowLevelAnimation() {
+  fun verifyRotateWithSimultaneousRotateAndPinchToZoomEnabled() {
     val bearingAnimator = mockk<ValueAnimator>(relaxUnitFun = true)
     every {
       cameraAnimationsPlugin.createBearingAnimator(

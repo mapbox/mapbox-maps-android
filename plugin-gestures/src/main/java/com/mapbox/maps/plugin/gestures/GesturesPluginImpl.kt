@@ -602,9 +602,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
           .anchor(focalPoint)
           .build(),
         actionAfter = {
-          cameraAnimationsPlugin.anchor = scaleCachedAnchor
-          notifyOnScaleListeners(detector)
-          spanSinceLast = abs(detector.currentSpan - detector.previousSpan)
+          onScaleAnimationEnd(detector)
         }
       )
     } else {
@@ -621,9 +619,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         }
         zoom.addListener(
           onEnd = {
-            cameraAnimationsPlugin.anchor = scaleCachedAnchor
-            notifyOnScaleListeners(detector)
-            spanSinceLast = abs(detector.currentSpan - detector.previousSpan)
+            onScaleAnimationEnd(detector)
           }
         )
         cameraAnimationsPlugin.playAnimatorsSequentially(zoom)
@@ -634,14 +630,18 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
             .anchor(focalPoint)
             .build(),
           actionAfter = {
-            cameraAnimationsPlugin.anchor = scaleCachedAnchor
-            notifyOnScaleListeners(detector)
-            spanSinceLast = abs(detector.currentSpan - detector.previousSpan)
+            onScaleAnimationEnd(detector)
           }
         )
       }
     }
     return true
+  }
+
+  private fun onScaleAnimationEnd(detector: StandardScaleGestureDetector) {
+    cameraAnimationsPlugin.anchor = scaleCachedAnchor
+    notifyOnScaleListeners(detector)
+    spanSinceLast = abs(detector.currentSpan - detector.previousSpan)
   }
 
   internal fun handleScaleBegin(detector: StandardScaleGestureDetector): Boolean {
@@ -864,8 +864,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         }
       bearingAnimator.addListener(
         onEnd = {
-          cameraAnimationsPlugin.anchor = rotateCachedAnchor
-          notifyOnRotateListeners(detector)
+          onRotateAnimationEnd(detector)
         }
       )
       cameraAnimationsPlugin.playAnimatorsSequentially(bearingAnimator)
@@ -877,12 +876,16 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
           .bearing(bearing)
           .build(),
         actionAfter = {
-          cameraAnimationsPlugin.anchor = rotateCachedAnchor
-          notifyOnRotateListeners(detector)
+          onRotateAnimationEnd(detector)
         }
       )
     }
     return true
+  }
+
+  private fun onRotateAnimationEnd(detector: RotateGestureDetector) {
+    cameraAnimationsPlugin.anchor = rotateCachedAnchor
+    notifyOnRotateListeners(detector)
   }
 
   internal fun handleRotateBegin(detector: RotateGestureDetector): Boolean {
