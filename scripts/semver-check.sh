@@ -16,7 +16,7 @@ TAGGED_RELEASE_VERSION=$1
 LAST_VERSION=$2
 API_COMPAT_LEVEL=$3
 
-echo " Semver-check TAGGED_RELEASE_VERSION:$TAGGED_RELEASE_VERSION, LAST_VERSION: $LAST_VERSION, API_COMPAT_LEVEL: $API_COMPAT_LEVEL"
+echo "Semver-check TAGGED_RELEASE_VERSION:$TAGGED_RELEASE_VERSION, LAST_VERSION: $LAST_VERSION, API_COMPAT_LEVEL: $API_COMPAT_LEVEL"
 # Checking if tagged release has API breaks
 if [[ ! -z ${TAGGED_RELEASE_VERSION} ]]; then
     SEMVER_REGEX="(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(\\-[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?(\\+[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?"
@@ -48,7 +48,7 @@ if [[ ! -z ${TAGGED_RELEASE_VERSION} ]]; then
             echo "Minor version must not be smaller than the old minor version."
             exit 1
         elif [[ ${newMinor} == $((oldMinor)) && ${newPatch} < $((oldPatch)) ]]; then
-            echo "Patch version number must be not be smaller than old patch version."
+            echo "Patch version number must not be smaller than old patch version."
             exit 1
         fi
     fi
