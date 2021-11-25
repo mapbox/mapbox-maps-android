@@ -1230,6 +1230,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       return false
     }
 
+    if (isPointAboveHorizon(ScreenCoordinate(e2.x.toDouble(), e2.y.toDouble()))) {
+      return false
+    }
+
     notifyOnFlingListeners()
 
     if (!internalSettings.scrollDecelerationEnabled) {
@@ -1308,19 +1312,19 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     return true
   }
 
-  private fun isDragStartAllowed(
+  private fun isPointAboveHorizon(
     pixel: ScreenCoordinate
   ): Boolean {
     if (mapProjectionDelegate.getMapProjection() != MapProjection.Mercator) {
-      return true;
+      return true
     }
     // Prevent drag start in area around horizon to avoid sharp map movements
     val topMapMargin = 0.04 * mapTransformDelegate.getSize().height
     val reprojectErrorMargin = min(10.0, topMapMargin / 2)
-    var point = ScreenCoordinate(pixel.x, pixel.y - topMapMargin)
-    var coordinate = mapCameraManagerDelegate.coordinateForPixel(point)
-    var roundtripPoint = mapCameraManagerDelegate.pixelForCoordinate(coordinate)
-    return (roundtripPoint.y < point.y + reprojectErrorMargin)
+    val point = ScreenCoordinate(pixel.x, pixel.y - topMapMargin)
+    val coordinate = mapCameraManagerDelegate.coordinateForPixel(point)
+    val roundtripPoint = mapCameraManagerDelegate.pixelForCoordinate(coordinate)
+    return (roundtripPoint.y >= point.y + reprojectErrorMargin)
   }
 
   internal fun handleMove(
@@ -1343,7 +1347,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       val fromY = focalPoint.y.toDouble()
 
       if (!dragInProgress) {
-        if (!isDragStartAllowed(ScreenCoordinate(fromX, fromY))) {
+        if (isPointAboveHorizon(ScreenCoordinate(fromX, fromY))) {
           return false
         }
         dragInProgress = true
