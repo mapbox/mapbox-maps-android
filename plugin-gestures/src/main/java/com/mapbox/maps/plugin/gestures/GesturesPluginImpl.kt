@@ -575,7 +575,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
   internal fun handleScale(detector: StandardScaleGestureDetector): Boolean {
     // in order not to mess up initial anchor values
-    if (!internalSettings.pinchRotateEnabled && immediateEaseInProcess) {
+    if (!internalSettings.simultaneousRotateAndPinchToZoomEnabled && immediateEaseInProcess) {
       return true
     }
     val focalPoint = getScaleFocalPoint(detector)
@@ -610,7 +610,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     } else {
       val zoomBy =
         ln(detector.scaleFactor.toDouble()) / ln(PI / 2) * ZOOM_RATE.toDouble() * internalSettings.zoomAnimationAmount.toDouble()
-      if (internalSettings.pinchRotateEnabled) {
+      if (internalSettings.simultaneousRotateAndPinchToZoomEnabled) {
         val zoom = cameraAnimationsPlugin.createZoomAnimator(
           cameraAnimatorOptions(mapCameraManagerDelegate.cameraState.zoom + zoomBy) {
             startValue(mapCameraManagerDelegate.cameraState.zoom)
@@ -845,7 +845,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     rotationDegreesSinceLast: Float
   ): Boolean {
     // in order not to mess up initial anchor values
-    if (!internalSettings.pinchRotateEnabled && immediateEaseInProcess) {
+    if (!internalSettings.simultaneousRotateAndPinchToZoomEnabled && immediateEaseInProcess) {
       return true
     }
     // Calculate map bearing value
@@ -853,7 +853,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     rotateCachedAnchor = cameraAnimationsPlugin.anchor
     val bearing = currentBearing + rotationDegreesSinceLast
     // Rotate the map
-    if (internalSettings.pinchRotateEnabled) {
+    if (internalSettings.simultaneousRotateAndPinchToZoomEnabled) {
       val bearingAnimator =
         cameraAnimationsPlugin.createBearingAnimator(
           cameraAnimatorOptions(bearing) {

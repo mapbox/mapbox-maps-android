@@ -77,14 +77,14 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
     }
 
   /**
-   * Whether rotation is enabled for the pinch gesture.
+   * Whether rotation is enabled for the pinch to zoom gesture.
    */
-  override var pinchRotateEnabled: Boolean
+  override var simultaneousRotateAndPinchToZoomEnabled: Boolean
     get() {
-      return this.internalSettings.pinchRotateEnabled
+      return this.internalSettings.simultaneousRotateAndPinchToZoomEnabled
     }
     set(value) {
-      this.internalSettings.pinchRotateEnabled = value
+      this.internalSettings.simultaneousRotateAndPinchToZoomEnabled = value
       applySettings()
     }
 
