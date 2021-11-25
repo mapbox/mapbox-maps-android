@@ -18,6 +18,7 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
+import com.mapbox.maps.plugin.MapProjection
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
@@ -25,10 +26,7 @@ import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAn
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
-import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
-import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
-import com.mapbox.maps.plugin.delegates.MapTransformDelegate
+import com.mapbox.maps.plugin.delegates.*
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettingsBase
@@ -48,6 +46,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
   private lateinit var mapTransformDelegate: MapTransformDelegate
   private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
+  private lateinit var mapProjectionDelegate: MapProjectionDelegate
   private lateinit var mapPluginProviderDelegate: MapPluginProviderDelegate
   private lateinit var cameraAnimationsPlugin: CameraAnimationsPlugin
 
@@ -1256,6 +1255,21 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     return true
   }
 
+  private fun isDragStartAllowed(
+    pixel: ScreenCoordinate
+  ): Boolean {
+    if (mapProjectionDelegate.getMapProjection() != MapProjection.Mercator) {
+      return true;
+    }
+    // Prevent drag start in area around horizon to avoid sharp map movements
+    val topMapMargin = 0.04 * mapTransformDelegate.getSize().height
+    val reprojectErrorMargin = min(10.0, topMapMargin / 2)
+    var point = ScreenCoordinate(pixel.x, pixel.y - topMapMargin)
+    var coordinate = mapCameraManagerDelegate.coordinateForPixel(point)
+    var roundtripPoint = mapCameraManagerDelegate.pixelForCoordinate(coordinate)
+    return (roundtripPoint.y < point.y + reprojectErrorMargin)
+  }
+
   internal fun handleMove(
     detector: MoveGestureDetector,
     distanceX: Float,
@@ -1276,6 +1290,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       val fromY = focalPoint.y.toDouble()
 
       if (!dragInProgress) {
+        if (!isDragStartAllowed(ScreenCoordinate(fromX, fromY))) {
+          return false
+        }
         dragInProgress = true
         mapCameraManagerDelegate.dragStart(ScreenCoordinate(fromX, fromY))
       }
@@ -1287,14 +1304,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       val toX = fromX - resolvedDistanceX
       val toY = fromY - resolvedDistanceY
 
-      val cameraOptions = getAdjustedCameraCenter(
-        mapCameraManagerDelegate.cameraState,
-        mapCameraManagerDelegate.getDragCameraOptions(
-          ScreenCoordinate(fromX, fromY),
-          ScreenCoordinate(toX, toY)
-        )
+      val cameraOptions = mapCameraManagerDelegate.getDragCameraOptions(
+        ScreenCoordinate(fromX, fromY),
+        ScreenCoordinate(toX, toY)
       )
-
       easeToImmediately(cameraOptions)
     }
     return true
@@ -1627,6 +1640,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     this.mapTransformDelegate = delegateProvider.mapTransformDelegate
     this.mapCameraManagerDelegate = delegateProvider.mapCameraManagerDelegate
+    this.mapProjectionDelegate = delegateProvider.mapProjectionDelegate
     this.mapPluginProviderDelegate = delegateProvider.mapPluginProviderDelegate
     @Suppress("UNCHECKED_CAST")
     this.cameraAnimationsPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
