@@ -102,7 +102,7 @@ class MapboxMap internal constructor(
   ) {
     initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener)
     if (styleUri.isEmpty()) {
-      nativeMapWeakRef.call { (this as StyleManagerInterface).styleJSON = "{}" }
+      nativeMapWeakRef.call { (this as StyleManagerInterface).styleJSON = EMPTY_STYLE_JSON }
     } else {
       nativeMapWeakRef.call { (this as StyleManagerInterface).styleURI = styleUri }
     }
@@ -1497,6 +1497,7 @@ class MapboxMap internal constructor(
     }
 
     private const val TAG_PROJECTION = "MbxProjection"
+    private const val EMPTY_STYLE_JSON = "{}"
     internal const val QFE_SUPER_CLUSTER = "supercluster"
     internal const val QFE_LEAVES = "leaves"
     internal const val QFE_LIMIT = "limit"

@@ -17,7 +17,7 @@ class StyleExtensionImpl private constructor(
 ) : StyleContract.StyleExtension {
 
   /**
-   * The style's Uri.
+   * The style's Uri. Will load an empty json `{}` if the styleUri is empty.
    */
   override val styleUri: String = builder.styleUri
 
@@ -165,5 +165,5 @@ class StyleExtensionImpl private constructor(
 /**
  * DSL function to construct a style extension.
  */
-fun style(styleUri: String, block: Builder.() -> Unit) =
+fun style(styleUri: String = "", block: Builder.() -> Unit) =
   Builder(styleUri).apply(block).build()
