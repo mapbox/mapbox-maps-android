@@ -6,7 +6,6 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
-import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import com.mapbox.maps.plugin.viewport.data.ViewportDataSourceProcessor.getMapAnchoredPaddingFromUserPadding
 import com.mapbox.maps.plugin.viewport.data.ViewportDataSourceProcessor.getScreenBoxForFraming
