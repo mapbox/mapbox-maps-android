@@ -325,15 +325,6 @@ class Style internal constructor(
     }
 
   /**
-   * Removes light from style if it was set.
-   */
-  fun removeStyleLight() {
-    styleManagerRef.call {
-      this.setStyleLight(Value.nullValue())
-    }
-  }
-
-  /**
    * Sets the style global terrain source properties.
    *
    * @see [Mapbox Style Specification: Terrrain](https://docs.mapbox.com/mapbox-gl-js/style-spec/#terrain)
@@ -367,15 +358,6 @@ class Style internal constructor(
     styleManagerRef.call {
       this.setStyleTerrainProperty(property, value)
     }
-
-  /**
-   * Removes terrain from style if it was set.
-   */
-  fun removeStyleTerrain() {
-    styleManagerRef.call {
-      this.setStyleTerrain(Value.nullValue())
-    }
-  }
 
   /**
    * Gets the value of a style light property.

@@ -317,12 +317,6 @@ class StyleTest {
   }
 
   @Test
-  fun removeStyleLight() {
-    style.removeStyleLight()
-    verify { nativeMap.setStyleLight(Value.nullValue()) }
-  }
-
-  @Test
   fun getLight() {
     style.getStyleLightProperty("id")
     verify { nativeMap.getStyleLightProperty("id") }
@@ -353,11 +347,5 @@ class StyleTest {
     val value = mockk<Value>()
     style.setStyleTerrainProperty("id", value)
     verify { nativeMap.setStyleTerrainProperty("id", value) }
-  }
-
-  @Test
-  fun removeStyleTerrain() {
-    style.removeStyleTerrain()
-    verify { nativeMap.setStyleTerrain(Value.nullValue()) }
   }
 }
