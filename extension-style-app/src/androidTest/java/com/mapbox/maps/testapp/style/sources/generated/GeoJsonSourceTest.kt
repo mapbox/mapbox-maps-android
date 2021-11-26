@@ -591,7 +591,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     const val TEST_URI = "https://raw.githubusercontent.com/mapbox/mapbox-gl-native-android/master/MapboxGLAndroidSDKTestApp/src/main/assets/earthquakes.geojson"
     const val SOURCE_ID = "testId"
     val TEST_GEOJSON = FeatureCollection.fromFeatures(listOf()).toJson()
-    const val LATCH_MAX_TIME = 5_000L
+    const val LATCH_MAX_TIME_MS = 5_000L
   }
 }
 
