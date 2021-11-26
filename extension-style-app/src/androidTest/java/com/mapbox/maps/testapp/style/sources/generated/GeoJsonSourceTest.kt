@@ -323,7 +323,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     val listener = OnSourceDataLoadedListener {
       if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
         // Plain json string data getter is not supported due to performance consideration.
-        assertEquals(null, testSource.data)
+        assertNull(testSource.data)
         latch.countDown()
       }
     }
