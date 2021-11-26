@@ -101,6 +101,12 @@ class TerrainTest {
     assertNotNull(style.getTerrain(sourceId))
     verify { style.setStyleTerrain(any()) }
   }
+
+  @Test
+  fun removeTerrainTest() {
+    style.removeTerrain()
+    verify { style.setStyleTerrain(Value.nullValue()) }
+  }
 }
 
 // End of generated file.
