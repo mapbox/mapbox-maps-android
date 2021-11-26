@@ -9,7 +9,7 @@ import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
  * Helper class that provides default implementation of [ViewportCameraStateTransition]
  * generators.
  */
-class MapboxViewportCameraStateTransition(
+internal class MapboxViewportCameraStateTransition(
   private val cameraManager: MapCameraManagerDelegate,
   private val cameraPlugin: CameraAnimationsPlugin,
   private val viewportCameraTransition: ViewportCameraTransition =

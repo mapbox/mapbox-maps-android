@@ -16,7 +16,7 @@ import kotlin.math.abs
 /**
  * Helper class that provides default implementation of [ViewportCameraTransition] generators.
  */
-class MapboxViewportCameraTransition(
+internal class MapboxViewportCameraTransition(
   private val cameraManager: MapCameraManagerDelegate,
   private val cameraPlugin: CameraAnimationsPlugin
 ) : ViewportCameraTransition {
