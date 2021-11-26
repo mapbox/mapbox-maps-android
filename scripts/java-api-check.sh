@@ -23,7 +23,7 @@ fi
 
 CURRENT_DIR=$(dirname "$0")
 TMPDIR=`mktemp -d`
-REPORT_DIR=${TMPDIR}/api_compat_report
+REPORT_DIR=${CURRENT_DIR}/../api_compat_report/$MODULE_NAME
 mkdir -p "${REPORT_DIR}"
 mkdir -p "${TMPDIR}"
 
@@ -139,6 +139,7 @@ compare_aars() {
         -D revapi.reporter.json.output="${json_report}" \
         -D revapi.reporter.text.minSeverity=NON_BREAKING \
         -D revapi.reporter.text.output="${REPORT_DIR}/api_compat.txt" \
+        -c ${CURRENT_DIR}/java-api-check.json \
         >&2
 
     eval "$(parse_json_report "${json_report}")"
@@ -156,5 +157,5 @@ compare_aars() {
 
 api_compat=$(compare_aars "${PREVIOUS_RELEASE}" "${CURRENT_RELEASE}")
 rm -rf "${TMPDIR}"
-echo $api_compat
+echo "Compare result: $api_compat"
 "${CURRENT_DIR}"/semver-check.sh "${TAGGED_RELEASE_VERSION}" "${LAST_VERSION}" "${api_compat}"

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -Eeuxo pipefail
+set -eo pipefail
 
 #
 # Usage:
@@ -16,8 +16,9 @@ TAGGED_RELEASE_VERSION=$1
 LAST_VERSION=$2
 API_COMPAT_LEVEL=$3
 
+echo "Semver-check TAGGED_RELEASE_VERSION:$TAGGED_RELEASE_VERSION, LAST_VERSION: $LAST_VERSION, API_COMPAT_LEVEL: $API_COMPAT_LEVEL"
 # Checking if tagged release has API breaks
-if [[ ! -z ${TAGGED_RELEASE_VERSION} ]] && [[ ! ${TAGGED_RELEASE_VERSION} =~ "rc." ]] && [[ ! ${LAST_VERSION} =~ "rc." ]]; then
+if [[ ! -z ${TAGGED_RELEASE_VERSION} ]]; then
     SEMVER_REGEX="(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(\\-[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?(\\+[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?"
     if [[ ${TAGGED_RELEASE_VERSION} =~ $SEMVER_REGEX ]]; then
         newMajor=${BASH_REMATCH[1]}
@@ -37,23 +38,19 @@ if [[ ! -z ${TAGGED_RELEASE_VERSION} ]] && [[ ! ${TAGGED_RELEASE_VERSION} =~ "rc
         exit 1
     fi
 
-    if [[ ${API_COMPAT_LEVEL} == "major" ]] && [[ ${newmajor} != $((oldmajor+1)) ]]; then
-        echo "Major API breaking change. Major version number must be incremented."
+    if [[ ${newMajor} == $((oldMajor + 1)) ]]; then
+        echo "Major API breaking change."
+    elif [[ ${newMajor} > $((oldMajor + 1)) ]] || [[ ${newMajor} < $((oldMajor)) ]] || [[ ${API_COMPAT_LEVEL} == "major" && ${newMajor} != $((oldMajor + 1)) ]]; then
+        echo "Major version number changed incorrectly."
         exit 1
-    elif [[ ${API_COMPAT_LEVEL} == "minor" ]] && [[ ${newMinor} != $((oldMinor+1)) ]]; then
-        echo "Minor API breaking change. Minor version number must be incremented."
-        exit 1
-    elif [[ ${API_COMPAT_LEVEL} == "patch" ]] && [[ ${newPatch} != $((oldPatch+1)) ]]; then
-        echo "Patch version number must be incremented."
-        exit 1
-    else
-        echo "Release tagged with correct version."
-    fi
-else
-    echo "Checked API breaks for branch or release candidate."
-    if [[ ${API_COMPAT_LEVEL} == "major" ]] || [[ ${API_COMPAT_LEVEL} == "minor" ]];then
-        echo "Current version has (${API_COMPAT_LEVEL}) API changes comparing to ${LAST_VERSION}"
-    else
-        echo "Current version is a (${API_COMPAT_LEVEL}) release for the ${LAST_VERSION}"
+    elif [[ ${API_COMPAT_LEVEL} != "major" ]]; then
+        if [[ ${newMinor} < $((oldMinor)) ]]; then
+            echo "Minor version must not be smaller than the old minor version."
+            exit 1
+        elif [[ ${newMinor} == $((oldMinor)) && ${newPatch} < $((oldPatch)) ]]; then
+            echo "Patch version number must not be smaller than old patch version."
+            exit 1
+        fi
     fi
 fi
+echo "Release tagged with correct version."

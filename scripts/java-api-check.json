@@ -1,0 +1,12 @@
+[
+  {
+    "extension": "revapi.java",
+    "configuration": {
+      "checks": {
+        "nonPublicPartOfAPI": {
+          "reportUnchanged": false
+        }
+      }
+    }
+  }
+]
