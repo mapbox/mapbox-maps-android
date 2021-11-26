@@ -55,3 +55,9 @@ repositories {
 tasks.withType<org.jetbrains.dokka.gradle.DokkaTask>().configureEach {
   outputDirectory.set(buildDir.resolve(this.name))
 }
+
+configurations.all {
+  resolutionStrategy {
+    force(Dependencies.mapboxCoreCommon)
+  }
+}
