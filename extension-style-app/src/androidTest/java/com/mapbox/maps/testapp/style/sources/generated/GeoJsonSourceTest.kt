@@ -14,6 +14,7 @@ import com.mapbox.maps.plugin.delegates.listeners.OnSourceDataLoadedListener
 import com.mapbox.maps.testapp.style.BaseStyleTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -46,7 +47,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
     }
     val listener = OnSourceDataLoadedListener {
       if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
-        assertEquals(null, testSource.data)
+        assertNull(testSource.data)
         latch.countDown()
       }
     }
@@ -59,7 +60,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
         }
       }
     }
-    if (!latch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+    if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
     mapboxMap.removeOnSourceDataLoadedListener(listener)
@@ -335,7 +336,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
         }
       }
     }
-    if (!latch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+    if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
     mapboxMap.removeOnSourceDataLoadedListener(listener)
@@ -387,7 +388,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
         }
       }
     }
-    if (!latch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+    if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
     mapboxMap.removeOnSourceDataLoadedListener(listener)
@@ -428,7 +429,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
         }
       }
     }
-    if (!latch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+    if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
     mapboxMap.removeOnSourceDataLoadedListener(listener)
@@ -470,7 +471,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
         }
       }
     }
-    if (!latch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+    if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
     mapboxMap.removeOnSourceDataLoadedListener(listener)
@@ -523,7 +524,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
         }
       }
     }
-    if (!latch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+    if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
     mapboxMap.removeOnSourceDataLoadedListener(listener)
@@ -565,7 +566,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
         }
       }
     }
-    if (!latch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+    if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
     mapboxMap.removeOnSourceDataLoadedListener(listener)
