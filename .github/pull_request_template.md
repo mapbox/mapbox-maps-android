@@ -1,12 +1,23 @@
 <!--
 Thanks for submitting a pull request!
-
 Please fill out the sections below to complete your submission.
-
 We appreciate your contributions!
 -->
-PRs must be submitted under the terms of our Contributor License Agreement [CLA](https://github.com/mapbox/mapbox-maps-android/blob/main/CONTRIBUTING.md#contributor-license-agreement).
-Fixes: < Link to related issues that will be fixed by this pull request, if they exist >
+
+### Summary of changes
+
+<!--
+• If this is a new feature, include a short summary on how to use it.
+• If this is a bug fix, explain how your contribution resolves the problem.
+• Include a screenshot or gif if applicable
+-->
+
+### User impact (optional)
+
+<!--
+If this PR introduces user-facing changes, please note them here.
+-->
+
 
 ## Pull request checklist:
  - [ ] Briefly describe the changes in this PR.
@@ -26,18 +37,6 @@ Fixes: < Link to related issues that will be fixed by this pull request, if they
  - [ ] Add an entry inside this element for inclusion in the `mapbox-maps-android` changelog: `<changelog></changelog>`.
  - [ ] If this PR is a `v10.[version]` release branch fix / enhancement, merge it to `main` firstly and then port to `v10.[version]` release branch.
 
-### Summary of changes
+Fixes: < Link to related issues that will be fixed by this pull request, if they exist >
 
-<!--
-What changes does this pull request introduce?
-
-• If this is a new feature, include a short summary on how to use it.
-• If this is a bug fix, explain how your contribution resolves the problem.
-• Include a screenshot or gif if applicable
--->
-
-### User impact (optional)
-
-<!--
-If this PR introduces user-facing changes, please note them here.
--->
+PRs must be submitted under the terms of our Contributor License Agreement [CLA](https://github.com/mapbox/mapbox-maps-android/blob/main/CONTRIBUTING.md#contributor-license-agreement).
