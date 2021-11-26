@@ -2,6 +2,14 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.0.1 November 26, 2021
+
+## Bug fixes 🐞
+* Fix billing issue when upgrading Mapbox Maps SDK from v9 to v10.
+
+## Dependencies
+* Bump common to v20.0.2.
+
 # 10.2.0-beta.1 November 18, 2021
 
 ## Features ✨ and improvements 🏁
