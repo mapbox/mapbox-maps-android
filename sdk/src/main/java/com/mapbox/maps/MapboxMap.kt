@@ -89,6 +89,8 @@ class MapboxMap internal constructor(
    * - **`file://...`**:
    * loads the style from a file path. This is used to load a style from disk.
    *
+   * Will load an empty json `{}` if the styleUri is empty.
+   *
    * @param styleUri The style URI
    * @param onStyleLoaded The OnStyleLoaded callback
    * @param onMapLoadErrorListener The OnMapLoadErrorListener callback
@@ -99,7 +101,11 @@ class MapboxMap internal constructor(
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
   ) {
     initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener)
-    nativeMapWeakRef.call { (this as StyleManagerInterface).styleURI = styleUri }
+    if (styleUri.isEmpty()) {
+      nativeMapWeakRef.call { (this as StyleManagerInterface).styleJSON = EMPTY_STYLE_JSON }
+    } else {
+      nativeMapWeakRef.call { (this as StyleManagerInterface).styleURI = styleUri }
+    }
   }
 
   /**
@@ -1491,6 +1497,7 @@ class MapboxMap internal constructor(
     }
 
     private const val TAG_PROJECTION = "MbxProjection"
+    private const val EMPTY_STYLE_JSON = "{}"
     internal const val QFE_SUPER_CLUSTER = "supercluster"
     internal const val QFE_LEAVES = "leaves"
     internal const val QFE_LIMIT = "limit"

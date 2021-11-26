@@ -11,7 +11,7 @@ interface StyleContract {
    */
   interface StyleExtension {
     /**
-     * The style's Uri.
+     * The style's Uri. Will load an empty json `{}` if the styleUri is empty.
      */
     val styleUri: String
 
