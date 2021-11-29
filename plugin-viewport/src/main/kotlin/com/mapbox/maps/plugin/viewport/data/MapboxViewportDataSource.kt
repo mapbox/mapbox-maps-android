@@ -26,8 +26,8 @@ class MapboxViewportDataSource(
   private val mapTransform: MapTransformDelegate
 ) : ViewportDataSource {
 
-  //private val cameraManager: MapCameraManagerDelegate = delegateProvider.mapCameraManagerDelegate
-  //private val mapTransform: MapTransformDelegate = delegateProvider.mapTransformDelegate
+  // private val cameraManager: MapCameraManagerDelegate = delegateProvider.mapCameraManagerDelegate
+  // private val mapTransform: MapTransformDelegate = delegateProvider.mapTransformDelegate
 
   /**
    * Holds options that impact generation of camera frames.
