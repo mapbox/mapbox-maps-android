@@ -68,7 +68,8 @@ class ViewportCameraTransitionOptions private constructor(
      */
     fun build() = ViewportCameraTransitionOptions(maxDurationMs)
   }
-  companion object {
+
+  internal companion object {
     fun build(setUp: Builder.() -> Unit): ViewportCameraTransitionOptions =
       Builder().apply(setUp).build()
   }

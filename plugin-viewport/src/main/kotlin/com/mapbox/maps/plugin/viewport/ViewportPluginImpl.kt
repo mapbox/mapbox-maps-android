@@ -29,6 +29,9 @@ import com.mapbox.maps.plugin.viewport.transition.ViewportCameraTransition
 import com.mapbox.maps.plugin.viewport.transition.ViewportCameraTransitionOptions
 import java.util.concurrent.CopyOnWriteArraySet
 
+/**
+ * Mapbox default implementation for Viewport plugin.
+ */
 class ViewportPluginImpl : ViewportPlugin {
   private var frameTransitionOptions = DEFAULT_FRAME_TRANSITION_OPT
   private var runningAnimation: AnimatorSet? = null
@@ -38,8 +41,12 @@ class ViewportPluginImpl : ViewportPlugin {
   private lateinit var cameraPlugin: CameraAnimationsPlugin
   private lateinit var locationComponentPlugin: LocationComponentPlugin
   private lateinit var mapDelegateProvider: MapDelegateProvider
-  override lateinit var viewportDataSource: ViewportDataSource
   private lateinit var stateTransition: ViewportCameraStateTransition
+
+  /**
+   * Describes an object that provides desired camera positions to [ViewportPlugin].
+   */
+  override lateinit var viewportDataSource: ViewportDataSource
 
   /**
    * Returns current [ViewportCameraTransition].
@@ -364,6 +371,9 @@ class ViewportPluginImpl : ViewportPlugin {
     )
   }
 
+  /**
+   * Called when the plugin is first added to the map.
+   */
   override fun initialize() {
     viewportDataSource.registerUpdateObserver(sourceUpdateObserver)
   }
