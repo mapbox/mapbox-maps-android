@@ -10,7 +10,7 @@ import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
-import com.mapbox.maps.plugin.viewport.ViewportCamera.Companion.VIEWPORT_CAMERA_OWNER
+import com.mapbox.maps.plugin.viewport.ViewportPluginImpl.Companion.VIEWPORT_CAMERA_OWNER
 import kotlin.math.abs
 
 /**
