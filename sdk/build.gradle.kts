@@ -72,6 +72,7 @@ dependencies {
   api(project(":plugin-annotation"))
   api(project(":extension-localization"))
   api(project(":plugin-lifecycle"))
+  api(project(":plugin-viewport"))
   compileOnly(Dependencies.asyncInflater)
   implementation(Dependencies.kotlin)
   implementation(Dependencies.androidxCoreKtx)
