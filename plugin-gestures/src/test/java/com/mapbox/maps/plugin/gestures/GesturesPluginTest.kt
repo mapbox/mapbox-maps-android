@@ -536,7 +536,7 @@ class GesturesPluginTest {
     presenter.addOnScaleListener(listener)
     val result = presenter.handleScale(scaleDetector)
     assert(result)
-    verify { cameraAnimationsPlugin.playAnimatorsSequentially(any()) }
+    verify { cameraAnimationsPlugin.playAnimatorsSequentially(any(), any()) }
 
     verify { zoomAnimator.addListener(capture(endListenerSlot)) }
     endListenerSlot.captured.onAnimationEnd(mockk())
@@ -688,11 +688,12 @@ class GesturesPluginTest {
     val endListenerSlot = slot<Animator.AnimatorListener>()
 
     val rotateGestureDetector = mockk<RotateGestureDetector>()
+    every { rotateGestureDetector.focalPoint } returns PointF(1.0f, 1.0f)
     val listener: OnRotateListener = mockk(relaxed = true)
     presenter.addOnRotateListener(listener)
     val result = presenter.handleRotate(rotateGestureDetector, 34.0f)
     assert(result)
-    verify { cameraAnimationsPlugin.playAnimatorsSequentially(any()) }
+    verify { cameraAnimationsPlugin.playAnimatorsSequentially(any(), any()) }
     verify { bearingAnimator.addListener(capture(endListenerSlot)) }
     endListenerSlot.captured.onAnimationEnd(mockk())
     verify { listener.onRotate(any()) }
@@ -919,7 +920,8 @@ class FlingGestureTest(
 
   @Test
   fun testFling() {
-    val result = presenter.handleFlingEvent(motionEvent, mockk(), targetVelocity.first, targetVelocity.second)
+    val result =
+      presenter.handleFlingEvent(motionEvent, mockk(), targetVelocity.first, targetVelocity.second)
     verify {
       mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),

@@ -622,7 +622,14 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
             onScaleAnimationEnd(detector)
           }
         )
-        cameraAnimationsPlugin.playAnimatorsSequentially(zoom)
+        val anchorAnimator = cameraAnimationsPlugin.createAnchorAnimator(
+          options = cameraAnimatorOptions(focalPoint) {
+            owner(MapAnimationOwnerRegistry.GESTURES)
+          },
+        ) {
+          duration = 0
+        }
+        cameraAnimationsPlugin.playAnimatorsSequentially(zoom, anchorAnimator)
       } else {
         easeToImmediately(
           CameraOptions.Builder()
@@ -852,6 +859,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     val currentBearing = mapCameraManagerDelegate.cameraState.bearing
     rotateCachedAnchor = cameraAnimationsPlugin.anchor
     val bearing = currentBearing + rotationDegreesSinceLast
+    val focalPoint = getRotateFocalPoint(detector)
     // Rotate the map
     if (internalSettings.simultaneousRotateAndPinchToZoomEnabled) {
       val bearingAnimator =
@@ -867,9 +875,15 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
           onRotateAnimationEnd(detector)
         }
       )
-      cameraAnimationsPlugin.playAnimatorsSequentially(bearingAnimator)
+      val anchorAnimator = cameraAnimationsPlugin.createAnchorAnimator(
+        options = cameraAnimatorOptions(focalPoint) {
+          owner(MapAnimationOwnerRegistry.GESTURES)
+        },
+      ) {
+        duration = 0
+      }
+      cameraAnimationsPlugin.playAnimatorsSequentially(bearingAnimator, anchorAnimator)
     } else {
-      val focalPoint = getRotateFocalPoint(detector)
       easeToImmediately(
         CameraOptions.Builder()
           .anchor(focalPoint)
