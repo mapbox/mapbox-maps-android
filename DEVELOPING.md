@@ -354,6 +354,36 @@ stacktrace that was saved as a txt file.
 $ ndk-stack -sym obj/arm64-v8a -dump trace.txt
 ```
 
+## Release management
+
+The Mapbox Maps SDK for Android makes stable releases every 6 weeks. Beta build is available in week 2 and a release candidate in week 4, which is promoted to stable in week 6.
+
+We release on a schedule to provide a level of predictability for our customers. Having a cadence that the team can rely on gives transparency and provides a rhythm that becomes second nature.
+
+### Why do we provide pre-releases?
+We provide pre-releases during development to enable the community and our customers to provide feedback.
+
+### What is the beta release?
+The beta release is a pre-release that exposes initial APIs, behaviors of upcoming features for early feedback. We make this release during week 2 of the release cadence.
+
+### What is the RC release?
+We finalize the scope of the beta release during week 4 of the cadence. We normally do not introduce any new APIs however bug fixes could land, and the RC is then promoted to stable in week 6.
+
+### What type of versioning does Maps Mobile use?
+We use the standard semantic version scheme ([SEMVER](https://semver.org/)) x.y.z to differentiate between major, minor, or patch releases. We treat stable release as a new major or minor release and not patch release.
+Where “x” represents the major releases where incompatible API changes occur “breaking changes”.  
+“y” represents minor releases where we add functionality in a backward-compatible manner.  
+And “z” represents patch releases where we make backward-compatible bug fixes.
+
+### Understanding release management in Git terms
+As soon as time has come to prepare new beta release, we cut the new Git branch `v[major].[minor]` from latest `main`. Beta, RC and stable releases are always cut and published from this branch.
+
+Any bug fix / feature _related_ to the `v[major].[minor]` release (when beta has already been released) will always be merged to `main` firstly and then either merged / cherry-picked to the `v[major].[minor]` branch.
+
+All bug fixes / features _not related_ to the `v[major].[minor]` release (when beta has already been released) will be simply merged to `main` and included in the _next_ release.
+
+If there is the necessity to prepare the patch release for `v[major].[minor]`, we release it from associated `v[major].[minor]` branch with correct `android-v[major].[minor].[patch]` tag and _not_ from separate patch branch.
+
 ## Working with snapshots
 
 The Mapbox Maps SDK for Android publishes snapshot releases to our API downloads infrastructure. These
@@ -372,7 +402,7 @@ An example of snapshot for the sdk is `com.mapbox.maps:android:10.0.0-a1d95e7a-S
 
 ### Manually triggered snapshot releases
 
-The Mapbox Maps SDK for Android also features manually triggerd snapshot releases from a developing
+The Mapbox Maps SDK for Android also features manually triggered snapshot releases from a developing
 branch.
 
 If a last commit in a developing branch has `publish_android_snapshot` in a title or description,
