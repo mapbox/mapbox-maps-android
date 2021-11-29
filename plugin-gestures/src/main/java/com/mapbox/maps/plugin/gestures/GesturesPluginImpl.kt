@@ -629,7 +629,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         ) {
           duration = 0
         }
-        cameraAnimationsPlugin.playAnimatorsSequentially(zoom, anchorAnimator)
+        cameraAnimationsPlugin.playAnimatorsTogether(zoom, anchorAnimator)
       } else {
         easeToImmediately(
           CameraOptions.Builder()
@@ -882,7 +882,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       ) {
         duration = 0
       }
-      cameraAnimationsPlugin.playAnimatorsSequentially(bearingAnimator, anchorAnimator)
+      cameraAnimationsPlugin.playAnimatorsTogether(bearingAnimator, anchorAnimator)
     } else {
       easeToImmediately(
         CameraOptions.Builder()

@@ -536,7 +536,7 @@ class GesturesPluginTest {
     presenter.addOnScaleListener(listener)
     val result = presenter.handleScale(scaleDetector)
     assert(result)
-    verify { cameraAnimationsPlugin.playAnimatorsSequentially(any(), any()) }
+    verify { cameraAnimationsPlugin.playAnimatorsTogether(any(), any()) }
 
     verify { zoomAnimator.addListener(capture(endListenerSlot)) }
     endListenerSlot.captured.onAnimationEnd(mockk())
@@ -693,7 +693,7 @@ class GesturesPluginTest {
     presenter.addOnRotateListener(listener)
     val result = presenter.handleRotate(rotateGestureDetector, 34.0f)
     assert(result)
-    verify { cameraAnimationsPlugin.playAnimatorsSequentially(any(), any()) }
+    verify { cameraAnimationsPlugin.playAnimatorsTogether(any(), any()) }
     verify { bearingAnimator.addListener(capture(endListenerSlot)) }
     endListenerSlot.captured.onAnimationEnd(mockk())
     verify { listener.onRotate(any()) }
