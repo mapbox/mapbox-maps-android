@@ -2,21 +2,25 @@
 
 package com.mapbox.maps.testapp.style.sources.generated
 
-import android.os.Handler
-import android.os.Looper
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
+import com.mapbox.maps.extension.observable.model.SourceDataType
 import com.mapbox.maps.extension.style.expressions.dsl.generated.*
 import com.mapbox.maps.extension.style.sources.generated.*
 import com.mapbox.maps.extension.style.types.PromoteId
+import com.mapbox.maps.plugin.delegates.listeners.OnSourceDataLoadedListener
 import com.mapbox.maps.testapp.style.BaseStyleTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeoutException
 
 /**
  * Basic smoke tests for GeoJsonSource.
@@ -27,7 +31,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun dataTest() {
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
       data(TEST_GEOJSON)
     }
@@ -36,20 +40,36 @@ class GeoJsonSourceTest : BaseStyleTest() {
   }
 
   @Test
-  @UiThreadTest
   fun dataAfterBindTest() {
-    val testSource = geoJsonSource("testId") {
+    val latch = CountDownLatch(1)
+    val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
     }
-    setupSource(testSource)
-    testSource.data(TEST_GEOJSON)
-    Handler(Looper.getMainLooper()).postDelayed({ assertEquals(null, testSource.data) }, 10L)
+    val listener = OnSourceDataLoadedListener {
+      if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
+        assertNull(testSource.data)
+        latch.countDown()
+      }
+    }
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        mapboxMap.apply {
+          addOnSourceDataLoadedListener(listener)
+          setupSource(testSource)
+          testSource.data(TEST_GEOJSON)
+        }
+      }
+    }
+    if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
+    }
+    mapboxMap.removeOnSourceDataLoadedListener(listener)
   }
 
   @Test
   @UiThreadTest
   fun emptyDataTest() {
-    val testSource = geoJsonSource("testId")
+    val testSource = geoJsonSource(SOURCE_ID)
     setupSource(testSource)
     assertNotNull(testSource.data)
   }
@@ -57,7 +77,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun urlTest() {
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
     }
     setupSource(testSource)
@@ -67,7 +87,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun urlAfterBindTest() {
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
     }
     setupSource(testSource)
@@ -78,7 +98,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun maxzoomTest() {
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
       maxzoom(1L)
     }
@@ -89,7 +109,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun attributionTest() {
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
       attribution("abc")
     }
@@ -100,7 +120,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun bufferTest() {
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
       buffer(1L)
     }
@@ -111,7 +131,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun toleranceTest() {
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
       tolerance(1.0)
     }
@@ -122,7 +142,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun clusterTest() {
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
       cluster(true)
     }
@@ -133,7 +153,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun clusterRadiusTest() {
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
       clusterRadius(1L)
     }
@@ -144,7 +164,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun clusterMaxZoomTest() {
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
       clusterMaxZoom(1L)
     }
@@ -156,7 +176,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
   @UiThreadTest
   @Ignore("https://github.com/mapbox/mapbox-maps-android/issues/499")
   fun clusterPropertiesTest() {
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
       clusterProperties((hashMapOf("key1" to "x", "key2" to "y") as HashMap<String, Any>))
     }
@@ -168,7 +188,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
   @UiThreadTest
   @Ignore("https://github.com/mapbox/mapbox-maps-android/issues/499")
   fun clusterPropertyTest() {
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
       clusterProperty(
         "sum",
@@ -185,7 +205,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun clusterPropertyAdvancedTest() {
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
       clusterProperty(
         "sum",
@@ -203,7 +223,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun multiClusterPropertyTest() {
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
       clusterProperty(
         "sum",
@@ -229,7 +249,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun lineMetricsTest() {
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
       lineMetrics(true)
     }
@@ -240,7 +260,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun generateIdTest() {
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
       generateId(true)
     }
@@ -251,7 +271,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun promoteIdTest() {
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
       promoteId(PromoteId(propertyName = "abc"))
     }
@@ -262,7 +282,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun prefetchZoomDeltaTest() {
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
       prefetchZoomDelta(1L)
     }
@@ -273,7 +293,7 @@ class GeoJsonSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun prefetchZoomDeltaAfterBindTest() {
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
     }
     setupSource(testSource)
@@ -282,8 +302,8 @@ class GeoJsonSourceTest : BaseStyleTest() {
   }
 
   @Test
-  @UiThreadTest
   fun featureTest() {
+    val latch = CountDownLatch(1)
     val feature = Feature.fromJson(
       """
         {
@@ -298,17 +318,33 @@ class GeoJsonSourceTest : BaseStyleTest() {
         }
       """.trimIndent()
     )
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       feature(feature)
     }
-    setupSource(testSource)
-    // Plain json string data getter is not supported due to performance consideration.
-    Handler(Looper.getMainLooper()).postDelayed({ assertEquals(null, testSource.data) }, 10L)
+    val listener = OnSourceDataLoadedListener {
+      if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
+        // Plain json string data getter is not supported due to performance consideration.
+        assertNull(testSource.data)
+        latch.countDown()
+      }
+    }
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        mapboxMap.apply {
+          addOnSourceDataLoadedListener(listener)
+          setupSource(testSource)
+        }
+      }
+    }
+    if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
+    }
+    mapboxMap.removeOnSourceDataLoadedListener(listener)
   }
 
   @Test
-  @UiThreadTest
   fun featureCollectionTest() {
+    val latch = CountDownLatch(1)
     val featureCollection = FeatureCollection.fromJson(
       """
         {
@@ -334,17 +370,33 @@ class GeoJsonSourceTest : BaseStyleTest() {
         }
       """.trimIndent()
     )
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       featureCollection(featureCollection)
     }
-    setupSource(testSource)
-    // Plain json string data getter is not supported due to performance consideration.
-    Handler(Looper.getMainLooper()).postDelayed({ assertEquals(null, testSource.data) }, 10L)
+    val listener = OnSourceDataLoadedListener {
+      if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
+        // Plain json string data getter is not supported due to performance consideration.
+        assertEquals(null, testSource.data)
+        latch.countDown()
+      }
+    }
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        mapboxMap.apply {
+          addOnSourceDataLoadedListener(listener)
+          setupSource(testSource)
+        }
+      }
+    }
+    if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
+    }
+    mapboxMap.removeOnSourceDataLoadedListener(listener)
   }
 
   @Test
-  @UiThreadTest
   fun geometryTest() {
+    val latch = CountDownLatch(1)
     val feature = Feature.fromJson(
       """
         {
@@ -359,17 +411,33 @@ class GeoJsonSourceTest : BaseStyleTest() {
         }
       """.trimIndent()
     )
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       geometry(feature.geometry()!!)
     }
-    setupSource(testSource)
-    // Plain json string data getter is not supported due to performance consideration.
-    Handler(Looper.getMainLooper()).postDelayed({ assertEquals(null, testSource.data) }, 10L)
+    val listener = OnSourceDataLoadedListener {
+      if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
+        // Plain json string data getter is not supported due to performance consideration.
+        assertEquals(null, testSource.data)
+        latch.countDown()
+      }
+    }
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        mapboxMap.apply {
+          addOnSourceDataLoadedListener(listener)
+          setupSource(testSource)
+        }
+      }
+    }
+    if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
+    }
+    mapboxMap.removeOnSourceDataLoadedListener(listener)
   }
 
   @Test
-  @UiThreadTest
   fun featureAfterBindTest() {
+    val latch = CountDownLatch(1)
     val feature = Feature.fromJson(
       """
         {
@@ -384,18 +452,34 @@ class GeoJsonSourceTest : BaseStyleTest() {
         }
       """.trimIndent()
     )
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
     }
-    setupSource(testSource)
-    testSource.feature(feature)
-    // Plain json string data getter is not supported due to performance consideration.
-    Handler(Looper.getMainLooper()).postDelayed({ assertEquals(null, testSource.data) }, 10L)
+    val listener = OnSourceDataLoadedListener {
+      if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
+        // Plain json string data getter is not supported due to performance consideration.
+        assertEquals(null, testSource.data)
+        latch.countDown()
+      }
+    }
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        mapboxMap.apply {
+          addOnSourceDataLoadedListener(listener)
+          setupSource(testSource)
+          testSource.feature(feature)
+        }
+      }
+    }
+    if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
+    }
+    mapboxMap.removeOnSourceDataLoadedListener(listener)
   }
 
   @Test
-  @UiThreadTest
   fun featureCollectionAfterBindTest() {
+    val latch = CountDownLatch(1)
     val featureCollection = FeatureCollection.fromJson(
       """
         {
@@ -421,18 +505,34 @@ class GeoJsonSourceTest : BaseStyleTest() {
         }
       """.trimIndent()
     )
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
     }
-    setupSource(testSource)
-    testSource.featureCollection(featureCollection)
-    // Plain json string data getter is not supported due to performance consideration.
-    Handler(Looper.getMainLooper()).postDelayed({ assertEquals(null, testSource.data) }, 10L)
+    val listener = OnSourceDataLoadedListener {
+      if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
+        // Plain json string data getter is not supported due to performance consideration.
+        assertEquals(null, testSource.data)
+        latch.countDown()
+      }
+    }
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        mapboxMap.apply {
+          addOnSourceDataLoadedListener(listener)
+          setupSource(testSource)
+          testSource.featureCollection(featureCollection)
+        }
+      }
+    }
+    if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
+    }
+    mapboxMap.removeOnSourceDataLoadedListener(listener)
   }
 
   @Test
-  @UiThreadTest
   fun geometryAfterBindTest() {
+    val latch = CountDownLatch(1)
     val feature = Feature.fromJson(
       """
         {
@@ -447,13 +547,29 @@ class GeoJsonSourceTest : BaseStyleTest() {
         }
       """.trimIndent()
     )
-    val testSource = geoJsonSource("testId") {
+    val testSource = geoJsonSource(SOURCE_ID) {
       url(TEST_URI)
     }
-    setupSource(testSource)
-    testSource.geometry(feature.geometry()!!)
-    // Plain json string data getter is not supported due to performance consideration.
-    Handler(Looper.getMainLooper()).postDelayed({ assertEquals(null, testSource.data) }, 10L)
+    val listener = OnSourceDataLoadedListener {
+      if (it.type == SourceDataType.METADATA && it.id == SOURCE_ID) {
+        // Plain json string data getter is not supported due to performance consideration.
+        assertEquals(null, testSource.data)
+        latch.countDown()
+      }
+    }
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        mapboxMap.apply {
+          addOnSourceDataLoadedListener(listener)
+          setupSource(testSource)
+          testSource.geometry(feature.geometry()!!)
+        }
+      }
+    }
+    if (!latch.await(LATCH_MAX_TIME_MS, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
+    }
+    mapboxMap.removeOnSourceDataLoadedListener(listener)
   }
 
   // Default source properties getter tests
@@ -472,9 +588,11 @@ class GeoJsonSourceTest : BaseStyleTest() {
     assertNotNull("defaultPrefetchZoomDelta should not be null", GeoJsonSource.defaultPrefetchZoomDelta)
   }
 
-  companion object {
-    private const val TEST_URI = "https://raw.githubusercontent.com/mapbox/mapbox-gl-native-android/master/MapboxGLAndroidSDKTestApp/src/main/assets/earthquakes.geojson"
-    private val TEST_GEOJSON = FeatureCollection.fromFeatures(listOf()).toJson()
+  private companion object {
+    const val TEST_URI = "https://raw.githubusercontent.com/mapbox/mapbox-gl-native-android/master/MapboxGLAndroidSDKTestApp/src/main/assets/earthquakes.geojson"
+    const val SOURCE_ID = "testId"
+    val TEST_GEOJSON = FeatureCollection.fromFeatures(listOf()).toJson()
+    const val LATCH_MAX_TIME_MS = 5_000L
   }
 }
 

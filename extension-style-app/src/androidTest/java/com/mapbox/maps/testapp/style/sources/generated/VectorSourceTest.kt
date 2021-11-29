@@ -23,7 +23,7 @@ class VectorSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun urlTest() {
-    val testSource = vectorSource("testId") {
+    val testSource = vectorSource(SOURCE_ID) {
       url(TEST_URI)
       url("abc")
     }
@@ -34,7 +34,7 @@ class VectorSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun urlAfterBindTest() {
-    val testSource = vectorSource("testId") {
+    val testSource = vectorSource(SOURCE_ID) {
       url(TEST_URI)
     }
     setupSource(testSource)
@@ -46,7 +46,7 @@ class VectorSourceTest : BaseStyleTest() {
   @UiThreadTest
   @Ignore("https://github.com/mapbox/mapbox-maps-android/issues/499")
   fun tilesTest() {
-    val testSource = vectorSource("testId") {
+    val testSource = vectorSource(SOURCE_ID) {
       url(TEST_URI)
       tiles(listOf("a", "b", "c"))
     }
@@ -57,7 +57,7 @@ class VectorSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun tilesAfterBindTest() {
-    val testSource = vectorSource("testId") {
+    val testSource = vectorSource(SOURCE_ID) {
       url(TEST_URI)
     }
     setupSource(testSource)
@@ -69,7 +69,7 @@ class VectorSourceTest : BaseStyleTest() {
   @UiThreadTest
   @Ignore("https://github.com/mapbox/mapbox-maps-android/issues/499")
   fun boundsTest() {
-    val testSource = vectorSource("testId") {
+    val testSource = vectorSource(SOURCE_ID) {
       url(TEST_URI)
       bounds(listOf(0.0, 1.0, 2.0, 3.0))
     }
@@ -81,7 +81,7 @@ class VectorSourceTest : BaseStyleTest() {
   @UiThreadTest
   @Ignore("https://github.com/mapbox/mapbox-maps-android/issues/499")
   fun schemeTest() {
-    val testSource = vectorSource("testId") {
+    val testSource = vectorSource(SOURCE_ID) {
       url(TEST_URI)
       scheme(Scheme.XYZ)
     }
@@ -92,7 +92,7 @@ class VectorSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun minzoomTest() {
-    val testSource = vectorSource("testId") {
+    val testSource = vectorSource(SOURCE_ID) {
       url(TEST_URI)
       minzoom(1L)
     }
@@ -103,7 +103,7 @@ class VectorSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun minzoomAfterBindTest() {
-    val testSource = vectorSource("testId") {
+    val testSource = vectorSource(SOURCE_ID) {
       url(TEST_URI)
     }
     setupSource(testSource)
@@ -114,7 +114,7 @@ class VectorSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun maxzoomTest() {
-    val testSource = vectorSource("testId") {
+    val testSource = vectorSource(SOURCE_ID) {
       url(TEST_URI)
       maxzoom(1L)
     }
@@ -125,7 +125,7 @@ class VectorSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun maxzoomAfterBindTest() {
-    val testSource = vectorSource("testId") {
+    val testSource = vectorSource(SOURCE_ID) {
       url(TEST_URI)
     }
     setupSource(testSource)
@@ -137,7 +137,7 @@ class VectorSourceTest : BaseStyleTest() {
   @UiThreadTest
   @Ignore("https://github.com/mapbox/mapbox-maps-android/issues/499")
   fun attributionTest() {
-    val testSource = vectorSource("testId") {
+    val testSource = vectorSource(SOURCE_ID) {
       url(TEST_URI)
       attribution("abc")
     }
@@ -148,7 +148,7 @@ class VectorSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun promoteIdTest() {
-    val testSource = vectorSource("testId") {
+    val testSource = vectorSource(SOURCE_ID) {
       url(TEST_URI)
       promoteId(PromoteId(propertyName = "abc"))
     }
@@ -159,7 +159,7 @@ class VectorSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun volatileTest() {
-    val testSource = vectorSource("testId") {
+    val testSource = vectorSource(SOURCE_ID) {
       url(TEST_URI)
       volatile(true)
     }
@@ -170,7 +170,7 @@ class VectorSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun volatileAfterBindTest() {
-    val testSource = vectorSource("testId") {
+    val testSource = vectorSource(SOURCE_ID) {
       url(TEST_URI)
     }
     setupSource(testSource)
@@ -181,7 +181,7 @@ class VectorSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun prefetchZoomDeltaTest() {
-    val testSource = vectorSource("testId") {
+    val testSource = vectorSource(SOURCE_ID) {
       url(TEST_URI)
       prefetchZoomDelta(1L)
     }
@@ -192,7 +192,7 @@ class VectorSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun prefetchZoomDeltaAfterBindTest() {
-    val testSource = vectorSource("testId") {
+    val testSource = vectorSource(SOURCE_ID) {
       url(TEST_URI)
     }
     setupSource(testSource)
@@ -203,7 +203,7 @@ class VectorSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun minimumTileUpdateIntervalTest() {
-    val testSource = vectorSource("testId") {
+    val testSource = vectorSource(SOURCE_ID) {
       url(TEST_URI)
       minimumTileUpdateInterval(1.0)
     }
@@ -214,7 +214,7 @@ class VectorSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun minimumTileUpdateIntervalAfterBindTest() {
-    val testSource = vectorSource("testId") {
+    val testSource = vectorSource(SOURCE_ID) {
       url(TEST_URI)
     }
     setupSource(testSource)
@@ -225,7 +225,7 @@ class VectorSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun maxOverscaleFactorForParentTilesTest() {
-    val testSource = vectorSource("testId") {
+    val testSource = vectorSource(SOURCE_ID) {
       url(TEST_URI)
       maxOverscaleFactorForParentTiles(1L)
     }
@@ -236,7 +236,7 @@ class VectorSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun maxOverscaleFactorForParentTilesAfterBindTest() {
-    val testSource = vectorSource("testId") {
+    val testSource = vectorSource(SOURCE_ID) {
       url(TEST_URI)
     }
     setupSource(testSource)
@@ -247,7 +247,7 @@ class VectorSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun tileSetTest() {
-    val testSource = vectorSource("testId") {
+    val testSource = vectorSource(SOURCE_ID) {
       url(TEST_URI)
       tileSet(TileSet.Builder("abc", listOf("a", "b", "c")).build())
     }
@@ -257,7 +257,7 @@ class VectorSourceTest : BaseStyleTest() {
   @Test
   @UiThreadTest
   fun tileSetTestDsl() {
-    val testSource = vectorSource("testId") {
+    val testSource = vectorSource(SOURCE_ID) {
       url(TEST_URI)
       tileSet("abc", listOf("a", "b", "c")) {
         attribution("testattribution")
@@ -279,8 +279,9 @@ class VectorSourceTest : BaseStyleTest() {
     assertNotNull("defaultMinimumTileUpdateInterval should not be null", VectorSource.defaultMinimumTileUpdateInterval)
   }
 
-  companion object {
-    private const val TEST_URI = "https://raw.githubusercontent.com/mapbox/mapbox-gl-native-android/master/MapboxGLAndroidSDKTestApp/src/main/assets/earthquakes.geojson"
+  private companion object {
+    const val TEST_URI = "https://raw.githubusercontent.com/mapbox/mapbox-gl-native-android/master/MapboxGLAndroidSDKTestApp/src/main/assets/earthquakes.geojson"
+    const val SOURCE_ID = "testId"
   }
 }
 

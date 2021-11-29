@@ -29,7 +29,7 @@ import java.util.concurrent.TimeoutException
 abstract class BaseStyleTest {
 
   private lateinit var mapView: MapView
-  private lateinit var mapboxMap: MapboxMap
+  protected lateinit var mapboxMap: MapboxMap
   private lateinit var style: Style
 
   @get:Rule
