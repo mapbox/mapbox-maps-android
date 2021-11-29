@@ -17,13 +17,13 @@ import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.plugin.LocationPuck2D
-import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.locationcomponent.LocationConsumer
 import com.mapbox.maps.plugin.locationcomponent.LocationProvider
 import com.mapbox.maps.plugin.locationcomponent.location
-import com.mapbox.maps.plugin.viewport.ViewportCamera
+import com.mapbox.maps.plugin.viewport.ViewportPlugin
 import com.mapbox.maps.plugin.viewport.data.MapboxViewportDataSource
 import com.mapbox.maps.plugin.viewport.state.ViewportCameraState
+import com.mapbox.maps.plugin.viewport.viewport
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityViewportAnimationBinding
 
@@ -141,13 +141,14 @@ class ViewportShowcaseActivity : AppCompatActivity() {
   }
 
   lateinit var latestLocation: Location
-  lateinit var viewportCamera: ViewportCamera
+  lateinit var viewportCamera: ViewportPlugin
   lateinit var viewportDataSource: MapboxViewportDataSource
 
   @SuppressLint("SetTextI18n")
   private fun setupViewportCamera() {
+    viewportCamera = mapView.viewport
     viewportDataSource = MapboxViewportDataSource(mapboxMap, mapboxMap)
-    viewportCamera = ViewportCamera(mapboxMap, mapView.camera, viewportDataSource)
+    viewportCamera.viewportDataSource = viewportDataSource
     viewportCamera.registerViewportCameraStateChangedObserver { cameraState ->
       // change title of viewport button depending on the camera state
       when (cameraState) {
