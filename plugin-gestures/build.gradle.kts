@@ -19,7 +19,9 @@ android {
       isIncludeAndroidResources = true
     }
   }
-
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
   sourceSets {
     // limit amount of exposed library resources
     getByName("main").res.srcDirs("src/main/res-public")

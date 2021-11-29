@@ -11,6 +11,9 @@
     <!-- Whether the single-touch scroll gesture is enabled. -->
     <public name="mapbox_gesturesScrollEnabled" type="attr" />
 
+    <!-- Whether rotation is enabled for the pinch to zoom gesture. -->
+    <public name="mapbox_gesturesSimultaneousRotateAndPinchToZoomEnabled" type="attr" />
+
     <!-- Whether the pitch gesture is enabled. -->
     <public name="mapbox_gesturesPitchEnabled" type="attr" />
 
