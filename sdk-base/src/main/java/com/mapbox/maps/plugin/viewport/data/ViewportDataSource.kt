@@ -17,11 +17,15 @@ interface ViewportDataSource {
   /**
    * Register an observer that gets called whenever the available [ViewportData] changes.
    * The observer also gets notified with latest data on registration.
+   *
+   * @param viewportDataSourceUpdateObserver
    */
   fun registerUpdateObserver(viewportDataSourceUpdateObserver: ViewportDataSourceUpdateObserver)
 
   /**
    * Unregister [ViewportDataSourceUpdateObserver].
+   *
+   * @param viewportDataSourceUpdateObserver
    */
   fun unregisterUpdateObserver(viewportDataSourceUpdateObserver: ViewportDataSourceUpdateObserver)
 }

@@ -13,6 +13,14 @@ import com.mapbox.maps.plugin.viewport.transition.TransitionEndListener
 import com.mapbox.maps.plugin.viewport.transition.ViewportCameraTransition
 import com.mapbox.maps.plugin.viewport.transition.ViewportCameraTransitionOptions
 
+/**
+ * The Viewport plugin allows to track objects on a map.
+ *
+ * Most common use-case is the ability to track the user location and animate the location updates
+ * to create a navigation experience. Next to tracking a single object, the API allows tracking
+ * multiple objects. The viewport needs to automatically optimize the camera position to take in
+ * account the user provided data.
+ */
 interface ViewportPlugin : MapPlugin {
 
   /**
@@ -132,9 +140,19 @@ interface ViewportPlugin : MapPlugin {
     viewportCameraStateChangedObserver: ViewportCameraStateChangedObserver
   )
 
+  /**
+   * Companion object of ViewportPlugin interface.
+   */
   companion object {
+    /**
+     * The default state transition option.
+     */
     val DEFAULT_STATE_TRANSITION_OPT =
       ViewportCameraTransitionOptions.build { maxDuration(3500L) }
+
+    /**
+     * The default frame transition option.
+     */
     val DEFAULT_FRAME_TRANSITION_OPT =
       ViewportCameraTransitionOptions.build { maxDuration(1000L) }
   }
