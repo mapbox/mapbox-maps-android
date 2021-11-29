@@ -17,16 +17,21 @@ import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.plugin.LocationPuck2D
-import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.locationcomponent.LocationConsumer
 import com.mapbox.maps.plugin.locationcomponent.LocationProvider
 import com.mapbox.maps.plugin.locationcomponent.location
-import com.mapbox.maps.plugin.viewport.ViewportCamera
+import com.mapbox.maps.plugin.viewport.ViewportPlugin
 import com.mapbox.maps.plugin.viewport.data.MapboxViewportDataSource
 import com.mapbox.maps.plugin.viewport.state.ViewportCameraState
+import com.mapbox.maps.plugin.viewport.viewport
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityViewportAnimationBinding
 
+/**
+ * Showcase the use age of viewport plugin.
+ *
+ * Use button to toggle the following and overview mode.
+ */
 class ViewportShowcaseActivity : AppCompatActivity() {
   private var emitCount = 0
   private var delta = 0f
@@ -34,6 +39,9 @@ class ViewportShowcaseActivity : AppCompatActivity() {
   private lateinit var mapboxMap: MapboxMap
   private lateinit var mapView: MapView
   private lateinit var viewportButton: Button
+  private lateinit var latestLocation: Location
+  private lateinit var viewport: ViewportPlugin
+  private lateinit var viewportDataSource: MapboxViewportDataSource
   private val pixelDensity = Resources.getSystem().displayMetrics.density
 
   private val paddedFollowingEdgeInsets = EdgeInsets(
@@ -127,12 +135,13 @@ class ViewportShowcaseActivity : AppCompatActivity() {
           addOnIndicatorPositionChangedListener {
             latestLocation.latitude = it.latitude()
             latestLocation.longitude = it.longitude()
+            viewportDataSource.onLocationChanged(latestLocation)
+            viewport.resetFrame()
           }
           addOnIndicatorBearingChangedListener {
             latestLocation.bearing = it.toFloat()
             viewportDataSource.onLocationChanged(latestLocation)
-            viewportDataSource.evaluate()
-            viewportCamera.resetFrame()
+            viewport.resetFrame()
           }
         }
       }
@@ -140,15 +149,12 @@ class ViewportShowcaseActivity : AppCompatActivity() {
     setupViewportCamera()
   }
 
-  lateinit var latestLocation: Location
-  lateinit var viewportCamera: ViewportCamera
-  lateinit var viewportDataSource: MapboxViewportDataSource
-
   @SuppressLint("SetTextI18n")
   private fun setupViewportCamera() {
+    viewport = mapView.viewport
     viewportDataSource = MapboxViewportDataSource(mapboxMap, mapboxMap)
-    viewportCamera = ViewportCamera(mapboxMap, mapView.camera, viewportDataSource)
-    viewportCamera.registerViewportCameraStateChangedObserver { cameraState ->
+    viewport.dataSource = viewportDataSource
+    viewport.registerViewportCameraStateChangedObserver { cameraState ->
       // change title of viewport button depending on the camera state
       when (cameraState) {
         ViewportCameraState.TransitionToFollowing,
@@ -173,12 +179,12 @@ class ViewportShowcaseActivity : AppCompatActivity() {
           viewportDataSource.options.followingFrameOptions.zoomUpdatesAllowed = true
           viewportDataSource.followingPadding = followingEdgeInsets
           viewportDataSource.evaluate()
-          viewportCamera.requestNavigationCameraToFollowing()
+          viewport.requestCameraToFollowing()
         }
         OVERVIEW -> {
           viewportDataSource.overviewPadding = overviewEdgeInsets
           viewportDataSource.evaluate()
-          viewportCamera.requestNavigationCameraToOverview()
+          viewport.requestCameraToOverview()
         }
       }
     }
