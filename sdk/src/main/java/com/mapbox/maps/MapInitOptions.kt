@@ -72,6 +72,7 @@ data class MapInitOptions @JvmOverloads constructor(
       Plugin.Mapbox(Plugin.MAPBOX_ANNOTATION_PLUGIN_ID),
       Plugin.Mapbox(Plugin.MAPBOX_LIFECYCLE_PLUGIN_ID),
       Plugin.Mapbox(Plugin.MAPBOX_MAP_OVERLAY_PLUGIN_ID),
+      Plugin.Mapbox(Plugin.MAPBOX_VIEWPORT_PLUGIN_ID),
     )
   }
 }

@@ -20,15 +20,14 @@ import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.math.max
 import kotlin.math.min
 
+/**
+ * Mapbox default implementation for ViewportDataSource.
+ */
 @UiThread
 class MapboxViewportDataSource(
   private val cameraManager: MapCameraManagerDelegate,
   private val mapTransform: MapTransformDelegate
 ) : ViewportDataSource {
-
-  //private val cameraManager: MapCameraManagerDelegate = delegateProvider.mapCameraManagerDelegate
-  //private val mapTransform: MapTransformDelegate = delegateProvider.mapTransformDelegate
-
   /**
    * Holds options that impact generation of camera frames.
    *
@@ -49,8 +48,15 @@ class MapboxViewportDataSource(
   private val viewportDataSourceUpdateObservers =
     CopyOnWriteArraySet<ViewportDataSourceUpdateObserver>()
 
+  /**
+   * Camera padding for the overview state.
+   */
   var overviewPadding: EdgeInsets = EMPTY_EDGE_INSETS
+  /**
+   * Camera padding for the following state.
+   */
   var followingPadding: EdgeInsets = EMPTY_EDGE_INSETS
+
   private var appliedFollowingPadding: EdgeInsets = followingPadding
   private var targetLocation: Location? = null
 
@@ -82,8 +88,17 @@ class MapboxViewportDataSource(
       }
     }
 
+  /**
+   * Get the latest [ViewportData].
+   */
   override fun getViewportData(): ViewportData = viewportData
 
+  /**
+   * Register an observer that gets called whenever the available [ViewportData] changes.
+   * The observer also gets notified with latest data on registration.
+   *
+   * @param viewportDataSourceUpdateObserver
+   */
   override fun registerUpdateObserver(
     viewportDataSourceUpdateObserver: ViewportDataSourceUpdateObserver
   ) {
@@ -91,6 +106,11 @@ class MapboxViewportDataSource(
     viewportDataSourceUpdateObserver.viewportDataSourceUpdated(viewportData)
   }
 
+  /**
+   * Unregister [ViewportDataSourceUpdateObserver].
+   *
+   * @param viewportDataSourceUpdateObserver
+   */
   override fun unregisterUpdateObserver(
     viewportDataSourceUpdateObserver: ViewportDataSourceUpdateObserver
   ) {
@@ -104,6 +124,7 @@ class MapboxViewportDataSource(
    */
   fun onLocationChanged(location: Location) {
     targetLocation = location
+    evaluate()
   }
 
   /**

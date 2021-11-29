@@ -27,15 +27,16 @@ android {
 
 dependencies {
   implementation(project(":sdk-base"))
+  implementation(project(":plugin-animation"))
+  implementation(project(":plugin-locationcomponent"))
   implementation(Dependencies.androidxAppCompat)
   implementation(Dependencies.androidxCoreKtx)
+  implementation(Dependencies.androidxAnnotations)
   implementation(Dependencies.kotlin)
   implementation(Dependencies.mapboxBase)
   testImplementation(Dependencies.equalsVerifier)
   testImplementation(Dependencies.junit)
   testImplementation(Dependencies.mockk)
-  testImplementation(project(":plugin-gestures"))
-  testImplementation(project(":plugin-animation"))
   androidTestImplementation(Dependencies.androidxTestRunner)
   androidTestImplementation(Dependencies.androidxJUnitTestRules)
   androidTestImplementation(Dependencies.androidxEspresso)

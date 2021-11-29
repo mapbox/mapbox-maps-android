@@ -1,5 +1,7 @@
 package com.mapbox.maps.plugin.viewport.transition
 
+import com.mapbox.maps.plugin.viewport.DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS
+
 /**
  * Options that impact the transition animation.
  *
@@ -51,7 +53,7 @@ class ViewportCameraTransitionOptions private constructor(
    * Builder for [ViewportCameraTransitionOptions].
    */
   class Builder {
-    private var maxDurationMs: Long = 1000L
+    private var maxDurationMs: Long = DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS
 
     /**
      * Sets maximum duration of the generated transitions set in milliseconds,
@@ -68,7 +70,8 @@ class ViewportCameraTransitionOptions private constructor(
      */
     fun build() = ViewportCameraTransitionOptions(maxDurationMs)
   }
-  companion object {
+
+  internal companion object {
     fun build(setUp: Builder.() -> Unit): ViewportCameraTransitionOptions =
       Builder().apply(setUp).build()
   }
