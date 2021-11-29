@@ -382,7 +382,14 @@ Any bug fix / feature _related_ to the `v[major].[minor]` release (when beta has
 
 All bug fixes / features _not related_ to the `v[major].[minor]` release (when beta has already been released) will be simply merged to `main` and included in the _next_ release.
 
+#### Preparing patch release
 If there is the necessity to prepare the patch release for `v[major].[minor]`, we release it from associated `v[major].[minor]` branch with correct `android-v[major].[minor].[patch]` tag and _not_ from separate patch branch.
+
+Preparing patch checklist:
+ - cut patch branch from `v[major].[minor]` branch.
+ - add patch bug fixes / features, updated the changelog.
+ - merge the patch branch to `v[major].[minor]`, delete the patch branch, and start patch release process by creating `android-v[major].[minor].[patch]` tag on `v[major].[minor]` branch.
+ - create PR to `main` branch with changelog entry for the patch release.
 
 ## Working with snapshots
 
