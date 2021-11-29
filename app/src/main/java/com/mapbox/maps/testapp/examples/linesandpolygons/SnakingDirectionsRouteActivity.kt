@@ -32,6 +32,7 @@ import com.mapbox.maps.testapp.databinding.ActivityJavaservicesSnakingDirections
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.concurrent.CopyOnWriteArrayList
 
 /**
  * Rather than showing the directions route all at once, have it "snake" from the origin to destination by showing the
@@ -42,7 +43,7 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
   private lateinit var mapboxDirectionsClient: MapboxDirections
   private lateinit var drawRouteRunnable: Runnable
   private val handler = Handler(Looper.getMainLooper())
-  private val drivingRoutePolyLineFeatureList = mutableListOf<Feature>()
+  private val drivingRoutePolyLineFeatureList = CopyOnWriteArrayList<Feature>()
   private var counterIndex = 0
   private lateinit var binding: ActivityJavaservicesSnakingDirectionsRouteBinding
 
