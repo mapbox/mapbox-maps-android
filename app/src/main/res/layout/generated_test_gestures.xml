@@ -6,6 +6,7 @@
     mapbox:mapbox_gesturesRotateEnabled = "false"
     mapbox:mapbox_gesturesPinchToZoomEnabled = "false"
     mapbox:mapbox_gesturesScrollEnabled = "false"
+    mapbox:mapbox_gesturesSimultaneousRotateAndPinchToZoomEnabled = "false"
     mapbox:mapbox_gesturesPitchEnabled = "false"
     mapbox:mapbox_gesturesScrollMode = "horizontal_and_vertical"
     mapbox:mapbox_gesturesDoubleTapToZoomInEnabled = "false"

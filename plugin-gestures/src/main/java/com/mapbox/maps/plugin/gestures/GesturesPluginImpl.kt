@@ -11,6 +11,7 @@ import android.util.AttributeSet
 import android.view.InputDevice
 import android.view.MotionEvent
 import androidx.annotation.VisibleForTesting
+import androidx.core.animation.addListener
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.android.gestures.*
 import com.mapbox.geojson.Point
@@ -575,7 +576,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
   internal fun handleScale(detector: StandardScaleGestureDetector): Boolean {
     // in order not to mess up initial anchor values
-    if (immediateEaseInProcess) {
+    if (!internalSettings.simultaneousRotateAndPinchToZoomEnabled && immediateEaseInProcess) {
       return true
     }
     val focalPoint = getScaleFocalPoint(detector)
@@ -602,27 +603,53 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
           .anchor(focalPoint)
           .build(),
         actionAfter = {
-          cameraAnimationsPlugin.anchor = scaleCachedAnchor
-          notifyOnScaleListeners(detector)
-          spanSinceLast = abs(detector.currentSpan - detector.previousSpan)
+          onScaleAnimationEnd(detector)
         }
       )
     } else {
       val zoomBy =
         ln(detector.scaleFactor.toDouble()) / ln(PI / 2) * ZOOM_RATE.toDouble() * internalSettings.zoomAnimationAmount.toDouble()
-      easeToImmediately(
-        CameraOptions.Builder()
-          .zoom(mapCameraManagerDelegate.cameraState.zoom + zoomBy)
-          .anchor(focalPoint)
-          .build(),
-        actionAfter = {
-          cameraAnimationsPlugin.anchor = scaleCachedAnchor
-          notifyOnScaleListeners(detector)
-          spanSinceLast = abs(detector.currentSpan - detector.previousSpan)
+      if (internalSettings.simultaneousRotateAndPinchToZoomEnabled) {
+        val zoom = cameraAnimationsPlugin.createZoomAnimator(
+          cameraAnimatorOptions(mapCameraManagerDelegate.cameraState.zoom + zoomBy) {
+            startValue(mapCameraManagerDelegate.cameraState.zoom)
+            owner(MapAnimationOwnerRegistry.GESTURES)
+          }
+        ) {
+          duration = 0
         }
-      )
+        zoom.addListener(
+          onEnd = {
+            onScaleAnimationEnd(detector)
+          }
+        )
+        val anchorAnimator = cameraAnimationsPlugin.createAnchorAnimator(
+          options = cameraAnimatorOptions(focalPoint) {
+            owner(MapAnimationOwnerRegistry.GESTURES)
+          },
+        ) {
+          duration = 0
+        }
+        cameraAnimationsPlugin.playAnimatorsTogether(zoom, anchorAnimator)
+      } else {
+        easeToImmediately(
+          CameraOptions.Builder()
+            .zoom(mapCameraManagerDelegate.cameraState.zoom + zoomBy)
+            .anchor(focalPoint)
+            .build(),
+          actionAfter = {
+            onScaleAnimationEnd(detector)
+          }
+        )
+      }
     }
     return true
+  }
+
+  private fun onScaleAnimationEnd(detector: StandardScaleGestureDetector) {
+    cameraAnimationsPlugin.anchor = scaleCachedAnchor
+    notifyOnScaleListeners(detector)
+    spanSinceLast = abs(detector.currentSpan - detector.previousSpan)
   }
 
   internal fun handleScaleBegin(detector: StandardScaleGestureDetector): Boolean {
@@ -826,28 +853,54 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     rotationDegreesSinceLast: Float
   ): Boolean {
     // in order not to mess up initial anchor values
-    if (immediateEaseInProcess) {
+    if (!internalSettings.simultaneousRotateAndPinchToZoomEnabled && immediateEaseInProcess) {
       return true
     }
     // Calculate map bearing value
     val currentBearing = mapCameraManagerDelegate.cameraState.bearing
     rotateCachedAnchor = cameraAnimationsPlugin.anchor
     val bearing = currentBearing + rotationDegreesSinceLast
-
-    // Rotate the map
     val focalPoint = getRotateFocalPoint(detector)
-    easeToImmediately(
-      CameraOptions.Builder()
-        .anchor(focalPoint)
-        .bearing(bearing)
-        .build(),
-      actionAfter = {
-        cameraAnimationsPlugin.anchor = rotateCachedAnchor
-        notifyOnRotateListeners(detector)
+    // Rotate the map
+    if (internalSettings.simultaneousRotateAndPinchToZoomEnabled) {
+      val bearingAnimator =
+        cameraAnimationsPlugin.createBearingAnimator(
+          cameraAnimatorOptions(bearing) {
+            owner(MapAnimationOwnerRegistry.GESTURES)
+          }
+        ) {
+          duration = 0
+        }
+      bearingAnimator.addListener(
+        onEnd = {
+          onRotateAnimationEnd(detector)
+        }
+      )
+      val anchorAnimator = cameraAnimationsPlugin.createAnchorAnimator(
+        options = cameraAnimatorOptions(focalPoint) {
+          owner(MapAnimationOwnerRegistry.GESTURES)
+        },
+      ) {
+        duration = 0
       }
-    )
-
+      cameraAnimationsPlugin.playAnimatorsTogether(bearingAnimator, anchorAnimator)
+    } else {
+      easeToImmediately(
+        CameraOptions.Builder()
+          .anchor(focalPoint)
+          .bearing(bearing)
+          .build(),
+        actionAfter = {
+          onRotateAnimationEnd(detector)
+        }
+      )
+    }
     return true
+  }
+
+  private fun onRotateAnimationEnd(detector: RotateGestureDetector) {
+    cameraAnimationsPlugin.anchor = rotateCachedAnchor
+    notifyOnRotateListeners(detector)
   }
 
   internal fun handleRotateBegin(detector: RotateGestureDetector): Boolean {
