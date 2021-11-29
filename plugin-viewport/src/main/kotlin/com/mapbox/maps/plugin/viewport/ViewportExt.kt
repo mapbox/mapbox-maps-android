@@ -11,4 +11,3 @@ import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 val MapPluginProviderDelegate.viewport: ViewportPlugin
   @JvmName("getViewport")
   get() = this.getPlugin(Plugin.MAPBOX_VIEWPORT_PLUGIN_ID)!!
-

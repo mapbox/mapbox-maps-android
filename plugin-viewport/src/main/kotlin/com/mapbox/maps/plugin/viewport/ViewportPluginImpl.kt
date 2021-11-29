@@ -19,8 +19,8 @@ import com.mapbox.maps.plugin.viewport.state.ViewportCameraState
 import com.mapbox.maps.plugin.viewport.state.ViewportCameraState.Following
 import com.mapbox.maps.plugin.viewport.state.ViewportCameraState.Idle
 import com.mapbox.maps.plugin.viewport.state.ViewportCameraState.Overview
-import com.mapbox.maps.plugin.viewport.state.ViewportCameraState.TransitionToOverview
 import com.mapbox.maps.plugin.viewport.state.ViewportCameraState.TransitionToFollowing
+import com.mapbox.maps.plugin.viewport.state.ViewportCameraState.TransitionToOverview
 import com.mapbox.maps.plugin.viewport.state.ViewportCameraStateChangedObserver
 import com.mapbox.maps.plugin.viewport.transition.MapboxViewportCameraStateTransition
 import com.mapbox.maps.plugin.viewport.transition.TransitionEndListener
@@ -114,7 +114,7 @@ class ViewportPluginImpl : ViewportPlugin {
         startAnimation(
           stateTransition.transitionToFollowing(data.cameraForFollowing, stateTransitionOptions)
             .apply {
-              addListener( //todo
+              addListener( // todo
                 createTransitionListener(TransitionToFollowing, Following, frameTransitionOptions)
               )
             },
@@ -182,7 +182,7 @@ class ViewportPluginImpl : ViewportPlugin {
         startAnimation(
           stateTransition.transitionToOverview(data.cameraForOverview, stateTransitionOptions)
             .apply {
-              addListener( //todo
+              addListener( // todo
                 createTransitionListener(TransitionToOverview, Overview, frameTransitionOptions)
               )
             },
