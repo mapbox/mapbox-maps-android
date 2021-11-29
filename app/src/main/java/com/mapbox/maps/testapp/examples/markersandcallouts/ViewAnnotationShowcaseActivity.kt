@@ -31,6 +31,7 @@ import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityViewAnnotationShowcaseBinding
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
+import java.util.concurrent.CopyOnWriteArrayList
 
 /**
  * Example how to add view annotations to the map.
@@ -42,7 +43,7 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
 
   private lateinit var mapboxMap: MapboxMap
   private lateinit var viewAnnotationManager: ViewAnnotationManager
-  private val pointList = mutableListOf<Feature>()
+  private val pointList = CopyOnWriteArrayList<Feature>()
   private var markerId = 0
 
   private var markerWidth = 0
