@@ -18,6 +18,10 @@ class MapAnimationOptions private constructor(
    */
   val duration: Long?,
   /**
+   * The amount of time, in milliseconds, to delay starting the animation after animation start.
+   */
+  val startDelay: Long?,
+  /**
    * The animation interpolator.
    * If not set explicitly default interpolator will be taken (CameraAnimatorsFactory.DEFAULT_INTERPOLATOR if using plugin-animation).
    */
@@ -44,6 +48,11 @@ class MapAnimationOptions private constructor(
     private var duration: Long? = null
 
     /**
+     * The amount of time, in milliseconds, to delay starting the animation after animation start.
+     */
+    private var startDelay: Long? = null
+
+    /**
      * The animation interpolator.
      */
     private var interpolator: TimeInterpolator? = null
@@ -64,6 +73,11 @@ class MapAnimationOptions private constructor(
     fun duration(duration: Long) = apply { this.duration = duration }
 
     /**
+     * Set the start delay of the animation in milliseconds.
+     */
+    fun startDelay(startDelay: Long) = apply { this.startDelay = startDelay }
+
+    /**
      * Set the animation interpolator.
      */
     fun interpolator(interpolator: TimeInterpolator) = apply { this.interpolator = interpolator }
@@ -71,49 +85,44 @@ class MapAnimationOptions private constructor(
     /**
      * Set the animator start / cancel / end listener.
      */
-    fun animatorListener(animatorListener: Animator.AnimatorListener) = apply { this.animatorListener = animatorListener }
+    fun animatorListener(animatorListener: Animator.AnimatorListener) =
+      apply { this.animatorListener = animatorListener }
 
     /**
      * Build an actual [MapAnimationOptions] object.
      */
-    fun build(): MapAnimationOptions = MapAnimationOptions(owner, duration, interpolator, animatorListener)
-  }
-
-  /**
-   * Hash code method.
-   */
-  override fun hashCode(): Int {
-    var result = duration ?: 0
-    result = 31 * result + (owner?.hashCode() ?: 0)
-    result = 31 * result + (interpolator?.hashCode() ?: 0)
-    result = 31 * result + (animatorListener?.hashCode() ?: 0)
-    return result.toInt()
+    fun build(): MapAnimationOptions =
+      MapAnimationOptions(owner, duration, startDelay, interpolator, animatorListener)
   }
 
   /**
    * Equals method.
    */
   override fun equals(other: Any?): Boolean {
-    if (this === other) {
-      return true
-    }
-    if (other == null || javaClass != other.javaClass) {
-      return false
-    }
-    val that = other as MapAnimationOptions
-    if (that.owner != owner) {
-      return false
-    }
-    if (that.duration != duration) {
-      return false
-    }
-    if (that.interpolator != interpolator) {
-      return false
-    }
-    if (that.animatorListener != animatorListener) {
-      return false
-    }
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
+
+    other as MapAnimationOptions
+
+    if (owner != other.owner) return false
+    if (duration != other.duration) return false
+    if (startDelay != other.startDelay) return false
+    if (interpolator != other.interpolator) return false
+    if (animatorListener != other.animatorListener) return false
+
     return true
+  }
+
+  /**
+   * Hash code method.
+   */
+  override fun hashCode(): Int {
+    var result = owner?.hashCode() ?: 0
+    result = 31 * result + (duration?.hashCode() ?: 0)
+    result = 31 * result + (startDelay?.hashCode() ?: 0)
+    result = 31 * result + (interpolator?.hashCode() ?: 0)
+    result = 31 * result + (animatorListener?.hashCode() ?: 0)
+    return result
   }
 
   /**

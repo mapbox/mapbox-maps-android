@@ -385,7 +385,16 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
       latch.countDown()
     }
 
-    mainHandler.post { cameraAnimationPlugin.easeTo(cameraOptions, mapAnimationOptions { duration(0) }) }
+    mainHandler.post {
+      cameraAnimationPlugin.easeTo(
+        cameraOptions,
+        mapAnimationOptions {
+          duration(
+            0
+          )
+        }
+      )
+    }
 
     if (latch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
       assertArrayEquals(expectedValues.toDoubleArray(), updatedValues.toDoubleArray(), EPS)
@@ -443,6 +452,123 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     mainHandler.post { cameraAnimationPlugin.easeTo(cameraOptions1, mapAnimationOptions { duration(0) }) }
     mainHandler.postDelayed({ cameraAnimationPlugin.easeTo(cameraOptions2, mapAnimationOptions { duration(0) }) }, 500)
     mainHandler.postDelayed({ cameraAnimationPlugin.easeTo(cameraOptions3, mapAnimationOptions { duration(0) }) }, 1000)
+
+    if (latch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+      assertArrayEquals(expectedValues.toDoubleArray(), updatedValues.toDoubleArray(), EPS)
+    } else {
+      throw TimeoutException()
+    }
+  }
+
+  @Test
+  fun testEaseToStartDelayCanceled() {
+    if (ignoreTestForGivenAbi()) {
+      return
+    }
+    val targetBearing1 = 5.0
+    val targetBearing2 = 10.0
+    val targetBearing3 = 15.0
+    val cameraOptions1 = CameraOptions.Builder().bearing(targetBearing1).build()
+    val cameraOptions2 = CameraOptions.Builder().bearing(targetBearing2).build()
+    val cameraOptions3 = CameraOptions.Builder().bearing(targetBearing3).build()
+    val expectedValues = mutableSetOf(targetBearing1, targetBearing3)
+    val updatedValues = mutableListOf<Double>()
+
+    val cameraAnimationPlugin = mapView.camera
+    val latch = CountDownLatch(2)
+    cameraAnimationPlugin.addCameraBearingChangeListener {
+      Logger.i(TAG, "onChanged $it")
+      updatedValues.add(it)
+      latch.countDown()
+    }
+
+    mainHandler.post {
+      cameraAnimationPlugin.easeTo(
+        cameraOptions1,
+        mapAnimationOptions {
+          duration(1)
+          startDelay(1)
+        }
+      )
+    }
+
+    mainHandler.postDelayed(
+      {
+        cameraAnimationPlugin.easeTo(
+          cameraOptions2,
+          mapAnimationOptions {
+            duration(1)
+            startDelay(3000)
+          }
+        )
+      },
+      100
+    )
+
+    // cameraOptions2 will be canceled since it's still waiting to start
+    mainHandler.postDelayed(
+      {
+        cameraAnimationPlugin.easeTo(
+          cameraOptions3,
+          mapAnimationOptions {
+            duration(1)
+            startDelay(0)
+          }
+        )
+      },
+      500
+    )
+
+    if (latch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
+      assertArrayEquals(expectedValues.toDoubleArray(), updatedValues.toDoubleArray(), EPS)
+    } else {
+      throw TimeoutException()
+    }
+  }
+
+  @Test
+  fun testEaseToStartDelay() {
+    if (ignoreTestForGivenAbi()) {
+      return
+    }
+    val targetBearing1 = 5.0
+    val cameraOptions1 = CameraOptions.Builder().bearing(targetBearing1).build()
+    val expectedValues = mutableSetOf(targetBearing1)
+    val updatedValues = mutableListOf<Double>()
+
+    val cameraAnimationPlugin = mapView.camera
+    val latch = CountDownLatch(2)
+    cameraAnimationPlugin.addCameraBearingChangeListener {
+      Logger.i(TAG, "onChanged $it")
+      updatedValues.add(it)
+      latch.countDown()
+    }
+
+    mainHandler.post {
+      cameraAnimationPlugin.easeTo(
+        cameraOptions1,
+        mapAnimationOptions {
+          duration(1)
+          startDelay(1000)
+        }
+      )
+    }
+    mainHandler.postDelayed(
+      {
+        // The animation is still waiting, no update value
+        assertEquals(0, updatedValues.size)
+      },
+      900
+    )
+
+    mainHandler.postDelayed(
+      {
+        // The animation was started and received update value
+        assertEquals(1, updatedValues.size)
+        latch.countDown()
+      },
+      1100
+    )
 
     if (latch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
       assertArrayEquals(expectedValues.toDoubleArray(), updatedValues.toDoubleArray(), EPS)
