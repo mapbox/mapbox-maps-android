@@ -1314,7 +1314,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     pixel: ScreenCoordinate
   ): Boolean {
     if (mapProjectionDelegate.getMapProjection() != MapProjection.Mercator) {
-      return true
+      return false
     }
     // Prevent drag start in area around horizon to avoid sharp map movements
     val topMapMargin = 0.04 * mapTransformDelegate.getSize().height
