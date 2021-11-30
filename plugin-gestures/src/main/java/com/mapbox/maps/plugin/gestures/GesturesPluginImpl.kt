@@ -14,9 +14,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.animation.addListener
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.android.gestures.*
-import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.CameraState
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.MapProjection
@@ -1368,27 +1366,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       easeToImmediately(cameraOptions)
     }
     return true
-  }
-
-  private fun getAdjustedCameraCenter(
-    currentCamera: CameraState,
-    targetCamera: CameraOptions
-  ): CameraOptions {
-    val translationLng = targetCamera.center!!.longitude() - currentCamera.center.longitude()
-    val translationLat = targetCamera.center!!.latitude() - currentCamera.center.latitude()
-    val maximumDistance =
-      SCROLL_LIMITING_FACTOR / 2.0.pow(currentCamera.zoom)
-    val currentDistance = hypot(translationLng, translationLat)
-    return if (currentDistance > maximumDistance) {
-      targetCamera.toBuilder().center(
-        Point.fromLngLat(
-          currentCamera.center.longitude() + translationLng * (maximumDistance / currentDistance),
-          currentCamera.center.latitude() + translationLat * (maximumDistance / currentDistance)
-        )
-      ).build()
-    } else {
-      targetCamera
-    }
   }
 
   internal fun handleMoveEnd(detector: MoveGestureDetector) {
