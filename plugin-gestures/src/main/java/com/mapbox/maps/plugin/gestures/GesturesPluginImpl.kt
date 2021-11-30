@@ -11,6 +11,7 @@ import android.util.AttributeSet
 import android.view.InputDevice
 import android.view.MotionEvent
 import androidx.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting.PRIVATE
 import androidx.core.animation.addListener
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.android.gestures.*
@@ -25,7 +26,11 @@ import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAn
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
-import com.mapbox.maps.plugin.delegates.*
+import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
+import com.mapbox.maps.plugin.delegates.MapDelegateProvider
+import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
+import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
+import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettingsBase
@@ -354,7 +359,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
           // Scale the map by the appropriate power of two factor
           val currentZoom = mapCameraManagerDelegate.cameraState.zoom
           val cachedAnchor = cameraAnimationsPlugin.anchor
-          val anchor = ScreenCoordinate(event.x.toDouble(), event.y.toDouble())
+          val anchor = event.toScreenCoordinate()
           val zoom =
             cameraAnimationsPlugin.calculateScaleBy(scrollDist.toDouble(), currentZoom)
           easeToImmediately(
@@ -406,7 +411,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
      * Called when an on single tap up confirmed gesture was detected.
      */
     override fun onSingleTapConfirmed(motionEvent: MotionEvent): Boolean {
-      return handleClickEvent(ScreenCoordinate(motionEvent.x.toDouble(), motionEvent.y.toDouble()))
+      return handleClickEvent(motionEvent.toScreenCoordinate())
     }
 
     /**
@@ -422,7 +427,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
      * Called when an on long press gesture was detected.
      */
     override fun onLongPress(motionEvent: MotionEvent) {
-      handleLongPressEvent(ScreenCoordinate(motionEvent.x.toDouble(), motionEvent.y.toDouble()))
+      handleLongPressEvent(motionEvent.toScreenCoordinate())
     }
 
     /**
@@ -1187,7 +1192,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   ): Boolean {
     val action = motionEvent.actionMasked
     if (action == MotionEvent.ACTION_DOWN) {
-      doubleTapFocalPoint = ScreenCoordinate(motionEvent.x.toDouble(), motionEvent.y.toDouble())
+      doubleTapFocalPoint = motionEvent.toScreenCoordinate()
       // disable the move detector in preparation for the quickzoom,
       // so that we don't move the map's center slightly before the quickzoom is started (see #14227)
       gesturesManager.moveGestureDetector.isEnabled = false
@@ -1228,7 +1233,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       return false
     }
 
-    if (isPointAboveHorizon(ScreenCoordinate(e2.x.toDouble(), e2.y.toDouble()))) {
+    if (isPointAboveHorizon(e2.toScreenCoordinate())) {
       return false
     }
 
@@ -1310,7 +1315,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     return true
   }
 
-  private fun isPointAboveHorizon(
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal fun isPointAboveHorizon(
     pixel: ScreenCoordinate
   ): Boolean {
     if (mapProjectionDelegate.getMapProjection() != MapProjection.Mercator) {
@@ -1698,3 +1704,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     const val MAX_SHOVE_ANGLE = 45.0f
   }
 }
+
+/**
+ * Convert a motion event to ScreenCoordinate.
+ */
+private fun MotionEvent.toScreenCoordinate() = ScreenCoordinate(x.toDouble(), y.toDouble())
