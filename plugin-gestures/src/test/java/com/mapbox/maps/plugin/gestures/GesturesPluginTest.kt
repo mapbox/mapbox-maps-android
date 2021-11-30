@@ -17,7 +17,10 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.Size
+import com.mapbox.maps.plugin.MapProjection
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.ScrollMode
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
@@ -50,6 +53,7 @@ class GesturesPluginTest {
   private val mapTransformDelegate: MapTransformDelegate = mockk(relaxUnitFun = true)
   private val mapCameraManagerDelegate: MapCameraManagerDelegate = mockk(relaxUnitFun = true)
   private val mapPluginProviderDelegate: MapPluginProviderDelegate = mockk(relaxUnitFun = true)
+  private val mapProjectionDelegate: MapProjectionDelegate = mockk(relaxUnitFun = true)
   private val cameraAnimationsPlugin: CameraAnimationsPlugin = mockk(relaxed = true)
 
   private val gesturesManager: AndroidGesturesManager = mockk(relaxed = true)
@@ -58,11 +62,15 @@ class GesturesPluginTest {
   private var scaleGestureDetector: StandardScaleGestureDetector = mockk(relaxUnitFun = true)
   private var moveGestureDetector: MoveGestureDetector = mockk(relaxUnitFun = true)
 
+  private val motionEvent1 = mockk<MotionEvent>()
+  private val motionEvent2 = mockk<MotionEvent>()
+
   private val typedArray: TypedArray = mockk(relaxed = true)
   private val pack = "com.mapbox.maps"
 
   private lateinit var presenter: GesturesPluginImpl
 
+  @MapboxExperimental
   @Before
   fun setUp() {
     mockkObject(GesturesAttributeParser)
@@ -86,7 +94,18 @@ class GesturesPluginTest {
     every { mapDelegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
     every { mapDelegateProvider.mapTransformDelegate } returns mapTransformDelegate
     every { mapDelegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
+    every { mapDelegateProvider.mapProjectionDelegate } returns mapProjectionDelegate
+    every { mapProjectionDelegate.getMapProjection() } returns MapProjection.Mercator
     every { mapPluginProviderDelegate.getPlugin<CameraAnimationsPlugin>(Plugin.MAPBOX_CAMERA_PLUGIN_ID) } returns cameraAnimationsPlugin
+
+    every { mapTransformDelegate.getSize() } returns Size(100.0f, 100.0f)
+    every { mapCameraManagerDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
+    every { mapCameraManagerDelegate.pixelForCoordinate(any()) } returns ScreenCoordinate(0.0, -10.0)
+
+    every { motionEvent1.x } returns 0.0f
+    every { motionEvent1.y } returns 0.0f
+    every { motionEvent2.x } returns 0.0f
+    every { motionEvent2.y } returns 0.0f
 
     presenter = GesturesPluginImpl(context, attrs, mockk(relaxed = true))
 
@@ -308,16 +327,16 @@ class GesturesPluginTest {
   fun verifyFlingListener() {
     val listener: OnFlingListener = mockk(relaxed = true)
     presenter.addOnFlingListener(listener)
-    presenter.handleFlingEvent(mockk(), mockk(), 0.0f, 0.0f)
+    presenter.handleFlingEvent(motionEvent1, motionEvent2, 0.0f, 0.0f)
     verify { listener.onFling() }
     presenter.removeOnFlingListener(listener)
-    presenter.handleFlingEvent(mockk(), mockk(), 0.0f, 0.0f)
+    presenter.handleFlingEvent(motionEvent1, motionEvent2, 0.0f, 0.0f)
     verify(exactly = 1) { listener.onFling() }
   }
 
   @Test
   fun verifyFlingIgnoreSmallDisplacement() {
-    val result = presenter.handleFlingEvent(mockk(), mockk(), 0.1f, 0.1f)
+    val result = presenter.handleFlingEvent(motionEvent1, motionEvent2, 0.1f, 0.1f)
     assertFalse(result)
   }
 
@@ -326,7 +345,7 @@ class GesturesPluginTest {
     val listener: OnFlingListener = mockk(relaxed = true)
     presenter.addOnFlingListener(listener)
     presenter.scrollEnabled = false
-    val result = presenter.handleFlingEvent(mockk(), mockk(), 0.1f, 0.1f)
+    val result = presenter.handleFlingEvent(motionEvent1, motionEvent2, 0.1f, 0.1f)
     assertFalse(result)
     verify(exactly = 0) { listener.onFling() }
   }
@@ -878,6 +897,7 @@ class FlingGestureTest(
   private val mapCameraManagerDelegate: MapCameraManagerDelegate = mockk(relaxUnitFun = true)
   private val mapTransformDelegate: MapTransformDelegate = mockk(relaxUnitFun = true)
   private val mapPluginProviderDelegate: MapPluginProviderDelegate = mockk(relaxUnitFun = true)
+  private val mapProjectionDelegate: MapProjectionDelegate = mockk(relaxUnitFun = true)
   private val cameraAnimationsPlugin: CameraAnimationsPlugin = mockk(relaxed = true)
 
   private lateinit var presenter: GesturesPluginImpl
@@ -885,9 +905,11 @@ class FlingGestureTest(
   private val typedArray: TypedArray = mockk(relaxed = true)
   private val pack = "com.mapbox.maps"
 
-  private val motionEvent = mockk<MotionEvent>()
+  private val motionEvent1 = mockk<MotionEvent>()
+  private val motionEvent2 = mockk<MotionEvent>()
   private val mapAnimationOptionsSlot = slot<MapAnimationOptions>()
 
+  @MapboxExperimental
   @Before
   fun prepare() {
     mockkObject(GesturesAttributeParser)
@@ -911,7 +933,12 @@ class FlingGestureTest(
     every { mapDelegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
     every { mapDelegateProvider.mapTransformDelegate } returns mapTransformDelegate
     every { mapDelegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
+    every { mapDelegateProvider.mapProjectionDelegate } returns mapProjectionDelegate
     every { mapPluginProviderDelegate.getPlugin<CameraAnimationsPlugin>(Plugin.MAPBOX_CAMERA_PLUGIN_ID) } returns cameraAnimationsPlugin
+    every { mapProjectionDelegate.getMapProjection() } returns MapProjection.Mercator
+    every { mapTransformDelegate.getSize() } returns Size(100.0f, 100.0f)
+    every { mapCameraManagerDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
+    every { mapCameraManagerDelegate.pixelForCoordinate(any()) } returns ScreenCoordinate(0.0, -10.0)
 
     presenter = GesturesPluginImpl(context, attrs, mockk(relaxed = true))
 
@@ -933,14 +960,16 @@ class FlingGestureTest(
       )
     } returns CameraOptions.Builder().build()
     presenter.updateSettings { scrollMode = targetScrollMode }
-    every { motionEvent.x } returns 0.0f
-    every { motionEvent.y } returns 0.0f
+    every { motionEvent1.x } returns 0.0f
+    every { motionEvent1.y } returns 0.0f
+    every { motionEvent2.x } returns 0.0f
+    every { motionEvent2.y } returns 0.0f
   }
 
   @Test
   fun testFling() {
     val result =
-      presenter.handleFlingEvent(motionEvent, mockk(), targetVelocity.first, targetVelocity.second)
+      presenter.handleFlingEvent(motionEvent1, motionEvent2, targetVelocity.first, targetVelocity.second)
     verify {
       mapCameraManagerDelegate.getDragCameraOptions(
         ScreenCoordinate(0.0, 0.0),
