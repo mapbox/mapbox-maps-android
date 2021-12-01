@@ -1018,8 +1018,24 @@ class GesturePluginTest {
     return MotionEvent.obtain(200, 500, action, 15.0f, 10.0f, 0)
   }
 
+  @Test
+  fun verifyDefaultShoveGestureAngle() {
+    verify {
+      gesturesManager.shoveGestureDetector.maxShoveAngle = MAX_SHOVE_ANGLE
+    }
+  }
+
+  @Test
+  fun verifyDefaultRotationAngleThreshold() {
+    verify {
+      gesturesManager.rotateGestureDetector.angleThreshold = ROTATION_ANGLE_THRESHOLD
+    }
+  }
+
   private companion object {
     const val FLING_DISPLACEMENT = 1000.0
     const val FLING_VELOCITY = 10000f
+    const val ROTATION_ANGLE_THRESHOLD = 3.0f
+    const val MAX_SHOVE_ANGLE = 45.0f
   }
 }
