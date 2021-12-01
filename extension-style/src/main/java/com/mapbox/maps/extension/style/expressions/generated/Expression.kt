@@ -2607,7 +2607,7 @@ class Expression : Value {
      */
     @JvmStatic
     internal fun literal(value: List<Any>): Expression {
-      return ExpressionBuilder("literal").addArgument(Expression(value)).build()
+      return Expression(value)
     }
 
     /**
