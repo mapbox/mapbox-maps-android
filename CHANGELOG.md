@@ -23,6 +23,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Core renderer prints its version on initialization. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
 * Introduce experimental `MapboxMap.setMemoryBudget` method for setting memory budget for the map and runtime "resource-budget" property for data sources. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
 * Improve performance by avoiding re-layout of invisible fading tiles. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
+* Add utility methods to `CoordinateBounds`. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
 
 ## Bug fixes 🐞
 * Fix `MapView.onLowMemory` not being called on low resources. ([#780](https://github.com/mapbox/mapbox-maps-android/pull/780))
