@@ -25,7 +25,7 @@ data class LocationComponentSettings @JvmOverloads constructor(
   var pulsingColor: Int = Color.parseColor("#4A90E2"),
 
   /**
-   * The maximum radius of the pulsing circle. Only work for 2D location puck.
+   * The maximum radius of the pulsing circle. Only work for 2D location puck. This property is specified in pixels.
    */
   var pulsingMaxRadius: Float = 10f,
 

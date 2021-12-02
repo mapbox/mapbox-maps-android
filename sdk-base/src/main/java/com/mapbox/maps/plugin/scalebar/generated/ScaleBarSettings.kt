@@ -20,22 +20,22 @@ data class ScaleBarSettings @JvmOverloads constructor(
   var position: Int = Gravity.TOP or Gravity.START,
 
   /**
-   * Defines the margin to the left that the scale bar honors.
+   * Defines the margin to the left that the scale bar honors. This property is specified in pixels.
    */
   var marginLeft: Float = 4f,
 
   /**
-   * Defines the margin to the top that the scale bar honors.
+   * Defines the margin to the top that the scale bar honors. This property is specified in pixels.
    */
   var marginTop: Float = 4f,
 
   /**
-   * Defines the margin to the right that the scale bar honors.
+   * Defines the margin to the right that the scale bar honors. This property is specified in pixels.
    */
   var marginRight: Float = 4f,
 
   /**
-   * Defines the margin to the bottom that the scale bar honors.
+   * Defines the margin to the bottom that the scale bar honors. This property is specified in pixels.
    */
   var marginBottom: Float = 4f,
 
@@ -55,27 +55,27 @@ data class ScaleBarSettings @JvmOverloads constructor(
   var secondaryColor: Int = Color.WHITE,
 
   /**
-   * Defines width of the border for the scale bar.
+   * Defines width of the border for the scale bar. This property is specified in pixels.
    */
   var borderWidth: Float = 2f,
 
   /**
-   * Defines height of the scale bar.
+   * Defines height of the scale bar. This property is specified in pixels.
    */
   var height: Float = 2f,
 
   /**
-   * Defines margin of the text bar of the scale bar.
+   * Defines margin of the text bar of the scale bar. This property is specified in pixels.
    */
   var textBarMargin: Float = 8f,
 
   /**
-   * Defines text border width of the scale bar.
+   * Defines text border width of the scale bar. This property is specified in pixels.
    */
   var textBorderWidth: Float = 2f,
 
   /**
-   * Defines text size of the scale bar.
+   * Defines text size of the scale bar. This property is specified in pixels.
    */
   var textSize: Float = 8f,
 

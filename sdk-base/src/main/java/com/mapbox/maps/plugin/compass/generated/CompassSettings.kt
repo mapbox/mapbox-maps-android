@@ -20,22 +20,22 @@ data class CompassSettings @JvmOverloads constructor(
   var position: Int = Gravity.TOP or Gravity.END,
 
   /**
-   * Defines the margin to the left that the compass icon honors.
+   * Defines the margin to the left that the compass icon honors. This property is specified in pixels.
    */
   var marginLeft: Float = 4f,
 
   /**
-   * Defines the margin to the top that the compass icon honors.
+   * Defines the margin to the top that the compass icon honors. This property is specified in pixels.
    */
   var marginTop: Float = 4f,
 
   /**
-   * Defines the margin to the right that the compass icon honors.
+   * Defines the margin to the right that the compass icon honors. This property is specified in pixels.
    */
   var marginRight: Float = 4f,
 
   /**
-   * Defines the margin to the bottom that the compass icon honors.
+   * Defines the margin to the bottom that the compass icon honors. This property is specified in pixels.
    */
   var marginBottom: Float = 4f,
 
