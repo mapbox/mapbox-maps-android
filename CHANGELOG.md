@@ -2,6 +2,21 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.2.0-rc.1 December 2, 2021
+
+## Features ✨ and improvements 🏁
+* Cancellable queryRenderFeatures ([#878](https://github.com/mapbox/mapbox-maps-android/pull/878))
+
+## Bug fixes 🐞
+* Do not allow to use one associatedFeatureId with multiple view annotations. ([#896](https://github.com/mapbox/mapbox-maps-android/pull/896))
+* Fix an issue where shove gesture was not detected when angle between touch points are not horizontal. ([#875](https://github.com/mapbox/mapbox-maps-android/pull/875))
+* Fix gestures at high camera pitch near horizon line. ([#927](https://github.com/mapbox/mapbox-maps-android/pull/927))
+* Reduce drag sensitivity around and above the horizon. ([#925](https://github.com/mapbox/mapbox-maps-android/pull/925))
+* Fix Fading tiles layout visibility issue on globe view projection zooming in/out. ([#925](https://github.com/mapbox/mapbox-maps-android/pull/925))
+
+## Dependencies
+* Bump gl-native to v10.2.0-rc.1, common to v21.0.0-rc.2. ([#925](https://github.com/mapbox/mapbox-maps-android/pull/925))
+
 # 10.2.0-beta.1 November 18, 2021
 
 ## Features ✨ and improvements 🏁
