@@ -25,6 +25,11 @@ data class GesturesSettings @JvmOverloads constructor(
   var scrollEnabled: Boolean = true,
 
   /**
+   * Whether rotation is enabled for the pinch to zoom gesture.
+   */
+  var simultaneousRotateAndPinchToZoomEnabled: Boolean = true,
+
+  /**
    * Whether the pitch gesture is enabled.
    */
   var pitchEnabled: Boolean = true,

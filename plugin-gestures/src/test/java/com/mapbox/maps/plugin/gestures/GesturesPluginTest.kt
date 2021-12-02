@@ -1,5 +1,7 @@
 package com.mapbox.maps.plugin.gestures
 
+import android.animation.Animator
+import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.PointF
@@ -508,7 +510,8 @@ class GesturesPluginTest {
   }
 
   @Test
-  fun verifyScale() {
+  fun verifyScaleWithSimultaneousRotateAndPinchToZoomDisabled() {
+    presenter.updateSettings { simultaneousRotateAndPinchToZoomEnabled = false }
     every { mapCameraManagerDelegate.cameraState } returns CameraState(
       Point.fromLngLat(0.0, 0.0),
       EdgeInsets(0.0, 0.0, 0.0, 0.0),
@@ -529,6 +532,37 @@ class GesturesPluginTest {
     assert(result)
     // setMoveDetectorEnabled
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
+  }
+
+  @Test
+  fun verifyScaleWithSimultaneousRotateAndPinchToZoomEnabled() {
+    val zoomAnimator = mockk<ValueAnimator>(relaxUnitFun = true)
+    every { cameraAnimationsPlugin.createZoomAnimator(any(), any()) } returns zoomAnimator
+    val endListenerSlot = slot<Animator.AnimatorListener>()
+
+    every { mapCameraManagerDelegate.cameraState } returns CameraState(
+      Point.fromLngLat(0.0, 0.0),
+      EdgeInsets(0.0, 0.0, 0.0, 0.0),
+      1.0,
+      0.0,
+      0.0
+    )
+    val scaleDetector = mockk<StandardScaleGestureDetector>()
+    every { scaleDetector.currentSpan } returns 100.0f
+    every { scaleDetector.previousSpan } returns 80.0f
+    every { scaleDetector.focalPoint } returns PointF(1.0f, 1.0f)
+    every { scaleDetector.scaleFactor } returns 2.0f
+    every { mapCameraManagerDelegate.cameraState.zoom } returns 1.0
+
+    val listener: OnScaleListener = mockk(relaxed = true)
+    presenter.addOnScaleListener(listener)
+    val result = presenter.handleScale(scaleDetector)
+    assert(result)
+    verify { cameraAnimationsPlugin.playAnimatorsTogether(any(), any()) }
+
+    verify { zoomAnimator.addListener(capture(endListenerSlot)) }
+    endListenerSlot.captured.onAnimationEnd(mockk())
+    verify { listener.onScale(any()) }
   }
 
   @Test
@@ -645,7 +679,8 @@ class GesturesPluginTest {
   }
 
   @Test
-  fun verifyRotate() {
+  fun verifyRotateWithSimultaneousRotateAndPinchToZoomDisabled() {
+    presenter.updateSettings { simultaneousRotateAndPinchToZoomEnabled = false }
     val rotateGestureDetector = mockk<RotateGestureDetector>()
     val listener: OnRotateListener = mockk(relaxed = true)
     presenter.addOnRotateListener(listener)
@@ -660,6 +695,30 @@ class GesturesPluginTest {
     val result = presenter.handleRotate(rotateGestureDetector, 34.0f)
     assert(result)
     verify { cameraAnimationsPlugin.easeTo(any(), any()) }
+  }
+
+  @Test
+  fun verifyRotateWithSimultaneousRotateAndPinchToZoomEnabled() {
+    val bearingAnimator = mockk<ValueAnimator>(relaxUnitFun = true)
+    every {
+      cameraAnimationsPlugin.createBearingAnimator(
+        any(),
+        any(),
+        any()
+      )
+    } returns bearingAnimator
+    val endListenerSlot = slot<Animator.AnimatorListener>()
+
+    val rotateGestureDetector = mockk<RotateGestureDetector>()
+    every { rotateGestureDetector.focalPoint } returns PointF(1.0f, 1.0f)
+    val listener: OnRotateListener = mockk(relaxed = true)
+    presenter.addOnRotateListener(listener)
+    val result = presenter.handleRotate(rotateGestureDetector, 34.0f)
+    assert(result)
+    verify { cameraAnimationsPlugin.playAnimatorsTogether(any(), any()) }
+    verify { bearingAnimator.addListener(capture(endListenerSlot)) }
+    endListenerSlot.captured.onAnimationEnd(mockk())
+    verify { listener.onRotate(any()) }
   }
 
   @Test
