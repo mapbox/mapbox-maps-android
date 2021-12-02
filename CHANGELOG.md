@@ -5,7 +5,7 @@ Mapbox welcomes participation and contributions from everyone.
 # 10.2.0-rc.1 December 2, 2021
 
 ## Bug fixes 🐞
-* Fix suggestion message to replace deprecated `queryRenderFeatures` overloaded methods. ([#878](https://github.com/mapbox/mapbox-maps-android/pull/878))
+* Fix `replaceWith` template to replace deprecated `queryRenderFeatures` overloaded methods. ([#878](https://github.com/mapbox/mapbox-maps-android/pull/878))
 * Do not allow to use one `associatedFeatureId` with multiple view annotations. ([#896](https://github.com/mapbox/mapbox-maps-android/pull/896))
 * Fix an issue where shove gesture was not detected when angle between touch points are not horizontal. ([#875](https://github.com/mapbox/mapbox-maps-android/pull/875))
 * Fix gestures at high camera pitch near horizon line. ([#927](https://github.com/mapbox/mapbox-maps-android/pull/927), [#925](https://github.com/mapbox/mapbox-maps-android/pull/925))
