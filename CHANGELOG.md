@@ -10,7 +10,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix an issue where shove gesture was not detected when angle between touch points are not horizontal. ([#875](https://github.com/mapbox/mapbox-maps-android/pull/875))
 * Fix gestures at high camera pitch near horizon line. ([#927](https://github.com/mapbox/mapbox-maps-android/pull/927), [#925](https://github.com/mapbox/mapbox-maps-android/pull/925))
 * Fix fading tiles layout visibility issue on globe view projection zooming in/out. ([#925](https://github.com/mapbox/mapbox-maps-android/pull/925))
-* Add config to enable simultaneous zoom and rotate gesture. ([#885](https://github.com/mapbox/mapbox-maps-android/pull/885))
+* Allow simultaneous zoom and rotate gesture by default and add `GesturesSettings#simultaneousRotateAndPinchToZoomEnabled` config option. ([#885](https://github.com/mapbox/mapbox-maps-android/pull/885))
 
 ## Dependencies
 * Bump gl-native to v10.2.0-rc.1, common to v21.0.0-rc.2. ([#925](https://github.com/mapbox/mapbox-maps-android/pull/925))
