@@ -1284,10 +1284,12 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     // limit animation time to Android SDK default animation time
     val animationTime = (velocityXY / pitchFactor).toLong()
 
+    // start the fling animation from a simulated touch point at the bottom of the display to reduce the fling speed at high pitch level.
+    val simulateTouchPoint = ScreenCoordinate(centerScreen.x, centerScreen.y * 2.0)
     cameraAnimationsPlugin.easeTo(
       mapCameraManagerDelegate.getDragCameraOptions(
-        centerScreen,
-        ScreenCoordinate(centerScreen.x + offsetX, centerScreen.y + offsetY)
+        simulateTouchPoint,
+        ScreenCoordinate(simulateTouchPoint.x + offsetX, simulateTouchPoint.y + offsetY)
       ),
       mapAnimationOptions {
         owner(MapAnimationOwnerRegistry.GESTURES)
