@@ -1,0 +1,569 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>AnnotationManagerImpl</title>
+<link href="../../../../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script><script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script><link href="../../../styles/style.css" rel="Stylesheet"><link href="../../../styles/logo-styles.css" rel="Stylesheet"><link href="../../../styles/jetbrains-mono.css" rel="Stylesheet"><link href="../../../styles/main.css" rel="Stylesheet"><script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script><script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script><script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script><script type="text/javascript" src="../../../scripts/main.js" async="async"></script>  </head>
+  <body>
+    <div id="container">
+      <div id="leftColumn"><a href="../../../index.html">
+          <div id="logo"></div>
+        </a>
+        <div id="paneSearch"></div>
+        <div id="sideMenu"></div>
+      </div>
+      <div id="main">
+        <div id="leftToggler"><span class="icon-toggler"></span></div>
+<script type="text/javascript" src="../../../scripts/main.js"></script>        <div class="main-content" id="content" pageIds="mapbox-maps-android::com.mapbox.maps.plugin.annotation/AnnotationManagerImpl///PointingToDeclaration//540127926">
+          <div class="navigation-wrapper" id="navigation-wrapper">
+            <div class="breadcrumbs"><a href="../../../index.html">mapbox-maps-android</a>/<a href="../index.html">com.mapbox.maps.plugin.annotation</a>/<a href="index.html">AnnotationManagerImpl</a></div>
+            <div class="pull-right d-flex">
+              <div id="searchBar"></div>
+            </div>
+          </div>
+          <div class="cover ">
+            <h1 class="cover"><span>Annotation</span><wbr></wbr><span>Manager</span><wbr></wbr><span>Impl</span></h1>
+            <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">abstract class <a href="index.html">AnnotationManagerImpl</a>&lt;<a href="index.html">G</a> : <span data-unresolved-link="com.mapbox.geojson/Geometry///PointingToDeclaration/">Geometry</span>, <a href="index.html">T</a> : <a href="../-annotation/index.html">Annotation</a>&lt;<a href="index.html">G</a>&gt;, <a href="index.html">S</a> : <a href="../-annotation-options/index.html">AnnotationOptions</a>&lt;<a href="index.html">G</a>, <a href="index.html">T</a>&gt;, <a href="index.html">D</a> : <a href="../-on-annotation-drag-listener/index.html">OnAnnotationDragListener</a>&lt;<a href="index.html">T</a>&gt;, <a href="index.html">U</a> : <a href="../-on-annotation-click-listener/index.html">OnAnnotationClickListener</a>&lt;<a href="index.html">T</a>&gt;, <a href="index.html">V</a> : <a href="../-on-annotation-long-click-listener/index.html">OnAnnotationLongClickListener</a>&lt;<a href="index.html">T</a>&gt;, <a href="index.html">I</a> : <a href="../-on-annotation-interaction-listener/index.html">OnAnnotationInteractionListener</a>&lt;<a href="index.html">T</a>&gt;, <a href="index.html">L</a> : <a href="../../com.mapbox.maps.extension.style.layers/-layer/index.html">Layer</a>&gt;(delegateProvider: <a href="../../com.mapbox.maps.plugin.delegates/-map-delegate-provider/index.html">MapDelegateProvider</a>, annotationConfig: <a href="../-annotation-config/index.html">AnnotationConfig</a>?) : <a href="../-annotation-manager/index.html">AnnotationManager</a>&lt;<a href="index.html">G</a>, <a href="index.html">T</a>, <a href="index.html">S</a>, <a href="index.html">D</a>, <a href="index.html">U</a>, <a href="index.html">V</a>, <a href="index.html">I</a>&gt; <span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><p class="paragraph">Base class for annotation managers</p></div></div>
+          </div>
+          <div class="tabbedcontent">
+            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button><button class="section-tab" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button><button class="section-tab" data-togglable="Inheritors">Inheritors</button></div>
+            <div class="tabs-section-body">
+              <h2 class="tabbedcontent">Constructors</h2>
+              <div class="table" data-togglable="Constructors"><a data-name="464236764%2FConstructors%2F540127926" anchor-label="AnnotationManagerImpl" id="464236764%2FConstructors%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue TabbedContent">
+                    <div class=""><span class="inline-flex"><a href="-annotation-manager-impl.html">AnnotationManagerImpl</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="464236764%2FConstructors%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">fun <a href="-annotation-manager-impl.html">AnnotationManagerImpl</a>(delegateProvider: <a href="../../com.mapbox.maps.plugin.delegates/-map-delegate-provider/index.html">MapDelegateProvider</a>, annotationConfig: <a href="../-annotation-config/index.html">AnnotationConfig</a>?)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="">Types</h2>
+              <div class="table" data-togglable="Types"><a data-name="-1688663029%2FClasslikes%2F540127926" anchor-label="MapClick" id="-1688663029%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-map-click/index.html">MapClick</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1688663029%2FClasslikes%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">inner class <a href="-map-click/index.html">MapClick</a> : <a href="../../com.mapbox.maps.plugin.gestures/-on-map-click-listener/index.html">OnMapClickListener</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-1688663029%2FClasslikes%2F540127926" anchor-label="MapClick" id="-1688663029%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-1688663029%2FClasslikes%2F540127926" anchor-label="MapClick" id="-1688663029%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Class handle the map click event</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-606806873%2FClasslikes%2F540127926" anchor-label="MapLongClick" id="-606806873%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-map-long-click/index.html">MapLongClick</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-606806873%2FClasslikes%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">inner class <a href="-map-long-click/index.html">MapLongClick</a> : <a href="../../com.mapbox.maps.plugin.gestures/-on-map-long-click-listener/index.html">OnMapLongClickListener</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-606806873%2FClasslikes%2F540127926" anchor-label="MapLongClick" id="-606806873%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-606806873%2FClasslikes%2F540127926" anchor-label="MapLongClick" id="-606806873%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Class handle the map long click event</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="259182814%2FClasslikes%2F540127926" anchor-label="MapMove" id="259182814%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-map-move/index.html">MapMove</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="259182814%2FClasslikes%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">inner class <a href="-map-move/index.html">MapMove</a> : <a href="../../com.mapbox.maps.plugin.gestures/-on-move-listener/index.html">OnMoveListener</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="259182814%2FClasslikes%2F540127926" anchor-label="MapMove" id="259182814%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="259182814%2FClasslikes%2F540127926" anchor-label="MapMove" id="259182814%2FClasslikes%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Class handle the map move event</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="">Functions</h2>
+              <div class="table" data-togglable="Functions"><a data-name="1435626343%2FFunctions%2F540127926" anchor-label="addClickListener" id="1435626343%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../-annotation-manager/add-click-listener.html">addClickListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1435626343%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="../-annotation-manager/add-click-listener.html">addClickListener</a>(u: <a href="index.html">U</a>): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-181358147%2FFunctions%2F540127926" anchor-label="addDragListener" id="-181358147%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../-annotation-manager/add-drag-listener.html">addDragListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-181358147%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="../-annotation-manager/add-drag-listener.html">addDragListener</a>(d: <a href="index.html">D</a>): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1162740711%2FFunctions%2F540127926" anchor-label="addInteractionListener" id="1162740711%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../-annotation-manager/add-interaction-listener.html">addInteractionListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1162740711%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="../-annotation-manager/add-interaction-listener.html">addInteractionListener</a>(i: <a href="index.html">I</a>): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1898082919%2FFunctions%2F540127926" anchor-label="addLongClickListener" id="1898082919%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../-annotation-manager/add-long-click-listener.html">addLongClickListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1898082919%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="../-annotation-manager/add-long-click-listener.html">addLongClickListener</a>(v: <a href="index.html">V</a>): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1285452848%2FFunctions%2F540127926" anchor-label="create" id="-1285452848%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="create.html">create</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1285452848%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="create.html">create</a>(option: <a href="index.html">S</a>): <a href="index.html">T</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-1307168680%2FFunctions%2F540127926" anchor-label="create" id="-1307168680%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-1307168680%2FFunctions%2F540127926" anchor-label="create" id="-1307168680%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Create an annotation with the option</div></div>
+<div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="create.html">create</a>(options: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="index.html">S</a>&gt;): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="index.html">T</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="2093699844%2FFunctions%2F540127926" anchor-label="create" id="2093699844%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="2093699844%2FFunctions%2F540127926" anchor-label="create" id="2093699844%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Create some annotations with the options</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1964691310%2FFunctions%2F540127926" anchor-label="delete" id="-1964691310%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="delete.html">delete</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1964691310%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="delete.html">delete</a>(annotation: <a href="index.html">T</a>)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="429092004%2FFunctions%2F540127926" anchor-label="delete" id="429092004%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="429092004%2FFunctions%2F540127926" anchor-label="delete" id="429092004%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Delete the annotation</div></div>
+<div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="delete.html">delete</a>(annotations: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="index.html">T</a>&gt;)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-23050582%2FFunctions%2F540127926" anchor-label="delete" id="-23050582%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-23050582%2FFunctions%2F540127926" anchor-label="delete" id="-23050582%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Delete annotations in the list</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="232686338%2FFunctions%2F540127926" anchor-label="deleteAll" id="232686338%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="delete-all.html">deleteAll</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="232686338%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="delete-all.html">deleteAll</a>()<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="232686338%2FFunctions%2F540127926" anchor-label="deleteAll" id="232686338%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="232686338%2FFunctions%2F540127926" anchor-label="deleteAll" id="232686338%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Delete all the added annotations</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-730813656%2FFunctions%2F540127926" anchor-label="enableDataDrivenProperty" id="-730813656%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="enable-data-driven-property.html">enableDataDrivenProperty</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-730813656%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="enable-data-driven-property.html">enableDataDrivenProperty</a>(property: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-730813656%2FFunctions%2F540127926" anchor-label="enableDataDrivenProperty" id="-730813656%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-730813656%2FFunctions%2F540127926" anchor-label="enableDataDrivenProperty" id="-730813656%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Enable a data-driven property</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1369432733%2FFunctions%2F540127926" anchor-label="getAnnotationIdKey" id="-1369432733%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="get-annotation-id-key.html">getAnnotationIdKey</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1369432733%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">abstract fun <a href="get-annotation-id-key.html">getAnnotationIdKey</a>(): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-1369432733%2FFunctions%2F540127926" anchor-label="getAnnotationIdKey" id="-1369432733%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-1369432733%2FFunctions%2F540127926" anchor-label="getAnnotationIdKey" id="-1369432733%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Get the key of the id of the annotation.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="440933757%2FFunctions%2F540127926" anchor-label="onDestroy" id="440933757%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="on-destroy.html">onDestroy</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="440933757%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="on-destroy.html">onDestroy</a>()<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="440933757%2FFunctions%2F540127926" anchor-label="onDestroy" id="440933757%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="440933757%2FFunctions%2F540127926" anchor-label="onDestroy" id="440933757%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Invoked when Mapview or Annotation manager is destroyed.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1918279589%2FFunctions%2F540127926" anchor-label="onSizeChanged" id="-1918279589%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="on-size-changed.html">onSizeChanged</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1918279589%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="on-size-changed.html">onSizeChanged</a>(width: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, height: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-1918279589%2FFunctions%2F540127926" anchor-label="onSizeChanged" id="-1918279589%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-1918279589%2FFunctions%2F540127926" anchor-label="onSizeChanged" id="-1918279589%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Invoked when MapView's width and height have changed.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1526512114%2FFunctions%2F540127926" anchor-label="queryMapForFeatures" id="-1526512114%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="query-map-for-features.html">queryMapForFeatures</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1526512114%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">fun <a href="query-map-for-features.html">queryMapForFeatures</a>(point: <span data-unresolved-link="com.mapbox.geojson/Point///PointingToDeclaration/">Point</span>): <a href="index.html">T</a>?<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-1849550083%2FFunctions%2F540127926" anchor-label="queryMapForFeatures" id="-1849550083%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-1849550083%2FFunctions%2F540127926" anchor-label="queryMapForFeatures" id="-1849550083%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Query the rendered annotation around the point</div></div>
+<div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">fun <a href="query-map-for-features.html">queryMapForFeatures</a>(screenCoordinate: <a href="../../com.mapbox.maps/[android-jvm]-screen-coordinate/index.html">ScreenCoordinate</a>): <a href="index.html">T</a>?<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="1217921373%2FFunctions%2F540127926" anchor-label="queryMapForFeatures" id="1217921373%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="1217921373%2FFunctions%2F540127926" anchor-label="queryMapForFeatures" id="1217921373%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Query the rendered annotation around the point</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-997914912%2FFunctions%2F540127926" anchor-label="removeClickListener" id="-997914912%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../-annotation-manager/remove-click-listener.html">removeClickListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-997914912%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="../-annotation-manager/remove-click-listener.html">removeClickListener</a>(u: <a href="index.html">U</a>): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1091152010%2FFunctions%2F540127926" anchor-label="removeDragListener" id="-1091152010%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../-annotation-manager/remove-drag-listener.html">removeDragListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1091152010%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="../-annotation-manager/remove-drag-listener.html">removeDragListener</a>(d: <a href="index.html">D</a>): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1834922464%2FFunctions%2F540127926" anchor-label="removeInteractionListener" id="1834922464%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../-annotation-manager/remove-interaction-listener.html">removeInteractionListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1834922464%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="../-annotation-manager/remove-interaction-listener.html">removeInteractionListener</a>(i: <a href="index.html">I</a>): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1994193696%2FFunctions%2F540127926" anchor-label="removeLongClickListener" id="-1994193696%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../-annotation-manager/remove-long-click-listener.html">removeLongClickListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1994193696%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="../-annotation-manager/remove-long-click-listener.html">removeLongClickListener</a>(v: <a href="index.html">V</a>): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="2036023940%2FFunctions%2F540127926" anchor-label="selectAnnotation" id="2036023940%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="select-annotation.html">selectAnnotation</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2036023940%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="select-annotation.html">selectAnnotation</a>(annotation: <a href="index.html">T</a>)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="2036023940%2FFunctions%2F540127926" anchor-label="selectAnnotation" id="2036023940%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="2036023940%2FFunctions%2F540127926" anchor-label="selectAnnotation" id="2036023940%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Toggles the annotation's selection state.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-168522154%2FFunctions%2F540127926" anchor-label="update" id="-168522154%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="update.html">update</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-168522154%2FFunctions%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="update.html">update</a>(annotation: <a href="index.html">T</a>)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="1681814082%2FFunctions%2F540127926" anchor-label="update" id="1681814082%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="1681814082%2FFunctions%2F540127926" anchor-label="update" id="1681814082%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Update the annotation</div></div>
+<div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="update.html">update</a>(annotations: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="index.html">T</a>&gt;)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-585748788%2FFunctions%2F540127926" anchor-label="update" id="-585748788%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="-585748788%2FFunctions%2F540127926" anchor-label="update" id="-585748788%2FFunctions%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Update annotations in the list</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="">Properties</h2>
+              <div class="table" data-togglable="Properties"><a data-name="1743633620%2FProperties%2F540127926" anchor-label="annotations" id="1743633620%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="annotations.html">annotations</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1743633620%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="1743633620%2FProperties%2F540127926" anchor-label="annotations" id="1743633620%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">open override val <a href="annotations.html">annotations</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="index.html">T</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="1743633620%2FProperties%2F540127926" anchor-label="annotations" id="1743633620%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>The added annotations</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-620231573%2FProperties%2F540127926" anchor-label="clickListeners" id="-620231573%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="click-listeners.html">clickListeners</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-620231573%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-620231573%2FProperties%2F540127926" anchor-label="clickListeners" id="-620231573%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">open override val <a href="click-listeners.html">clickListeners</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html">MutableList</a>&lt;<a href="index.html">U</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="-620231573%2FProperties%2F540127926" anchor-label="clickListeners" id="-620231573%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>The Added clickListeners</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="524173068%2FProperties%2F540127926" anchor-label="delegateProvider" id="524173068%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="delegate-provider.html">delegateProvider</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="524173068%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="524173068%2FProperties%2F540127926" anchor-label="delegateProvider" id="524173068%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">override val <a href="delegate-provider.html">delegateProvider</a>: <a href="../../com.mapbox.maps.plugin.delegates/-map-delegate-provider/index.html">MapDelegateProvider</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="524173068%2FProperties%2F540127926" anchor-label="delegateProvider" id="524173068%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>The delegateProvider</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="2005623725%2FProperties%2F540127926" anchor-label="dragListeners" id="2005623725%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="drag-listeners.html">dragListeners</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2005623725%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="2005623725%2FProperties%2F540127926" anchor-label="dragListeners" id="2005623725%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">open override val <a href="drag-listeners.html">dragListeners</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html">MutableList</a>&lt;<a href="index.html">D</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="2005623725%2FProperties%2F540127926" anchor-label="dragListeners" id="2005623725%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>The added dragListeners</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="140944978%2FProperties%2F540127926" anchor-label="interactionListener" id="140944978%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="interaction-listener.html">interactionListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="140944978%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="140944978%2FProperties%2F540127926" anchor-label="interactionListener" id="140944978%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">open override val <a href="interaction-listener.html">interactionListener</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html">MutableList</a>&lt;<a href="index.html">I</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="140944978%2FProperties%2F540127926" anchor-label="interactionListener" id="140944978%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>The added interactionListener</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1047762065%2FProperties%2F540127926" anchor-label="layerFilter" id="-1047762065%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="layer-filter.html">layerFilter</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1047762065%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="-1047762065%2FProperties%2F540127926" anchor-label="layerFilter" id="-1047762065%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">abstract var <a href="layer-filter.html">layerFilter</a>: <a href="../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a>?<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="-1047762065%2FProperties%2F540127926" anchor-label="layerFilter" id="-1047762065%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Set filter on the managed annotations.</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="2052360143%2FProperties%2F540127926" anchor-label="longClickListeners" id="2052360143%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="long-click-listeners.html">longClickListeners</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2052360143%2FProperties%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><a data-name="2052360143%2FProperties%2F540127926" anchor-label="longClickListeners" id="2052360143%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="symbol monospace">open override val <a href="long-click-listeners.html">longClickListeners</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html">MutableList</a>&lt;<a href="index.html">V</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="2052360143%2FProperties%2F540127926" anchor-label="longClickListeners" id="2052360143%2FProperties%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>The added longClickListeners</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="">Inheritors</h2>
+              <div class="table" data-togglable="Inheritors"><a data-name="183779372%2FInheritors%2F540127926" anchor-label="CircleAnnotationManager" id="183779372%2FInheritors%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../../com.mapbox.maps.plugin.annotation.generated/-circle-annotation-manager/index.html">CircleAnnotationManager</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="183779372%2FInheritors%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div></div>
+                  </div>
+                </div>
+<a data-name="-1364073926%2FInheritors%2F540127926" anchor-label="PointAnnotationManager" id="-1364073926%2FInheritors%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../../com.mapbox.maps.plugin.annotation.generated/-point-annotation-manager/index.html">PointAnnotationManager</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1364073926%2FInheritors%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div></div>
+                  </div>
+                </div>
+<a data-name="1237812132%2FInheritors%2F540127926" anchor-label="PolygonAnnotationManager" id="1237812132%2FInheritors%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../../com.mapbox.maps.plugin.annotation.generated/-polygon-annotation-manager/index.html">PolygonAnnotationManager</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1237812132%2FInheritors%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div></div>
+                  </div>
+                </div>
+<a data-name="-1184707876%2FInheritors%2F540127926" anchor-label="PolylineAnnotationManager" id="-1184707876%2FInheritors%2F540127926" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../../com.mapbox.maps.plugin.annotation.generated/-polyline-annotation-manager/index.html">PolylineAnnotationManager</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1184707876%2FInheritors%2F540127926"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="go-to-top-icon"><a href="#content"></a></span><span>© 2021 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span></div>
+      </div>
+    </div>
+  </body>
+</html>
+
