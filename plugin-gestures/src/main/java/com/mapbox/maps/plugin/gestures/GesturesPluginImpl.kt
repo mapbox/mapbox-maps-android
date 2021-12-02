@@ -11,14 +11,14 @@ import android.util.AttributeSet
 import android.view.InputDevice
 import android.view.MotionEvent
 import androidx.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting.PRIVATE
 import androidx.core.animation.addListener
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.android.gestures.*
-import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.CameraState
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
+import com.mapbox.maps.plugin.MapProjection
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
@@ -29,6 +29,7 @@ import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
+import com.mapbox.maps.plugin.delegates.MapProjectionDelegate
 import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
@@ -49,6 +50,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
   private lateinit var mapTransformDelegate: MapTransformDelegate
   private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
+  private lateinit var mapProjectionDelegate: MapProjectionDelegate
   private lateinit var mapPluginProviderDelegate: MapPluginProviderDelegate
   private lateinit var cameraAnimationsPlugin: CameraAnimationsPlugin
 
@@ -357,7 +359,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
           // Scale the map by the appropriate power of two factor
           val currentZoom = mapCameraManagerDelegate.cameraState.zoom
           val cachedAnchor = cameraAnimationsPlugin.anchor
-          val anchor = ScreenCoordinate(event.x.toDouble(), event.y.toDouble())
+          val anchor = event.toScreenCoordinate()
           val zoom =
             cameraAnimationsPlugin.calculateScaleBy(scrollDist.toDouble(), currentZoom)
           easeToImmediately(
@@ -409,7 +411,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
      * Called when an on single tap up confirmed gesture was detected.
      */
     override fun onSingleTapConfirmed(motionEvent: MotionEvent): Boolean {
-      return handleClickEvent(ScreenCoordinate(motionEvent.x.toDouble(), motionEvent.y.toDouble()))
+      return handleClickEvent(motionEvent.toScreenCoordinate())
     }
 
     /**
@@ -425,7 +427,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
      * Called when an on long press gesture was detected.
      */
     override fun onLongPress(motionEvent: MotionEvent) {
-      handleLongPressEvent(ScreenCoordinate(motionEvent.x.toDouble(), motionEvent.y.toDouble()))
+      handleLongPressEvent(motionEvent.toScreenCoordinate())
     }
 
     /**
@@ -1190,7 +1192,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   ): Boolean {
     val action = motionEvent.actionMasked
     if (action == MotionEvent.ACTION_DOWN) {
-      doubleTapFocalPoint = ScreenCoordinate(motionEvent.x.toDouble(), motionEvent.y.toDouble())
+      doubleTapFocalPoint = motionEvent.toScreenCoordinate()
       // disable the move detector in preparation for the quickzoom,
       // so that we don't move the map's center slightly before the quickzoom is started (see #14227)
       gesturesManager.moveGestureDetector.isEnabled = false
@@ -1228,6 +1230,10 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   ): Boolean {
     if (!internalSettings.scrollEnabled) {
       // don't allow a fling if scroll is disabled
+      return false
+    }
+
+    if (isPointAboveHorizon(e2.toScreenCoordinate())) {
       return false
     }
 
@@ -1278,10 +1284,12 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     // limit animation time to Android SDK default animation time
     val animationTime = (velocityXY / pitchFactor).toLong()
 
+    // start the fling animation from a simulated touch point at the bottom of the display to reduce the fling speed at high pitch level.
+    val simulateTouchPoint = ScreenCoordinate(centerScreen.x, centerScreen.y * 2.0)
     cameraAnimationsPlugin.easeTo(
       mapCameraManagerDelegate.getDragCameraOptions(
-        centerScreen,
-        ScreenCoordinate(centerScreen.x + offsetX, centerScreen.y + offsetY)
+        simulateTouchPoint,
+        ScreenCoordinate(simulateTouchPoint.x + offsetX, simulateTouchPoint.y + offsetY)
       ),
       mapAnimationOptions {
         owner(MapAnimationOwnerRegistry.GESTURES)
@@ -1309,6 +1317,22 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     return true
   }
 
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal fun isPointAboveHorizon(
+    pixel: ScreenCoordinate
+  ): Boolean {
+    if (mapProjectionDelegate.getMapProjection() != MapProjection.Mercator) {
+      return false
+    }
+    // Prevent drag start in area around horizon to avoid sharp map movements
+    val topMapMargin = 0.04 * mapTransformDelegate.getSize().height
+    val reprojectErrorMargin = min(10.0, topMapMargin / 2)
+    val point = ScreenCoordinate(pixel.x, pixel.y - topMapMargin)
+    val coordinate = mapCameraManagerDelegate.coordinateForPixel(point)
+    val roundtripPoint = mapCameraManagerDelegate.pixelForCoordinate(coordinate)
+    return (roundtripPoint.y >= point.y + reprojectErrorMargin)
+  }
+
   internal fun handleMove(
     detector: MoveGestureDetector,
     distanceX: Float,
@@ -1329,6 +1353,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       val fromY = focalPoint.y.toDouble()
 
       if (!dragInProgress) {
+        if (isPointAboveHorizon(ScreenCoordinate(fromX, fromY))) {
+          return false
+        }
         dragInProgress = true
         mapCameraManagerDelegate.dragStart(ScreenCoordinate(fromX, fromY))
       }
@@ -1340,38 +1367,13 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       val toX = fromX - resolvedDistanceX
       val toY = fromY - resolvedDistanceY
 
-      val cameraOptions = getAdjustedCameraCenter(
-        mapCameraManagerDelegate.cameraState,
-        mapCameraManagerDelegate.getDragCameraOptions(
-          ScreenCoordinate(fromX, fromY),
-          ScreenCoordinate(toX, toY)
-        )
+      val cameraOptions = mapCameraManagerDelegate.getDragCameraOptions(
+        ScreenCoordinate(fromX, fromY),
+        ScreenCoordinate(toX, toY)
       )
-
       easeToImmediately(cameraOptions)
     }
     return true
-  }
-
-  private fun getAdjustedCameraCenter(
-    currentCamera: CameraState,
-    targetCamera: CameraOptions
-  ): CameraOptions {
-    val translationLng = targetCamera.center!!.longitude() - currentCamera.center.longitude()
-    val translationLat = targetCamera.center!!.latitude() - currentCamera.center.latitude()
-    val maximumDistance =
-      SCROLL_LIMITING_FACTOR / 2.0.pow(currentCamera.zoom)
-    val currentDistance = hypot(translationLng, translationLat)
-    return if (currentDistance > maximumDistance) {
-      targetCamera.toBuilder().center(
-        Point.fromLngLat(
-          currentCamera.center.longitude() + translationLng * (maximumDistance / currentDistance),
-          currentCamera.center.latitude() + translationLat * (maximumDistance / currentDistance)
-        )
-      ).build()
-    } else {
-      targetCamera
-    }
   }
 
   internal fun handleMoveEnd(detector: MoveGestureDetector) {
@@ -1680,6 +1682,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     this.mapTransformDelegate = delegateProvider.mapTransformDelegate
     this.mapCameraManagerDelegate = delegateProvider.mapCameraManagerDelegate
+    this.mapProjectionDelegate = delegateProvider.mapProjectionDelegate
     this.mapPluginProviderDelegate = delegateProvider.mapPluginProviderDelegate
     @Suppress("UNCHECKED_CAST")
     this.cameraAnimationsPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
@@ -1703,3 +1706,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     const val MAX_SHOVE_ANGLE = 45.0f
   }
 }
+
+/**
+ * Convert a motion event to ScreenCoordinate.
+ */
+private fun MotionEvent.toScreenCoordinate() = ScreenCoordinate(x.toDouble(), y.toDouble())
