@@ -475,11 +475,10 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     val updatedValues = mutableListOf<Double>()
 
     val cameraAnimationPlugin = mapView.camera
-    val latch = CountDownLatch(2)
+    val latch = CountDownLatch(1)
     cameraAnimationPlugin.addCameraBearingChangeListener {
       Logger.i(TAG, "onChanged $it")
       updatedValues.add(it)
-      latch.countDown()
     }
 
     mainHandler.post {
@@ -498,7 +497,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
           cameraOptions2,
           mapAnimationOptions {
             duration(1)
-            startDelay(3000)
+            startDelay(1000)
           }
         )
       },
@@ -519,11 +518,10 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
       500
     )
 
-    if (latch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
-      assertArrayEquals(expectedValues.toDoubleArray(), updatedValues.toDoubleArray(), EPS)
-    } else {
-      throw TimeoutException()
-    }
+    // wait for a bit more time than all delays in test
+    latch.await(1200, TimeUnit.MILLISECONDS)
+    // verify that data came as expected
+    assertArrayEquals(expectedValues.toDoubleArray(), updatedValues.toDoubleArray(), EPS)
   }
 
   @Test
@@ -537,11 +535,10 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     val updatedValues = mutableListOf<Double>()
 
     val cameraAnimationPlugin = mapView.camera
-    val latch = CountDownLatch(2)
+    val latch = CountDownLatch(1)
     cameraAnimationPlugin.addCameraBearingChangeListener {
       Logger.i(TAG, "onChanged $it")
       updatedValues.add(it)
-      latch.countDown()
     }
 
     mainHandler.post {
@@ -553,28 +550,14 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
         }
       )
     }
-    mainHandler.postDelayed(
-      {
-        // The animation is still waiting, no update value
-        assertEquals(0, updatedValues.size)
-      },
-      900
-    )
+    latch.await(900, TimeUnit.MILLISECONDS)
+    // The animation is still waiting, no update value
+    assertEquals(0, updatedValues.size)
 
-    mainHandler.postDelayed(
-      {
-        // The animation was started and received update value
-        assertEquals(1, updatedValues.size)
-        latch.countDown()
-      },
-      1100
-    )
-
-    if (latch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
-      assertArrayEquals(expectedValues.toDoubleArray(), updatedValues.toDoubleArray(), EPS)
-    } else {
-      throw TimeoutException()
-    }
+    // wait for a bit more time than all delays in test
+    latch.await(1100, TimeUnit.MILLISECONDS)
+    // verify that data came as expected
+    assertArrayEquals(expectedValues.toDoubleArray(), updatedValues.toDoubleArray(), EPS)
   }
 
   @Test
