@@ -835,6 +835,9 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       animationOptions?.duration?.let {
         duration = it
       }
+      animationOptions?.startDelay?.let {
+        startDelay = it
+      }
       animationOptions?.interpolator?.let {
         interpolator = it
       }

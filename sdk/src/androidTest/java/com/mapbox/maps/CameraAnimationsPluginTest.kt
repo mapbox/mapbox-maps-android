@@ -385,7 +385,16 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
       latch.countDown()
     }
 
-    mainHandler.post { cameraAnimationPlugin.easeTo(cameraOptions, mapAnimationOptions { duration(0) }) }
+    mainHandler.post {
+      cameraAnimationPlugin.easeTo(
+        cameraOptions,
+        mapAnimationOptions {
+          duration(
+            0
+          )
+        }
+      )
+    }
 
     if (latch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
       assertArrayEquals(expectedValues.toDoubleArray(), updatedValues.toDoubleArray(), EPS)
@@ -449,6 +458,106 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     } else {
       throw TimeoutException()
     }
+  }
+
+  @Test
+  fun testEaseToStartDelayCanceled() {
+    if (ignoreTestForGivenAbi()) {
+      return
+    }
+    val targetBearing1 = 5.0
+    val targetBearing2 = 10.0
+    val targetBearing3 = 15.0
+    val cameraOptions1 = CameraOptions.Builder().bearing(targetBearing1).build()
+    val cameraOptions2 = CameraOptions.Builder().bearing(targetBearing2).build()
+    val cameraOptions3 = CameraOptions.Builder().bearing(targetBearing3).build()
+    val expectedValues = mutableSetOf(targetBearing1, targetBearing3)
+    val updatedValues = mutableListOf<Double>()
+
+    val cameraAnimationPlugin = mapView.camera
+    val latch = CountDownLatch(1)
+    cameraAnimationPlugin.addCameraBearingChangeListener {
+      Logger.i(TAG, "onChanged $it")
+      updatedValues.add(it)
+    }
+
+    mainHandler.post {
+      cameraAnimationPlugin.easeTo(
+        cameraOptions1,
+        mapAnimationOptions {
+          duration(1)
+          startDelay(1)
+        }
+      )
+    }
+
+    mainHandler.postDelayed(
+      {
+        cameraAnimationPlugin.easeTo(
+          cameraOptions2,
+          mapAnimationOptions {
+            duration(1)
+            startDelay(1000)
+          }
+        )
+      },
+      100
+    )
+
+    // cameraOptions2 will be canceled since it's still waiting to start
+    mainHandler.postDelayed(
+      {
+        cameraAnimationPlugin.easeTo(
+          cameraOptions3,
+          mapAnimationOptions {
+            duration(1)
+            startDelay(0)
+          }
+        )
+      },
+      500
+    )
+
+    // wait for a bit more time than all delays in test
+    latch.await(1200, TimeUnit.MILLISECONDS)
+    // verify that data came as expected
+    assertArrayEquals(expectedValues.toDoubleArray(), updatedValues.toDoubleArray(), EPS)
+  }
+
+  @Test
+  fun testEaseToStartDelay() {
+    if (ignoreTestForGivenAbi()) {
+      return
+    }
+    val targetBearing1 = 5.0
+    val cameraOptions1 = CameraOptions.Builder().bearing(targetBearing1).build()
+    val expectedValues = mutableSetOf(targetBearing1)
+    val updatedValues = mutableListOf<Double>()
+
+    val cameraAnimationPlugin = mapView.camera
+    val latch = CountDownLatch(1)
+    cameraAnimationPlugin.addCameraBearingChangeListener {
+      Logger.i(TAG, "onChanged $it")
+      updatedValues.add(it)
+    }
+
+    mainHandler.post {
+      cameraAnimationPlugin.easeTo(
+        cameraOptions1,
+        mapAnimationOptions {
+          duration(1)
+          startDelay(1000)
+        }
+      )
+    }
+    latch.await(900, TimeUnit.MILLISECONDS)
+    // The animation is still waiting, no update value
+    assertEquals(0, updatedValues.size)
+
+    // wait for a bit more time than all delays in test
+    latch.await(1100, TimeUnit.MILLISECONDS)
+    // verify that data came as expected
+    assertArrayEquals(expectedValues.toDoubleArray(), updatedValues.toDoubleArray(), EPS)
   }
 
   @Test
