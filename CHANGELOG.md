@@ -17,6 +17,8 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 10.1.1 December 1, 2021
 
+**NOTE:** As of December 3, 2021, this release is no longer available due to a new bug that was introduced while fixing the billing issue. A new patch will be issued shortly.
+
 ## Bug fixes 🐞
 * Fix billing issue when upgrading Mapbox Maps SDK from v9 to v10.
 
@@ -24,6 +26,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Bump gl-native to 10.1.1, common to 20.1.1.
 
 # 10.0.1 November 26, 2021
+
+**NOTE:** As of December 3, 2021, this release is no longer available due to a new bug that was introduced while fixing the billing issue. A new patch will be issued shortly.
 
 ## Bug fixes 🐞
 * Fix billing issue when upgrading Mapbox Maps SDK from v9 to v10.
