@@ -488,6 +488,10 @@ public class JavaInterfaceChecker {
         AndroidGesturesManager gesturesManager = GesturesUtils.getGesturesManager(mapboxMap);
         GesturesUtils.setGesturesManager(mapboxMap, gesturesManager, false, false);
         GesturesUtils.getGesturesSettings(mapboxMap);
+        GesturesUtils.updateGestureSettings(mapboxMap, gesturesSettings -> {
+            gesturesSettings.setFocalPoint(new ScreenCoordinate(10.0, 10.0));
+            return null;
+        });
     }
 
     private void locationComponent(MapView mapView) {

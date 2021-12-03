@@ -219,7 +219,9 @@ fun MapPluginExtensionsDelegate.setGesturesManager(
 }
 
 /**
- * The gesture configuration object.
+ * Get copy of current gesture settings.
+ * This copy should not be used to update any setting, please [updateGestureSettings] instead.
+ *
  * Gesture plugin with id = [Plugin.MAPBOX_GESTURES_PLUGIN_ID] must be added while constructing
  * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
  *
@@ -228,6 +230,19 @@ fun MapPluginExtensionsDelegate.setGesturesManager(
  */
 fun MapPluginExtensionsDelegate.getGesturesSettings() =
   gesturesPlugin { getSettings() } as GesturesSettings?
+
+/**
+ * Update current gesture settings.
+ *
+ * Gesture plugin with id = [Plugin.MAPBOX_GESTURES_PLUGIN_ID] must be added while constructing
+ * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
+ *
+ * @throws IllegalStateException if gestures plugin was not added.
+ * @see [com.mapbox.maps.MapInitOptions]
+ */
+fun MapPluginExtensionsDelegate.updateGestureSettings(block: (GesturesSettings.() -> Unit)) {
+  gesturesPlugin { updateSettings(block) }
+}
 
 /**
  * Returns if the scroll is horizontally limited,
