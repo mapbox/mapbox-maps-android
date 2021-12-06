@@ -425,6 +425,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
           }
           addIconToStyle(style, annotationMap.values)
           val features = convertAnnotationsToFeatures(annotationMap.values)
+          Logger.e(TAG, "Update features: $features")
+
           geoJsonSource.featureCollection(FeatureCollection.fromFeatures(features))
         }
       }
