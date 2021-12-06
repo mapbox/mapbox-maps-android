@@ -91,11 +91,30 @@ class CircleAnnotationActivity : AppCompatActivity() {
 
     binding.deleteAll.setOnClickListener {
       circleAnnotationManager?.let {
-        annotationPlugin.removeAnnotationManager(it)
+        it.deleteAll()
+        val circleAnnotationOptions: CircleAnnotationOptions = CircleAnnotationOptions()
+          .withPoint(Point.fromLngLat(CIRCLE_LONGITUDE, CIRCLE_LATITUDE))
+          .withCircleColor(Color.YELLOW)
+          .withCircleRadius(12.0)
+          .withDraggable(true)
+        it.create(circleAnnotationOptions)
+
       }
     }
     binding.changeStyle.setOnClickListener {
-      binding.mapView.getMapboxMap().loadStyleUri(nextStyle)
+      // random add circles across the globe
+      val circleAnnotationOptionsList: MutableList<CircleAnnotationOptions> = ArrayList()
+      for (i in 0..2000) {
+        val color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
+        circleAnnotationOptionsList.add(
+          CircleAnnotationOptions()
+            .withPoint(AnnotationUtils.createRandomPoint())
+            .withCircleColor(color)
+            .withCircleRadius(8.0)
+            .withDraggable(true)
+        )
+      }
+      circleAnnotationManager?.create(circleAnnotationOptionsList)
     }
   }
 
