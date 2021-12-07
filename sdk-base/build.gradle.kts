@@ -29,7 +29,8 @@ dependencies {
     api(project(":common"))
   } else {
     api(Dependencies.mapboxGlNative)
-    api(Dependencies.mapboxCoreCommon)
+//    api(Dependencies.mapboxCoreCommon)
+    api("com.mapbox.common:common:20.0.0-worker-thread-priority-SNAPSHOT") {  setForce(true) }
   }
 
   testImplementation(Dependencies.junit)
