@@ -2,10 +2,11 @@ package com.mapbox.maps.testapp.examples
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
-import java.lang.RuntimeException
+import com.mapbox.maps.extension.style.expressions.generated.Expression
+import com.mapbox.maps.extension.style.layers.generated.FillLayer
+import com.mapbox.maps.extension.style.layers.getLayerAs
 
 /**
  * Example showcasing raw expression support through the Value API.
@@ -42,23 +43,19 @@ class RawExpressionActivity : AppCompatActivity() {
   }
 
   private fun addExpressionToStyle(style: Style) {
-    val expression = Value.fromJson(
-      """
-      [
-        "interpolate",
-         ["linear"],
-         ["zoom"],
-         0, "hsl(103, 80%, 70%)",
-         8.53, "hsl(360, 80%, 70%)",
-         22, "hsl(196, 80%, 70%)"
-       ]  
-      """.trimIndent()
+    style.getLayerAs<FillLayer>("water")?.fillColor(
+      Expression.fromRaw(
+        """
+        [
+          "interpolate",
+           ["linear"],
+           ["zoom"],
+           0, "hsl(103, 80%, 70%)",
+           8.53, "hsl(360, 80%, 70%)",
+           22, "hsl(196, 80%, 70%)"
+         ]  
+        """.trimIndent()
+      )
     )
-
-    if (expression.isValue && expression.value != null) {
-      style.setStyleLayerProperty("water", "fill-color", expression.value!!)
-    } else {
-      throw RuntimeException("Invalid expression")
-    }
   }
 }
