@@ -471,4 +471,56 @@ class MapboxRenderThreadTest {
     // EGL should be prepared
     assert(mapboxRenderThread.eglPrepared)
   }
+
+  @Test
+  fun snapshotIsTakenAfterDrawAndBeforeSwapBuffers() {
+    val latch = CountDownLatch(1)
+    val surface = mockk<Surface>()
+    every { surface.isValid } returns true
+    every { eglCore.eglStatusSuccess } returns true
+    every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
+    mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
+    val runnable = mockk<Runnable>(relaxUnitFun = true)
+    every { runnable.run() } answers { latch.countDown() }
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
+    mapboxRenderThread.queueSnapshot(runnable)
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
+    if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
+    }
+    verifyOrder {
+      mapboxRenderer.onDrawFrame()
+      runnable.run()
+      eglCore.swapBuffers(any())
+    }
+  }
+
+  @Test
+  fun multipleSnapshotsAreTaken() {
+    val latch = CountDownLatch(3)
+    val surface = mockk<Surface>()
+    every { surface.isValid } returns true
+    every { eglCore.eglStatusSuccess } returns true
+    every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
+    mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
+    val runnable = mockk<Runnable>(relaxUnitFun = true)
+    val runnable2 = mockk<Runnable>(relaxUnitFun = true)
+    val runnable3 = mockk<Runnable>(relaxUnitFun = true)
+    every { runnable.run() } answers { latch.countDown() }
+    every { runnable2.run() } answers { latch.countDown() }
+    every { runnable3.run() } answers { latch.countDown() }
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
+    mapboxRenderThread.queueSnapshot(runnable)
+    mapboxRenderThread.queueSnapshot(runnable2)
+    mapboxRenderThread.queueSnapshot(runnable3)
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
+    if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
+    }
+    verify {
+      runnable.run()
+      runnable2.run()
+      runnable3.run()
+    }
+  }
 }
