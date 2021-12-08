@@ -7,6 +7,7 @@ import com.mapbox.maps.ImageStretches
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.utils.check
+import com.mapbox.maps.util.MapboxStyleException
 
 /**
  * Concrete implementation of ImagePlugin (see [ImageExtensionImpl])
@@ -78,7 +79,7 @@ class ImageNinePatchExtensionImpl(private val builder: Builder) : StyleContract.
 
     init {
       if (bitmap.config != Bitmap.Config.ARGB_8888) {
-        throw RuntimeException("Only ARGB_8888 bitmap config is supported!")
+        throw MapboxStyleException("Only ARGB_8888 bitmap config is supported!")
       }
       bitmap.parse9PatchBitmap().also {
         internalImage = it.internalImage

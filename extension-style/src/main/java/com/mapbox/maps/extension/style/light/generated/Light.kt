@@ -18,6 +18,7 @@ import com.mapbox.maps.extension.style.utils.ColorUtils.colorIntToRgbaExpression
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorInt
 import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorString
 import com.mapbox.maps.extension.style.utils.unwrap
+import com.mapbox.maps.util.MapboxStyleException
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -375,7 +376,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
     }
     val expected = delegate.setStyleLight(Value(lightParams))
     expected.error?.let {
-      throw RuntimeException("Set Light failed: $it")
+      throw MapboxStyleException("Set Light failed: $it")
     }
   }
 
@@ -390,7 +391,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
       propertyValue.value
     )
     expected?.error?.let {
-      throw RuntimeException("Set light property failed: $it")
+      throw MapboxStyleException("Set light property failed: $it")
     }
   }
 
@@ -404,7 +405,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
         null
       }
     }
-    throw RuntimeException("Get property $propertyName failed: light is not added to style yet.")
+    throw MapboxStyleException("Get property $propertyName failed: light is not added to style yet.")
   }
 
   private fun getTransitionProperty(transitionName: String): StyleTransition? {
@@ -422,7 +423,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
         null
       }
     }
-    throw RuntimeException("Get property $transitionName failed: light is not added to style yet.")
+    throw MapboxStyleException("Get property $transitionName failed: light is not added to style yet.")
   }
   /**
    * Static variables and methods.

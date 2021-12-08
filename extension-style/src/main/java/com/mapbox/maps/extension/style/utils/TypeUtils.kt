@@ -12,6 +12,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.LayerProperty
 import com.mapbox.maps.extension.style.light.LightPosition
 import com.mapbox.maps.extension.style.types.Formatted
 import com.mapbox.maps.extension.style.types.StyleTransition
+import com.mapbox.maps.util.MapboxStyleException
 
 internal object TypeUtils {
   fun wrapToValue(value: Any): Value {
@@ -97,9 +98,9 @@ internal object TypeUtils {
         if (value.isString) {
           return Value(value.asString)
         }
-        throw RuntimeException("Failed to parse JsonPrimitive: $value")
+        throw MapboxStyleException("Failed to parse JsonPrimitive: $value")
       }
-      else -> throw RuntimeException("Wrapping \"${value::class.java.simpleName}\" is not supported.")
+      else -> throw MapboxStyleException("Wrapping \"${value::class.java.simpleName}\" is not supported.")
     }
   }
 }
@@ -137,7 +138,7 @@ fun Value.unwrapToAny(): Any {
       return ret
     }
   }
-  throw RuntimeException("unable to unwrap Value of content type: ${this.contents?.let { it::class.java.simpleName }}")
+  throw MapboxStyleException("unable to unwrap Value of content type: ${this.contents?.let { it::class.java.simpleName }}")
 }
 
 /**
@@ -150,7 +151,7 @@ inline fun <reified T> Value.unwrapToTyped(): T {
   return if (unwrappedValue is T) {
     unwrappedValue
   } else {
-    throw RuntimeException("Requested type ${T::class.java.simpleName} doesn't match ${unwrappedValue::class.java.simpleName}")
+    throw MapboxStyleException("Requested type ${T::class.java.simpleName} doesn't match ${unwrappedValue::class.java.simpleName}")
   }
 }
 
@@ -182,7 +183,7 @@ fun Value.unwrapToStyleTransition(): StyleTransition {
       return builder.build()
     }
   }
-  throw RuntimeException("unable to unwrap to StyleTransition: $this")
+  throw MapboxStyleException("unable to unwrap to StyleTransition: $this")
 }
 
 /**
@@ -243,7 +244,7 @@ fun Value.unwrapToExpression(): Expression {
       return Expression(inputMap)
     }
   }
-  throw RuntimeException("unable to unwrap to Expression: $this")
+  throw MapboxStyleException("unable to unwrap to Expression: $this")
 }
 
 /**
@@ -261,7 +262,7 @@ inline fun <reified T> StylePropertyValue.unwrap(): T {
       if (unwrappedTransition is T) {
         return unwrappedTransition
       } else {
-        throw RuntimeException("Requested type ${T::class.java.simpleName} doesn't match ${unwrappedTransition::class.java.simpleName}")
+        throw MapboxStyleException("Requested type ${T::class.java.simpleName} doesn't match ${unwrappedTransition::class.java.simpleName}")
       }
     }
     StylePropertyValueKind.EXPRESSION -> {
@@ -269,13 +270,13 @@ inline fun <reified T> StylePropertyValue.unwrap(): T {
       if (unwrappedExpression is T) {
         return unwrappedExpression
       } else {
-        throw RuntimeException("Requested type ${T::class.java.simpleName} doesn't match ${unwrappedExpression::class.java.simpleName}")
+        throw MapboxStyleException("Requested type ${T::class.java.simpleName} doesn't match ${unwrappedExpression::class.java.simpleName}")
       }
     }
     StylePropertyValueKind.UNDEFINED -> {
-      throw RuntimeException("Property is undefined")
+      throw MapboxStyleException("Property is undefined")
     }
-    else -> throw RuntimeException("parsing ${this.kind} is not supported yet")
+    else -> throw MapboxStyleException("parsing ${this.kind} is not supported yet")
   }
 }
 

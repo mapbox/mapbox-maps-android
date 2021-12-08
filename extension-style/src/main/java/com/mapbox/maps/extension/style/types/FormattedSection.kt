@@ -4,7 +4,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.Keep
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.extension.style.utils.ColorUtils
-import java.lang.RuntimeException
+import com.mapbox.maps.util.MapboxStyleException
 
 /**
  * A component of the [Formatted].
@@ -41,7 +41,7 @@ data class FormattedSection @JvmOverloads constructor(
           return colorInt
         }
       }
-      throw RuntimeException("textColor not set.")
+      throw MapboxStyleException("textColor not set.")
     }
     set(@ColorInt value) {
       textColor = ColorUtils.colorToRgbaString(value)

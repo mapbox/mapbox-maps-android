@@ -13,6 +13,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.animation.animator.*
 import com.mapbox.maps.plugin.delegates.*
+import com.mapbox.maps.util.MapboxCameraAnimationException
 import com.mapbox.maps.util.MathUtils
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.properties.Delegates
@@ -300,9 +301,8 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
               Logger.d(TAG, "Animation ${type.name}(${hashCode()}) started.")
             }
           }
-        } ?: throw RuntimeException(
-          "Could not start animation in CameraManager! " +
-            "Animation must be an instance of CameraAnimator and not null. "
+        } ?: throw MapboxCameraAnimationException(
+          "Could not start animation as it must be an instance of CameraAnimator and not null!"
         )
       }
 
@@ -344,9 +344,8 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
           if (runningAnimatorsQueue.isEmpty()) {
             commitChanges()
           }
-        } ?: throw RuntimeException(
-          "Could not finish animation in CameraManager! " +
-            "Animation must be an instance of CameraAnimator and not null. "
+        } ?: throw MapboxCameraAnimationException(
+          "Could not start animation as it must be an instance of CameraAnimator and not null!"
         )
       }
     })

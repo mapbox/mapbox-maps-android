@@ -17,6 +17,7 @@ import com.mapbox.maps.plugin.annotation.AnnotationManager
 import com.mapbox.maps.plugin.annotation.AnnotationOptions
 import com.mapbox.maps.plugin.annotation.ConvertUtils.convertDoubleArray
 import com.mapbox.maps.plugin.annotation.ConvertUtils.toDoubleArray
+import com.mapbox.maps.util.MapboxAnnotationException
 
 /**
  * Builder class from which a pointAnnotation is created.
@@ -652,7 +653,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
     annotationManager: AnnotationManager<Point, PointAnnotation, *, *, *, *, *>
   ): PointAnnotation {
     if (geometry == null) {
-      throw RuntimeException("geometry field is required")
+      throw MapboxAnnotationException("geometry field is required")
     }
     val jsonObject = JsonObject()
     iconAnchor?.let {
@@ -835,7 +836,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
      */
     fun fromFeature(feature: Feature): PointAnnotationOptions? {
       if (feature.geometry() == null) {
-        throw RuntimeException("geometry field is required")
+        throw MapboxAnnotationException("geometry field is required")
       }
       if (feature.geometry() !is Point) {
 

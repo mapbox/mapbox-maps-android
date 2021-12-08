@@ -5,12 +5,13 @@ import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.LOCATION_INDICATOR_LAYER
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_LAYER
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_SOURCE
+import com.mapbox.maps.util.MapboxLocationComponentException
 
 internal class LayerSourceProvider {
 
   fun getModelSource(locationModelLayerOptions: LocationPuck3D): ModelSourceWrapper {
     if (locationModelLayerOptions.modelUri.isEmpty()) {
-      throw RuntimeException("Model Url must not be empty!")
+      throw MapboxLocationComponentException("Model Url must not be empty!")
     }
     return ModelSourceWrapper(
       MODEL_SOURCE,

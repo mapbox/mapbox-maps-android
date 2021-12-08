@@ -9,6 +9,7 @@ import androidx.core.content.res.ResourcesCompat
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.locationcomponent.R
+import com.mapbox.maps.util.MapboxLocationComponentException
 
 /**
  * Utility class for parsing [AttributeSet] to [LocationComponentSettings].
@@ -39,7 +40,7 @@ internal object LocationComponentAttributeParser {
           )
           1 -> LocationPuck3D(
             modelUri = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DModelUri)
-              ?: throw RuntimeException("model-uri must be specified in order to use 3d location puck."),
+              ?: throw MapboxLocationComponentException("model-uri must be specified in order to use 3d location puck."),
             position = listOf(
               typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DPosition_lon, 0.0f),
               typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck3DPosition_lat, 0.0f),

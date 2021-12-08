@@ -16,6 +16,7 @@ import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttributeParser
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettingsBase
+import com.mapbox.maps.util.MapboxLocationComponentException
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArrayList
 
@@ -112,7 +113,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
         }
       }
       expected.error?.let {
-        throw RuntimeException(it)
+        throw MapboxLocationComponentException(it)
       }
     }
   }

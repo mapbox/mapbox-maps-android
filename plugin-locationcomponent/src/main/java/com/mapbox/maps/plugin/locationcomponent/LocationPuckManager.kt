@@ -12,6 +12,7 @@ import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
+import com.mapbox.maps.util.MapboxLocationComponentException
 import kotlin.math.pow
 
 internal class LocationPuckManager(
@@ -210,11 +211,11 @@ internal class LocationPuckManager(
 private inline fun <reified T> Expected<String, T>.take(): T {
   this.also {
     it.error?.let { err ->
-      throw RuntimeException(err)
+      throw MapboxLocationComponentException(err)
     }
     it.value?.let { v ->
       return v
     }
   }
-  throw RuntimeException("Error in parsing expression.")
+  throw MapboxLocationComponentException("Error in parsing expression.")
 }

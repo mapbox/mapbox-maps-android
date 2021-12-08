@@ -12,6 +12,7 @@ import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.extension.style.utils.take
 import com.mapbox.maps.extension.style.utils.unwrapToExpression
+import com.mapbox.maps.util.MapboxStyleException
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -2263,7 +2264,7 @@ class Expression : Value {
         builder.addArgument(Expression(it.contents as HashMap<String, Value>))
         return builder.build()
       }
-      throw RuntimeException(expected.error)
+      throw MapboxStyleException(expected.error)
     }
 
     /**
@@ -3204,7 +3205,7 @@ class Expression : Value {
         builder.addArgument(Expression(it.contents as HashMap<String, Value>))
         return builder.build()
       }
-      throw RuntimeException(expected.error)
+      throw MapboxStyleException(expected.error)
     }
 
     /**

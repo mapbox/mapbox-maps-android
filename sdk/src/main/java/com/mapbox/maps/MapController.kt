@@ -36,6 +36,7 @@ import com.mapbox.maps.plugin.overlay.MapOverlayPluginImpl
 import com.mapbox.maps.plugin.scalebar.ScaleBarPluginImpl
 import com.mapbox.maps.renderer.MapboxRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
+import com.mapbox.maps.util.MapboxMapException
 import java.lang.ref.WeakReference
 
 internal class MapController : MapPluginProviderDelegate, MapControllable {
@@ -292,7 +293,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
             ScaleBarPluginImpl()
           }
           else -> {
-            plugin.instance ?: throw RuntimeException("Custom non Mapbox plugins must have non-null `instance` parameter!")
+            plugin.instance ?: throw MapboxMapException("Custom non Mapbox plugins must have non-null `instance` parameter!")
           }
         }
         createPlugin(mapView, Plugin.Custom(plugin.id, pluginObject))
