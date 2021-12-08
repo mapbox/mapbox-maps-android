@@ -97,7 +97,7 @@ As a convenience, the CI will run the checks again and will let you know if the
 code is completely formatted and if everything that was supposed to be generated
 was generated.
 
-### Token shield
+### Secret shield
 
 This project uses [secret-shield](https://github.com/mapbox/secret-shield) to help block secrets such
 as access tokens from being exposed.
