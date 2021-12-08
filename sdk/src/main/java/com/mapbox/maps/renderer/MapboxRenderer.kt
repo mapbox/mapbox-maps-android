@@ -118,7 +118,6 @@ internal abstract class MapboxRenderer : MapClient {
   }
 
   @WorkerThread
-  @Synchronized
   fun snapshot(): Bitmap? {
     if (!readyForSnapshot.get()) {
       Logger.e(TAG, "Could not take map snapshot because map is not ready yet.")
@@ -140,7 +139,6 @@ internal abstract class MapboxRenderer : MapClient {
   }
 
   @AnyThread
-  @Synchronized
   fun snapshot(listener: OnSnapshotReady) {
     if (!readyForSnapshot.get()) {
       Logger.e(TAG, "Could not take map snapshot because map is not ready yet.")
