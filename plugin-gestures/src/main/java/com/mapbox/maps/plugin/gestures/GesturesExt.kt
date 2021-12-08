@@ -219,13 +219,24 @@ fun MapPluginExtensionsDelegate.setGesturesManager(
 }
 
 /**
- * The gesture configuration object.
+ * Get copy of current gesture settings.
+ *
+ * Updating any property of [GesturesSettings] object returned will not take any effect,
+ * please use MapView.gestures.updateSettings { } instead.
+ *
  * Gesture plugin with id = [Plugin.MAPBOX_GESTURES_PLUGIN_ID] must be added while constructing
  * [com.mapbox.maps.MapView] as part of [com.mapbox.maps.MapInitOptions.plugins].
  *
  * @throws IllegalStateException if gestures plugin was not added.
  * @see [com.mapbox.maps.MapInitOptions]
  */
+@Deprecated(
+  "Gesture plugin instance obtained from MapView should be used instead to get a copy of current settings object. " +
+    "In order to set particular setting same gesture plugin instance should be used e.g. mapView.gestures.rotateEnabled = false",
+  replaceWith = ReplaceWith(
+    "mapView.gestures.getSettings()",
+  ),
+)
 fun MapPluginExtensionsDelegate.getGesturesSettings() =
   gesturesPlugin { getSettings() } as GesturesSettings?
 
