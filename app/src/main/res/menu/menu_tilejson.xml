@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_set_tile_request_delay"
+        android:checkable="true"
+        android:checked="false"
+        android:title="@string/set_tile_request_delay" />
+    <item
+        android:id="@+id/menu_set_tile_network_request_delay"
+        android:checkable="true"
+        android:checked="false"
+        android:title="@string/set_tile_network_request_delay" />
+</menu>

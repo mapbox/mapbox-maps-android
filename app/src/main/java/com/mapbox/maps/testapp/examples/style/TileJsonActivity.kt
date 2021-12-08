@@ -1,6 +1,8 @@
 package com.mapbox.maps.testapp.examples.style
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -12,8 +14,10 @@ import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.rasterLayer
 import com.mapbox.maps.extension.style.sources.TileSet
 import com.mapbox.maps.extension.style.sources.addSource
+import com.mapbox.maps.extension.style.sources.generated.RasterSource
 import com.mapbox.maps.extension.style.sources.generated.Scheme
 import com.mapbox.maps.extension.style.sources.generated.rasterSource
+import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.testapp.R
 
 /**
@@ -65,6 +69,38 @@ class TileJsonActivity : AppCompatActivity() {
     }
   }
 
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    menuInflater.inflate(R.menu.menu_tilejson, menu)
+    return true
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    when (item.itemId) {
+      R.id.menu_set_tile_request_delay -> {
+        item.isChecked = !item.isChecked
+        setTileDelay(TILE_REQUEST, item.isChecked)
+      }
+      R.id.menu_set_tile_network_request_delay -> {
+        item.isChecked = !item.isChecked
+        setTileDelay(NETWORK_REQUEST, item.isChecked)
+      }
+    }
+    return true
+  }
+
+  private fun setTileDelay(requestType: String, isChecked: Boolean = false) {
+    mapboxMap.getStyle {
+      it.getSourceAs<RasterSource>(SOURCE_ID)?.apply {
+        if (requestType == TILE_REQUEST) {
+          tileRequestsDelay(if (isChecked) RASTER_TILE_DELAY else DEFAULT_RASTER_TILE_DELAY)
+        }
+        if (requestType == NETWORK_REQUEST) {
+          tileNetworkRequestsDelay(if (isChecked) RASTER_TILE_DELAY else DEFAULT_RASTER_TILE_DELAY)
+        }
+      }
+    }
+  }
+
   private companion object {
     const val SOURCE_ID = "osm"
     const val LAYER_ID = SOURCE_ID
@@ -77,6 +113,10 @@ class TileJsonActivity : AppCompatActivity() {
     const val TILE_JSON_MIN_ZOOM = 0
     const val TILE_JSON_MAX_ZOOM = 18
 
+    const val RASTER_TILE_DELAY = 2000.0
+    const val DEFAULT_RASTER_TILE_DELAY = 0.0
+    const val TILE_REQUEST = "tile"
+    const val NETWORK_REQUEST = "network"
     const val OSM_RASTER_TILE_URL = "http://tile.openstreetmap.org/{z}/{x}/{y}.png"
     const val RASTER_TILE_SIZE_PIXELS = 256L
 
