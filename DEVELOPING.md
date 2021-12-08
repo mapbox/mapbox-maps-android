@@ -97,6 +97,14 @@ As a convenience, the CI will run the checks again and will let you know if the
 code is completely formatted and if everything that was supposed to be generated
 was generated.
 
+### Secret shield
+
+This project uses [secret-shield](https://github.com/mapbox/secret-shield) to help block secrets such
+as access tokens from being exposed.
+
+Install `secret-shield` by entering `npm install -g @mapbox/secret-shield`.
+Install the pre-commit hook by running `scripts/install-pre-commit/install-pre-commit.sh`
+
 ### Code formatting
 
 We follow [Kotlin Coding Conventions](https://kotlinlang.org/docs/reference/coding-conventions.html) 
@@ -112,18 +120,6 @@ if `ktlint` fails.
 Check if format is correct with `ktlint` or `./gradlew ktlint`.
 Run `ktlintFormat` or `./gradlew ktlintFormat` or `make fix` to automatically reformat everything and 
 fix all the issues.
-
-There's a script that installs pre-commit git hook to check `ktlint` on every commit :
-[install-pre-commit-hook](https://github.com/mapbox/mapbox-maps-android-internal/blob/main/scripts/hooks/install-pre-commit.sh). 
-Note, that if some global pre-commit (eg [secret-shield](https://github.com/mapbox/secret-shield)) 
-git hooks are already installed it will probably prevent this new hook from being called. 
-In such case global git hooks will need to call local hooks as well manually, e.g. add
-```
-if [ -e ./.git/hooks/pre-commit ]; then
-    ./.git/hooks/pre-commit "$@"
-fi
-```
-to the end of global pre-commit hook.
 
 ## Code
 
