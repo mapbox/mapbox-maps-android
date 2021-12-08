@@ -128,7 +128,7 @@ internal abstract class MapboxRenderer : MapClient {
     val waitCondition = lock.newCondition()
     lock.withLock {
       var snapshot: Bitmap? = null
-      renderThread.queueRenderEvent {
+      renderThread.queueSnapshot {
         lock.withLock {
           snapshot = performSnapshot()
           waitCondition.signal()
