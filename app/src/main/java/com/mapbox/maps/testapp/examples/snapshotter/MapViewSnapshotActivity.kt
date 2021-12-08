@@ -25,8 +25,11 @@ class MapViewSnapshotActivity : AppCompatActivity() {
     mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
 
     binding.fab.setOnClickListener {
-      val bitmap = binding.mapView.snapshot()
-      binding.imageView.setImageBitmap(bitmap)
+      binding.mapView.snapshot { bitmap ->
+        binding.imageView.post {
+          binding.imageView.setImageBitmap(bitmap)
+        }
+      }
     }
   }
 }
