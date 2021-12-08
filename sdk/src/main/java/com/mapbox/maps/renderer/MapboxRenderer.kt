@@ -117,7 +117,7 @@ internal abstract class MapboxRenderer : MapClient {
     renderThread.queueEvent(runnable)
   }
 
-  @AnyThread
+  @WorkerThread
   @Synchronized
   fun snapshot(): Bitmap? {
     if (!readyForSnapshot.get()) {
@@ -146,7 +146,7 @@ internal abstract class MapboxRenderer : MapClient {
       Logger.e(TAG, "Could not take map snapshot because map is not ready yet.")
       listener.onSnapshotReady(null)
     }
-    renderThread.queueRenderEvent {
+    renderThread.queueSnapshot {
       listener.onSnapshotReady(performSnapshot())
     }
   }
