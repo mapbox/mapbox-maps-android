@@ -6,7 +6,7 @@ import com.mapbox.maps.CameraOptions
 /**
  * Helper interface to provide camera transition animations.
  */
-interface ViewportCameraTransition {
+interface ViewportTransition {
   /**
    * This transition moves the camera from a zoomed out level to a zoomed in level.
    *
@@ -18,7 +18,7 @@ interface ViewportCameraTransition {
    */
   fun transitionFromLowZoomToHighZoom(
     cameraOptions: CameraOptions,
-    transitionOptions: ViewportCameraTransitionOptions
+    transitionOptions: ViewportTransitionOptions
   ): AnimatorSet
 
   /**
@@ -32,7 +32,7 @@ interface ViewportCameraTransition {
    */
   fun transitionFromHighZoomToLowZoom(
     cameraOptions: CameraOptions,
-    transitionOptions: ViewportCameraTransitionOptions
+    transitionOptions: ViewportTransitionOptions
   ): AnimatorSet
 
   /**
@@ -46,6 +46,6 @@ interface ViewportCameraTransition {
    */
   fun transitionLinear(
     cameraOptions: CameraOptions,
-    transitionOptions: ViewportCameraTransitionOptions
+    transitionOptions: ViewportTransitionOptions
   ): AnimatorSet
 }

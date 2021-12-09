@@ -1,8 +1,8 @@
 package com.mapbox.maps.plugin.viewport.data
 
 import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.plugin.viewport.state.ViewportCameraState.Following
-import com.mapbox.maps.plugin.viewport.state.ViewportCameraState.Overview
+import com.mapbox.maps.plugin.viewport.state.ViewportState.Following
+import com.mapbox.maps.plugin.viewport.state.ViewportState.Overview
 
 /**
  * Data object that carries the camera frames that [ViewportCamera] uses for transitions

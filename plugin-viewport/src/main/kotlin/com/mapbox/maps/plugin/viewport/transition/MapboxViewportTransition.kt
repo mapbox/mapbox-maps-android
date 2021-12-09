@@ -14,15 +14,15 @@ import com.mapbox.maps.plugin.viewport.ViewportPluginImpl.Companion.VIEWPORT_CAM
 import kotlin.math.abs
 
 /**
- * Helper class that provides default implementation of [ViewportCameraTransition] generators.
+ * Helper class that provides default implementation of [ViewportTransition] generators.
  */
-internal class MapboxViewportCameraTransition(
+internal class MapboxViewportTransition(
   private val cameraManager: MapCameraManagerDelegate,
   private val cameraPlugin: CameraAnimationsPlugin
-) : ViewportCameraTransition {
+) : ViewportTransition {
   override fun transitionFromLowZoomToHighZoom(
     cameraOptions: CameraOptions,
-    transitionOptions: ViewportCameraTransitionOptions
+    transitionOptions: ViewportTransitionOptions
   ): AnimatorSet {
     val animators = mutableListOf<Animator>()
     val currentMapCameraState = cameraManager.cameraState
@@ -96,7 +96,7 @@ internal class MapboxViewportCameraTransition(
 
   override fun transitionFromHighZoomToLowZoom(
     cameraOptions: CameraOptions,
-    transitionOptions: ViewportCameraTransitionOptions
+    transitionOptions: ViewportTransitionOptions
   ): AnimatorSet {
     val animators = mutableListOf<Animator>()
     val currentMapCameraState = cameraManager.cameraState
@@ -143,7 +143,7 @@ internal class MapboxViewportCameraTransition(
 
   override fun transitionLinear(
     cameraOptions: CameraOptions,
-    transitionOptions: ViewportCameraTransitionOptions
+    transitionOptions: ViewportTransitionOptions
   ): AnimatorSet {
     val animators = mutableListOf<Animator>()
     val currentMapCameraState = cameraManager.cameraState

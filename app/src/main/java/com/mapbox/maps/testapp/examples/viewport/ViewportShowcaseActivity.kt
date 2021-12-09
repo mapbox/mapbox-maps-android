@@ -22,7 +22,7 @@ import com.mapbox.maps.plugin.locationcomponent.LocationProvider
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.ViewportPlugin
 import com.mapbox.maps.plugin.viewport.data.MapboxViewportDataSource
-import com.mapbox.maps.plugin.viewport.state.ViewportCameraState
+import com.mapbox.maps.plugin.viewport.state.ViewportState
 import com.mapbox.maps.plugin.viewport.viewport
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityViewportAnimationBinding
@@ -157,12 +157,12 @@ class ViewportShowcaseActivity : AppCompatActivity() {
     viewport.registerViewportCameraStateChangedObserver { cameraState ->
       // change title of viewport button depending on the camera state
       when (cameraState) {
-        ViewportCameraState.TransitionToFollowing,
-        ViewportCameraState.Following -> viewportButton.text = OVERVIEW
+        ViewportState.TransitionToFollowing,
+        ViewportState.Following -> viewportButton.text = OVERVIEW
 
-        ViewportCameraState.TransitionToOverview,
-        ViewportCameraState.Overview,
-        ViewportCameraState.Idle -> viewportButton.text = FOLLOW
+        ViewportState.TransitionToOverview,
+        ViewportState.Overview,
+        ViewportState.Idle -> viewportButton.text = FOLLOW
       }
     }
     if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
