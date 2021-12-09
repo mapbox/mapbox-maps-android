@@ -107,7 +107,7 @@ function prepare_android_docs_branch() {
   BRANCH_NAME="maps_android_sdk_v$1"
   git checkout -b $BRANCH_NAME origin/$BRANCH_WITH_DOCUMENTATION
   git add -A
-  git commit -m "Carbon Maps SDK bump to $1"
+  git commit -m "Maps SDK bump to $1"
   git push --set-upstream origin $BRANCH_NAME --force
   cd -
 }
@@ -141,7 +141,7 @@ if [[ $MAPS_SDK_VERSION != *beta* ]] && [[ $MAPS_SDK_VERSION != *alpha* ]] && [[
   update_constants_and_map_version_numbers $MAPS_SDK_VERSION
   prepare_android_docs_branch $MAPS_SDK_VERSION
   cd $ANDROID_DOCS_DIRECTORY
-  create_pull_request "Carbon Maps SDK bump to ${MAPS_SDK_VERSION}" $BRANCH_WITH_DOCUMENTATION
+  create_pull_request "Maps SDK bump to ${MAPS_SDK_VERSION}" $BRANCH_WITH_DOCUMENTATION
   # Rollback the remote url when run the script locally
   git remote set-url origin git@github.com:mapbox/android-docs.git
   cd -
