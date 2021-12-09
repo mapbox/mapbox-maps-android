@@ -133,7 +133,7 @@ internal abstract class MapboxRendererTest {
       handler = Handler(this.looper)
     }
     val runnable = slot<Runnable>()
-    every { renderThread.queueRenderEvent(capture(runnable)) } answers {
+    every { renderThread.queueSnapshot(capture(runnable)) } answers {
       handler.post(runnable.captured)
     }
     mapboxRenderer.pixelReader = pixelReader
