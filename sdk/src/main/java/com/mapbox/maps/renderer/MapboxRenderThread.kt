@@ -38,8 +38,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   internal val renderEventQueue = CopyOnWriteArrayList<Runnable>()
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val eventQueue = CopyOnWriteArrayList<Runnable>()
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal var snapshotQueue = CopyOnWriteArrayList<Runnable>()
+  private val snapshotQueue = CopyOnWriteArrayList<Runnable>()
 
   private var surface: Surface? = null
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
