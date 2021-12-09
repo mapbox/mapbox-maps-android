@@ -376,7 +376,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
     }
     val expected = delegate.setStyleLight(Value(lightParams))
     expected.error?.let {
-      throw MapboxStyleException("Set Light failed: $it")
+      throw MapboxStyleException("Set light failed: $it")
     }
   }
 

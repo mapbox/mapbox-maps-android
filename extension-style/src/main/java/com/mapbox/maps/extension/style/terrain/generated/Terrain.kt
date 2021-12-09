@@ -90,7 +90,7 @@ class Terrain(private val sourceId: String) : TerrainDslReceiver, StyleContract.
     }
     val expected = delegate.setStyleTerrain(Value(terrainParams))
     expected.error?.let {
-      throw MapboxStyleException("Set Terrain failed: $it")
+      throw MapboxStyleException("Set terrain failed: $it")
     }
   }
 

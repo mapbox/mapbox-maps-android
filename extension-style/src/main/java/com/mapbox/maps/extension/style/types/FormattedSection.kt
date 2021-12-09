@@ -40,7 +40,7 @@ data class FormattedSection @JvmOverloads constructor(
           return colorInt
         }
       }
-      throw IllegalArgumentException("textColor not set.")
+      throw IllegalStateException("Property textColor is not set.")
     }
     set(@ColorInt value) {
       textColor = ColorUtils.colorToRgbaString(value)
