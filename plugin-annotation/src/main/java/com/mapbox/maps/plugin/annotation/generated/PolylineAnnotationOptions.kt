@@ -8,6 +8,7 @@ import com.google.gson.JsonObject
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapboxAnnotationException
 import com.mapbox.maps.extension.style.layers.properties.generated.LineJoin
 import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.AnnotationManager
@@ -288,7 +289,7 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
     annotationManager: AnnotationManager<LineString, PolylineAnnotation, *, *, *, *, *>
   ): PolylineAnnotation {
     if (geometry == null) {
-      throw RuntimeException("geometry field is required")
+      throw MapboxAnnotationException("geometry field is required")
     }
     val jsonObject = JsonObject()
     lineJoin?.let {
@@ -366,7 +367,7 @@ class PolylineAnnotationOptions : AnnotationOptions<LineString, PolylineAnnotati
      */
     fun fromFeature(feature: Feature): PolylineAnnotationOptions? {
       if (feature.geometry() == null) {
-        throw RuntimeException("geometry field is required")
+        throw MapboxAnnotationException("geometry field is required")
       }
       if (feature.geometry() !is LineString) {
 

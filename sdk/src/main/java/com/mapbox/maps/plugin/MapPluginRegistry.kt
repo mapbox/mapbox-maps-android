@@ -108,7 +108,7 @@ internal class MapPluginRegistry(
       } else {
         plugins[plugin.id]?.initialize()
       }
-    } ?: throw RuntimeException("MapPlugin instance is missing for ${plugin.id}!")
+    } ?: throw MapboxConfigurationException("MapPlugin instance is missing for ${plugin.id}!")
   }
 
   @Suppress("UNCHECKED_CAST")

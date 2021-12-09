@@ -3,6 +3,7 @@ package com.mapbox.maps.extension.style.sources
 import android.util.Log
 import com.mapbox.bindgen.Value
 import com.mapbox.common.Logger
+import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
@@ -57,7 +58,7 @@ abstract class Source(
     val expected = delegate.addStyleSource(sourceId, getCachedSourceProperties())
     expected.error?.let {
       Log.e(TAG, getCachedSourceProperties().toString())
-      throw RuntimeException("Add source failed: $it")
+      throw MapboxStyleException("Add source failed: $it")
     }
 
     // Set volatile properties.
@@ -100,7 +101,7 @@ abstract class Source(
         expected.error?.let { error ->
           "Set source property \"${property.propertyName}\" failed:\nError: $error\nValue set: ${property.value}".let {
             if (throwRuntimeException) {
-              throw RuntimeException(it)
+              throw MapboxStyleException(it)
             } else {
               Logger.e(TAG, it)
             }
@@ -126,7 +127,7 @@ abstract class Source(
         null
       }
     }
-    throw RuntimeException("Couldn't get $propertyName: source is not added to style yet.")
+    throw MapboxStyleException("Couldn't get $propertyName: source is not added to style yet.")
   }
 
   /**

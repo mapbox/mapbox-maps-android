@@ -10,7 +10,7 @@ internal class LayerSourceProvider {
 
   fun getModelSource(locationModelLayerOptions: LocationPuck3D): ModelSourceWrapper {
     if (locationModelLayerOptions.modelUri.isEmpty()) {
-      throw RuntimeException("Model Url must not be empty!")
+      throw IllegalArgumentException("Model Url must not be empty!")
     }
     return ModelSourceWrapper(
       MODEL_SOURCE,

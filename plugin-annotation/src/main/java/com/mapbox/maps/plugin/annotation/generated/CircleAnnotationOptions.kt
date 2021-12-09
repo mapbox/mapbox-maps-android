@@ -7,6 +7,7 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapboxAnnotationException
 import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.AnnotationManager
 import com.mapbox.maps.plugin.annotation.AnnotationOptions
@@ -281,7 +282,7 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
     annotationManager: AnnotationManager<Point, CircleAnnotation, *, *, *, *, *>
   ): CircleAnnotation {
     if (geometry == null) {
-      throw RuntimeException("geometry field is required")
+      throw MapboxAnnotationException("geometry field is required")
     }
     val jsonObject = JsonObject()
     circleSortKey?.let {
@@ -353,7 +354,7 @@ class CircleAnnotationOptions : AnnotationOptions<Point, CircleAnnotation> {
      */
     fun fromFeature(feature: Feature): CircleAnnotationOptions? {
       if (feature.geometry() == null) {
-        throw RuntimeException("geometry field is required")
+        throw MapboxAnnotationException("geometry field is required")
       }
       if (feature.geometry() !is Point) {
 

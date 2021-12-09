@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
 import com.mapbox.bindgen.Value
+import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -375,7 +376,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
     }
     val expected = delegate.setStyleLight(Value(lightParams))
     expected.error?.let {
-      throw RuntimeException("Set Light failed: $it")
+      throw MapboxStyleException("Set light failed: $it")
     }
   }
 
@@ -390,7 +391,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
       propertyValue.value
     )
     expected?.error?.let {
-      throw RuntimeException("Set light property failed: $it")
+      throw MapboxStyleException("Set light property failed: $it")
     }
   }
 
@@ -404,7 +405,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
         null
       }
     }
-    throw RuntimeException("Get property $propertyName failed: light is not added to style yet.")
+    throw MapboxStyleException("Get property $propertyName failed: light is not added to style yet.")
   }
 
   private fun getTransitionProperty(transitionName: String): StyleTransition? {
@@ -422,7 +423,7 @@ class Light : LightDslReceiver, StyleContract.StyleLightExtension {
         null
       }
     }
-    throw RuntimeException("Get property $transitionName failed: light is not added to style yet.")
+    throw MapboxStyleException("Get property $transitionName failed: light is not added to style yet.")
   }
   /**
    * Static variables and methods.

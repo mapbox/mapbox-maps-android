@@ -3,7 +3,6 @@ package com.mapbox.maps
 import androidx.annotation.VisibleForTesting
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.plugin.MapProjection
-import java.lang.RuntimeException
 
 internal object MapProjectionUtils {
 
@@ -18,7 +17,7 @@ internal object MapProjectionUtils {
     return when (map?.get(NAME_KEY)?.contents as? String) {
       MERCATOR_PROJECTION_NAME -> MapProjection.Mercator
       GLOBE_PROJECTION_NAME -> MapProjection.Globe
-      else -> throw RuntimeException("Could not cast given Value to valid MapProjection!")
+      else -> throw MapboxMapException("Could not cast given Value to valid MapProjection!")
     }
   }
 

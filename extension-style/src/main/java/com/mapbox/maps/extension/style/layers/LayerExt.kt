@@ -3,6 +3,7 @@ package com.mapbox.maps.extension.style.layers
 
 import com.mapbox.common.Logger
 import com.mapbox.maps.LayerPosition
+import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
@@ -111,7 +112,7 @@ internal fun Layer.bindPersistentlyTo(style: StyleInterface, position: LayerPosi
   this.delegate = style
   val expected = style.addPersistentStyleLayer(getCachedLayerProperties(), position)
   expected.error?.let {
-    throw RuntimeException("Add persistent layer failed: $it")
+    throw MapboxStyleException("Add persistent layer failed: $it")
   }
 }
 

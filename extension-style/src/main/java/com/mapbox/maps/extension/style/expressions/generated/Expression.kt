@@ -6,6 +6,7 @@ import androidx.annotation.ColorInt
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.GeoJson
 import com.mapbox.geojson.Geometry
+import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.extension.style.expressions.types.FormatSection
 import com.mapbox.maps.extension.style.types.ExpressionDsl
 import com.mapbox.maps.extension.style.utils.ColorUtils
@@ -2263,7 +2264,7 @@ class Expression : Value {
         builder.addArgument(Expression(it.contents as HashMap<String, Value>))
         return builder.build()
       }
-      throw RuntimeException(expected.error)
+      throw MapboxStyleException(expected.error)
     }
 
     /**
@@ -3204,7 +3205,7 @@ class Expression : Value {
         builder.addArgument(Expression(it.contents as HashMap<String, Value>))
         return builder.build()
       }
-      throw RuntimeException(expected.error)
+      throw MapboxStyleException(expected.error)
     }
 
     /**

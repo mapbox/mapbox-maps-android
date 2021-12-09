@@ -4,13 +4,13 @@ package com.mapbox.maps.extension.style.terrain.generated
 import android.util.Log
 import androidx.annotation.UiThread
 import com.mapbox.bindgen.Value
+import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.types.TerrainDsl
 import com.mapbox.maps.extension.style.utils.unwrap
-import kotlin.collections.HashMap
 
 /**
  * A global modifier that elevates layers and markers based on a DEM data source.
@@ -90,7 +90,7 @@ class Terrain(private val sourceId: String) : TerrainDslReceiver, StyleContract.
     }
     val expected = delegate.setStyleTerrain(Value(terrainParams))
     expected.error?.let {
-      throw RuntimeException("Set Terrain failed: $it")
+      throw MapboxStyleException("Set terrain failed: $it")
     }
   }
 
@@ -105,7 +105,7 @@ class Terrain(private val sourceId: String) : TerrainDslReceiver, StyleContract.
       propertyValue.value
     )
     expected?.error?.let {
-      throw RuntimeException("Set terrain property failed: $it")
+      throw MapboxStyleException("Set terrain property failed: $it")
     }
   }
 
@@ -119,7 +119,7 @@ class Terrain(private val sourceId: String) : TerrainDslReceiver, StyleContract.
         null
       }
     }
-    throw RuntimeException("Get property $propertyName failed: terrain is not added to style yet.")
+    throw MapboxStyleException("Get property $propertyName failed: terrain is not added to style yet.")
   }
 
   /**

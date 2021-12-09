@@ -3,6 +3,7 @@ package com.mapbox.maps.plugin.locationcomponent
 import com.mapbox.bindgen.Value
 import com.mapbox.common.Logger
 import com.mapbox.maps.LayerPosition
+import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.StyleManagerInterface
 
 internal open class LocationLayerWrapper(val layerId: String) {
@@ -14,7 +15,7 @@ internal open class LocationLayerWrapper(val layerId: String) {
     this.mapStyleDelegate = mapStyleDelegate
     val expected = mapStyleDelegate.addPersistentStyleLayer(toValue(), position)
     expected.error?.let {
-      throw RuntimeException("Add layer failed: $it")
+      throw MapboxLocationComponentException("Add layer failed: $it")
     }
   }
 
@@ -24,7 +25,7 @@ internal open class LocationLayerWrapper(val layerId: String) {
       if (styleDelegate.styleLayerExists(layerId)) {
         val expected = styleDelegate.setStyleLayerProperty(layerId, propertyName, value)
         expected.error?.let {
-          throw RuntimeException("Set layer property \"${propertyName}\" failed:\n$it\n$value")
+          throw MapboxLocationComponentException("Set layer property \"${propertyName}\" failed:\n$it\n$value")
         }
       } else {
         Logger.w(TAG, "Skip updating layer property $propertyName, layer $layerId not ready yet.")

@@ -8,6 +8,7 @@ import com.google.gson.JsonObject
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.geojson.Polygon
+import com.mapbox.maps.MapboxAnnotationException
 import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.AnnotationManager
 import com.mapbox.maps.plugin.annotation.AnnotationOptions
@@ -228,7 +229,7 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
     annotationManager: AnnotationManager<Polygon, PolygonAnnotation, *, *, *, *, *>
   ): PolygonAnnotation {
     if (geometry == null) {
-      throw RuntimeException("geometry field is required")
+      throw MapboxAnnotationException("geometry field is required")
     }
     val jsonObject = JsonObject()
     fillSortKey?.let {
@@ -282,7 +283,7 @@ class PolygonAnnotationOptions : AnnotationOptions<Polygon, PolygonAnnotation> {
      */
     fun fromFeature(feature: Feature): PolygonAnnotationOptions? {
       if (feature.geometry() == null) {
-        throw RuntimeException("geometry field is required")
+        throw MapboxAnnotationException("geometry field is required")
       }
       if (feature.geometry() !is Polygon) {
         return null

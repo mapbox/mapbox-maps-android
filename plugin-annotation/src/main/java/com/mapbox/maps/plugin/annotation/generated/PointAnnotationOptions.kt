@@ -8,6 +8,7 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapboxAnnotationException
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.TextJustify
@@ -652,7 +653,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
     annotationManager: AnnotationManager<Point, PointAnnotation, *, *, *, *, *>
   ): PointAnnotation {
     if (geometry == null) {
-      throw RuntimeException("geometry field is required")
+      throw MapboxAnnotationException("geometry field is required")
     }
     val jsonObject = JsonObject()
     iconAnchor?.let {
@@ -835,7 +836,7 @@ class PointAnnotationOptions : AnnotationOptions<Point, PointAnnotation> {
      */
     fun fromFeature(feature: Feature): PointAnnotationOptions? {
       if (feature.geometry() == null) {
-        throw RuntimeException("geometry field is required")
+        throw MapboxAnnotationException("geometry field is required")
       }
       if (feature.geometry() !is Point) {
 

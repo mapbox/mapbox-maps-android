@@ -3,6 +3,7 @@ package com.mapbox.maps.extension.style.layers
 import android.util.Log
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.LayerPosition
+import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
@@ -112,7 +113,7 @@ abstract class Layer : StyleContract.StyleLayerExtension {
 
     val expected = delegate.addStyleLayer(getCachedLayerProperties(), position)
     expected.error?.let {
-      throw RuntimeException("Add layer failed: $it")
+      throw MapboxStyleException("Add layer failed: $it")
     }
   }
 
@@ -139,7 +140,7 @@ abstract class Layer : StyleContract.StyleLayerExtension {
         property.value
       )
       expected.error?.let {
-        throw RuntimeException("Set layer property \"${property.propertyName}\" failed:\n$it\n${property.value}")
+        throw MapboxStyleException("Set layer property \"${property.propertyName}\" failed:\n$it\n${property.value}")
       }
     }
   }
@@ -154,7 +155,7 @@ abstract class Layer : StyleContract.StyleLayerExtension {
         null
       }
     }
-    throw RuntimeException("Couldn't get $propertyName: layer is not added to style yet.")
+    throw MapboxStyleException("Couldn't get $propertyName: layer is not added to style yet.")
   }
 
   /**

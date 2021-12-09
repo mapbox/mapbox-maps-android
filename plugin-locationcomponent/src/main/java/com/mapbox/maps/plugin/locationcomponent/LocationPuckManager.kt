@@ -6,6 +6,7 @@ import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
@@ -210,11 +211,11 @@ internal class LocationPuckManager(
 private inline fun <reified T> Expected<String, T>.take(): T {
   this.also {
     it.error?.let { err ->
-      throw RuntimeException(err)
+      throw MapboxLocationComponentException(err)
     }
     it.value?.let { v ->
       return v
     }
   }
-  throw RuntimeException("Error in parsing expression.")
+  throw MapboxLocationComponentException("Error in parsing expression.")
 }

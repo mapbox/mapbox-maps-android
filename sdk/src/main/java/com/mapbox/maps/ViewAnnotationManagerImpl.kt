@@ -56,7 +56,7 @@ internal class ViewAnnotationManagerImpl(
 
   override fun addViewAnnotation(view: View, options: ViewAnnotationOptions) {
     if (idLookupMap.containsKey(view)) {
-      throw RuntimeException(
+      throw MapboxViewAnnotationException(
         "Trying to add view annotation that was already added before! " +
           "Please consider deleting annotation view ($view) beforehand."
       )
@@ -119,14 +119,16 @@ internal class ViewAnnotationManagerImpl(
   }
 
   private fun validateOptions(options: ViewAnnotationOptions) {
-    checkNotNull(options.geometry) { EXCEPTION_TEXT_GEOMETRY_IS_NULL }
+    if (options.geometry == null) {
+      throw IllegalArgumentException(EXCEPTION_TEXT_GEOMETRY_IS_NULL)
+    }
   }
 
   private fun checkAssociatedFeatureIdUniqueness(options: ViewAnnotationOptions) {
     options.associatedFeatureId?.let { associatedFeatureId ->
       val (view, _) = findByFeatureId(associatedFeatureId)
       if (view != null) {
-        throw RuntimeException(
+        throw MapboxViewAnnotationException(
           String.format(
             EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS,
             associatedFeatureId
@@ -241,7 +243,7 @@ internal class ViewAnnotationManagerImpl(
 
   private inline fun <reified V> getValue(expected: Expected<String, V>): V? {
     if (expected.isError) {
-      throw RuntimeException(expected.error)
+      throw MapboxViewAnnotationException(expected.error)
     }
     return expected.value
   }

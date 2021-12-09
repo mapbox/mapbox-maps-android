@@ -10,7 +10,10 @@ import com.mapbox.common.module.provider.ModuleProviderArgument
 import com.mapbox.maps.assets.AssetManagerProvider
 import com.mapbox.maps.extension.observable.model.StyleDataType
 import com.mapbox.maps.module.MapTelemetry
-import com.mapbox.maps.plugin.*
+import com.mapbox.maps.plugin.InvalidViewPluginHostException
+import com.mapbox.maps.plugin.MapPlugin
+import com.mapbox.maps.plugin.MapPluginRegistry
+import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_ANNOTATION_PLUGIN_ID
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_ATTRIBUTION_PLUGIN_ID
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
@@ -292,7 +295,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
             ScaleBarPluginImpl()
           }
           else -> {
-            plugin.instance ?: throw RuntimeException("Custom non Mapbox plugins must have non-null `instance` parameter!")
+            plugin.instance ?: throw MapboxConfigurationException("Custom non Mapbox plugins must have non-null `instance` parameter!")
           }
         }
         createPlugin(mapView, Plugin.Custom(plugin.id, pluginObject))

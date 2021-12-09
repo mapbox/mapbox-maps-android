@@ -78,7 +78,7 @@ class ImageNinePatchExtensionImpl(private val builder: Builder) : StyleContract.
 
     init {
       if (bitmap.config != Bitmap.Config.ARGB_8888) {
-        throw RuntimeException("Only ARGB_8888 bitmap config is supported!")
+        throw IllegalArgumentException("Only ARGB_8888 bitmap config is supported!")
       }
       bitmap.parse9PatchBitmap().also {
         internalImage = it.internalImage

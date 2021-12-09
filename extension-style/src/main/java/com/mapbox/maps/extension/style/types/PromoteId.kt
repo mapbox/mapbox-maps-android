@@ -4,7 +4,6 @@ import androidx.annotation.Keep
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.VectorSource
-import java.lang.UnsupportedOperationException
 
 /**
  * Holds a property type to promote a specific feature for feature state API.
@@ -52,7 +51,7 @@ data class PromoteId @JvmOverloads constructor(
             PromoteId("")
           }
         } catch (e: RuntimeException) {
-          throw RuntimeException("$propertyName must be in the format HashMap<String,String>")
+          throw IllegalArgumentException("$propertyName must be in the format HashMap<String,String>")
         }
       }
       else -> throw UnsupportedOperationException("Wrapping ${propertyName::class.java.simpleName} to PromoteId is not supported.")

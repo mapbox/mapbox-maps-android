@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.RenderedQueryGeometry
 import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.extension.style.StyleInterface
@@ -112,7 +113,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
         }
       }
       expected.error?.let {
-        throw RuntimeException(it)
+        throw MapboxLocationComponentException(it)
       }
     }
   }

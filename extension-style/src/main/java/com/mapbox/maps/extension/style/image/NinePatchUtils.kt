@@ -48,7 +48,7 @@ fun Bitmap.parse9PatchBitmap() = decodeNinePatchChunk(this)
 
 private fun decodeNinePatchChunk(bitmap: Bitmap): NinePatchImage {
   val ninePatchChunk = bitmap.ninePatchChunk
-    ?: throw RuntimeException("Given bitmap must be a 9-patch drawable (.9.png)!")
+    ?: throw IllegalArgumentException("Given bitmap must be a 9-patch drawable (.9.png)!")
   val buffer = ByteBuffer.wrap(ninePatchChunk).order(ByteOrder.nativeOrder())
   // skip first byte
   buffer.get()

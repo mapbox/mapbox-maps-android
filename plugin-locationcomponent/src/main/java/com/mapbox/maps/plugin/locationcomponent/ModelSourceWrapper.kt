@@ -3,6 +3,7 @@ package com.mapbox.maps.plugin.locationcomponent
 import android.util.Log
 import com.mapbox.bindgen.Value
 import com.mapbox.common.Logger
+import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.StyleManagerInterface
 
 internal class ModelSourceWrapper(
@@ -32,7 +33,7 @@ internal class ModelSourceWrapper(
     val expected = delegate.addStyleSource(sourceId, toValue())
     expected.error?.let {
       Log.e(TAG, sourceProperties.toString())
-      throw RuntimeException("Add source failed: $it")
+      throw MapboxLocationComponentException("Add source failed: $it")
     }
   }
 
@@ -54,7 +55,7 @@ internal class ModelSourceWrapper(
           value
         )
         expected.error?.let {
-          throw RuntimeException("Set source property \"${propertyName}\" failed:\nError: $it\nValue set: $value")
+          throw MapboxLocationComponentException("Set source property \"${propertyName}\" failed:\nError: $it\nValue set: $value")
         }
       } else {
         Logger.w(
