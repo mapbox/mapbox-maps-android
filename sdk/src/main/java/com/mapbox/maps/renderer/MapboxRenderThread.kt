@@ -38,6 +38,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   internal val renderEventQueue = CopyOnWriteArrayList<Runnable>()
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val eventQueue = CopyOnWriteArrayList<Runnable>()
+  private val snapshotQueue = CopyOnWriteArrayList<Runnable>()
 
   private var surface: Surface? = null
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -162,9 +163,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   private fun drainQueue(queue: CopyOnWriteArrayList<Runnable>) {
     queue.apply {
       if (isNotEmpty()) {
-        forEach {
-          it.run()
-        }
+        forEach(Runnable::run)
         clear()
       }
     }
@@ -178,6 +177,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       return
     }
     mapboxRenderer.onDrawFrame()
+    // snapshots should be taken before swapBuffers otherwise buffers may be already empty
+    drainQueue(snapshotQueue)
     eglSurface?.let {
       when (val swapStatus = eglCore.swapBuffers(it)) {
         EGL10.EGL_SUCCESS -> {}
@@ -304,6 +305,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         shouldExit = false
         eventQueue.clear()
         renderEventQueue.clear()
+        snapshotQueue.clear()
         renderHandlerThread.clearMessageQueue()
         prepareRenderFrame(creatingSurface = true)
       }
@@ -339,6 +341,12 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @AnyThread
   fun queueRenderEvent(runnable: Runnable) {
     renderEventQueue.add(runnable)
+    postPrepareRenderFrame()
+  }
+
+  @AnyThread
+  fun queueSnapshot(performSnapshotTask: Runnable) {
+    snapshotQueue.add(performSnapshotTask)
     postPrepareRenderFrame()
   }
 

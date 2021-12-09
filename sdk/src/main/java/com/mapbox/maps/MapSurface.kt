@@ -105,6 +105,7 @@ class MapSurface @JvmOverloads constructor(
 
   /**
    * Queue a runnable to be executed on the map renderer thread.
+   * Consecutive events will be called in the order they were queued.
    *
    * @param event the runnable to queue
    * @param needRender if we should force redraw after running event (e.g. execute some GL commands)
@@ -122,6 +123,7 @@ class MapSurface @JvmOverloads constructor(
 
   /**
    * Called to capture a snapshot asynchronously.
+   * Consecutive requests will return snapshots in the order they were added.
    *
    * @param listener The listener to be invoked when snapshot finishes
    */
