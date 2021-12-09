@@ -382,6 +382,68 @@ class RasterDemSourceTest {
   }
 
   @Test
+  fun tileRequestsDelaySet() {
+    val testSource = rasterDemSource("testId") {
+      tileRequestsDelay(1.0)
+    }
+    testSource.bindTo(style)
+
+    verify { style.setStyleSourceProperty("testId", "tile-requests-delay", capture(valueSlot)) }
+    assertEquals("1.0", valueSlot.captured.toString())
+  }
+
+  @Test
+  fun tileRequestsDelaySetAfterBind() {
+    val testSource = rasterDemSource("testId") {}
+    testSource.bindTo(style)
+    testSource.tileRequestsDelay(1.0)
+
+    verify { style.setStyleSourceProperty("testId", "tile-requests-delay", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun tileRequestsDelayGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val testSource = rasterDemSource("testId") {}
+    testSource.bindTo(style)
+
+    assertEquals(1.0.toString(), testSource.tileRequestsDelay?.toString())
+    verify { style.getStyleSourceProperty("testId", "tile-requests-delay") }
+  }
+
+  @Test
+  fun tileNetworkRequestsDelaySet() {
+    val testSource = rasterDemSource("testId") {
+      tileNetworkRequestsDelay(1.0)
+    }
+    testSource.bindTo(style)
+
+    verify { style.setStyleSourceProperty("testId", "tile-network-requests-delay", capture(valueSlot)) }
+    assertEquals("1.0", valueSlot.captured.toString())
+  }
+
+  @Test
+  fun tileNetworkRequestsDelaySetAfterBind() {
+    val testSource = rasterDemSource("testId") {}
+    testSource.bindTo(style)
+    testSource.tileNetworkRequestsDelay(1.0)
+
+    verify { style.setStyleSourceProperty("testId", "tile-network-requests-delay", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "1.0")
+  }
+
+  @Test
+  fun tileNetworkRequestsDelayGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+    val testSource = rasterDemSource("testId") {}
+    testSource.bindTo(style)
+
+    assertEquals(1.0.toString(), testSource.tileNetworkRequestsDelay?.toString())
+    verify { style.getStyleSourceProperty("testId", "tile-network-requests-delay") }
+  }
+
+  @Test
   fun tileSetTest() {
     val testSource = rasterDemSource("testId") {
       tileSet(
@@ -460,6 +522,22 @@ class RasterDemSourceTest {
 
     assertEquals(1.0.toString(), RasterDemSource.defaultMinimumTileUpdateInterval?.toString())
     verify { StyleManager.getStyleSourcePropertyDefaultValue("raster-dem", "minimum-tile-update-interval") }
+  }
+
+  @Test
+  fun defaultTileRequestsDelayGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+
+    assertEquals(1.0.toString(), RasterDemSource.defaultTileRequestsDelay?.toString())
+    verify { StyleManager.getStyleSourcePropertyDefaultValue("raster-dem", "tile-requests-delay") }
+  }
+
+  @Test
+  fun defaultTileNetworkRequestsDelayGet() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
+
+    assertEquals(1.0.toString(), RasterDemSource.defaultTileNetworkRequestsDelay?.toString())
+    verify { StyleManager.getStyleSourcePropertyDefaultValue("raster-dem", "tile-network-requests-delay") }
   }
 }
 

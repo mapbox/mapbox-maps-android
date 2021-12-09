@@ -246,6 +246,50 @@ class VectorSourceTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun tileRequestsDelayTest() {
+    val testSource = vectorSource(SOURCE_ID) {
+      url(TEST_URI)
+      tileRequestsDelay(1.0)
+    }
+    setupSource(testSource)
+    assertEquals(1.0, testSource.tileRequestsDelay)
+  }
+
+  @Test
+  @UiThreadTest
+  fun tileRequestsDelayAfterBindTest() {
+    val testSource = vectorSource(SOURCE_ID) {
+      url(TEST_URI)
+    }
+    setupSource(testSource)
+    testSource.tileRequestsDelay(1.0)
+    assertEquals(1.0, testSource.tileRequestsDelay)
+  }
+
+  @Test
+  @UiThreadTest
+  fun tileNetworkRequestsDelayTest() {
+    val testSource = vectorSource(SOURCE_ID) {
+      url(TEST_URI)
+      tileNetworkRequestsDelay(1.0)
+    }
+    setupSource(testSource)
+    assertEquals(1.0, testSource.tileNetworkRequestsDelay)
+  }
+
+  @Test
+  @UiThreadTest
+  fun tileNetworkRequestsDelayAfterBindTest() {
+    val testSource = vectorSource(SOURCE_ID) {
+      url(TEST_URI)
+    }
+    setupSource(testSource)
+    testSource.tileNetworkRequestsDelay(1.0)
+    assertEquals(1.0, testSource.tileNetworkRequestsDelay)
+  }
+
+  @Test
+  @UiThreadTest
   fun tileSetTest() {
     val testSource = vectorSource(SOURCE_ID) {
       url(TEST_URI)
@@ -277,6 +321,8 @@ class VectorSourceTest : BaseStyleTest() {
     assertNotNull("defaultVolatile should not be null", VectorSource.defaultVolatile)
     assertNotNull("defaultPrefetchZoomDelta should not be null", VectorSource.defaultPrefetchZoomDelta)
     assertNotNull("defaultMinimumTileUpdateInterval should not be null", VectorSource.defaultMinimumTileUpdateInterval)
+    assertNotNull("defaultTileRequestsDelay should not be null", VectorSource.defaultTileRequestsDelay)
+    assertNotNull("defaultTileNetworkRequestsDelay should not be null", VectorSource.defaultTileNetworkRequestsDelay)
   }
 
   private companion object {

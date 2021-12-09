@@ -146,4 +146,8 @@
 
     <!--View Annotations-->
     <string name="content_description_close">Close callout</string>
+
+    <!-- Tile requests -->
+    <string name="set_tile_request_delay">Set tile request delay to 2 sec</string>
+    <string name="set_tile_network_request_delay">Set tile network delay to 2 sec</string>
 </resources>

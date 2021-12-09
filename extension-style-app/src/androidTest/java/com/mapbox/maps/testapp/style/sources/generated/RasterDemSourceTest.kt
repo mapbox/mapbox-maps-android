@@ -245,6 +245,50 @@ class RasterDemSourceTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun tileRequestsDelayTest() {
+    val testSource = rasterDemSource(SOURCE_ID) {
+      url(TEST_URI)
+      tileRequestsDelay(1.0)
+    }
+    setupSource(testSource)
+    assertEquals(1.0, testSource.tileRequestsDelay)
+  }
+
+  @Test
+  @UiThreadTest
+  fun tileRequestsDelayAfterBindTest() {
+    val testSource = rasterDemSource(SOURCE_ID) {
+      url(TEST_URI)
+    }
+    setupSource(testSource)
+    testSource.tileRequestsDelay(1.0)
+    assertEquals(1.0, testSource.tileRequestsDelay)
+  }
+
+  @Test
+  @UiThreadTest
+  fun tileNetworkRequestsDelayTest() {
+    val testSource = rasterDemSource(SOURCE_ID) {
+      url(TEST_URI)
+      tileNetworkRequestsDelay(1.0)
+    }
+    setupSource(testSource)
+    assertEquals(1.0, testSource.tileNetworkRequestsDelay)
+  }
+
+  @Test
+  @UiThreadTest
+  fun tileNetworkRequestsDelayAfterBindTest() {
+    val testSource = rasterDemSource(SOURCE_ID) {
+      url(TEST_URI)
+    }
+    setupSource(testSource)
+    testSource.tileNetworkRequestsDelay(1.0)
+    assertEquals(1.0, testSource.tileNetworkRequestsDelay)
+  }
+
+  @Test
+  @UiThreadTest
   fun tileSetTest() {
     val testSource = rasterDemSource(SOURCE_ID) {
       url(TEST_URI)
@@ -276,6 +320,8 @@ class RasterDemSourceTest : BaseStyleTest() {
     assertNotNull("defaultVolatile should not be null", RasterDemSource.defaultVolatile)
     assertNotNull("defaultPrefetchZoomDelta should not be null", RasterDemSource.defaultPrefetchZoomDelta)
     assertNotNull("defaultMinimumTileUpdateInterval should not be null", RasterDemSource.defaultMinimumTileUpdateInterval)
+    assertNotNull("defaultTileRequestsDelay should not be null", RasterDemSource.defaultTileRequestsDelay)
+    assertNotNull("defaultTileNetworkRequestsDelay should not be null", RasterDemSource.defaultTileNetworkRequestsDelay)
   }
 
   private companion object {

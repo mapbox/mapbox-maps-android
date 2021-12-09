@@ -252,6 +252,52 @@ class VectorSource(builder: Builder) : Source(builder.sourceId) {
     get() = getPropertyValue("max-overscale-factor-for-parent-tiles")
 
   /**
+   * For the tiled sources, this property sets the tile requests delay. The given delay comes in
+   * action only during an ongoing animation or gestures. It helps to avoid loading, parsing and rendering
+   * of the transient tiles and thus to improve the rendering performance, especially on low-end devices.
+   */
+  fun tileRequestsDelay(value: Double = 0.0) = apply {
+    setVolatileProperty(PropertyValue("tile-requests-delay", TypeUtils.wrapToValue(value)))
+  }
+
+  /**
+   * For the tiled sources, this property sets the tile requests delay. The given delay comes in
+   * action only during an ongoing animation or gestures. It helps to avoid loading, parsing and rendering
+   * of the transient tiles and thus to improve the rendering performance, especially on low-end devices.
+   */
+  val tileRequestsDelay: Double?
+    /**
+     * Get the TileRequestsDelay property
+     *
+     * @return Double
+     */
+    get() = getPropertyValue("tile-requests-delay")
+
+  /**
+   * For the tiled sources, this property sets the tile network requests delay. The given delay comes
+   * in action only during an ongoing animation or gestures. It helps to avoid loading the transient
+   * tiles from the network and thus to avoid redundant network requests. Note that tile-network-requests-delay value is
+   * superseded with tile-requests-delay property value, if both are provided.
+   */
+  fun tileNetworkRequestsDelay(value: Double = 0.0) = apply {
+    setVolatileProperty(PropertyValue("tile-network-requests-delay", TypeUtils.wrapToValue(value)))
+  }
+
+  /**
+   * For the tiled sources, this property sets the tile network requests delay. The given delay comes
+   * in action only during an ongoing animation or gestures. It helps to avoid loading the transient
+   * tiles from the network and thus to avoid redundant network requests. Note that tile-network-requests-delay value is
+   * superseded with tile-requests-delay property value, if both are provided.
+   */
+  val tileNetworkRequestsDelay: Double?
+    /**
+     * Get the TileNetworkRequestsDelay property
+     *
+     * @return Double
+     */
+    get() = getPropertyValue("tile-network-requests-delay")
+
+  /**
    * Builder for VectorSource.
    *
    * @param sourceId the ID of the source
@@ -371,6 +417,27 @@ class VectorSource(builder: Builder) : Source(builder.sourceId) {
     }
 
     /**
+     * For the tiled sources, this property sets the tile requests delay. The given delay comes in
+     * action only during an ongoing animation or gestures. It helps to avoid loading, parsing and rendering
+     * of the transient tiles and thus to improve the rendering performance, especially on low-end devices.
+     */
+    fun tileRequestsDelay(value: Double = 0.0) = apply {
+      val propertyValue = PropertyValue("tile-requests-delay", TypeUtils.wrapToValue(value))
+      volatileProperties[propertyValue.propertyName] = propertyValue
+    }
+
+    /**
+     * For the tiled sources, this property sets the tile network requests delay. The given delay comes
+     * in action only during an ongoing animation or gestures. It helps to avoid loading the transient
+     * tiles from the network and thus to avoid redundant network requests. Note that tile-network-requests-delay value is
+     * superseded with tile-requests-delay property value, if both are provided.
+     */
+    fun tileNetworkRequestsDelay(value: Double = 0.0) = apply {
+      val propertyValue = PropertyValue("tile-network-requests-delay", TypeUtils.wrapToValue(value))
+      volatileProperties[propertyValue.propertyName] = propertyValue
+    }
+
+    /**
      * Add a TileSet to the Source.
      *
      * @param tileSet
@@ -484,6 +551,33 @@ class VectorSource(builder: Builder) : Source(builder.sourceId) {
        * @return Double
        */
       get() = StyleManager.getStyleSourcePropertyDefaultValue("vector", "minimum-tile-update-interval").silentUnwrap()
+
+    /**
+     * For the tiled sources, this property sets the tile requests delay. The given delay comes in
+     * action only during an ongoing animation or gestures. It helps to avoid loading, parsing and rendering
+     * of the transient tiles and thus to improve the rendering performance, especially on low-end devices.
+     */
+    val defaultTileRequestsDelay: Double?
+      /**
+       * Get the TileRequestsDelay property
+       *
+       * @return Double
+       */
+      get() = StyleManager.getStyleSourcePropertyDefaultValue("vector", "tile-requests-delay").silentUnwrap()
+
+    /**
+     * For the tiled sources, this property sets the tile network requests delay. The given delay comes
+     * in action only during an ongoing animation or gestures. It helps to avoid loading the transient
+     * tiles from the network and thus to avoid redundant network requests. Note that tile-network-requests-delay value is
+     * superseded with tile-requests-delay property value, if both are provided.
+     */
+    val defaultTileNetworkRequestsDelay: Double?
+      /**
+       * Get the TileNetworkRequestsDelay property
+       *
+       * @return Double
+       */
+      get() = StyleManager.getStyleSourcePropertyDefaultValue("vector", "tile-network-requests-delay").silentUnwrap()
   }
 }
 
