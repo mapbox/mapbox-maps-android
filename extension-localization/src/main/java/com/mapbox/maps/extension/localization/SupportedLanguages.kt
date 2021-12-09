@@ -149,3 +149,7 @@ internal fun getLanguageNameV8(locale: Locale): String {
     }
   }
 }
+
+internal fun isSupportedLanguage(locale: String): Boolean {
+  return supportedV7.contains(locale) || supportedV8.contains(locale)
+}
