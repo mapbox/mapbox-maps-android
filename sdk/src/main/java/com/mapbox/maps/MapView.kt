@@ -225,6 +225,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
 
   /**
    * Queue a runnable to be executed on the map renderer thread.
+   * Consecutive events will be called in the order they were queued.
    *
    * @param event the runnable to queue
    * @param needRender if we should force redraw after running event (e.g. execute some GL commands)
@@ -244,6 +245,8 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   /**
    * Perform snapshot of current [MapView] state with notifying listener about it.
    * This method is asynchronous so it does not block calling thread.
+   * Consecutive requests will return snapshots in the order they were added.
+   *
    * [OnSnapshotReady.onSnapshotReady] is called from non UI thread.
    *
    * @param listener instance of [OnSnapshotReady] callback
