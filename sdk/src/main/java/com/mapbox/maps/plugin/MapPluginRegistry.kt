@@ -6,7 +6,6 @@ import com.mapbox.maps.*
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePlugin
-import com.mapbox.maps.util.MapboxMapException
 import java.util.concurrent.CopyOnWriteArrayList
 
 internal class MapPluginRegistry(
@@ -109,7 +108,7 @@ internal class MapPluginRegistry(
       } else {
         plugins[plugin.id]?.initialize()
       }
-    } ?: throw MapboxMapException("MapPlugin instance is missing for ${plugin.id}!")
+    } ?: throw MapboxConfigurationException("MapPlugin instance is missing for ${plugin.id}!")
   }
 
   @Suppress("UNCHECKED_CAST")

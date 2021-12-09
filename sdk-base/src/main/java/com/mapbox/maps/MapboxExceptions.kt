@@ -1,4 +1,4 @@
-package com.mapbox.maps.util
+package com.mapbox.maps
 
 /**
  * Mapbox exception class flagging map related [RuntimeException] did occur.

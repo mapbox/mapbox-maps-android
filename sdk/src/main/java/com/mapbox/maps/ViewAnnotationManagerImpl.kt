@@ -8,7 +8,6 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.VisibleForTesting
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.bindgen.Expected
-import com.mapbox.maps.util.MapboxViewAnnotationException
 import com.mapbox.maps.viewannotation.ViewAnnotation
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import java.util.concurrent.ConcurrentHashMap
@@ -121,7 +120,7 @@ internal class ViewAnnotationManagerImpl(
 
   private fun validateOptions(options: ViewAnnotationOptions) {
     if (options.geometry == null) {
-      throw MapboxViewAnnotationException(EXCEPTION_TEXT_GEOMETRY_IS_NULL)
+      throw IllegalArgumentException(EXCEPTION_TEXT_GEOMETRY_IS_NULL)
     }
   }
 

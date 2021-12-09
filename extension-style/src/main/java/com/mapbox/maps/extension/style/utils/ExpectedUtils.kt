@@ -2,7 +2,7 @@ package com.mapbox.maps.extension.style.utils
 
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
-import com.mapbox.maps.util.MapboxStyleException
+import com.mapbox.maps.MapboxStyleException
 
 /**
  * Internal function to check if a method invoke on StyleDelegate succeeded, throws exception if not.

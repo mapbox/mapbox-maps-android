@@ -7,7 +7,6 @@ import com.mapbox.maps.ImageStretches
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.utils.check
-import com.mapbox.maps.util.MapboxStyleException
 import java.nio.ByteBuffer
 
 /**
@@ -92,7 +91,7 @@ class ImageExtensionImpl(private val builder: Builder) : StyleContract.StyleImag
      */
     fun bitmap(bitmap: Bitmap) = apply {
       if (bitmap.config != Bitmap.Config.ARGB_8888) {
-        throw MapboxStyleException("Only ARGB_8888 bitmap config is supported!")
+        throw IllegalArgumentException("Only ARGB_8888 bitmap config is supported!")
       }
       val byteBuffer = ByteBuffer.allocate(bitmap.byteCount)
       bitmap.copyPixelsToBuffer(byteBuffer)
@@ -145,7 +144,7 @@ class ImageExtensionImpl(private val builder: Builder) : StyleContract.StyleImag
      */
     fun build(): ImageExtensionImpl {
       if (!this::internalImage.isInitialized) {
-        throw MapboxStyleException("An image plugin requires an image input.")
+        throw IllegalStateException("An image plugin requires an image input.")
       }
       return ImageExtensionImpl(this)
     }

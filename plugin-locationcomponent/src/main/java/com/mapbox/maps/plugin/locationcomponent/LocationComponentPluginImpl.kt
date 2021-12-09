@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.RenderedQueryGeometry
 import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.extension.style.StyleInterface
@@ -16,7 +17,6 @@ import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttributeParser
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettingsBase
-import com.mapbox.maps.util.MapboxLocationComponentException
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArrayList
 

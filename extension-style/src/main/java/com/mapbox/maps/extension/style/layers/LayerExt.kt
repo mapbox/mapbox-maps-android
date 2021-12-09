@@ -3,13 +3,13 @@ package com.mapbox.maps.extension.style.layers
 
 import com.mapbox.common.Logger
 import com.mapbox.maps.LayerPosition
+import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.layers.generated.*
 import com.mapbox.maps.extension.style.utils.silentUnwrap
 import com.mapbox.maps.extension.style.utils.unwrap
-import com.mapbox.maps.util.MapboxStyleException
 
 /**
  * Extension function to get a Layer provided by the Style Extension by layer id.

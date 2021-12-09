@@ -8,6 +8,7 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapboxAnnotationException
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.TextJustify
@@ -17,7 +18,6 @@ import com.mapbox.maps.plugin.annotation.AnnotationManager
 import com.mapbox.maps.plugin.annotation.AnnotationOptions
 import com.mapbox.maps.plugin.annotation.ConvertUtils.convertDoubleArray
 import com.mapbox.maps.plugin.annotation.ConvertUtils.toDoubleArray
-import com.mapbox.maps.util.MapboxAnnotationException
 
 /**
  * Builder class from which a pointAnnotation is created.

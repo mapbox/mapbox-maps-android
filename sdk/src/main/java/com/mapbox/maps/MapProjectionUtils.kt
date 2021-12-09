@@ -3,7 +3,6 @@ package com.mapbox.maps
 import androidx.annotation.VisibleForTesting
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.plugin.MapProjection
-import com.mapbox.maps.util.MapboxMapException
 
 internal object MapProjectionUtils {
 

@@ -3,8 +3,8 @@ package com.mapbox.maps.plugin.locationcomponent
 import com.mapbox.bindgen.Value
 import com.mapbox.common.Logger
 import com.mapbox.maps.LayerPosition
+import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.StyleManagerInterface
-import com.mapbox.maps.util.MapboxLocationComponentException
 
 internal open class LocationLayerWrapper(val layerId: String) {
 

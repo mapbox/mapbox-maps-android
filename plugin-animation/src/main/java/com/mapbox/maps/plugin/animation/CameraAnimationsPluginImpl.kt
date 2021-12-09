@@ -13,7 +13,6 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.animation.animator.*
 import com.mapbox.maps.plugin.delegates.*
-import com.mapbox.maps.util.MapboxCameraAnimationException
 import com.mapbox.maps.util.MathUtils
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.properties.Delegates

@@ -8,10 +8,10 @@ import com.google.gson.JsonObject
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.geojson.Polygon
+import com.mapbox.maps.MapboxAnnotationException
 import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.AnnotationManager
 import com.mapbox.maps.plugin.annotation.AnnotationOptions
-import com.mapbox.maps.util.MapboxAnnotationException
 
 /**
  * Builder class from which a polygonAnnotation is created.

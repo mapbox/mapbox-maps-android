@@ -3,6 +3,7 @@ package com.mapbox.maps.extension.style.layers
 import android.util.Log
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.LayerPosition
+import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
@@ -10,7 +11,6 @@ import com.mapbox.maps.extension.style.layers.generated.BackgroundLayer
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.layers.properties.generated.Visibility
 import com.mapbox.maps.extension.style.utils.unwrap
-import com.mapbox.maps.util.MapboxStyleException
 
 /**
  * Base class for the different Layer types

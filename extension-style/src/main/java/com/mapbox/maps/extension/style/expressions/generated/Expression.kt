@@ -6,13 +6,13 @@ import androidx.annotation.ColorInt
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.GeoJson
 import com.mapbox.geojson.Geometry
+import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.extension.style.expressions.types.FormatSection
 import com.mapbox.maps.extension.style.types.ExpressionDsl
 import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.extension.style.utils.TypeUtils
 import com.mapbox.maps.extension.style.utils.take
 import com.mapbox.maps.extension.style.utils.unwrapToExpression
-import com.mapbox.maps.util.MapboxStyleException
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap

@@ -8,7 +8,6 @@ import com.mapbox.maps.Image
 import com.mapbox.maps.ImageContent
 import com.mapbox.maps.ImageStretches
 import com.mapbox.maps.extension.style.StyleInterface
-import com.mapbox.maps.util.MapboxStyleException
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
@@ -49,7 +48,7 @@ fun Bitmap.parse9PatchBitmap() = decodeNinePatchChunk(this)
 
 private fun decodeNinePatchChunk(bitmap: Bitmap): NinePatchImage {
   val ninePatchChunk = bitmap.ninePatchChunk
-    ?: throw MapboxStyleException("Given bitmap must be a 9-patch drawable (.9.png)!")
+    ?: throw IllegalArgumentException("Given bitmap must be a 9-patch drawable (.9.png)!")
   val buffer = ByteBuffer.wrap(ninePatchChunk).order(ByteOrder.nativeOrder())
   // skip first byte
   buffer.get()

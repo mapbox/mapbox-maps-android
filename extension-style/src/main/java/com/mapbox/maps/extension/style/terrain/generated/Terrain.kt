@@ -4,14 +4,13 @@ package com.mapbox.maps.extension.style.terrain.generated
 import android.util.Log
 import androidx.annotation.UiThread
 import com.mapbox.bindgen.Value
+import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.types.TerrainDsl
 import com.mapbox.maps.extension.style.utils.unwrap
-import com.mapbox.maps.util.MapboxStyleException
-import kotlin.collections.HashMap
 
 /**
  * A global modifier that elevates layers and markers based on a DEM data source.
