@@ -30,7 +30,7 @@ import com.mapbox.maps.plugin.viewport.transition.ViewportTransitionOptions
 import java.util.concurrent.CopyOnWriteArraySet
 
 /**
- * Mapbox default implementation for Viewport plugin.
+ * Mapbox default implementation for [ViewportPlugin].
  */
 class ViewportPluginImpl : ViewportPlugin {
   private var frameTransitionOptions = DEFAULT_FRAME_TRANSITION_OPT

@@ -1,7 +1,9 @@
 package com.mapbox.maps.plugin.viewport.data
 
+import com.mapbox.maps.plugin.viewport.ViewportPlugin
+
 /**
- * Describes an object that provides desired camera positions to [ViewportCamera].
+ * Describes an object that provides desired camera positions to [ViewportPlugin].
  *
  * Implementation should always store the latest available [ViewportData] and return it via
  * [getViewportData]. Whenever data becomes available,

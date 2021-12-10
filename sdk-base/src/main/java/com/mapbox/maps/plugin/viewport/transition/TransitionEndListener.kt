@@ -1,7 +1,9 @@
 package com.mapbox.maps.plugin.viewport.transition
 
+import com.mapbox.maps.plugin.viewport.ViewportPlugin
+
 /**
- * A listener that is notified when a [ViewportCamera] transition ends.
+ * A listener that is notified when a [ViewportPlugin] transition ends.
  */
 fun interface TransitionEndListener {
 

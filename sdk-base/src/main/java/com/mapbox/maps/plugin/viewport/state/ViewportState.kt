@@ -1,22 +1,23 @@
 package com.mapbox.maps.plugin.viewport.state
 
+import com.mapbox.maps.plugin.viewport.ViewportPlugin
 import com.mapbox.maps.plugin.viewport.data.ViewportDataSource
 
 /**
- * Set of possible [ViewportCamera] states.
+ * Set of possible [ViewportPlugin] states.
  */
 sealed class ViewportState {
   /**
    * Describes state when `ViewportCamera` does not execute any transitions.
    *
-   * Set after invoking [ViewportCamera.requestViewportCameraToIdle]
+   * Set after invoking [ViewportPlugin.requestCameraToIdle]
    */
   object Idle : ViewportState()
 
   /**
-   * Describes state when `ViewportCamera` transitions to the [Following] state.
+   * Describes state when `ViewportPlugin` transitions to the [Following] state.
    *
-   * Set after invoking [ViewportCamera.requestViewportCameraToFollowing].
+   * Set after invoking [ViewportPlugin.requestCameraToFollowing].
    */
   object TransitionToFollowing : ViewportState()
 
@@ -25,7 +26,7 @@ sealed class ViewportState {
    *
    * Preceded by [TransitionToFollowing].
    *
-   * Set after invoking [ViewportCamera.requestViewportCameraToFollowing].
+   * Set after invoking [ViewportPlugin.requestCameraToFollowing].
    *
    * When in this state, each update to the [ViewportDataSource]
    * will automatically trigger another transition.
@@ -35,7 +36,7 @@ sealed class ViewportState {
   /**
    * Describes state when `ViewportCamera` transitions to the [Overview] state.
    *
-   * Set after invoking [ViewportCamera.requestViewportCameraToOverview].
+   * Set after invoking [ViewportPlugin.requestCameraToOverview].
    */
   object TransitionToOverview : ViewportState()
 
@@ -44,7 +45,7 @@ sealed class ViewportState {
    *
    * Preceded by [TransitionToOverview].
    *
-   * Set after invoking [ViewportCamera.requestViewportCameraToOverview].
+   * Set after invoking [ViewportPlugin.requestCameraToOverview].
    *
    * When in this state, each update to the [ViewportDataSource]
    * will automatically trigger another transition.
