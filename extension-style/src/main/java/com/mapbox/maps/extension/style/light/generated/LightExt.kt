@@ -3,7 +3,6 @@
 
 package com.mapbox.maps.extension.style.light.generated
 
-import com.mapbox.bindgen.Value
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
 
@@ -23,13 +22,6 @@ fun StyleInterface.getLight(): Light {
  */
 fun StyleInterface.setLight(light: StyleContract.StyleLightExtension) {
   light.bindTo(this)
-}
-
-/**
- * Removes light from style if it was set.
- */
-fun StyleInterface.removeLight() {
-  setStyleLight(Value.nullValue())
 }
 
 // End of generated file.

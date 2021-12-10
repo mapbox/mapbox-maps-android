@@ -718,12 +718,6 @@ class LightTest {
     assertNotNull(style.getLight())
     verify { style.setStyleLight(any()) }
   }
-
-  @Test
-  fun removeLightTest() {
-    style.removeLight()
-    verify { style.setStyleLight(Value.nullValue()) }
-  }
 }
 
 // End of generated file.
