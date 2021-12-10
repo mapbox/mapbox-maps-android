@@ -6,7 +6,7 @@ import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 
 /**
- * Extension val for MapView to get the Viewport plugin instance.
+ * Extension val for MapView to get the [ViewportPlugin] instance.
  */
 val MapPluginProviderDelegate.viewport: ViewportPlugin
   @JvmName("getViewport")

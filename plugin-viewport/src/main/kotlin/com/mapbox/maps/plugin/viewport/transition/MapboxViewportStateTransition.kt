@@ -6,26 +6,26 @@ import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 
 /**
- * Helper class that provides default implementation of [ViewportCameraStateTransition]
+ * Helper class that provides default implementation of [ViewportStateTransition]
  * generators.
  */
-internal class MapboxViewportCameraStateTransition(
+internal class MapboxViewportStateTransition(
   private val cameraManager: MapCameraManagerDelegate,
   private val cameraPlugin: CameraAnimationsPlugin,
-  private val viewportCameraTransition: ViewportCameraTransition =
-    MapboxViewportCameraTransition(cameraManager, cameraPlugin)
-) : ViewportCameraStateTransition {
+  private val viewportTransition: ViewportTransition =
+    MapboxViewportTransition(cameraManager, cameraPlugin)
+) : ViewportStateTransition {
   override fun transitionToFollowing(
     cameraOptions: CameraOptions,
-    transitionOptions: ViewportCameraTransitionOptions
-  ): AnimatorSet = with(viewportCameraTransition) {
+    transitionOptions: ViewportTransitionOptions
+  ): AnimatorSet = with(viewportTransition) {
     transitionFromLowZoomToHighZoom(cameraOptions, transitionOptions)
   }
 
   override fun transitionToOverview(
     cameraOptions: CameraOptions,
-    transitionOptions: ViewportCameraTransitionOptions
-  ): AnimatorSet = with(viewportCameraTransition) {
+    transitionOptions: ViewportTransitionOptions
+  ): AnimatorSet = with(viewportTransition) {
     val currentZoom = cameraManager.cameraState.zoom
     if (currentZoom < cameraOptions.zoom ?: currentZoom) {
       transitionFromLowZoomToHighZoom(cameraOptions, transitionOptions)
@@ -36,15 +36,15 @@ internal class MapboxViewportCameraStateTransition(
 
   override fun updateFrameForFollowing(
     cameraOptions: CameraOptions,
-    transitionOptions: ViewportCameraTransitionOptions
-  ): AnimatorSet = with(viewportCameraTransition) {
+    transitionOptions: ViewportTransitionOptions
+  ): AnimatorSet = with(viewportTransition) {
     transitionLinear(cameraOptions, transitionOptions)
   }
 
   override fun updateFrameForOverview(
     cameraOptions: CameraOptions,
-    transitionOptions: ViewportCameraTransitionOptions
-  ): AnimatorSet = with(viewportCameraTransition) {
+    transitionOptions: ViewportTransitionOptions
+  ): AnimatorSet = with(viewportTransition) {
     transitionLinear(cameraOptions, transitionOptions)
   }
 }
