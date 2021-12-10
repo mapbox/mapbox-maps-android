@@ -9,6 +9,7 @@
     mapbox:mapbox_locationComponentPulsingMaxRadius = "10dp"
     mapbox:mapbox_locationComponentLayerAbove = "testString"
     mapbox:mapbox_locationComponentLayerBelow = "testString"
+    mapbox:mapbox_locationComponentPuckBearingSource = "heading"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
 <!-- End of generated file. -->

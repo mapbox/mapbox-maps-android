@@ -61,6 +61,11 @@ class LocationComponentAttributeParserTest : BaseMapTest() {
       "testString",
       mapView.location.getSettings().layerBelow
     )
+    assertEquals(
+      "puckBearingSource test failed..",
+      PuckBearingSource.HEADING,
+      mapView.location.getSettings().puckBearingSource
+    )
     // TODO, test for location puck.
   }
 }

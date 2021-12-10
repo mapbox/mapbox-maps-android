@@ -123,6 +123,12 @@ class LocationComponentAttributeParserTest {
     val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
     assertEquals(null, settings.layerBelow)
   }
+  @Test
+  fun puckBearingSourceTest() {
+    every { typedArray.getInt(any(), any()) } returns PuckBearingSource.HEADING.ordinal
+    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
+    assertEquals(PuckBearingSource.HEADING, settings.puckBearingSource)
+  }
 }
 
 // End of generated file.
