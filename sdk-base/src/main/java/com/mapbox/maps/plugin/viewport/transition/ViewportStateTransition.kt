@@ -6,13 +6,13 @@ import com.mapbox.maps.CameraOptions
 /**
  * Helper interface to provide navigation camera state transitions.
  */
-interface ViewportCameraStateTransition {
+interface ViewportStateTransition {
   /**
    * Transition the camera to following state.
    */
   fun transitionToFollowing(
     cameraOptions: CameraOptions,
-    transitionOptions: ViewportCameraTransitionOptions
+    transitionOptions: ViewportTransitionOptions
   ): AnimatorSet
 
   /**
@@ -20,7 +20,7 @@ interface ViewportCameraStateTransition {
    */
   fun transitionToOverview(
     cameraOptions: CameraOptions,
-    transitionOptions: ViewportCameraTransitionOptions
+    transitionOptions: ViewportTransitionOptions
   ): AnimatorSet
 
   /**
@@ -28,7 +28,7 @@ interface ViewportCameraStateTransition {
    */
   fun updateFrameForFollowing(
     cameraOptions: CameraOptions,
-    transitionOptions: ViewportCameraTransitionOptions
+    transitionOptions: ViewportTransitionOptions
   ): AnimatorSet
 
   /**
@@ -36,6 +36,6 @@ interface ViewportCameraStateTransition {
    */
   fun updateFrameForOverview(
     cameraOptions: CameraOptions,
-    transitionOptions: ViewportCameraTransitionOptions
+    transitionOptions: ViewportTransitionOptions
   ): AnimatorSet
 }

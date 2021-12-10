@@ -15,33 +15,33 @@ import com.mapbox.maps.plugin.viewport.data.MapboxViewportDataSource
 import com.mapbox.maps.plugin.viewport.data.ViewportData
 import com.mapbox.maps.plugin.viewport.data.ViewportDataSource
 import com.mapbox.maps.plugin.viewport.data.ViewportDataSourceUpdateObserver
-import com.mapbox.maps.plugin.viewport.state.ViewportCameraState
-import com.mapbox.maps.plugin.viewport.state.ViewportCameraState.Following
-import com.mapbox.maps.plugin.viewport.state.ViewportCameraState.Idle
-import com.mapbox.maps.plugin.viewport.state.ViewportCameraState.Overview
-import com.mapbox.maps.plugin.viewport.state.ViewportCameraState.TransitionToFollowing
-import com.mapbox.maps.plugin.viewport.state.ViewportCameraState.TransitionToOverview
-import com.mapbox.maps.plugin.viewport.state.ViewportCameraStateChangedObserver
-import com.mapbox.maps.plugin.viewport.transition.MapboxViewportCameraStateTransition
+import com.mapbox.maps.plugin.viewport.state.ViewportState
+import com.mapbox.maps.plugin.viewport.state.ViewportState.Following
+import com.mapbox.maps.plugin.viewport.state.ViewportState.Idle
+import com.mapbox.maps.plugin.viewport.state.ViewportState.Overview
+import com.mapbox.maps.plugin.viewport.state.ViewportState.TransitionToFollowing
+import com.mapbox.maps.plugin.viewport.state.ViewportState.TransitionToOverview
+import com.mapbox.maps.plugin.viewport.state.ViewportStateChangedObserver
+import com.mapbox.maps.plugin.viewport.transition.MapboxViewportStateTransition
 import com.mapbox.maps.plugin.viewport.transition.TransitionEndListener
-import com.mapbox.maps.plugin.viewport.transition.ViewportCameraStateTransition
-import com.mapbox.maps.plugin.viewport.transition.ViewportCameraTransition
-import com.mapbox.maps.plugin.viewport.transition.ViewportCameraTransitionOptions
+import com.mapbox.maps.plugin.viewport.transition.ViewportStateTransition
+import com.mapbox.maps.plugin.viewport.transition.ViewportTransition
+import com.mapbox.maps.plugin.viewport.transition.ViewportTransitionOptions
 import java.util.concurrent.CopyOnWriteArraySet
 
 /**
- * Mapbox default implementation for Viewport plugin.
+ * Mapbox default implementation for [ViewportPlugin].
  */
 class ViewportPluginImpl : ViewportPlugin {
   private var frameTransitionOptions = DEFAULT_FRAME_TRANSITION_OPT
   private var runningAnimation: AnimatorSet? = null
   private val transitionEndListeners = CopyOnWriteArraySet<TransitionEndListener>()
-  private val viewportCameraStateChangedObservers =
-    CopyOnWriteArraySet<ViewportCameraStateChangedObserver>()
+  private val viewportStateChangedObservers =
+    CopyOnWriteArraySet<ViewportStateChangedObserver>()
   private lateinit var cameraPlugin: CameraAnimationsPlugin
   private lateinit var locationComponentPlugin: LocationComponentPlugin
   private lateinit var mapDelegateProvider: MapDelegateProvider
-  private lateinit var stateTransition: ViewportCameraStateTransition
+  private lateinit var stateTransition: ViewportStateTransition
 
   /**
    * Describes an object that provides desired camera positions to [ViewportPlugin].
@@ -49,15 +49,15 @@ class ViewportPluginImpl : ViewportPlugin {
   override lateinit var dataSource: ViewportDataSource
 
   /**
-   * Returns current [ViewportCameraTransition].
-   * @see registerViewportCameraStateChangedObserver
+   * Returns current [ViewportTransition].
+   * @see registerViewportStateChangedObserver
    */
-  override var state: ViewportCameraState = Idle
+  override var state: ViewportState = Idle
     private set(value) {
       if (value != field) {
         field = value
-        viewportCameraStateChangedObservers.forEach {
-          it.onViewportCameraStateChanged(value)
+        viewportStateChangedObservers.forEach {
+          it.onViewportStateChanged(value)
         }
       }
     }
@@ -72,23 +72,23 @@ class ViewportPluginImpl : ViewportPlugin {
    *
    * @param stateTransitionOptionsBlock options that impact the transition animation from
    * the current state to the requested state.
-   * Defaults to [ViewportCameraTransitionOptions.maxDurationMs] equal to [DEFAULT_STATE_TRANSITION_MAX_DURATION_MS] millis.
+   * Defaults to [ViewportTransitionOptions.maxDurationMs] equal to [DEFAULT_STATE_TRANSITION_MAX_DURATION_MS] millis.
    * @param frameTransitionOptionsBlock options that impact the transition animations between
    * viewport frames in the selected state.
    * This refers to camera transition on each [ViewportDataSource] update when [Following] is engaged.
-   * Defaults to [ViewportCameraTransitionOptions.maxDurationMs] equal to [DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS] millis.
+   * Defaults to [ViewportTransitionOptions.maxDurationMs] equal to [DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS] millis.
    * @param transitionEndListener invoked when transition ends.
    */
   override fun requestCameraToFollowing(
-    stateTransitionOptionsBlock: ((ViewportCameraTransitionOptions.Builder).() -> Unit),
-    frameTransitionOptionsBlock: ((ViewportCameraTransitionOptions.Builder).() -> Unit),
+    stateTransitionOptionsBlock: ((ViewportTransitionOptions.Builder).() -> Unit),
+    frameTransitionOptionsBlock: ((ViewportTransitionOptions.Builder).() -> Unit),
     transitionEndListener: TransitionEndListener?,
   ) {
     requestCameraToFollowing(
-      ViewportCameraTransitionOptions.Builder()
+      ViewportTransitionOptions.Builder()
         .maxDuration(DEFAULT_STATE_TRANSITION_MAX_DURATION_MS).apply(stateTransitionOptionsBlock)
         .build(),
-      ViewportCameraTransitionOptions.Builder()
+      ViewportTransitionOptions.Builder()
         .maxDuration(DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS).apply(frameTransitionOptionsBlock)
         .build(),
       transitionEndListener,
@@ -102,15 +102,15 @@ class ViewportPluginImpl : ViewportPlugin {
    * The target camera position is obtained with [ViewportDataSource.getViewportData].
    *
    * @param stateTransitionOptions options that impact the transition animation from the current state to the requested state.
-   * Defaults to [ViewportCameraTransitionOptions.maxDurationMs] equal to [DEFAULT_STATE_TRANSITION_MAX_DURATION_MS] millis.
+   * Defaults to [ViewportTransitionOptions.maxDurationMs] equal to [DEFAULT_STATE_TRANSITION_MAX_DURATION_MS] millis.
    * @param frameTransitionOptions options that impact the transition animations between viewport frames in the selected state.
    * This refers to camera transition on each [ViewportDataSource] update when [Following] is engaged.
-   * Defaults to [ViewportCameraTransitionOptions.maxDurationMs] equal to [DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS] millis.
+   * Defaults to [ViewportTransitionOptions.maxDurationMs] equal to [DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS] millis.
    * @param transitionEndListener invoked when transition ends.
    */
   override fun requestCameraToFollowing(
-    stateTransitionOptions: ViewportCameraTransitionOptions,
-    frameTransitionOptions: ViewportCameraTransitionOptions,
+    stateTransitionOptions: ViewportTransitionOptions,
+    frameTransitionOptions: ViewportTransitionOptions,
     transitionEndListener: TransitionEndListener?,
   ) {
     when (state) {
@@ -142,23 +142,23 @@ class ViewportPluginImpl : ViewportPlugin {
    *
    * @param stateTransitionOptionsBlock options that impact the transition animation from
    * the current state to the requested state.
-   * Defaults to [ViewportCameraTransitionOptions.maxDurationMs] equal to [DEFAULT_STATE_TRANSITION_MAX_DURATION_MS] millis.
+   * Defaults to [ViewportTransitionOptions.maxDurationMs] equal to [DEFAULT_STATE_TRANSITION_MAX_DURATION_MS] millis.
    * @param frameTransitionOptionsBlock options that impact the transition animations between
    * viewport frames in the selected state.
    * This refers to camera transition on each [ViewportDataSource] update when [Overview] is engaged.
-   * Defaults to [ViewportCameraTransitionOptions.maxDurationMs] equal to [DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS] millis.
+   * Defaults to [ViewportTransitionOptions.maxDurationMs] equal to [DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS] millis.
    * @param transitionEndListener invoked when transition ends.
    */
   override fun requestCameraToOverview(
-    stateTransitionOptionsBlock: ((ViewportCameraTransitionOptions.Builder).() -> Unit),
-    frameTransitionOptionsBlock: ((ViewportCameraTransitionOptions.Builder).() -> Unit),
+    stateTransitionOptionsBlock: ((ViewportTransitionOptions.Builder).() -> Unit),
+    frameTransitionOptionsBlock: ((ViewportTransitionOptions.Builder).() -> Unit),
     transitionEndListener: TransitionEndListener?,
   ) {
     requestCameraToOverview(
-      ViewportCameraTransitionOptions.Builder()
+      ViewportTransitionOptions.Builder()
         .maxDuration(DEFAULT_STATE_TRANSITION_MAX_DURATION_MS).apply(stateTransitionOptionsBlock)
         .build(),
-      ViewportCameraTransitionOptions.Builder()
+      ViewportTransitionOptions.Builder()
         .maxDuration(DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS).apply(frameTransitionOptionsBlock)
         .build(),
       transitionEndListener,
@@ -172,15 +172,15 @@ class ViewportPluginImpl : ViewportPlugin {
    * The target camera position is obtained with [ViewportDataSource.getViewportData].
    *
    * @param stateTransitionOptions options that impact the transition animation from the current state to the requested state.
-   * Defaults to [ViewportCameraTransitionOptions.maxDurationMs] equal to [DEFAULT_STATE_TRANSITION_MAX_DURATION_MS] millis.
+   * Defaults to [ViewportTransitionOptions.maxDurationMs] equal to [DEFAULT_STATE_TRANSITION_MAX_DURATION_MS] millis.
    * @param frameTransitionOptions options that impact the transition animations between viewport frames in the selected state.
    * This refers to camera transition on each [ViewportDataSource] update when [Overview] is engaged.
-   * Defaults to [ViewportCameraTransitionOptions.maxDurationMs] equal to [DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS] millis.
+   * Defaults to [ViewportTransitionOptions.maxDurationMs] equal to [DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS] millis.
    * @param transitionEndListener invoked when transition ends.
    */
   override fun requestCameraToOverview(
-    stateTransitionOptions: ViewportCameraTransitionOptions,
-    frameTransitionOptions: ViewportCameraTransitionOptions,
+    stateTransitionOptions: ViewportTransitionOptions,
+    frameTransitionOptions: ViewportTransitionOptions,
     transitionEndListener: TransitionEndListener?,
   ) {
     when (state) {
@@ -251,22 +251,22 @@ class ViewportPluginImpl : ViewportPlugin {
   }
 
   /**
-   * Registers [ViewportCameraStateChangedObserver].
+   * Registers [ViewportStateChangedObserver].
    */
-  override fun registerViewportCameraStateChangedObserver(
-    viewportCameraStateChangedObserver: ViewportCameraStateChangedObserver
+  override fun registerViewportStateChangedObserver(
+    viewportStateChangedObserver: ViewportStateChangedObserver
   ) {
-    viewportCameraStateChangedObservers.add(viewportCameraStateChangedObserver)
-    viewportCameraStateChangedObserver.onViewportCameraStateChanged(state)
+    viewportStateChangedObservers.add(viewportStateChangedObserver)
+    viewportStateChangedObserver.onViewportStateChanged(state)
   }
 
   /**
-   * Unregisters [ViewportCameraStateChangedObserver].
+   * Unregisters [ViewportStateChangedObserver].
    */
-  override fun unregisterViewportCameraStateChangedObserver(
-    viewportCameraStateChangedObserver: ViewportCameraStateChangedObserver
+  override fun unregisterViewportStateChangedObserver(
+    viewportStateChangedObserver: ViewportStateChangedObserver
   ) {
-    viewportCameraStateChangedObservers.remove(viewportCameraStateChangedObserver)
+    viewportStateChangedObservers.remove(viewportStateChangedObserver)
   }
 
   private fun setIdleProperties() {
@@ -313,9 +313,9 @@ class ViewportPluginImpl : ViewportPlugin {
   }
 
   private fun createTransitionListener(
-    progressState: ViewportCameraState,
-    finalState: ViewportCameraState,
-    frameTransitionOptions: ViewportCameraTransitionOptions,
+    progressState: ViewportState,
+    finalState: ViewportState,
+    frameTransitionOptions: ViewportTransitionOptions,
   ) = object : Animator.AnimatorListener {
 
     private var isCanceled = false
@@ -354,7 +354,7 @@ class ViewportPluginImpl : ViewportPlugin {
     this.mapDelegateProvider = delegateProvider
     this.cameraPlugin = delegateProvider.mapPluginProviderDelegate.camera
     this.stateTransition =
-      MapboxViewportCameraStateTransition(delegateProvider.mapCameraManagerDelegate, cameraPlugin)
+      MapboxViewportStateTransition(delegateProvider.mapCameraManagerDelegate, cameraPlugin)
 
     if (!::dataSource.isInitialized) {
       this.dataSource = MapboxViewportDataSource(
@@ -384,7 +384,7 @@ class ViewportPluginImpl : ViewportPlugin {
   override fun cleanup() {
     runningAnimation?.cancel()
     transitionEndListeners.clear()
-    viewportCameraStateChangedObservers.clear()
+    viewportStateChangedObservers.clear()
   }
 
   internal companion object {
