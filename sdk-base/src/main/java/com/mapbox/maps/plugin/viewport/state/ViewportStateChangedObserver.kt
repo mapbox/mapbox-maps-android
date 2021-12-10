@@ -8,5 +8,5 @@ fun interface ViewportStateChangedObserver {
    * Called whenever [ViewportState] changes.
    * @param viewportState current states
    */
-  fun onViewportCameraStateChanged(viewportState: ViewportState)
+  fun onViewportStateChanged(viewportState: ViewportState)
 }

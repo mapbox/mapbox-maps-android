@@ -46,7 +46,7 @@ class ViewportTransitionOptions private constructor(
    * Returns a string representation of the object.
    */
   override fun toString(): String {
-    return "ViewportCameraTransitionOptions(maxDurationMs=$maxDurationMs)"
+    return "ViewportTransitionOptions(maxDurationMs=$maxDurationMs)"
   }
 
   /**

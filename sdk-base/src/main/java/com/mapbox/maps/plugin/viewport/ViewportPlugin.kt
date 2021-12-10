@@ -25,7 +25,7 @@ interface ViewportPlugin : MapPlugin {
 
   /**
    * Returns current [ViewportTransition].
-   * @see registerViewportCameraStateChangedObserver
+   * @see registerViewportStateChangedObserver
    */
   val state: ViewportState
 
@@ -129,14 +129,14 @@ interface ViewportPlugin : MapPlugin {
   /**
    * Registers [ViewportStateChangedObserver].
    */
-  fun registerViewportCameraStateChangedObserver(
+  fun registerViewportStateChangedObserver(
     viewportStateChangedObserver: ViewportStateChangedObserver
   )
 
   /**
    * Unregisters [ViewportStateChangedObserver].
    */
-  fun unregisterViewportCameraStateChangedObserver(
+  fun unregisterViewportStateChangedObserver(
     viewportStateChangedObserver: ViewportStateChangedObserver
   )
 

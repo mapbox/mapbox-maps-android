@@ -36,7 +36,7 @@ class ViewportPluginImpl : ViewportPlugin {
   private var frameTransitionOptions = DEFAULT_FRAME_TRANSITION_OPT
   private var runningAnimation: AnimatorSet? = null
   private val transitionEndListeners = CopyOnWriteArraySet<TransitionEndListener>()
-  private val viewportCameraStateChangedObservers =
+  private val viewportStateChangedObservers =
     CopyOnWriteArraySet<ViewportStateChangedObserver>()
   private lateinit var cameraPlugin: CameraAnimationsPlugin
   private lateinit var locationComponentPlugin: LocationComponentPlugin
@@ -50,14 +50,14 @@ class ViewportPluginImpl : ViewportPlugin {
 
   /**
    * Returns current [ViewportTransition].
-   * @see registerViewportCameraStateChangedObserver
+   * @see registerViewportStateChangedObserver
    */
   override var state: ViewportState = Idle
     private set(value) {
       if (value != field) {
         field = value
-        viewportCameraStateChangedObservers.forEach {
-          it.onViewportCameraStateChanged(value)
+        viewportStateChangedObservers.forEach {
+          it.onViewportStateChanged(value)
         }
       }
     }
@@ -253,20 +253,20 @@ class ViewportPluginImpl : ViewportPlugin {
   /**
    * Registers [ViewportStateChangedObserver].
    */
-  override fun registerViewportCameraStateChangedObserver(
+  override fun registerViewportStateChangedObserver(
     viewportStateChangedObserver: ViewportStateChangedObserver
   ) {
-    viewportCameraStateChangedObservers.add(viewportStateChangedObserver)
-    viewportStateChangedObserver.onViewportCameraStateChanged(state)
+    viewportStateChangedObservers.add(viewportStateChangedObserver)
+    viewportStateChangedObserver.onViewportStateChanged(state)
   }
 
   /**
    * Unregisters [ViewportStateChangedObserver].
    */
-  override fun unregisterViewportCameraStateChangedObserver(
+  override fun unregisterViewportStateChangedObserver(
     viewportStateChangedObserver: ViewportStateChangedObserver
   ) {
-    viewportCameraStateChangedObservers.remove(viewportStateChangedObserver)
+    viewportStateChangedObservers.remove(viewportStateChangedObserver)
   }
 
   private fun setIdleProperties() {
@@ -384,7 +384,7 @@ class ViewportPluginImpl : ViewportPlugin {
   override fun cleanup() {
     runningAnimation?.cancel()
     transitionEndListeners.clear()
-    viewportCameraStateChangedObservers.clear()
+    viewportStateChangedObservers.clear()
   }
 
   internal companion object {

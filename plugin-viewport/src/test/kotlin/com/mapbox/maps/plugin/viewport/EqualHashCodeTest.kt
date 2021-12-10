@@ -6,7 +6,7 @@ import org.junit.Test
 
 class EqualHashCodeTest {
   @Test
-  fun `ViewportCameraTransitionOptions hashCode and equals test`() {
+  fun `ViewportTransitionOptions hashCode and equals test`() {
     val clazz = ViewportTransitionOptions::class.java
     EqualsVerifier.forClass(clazz)
       .usingGetClass()

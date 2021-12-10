@@ -146,15 +146,15 @@ class ViewportShowcaseActivity : AppCompatActivity() {
         }
       }
     }
-    setupViewportCamera()
+    setupViewportPlugin()
   }
 
   @SuppressLint("SetTextI18n")
-  private fun setupViewportCamera() {
+  private fun setupViewportPlugin() {
     viewport = mapView.viewport
     viewportDataSource = MapboxViewportDataSource(mapboxMap, mapboxMap)
     viewport.dataSource = viewportDataSource
-    viewport.registerViewportCameraStateChangedObserver { cameraState ->
+    viewport.registerViewportStateChangedObserver { cameraState ->
       // change title of viewport button depending on the camera state
       when (cameraState) {
         ViewportState.TransitionToFollowing,
