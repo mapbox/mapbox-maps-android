@@ -7,6 +7,7 @@ import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
+import com.mapbox.maps.plugin.PuckBearingSource
 import io.mockk.Runs
 import io.mockk.clearAllMocks
 import io.mockk.every
