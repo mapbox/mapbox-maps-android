@@ -91,6 +91,127 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
       // Get rotation matrix given the gravity and geomagnetic matrices
       SensorManager.getRotationMatrix(rotationMatrix, null, gravityValues, magneticValues)
     }
+    val (worldAxisForDeviceAxisX, worldAxisForDeviceAxisY) = getWorldAxisFromRotation()
+    val adjustedRotationMatrix = FloatArray(9)
+    SensorManager.remapCoordinateSystem(
+      rotationMatrix, worldAxisForDeviceAxisX,
+      worldAxisForDeviceAxisY, adjustedRotationMatrix
+    )
+
+    // Transform rotation matrix into azimuth/pitch/roll
+    val orientation = FloatArray(3)
+    SensorManager.getOrientation(adjustedRotationMatrix, orientation)
+    val (adjustedWorldAxisForDeviceAxisX, adjustedWorldAxisForDeviceAxisY) = adjustWorldAxis(
+      orientation,
+      worldAxisForDeviceAxisX,
+      worldAxisForDeviceAxisY
+    )
+    SensorManager.remapCoordinateSystem(
+      rotationMatrix, adjustedWorldAxisForDeviceAxisX,
+      adjustedWorldAxisForDeviceAxisY, adjustedRotationMatrix
+    )
+
+    // Transform rotation matrix into azimuth/pitch/roll
+    SensorManager.getOrientation(adjustedRotationMatrix, orientation)
+
+    // The x-axis is all we care about here.
+    notifyCompassChangeListeners(Math.toDegrees(orientation[0].toDouble()).toFloat())
+
+    // Update the compassUpdateNextTimestamp
+    compassUpdateNextTimestamp = currentTime + LocationComponentConstants.COMPASS_UPDATE_RATE_MS
+  }
+
+  private fun adjustWorldAxis(
+    orientation: FloatArray,
+    worldAxisForDeviceAxisX: Int,
+    worldAxisForDeviceAxisY: Int
+  ): Pair<Int, Int> {
+    var worldAxisForDeviceAxisX1 = worldAxisForDeviceAxisX
+    var worldAxisForDeviceAxisY1 = worldAxisForDeviceAxisY
+    when {
+      orientation[1] < -Math.PI / 4 -> {
+        // The pitch is less than -45 degrees.
+        // Remap the axes as if the device screen was the instrument panel.
+        when (windowManager.defaultDisplay.rotation) {
+          Surface.ROTATION_90 -> {
+            worldAxisForDeviceAxisX1 = SensorManager.AXIS_Z
+            worldAxisForDeviceAxisY1 = SensorManager.AXIS_MINUS_X
+          }
+          Surface.ROTATION_180 -> {
+            worldAxisForDeviceAxisX1 = SensorManager.AXIS_MINUS_X
+            worldAxisForDeviceAxisY1 = SensorManager.AXIS_MINUS_Z
+          }
+          Surface.ROTATION_270 -> {
+            worldAxisForDeviceAxisX1 = SensorManager.AXIS_MINUS_Z
+            worldAxisForDeviceAxisY1 = SensorManager.AXIS_X
+          }
+          Surface.ROTATION_0 -> {
+            worldAxisForDeviceAxisX1 = SensorManager.AXIS_X
+            worldAxisForDeviceAxisY1 = SensorManager.AXIS_Z
+          }
+          else -> {
+            worldAxisForDeviceAxisX1 = SensorManager.AXIS_X
+            worldAxisForDeviceAxisY1 = SensorManager.AXIS_Z
+          }
+        }
+      }
+      orientation[1] > Math.PI / 4 -> {
+        // The pitch is larger than 45 degrees.
+        // Remap the axes as if the device screen was upside down and facing back.
+        when (windowManager.defaultDisplay.rotation) {
+          Surface.ROTATION_90 -> {
+            worldAxisForDeviceAxisX1 = SensorManager.AXIS_MINUS_Z
+            worldAxisForDeviceAxisY1 = SensorManager.AXIS_MINUS_X
+          }
+          Surface.ROTATION_180 -> {
+            worldAxisForDeviceAxisX1 = SensorManager.AXIS_MINUS_X
+            worldAxisForDeviceAxisY1 = SensorManager.AXIS_Z
+          }
+          Surface.ROTATION_270 -> {
+            worldAxisForDeviceAxisX1 = SensorManager.AXIS_Z
+            worldAxisForDeviceAxisY1 = SensorManager.AXIS_X
+          }
+          Surface.ROTATION_0 -> {
+            worldAxisForDeviceAxisX1 = SensorManager.AXIS_X
+            worldAxisForDeviceAxisY1 = SensorManager.AXIS_MINUS_Z
+          }
+          else -> {
+            worldAxisForDeviceAxisX1 = SensorManager.AXIS_X
+            worldAxisForDeviceAxisY1 = SensorManager.AXIS_MINUS_Z
+          }
+        }
+      }
+      Math.abs(orientation[2]) > Math.PI / 2 -> {
+        // The roll is less than -90 degrees, or is larger than 90 degrees.
+        // Remap the axes as if the device screen was face down.
+        when (windowManager.defaultDisplay.rotation) {
+          Surface.ROTATION_90 -> {
+            worldAxisForDeviceAxisX1 = SensorManager.AXIS_MINUS_Y
+            worldAxisForDeviceAxisY1 = SensorManager.AXIS_MINUS_X
+          }
+          Surface.ROTATION_180 -> {
+            worldAxisForDeviceAxisX1 = SensorManager.AXIS_MINUS_X
+            worldAxisForDeviceAxisY1 = SensorManager.AXIS_Y
+          }
+          Surface.ROTATION_270 -> {
+            worldAxisForDeviceAxisX1 = SensorManager.AXIS_Y
+            worldAxisForDeviceAxisY1 = SensorManager.AXIS_X
+          }
+          Surface.ROTATION_0 -> {
+            worldAxisForDeviceAxisX1 = SensorManager.AXIS_X
+            worldAxisForDeviceAxisY1 = SensorManager.AXIS_MINUS_Y
+          }
+          else -> {
+            worldAxisForDeviceAxisX1 = SensorManager.AXIS_X
+            worldAxisForDeviceAxisY1 = SensorManager.AXIS_MINUS_Y
+          }
+        }
+      }
+    }
+    return Pair(worldAxisForDeviceAxisX1, worldAxisForDeviceAxisY1)
+  }
+
+  private fun getWorldAxisFromRotation(): Pair<Int, Int> {
     var worldAxisForDeviceAxisX: Int
     var worldAxisForDeviceAxisY: Int
     when (windowManager.defaultDisplay.rotation) {
@@ -111,108 +232,7 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
         worldAxisForDeviceAxisY = SensorManager.AXIS_Y
       }
     }
-    val adjustedRotationMatrix = FloatArray(9)
-    SensorManager.remapCoordinateSystem(
-      rotationMatrix, worldAxisForDeviceAxisX,
-      worldAxisForDeviceAxisY, adjustedRotationMatrix
-    )
-
-    // Transform rotation matrix into azimuth/pitch/roll
-    val orientation = FloatArray(3)
-    SensorManager.getOrientation(adjustedRotationMatrix, orientation)
-    when {
-      orientation[1] < -Math.PI / 4 -> {
-        // The pitch is less than -45 degrees.
-        // Remap the axes as if the device screen was the instrument panel.
-        when (windowManager.defaultDisplay.rotation) {
-          Surface.ROTATION_90 -> {
-            worldAxisForDeviceAxisX = SensorManager.AXIS_Z
-            worldAxisForDeviceAxisY = SensorManager.AXIS_MINUS_X
-          }
-          Surface.ROTATION_180 -> {
-            worldAxisForDeviceAxisX = SensorManager.AXIS_MINUS_X
-            worldAxisForDeviceAxisY = SensorManager.AXIS_MINUS_Z
-          }
-          Surface.ROTATION_270 -> {
-            worldAxisForDeviceAxisX = SensorManager.AXIS_MINUS_Z
-            worldAxisForDeviceAxisY = SensorManager.AXIS_X
-          }
-          Surface.ROTATION_0 -> {
-            worldAxisForDeviceAxisX = SensorManager.AXIS_X
-            worldAxisForDeviceAxisY = SensorManager.AXIS_Z
-          }
-          else -> {
-            worldAxisForDeviceAxisX = SensorManager.AXIS_X
-            worldAxisForDeviceAxisY = SensorManager.AXIS_Z
-          }
-        }
-      }
-      orientation[1] > Math.PI / 4 -> {
-        // The pitch is larger than 45 degrees.
-        // Remap the axes as if the device screen was upside down and facing back.
-        when (windowManager.defaultDisplay.rotation) {
-          Surface.ROTATION_90 -> {
-            worldAxisForDeviceAxisX = SensorManager.AXIS_MINUS_Z
-            worldAxisForDeviceAxisY = SensorManager.AXIS_MINUS_X
-          }
-          Surface.ROTATION_180 -> {
-            worldAxisForDeviceAxisX = SensorManager.AXIS_MINUS_X
-            worldAxisForDeviceAxisY = SensorManager.AXIS_Z
-          }
-          Surface.ROTATION_270 -> {
-            worldAxisForDeviceAxisX = SensorManager.AXIS_Z
-            worldAxisForDeviceAxisY = SensorManager.AXIS_X
-          }
-          Surface.ROTATION_0 -> {
-            worldAxisForDeviceAxisX = SensorManager.AXIS_X
-            worldAxisForDeviceAxisY = SensorManager.AXIS_MINUS_Z
-          }
-          else -> {
-            worldAxisForDeviceAxisX = SensorManager.AXIS_X
-            worldAxisForDeviceAxisY = SensorManager.AXIS_MINUS_Z
-          }
-        }
-      }
-      Math.abs(orientation[2]) > Math.PI / 2 -> {
-        // The roll is less than -90 degrees, or is larger than 90 degrees.
-        // Remap the axes as if the device screen was face down.
-        when (windowManager.defaultDisplay.rotation) {
-          Surface.ROTATION_90 -> {
-            worldAxisForDeviceAxisX = SensorManager.AXIS_MINUS_Y
-            worldAxisForDeviceAxisY = SensorManager.AXIS_MINUS_X
-          }
-          Surface.ROTATION_180 -> {
-            worldAxisForDeviceAxisX = SensorManager.AXIS_MINUS_X
-            worldAxisForDeviceAxisY = SensorManager.AXIS_Y
-          }
-          Surface.ROTATION_270 -> {
-            worldAxisForDeviceAxisX = SensorManager.AXIS_Y
-            worldAxisForDeviceAxisY = SensorManager.AXIS_X
-          }
-          Surface.ROTATION_0 -> {
-            worldAxisForDeviceAxisX = SensorManager.AXIS_X
-            worldAxisForDeviceAxisY = SensorManager.AXIS_MINUS_Y
-          }
-          else -> {
-            worldAxisForDeviceAxisX = SensorManager.AXIS_X
-            worldAxisForDeviceAxisY = SensorManager.AXIS_MINUS_Y
-          }
-        }
-      }
-    }
-    SensorManager.remapCoordinateSystem(
-      rotationMatrix, worldAxisForDeviceAxisX,
-      worldAxisForDeviceAxisY, adjustedRotationMatrix
-    )
-
-    // Transform rotation matrix into azimuth/pitch/roll
-    SensorManager.getOrientation(adjustedRotationMatrix, orientation)
-
-    // The x-axis is all we care about here.
-    notifyCompassChangeListeners(Math.toDegrees(orientation[0].toDouble()).toFloat())
-
-    // Update the compassUpdateNextTimestamp
-    compassUpdateNextTimestamp = currentTime + LocationComponentConstants.COMPASS_UPDATE_RATE_MS
+    return Pair(worldAxisForDeviceAxisX, worldAxisForDeviceAxisY)
   }
 
   private fun notifyCompassChangeListeners(heading: Float) {
@@ -272,6 +292,7 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
     }
     return smoothedValues
   }
+
   /**
    * Callback to receive compass update event
    */
@@ -284,7 +305,7 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
     fun onCompassChanged(userHeading: Float)
   }
 
-  companion object {
+  private companion object {
     private const val TAG = "LocationCompassProvider"
 
     // The rate sensor events will be delivered at. As the Android documentation states, this is only

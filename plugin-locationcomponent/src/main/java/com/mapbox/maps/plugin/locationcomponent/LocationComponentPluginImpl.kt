@@ -304,7 +304,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
       }
     }
     if (internalSettings.enabled) {
-      if(locationProvider is LocationProviderImpl) {
+      if (locationProvider is LocationProviderImpl) {
         (locationProvider as LocationProviderImpl).updateSettings(internalSettings)
       }
       locationPuckManager?.updateSettings(internalSettings)
