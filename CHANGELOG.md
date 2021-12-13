@@ -2,6 +2,14 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.1.2 December 13, 2021
+
+## Bug fixes 🐞
+* Fix billing issue when upgrading Mapbox Maps SDK from v9 to v10.
+
+## Dependencies
+* Bump common to 20.1.2. ([#979](https://github.com/mapbox/mapbox-maps-android/pull/979))
+
 # 10.1.1 December 1, 2021
 
 **NOTE:** As of December 3, 2021, this release is no longer available due to a new bug that was introduced while fixing the billing issue. A new patch will be issued shortly.
