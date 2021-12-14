@@ -13,6 +13,16 @@ buildscript {
       }
     }
     maven {
+      url = uri("https://api.mapbox.com/downloads/v2/snapshots/maven")
+      credentials {
+        username = "mapbox"
+        password = System.getenv("SDK_REGISTRY_TOKEN") ?: project.property("SDK_REGISTRY_TOKEN") as String
+      }
+      authentication {
+        create<BasicAuthentication>("basic")
+      }
+    }
+    maven {
       url = uri("https://plugins.gradle.org/m2/")
     }
   }
@@ -32,6 +42,16 @@ allprojects {
     jcenter()
     maven {
       url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
+      credentials {
+        username = "mapbox"
+        password = System.getenv("SDK_REGISTRY_TOKEN") ?: project.property("SDK_REGISTRY_TOKEN") as String
+      }
+      authentication {
+        create<BasicAuthentication>("basic")
+      }
+    }
+    maven {
+      url = uri("https://api.mapbox.com/downloads/v2/snapshots/maven")
       credentials {
         username = "mapbox"
         password = System.getenv("SDK_REGISTRY_TOKEN") ?: project.property("SDK_REGISTRY_TOKEN") as String

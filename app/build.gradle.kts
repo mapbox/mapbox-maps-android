@@ -99,6 +99,13 @@ dependencies {
   testImplementation(Dependencies.junit)
 }
 
+configurations.all {
+  resolutionStrategy {
+    force("com.mapbox.common:common:20.0.0-worker-thread-priority-SNAPSHOT")
+    force("com.mapbox.maps:android-core:10.0.2")
+  }
+}
+
 project.apply {
   from("$rootDir/gradle/ktlint.gradle")
   from("$rootDir/gradle/lint.gradle")
