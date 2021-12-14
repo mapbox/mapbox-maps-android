@@ -17,6 +17,7 @@ internal class EGLConfigChooser constructor(
   private val antialiasingSampleCount: Int,
 ) {
   private val antialiasingEnabled = antialiasingSampleCount > DEFAULT_ANTIALIASING_SAMPLE_COUNT
+
   // Get all configs at least RGB 565 with 16 depth and 8 stencil
   private val configAttributes: IntArray
     get() {
@@ -31,14 +32,27 @@ internal class EGLConfigChooser constructor(
         EGL_BLUE_SIZE, 5,
         EGL_ALPHA_SIZE, if (translucentSurface) 8 else 0,
         EGL_DEPTH_SIZE, 16,
-        if (antialiasingEnabled) { EGL_SAMPLE_BUFFERS } else { EGL_NONE }, 1,
-        if (antialiasingEnabled) { EGL_SAMPLES } else { EGL_NONE }, antialiasingSampleCount,
         EGL_STENCIL_SIZE, 8,
-        if (emulator) EGL_NONE else EGL_CONFORMANT, EGL_OPENGL_ES2_BIT,
-        if (emulator) EGL_NONE else EGL_COLOR_BUFFER_TYPE, EGL_RGB_BUFFER,
-        EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
-        EGL_NONE
-      )
+        EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT
+      ).plus(
+        if (antialiasingEnabled) {
+          intArrayOf(
+            EGL_SAMPLE_BUFFERS, 1,
+            EGL_SAMPLES, antialiasingSampleCount
+          )
+        } else {
+          intArrayOf()
+        }
+      ).plus(
+        if (emulator) {
+          intArrayOf(
+            EGL_CONFORMANT, EGL_OPENGL_ES2_BIT,
+            EGL_COLOR_BUFFER_TYPE, EGL_RGB_BUFFER,
+          )
+        } else {
+          intArrayOf()
+        }
+      ).plus(EGL_NONE)
     }
   private var eglChooserSuccess = true
 
