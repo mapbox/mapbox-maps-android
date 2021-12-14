@@ -453,7 +453,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
   private fun convertAnnotationsToFeatures(annotations: Collection<T>): List<Feature> =
     annotations.map {
       it.setUsedDataDrivenProperties()
-      Feature.fromGeometry(it.geometry, it.getJsonObjectCopy())
+      Feature.fromGeometry(it.geometry, it.getJsonObjectCopy(), it.featureIdentifier)
     }
 
   /**
