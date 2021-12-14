@@ -72,9 +72,9 @@ abstract class Annotation<T : Geometry>(
   var isSelected: Boolean = false
 
   /**
-   * Unique feature identifier.
+   * Unique feature identifier. May be useful to connect an annotation with view annotation.
    */
-  val featureIdentifier: String = "annotation_feature_${(FEATURE_IDENTIFIER++)}"
+  val featureIdentifier = FEATURE_IDENTIFIER_PREFIX + id.toString()
 
   /**
    * Static variables and methods.
@@ -93,9 +93,6 @@ abstract class Annotation<T : Geometry>(
      */
     const val MIN_MERCATOR_LATITUDE = -85.05112877980659
 
-    /**
-     * Unique feature identifier incremental counter.
-     */
-    private var FEATURE_IDENTIFIER = 5234
+    private const val FEATURE_IDENTIFIER_PREFIX = "mapbox_annotation_"
   }
 }
