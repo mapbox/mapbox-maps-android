@@ -372,7 +372,7 @@ The Mapbox Maps SDK for Android also features manually triggered snapshot releas
 branch.
 
 If a last commit in a developing branch has `publish_android_snapshot` in a title or description,
-the `build-sdk-release` CI bot will create a snapshot release.
+the `build-modules-and-instrumentation-tests` CI step will create a snapshot release.
 
 The name of the snapshot release would be:
 
