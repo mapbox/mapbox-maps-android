@@ -31,11 +31,20 @@ class CircleAnnotationActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = ActivityAnnotationBinding.inflate(layoutInflater)
     setContentView(binding.root)
+    Toast.makeText(this, "Long click a circle to start dragging.", Toast.LENGTH_LONG).show()
     annotationPlugin = binding.mapView.annotations
     circleAnnotationManager = annotationPlugin.createCircleAnnotationManager().apply {
       addClickListener(
         OnCircleAnnotationClickListener {
           Toast.makeText(this@CircleAnnotationActivity, "click: ${it.id}", Toast.LENGTH_SHORT)
+            .show()
+          false
+        }
+      )
+      addLongClickListener(
+        OnCircleAnnotationLongClickListener {
+          it.isDraggable = true
+          Toast.makeText(this@CircleAnnotationActivity, "long click: ${it.id}", Toast.LENGTH_SHORT)
             .show()
           false
         }
@@ -64,7 +73,7 @@ class CircleAnnotationActivity : AppCompatActivity() {
           .withPoint(Point.fromLngLat(CIRCLE_LONGITUDE, CIRCLE_LATITUDE))
           .withCircleColor(Color.YELLOW)
           .withCircleRadius(12.0)
-          .withDraggable(true)
+          .withDraggable(false)
         create(circleAnnotationOptions)
 
         // random add circles across the globe
@@ -76,7 +85,7 @@ class CircleAnnotationActivity : AppCompatActivity() {
               .withPoint(AnnotationUtils.createRandomPoint())
               .withCircleColor(color)
               .withCircleRadius(8.0)
-              .withDraggable(true)
+              .withDraggable(false)
           )
         }
         create(circleAnnotationOptionsList)

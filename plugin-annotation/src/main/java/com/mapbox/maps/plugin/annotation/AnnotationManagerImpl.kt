@@ -398,7 +398,10 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
       dragSource?.let { geoJsonSource ->
         dragLayer?.let { layer ->
           if (!style.styleSourceExists(geoJsonSource.sourceId) || !style.styleLayerExists(layer.layerId)) {
-            Logger.e(TAG, "Can't update dragSource: drag source or layer has not been added to style.")
+            Logger.e(
+              TAG,
+              "Can't update dragSource: drag source or layer has not been added to style."
+            )
             return@getStyle
           }
           addIconToStyle(style, dragAnnotationMap.values)
@@ -675,12 +678,19 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
           stopDragging()
           return true
         }
-        val shiftedGeometry: G? = delegateProvider.let {
+
+        if (annotationMap.containsKey(annotation.id)) {
+          // Delete the dragging annotation from original source and add it to drag source
+          annotationMap.remove(annotation.id)
+          dragAnnotationMap[annotation.id] = annotation
+          updateSource()
+        }
+
+        delegateProvider.let {
           annotation.getOffsetGeometry(
             it.mapCameraManagerDelegate, moveObject
           )
-        }
-        shiftedGeometry?.let { geometry ->
+        }?.let { geometry ->
           annotation.geometry = geometry
           updateDragSource()
           dragListeners.forEach {
@@ -688,6 +698,11 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
           }
           return true
         }
+
+        /* The dragging annotation has been removed from original source,
+         update drag source to make sure it is shown in drag layer.
+         */
+        updateDragSource()
       }
       return false
     }
@@ -701,19 +716,9 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     }
 
     private fun startDragging(annotation: T): Boolean {
-      if (annotation.isDraggable) {
-        dragListeners.forEach { it.onAnnotationDragStarted(annotation) }
-        draggingAnnotation = annotation
-        if (annotationMap.containsKey(annotation.id)) {
-          // Delete the dragging annotation from original source and add it to drag source
-          annotationMap.remove(annotation.id)
-          dragAnnotationMap[annotation.id] = annotation
-          updateSource()
-          updateDragSource()
-        }
-        return true
-      }
-      return false
+      dragListeners.forEach { it.onAnnotationDragStarted(annotation) }
+      draggingAnnotation = annotation
+      return true
     }
 
     private fun stopDragging() {
