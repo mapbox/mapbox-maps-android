@@ -72,6 +72,11 @@ abstract class Annotation<T : Geometry>(
   var isSelected: Boolean = false
 
   /**
+   * Unique feature identifier. May be useful to connect an annotation with view annotation.
+   */
+  val featureIdentifier = FEATURE_IDENTIFIER_PREFIX + id.toString()
+
+  /**
    * Static variables and methods.
    */
   companion object {
@@ -87,5 +92,7 @@ abstract class Annotation<T : Geometry>(
      * Minimum latitude value in Mercator projection.
      */
     const val MIN_MERCATOR_LATITUDE = -85.05112877980659
+
+    private const val FEATURE_IDENTIFIER_PREFIX = "mapbox_annotation_"
   }
 }
