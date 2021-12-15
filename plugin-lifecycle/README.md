@@ -28,6 +28,7 @@ allprojects {
     }
 }
 
+
 // In the app build.gradle file
 dependencies {
   implementation 'com.mapbox.plugin:maps-lifecycle:10.2.0'
