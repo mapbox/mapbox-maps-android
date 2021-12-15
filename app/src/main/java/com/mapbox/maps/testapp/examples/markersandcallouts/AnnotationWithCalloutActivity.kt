@@ -11,11 +11,9 @@ import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.ViewAnnotationAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
+import com.mapbox.maps.plugin.annotation.Annotation
 import com.mapbox.maps.plugin.annotation.annotations
-import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
-import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
-import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
-import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
+import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityViewAnnotationShowcaseBinding
 import com.mapbox.maps.testapp.databinding.ItemCalloutViewBinding
@@ -57,6 +55,31 @@ class AnnotationWithCalloutActivity : AppCompatActivity() {
         pointAnnotation.iconImageBitmap = if (pointAnnotation.iconImage == null) iconBitmap else null
         pointAnnotationManager.update(pointAnnotation)
       }
+      // update view annotation geometry if dragging the marker
+      pointAnnotationManager.addDragListener(object : OnPointAnnotationDragListener {
+        override fun onAnnotationDragStarted(annotation: Annotation<*>) {
+        }
+
+        override fun onAnnotationDrag(annotation: Annotation<*>) {
+          if (annotation == pointAnnotation) {
+            binding.mapView.viewAnnotationManager.updateViewAnnotation(
+              viewAnnotation,
+              viewAnnotationOptions {
+                geometry(pointAnnotation.geometry)
+              }
+            )
+            ItemCalloutViewBinding.bind(viewAnnotation).apply {
+              textNativeView.text = "lat=%.2f\nlon=%.2f".format(
+                pointAnnotation.geometry.latitude(),
+                pointAnnotation.geometry.longitude()
+              )
+            }
+          }
+        }
+
+        override fun onAnnotationDragFinished(annotation: Annotation<*>) {
+        }
+      })
     }
   }
 
@@ -104,6 +127,7 @@ class AnnotationWithCalloutActivity : AppCompatActivity() {
       .withPoint(POINT)
       .withIconImage(iconBitmap)
       .withIconAnchor(IconAnchor.BOTTOM)
+      .withDraggable(true)
     pointAnnotationManager = annotationPlugin.createPointAnnotationManager()
     pointAnnotation = pointAnnotationManager.create(pointAnnotationOptions)
   }
