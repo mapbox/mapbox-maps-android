@@ -32,8 +32,8 @@ internal object LocationComponentAttributeParser {
         layerAbove = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLayerAbove),
         layerBelow = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLayerBelow),
         puckBearingSource = when (typedArray.getInt(R.styleable.mapbox_MapView_mapbox_locationComponentPuckBearingSource, 0)) {
-          0 -> PuckBearingSource.HEADING
-          else -> PuckBearingSource.COURSE
+          1 -> PuckBearingSource.COURSE
+          else -> PuckBearingSource.HEADING
         },
         locationPuck = when (typedArray.getInt(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuck, -1)) {
           0 -> LocationPuck2D(

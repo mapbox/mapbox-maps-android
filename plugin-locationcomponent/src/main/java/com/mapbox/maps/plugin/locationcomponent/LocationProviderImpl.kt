@@ -87,7 +87,7 @@ internal class LocationProviderImpl(context: Context, var settings: LocationComp
     }
     when (settings.puckBearingSource) {
       PuckBearingSource.HEADING -> locationCompassEngine.addCompassListener(this)
-      else -> locationCompassEngine.removeCompassListener(this)
+      PuckBearingSource.COURSE -> locationCompassEngine.removeCompassListener(this)
     }
     currentPuckBearingSource = settings.puckBearingSource
   }

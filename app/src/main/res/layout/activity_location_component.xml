@@ -6,4 +6,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     mapbox:mapbox_locationComponentEnabled = "true"
+    mapbox:mapbox_locationComponentPuckBearingSource = "heading"
     tools:context=".examples.LocationComponentActivity" />

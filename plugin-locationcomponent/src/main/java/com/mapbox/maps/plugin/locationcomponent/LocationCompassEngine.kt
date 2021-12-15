@@ -18,7 +18,7 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
     context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
   private val sensorManager: SensorManager =
     context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-  private val compassListeners = mutableListOf<CompassListener>()
+  private val compassListeners = mutableSetOf<CompassListener>()
 
   // Not all devices have a compassSensor
   private var compassSensor: Sensor? = null
@@ -30,6 +30,7 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
   private var compassUpdateNextTimestamp: Long = 0
   private var gravityValues = FloatArray(3)
   private var magneticValues = FloatArray(3)
+  private val orientation = FloatArray(3)
 
   init {
     compassSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
@@ -47,9 +48,7 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
     if (compassListeners.isEmpty()) {
       registerSensorListeners()
     }
-    if (!compassListeners.contains(compassListener)) {
-      compassListeners.add(compassListener)
-    }
+    compassListeners.add(compassListener)
   }
 
   fun removeCompassListener(compassListener: CompassListener) {
@@ -63,17 +62,15 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
     when (event.sensor.type) {
       Sensor.TYPE_ROTATION_VECTOR -> {
         rotationVectorValue = event.values
-        updateOrientation()
       }
       Sensor.TYPE_ACCELEROMETER -> {
         gravityValues = lowPassFilter(event.values, gravityValues)
-        updateOrientation()
       }
       Sensor.TYPE_MAGNETIC_FIELD -> {
         magneticValues = lowPassFilter(event.values, magneticValues)
-        updateOrientation()
       }
     }
+    updateOrientation()
   }
 
   override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
@@ -100,7 +97,6 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
     )
 
     // Transform rotation matrix into azimuth/pitch/roll
-    val orientation = FloatArray(3)
     SensorManager.getOrientation(adjustedRotationMatrix, orientation)
     val (adjustedWorldAxisForDeviceAxisX, adjustedWorldAxisForDeviceAxisY) = adjustWorldAxis(
       orientation,
@@ -146,10 +142,6 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
             worldAxisForDeviceAxisX1 = SensorManager.AXIS_MINUS_Z
             worldAxisForDeviceAxisY1 = SensorManager.AXIS_X
           }
-          Surface.ROTATION_0 -> {
-            worldAxisForDeviceAxisX1 = SensorManager.AXIS_X
-            worldAxisForDeviceAxisY1 = SensorManager.AXIS_Z
-          }
           else -> {
             worldAxisForDeviceAxisX1 = SensorManager.AXIS_X
             worldAxisForDeviceAxisY1 = SensorManager.AXIS_Z
@@ -171,10 +163,6 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
           Surface.ROTATION_270 -> {
             worldAxisForDeviceAxisX1 = SensorManager.AXIS_Z
             worldAxisForDeviceAxisY1 = SensorManager.AXIS_X
-          }
-          Surface.ROTATION_0 -> {
-            worldAxisForDeviceAxisX1 = SensorManager.AXIS_X
-            worldAxisForDeviceAxisY1 = SensorManager.AXIS_MINUS_Z
           }
           else -> {
             worldAxisForDeviceAxisX1 = SensorManager.AXIS_X
@@ -198,10 +186,6 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
             worldAxisForDeviceAxisX1 = SensorManager.AXIS_Y
             worldAxisForDeviceAxisY1 = SensorManager.AXIS_X
           }
-          Surface.ROTATION_0 -> {
-            worldAxisForDeviceAxisX1 = SensorManager.AXIS_X
-            worldAxisForDeviceAxisY1 = SensorManager.AXIS_MINUS_Y
-          }
           else -> {
             worldAxisForDeviceAxisX1 = SensorManager.AXIS_X
             worldAxisForDeviceAxisY1 = SensorManager.AXIS_MINUS_Y
@@ -209,7 +193,7 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
         }
       }
     }
-    return Pair(worldAxisForDeviceAxisX1, worldAxisForDeviceAxisY1)
+    return worldAxisForDeviceAxisX1 to worldAxisForDeviceAxisY1
   }
 
   private fun getWorldAxisFromRotation(): Pair<Int, Int> {
@@ -296,7 +280,7 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
   /**
    * Callback to receive compass update event
    */
-  interface CompassListener {
+  fun interface CompassListener {
     /**
      * Callback's invoked when a new compass update occurs.
      *
