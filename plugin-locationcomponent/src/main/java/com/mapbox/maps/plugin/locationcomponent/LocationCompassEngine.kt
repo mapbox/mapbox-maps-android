@@ -27,7 +27,6 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
 
   private val rotationMatrix = FloatArray(9)
   private var rotationVectorValue: FloatArray? = null
-  private var lastHeading = 0f
   private var compassUpdateNextTimestamp: Long = 0
   private var gravityValues = FloatArray(3)
   private var magneticValues = FloatArray(3)
@@ -48,7 +47,9 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
     if (compassListeners.isEmpty()) {
       registerSensorListeners()
     }
-    compassListeners.add(compassListener)
+    if (!compassListeners.contains(compassListener)) {
+      compassListeners.add(compassListener)
+    }
   }
 
   fun removeCompassListener(compassListener: CompassListener) {
@@ -232,14 +233,13 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
         worldAxisForDeviceAxisY = SensorManager.AXIS_Y
       }
     }
-    return Pair(worldAxisForDeviceAxisX, worldAxisForDeviceAxisY)
+    return worldAxisForDeviceAxisX to worldAxisForDeviceAxisY
   }
 
   private fun notifyCompassChangeListeners(heading: Float) {
     for (compassListener in compassListeners) {
       compassListener.onCompassChanged(heading)
     }
-    lastHeading = heading
   }
 
   private fun registerSensorListeners() {

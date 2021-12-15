@@ -64,6 +64,8 @@ class LocationCompassEngineTest {
   fun removeListenerWhileSupportRotationVectorSensor() {
     locationCompassEngine = LocationCompassEngine(context)
     locationCompassEngine.addCompassListener(compassListener)
+    locationCompassEngine.addCompassListener(compassListener)
+    locationCompassEngine.addCompassListener(compassListener)
     locationCompassEngine.removeCompassListener(compassListener)
     verify(exactly = 1) { sensorManager.unregisterListener(any(), compassSensor) }
     verify(exactly = 0) { sensorManager.unregisterListener(any(), gravitySensor) }
