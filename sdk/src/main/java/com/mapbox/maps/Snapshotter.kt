@@ -9,7 +9,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.res.ResourcesCompat
+import com.mapbox.annotation.module.MapboxModuleType
 import com.mapbox.common.Logger
+import com.mapbox.common.module.provider.MapboxModuleProvider
+import com.mapbox.common.module.provider.ModuleProviderArgument
 import com.mapbox.geojson.Point
 import com.mapbox.maps.attribution.AttributionLayout
 import com.mapbox.maps.attribution.AttributionMeasure
@@ -18,6 +21,7 @@ import com.mapbox.maps.extension.observable.getMapLoadingErrorEventData
 import com.mapbox.maps.extension.observable.getStyleDataLoadedEventData
 import com.mapbox.maps.extension.observable.getStyleImageMissingEventData
 import com.mapbox.maps.extension.observable.model.StyleDataType
+import com.mapbox.maps.module.MapTelemetry
 import java.lang.ref.WeakReference
 import kotlin.math.min
 
@@ -48,6 +52,7 @@ open class Snapshotter {
     snapshotOverlayOptions = overlayOptions
     pixelRatio = context.resources.displayMetrics.density
     coreSnapshotter = MapSnapshotter(options)
+    dispatchTelemetryTurnstileEvent(context, options)
     val weakSelf = WeakReference(this)
     observer = Observer { event ->
       weakSelf.get()?.apply {
@@ -81,6 +86,21 @@ open class Snapshotter {
       }
     }
     subscribe(observer, STYLE_LOAD_EVENTS_LIST)
+  }
+
+  private fun dispatchTelemetryTurnstileEvent(
+    context: Context,
+    options: MapSnapshotOptions
+  ) {
+    MapboxModuleProvider.createModule<MapTelemetry>(MapboxModuleType.MapTelemetry) {
+      arrayOf(
+        ModuleProviderArgument(
+          Context::class.java,
+          context.applicationContext
+        ),
+        ModuleProviderArgument(String::class.java, options.resourceOptions.accessToken)
+      )
+    }.onAppUserTurnstileEvent()
   }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
