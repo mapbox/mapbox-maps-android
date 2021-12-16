@@ -59,6 +59,42 @@ android {
   if (buildFromSource.toBoolean()) {
     packagingOptions {
       pickFirst("**/libc++_shared.so")
+      pickFirst("**/libmapbox-common.so")
+    }
+  }
+
+  if (buildFromSource.toBoolean()) {
+    project.afterEvaluate {
+      getTasksByName("packageDebug", false).iterator().next().doFirst {
+        // def platforms = ["arm64-v8a", "armeabi-v7a", "x86", "x86_64"]
+        val platforms = listOf("arm64-v8a")
+
+        platforms.forEach { platform ->
+          print("injecting unstripped symbol binaries for maps $platform\n")
+          delete(
+            fileTree("build/intermediates/stripped_native_libs/debug/out/lib/$platform") {
+              include("**/libmapbox-maps.so")
+            }
+          )
+          copy {
+            from("../../mapbox-gl-native-internal/internal/platform/android/sdk/build/intermediates/cmake/debug/obj/$platform")
+            into("build/intermediates/stripped_native_libs/debug/out/lib/$platform")
+            include("*.so")
+          }
+
+          print("injecting unstripped symbol binaries for common $platform\n")
+          delete(
+            fileTree("build/intermediates/stripped_native_libs/debug/out/lib/$platform") {
+              include("**/libmapbox-common.so")
+            }
+          )
+          copy {
+            from("../../mapbox-gl-native-internal/internal/vendor/common/platform/android/common/build/intermediates/cmake/debug/obj/$platform")
+            into("build/intermediates/stripped_native_libs/debug/out/lib/$platform")
+            include("*.so")
+          }
+        }
+      }
     }
   }
 }
@@ -111,5 +147,7 @@ project.apply {
   from("$rootDir/gradle/lint.gradle")
 }
 
-val localPath:String = org.apache.commons.io.FilenameUtils.getFullPathNoEndSeparator(project.buildscript.sourceFile.toString())
-the<com.mapbox.AccessTokenExtension>().file = "${localPath}/src/main/res/values/developer-config.xml"
+val localPath: String =
+  org.apache.commons.io.FilenameUtils.getFullPathNoEndSeparator(project.buildscript.sourceFile.toString())
+the<com.mapbox.AccessTokenExtension>().file =
+  "${localPath}/src/main/res/values/developer-config.xml"
