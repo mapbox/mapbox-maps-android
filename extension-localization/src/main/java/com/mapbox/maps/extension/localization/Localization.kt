@@ -16,11 +16,16 @@ import java.util.*
  * where name_xx is the supported local name related with locale.
  * For example if locale is [Locale.GERMAN], the original expression
  * `["format",["coalesce",["get","name_en"],["get","name"]],{}]` will be replaced by
- * `["format",["coalesce",["get","name_zh-Hans"],["get","name"]],{}]`
+ * `["format",["coalesce",["get","name_de"],["get","name"]],{}]`
  */
 internal fun setMapLanguage(locale: Locale, style: StyleInterface, layerIds: List<String>?) {
+  var convertedLocale = "name_${locale.language}"
+  if (!isSupportedLanguage(convertedLocale)) {
+    Logger.e(TAG, "Locale: $locale is not supported.")
+    return
+  }
+
   style.styleSources
-    .filter { sourceIsFromMapbox(style, it) }
     .forEach { source ->
       style.styleLayers
         .filter { it.type == LAYER_TYPE_SYMBOL }
@@ -34,9 +39,13 @@ internal fun setMapLanguage(locale: Locale, style: StyleInterface, layerIds: Lis
               if (BuildConfig.DEBUG) {
                 Logger.i(TAG, "Localize layer id: ${it.layerId}")
               }
-              val language = if (sourceIsStreetsV8(style, source)) getLanguageNameV8(locale)
-              else getLanguageNameV7(locale)
-              convertExpression(language, it, textFieldExpression)
+
+              if (sourceIsStreetsV8(style, source)) {
+                convertedLocale = getLanguageNameV8(locale)
+              } else if (sourceIsStreetsV7(style, source)) {
+                convertedLocale = getLanguageNameV7(locale)
+              }
+              convertExpression(convertedLocale, it, textFieldExpression)
             }
           }
         }
@@ -56,21 +65,11 @@ private fun convertExpression(language: String, layer: SymbolLayer, textField: E
   }
 }
 
-private fun sourceIsFromMapbox(style: StyleInterface, source: StyleObjectInfo): Boolean {
-  for (supportedSource in SUPPORTED_SOURCES) {
-    if (sourceIsType(style, source, supportedSource)) {
-      return true
-    }
-  }
-  Logger.w(
-    TAG,
-    "The source ${source.id} is not based on Mapbox Vector Tiles. Supported sources:\n $SUPPORTED_SOURCES"
-  )
-  return false
-}
-
 private fun sourceIsStreetsV8(style: StyleInterface, source: StyleObjectInfo): Boolean =
   sourceIsType(style, source, STREET_V8)
+
+private fun sourceIsStreetsV7(style: StyleInterface, source: StyleObjectInfo): Boolean =
+  sourceIsType(style, source, STREET_V7)
 
 private fun sourceIsType(style: StyleInterface, source: StyleObjectInfo, type: String): Boolean {
   if (source.type == SOURCE_TYPE_VECTOR) {
@@ -86,6 +85,5 @@ private const val SOURCE_TYPE_VECTOR = "vector"
 private const val LAYER_TYPE_SYMBOL = "symbol"
 private const val STREET_V7 = "mapbox.mapbox-streets-v7"
 private const val STREET_V8 = "mapbox.mapbox-streets-v8"
-private val SUPPORTED_SOURCES = listOf(STREET_V7, STREET_V8)
 private val EXPRESSION_REGEX = Regex("\\[\"get\",\\s*\"(name_.{2,7})\"\\]")
 private val EXPRESSION_ABBR_REGEX = Regex("\\[\"get\",\\s*\"abbr\"\\]")
