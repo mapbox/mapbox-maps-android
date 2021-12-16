@@ -7,10 +7,10 @@ plugins {
 }
 
 android {
-  compileSdkVersion(AndroidVersions.compileSdkVersion)
+  compileSdkVersion(AndroidVersions.compileSdkVersion_AndroidAuto)
   defaultConfig {
-    minSdkVersion(AndroidVersions.minAndroidAutoSdkVersion)
-    targetSdkVersion(AndroidVersions.targetSdkVersion)
+    minSdkVersion(AndroidVersions.minSdkVersion_AndroidAuto)
+    targetSdkVersion(AndroidVersions.targetSdkVersion_AndroidAuto)
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
@@ -23,10 +23,13 @@ android {
 
 dependencies {
   compileOnly(project(":sdk"))
+  testImplementation(project(":sdk"))
+
   implementation(Dependencies.googleCarAppLibrary)
   implementation(Dependencies.kotlin)
   implementation(Dependencies.androidxCoreKtx)
   implementation(Dependencies.androidxAnnotations)
+
   testImplementation(Dependencies.junit)
   testImplementation(Dependencies.mockk)
   testImplementation(Dependencies.androidxTestCore)
