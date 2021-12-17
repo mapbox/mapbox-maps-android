@@ -5,12 +5,12 @@ import com.google.gson.annotations.SerializedName
 /**
  * Describes priority for request object.
  */
-enum class RequestPriority {
+enum class RequestPriority(val value: String) {
   /** Regular priority. */
   @SerializedName("regular")
-  REGULAR,
+  REGULAR("regular"),
 
   /** low priority. */
   @SerializedName("low")
-  LOW
+  LOW("low")
 }
