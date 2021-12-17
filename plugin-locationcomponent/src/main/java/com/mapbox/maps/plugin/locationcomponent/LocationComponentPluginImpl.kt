@@ -216,7 +216,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
     internalSettings =
       LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, pixelRatio)
     if (internalSettings.enabled && locationProvider == null) {
-      locationProvider = LocationProviderImpl(context)
+      locationProvider = LocationProviderImpl(context, internalSettings)
     }
   }
 
@@ -298,12 +298,15 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
     if (internalSettings.enabled && !isLocationComponentActivated) {
       context.get()?.let {
         if (locationProvider == null) {
-          locationProvider = LocationProviderImpl(it)
+          locationProvider = LocationProviderImpl(it, internalSettings)
         }
         activateLocationComponent()
       }
     }
     if (internalSettings.enabled) {
+      if (locationProvider is LocationProviderImpl) {
+        (locationProvider as LocationProviderImpl).updateSettings(internalSettings)
+      }
       locationPuckManager?.updateSettings(internalSettings)
     } else {
       deactivateLocationComponent()

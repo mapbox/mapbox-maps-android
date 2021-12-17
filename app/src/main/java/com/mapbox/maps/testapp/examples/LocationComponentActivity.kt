@@ -11,6 +11,7 @@ import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
+import com.mapbox.maps.plugin.PuckBearingSource
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
@@ -83,6 +84,16 @@ class LocationComponentActivity : AppCompatActivity() {
       }
       R.id.action_component_enabled -> {
         binding.mapView.location.enabled = true
+        return true
+      }
+      R.id.heading -> {
+        binding.mapView.location.updateSettings { puckBearingSource = PuckBearingSource.HEADING }
+        item.isChecked = true
+        return true
+      }
+      R.id.course -> {
+        binding.mapView.location.updateSettings { puckBearingSource = PuckBearingSource.COURSE }
+        item.isChecked = true
         return true
       }
       else -> return super.onOptionsItemSelected(item)

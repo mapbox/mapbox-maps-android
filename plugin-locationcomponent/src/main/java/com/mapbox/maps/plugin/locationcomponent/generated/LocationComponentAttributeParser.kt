@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import androidx.core.content.res.ResourcesCompat
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
+import com.mapbox.maps.plugin.PuckBearingSource
 import com.mapbox.maps.plugin.locationcomponent.R
 
 /**
@@ -30,6 +31,10 @@ internal object LocationComponentAttributeParser {
         pulsingMaxRadius = typedArray.getDimension(R.styleable.mapbox_MapView_mapbox_locationComponentPulsingMaxRadius, 10f * pixelRatio),
         layerAbove = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLayerAbove),
         layerBelow = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLayerBelow),
+        puckBearingSource = when (typedArray.getInt(R.styleable.mapbox_MapView_mapbox_locationComponentPuckBearingSource, 0)) {
+          1 -> PuckBearingSource.COURSE
+          else -> PuckBearingSource.HEADING
+        },
         locationPuck = when (typedArray.getInt(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuck, -1)) {
           0 -> LocationPuck2D(
             topImage = typedArray.getDrawable(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DTopImage),
