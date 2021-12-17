@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Describes an error type while loading the map.
  * Defines what resource could not be loaded.
+ * @param value String value of this enum
  */
 enum class MapLoadErrorType(val value: String) {
   /**

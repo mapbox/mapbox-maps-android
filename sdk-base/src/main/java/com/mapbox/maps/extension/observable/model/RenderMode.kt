@@ -2,7 +2,9 @@ package com.mapbox.maps.extension.observable.model
 
 import com.google.gson.annotations.SerializedName
 
-/** Describes whether a map or frame has been fully rendered or not.  */
+/** Describes whether a map or frame has been fully rendered or not.
+ * @param value String value of this enum
+ */
 enum class RenderMode(val value: String) {
   /**
    * The map is partially rendered. Partially rendered map means

@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 /**
  * Describes data source of request for resource-request event.
+ * @param value String value of this enum
  */
 enum class DataSourceType(val value: String) {
   /**

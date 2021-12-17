@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 /**
  * Describes source data type for response in resource-request event.
+ * @param value String value of this enum
  */
 enum class ResponseSourceType(val value: String) {
   /**

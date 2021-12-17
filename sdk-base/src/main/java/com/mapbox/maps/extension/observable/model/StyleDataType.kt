@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 /**
  * Defines what kind of style data has been loaded in a style-data-loaded event.
+ * @param value String value of this enum
  */
 enum class StyleDataType(val value: String) {
   /**

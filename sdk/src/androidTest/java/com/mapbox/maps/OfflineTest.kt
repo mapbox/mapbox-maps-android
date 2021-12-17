@@ -291,15 +291,19 @@ class OfflineTest {
     var mapLoadingErrorCount = 0
     val observer = Observer { event ->
       Logger.e(TAG, "type ${event.type}, data ${event.data.toJson()}")
-      val data = event.getResourceEventData()
-      if (!data.cancelled && data.dataSource == DataSourceType.DATABASE && data.request.kind == RequestType.TILE) {
-        resourceRequests++
-      }
-      if (event.type == MapEvents.MAP_LOADING_ERROR) {
-        mapLoadingErrorCount++
-      }
-      if (event.type == MapEvents.MAP_LOADED || event.type == MapEvents.STYLE_LOADED) {
-        latch.countDown()
+      when (event.type) {
+        MapEvents.RESOURCE_REQUEST -> {
+          val data = event.getResourceEventData()
+          if (!data.cancelled && data.dataSource == DataSourceType.DATABASE && data.request.kind == RequestType.SOURCE) {
+            resourceRequests++
+          }
+        }
+        MapEvents.MAP_LOADING_ERROR -> {
+          mapLoadingErrorCount++
+        }
+        else -> {
+          latch.countDown()
+        }
       }
     }
     switchAirplaneMode()
@@ -334,15 +338,19 @@ class OfflineTest {
     var mapLoadingErrorCount = 0
     val observer = Observer { event ->
       Logger.e(TAG, "type ${event.type}, data ${event.data.toJson()}")
-      val data = event.getResourceEventData()
-      if (!data.cancelled && data.dataSource == DataSourceType.DATABASE && data.request.kind == RequestType.TILE) {
-        resourceRequests++
-      }
-      if (event.type == MapEvents.MAP_LOADING_ERROR) {
-        mapLoadingErrorCount++
-      }
-      if (event.type == MapEvents.MAP_LOADED || event.type == MapEvents.STYLE_LOADED) {
-        latch.countDown()
+      when (event.type) {
+        MapEvents.RESOURCE_REQUEST -> {
+          val data = event.getResourceEventData()
+          if (!data.cancelled && data.dataSource == DataSourceType.DATABASE && data.request.kind == RequestType.TILE) {
+            resourceRequests++
+          }
+        }
+        MapEvents.MAP_LOADING_ERROR -> {
+          mapLoadingErrorCount++
+        }
+        else -> {
+          latch.countDown()
+        }
       }
     }
     OfflineSwitch.getInstance().isMapboxStackConnected = false

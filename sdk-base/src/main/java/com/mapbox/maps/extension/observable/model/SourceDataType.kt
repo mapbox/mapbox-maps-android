@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 /**
  * Defines what kind of source data has been loaded in a source-data-loaded event.
+ * @param value String value of this enum
  */
 enum class SourceDataType(val value: String) {
   /**

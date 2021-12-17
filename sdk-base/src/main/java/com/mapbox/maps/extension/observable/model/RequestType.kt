@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 /**
  * Describes type for request object.
+ * @param value String value of this enum
  */
 enum class RequestType(val value: String) {
   /**

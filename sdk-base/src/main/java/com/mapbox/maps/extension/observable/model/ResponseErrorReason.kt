@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 /**
  * Describes the reason of Error for response object.
+ * @param value String value of this enum
  */
 enum class ResponseErrorReason(val value: String) {
   /**
