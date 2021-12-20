@@ -308,24 +308,24 @@ fun Event.getResourceEventData(): ResourceEventData {
   return ResourceEventData(
     begin = map.nonNullLong(BEGIN),
     end = map.nullableLong(END),
-    dataSource = DataSourceType.valueOf(map.nonNullString(DATA_SOURCE).toUpperCase(Locale.US).replace("-", "_")),
+    dataSource = DataSourceType.valueOf(map.validEnumValue(DATA_SOURCE)),
     request = Request(
       loadingMethod = requestMap.nonNullList(LOADING_METHOD),
       url = requestMap.nonNullString(URL),
-      kind = RequestType.valueOf(requestMap.nonNullString(KIND).toUpperCase(Locale.US).replace("-", "_")),
-      priority = RequestPriority.valueOf(requestMap.nonNullString(PRIORITY).toUpperCase(Locale.US))
+      kind = RequestType.valueOf(requestMap.validEnumValue(KIND)),
+      priority = RequestPriority.valueOf(requestMap.validEnumValue(PRIORITY))
     ),
     response = if (responseMap == null) null else Response(
       eTag = responseMap.nullableString(E_TAG),
       mustRevalidate = responseMap.nonNullBoolean(MUST_REVALIDATE),
       noContent = responseMap.nonNullBoolean(NO_CONTENT),
       modified = responseMap.nullableString(MODIFIED),
-      source = ResponseSourceType.valueOf(responseMap.nonNullString(SOURCE).toUpperCase(Locale.US).replace("-", "_")),
+      source = ResponseSourceType.valueOf(responseMap.validEnumValue(SOURCE)),
       notModified = responseMap.nonNullBoolean(NOT_MODIFIED),
       expires = responseMap.nullableString(EXPIRES),
       size = responseMap.nonNullInt(SIZE),
       error = if (errorMap == null) null else Error(
-        reason = ResponseErrorReason.valueOf(errorMap.nonNullString(REASON).toUpperCase(Locale.US).replace("-", "_")),
+        reason = ResponseErrorReason.valueOf(errorMap.validEnumValue(REASON)),
         message = errorMap.nonNullString(MESSAGE)
       )
     ),
@@ -357,7 +357,7 @@ fun Event.getMapLoadingErrorEventData(): MapLoadingErrorEventData {
   return MapLoadingErrorEventData(
     begin = map.nonNullLong(BEGIN),
     end = map.nullableLong(END),
-    type = MapLoadErrorType.valueOf(map.nonNullString(TYPE).toUpperCase(Locale.US)),
+    type = MapLoadErrorType.valueOf(map.validEnumValue(TYPE)),
     message = map.nonNullString(MESSAGE),
     sourceId = map.nullableString(SOURCE_ID),
     tileId = if (tileIDMap == null) null else TileID(
@@ -391,7 +391,7 @@ fun Event.getStyleDataLoadedEventData(): StyleDataLoadedEventData {
   return StyleDataLoadedEventData(
     begin = map.nonNullLong(BEGIN),
     end = map.nullableLong(END),
-    type = StyleDataType.valueOf(map.nonNullString(TYPE).toUpperCase(Locale.US))
+    type = StyleDataType.valueOf(map.validEnumValue(TYPE))
   )
 }
 
@@ -421,7 +421,7 @@ fun Event.getSourceDataLoadedEventData(): SourceDataLoadedEventData {
     begin = map.nonNullLong(BEGIN),
     end = map.nullableLong(END),
     id = map.nonNullString(ID),
-    type = SourceDataType.valueOf(map.nonNullString(TYPE).toUpperCase(Locale.US)),
+    type = SourceDataType.valueOf(map.validEnumValue(TYPE)),
     loaded = map.nullableBoolean(LOADED),
     tileID = if (tileIDMap == null) null else TileID(
       zoom = tileIDMap.nonNullLong(Z),
@@ -510,7 +510,7 @@ fun Event.getRenderFrameFinishedEventData(): RenderFrameFinishedEventData {
   return RenderFrameFinishedEventData(
     begin = map.nonNullLong(BEGIN),
     end = map.nullableLong(END),
-    renderMode = RenderMode.valueOf(map.nonNullString(RENDER_MODE).toUpperCase(Locale.US)),
+    renderMode = RenderMode.valueOf(map.validEnumValue(RENDER_MODE)),
     needsRepaint = map.nonNullBoolean(NEEDS_REPAINT),
     placementChanged = map.nonNullBoolean(PLACEMENT_CHANGED)
   )
@@ -539,6 +539,10 @@ internal fun Map<String, Value>.nullableLong(name: String): Long? {
 
 internal fun Map<String, Value>.nonNullString(name: String): String {
   return this[name]!!.contents as String
+}
+
+internal fun Map<String, Value>.validEnumValue(name: String): String {
+  return nonNullString(name).toUpperCase(Locale.US).replace(DASH, UNDERLINE)
 }
 
 internal fun Map<String, Value>.nullableString(name: String): String? {
@@ -575,6 +579,9 @@ internal fun Map<String, Value>.nullableMap(name: String): Map<String, Value>? {
 internal fun Map<String, Value>.nonNullList(name: String): List<String> {
   return (this[name]!!.contents as List<Value>).map { it.toString() }
 }
+
+private const val UNDERLINE = "_"
+private const val DASH = "-"
 
 // Base type
 private const val BEGIN = "begin"
