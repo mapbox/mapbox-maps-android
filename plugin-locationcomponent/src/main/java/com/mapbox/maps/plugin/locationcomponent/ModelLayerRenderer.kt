@@ -64,6 +64,9 @@ internal class ModelLayerRenderer(
   override fun setAccuracyRadius(accuracy: Float) {
   }
 
+  override fun showBearingImage(show: Boolean) {
+  }
+
   override fun styleScaling(scaleExpression: Value) {
     modelLayer.modelScaleExpression(scaleExpression)
   }

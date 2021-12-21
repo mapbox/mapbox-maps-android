@@ -143,10 +143,10 @@ public class JavaInterfaceChecker {
         LocationComponentSettings locationComponentSettings = new LocationComponentSettings(locationPuck);
         locationComponentSettings = new LocationComponentSettings(true, locationPuck);
         locationComponentSettings = new LocationComponentSettings(true, true, locationPuck);
-        locationComponentSettings = new LocationComponentSettings(true, true, Color.BLACK, locationPuck);
-        locationComponentSettings = new LocationComponentSettings(true, true, Color.BLACK, 1f, locationPuck);
-        locationComponentSettings = new LocationComponentSettings(true, true, Color.BLACK, 1f, "id", locationPuck);
-        locationComponentSettings = new LocationComponentSettings(true, true, Color.BLACK, 1f, "id", "id", locationPuck);
+        locationComponentSettings = new LocationComponentSettings(true, true, true, Color.BLACK, locationPuck);
+        locationComponentSettings = new LocationComponentSettings(true, true, true, Color.BLACK, 1f, locationPuck);
+        locationComponentSettings = new LocationComponentSettings(true, true, true, Color.BLACK, 1f, "id", locationPuck);
+        locationComponentSettings = new LocationComponentSettings(true, true, true, Color.BLACK, 1f, "id", "id", locationPuck);
     }
 
     private void gesturesSettings(ScrollMode scrollMode, ScreenCoordinate screenCoordinate) {

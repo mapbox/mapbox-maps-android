@@ -34,6 +34,11 @@ interface LocationComponentSettingsInterface {
   var pulsingEnabled: Boolean
 
   /**
+   * Whether the bearing image of location puck is shown.
+   */
+  var showBearingImage: Boolean
+
+  /**
    * The color of the pulsing circle. Only work for 2D location puck.
    */
   var pulsingColor: Int

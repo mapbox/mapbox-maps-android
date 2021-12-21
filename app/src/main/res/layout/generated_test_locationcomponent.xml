@@ -5,6 +5,7 @@
     android:id="@+id/mapView"
     mapbox:mapbox_locationComponentEnabled = "false"
     mapbox:mapbox_locationComponentPulsingEnabled = "false"
+    mapbox:mapbox_locationComponentShowBearingImage = "false"
     mapbox:mapbox_locationComponentPulsingColor = "#000000"
     mapbox:mapbox_locationComponentPulsingMaxRadius = "10dp"
     mapbox:mapbox_locationComponentLayerAbove = "testString"

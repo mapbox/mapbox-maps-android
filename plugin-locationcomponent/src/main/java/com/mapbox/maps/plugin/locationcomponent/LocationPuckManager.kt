@@ -93,6 +93,7 @@ internal class LocationPuckManager(
     }
     delegateProvider.getStyle {
       initialize(it)
+      locationLayerRenderer.showBearingImage(settings.showBearingImage)
     }
   }
 

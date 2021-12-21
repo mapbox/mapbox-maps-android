@@ -163,7 +163,7 @@ class LocationIndicatorLayerRendererTest {
         any()
       )
     }
-    verify {
+    verify(exactly = 0) {
       style.addImage(
         BEARING_ICON,
         any()
@@ -173,6 +173,23 @@ class LocationIndicatorLayerRendererTest {
       style.addImage(
         SHADOW_ICON,
         any()
+      )
+    }
+  }
+
+  @Test
+  fun testShowBearingImage() {
+    locationLayerRenderer.showBearingImage(true)
+    verify {
+      style.addImage(
+        BEARING_ICON,
+        any()
+      )
+    }
+    locationLayerRenderer.showBearingImage(false)
+    verify {
+      style.removeStyleImage(
+        BEARING_ICON
       )
     }
   }

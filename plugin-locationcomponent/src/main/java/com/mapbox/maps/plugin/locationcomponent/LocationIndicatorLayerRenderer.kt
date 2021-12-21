@@ -21,7 +21,7 @@ internal class LocationIndicatorLayerRenderer(
   LocationLayerRenderer {
   private var style: StyleInterface? = null
   private var layer = layerSourceProvider.getLocationIndicatorLayer()
-
+  private var showBearingImage = false
   override fun initializeComponents(style: StyleInterface) {
     this.style = style
     setupBitmaps()
@@ -67,6 +67,16 @@ internal class LocationIndicatorLayerRenderer(
     layer.accuracyRadius(accuracy.toDouble())
   }
 
+  override fun showBearingImage(show: Boolean) {
+    showBearingImage = show
+    if (show) {
+      puckOptions.bearingImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
+        ?.let { style?.addImage(BEARING_ICON, it) }
+    } else {
+      style?.removeStyleImage(BEARING_ICON)
+    }
+  }
+
   override fun styleScaling(scaleExpression: Value) {
     layer.shadowImageSize(scaleExpression)
     layer.bearingImageSize(scaleExpression)
@@ -76,8 +86,10 @@ internal class LocationIndicatorLayerRenderer(
   private fun setupBitmaps() {
     puckOptions.topImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
       ?.let { style?.addImage(TOP_ICON, it) }
-    puckOptions.bearingImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
-      ?.let { style?.addImage(BEARING_ICON, it) }
+    if (showBearingImage) {
+      puckOptions.bearingImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
+        ?.let { style?.addImage(BEARING_ICON, it) }
+    }
     puckOptions.shadowImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
       ?.let { style?.addImage(SHADOW_ICON, it) }
     layer.topImage(TOP_ICON)

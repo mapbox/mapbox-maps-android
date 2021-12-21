@@ -21,6 +21,11 @@ data class LocationComponentSettings @JvmOverloads constructor(
   var pulsingEnabled: Boolean = false,
 
   /**
+   * Whether the bearing image of location puck is shown.
+   */
+  var showBearingImage: Boolean = false,
+
+  /**
    * The color of the pulsing circle. Only work for 2D location puck.
    */
   var pulsingColor: Int = Color.parseColor("#4A90E2"),

@@ -86,6 +86,14 @@ class LocationComponentActivity : AppCompatActivity() {
         binding.mapView.location.enabled = true
         return true
       }
+      R.id.action_show_bearing -> {
+        binding.mapView.location.updateSettings { showBearingImage = true }
+        return true
+      }
+      R.id.action_hide_bearing -> {
+        binding.mapView.location.updateSettings { showBearingImage = false }
+        return true
+      }
       R.id.heading -> {
         binding.mapView.location.updateSettings { puckBearingSource = PuckBearingSource.HEADING }
         item.isChecked = true
