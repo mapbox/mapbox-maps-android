@@ -5,35 +5,36 @@ import com.google.gson.annotations.SerializedName
 /**
  * Describes an error type while loading the map.
  * Defines what resource could not be loaded.
+ * @param value String value of this enum
  */
-enum class MapLoadErrorType {
+enum class MapLoadErrorType(val value: String) {
   /**
    * An error related to style.
    */
   @SerializedName("style")
-  STYLE,
+  STYLE("style"),
 
   /**
    * An error related to sprite.
    */
   @SerializedName("sprite")
-  SPRITE,
+  SPRITE("sprite"),
 
   /**
    * An error related to source.
    */
   @SerializedName("source")
-  SOURCE,
+  SOURCE("source"),
 
   /**
    * An error related to tile.
    */
   @SerializedName("tile")
-  TILE,
+  TILE("tile"),
 
   /**
    * An error related to glyphs.
    */
   @SerializedName("glyphs")
-  GLYPHS
+  GLYPHS("glyphs")
 }

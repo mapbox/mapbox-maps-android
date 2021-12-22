@@ -101,11 +101,24 @@ class NativeObserverTest {
 
   @Test
   fun addOnMapLoadErrorListener() {
+    val tileIDMap = hashMapOf(
+      "z" to Value(1),
+      "x" to Value(2),
+      "y" to Value(3)
+    )
+    val map = hashMapOf(
+      "begin" to Value(1L),
+      "end" to Value(2L),
+      "type" to Value("sprite"),
+      "message" to Value("error message"),
+      "source-id" to Value("source"),
+      "tile-id" to Value(tileIDMap)
+    )
     val listener = mockk<OnMapLoadErrorListener>(relaxUnitFun = true)
     nativeObserver.addOnMapLoadErrorListener(listener)
     verify { observableInterface.subscribe(any(), listOf(MapEvents.MAP_LOADING_ERROR)) }
     assertTrue(nativeObserver.observedEvents.contains(MapEvents.MAP_LOADING_ERROR))
-    notifyEvents(MapEvents.MAP_LOADING_ERROR)
+    notifyEvents(MapEvents.MAP_LOADING_ERROR, Value(map))
     verify { listener.onMapLoadError(any()) }
 
     val listener2 = mockk<OnMapLoadErrorListener>(relaxUnitFun = true)
@@ -117,7 +130,7 @@ class NativeObserverTest {
         listOf(MapEvents.MAP_LOADING_ERROR)
       )
     }
-    notifyEvents(MapEvents.MAP_LOADING_ERROR)
+    notifyEvents(MapEvents.MAP_LOADING_ERROR, Value(map))
     verify { listener2.onMapLoadError(any()) }
   }
 
@@ -184,11 +197,18 @@ class NativeObserverTest {
   // Render frame events
   @Test
   fun addOnRenderFrameFinishedListener() {
+    val map = hashMapOf(
+      "begin" to Value(1L),
+      "end" to Value(2L),
+      "needs-repaint" to Value(true),
+      "placement-changed" to Value(false),
+      "render-mode" to Value("full"),
+    )
     val listener = mockk<OnRenderFrameFinishedListener>(relaxUnitFun = true)
     nativeObserver.addOnRenderFrameFinishedListener(listener)
     verify { observableInterface.subscribe(any(), listOf(MapEvents.RENDER_FRAME_FINISHED)) }
     assertTrue(nativeObserver.observedEvents.contains(MapEvents.RENDER_FRAME_FINISHED))
-    notifyEvents(MapEvents.RENDER_FRAME_FINISHED)
+    notifyEvents(MapEvents.RENDER_FRAME_FINISHED, Value(map))
     verify { listener.onRenderFrameFinished(any()) }
 
     val listener2 = mockk<OnRenderFrameFinishedListener>(relaxUnitFun = true)
@@ -200,7 +220,7 @@ class NativeObserverTest {
         listOf(MapEvents.RENDER_FRAME_FINISHED)
       )
     }
-    notifyEvents(MapEvents.RENDER_FRAME_FINISHED)
+    notifyEvents(MapEvents.RENDER_FRAME_FINISHED, Value(map))
     verify { listener2.onRenderFrameFinished(any()) }
   }
 
@@ -313,11 +333,24 @@ class NativeObserverTest {
 
   @Test
   fun addOnSourceDataLoadedListener() {
+    val tileIDMap = hashMapOf(
+      "z" to Value(1),
+      "x" to Value(2),
+      "y" to Value(3)
+    )
+    val map = hashMapOf(
+      "begin" to Value(1L),
+      "end" to Value(2L),
+      "id" to Value("id"),
+      "loaded" to Value(true),
+      "type" to Value("metadata"),
+      "tile-id" to Value(tileIDMap)
+    )
     val listener = mockk<OnSourceDataLoadedListener>(relaxUnitFun = true)
     nativeObserver.addOnSourceDataLoadedListener(listener)
     verify { observableInterface.subscribe(any(), listOf(MapEvents.SOURCE_DATA_LOADED)) }
     assertTrue(nativeObserver.observedEvents.contains(MapEvents.SOURCE_DATA_LOADED))
-    notifyEvents(MapEvents.SOURCE_DATA_LOADED)
+    notifyEvents(MapEvents.SOURCE_DATA_LOADED, Value(map))
     verify { listener.onSourceDataLoaded(any()) }
 
     val listener2 = mockk<OnSourceDataLoadedListener>(relaxUnitFun = true)
@@ -329,7 +362,7 @@ class NativeObserverTest {
         listOf(MapEvents.SOURCE_DATA_LOADED)
       )
     }
-    notifyEvents(MapEvents.SOURCE_DATA_LOADED)
+    notifyEvents(MapEvents.SOURCE_DATA_LOADED, Value(map))
     verify { listener2.onSourceDataLoaded(any()) }
   }
 
@@ -524,11 +557,16 @@ class NativeObserverTest {
 
   @Test
   fun addOnStyleDataLoadedListener() {
+    val map = hashMapOf(
+      "begin" to Value(1L),
+      "end" to Value(2L),
+      "type" to Value("sources")
+    )
     val listener = mockk<OnStyleDataLoadedListener>(relaxUnitFun = true)
     nativeObserver.addOnStyleDataLoadedListener(listener)
     verify { observableInterface.subscribe(any(), listOf(MapEvents.STYLE_DATA_LOADED)) }
     assertTrue(nativeObserver.observedEvents.contains(MapEvents.STYLE_DATA_LOADED))
-    notifyEvents(MapEvents.STYLE_DATA_LOADED)
+    notifyEvents(MapEvents.STYLE_DATA_LOADED, Value(map))
     verify { listener.onStyleDataLoaded(any()) }
 
     val listener2 = mockk<OnStyleDataLoadedListener>(relaxUnitFun = true)
@@ -540,7 +578,7 @@ class NativeObserverTest {
         listOf(MapEvents.STYLE_DATA_LOADED)
       )
     }
-    notifyEvents(MapEvents.STYLE_DATA_LOADED)
+    notifyEvents(MapEvents.STYLE_DATA_LOADED, Value(map))
     verify { listener2.onStyleDataLoaded(any()) }
   }
 

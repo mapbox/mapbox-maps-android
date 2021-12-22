@@ -1,16 +1,14 @@
 package com.mapbox.maps.extension.observable
 
-import com.google.gson.Gson
+import com.mapbox.bindgen.Value
 import com.mapbox.maps.Event
 import com.mapbox.maps.MapEvents
 import com.mapbox.maps.ObservableInterface
 import com.mapbox.maps.Observer
 import com.mapbox.maps.extension.observable.eventdata.*
 import com.mapbox.maps.extension.observable.eventdata.ResourceEventData
-
-private val gson by lazy {
-  Gson()
-}
+import com.mapbox.maps.extension.observable.model.*
+import java.util.*
 
 /**
  * Subscribes an Observer for of event type "resource-request".
@@ -301,124 +299,336 @@ fun ObservableInterface.unsubscribeSourceRemoved(observer: Observer) =
  * Get the parsed event data for resource-request event.
  * @return a parsed ResourceEventData object.
  */
+@Suppress("UNCHECKED_CAST")
 fun Event.getResourceEventData(): ResourceEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, ResourceEventData::class.java)
+  val map = data.contents as Map<String, Value>
+  val requestMap = map.nonNullMap(REQUEST)
+  val responseMap = map.nullableMap(RESPONSE)
+  val errorMap = responseMap?.nullableMap(ERROR)
+  return ResourceEventData(
+    begin = map.nonNullLong(BEGIN),
+    end = map.nullableLong(END),
+    dataSource = DataSourceType.valueOf(map.validEnumValue(DATA_SOURCE)),
+    request = Request(
+      loadingMethod = requestMap.nonNullList(LOADING_METHOD),
+      url = requestMap.nonNullString(URL),
+      kind = RequestType.valueOf(requestMap.validEnumValue(KIND)),
+      priority = RequestPriority.valueOf(requestMap.validEnumValue(PRIORITY))
+    ),
+    response = if (responseMap == null) null else Response(
+      eTag = responseMap.nullableString(E_TAG),
+      mustRevalidate = responseMap.nonNullBoolean(MUST_REVALIDATE),
+      noContent = responseMap.nonNullBoolean(NO_CONTENT),
+      modified = responseMap.nullableString(MODIFIED),
+      source = ResponseSourceType.valueOf(responseMap.validEnumValue(SOURCE)),
+      notModified = responseMap.nonNullBoolean(NOT_MODIFIED),
+      expires = responseMap.nullableString(EXPIRES),
+      size = responseMap.nonNullInt(SIZE),
+      error = if (errorMap == null) null else Error(
+        reason = ResponseErrorReason.valueOf(errorMap.validEnumValue(REASON)),
+        message = errorMap.nonNullString(MESSAGE)
+      )
+    ),
+    cancelled = map.nonNullBoolean(CANCELLED)
+  )
 }
 
 /**
  * Get the parsed event data for map loaded event.
  * @return a parsed MapLoadedEventData object.
  */
+@Suppress("UNCHECKED_CAST")
 fun Event.getMapLoadedEventData(): MapLoadedEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, MapLoadedEventData::class.java)
+  val map = data.contents as Map<String, Value>
+  return MapLoadedEventData(
+    begin = map.nonNullLong(BEGIN),
+    end = map.nullableLong(END)
+  )
 }
 
 /**
  * Get the parsed event data for map loading error event.
  * @return a parsed MapLoadingErrorEventData object.
  */
+@Suppress("UNCHECKED_CAST")
 fun Event.getMapLoadingErrorEventData(): MapLoadingErrorEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, MapLoadingErrorEventData::class.java)
+  val map = data.contents as Map<String, Value>
+  val tileIDMap = map.nullableMap(TILE_ID)
+  return MapLoadingErrorEventData(
+    begin = map.nonNullLong(BEGIN),
+    end = map.nullableLong(END),
+    type = MapLoadErrorType.valueOf(map.validEnumValue(TYPE)),
+    message = map.nonNullString(MESSAGE),
+    sourceId = map.nullableString(SOURCE_ID),
+    tileId = if (tileIDMap == null) null else TileID(
+      zoom = tileIDMap.nonNullLong(Z),
+      x = tileIDMap.nonNullLong(X),
+      y = tileIDMap.nonNullLong(Y)
+    )
+  )
 }
 
 /**
  * Get the parsed event data for map idle event.
  * @return a parsed MapIdleEventData object.
  */
+@Suppress("UNCHECKED_CAST")
 fun Event.getMapIdleEventData(): MapIdleEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, MapIdleEventData::class.java)
+  val map = data.contents as Map<String, Value>
+  return MapIdleEventData(
+    begin = map.nonNullLong(BEGIN),
+    end = map.nullableLong(END)
+  )
 }
 
 /**
  * Get the parsed event data for style data loaded event.
  * @return a parsed StyleDataLoadedEventData object.
  */
+@Suppress("UNCHECKED_CAST")
 fun Event.getStyleDataLoadedEventData(): StyleDataLoadedEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, StyleDataLoadedEventData::class.java)
+  val map = data.contents as Map<String, Value>
+  return StyleDataLoadedEventData(
+    begin = map.nonNullLong(BEGIN),
+    end = map.nullableLong(END),
+    type = StyleDataType.valueOf(map.validEnumValue(TYPE))
+  )
 }
 
 /**
  * Get the parsed event data for style loaded event.
  * @return a parsed StyleLoadedEventData object.
  */
+@Suppress("UNCHECKED_CAST")
 fun Event.getStyleLoadedEventData(): StyleLoadedEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, StyleLoadedEventData::class.java)
+  val map = data.contents as Map<String, Value>
+  return StyleLoadedEventData(
+    begin = map.nonNullLong(BEGIN),
+    end = map.nullableLong(END),
+  )
 }
 
 /**
  * Get the parsed event data for source data loaded event.
  * @return a parsed SourceDataLoadedEventData object.
  */
+@Suppress("UNCHECKED_CAST")
 fun Event.getSourceDataLoadedEventData(): SourceDataLoadedEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, SourceDataLoadedEventData::class.java)
+  val map = data.contents as Map<String, Value>
+  val tileIDMap = map.nullableMap(TILE_ID)
+
+  return SourceDataLoadedEventData(
+    begin = map.nonNullLong(BEGIN),
+    end = map.nullableLong(END),
+    id = map.nonNullString(ID),
+    type = SourceDataType.valueOf(map.validEnumValue(TYPE)),
+    loaded = map.nullableBoolean(LOADED),
+    tileID = if (tileIDMap == null) null else TileID(
+      zoom = tileIDMap.nonNullLong(Z),
+      x = tileIDMap.nonNullLong(X),
+      y = tileIDMap.nonNullLong(Y)
+    )
+  )
 }
 
 /**
  * Get the parsed event data for style missing event.
  * @return a parsed StyleImageMissingEventData.
  */
+@Suppress("UNCHECKED_CAST")
 fun Event.getStyleImageMissingEventData(): StyleImageMissingEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, StyleImageMissingEventData::class.java)
+  val map = data.contents as Map<String, Value>
+  return StyleImageMissingEventData(
+    begin = map.nonNullLong(BEGIN),
+    end = map.nullableLong(END),
+    id = map.nonNullString(ID)
+  )
 }
 
 /**
  * Get the parsed event data for style image unused event.
  * @return a parsed StyleImageUnusedEventData.
  */
+@Suppress("UNCHECKED_CAST")
 fun Event.getStyleImageUnusedEventData(): StyleImageUnusedEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, StyleImageUnusedEventData::class.java)
+  val map = data.contents as Map<String, Value>
+  return StyleImageUnusedEventData(
+    begin = map.nonNullLong(BEGIN),
+    end = map.nullableLong(END),
+    id = map.nonNullString(ID)
+  )
 }
 
 /**
  * Get the parsed event data for source added event.
  * @return a parsed IDStringEventData.
  */
+@Suppress("UNCHECKED_CAST")
 fun Event.getSourceAddedEventData(): SourceAddedEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, SourceAddedEventData::class.java)
+  val map = data.contents as Map<String, Value>
+  return SourceAddedEventData(
+    begin = map.nonNullLong(BEGIN),
+    end = map.nullableLong(END),
+    id = map.nonNullString(ID)
+  )
 }
 
 /**
  * Get the parsed event data for source removed event.
  * @return a parsed SourceRemovedEventData.
  */
+@Suppress("UNCHECKED_CAST")
 fun Event.getSourceRemovedEventData(): SourceRemovedEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, SourceRemovedEventData::class.java)
+  val map = data.contents as Map<String, Value>
+  return SourceRemovedEventData(
+    begin = map.nonNullLong(BEGIN),
+    end = map.nullableLong(END),
+    id = map.nonNullString(ID)
+  )
 }
 
 /**
  * Get the parsed event data for render frame started event.
  * @return a parsed RenderFrameStartedEventData.
  */
+@Suppress("UNCHECKED_CAST")
 fun Event.getRenderFrameStartedEventData(): RenderFrameStartedEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, RenderFrameStartedEventData::class.java)
+  val map = data.contents as Map<String, Value>
+  return RenderFrameStartedEventData(
+    begin = map.nonNullLong(BEGIN),
+    end = map.nullableLong(END)
+  )
 }
 
 /**
  * Get the parsed event data for render frame finished event.
  * @return a parsed RenderFrameFinishedEventData.
  */
+@Suppress("UNCHECKED_CAST")
 fun Event.getRenderFrameFinishedEventData(): RenderFrameFinishedEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, RenderFrameFinishedEventData::class.java)
+  val map = data.contents as Map<String, Value>
+  return RenderFrameFinishedEventData(
+    begin = map.nonNullLong(BEGIN),
+    end = map.nullableLong(END),
+    renderMode = RenderMode.valueOf(map.validEnumValue(RENDER_MODE)),
+    needsRepaint = map.nonNullBoolean(NEEDS_REPAINT),
+    placementChanged = map.nonNullBoolean(PLACEMENT_CHANGED)
+  )
 }
 
 /**
  * Get the parsed event data for camera changed event.
  * @return a parsed CameraChangedEventData.
  */
+@Suppress("UNCHECKED_CAST")
 fun Event.getCameraChangedEventData(): CameraChangedEventData {
-  val json = data.toJson()
-  return gson.fromJson(json, CameraChangedEventData::class.java)
+  val map = data.contents as Map<String, Value>
+  return CameraChangedEventData(
+    begin = map.nonNullLong(BEGIN),
+    end = map.nullableLong(END)
+  )
 }
+
+internal fun Map<String, Value>.nonNullLong(name: String): Long {
+  return this[name]!!.contents as Long
+}
+
+internal fun Map<String, Value>.nullableLong(name: String): Long? {
+  return this[name]?.contents as Long?
+}
+
+internal fun Map<String, Value>.nonNullString(name: String): String {
+  return this[name]!!.contents as String
+}
+
+internal fun Map<String, Value>.validEnumValue(name: String): String {
+  return nonNullString(name).toUpperCase(Locale.US).replace(DASH, UNDERLINE)
+}
+
+internal fun Map<String, Value>.nullableString(name: String): String? {
+  return this[name]?.contents as String?
+}
+
+internal fun Map<String, Value>.nonNullInt(name: String): Int {
+  return (this[name]!!.contents as Long).toInt()
+}
+
+internal fun Map<String, Value>.nullableInt(name: String): Int? {
+  return (this[name]?.contents as Int?)?.toInt()
+}
+
+internal fun Map<String, Value>.nonNullBoolean(name: String): Boolean {
+  return this[name]!!.contents as Boolean
+}
+
+internal fun Map<String, Value>.nullableBoolean(name: String): Boolean? {
+  return this[name]?.contents as Boolean?
+}
+
+@Suppress("UNCHECKED_CAST")
+internal fun Map<String, Value>.nonNullMap(name: String): Map<String, Value> {
+  return this[name]!!.contents as Map<String, Value>
+}
+
+@Suppress("UNCHECKED_CAST")
+internal fun Map<String, Value>.nullableMap(name: String): Map<String, Value>? {
+  return this[name]?.contents as Map<String, Value>?
+}
+
+@Suppress("UNCHECKED_CAST")
+internal fun Map<String, Value>.nonNullList(name: String): List<String> {
+  return (this[name]!!.contents as List<Value>).map { it.toString() }
+}
+
+private const val UNDERLINE = "_"
+private const val DASH = "-"
+
+// Base type
+private const val BEGIN = "begin"
+private const val END = "end"
+
+// MapLoadingErrorEventData
+private const val TYPE = "type"
+private const val MESSAGE = "message"
+private const val SOURCE_ID = "source-id"
+private const val TILE_ID = "tile-id"
+
+// TileID
+private const val X = "x"
+private const val Y = "y"
+private const val Z = "z"
+
+// ResourceEventData
+private const val DATA_SOURCE = "data-source"
+private const val REQUEST = "request"
+private const val RESPONSE = "response"
+private const val CANCELLED = "cancelled"
+
+// Request
+private const val LOADING_METHOD = "loading-method"
+private const val URL = "url"
+private const val KIND = "kind"
+private const val PRIORITY = "priority"
+
+// Response
+private const val E_TAG = "etag"
+private const val MUST_REVALIDATE = "must-revalidate"
+private const val NO_CONTENT = "no-content"
+private const val MODIFIED = "modified"
+private const val SOURCE = "source"
+private const val NOT_MODIFIED = "not-modified"
+private const val EXPIRES = "expires"
+private const val SIZE = "size"
+private const val ERROR = "error"
+
+// Error
+private const val REASON = "reason"
+
+// SourceDataLoadedEventData
+private const val ID = "id"
+private const val LOADED = "loaded"
+
+// RenderFrameFinishedEventData(
+private const val RENDER_MODE = "render-mode"
+private const val NEEDS_REPAINT = "needs-repaint"
+private const val PLACEMENT_CHANGED = "placement-changed"

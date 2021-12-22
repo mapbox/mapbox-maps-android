@@ -4,53 +4,54 @@ import com.google.gson.annotations.SerializedName
 
 /**
  * Describes type for request object.
+ * @param value String value of this enum
  */
-enum class RequestType {
+enum class RequestType(val value: String) {
   /**
    * Request type unknown.
    */
   @SerializedName("unknown")
-  UNKNOWN,
+  UNKNOWN("unknown"),
 
   /**
    * Request type style.
    */
   @SerializedName("style")
-  STYLE,
+  STYLE("style"),
 
   /**
    * Request type source.
    */
   @SerializedName("source")
-  SOURCE,
+  SOURCE("source"),
 
   /**
    * Request type tile.
    */
   @SerializedName("tile")
-  TILE,
+  TILE("tile"),
 
   /**
    * Request type glyphs.
    */
   @SerializedName("glyphs")
-  GLYPHS,
+  GLYPHS("glyphs"),
 
   /**
    * Request type sprite-image.
    */
   @SerializedName("sprite-image")
-  SPRITE_IMAGE,
+  SPRITE_IMAGE("sprite-image"),
 
   /**
    * Request type sprite-json.
    */
   @SerializedName("sprite-json")
-  SPRITE_JSON,
+  SPRITE_JSON("sprite-json"),
 
   /**
    * Request type image.
    */
   @SerializedName("image")
-  IMAGE,
+  IMAGE("image"),
 }
