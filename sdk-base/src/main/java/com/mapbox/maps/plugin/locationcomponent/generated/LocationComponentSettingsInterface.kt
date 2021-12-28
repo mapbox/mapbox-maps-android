@@ -28,17 +28,17 @@ interface LocationComponentSettingsInterface {
   var enabled: Boolean
 
   /**
-   * Whether the location puck is pulsing on the map. Only work for 2D location puck.
+   * Whether the location puck is pulsing on the map. Works for 2D location puck only.
    */
   var pulsingEnabled: Boolean
 
   /**
-   * The color of the pulsing circle. Only work for 2D location puck.
+   * The color of the pulsing circle. Works for 2D location puck only.
    */
   var pulsingColor: Int
 
   /**
-   * The maximum radius of the pulsing circle. Only work for 2D location puck.
+   * The maximum radius of the pulsing circle. Works for 2D location puck only.
    */
   var pulsingMaxRadius: Float
 

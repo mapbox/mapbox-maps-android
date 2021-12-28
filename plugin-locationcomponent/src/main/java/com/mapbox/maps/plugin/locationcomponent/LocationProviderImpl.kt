@@ -12,14 +12,16 @@ import com.mapbox.android.core.location.LocationEngineResult
 import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
+import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAccuracyRingSettings
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArrayList
 
 /**
  * Default Location Provider implementation, it can be overwritten by users.
  */
-internal class LocationProviderImpl(context: Context) :
-  LocationProvider, LocationEngineCallback<LocationEngineResult> {
+internal class LocationProviderImpl(context: Context, var accuracyRadiusSettings: LocationComponentAccuracyRingSettings) :
+  LocationProvider,
+  LocationEngineCallback<LocationEngineResult> {
   private val contextWeekRef: WeakReference<Context> = WeakReference(context)
   private val locationEngine = LocationEngineProvider.getBestLocationEngine(context)
 
@@ -63,7 +65,14 @@ internal class LocationProviderImpl(context: Context) :
     locationConsumers.forEach { consumer ->
       consumer.onLocationUpdated(Point.fromLngLat(location.longitude, location.latitude))
       consumer.onBearingUpdated(location.bearing.toDouble())
+      if (accuracyRadiusSettings.showAccuracyRing && consumer is LocationConsumer2) {
+        consumer.onAccuracyRadiusUpdated(location.accuracy.toDouble())
+      }
     }
+  }
+
+  fun updateAccuracyRadiusSettings(accuracyRadiusSettings: LocationComponentAccuracyRingSettings) {
+    this.accuracyRadiusSettings = accuracyRadiusSettings
   }
 
   /**

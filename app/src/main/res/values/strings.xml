@@ -35,6 +35,8 @@
     <string name="location_hide_bearing">Hide bearing image</string>
     <string name="location_stop_pulsing">Stop pulsing</string>
     <string name="location_start_pulsing">Start pulsing</string>
+    <string name="location_disable_accuracy">Disable Accuracy Ring</string>
+    <string name="location_enable_accuracy">Enable Accuracy Ring</string>
 
     <!--RestrictBounds-->
     <string name="restrict_san_francisco">Restrict San Francisco</string>

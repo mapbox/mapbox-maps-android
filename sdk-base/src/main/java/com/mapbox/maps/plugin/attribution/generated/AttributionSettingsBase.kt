@@ -9,7 +9,7 @@ package com.mapbox.maps.plugin.attribution.generated
  */
 abstract class AttributionSettingsBase : AttributionSettingsInterface {
   /**
-   * Shows the attribution icon on the map.
+   * The internalSettings that hold all the settings
    */
   protected abstract var internalSettings: AttributionSettings
 

@@ -5,7 +5,7 @@ package com.mapbox.maps.plugin.attribution.generated
 import android.graphics.Color
 import android.view.Gravity
 /**
- * Shows the attribution icon on the map.
+ * Settings for Attribution
  */
 data class AttributionSettings @JvmOverloads constructor(
 

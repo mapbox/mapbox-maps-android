@@ -9,7 +9,7 @@ package com.mapbox.maps.plugin.logo.generated
  */
 abstract class LogoSettingsBase : LogoSettingsInterface {
   /**
-   * Shows the Mapbox logo on the map.
+   * The internalSettings that hold all the settings
    */
   protected abstract var internalSettings: LogoSettings
 

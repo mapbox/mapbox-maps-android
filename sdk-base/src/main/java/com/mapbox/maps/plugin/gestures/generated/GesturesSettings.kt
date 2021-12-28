@@ -5,7 +5,7 @@ package com.mapbox.maps.plugin.gestures.generated
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.ScrollMode
 /**
- * Gesture configuration allows to control the user touch interaction.
+ * Settings for Gestures
  */
 data class GesturesSettings @JvmOverloads constructor(
 

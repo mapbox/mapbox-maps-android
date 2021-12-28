@@ -5,7 +5,7 @@ package com.mapbox.maps.plugin.compass.generated
 import android.graphics.drawable.Drawable
 import android.view.Gravity
 /**
- * Shows the compass on the map.
+ * Settings for Compass
  */
 data class CompassSettings @JvmOverloads constructor(
 
