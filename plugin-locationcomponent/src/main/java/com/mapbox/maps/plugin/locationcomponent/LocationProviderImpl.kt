@@ -5,12 +5,9 @@ import android.content.Context
 import android.location.Location
 import android.os.Handler
 import android.os.Looper
-import com.mapbox.android.core.location.LocationEngineCallback
-import com.mapbox.android.core.location.LocationEngineProvider
-import com.mapbox.android.core.location.LocationEngineRequest
-import com.mapbox.android.core.location.LocationEngineResult
 import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.common.Logger
+import com.mapbox.common.location.compat.*
 import com.mapbox.geojson.Point
 import com.mapbox.maps.plugin.PuckBearingSource
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
