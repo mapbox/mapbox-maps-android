@@ -4,9 +4,9 @@ import android.content.Context
 import android.hardware.SensorManager
 import android.location.Location
 import android.view.WindowManager
-import com.mapbox.android.core.location.*
 import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.common.ShadowLogger
+import com.mapbox.common.location.compat.*
 import com.mapbox.geojson.Point
 import com.mapbox.maps.plugin.PuckBearingSource
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings

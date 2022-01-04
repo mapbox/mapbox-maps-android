@@ -29,7 +29,12 @@ dependencies {
     api(project(":common"))
   } else {
     api(Dependencies.mapboxGlNative)
-    api(Dependencies.mapboxCoreCommon)
+    api("com.mapbox.common:common") {
+      version {
+        strictly("21.1.0-beta.1-ab24d2ac9a4498a42915ee9dfe173a19899fcbf6-SNAPSHOT")
+      }
+      because("Use snapshot in order to support Common Location testing")
+    }
   }
 
   testImplementation(Dependencies.junit)
