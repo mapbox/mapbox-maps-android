@@ -58,6 +58,7 @@ internal class LocationPuckManager(
     }
     updateCurrentBearing(lastBearing)
     locationLayerRenderer.initializeComponents(style)
+    locationLayerRenderer.showBearingImage(settings.showBearingImage)
     styleScaling(settings)
     if (lastLocation != null && settings.enabled) {
       show()
@@ -93,7 +94,6 @@ internal class LocationPuckManager(
     }
     delegateProvider.getStyle {
       initialize(it)
-      locationLayerRenderer.showBearingImage(settings.showBearingImage)
     }
   }
 

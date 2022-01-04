@@ -178,7 +178,7 @@ class LocationIndicatorLayerRendererTest {
   }
 
   @Test
-  fun testShowBearingImage() {
+  fun testShowBearingImageTrue() {
     locationLayerRenderer.showBearingImage(true)
     verify {
       style.addImage(
@@ -186,6 +186,10 @@ class LocationIndicatorLayerRendererTest {
         any()
       )
     }
+  }
+
+  @Test
+  fun testShowBearingImageFalse() {
     locationLayerRenderer.showBearingImage(false)
     verify {
       style.removeStyleImage(

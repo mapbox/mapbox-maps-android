@@ -70,7 +70,7 @@ internal object LocationComponentAttributeParser {
           )
           else -> LocationPuck2D(
             topImage = ResourcesCompat.getDrawable(context.resources, R.drawable.mapbox_user_icon, null),
-            bearingImage = ResourcesCompat.getDrawable(context.resources, R.drawable.mapbox_user_stroke_icon, null),
+            bearingImage = ResourcesCompat.getDrawable(context.resources, R.drawable.mapbox_user_bearing_icon, null),
             shadowImage = ResourcesCompat.getDrawable(context.resources, R.drawable.mapbox_user_icon_shadow, null),
           )
         },
