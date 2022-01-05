@@ -4,7 +4,6 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import com.mapbox.maps.ViewAnnotationOptions
-import java.util.*
 
 internal data class ViewAnnotation(
   /**
@@ -24,6 +23,14 @@ internal data class ViewAnnotation(
    * Layout params needed to position Android view correctly on the screen.
    */
   var viewLayoutParams: FrameLayout.LayoutParams,
+  /**
+   * Cached value of last measured width. If user did specify width explicitly - will be set to -1.
+   */
+  var measuredWidth: Int,
+  /**
+   * Cached value of last measured height. If user did specify height explicitly - will be set to -1.
+   */
+  var measuredHeight: Int,
 ) {
   /**
    * String id needed to call functions from gl-native

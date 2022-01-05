@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -176,11 +177,15 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
         viewAnnotationManager.updateViewAnnotation(
           viewAnnotation,
           viewAnnotationOptions {
-            width(viewAnnotationManager.getViewAnnotationOptionsByView(viewAnnotation)?.width!! + pxDelta)
-            height(viewAnnotationManager.getViewAnnotationOptionsByView(viewAnnotation)?.height!! + pxDelta)
             selected(isSelected)
           }
         )
+        (button.layoutParams as ViewGroup.MarginLayoutParams).apply {
+          bottomMargin += pxDelta
+          rightMargin += pxDelta
+          leftMargin += pxDelta
+        }
+        button.requestLayout()
       }
     }
   }
@@ -198,7 +203,7 @@ class ViewAnnotationShowcaseActivity : AppCompatActivity(), OnMapClickListener, 
     const val TERRAIN_SOURCE = "TERRAIN_SOURCE"
     const val TERRAIN_URL_TILE_RESOURCE = "mapbox://mapbox.mapbox-terrain-dem-v1"
     const val MARKER_ID_PREFIX = "view_annotation_"
-    const val SELECTED_ADD_COEF_DP: Float = 15f
+    const val SELECTED_ADD_COEF_DP: Float = 8f
     const val STARTUP_TEXT = "Long click on a map to add a marker and click on a marker to pop-up annotation."
   }
 }

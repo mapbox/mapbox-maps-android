@@ -82,6 +82,8 @@ internal class ViewAnnotationManagerImpl(
     checkAssociatedFeatureIdUniqueness(options)
     annotationMap[id]?.let {
       it.handleVisibilityAutomatically = (options.visible == null)
+      options.width?.let { _ -> it.measuredWidth = -1 }
+      options.height?.let { _ -> it.measuredHeight = -1 }
       getValue(mapboxMap.updateViewAnnotation(id, options))
       return true
     } ?: return false
@@ -141,17 +143,42 @@ internal class ViewAnnotationManagerImpl(
   private fun prepareViewAnnotation(inflatedView: View, options: ViewAnnotationOptions): View {
     checkAssociatedFeatureIdUniqueness(options)
     val inflatedViewLayout = inflatedView.layoutParams as FrameLayout.LayoutParams
+    // provide explicit 1 px sizes if inflated sizes are zero (use-case for wrap_content, match_parent)
     val updatedOptions = options.toBuilder()
-      .width(options.width ?: inflatedViewLayout.width)
-      .height(options.height ?: inflatedViewLayout.height)
+      .width(options.width ?: if (inflatedViewLayout.width == 0) 1 else inflatedViewLayout.width)
+      .height(options.height ?: if (inflatedViewLayout.height == 0) 1 else inflatedViewLayout.height)
       .build()
     val viewAnnotation = ViewAnnotation(
       view = inflatedView,
       handleVisibilityAutomatically = (options.visible == null),
       visible = (inflatedView.visibility == View.VISIBLE),
       viewLayoutParams = inflatedViewLayout,
+      measuredWidth = if (options.width != null) -1 else updatedOptions.width!!,
+      measuredHeight = if (options.height != null) -1 else updatedOptions.height!!,
     )
     val globalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
+      if (viewAnnotation.measuredWidth != -1 && inflatedView.measuredWidth != viewAnnotation.measuredWidth) {
+        viewAnnotation.measuredWidth = inflatedView.measuredWidth
+        getValue(
+          mapboxMap.updateViewAnnotation(
+            viewAnnotation.id,
+            ViewAnnotationOptions.Builder()
+              .width(inflatedView.measuredWidth)
+              .build()
+          )
+        )
+      }
+      if (viewAnnotation.measuredHeight != -1 && inflatedView.measuredHeight != viewAnnotation.measuredHeight) {
+        viewAnnotation.measuredHeight = inflatedView.measuredHeight
+        getValue(
+          mapboxMap.updateViewAnnotation(
+            viewAnnotation.id,
+            ViewAnnotationOptions.Builder()
+              .height(inflatedView.measuredHeight)
+              .build()
+          )
+        )
+      }
       if (viewAnnotation.handleVisibilityAutomatically) {
         val isVisibleNow = (inflatedView.visibility == View.VISIBLE)
         if (isVisibleNow == viewAnnotation.visible) {
@@ -212,9 +239,14 @@ internal class ViewAnnotationManagerImpl(
     // add and reposition new and existed views
     positionDescriptorCoreList.forEach { descriptor ->
       annotationMap[descriptor.identifier]?.let { annotation ->
+        // update layout params explicitly if user has specified concrete width or height
         annotation.viewLayoutParams.apply {
-          width = descriptor.width
-          height = descriptor.height
+          if (annotation.measuredWidth == -1) {
+            width = descriptor.width
+          }
+          if (annotation.measuredHeight == -1) {
+            height = descriptor.height
+          }
         }
         annotation.view.apply {
           translationX = descriptor.leftTopCoordinate.x.toFloat()
