@@ -70,6 +70,14 @@ class FrameStatsRecorder : Observer {
       """.trimIndent(),
       Toast.LENGTH_LONG
     ).show()
+
+    println("Average FPS: ${(renderFrameFinishCount * 1e9f / (endBenchmarkTime - startBenchmarkTime)).format()}")
+    println("Over time frames: $overtimeFrameCount")
+    println("Over time frames ratio: ${(overtimeFrameCount * 100f / renderFrameFinishCount).format()}%")
+    println("Max frame interval: ${renderFrameIntervalsMs.maxOrNull().format()}ms")
+    println("Min frame interval: ${renderFrameIntervalsMs.minOrNull().format()}ms")
+    println("Frame interval SD: ${renderFrameIntervalsMs.sd().format()}ms")
+    println("Logs have been saved to ${mapView.context.filesDir}/${StorageUtils.LOG_DIR}/$FRAME_LOG_JSON_NAME.")
     mapView.getMapboxMap().unsubscribe(this@FrameStatsRecorder)
   }
 

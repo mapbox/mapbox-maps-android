@@ -11,6 +11,7 @@ import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.testapp.databinding.ActivityAnnotationBinding
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
+import com.mapbox.maps.testapp.utils.FrameStatsRecorder
 import java.util.*
 
 /**
@@ -26,6 +27,8 @@ class CircleAnnotationActivity : AppCompatActivity() {
     }
   private lateinit var annotationPlugin: AnnotationPlugin
   private lateinit var binding: ActivityAnnotationBinding
+
+  val frameRecorder = FrameStatsRecorder()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -95,6 +98,8 @@ class CircleAnnotationActivity : AppCompatActivity() {
         )?.let {
           create(FeatureCollection.fromJson(it))
         }
+
+        frameRecorder.startBenchmarking(binding.mapView)
       }
     }
 
@@ -106,6 +111,11 @@ class CircleAnnotationActivity : AppCompatActivity() {
     binding.changeStyle.setOnClickListener {
       binding.mapView.getMapboxMap().loadStyleUri(nextStyle)
     }
+  }
+
+  override fun onStop() {
+    frameRecorder.stopBenchmarking(binding.mapView)
+    super.onStop()
   }
 
   companion object {
