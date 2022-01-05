@@ -8,6 +8,7 @@ import android.os.Looper
 import android.os.Process.THREAD_PRIORITY_DEFAULT
 import androidx.annotation.VisibleForTesting
 import com.mapbox.bindgen.Value
+import com.mapbox.common.ValueConverter
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.GeoJson
@@ -286,6 +287,8 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    */
   fun feature(value: Feature): GeoJsonSource = applyGeoJsonData(value)
 
+  fun featurePartial(feature: Feature): GeoJsonSource = applyGeoJsonDataPartial(feature)
+
   /**
    * Add a Feature Collection to the GeojsonSource.
    * Data will be parsed from collection to [String] in a worker thread and
@@ -335,6 +338,36 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
     workerHandler.removeCallbacksAndMessages(null)
     workerHandler.post {
       val property = data.toPropertyValue()
+      mainHandler.post {
+        // we set parsed data when sync setter was not called during background work
+        setProperty(property, throwRuntimeException = false)
+      }
+    }
+  }
+
+  private fun applyGeoJsonDataPartial(
+    feature: Feature
+  ): GeoJsonSource = apply {
+    // remove any events from queue before posting this task
+    workerHandler.removeCallbacksAndMessages(null)
+    workerHandler.post {
+      val updateMap = hashMapOf(
+        "update-id" to Value.valueOf(feature.id()!!),
+        "value" to ValueConverter.fromJson(feature.toJson()).value
+      )
+
+      // FIXME somehow feature.toValue() doesn't work despite it's only different in \"\"
+//      println("KT mapping : ${feature.toValue()}")
+//      KT mapping : {"type":"Feature","id":"mapbox_annotation_0","geometry":{"type":"Point","coordinates":[-4.2271513,-5.359053]},"properties":{"circle-color":"rgba(255, 255, 0, 1)","circle-radius":12.0,"CircleAnnotation":0}}
+
+//      println("CPP mapping : ${ValueConverter.fromJson(feature.toJson()).value}")
+//      CPP mapping : {geometry={coordinates=[-4.2271513, -5.359053], type=Point}, id=mapbox_annotation_0, type=Feature, properties={circle-radius=12.0, CircleAnnotation=0, circle-color=rgba(255, 255, 0, 1)}}
+
+      val property = PropertyValue(
+        "data",
+        Value.valueOf(mutableListOf(Value.valueOf(updateMap)))
+      )
+
       mainHandler.post {
         // we set parsed data when sync setter was not called during background work
         setProperty(property, throwRuntimeException = false)

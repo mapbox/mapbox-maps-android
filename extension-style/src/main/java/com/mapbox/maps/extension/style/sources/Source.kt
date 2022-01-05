@@ -93,11 +93,13 @@ abstract class Source(
   private fun updateProperty(property: PropertyValue<*>, throwRuntimeException: Boolean = true) {
     delegate?.let { styleDelegate ->
       try {
+        val time = System.nanoTime()
         val expected = styleDelegate.setStyleSourceProperty(
           sourceId,
           property.propertyName,
           property.value
         )
+        println("Set property : ${System.nanoTime() - time} / \"${property.propertyName}\" = ${property.value} / sourceId = $sourceId")
         expected.error?.let { error ->
           "Set source property \"${property.propertyName}\" failed:\nError: $error\nValue set: ${property.value}".let {
             if (throwRuntimeException) {

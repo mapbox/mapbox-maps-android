@@ -316,7 +316,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     return option.build(currentId, this).also {
       annotationMap[it.id] = it
       currentId++
-      updateSource()
+      updateSourceSingleAnnotation(it)
     }
   }
 
@@ -404,9 +404,12 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
             )
             return@getStyle
           }
+          println("Update drag source ${dragSource?.sourceId}")
+          val time = System.nanoTime()
           addIconToStyle(style, dragAnnotationMap.values)
           val features = convertAnnotationsToFeatures(dragAnnotationMap.values)
           geoJsonSource.featureCollection(FeatureCollection.fromFeatures(features))
+          println("Updated drag source ${dragSource?.sourceId} for ${System.nanoTime() - time}")
         }
       }
     }
@@ -421,14 +424,47 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         initLayerAndSource(style)
       }
       source?.let { geoJsonSource ->
+        println("SLOW update annotation")
         layer?.let { layer ->
           if (!style.styleSourceExists(geoJsonSource.sourceId) || !style.styleLayerExists(layer.layerId)) {
             Logger.e(TAG, "Can't update source: source or layer has not been added to style.")
             return@getStyle
           }
           addIconToStyle(style, annotationMap.values)
+          var time = System.nanoTime()
           val features = convertAnnotationsToFeatures(annotationMap.values)
-          geoJsonSource.featureCollection(FeatureCollection.fromFeatures(features))
+          println("Create features (${annotationMap.size}) : ${System.nanoTime() - time}")
+          time = System.nanoTime()
+          val collection = FeatureCollection.fromFeatures(features)
+          println("Create collection : ${System.nanoTime() - time}")
+          geoJsonSource.featureCollection(collection)
+          println("Update source : ${System.nanoTime() - time}")
+        }
+      }
+    }
+  }
+
+  private fun updateSourceSingleAnnotation(annotation: T) {
+    delegateProvider.getStyle { style ->
+      if (source == null || layer == null) {
+        initLayerAndSource(style)
+      }
+      println("FAST update annotation")
+      source?.let { geoJsonSource ->
+        layer?.let { layer ->
+          if (!style.styleSourceExists(geoJsonSource.sourceId) || !style.styleLayerExists(layer.layerId)) {
+            Logger.e(TAG, "Can't update source: source or layer has not been added to style.")
+            return@getStyle
+          }
+          addIconToStyle(style, annotationMap.values)
+
+          annotation.setUsedDataDrivenProperties()
+          var time = System.nanoTime()
+          val feature = Feature.fromGeometry(annotation.geometry, annotation.getJsonObjectCopy(), annotation.featureIdentifier)
+          println("Map feature : ${System.nanoTime() - time}, $feature")
+          time = System.nanoTime()
+          geoJsonSource.featurePartial(feature)
+          println("Update source partial : ${System.nanoTime() - time}")
         }
       }
     }
@@ -463,10 +499,11 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
    * Update the annotation
    */
   override fun update(annotation: T) {
+    // TODO modify for granular annotation update
     when {
       annotationMap.containsKey(annotation.id) -> {
         annotationMap[annotation.id] = annotation
-        updateSource()
+        updateSourceSingleAnnotation(annotation)
       }
       dragAnnotationMap.containsKey(annotation.id) -> {
         dragAnnotationMap[annotation.id] = annotation
@@ -654,6 +691,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
             detector.focalPoint.y.toDouble()
           )
         )?.let {
+          println("OnMove : ${detector.focalPoint.x}, annotation : ${it.id} / ${it.featureIdentifier} $it")
           startDragging(it)
         }
       }
@@ -664,6 +702,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
      */
     override fun onMove(detector: MoveGestureDetector): Boolean {
       // Updating symbol's position
+      println("onMove ${draggingAnnotation?.id}")
+
       draggingAnnotation?.let { annotation ->
         if (detector.pointersCount > 1 || !annotation.isDraggable) {
           // Stopping the drag when we don't work with a simple, on-pointer move anymore
@@ -679,12 +719,14 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
           return true
         }
 
-        if (annotationMap.containsKey(annotation.id)) {
-          // Delete the dragging annotation from original source and add it to drag source
-          annotationMap.remove(annotation.id)
-          dragAnnotationMap[annotation.id] = annotation
-          updateSource()
-        }
+        // TODO remove
+//        if (annotationMap.containsKey(annotation.id)) {
+//          // Delete the dragging annotation from original source and add it to drag source
+//          annotationMap.remove(annotation.id)
+//          dragAnnotationMap[annotation.id] = annotation
+//          println("Remove from annotation map")
+//          updateSource()
+//        }
 
         delegateProvider.let {
           annotation.getOffsetGeometry(
@@ -692,7 +734,12 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
           )
         }?.let { geometry ->
           annotation.geometry = geometry
-          updateDragSource()
+          // 1. move within drag source
+//          updateDragSource()
+          // 2. move within main source with partial update
+          updateSourceSingleAnnotation(annotation)
+          // 3. move within main source with full update
+//          updateSource()
           dragListeners.forEach {
             it.onAnnotationDrag(annotation)
           }
@@ -702,7 +749,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         /* The dragging annotation has been removed from original source,
          update drag source to make sure it is shown in drag layer.
          */
-        updateDragSource()
+//        updateDragSource()
       }
       return false
     }
