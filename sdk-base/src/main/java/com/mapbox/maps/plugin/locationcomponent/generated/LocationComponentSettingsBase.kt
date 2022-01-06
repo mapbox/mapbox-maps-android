@@ -65,18 +65,6 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
 
   /**
-   * Whether the bearing image of location puck is shown.
-   */
-  override var showBearingImage: Boolean
-    get() {
-      return this.internalSettings.showBearingImage
-    }
-    set(value) {
-      this.internalSettings.showBearingImage = value
-      applySettings()
-    }
-
-  /**
    * The color of the pulsing circle. Only work for 2D location puck.
    */
   override var pulsingColor: Int

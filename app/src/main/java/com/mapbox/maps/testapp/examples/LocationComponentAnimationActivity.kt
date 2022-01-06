@@ -115,7 +115,8 @@ class LocationComponentAnimationActivity : AppCompatActivity() {
               bearingImage = AppCompatResources.getDrawable(
                 this@LocationComponentAnimationActivity,
                 R.drawable.mapbox_mylocation_icon_bearing,
-              )
+              ),
+              showBearingImage = true
             )
           }
         }

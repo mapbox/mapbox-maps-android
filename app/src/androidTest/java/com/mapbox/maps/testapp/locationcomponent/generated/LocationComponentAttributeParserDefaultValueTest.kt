@@ -33,11 +33,6 @@ class LocationComponentAttributeParserDefaultValueTest : BaseMapTest() {
       mapView.location.getSettings().pulsingEnabled
     )
     assertEquals(
-      "showBearingImage test failed..",
-      false,
-      mapView.location.getSettings().showBearingImage
-    )
-    assertEquals(
       "pulsingColor test failed..",
       Color.parseColor("#4A90E2"),
       mapView.location.getSettings().pulsingColor

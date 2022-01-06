@@ -54,6 +54,10 @@ data class LocationPuck2D @JvmOverloads constructor(
    */
   var topImage: Drawable? = null,
   /**
+   * Whether the bearing image of location puck is shown.
+   */
+  var showBearingImage: Boolean = false,
+  /**
    * Name of image in sprite to use as the middle of the location indicator.
    */
   var bearingImage: Drawable? = null,

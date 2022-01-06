@@ -178,22 +178,14 @@ class LocationIndicatorLayerRendererTest {
   }
 
   @Test
-  fun testShowBearingImageTrue() {
-    locationLayerRenderer.showBearingImage(true)
-    verify {
+  fun testAddBearingBitmaps() {
+    every { puckOptions.showBearingImage } returns true
+    locationLayerRenderer = LocationIndicatorLayerRenderer(puckOptions, layerSourceProvider)
+    locationLayerRenderer.initializeComponents(style)
+    verify(exactly = 1) {
       style.addImage(
         BEARING_ICON,
         any()
-      )
-    }
-  }
-
-  @Test
-  fun testShowBearingImageFalse() {
-    locationLayerRenderer.showBearingImage(false)
-    verify {
-      style.removeStyleImage(
-        BEARING_ICON
       )
     }
   }

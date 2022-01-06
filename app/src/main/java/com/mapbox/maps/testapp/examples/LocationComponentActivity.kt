@@ -87,11 +87,17 @@ class LocationComponentActivity : AppCompatActivity() {
         return true
       }
       R.id.action_show_bearing -> {
-        binding.mapView.location.updateSettings { showBearingImage = true }
+        if (binding.mapView.location.locationPuck is LocationPuck2D) {
+          (binding.mapView.location.locationPuck as LocationPuck2D).showBearingImage = true
+          binding.mapView.location.updateSettings {}
+        }
         return true
       }
       R.id.action_hide_bearing -> {
-        binding.mapView.location.updateSettings { showBearingImage = false }
+        if (binding.mapView.location.locationPuck is LocationPuck2D) {
+          (binding.mapView.location.locationPuck as LocationPuck2D).showBearingImage = false
+          binding.mapView.location.updateSettings {}
+        }
         return true
       }
       R.id.heading -> {

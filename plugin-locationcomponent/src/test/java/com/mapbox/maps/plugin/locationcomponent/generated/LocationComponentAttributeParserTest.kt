@@ -95,20 +95,6 @@ class LocationComponentAttributeParserTest {
     val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
     assertEquals(false, settings.pulsingEnabled)
   }
-
-  @Test
-  fun showBearingImageTestTrue() {
-    every { typedArray.getBoolean(any(), any()) } returns true
-    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
-    assertEquals(true, settings.showBearingImage)
-  }
-
-  @Test
-  fun showBearingImageTestFalse() {
-    every { typedArray.getBoolean(any(), any()) } returns false
-    val settings = LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, 1.2f)
-    assertEquals(false, settings.showBearingImage)
-  }
   @Test
   fun pulsingColorTest() {
     every { typedArray.getColor(any(), any()) } returns Color.parseColor("#4A90E2")

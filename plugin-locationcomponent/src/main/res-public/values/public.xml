@@ -8,9 +8,6 @@
     <!-- Whether the location puck is pulsing on the map. Only work for 2D location puck. -->
     <public name="mapbox_locationComponentPulsingEnabled" type="attr" />
 
-    <!-- Whether the bearing image of location puck is shown. -->
-    <public name="mapbox_locationComponentShowBearingImage" type="attr" />
-
     <!-- The color of the pulsing circle. Only work for 2D location puck. -->
     <public name="mapbox_locationComponentPulsingColor" type="attr" />
 
@@ -30,6 +27,8 @@
 
     <!-- Name of image in sprite to use as the top of the location indicator. -->
     <public name="mapbox_locationComponentLocationPuckLocationPuck2DTopImage" type="attr" />
+    <!-- Whether the bearing image of location puck is shown. -->
+    <public name="mapbox_locationComponentLocationPuckLocationPuck2DShowBearingImage" type="attr" />
     <!-- Name of image in sprite to use as the middle of the location indicator. -->
     <public name="mapbox_locationComponentLocationPuckLocationPuck2DBearingImage" type="attr" />
     <!-- Name of image in sprite to use as the background of the location indicator. -->
