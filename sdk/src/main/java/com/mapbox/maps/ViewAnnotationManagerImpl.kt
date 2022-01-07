@@ -147,19 +147,17 @@ internal class ViewAnnotationManagerImpl(
   private fun prepareViewAnnotation(inflatedView: View, options: ViewAnnotationOptions): View {
     checkAssociatedFeatureIdUniqueness(options)
     val inflatedViewLayout = inflatedView.layoutParams as FrameLayout.LayoutParams
-    // provide explicit 1 px sizes if inflated sizes are zero, match_parent (-1), wrap_content (-2)
-    // we need to pass valid sizes > 0 otherwise core will not register such view
     val updatedOptions = options.toBuilder()
-      .width(options.width ?: if (inflatedViewLayout.width < 1) 1 else inflatedViewLayout.width)
-      .height(options.height ?: if (inflatedViewLayout.height < 1) 1 else inflatedViewLayout.height)
+      .width(options.width ?: inflatedViewLayout.width)
+      .height(options.height ?: inflatedViewLayout.height)
       .build()
     val viewAnnotation = ViewAnnotation(
       view = inflatedView,
       handleVisibilityAutomatically = (options.visible == null),
       visible = (inflatedView.visibility == View.VISIBLE),
       viewLayoutParams = inflatedViewLayout,
-      measuredWidth = if (options.width != null) -1 else updatedOptions.width!!,
-      measuredHeight = if (options.height != null) -1 else updatedOptions.height!!,
+      measuredWidth = if (options.width != null) -1 else inflatedViewLayout.width,
+      measuredHeight = if (options.height != null) -1 else inflatedViewLayout.height,
     )
     val globalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
       if (viewAnnotation.measuredWidth != -1 &&
