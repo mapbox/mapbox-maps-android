@@ -82,8 +82,12 @@ internal class ViewAnnotationManagerImpl(
     checkAssociatedFeatureIdUniqueness(options)
     annotationMap[id]?.let {
       it.handleVisibilityAutomatically = (options.visible == null)
-      options.width?.let { _ -> it.measuredWidth = -1 }
-      options.height?.let { _ -> it.measuredHeight = -1 }
+      if (options.width != null) {
+        it.measuredWidth = -1
+      }
+      if (options.height != null) {
+        it.measuredHeight = -1
+      }
       getValue(mapboxMap.updateViewAnnotation(id, options))
       return true
     } ?: return false
@@ -143,10 +147,11 @@ internal class ViewAnnotationManagerImpl(
   private fun prepareViewAnnotation(inflatedView: View, options: ViewAnnotationOptions): View {
     checkAssociatedFeatureIdUniqueness(options)
     val inflatedViewLayout = inflatedView.layoutParams as FrameLayout.LayoutParams
-    // provide explicit 1 px sizes if inflated sizes are zero (use-case for wrap_content, match_parent)
+    // provide explicit 1 px sizes if inflated sizes are zero, match_parent (-1), wrap_content (-2)
+    // we need to pass valid sizes > 0 otherwise core will not register such view
     val updatedOptions = options.toBuilder()
-      .width(options.width ?: if (inflatedViewLayout.width == 0) 1 else inflatedViewLayout.width)
-      .height(options.height ?: if (inflatedViewLayout.height == 0) 1 else inflatedViewLayout.height)
+      .width(options.width ?: if (inflatedViewLayout.width < 1) 1 else inflatedViewLayout.width)
+      .height(options.height ?: if (inflatedViewLayout.height < 1) 1 else inflatedViewLayout.height)
       .build()
     val viewAnnotation = ViewAnnotation(
       view = inflatedView,
@@ -157,7 +162,10 @@ internal class ViewAnnotationManagerImpl(
       measuredHeight = if (options.height != null) -1 else updatedOptions.height!!,
     )
     val globalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
-      if (viewAnnotation.measuredWidth != -1 && inflatedView.measuredWidth != viewAnnotation.measuredWidth) {
+      if (viewAnnotation.measuredWidth != -1 &&
+        inflatedView.measuredWidth > 0 &&
+        inflatedView.measuredWidth != viewAnnotation.measuredWidth
+      ) {
         viewAnnotation.measuredWidth = inflatedView.measuredWidth
         getValue(
           mapboxMap.updateViewAnnotation(
@@ -168,7 +176,10 @@ internal class ViewAnnotationManagerImpl(
           )
         )
       }
-      if (viewAnnotation.measuredHeight != -1 && inflatedView.measuredHeight != viewAnnotation.measuredHeight) {
+      if (viewAnnotation.measuredHeight != -1 &&
+        inflatedView.measuredHeight > 0 &&
+        inflatedView.measuredHeight != viewAnnotation.measuredHeight
+      ) {
         viewAnnotation.measuredHeight = inflatedView.measuredHeight
         getValue(
           mapboxMap.updateViewAnnotation(
