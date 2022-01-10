@@ -38,7 +38,7 @@ import com.mapbox.maps.plugin.locationcomponent.LocationComponentPluginImpl
 import com.mapbox.maps.plugin.logo.LogoViewPlugin
 import com.mapbox.maps.plugin.overlay.MapOverlayPluginImpl
 import com.mapbox.maps.plugin.scalebar.ScaleBarPluginImpl
-import com.mapbox.maps.plugin.viewport.ViewportPluginImpl
+import com.mapbox.maps.plugin.viewport.experimental.ViewportPluginImpl
 import com.mapbox.maps.renderer.MapboxRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import java.lang.ref.WeakReference
