@@ -9,6 +9,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.bindgen.Expected
 import com.mapbox.maps.viewannotation.ViewAnnotation
+import com.mapbox.maps.viewannotation.ViewAnnotation.Companion.USER_FIXED_DIMENSION
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.collections.HashMap
@@ -83,10 +84,10 @@ internal class ViewAnnotationManagerImpl(
     annotationMap[id]?.let {
       it.handleVisibilityAutomatically = (options.visible == null)
       if (options.width != null) {
-        it.measuredWidth = -1
+        it.measuredWidth = USER_FIXED_DIMENSION
       }
       if (options.height != null) {
-        it.measuredHeight = -1
+        it.measuredHeight = USER_FIXED_DIMENSION
       }
       getValue(mapboxMap.updateViewAnnotation(id, options))
       return true
@@ -156,11 +157,11 @@ internal class ViewAnnotationManagerImpl(
       handleVisibilityAutomatically = (options.visible == null),
       visible = (inflatedView.visibility == View.VISIBLE),
       viewLayoutParams = inflatedViewLayout,
-      measuredWidth = if (options.width != null) -1 else inflatedViewLayout.width,
-      measuredHeight = if (options.height != null) -1 else inflatedViewLayout.height,
+      measuredWidth = if (options.width != null) USER_FIXED_DIMENSION else inflatedViewLayout.width,
+      measuredHeight = if (options.height != null) USER_FIXED_DIMENSION else inflatedViewLayout.height,
     )
     val globalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
-      if (viewAnnotation.measuredWidth != -1 &&
+      if (viewAnnotation.measuredWidth != USER_FIXED_DIMENSION &&
         inflatedView.measuredWidth > 0 &&
         inflatedView.measuredWidth != viewAnnotation.measuredWidth
       ) {
@@ -174,7 +175,7 @@ internal class ViewAnnotationManagerImpl(
           )
         )
       }
-      if (viewAnnotation.measuredHeight != -1 &&
+      if (viewAnnotation.measuredHeight != USER_FIXED_DIMENSION &&
         inflatedView.measuredHeight > 0 &&
         inflatedView.measuredHeight != viewAnnotation.measuredHeight
       ) {
@@ -250,10 +251,10 @@ internal class ViewAnnotationManagerImpl(
       annotationMap[descriptor.identifier]?.let { annotation ->
         // update layout params explicitly if user has specified concrete width or height
         annotation.viewLayoutParams.apply {
-          if (annotation.measuredWidth == -1) {
+          if (annotation.measuredWidth == USER_FIXED_DIMENSION) {
             width = descriptor.width
           }
-          if (annotation.measuredHeight == -1) {
+          if (annotation.measuredHeight == USER_FIXED_DIMENSION) {
             height = descriptor.height
           }
         }

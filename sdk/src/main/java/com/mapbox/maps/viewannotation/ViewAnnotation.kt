@@ -24,11 +24,11 @@ internal data class ViewAnnotation(
    */
   var viewLayoutParams: FrameLayout.LayoutParams,
   /**
-   * Cached value of last measured width. If user did specify width explicitly - will be set to -1.
+   * Cached value of last measured width. If user did specify width explicitly - will be set to [USER_FIXED_DIMENSION].
    */
   var measuredWidth: Int,
   /**
-   * Cached value of last measured height. If user did specify height explicitly - will be set to -1.
+   * Cached value of last measured height. If user did specify height explicitly - will be set to [USER_FIXED_DIMENSION].
    */
   var measuredHeight: Int,
 ) {
@@ -42,7 +42,8 @@ internal data class ViewAnnotation(
    */
   var globalLayoutListener: ViewTreeObserver.OnGlobalLayoutListener? = null
 
-  private companion object {
-    var VIEW_ANNOTATION_CURRENT_ID = 42
+  companion object {
+    private var VIEW_ANNOTATION_CURRENT_ID = 42
+    internal val USER_FIXED_DIMENSION = -1
   }
 }
