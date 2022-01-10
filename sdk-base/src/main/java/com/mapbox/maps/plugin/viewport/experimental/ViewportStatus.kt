@@ -20,7 +20,22 @@ sealed class ViewportStatus {
      * The current [ViewportState].
      */
     val state: ViewportState?
-  ) : ViewportStatus()
+  ) : ViewportStatus() {
+    /**
+     * Indicates whether some other object is "equal to" this one.
+     */
+    override fun equals(other: Any?): Boolean = other is State && other.state === this.state
+
+    /**
+     * Returns a hash code value for the object.
+     */
+    override fun hashCode() = Objects.hash(state)
+
+    /**
+     * Returns a String for the object.
+     */
+    override fun toString() = "ViewportStatus#State(state=$state)"
+  }
 
   /**
    * Represents the current status is a [ViewportTransition].
@@ -38,33 +53,25 @@ sealed class ViewportStatus {
      * The target [ViewportState].
      */
     val toState: ViewportState
-  ) : ViewportStatus()
-
-  /**
-   * Indicates whether some other object is "equal to" this one.
-   */
-  override fun equals(other: Any?): Boolean = when (this) {
-    is State -> other is State && other.state === this.state
-    is Transition ->
+  ) : ViewportStatus() {
+    /**
+     * Indicates whether some other object is "equal to" this one.
+     */
+    override fun equals(other: Any?): Boolean =
       other is Transition &&
         other.transition === this.transition &&
         other.fromState === this.fromState &&
         other.toState === this.toState
-  }
 
-  /**
-   * Returns a hash code value for the object.
-   */
-  override fun hashCode() = when (this) {
-    is State -> Objects.hash(state)
-    is Transition -> Objects.hash(transition, fromState, toState)
-  }
+    /**
+     * Returns a hash code value for the object.
+     */
+    override fun hashCode() = Objects.hash(transition, fromState, toState)
 
-  /**
-   * Returns a String for the object.
-   */
-  override fun toString() = when (this) {
-    is State -> "ViewportStatus#State(state=$state)"
-    is Transition -> "ViewportStatus#Transition(transition=$transition, fromState=$fromState, toState=$toState)"
+    /**
+     * Returns a String for the object.
+     */
+    override fun toString() =
+      "ViewportStatus#Transition(transition=$transition, fromState=$fromState, toState=$toState)"
   }
 }

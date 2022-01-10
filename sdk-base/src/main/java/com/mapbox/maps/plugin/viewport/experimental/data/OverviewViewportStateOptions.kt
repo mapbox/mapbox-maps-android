@@ -45,8 +45,8 @@ class OverviewViewportStateOptions private constructor(
   override fun equals(other: Any?) = other is OverviewViewportStateOptions &&
     geometry == other.geometry &&
     padding == other.padding &&
-    bearing == other.bearing &&
-    pitch == other.pitch &&
+    bearing.compareTo(other.bearing) == 0 &&
+    pitch.compareTo(other.pitch) == 0 &&
     frameTransitionMaxDurationMs == other.frameTransitionMaxDurationMs
 
   /**

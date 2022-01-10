@@ -12,7 +12,7 @@ class ViewportPluginOptions private constructor(
    *
    * Defaults to true.
    */
-  var transitionsToIdleUponUserInteraction: Boolean
+  val transitionsToIdleUponUserInteraction: Boolean
 ) {
   /**
    * Returns a builder that created the [ViewportPluginOptions]

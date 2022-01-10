@@ -3,10 +3,14 @@ package com.mapbox.maps
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
+import com.mapbox.maps.plugin.viewport.experimental.ViewportStatus
 import com.mapbox.maps.plugin.viewport.experimental.data.DefaultViewportTransitionOptions
+import com.mapbox.maps.plugin.viewport.experimental.data.FollowingViewportStateBearing
 import com.mapbox.maps.plugin.viewport.experimental.data.FollowingViewportStateOptions
 import com.mapbox.maps.plugin.viewport.experimental.data.OverviewViewportStateOptions
+import com.mapbox.maps.plugin.viewport.experimental.data.ViewportPluginOptions
 import nl.jqno.equalsverifier.EqualsVerifier
+import nl.jqno.equalsverifier.Warning
 import org.junit.Test
 
 class EqualsHashCodeTest {
@@ -50,9 +54,32 @@ class EqualsHashCodeTest {
   }
 
   @Test
+  fun `FollowingViewportStateBearing hashCode and equals test`() {
+    EqualsVerifier.forClass(FollowingViewportStateBearing::class.java)
+      .usingGetClass()
+      .suppress(Warning.INHERITED_DIRECTLY_FROM_OBJECT)
+      .verify()
+  }
+
+  @Test
+  fun `ViewportStatus hashCode and equals test`() {
+    EqualsVerifier.forClass(ViewportStatus::class.java)
+      .usingGetClass()
+      .suppress(Warning.INHERITED_DIRECTLY_FROM_OBJECT)
+      .verify()
+  }
+
+  @Test
   fun `OverviewViewportStateOptions hashCode and equals test`() {
     EqualsVerifier.forClass(OverviewViewportStateOptions::class.java)
       .usingGetClass()
+      .verify()
+  }
+  @Test
+  fun `ViewportPluginOptions hashCode and equals test`() {
+    EqualsVerifier.forClass(ViewportPluginOptions::class.java)
+      .usingGetClass()
+      .suppress(Warning.INHERITED_DIRECTLY_FROM_OBJECT)
       .verify()
   }
 }

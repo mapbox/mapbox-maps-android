@@ -47,8 +47,8 @@ class FollowingViewportStateOptions private constructor(
    * Indicates whether some other object is "equal to" this one.
    */
   override fun equals(other: Any?) = other is FollowingViewportStateOptions &&
-    defaultZoom == other.defaultZoom &&
-    defaultPitch == other.defaultPitch &&
+    defaultZoom.compareTo(other.defaultZoom) == 0 &&
+    defaultPitch.compareTo(other.defaultPitch) == 0 &&
     padding == other.padding &&
     frameTransitionMaxDurationMs == other.frameTransitionMaxDurationMs &&
     bearingOptions == other.bearingOptions
@@ -130,49 +130,5 @@ class FollowingViewportStateOptions private constructor(
         frameTransitionMaxDuration,
         bearingOptions
       )
-  }
-}
-
-/**
- * Describes the camera bearing options for the [FollowingViewportState].
- */
-sealed class FollowingViewportStateBearing {
-  /**
-   * The viewport's bearing is fixed to the given bearing.
-   *
-   * @param bearing The bearing that the [FollowingViewportState] uses to generate camera updates.
-   */
-  class Constant(val bearing: Double) : FollowingViewportStateBearing()
-
-  /**
-   * The viewport's bearing is set as the same as the location puck's bearing.
-   *
-   * When set to this mode, the viewport's bearing is driven by the location, thus guarantees
-   * synchronization.
-   */
-  object SyncWithLocationPuck : FollowingViewportStateBearing()
-
-  /**
-   * Indicates whether some other object is "equal to" this one.
-   */
-  override fun equals(other: Any?) = when (this) {
-    is Constant -> other is Constant && bearing == other.bearing
-    is SyncWithLocationPuck -> other is SyncWithLocationPuck
-  }
-
-  /**
-   * Returns a hash code value for the object.
-   */
-  override fun hashCode() = when (this) {
-    is Constant -> Objects.hash(bearing)
-    is SyncWithLocationPuck -> Objects.hash(SyncWithLocationPuck)
-  }
-
-  /**
-   * Returns a String for the object.
-   */
-  override fun toString() = when (this) {
-    is Constant -> "FollowingViewportStateBearing#Constant(bearing=$bearing)"
-    is SyncWithLocationPuck -> "SyncWithLocationPuck#SyncWithLocationPuck"
   }
 }
