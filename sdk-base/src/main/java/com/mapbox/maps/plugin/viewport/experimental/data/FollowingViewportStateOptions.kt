@@ -145,17 +145,6 @@ sealed class FollowingViewportStateBearing {
   class Constant(val bearing: Double) : FollowingViewportStateBearing()
 
   /**
-   * The viewport's bearing follows the user's heading, i.e. the direction the user is facing.
-   */
-  object Heading : FollowingViewportStateBearing()
-
-  /**
-   * The viewport's bearing follows the user's heading, i.e. the direction the user is actually
-   * moving towards.
-   */
-  object Course : FollowingViewportStateBearing()
-
-  /**
    * The viewport's bearing is set as the same as the location puck's bearing.
    *
    * When set to this mode, the viewport's bearing is driven by the location, thus guarantees
@@ -168,8 +157,6 @@ sealed class FollowingViewportStateBearing {
    */
   override fun equals(other: Any?) = when (this) {
     is Constant -> other is Constant && bearing == other.bearing
-    is Heading -> other is Heading
-    is Course -> other is Course
     is SyncWithLocationPuck -> other is SyncWithLocationPuck
   }
 
@@ -178,8 +165,6 @@ sealed class FollowingViewportStateBearing {
    */
   override fun hashCode() = when (this) {
     is Constant -> Objects.hash(bearing)
-    is Heading -> Objects.hash(Heading)
-    is Course -> Objects.hash(Course)
     is SyncWithLocationPuck -> Objects.hash(SyncWithLocationPuck)
   }
 
@@ -188,8 +173,6 @@ sealed class FollowingViewportStateBearing {
    */
   override fun toString() = when (this) {
     is Constant -> "FollowingViewportStateBearing#Constant(bearing=$bearing)"
-    is Heading -> "FollowingViewportStateBearing#Heading"
-    is Course -> "FollowingViewportStateBearing#Course"
     is SyncWithLocationPuck -> "SyncWithLocationPuck#SyncWithLocationPuck"
   }
 }
