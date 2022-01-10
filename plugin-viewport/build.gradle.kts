@@ -29,6 +29,7 @@ dependencies {
   implementation(project(":sdk-base"))
   implementation(project(":plugin-animation"))
   implementation(project(":plugin-locationcomponent"))
+  implementation(project(":plugin-gestures"))
   implementation(Dependencies.androidxAppCompat)
   implementation(Dependencies.androidxCoreKtx)
   implementation(Dependencies.androidxAnnotations)
