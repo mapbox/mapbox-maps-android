@@ -1,4 +1,4 @@
-package com.mapbox.maps.plugin.viewport.experimental
+package com.mapbox.maps.plugin.viewport
 
 /**
  * Observer that gets notified whenever [ViewportStatus] changes.

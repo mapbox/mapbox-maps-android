@@ -1,6 +1,6 @@
-package com.mapbox.maps.plugin.viewport.experimental.transition
+package com.mapbox.maps.plugin.viewport.transition
 
-import com.mapbox.maps.plugin.viewport.experimental.data.DefaultViewportTransitionOptions
+import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
 
 /**
  * The default [ViewportTransition] that transitions Viewport from one [ViewportState] to another.

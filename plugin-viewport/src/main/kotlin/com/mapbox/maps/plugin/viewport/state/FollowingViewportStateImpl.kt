@@ -1,4 +1,4 @@
-package com.mapbox.maps.plugin.viewport.experimental.state
+package com.mapbox.maps.plugin.viewport.state
 
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
@@ -11,9 +11,9 @@ import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
-import com.mapbox.maps.plugin.viewport.experimental.data.FollowingViewportStateBearing
-import com.mapbox.maps.plugin.viewport.experimental.data.FollowingViewportStateOptions
-import com.mapbox.maps.plugin.viewport.experimental.transition.MapboxViewportTransitionFactory
+import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateBearing
+import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateOptions
+import com.mapbox.maps.plugin.viewport.transition.MapboxViewportTransitionFactory
 import java.util.concurrent.*
 
 /**

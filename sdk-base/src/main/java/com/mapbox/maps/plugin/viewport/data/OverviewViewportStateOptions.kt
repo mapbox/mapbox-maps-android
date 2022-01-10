@@ -1,4 +1,4 @@
-package com.mapbox.maps.plugin.viewport.experimental.data
+package com.mapbox.maps.plugin.viewport.data
 
 import com.mapbox.geojson.Geometry
 import com.mapbox.maps.EdgeInsets

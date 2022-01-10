@@ -3,76 +3,62 @@ package com.mapbox.maps.testapp.examples.viewport
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.content.res.Resources
-import android.location.Location
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import com.mapbox.api.directions.v5.models.DirectionsResponse
+import com.mapbox.core.constants.Constants
+import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.plugin.LocationPuck2D
-import com.mapbox.maps.plugin.locationcomponent.LocationConsumer
-import com.mapbox.maps.plugin.locationcomponent.LocationProvider
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.ViewportPlugin
-import com.mapbox.maps.plugin.viewport.data.MapboxViewportDataSource
+import com.mapbox.maps.plugin.viewport.ViewportStatus
+import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateOptions
+import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
+import com.mapbox.maps.plugin.viewport.state.FollowingViewportState
+import com.mapbox.maps.plugin.viewport.state.OverviewViewportState
 import com.mapbox.maps.plugin.viewport.state.ViewportState
 import com.mapbox.maps.plugin.viewport.viewport
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityViewportAnimationBinding
+import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
+import com.mapbox.maps.testapp.utils.SimulateRouteLocationProvider
 
 /**
  * Showcase the use age of viewport plugin.
  *
  * Use button to toggle the following and overview mode.
  */
+@MapboxExperimental
 class ViewportShowcaseActivity : AppCompatActivity() {
-  private var emitCount = 0
-  private var delta = 0f
-  private val handler = Handler(Looper.getMainLooper())
   private lateinit var mapboxMap: MapboxMap
   private lateinit var mapView: MapView
   private lateinit var viewportButton: Button
-  private lateinit var latestLocation: Location
   private lateinit var viewport: ViewportPlugin
-  private lateinit var viewportDataSource: MapboxViewportDataSource
+  private lateinit var followingViewportState: FollowingViewportState
+  private lateinit var overviewViewportState: OverviewViewportState
   private val pixelDensity = Resources.getSystem().displayMetrics.density
-
-  private val paddedFollowingEdgeInsets = EdgeInsets(
-    0.0,
-    0.0,
-    120.0 * pixelDensity,
-    0.0
-  )
-
-  private val notPaddedEdgeInsets: EdgeInsets by lazy {
-    EdgeInsets(
-      0.0,
-      0.0,
-      0.0,
-      0.0
+  private val simulateRouteLocationProvider by lazy {
+    SimulateRouteLocationProvider(
+      LineString.fromPolyline(
+        DirectionsResponse.fromJson(
+          AnnotationUtils.loadStringFromAssets(
+            this,
+            NAVIGATION_ROUTE_JSON_NAME
+          )
+        ).routes()[0].geometry()!!,
+        Constants.PRECISION_6
+      )
     )
   }
-  private var followingEdgeInsets = paddedFollowingEdgeInsets
-    set(value) {
-      field = value
-      viewportDataSource.followingPadding = value
-      viewportDataSource.evaluate()
-    }
-  private val overviewEdgeInsets: EdgeInsets by lazy {
-    EdgeInsets(
-      40.0 * pixelDensity,
-      40.0 * pixelDensity,
-      40.0 * pixelDensity,
-      40.0 * pixelDensity
-    )
-  }
+
   private val overviewPadding: EdgeInsets by lazy {
     EdgeInsets(
       140.0 * pixelDensity,
@@ -121,9 +107,7 @@ class ViewportShowcaseActivity : AppCompatActivity() {
             .build()
         )
         binding.mapView.location.apply {
-          val provider = FakeLocationProvider()
-          latestLocation = Location(provider.javaClass.simpleName)
-          setLocationProvider(provider)
+          setLocationProvider(simulateRouteLocationProvider)
           updateSettings {
             locationPuck = LocationPuck2D(
               bearingImage = AppCompatResources.getDrawable(
@@ -131,17 +115,6 @@ class ViewportShowcaseActivity : AppCompatActivity() {
                 R.drawable.mapbox_mylocation_icon_bearing,
               )
             )
-          }
-          addOnIndicatorPositionChangedListener {
-            latestLocation.latitude = it.latitude()
-            latestLocation.longitude = it.longitude()
-            viewportDataSource.onLocationChanged(latestLocation)
-            viewport.resetFrame()
-          }
-          addOnIndicatorBearingChangedListener {
-            latestLocation.bearing = it.toFloat()
-            viewportDataSource.onLocationChanged(latestLocation)
-            viewport.resetFrame()
           }
         }
       }
@@ -152,92 +125,51 @@ class ViewportShowcaseActivity : AppCompatActivity() {
   @SuppressLint("SetTextI18n")
   private fun setupViewportPlugin() {
     viewport = mapView.viewport
-    viewportDataSource = MapboxViewportDataSource(mapboxMap, mapboxMap)
-    viewport.dataSource = viewportDataSource
-    viewport.registerViewportStateChangedObserver { cameraState ->
-      // change title of viewport button depending on the camera state
-      when (cameraState) {
-        ViewportState.TransitionToFollowing,
-        ViewportState.Following -> viewportButton.text = OVERVIEW
-
-        ViewportState.TransitionToOverview,
-        ViewportState.Overview,
-        ViewportState.Idle -> viewportButton.text = FOLLOW
+    followingViewportState =
+      viewport.makeFollowingViewportState(FollowingViewportStateOptions.Builder().build())
+    overviewViewportState =
+      viewport.makeOverviewViewportState(OverviewViewportStateOptions.Builder().geometry(simulateRouteLocationProvider.route).build())
+    viewport.addStatusObserver { from, to, reason ->
+      when (to.getCurrentOrNextState()) {
+        is FollowingViewportState -> viewportButton.text = OVERVIEW
+        is OverviewViewportState -> viewportButton.text = FOLLOW
+        else -> viewportButton.text = FOLLOW
       }
     }
     if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-      viewportDataSource.overviewPadding = landscapeOverviewPadding
-      viewportDataSource.followingPadding = landscapeFollowingPadding
+      followingViewportState.apply {
+        options = options.toBuilder().padding(landscapeFollowingPadding).build()
+      }
+      overviewViewportState.apply {
+        options = options.toBuilder().padding(landscapeOverviewPadding).build()
+      }
     } else {
-      viewportDataSource.overviewPadding = overviewPadding
-      viewportDataSource.followingPadding = followingPadding
+      followingViewportState.apply {
+        options = options.toBuilder().padding(followingPadding).build()
+      }
+      overviewViewportState.apply {
+        options = options.toBuilder().padding(overviewPadding).build()
+      }
     }
     viewportButton.setOnClickListener {
       when (viewportButton.text) {
-        FOLLOW -> {
-          followingEdgeInsets = paddedFollowingEdgeInsets
-          viewportDataSource.options.followingFrameOptions.zoomUpdatesAllowed = true
-          viewportDataSource.followingPadding = followingEdgeInsets
-          viewportDataSource.evaluate()
-          viewport.requestCameraToFollowing()
-        }
-        OVERVIEW -> {
-          viewportDataSource.overviewPadding = overviewEdgeInsets
-          viewportDataSource.evaluate()
-          viewport.requestCameraToOverview()
-        }
+        FOLLOW -> viewport.transitionTo(followingViewportState)
+        OVERVIEW -> viewport.transitionTo(overviewViewportState)
       }
-    }
-  }
-
-  private inner class FakeLocationProvider : LocationProvider {
-
-    private var locationConsumer: LocationConsumer? = null
-
-    private fun emitFakeLocations() {
-      // after several first emits we update puck animator options
-      if (emitCount == 5) {
-        locationConsumer?.run {
-          onPuckLocationAnimatorDefaultOptionsUpdated {
-            // set same duration as our location emit frequency - it will make puck position change smooth
-            duration = 2000
-            interpolator = FastOutSlowInInterpolator()
-          }
-          onPuckBearingAnimatorDefaultOptionsUpdated {
-            // set duration bigger than our location emit frequency -
-            // this will result in cancelling ongoing animation and starting new one with a visible non-smooth `jump`
-            duration = 5000
-          }
-        }
-      }
-      handler.postDelayed(
-        {
-          locationConsumer?.onLocationUpdated(Point.fromLngLat(POINT_LNG + delta, POINT_LAT + delta))
-          locationConsumer?.onBearingUpdated(BEARING + delta * 10000.0 * 5)
-          delta += 0.001f
-          emitCount++
-          emitFakeLocations()
-        },
-        2000
-      )
-    }
-
-    override fun registerLocationConsumer(locationConsumer: LocationConsumer) {
-      this.locationConsumer = locationConsumer
-      emitFakeLocations()
-    }
-
-    override fun unRegisterLocationConsumer(locationConsumer: LocationConsumer) {
-      this.locationConsumer = null
-      handler.removeCallbacksAndMessages(null)
     }
   }
 
   companion object {
     private const val FOLLOW = "Follow"
     private const val OVERVIEW = "Overview"
-    private const val POINT_LAT = 60.1699
-    private const val POINT_LNG = 24.9384
-    private const val BEARING = 60.0
+    private const val POINT_LAT = 34.052235
+    private const val POINT_LNG = -118.243683
+    private const val NAVIGATION_ROUTE_JSON_NAME = "navigation_route.json"
   }
 }
+
+private fun ViewportStatus.getCurrentOrNextState(): ViewportState? =
+  when (this) {
+    is ViewportStatus.State -> state
+    is ViewportStatus.Transition -> toState
+  }

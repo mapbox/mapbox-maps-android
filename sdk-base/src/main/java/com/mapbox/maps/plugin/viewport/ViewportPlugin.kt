@@ -1,159 +1,155 @@
 package com.mapbox.maps.plugin.viewport
 
 import com.mapbox.maps.plugin.MapPlugin
-import com.mapbox.maps.plugin.viewport.data.ViewportDataSource
+import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
+import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateOptions
+import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
+import com.mapbox.maps.plugin.viewport.data.ViewportPluginOptions
+import com.mapbox.maps.plugin.viewport.state.FollowingViewportState
+import com.mapbox.maps.plugin.viewport.state.OverviewViewportState
 import com.mapbox.maps.plugin.viewport.state.ViewportState
-import com.mapbox.maps.plugin.viewport.state.ViewportState.Following
-import com.mapbox.maps.plugin.viewport.state.ViewportState.Idle
-import com.mapbox.maps.plugin.viewport.state.ViewportState.Overview
-import com.mapbox.maps.plugin.viewport.state.ViewportState.TransitionToFollowing
-import com.mapbox.maps.plugin.viewport.state.ViewportState.TransitionToOverview
-import com.mapbox.maps.plugin.viewport.state.ViewportStateChangedObserver
-import com.mapbox.maps.plugin.viewport.transition.TransitionEndListener
+import com.mapbox.maps.plugin.viewport.transition.DefaultViewportTransition
 import com.mapbox.maps.plugin.viewport.transition.ViewportTransition
-import com.mapbox.maps.plugin.viewport.transition.ViewportTransitionOptions
 
 /**
  * The Viewport plugin allows to track objects on a map.
  *
- * Most common use-case is the ability to track the user location and animate the location updates
- * to create a navigation experience. Next to tracking a single object, the API allows tracking
- * multiple objects. The viewport needs to automatically optimize the camera position to take in
- * account the user provided data.
+ * It provides a structured approach to organizing camera management logic into states and transitions between them.
+ *
+ * at any given time, the viewport is either:
+ *  - idle (not updating the camera)
+ *  - in a state (camera is being managed by a ViewportState)
+ *  - transitioning (camera is being managed by a ViewportTransition)
  */
 interface ViewportPlugin : MapPlugin {
 
   /**
-   * Returns current [ViewportTransition].
-   * @see registerViewportStateChangedObserver
+   * Returns current [ViewportStatus].
+   *
+   * If current status is IDLE, returns ViewportStatus.State(null).
+   * @see addStatusObserver
    */
-  val state: ViewportState
+  val status: ViewportStatus
 
   /**
-   * Describes an object that provides desired camera positions to [ViewportPlugin].
+   * Executes a transition to requested state.
+   *
+   * When started, goes to [ViewportTransition]
+   * and to the final [ViewportState] when ended.
+   *
+   * If transition is canceled, state goes to IDLE.
+   *
+   * @param targetState The target [ViewportState] to transition to.
+   * @param completionListener The listener to observe the completion state.
    */
-  var dataSource: ViewportDataSource
+  fun transitionTo(targetState: ViewportState, completionListener: CompletionListener? = null)
 
   /**
-   * Executes a transition to [Following] state. When started, goes to [TransitionToFollowing]
-   * and to the final [Following] when ended. If transition is canceled, state goes to [Idle].
-   *
-   * The target camera position is obtained with [ViewportDataSource.getViewportData].
-   *
-   * @param stateTransitionOptionsBlock options that impact the transition animation from
-   * the current state to the requested state.
-   * Defaults to [ViewportTransitionOptions.maxDurationMs] equal to [DEFAULT_STATE_TRANSITION_MAX_DURATION_MS] millis.
-   * @param frameTransitionOptionsBlock options that impact the transition animations between
-   * viewport frames in the selected state.
-   * This refers to camera transition on each [ViewportDataSource] update when [Following] is engaged.
-   * Defaults to [ViewportTransitionOptions.maxDurationMs] equal to [DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS] millis.
-   * @param transitionEndListener invoked when transition ends.
+   * Immediately goes to IDLE state canceling all ongoing transitions.
    */
-  fun requestCameraToFollowing(
-    stateTransitionOptionsBlock: ((ViewportTransitionOptions.Builder).() -> Unit),
-    frameTransitionOptionsBlock: ((ViewportTransitionOptions.Builder).() -> Unit),
-    transitionEndListener: TransitionEndListener? = null,
+  fun idle()
+
+  /**
+   * Options that impact the [ViewportPlugin].
+   */
+  var options: ViewportPluginOptions
+
+  // States
+
+  /**
+   * Returns list of registered states.
+   */
+  val states: Set<ViewportState>
+
+  /**
+   * Add a viewport state to the viewport plugin, which could be reused later with the state id.
+   *
+   * @param state the view port state to be added.
+   */
+  fun addState(state: ViewportState)
+
+  /**
+   * Remove a viewport state from the viewport plugin, and it could not be reused later with the state id.
+
+   * @param state the view port state to be removed.
+   */
+  fun removeState(state: ViewportState)
+
+  // Transitions
+
+  /**
+   * DefaultViewportTransition with default options.
+   *
+   * This transition is used unless overridden by one of the registered transitions.
+   */
+  var defaultTransition: ViewportTransition
+
+  /**
+   * Set the [ViewportTransition] for the transition from given [ViewportState] to target [ViewportState]
+   *
+   * @param transition The transition to be set.
+   * @param from The state before the transition.
+   * @param to The state after the transition.
+   */
+  fun setTransition(transition: ViewportTransition, from: ViewportState?, to: ViewportState)
+
+  /**
+   * Get the [ViewportTransition] from given [ViewportState] to target [ViewportState].
+   *
+   * @param from The state before the transition.
+   * @param to The state after the transition.
+   */
+  fun getTransition(from: ViewportState?, to: ViewportState): ViewportTransition?
+
+  /**
+   * Remove the [ViewportTransition] from given [ViewportState] to target [ViewportState].
+   *
+   * @param from The state before the transition.
+   * @param to The state after the transition.
+   */
+  fun removeTransition(from: ViewportState?, to: ViewportState)
+
+  // Observers
+
+  /**
+   * Adds [ViewportStatusObserver] to observe the status change.
+   */
+  fun addStatusObserver(
+    viewportStatusObserver: ViewportStatusObserver
   )
 
   /**
-   * Executes a transition to [Following] state. When started, goes to [TransitionToFollowing]
-   * and to the final [Following] when ended. If transition is canceled, state goes to [Idle].
-   *
-   * The target camera position is obtained with [ViewportDataSource.getViewportData].
-   *
-   * @param stateTransitionOptions options that impact the transition animation from the current state to the requested state.
-   * Defaults to [ViewportTransitionOptions.maxDurationMs] equal to [DEFAULT_STATE_TRANSITION_MAX_DURATION_MS] millis.
-   * @param frameTransitionOptions options that impact the transition animations between viewport frames in the selected state.
-   * This refers to camera transition on each [ViewportDataSource] update when [Following] is engaged.
-   * Defaults to [ViewportTransitionOptions.maxDurationMs] equal to [DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS] millis.
-   * @param transitionEndListener invoked when transition ends.
+   * Removes [ViewportStatusObserver].
    */
-  fun requestCameraToFollowing(
-    stateTransitionOptions: ViewportTransitionOptions = DEFAULT_STATE_TRANSITION_OPT,
-    frameTransitionOptions: ViewportTransitionOptions = DEFAULT_FRAME_TRANSITION_OPT,
-    transitionEndListener: TransitionEndListener? = null,
+  fun removeStatusObserver(
+    viewportStatusObserver: ViewportStatusObserver
   )
 
+  // Convenient methods to create the in-stock [ViewportState] and [ViewportTransition].
+
   /**
-   * Executes a transition to [Overview] state. When started, goes to [TransitionToOverview]
-   * and to the final [Overview] when ended. If transition is canceled, state goes to [Idle].
+   * Create a [FollowingViewportState] instance with provided [FollowingViewportStateOptions].
    *
-   * The target camera position is obtained with [ViewportDataSource.getViewportData].
+   * @param options The desired [FollowingViewportStateOptions]
+   */
+  fun makeFollowingViewportState(options: FollowingViewportStateOptions): FollowingViewportState
+
+  /**
+   * Create an [OverviewViewportState] instance with provided [OverviewViewportStateOptions].
    *
-   * @param stateTransitionOptionsBlock options that impact the transition animation from
-   * the current state to the requested state.
-   * Defaults to [ViewportTransitionOptions.maxDurationMs] equal to [DEFAULT_STATE_TRANSITION_MAX_DURATION_MS] millis.
-   * @param frameTransitionOptionsBlock options that impact the transition animations between
-   * viewport frames in the selected state.
-   * This refers to camera transition on each [ViewportDataSource] update when [Overview] is engaged.
-   * Defaults to [ViewportTransitionOptions.maxDurationMs] equal to [DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS] millis.
-   * @param transitionEndListener invoked when transition ends.
+   * @param options The desired [OverviewViewportStateOptions]
    */
-  fun requestCameraToOverview(
-    stateTransitionOptionsBlock: ((ViewportTransitionOptions.Builder).() -> Unit),
-    frameTransitionOptionsBlock: ((ViewportTransitionOptions.Builder).() -> Unit),
-    transitionEndListener: TransitionEndListener? = null,
-  )
+  fun makeOverviewViewportState(options: OverviewViewportStateOptions): OverviewViewportState
 
   /**
-   * Executes a transition to [Overview] state. When started, goes to [TransitionToOverview]
-   * and to the final [Overview] when ended. If transition is canceled, state goes to [Idle].
+   * Create a default [ViewportTransition] instance with provided [DefaultViewportTransitionOptions].
    *
-   * The target camera position is obtained with [ViewportDataSource.getViewportData].
-   *
-   * @param stateTransitionOptions options that impact the transition animation from the current state to the requested state.
-   * Defaults to [ViewportTransitionOptions.maxDurationMs] equal to [DEFAULT_STATE_TRANSITION_MAX_DURATION_MS] millis.
-   * @param frameTransitionOptions options that impact the transition animations between viewport frames in the selected state.
-   * This refers to camera transition on each [ViewportDataSource] update when [Overview] is engaged.
-   * Defaults to [ViewportTransitionOptions.maxDurationMs] equal to [DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS] millis.
-   * @param transitionEndListener invoked when transition ends.
+   * @param options The desired [DefaultViewportTransitionOptions]
    */
-  fun requestCameraToOverview(
-    stateTransitionOptions: ViewportTransitionOptions = DEFAULT_STATE_TRANSITION_OPT,
-    frameTransitionOptions: ViewportTransitionOptions = DEFAULT_FRAME_TRANSITION_OPT,
-    transitionEndListener: TransitionEndListener? = null,
-  )
+  fun makeDefaultTransition(options: DefaultViewportTransitionOptions): DefaultViewportTransition
 
   /**
-   * If the [state] is [Following] or [Overview],
-   * performs an immediate camera transition (a jump, with animation duration equal to `0`)
-   * based on the latest data obtained with [ViewportDataSource.getViewportData].
+   * Create a [ViewportTransition] instance that transition to the target [ViewportState] immediately.
    */
-  fun resetFrame()
-
-  /**
-   * Immediately goes to [Idle] state canceling all ongoing transitions.
-   */
-  fun requestCameraToIdle()
-
-  /**
-   * Registers [ViewportStateChangedObserver].
-   */
-  fun registerViewportStateChangedObserver(
-    viewportStateChangedObserver: ViewportStateChangedObserver
-  )
-
-  /**
-   * Unregisters [ViewportStateChangedObserver].
-   */
-  fun unregisterViewportStateChangedObserver(
-    viewportStateChangedObserver: ViewportStateChangedObserver
-  )
-
-  /**
-   * Companion object of ViewportPlugin interface.
-   */
-  companion object {
-    /**
-     * The default state transition option.
-     */
-    val DEFAULT_STATE_TRANSITION_OPT =
-      ViewportTransitionOptions.build { maxDuration(DEFAULT_STATE_TRANSITION_MAX_DURATION_MS) }
-
-    /**
-     * The default frame transition option.
-     */
-    val DEFAULT_FRAME_TRANSITION_OPT =
-      ViewportTransitionOptions.build { maxDuration(DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS) }
-  }
+  fun makeImmediateViewportTransition(): ViewportTransition
 }

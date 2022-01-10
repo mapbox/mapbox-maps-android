@@ -1,12 +1,12 @@
-package com.mapbox.maps.plugin.viewport.experimental.transition
+package com.mapbox.maps.plugin.viewport.transition
 
 import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.viewport.experimental.CompletionListener
-import com.mapbox.maps.plugin.viewport.experimental.ViewportPluginImpl.Companion.VIEWPORT_CAMERA_OWNER
-import com.mapbox.maps.plugin.viewport.experimental.state.ViewportState
+import com.mapbox.maps.plugin.viewport.CompletionListener
+import com.mapbox.maps.plugin.viewport.ViewportPluginImpl.Companion.VIEWPORT_CAMERA_OWNER
+import com.mapbox.maps.plugin.viewport.state.ViewportState
 
 /**
  * [ViewportTransition] that transition to target [ViewportState] immediately.
