@@ -26,6 +26,7 @@ import com.mapbox.maps.plugin.viewport.experimental.ViewportStatus
 import com.mapbox.maps.plugin.viewport.experimental.data.FollowingViewportStateBearing
 import com.mapbox.maps.plugin.viewport.experimental.data.FollowingViewportStateOptions
 import com.mapbox.maps.plugin.viewport.experimental.data.OverviewViewportStateOptions
+import com.mapbox.maps.plugin.viewport.experimental.data.ViewportPluginOptions
 import com.mapbox.maps.plugin.viewport.experimental.experimentalViewport
 import com.mapbox.maps.plugin.viewport.experimental.state.FollowingViewportState
 import com.mapbox.maps.plugin.viewport.experimental.state.OverviewViewportState
@@ -100,7 +101,8 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
   private fun setupAdvancedGestures() {
     // Disable viewport's transitionsToIdleUponUserInteraction so that we can customise the gestures
     // within the state.
-    mapView.experimentalViewport.transitionsToIdleUponUserInteraction = false
+    mapView.experimentalViewport.options =
+      ViewportPluginOptions.Builder().transitionsToIdleUponUserInteraction(false).build()
 
     // Advanced gestures handling
 

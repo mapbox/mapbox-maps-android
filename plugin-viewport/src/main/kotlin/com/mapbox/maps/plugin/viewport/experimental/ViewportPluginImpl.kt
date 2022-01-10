@@ -15,6 +15,7 @@ import com.mapbox.maps.plugin.viewport.VIEWPORT_STATUS_OBSERVER_REASON_USER_INTE
 import com.mapbox.maps.plugin.viewport.experimental.data.DefaultViewportTransitionOptions
 import com.mapbox.maps.plugin.viewport.experimental.data.FollowingViewportStateOptions
 import com.mapbox.maps.plugin.viewport.experimental.data.OverviewViewportStateOptions
+import com.mapbox.maps.plugin.viewport.experimental.data.ViewportPluginOptions
 import com.mapbox.maps.plugin.viewport.experimental.state.FollowingViewportState
 import com.mapbox.maps.plugin.viewport.experimental.state.FollowingViewportStateImpl
 import com.mapbox.maps.plugin.viewport.experimental.state.OverviewViewportState
@@ -58,7 +59,7 @@ class ViewportPluginImpl : ViewportPlugin {
       when (owner) {
         VIEWPORT_CAMERA_OWNER -> Unit
         MapAnimationOwnerRegistry.GESTURES -> {
-          if (transitionsToIdleUponUserInteraction) {
+          if (options.transitionsToIdleUponUserInteraction) {
             currentCancelable?.cancel()
             currentCancelable = null
             updateStatus(
@@ -195,6 +196,11 @@ class ViewportPluginImpl : ViewportPlugin {
     updateStatus(ViewportStatus.State(null), VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC)
   }
 
+  /**
+   * Options that impact the [ViewportPlugin].
+   */
+  override var options: ViewportPluginOptions = ViewportPluginOptions.Builder().build()
+
   private fun notifyStatusChanged(
     previousStatus: ViewportStatus,
     currentStatus: ViewportStatus,
@@ -271,14 +277,6 @@ class ViewportPluginImpl : ViewportPlugin {
   override fun removeTransition(from: ViewportState?, to: ViewportState) {
     transitions.remove(Pair(from, to))
   }
-
-  /**
-   * Indicates whether to transition [ViewportState] to IDLE (null) when user interact with the map
-   * using gestures.
-   *
-   * Defaults to true.
-   */
-  override var transitionsToIdleUponUserInteraction: Boolean = true
 
   /**
    * Adds [ViewportStatusObserver] to observe the status change.

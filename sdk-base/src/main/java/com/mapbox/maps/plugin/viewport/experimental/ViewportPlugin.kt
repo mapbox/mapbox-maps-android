@@ -4,6 +4,7 @@ import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.viewport.experimental.data.DefaultViewportTransitionOptions
 import com.mapbox.maps.plugin.viewport.experimental.data.FollowingViewportStateOptions
 import com.mapbox.maps.plugin.viewport.experimental.data.OverviewViewportStateOptions
+import com.mapbox.maps.plugin.viewport.experimental.data.ViewportPluginOptions
 import com.mapbox.maps.plugin.viewport.experimental.state.FollowingViewportState
 import com.mapbox.maps.plugin.viewport.experimental.state.OverviewViewportState
 import com.mapbox.maps.plugin.viewport.experimental.state.ViewportState
@@ -49,12 +50,9 @@ interface ViewportPlugin : MapPlugin {
   fun idle()
 
   /**
-   * Indicates whether to transition [ViewportState] to IDLE (null) when user interact with the map
-   * using gestures.
-   *
-   * Defaults to true.
+   * Options that impact the [ViewportPlugin].
    */
-  var transitionsToIdleUponUserInteraction: Boolean
+  var options: ViewportPluginOptions
 
   // States
 
