@@ -38,7 +38,6 @@ internal object LocationComponentAttributeParser {
         locationPuck = when (typedArray.getInt(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuck, -1)) {
           0 -> LocationPuck2D(
             topImage = typedArray.getDrawable(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DTopImage),
-            showBearingImage = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DShowBearingImage, false),
             bearingImage = typedArray.getDrawable(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DBearingImage),
             shadowImage = typedArray.getDrawable(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DShadowImage),
             scaleExpression = typedArray.getString(R.styleable.mapbox_MapView_mapbox_locationComponentLocationPuckLocationPuck2DScaleExpression),
@@ -70,7 +69,7 @@ internal object LocationComponentAttributeParser {
           )
           else -> LocationPuck2D(
             topImage = ResourcesCompat.getDrawable(context.resources, R.drawable.mapbox_user_icon, null),
-            bearingImage = ResourcesCompat.getDrawable(context.resources, R.drawable.mapbox_user_bearing_icon, null),
+            bearingImage = ResourcesCompat.getDrawable(context.resources, R.drawable.mapbox_user_stroke_icon, null),
             shadowImage = ResourcesCompat.getDrawable(context.resources, R.drawable.mapbox_user_icon_shadow, null),
           )
         },

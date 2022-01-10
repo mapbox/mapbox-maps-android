@@ -13,8 +13,7 @@ import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.PuckBearingSource
 import com.mapbox.maps.plugin.gestures.gestures
-import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
-import com.mapbox.maps.plugin.locationcomponent.location
+import com.mapbox.maps.plugin.locationcomponent.*
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityLocationComponentBinding
 import com.mapbox.maps.testapp.utils.LocationPermissionHelper
@@ -88,15 +87,17 @@ class LocationComponentActivity : AppCompatActivity() {
       }
       R.id.action_show_bearing -> {
         if (binding.mapView.location.locationPuck is LocationPuck2D) {
-          (binding.mapView.location.locationPuck as LocationPuck2D).showBearingImage = true
-          binding.mapView.location.updateSettings {}
+          binding.mapView.location.apply {
+            locationPuck = createDefault2DPuck(this@LocationComponentActivity, true)
+          }
         }
         return true
       }
       R.id.action_hide_bearing -> {
         if (binding.mapView.location.locationPuck is LocationPuck2D) {
-          (binding.mapView.location.locationPuck as LocationPuck2D).showBearingImage = false
-          binding.mapView.location.updateSettings {}
+          binding.mapView.location.apply {
+            locationPuck = createDefault2DPuck(this@LocationComponentActivity)
+          }
         }
         return true
       }

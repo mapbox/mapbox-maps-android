@@ -163,7 +163,7 @@ class LocationIndicatorLayerRendererTest {
         any()
       )
     }
-    verify(exactly = 0) {
+    verify(exactly = 1) {
       style.addImage(
         BEARING_ICON,
         any()
@@ -172,19 +172,6 @@ class LocationIndicatorLayerRendererTest {
     verify {
       style.addImage(
         SHADOW_ICON,
-        any()
-      )
-    }
-  }
-
-  @Test
-  fun testAddBearingBitmaps() {
-    every { puckOptions.showBearingImage } returns true
-    locationLayerRenderer = LocationIndicatorLayerRenderer(puckOptions, layerSourceProvider)
-    locationLayerRenderer.initializeComponents(style)
-    verify(exactly = 1) {
-      style.addImage(
-        BEARING_ICON,
         any()
       )
     }

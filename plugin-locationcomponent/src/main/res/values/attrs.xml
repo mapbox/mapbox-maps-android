@@ -33,8 +33,6 @@
 
         <!-- Name of image in sprite to use as the top of the location indicator. -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck2DTopImage" format="reference"/>
-        <!-- Whether the bearing image of location puck is shown. -->
-        <attr name="mapbox_locationComponentLocationPuckLocationPuck2DShowBearingImage" format="boolean"/>
         <!-- Name of image in sprite to use as the middle of the location indicator. -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck2DBearingImage" format="reference"/>
         <!-- Name of image in sprite to use as the background of the location indicator. -->

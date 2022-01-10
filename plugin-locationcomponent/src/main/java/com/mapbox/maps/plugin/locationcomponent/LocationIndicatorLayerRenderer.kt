@@ -75,18 +75,13 @@ internal class LocationIndicatorLayerRenderer(
   private fun setupBitmaps() {
     puckOptions.topImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
       ?.let { style?.addImage(TOP_ICON, it) }
-    if (puckOptions.showBearingImage) {
-      puckOptions.bearingImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
-        ?.let { style?.addImage(BEARING_ICON, it) }
-    } else {
-      style?.removeStyleImage(BEARING_ICON)
-    }
+    puckOptions.bearingImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
+      ?.let { style?.addImage(BEARING_ICON, it) }
+
     puckOptions.shadowImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
       ?.let { style?.addImage(SHADOW_ICON, it) }
     layer.topImage(TOP_ICON)
-    if (puckOptions.showBearingImage) {
-      layer.bearingImage(BEARING_ICON)
-    }
+    layer.bearingImage(BEARING_ICON)
     layer.shadowImage(SHADOW_ICON)
   }
 

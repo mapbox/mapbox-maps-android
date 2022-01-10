@@ -149,6 +149,12 @@ public class JavaInterfaceChecker {
         locationComponentSettings = new LocationComponentSettings(true, true, Color.BLACK, 1f, "id", "id", locationPuck);
     }
 
+    private void locationComponent(Context context, MapView mapView) {
+        LocationComponentPlugin locationComponent = LocationComponentUtils.getLocationComponent(mapView);
+        locationComponent.setLocationPuck(LocationComponentUtils.createDefault2DPuck(locationComponent, context));
+        locationComponent.setLocationPuck(LocationComponentUtils.createDefault2DPuck(locationComponent, context, true));
+    }
+
     private void gesturesSettings(ScrollMode scrollMode, ScreenCoordinate screenCoordinate) {
         GesturesSettings gesturesSettings = new GesturesSettings();
         gesturesSettings = new GesturesSettings(true);
@@ -306,9 +312,9 @@ public class JavaInterfaceChecker {
     private void locationPuck(Drawable image, List<Float> floatList) {
         LocationPuck2D locationPuck2D = new LocationPuck2D();
         locationPuck2D = new LocationPuck2D(image);
-        locationPuck2D = new LocationPuck2D(image, true, image);
-        locationPuck2D = new LocationPuck2D(image, true, image, image);
-        locationPuck2D = new LocationPuck2D(image, true, image, image, "scale");
+        locationPuck2D = new LocationPuck2D(image, image);
+        locationPuck2D = new LocationPuck2D(image, image, image);
+        locationPuck2D = new LocationPuck2D(image, image, image, "scale");
 
         LocationPuck3D locationPuck3D = new LocationPuck3D("uri");
         locationPuck3D = new LocationPuck3D("uri", floatList);
