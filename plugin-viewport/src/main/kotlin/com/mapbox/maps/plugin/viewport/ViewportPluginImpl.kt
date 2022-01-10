@@ -9,8 +9,6 @@ import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.gestures.GesturesPlugin
-import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
 import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
@@ -47,7 +45,6 @@ class ViewportPluginImpl : ViewportPlugin {
     @Synchronized get
   private val transitions = HashMap<Pair<ViewportState?, ViewportState?>, ViewportTransition>()
   private lateinit var delegateProvider: MapDelegateProvider
-  private lateinit var gesturesPlugin: GesturesPlugin
   private lateinit var cameraPlugin: CameraAnimationsPlugin
 
   private val cameraAnimationsLifecycleListener = object : CameraAnimationsLifecycleListener {
@@ -333,7 +330,6 @@ class ViewportPluginImpl : ViewportPlugin {
    */
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
     this.delegateProvider = delegateProvider
-    this.gesturesPlugin = delegateProvider.mapPluginProviderDelegate.gestures
     this.cameraPlugin = delegateProvider.mapPluginProviderDelegate.camera
     cameraPlugin.addCameraAnimationsLifecycleListener(cameraAnimationsLifecycleListener)
     this.defaultTransition = DefaultViewportTransitionImpl(
