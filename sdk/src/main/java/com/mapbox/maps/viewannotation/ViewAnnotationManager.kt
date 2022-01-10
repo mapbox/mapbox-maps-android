@@ -1,7 +1,6 @@
 package com.mapbox.maps.viewannotation
 
 import android.view.View
-import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.geojson.Feature
@@ -29,7 +28,6 @@ interface ViewAnnotationManager {
 
   /**
    * Add view annotation inflated from [resId] synchronously.
-   * Parent layout of [resId] must have fixed dimensions and should not use [ViewGroup.LayoutParams.WRAP_CONTENT].
    *
    * Annotation [options] must include Geometry where we want to bind our view annotation.
    *
@@ -50,7 +48,6 @@ interface ViewAnnotationManager {
 
   /**
    * Add view annotation inflated from [resId] asynchronously.
-   * Parent layout of [resId] must have fixed dimensions and should not use [ViewGroup.LayoutParams.WRAP_CONTENT].
    *
    * In order to use this function please add following [dependency](https://mvnrepository.com/artifact/androidx.asynclayoutinflater/asynclayoutinflater/1.0.0) to your project.
    *

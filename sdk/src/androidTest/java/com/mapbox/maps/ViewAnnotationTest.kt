@@ -3,8 +3,8 @@ package com.mapbox.maps
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import androidx.annotation.LayoutRes
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.mapbox.geojson.Feature
@@ -22,11 +22,14 @@ import org.hamcrest.Matchers
 import org.junit.*
 import org.junit.Assert.*
 import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
 import java.util.concurrent.CountDownLatch
 
-@RunWith(AndroidJUnit4::class)
+@RunWith(Parameterized::class)
 @LargeTest
-class ViewAnnotationTest {
+class ViewAnnotationTest(
+  @LayoutRes private val layoutResId: Int
+) {
   private lateinit var mapboxMap: MapboxMap
   private lateinit var mapView: MapView
   private lateinit var viewAnnotationManager: ViewAnnotationManager
@@ -116,7 +119,7 @@ class ViewAnnotationTest {
     viewAnnotationTestHelper(
       performAction = {
         firstView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
           }
@@ -143,7 +146,7 @@ class ViewAnnotationTest {
     viewAnnotationTestHelper(
       performAction = {
         firstView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
             anchor(ViewAnnotationAnchor.TOP_LEFT)
@@ -165,7 +168,7 @@ class ViewAnnotationTest {
     viewAnnotationTestHelper(
       performAction = {
         firstView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
             anchor(ViewAnnotationAnchor.TOP_LEFT)
@@ -195,7 +198,7 @@ class ViewAnnotationTest {
     viewAnnotationTestHelper(
       performAction = {
         firstView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
             visible(false)
@@ -213,7 +216,7 @@ class ViewAnnotationTest {
     viewAnnotationTestHelper(
       performAction = {
         firstView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(SHIFTED_CENTER)
             anchor(ViewAnnotationAnchor.TOP_LEFT)
@@ -221,7 +224,7 @@ class ViewAnnotationTest {
           }
         )
         secondView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
             anchor(ViewAnnotationAnchor.TOP_LEFT)
@@ -249,7 +252,7 @@ class ViewAnnotationTest {
     viewAnnotationTestHelper(
       performAction = {
         firstView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(SHIFTED_CENTER)
             anchor(ViewAnnotationAnchor.TOP_LEFT)
@@ -257,7 +260,7 @@ class ViewAnnotationTest {
           }
         )
         secondView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
             anchor(ViewAnnotationAnchor.TOP_LEFT)
@@ -279,7 +282,7 @@ class ViewAnnotationTest {
     viewAnnotationTestHelper(
       performAction = {
         firstView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(SHIFTED_CENTER)
             anchor(ViewAnnotationAnchor.TOP_LEFT)
@@ -288,7 +291,7 @@ class ViewAnnotationTest {
           }
         )
         secondView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
             anchor(ViewAnnotationAnchor.TOP_LEFT)
@@ -316,7 +319,7 @@ class ViewAnnotationTest {
     viewAnnotationTestHelper(
       performAction = {
         firstView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(SHIFTED_CENTER)
             anchor(ViewAnnotationAnchor.TOP_LEFT)
@@ -324,7 +327,7 @@ class ViewAnnotationTest {
           }
         )
         secondView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
             anchor(ViewAnnotationAnchor.TOP_LEFT)
@@ -352,7 +355,7 @@ class ViewAnnotationTest {
     viewAnnotationTestHelper(
       performAction = {
         firstView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(SHIFTED_CENTER)
             anchor(ViewAnnotationAnchor.TOP_LEFT)
@@ -360,7 +363,7 @@ class ViewAnnotationTest {
           }
         )
         secondView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
             anchor(ViewAnnotationAnchor.TOP_LEFT)
@@ -382,7 +385,7 @@ class ViewAnnotationTest {
     viewAnnotationTestHelper(
       performAction = {
         firstView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(SHIFTED_CENTER)
             anchor(ViewAnnotationAnchor.TOP_LEFT)
@@ -391,7 +394,7 @@ class ViewAnnotationTest {
           }
         )
         secondView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
             anchor(ViewAnnotationAnchor.TOP_LEFT)
@@ -413,7 +416,7 @@ class ViewAnnotationTest {
     viewAnnotationTestHelper(
       performAction = {
         firstView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(SHIFTED_CENTER)
             anchor(ViewAnnotationAnchor.TOP_LEFT)
@@ -422,7 +425,7 @@ class ViewAnnotationTest {
           }
         )
         secondView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
             anchor(ViewAnnotationAnchor.TOP_LEFT)
@@ -448,7 +451,7 @@ class ViewAnnotationTest {
     viewAnnotationTestHelper(
       performAction = {
         firstView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
           }
@@ -484,7 +487,7 @@ class ViewAnnotationTest {
     viewAnnotationTestHelper(
       performAction = {
         firstView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
           }
@@ -521,14 +524,14 @@ class ViewAnnotationTest {
       additionalLatchCount = 1,
       performAction = {
         firstView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
             allowOverlap(false)
           }
         )
         secondView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(SHIFTED_CENTER)
             allowOverlap(false)
@@ -564,7 +567,7 @@ class ViewAnnotationTest {
     viewAnnotationTestHelper(
       performAction = {
         firstView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
           }
@@ -583,14 +586,14 @@ class ViewAnnotationTest {
       additionalLatchCount = 1,
       performAction = {
         firstView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
             allowOverlap(false)
           }
         )
         secondView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(SHIFTED_CENTER)
             allowOverlap(false)
@@ -621,7 +624,7 @@ class ViewAnnotationTest {
       performAction = {
         prepareStyle(mapboxMap.getStyle()!!, Visibility.VISIBLE)
         firstView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
             anchor(ViewAnnotationAnchor.BOTTOM)
@@ -643,7 +646,7 @@ class ViewAnnotationTest {
       performAction = {
         prepareStyle(mapboxMap.getStyle()!!, Visibility.NONE)
         firstView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
             anchor(ViewAnnotationAnchor.BOTTOM)
@@ -667,14 +670,14 @@ class ViewAnnotationTest {
       additionalLatchCount = 1,
       performAction = {
         firstView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(CAMERA_CENTER)
             allowOverlap(false)
           }
         )
         secondView = viewAnnotationManager.addViewAnnotation(
-          resId = R.layout.view_annotation,
+          resId = layoutResId,
           options = viewAnnotationOptions {
             geometry(SHIFTED_CENTER)
             allowOverlap(false)
@@ -720,5 +723,12 @@ class ViewAnnotationTest {
     const val CAMERA_ZOOM = 10.0
     val CAMERA_CENTER: Point = Point.fromLngLat(0.0, 0.0)
     val SHIFTED_CENTER: Point = Point.fromLngLat(CAMERA_CENTER.longitude() - 0.01, CAMERA_CENTER.latitude() - 0.01)
+
+    @JvmStatic
+    @Parameterized.Parameters
+    fun data() = listOf(
+      R.layout.view_annotation,
+      R.layout.view_annotation_wrap_content,
+    )
   }
 }

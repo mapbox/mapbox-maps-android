@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
@@ -112,11 +113,15 @@ class AnnotationWithCalloutActivity : AppCompatActivity() {
         viewAnnotationManager.updateViewAnnotation(
           viewAnnotation,
           viewAnnotationOptions {
-            width(viewAnnotationManager.getViewAnnotationOptionsByView(viewAnnotation)?.width!! + pxDelta)
-            height(viewAnnotationManager.getViewAnnotationOptionsByView(viewAnnotation)?.height!! + pxDelta)
             selected(isSelected)
           }
         )
+        (button.layoutParams as ViewGroup.MarginLayoutParams).apply {
+          bottomMargin += pxDelta
+          rightMargin += pxDelta
+          leftMargin += pxDelta
+        }
+        button.requestLayout()
       }
     }
   }
@@ -133,7 +138,7 @@ class AnnotationWithCalloutActivity : AppCompatActivity() {
   }
 
   private companion object {
-    const val SELECTED_ADD_COEF_PX = 50
+    const val SELECTED_ADD_COEF_PX = 25
     val POINT: Point = Point.fromLngLat(0.381457, 6.687337)
   }
 }

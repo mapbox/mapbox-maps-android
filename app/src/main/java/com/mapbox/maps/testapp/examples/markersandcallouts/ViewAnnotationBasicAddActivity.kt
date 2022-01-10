@@ -2,6 +2,7 @@ package com.mapbox.maps.testapp.examples.markersandcallouts
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -70,17 +71,21 @@ class ViewAnnotationBasicAddActivity : AppCompatActivity(), OnMapClickListener {
         viewAnnotationManager.updateViewAnnotation(
           viewAnnotation,
           viewAnnotationOptions {
-            width(viewAnnotationManager.getViewAnnotationOptionsByView(viewAnnotation)?.width!! + pxDelta)
-            height(viewAnnotationManager.getViewAnnotationOptionsByView(viewAnnotation)?.height!! + pxDelta)
             selected(isSelected)
           }
         )
+        (button.layoutParams as ViewGroup.MarginLayoutParams).apply {
+          bottomMargin += pxDelta
+          rightMargin += pxDelta
+          leftMargin += pxDelta
+        }
+        button.requestLayout()
       }
     }
   }
 
   private companion object {
-    const val SELECTED_ADD_COEF_PX = 50
+    const val SELECTED_ADD_COEF_PX = 25
     const val STARTUP_TEXT = "Click on a map to add a view annotation."
   }
 }
