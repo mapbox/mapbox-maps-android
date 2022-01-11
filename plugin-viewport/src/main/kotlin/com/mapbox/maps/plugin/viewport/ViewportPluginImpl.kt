@@ -12,7 +12,7 @@ import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
 import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
-import com.mapbox.maps.plugin.viewport.data.ViewportPluginOptions
+import com.mapbox.maps.plugin.viewport.data.ViewportOptions
 import com.mapbox.maps.plugin.viewport.state.FollowingViewportState
 import com.mapbox.maps.plugin.viewport.state.FollowingViewportStateImpl
 import com.mapbox.maps.plugin.viewport.state.OverviewViewportState
@@ -185,7 +185,7 @@ class ViewportPluginImpl : ViewportPlugin {
   /**
    * Options that impact the [ViewportPlugin].
    */
-  override var options: ViewportPluginOptions = ViewportPluginOptions.Builder().build()
+  override var options: ViewportOptions = ViewportOptions.Builder().build()
 
   private fun notifyStatusChanged(
     previousStatus: ViewportStatus,

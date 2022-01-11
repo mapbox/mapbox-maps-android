@@ -21,7 +21,7 @@ import com.mapbox.maps.plugin.viewport.ViewportStatus
 import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
 import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
-import com.mapbox.maps.plugin.viewport.data.ViewportPluginOptions
+import com.mapbox.maps.plugin.viewport.data.ViewportOptions
 import com.mapbox.maps.plugin.viewport.viewport
 import com.mapbox.maps.testapp.R
 
@@ -155,7 +155,7 @@ class NavigationSimulator(
         doubleTouchToZoomOutEnabled = true
       }
       viewportPlugin.options =
-        ViewportPluginOptions.Builder().transitionsToIdleUponUserInteraction(true).build()
+        ViewportOptions.Builder().transitionsToIdleUponUserInteraction(true).build()
       addOnMapClickListener(onMapClickListener)
     }
     gesturesEnabled = true
@@ -176,7 +176,7 @@ class NavigationSimulator(
     if (gesturesEnabled) {
       mapView.gestures.apply {
         viewportPlugin.options =
-          ViewportPluginOptions.Builder().transitionsToIdleUponUserInteraction(false).build()
+          ViewportOptions.Builder().transitionsToIdleUponUserInteraction(false).build()
         removeOnMapClickListener(onMapClickListener)
       }
       mapView.gestures.updateSettings {

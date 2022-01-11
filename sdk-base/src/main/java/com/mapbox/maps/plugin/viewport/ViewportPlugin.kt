@@ -5,7 +5,7 @@ import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
 import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
-import com.mapbox.maps.plugin.viewport.data.ViewportPluginOptions
+import com.mapbox.maps.plugin.viewport.data.ViewportOptions
 import com.mapbox.maps.plugin.viewport.state.FollowingViewportState
 import com.mapbox.maps.plugin.viewport.state.OverviewViewportState
 import com.mapbox.maps.plugin.viewport.state.ViewportState
@@ -54,7 +54,7 @@ interface ViewportPlugin : MapPlugin {
   /**
    * Options that impact the [ViewportPlugin].
    */
-  var options: ViewportPluginOptions
+  var options: ViewportOptions
 
   // Transitions
 
