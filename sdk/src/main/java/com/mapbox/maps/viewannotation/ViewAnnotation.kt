@@ -10,6 +10,10 @@ internal data class ViewAnnotation(
    */
   val view: View,
   /**
+   * Attach state listener needed to control global layout listener lifecycle.
+   */
+  var attachStateListener: View.OnAttachStateChangeListener? = null,
+  /**
    * We handle visibility automatically in the manager
    * if user did not specify [ViewAnnotationOptions.visible]  explicitly  during add / update operation
    */
