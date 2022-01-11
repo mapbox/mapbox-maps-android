@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import androidx.core.animation.doOnEnd
+import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.plugin.animation.Cancelable
@@ -114,11 +115,21 @@ class FollowingViewportStateImpl internal constructor(
    * @return a handle that cancels current observation.
    */
   override fun observeDataSource(viewportStateDataObserver: ViewportStateDataObserver): Cancelable {
+    checkLocationComponentEnablement()
     addIndicatorListenerIfNeeded()
     dataSourceUpdateObservers.add(viewportStateDataObserver)
     return Cancelable {
       dataSourceUpdateObservers.remove(viewportStateDataObserver)
       removeIndicatorListenerIfNeeded()
+    }
+  }
+
+  private fun checkLocationComponentEnablement() {
+    if (!locationComponent.enabled) {
+      Logger.w(
+        TAG,
+        "Location component is required to be enabled to use FollowingViewportState, otherwise there would be no ViewportState or ViewportTransition updates."
+      )
     }
   }
 
@@ -128,6 +139,7 @@ class FollowingViewportStateImpl internal constructor(
    * @return a handle that cancels the camera updates.
    */
   override fun startUpdatingCamera(): Cancelable {
+    checkLocationComponentEnablement()
     addIndicatorListenerIfNeeded()
     updateFrame(
       evaluateViewportData(), instant = false
@@ -218,5 +230,9 @@ class FollowingViewportStateImpl internal constructor(
         },
       instant
     )
+  }
+
+  private companion object {
+    private const val TAG = "FollowingViewportStateImpl"
   }
 }
