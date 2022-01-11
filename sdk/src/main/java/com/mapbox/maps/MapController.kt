@@ -41,7 +41,7 @@ import com.mapbox.maps.plugin.scalebar.ScaleBarPluginImpl
 import com.mapbox.maps.plugin.viewport.ViewportPluginImpl
 import com.mapbox.maps.renderer.MapboxRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
-import com.mapbox.maps.renderer.Widget
+import com.mapbox.maps.renderer.widget.Widget
 import java.lang.ref.WeakReference
 
 internal class MapController : MapPluginProviderDelegate, MapControllable {

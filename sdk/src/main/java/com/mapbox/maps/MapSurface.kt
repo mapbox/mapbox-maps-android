@@ -8,7 +8,7 @@ import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.renderer.MapboxSurfaceRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
-import com.mapbox.maps.renderer.Widget
+import com.mapbox.maps.renderer.widget.Widget
 
 /**
  * A [MapSurface] provides an embeddable map interface.
@@ -186,7 +186,6 @@ class MapSurface @JvmOverloads constructor(
   override fun addWidget(widget: Widget) {
     mapController.addWidget(widget)
   }
-
 
   /**
    * Get the plugin instance.

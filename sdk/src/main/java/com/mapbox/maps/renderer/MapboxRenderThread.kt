@@ -1,5 +1,6 @@
 package com.mapbox.maps.renderer
 
+import android.opengl.GLES20
 import android.os.SystemClock
 import android.view.Choreographer
 import android.view.Surface
@@ -9,9 +10,10 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import com.mapbox.common.Logger
 import com.mapbox.maps.renderer.egl.EGLCore
+import com.mapbox.maps.renderer.gl.TextureRenderer
+import com.mapbox.maps.renderer.widget.Widget
 import java.util.LinkedList
 import java.util.concurrent.ConcurrentLinkedQueue
-import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.locks.ReentrantLock
 import javax.microedition.khronos.egl.EGL10
 import javax.microedition.khronos.egl.EGL11
@@ -40,13 +42,14 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val nonRenderEventQueue = ConcurrentLinkedQueue<RenderEvent>()
 
-  private val widgetList = CopyOnWriteArrayList<Widget>()
-
   private var surface: Surface? = null
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var eglSurface: EGLSurface
   private var width: Int = 0
   private var height: Int = 0
+
+  private val widgetRenderer: MapboxWidgetRenderer
+  private val widgetTextureRenderer: TextureRenderer
 
   @Volatile
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -65,6 +68,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
    * We track moment when native renderer is prepared.
    */
   private var renderCreated = false
+  private var widgetRenderCreated = false
 
   /**
    * We track moment when EGL context is created and associated with current Android surface.
@@ -87,26 +91,33 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   constructor(
     mapboxRenderer: MapboxRenderer,
+    mapboxWidgetRenderer: MapboxWidgetRenderer,
     translucentSurface: Boolean,
     antialiasingSampleCount: Int,
   ) {
     this.translucentSurface = translucentSurface
     this.mapboxRenderer = mapboxRenderer
+    this.widgetRenderer = mapboxWidgetRenderer
     this.eglCore = EGLCore(translucentSurface, antialiasingSampleCount)
     this.eglSurface = eglCore.eglNoSurface
+    this.widgetTextureRenderer = TextureRenderer()
     renderHandlerThread = RenderHandlerThread().apply { start() }
   }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   constructor(
     mapboxRenderer: MapboxRenderer,
+    mapboxWidgetRenderer: MapboxWidgetRenderer,
     handlerThread: RenderHandlerThread,
-    eglCore: EGLCore
+    eglCore: EGLCore,
+    widgetTextureRenderer: TextureRenderer,
   ) {
     this.translucentSurface = false
     this.mapboxRenderer = mapboxRenderer
+    this.widgetRenderer = mapboxWidgetRenderer
     this.renderHandlerThread = handlerThread
     this.eglCore = eglCore
+    this.widgetTextureRenderer = widgetTextureRenderer
     this.eglSurface = eglCore.eglNoSurface
   }
 
@@ -143,6 +154,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
                   height = height
                 )
                 renderCreated = true
+              }
+              if (!widgetRenderCreated) {
+                widgetRenderer.onSharedContext(eglCore.eglContext)
+                widgetRenderCreated = true
               }
               return true
             }
@@ -204,11 +219,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   private fun checkSurfaceSizeChanged() {
     if (sizeChanged) {
-      mapboxRenderer.onSurfaceChanged(
-        width = width,
-        height = height
-      )
-      widgetList.forEach { it.onSizeChanged(width, height) }
+      mapboxRenderer.onSurfaceChanged(width = width, height = height)
+      widgetRenderer.onSurfaceChanged(width = width, height = height)
       sizeChanged = false
     }
   }
@@ -223,15 +235,23 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       postPrepareRenderFrame()
       return
     }
+
+    if (widgetRenderer.needRender) {
+      eglCore.makeNothingCurrent()
+      widgetRenderer.updateTexture()
+      eglCore.makeCurrent(eglSurface)
+    }
+
     mapboxRenderer.render()
+
+    if (widgetRenderer.getTextureId() != 0) {
+      widgetTextureRenderer.render(widgetRenderer.getTextureId())
+    }
+
     // assuming render event queue holds user's runnables with OpenGL ES commands
     // it makes sense to execute them after drawing a map but before swapping buffers
     // **note** this queue also holds snapshot tasks
     drainQueue(renderEventQueue)
-    // render all the widgets
-    widgetList.forEach {
-      it.render()
-    }
     when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
       EGL10.EGL_SUCCESS -> {}
       EGL11.EGL_CONTEXT_LOST -> {
@@ -267,9 +287,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun releaseEglSurface() {
+    widgetTextureRenderer.release()
     eglCore.releaseSurface(eglSurface)
     eglContextCreated = false
     eglSurface = eglCore.eglNoSurface
+    widgetRenderer.release()
   }
 
   private fun releaseAll() {
@@ -279,6 +301,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     renderCreated = false
     releaseEgl()
     surface?.release()
+    widgetRenderer.release()
   }
 
   private fun prepareRenderFrame(creatingSurface: Boolean = false) {
@@ -345,8 +368,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   fun addWidget(widget: Widget) {
-    widget.onSizeChanged(this.width, this.height)
-    widgetList.add(widget)
+    widgetRenderer.addWidget(widget)
   }
 
   @WorkerThread
@@ -360,7 +382,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
     this.width = width
     this.height = height
-    widgetList.forEach { it.onSizeChanged(width, height) }
+    widgetRenderer.onSurfaceChanged(width = width, height = height)
     renderEventQueue.removeAll { it.eventType == EventType.SDK }
     nonRenderEventQueue.removeAll { it.eventType == EventType.SDK }
     // we do not want to clear render events scheduled by user
@@ -499,6 +521,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   companion object {
     private const val TAG = "Mbgl-RenderThread"
+
     private val ONE_SECOND_NS = 10.0.pow(9.0).toLong()
     private val ONE_MILLISECOND_NS = 10.0.pow(6.0).toLong()
 

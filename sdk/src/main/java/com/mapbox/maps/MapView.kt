@@ -19,7 +19,7 @@ import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.renderer.MapboxSurfaceHolderRenderer
 import com.mapbox.maps.renderer.MapboxTextureViewRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
-import com.mapbox.maps.renderer.Widget
+import com.mapbox.maps.renderer.widget.Widget
 import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 

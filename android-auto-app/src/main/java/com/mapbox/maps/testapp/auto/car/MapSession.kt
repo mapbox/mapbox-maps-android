@@ -4,8 +4,6 @@ import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.content.res.Configuration
-import android.graphics.BitmapFactory
-import android.util.Log
 import androidx.car.app.*
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapSurface
@@ -19,7 +17,6 @@ import com.mapbox.maps.extension.style.sources.generated.rasterDemSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.extension.style.terrain.generated.terrain
 import com.mapbox.maps.plugin.locationcomponent.location
-import com.mapbox.maps.renderer.Widget
 import com.mapbox.maps.testapp.auto.R
 
 /**
@@ -28,15 +25,15 @@ import com.mapbox.maps.testapp.auto.R
 class MapSession : Session() {
   private lateinit var mapSurface: MapSurface
   private val carCameraController = CarCameraController()
-  private val widgetList = mutableListOf<Widget>()
 
   override fun onCreateScreen(intent: Intent): Screen {
     val mapScreen = MapScreen(carContext)
-    widgetList.add(LogoWidget(carContext))
-    widgetList.add(CompassWidget(carContext))
     initMapSurface(
       scrollListener = carCameraController,
     ) { surface ->
+      val logo = LogoWidget(carContext)
+      val compass = CompassWidget(carContext)
+
       mapSurface = surface
       carCameraController.init(
         mapSurface,
@@ -50,14 +47,13 @@ class MapSession : Session() {
       mapScreen.setMapCameraController(carCameraController)
       loadStyle(surface)
       initLocationComponent(surface)
-      widgetList.forEach { surface.addWidget(it) }
+
+      surface.addWidget(logo)
+      surface.addWidget(compass)
+
       surface.getMapboxMap().apply {
         addOnCameraChangeListener {
-          widgetList.filterIsInstance<CompassWidget>().forEach {
-            it.rotate(
-              this.cameraState.bearing.toFloat().also { Log.e("testtest", it.toString()) }
-            )
-          }
+          compass.rotate(this.cameraState.bearing.toFloat())
         }
       }
     }

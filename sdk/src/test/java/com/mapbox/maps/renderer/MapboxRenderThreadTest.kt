@@ -4,6 +4,9 @@ import android.view.Surface
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.renderer.MapboxRenderThread.Companion.RETRY_DELAY_MS
 import com.mapbox.maps.renderer.egl.EGLCore
+import com.mapbox.maps.renderer.gl.TextureRenderer
+import com.mapbox.verifyNo
+import com.mapbox.verifyOnce
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -18,6 +21,7 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 import javax.microedition.khronos.egl.EGL10
+import javax.microedition.khronos.egl.EGLSurface
 
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowLogger::class])
@@ -26,9 +30,11 @@ class MapboxRenderThreadTest {
 
   private lateinit var mapboxRenderThread: MapboxRenderThread
   private lateinit var mapboxRenderer: MapboxRenderer
+  private lateinit var mapboxWidgetRenderer: MapboxWidgetRenderer
   private lateinit var eglCore: EGLCore
   private lateinit var renderHandlerThread: RenderHandlerThread
-  private val waitTime = 200L
+  private lateinit var textureRenderer: TextureRenderer
+  private val waitTime = 300L
 
   private fun mockValidSurface(): Surface {
     val surface = mockk<Surface>()
@@ -53,11 +59,18 @@ class MapboxRenderThreadTest {
     mapboxRenderer = mockk(relaxUnitFun = true)
     eglCore = mockk(relaxUnitFun = true)
     every { eglCore.eglNoSurface } returns mockk()
+    every { eglCore.swapBuffers(any()) } returns EGL10.EGL_SUCCESS
+    mapboxWidgetRenderer = mockk(relaxUnitFun = true)
+    every { mapboxWidgetRenderer.getTextureId()  } returns 0
+    every { mapboxWidgetRenderer.needRender  } returns false
     renderHandlerThread = RenderHandlerThread()
+    textureRenderer = mockk(relaxed = true)
     mapboxRenderThread = MapboxRenderThread(
       mapboxRenderer,
+      mapboxWidgetRenderer,
       renderHandlerThread,
-      eglCore
+      eglCore,
+      textureRenderer,
     ).apply {
       renderHandlerThread.start()
     }
@@ -93,7 +106,7 @@ class MapboxRenderThreadTest {
     every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
     mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
     latch.await(waitTime, TimeUnit.MILLISECONDS)
-    verify(exactly = 0) {
+    verifyNo {
       mapboxRenderer.createRenderer()
       mapboxRenderer.onSurfaceChanged(1, 1)
     }
@@ -179,7 +192,7 @@ class MapboxRenderThreadTest {
       eglCore.swapBuffers(any())
     }
     // make EGL context current only once when creating surface
-    verify(exactly = 1) {
+    verifyOnce {
       eglCore.makeNothingCurrent()
     }
   }
@@ -475,8 +488,10 @@ class MapboxRenderThreadTest {
     mapboxRenderer = mockk<MapboxSurfaceRenderer>(relaxUnitFun = true)
     mapboxRenderThread = MapboxRenderThread(
       mapboxRenderer,
+      mapboxWidgetRenderer,
       renderHandlerThread,
-      eglCore
+      eglCore,
+      textureRenderer,
     ).apply {
       renderHandlerThread.start()
     }
@@ -497,8 +512,10 @@ class MapboxRenderThreadTest {
     mapboxRenderer = mockk<MapboxTextureViewRenderer>(relaxUnitFun = true)
     mapboxRenderThread = MapboxRenderThread(
       mapboxRenderer,
+      mapboxWidgetRenderer,
       renderHandlerThread,
-      eglCore
+      eglCore,
+      textureRenderer,
     ).apply {
       renderHandlerThread.start()
     }
@@ -526,6 +543,109 @@ class MapboxRenderThreadTest {
     // 1 swap when creating surface + 1 for request render call
     verify(exactly = 2) {
       eglCore.swapBuffers(any())
+    }
+  }
+
+  @Test
+  fun onDrawDoesNotRenderWidgets() {
+    mockValidSurface()
+    every { mapboxWidgetRenderer.needRender  } returns false
+    every { mapboxWidgetRenderer.getTextureId()  } returns 0
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
+
+    verifyNo {
+      mapboxWidgetRenderer.updateTexture()
+    }
+    verifyNo {
+      textureRenderer.render(any())
+    }
+  }
+
+  @Test
+  fun onDrawRendersWidgets() {
+    mockValidSurface()
+    val textureId = 1
+    every { mapboxWidgetRenderer.needRender  } returns true
+    every { mapboxWidgetRenderer.getTextureId()  } returns textureId
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
+
+    verify(exactly = 2) {
+      mapboxWidgetRenderer.updateTexture()
+    }
+    verify(exactly = 2) {
+      textureRenderer.render(textureId)
+    }
+  }
+
+  @Test
+  fun onSurfaceCreatedInitsWidgetRender() {
+    val latch = CountDownLatch(1)
+    every { mapboxRenderer.createRenderer() } answers { latch.countDown() }
+    mockValidSurface()
+    if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
+      throw TimeoutException()
+    }
+    verifyOnce {
+      mapboxWidgetRenderer.onSharedContext(eglCore.eglContext)
+    }
+  }
+
+  @Test
+  fun onEglCoreFailDoesntInitWidgetRender() {
+    val surface = mockk<Surface>()
+    mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
+    val latch = CountDownLatch(1)
+    latch.await(waitTime, TimeUnit.MILLISECONDS)
+    verifyNo {
+      mapboxWidgetRenderer.onSharedContext(any())
+    }
+  }
+
+  @Test
+  fun onInvalidSurfaceDoesntInitWidgetRender() {
+    val surface = mockk<Surface>()
+    every { surface.isValid } returns false
+    mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
+    val latch = CountDownLatch(1)
+    latch.await(waitTime, TimeUnit.MILLISECONDS)
+    verifyNo {
+      mapboxWidgetRenderer.onSharedContext(any())
+    }
+  }
+
+  @Test
+  fun onInvalidEglWindowSurfaceDoesntInitWidgetRender() {
+    val latch = CountDownLatch(1)
+    val surface = mockk<Surface>()
+    val noSurface = mockk<EGLSurface>()
+
+    every { surface.isValid } returns true
+    every { eglCore.createWindowSurface(any()) } returns noSurface
+    every { eglCore.eglNoSurface } returns noSurface
+
+    mapboxRenderThread = MapboxRenderThread(
+      mapboxRenderer,
+      mapboxWidgetRenderer,
+      renderHandlerThread,
+      eglCore,
+      textureRenderer,
+    ).apply {
+      renderHandlerThread.start()
+    }
+
+    mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
+
+    latch.await(waitTime, TimeUnit.MILLISECONDS)
+
+    verifyNo {
+      mapboxWidgetRenderer.onSharedContext(any())
     }
   }
 }

@@ -3,7 +3,7 @@ package com.mapbox.maps
 import android.graphics.Bitmap
 import android.view.MotionEvent
 import com.mapbox.maps.renderer.OnFpsChangedListener
-import com.mapbox.maps.renderer.Widget
+import com.mapbox.maps.renderer.widget.Widget
 
 /**
  * MapControllable interface is the gateway for public API to talk to the internal map controller.

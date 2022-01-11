@@ -97,5 +97,4 @@ class CarCameraController : OnIndicatorPositionChangedListener, OnIndicatorBeari
     private const val INITIAL_PITCH = 75.0
     private const val TAG = "CarCameraController"
   }
-
 }
