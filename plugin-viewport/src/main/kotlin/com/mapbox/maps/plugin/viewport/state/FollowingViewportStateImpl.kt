@@ -128,7 +128,7 @@ class FollowingViewportStateImpl internal constructor(
     if (!locationComponent.enabled) {
       Logger.w(
         TAG,
-        "Location component is required to be enabled to use FollowingViewportState, otherwise there would be no ViewportState or ViewportTransition updates."
+        "Location component is required to be enabled to use FollowingViewportState, otherwise there would be no FollowingViewportState updates or ViewportTransition updates towards the FollowingViewportState."
       )
     }
   }
