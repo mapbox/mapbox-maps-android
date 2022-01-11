@@ -48,8 +48,8 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
   private val followingViewportState: FollowingViewportState by lazy {
     mapView.viewport.makeFollowingViewportState(
       FollowingViewportStateOptions.Builder()
-        .bearingOptions(FollowingViewportStateBearing.Constant(0.0))
-        .frameTransitionMaxDurationMs(500)
+        .bearing(FollowingViewportStateBearing.Constant(0.0))
+        .frameAnimationDurationMs(500)
         .padding(EdgeInsets(200.0 * resources.displayMetrics.density, 0.0, 0.0, 0.0))
         .build()
     )
@@ -130,7 +130,7 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
 
         override fun onShove(detector: ShoveGestureDetector) {
           followingViewportState.options = followingViewportState.options.toBuilder()
-            .defaultPitch(followingViewportState.options.defaultPitch - PITCH_FACTOR * detector.deltaPixelSinceLast)
+            .pitch(followingViewportState.options.pitch - PITCH_FACTOR * detector.deltaPixelSinceLast)
             .build()
         }
 
@@ -148,7 +148,7 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
       override fun onScale(detector: StandardScaleGestureDetector) {
         val zoomBy = ln(detector.scaleFactor.toDouble()) / ln(PI / 2) * SCALE_FACTOR
         followingViewportState.options = followingViewportState.options.toBuilder()
-          .defaultZoom(followingViewportState.options.defaultZoom + zoomBy).build()
+          .zoom(followingViewportState.options.zoom + zoomBy).build()
       }
 
       override fun onScaleEnd(detector: StandardScaleGestureDetector) {

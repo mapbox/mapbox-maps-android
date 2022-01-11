@@ -42,7 +42,7 @@ class FollowingViewportStateImpl internal constructor(
   }
 
   private val indicatorBearingChangedListener = OnIndicatorBearingChangedListener { bearing ->
-    if (options.bearingOptions == FollowingViewportStateBearing.SyncWithLocationPuck) {
+    if (options.bearing == FollowingViewportStateBearing.SyncWithLocationPuck) {
       lastBearing = bearing
       notifyLatestViewportData()
     }
@@ -65,15 +65,15 @@ class FollowingViewportStateImpl internal constructor(
     return CameraOptions.Builder()
       .center(lastLocation)
       .bearing(
-        with(options.bearingOptions) {
+        with(options.bearing) {
           when (this) {
             is FollowingViewportStateBearing.Constant -> bearing
             else -> lastBearing
           }
         }
       )
-      .zoom(options.defaultZoom)
-      .pitch(options.defaultPitch)
+      .zoom(options.zoom)
+      .pitch(options.pitch)
       .padding(options.padding)
       .build()
   }
@@ -189,7 +189,7 @@ class FollowingViewportStateImpl internal constructor(
     onComplete: ((isFinished: Boolean) -> Unit)? = null
   ) {
     startAnimation(
-      transitionFactory.transitionLinear(cameraOptions, options.frameTransitionMaxDurationMs)
+      transitionFactory.transitionLinear(cameraOptions, options.frameAnimationDurationMs)
         .apply {
           addListener(
             object : Animator.AnimatorListener {

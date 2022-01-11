@@ -2,7 +2,7 @@ package com.mapbox.maps.plugin.viewport.data
 
 import com.mapbox.geojson.Geometry
 import com.mapbox.maps.EdgeInsets
-import com.mapbox.maps.plugin.viewport.DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS
+import com.mapbox.maps.plugin.viewport.DEFAULT_FRAME_ANIMATION_DURATION_MS
 import java.lang.IllegalArgumentException
 import java.util.*
 
@@ -27,17 +27,17 @@ class OverviewViewportStateOptions private constructor(
    */
   val pitch: Double,
   /**
-   * The maximum duration between frames in milliseconds.
+   * The duration between frames in milliseconds.
    *
-   * Defaults to [DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS] milliseconds
+   * Defaults to [DEFAULT_FRAME_ANIMATION_DURATION_MS] milliseconds
    */
-  val frameTransitionMaxDurationMs: Long
+  val frameAnimationDurationMs: Long
 ) {
   /**
    * Returns a builder that created the [OverviewViewportStateOptions]
    */
   fun toBuilder() = Builder().geometry(geometry).padding(padding).bearing(bearing).pitch(pitch)
-    .frameTransitionMaxDurationMs(frameTransitionMaxDurationMs)
+    .frameAnimationDurationMs(frameAnimationDurationMs)
 
   /**
    * Indicates whether some other object is "equal to" this one.
@@ -47,19 +47,19 @@ class OverviewViewportStateOptions private constructor(
     padding == other.padding &&
     bearing.compareTo(other.bearing) == 0 &&
     pitch.compareTo(other.pitch) == 0 &&
-    frameTransitionMaxDurationMs == other.frameTransitionMaxDurationMs
+    frameAnimationDurationMs == other.frameAnimationDurationMs
 
   /**
    * Returns a hash code value for the object.
    */
   override fun hashCode() =
-    Objects.hash(geometry, padding, bearing, pitch, frameTransitionMaxDurationMs)
+    Objects.hash(geometry, padding, bearing, pitch, frameAnimationDurationMs)
 
   /**
    * Returns a String for the object.
    */
   override fun toString() =
-    "OverviewViewportStateOptions(geometry=$geometry, padding=$padding, bearing=$bearing, pitch=$pitch, frameTransitionMaxDurationMs=$frameTransitionMaxDurationMs)"
+    "OverviewViewportStateOptions(geometry=$geometry, padding=$padding, bearing=$bearing, pitch=$pitch, frameAnimationDurationMs=$frameAnimationDurationMs)"
 
   /**
    * Builder for [OverviewViewportStateOptions]
@@ -69,7 +69,7 @@ class OverviewViewportStateOptions private constructor(
     private var padding: EdgeInsets = EdgeInsets(0.0, 0.0, 0.0, 0.0)
     private var bearing: Double = 0.0
     private var pitch: Double = 0.0
-    private var frameTransitionMaxDurationMs: Long = DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS
+    private var frameAnimationDurationMs: Long = DEFAULT_FRAME_ANIMATION_DURATION_MS
 
     /**
      * The geometry that the OverviewState should cover.
@@ -100,12 +100,12 @@ class OverviewViewportStateOptions private constructor(
     }
 
     /**
-     * The maximum duration between frames in milliseconds.
+     * The duration between frames in milliseconds.
      *
-     * Defaults to [DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS] milliseconds
+     * Defaults to [DEFAULT_FRAME_ANIMATION_DURATION_MS] milliseconds
      */
-    fun frameTransitionMaxDurationMs(duration: Long) = apply {
-      this.frameTransitionMaxDurationMs = duration
+    fun frameAnimationDurationMs(duration: Long) = apply {
+      this.frameAnimationDurationMs = duration
     }
 
     /**
@@ -117,7 +117,7 @@ class OverviewViewportStateOptions private constructor(
         padding,
         bearing,
         pitch,
-        frameTransitionMaxDurationMs
+        frameAnimationDurationMs
       )
     }
       ?: throw IllegalArgumentException("Geometry is required for OverviewViewportStateOptions and shouldn't be null")

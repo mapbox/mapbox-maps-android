@@ -1,7 +1,7 @@
 package com.mapbox.maps.plugin.viewport.data
 
 import com.mapbox.maps.EdgeInsets
-import com.mapbox.maps.plugin.viewport.DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS
+import com.mapbox.maps.plugin.viewport.DEFAULT_FRAME_ANIMATION_DURATION_MS
 import java.util.Objects
 
 /**
@@ -13,13 +13,13 @@ class FollowingViewportStateOptions private constructor(
    *
    * Defaults to `16.35`.
    */
-  val defaultZoom: Double,
+  val zoom: Double,
   /**
    * The default pitch that will be generated for following camera frames.
    *
    * Defaults to `45.0` degrees.
    */
-  val defaultPitch: Double,
+  val pitch: Double,
   /**
    * The edge padding of the map.
    */
@@ -27,53 +27,53 @@ class FollowingViewportStateOptions private constructor(
   /**
    * The maximum duration between frames in milliseconds.
    *
-   * Defaults to [DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS] milliseconds
+   * Defaults to [DEFAULT_FRAME_ANIMATION_DURATION_MS] milliseconds
    */
-  val frameTransitionMaxDurationMs: Long,
+  val frameAnimationDurationMs: Long,
   /**
    * The camera bearing configuration of the [FollowingViewportState].
    *
    * Defaults to [FollowingViewportStateBearing.SyncWithLocationPuck]
    */
-  val bearingOptions: FollowingViewportStateBearing
+  val bearing: FollowingViewportStateBearing
 ) {
   /**
    * Returns a builder that created the [FollowingViewportStateOptions]
    */
-  fun toBuilder() = Builder().defaultZoom(defaultZoom).defaultPitch(defaultPitch).padding(padding)
-    .frameTransitionMaxDurationMs(frameTransitionMaxDurationMs).bearingOptions(bearingOptions)
+  fun toBuilder() = Builder().zoom(zoom).pitch(pitch).padding(padding)
+    .frameAnimationDurationMs(frameAnimationDurationMs).bearing(bearing)
 
   /**
    * Indicates whether some other object is "equal to" this one.
    */
   override fun equals(other: Any?) = other is FollowingViewportStateOptions &&
-    defaultZoom.compareTo(other.defaultZoom) == 0 &&
-    defaultPitch.compareTo(other.defaultPitch) == 0 &&
+    zoom.compareTo(other.zoom) == 0 &&
+    pitch.compareTo(other.pitch) == 0 &&
     padding == other.padding &&
-    frameTransitionMaxDurationMs == other.frameTransitionMaxDurationMs &&
-    bearingOptions == other.bearingOptions
+    frameAnimationDurationMs == other.frameAnimationDurationMs &&
+    bearing == other.bearing
 
   /**
    * Returns a hash code value for the object.
    */
   override fun hashCode() =
-    Objects.hash(defaultZoom, defaultPitch, padding, frameTransitionMaxDurationMs, bearingOptions)
+    Objects.hash(zoom, pitch, padding, frameAnimationDurationMs, bearing)
 
   /**
    * Returns a String for the object.
    */
   override fun toString() =
-    "FollowingViewportStateOptions(defaultZoom=$defaultZoom, defaultPitch=$defaultPitch, padding=$padding, frameTransitionMaxDurationMs=$frameTransitionMaxDurationMs, bearingOptions=$bearingOptions)"
+    "FollowingViewportStateOptions(zoom=$zoom, pitch=$pitch, padding=$padding, frameAnimationDurationMs=$frameAnimationDurationMs, bearing=$bearing)"
 
   /**
    * Builder for [FollowingViewportStateOptions]
    */
   class Builder {
-    private var defaultZoom: Double = 16.35
-    private var defaultPitch: Double = 45.0
+    private var zoom: Double = 16.35
+    private var pitch: Double = 45.0
     private var padding: EdgeInsets = EdgeInsets(0.0, 0.0, 0.0, 0.0)
-    private var frameTransitionMaxDuration: Long = DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS
-    private var bearingOptions: FollowingViewportStateBearing =
+    private var frameAnimationDurationMs: Long = DEFAULT_FRAME_ANIMATION_DURATION_MS
+    private var bearing: FollowingViewportStateBearing =
       FollowingViewportStateBearing.SyncWithLocationPuck
 
     /**
@@ -81,8 +81,8 @@ class FollowingViewportStateOptions private constructor(
      *
      * Defaults to `16.35`.
      */
-    fun defaultZoom(zoom: Double) = apply {
-      this.defaultZoom = zoom
+    fun zoom(zoom: Double) = apply {
+      this.zoom = zoom
     }
 
     /**
@@ -90,8 +90,8 @@ class FollowingViewportStateOptions private constructor(
      *
      * Defaults to `45.0` degrees.
      */
-    fun defaultPitch(pitch: Double) = apply {
-      this.defaultPitch = pitch
+    fun pitch(pitch: Double) = apply {
+      this.pitch = pitch
     }
 
     /**
@@ -104,10 +104,10 @@ class FollowingViewportStateOptions private constructor(
     /**
      * The maximum duration between frames in milliseconds.
      *
-     * Defaults to [DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS] milliseconds
+     * Defaults to [DEFAULT_FRAME_ANIMATION_DURATION_MS] milliseconds
      */
-    fun frameTransitionMaxDurationMs(duration: Long) = apply {
-      this.frameTransitionMaxDuration = duration
+    fun frameAnimationDurationMs(duration: Long) = apply {
+      this.frameAnimationDurationMs = duration
     }
 
     /**
@@ -115,8 +115,8 @@ class FollowingViewportStateOptions private constructor(
      *
      * Defaults to [FollowingViewportStateBearing.SyncWithLocationPuck]
      */
-    fun bearingOptions(options: FollowingViewportStateBearing) = apply {
-      this.bearingOptions = options
+    fun bearing(options: FollowingViewportStateBearing) = apply {
+      this.bearing = options
     }
 
     /**
@@ -124,11 +124,11 @@ class FollowingViewportStateOptions private constructor(
      */
     fun build() =
       FollowingViewportStateOptions(
-        defaultZoom,
-        defaultPitch,
+        zoom,
+        pitch,
         padding,
-        frameTransitionMaxDuration,
-        bearingOptions
+        frameAnimationDurationMs,
+        bearing
       )
   }
 }

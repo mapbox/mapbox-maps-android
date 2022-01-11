@@ -152,7 +152,7 @@ internal class MapboxViewportTransitionFactory(
 
   fun transitionLinear(
     cameraOptions: CameraOptions,
-    maxTransitionDuration: Long
+    transitionDurationMs: Long
   ): AnimatorSet {
     val animators = mutableListOf<Animator>()
     val currentMapCameraState = cameraManager.cameraState
@@ -160,7 +160,7 @@ internal class MapboxViewportTransitionFactory(
     cameraOptions.center?.let { center ->
       animators += createCenterAnimator(
         center = center,
-        duration = LINEAR_ANIMATION_DURATION_MS,
+        duration = transitionDurationMs,
         interpolator = LINEAR_INTERPOLATOR
       )
     }
@@ -168,7 +168,7 @@ internal class MapboxViewportTransitionFactory(
     cameraOptions.zoom?.let { zoom ->
       animators += createZoomAnimator(
         zoom = zoom,
-        duration = LINEAR_ANIMATION_DURATION_MS,
+        duration = transitionDurationMs,
         interpolator = LINEAR_INTERPOLATOR
       )
     }
@@ -187,7 +187,7 @@ internal class MapboxViewportTransitionFactory(
     cameraOptions.pitch?.let { pitch ->
       animators += createPitchAnimator(
         pitch = pitch,
-        duration = LINEAR_ANIMATION_DURATION_MS,
+        duration = transitionDurationMs,
         interpolator = LINEAR_INTERPOLATOR
       )
     }
@@ -195,12 +195,12 @@ internal class MapboxViewportTransitionFactory(
     cameraOptions.padding?.let { padding ->
       animators += createPaddingAnimator(
         padding = padding,
-        duration = LINEAR_ANIMATION_DURATION_MS,
+        duration = transitionDurationMs,
         interpolator = LINEAR_INTERPOLATOR
       )
     }
 
-    return createAnimatorSet(animators).constrainDurationTo(maxTransitionDuration)
+    return createAnimatorSet(animators)
   }
 
   private fun createCenterAnimator(
