@@ -54,27 +54,6 @@ interface ViewportPlugin : MapPlugin {
    */
   var options: ViewportPluginOptions
 
-  // States
-
-  /**
-   * Returns list of registered states.
-   */
-  val states: Set<ViewportState>
-
-  /**
-   * Add a viewport state to the viewport plugin, which could be reused later with the state id.
-   *
-   * @param state the view port state to be added.
-   */
-  fun addState(state: ViewportState)
-
-  /**
-   * Remove a viewport state from the viewport plugin, and it could not be reused later with the state id.
-
-   * @param state the view port state to be removed.
-   */
-  fun removeState(state: ViewportState)
-
   // Transitions
 
   /**

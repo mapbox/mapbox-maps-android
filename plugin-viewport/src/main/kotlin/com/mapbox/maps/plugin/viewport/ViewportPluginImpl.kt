@@ -39,7 +39,6 @@ import java.util.concurrent.CopyOnWriteArraySet
 @MapboxExperimental
 class ViewportPluginImpl : ViewportPlugin {
   private val registeredStatusObservers = CopyOnWriteArraySet<ViewportStatusObserver>()
-  private val internalStates = CopyOnWriteArraySet<ViewportState>()
   private var currentCancelable: Cancelable? = null
     @Synchronized set
     @Synchronized get
@@ -96,12 +95,6 @@ class ViewportPluginImpl : ViewportPlugin {
   }
 
   /**
-   * Returns list of registered states.
-   */
-  override val states: Set<ViewportState>
-    get() = internalStates
-
-  /**
    * Returns current [ViewportStatus].
    *
    * If current status is IDLE, returns ViewportStatus.State(null).
@@ -148,10 +141,6 @@ class ViewportPluginImpl : ViewportPlugin {
     val fromState = status.getCurrentOrTargetState()
     currentCancelable?.cancel()
     currentCancelable = null
-    // implicit adding of states upon transitioning to a state that hasn't been added yet
-    if (!states.contains(targetState)) {
-      internalStates.add(targetState)
-    }
 
     // get the transition (or default) for the from and to state
     val transition = getTransition(fromState, targetState) ?: defaultTransition
@@ -210,27 +199,6 @@ class ViewportPluginImpl : ViewportPlugin {
         reason
       )
     }
-  }
-
-  /**
-   * Add a viewport state to the viewport plugin, which could be reused later with the state id.
-   *
-   * @param state the view port state to be added.
-   */
-  override fun addState(state: ViewportState) {
-    internalStates.add(state)
-  }
-
-  /**
-   * Remove a viewport state from the viewport plugin, and it could not be reused later with the state id.
-
-   * @param state the view port state to be removed.
-   */
-  override fun removeState(state: ViewportState) {
-    if (status.getCurrentOrTargetState() === state) {
-      idle()
-    }
-    internalStates.remove(state)
   }
 
   /**
