@@ -1,4 +1,4 @@
-package com.mapbox.maps.plugin.viewport.experimental.state
+package com.mapbox.maps.plugin.viewport.state
 
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
@@ -7,8 +7,8 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.viewport.experimental.data.OverviewViewportStateOptions
-import com.mapbox.maps.plugin.viewport.experimental.transition.MapboxViewportTransitionFactory
+import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
+import com.mapbox.maps.plugin.viewport.transition.MapboxViewportTransitionFactory
 import java.util.concurrent.*
 
 /**

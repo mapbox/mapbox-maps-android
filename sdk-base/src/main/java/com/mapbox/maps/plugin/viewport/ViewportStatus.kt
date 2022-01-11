@@ -1,7 +1,7 @@
-package com.mapbox.maps.plugin.viewport.experimental
+package com.mapbox.maps.plugin.viewport
 
-import com.mapbox.maps.plugin.viewport.experimental.state.ViewportState
-import com.mapbox.maps.plugin.viewport.experimental.transition.ViewportTransition
+import com.mapbox.maps.plugin.viewport.state.ViewportState
+import com.mapbox.maps.plugin.viewport.transition.ViewportTransition
 import java.util.*
 
 /**

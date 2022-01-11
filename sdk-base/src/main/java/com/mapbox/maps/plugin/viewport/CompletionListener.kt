@@ -1,4 +1,4 @@
-package com.mapbox.maps.plugin.viewport.experimental
+package com.mapbox.maps.plugin.viewport
 
 /**
  * A listener that's notified when the action is completed.

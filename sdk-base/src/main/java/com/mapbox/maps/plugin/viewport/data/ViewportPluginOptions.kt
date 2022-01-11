@@ -1,6 +1,6 @@
-package com.mapbox.maps.plugin.viewport.experimental.data
+package com.mapbox.maps.plugin.viewport.data
 
-import com.mapbox.maps.plugin.viewport.experimental.state.ViewportState
+import com.mapbox.maps.plugin.viewport.state.ViewportState
 
 /**
  * Options that impact the [ViewportPlugin].

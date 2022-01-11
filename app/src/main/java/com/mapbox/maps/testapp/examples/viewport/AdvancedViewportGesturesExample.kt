@@ -22,15 +22,15 @@ import com.mapbox.maps.plugin.gestures.OnScaleListener
 import com.mapbox.maps.plugin.gestures.OnShoveListener
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.location
-import com.mapbox.maps.plugin.viewport.experimental.ViewportStatus
-import com.mapbox.maps.plugin.viewport.experimental.data.FollowingViewportStateBearing
-import com.mapbox.maps.plugin.viewport.experimental.data.FollowingViewportStateOptions
-import com.mapbox.maps.plugin.viewport.experimental.data.OverviewViewportStateOptions
-import com.mapbox.maps.plugin.viewport.experimental.data.ViewportPluginOptions
-import com.mapbox.maps.plugin.viewport.experimental.experimentalViewport
-import com.mapbox.maps.plugin.viewport.experimental.state.FollowingViewportState
-import com.mapbox.maps.plugin.viewport.experimental.state.OverviewViewportState
-import com.mapbox.maps.plugin.viewport.experimental.state.ViewportState
+import com.mapbox.maps.plugin.viewport.ViewportStatus
+import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateBearing
+import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateOptions
+import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
+import com.mapbox.maps.plugin.viewport.data.ViewportPluginOptions
+import com.mapbox.maps.plugin.viewport.state.FollowingViewportState
+import com.mapbox.maps.plugin.viewport.state.OverviewViewportState
+import com.mapbox.maps.plugin.viewport.state.ViewportState
+import com.mapbox.maps.plugin.viewport.viewport
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.examples.annotation.AnnotationUtils
 import com.mapbox.maps.testapp.utils.SimulateRouteLocationProvider
@@ -46,15 +46,16 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
   private lateinit var mapView: MapView
   private lateinit var routePoints: LineString
   private val followingViewportState: FollowingViewportState by lazy {
-    mapView.experimentalViewport.makeFollowingViewportState(
+    mapView.viewport.makeFollowingViewportState(
       FollowingViewportStateOptions.Builder()
         .bearingOptions(FollowingViewportStateBearing.Constant(0.0))
+        .frameTransitionMaxDurationMs(500)
         .padding(EdgeInsets(200.0 * resources.displayMetrics.density, 0.0, 0.0, 0.0))
         .build()
     )
   }
   private val overviewViewportState: OverviewViewportState by lazy {
-    mapView.experimentalViewport.makeOverviewViewportState(
+    mapView.viewport.makeOverviewViewportState(
       OverviewViewportStateOptions.Builder()
         .geometry(routePoints)
         .padding(EdgeInsets(100.0, 100.0, 100.0, 100.0))
@@ -94,14 +95,14 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
     ) {
       setupLocationComponent(routePoints)
       setupAdvancedGestures()
-      mapView.experimentalViewport.transitionTo(overviewViewportState)
+      mapView.viewport.transitionTo(overviewViewportState)
     }
   }
 
   private fun setupAdvancedGestures() {
     // Disable viewport's transitionsToIdleUponUserInteraction so that we can customise the gestures
     // within the state.
-    mapView.experimentalViewport.options =
+    mapView.viewport.options =
       ViewportPluginOptions.Builder().transitionsToIdleUponUserInteraction(false).build()
 
     // Advanced gestures handling
@@ -111,8 +112,8 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
 
     // Switch ViewportStates by single tapping on the map.
     mapView.gestures.addOnMapClickListener {
-      mapView.experimentalViewport.transitionTo(
-        when (mapView.experimentalViewport.status.getCurrentOrNextState()) {
+      mapView.viewport.transitionTo(
+        when (mapView.viewport.status.getCurrentOrNextState()) {
           followingViewportState -> overviewViewportState
           else -> followingViewportState
         }
@@ -191,7 +192,7 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
   }
 }
 
-fun ViewportStatus.getCurrentOrNextState(): ViewportState? =
+private fun ViewportStatus.getCurrentOrNextState(): ViewportState? =
   when (this) {
     is ViewportStatus.State -> state
     is ViewportStatus.Transition -> toState

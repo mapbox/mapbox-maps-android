@@ -18,8 +18,8 @@
         android:id="@+id/switchButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:text="@string/follow"
         mapbox:layout_constraintBottom_toBottomOf="parent"
         mapbox:layout_constraintEnd_toEndOf="parent"
-        mapbox:layout_constraintStart_toStartOf="parent"
-        tools:text="Follow" />
+        mapbox:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

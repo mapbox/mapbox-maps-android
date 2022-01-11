@@ -1,54 +1,33 @@
 package com.mapbox.maps.plugin.viewport.state
 
+import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.viewport.ViewportPlugin
-import com.mapbox.maps.plugin.viewport.data.ViewportDataSource
 
 /**
- * Set of possible [ViewportPlugin] states.
+ * Definition of [ViewportPlugin] states.
+ *
+ * [ViewportState] is used to observe the data source associated with the state and query the camera
+ * to keep updating according to current viewport data.
  */
-sealed class ViewportState {
+interface ViewportState {
   /**
-   * Describes state when [ViewportPlugin] does not execute any transitions.
+   * Observe the new camera options produced by the [ViewportState], it can be used to get the
+   * latest state [CameraOptions] for [ViewportTransition].
    *
-   * Set after invoking [ViewportPlugin.requestCameraToIdle]
+   * @param viewportStateDataObserver observer that observe new viewport data.
+   * @return a handle that cancels current observation.
    */
-  object Idle : ViewportState()
+  fun observeDataSource(viewportStateDataObserver: ViewportStateDataObserver): Cancelable
 
   /**
-   * Describes state when [ViewportPlugin] transitions to the [Following] state.
+   * Start updating the camera for the current [ViewportState].
    *
-   * Set after invoking [ViewportPlugin.requestCameraToFollowing].
+   * @return a handle that cancels the camera updates.
    */
-  object TransitionToFollowing : ViewportState()
+  fun startUpdatingCamera(): Cancelable
 
   /**
-   * Describes state when [ViewportPlugin] finished transition to the following state.
-   *
-   * Preceded by [TransitionToFollowing].
-   *
-   * Set after invoking [ViewportPlugin.requestCameraToFollowing].
-   *
-   * When in this state, each update to the [ViewportDataSource]
-   * will automatically trigger another transition.
+   * Stop updating the camera for the current [ViewportState].
    */
-  object Following : ViewportState()
-
-  /**
-   * Describes state when [ViewportPlugin] transitions to the [Overview] state.
-   *
-   * Set after invoking [ViewportPlugin.requestCameraToOverview].
-   */
-  object TransitionToOverview : ViewportState()
-
-  /**
-   * Describes state when [ViewportPlugin] finished transition to the overview state.
-   *
-   * Preceded by [TransitionToOverview].
-   *
-   * Set after invoking [ViewportPlugin.requestCameraToOverview].
-   *
-   * When in this state, each update to the [ViewportDataSource]
-   * will automatically trigger another transition.
-   */
-  object Overview : ViewportState()
+  fun stopUpdatingCamera()
 }

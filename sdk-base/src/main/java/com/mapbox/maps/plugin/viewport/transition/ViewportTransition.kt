@@ -1,51 +1,31 @@
 package com.mapbox.maps.plugin.viewport.transition
 
-import android.animation.AnimatorSet
-import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.plugin.animation.Cancelable
+import com.mapbox.maps.plugin.viewport.CompletionListener
+import com.mapbox.maps.plugin.viewport.state.ViewportState
 
 /**
- * Helper interface to provide camera transition animations.
+ * Defines how a [ViewportState] transition to another [ViewportState].
  */
 interface ViewportTransition {
   /**
-   * This transition moves the camera from a zoomed out level to a zoomed in level.
+   * Run the [ViewportTransition] from previous [ViewportState] to the target [ViewportState].
    *
-   * The timings and delays are biased toward making sure the center point is visible
-   * before zooming in and changing bearing and pitch.
+   * The completion block contains a Bool that is true if the transition is cancelled and false
+   * if it ran to completion. Implementations must be sure to invoke the completion block with false if
+   * the returned Cancelable is invoked prior to completion. the completion block must be invoked
+   * on the main queue. Transitions must handle the possibility that the "to" state might fail to
+   * provide a target camera in a timely manner or might update the target camera multiple times
+   * during the transition (a "moving target").
    *
-   * @param cameraOptions camera position to transition to
-   * @param transitionOptions transition options
+   * @param from The previous [ViewportState], null if previous state is IDLE.
+   * @param to The target [ViewportState]
+   * @param completionListener The listener to observe the completion state.
+   * @return a handle that can be used to cancel the current [ViewportTransition]
    */
-  fun transitionFromLowZoomToHighZoom(
-    cameraOptions: CameraOptions,
-    transitionOptions: ViewportTransitionOptions
-  ): AnimatorSet
-
-  /**
-   * This transition moves the camera from zoomed in to zoomed out.
-   *
-   * The timings and delays are made to favor zooming out first in order to
-   * minimize fast moves over map geometry.
-   *
-   * @param cameraOptions camera position to transition to
-   * @param transitionOptions transition options
-   */
-  fun transitionFromHighZoomToLowZoom(
-    cameraOptions: CameraOptions,
-    transitionOptions: ViewportTransitionOptions
-  ): AnimatorSet
-
-  /**
-   * This transition is for use in frequently animating between points on a map.
-   * No animation easing is used.
-   *
-   * This transition works best where frequent, continuous updates are needed.
-   *
-   * @param cameraOptions camera position to transition to
-   * @param transitionOptions transition options
-   */
-  fun transitionLinear(
-    cameraOptions: CameraOptions,
-    transitionOptions: ViewportTransitionOptions
-  ): AnimatorSet
+  fun run(
+    from: ViewportState?,
+    to: ViewportState,
+    completionListener: CompletionListener
+  ): Cancelable
 }

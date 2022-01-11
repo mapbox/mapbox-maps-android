@@ -1,390 +1,349 @@
 package com.mapbox.maps.plugin.viewport
 
-import android.animation.Animator
-import android.animation.AnimatorSet
 import android.animation.ValueAnimator
-import androidx.core.animation.doOnEnd
-import com.mapbox.maps.plugin.InvalidPluginConfigurationException
-import com.mapbox.maps.plugin.Plugin
+import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.plugin.animation.CameraAnimationsLifecycleListener
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
+import com.mapbox.maps.plugin.animation.CameraAnimatorType
+import com.mapbox.maps.plugin.animation.Cancelable
+import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin
-import com.mapbox.maps.plugin.viewport.ViewportPlugin.Companion.DEFAULT_FRAME_TRANSITION_OPT
-import com.mapbox.maps.plugin.viewport.data.MapboxViewportDataSource
-import com.mapbox.maps.plugin.viewport.data.ViewportData
-import com.mapbox.maps.plugin.viewport.data.ViewportDataSource
-import com.mapbox.maps.plugin.viewport.data.ViewportDataSourceUpdateObserver
+import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
+import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateOptions
+import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
+import com.mapbox.maps.plugin.viewport.data.ViewportPluginOptions
+import com.mapbox.maps.plugin.viewport.state.FollowingViewportState
+import com.mapbox.maps.plugin.viewport.state.FollowingViewportStateImpl
+import com.mapbox.maps.plugin.viewport.state.OverviewViewportState
+import com.mapbox.maps.plugin.viewport.state.OverviewViewportStateImpl
 import com.mapbox.maps.plugin.viewport.state.ViewportState
-import com.mapbox.maps.plugin.viewport.state.ViewportState.Following
-import com.mapbox.maps.plugin.viewport.state.ViewportState.Idle
-import com.mapbox.maps.plugin.viewport.state.ViewportState.Overview
-import com.mapbox.maps.plugin.viewport.state.ViewportState.TransitionToFollowing
-import com.mapbox.maps.plugin.viewport.state.ViewportState.TransitionToOverview
-import com.mapbox.maps.plugin.viewport.state.ViewportStateChangedObserver
-import com.mapbox.maps.plugin.viewport.transition.MapboxViewportStateTransition
-import com.mapbox.maps.plugin.viewport.transition.TransitionEndListener
-import com.mapbox.maps.plugin.viewport.transition.ViewportStateTransition
+import com.mapbox.maps.plugin.viewport.transition.DefaultViewportTransition
+import com.mapbox.maps.plugin.viewport.transition.DefaultViewportTransitionImpl
+import com.mapbox.maps.plugin.viewport.transition.ImmediateViewportTransition
 import com.mapbox.maps.plugin.viewport.transition.ViewportTransition
-import com.mapbox.maps.plugin.viewport.transition.ViewportTransitionOptions
 import java.util.concurrent.CopyOnWriteArraySet
 
 /**
  * Mapbox default implementation for [ViewportPlugin].
+ *
+ * The Viewport plugin allows to track objects on a map.
+ *
+ * It provides a structured approach to organizing camera management logic into states and transitions between them.
+ *
+ * at any given time, the viewport is either:
+ *  - idle (not updating the camera)
+ *  - in a state (camera is being managed by a ViewportState)
+ *  - transitioning (camera is being managed by a ViewportTransition)
  */
+@MapboxExperimental
 class ViewportPluginImpl : ViewportPlugin {
-  private var frameTransitionOptions = DEFAULT_FRAME_TRANSITION_OPT
-  private var runningAnimation: AnimatorSet? = null
-  private val transitionEndListeners = CopyOnWriteArraySet<TransitionEndListener>()
-  private val viewportStateChangedObservers =
-    CopyOnWriteArraySet<ViewportStateChangedObserver>()
+  private val registeredStatusObservers = CopyOnWriteArraySet<ViewportStatusObserver>()
+  private val internalStates = CopyOnWriteArraySet<ViewportState>()
+  private var currentCancelable: Cancelable? = null
+    @Synchronized set
+    @Synchronized get
+  private val transitions = HashMap<Pair<ViewportState?, ViewportState?>, ViewportTransition>()
+  private lateinit var delegateProvider: MapDelegateProvider
   private lateinit var cameraPlugin: CameraAnimationsPlugin
-  private lateinit var locationComponentPlugin: LocationComponentPlugin
-  private lateinit var mapDelegateProvider: MapDelegateProvider
-  private lateinit var stateTransition: ViewportStateTransition
 
-  /**
-   * Describes an object that provides desired camera positions to [ViewportPlugin].
-   */
-  override lateinit var dataSource: ViewportDataSource
-
-  /**
-   * Returns current [ViewportTransition].
-   * @see registerViewportStateChangedObserver
-   */
-  override var state: ViewportState = Idle
-    private set(value) {
-      if (value != field) {
-        field = value
-        viewportStateChangedObservers.forEach {
-          it.onViewportStateChanged(value)
+  private val cameraAnimationsLifecycleListener = object : CameraAnimationsLifecycleListener {
+    override fun onAnimatorStarting(
+      type: CameraAnimatorType,
+      animator: ValueAnimator,
+      owner: String?
+    ) {
+      when (owner) {
+        VIEWPORT_CAMERA_OWNER -> Unit
+        MapAnimationOwnerRegistry.GESTURES -> {
+          if (options.transitionsToIdleUponUserInteraction) {
+            currentCancelable?.cancel()
+            currentCancelable = null
+            updateStatus(
+              ViewportStatus.State(null),
+              VIEWPORT_STATUS_OBSERVER_REASON_USER_INTERACTION
+            )
+          }
         }
       }
     }
 
-  private val sourceUpdateObserver = ViewportDataSourceUpdateObserver(::updateFrame)
+    override fun onAnimatorInterrupting(
+      type: CameraAnimatorType,
+      runningAnimator: ValueAnimator,
+      runningAnimatorOwner: String?,
+      newAnimator: ValueAnimator,
+      newAnimatorOwner: String?
+    ) {
+      // no-ops
+    }
 
-  /**
-   * Executes a transition to [Following] state. When started, goes to [TransitionToFollowing]
-   * and to the final [Following] when ended. If transition is canceled, state goes to [Idle].
-   *
-   * The target camera position is obtained with [ViewportDataSource.getViewportData].
-   *
-   * @param stateTransitionOptionsBlock options that impact the transition animation from
-   * the current state to the requested state.
-   * Defaults to [ViewportTransitionOptions.maxDurationMs] equal to [DEFAULT_STATE_TRANSITION_MAX_DURATION_MS] millis.
-   * @param frameTransitionOptionsBlock options that impact the transition animations between
-   * viewport frames in the selected state.
-   * This refers to camera transition on each [ViewportDataSource] update when [Following] is engaged.
-   * Defaults to [ViewportTransitionOptions.maxDurationMs] equal to [DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS] millis.
-   * @param transitionEndListener invoked when transition ends.
-   */
-  override fun requestCameraToFollowing(
-    stateTransitionOptionsBlock: ((ViewportTransitionOptions.Builder).() -> Unit),
-    frameTransitionOptionsBlock: ((ViewportTransitionOptions.Builder).() -> Unit),
-    transitionEndListener: TransitionEndListener?,
-  ) {
-    requestCameraToFollowing(
-      ViewportTransitionOptions.Builder()
-        .maxDuration(DEFAULT_STATE_TRANSITION_MAX_DURATION_MS).apply(stateTransitionOptionsBlock)
-        .build(),
-      ViewportTransitionOptions.Builder()
-        .maxDuration(DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS).apply(frameTransitionOptionsBlock)
-        .build(),
-      transitionEndListener,
-    )
+    override fun onAnimatorEnding(
+      type: CameraAnimatorType,
+      animator: ValueAnimator,
+      owner: String?
+    ) {
+      // no-ops
+    }
+
+    override fun onAnimatorCancelling(
+      type: CameraAnimatorType,
+      animator: ValueAnimator,
+      owner: String?
+    ) {
+      // no-ops
+    }
   }
 
   /**
-   * Executes a transition to [Following] state. When started, goes to [TransitionToFollowing]
-   * and to the final [Following] when ended. If transition is canceled, state goes to [Idle].
-   *
-   * The target camera position is obtained with [ViewportDataSource.getViewportData].
-   *
-   * @param stateTransitionOptions options that impact the transition animation from the current state to the requested state.
-   * Defaults to [ViewportTransitionOptions.maxDurationMs] equal to [DEFAULT_STATE_TRANSITION_MAX_DURATION_MS] millis.
-   * @param frameTransitionOptions options that impact the transition animations between viewport frames in the selected state.
-   * This refers to camera transition on each [ViewportDataSource] update when [Following] is engaged.
-   * Defaults to [ViewportTransitionOptions.maxDurationMs] equal to [DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS] millis.
-   * @param transitionEndListener invoked when transition ends.
+   * Returns list of registered states.
    */
-  override fun requestCameraToFollowing(
-    stateTransitionOptions: ViewportTransitionOptions,
-    frameTransitionOptions: ViewportTransitionOptions,
-    transitionEndListener: TransitionEndListener?,
-  ) {
-    when (state) {
-      TransitionToFollowing -> transitionEndListener?.let { listener ->
-        transitionEndListeners.add(listener)
+  override val states: Set<ViewportState>
+    get() = internalStates
+
+  /**
+   * Returns current [ViewportStatus].
+   *
+   * If current status is IDLE, returns ViewportStatus.State(null).
+   * @see addStatusObserver
+   */
+  override var status: ViewportStatus = ViewportStatus.State(null)
+    @Synchronized private set
+    @Synchronized get
+
+  private fun updateStatus(targetStatus: ViewportStatus, reason: String) {
+    val previousStatus = status
+    status = targetStatus
+    notifyStatusChanged(previousStatus, targetStatus, reason)
+  }
+
+  /**
+   * Executes a transition to requested state.
+   *
+   * When started, goes to [ViewportTransition]
+   * and to the final [ViewportState] when ended.
+   *
+   * If transition is canceled, state goes to IDLE.
+   *
+   * @param targetState The target [ViewportState] to transition to.
+   * @param completionListener The listener to observe the completion state.
+   */
+  override fun transitionTo(targetState: ViewportState, completionListener: CompletionListener?) {
+    with(status) {
+      when (this) {
+        is ViewportStatus.State -> {
+          if (this.state === targetState) {
+            completionListener?.onComplete(true)
+            return
+          }
+        }
+        is ViewportStatus.Transition -> {
+          if (this.toState === targetState) {
+            completionListener?.onComplete(false)
+            return
+          }
+        }
       }
-      Following -> transitionEndListener?.onTransitionEnd(isCanceled = false)
-      Idle, TransitionToOverview, Overview -> {
-        val data = dataSource.getViewportData()
-        startAnimation(
-          stateTransition.transitionToFollowing(data.cameraForFollowing, stateTransitionOptions)
-            .apply {
-              addListener( // todo
-                createTransitionListener(TransitionToFollowing, Following, frameTransitionOptions)
-              )
-            },
-          instant = false,
-          transitionEndListener,
+    }
+    val fromState = status.getCurrentOrTargetState()
+    currentCancelable?.cancel()
+    currentCancelable = null
+    // implicit adding of states upon transitioning to a state that hasn't been added yet
+    if (!states.contains(targetState)) {
+      internalStates.add(targetState)
+    }
+
+    // get the transition (or default) for the from and to state
+    val transition = getTransition(fromState, targetState) ?: defaultTransition
+
+    // run the transition
+    var completionBlockInvoked = false
+    val transitionCancelable = transition.run(fromState, targetState) { isFinished ->
+      completionBlockInvoked = true
+      if (isFinished) {
+        // transfer camera updating responsibility to targetState
+        currentCancelable = targetState.startUpdatingCamera()
+        updateStatus(
+          ViewportStatus.State(targetState),
+          VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
         )
       }
+      completionListener?.onComplete(isFinished)
+    }
+    // since it's possible that a transition might invoke its
+    // completion block synchronously, we'll only store the
+    // transition cancelable if the transition is not complete
+    // so that we don't clobber the targetState cancelable.
+    if (!completionBlockInvoked) {
+      currentCancelable = transitionCancelable
+      updateStatus(
+        ViewportStatus.Transition(transition, fromState, targetState),
+        VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
+      )
     }
   }
 
   /**
-   * Executes a transition to [Overview] state. When started, goes to [TransitionToOverview]
-   * and to the final [Overview] when ended. If transition is canceled, state goes to [Idle].
+   * Immediately goes to IDLE state canceling all ongoing transitions.
+   */
+  override fun idle() {
+    if (status.getCurrentOrTargetState() == null) return
+    currentCancelable?.cancel()
+    currentCancelable = null
+    updateStatus(ViewportStatus.State(null), VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC)
+  }
+
+  /**
+   * Options that impact the [ViewportPlugin].
+   */
+  override var options: ViewportPluginOptions = ViewportPluginOptions.Builder().build()
+
+  private fun notifyStatusChanged(
+    previousStatus: ViewportStatus,
+    currentStatus: ViewportStatus,
+    reason: String
+  ) {
+    registeredStatusObservers.forEach {
+      it.onViewportStatusChanged(
+        previousStatus,
+        currentStatus,
+        reason
+      )
+    }
+  }
+
+  /**
+   * Add a viewport state to the viewport plugin, which could be reused later with the state id.
    *
-   * The target camera position is obtained with [ViewportDataSource.getViewportData].
+   * @param state the view port state to be added.
+   */
+  override fun addState(state: ViewportState) {
+    internalStates.add(state)
+  }
+
+  /**
+   * Remove a viewport state from the viewport plugin, and it could not be reused later with the state id.
+
+   * @param state the view port state to be removed.
+   */
+  override fun removeState(state: ViewportState) {
+    if (status.getCurrentOrTargetState() === state) {
+      idle()
+    }
+    internalStates.remove(state)
+  }
+
+  /**
+   * DefaultViewportTransition with default options
    *
-   * @param stateTransitionOptionsBlock options that impact the transition animation from
-   * the current state to the requested state.
-   * Defaults to [ViewportTransitionOptions.maxDurationMs] equal to [DEFAULT_STATE_TRANSITION_MAX_DURATION_MS] millis.
-   * @param frameTransitionOptionsBlock options that impact the transition animations between
-   * viewport frames in the selected state.
-   * This refers to camera transition on each [ViewportDataSource] update when [Overview] is engaged.
-   * Defaults to [ViewportTransitionOptions.maxDurationMs] equal to [DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS] millis.
-   * @param transitionEndListener invoked when transition ends.
+   * This transition is used unless overridden by one of the registered transitions.
    */
-  override fun requestCameraToOverview(
-    stateTransitionOptionsBlock: ((ViewportTransitionOptions.Builder).() -> Unit),
-    frameTransitionOptionsBlock: ((ViewportTransitionOptions.Builder).() -> Unit),
-    transitionEndListener: TransitionEndListener?,
-  ) {
-    requestCameraToOverview(
-      ViewportTransitionOptions.Builder()
-        .maxDuration(DEFAULT_STATE_TRANSITION_MAX_DURATION_MS).apply(stateTransitionOptionsBlock)
-        .build(),
-      ViewportTransitionOptions.Builder()
-        .maxDuration(DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS).apply(frameTransitionOptionsBlock)
-        .build(),
-      transitionEndListener,
-    )
-  }
+  override lateinit var defaultTransition: ViewportTransition
 
   /**
-   * Executes a transition to [Overview] state. When started, goes to [TransitionToOverview]
-   * and to the final [Overview] when ended. If transition is canceled, state goes to [Idle].
+   * Set the [ViewportTransition] for the transition from given [ViewportState] to target [ViewportState]
    *
-   * The target camera position is obtained with [ViewportDataSource.getViewportData].
+   * @param transition The transition to be set.
+   * @param from The state before the transition.
+   * @param to The state after the transition.
+   */
+  override fun setTransition(
+    transition: ViewportTransition,
+    from: ViewportState?,
+    to: ViewportState
+  ) {
+    transitions[Pair(from, to)] = transition
+  }
+
+  /**
+   * Get the transition from the previous state and target state.
    *
-   * @param stateTransitionOptions options that impact the transition animation from the current state to the requested state.
-   * Defaults to [ViewportTransitionOptions.maxDurationMs] equal to [DEFAULT_STATE_TRANSITION_MAX_DURATION_MS] millis.
-   * @param frameTransitionOptions options that impact the transition animations between viewport frames in the selected state.
-   * This refers to camera transition on each [ViewportDataSource] update when [Overview] is engaged.
-   * Defaults to [ViewportTransitionOptions.maxDurationMs] equal to [DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS] millis.
-   * @param transitionEndListener invoked when transition ends.
+   * @param from The state before the transition.
+   * @param to The state after the transition.
    */
-  override fun requestCameraToOverview(
-    stateTransitionOptions: ViewportTransitionOptions,
-    frameTransitionOptions: ViewportTransitionOptions,
-    transitionEndListener: TransitionEndListener?,
-  ) {
-    when (state) {
-      TransitionToOverview -> transitionEndListener?.let { listener ->
-        transitionEndListeners.add(listener)
-      }
-      Overview -> transitionEndListener?.onTransitionEnd(isCanceled = false)
-      Idle, TransitionToFollowing, Following -> {
-        val data = dataSource.getViewportData()
-        startAnimation(
-          stateTransition.transitionToOverview(data.cameraForOverview, stateTransitionOptions)
-            .apply {
-              addListener( // todo
-                createTransitionListener(TransitionToOverview, Overview, frameTransitionOptions)
-              )
-            },
-          instant = false,
-          transitionEndListener,
-        )
-      }
-    }
+  override fun getTransition(from: ViewportState?, to: ViewportState): ViewportTransition? {
+    return transitions[Pair(from, to)]
   }
 
   /**
-   * If the [state] is [Following] or [Overview],
-   * performs an immediate camera transition (a jump, with animation duration equal to `0`)
-   * based on the latest data obtained with [ViewportDataSource.getViewportData].
+   * Remove the transition between the previous state and target state.
+   *
+   * @param from The state before the transition.
+   * @param to The state after the transition.
    */
-  override fun resetFrame() {
-    val viewportData = dataSource.getViewportData()
-    updateFrame(viewportData, instant = true)
-  }
-
-  private fun updateFrame(viewportData: ViewportData, instant: Boolean = false) {
-    when (state) {
-      Following -> {
-        startAnimation(
-          stateTransition.updateFrameForFollowing(
-            viewportData.cameraForFollowing,
-            frameTransitionOptions
-          ).apply { doOnEnd { finishAnimation(this) } },
-          instant
-        )
-      }
-      Overview -> {
-        startAnimation(
-          stateTransition.updateFrameForOverview(
-            viewportData.cameraForOverview,
-            frameTransitionOptions
-          ).apply { doOnEnd { finishAnimation(this) } },
-          instant
-        )
-      }
-      Idle, TransitionToFollowing, TransitionToOverview -> {
-        // no impl
-      }
-    }
+  override fun removeTransition(from: ViewportState?, to: ViewportState) {
+    transitions.remove(Pair(from, to))
   }
 
   /**
-   * Immediately goes to [Idle] state canceling all ongoing transitions.
+   * Adds [ViewportStatusObserver] to observe the status change.
    */
-  override fun requestCameraToIdle() {
-    if (state != Idle) {
-      cancelAnimation()
-      setIdleProperties()
-    }
+  override fun addStatusObserver(viewportStatusObserver: ViewportStatusObserver) {
+    registeredStatusObservers.add(viewportStatusObserver)
   }
 
   /**
-   * Registers [ViewportStateChangedObserver].
+   * Removes [ViewportStatusObserver].
    */
-  override fun registerViewportStateChangedObserver(
-    viewportStateChangedObserver: ViewportStateChangedObserver
-  ) {
-    viewportStateChangedObservers.add(viewportStateChangedObserver)
-    viewportStateChangedObserver.onViewportStateChanged(state)
+  override fun removeStatusObserver(viewportStatusObserver: ViewportStatusObserver) {
+    registeredStatusObservers.remove(viewportStatusObserver)
+  }
+
+  // Convenient methods to create the in-stock [ViewportState] and [ViewportTransition].
+
+  /**
+   * Create a [FollowingViewportState] instance with provided [FollowingViewportStateOptions].
+   *
+   * @param options The desired [FollowingViewportStateOptions]
+   */
+  override fun makeFollowingViewportState(options: FollowingViewportStateOptions): FollowingViewportState {
+    return FollowingViewportStateImpl(delegateProvider, options)
   }
 
   /**
-   * Unregisters [ViewportStateChangedObserver].
+   * Create an [OverviewViewportState] instance with provided [OverviewViewportStateOptions].
+   *
+   * @param options The desired [OverviewViewportStateOptions]
    */
-  override fun unregisterViewportStateChangedObserver(
-    viewportStateChangedObserver: ViewportStateChangedObserver
-  ) {
-    viewportStateChangedObservers.remove(viewportStateChangedObserver)
+  override fun makeOverviewViewportState(options: OverviewViewportStateOptions): OverviewViewportState {
+    return OverviewViewportStateImpl(delegateProvider, options)
   }
 
-  private fun setIdleProperties() {
-    this.frameTransitionOptions = DEFAULT_FRAME_TRANSITION_OPT
-    state = Idle
+  /**
+   * Create a default [ViewportTransition] instance with provided [DefaultViewportTransitionOptions].
+   *
+   * @param options The desired [DefaultViewportTransitionOptions]
+   */
+  override fun makeDefaultTransition(options: DefaultViewportTransitionOptions): DefaultViewportTransition {
+    return DefaultViewportTransitionImpl(delegateProvider, options)
   }
 
-  private fun cancelAnimation() {
-    runningAnimation?.apply {
-      cancel()
-      childAnimations.forEach {
-        cameraPlugin.unregisterAnimators(it as ValueAnimator)
-      }
-    }
-    runningAnimation = null
-  }
-
-  private fun startAnimation(
-    animatorSet: AnimatorSet,
-    instant: Boolean,
-    transitionEndListener: TransitionEndListener? = null,
-  ) {
-    cancelAnimation()
-    transitionEndListener?.let {
-      transitionEndListeners.add(it)
-    }
-    animatorSet.childAnimations.forEach {
-      cameraPlugin.registerAnimators(it as ValueAnimator)
-    }
-    if (instant) {
-      animatorSet.duration = 0
-    }
-    animatorSet.start()
-    runningAnimation = animatorSet
-  }
-
-  private fun finishAnimation(animatorSet: AnimatorSet?) {
-    animatorSet?.childAnimations?.forEach {
-      cameraPlugin.unregisterAnimators(it as ValueAnimator)
-    }
-    if (runningAnimation == animatorSet) {
-      runningAnimation = null
-    }
-  }
-
-  private fun createTransitionListener(
-    progressState: ViewportState,
-    finalState: ViewportState,
-    frameTransitionOptions: ViewportTransitionOptions,
-  ) = object : Animator.AnimatorListener {
-
-    private var isCanceled = false
-
-    override fun onAnimationStart(animation: Animator?) {
-      this@ViewportPluginImpl.frameTransitionOptions = DEFAULT_FRAME_TRANSITION_OPT
-      state = progressState
-    }
-
-    override fun onAnimationEnd(animation: Animator?) {
-      if (isCanceled) {
-        setIdleProperties()
-      } else {
-        this@ViewportPluginImpl.frameTransitionOptions = frameTransitionOptions
-        state = finalState
-      }
-
-      finishAnimation(animation as AnimatorSet)
-      transitionEndListeners.forEach { it.onTransitionEnd(isCanceled) }
-      transitionEndListeners.clear()
-      updateFrame(dataSource.getViewportData())
-    }
-
-    override fun onAnimationCancel(animation: Animator?) {
-      isCanceled = true
-    }
-
-    override fun onAnimationRepeat(animation: Animator?) {
-    }
+  /**
+   * Create a [ViewportTransition] instance that transition to the target [ViewportState] immediately.
+   */
+  override fun makeImmediateViewportTransition(): ViewportTransition {
+    return ImmediateViewportTransition(delegateProvider)
   }
 
   /**
    * Provides all map delegate instances.
    */
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
-    this.mapDelegateProvider = delegateProvider
+    this.delegateProvider = delegateProvider
     this.cameraPlugin = delegateProvider.mapPluginProviderDelegate.camera
-    this.stateTransition =
-      MapboxViewportStateTransition(delegateProvider.mapCameraManagerDelegate, cameraPlugin)
-
-    if (!::dataSource.isInitialized) {
-      this.dataSource = MapboxViewportDataSource(
-        mapDelegateProvider.mapCameraManagerDelegate,
-        mapDelegateProvider.mapTransformDelegate
-      )
-    }
-    @Suppress("UNCHECKED_CAST")
-    this.locationComponentPlugin = delegateProvider.mapPluginProviderDelegate.getPlugin(
-      Plugin.MAPBOX_LOCATION_COMPONENT_PLUGIN_ID
-    ) ?: throw InvalidPluginConfigurationException(
-      "Can't look up an instance of location component plugin, " +
-        "is it available on the clazz path and loaded through the map?"
+    cameraPlugin.addCameraAnimationsLifecycleListener(cameraAnimationsLifecycleListener)
+    this.defaultTransition = DefaultViewportTransitionImpl(
+      delegateProvider,
+      DefaultViewportTransitionOptions.Builder().build()
     )
-  }
-
-  /**
-   * Called when the plugin is first added to the map.
-   */
-  override fun initialize() {
-    dataSource.registerUpdateObserver(sourceUpdateObserver)
   }
 
   /**
    * Called when the map is destroyed. Should be used to cleanup plugin resources for that map.
    */
   override fun cleanup() {
-    runningAnimation?.cancel()
-    transitionEndListeners.clear()
-    viewportStateChangedObservers.clear()
+    updateStatus(ViewportStatus.State(null), VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC)
+    cameraPlugin.removeCameraAnimationsLifecycleListener(cameraAnimationsLifecycleListener)
   }
 
   internal companion object {
@@ -396,3 +355,9 @@ class ViewportPluginImpl : ViewportPlugin {
     internal const val VIEWPORT_CAMERA_OWNER = "VIEWPORT_CAMERA_OWNER"
   }
 }
+
+internal fun ViewportStatus.getCurrentOrTargetState(): ViewportState? =
+  when (this) {
+    is ViewportStatus.State -> state
+    is ViewportStatus.Transition -> toState
+  }

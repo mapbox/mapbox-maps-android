@@ -17,12 +17,12 @@ import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.location
-import com.mapbox.maps.plugin.viewport.experimental.ViewportStatus
-import com.mapbox.maps.plugin.viewport.experimental.data.DefaultViewportTransitionOptions
-import com.mapbox.maps.plugin.viewport.experimental.data.FollowingViewportStateOptions
-import com.mapbox.maps.plugin.viewport.experimental.data.OverviewViewportStateOptions
-import com.mapbox.maps.plugin.viewport.experimental.data.ViewportPluginOptions
-import com.mapbox.maps.plugin.viewport.experimental.experimentalViewport
+import com.mapbox.maps.plugin.viewport.ViewportStatus
+import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
+import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateOptions
+import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
+import com.mapbox.maps.plugin.viewport.data.ViewportPluginOptions
+import com.mapbox.maps.plugin.viewport.viewport
 import com.mapbox.maps.testapp.R
 
 /**
@@ -39,7 +39,7 @@ class NavigationSimulator(
   NavigationSimulatorCameraController {
   private val locationProvider by lazy { SimulateRouteLocationProvider(routePoints) }
   private val handler = Handler(Looper.getMainLooper())
-  private val viewportPlugin = mapView.experimentalViewport
+  private val viewportPlugin = mapView.viewport
   private val followingViewportState =
     viewportPlugin.makeFollowingViewportState(FollowingViewportStateOptions.Builder().build())
   private val overviewViewportState = viewportPlugin.makeOverviewViewportState(

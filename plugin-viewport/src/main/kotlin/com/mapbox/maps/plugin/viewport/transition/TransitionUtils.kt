@@ -52,7 +52,7 @@ private fun Double.roundTo(numFractionDigits: Int): Double {
  * All other animations are scaled by the same factor which allows to mostly keep the same
  * composition and "feel" of the animation set while shortening its duration.
  */
-internal fun AnimatorSet.constraintDurationTo(maxDuration: Long): AnimatorSet {
+internal fun AnimatorSet.constrainDurationTo(maxDuration: Long): AnimatorSet {
   childAnimations.maxByOrNull { it.startDelay + it.duration }?.let {
     val longestExecutionTime = it.startDelay + it.duration
     if (longestExecutionTime > maxDuration) {
