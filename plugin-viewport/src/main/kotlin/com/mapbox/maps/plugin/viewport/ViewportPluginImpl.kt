@@ -1,6 +1,8 @@
 package com.mapbox.maps.plugin.viewport
 
 import android.animation.ValueAnimator
+import android.os.Handler
+import android.os.Looper
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.animation.CameraAnimationsLifecycleListener
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
@@ -37,7 +39,8 @@ import java.util.concurrent.CopyOnWriteArraySet
  *  - transitioning (camera is being managed by a ViewportTransition)
  */
 @MapboxExperimental
-class ViewportPluginImpl : ViewportPlugin {
+class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLooper())) :
+  ViewportPlugin {
   private val registeredStatusObservers = CopyOnWriteArraySet<ViewportStatusObserver>()
   private var currentCancelable: Cancelable? = null
     @Synchronized set
@@ -105,9 +108,11 @@ class ViewportPluginImpl : ViewportPlugin {
     @Synchronized get
 
   private fun updateStatus(targetStatus: ViewportStatus, reason: String) {
-    val previousStatus = status
-    status = targetStatus
-    notifyStatusChanged(previousStatus, targetStatus, reason)
+    if (targetStatus != status) {
+      val previousStatus = status
+      status = targetStatus
+      notifyStatusChanged(previousStatus, targetStatus, reason)
+    }
   }
 
   /**
@@ -156,6 +161,9 @@ class ViewportPluginImpl : ViewportPlugin {
           ViewportStatus.State(targetState),
           VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
         )
+      } else {
+        currentCancelable = null
+        updateStatus(ViewportStatus.State(null), VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC)
       }
       completionListener?.onComplete(isFinished)
     }
@@ -193,11 +201,13 @@ class ViewportPluginImpl : ViewportPlugin {
     reason: String
   ) {
     registeredStatusObservers.forEach {
-      it.onViewportStatusChanged(
-        previousStatus,
-        currentStatus,
-        reason
-      )
+      handler.post {
+        it.onViewportStatusChanged(
+          previousStatus,
+          currentStatus,
+          reason
+        )
+      }
     }
   }
 
