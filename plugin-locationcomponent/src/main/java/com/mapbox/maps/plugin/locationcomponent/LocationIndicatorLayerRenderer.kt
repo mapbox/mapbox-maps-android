@@ -21,7 +21,6 @@ internal class LocationIndicatorLayerRenderer(
   LocationLayerRenderer {
   private var style: StyleInterface? = null
   private var layer = layerSourceProvider.getLocationIndicatorLayer()
-
   override fun initializeComponents(style: StyleInterface) {
     this.style = style
     setupBitmaps()
@@ -78,6 +77,7 @@ internal class LocationIndicatorLayerRenderer(
       ?.let { style?.addImage(TOP_ICON, it) }
     puckOptions.bearingImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
       ?.let { style?.addImage(BEARING_ICON, it) }
+
     puckOptions.shadowImage?.let { BitmapUtils.getBitmapFromDrawable(it) }
       ?.let { style?.addImage(SHADOW_ICON, it) }
     layer.topImage(TOP_ICON)

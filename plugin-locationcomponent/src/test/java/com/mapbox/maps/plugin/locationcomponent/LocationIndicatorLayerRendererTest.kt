@@ -163,7 +163,7 @@ class LocationIndicatorLayerRendererTest {
         any()
       )
     }
-    verify {
+    verify(exactly = 1) {
       style.addImage(
         BEARING_ICON,
         any()

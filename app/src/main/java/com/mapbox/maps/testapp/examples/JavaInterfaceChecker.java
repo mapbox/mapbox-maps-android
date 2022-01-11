@@ -149,6 +149,12 @@ public class JavaInterfaceChecker {
         locationComponentSettings = new LocationComponentSettings(true, true, Color.BLACK, 1f, "id", "id", locationPuck);
     }
 
+    private void locationComponent(Context context, MapView mapView) {
+        LocationComponentPlugin locationComponent = LocationComponentUtils.getLocationComponent(mapView);
+        locationComponent.setLocationPuck(LocationComponentUtils.createDefault2DPuck(locationComponent, context));
+        locationComponent.setLocationPuck(LocationComponentUtils.createDefault2DPuck(locationComponent, context, true));
+    }
+
     private void gesturesSettings(ScrollMode scrollMode, ScreenCoordinate screenCoordinate) {
         GesturesSettings gesturesSettings = new GesturesSettings();
         gesturesSettings = new GesturesSettings(true);

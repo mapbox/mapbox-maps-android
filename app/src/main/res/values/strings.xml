@@ -31,6 +31,8 @@
     <string name="toggle_custom_map_style">Toggle custom Map style</string>
     <string name="location_disable_component">Disable Component</string>
     <string name="location_enable_component">Enable Component</string>
+    <string name="location_show_bearing">Show bearing image</string>
+    <string name="location_hide_bearing">Hide bearing image</string>
     <string name="location_stop_pulsing">Stop pulsing</string>
     <string name="location_start_pulsing">Start pulsing</string>
 
