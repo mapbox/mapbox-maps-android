@@ -9,6 +9,7 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
+import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
@@ -19,6 +20,8 @@ import java.util.concurrent.*
 
 /**
  * The actual implementation of [FollowingViewportState] that follows user's location.
+ *
+ * Note: [LocationComponentPlugin] should be enabled to use this viewport state.
  */
 class FollowingViewportStateImpl internal constructor(
   mapDelegateProvider: MapDelegateProvider,
