@@ -47,6 +47,7 @@ class DefaultViewportTransitionImpl(
     to: ViewportState,
     completionListener: CompletionListener
   ): Cancelable {
+    var isCancelableCalled = false
     val cancelable = to.observeDataSource { cameraOptions ->
       startAnimation(
         createAnimatorSet(cameraOptions, options.maxDurationMs)
@@ -59,7 +60,9 @@ class DefaultViewportTransitionImpl(
                 }
 
                 override fun onAnimationEnd(animation: Animator?) {
-                  completionListener.onComplete(!isCanceled)
+                  if (!isCancelableCalled) {
+                    completionListener.onComplete(!isCanceled)
+                  }
                 }
 
                 override fun onAnimationCancel(animation: Animator?) {
@@ -78,9 +81,9 @@ class DefaultViewportTransitionImpl(
       false
     }
     return Cancelable {
+      isCancelableCalled = true
       cancelAnimation()
       cancelable.cancel()
-      completionListener.onComplete(false)
     }
   }
 

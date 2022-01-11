@@ -2,6 +2,7 @@ package com.mapbox.maps.plugin.viewport
 
 import android.os.Handler
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.animation.camera
@@ -32,6 +33,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
+@MapboxExperimental
 class ViewportPluginImplTest {
   private val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
   private val mapPluginProviderDelegate = mockk<MapPluginProviderDelegate>(relaxed = true)
