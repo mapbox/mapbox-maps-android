@@ -25,7 +25,6 @@ sealed class MapProjection {
    *
    * Some layers are not supported when map is in Globe projection:
    *  - custom
-   *  - fill extrusion
    *  - location indicator
    *
    * If Globe projection is set it will be switched automatically to Mercator projection
