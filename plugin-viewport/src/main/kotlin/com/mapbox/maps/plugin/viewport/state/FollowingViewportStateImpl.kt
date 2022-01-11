@@ -4,11 +4,13 @@ import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import androidx.core.animation.doOnEnd
+import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
+import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
@@ -19,6 +21,8 @@ import java.util.concurrent.*
 
 /**
  * The actual implementation of [FollowingViewportState] that follows user's location.
+ *
+ * Note: [LocationComponentPlugin] should be enabled to use this viewport state.
  */
 class FollowingViewportStateImpl internal constructor(
   mapDelegateProvider: MapDelegateProvider,
@@ -42,7 +46,7 @@ class FollowingViewportStateImpl internal constructor(
   }
 
   private val indicatorBearingChangedListener = OnIndicatorBearingChangedListener { bearing ->
-    if (options.bearingOptions == FollowingViewportStateBearing.SyncWithLocationPuck) {
+    if (options.bearing == FollowingViewportStateBearing.SyncWithLocationPuck) {
       lastBearing = bearing
       notifyLatestViewportData()
     }
@@ -65,15 +69,15 @@ class FollowingViewportStateImpl internal constructor(
     return CameraOptions.Builder()
       .center(lastLocation)
       .bearing(
-        with(options.bearingOptions) {
+        with(options.bearing) {
           when (this) {
             is FollowingViewportStateBearing.Constant -> bearing
             else -> lastBearing
           }
         }
       )
-      .zoom(options.defaultZoom)
-      .pitch(options.defaultPitch)
+      .zoom(options.zoom)
+      .pitch(options.pitch)
       .padding(options.padding)
       .build()
   }
@@ -111,11 +115,21 @@ class FollowingViewportStateImpl internal constructor(
    * @return a handle that cancels current observation.
    */
   override fun observeDataSource(viewportStateDataObserver: ViewportStateDataObserver): Cancelable {
+    checkLocationComponentEnablement()
     addIndicatorListenerIfNeeded()
     dataSourceUpdateObservers.add(viewportStateDataObserver)
     return Cancelable {
       dataSourceUpdateObservers.remove(viewportStateDataObserver)
       removeIndicatorListenerIfNeeded()
+    }
+  }
+
+  private fun checkLocationComponentEnablement() {
+    if (!locationComponent.enabled) {
+      Logger.w(
+        TAG,
+        "Location component is required to be enabled to use FollowingViewportState, otherwise there would be no FollowingViewportState updates or ViewportTransition updates towards the FollowingViewportState."
+      )
     }
   }
 
@@ -125,6 +139,7 @@ class FollowingViewportStateImpl internal constructor(
    * @return a handle that cancels the camera updates.
    */
   override fun startUpdatingCamera(): Cancelable {
+    checkLocationComponentEnablement()
     addIndicatorListenerIfNeeded()
     updateFrame(
       evaluateViewportData(), instant = false
@@ -189,7 +204,7 @@ class FollowingViewportStateImpl internal constructor(
     onComplete: ((isFinished: Boolean) -> Unit)? = null
   ) {
     startAnimation(
-      transitionFactory.transitionLinear(cameraOptions, options.frameTransitionMaxDurationMs)
+      transitionFactory.transitionLinear(cameraOptions, options.frameAnimationDurationMs)
         .apply {
           addListener(
             object : Animator.AnimatorListener {
@@ -215,5 +230,9 @@ class FollowingViewportStateImpl internal constructor(
         },
       instant
     )
+  }
+
+  private companion object {
+    private const val TAG = "FollowingViewportStateImpl"
   }
 }

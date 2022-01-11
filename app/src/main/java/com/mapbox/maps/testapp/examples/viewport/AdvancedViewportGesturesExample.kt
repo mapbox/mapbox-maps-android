@@ -26,7 +26,7 @@ import com.mapbox.maps.plugin.viewport.ViewportStatus
 import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateBearing
 import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
-import com.mapbox.maps.plugin.viewport.data.ViewportPluginOptions
+import com.mapbox.maps.plugin.viewport.data.ViewportOptions
 import com.mapbox.maps.plugin.viewport.state.FollowingViewportState
 import com.mapbox.maps.plugin.viewport.state.OverviewViewportState
 import com.mapbox.maps.plugin.viewport.state.ViewportState
@@ -48,8 +48,8 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
   private val followingViewportState: FollowingViewportState by lazy {
     mapView.viewport.makeFollowingViewportState(
       FollowingViewportStateOptions.Builder()
-        .bearingOptions(FollowingViewportStateBearing.Constant(0.0))
-        .frameTransitionMaxDurationMs(500)
+        .bearing(FollowingViewportStateBearing.Constant(0.0))
+        .frameAnimationDurationMs(500)
         .padding(EdgeInsets(200.0 * resources.displayMetrics.density, 0.0, 0.0, 0.0))
         .build()
     )
@@ -103,7 +103,7 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
     // Disable viewport's transitionsToIdleUponUserInteraction so that we can customise the gestures
     // within the state.
     mapView.viewport.options =
-      ViewportPluginOptions.Builder().transitionsToIdleUponUserInteraction(false).build()
+      ViewportOptions.Builder().transitionsToIdleUponUserInteraction(false).build()
 
     // Advanced gestures handling
 
@@ -130,7 +130,7 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
 
         override fun onShove(detector: ShoveGestureDetector) {
           followingViewportState.options = followingViewportState.options.toBuilder()
-            .defaultPitch(followingViewportState.options.defaultPitch - PITCH_FACTOR * detector.deltaPixelSinceLast)
+            .pitch(followingViewportState.options.pitch - PITCH_FACTOR * detector.deltaPixelSinceLast)
             .build()
         }
 
@@ -148,7 +148,7 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
       override fun onScale(detector: StandardScaleGestureDetector) {
         val zoomBy = ln(detector.scaleFactor.toDouble()) / ln(PI / 2) * SCALE_FACTOR
         followingViewportState.options = followingViewportState.options.toBuilder()
-          .defaultZoom(followingViewportState.options.defaultZoom + zoomBy).build()
+          .zoom(followingViewportState.options.zoom + zoomBy).build()
       }
 
       override fun onScaleEnd(detector: StandardScaleGestureDetector) {

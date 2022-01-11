@@ -8,6 +8,9 @@ import com.mapbox.maps.plugin.viewport.ViewportPlugin
  *
  * [ViewportState] is used to observe the data source associated with the state and query the camera
  * to keep updating according to current viewport data.
+ *
+ * Users are responsible to create the viewport states and keep a reference to these states for
+ * future operations.
  */
 interface ViewportState {
   /**

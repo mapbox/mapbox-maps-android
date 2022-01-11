@@ -5,7 +5,7 @@ import com.mapbox.maps.plugin.viewport.state.ViewportState
 /**
  * Options that impact the [ViewportPlugin].
  */
-class ViewportPluginOptions private constructor(
+class ViewportOptions private constructor(
   /**
    * Indicates whether to transition [ViewportState] to IDLE (null) when user interact with the map
    * using gestures.
@@ -15,14 +15,14 @@ class ViewportPluginOptions private constructor(
   val transitionsToIdleUponUserInteraction: Boolean
 ) {
   /**
-   * Returns a builder that created the [ViewportPluginOptions]
+   * Returns a builder that created the [ViewportOptions]
    */
   fun toBuilder() = Builder().transitionsToIdleUponUserInteraction(transitionsToIdleUponUserInteraction)
 
   /**
    * Indicates whether some other object is "equal to" this one.
    */
-  override fun equals(other: Any?) = other is ViewportPluginOptions &&
+  override fun equals(other: Any?) = other is ViewportOptions &&
     transitionsToIdleUponUserInteraction == other.transitionsToIdleUponUserInteraction
 
   /**
@@ -37,7 +37,7 @@ class ViewportPluginOptions private constructor(
     "ViewportPluginOptions(transitionsToIdleUponUserInteraction=$transitionsToIdleUponUserInteraction)"
 
   /**
-   * Builder for [ViewportPluginOptions]
+   * Builder for [ViewportOptions]
    */
   class Builder {
     private var transitionsToIdleUponUserInteraction: Boolean = true
@@ -53,8 +53,8 @@ class ViewportPluginOptions private constructor(
     }
 
     /**
-     * Builds [ViewportPluginOptions]
+     * Builds [ViewportOptions]
      */
-    fun build() = ViewportPluginOptions(transitionsToIdleUponUserInteraction)
+    fun build() = ViewportOptions(transitionsToIdleUponUserInteraction)
   }
 }
