@@ -132,7 +132,6 @@ class ViewportShowcaseActivity : AppCompatActivity() {
     viewport.addStatusObserver { from, to, reason ->
       when (to.getCurrentOrNextState()) {
         is FollowingViewportState -> viewportButton.text = OVERVIEW
-        is OverviewViewportState -> viewportButton.text = FOLLOW
         else -> viewportButton.text = FOLLOW
       }
     }
