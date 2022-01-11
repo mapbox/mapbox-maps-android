@@ -7,9 +7,7 @@ import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.ViewAnnotationManagerImpl.Companion.EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
+import io.mockk.*
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
@@ -36,12 +34,14 @@ class ViewAnnotationManagerTest {
     every { view.visibility } returns View.VISIBLE
     every { view.viewTreeObserver } returns mockk(relaxed = true)
     every { mapView.context } returns mockk()
+    every { view.addOnAttachStateChangeListener(any()) } just Runs
     every { mapboxMap.addViewAnnotation(any(), any()) } returns ExpectedFactory.createNone()
   }
 
   @After
   fun tearDown() {
     every { mapboxMap.removeViewAnnotation(any()) } returns ExpectedFactory.createNone()
+    every { view.removeOnAttachStateChangeListener(any()) } just Runs
     viewAnnotationManager.destroy()
   }
 
@@ -162,6 +162,7 @@ class ViewAnnotationManagerTest {
   @Test
   fun removeViewAnnotationSuccess() {
     every { mapboxMap.removeViewAnnotation(any()) } returns ExpectedFactory.createNone()
+    every { view.removeOnAttachStateChangeListener(any()) } just Runs
     viewAnnotationManager.addViewAnnotation(
       view,
       viewAnnotationOptions {
@@ -172,6 +173,7 @@ class ViewAnnotationManagerTest {
     val removeActualResult = viewAnnotationManager.removeViewAnnotation(view)
     assertEquals(true, removeActualResult)
     assertNull(viewAnnotationManager.idLookupMap[view])
+    verify(exactly = 1) { view.removeOnAttachStateChangeListener(any()) }
     verify(exactly = 1) { mapboxMap.removeViewAnnotation(id!!) }
     verify(exactly = 1) { mapView.removeView(view) }
   }

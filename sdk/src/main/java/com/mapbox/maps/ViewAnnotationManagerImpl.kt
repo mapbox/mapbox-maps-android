@@ -68,7 +68,8 @@ internal class ViewAnnotationManagerImpl(
 
   override fun removeViewAnnotation(view: View): Boolean {
     val id = idLookupMap.remove(view) ?: return false
-    annotationMap.remove(id) ?: return false
+    val annotation = annotationMap.remove(id) ?: return false
+    annotation.view.removeOnAttachStateChangeListener(annotation.attachStateListener)
     mapView.removeView(view)
     getValue(mapboxMap.removeViewAnnotation(id))
     return true
