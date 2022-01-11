@@ -33,8 +33,8 @@ class FollowingViewportStateImpl internal constructor(
   private val transitionFactory = MapboxViewportTransitionFactory(mapDelegateProvider)
   private val dataSourceUpdateObservers = CopyOnWriteArrayList<ViewportStateDataObserver>()
 
-  private var lastLocation: Point = Point.fromLngLat(0.0, 0.0)
-  private var lastBearing: Double = 0.0
+  private var lastLocation: Point? = null
+  private var lastBearing: Double? = null
 
   private var runningAnimation: AnimatorSet? = null
   private var isFollowingStateRunning = false
@@ -94,6 +94,8 @@ class FollowingViewportStateImpl internal constructor(
     if (isObservingLocationUpdates && dataSourceUpdateObservers.isEmpty() && !isFollowingStateRunning) {
       locationComponent.removeOnIndicatorPositionChangedListener(indicatorPositionChangedListener)
       locationComponent.removeOnIndicatorBearingChangedListener(indicatorBearingChangedListener)
+      lastBearing = null
+      lastLocation = null
       isObservingLocationUpdates = false
     }
   }
