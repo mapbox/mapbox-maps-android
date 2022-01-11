@@ -1,4 +1,4 @@
-package com.mapbox.maps.plugin.viewport.experimental.data
+package com.mapbox.maps.plugin.viewport.data
 
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.plugin.viewport.DEFAULT_FRAME_TRANSITION_MAX_DURATION_MS

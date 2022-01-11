@@ -1,4 +1,4 @@
-package com.mapbox.maps.plugin.viewport.experimental.transition
+package com.mapbox.maps.plugin.viewport.transition
 
 import android.animation.Animator
 import android.animation.AnimatorSet
@@ -10,7 +10,7 @@ import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.viewport.experimental.ViewportPluginImpl.Companion.VIEWPORT_CAMERA_OWNER
+import com.mapbox.maps.plugin.viewport.ViewportPluginImpl.Companion.VIEWPORT_CAMERA_OWNER
 import kotlin.math.abs
 
 /**

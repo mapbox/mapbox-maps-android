@@ -1,4 +1,4 @@
-package com.mapbox.maps.plugin.viewport.experimental.data
+package com.mapbox.maps.plugin.viewport.data
 
 import java.util.Objects
 

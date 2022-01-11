@@ -1,4 +1,4 @@
-package com.mapbox.maps.plugin.viewport.experimental.state
+package com.mapbox.maps.plugin.viewport.state
 
 import com.mapbox.maps.CameraOptions
 

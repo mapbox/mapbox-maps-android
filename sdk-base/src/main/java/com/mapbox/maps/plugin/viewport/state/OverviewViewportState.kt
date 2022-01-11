@@ -1,6 +1,6 @@
-package com.mapbox.maps.plugin.viewport.experimental.state
+package com.mapbox.maps.plugin.viewport.state
 
-import com.mapbox.maps.plugin.viewport.experimental.data.OverviewViewportStateOptions
+import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
 
 /**
  * The [ViewportState] that shows the overview of a given geometry.

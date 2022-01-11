@@ -1,4 +1,4 @@
-package com.mapbox.maps.plugin.viewport.experimental.transition
+package com.mapbox.maps.plugin.viewport.transition
 
 import android.animation.Animator
 import android.animation.AnimatorSet
@@ -8,9 +8,9 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.viewport.experimental.CompletionListener
-import com.mapbox.maps.plugin.viewport.experimental.data.DefaultViewportTransitionOptions
-import com.mapbox.maps.plugin.viewport.experimental.state.ViewportState
+import com.mapbox.maps.plugin.viewport.CompletionListener
+import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
+import com.mapbox.maps.plugin.viewport.state.ViewportState
 
 /**
  * The implementation of [DefaultViewportTransition] that transitions Viewport from one [ViewportState] to another.
