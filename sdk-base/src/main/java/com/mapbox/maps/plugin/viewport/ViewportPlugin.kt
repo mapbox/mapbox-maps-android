@@ -1,10 +1,11 @@
 package com.mapbox.maps.plugin.viewport
 
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
 import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
-import com.mapbox.maps.plugin.viewport.data.ViewportPluginOptions
+import com.mapbox.maps.plugin.viewport.data.ViewportOptions
 import com.mapbox.maps.plugin.viewport.state.FollowingViewportState
 import com.mapbox.maps.plugin.viewport.state.OverviewViewportState
 import com.mapbox.maps.plugin.viewport.state.ViewportState
@@ -21,6 +22,7 @@ import com.mapbox.maps.plugin.viewport.transition.ViewportTransition
  *  - in a state (camera is being managed by a ViewportState)
  *  - transitioning (camera is being managed by a ViewportTransition)
  */
+@MapboxExperimental
 interface ViewportPlugin : MapPlugin {
 
   /**
@@ -52,28 +54,7 @@ interface ViewportPlugin : MapPlugin {
   /**
    * Options that impact the [ViewportPlugin].
    */
-  var options: ViewportPluginOptions
-
-  // States
-
-  /**
-   * Returns list of registered states.
-   */
-  val states: Set<ViewportState>
-
-  /**
-   * Add a viewport state to the viewport plugin, which could be reused later with the state id.
-   *
-   * @param state the view port state to be added.
-   */
-  fun addState(state: ViewportState)
-
-  /**
-   * Remove a viewport state from the viewport plugin, and it could not be reused later with the state id.
-
-   * @param state the view port state to be removed.
-   */
-  fun removeState(state: ViewportState)
+  var options: ViewportOptions
 
   // Transitions
 

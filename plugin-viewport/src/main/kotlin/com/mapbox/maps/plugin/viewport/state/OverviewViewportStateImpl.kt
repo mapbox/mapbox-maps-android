@@ -130,7 +130,7 @@ class OverviewViewportStateImpl(
 
   private fun updateFrame(cameraOptions: CameraOptions, instant: Boolean = false) {
     startAnimation(
-      transitionFactory.transitionLinear(cameraOptions, options.frameTransitionMaxDurationMs)
+      transitionFactory.transitionLinear(cameraOptions, options.frameAnimationDurationMs)
         .apply { doOnEnd { finishAnimation(this) } },
       instant
     )
