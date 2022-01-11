@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.viewport.state
 
+import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import androidx.core.animation.doOnEnd
@@ -124,8 +125,14 @@ class FollowingViewportStateImpl internal constructor(
    * @return a handle that cancels the camera updates.
    */
   override fun startUpdatingCamera(): Cancelable {
-    isFollowingStateRunning = true
     addIndicatorListenerIfNeeded()
+    updateFrame(
+      evaluateViewportData(), instant = false
+    ) { isFinished ->
+      if (isFinished) {
+        isFollowingStateRunning = true
+      }
+    }
     return Cancelable {
       isFollowingStateRunning = false
       cancelAnimation()
@@ -176,10 +183,36 @@ class FollowingViewportStateImpl internal constructor(
     }
   }
 
-  private fun updateFrame(cameraOptions: CameraOptions, instant: Boolean = false) {
+  private fun updateFrame(
+    cameraOptions: CameraOptions,
+    instant: Boolean = false,
+    onComplete: ((isFinished: Boolean) -> Unit)? = null
+  ) {
     startAnimation(
       transitionFactory.transitionLinear(cameraOptions, options.frameTransitionMaxDurationMs)
-        .apply { doOnEnd { finishAnimation(this) } },
+        .apply {
+          addListener(
+            object : Animator.AnimatorListener {
+              private var isCanceled = false
+              override fun onAnimationStart(animation: Animator?) {
+                // no-ops
+              }
+
+              override fun onAnimationEnd(animation: Animator?) {
+                onComplete?.invoke(!isCanceled)
+              }
+
+              override fun onAnimationCancel(animation: Animator?) {
+                isCanceled = true
+              }
+
+              override fun onAnimationRepeat(animation: Animator?) {
+                // no-ops
+              }
+            }
+          )
+          doOnEnd { finishAnimation(this) }
+        },
       instant
     )
   }
