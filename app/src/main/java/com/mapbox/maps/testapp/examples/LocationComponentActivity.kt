@@ -88,7 +88,7 @@ class LocationComponentActivity : AppCompatActivity() {
       R.id.action_show_bearing -> {
         if (binding.mapView.location.locationPuck is LocationPuck2D) {
           binding.mapView.location.apply {
-            locationPuck = createDefault2DPuck(this@LocationComponentActivity, true)
+            locationPuck = createDefault2DPuck(this@LocationComponentActivity, withBearing = true)
           }
         }
         return true
