@@ -3,7 +3,7 @@ package com.mapbox.maps.plugin.viewport.state
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
-import androidx.core.animation.doOnEnd
+import androidx.annotation.VisibleForTesting
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
@@ -26,18 +26,22 @@ import java.util.concurrent.*
  */
 class FollowingViewportStateImpl internal constructor(
   mapDelegateProvider: MapDelegateProvider,
-  initialOptions: FollowingViewportStateOptions
+  initialOptions: FollowingViewportStateOptions,
+  private val transitionFactory: MapboxViewportTransitionFactory = MapboxViewportTransitionFactory(
+    mapDelegateProvider
+  )
 ) : FollowingViewportState {
   private val cameraPlugin = mapDelegateProvider.mapPluginProviderDelegate.camera
   private val locationComponent = mapDelegateProvider.mapPluginProviderDelegate.location
-  private val transitionFactory = MapboxViewportTransitionFactory(mapDelegateProvider)
   private val dataSourceUpdateObservers = CopyOnWriteArrayList<ViewportStateDataObserver>()
 
   private var lastLocation: Point? = null
   private var lastBearing: Double? = null
 
   private var runningAnimation: AnimatorSet? = null
-  private var isFollowingStateRunning = false
+
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal var isFollowingStateRunning = false
   private var isObservingLocationUpdates = false
 
   private val indicatorPositionChangedListener = OnIndicatorPositionChangedListener { point ->
@@ -53,14 +57,16 @@ class FollowingViewportStateImpl internal constructor(
   }
 
   private fun notifyLatestViewportData() {
-    val viewportData = evaluateViewportData()
-    if (isFollowingStateRunning) {
-      // Use instant update here since the location updates are already interpolated by the location component plugin
-      updateFrame(viewportData, true)
-    }
-    dataSourceUpdateObservers.forEach {
-      if (!it.onNewData(viewportData)) {
-        dataSourceUpdateObservers.remove(it)
+    if (lastLocation != null && lastBearing != null) {
+      val viewportData = evaluateViewportData()
+      if (isFollowingStateRunning) {
+        // Use instant update here since the location updates are already interpolated by the location component plugin
+        updateFrame(viewportData, true)
+      }
+      dataSourceUpdateObservers.forEach {
+        if (!it.onNewData(viewportData)) {
+          dataSourceUpdateObservers.remove(it)
+        }
       }
     }
   }
@@ -94,8 +100,6 @@ class FollowingViewportStateImpl internal constructor(
     if (isObservingLocationUpdates && dataSourceUpdateObservers.isEmpty() && !isFollowingStateRunning) {
       locationComponent.removeOnIndicatorPositionChangedListener(indicatorPositionChangedListener)
       locationComponent.removeOnIndicatorBearingChangedListener(indicatorBearingChangedListener)
-      lastBearing = null
-      lastLocation = null
       isObservingLocationUpdates = false
     }
   }
@@ -217,6 +221,7 @@ class FollowingViewportStateImpl internal constructor(
 
               override fun onAnimationEnd(animation: Animator?) {
                 onComplete?.invoke(!isCanceled)
+                finishAnimation(this@apply)
               }
 
               override fun onAnimationCancel(animation: Animator?) {
@@ -228,7 +233,6 @@ class FollowingViewportStateImpl internal constructor(
               }
             }
           )
-          doOnEnd { finishAnimation(this) }
         },
       instant
     )
