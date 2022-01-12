@@ -50,7 +50,7 @@ class NavigationSimulator(
 
   init {
     initMapboxMap()
-    viewportPlugin.defaultTransition = viewportPlugin.makeDefaultTransition(
+    viewportPlugin.defaultTransition = viewportPlugin.makeDefaultViewportTransition(
       DefaultViewportTransitionOptions.Builder()
         .maxDurationMs(DEFAULT_VIEWPORT_TRANSITION_MAX_DURATION).build()
     )

@@ -289,7 +289,7 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
    *
    * @param options The desired [DefaultViewportTransitionOptions]
    */
-  override fun makeDefaultTransition(options: DefaultViewportTransitionOptions): DefaultViewportTransition {
+  override fun makeDefaultViewportTransition(options: DefaultViewportTransitionOptions): DefaultViewportTransition {
     return DefaultViewportTransitionImpl(delegateProvider, options)
   }
 

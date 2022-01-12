@@ -113,7 +113,9 @@ interface ViewportPlugin : MapPlugin {
    *
    * @param options The desired [FollowingViewportStateOptions]
    */
-  fun makeFollowingViewportState(options: FollowingViewportStateOptions): FollowingViewportState
+  fun makeFollowingViewportState(
+    options: FollowingViewportStateOptions = FollowingViewportStateOptions.Builder().build()
+  ): FollowingViewportState
 
   /**
    * Create an [OverviewViewportState] instance with provided [OverviewViewportStateOptions].
@@ -127,7 +129,9 @@ interface ViewportPlugin : MapPlugin {
    *
    * @param options The desired [DefaultViewportTransitionOptions]
    */
-  fun makeDefaultTransition(options: DefaultViewportTransitionOptions): DefaultViewportTransition
+  fun makeDefaultViewportTransition(
+    options: DefaultViewportTransitionOptions = DefaultViewportTransitionOptions.Builder().build()
+  ): DefaultViewportTransition
 
   /**
    * Create a [ViewportTransition] instance that transition to the target [ViewportState] immediately.

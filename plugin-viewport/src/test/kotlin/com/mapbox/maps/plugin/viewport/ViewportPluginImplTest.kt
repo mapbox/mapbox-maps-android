@@ -102,7 +102,7 @@ class ViewportPluginImplTest {
   fun testCreateDefaultViewportTransition() {
     val defaultViewportTransitionOptions = DefaultViewportTransitionOptions.Builder().build()
     val defaultViewportTransition =
-      viewportPlugin.makeDefaultTransition(defaultViewportTransitionOptions)
+      viewportPlugin.makeDefaultViewportTransition(defaultViewportTransitionOptions)
     assertEquals(defaultViewportTransitionOptions, defaultViewportTransition.options)
   }
 
