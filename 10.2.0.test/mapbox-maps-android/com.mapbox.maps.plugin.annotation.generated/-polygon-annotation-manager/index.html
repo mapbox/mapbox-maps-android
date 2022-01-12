@@ -1,0 +1,937 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>PolygonAnnotationManager</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+    <link href="../../../styles/style.css" rel="Stylesheet">
+    <link href="../../../styles/logo-styles.css" rel="Stylesheet">
+    <link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+    <link href="../../../styles/main.css" rel="Stylesheet">
+    <script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+    <script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+    <script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+    <script type="text/javascript" src="../../../scripts/main.js" async="async"></script>
+    <script>var pathToRoot = "../../../";</script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="leftColumn">
+        <div id="logo"></div>
+        <div id="paneSearch"></div>
+        <div id="sideMenu"></div>
+      </div>
+      <div id="main">
+        <div id="leftToggler"><span class="icon-toggler"></span></div>
+        <div id="searchBar"></div>
+        <script type="text/javascript" src="../../../scripts/pages.js"></script>
+        <script type="text/javascript" src="../../../scripts/main.js"></script>
+        <div id="content" pageIds="com.mapbox.maps.plugin.annotation.generated/PolygonAnnotationManager///PointingToDeclaration//1029194494">
+          <div class="breadcrumbs"><a href="../../index.html">mapbox-maps-android</a>/<a href="../index.html">com.mapbox.maps.plugin.annotation.generated</a>/<a href="index.html">PolygonAnnotationManager</a></div>
+          <div class="cover ">
+            <h1 class="cover"><span>Polygon</span><wbr></wbr><span>Annotation</span><wbr></wbr><span>Manager</span></h1>
+            <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">class <a href="index.html">PolygonAnnotationManager</a>(delegateProvider: <a href="../../com.mapbox.maps.plugin.delegates/-map-delegate-provider/index.html">MapDelegateProvider</a>, annotationConfig: <a href="../../com.mapbox.maps.plugin.annotation/-annotation-config/index.html">AnnotationConfig</a>?) : <a href="../../com.mapbox.maps.plugin.annotation/-annotation-manager-impl/index.html">AnnotationManagerImpl</a>&lt;<span data-unresolved-link="com.mapbox.geojson/Polygon///PointingToDeclaration/">Polygon</span>, <a href="../-polygon-annotation/index.html">PolygonAnnotation</a>, <a href="../-polygon-annotation-options/index.html">PolygonAnnotationOptions</a>, <a href="../-on-polygon-annotation-drag-listener/index.html">OnPolygonAnnotationDragListener</a>, <a href="../-on-polygon-annotation-click-listener/index.html">OnPolygonAnnotationClickListener</a>, <a href="../-on-polygon-annotation-long-click-listener/index.html">OnPolygonAnnotationLongClickListener</a>, <a href="../-on-polygon-annotation-interaction-listener/index.html">OnPolygonAnnotationInteractionListener</a>, <a href="../../com.mapbox.maps.extension.style.layers.generated/-fill-layer/index.html">FillLayer</a>&gt; <span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div><p class="paragraph">The polygonAnnotation manager allows to add polygonAnnotations to a map.</p></div></div>
+          </div>
+          <div class="tabbedcontent">
+            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button><button class="section-tab" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
+            <div class="tabs-section-body">
+              <h2 class="tabbedcontent">Constructors</h2>
+              <div class="table" data-togglable="Constructors"><a data-name="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FPolygonAnnotationManager%2F%23com.mapbox.maps.plugin.delegates.MapDelegateProvider%23com.mapbox.maps.plugin.annotation.AnnotationConfig%3F%2FPointingToDeclaration%2F%5D%2FConstructors%2F1029194494" anchor-label="PolygonAnnotationManager" id="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FPolygonAnnotationManager%2F%23com.mapbox.maps.plugin.delegates.MapDelegateProvider%23com.mapbox.maps.plugin.annotation.AnnotationConfig%3F%2FPointingToDeclaration%2F%5D%2FConstructors%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue TabbedContent">
+                    <div class=""><span class="inline-flex"><a href="-polygon-annotation-manager.html">PolygonAnnotationManager</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FPolygonAnnotationManager%2F%23com.mapbox.maps.plugin.delegates.MapDelegateProvider%23com.mapbox.maps.plugin.annotation.AnnotationConfig%3F%2FPointingToDeclaration%2F%5D%2FConstructors%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">fun <a href="-polygon-annotation-manager.html">PolygonAnnotationManager</a>(delegateProvider: <a href="../../com.mapbox.maps.plugin.delegates/-map-delegate-provider/index.html">MapDelegateProvider</a>, annotationConfig: <a href="../../com.mapbox.maps.plugin.annotation/-annotation-config/index.html">AnnotationConfig</a>? = null)<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="">Types</h2>
+              <div class="table" data-togglable="Types"><a data-name="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager.Companion%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F1029194494" anchor-label="Companion" id="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager.Companion%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-companion/index.html">Companion</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager.Companion%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">object <a href="-companion/index.html">Companion</a><span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager.Companion%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F1029194494" anchor-label="Companion" id="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager.Companion%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager.Companion%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F1029194494" anchor-label="Companion" id="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager.Companion%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Static variables and methods.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="">Functions</h2>
+              <div class="table" data-togglable="Functions"><a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FaddClickListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationClickListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="addClickListener" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FaddClickListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationClickListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FaddClickListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationClickListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">addClickListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FaddClickListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationClickListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FaddClickListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationClickListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">addClickListener</a>(u: <a href="../-on-polygon-annotation-click-listener/index.html">OnPolygonAnnotationClickListener</a>): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FaddDragListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationDragListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="addDragListener" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FaddDragListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationDragListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FaddDragListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationDragListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">addDragListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FaddDragListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationDragListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FaddDragListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationDragListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">addDragListener</a>(d: <a href="../-on-polygon-annotation-drag-listener/index.html">OnPolygonAnnotationDragListener</a>): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FaddInteractionListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationInteractionListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="addInteractionListener" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FaddInteractionListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationInteractionListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FaddInteractionListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationInteractionListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">addInteractionListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FaddInteractionListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationInteractionListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FaddInteractionListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationInteractionListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">addInteractionListener</a>(i: <a href="../-on-polygon-annotation-interaction-listener/index.html">OnPolygonAnnotationInteractionListener</a>): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FaddLongClickListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationLongClickListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="addLongClickListener" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FaddLongClickListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationLongClickListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FaddLongClickListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationLongClickListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">addLongClickListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FaddLongClickListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationLongClickListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FaddLongClickListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationLongClickListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">addLongClickListener</a>(v: <a href="../-on-polygon-annotation-long-click-listener/index.html">OnPolygonAnnotationLongClickListener</a>): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2Fcreate%2F%23com.mapbox.geojson.FeatureCollection%2FPointingToDeclaration%2F%2C+com.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2Fcreate%2F%23kotlin.String%2FPointingToDeclaration%2F%2C+com.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fcreate%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions%2FPointingToDeclaration%2F%2C+com.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fcreate%2F%23kotlin.collections.List%5Bcom.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions%5D%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="create" id="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2Fcreate%2F%23com.mapbox.geojson.FeatureCollection%2FPointingToDeclaration%2F%2C+com.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2Fcreate%2F%23kotlin.String%2FPointingToDeclaration%2F%2C+com.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fcreate%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions%2FPointingToDeclaration%2F%2C+com.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fcreate%2F%23kotlin.collections.List%5Bcom.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions%5D%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="create.html">create</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2Fcreate%2F%23com.mapbox.geojson.FeatureCollection%2FPointingToDeclaration%2F%2C+com.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2Fcreate%2F%23kotlin.String%2FPointingToDeclaration%2F%2C+com.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fcreate%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions%2FPointingToDeclaration%2F%2C+com.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fcreate%2F%23kotlin.collections.List%5Bcom.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions%5D%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">fun <a href="create.html">create</a>(featureCollection: <span data-unresolved-link="com.mapbox.geojson/FeatureCollection///PointingToDeclaration/">FeatureCollection</span>): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="../-polygon-annotation/index.html">PolygonAnnotation</a>&gt;<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2Fcreate%2F%23com.mapbox.geojson.FeatureCollection%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="create" id="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2Fcreate%2F%23com.mapbox.geojson.FeatureCollection%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2Fcreate%2F%23com.mapbox.geojson.FeatureCollection%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="create" id="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2Fcreate%2F%23com.mapbox.geojson.FeatureCollection%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Create a list of polygonAnnotations on the map.</div></div>
+<div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">fun <a href="create.html">create</a>(json: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="../-polygon-annotation/index.html">PolygonAnnotation</a>&gt;<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2Fcreate%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="create" id="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2Fcreate%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2Fcreate%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="create" id="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2Fcreate%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Create a list of polygonAnnotations on the map.</div></div>
+<div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fcreate%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">create</a>(option: <a href="../-polygon-annotation-options/index.html">PolygonAnnotationOptions</a>): <a href="../-polygon-annotation/index.html">PolygonAnnotation</a><span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fcreate%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="create" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fcreate%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fcreate%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="create" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fcreate%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Create an annotation with the option</div></div>
+<div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fcreate%2F%23kotlin.collections.List%5Bcom.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions%5D%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">create</a>(options: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="../-polygon-annotation-options/index.html">PolygonAnnotationOptions</a>&gt;): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="../-polygon-annotation/index.html">PolygonAnnotation</a>&gt;<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fcreate%2F%23kotlin.collections.List%5Bcom.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions%5D%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="create" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fcreate%2F%23kotlin.collections.List%5Bcom.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions%5D%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fcreate%2F%23kotlin.collections.List%5Bcom.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions%5D%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="create" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fcreate%2F%23kotlin.collections.List%5Bcom.mapbox.maps.plugin.annotation.generated.PolygonAnnotationOptions%5D%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Create some annotations with the options</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fdelete%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%2C+com.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fdelete%2F%23kotlin.collections.List%5Bcom.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%5D%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="delete" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fdelete%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%2C+com.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fdelete%2F%23kotlin.collections.List%5Bcom.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%5D%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fdelete%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">delete</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fdelete%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%2C+com.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fdelete%2F%23kotlin.collections.List%5Bcom.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%5D%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fdelete%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">delete</a>(annotation: <a href="../-polygon-annotation/index.html">PolygonAnnotation</a>)<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fdelete%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="delete" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fdelete%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fdelete%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="delete" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fdelete%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Delete the annotation</div></div>
+<div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fdelete%2F%23kotlin.collections.List%5Bcom.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%5D%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">delete</a>(annotations: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="../-polygon-annotation/index.html">PolygonAnnotation</a>&gt;)<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fdelete%2F%23kotlin.collections.List%5Bcom.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%5D%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="delete" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fdelete%2F%23kotlin.collections.List%5Bcom.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%5D%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fdelete%2F%23kotlin.collections.List%5Bcom.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%5D%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="delete" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fdelete%2F%23kotlin.collections.List%5Bcom.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%5D%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Delete annotations in the list</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FdeleteAll%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="deleteAll" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FdeleteAll%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../../com.mapbox.maps.plugin.annotation/-annotation-manager-impl/delete-all.html">deleteAll</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FdeleteAll%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="../../com.mapbox.maps.plugin.annotation/-annotation-manager-impl/delete-all.html">deleteAll</a>()<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FdeleteAll%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="deleteAll" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FdeleteAll%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FdeleteAll%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="deleteAll" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FdeleteAll%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Delete all the added annotations</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FenableDataDrivenProperty%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="enableDataDrivenProperty" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FenableDataDrivenProperty%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../../com.mapbox.maps.plugin.annotation/-annotation-manager-impl/enable-data-driven-property.html">enableDataDrivenProperty</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FenableDataDrivenProperty%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="../../com.mapbox.maps.plugin.annotation/-annotation-manager-impl/enable-data-driven-property.html">enableDataDrivenProperty</a>(property: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>)<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FenableDataDrivenProperty%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="enableDataDrivenProperty" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FenableDataDrivenProperty%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FenableDataDrivenProperty%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="enableDataDrivenProperty" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FenableDataDrivenProperty%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Enable a data-driven property</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bkotlin%2FAny%2Fequals%2F%23kotlin.Any%3F%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="equals" id="%5Bkotlin%2FAny%2Fequals%2F%23kotlin.Any%3F%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../../com.mapbox.maps.util/-math-utils/index.html#%5Bkotlin%2FAny%2Fequals%2F%23kotlin.Any%3F%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">equals</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bkotlin%2FAny%2Fequals%2F%23kotlin.Any%3F%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open operator fun <a href="../../com.mapbox.maps.util/-math-utils/index.html#%5Bkotlin%2FAny%2Fequals%2F%23kotlin.Any%3F%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">equals</a>(other: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a>?): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FgetAnnotationIdKey%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="getAnnotationIdKey" id="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FgetAnnotationIdKey%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="get-annotation-id-key.html">getAnnotationIdKey</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FgetAnnotationIdKey%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="get-annotation-id-key.html">getAnnotationIdKey</a>(): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FgetAnnotationIdKey%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="getAnnotationIdKey" id="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FgetAnnotationIdKey%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FgetAnnotationIdKey%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="getAnnotationIdKey" id="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FgetAnnotationIdKey%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Get the key of the id of the annotation.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bkotlin%2FAny%2FhashCode%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="hashCode" id="%5Bkotlin%2FAny%2FhashCode%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../../com.mapbox.maps.util/-math-utils/index.html#%5Bkotlin%2FAny%2FhashCode%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">hashCode</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bkotlin%2FAny%2FhashCode%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="../../com.mapbox.maps.util/-math-utils/index.html#%5Bkotlin%2FAny%2FhashCode%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">hashCode</a>(): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FonDestroy%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="onDestroy" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FonDestroy%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../../com.mapbox.maps.plugin.annotation/-annotation-manager-impl/on-destroy.html">onDestroy</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FonDestroy%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="../../com.mapbox.maps.plugin.annotation/-annotation-manager-impl/on-destroy.html">onDestroy</a>()<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FonDestroy%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="onDestroy" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FonDestroy%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FonDestroy%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="onDestroy" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FonDestroy%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Invoked when Mapview or Annotation manager is destroyed.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FonSizeChanged%2F%23kotlin.Int%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="onSizeChanged" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FonSizeChanged%2F%23kotlin.Int%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../../com.mapbox.maps.plugin.annotation/-annotation-manager-impl/on-size-changed.html">onSizeChanged</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FonSizeChanged%2F%23kotlin.Int%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="../../com.mapbox.maps.plugin.annotation/-annotation-manager-impl/on-size-changed.html">onSizeChanged</a>(width: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, height: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>)<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FonSizeChanged%2F%23kotlin.Int%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="onSizeChanged" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FonSizeChanged%2F%23kotlin.Int%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FonSizeChanged%2F%23kotlin.Int%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="onSizeChanged" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FonSizeChanged%2F%23kotlin.Int%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Invoked when MapView's width and height have changed.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FqueryMapForFeatures%2F%23com.mapbox.geojson.Point%2FPointingToDeclaration%2F%2C+com.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FqueryMapForFeatures%2F%23com.mapbox.maps.ScreenCoordinate%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="queryMapForFeatures" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FqueryMapForFeatures%2F%23com.mapbox.geojson.Point%2FPointingToDeclaration%2F%2C+com.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FqueryMapForFeatures%2F%23com.mapbox.maps.ScreenCoordinate%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../../com.mapbox.maps.plugin.annotation/-annotation-manager-impl/query-map-for-features.html">queryMapForFeatures</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FqueryMapForFeatures%2F%23com.mapbox.geojson.Point%2FPointingToDeclaration%2F%2C+com.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FqueryMapForFeatures%2F%23com.mapbox.maps.ScreenCoordinate%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">fun <a href="../../com.mapbox.maps.plugin.annotation/-annotation-manager-impl/query-map-for-features.html">queryMapForFeatures</a>(point: <span data-unresolved-link="com.mapbox.geojson/Point///PointingToDeclaration/">Point</span>): <a href="../-polygon-annotation/index.html">PolygonAnnotation</a>?<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FqueryMapForFeatures%2F%23com.mapbox.geojson.Point%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="queryMapForFeatures" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FqueryMapForFeatures%2F%23com.mapbox.geojson.Point%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FqueryMapForFeatures%2F%23com.mapbox.geojson.Point%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="queryMapForFeatures" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FqueryMapForFeatures%2F%23com.mapbox.geojson.Point%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Query the rendered annotation around the point</div></div>
+<div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">fun <a href="../../com.mapbox.maps.plugin.annotation/-annotation-manager-impl/query-map-for-features.html">queryMapForFeatures</a>(screenCoordinate: <a href="../../com.mapbox.maps/[android-jvm]-screen-coordinate/index.html">ScreenCoordinate</a>): <a href="../-polygon-annotation/index.html">PolygonAnnotation</a>?<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FqueryMapForFeatures%2F%23com.mapbox.maps.ScreenCoordinate%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="queryMapForFeatures" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FqueryMapForFeatures%2F%23com.mapbox.maps.ScreenCoordinate%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FqueryMapForFeatures%2F%23com.mapbox.maps.ScreenCoordinate%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="queryMapForFeatures" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FqueryMapForFeatures%2F%23com.mapbox.maps.ScreenCoordinate%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Query the rendered annotation around the point</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FremoveClickListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationClickListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="removeClickListener" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FremoveClickListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationClickListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FremoveClickListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationClickListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">removeClickListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FremoveClickListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationClickListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FremoveClickListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationClickListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">removeClickListener</a>(u: <a href="../-on-polygon-annotation-click-listener/index.html">OnPolygonAnnotationClickListener</a>): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FremoveDragListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationDragListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="removeDragListener" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FremoveDragListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationDragListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FremoveDragListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationDragListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">removeDragListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FremoveDragListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationDragListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FremoveDragListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationDragListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">removeDragListener</a>(d: <a href="../-on-polygon-annotation-drag-listener/index.html">OnPolygonAnnotationDragListener</a>): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FremoveInteractionListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationInteractionListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="removeInteractionListener" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FremoveInteractionListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationInteractionListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FremoveInteractionListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationInteractionListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">removeInteractionListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FremoveInteractionListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationInteractionListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FremoveInteractionListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationInteractionListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">removeInteractionListener</a>(i: <a href="../-on-polygon-annotation-interaction-listener/index.html">OnPolygonAnnotationInteractionListener</a>): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FremoveLongClickListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationLongClickListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="removeLongClickListener" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FremoveLongClickListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationLongClickListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FremoveLongClickListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationLongClickListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">removeLongClickListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FremoveLongClickListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationLongClickListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManager%2FremoveLongClickListener%2F%23com.mapbox.maps.plugin.annotation.generated.OnPolygonAnnotationLongClickListener%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">removeLongClickListener</a>(v: <a href="../-on-polygon-annotation-long-click-listener/index.html">OnPolygonAnnotationLongClickListener</a>): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FselectAnnotation%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="selectAnnotation" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FselectAnnotation%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FselectAnnotation%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">selectAnnotation</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FselectAnnotation%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FselectAnnotation%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">selectAnnotation</a>(annotation: <a href="../-polygon-annotation/index.html">PolygonAnnotation</a>)<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FselectAnnotation%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="selectAnnotation" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FselectAnnotation%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FselectAnnotation%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="selectAnnotation" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2FselectAnnotation%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Toggles the annotation's selection state.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bkotlin%2FAny%2FtoString%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="toString" id="%5Bkotlin%2FAny%2FtoString%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="../../com.mapbox.maps.util/-math-utils/index.html#%5Bkotlin%2FAny%2FtoString%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">toString</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bkotlin%2FAny%2FtoString%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="../../com.mapbox.maps.util/-math-utils/index.html#%5Bkotlin%2FAny%2FtoString%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">toString</a>(): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fupdate%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%2C+com.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fupdate%2F%23kotlin.collections.List%5Bcom.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%5D%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="update" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fupdate%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%2C+com.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fupdate%2F%23kotlin.collections.List%5Bcom.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%5D%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fupdate%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">update</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fupdate%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%2C+com.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fupdate%2F%23kotlin.collections.List%5Bcom.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%5D%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fupdate%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">update</a>(annotation: <a href="../-polygon-annotation/index.html">PolygonAnnotation</a>)<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fupdate%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="update" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fupdate%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fupdate%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="update" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fupdate%2F%23com.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Update the annotation</div></div>
+<div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override fun <a href="index.html#%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fupdate%2F%23kotlin.collections.List%5Bcom.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%5D%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494">update</a>(annotations: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="../-polygon-annotation/index.html">PolygonAnnotation</a>&gt;)<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fupdate%2F%23kotlin.collections.List%5Bcom.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%5D%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="update" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fupdate%2F%23kotlin.collections.List%5Bcom.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%5D%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fupdate%2F%23kotlin.collections.List%5Bcom.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%5D%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" anchor-label="update" id="%5Bcom.mapbox.maps.plugin.annotation%2FAnnotationManagerImpl%2Fupdate%2F%23kotlin.collections.List%5Bcom.mapbox.maps.plugin.annotation.generated.PolygonAnnotation%5D%2FPointingToDeclaration%2F%5D%2FFunctions%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Update annotations in the list</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="">Properties</h2>
+              <div class="table" data-togglable="Properties"><a data-name="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2Fannotations%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494" anchor-label="annotations" id="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2Fannotations%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="annotations.html">annotations</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2Fannotations%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override val <a href="annotations.html">annotations</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="../-polygon-annotation/index.html">PolygonAnnotation</a>&gt;<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div><div class="brief ">The added annotations</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FclickListeners%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494" anchor-label="clickListeners" id="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FclickListeners%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="click-listeners.html">clickListeners</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FclickListeners%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override val <a href="click-listeners.html">clickListeners</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html">MutableList</a>&lt;<a href="../-on-polygon-annotation-click-listener/index.html">OnPolygonAnnotationClickListener</a>&gt;<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div><div class="brief ">The Added clickListeners</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FdelegateProvider%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494" anchor-label="delegateProvider" id="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FdelegateProvider%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="delegate-provider.html">delegateProvider</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FdelegateProvider%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">override val <a href="delegate-provider.html">delegateProvider</a>: <a href="../../com.mapbox.maps.plugin.delegates/-map-delegate-provider/index.html">MapDelegateProvider</a><span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div><div class="brief ">The delegateProvider</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FdragListeners%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494" anchor-label="dragListeners" id="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FdragListeners%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="drag-listeners.html">dragListeners</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FdragListeners%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override val <a href="drag-listeners.html">dragListeners</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html">MutableList</a>&lt;<a href="../-on-polygon-annotation-drag-listener/index.html">OnPolygonAnnotationDragListener</a>&gt;<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div><div class="brief ">The added dragListeners</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FfillAntialias%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494" anchor-label="fillAntialias" id="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FfillAntialias%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="fill-antialias.html">fillAntialias</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FfillAntialias%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">var <a href="fill-antialias.html">fillAntialias</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>?<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div><div class="brief ">The FillAntialias propertyWhether or not the fill should be antialiased.</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FfillTranslate%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494" anchor-label="fillTranslate" id="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FfillTranslate%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="fill-translate.html">fillTranslate</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FfillTranslate%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">var <a href="fill-translate.html">fillTranslate</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a>&gt;?<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div><div class="brief ">The FillTranslate propertyThe geometry's offset.</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FfillTranslateAnchor%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494" anchor-label="fillTranslateAnchor" id="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FfillTranslateAnchor%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="fill-translate-anchor.html">fillTranslateAnchor</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FfillTranslateAnchor%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">var <a href="fill-translate-anchor.html">fillTranslateAnchor</a>: <a href="../../com.mapbox.maps.extension.style.layers.properties.generated/-fill-translate-anchor/index.html">FillTranslateAnchor</a>?<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div><div class="brief ">The FillTranslateAnchor propertyControls the frame of reference for {@link PropertyFactory#fillTranslate}.</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FinteractionListener%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494" anchor-label="interactionListener" id="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FinteractionListener%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="interaction-listener.html">interactionListener</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FinteractionListener%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override val <a href="interaction-listener.html">interactionListener</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html">MutableList</a>&lt;<a href="../-on-polygon-annotation-interaction-listener/index.html">OnPolygonAnnotationInteractionListener</a>&gt;<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div><div class="brief ">The added interactionListener</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FlayerFilter%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494" anchor-label="layerFilter" id="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FlayerFilter%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="layer-filter.html">layerFilter</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FlayerFilter%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override var <a href="layer-filter.html">layerFilter</a>: <a href="../../com.mapbox.maps.extension.style.expressions.generated/-expression/index.html">Expression</a>?<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div><div class="brief ">The filter on the managed polygonAnnotations.</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FlongClickListeners%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494" anchor-label="longClickListeners" id="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FlongClickListeners%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="long-click-listeners.html">longClickListeners</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.maps.plugin.annotation.generated%2FPolygonAnnotationManager%2FlongClickListeners%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F1029194494"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open override val <a href="long-click-listeners.html">longClickListeners</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html">MutableList</a>&lt;<a href="../-on-polygon-annotation-long-click-listener/index.html">OnPolygonAnnotationLongClickListener</a>&gt;<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div><div class="brief ">The added longClickListeners</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="go-to-top-icon"><a href="#container"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M11.3337 9.66683H0.666992L6.00033 3.66683L11.3337 9.66683Z" fill="black"/>
+    <path d="M0.666992 0.333496H11.3337V1.66683H0.666992V0.333496Z" fill="black"/>
+</svg></a></span><span>© 2020 Copyright</span><span class="pull-right"><span>Sponsored and developed by dokka</span><a href="https://github.com/Kotlin/dokka"><span class="padded-icon"><svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8 0H2.3949L4.84076 2.44586L0 7.28662L0.713376 8L5.55414 3.15924L8 5.6051V0Z" fill="black"/>
+</svg></span></a></span></div>
+      </div>
+    </div>
+  </body>
+</html>
+
