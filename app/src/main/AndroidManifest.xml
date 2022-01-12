@@ -1113,6 +1113,30 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
+            android:name=".examples.viewport.ViewportShowcaseActivity"
+            android:description="@string/description_viewport"
+            android:exported="true"
+            android:label="@string/activity_viewport">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_viewport" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
+        <activity
+            android:name=".examples.viewport.AdvancedViewportGesturesExample"
+            android:description="@string/description_advanced_viewport"
+            android:exported="true"
+            android:label="@string/activity_advanced_viewport">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_viewport" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
+        <activity
             android:name=".examples.markersandcallouts.AnnotationWithCalloutActivity"
             android:description="@string/description_view_annotation_callout_annotation"
             android:exported="true"

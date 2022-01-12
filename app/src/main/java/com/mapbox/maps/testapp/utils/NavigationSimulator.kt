@@ -2,17 +2,11 @@ package com.mapbox.maps.testapp.utils
 
 import android.os.Handler
 import android.os.Looper
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
-import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.geojson.LineString
-import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
-import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.LineCap
@@ -20,15 +14,16 @@ import com.mapbox.maps.extension.style.layers.properties.generated.LineJoin
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.LocationPuck2D
-import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
-import com.mapbox.maps.plugin.animation.MapAnimationOptions
-import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
-import com.mapbox.maps.plugin.gestures.OnMoveListener
 import com.mapbox.maps.plugin.gestures.gestures
-import com.mapbox.maps.plugin.locationcomponent.*
+import com.mapbox.maps.plugin.locationcomponent.location
+import com.mapbox.maps.plugin.viewport.ViewportStatus
+import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
+import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateOptions
+import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
+import com.mapbox.maps.plugin.viewport.data.ViewportOptions
+import com.mapbox.maps.plugin.viewport.viewport
 import com.mapbox.maps.testapp.R
-import com.mapbox.turf.TurfMeasurement
 
 /**
  * Simulate a navigation route with pre-defined route as LineString.
@@ -42,146 +37,35 @@ class NavigationSimulator(
   private val style: String = DEFAULT_STYLE
 ) :
   NavigationSimulatorCameraController {
-  private val locationProvider by lazy { FakeLocationProvider(routePoints) }
-  private var cameraFollowMode = CameraFollowMode.OVERVIEW
+  private val locationProvider by lazy { SimulateRouteLocationProvider(routePoints) }
   private val handler = Handler(Looper.getMainLooper())
+  private val viewportPlugin = mapView.viewport
+  private val followingViewportState =
+    viewportPlugin.makeFollowingViewportState(FollowingViewportStateOptions.Builder().build())
+  private val overviewViewportState = viewportPlugin.makeOverviewViewportState(
+    OverviewViewportStateOptions.Builder().geometry(routePoints)
+      .padding(EdgeInsets(100.0, 100.0, 100.0, 100.0)).build()
+  )
   private var gesturesEnabled = true
 
   init {
     initMapboxMap()
-  }
-
-  private val onIndicatorBearingChangedListener = OnIndicatorBearingChangedListener {
-    if (cameraFollowMode == CameraFollowMode.FOLLOW) {
-      mapView.getMapboxMap()
-        .setCamera(CameraOptions.Builder().pitch(CAMERA_TRACKING_PITCH).bearing(it).build())
-    }
-  }
-
-  private val onIndicatorPositionChangedListener = OnIndicatorPositionChangedListener {
-    if (cameraFollowMode == CameraFollowMode.FOLLOW) {
-      mapView.getMapboxMap()
-        .setCamera(CameraOptions.Builder().center(it).pitch(CAMERA_TRACKING_PITCH).build())
-      mapView.gestures.focalPoint = mapView.getMapboxMap().pixelForCoordinate(it)
-    }
-  }
-
-  private val onMoveListener = object : OnMoveListener {
-    override fun onMoveBegin(detector: MoveGestureDetector) {
-      if (cameraFollowMode != CameraFollowMode.NONE) {
-        onCameraTrackingDismissed()
-      }
-    }
-
-    override fun onMove(detector: MoveGestureDetector): Boolean {
-      return false
-    }
-
-    override fun onMoveEnd(detector: MoveGestureDetector) {}
+    viewportPlugin.defaultTransition = viewportPlugin.makeDefaultViewportTransition(
+      DefaultViewportTransitionOptions.Builder()
+        .maxDurationMs(DEFAULT_VIEWPORT_TRANSITION_MAX_DURATION).build()
+    )
   }
 
   private val onMapClickListener = OnMapClickListener {
-    when (cameraFollowMode) {
-      CameraFollowMode.OVERVIEW -> {
-        setCameraToFollowPuck()
-      }
-      CameraFollowMode.FOLLOW -> {
-        setCameraToOverview(true)
-      }
-      CameraFollowMode.NONE -> {
-        setCameraToFollowPuck()
+    with(viewportPlugin.status) {
+      if (this is ViewportStatus.State) {
+        when (state) {
+          followingViewportState -> viewportPlugin.transitionTo(overviewViewportState)
+          else -> viewportPlugin.transitionTo(followingViewportState)
+        }
       }
     }
     true
-  }
-
-  private fun setCameraToOverview(easeTo: Boolean = true) {
-    cameraFollowMode = CameraFollowMode.OVERVIEW
-    val camera = mapView.getMapboxMap().cameraForCoordinates(
-      locationProvider.route.coordinates(),
-      bearing = 0.0,
-      pitch = 0.0,
-      padding = EdgeInsets(100.0, 100.0, 100.0, 100.0)
-    )
-    if (easeTo) {
-      mapView.camera.apply {
-        easeTo(
-          cameraOptions {
-            pitch(camera.pitch!!)
-            bearing(camera.bearing!!)
-          },
-          MapAnimationOptions.mapAnimationOptions {
-            duration(EASE_TO_PUCK_DURATION_MS / 3)
-          }
-        )
-        val zoom = createZoomAnimator(
-          CameraAnimatorOptions.cameraAnimatorOptions(camera.zoom!!)
-        ) {
-          duration = EASE_TO_PUCK_DURATION_MS / 3
-          interpolator = AccelerateDecelerateInterpolator()
-        }
-        handler.postDelayed(
-          {
-            playAnimatorsSequentially(zoom)
-          },
-          EASE_TO_PUCK_DURATION_MS / 3
-        )
-        handler.postDelayed(
-          {
-            easeTo(
-              camera,
-              MapAnimationOptions.mapAnimationOptions {
-                duration(EASE_TO_PUCK_DURATION_MS / 3)
-              }
-            )
-          },
-          EASE_TO_PUCK_DURATION_MS * 2 / 3
-        )
-      }
-    } else {
-      mapView.getMapboxMap().setCamera(camera)
-    }
-  }
-
-  private fun easeToPuck(callback: () -> Unit) {
-    mapView.camera.apply {
-      val zoom = createZoomAnimator(
-        CameraAnimatorOptions.cameraAnimatorOptions(CAMERA_TRACKING_ZOOM)
-      ) {
-        duration = EASE_TO_PUCK_DURATION_MS / 3
-        interpolator = AccelerateDecelerateInterpolator()
-      }
-      val center = createCenterAnimator(
-        CameraAnimatorOptions.cameraAnimatorOptions(locationProvider.lastLocation)
-      ) {
-        duration = EASE_TO_PUCK_DURATION_MS / 3
-        interpolator = AccelerateDecelerateInterpolator()
-      }
-      playAnimatorsSequentially(center, zoom)
-      handler.postDelayed(
-        {
-          easeTo(
-            cameraOptions {
-              center(locationProvider.lastLocation)
-              bearing(locationProvider.lastBearing)
-              pitch(CAMERA_TRACKING_PITCH)
-            },
-            MapAnimationOptions.mapAnimationOptions {
-              duration(EASE_TO_PUCK_DURATION_MS / 3)
-            }
-          )
-        },
-        EASE_TO_PUCK_DURATION_MS * 2 / 3
-      )
-    }
-
-    handler.postDelayed(callback, EASE_TO_PUCK_DURATION_MS)
-  }
-
-  private fun setCameraToFollowPuck() {
-    easeToPuck {
-      cameraFollowMode = CameraFollowMode.FOLLOW
-    }
   }
 
   private fun initMapboxMap() {
@@ -200,7 +84,7 @@ class NavigationSimulator(
     ) {
       mapView.recordFrameStats()
       initLocationComponent()
-      setCameraToOverview(false)
+      viewportPlugin.transitionTo(overviewViewportState)
       enableGestures()
     }
   }
@@ -270,7 +154,8 @@ class NavigationSimulator(
         doubleTapToZoomInEnabled = true
         doubleTouchToZoomOutEnabled = true
       }
-      addOnMoveListener(onMoveListener)
+      viewportPlugin.options =
+        ViewportOptions.Builder().transitionsToIdleUponUserInteraction(true).build()
       addOnMapClickListener(onMapClickListener)
     }
     gesturesEnabled = true
@@ -278,9 +163,9 @@ class NavigationSimulator(
 
   override fun setCameraTrackingMode(cameraMode: CameraFollowMode) {
     when (cameraMode) {
-      CameraFollowMode.FOLLOW -> setCameraToFollowPuck()
-      CameraFollowMode.OVERVIEW -> setCameraToOverview(true)
-      CameraFollowMode.NONE -> stopCameraTracking()
+      CameraFollowMode.FOLLOW -> viewportPlugin.transitionTo(followingViewportState)
+      CameraFollowMode.OVERVIEW -> viewportPlugin.transitionTo(overviewViewportState)
+      CameraFollowMode.NONE -> viewportPlugin.idle()
     }
   }
 
@@ -290,7 +175,8 @@ class NavigationSimulator(
   override fun disableGestures() {
     if (gesturesEnabled) {
       mapView.gestures.apply {
-        removeOnMoveListener(onMoveListener)
+        viewportPlugin.options =
+          ViewportOptions.Builder().transitionsToIdleUponUserInteraction(false).build()
         removeOnMapClickListener(onMapClickListener)
       }
       mapView.gestures.updateSettings {
@@ -329,65 +215,12 @@ class NavigationSimulator(
       )
     }
     locationComponentPlugin.setLocationProvider(locationProvider)
-    locationComponentPlugin.addOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
-    locationComponentPlugin.addOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener)
-  }
-
-  private fun onCameraTrackingDismissed() {
-    Toast.makeText(mapView.context, "onCameraTrackingDismissed", Toast.LENGTH_SHORT).show()
-    stopCameraTracking()
-  }
-
-  private fun stopCameraTracking() {
-    cameraFollowMode = CameraFollowMode.NONE
   }
 
   fun onDestroy() {
     handler.removeCallbacksAndMessages(null)
-    mapView.location.apply {
-      removeOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener)
-      removeOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
-    }
     mapView.gestures.apply {
-      removeOnMoveListener(onMoveListener)
       removeOnMapClickListener(onMapClickListener)
-    }
-  }
-
-  private inner class FakeLocationProvider(val route: LineString) : LocationProvider {
-    private var locationConsumer: LocationConsumer? = null
-    private val pointList = route.coordinates().toMutableList()
-    private val iterator = pointList.iterator()
-    var lastLocation: Point = iterator.next()
-    var lastBearing = 0.0
-
-    private fun emitFakeLocations() {
-      handler.postDelayed(
-        {
-          if (iterator.hasNext()) {
-            val point = iterator.next()
-            val bearing = TurfMeasurement.bearing(lastLocation, point)
-            lastLocation = point
-            lastBearing = bearing
-            iterator.remove()
-
-            locationConsumer?.onLocationUpdated(point)
-            locationConsumer?.onBearingUpdated(bearing)
-          }
-          emitFakeLocations()
-        },
-        LOCATION_UPDATE_INTERVAL_MS
-      )
-    }
-
-    override fun registerLocationConsumer(locationConsumer: LocationConsumer) {
-      this.locationConsumer = locationConsumer
-      emitFakeLocations()
-    }
-
-    override fun unRegisterLocationConsumer(locationConsumer: LocationConsumer) {
-      this.locationConsumer = null
-      handler.removeCallbacksAndMessages(null)
     }
   }
 
@@ -419,10 +252,7 @@ class NavigationSimulator(
     private const val DEFAULT_STYLE = Style.MAPBOX_STREETS
     private const val DEFAULT_CAMERA_MODE_SWITCH_INTERVAL_MS = 5000L
     private const val DEFAULT_SCRIPT_DURATION_MS = 20000L
-    private const val EASE_TO_PUCK_DURATION_MS = 2000L
-    private const val LOCATION_UPDATE_INTERVAL_MS = 1000L
-    private const val CAMERA_TRACKING_PITCH = 40.0
-    private const val CAMERA_TRACKING_ZOOM = 16.5
+    private const val DEFAULT_VIEWPORT_TRANSITION_MAX_DURATION = 2000L
     private const val GEOJSON_SOURCE_ID = "source_id"
     private const val ROUTE_LINE_LAYER_ID = "route_line_layer_id"
   }

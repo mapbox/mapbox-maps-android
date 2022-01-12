@@ -26,6 +26,7 @@ include(
   ":plugin-logo",
   ":plugin-overlay",
   ":plugin-scalebar",
+  ":plugin-viewport",
   ":sdk",
   ":sdk-base"
 )
