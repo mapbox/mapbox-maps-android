@@ -6,6 +6,12 @@
         "nonPublicPartOfAPI": {
           "reportUnchanged": false
         }
+      },
+      "filter": {
+        "packages": {
+          "regex": true,
+          "include": ["com\\.mapbox\\.maps\\..*"]
+        }
       }
     }
   }
