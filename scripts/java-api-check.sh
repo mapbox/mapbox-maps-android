@@ -134,7 +134,6 @@ compare_aars() {
         -D revapi.java.missing-classes.behavior=report \
         -D revapi.java.missing-classes.ignoreMissingAnnotations=false \
         -D revapi.java.non-public-part-of-api.report-unchanged=false \
-        -D revapi.java.filter.packages.include=\[com.mapbox.maps\] \
         -D revapi.reporter.json.minSeverity=EQUIVALENT \
         -D revapi.reporter.json.output="${json_report}" \
         -D revapi.reporter.text.minSeverity=NON_BREAKING \
