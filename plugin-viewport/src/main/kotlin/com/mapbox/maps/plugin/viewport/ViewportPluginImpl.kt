@@ -43,8 +43,6 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
   ViewportPlugin {
   private val registeredStatusObservers = CopyOnWriteArraySet<ViewportStatusObserver>()
   private var currentCancelable: Cancelable? = null
-    @Synchronized set
-    @Synchronized get
   private val transitions = HashMap<Pair<ViewportState?, ViewportState?>, ViewportTransition>()
   private lateinit var delegateProvider: MapDelegateProvider
   private lateinit var cameraPlugin: CameraAnimationsPlugin
@@ -104,8 +102,7 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
    * @see addStatusObserver
    */
   override var status: ViewportStatus = ViewportStatus.State(null)
-    @Synchronized private set
-    @Synchronized get
+    private set
 
   private fun updateStatus(targetStatus: ViewportStatus, reason: String) {
     if (targetStatus != status) {
