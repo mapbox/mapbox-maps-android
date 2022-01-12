@@ -181,7 +181,7 @@ class FollowingViewportStateImplTest {
   }
 
   @Test
-  fun testStartUpdatingCamera() {
+  fun testStartStopUpdatingCamera() {
     val indicatorBearingChangedListenerSlot = slot<OnIndicatorBearingChangedListener>()
     val indicatorPositionChangedListenerSlot = slot<OnIndicatorPositionChangedListener>()
     val testBearing = 10.0
@@ -195,6 +195,7 @@ class FollowingViewportStateImplTest {
     every { animatorSet.childAnimations } returns arrayListOf(animator)
     every { animatorSet.start() } just runs
 
+    // test stop updating camera
     followingState.startUpdatingCamera()
     verify {
       locationPlugin.addOnIndicatorBearingChangedListener(
@@ -221,5 +222,20 @@ class FollowingViewportStateImplTest {
     assertFalse(followingState.isFollowingStateRunning)
     animatorListenerSlot.captured.onAnimationEnd(mockk())
     assertTrue(followingState.isFollowingStateRunning)
+
+    // test stop updating camera
+    followingState.stopUpdatingCamera()
+    verify {
+      locationPlugin.removeOnIndicatorBearingChangedListener(
+        indicatorBearingChangedListenerSlot.captured
+      )
+    }
+    verify {
+      locationPlugin.removeOnIndicatorPositionChangedListener(
+        indicatorPositionChangedListenerSlot.captured
+      )
+    }
+    assertFalse(followingState.isFollowingStateRunning)
+    verify { cameraPlugin.unregisterAnimators(animator) }
   }
 }
