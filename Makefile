@@ -72,7 +72,7 @@ generate-changelog:
 .PHONY: update-android-docs
 update-android-docs:
 	unset GITHUB_TOKEN; \
-	echo "$(shell mbx-ci github writer token)" > gh_token.txt;\
+	echo "$(shell mbx-ci github writer private token)" > gh_token.txt;\
 	sh scripts/update-android-docs.sh -s $(TAG)
 
 .PHONY: unit-tests
