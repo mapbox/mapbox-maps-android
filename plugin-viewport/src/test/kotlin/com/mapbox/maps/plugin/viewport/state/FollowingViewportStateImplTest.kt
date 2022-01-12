@@ -14,8 +14,10 @@ import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
+import com.mapbox.maps.plugin.viewport.CAMERA_ANIMATIONS_UTILS
 import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_VIEWPORT_STATE_PITCH
 import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_VIEWPORT_STATE_ZOOM
+import com.mapbox.maps.plugin.viewport.LOCATION_COMPONENT_UTILS
 import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateOptions
 import com.mapbox.maps.plugin.viewport.transition.MapboxViewportTransitionFactory
 import io.mockk.every
@@ -48,8 +50,8 @@ class FollowingViewportStateImplTest {
   @Before
   fun setup() {
     every { delegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
-    mockkStatic("com.mapbox.maps.plugin.animation.CameraAnimationsUtils")
-    mockkStatic("com.mapbox.maps.plugin.locationcomponent.LocationComponentUtils")
+    mockkStatic(CAMERA_ANIMATIONS_UTILS)
+    mockkStatic(LOCATION_COMPONENT_UTILS)
     every { mapPluginProviderDelegate.location } returns locationPlugin
     every { mapPluginProviderDelegate.camera } returns cameraPlugin
     every { locationPlugin.addOnIndicatorBearingChangedListener(any()) } just runs
@@ -64,8 +66,8 @@ class FollowingViewportStateImplTest {
 
   @After
   fun cleanUp() {
-    unmockkStatic("com.mapbox.maps.plugin.animation.CameraAnimationsUtils")
-    unmockkStatic("com.mapbox.maps.plugin.locationcomponent.LocationComponentUtils")
+    unmockkStatic(CAMERA_ANIMATIONS_UTILS)
+    unmockkStatic(LOCATION_COMPONENT_UTILS)
     unmockkAll()
   }
 

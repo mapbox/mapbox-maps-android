@@ -20,6 +20,7 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.unmockkAll
+import io.mockk.unmockkStatic
 import io.mockk.verify
 import io.mockk.verifyOrder
 import org.junit.After
@@ -48,8 +49,8 @@ class ViewportPluginImplTest {
   @Before
   fun setup() {
     every { delegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
-    mockkStatic("com.mapbox.maps.plugin.animation.CameraAnimationsUtils")
-    mockkStatic("com.mapbox.maps.plugin.locationcomponent.LocationComponentUtils")
+    mockkStatic(CAMERA_ANIMATIONS_UTILS)
+    mockkStatic(LOCATION_COMPONENT_UTILS)
     every { mapPluginProviderDelegate.location } returns locationPlugin
     every { mapPluginProviderDelegate.camera } returns cameraPlugin
     viewportPlugin = ViewportPluginImpl(handler)
@@ -59,6 +60,8 @@ class ViewportPluginImplTest {
 
   @After
   fun cleanUp() {
+    unmockkStatic(CAMERA_ANIMATIONS_UTILS)
+    unmockkStatic(LOCATION_COMPONENT_UTILS)
     unmockkAll()
   }
 

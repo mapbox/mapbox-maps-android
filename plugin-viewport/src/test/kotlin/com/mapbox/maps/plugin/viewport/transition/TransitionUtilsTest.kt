@@ -20,7 +20,7 @@ class TransitionUtilsTest {
       targetBearing = 0.0
     )
 
-    assertEquals(expected, actual, 0.0000001)
+    assertEquals(expected, actual, EPS)
   }
 
   @Test
@@ -32,7 +32,7 @@ class TransitionUtilsTest {
       targetBearing = 10.0
     )
 
-    assertEquals(expected, actual, 0.0000001)
+    assertEquals(expected, actual, EPS)
   }
 
   @Test
@@ -44,7 +44,7 @@ class TransitionUtilsTest {
       targetBearing = 359.5
     )
 
-    assertEquals(expected, actual, 0.0000001)
+    assertEquals(expected, actual, EPS)
   }
 
   @Test
@@ -56,7 +56,7 @@ class TransitionUtilsTest {
       targetBearing = 0.0
     )
 
-    assertEquals(expected, actual, 0.0000001)
+    assertEquals(expected, actual, EPS)
   }
 
   @Test
@@ -68,7 +68,7 @@ class TransitionUtilsTest {
       targetBearing = 1.0
     )
 
-    assertEquals(expected, actual, 0.0000001)
+    assertEquals(expected, actual, EPS)
   }
 
   @Test
@@ -80,7 +80,7 @@ class TransitionUtilsTest {
       targetBearing = 110.0
     )
 
-    assertEquals(expected, actual, 0.000001)
+    assertEquals(expected, actual, EPS)
   }
 
   @Test
@@ -92,7 +92,7 @@ class TransitionUtilsTest {
       targetBearing = 360.0
     )
 
-    assertEquals(expected, actual, 0.000001)
+    assertEquals(expected, actual, EPS)
   }
 
   @Test
@@ -104,7 +104,7 @@ class TransitionUtilsTest {
       targetBearing = 0.0
     )
 
-    assertEquals(expected, actual, 0.000001)
+    assertEquals(expected, actual, EPS)
   }
 
   @Test
@@ -184,5 +184,9 @@ class TransitionUtilsTest {
     assertEquals(expected[0].duration, actual[0].duration)
     assertEquals(expected[1].startDelay, actual[1].startDelay)
     assertEquals(expected[1].duration, actual[1].duration)
+  }
+
+  private companion object {
+    private const val EPS = 0.000001
   }
 }

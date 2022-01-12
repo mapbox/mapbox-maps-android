@@ -7,6 +7,7 @@ import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
+import com.mapbox.maps.plugin.viewport.CAMERA_ANIMATIONS_UTILS
 import com.mapbox.maps.plugin.viewport.CompletionListener
 import com.mapbox.maps.plugin.viewport.ViewportPluginImpl
 import com.mapbox.maps.plugin.viewport.state.ViewportState
@@ -44,14 +45,14 @@ class ImmediateViewportTransitionImplTest {
   fun setup() {
     every { delegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
     every { cancelable.cancel() } just runs
-    mockkStatic("com.mapbox.maps.plugin.animation.CameraAnimationsUtils")
+    mockkStatic(CAMERA_ANIMATIONS_UTILS)
     every { mapPluginProviderDelegate.camera } returns cameraPlugin
     immediateTransition = ImmediateViewportTransition(delegateProvider)
   }
 
   @After
   fun cleanUp() {
-    unmockkStatic("com.mapbox.maps.plugin.animation.CameraAnimationsUtils")
+    unmockkStatic(CAMERA_ANIMATIONS_UTILS)
     unmockkAll()
   }
 

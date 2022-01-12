@@ -11,6 +11,7 @@ import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
+import com.mapbox.maps.plugin.viewport.CAMERA_ANIMATIONS_UTILS
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
 import com.mapbox.maps.plugin.viewport.transition.MapboxViewportTransitionFactory
 import io.mockk.every
@@ -44,7 +45,7 @@ class OverviewViewportStateImplTest {
   @Before
   fun setup() {
     every { delegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
-    mockkStatic("com.mapbox.maps.plugin.animation.CameraAnimationsUtils")
+    mockkStatic(CAMERA_ANIMATIONS_UTILS)
     every { mapPluginProviderDelegate.camera } returns cameraPlugin
     every { delegateProvider.mapCameraManagerDelegate } returns mapCameraDelegate
     every { mapCameraDelegate.cameraForGeometry(any(), any(), any(), any()) } returns cameraOptions
@@ -58,7 +59,7 @@ class OverviewViewportStateImplTest {
 
   @After
   fun cleanUp() {
-    unmockkStatic("com.mapbox.maps.plugin.animation.CameraAnimationsUtils")
+    unmockkStatic(CAMERA_ANIMATIONS_UTILS)
     unmockkAll()
   }
 

@@ -8,8 +8,10 @@ import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
+import com.mapbox.maps.plugin.viewport.CAMERA_ANIMATIONS_UTILS
 import com.mapbox.maps.plugin.viewport.DEFAULT_FRAME_ANIMATION_DURATION_MS
 import com.mapbox.maps.plugin.viewport.DEFAULT_STATE_TRANSITION_MAX_DURATION_MS
+import com.mapbox.maps.plugin.viewport.TRANSITION_UTILS
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
@@ -35,8 +37,8 @@ class MapboxViewportTransitionFactoryTest {
 
   @Before
   fun setup() {
-    mockkStatic("com.mapbox.maps.plugin.viewport.transition.TransitionUtilsKt")
-    mockkStatic("com.mapbox.maps.plugin.animation.CameraAnimationsUtils")
+    mockkStatic(TRANSITION_UTILS)
+    mockkStatic(CAMERA_ANIMATIONS_UTILS)
     every { delegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
     every { mapPluginProviderDelegate.camera } returns cameraPlugin
     every { delegateProvider.mapCameraManagerDelegate } returns mapCameraDelegate
@@ -155,7 +157,7 @@ class MapboxViewportTransitionFactoryTest {
 
   @After
   fun tearDown() {
-    unmockkStatic("com.mapbox.maps.plugin.viewport.transition.TransitionUtilsKt")
-    unmockkStatic("com.mapbox.maps.plugin.animation.CameraAnimationsUtils")
+    unmockkStatic(TRANSITION_UTILS)
+    unmockkStatic(CAMERA_ANIMATIONS_UTILS)
   }
 }
