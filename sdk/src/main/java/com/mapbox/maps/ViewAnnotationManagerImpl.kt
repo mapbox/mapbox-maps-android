@@ -69,7 +69,7 @@ internal class ViewAnnotationManagerImpl(
   override fun removeViewAnnotation(view: View): Boolean {
     val id = idLookupMap.remove(view) ?: return false
     val annotation = annotationMap.remove(id) ?: return false
-    view.viewTreeObserver.removeOnGlobalLayoutListener(annotation.globalLayoutListener)
+    annotation.view.removeOnAttachStateChangeListener(annotation.attachStateListener)
     mapView.removeView(view)
     getValue(mapboxMap.removeViewAnnotation(id))
     return true
@@ -117,7 +117,8 @@ internal class ViewAnnotationManagerImpl(
     mapboxMap.setViewAnnotationPositionsUpdateListener(null)
     annotationMap.forEach { (id, annotation) ->
       getValue(mapboxMap.removeViewAnnotation(id))
-      annotation.view.viewTreeObserver.removeOnGlobalLayoutListener(annotation.globalLayoutListener)
+      annotation.view.removeOnAttachStateChangeListener(annotation.attachStateListener)
+      annotation.attachStateListener = null
       mapView.removeView(annotation.view)
     }
     currentViewsDrawnMap.clear()
@@ -212,8 +213,16 @@ internal class ViewAnnotationManagerImpl(
         }
       }
     }
-    viewAnnotation.globalLayoutListener = globalLayoutListener
-    inflatedView.viewTreeObserver.addOnGlobalLayoutListener(globalLayoutListener)
+    viewAnnotation.attachStateListener = object : View.OnAttachStateChangeListener {
+      override fun onViewAttachedToWindow(v: View?) {
+        inflatedView.viewTreeObserver.addOnGlobalLayoutListener(globalLayoutListener)
+      }
+
+      override fun onViewDetachedFromWindow(v: View?) {
+        inflatedView.viewTreeObserver.removeOnGlobalLayoutListener(globalLayoutListener)
+      }
+    }
+    inflatedView.addOnAttachStateChangeListener(viewAnnotation.attachStateListener)
     annotationMap[viewAnnotation.id] = viewAnnotation
     idLookupMap[inflatedView] = viewAnnotation.id
     getValue(mapboxMap.addViewAnnotation(viewAnnotation.id, updatedOptions))

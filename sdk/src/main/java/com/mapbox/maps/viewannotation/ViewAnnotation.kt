@@ -1,7 +1,6 @@
 package com.mapbox.maps.viewannotation
 
 import android.view.View
-import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import com.mapbox.maps.ViewAnnotationOptions
 
@@ -10,6 +9,10 @@ internal data class ViewAnnotation(
    * Inflated Android view.
    */
   val view: View,
+  /**
+   * Attach state listener needed to control global layout listener lifecycle.
+   */
+  var attachStateListener: View.OnAttachStateChangeListener? = null,
   /**
    * We handle visibility automatically in the manager
    * if user did not specify [ViewAnnotationOptions.visible]  explicitly  during add / update operation
@@ -36,11 +39,6 @@ internal data class ViewAnnotation(
    * String id needed to call functions from gl-native
    */
   val id: String = (VIEW_ANNOTATION_CURRENT_ID++).toString()
-
-  /**
-   * Global layout listener to control positioning on the screen based on view's actual visibility.
-   */
-  var globalLayoutListener: ViewTreeObserver.OnGlobalLayoutListener? = null
 
   companion object {
     private var VIEW_ANNOTATION_CURRENT_ID = 42
