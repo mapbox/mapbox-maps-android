@@ -11,7 +11,7 @@ import com.mapbox.maps.plugin.viewport.state.ViewportState
 /**
  * [ViewportTransition] that transition to target [ViewportState] immediately.
  */
-class ImmediateViewportTransition internal constructor(delegateProvider: MapDelegateProvider) :
+internal class ImmediateViewportTransition(delegateProvider: MapDelegateProvider) :
   ViewportTransition {
   private val cameraPlugin = delegateProvider.mapPluginProviderDelegate.camera
 

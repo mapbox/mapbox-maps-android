@@ -8,6 +8,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import com.mapbox.api.directions.v5.models.DirectionsResponse
+import com.mapbox.common.Logger
 import com.mapbox.core.constants.Constants
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
@@ -128,8 +129,19 @@ class ViewportShowcaseActivity : AppCompatActivity() {
     followingViewportState =
       viewport.makeFollowingViewportState(FollowingViewportStateOptions.Builder().build())
     overviewViewportState =
-      viewport.makeOverviewViewportState(OverviewViewportStateOptions.Builder().geometry(simulateRouteLocationProvider.route).build())
+      viewport.makeOverviewViewportState(
+        OverviewViewportStateOptions.Builder().geometry(simulateRouteLocationProvider.route).build()
+      )
     viewport.addStatusObserver { from, to, reason ->
+      Logger.d(
+        TAG,
+        """
+        ViewportStatus changed:
+            from:         $from,
+            to:           $to,
+            with reason:         $reason
+        """.trimIndent()
+      )
       when (to.getCurrentOrNextState()) {
         is FollowingViewportState -> viewportButton.text = OVERVIEW
         else -> viewportButton.text = FOLLOW
@@ -159,6 +171,7 @@ class ViewportShowcaseActivity : AppCompatActivity() {
   }
 
   companion object {
+    private const val TAG = "ViewportShowcase"
     private const val FOLLOW = "Follow"
     private const val OVERVIEW = "Overview"
     private const val POINT_LAT = 34.052235

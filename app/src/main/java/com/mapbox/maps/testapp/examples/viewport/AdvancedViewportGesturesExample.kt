@@ -10,6 +10,7 @@ import com.mapbox.core.constants.Constants
 import com.mapbox.geojson.LineString
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
@@ -42,6 +43,7 @@ import kotlin.math.ln
  *
  * Touch the map to toggle the following and overview mode.
  */
+@MapboxExperimental
 class AdvancedViewportGesturesExample : AppCompatActivity() {
   private lateinit var mapView: MapView
   private lateinit var routePoints: LineString

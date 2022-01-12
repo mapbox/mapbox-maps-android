@@ -3,7 +3,6 @@ package com.mapbox.maps.plugin.viewport.transition
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
-import androidx.core.animation.doOnEnd
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.animation.camera
@@ -15,14 +14,16 @@ import com.mapbox.maps.plugin.viewport.state.ViewportState
 /**
  * The implementation of [DefaultViewportTransition] that transitions Viewport from one [ViewportState] to another.
  */
-class DefaultViewportTransitionImpl(
+internal class DefaultViewportTransitionImpl(
   delegateProvider: MapDelegateProvider,
   /**
    * Describes the configuration options for the [DefaultViewportTransition].
    */
-  override var options: DefaultViewportTransitionOptions
+  override var options: DefaultViewportTransitionOptions,
+  private val transitionFactory: MapboxViewportTransitionFactory = MapboxViewportTransitionFactory(
+    delegateProvider
+  )
 ) : DefaultViewportTransition {
-  private val transitionFactory = MapboxViewportTransitionFactory(delegateProvider)
   private val cameraPlugin = delegateProvider.mapPluginProviderDelegate.camera
   private val cameraDelegate = delegateProvider.mapCameraManagerDelegate
   private var runningAnimation: AnimatorSet? = null
@@ -47,6 +48,7 @@ class DefaultViewportTransitionImpl(
     to: ViewportState,
     completionListener: CompletionListener
   ): Cancelable {
+    var isCancelableCalled = false
     val cancelable = to.observeDataSource { cameraOptions ->
       startAnimation(
         createAnimatorSet(cameraOptions, options.maxDurationMs)
@@ -59,7 +61,10 @@ class DefaultViewportTransitionImpl(
                 }
 
                 override fun onAnimationEnd(animation: Animator?) {
-                  completionListener.onComplete(!isCanceled)
+                  if (!isCancelableCalled) {
+                    completionListener.onComplete(!isCanceled)
+                  }
+                  finishAnimation(this@apply)
                 }
 
                 override fun onAnimationCancel(animation: Animator?) {
@@ -71,16 +76,15 @@ class DefaultViewportTransitionImpl(
                 }
               }
             )
-            doOnEnd { finishAnimation(this) }
           },
         instant = false
       )
       false
     }
     return Cancelable {
+      isCancelableCalled = true
       cancelAnimation()
       cancelable.cancel()
-      completionListener.onComplete(false)
     }
   }
 
