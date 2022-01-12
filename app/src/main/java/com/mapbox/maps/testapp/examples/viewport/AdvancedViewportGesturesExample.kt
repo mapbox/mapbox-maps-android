@@ -148,6 +148,8 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
       }
 
       override fun onScale(detector: StandardScaleGestureDetector) {
+        // This is an example of calculating the correct zoom delta from the StandardScaleGestureDetector
+        // logic is ported from the gestures plugin implementation
         val zoomBy = ln(detector.scaleFactor.toDouble()) / ln(PI / 2) * SCALE_FACTOR
         followingViewportState.options = followingViewportState.options.toBuilder()
           .zoom(followingViewportState.options.zoom + zoomBy).build()

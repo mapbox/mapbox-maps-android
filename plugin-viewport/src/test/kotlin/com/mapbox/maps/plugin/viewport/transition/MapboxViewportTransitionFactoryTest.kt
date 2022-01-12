@@ -71,7 +71,7 @@ class MapboxViewportTransitionFactoryTest {
       DEFAULT_STATE_TRANSITION_MAX_DURATION_MS
     )
 
-    assertEquals(-10.0, valueSlot.captured.targets.last(), 0.0000000001)
+    assertEquals(-10.0, valueSlot.captured.targets.last(), EPS)
     verify { normalizeBearing(10.0, 350.0) }
   }
 
@@ -94,7 +94,7 @@ class MapboxViewportTransitionFactoryTest {
       DEFAULT_STATE_TRANSITION_MAX_DURATION_MS
     )
 
-    assertEquals(-10.0, valueSlot.captured.targets.last(), 0.0000000001)
+    assertEquals(-10.0, valueSlot.captured.targets.last(), EPS)
     verify { normalizeBearing(10.0, 350.0) }
   }
 
@@ -113,7 +113,7 @@ class MapboxViewportTransitionFactoryTest {
     } returns mockk()
     transitionsFactory.transitionLinear(cameraOptions, DEFAULT_FRAME_ANIMATION_DURATION_MS)
 
-    assertEquals(-10.0, valueSlot.captured.targets.last(), 0.0000000001)
+    assertEquals(-10.0, valueSlot.captured.targets.last(), EPS)
     verify { normalizeBearing(10.0, 350.0) }
   }
 
@@ -159,5 +159,9 @@ class MapboxViewportTransitionFactoryTest {
   fun tearDown() {
     unmockkStatic(TRANSITION_UTILS)
     unmockkStatic(CAMERA_ANIMATIONS_UTILS)
+  }
+
+  private companion object {
+    const val EPS = 0.0000000001
   }
 }

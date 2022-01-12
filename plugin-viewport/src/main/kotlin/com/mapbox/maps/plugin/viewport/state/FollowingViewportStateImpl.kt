@@ -239,6 +239,6 @@ internal class FollowingViewportStateImpl(
   }
 
   private companion object {
-    private const val TAG = "FollowingViewportStateImpl"
+    const val TAG = "FollowingViewportStateImpl"
   }
 }

@@ -330,7 +330,7 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
      *
      * @see CameraAnimator.owner
      */
-    internal const val VIEWPORT_CAMERA_OWNER = "VIEWPORT_CAMERA_OWNER"
+    const val VIEWPORT_CAMERA_OWNER = "VIEWPORT_CAMERA_OWNER"
   }
 }
 

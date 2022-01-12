@@ -133,7 +133,7 @@ class ViewportShowcaseActivity : AppCompatActivity() {
         OverviewViewportStateOptions.Builder().geometry(simulateRouteLocationProvider.route).build()
       )
     viewport.addStatusObserver { from, to, reason ->
-      Logger.d(
+      Logger.i(
         TAG,
         """
         ViewportStatus changed:

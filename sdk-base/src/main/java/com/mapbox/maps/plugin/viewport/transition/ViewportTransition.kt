@@ -7,7 +7,7 @@ import com.mapbox.maps.plugin.viewport.state.ViewportState
 /**
  * Defines how a [ViewportState] transition to another [ViewportState].
  */
-interface ViewportTransition {
+fun interface ViewportTransition {
   /**
    * Run the [ViewportTransition] from previous [ViewportState] to the target [ViewportState].
    *

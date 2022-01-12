@@ -51,7 +51,8 @@ class NavigationSimulator(
   init {
     initMapboxMap()
     viewportPlugin.defaultTransition = viewportPlugin.makeDefaultTransition(
-      DefaultViewportTransitionOptions.Builder().maxDurationMs(2000).build()
+      DefaultViewportTransitionOptions.Builder()
+        .maxDurationMs(DEFAULT_VIEWPORT_TRANSITION_MAX_DURATION).build()
     )
   }
 
@@ -60,7 +61,6 @@ class NavigationSimulator(
       if (this is ViewportStatus.State) {
         when (state) {
           followingViewportState -> viewportPlugin.transitionTo(overviewViewportState)
-          overviewViewportState -> viewportPlugin.transitionTo(followingViewportState)
           else -> viewportPlugin.transitionTo(followingViewportState)
         }
       }
@@ -252,6 +252,7 @@ class NavigationSimulator(
     private const val DEFAULT_STYLE = Style.MAPBOX_STREETS
     private const val DEFAULT_CAMERA_MODE_SWITCH_INTERVAL_MS = 5000L
     private const val DEFAULT_SCRIPT_DURATION_MS = 20000L
+    private const val DEFAULT_VIEWPORT_TRANSITION_MAX_DURATION = 2000L
     private const val GEOJSON_SOURCE_ID = "source_id"
     private const val ROUTE_LINE_LAYER_ID = "route_line_layer_id"
   }
