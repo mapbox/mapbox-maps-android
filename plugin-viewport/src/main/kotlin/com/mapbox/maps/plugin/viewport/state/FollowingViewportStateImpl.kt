@@ -24,7 +24,7 @@ import java.util.concurrent.*
  *
  * Note: [LocationComponentPlugin] should be enabled to use this viewport state.
  */
-class FollowingViewportStateImpl internal constructor(
+internal class FollowingViewportStateImpl(
   mapDelegateProvider: MapDelegateProvider,
   initialOptions: FollowingViewportStateOptions,
   private val transitionFactory: MapboxViewportTransitionFactory = MapboxViewportTransitionFactory(
@@ -33,7 +33,7 @@ class FollowingViewportStateImpl internal constructor(
 ) : FollowingViewportState {
   private val cameraPlugin = mapDelegateProvider.mapPluginProviderDelegate.camera
   private val locationComponent = mapDelegateProvider.mapPluginProviderDelegate.location
-  private val dataSourceUpdateObservers = CopyOnWriteArrayList<ViewportStateDataObserver>()
+  private val dataSourceUpdateObservers = CopyOnWriteArraySet<ViewportStateDataObserver>()
 
   private var lastLocation: Point? = null
   private var lastBearing: Double? = null

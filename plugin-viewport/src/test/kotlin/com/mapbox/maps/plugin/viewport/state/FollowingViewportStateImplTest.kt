@@ -195,7 +195,7 @@ class FollowingViewportStateImplTest {
     every { animatorSet.childAnimations } returns arrayListOf(animator)
     every { animatorSet.start() } just runs
 
-    // test stop updating camera
+    // test start updating camera
     followingState.startUpdatingCamera()
     verify {
       locationPlugin.addOnIndicatorBearingChangedListener(

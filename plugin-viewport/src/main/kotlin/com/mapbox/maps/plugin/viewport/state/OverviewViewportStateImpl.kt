@@ -2,6 +2,7 @@ package com.mapbox.maps.plugin.viewport.state
 
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
+import androidx.annotation.VisibleForTesting
 import androidx.core.animation.doOnEnd
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.plugin.animation.Cancelable
@@ -14,17 +15,20 @@ import java.util.concurrent.*
 /**
  * The actual implementation of [OverviewViewportState] that shows the overview of a given geometry.
  */
-class OverviewViewportStateImpl(
+internal class OverviewViewportStateImpl(
   mapDelegateProvider: MapDelegateProvider,
-  initialOptions: OverviewViewportStateOptions
+  initialOptions: OverviewViewportStateOptions,
+  private val transitionFactory: MapboxViewportTransitionFactory = MapboxViewportTransitionFactory(
+    mapDelegateProvider
+  )
 ) : OverviewViewportState {
   private val cameraPlugin = mapDelegateProvider.mapPluginProviderDelegate.camera
   private val cameraDelegate = mapDelegateProvider.mapCameraManagerDelegate
-  private val transitionFactory = MapboxViewportTransitionFactory(mapDelegateProvider)
-  private val dataSourceUpdateObservers = CopyOnWriteArrayList<ViewportStateDataObserver>()
+  private val dataSourceUpdateObservers = CopyOnWriteArraySet<ViewportStateDataObserver>()
   private var runningAnimation: AnimatorSet? = null
 
-  private var isOverviewStateRunning = false
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal var isOverviewStateRunning = false
 
   /**
    * Describes the configuration options of the state.
@@ -65,8 +69,9 @@ class OverviewViewportStateImpl(
    * @return a handle that cancels current observation.
    */
   override fun observeDataSource(viewportStateDataObserver: ViewportStateDataObserver): Cancelable {
-    dataSourceUpdateObservers.add(viewportStateDataObserver)
-    viewportStateDataObserver.onNewData(evaluateViewportData())
+    if (viewportStateDataObserver.onNewData(evaluateViewportData())) {
+      dataSourceUpdateObservers.add(viewportStateDataObserver)
+    }
 
     return Cancelable {
       dataSourceUpdateObservers.remove(viewportStateDataObserver)
