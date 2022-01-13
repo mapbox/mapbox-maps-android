@@ -40,12 +40,13 @@ import com.mapbox.maps.plugin.overlay.MapOverlayPluginImpl
 import com.mapbox.maps.plugin.scalebar.ScaleBarPluginImpl
 import com.mapbox.maps.plugin.viewport.ViewportPluginImpl
 import com.mapbox.maps.renderer.MapboxRenderer
+import com.mapbox.maps.renderer.MapboxRendererInterface
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import com.mapbox.maps.renderer.widget.Widget
 
 internal class MapController : MapPluginProviderDelegate, MapControllable {
 
-  private val renderer: MapboxRenderer
+  private val renderer: MapboxRendererInterface
   private val nativeObserver: NativeObserver
   private val mapInitOptions: MapInitOptions
   private val nativeMap: MapInterface
@@ -57,20 +58,34 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   internal var lifecycleState: LifecycleState = LifecycleState.STATE_STOPPED
 
   constructor(
-    renderer: MapboxRenderer,
+    renderer: MapboxRendererInterface,
     mapInitOptions: MapInitOptions,
   ) {
     this.renderer = renderer
     this.mapInitOptions = mapInitOptions
     AssetManagerProvider().initialize(mapInitOptions.context.assets)
-    this.nativeMap = MapProvider.getNativeMap(
-      mapInitOptions,
-      renderer,
-    )
+    // create Map in Kotlin if using Android renderer
+    if (renderer is MapboxRenderer) {
+      this.nativeMap = MapProvider.getNativeMap(
+        mapInitOptions,
+        renderer
+      )
+    } else {
+      // create Map in C++ if using C++ renderer and return it to Kotlin
+      if (renderer is MapboxNativeSurfaceRenderer) {
+        this.nativeMap = NativeMapImpl(
+          renderer.createMap(mapInitOptions)
+        )
+      } else {
+        throw RuntimeException("This should not happen")
+      }
+    }
     this.nativeObserver = NativeObserver(nativeMap)
-    this.mapboxMap =
-      MapProvider.getMapboxMap(nativeMap, nativeObserver, mapInitOptions.mapOptions.pixelRatio)
-    this.mapboxMap.renderHandler = renderer.renderThread.renderHandlerThread.handler
+    this.mapboxMap = MapboxMap(nativeMap, nativeObserver, mapInitOptions.mapOptions.pixelRatio)
+    // TODO think about it in case of C++ renderer
+    if (renderer is MapboxRenderer) {
+      this.mapboxMap.renderHandler = renderer.renderThread.renderHandlerThread.handler
+    }
     this.pluginRegistry = MapProvider.getMapPluginRegistry(
       mapboxMap,
       this,
@@ -86,7 +101,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
         }
       }
     }
-    renderer.setMap(nativeMap)
+    // no need to set map when C++ creates it
+    if (renderer is MapboxRenderer) {
+      renderer.setMap(nativeMap)
+    }
     this.mapInitOptions.cameraOptions?.let {
       mapboxMap.setCamera(it)
     }
@@ -205,10 +223,18 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
   }
 
   override fun addWidget(widget: Widget) {
-    renderer.renderThread.addWidget(widget)
+    // TODO think about widgets when using C++ renderer
+    if (renderer is MapboxRenderer) {
+      renderer.renderThread.addWidget(widget)
+    }
   }
 
-  override fun removeWidget(widget: Widget) = renderer.renderThread.removeWidget(widget)
+  override fun removeWidget(widget: Widget): Boolean {
+    if (renderer is MapboxRenderer) {
+      return renderer.renderThread.removeWidget(widget)
+    }
+    return false
+  }
 
   //
   // Telemetry

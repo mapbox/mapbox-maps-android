@@ -2,7 +2,9 @@ package com.mapbox.maps
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
+import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
 import android.graphics.Bitmap
 import android.os.Build
 import android.util.AttributeSet
@@ -101,7 +103,9 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     }
     mapController = MapController(
       when (view) {
-        is SurfaceView -> MapboxSurfaceHolderRenderer(view.holder, resolvedMapInitOptions.antialiasingSampleCount)
+        // TODO for now simply replace platform surface renderer with native one
+//        is SurfaceView -> MapboxSurfaceHolderRenderer(view.holder, resolvedMapInitOptions.antialiasingSampleCount)
+        is SurfaceView -> MapboxNativeSurfaceRenderer(getActivity()!!, view.holder)
         is TextureView -> MapboxTextureViewRenderer(view, resolvedMapInitOptions.antialiasingSampleCount)
         else -> throw IllegalArgumentException("Provided view has to be a texture or a surface.")
       },
@@ -109,6 +113,18 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     )
     addView(view, 0)
     mapController.initializePlugins(resolvedMapInitOptions, this)
+  }
+
+  // need activity instance for NDK frame pacing, https://stackoverflow.com/a/32973351
+  private fun getActivity(): Activity? {
+    var context = context
+    while (context is ContextWrapper) {
+      if (context is Activity) {
+        return context
+      }
+      context = context.baseContext
+    }
+    return null
   }
 
   override fun onAttachedToWindow() {
