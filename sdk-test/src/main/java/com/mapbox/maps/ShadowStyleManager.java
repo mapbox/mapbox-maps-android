@@ -1,11 +1,8 @@
-package com.mapbox.maps.extension.style;
+package com.mapbox.maps;
 
 import androidx.annotation.NonNull;
 
 import com.mapbox.bindgen.Value;
-import com.mapbox.maps.StyleManager;
-import com.mapbox.maps.StylePropertyValue;
-import com.mapbox.maps.StylePropertyValueKind;
 
 import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;

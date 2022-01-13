@@ -34,6 +34,7 @@ dependencies {
   implementation(Dependencies.androidxAnnotations)
   implementation(Dependencies.kotlin)
   implementation(Dependencies.mapboxBase)
+  testImplementation(project(":sdk-test"))
   testImplementation(Dependencies.equalsVerifier)
   testImplementation(Dependencies.junit)
   testImplementation(Dependencies.mockk)

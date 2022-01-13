@@ -3,6 +3,7 @@ import org.jetbrains.dokka.gradle.DokkaTask
 plugins {
   id("com.android.library")
   kotlin("android")
+  id("com.jaredsburrows.license")
   id("org.jetbrains.dokka")
 }
 
@@ -14,22 +15,14 @@ android {
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 }
+val buildFromSource: String by project
 
 dependencies {
-  implementation(project(":sdk-base"))
-  implementation(Dependencies.mapboxBase)
   implementation(Dependencies.kotlin)
-  implementation(Dependencies.androidxCoreKtx)
-  implementation(Dependencies.androidxLifecycle)
-  testImplementation(project(":sdk-test"))
-  testImplementation(Dependencies.junit)
-  testImplementation(Dependencies.mockk)
-  testImplementation(Dependencies.androidxTestCore)
-  testImplementation(Dependencies.robolectric)
-  androidTestImplementation(Dependencies.androidxTestRunner)
-  androidTestImplementation(Dependencies.androidxJUnitTestRules)
-  androidTestImplementation(Dependencies.androidxEspresso)
-  lintPublish(project(":mapbox-lint"))
+  implementation(Dependencies.androidxAnnotations)
+  compileOnly(Dependencies.robolectric)
+  compileOnly(Dependencies.mapboxGlNative)
+  compileOnly(Dependencies.mapboxCoreCommon)
 }
 
 tasks.withType<DokkaTask>().configureEach {
@@ -45,7 +38,7 @@ tasks.withType<DokkaTask>().configureEach {
 project.apply {
   from("$rootDir/gradle/ktlint.gradle")
   from("$rootDir/gradle/lint.gradle")
-  from("${rootDir}/gradle/jacoco.gradle")
+  from("$rootDir/gradle/jacoco.gradle")
   from("$rootDir/gradle/sdk-registry.gradle")
   from("$rootDir/gradle/track-public-apis.gradle")
 }

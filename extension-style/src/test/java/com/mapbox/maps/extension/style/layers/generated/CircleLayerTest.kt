@@ -6,10 +6,10 @@ import android.graphics.Color
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
+import com.mapbox.maps.ShadowStyleManager
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.StylePropertyValue
 import com.mapbox.maps.StylePropertyValueKind
-import com.mapbox.maps.extension.style.ShadowStyleManager
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.dsl.generated.*
 import com.mapbox.maps.extension.style.layers.getLayer

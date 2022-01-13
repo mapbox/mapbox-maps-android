@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.annotation
 
 import com.mapbox.bindgen.ExpectedFactory
+import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.sources.addSource

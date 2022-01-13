@@ -29,6 +29,7 @@ dependencies {
   implementation(Dependencies.androidxAppCompat)
   implementation(Dependencies.androidxCoreKtx)
   implementation(Dependencies.androidxAnnotations)
+  testImplementation(project(":sdk-test"))
   testImplementation(Dependencies.junit)
   testImplementation(Dependencies.mockk)
   testImplementation(Dependencies.androidxTestCore)

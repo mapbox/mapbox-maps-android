@@ -28,7 +28,8 @@ include(
   ":plugin-scalebar",
   ":plugin-viewport",
   ":sdk",
-  ":sdk-base"
+  ":sdk-base",
+  ":sdk-test"
 )
 rootProject.name = "Mapbox Maps Android"
 rootProject.buildFileName = "build.gradle.kts"

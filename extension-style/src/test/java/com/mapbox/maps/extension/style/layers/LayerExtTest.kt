@@ -3,8 +3,8 @@ package com.mapbox.maps.extension.style.layers
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.None
+import com.mapbox.maps.ShadowStyleManager
 import com.mapbox.maps.StyleManager
-import com.mapbox.maps.extension.style.ShadowStyleManager
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import io.mockk.*

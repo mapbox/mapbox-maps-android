@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Looper
 import android.view.Gravity
 import android.widget.FrameLayout
+import com.mapbox.maps.ShadowProjection
 import com.mapbox.maps.plugin.scalebar.ScaleBarImpl.Companion.MSG_RENDER_CONTINUOUS
 import com.mapbox.maps.plugin.scalebar.ScaleBarImpl.Companion.MSG_RENDER_ON_DEMAND
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings

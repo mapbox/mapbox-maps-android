@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable
 import android.widget.FrameLayout
 import com.mapbox.maps.MapOptions
 import com.mapbox.maps.Projection
+import com.mapbox.maps.ShadowProjection
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapListenerDelegate

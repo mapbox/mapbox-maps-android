@@ -27,6 +27,7 @@ dependencies {
   implementation(Dependencies.androidxInterpolators)
   implementation(Dependencies.kotlin)
   implementation(Dependencies.androidxCoreKtx)
+  testImplementation(project(":sdk-test"))
   testImplementation(Dependencies.junit)
   testImplementation(Dependencies.mockk)
   testImplementation(Dependencies.robolectric)

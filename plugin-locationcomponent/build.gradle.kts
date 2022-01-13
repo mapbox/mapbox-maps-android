@@ -30,6 +30,7 @@ dependencies {
   implementation(Dependencies.androidxCoreKtx)
   implementation(Dependencies.androidxAnnotations)
   implementation(Dependencies.mapboxJavaGeoJSON)
+  testImplementation(project(":sdk-test"))
   testImplementation(Dependencies.junit)
   testImplementation(Dependencies.mockk)
   testImplementation(Dependencies.androidxTestCore)

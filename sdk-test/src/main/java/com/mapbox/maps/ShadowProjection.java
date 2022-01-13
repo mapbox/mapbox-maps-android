@@ -1,6 +1,4 @@
-package com.mapbox.maps.plugin.scalebar;
-
-import com.mapbox.maps.Projection;
+package com.mapbox.maps;
 
 import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;

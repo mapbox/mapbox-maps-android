@@ -30,6 +30,7 @@ dependencies {
   implementation(Dependencies.androidxAppCompat)
   implementation(Dependencies.androidxCoreKtx)
   implementation(Dependencies.androidxAnnotations)
+  testImplementation(project(":sdk-test"))
   testImplementation(project(":plugin-gestures"))
   testImplementation(Dependencies.junit)
   testImplementation(Dependencies.mockk)
