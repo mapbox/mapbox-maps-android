@@ -88,15 +88,17 @@ function clone_android_docs_repo() {
 function update_constants_and_map_version_numbers() {
   cd $ANDROID_DOCS_DIRECTORY
   git remote set-url origin https://x-access-token:"$GITHUB_TOKEN"@github.com/mapbox/android-docs.git
-  CONSTANTS_FILE_TMP="${CONSTANTS_FILE}.tmp"
-  jq --arg version $1 '.MAP_SDK_VERSION=$version' $CONSTANTS_FILE >$CONSTANTS_FILE_TMP
-  mv $CONSTANTS_FILE_TMP $CONSTANTS_FILE
 
   MAP_VERSION_NUMBERS_FILE_TMP="${MAP_VERSION_NUMBERS_FILE}.tmp"
   if [[ $1 == *beta* ]] || [[ $1 == *alpha* ]] || [[ $1 == *rc* ]]; then
     jq --arg version $1 '.[-1] |= $version' $MAP_VERSION_NUMBERS_FILE >$MAP_VERSION_NUMBERS_FILE_TMP
   else
     jq --arg version $1 '. += [$version]' $MAP_VERSION_NUMBERS_FILE >$MAP_VERSION_NUMBERS_FILE_TMP
+
+    # Only update version in constants for stable release
+    CONSTANTS_FILE_TMP="${CONSTANTS_FILE}.tmp"
+    jq --arg version $1 '.MAP_SDK_VERSION=$version' $CONSTANTS_FILE >$CONSTANTS_FILE_TMP
+    mv $CONSTANTS_FILE_TMP $CONSTANTS_FILE
   fi
   mv $MAP_VERSION_NUMBERS_FILE_TMP $MAP_VERSION_NUMBERS_FILE
   cd -
@@ -136,16 +138,14 @@ prepare_branch_with_empty $MAPS_SDK_VERSION
 create_pull_request "Trigger ${MAPS_SDK_VERSION} deploy." $BRANCH_WITH_DOCUMENTATION
 
 # Update config files in Android Docs Repo for stable release.
-if [[ $MAPS_SDK_VERSION != *beta* ]] && [[ $MAPS_SDK_VERSION != *alpha* ]] && [[ $MAPS_SDK_VERSION != *rc* ]]; then
-  clone_android_docs_repo
-  update_constants_and_map_version_numbers $MAPS_SDK_VERSION
-  prepare_android_docs_branch $MAPS_SDK_VERSION
-  cd $ANDROID_DOCS_DIRECTORY
-  create_pull_request "Maps SDK bump to ${MAPS_SDK_VERSION}" $BRANCH_WITH_DOCUMENTATION
-  # Rollback the remote url when run the script locally
-  git remote set-url origin git@github.com:mapbox/android-docs.git
-  cd -
-fi
+clone_android_docs_repo
+update_constants_and_map_version_numbers $MAPS_SDK_VERSION
+prepare_android_docs_branch $MAPS_SDK_VERSION
+cd $ANDROID_DOCS_DIRECTORY
+create_pull_request "Maps SDK bump to ${MAPS_SDK_VERSION}" $BRANCH_WITH_DOCUMENTATION
+# Rollback the remote url when run the script locally
+git remote set-url origin git@github.com:mapbox/android-docs.git
+cd -
 
 # Rollback the remote url when run the script locally
 git remote set-url origin git@github.com:mapbox/mapbox-maps-android.git
