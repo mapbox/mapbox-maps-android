@@ -63,8 +63,10 @@ if [[ -z $RELEASE_TAG ]]; then
     AAR_PATH="s3://mapbox-api-downloads-production/v2/mobile-maps-android-base/releases/android/"${LAST_VERSION}"/maven/base-"${LAST_VERSION}".aar"
   fi
   echo "aar path is: $AAR_PATH, checking file"
-  #todo check if file exists on s3
-#  aws s3 ls "$AAR_PATH" >/dev/null 2>&1
+  if [[ -z $(aws s3 ls "$AAR_PATH") ]]; then
+    echo "$AAR_PATH doesn't exists on s3, skip check for it."
+    exit 0
+  fi
   echo "Downloading file from s3"
   aws s3 cp "$AAR_PATH" "${PREVIOUS_RELEASE}"
 else
@@ -157,4 +159,12 @@ compare_aars() {
 api_compat=$(compare_aars "${PREVIOUS_RELEASE}" "${CURRENT_RELEASE}")
 rm -rf "${TMPDIR}"
 echo "Compare result: $api_compat"
+
+#if [[ -z ${TAGGED_RELEASE_VERSION} ]]; then
+#  if [[ $api_compat == major ]]; then
+#    echo "Find major level breaking change."
+#    exit 1
+#  fi
+#fi
+
 "${CURRENT_DIR}"/semver-check.sh "${TAGGED_RELEASE_VERSION}" "${LAST_VERSION}" "${api_compat}"
