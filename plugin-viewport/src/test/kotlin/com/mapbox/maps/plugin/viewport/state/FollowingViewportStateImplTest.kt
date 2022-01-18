@@ -18,6 +18,7 @@ import com.mapbox.maps.plugin.viewport.CAMERA_ANIMATIONS_UTILS
 import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_VIEWPORT_STATE_PITCH
 import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_VIEWPORT_STATE_ZOOM
 import com.mapbox.maps.plugin.viewport.LOCATION_COMPONENT_UTILS
+import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateBearing
 import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateOptions
 import com.mapbox.maps.plugin.viewport.transition.MapboxViewportTransitionFactory
 import io.mockk.every
@@ -97,8 +98,10 @@ class FollowingViewportStateImplTest {
         )
       )
     }
-    indicatorBearingChangedListenerSlot.captured.onIndicatorBearingChanged(testBearing)
     indicatorPositionChangedListenerSlot.captured.onIndicatorPositionChanged(testCenter)
+    // first new data should only be fired when the first position and first bearing are both available.
+    verify(exactly = 0) { dataObserver.onNewData(any()) }
+    indicatorBearingChangedListenerSlot.captured.onIndicatorBearingChanged(testBearing)
     verify(exactly = 1) {
       dataObserver.onNewData(
         cameraOptions {
@@ -111,18 +114,67 @@ class FollowingViewportStateImplTest {
       )
     }
 
+    // more indicator updates after the initial update shouldn't be notified.
     indicatorBearingChangedListenerSlot.captured.onIndicatorBearingChanged(testBearing)
     indicatorPositionChangedListenerSlot.captured.onIndicatorPositionChanged(testCenter)
     verify(exactly = 1) {
+      dataObserver.onNewData(any())
+    }
+  }
+
+  @Test
+  fun testObserveDataSourceForFirstDataPointWithConstantBearing() {
+    val indicatorBearingChangedListenerSlot = slot<OnIndicatorBearingChangedListener>()
+    val indicatorPositionChangedListenerSlot = slot<OnIndicatorPositionChangedListener>()
+    val dataObserver = mockk<ViewportStateDataObserver>(relaxed = true)
+    val testBearing = 10.0
+    val testCenter = Point.fromLngLat(0.0, 0.0)
+    val constantBearing = 45.0
+
+    // set the bearing to be constant
+    followingState.apply {
+      options = options.toBuilder().bearing(FollowingViewportStateBearing.Constant(constantBearing)).build()
+    }
+    // stop observing after the first data point
+    every { dataObserver.onNewData(any()) } returns false
+
+    followingState.observeDataSource(dataObserver)
+    verify {
+      locationPlugin.addOnIndicatorBearingChangedListener(
+        capture(
+          indicatorBearingChangedListenerSlot
+        )
+      )
+    }
+    verify {
+      locationPlugin.addOnIndicatorPositionChangedListener(
+        capture(
+          indicatorPositionChangedListenerSlot
+        )
+      )
+    }
+    indicatorPositionChangedListenerSlot.captured.onIndicatorPositionChanged(testCenter)
+    // first new data be fired when the first position is available, when the bearing is constant.
+    verify(exactly = 1) {
       dataObserver.onNewData(
         cameraOptions {
-          bearing(testBearing)
           center(testCenter)
-          pitch(DEFAULT_FOLLOW_VIEWPORT_STATE_PITCH)
+          bearing(constantBearing)
           zoom(DEFAULT_FOLLOW_VIEWPORT_STATE_ZOOM)
+          pitch(DEFAULT_FOLLOW_VIEWPORT_STATE_PITCH)
           padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
         }
       )
+    }
+    // new bearing updates from location component shouldn't trigger new data.
+    indicatorBearingChangedListenerSlot.captured.onIndicatorBearingChanged(testBearing)
+    verify(exactly = 1) { dataObserver.onNewData(any()) }
+
+    // more indicator updates after the initial update shouldn't be notified.
+    indicatorBearingChangedListenerSlot.captured.onIndicatorBearingChanged(testBearing)
+    indicatorPositionChangedListenerSlot.captured.onIndicatorPositionChanged(testCenter)
+    verify(exactly = 1) {
+      dataObserver.onNewData(any())
     }
   }
 
