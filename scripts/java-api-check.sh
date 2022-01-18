@@ -6,6 +6,12 @@ set -Eeuxo pipefail
 #   ./java-api-check.sh <current release tag (empty for branches)> <path to current aar> <module name> <optional, path to previously released aar>
 #
 
+if ! command -v gh &> /dev/null
+then
+    echo "gh (github cli tool) is not found, install it first"
+    exit
+fi
+
 if [[ ! -f $2 ]]
 then
   # Assembled aar located under moduleName/build/outputs/aar/moduleName-release.aar
@@ -43,15 +49,10 @@ PREVIOUS_RELEASE=${TMPDIR}/previous/sdk-release.aar
 CURRENT_RELEASE_DIR=$(dirname "${CURRENT_RELEASE}")
 PREVIOUS_RELEASE_DIR=$(dirname "${PREVIOUS_RELEASE}")
 
-if [[ -z ${TAGGED_RELEASE_VERSION} ]]; then
-# If it is not a tagged release (branch), use LAST_VERSION as a last tag.
-    LAST_VERSION=$(git describe --tags --abbrev=0)
-else
-# Circle-CI release job will have tag that points to the HEAD
-# Previous version is last version before current tag.
-    LAST_VERSION=$(git describe HEAD~1 --tags --abbrev=0)
-fi
-LAST_VERSION=${LAST_VERSION:9}
+gh auth login --with-token < ./gh_token.txt
+LAST_VERSION_TAG=$(gh release list -L 1) #android-v10.3.0-beta.1  Pre-release  (android-v10.3.0-beta.1)  about 5 days ago
+LAST_VERSION_TAG_ARRAY=($LAST_VERSION_TAG)
+LAST_VERSION=${LAST_VERSION_TAG_ARRAY[0]:9}
 
 RELEASE_TAG=${4-""}
 if [[ -z $RELEASE_TAG ]]; then
@@ -64,7 +65,7 @@ if [[ -z $RELEASE_TAG ]]; then
   fi
   echo "aar path is: $AAR_PATH, checking file"
   if [[ -z $(aws s3 ls "$AAR_PATH") ]]; then
-    echo "$AAR_PATH doesn't exists on s3, skip check for it."
+    echo "$AAR_PATH doesn't exist on s3, skipping the check"
     exit 0
   fi
   echo "Downloading file from s3"
@@ -160,11 +161,12 @@ api_compat=$(compare_aars "${PREVIOUS_RELEASE}" "${CURRENT_RELEASE}")
 rm -rf "${TMPDIR}"
 echo "Compare result: $api_compat"
 
-#if [[ -z ${TAGGED_RELEASE_VERSION} ]]; then
-#  if [[ $api_compat == major ]]; then
-#    echo "Find major level breaking change."
-#    exit 1
-#  fi
-#fi
+# Fail the job when there is major changes.
+if [[ -z ${TAGGED_RELEASE_VERSION} ]]; then
+  if [[ $api_compat == major ]]; then
+    echo "Potential major level breaking change found."
+    exit 1
+  fi
+fi
 
 "${CURRENT_DIR}"/semver-check.sh "${TAGGED_RELEASE_VERSION}" "${LAST_VERSION}" "${api_compat}"
