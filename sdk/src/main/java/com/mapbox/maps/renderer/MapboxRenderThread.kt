@@ -86,12 +86,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     this.eglCore = eglCore
   }
 
-  private fun postPrepareRenderFrame(delayMillis: Long = 0) {
-    if (delayMillis > 0) {
-      renderHandlerThread.postDelayed( { prepareRenderFrame() }, delayMillis)
-    } else {
-      renderHandlerThread.post { prepareRenderFrame() }
-    }
+  private fun postPrepareRenderFrame(delayMillis: Long = 0L) {
+    renderHandlerThread.postDelayed( { prepareRenderFrame() }, delayMillis)
   }
 
   private fun checkSurfaceReady(creatingSurface: Boolean): Boolean {
@@ -123,7 +119,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     if (!surface.isValid) {
       Logger.w(TAG, "EGL was configured but surface is not valid.")
       // give system a bit of time and try rendering again hoping surface will be valid now
-      postPrepareRenderFrame(delayMillis = 50)
+      postPrepareRenderFrame(delayMillis = 50L)
       return false
     }
     // on Android SDK <= 23 at least on x86 emulators we need to force set EGL10.EGL_NO_CONTEXT
@@ -135,14 +131,14 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     if (!eglCore.eglStatusSuccess) {
       // Set EGL Surface as EGL_NO_SURFACE and try recreate it in next iteration.
       eglSurface = EGL10.EGL_NO_SURFACE
-      postPrepareRenderFrame(delayMillis = 50)
+      postPrepareRenderFrame(delayMillis = 50L)
       return false
     }
     eglSurface?.let {
       val eglContextAttached = eglCore.makeCurrent(it)
       if (!eglContextAttached) {
         Logger.w(TAG, "EGL was configured but context could not be made current. Trying again in a moment...")
-        postPrepareRenderFrame(delayMillis = 50)
+        postPrepareRenderFrame(delayMillis = 50L)
       }
     }
 
@@ -325,7 +321,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
           }
         }
         snapshotQueue.clear()
-        renderHandlerThread.clearMessageQueue()
+        renderHandlerThread.clearMessageQueue(clearAll = false)
         prepareRenderFrame(creatingSurface = true)
       }
       createCondition.await()
@@ -356,18 +352,28 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       }
       postPrepareRenderFrame()
     } else {
-      renderHandlerThread.post {
+      postNonRenderEvent(renderEvent)
+    }
+  }
+
+  private fun postNonRenderEvent(renderEvent: RenderEvent, delayMillis: Long = 0L) {
+    renderHandlerThread.postDelayed(
+      {
         // at the time we start executing surface may be already destroyed
+        Logger.w(TAG, "postNonRenderEvent $shouldExit ${renderEvent.runnable}")
         if (!shouldExit) {
           if (nativeRenderCreated) {
+            Logger.w(TAG, "Executing runnable ${renderEvent.runnable}")
             renderEvent.runnable?.run()
           } else {
             Logger.w(TAG, "Render thread is not fully ready, rescheduling runnable.")
-            queueRenderEvent(renderEvent)
+            postNonRenderEvent(renderEvent, delayMillis = 50L)
           }
         }
-      }
-    }
+      },
+      delayMillis,
+      renderEvent.eventType
+    )
   }
 
   @AnyThread
@@ -404,7 +410,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
             if (nativeRenderCreated) {
               releaseAll()
             }
-            renderHandlerThread.clearMessageQueue()
+            renderHandlerThread.clearMessageQueue(clearAll = true)
             destroyCondition.signal()
           }
         }
