@@ -25,7 +25,6 @@ import io.mockk.verifyOrder
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -72,7 +71,7 @@ class ViewportPluginImplTest {
   @Test
   fun testCleanUp() {
     viewportPlugin.cleanup()
-    assert(viewportPlugin.status == ViewportStatus.State(null))
+    assert(viewportPlugin.status == ViewportStatus.Idle)
     verify { cameraPlugin.removeCameraAnimationsLifecycleListener(any()) }
   }
 
@@ -118,24 +117,24 @@ class ViewportPluginImplTest {
     val transitionToCompletionListener = mockk<CompletionListener>(relaxed = true)
     viewportPlugin.defaultTransition = transition
     // enter transition status
-    viewportPlugin.transitionTo(targetState, transitionToCompletionListener)
+    viewportPlugin.transitionTo(targetState, null, transitionToCompletionListener)
     runHandlerAndTest {
       verify {
         statusObserver.onViewportStatusChanged(
-          ViewportStatus.State(null),
-          ViewportStatus.Transition(transition, null, targetState),
+          ViewportStatus.Idle,
+          ViewportStatus.Transition(transition, targetState),
           VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
         )
       }
     }
     assertTrue(viewportPlugin.status is ViewportStatus.Transition)
-    verify { transition.run(any(), targetState, capture(completeSlot)) }
+    verify { transition.run(targetState, capture(completeSlot)) }
     // complete transition, enter state status
     completeSlot.captured.onComplete(true)
     runHandlerAndTest {
       verify {
         statusObserver.onViewportStatusChanged(
-          ViewportStatus.Transition(transition, null, targetState),
+          ViewportStatus.Transition(transition,  targetState),
           ViewportStatus.State(targetState),
           VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
         )
@@ -155,27 +154,27 @@ class ViewportPluginImplTest {
     val transitionToCompletionListener = mockk<CompletionListener>(relaxed = true)
     viewportPlugin.defaultTransition = transition
     // enter transition status
-    viewportPlugin.transitionTo(targetState, transitionToCompletionListener)
-    verify { transition.run(any(), targetState, capture(completeSlot)) }
+    viewportPlugin.transitionTo(targetState, null, transitionToCompletionListener)
+    verify { transition.run(targetState, capture(completeSlot)) }
     assertTrue(viewportPlugin.status is ViewportStatus.Transition)
     runHandlerAndTest {
       verify {
         statusObserver.onViewportStatusChanged(
-          ViewportStatus.State(null),
-          ViewportStatus.Transition(transition, null, targetState),
+          ViewportStatus.Idle,
+          ViewportStatus.Transition(transition, targetState),
           VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
         )
       }
     }
     // complete transition with canceled flag
     completeSlot.captured.onComplete(false)
-    assertEquals(viewportPlugin.status, ViewportStatus.State(null))
+    assertEquals(viewportPlugin.status, ViewportStatus.Idle)
     runHandlerAndTest {
       runHandlerAndTest {
         verify {
           statusObserver.onViewportStatusChanged(
-            ViewportStatus.Transition(transition, null, targetState),
-            ViewportStatus.State(null),
+            ViewportStatus.Transition(transition, targetState),
+            ViewportStatus.Idle,
             VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
           )
         }
@@ -193,19 +192,19 @@ class ViewportPluginImplTest {
     viewportPlugin.defaultTransition = transition
     // enter transition status
     viewportPlugin.transitionTo(targetState)
-    verify { transition.run(any(), targetState, capture(completeSlot)) }
+    verify { transition.run(targetState, capture(completeSlot)) }
     assertTrue(viewportPlugin.status is ViewportStatus.Transition)
     runHandlerAndTest {
       verify {
         statusObserver.onViewportStatusChanged(
-          ViewportStatus.State(null),
-          ViewportStatus.Transition(transition, null, targetState),
+          ViewportStatus.Idle,
+          ViewportStatus.Transition(transition, targetState),
           VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
         )
       }
     }
     // start new transition to the same state
-    viewportPlugin.transitionTo(targetState, transitionToCompletionListener)
+    viewportPlugin.transitionTo(targetState, null, transitionToCompletionListener)
     verify { transitionToCompletionListener.onComplete(false) }
   }
 
@@ -217,13 +216,13 @@ class ViewportPluginImplTest {
     viewportPlugin.defaultTransition = transition
     // enter transition status
     viewportPlugin.transitionTo(targetState)
-    verify { transition.run(any(), targetState, capture(completeSlot)) }
+    verify { transition.run(targetState, capture(completeSlot)) }
     assertTrue(viewportPlugin.status is ViewportStatus.Transition)
     runHandlerAndTest {
       verify {
         statusObserver.onViewportStatusChanged(
-          ViewportStatus.State(null),
-          ViewportStatus.Transition(transition, null, targetState),
+          ViewportStatus.Idle,
+          ViewportStatus.Transition(transition, targetState),
           VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
         )
       }
@@ -234,7 +233,7 @@ class ViewportPluginImplTest {
     runHandlerAndTest {
       verify {
         statusObserver.onViewportStatusChanged(
-          ViewportStatus.Transition(transition, null, targetState),
+          ViewportStatus.Transition(transition, targetState),
           ViewportStatus.State(targetState),
           VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
         )
@@ -242,7 +241,7 @@ class ViewportPluginImplTest {
     }
     verify(exactly = 1) { targetState.startUpdatingCamera() }
     // start new transition to the same state
-    viewportPlugin.transitionTo(targetState, transitionToCompletionListener)
+    viewportPlugin.transitionTo(targetState, null, transitionToCompletionListener)
     verify { transitionToCompletionListener.onComplete(true) }
     // verify no more startUpdatingCamera is called
     verify(exactly = 1) { targetState.startUpdatingCamera() }
@@ -262,20 +261,20 @@ class ViewportPluginImplTest {
     runHandlerAndTest {
       verify {
         statusObserver.onViewportStatusChanged(
-          ViewportStatus.State(null),
-          ViewportStatus.Transition(transition, null, targetState),
+          ViewportStatus.Idle,
+          ViewportStatus.Transition(transition, targetState),
           VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
         )
       }
     }
-    verify { transition.run(any(), targetState, capture(completeSlot)) }
+    verify { transition.run(targetState, capture(completeSlot)) }
     // complete transition, enter state status
     completeSlot.captured.onComplete(true)
     assertEquals(viewportPlugin.status, ViewportStatus.State(targetState))
     runHandlerAndTest {
       verify {
         statusObserver.onViewportStatusChanged(
-          ViewportStatus.Transition(transition, null, targetState),
+          ViewportStatus.Transition(transition, targetState),
           ViewportStatus.State(targetState),
           VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
         )
@@ -287,14 +286,14 @@ class ViewportPluginImplTest {
       verify {
         statusObserver.onViewportStatusChanged(
           ViewportStatus.State(targetState),
-          ViewportStatus.Transition(transition, targetState, newState),
+          ViewportStatus.Transition(transition, newState),
           VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
         )
       }
     }
     verifyOrder {
       stateUpdatingCancelable.cancel()
-      transition.run(any(), newState, any())
+      transition.run(newState, any())
     }
   }
 
@@ -304,7 +303,7 @@ class ViewportPluginImplTest {
     val newState = mockk<ViewportState>(relaxed = true)
     val transition = mockk<ViewportTransition>(relaxed = true)
     val transitionUpdateCancelable = mockk<Cancelable>(relaxed = true)
-    every { transition.run(any(), any(), any()) } returns transitionUpdateCancelable
+    every { transition.run(any(), any()) } returns transitionUpdateCancelable
     viewportPlugin.defaultTransition = transition
     // enter transition status
     viewportPlugin.transitionTo(targetState)
@@ -312,27 +311,27 @@ class ViewportPluginImplTest {
     runHandlerAndTest {
       verify {
         statusObserver.onViewportStatusChanged(
-          ViewportStatus.State(null),
-          ViewportStatus.Transition(transition, null, targetState),
+          ViewportStatus.Idle,
+          ViewportStatus.Transition(transition, targetState),
           VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
         )
       }
     }
-    verify { transition.run(any(), targetState, capture(completeSlot)) }
+    verify { transition.run(targetState, capture(completeSlot)) }
     // transition to new state
     viewportPlugin.transitionTo(newState)
     runHandlerAndTest {
       verify {
         statusObserver.onViewportStatusChanged(
-          ViewportStatus.Transition(transition, null, targetState),
-          ViewportStatus.Transition(transition, targetState, newState),
+          ViewportStatus.Transition(transition, targetState),
+          ViewportStatus.Transition(transition, newState),
           VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
         )
       }
     }
     verifyOrder {
       transitionUpdateCancelable.cancel()
-      transition.run(any(), newState, any())
+      transition.run(newState, any())
     }
   }
 
@@ -341,7 +340,7 @@ class ViewportPluginImplTest {
     val targetState = mockk<ViewportState>(relaxed = true)
     val transition = mockk<ViewportTransition>(relaxed = true)
     val transitionUpdateCancelable = mockk<Cancelable>(relaxed = true)
-    every { transition.run(any(), any(), any()) } returns transitionUpdateCancelable
+    every { transition.run(any(), any()) } returns transitionUpdateCancelable
     viewportPlugin.defaultTransition = transition
     // enter transition status
     viewportPlugin.transitionTo(targetState)
@@ -349,59 +348,26 @@ class ViewportPluginImplTest {
     runHandlerAndTest {
       verify {
         statusObserver.onViewportStatusChanged(
-          ViewportStatus.State(null),
-          ViewportStatus.Transition(transition, null, targetState),
+          ViewportStatus.Idle,
+          ViewportStatus.Transition(transition, targetState),
           VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
         )
       }
     }
-    verify { transition.run(any(), targetState, capture(completeSlot)) }
+    verify { transition.run(targetState, capture(completeSlot)) }
     // transition to idle
     viewportPlugin.idle()
     runHandlerAndTest {
       verify {
         statusObserver.onViewportStatusChanged(
-          ViewportStatus.Transition(transition, null, targetState),
-          ViewportStatus.State(null),
+          ViewportStatus.Transition(transition, targetState),
+          ViewportStatus.Idle,
           VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
         )
       }
     }
     verify { transitionUpdateCancelable.cancel() }
-    assertEquals(viewportPlugin.status, ViewportStatus.State(null))
-  }
-
-  @Test
-  fun testSetGetAndRemoveTransition() {
-    val targetState = mockk<ViewportState>(relaxed = true)
-    val fromState = mockk<ViewportState>(relaxed = true)
-    val transition = mockk<ViewportTransition>(relaxed = true)
-    viewportPlugin.setTransition(transition, fromState, targetState)
-    assertEquals(transition, viewportPlugin.getTransition(fromState, targetState))
-    viewportPlugin.removeTransition(fromState, targetState)
-    assertNull(viewportPlugin.getTransition(fromState, targetState))
-  }
-
-  @Test
-  fun testSetTransitionForStateTransition() {
-    val targetState = mockk<ViewportState>(relaxed = true)
-    val fromState = mockk<ViewportState>(relaxed = true)
-    val customisedTransition = mockk<ViewportTransition>(relaxed = true)
-    val defaultTransition = mockk<ViewportTransition>(relaxed = true)
-    viewportPlugin.defaultTransition = defaultTransition
-    viewportPlugin.setTransition(customisedTransition, fromState, targetState)
-    assertEquals(customisedTransition, viewportPlugin.getTransition(fromState, targetState))
-    // enter transition status
-    viewportPlugin.transitionTo(fromState)
-    assertTrue(viewportPlugin.status is ViewportStatus.Transition)
-    verify { defaultTransition.run(any(), fromState, capture(completeSlot)) }
-    // complete transition, enter fromState
-    completeSlot.captured.onComplete(true)
-    assertEquals(viewportPlugin.status, ViewportStatus.State(fromState))
-    // transition from fromState to targetState
-    viewportPlugin.transitionTo(targetState)
-    // verify using customised transition
-    verify { customisedTransition.run(any(), any(), any()) }
+    assertEquals(viewportPlugin.status, ViewportStatus.Idle)
   }
 
   @Test
@@ -415,8 +381,8 @@ class ViewportPluginImplTest {
     runHandlerAndTest {
       verify(exactly = 1) {
         testObserver.onViewportStatusChanged(
-          ViewportStatus.State(null),
-          ViewportStatus.Transition(defaultTransition, null, targetState),
+          ViewportStatus.Idle,
+          ViewportStatus.Transition(defaultTransition, targetState),
           VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
         )
       }
@@ -426,8 +392,8 @@ class ViewportPluginImplTest {
     runHandlerAndTest {
       verify(exactly = 0) {
         testObserver.onViewportStatusChanged(
-          ViewportStatus.Transition(defaultTransition, null, targetState),
-          ViewportStatus.State(null),
+          ViewportStatus.Transition(defaultTransition, targetState),
+          ViewportStatus.Idle,
           VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
         )
       }

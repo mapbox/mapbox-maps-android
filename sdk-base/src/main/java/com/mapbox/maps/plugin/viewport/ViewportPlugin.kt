@@ -42,9 +42,10 @@ interface ViewportPlugin : MapPlugin {
    * If transition is canceled, state goes to IDLE.
    *
    * @param targetState The target [ViewportState] to transition to.
+   * @param transition The [ViewportTransition] that's used to transition to target state, if not specified, the [ViewportPlugin.defaultTransition] will be used.
    * @param completionListener The listener to observe the completion state.
    */
-  fun transitionTo(targetState: ViewportState, completionListener: CompletionListener? = null)
+  fun transitionTo(targetState: ViewportState, transition: ViewportTransition? = null, completionListener: CompletionListener? = null)
 
   /**
    * Immediately goes to IDLE state canceling all ongoing transitions.
@@ -64,31 +65,6 @@ interface ViewportPlugin : MapPlugin {
    * This transition is used unless overridden by one of the registered transitions.
    */
   var defaultTransition: ViewportTransition
-
-  /**
-   * Set the [ViewportTransition] for the transition from given [ViewportState] to target [ViewportState]
-   *
-   * @param transition The transition to be set.
-   * @param from The state before the transition.
-   * @param to The state after the transition.
-   */
-  fun setTransition(transition: ViewportTransition, from: ViewportState?, to: ViewportState)
-
-  /**
-   * Get the [ViewportTransition] from given [ViewportState] to target [ViewportState].
-   *
-   * @param from The state before the transition.
-   * @param to The state after the transition.
-   */
-  fun getTransition(from: ViewportState?, to: ViewportState): ViewportTransition?
-
-  /**
-   * Remove the [ViewportTransition] from given [ViewportState] to target [ViewportState].
-   *
-   * @param from The state before the transition.
-   * @param to The state after the transition.
-   */
-  fun removeTransition(from: ViewportState?, to: ViewportState)
 
   // Observers
 

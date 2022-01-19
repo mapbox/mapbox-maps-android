@@ -184,4 +184,5 @@ private fun ViewportStatus.getCurrentOrNextState(): ViewportState? =
   when (this) {
     is ViewportStatus.State -> state
     is ViewportStatus.Transition -> toState
+    ViewportStatus.Idle -> null
   }

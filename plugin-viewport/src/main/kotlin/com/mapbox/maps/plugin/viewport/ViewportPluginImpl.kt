@@ -43,7 +43,6 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
   ViewportPlugin {
   private val registeredStatusObservers = CopyOnWriteArraySet<ViewportStatusObserver>()
   private var currentCancelable: Cancelable? = null
-  private val transitions = HashMap<Pair<ViewportState?, ViewportState?>, ViewportTransition>()
   private lateinit var delegateProvider: MapDelegateProvider
   private lateinit var cameraPlugin: CameraAnimationsPlugin
 
@@ -60,7 +59,7 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
             currentCancelable?.cancel()
             currentCancelable = null
             updateStatus(
-              ViewportStatus.State(null),
+              ViewportStatus.Idle,
               VIEWPORT_STATUS_OBSERVER_REASON_USER_INTERACTION
             )
           }
@@ -98,10 +97,9 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
   /**
    * Returns current [ViewportStatus].
    *
-   * If current status is IDLE, returns ViewportStatus.State(null).
    * @see addStatusObserver
    */
-  override var status: ViewportStatus = ViewportStatus.State(null)
+  override var status: ViewportStatus = ViewportStatus.Idle
     private set
 
   private fun updateStatus(targetStatus: ViewportStatus, reason: String) {
@@ -121,9 +119,10 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
    * If transition is canceled, state goes to IDLE.
    *
    * @param targetState The target [ViewportState] to transition to.
+   * @param transition The [ViewportTransition] that's used to transition to target state, if not specified, the [ViewportPlugin.defaultTransition] will be used.
    * @param completionListener The listener to observe the completion state.
    */
-  override fun transitionTo(targetState: ViewportState, completionListener: CompletionListener?) {
+  override fun transitionTo(targetState: ViewportState, transition: ViewportTransition?, completionListener: CompletionListener?) {
     with(status) {
       when (this) {
         is ViewportStatus.State -> {
@@ -138,18 +137,18 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
             return
           }
         }
+        is ViewportStatus.Idle -> Unit
       }
     }
-    val fromState = status.getCurrentOrTargetState()
     currentCancelable?.cancel()
     currentCancelable = null
 
     // get the transition (or default) for the from and to state
-    val transition = getTransition(fromState, targetState) ?: defaultTransition
+    val viewportTransition = transition ?: defaultTransition
 
     // run the transition
     var completionBlockInvoked = false
-    val transitionCancelable = transition.run(fromState, targetState) { isFinished ->
+    val transitionCancelable = viewportTransition.run(targetState) { isFinished ->
       completionBlockInvoked = true
       if (isFinished) {
         // transfer camera updating responsibility to targetState
@@ -160,7 +159,7 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
         )
       } else {
         currentCancelable = null
-        updateStatus(ViewportStatus.State(null), VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC)
+        updateStatus(ViewportStatus.Idle, VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC)
       }
       completionListener?.onComplete(isFinished)
     }
@@ -171,7 +170,7 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
     if (!completionBlockInvoked) {
       currentCancelable = transitionCancelable
       updateStatus(
-        ViewportStatus.Transition(transition, fromState, targetState),
+        ViewportStatus.Transition(viewportTransition, targetState),
         VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
       )
     }
@@ -181,10 +180,10 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
    * Immediately goes to IDLE state canceling all ongoing transitions.
    */
   override fun idle() {
-    if (status.getCurrentOrTargetState() == null) return
+    if (status == ViewportStatus.Idle) return
     currentCancelable?.cancel()
     currentCancelable = null
-    updateStatus(ViewportStatus.State(null), VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC)
+    updateStatus(ViewportStatus.Idle, VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC)
   }
 
   /**
@@ -214,41 +213,6 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
    * This transition is used unless overridden by one of the registered transitions.
    */
   override lateinit var defaultTransition: ViewportTransition
-
-  /**
-   * Set the [ViewportTransition] for the transition from given [ViewportState] to target [ViewportState]
-   *
-   * @param transition The transition to be set.
-   * @param from The state before the transition.
-   * @param to The state after the transition.
-   */
-  override fun setTransition(
-    transition: ViewportTransition,
-    from: ViewportState?,
-    to: ViewportState
-  ) {
-    transitions[Pair(from, to)] = transition
-  }
-
-  /**
-   * Get the transition from the previous state and target state.
-   *
-   * @param from The state before the transition.
-   * @param to The state after the transition.
-   */
-  override fun getTransition(from: ViewportState?, to: ViewportState): ViewportTransition? {
-    return transitions[Pair(from, to)]
-  }
-
-  /**
-   * Remove the transition between the previous state and target state.
-   *
-   * @param from The state before the transition.
-   * @param to The state after the transition.
-   */
-  override fun removeTransition(from: ViewportState?, to: ViewportState) {
-    transitions.remove(Pair(from, to))
-  }
 
   /**
    * Adds [ViewportStatusObserver] to observe the status change.
@@ -317,7 +281,7 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
    * Called when the map is destroyed. Should be used to cleanup plugin resources for that map.
    */
   override fun cleanup() {
-    updateStatus(ViewportStatus.State(null), VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC)
+    updateStatus(ViewportStatus.Idle, VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC)
     cameraPlugin.removeCameraAnimationsLifecycleListener(cameraAnimationsLifecycleListener)
   }
 
@@ -330,9 +294,3 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
     const val VIEWPORT_CAMERA_OWNER = "VIEWPORT_CAMERA_OWNER"
   }
 }
-
-internal fun ViewportStatus.getCurrentOrTargetState(): ViewportState? =
-  when (this) {
-    is ViewportStatus.State -> state
-    is ViewportStatus.Transition -> toState
-  }
