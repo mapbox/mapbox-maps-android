@@ -22,6 +22,12 @@ internal class RenderHandlerThread {
     } ?: Logger.w(TAG, "Thread $HANDLE_THREAD_NAME was not started, ignoring event")
   }
 
+  fun postDelayed(task: () -> Unit, delayMillis: Long) {
+    handler?.let {
+      it.postDelayed( { task.invoke() }, delayMillis)
+    } ?: Logger.w(TAG, "Thread $HANDLE_THREAD_NAME was not started, ignoring event")
+  }
+
   fun start() {
     handlerThread = HandlerThread(HANDLE_THREAD_NAME, THREAD_PRIORITY_DISPLAY).apply {
       start()

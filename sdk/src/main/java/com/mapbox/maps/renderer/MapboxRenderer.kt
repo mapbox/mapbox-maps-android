@@ -60,14 +60,46 @@ internal abstract class MapboxRenderer : MapClient {
 
   @AnyThread
   override fun scheduleRepaint() {
-    renderThread.requestRender()
+    renderThread.queueRenderEvent(
+      RenderEvent(
+        runnable = null,
+        needRender = true,
+        eventType = EventType.MAPBOX
+      )
+    )
   }
 
   @AnyThread
   override fun scheduleTask(task: Task) {
-    renderThread.queueEvent {
-      task.run()
-    }
+    renderThread.queueRenderEvent(
+      RenderEvent(
+        runnable = { task.run() },
+        needRender = false,
+        eventType = EventType.MAPBOX
+      )
+    )
+  }
+
+  @AnyThread
+  fun queueRenderEvent(runnable: Runnable) {
+    renderThread.queueRenderEvent(
+      RenderEvent(
+        runnable = runnable,
+        needRender = true,
+        eventType = EventType.USER
+      )
+    )
+  }
+
+  @AnyThread
+  fun queueEvent(runnable: Runnable) {
+    renderThread.queueRenderEvent(
+      RenderEvent(
+        runnable = runnable,
+        needRender = false,
+        eventType = EventType.USER
+      )
+    )
   }
 
   @WorkerThread
@@ -108,16 +140,6 @@ internal abstract class MapboxRenderer : MapClient {
   fun onStart() {
     renderThread.resume()
     map?.subscribe(observer, listOf(MapEvents.RENDER_FRAME_FINISHED))
-  }
-
-  @AnyThread
-  fun queueRenderEvent(runnable: Runnable) {
-    renderThread.queueRenderEvent(runnable)
-  }
-
-  @AnyThread
-  fun queueEvent(runnable: Runnable) {
-    renderThread.queueEvent(runnable)
   }
 
   @WorkerThread
