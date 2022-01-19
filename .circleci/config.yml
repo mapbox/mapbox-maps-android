@@ -346,12 +346,20 @@ jobs:
           fingerprints:
             - "3b:cd:47:bf:57:9c:e5:36:b0:4d:5f:12:5e:d3:b3:3e"
       - restore-gradle-cache
+      - init-aws
       - run:
           name: ktlint
           command: ./gradlew ktlint
       - run:
           name: license
           command: python scripts/license-validate.py
+      - run:
+          name: check changelog
+          command: |
+            if [[ ! -z "${CIRCLE_PULL_REQUEST}" ]]; then
+              echo "$(./mbx-ci github reader token)" > gh_token.txt
+              ./scripts/check-changelog.sh
+            fi
       - store-results
 
   verify-docs:
