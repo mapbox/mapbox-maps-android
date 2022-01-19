@@ -156,10 +156,7 @@ internal class LocationPuckManager(
    */
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal fun styleScaling(settings: LocationComponentSettings) {
-    val puck = settings.locationPuck
-    val minZoom = MIN_ZOOM
-    val maxZoom = MAX_ZOOM
-    when (puck) {
+    when (val puck = settings.locationPuck) {
       is LocationPuck2D -> {
         val scaleExpression = puck.scaleExpression
         if (scaleExpression != null) {
@@ -167,6 +164,7 @@ internal class LocationPuckManager(
         }
       }
       is LocationPuck3D -> {
+        val modelScaleConstant = 2.0.pow(MAX_ZOOM - MIN_ZOOM)
         val modelScaleExpression = puck.modelScaleExpression
         val scaleExpression = if (modelScaleExpression == null) {
           Value(
@@ -174,20 +172,20 @@ internal class LocationPuckManager(
               Value("interpolate"),
               Value(arrayListOf(Value("exponential"), Value(0.5))),
               Value(arrayListOf(Value("zoom"))),
-              Value(minZoom),
+              Value(MIN_ZOOM),
               Value(
                 arrayListOf(
                   Value("literal"),
                   Value(
                     arrayListOf(
-                      Value(2.0.pow(maxZoom - minZoom) * puck.modelScale[0].toDouble()),
-                      Value(2.0.pow(maxZoom - minZoom) * puck.modelScale[1].toDouble()),
-                      Value(2.0.pow(maxZoom - minZoom) * puck.modelScale[2].toDouble())
+                      Value(modelScaleConstant * puck.modelScale[0].toDouble()),
+                      Value(modelScaleConstant * puck.modelScale[1].toDouble()),
+                      Value(modelScaleConstant * puck.modelScale[2].toDouble())
                     )
                   )
                 )
               ),
-              Value(maxZoom),
+              Value(MAX_ZOOM),
               Value(
                 arrayListOf(
                   Value("literal"),
