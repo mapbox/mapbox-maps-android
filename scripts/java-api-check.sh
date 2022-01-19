@@ -30,6 +30,7 @@ fi
 CURRENT_DIR=$(dirname "$0")
 TMPDIR=`mktemp -d`
 REPORT_DIR=${CURRENT_DIR}/../api_compat_report/$MODULE_NAME
+MAJOR_CHANGE_FILE=${CURRENT_DIR}/../api_compat_report/major.txt
 mkdir -p "${REPORT_DIR}"
 mkdir -p "${TMPDIR}"
 
@@ -161,12 +162,8 @@ api_compat=$(compare_aars "${PREVIOUS_RELEASE}" "${CURRENT_RELEASE}")
 rm -rf "${TMPDIR}"
 echo "Compare result: $api_compat"
 
-# Fail the job when there is major changes.
-if [[ -z ${TAGGED_RELEASE_VERSION} ]]; then
-  if [[ $api_compat == major ]]; then
-    echo "Potential major level breaking change found."
-    exit 1
-  fi
+if [[ $api_compat == major ]]; then
+  echo "${MODULE_NAME} " >> "${MAJOR_CHANGE_FILE}"
 fi
 
 "${CURRENT_DIR}"/semver-check.sh "${TAGGED_RELEASE_VERSION}" "${LAST_VERSION}" "${api_compat}"

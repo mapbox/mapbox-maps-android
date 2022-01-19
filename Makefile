@@ -31,7 +31,7 @@ build:
 .PHONY: checkApi
 checkApi:
 	unset GITHUB_TOKEN; \
-	echo "$(shell mbx-ci github writer private token)" > gh_token.txt;\
+	echo "$(shell mbx-ci github reader token)" > gh_token.txt;\
 	sh scripts/java-api-check-all.sh "$(TAG)"
 
 .PHONY: proguard
