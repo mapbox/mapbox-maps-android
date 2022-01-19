@@ -57,7 +57,7 @@ internal class FollowingViewportStateImpl(
   }
 
   private fun notifyLatestViewportData() {
-    if (lastLocation != null && lastBearing != null) {
+    if (lastLocation != null && (options.bearing is FollowingViewportStateBearing.Constant || lastBearing != null)) {
       val viewportData = evaluateViewportData()
       if (isFollowingStateRunning) {
         // Use instant update here since the location updates are already interpolated by the location component plugin
