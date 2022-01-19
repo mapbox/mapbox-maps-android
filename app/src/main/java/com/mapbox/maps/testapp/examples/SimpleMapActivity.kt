@@ -17,9 +17,12 @@ class SimpleMapActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val mapView = MapView(this)
     setContentView(mapView)
-//    mapView.queueEvent({
-//      Logger.e("Mbgl-Kiryl", GLES20.glGetString(GLES20.GL_RENDERER))
-//    }, needRender = false)
+    val runnable = Runnable {
+      Logger.e("Mbgl-Kiryl", "Event")
+      Logger.e("Mbgl-Kiryl", GLES20.glGetString(GLES20.GL_RENDERER))
+    }
+    Logger.e("Mbgl-Kiryl", "Runnable $runnable")
+    mapView.queueEvent(runnable, needRender = false)
     mapView.getMapboxMap()
       .apply {
         setCamera(
