@@ -148,11 +148,17 @@ internal class LocationPuckManager(
     locationLayerRenderer.hide()
   }
 
+  /**
+   * function to set scaling for [LocationPuck].
+   * In order to keep 3D puck size constant across all zoom levels, we interpolate the model based on
+   * current zoom level. MIN_ZOOM, MAX_ZOOM are used as two anchor points to calculate
+   * the scale expression.
+   */
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal fun styleScaling(settings: LocationComponentSettings) {
     val puck = settings.locationPuck
-    val minZoom = delegateProvider.mapCameraManagerDelegate.getBounds().minZoom
-    val maxZoom = delegateProvider.mapCameraManagerDelegate.getBounds().maxZoom
+    val minZoom = MIN_ZOOM
+    val maxZoom = MAX_ZOOM
     when (puck) {
       is LocationPuck2D -> {
         val scaleExpression = puck.scaleExpression
@@ -202,6 +208,11 @@ internal class LocationPuckManager(
         locationLayerRenderer.styleScaling(scaleExpression)
       }
     }
+  }
+
+  private companion object {
+    const val MIN_ZOOM = 0.50
+    const val MAX_ZOOM = 22.0
   }
 }
 
