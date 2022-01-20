@@ -9,7 +9,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import com.mapbox.common.Logger
 import com.mapbox.maps.renderer.egl.EGLCore
-import java.util.*
+import java.util.LinkedList
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicLong
 import java.util.concurrent.locks.ReentrantLock
@@ -206,7 +206,14 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     // it makes sense to execute them after drawing a map but before swapping buffers
     // **note** this queue also holds snapshot tasks
     renderEventQueueLock.withLock {
-      drainQueue(renderEventQueue)
+      renderEventQueue.apply {
+        if (isNotEmpty()) {
+          forEach {
+            it.runnable?.run()
+          }
+          clear()
+        }
+      }
     }
     eglSurface?.let {
       when (val swapStatus = eglCore.swapBuffers(it)) {
@@ -400,17 +407,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       delayMillis,
       renderEvent.eventType
     )
-  }
-
-  private fun drainQueue(queue: LinkedList<RenderEvent>) {
-    queue.apply {
-      if (isNotEmpty()) {
-        forEach {
-          it.runnable?.run()
-        }
-        clear()
-      }
-    }
   }
 
   @AnyThread
