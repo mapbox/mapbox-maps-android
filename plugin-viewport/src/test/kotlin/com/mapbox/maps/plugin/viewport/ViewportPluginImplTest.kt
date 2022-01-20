@@ -76,11 +76,11 @@ class ViewportPluginImplTest {
   }
 
   @Test
-  fun testCreateFollowingViewportState() {
-    val followingViewportStateOptions = FollowPuckViewportStateOptions.Builder().build()
-    val followingState =
-      viewportPlugin.makeFollowPuckViewportState(followingViewportStateOptions)
-    assertEquals(followingState.options, followingViewportStateOptions)
+  fun testCreateFollowPuckViewportState() {
+    val followPuckViewportStateOptions = FollowPuckViewportStateOptions.Builder().build()
+    val followPuckState =
+      viewportPlugin.makeFollowPuckViewportState(followPuckViewportStateOptions)
+    assertEquals(followPuckState.options, followPuckViewportStateOptions)
   }
 
   @Test(expected = IllegalArgumentException::class)
@@ -111,7 +111,7 @@ class ViewportPluginImplTest {
   }
 
   @Test
-  fun testTransitionTo() {
+  fun testTransitionToWithDefaultTransition() {
     val targetState = mockk<ViewportState>(relaxed = true)
     val transition = mockk<ViewportTransition>(relaxed = true)
     val transitionToCompletionListener = mockk<CompletionListener>(relaxed = true)
@@ -128,6 +128,45 @@ class ViewportPluginImplTest {
       }
     }
     assertTrue(viewportPlugin.status is ViewportStatus.Transition)
+    verify { transition.run(targetState, capture(completeSlot)) }
+    // complete transition, enter state status
+    completeSlot.captured.onComplete(true)
+    runHandlerAndTest {
+      verify {
+        statusObserver.onViewportStatusChanged(
+          ViewportStatus.Transition(transition, targetState),
+          ViewportStatus.State(targetState),
+          VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
+        )
+      }
+    }
+    assertEquals(viewportPlugin.status, ViewportStatus.State(targetState))
+    verifyOrder {
+      targetState.startUpdatingCamera()
+      transitionToCompletionListener.onComplete(true)
+    }
+  }
+
+  @Test
+  fun testTransitionToWithCustomisedTransition() {
+    val targetState = mockk<ViewportState>(relaxed = true)
+    val transition = mockk<ViewportTransition>(relaxed = true)
+    val defaultTransition = mockk<ViewportTransition>(relaxed = true)
+    val transitionToCompletionListener = mockk<CompletionListener>(relaxed = true)
+    viewportPlugin.defaultTransition = defaultTransition
+    // enter transition status
+    viewportPlugin.transitionTo(targetState, transition, transitionToCompletionListener)
+    runHandlerAndTest {
+      verify {
+        statusObserver.onViewportStatusChanged(
+          ViewportStatus.Idle,
+          ViewportStatus.Transition(transition, targetState),
+          VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
+        )
+      }
+    }
+    assertTrue(viewportPlugin.status is ViewportStatus.Transition)
+    verify(exactly = 0) { defaultTransition.run(targetState, any()) }
     verify { transition.run(targetState, capture(completeSlot)) }
     // complete transition, enter state status
     completeSlot.captured.onComplete(true)
