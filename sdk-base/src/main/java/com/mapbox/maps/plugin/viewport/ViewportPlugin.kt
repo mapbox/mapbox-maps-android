@@ -3,10 +3,10 @@ package com.mapbox.maps.plugin.viewport
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
-import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateOptions
+import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.ViewportOptions
-import com.mapbox.maps.plugin.viewport.state.FollowingViewportState
+import com.mapbox.maps.plugin.viewport.state.FollowPuckViewportState
 import com.mapbox.maps.plugin.viewport.state.OverviewViewportState
 import com.mapbox.maps.plugin.viewport.state.ViewportState
 import com.mapbox.maps.plugin.viewport.transition.DefaultViewportTransition
@@ -85,13 +85,13 @@ interface ViewportPlugin : MapPlugin {
   // Convenient methods to create the in-stock [ViewportState] and [ViewportTransition].
 
   /**
-   * Create a [FollowingViewportState] instance with provided [FollowingViewportStateOptions].
+   * Create a [FollowPuckViewportState] instance with provided [FollowPuckViewportStateOptions].
    *
-   * @param options The desired [FollowingViewportStateOptions]
+   * @param options The desired [FollowPuckViewportStateOptions]
    */
-  fun makeFollowingViewportState(
-    options: FollowingViewportStateOptions = FollowingViewportStateOptions.Builder().build()
-  ): FollowingViewportState
+  fun makeFollowPuckViewportState(
+    options: FollowPuckViewportStateOptions = FollowPuckViewportStateOptions.Builder().build()
+  ): FollowPuckViewportState
 
   /**
    * Create an [OverviewViewportState] instance with provided [OverviewViewportStateOptions].

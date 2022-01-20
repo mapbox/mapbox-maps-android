@@ -10,7 +10,7 @@ import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
-import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateOptions
+import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
 import com.mapbox.maps.plugin.viewport.state.ViewportState
 import com.mapbox.maps.plugin.viewport.transition.ViewportTransition
@@ -77,9 +77,9 @@ class ViewportPluginImplTest {
 
   @Test
   fun testCreateFollowingViewportState() {
-    val followingViewportStateOptions = FollowingViewportStateOptions.Builder().build()
+    val followingViewportStateOptions = FollowPuckViewportStateOptions.Builder().build()
     val followingState =
-      viewportPlugin.makeFollowingViewportState(followingViewportStateOptions)
+      viewportPlugin.makeFollowPuckViewportState(followingViewportStateOptions)
     assertEquals(followingState.options, followingViewportStateOptions)
   }
 
@@ -134,7 +134,7 @@ class ViewportPluginImplTest {
     runHandlerAndTest {
       verify {
         statusObserver.onViewportStatusChanged(
-          ViewportStatus.Transition(transition,  targetState),
+          ViewportStatus.Transition(transition, targetState),
           ViewportStatus.State(targetState),
           VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
         )

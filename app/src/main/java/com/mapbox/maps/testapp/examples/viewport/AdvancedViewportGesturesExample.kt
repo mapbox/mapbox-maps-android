@@ -24,11 +24,11 @@ import com.mapbox.maps.plugin.gestures.OnShoveListener
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.ViewportStatus
-import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateBearing
-import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateOptions
+import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing
+import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.ViewportOptions
-import com.mapbox.maps.plugin.viewport.state.FollowingViewportState
+import com.mapbox.maps.plugin.viewport.state.FollowPuckViewportState
 import com.mapbox.maps.plugin.viewport.state.OverviewViewportState
 import com.mapbox.maps.plugin.viewport.state.ViewportState
 import com.mapbox.maps.plugin.viewport.viewport
@@ -47,10 +47,10 @@ import kotlin.math.ln
 class AdvancedViewportGesturesExample : AppCompatActivity() {
   private lateinit var mapView: MapView
   private lateinit var routePoints: LineString
-  private val followingViewportState: FollowingViewportState by lazy {
-    mapView.viewport.makeFollowingViewportState(
-      FollowingViewportStateOptions.Builder()
-        .bearing(FollowingViewportStateBearing.Constant(0.0))
+  private val followPuckViewportState: FollowPuckViewportState by lazy {
+    mapView.viewport.makeFollowPuckViewportState(
+      FollowPuckViewportStateOptions.Builder()
+        .bearing(FollowPuckViewportStateBearing.Constant(0.0))
         .frameAnimationDurationMs(500)
         .padding(EdgeInsets(200.0 * resources.displayMetrics.density, 0.0, 0.0, 0.0))
         .build()
@@ -116,8 +116,8 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
     mapView.gestures.addOnMapClickListener {
       mapView.viewport.transitionTo(
         when (mapView.viewport.status.getCurrentOrNextState()) {
-          followingViewportState -> overviewViewportState
-          else -> followingViewportState
+          followPuckViewportState -> overviewViewportState
+          else -> followPuckViewportState
         }
       )
       false
@@ -131,8 +131,8 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
         }
 
         override fun onShove(detector: ShoveGestureDetector) {
-          followingViewportState.options = followingViewportState.options.toBuilder()
-            .pitch(followingViewportState.options.pitch - PITCH_FACTOR * detector.deltaPixelSinceLast)
+          followPuckViewportState.options = followPuckViewportState.options.toBuilder()
+            .pitch(followPuckViewportState.options.pitch - PITCH_FACTOR * detector.deltaPixelSinceLast)
             .build()
         }
 
@@ -151,8 +151,8 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
         // This is an example of calculating the correct zoom delta from the StandardScaleGestureDetector
         // logic is ported from the gestures plugin implementation
         val zoomBy = ln(detector.scaleFactor.toDouble()) / ln(PI / 2) * SCALE_FACTOR
-        followingViewportState.options = followingViewportState.options.toBuilder()
-          .zoom(followingViewportState.options.zoom + zoomBy).build()
+        followPuckViewportState.options = followPuckViewportState.options.toBuilder()
+          .zoom(followPuckViewportState.options.zoom + zoomBy).build()
       }
 
       override fun onScaleEnd(detector: StandardScaleGestureDetector) {

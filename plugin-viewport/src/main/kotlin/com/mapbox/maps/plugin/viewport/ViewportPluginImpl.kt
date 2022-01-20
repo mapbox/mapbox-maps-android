@@ -12,11 +12,11 @@ import com.mapbox.maps.plugin.animation.MapAnimationOwnerRegistry
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
-import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateOptions
+import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.ViewportOptions
-import com.mapbox.maps.plugin.viewport.state.FollowingViewportState
-import com.mapbox.maps.plugin.viewport.state.FollowingViewportStateImpl
+import com.mapbox.maps.plugin.viewport.state.FollowPuckViewportState
+import com.mapbox.maps.plugin.viewport.state.FollowPuckViewportStateImpl
 import com.mapbox.maps.plugin.viewport.state.OverviewViewportState
 import com.mapbox.maps.plugin.viewport.state.OverviewViewportStateImpl
 import com.mapbox.maps.plugin.viewport.state.ViewportState
@@ -231,12 +231,12 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
   // Convenient methods to create the in-stock [ViewportState] and [ViewportTransition].
 
   /**
-   * Create a [FollowingViewportState] instance with provided [FollowingViewportStateOptions].
+   * Create a [FollowPuckViewportState] instance with provided [FollowPuckViewportStateOptions].
    *
-   * @param options The desired [FollowingViewportStateOptions]
+   * @param options The desired [FollowPuckViewportStateOptions]
    */
-  override fun makeFollowingViewportState(options: FollowingViewportStateOptions): FollowingViewportState {
-    return FollowingViewportStateImpl(delegateProvider, options)
+  override fun makeFollowPuckViewportState(options: FollowPuckViewportStateOptions): FollowPuckViewportState {
+    return FollowPuckViewportStateImpl(delegateProvider, options)
   }
 
   /**

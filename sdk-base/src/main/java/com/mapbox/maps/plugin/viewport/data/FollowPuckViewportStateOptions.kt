@@ -9,7 +9,7 @@ import java.util.Objects
 /**
  * Options that impact the [FollowingViewportState].
  */
-class FollowingViewportStateOptions private constructor(
+class FollowPuckViewportStateOptions private constructor(
   /**
    * The default zoom that will be generated for camera following frames.
    *
@@ -35,12 +35,12 @@ class FollowingViewportStateOptions private constructor(
   /**
    * The camera bearing configuration of the [FollowingViewportState].
    *
-   * Defaults to [FollowingViewportStateBearing.SyncWithLocationPuck]
+   * Defaults to [FollowPuckViewportStateBearing.SyncWithLocationPuck]
    */
-  val bearing: FollowingViewportStateBearing
+  val bearing: FollowPuckViewportStateBearing
 ) {
   /**
-   * Returns a builder that created the [FollowingViewportStateOptions]
+   * Returns a builder that created the [FollowPuckViewportStateOptions]
    */
   fun toBuilder() = Builder().zoom(zoom).pitch(pitch).padding(padding)
     .frameAnimationDurationMs(frameAnimationDurationMs).bearing(bearing)
@@ -48,7 +48,7 @@ class FollowingViewportStateOptions private constructor(
   /**
    * Indicates whether some other object is "equal to" this one.
    */
-  override fun equals(other: Any?) = other is FollowingViewportStateOptions &&
+  override fun equals(other: Any?) = other is FollowPuckViewportStateOptions &&
     zoom.compareTo(other.zoom) == 0 &&
     pitch.compareTo(other.pitch) == 0 &&
     padding == other.padding &&
@@ -68,15 +68,15 @@ class FollowingViewportStateOptions private constructor(
     "FollowingViewportStateOptions(zoom=$zoom, pitch=$pitch, padding=$padding, frameAnimationDurationMs=$frameAnimationDurationMs, bearing=$bearing)"
 
   /**
-   * Builder for [FollowingViewportStateOptions]
+   * Builder for [FollowPuckViewportStateOptions]
    */
   class Builder {
     private var zoom: Double = DEFAULT_FOLLOW_VIEWPORT_STATE_ZOOM
     private var pitch: Double = DEFAULT_FOLLOW_VIEWPORT_STATE_PITCH
     private var padding: EdgeInsets = EdgeInsets(0.0, 0.0, 0.0, 0.0)
     private var frameAnimationDurationMs: Long = DEFAULT_FRAME_ANIMATION_DURATION_MS
-    private var bearing: FollowingViewportStateBearing =
-      FollowingViewportStateBearing.SyncWithLocationPuck
+    private var bearing: FollowPuckViewportStateBearing =
+      FollowPuckViewportStateBearing.SyncWithLocationPuck
 
     /**
      * The default zoom that will be generated for camera following frames.
@@ -115,17 +115,17 @@ class FollowingViewportStateOptions private constructor(
     /**
      * The camera bearing configuration of the [FollowingViewportState].
      *
-     * Defaults to [FollowingViewportStateBearing.SyncWithLocationPuck]
+     * Defaults to [FollowPuckViewportStateBearing.SyncWithLocationPuck]
      */
-    fun bearing(options: FollowingViewportStateBearing) = apply {
+    fun bearing(options: FollowPuckViewportStateBearing) = apply {
       this.bearing = options
     }
 
     /**
-     * Builds [FollowingViewportStateOptions]
+     * Builds [FollowPuckViewportStateOptions]
      */
     fun build() =
-      FollowingViewportStateOptions(
+      FollowPuckViewportStateOptions(
         zoom,
         pitch,
         padding,
