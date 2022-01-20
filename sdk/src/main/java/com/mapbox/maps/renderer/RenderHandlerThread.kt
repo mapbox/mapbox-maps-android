@@ -21,10 +21,6 @@ internal class RenderHandlerThread {
     postDelayed(task, 0, EventType.MAPBOX)
   }
 
-  fun post(task: () -> Unit, eventType: EventType) {
-    postDelayed(task, 0, eventType)
-  }
-
   fun postDelayed(task: () -> Unit, delayMillis: Long, eventType: EventType = EventType.MAPBOX) {
     handler?.let {
       val message = Message.obtain(it, task)

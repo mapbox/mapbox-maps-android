@@ -87,14 +87,19 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun postPrepareRenderFrame(delayMillis: Long = 0L) {
-    renderHandlerThread.postDelayed( { prepareRenderFrame() }, delayMillis)
+    renderHandlerThread.postDelayed(
+      {
+        prepareRenderFrame()
+      },
+      delayMillis
+    )
   }
 
   private fun checkSurfaceReady(creatingSurface: Boolean): Boolean {
     lock.withLock {
       try {
         surface?.let {
-          if (eglSurface == null || eglSurface == EGL10.EGL_NO_SURFACE) {
+          if (!nativeRenderCreated) {
             return prepareEglSurface(it, creatingSurface)
           }
         } ?: return false
@@ -119,7 +124,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     if (!surface.isValid) {
       Logger.w(TAG, "EGL was configured but surface is not valid.")
       // give system a bit of time and try rendering again hoping surface will be valid now
-      postPrepareRenderFrame(delayMillis = 50L)
+      postPrepareRenderFrame(delayMillis = RETRY_DELAY_MS)
       return false
     }
     // on Android SDK <= 23 at least on x86 emulators we need to force set EGL10.EGL_NO_CONTEXT
@@ -127,18 +132,20 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     if (creatingSurface) {
       eglCore.makeNothingCurrent()
     }
-    eglSurface = eglCore.createWindowSurface(surface)
-    if (!eglCore.eglStatusSuccess) {
-      // Set EGL Surface as EGL_NO_SURFACE and try recreate it in next iteration.
-      eglSurface = EGL10.EGL_NO_SURFACE
-      postPrepareRenderFrame(delayMillis = 50L)
-      return false
+    if (eglSurface == null || eglSurface == EGL10.EGL_NO_SURFACE) {
+      eglSurface = eglCore.createWindowSurface(surface)
+      if (!eglCore.eglStatusSuccess) {
+        // Set EGL Surface as EGL_NO_SURFACE and try recreate it in next iteration.
+        eglSurface = EGL10.EGL_NO_SURFACE
+        postPrepareRenderFrame(delayMillis = RETRY_DELAY_MS)
+        return false
+      }
     }
     eglSurface?.let {
       val eglContextAttached = eglCore.makeCurrent(it)
       if (!eglContextAttached) {
         Logger.w(TAG, "EGL was configured but context could not be made current. Trying again in a moment...")
-        postPrepareRenderFrame(delayMillis = 50L)
+        postPrepareRenderFrame(delayMillis = RETRY_DELAY_MS)
       }
     }
 
@@ -321,6 +328,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
           }
         }
         snapshotQueue.clear()
+        // we do not want to clear render events scheduled by user
         renderHandlerThread.clearMessageQueue(clearAll = false)
         prepareRenderFrame(creatingSurface = true)
       }
@@ -360,14 +368,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     renderHandlerThread.postDelayed(
       {
         // at the time we start executing surface may be already destroyed
-        Logger.w(TAG, "postNonRenderEvent $shouldExit ${renderEvent.runnable}")
         if (!shouldExit) {
           if (nativeRenderCreated) {
-            Logger.w(TAG, "Executing runnable ${renderEvent.runnable}")
             renderEvent.runnable?.run()
           } else {
-            Logger.w(TAG, "Render thread is not fully ready, rescheduling runnable.")
-            postNonRenderEvent(renderEvent, delayMillis = 50L)
+            postNonRenderEvent(renderEvent, delayMillis = RETRY_DELAY_MS)
           }
         }
       },
@@ -421,9 +426,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     mapboxRenderer.map = null
   }
 
-  companion object {
-    private const val TAG = "Mbgl-RenderThread"
-    private val ONE_SECOND_NS = 10.0.pow(9.0).toLong()
-    private val ONE_MILLISECOND_NS = 10.0.pow(6.0).toLong()
+  private companion object {
+    const val TAG = "Mbgl-RenderThread"
+    const val RETRY_DELAY_MS = 50L
+    val ONE_SECOND_NS = 10.0.pow(9.0).toLong()
+    val ONE_MILLISECOND_NS = 10.0.pow(6.0).toLong()
   }
 }
