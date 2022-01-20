@@ -20,29 +20,24 @@ internal class EGLCore(
   private var eglDisplay: EGLDisplay = EGL10.EGL_NO_DISPLAY
   private var eglContext: EGLContext = EGL10.EGL_NO_CONTEXT
 
-  var eglStatusSuccess: Boolean = true
-
-  fun prepareEgl() {
+  fun prepareEgl(): Boolean {
     egl = EGLContext.getEGL() as EGL10
     eglDisplay = egl.eglGetDisplay(EGL10.EGL_DEFAULT_DISPLAY)
     if (eglDisplay == EGL10.EGL_NO_DISPLAY) {
       Logger.e(TAG, "Unable to get EGL14 display")
-      eglStatusSuccess = false
-      return
+      return false
     }
 
     val versions = IntArray(2)
     if (!egl.eglInitialize(eglDisplay, versions)) {
       Logger.e(TAG, "eglInitialize failed")
-      eglStatusSuccess = false
-      return
+      return false
     }
 
     EGLConfigChooser(translucentSurface, antialiasingSampleCount).chooseConfig(egl, eglDisplay)?.let {
       eglConfig = it
     } ?: run {
-      eglStatusSuccess = false
-      return
+      return false
     }
 
     val context = egl.eglCreateContext(
@@ -51,7 +46,10 @@ internal class EGLCore(
       EGL10.EGL_NO_CONTEXT,
       intArrayOf(EGL_CONTEXT_CLIENT_VERSION, 2, EGL10.EGL_NONE)
     )
-    checkEglErrorNoException("eglCreateContext")
+    val contextCreated = checkEglErrorNoException("eglCreateContext")
+    if (!contextCreated) {
+      return false
+    }
     eglContext = context
     // Confirm with query.
     val values = IntArray(1)
@@ -61,13 +59,13 @@ internal class EGLCore(
       EGL_CONTEXT_CLIENT_VERSION,
       values
     )
-    Logger.d(TAG, "EGLContext created, client version ${values[0]}")
+    Logger.i(TAG, "EGLContext created, client version ${values[0]}")
+    return true
   }
 
   /**
    * Discards all resources held by this class, notably the EGL context.  This must be
    * called from the thread where the context was created.
-   *
    *
    * On completion, no context will be current.
    */
@@ -96,7 +94,7 @@ internal class EGLCore(
   /**
    * Creates an EGL surface associated with a Surface.
    */
-  fun createWindowSurface(surface: Surface): EGLSurface {
+  fun createWindowSurface(surface: Surface): EGLSurface? {
     // Create a window surface, and attach it to the Surface we received.
     val surfaceAttribs = intArrayOf(EGL10.EGL_NONE)
     val eglSurface = egl.eglCreateWindowSurface(
@@ -105,10 +103,10 @@ internal class EGLCore(
       surface,
       surfaceAttribs
     )
-    checkEglErrorNoException("eglCreateWindowSurface")
-    if (eglSurface == null) {
-      Logger.e(TAG, "surface was null")
-      eglStatusSuccess = false
+    val eglWindowCreated = checkEglErrorNoException("eglCreateWindowSurface")
+    if (!eglWindowCreated || eglSurface == null) {
+      Logger.e(TAG, "Surface was null")
+      return null
     }
     return eglSurface
   }
@@ -116,21 +114,26 @@ internal class EGLCore(
   /**
    * Makes no context current.
    */
-  fun makeNothingCurrent() {
+  fun makeNothingCurrent(): Boolean {
     if (!egl.eglMakeCurrent(eglDisplay, EGL10.EGL_NO_SURFACE, EGL10.EGL_NO_SURFACE, EGL10.EGL_NO_CONTEXT)) {
-      checkEglErrorNoException("eglMakeNothingCurrent")
+      val eglMakeNothingCurrentSuccess = checkEglErrorNoException("eglMakeNothingCurrent")
+      if (!eglMakeNothingCurrentSuccess) {
+        return false
+      }
     }
+    return true
   }
 
   /**
    * Makes our EGL context current, using the supplied surface for both "draw" and "read".
    */
   fun makeCurrent(eglSurface: EGLSurface): Boolean {
-    if (!eglStatusSuccess) {
-      return false
+    // do nothing if current context is applied before
+    if (egl.eglGetCurrentContext() == eglContext) {
+      return true
     }
     if (eglDisplay == EGL10.EGL_NO_DISPLAY) {
-      Logger.d(TAG, "NOTE: makeCurrent w/o display")
+      Logger.i(TAG, "NOTE: makeCurrent w/o display")
     }
     if (!egl.eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext)) {
       Logger.e(TAG, "eglMakeCurrent failed")
@@ -153,12 +156,13 @@ internal class EGLCore(
   /**
    * Checks for EGL errors.
    */
-  private fun checkEglErrorNoException(msg: String) {
+  private fun checkEglErrorNoException(msg: String): Boolean {
     val error = egl.eglGetError()
     if (error != EGL10.EGL_SUCCESS) {
       Logger.e(TAG, msg + ": EGL error: 0x${Integer.toHexString(error)}")
-      eglStatusSuccess = false
+      return false
     }
+    return true
   }
 
   companion object {

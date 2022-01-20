@@ -60,22 +60,24 @@ internal abstract class MapboxRenderer : MapClient {
 
   @AnyThread
   override fun scheduleRepaint() {
+    Logger.e("KIRYLDD", "scheduleRepaint!")
     renderThread.queueRenderEvent(
       RenderEvent(
         runnable = null,
         needRender = true,
-        eventType = EventType.MAPBOX
+        eventType = EventType.SDK
       )
     )
   }
 
   @AnyThread
   override fun scheduleTask(task: Task) {
+    Logger.e("KIRYLDD", "scheduleTask!")
     renderThread.queueRenderEvent(
       RenderEvent(
         runnable = { task.run() },
         needRender = false,
-        eventType = EventType.MAPBOX
+        eventType = EventType.SDK
       )
     )
   }
@@ -86,7 +88,7 @@ internal abstract class MapboxRenderer : MapClient {
       RenderEvent(
         runnable = runnable,
         needRender = true,
-        eventType = EventType.USER
+        eventType = EventType.OTHER
       )
     )
   }
@@ -97,7 +99,7 @@ internal abstract class MapboxRenderer : MapClient {
       RenderEvent(
         runnable = runnable,
         needRender = false,
-        eventType = EventType.USER
+        eventType = EventType.OTHER
       )
     )
   }
