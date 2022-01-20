@@ -1,9 +1,7 @@
 package com.mapbox.maps.testapp.examples
 
-import android.opengl.GLES20
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
@@ -17,12 +15,6 @@ class SimpleMapActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val mapView = MapView(this)
     setContentView(mapView)
-    val runnable = Runnable {
-      Logger.e("Mbgl-Kiryl", "Event")
-      Logger.e("Mbgl-Kiryl", GLES20.glGetString(GLES20.GL_RENDERER))
-    }
-    Logger.e("Mbgl-Kiryl", "Runnable $runnable")
-    mapView.queueEvent(runnable, needRender = false)
     mapView.getMapboxMap()
       .apply {
         setCamera(

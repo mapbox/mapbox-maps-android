@@ -93,7 +93,6 @@ internal abstract class MapboxRenderer : MapClient {
 
   @AnyThread
   fun queueEvent(runnable: Runnable) {
-    Logger.e("Mbgl-Kiryl", "queueEvent: $runnable")
     renderThread.queueRenderEvent(
       RenderEvent(
         runnable = runnable,
