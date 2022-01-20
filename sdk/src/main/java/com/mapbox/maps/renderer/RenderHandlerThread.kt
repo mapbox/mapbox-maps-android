@@ -18,10 +18,10 @@ internal class RenderHandlerThread {
     get() = handlerThread.isAlive
 
   fun post(task: () -> Unit) {
-    postDelayed(task, 0, EventType.MAPBOX)
+    postDelayed(task, 0, EventType.SDK)
   }
 
-  fun postDelayed(task: () -> Unit, delayMillis: Long, eventType: EventType = EventType.MAPBOX) {
+  fun postDelayed(task: () -> Unit, delayMillis: Long, eventType: EventType = EventType.SDK) {
     handler?.let {
       val message = Message.obtain(it, task)
       message.obj = eventType
@@ -50,7 +50,7 @@ internal class RenderHandlerThread {
     if (clearAll) {
       handler?.removeCallbacksAndMessages(null)
     } else {
-      handler?.removeCallbacksAndMessages(EventType.MAPBOX)
+      handler?.removeCallbacksAndMessages(EventType.SDK)
     }
   }
 
