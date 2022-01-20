@@ -8,6 +8,10 @@
         }
       },
       "filter": {
+        "classes": {
+          "regex": true,
+          "include": ["com\\.mapbox\\.maps\\..*"]
+        },
         "packages": {
           "regex": true,
           "include": ["com\\.mapbox\\.maps\\..*"]

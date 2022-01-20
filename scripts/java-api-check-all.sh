@@ -5,6 +5,7 @@ set -Eeuxo pipefail
 #   ./java-api-check-all.sh <current release tag (empty for branches)>
 #
 CURRENT_DIR=$(dirname "$0")
+MAJOR_CHANGE_FILE=${CURRENT_DIR}/../api_compat_report/major.txt
 REVAPI=`mktemp -d`
 mkdir -p "${REVAPI}"
 
@@ -40,3 +41,10 @@ for i in $MODULES; do
 done
 
 rm -rf "${REVAPI}"
+
+# Fail the job when there is major changes.
+if [[ -f "$MAJOR_CHANGE_FILE" ]]; then
+  echo "Potential major level breaking change found:"
+  cat "$MAJOR_CHANGE_FILE"
+  exit 1
+fi

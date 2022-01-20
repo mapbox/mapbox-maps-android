@@ -30,7 +30,9 @@ build:
 # Use `make checkApi TAG=ReleaseTag` to check the release tag or `make checkApi` to check current branch while running locally.
 .PHONY: checkApi
 checkApi:
-	./scripts/java-api-check-all.sh "$(TAG)"
+	unset GITHUB_TOKEN; \
+	echo "$(shell mbx-ci github reader token)" > gh_token.txt;\
+	sh scripts/java-api-check-all.sh "$(TAG)"
 
 .PHONY: proguard
 proguard:

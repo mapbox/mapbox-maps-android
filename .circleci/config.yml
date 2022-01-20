@@ -375,6 +375,7 @@ jobs:
           name: verfiy-api
           command: |
             make build
+            echo "$(./mbx-ci github reader token)" > gh_token.txt
             if [[ $CIRCLE_TAG == android-v* ]]; then
               ./scripts/java-api-check-all.sh "${CIRCLE_TAG}"
             else
