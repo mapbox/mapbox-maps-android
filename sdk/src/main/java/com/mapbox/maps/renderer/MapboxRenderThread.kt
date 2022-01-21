@@ -428,8 +428,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   fun resume() {
     Logger.e("KIRYLDD", "resume")
     paused.set(false)
-    // schedule render just in case
-    postPrepareRenderFrame()
+    // schedule render if we resume not after first create (e.g. bring map back to front)
+    if (nativeRenderCreated && surface != null) {
+      postPrepareRenderFrame()
+    }
     Logger.e("KIRYLDD", "pause = false")
   }
 
