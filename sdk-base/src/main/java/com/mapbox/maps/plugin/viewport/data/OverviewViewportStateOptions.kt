@@ -21,11 +21,11 @@ class OverviewViewportStateOptions private constructor(
   /**
    * The bearing of the map.
    */
-  val bearing: Double,
+  val bearing: Double?,
   /**
    * The pitch of the map.
    */
-  val pitch: Double,
+  val pitch: Double?,
   /**
    * The duration between frames in milliseconds.
    *
@@ -45,8 +45,8 @@ class OverviewViewportStateOptions private constructor(
   override fun equals(other: Any?) = other is OverviewViewportStateOptions &&
     geometry == other.geometry &&
     padding == other.padding &&
-    bearing.compareTo(other.bearing) == 0 &&
-    pitch.compareTo(other.pitch) == 0 &&
+    Objects.equals(bearing, other.bearing) &&
+    Objects.equals(pitch, other.pitch) &&
     animationDurationMs == other.animationDurationMs
 
   /**
@@ -67,8 +67,8 @@ class OverviewViewportStateOptions private constructor(
   class Builder {
     private var geometry: Geometry? = null
     private var padding: EdgeInsets = EdgeInsets(0.0, 0.0, 0.0, 0.0)
-    private var bearing: Double = 0.0
-    private var pitch: Double = 0.0
+    private var bearing: Double? = 0.0
+    private var pitch: Double? = 0.0
     private var animationDurationMs: Long = DEFAULT_FRAME_ANIMATION_DURATION_MS
 
     /**
@@ -88,14 +88,14 @@ class OverviewViewportStateOptions private constructor(
     /**
      * The bearing of the map.
      */
-    fun bearing(bearing: Double) = apply {
+    fun bearing(bearing: Double?) = apply {
       this.bearing = bearing
     }
 
     /**
      * The pitch of the map.
      */
-    fun pitch(pitch: Double) = apply {
+    fun pitch(pitch: Double?) = apply {
       this.pitch = pitch
     }
 
