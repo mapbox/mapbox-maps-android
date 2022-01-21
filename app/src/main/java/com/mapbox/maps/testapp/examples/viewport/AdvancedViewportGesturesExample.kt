@@ -51,7 +51,7 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
     mapView.viewport.makeFollowPuckViewportState(
       FollowPuckViewportStateOptions.Builder()
         .bearing(FollowPuckViewportStateBearing.Constant(0.0))
-        .frameAnimationDurationMs(500)
+        .animationDurationMs(500)
         .padding(EdgeInsets(200.0 * resources.displayMetrics.density, 0.0, 0.0, 0.0))
         .build()
     )
@@ -123,7 +123,7 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
       false
     }
 
-    // Let shove gesture to overwrite the followingViewportState's default pitch value.
+    // Let shove gesture to overwrite the followPuckViewportState's default pitch value.
     mapView.gestures.addOnShoveListener(
       object : OnShoveListener {
         override fun onShoveBegin(detector: ShoveGestureDetector) {
@@ -131,9 +131,11 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
         }
 
         override fun onShove(detector: ShoveGestureDetector) {
-          followPuckViewportState.options = followPuckViewportState.options.toBuilder()
-            .pitch(followPuckViewportState.options.pitch - PITCH_FACTOR * detector.deltaPixelSinceLast)
-            .build()
+          if (mapView.viewport.status == ViewportStatus.State(followPuckViewportState)) {
+            followPuckViewportState.options = followPuckViewportState.options.toBuilder()
+              .pitch(followPuckViewportState.options.pitch - PITCH_FACTOR * detector.deltaPixelSinceLast)
+              .build()
+          }
         }
 
         override fun onShoveEnd(detector: ShoveGestureDetector) {
@@ -141,18 +143,20 @@ class AdvancedViewportGesturesExample : AppCompatActivity() {
         }
       })
 
-    // Let scale gesture to overwrite the followingViewportState's default zoom value.
+    // Let scale gesture to overwrite the followPuckViewportState's default zoom value.
     mapView.gestures.addOnScaleListener(object : OnScaleListener {
       override fun onScaleBegin(detector: StandardScaleGestureDetector) {
         // no-ops
       }
 
       override fun onScale(detector: StandardScaleGestureDetector) {
-        // This is an example of calculating the correct zoom delta from the StandardScaleGestureDetector
-        // logic is ported from the gestures plugin implementation
-        val zoomBy = ln(detector.scaleFactor.toDouble()) / ln(PI / 2) * SCALE_FACTOR
-        followPuckViewportState.options = followPuckViewportState.options.toBuilder()
-          .zoom(followPuckViewportState.options.zoom + zoomBy).build()
+        if (mapView.viewport.status == ViewportStatus.State(followPuckViewportState)) {
+          // This is an example of calculating the correct zoom delta from the StandardScaleGestureDetector
+          // logic is ported from the gestures plugin implementation
+          val zoomBy = ln(detector.scaleFactor.toDouble()) / ln(PI / 2) * SCALE_FACTOR
+          followPuckViewportState.options = followPuckViewportState.options.toBuilder()
+            .zoom(followPuckViewportState.options.zoom + zoomBy).build()
+        }
       }
 
       override fun onScaleEnd(detector: StandardScaleGestureDetector) {

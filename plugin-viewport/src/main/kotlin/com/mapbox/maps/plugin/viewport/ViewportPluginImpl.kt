@@ -15,6 +15,7 @@ import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.ViewportOptions
+import com.mapbox.maps.plugin.viewport.data.ViewportStatusChangeReason
 import com.mapbox.maps.plugin.viewport.state.FollowPuckViewportState
 import com.mapbox.maps.plugin.viewport.state.FollowPuckViewportStateImpl
 import com.mapbox.maps.plugin.viewport.state.OverviewViewportState
@@ -60,7 +61,7 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
             currentCancelable = null
             updateStatus(
               ViewportStatus.Idle,
-              VIEWPORT_STATUS_OBSERVER_REASON_USER_INTERACTION
+              ViewportStatusChangeReason.USER_INTERACTION
             )
           }
         }
@@ -102,7 +103,7 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
   override var status: ViewportStatus = ViewportStatus.Idle
     private set
 
-  private fun updateStatus(targetStatus: ViewportStatus, reason: String) {
+  private fun updateStatus(targetStatus: ViewportStatus, reason: ViewportStatusChangeReason) {
     if (targetStatus != status) {
       val previousStatus = status
       status = targetStatus
@@ -155,11 +156,11 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
         currentCancelable = targetState.startUpdatingCamera()
         updateStatus(
           ViewportStatus.State(targetState),
-          VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
+          ViewportStatusChangeReason.TRANSITION_SUCCEEDED
         )
       } else {
         currentCancelable = null
-        updateStatus(ViewportStatus.Idle, VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC)
+        updateStatus(ViewportStatus.Idle, ViewportStatusChangeReason.TRANSITION_FAILED)
       }
       completionListener?.onComplete(isFinished)
     }
@@ -171,19 +172,19 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
       currentCancelable = transitionCancelable
       updateStatus(
         ViewportStatus.Transition(viewportTransition, targetState),
-        VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
+        ViewportStatusChangeReason.TRANSITION_STARTED
       )
     }
   }
 
   /**
-   * Immediately goes to IDLE state canceling all ongoing transitions.
+   * Immediately goes to [ViewportStatus.Idle] state canceling all ongoing transitions.
    */
   override fun idle() {
     if (status == ViewportStatus.Idle) return
     currentCancelable?.cancel()
     currentCancelable = null
-    updateStatus(ViewportStatus.Idle, VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC)
+    updateStatus(ViewportStatus.Idle, ViewportStatusChangeReason.IDLE_REQUESTED)
   }
 
   /**
@@ -194,7 +195,7 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
   private fun notifyStatusChanged(
     previousStatus: ViewportStatus,
     currentStatus: ViewportStatus,
-    reason: String
+    reason: ViewportStatusChangeReason
   ) {
     registeredStatusObservers.forEach {
       handler.post {
@@ -281,7 +282,7 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
    * Called when the map is destroyed. Should be used to cleanup plugin resources for that map.
    */
   override fun cleanup() {
-    updateStatus(ViewportStatus.Idle, VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC)
+    updateStatus(ViewportStatus.Idle, ViewportStatusChangeReason.IDLE_REQUESTED)
     cameraPlugin.removeCameraAnimationsLifecycleListener(cameraAnimationsLifecycleListener)
   }
 

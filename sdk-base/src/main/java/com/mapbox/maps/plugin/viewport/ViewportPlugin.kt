@@ -28,7 +28,6 @@ interface ViewportPlugin : MapPlugin {
   /**
    * Returns current [ViewportStatus].
    *
-   * If current status is IDLE, returns ViewportStatus.State(null).
    * @see addStatusObserver
    */
   val status: ViewportStatus

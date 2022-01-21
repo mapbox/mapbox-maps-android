@@ -31,13 +31,13 @@ class OverviewViewportStateOptions private constructor(
    *
    * Defaults to [DEFAULT_FRAME_ANIMATION_DURATION_MS] milliseconds
    */
-  val frameAnimationDurationMs: Long
+  val animationDurationMs: Long
 ) {
   /**
    * Returns a builder that created the [OverviewViewportStateOptions]
    */
   fun toBuilder() = Builder().geometry(geometry).padding(padding).bearing(bearing).pitch(pitch)
-    .frameAnimationDurationMs(frameAnimationDurationMs)
+    .animationDurationMs(animationDurationMs)
 
   /**
    * Indicates whether some other object is "equal to" this one.
@@ -47,19 +47,19 @@ class OverviewViewportStateOptions private constructor(
     padding == other.padding &&
     bearing.compareTo(other.bearing) == 0 &&
     pitch.compareTo(other.pitch) == 0 &&
-    frameAnimationDurationMs == other.frameAnimationDurationMs
+    animationDurationMs == other.animationDurationMs
 
   /**
    * Returns a hash code value for the object.
    */
   override fun hashCode() =
-    Objects.hash(geometry, padding, bearing, pitch, frameAnimationDurationMs)
+    Objects.hash(geometry, padding, bearing, pitch, animationDurationMs)
 
   /**
    * Returns a String for the object.
    */
   override fun toString() =
-    "OverviewViewportStateOptions(geometry=$geometry, padding=$padding, bearing=$bearing, pitch=$pitch, frameAnimationDurationMs=$frameAnimationDurationMs)"
+    "OverviewViewportStateOptions(geometry=$geometry, padding=$padding, bearing=$bearing, pitch=$pitch, animationDurationMs=$animationDurationMs)"
 
   /**
    * Builder for [OverviewViewportStateOptions]
@@ -69,7 +69,7 @@ class OverviewViewportStateOptions private constructor(
     private var padding: EdgeInsets = EdgeInsets(0.0, 0.0, 0.0, 0.0)
     private var bearing: Double = 0.0
     private var pitch: Double = 0.0
-    private var frameAnimationDurationMs: Long = DEFAULT_FRAME_ANIMATION_DURATION_MS
+    private var animationDurationMs: Long = DEFAULT_FRAME_ANIMATION_DURATION_MS
 
     /**
      * The geometry that the OverviewState should cover.
@@ -104,8 +104,8 @@ class OverviewViewportStateOptions private constructor(
      *
      * Defaults to [DEFAULT_FRAME_ANIMATION_DURATION_MS] milliseconds
      */
-    fun frameAnimationDurationMs(duration: Long) = apply {
-      this.frameAnimationDurationMs = duration
+    fun animationDurationMs(duration: Long) = apply {
+      this.animationDurationMs = duration
     }
 
     /**
@@ -117,7 +117,7 @@ class OverviewViewportStateOptions private constructor(
         padding,
         bearing,
         pitch,
-        frameAnimationDurationMs
+        animationDurationMs
       )
     }
       ?: throw IllegalArgumentException("Geometry is required for OverviewViewportStateOptions and shouldn't be null")

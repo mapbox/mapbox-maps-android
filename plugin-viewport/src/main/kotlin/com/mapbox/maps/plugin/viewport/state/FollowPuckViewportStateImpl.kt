@@ -210,7 +210,7 @@ internal class FollowPuckViewportStateImpl(
     onComplete: ((isFinished: Boolean) -> Unit)? = null
   ) {
     startAnimation(
-      transitionFactory.transitionLinear(cameraOptions, options.frameAnimationDurationMs)
+      transitionFactory.transitionLinear(cameraOptions, options.animationDurationMs)
         .apply {
           addListener(
             object : Animator.AnimatorListener {

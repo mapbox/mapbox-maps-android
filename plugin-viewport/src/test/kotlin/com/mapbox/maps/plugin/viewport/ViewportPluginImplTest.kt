@@ -12,6 +12,7 @@ import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
+import com.mapbox.maps.plugin.viewport.data.ViewportStatusChangeReason
 import com.mapbox.maps.plugin.viewport.state.ViewportState
 import com.mapbox.maps.plugin.viewport.transition.ViewportTransition
 import io.mockk.every
@@ -123,7 +124,7 @@ class ViewportPluginImplTest {
         statusObserver.onViewportStatusChanged(
           ViewportStatus.Idle,
           ViewportStatus.Transition(transition, targetState),
-          VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
+          ViewportStatusChangeReason.TRANSITION_STARTED
         )
       }
     }
@@ -136,7 +137,7 @@ class ViewportPluginImplTest {
         statusObserver.onViewportStatusChanged(
           ViewportStatus.Transition(transition, targetState),
           ViewportStatus.State(targetState),
-          VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
+          ViewportStatusChangeReason.TRANSITION_SUCCEEDED
         )
       }
     }
@@ -161,7 +162,7 @@ class ViewportPluginImplTest {
         statusObserver.onViewportStatusChanged(
           ViewportStatus.Idle,
           ViewportStatus.Transition(transition, targetState),
-          VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
+          ViewportStatusChangeReason.TRANSITION_STARTED
         )
       }
     }
@@ -175,7 +176,7 @@ class ViewportPluginImplTest {
         statusObserver.onViewportStatusChanged(
           ViewportStatus.Transition(transition, targetState),
           ViewportStatus.State(targetState),
-          VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
+          ViewportStatusChangeReason.TRANSITION_SUCCEEDED
         )
       }
     }
@@ -201,7 +202,7 @@ class ViewportPluginImplTest {
         statusObserver.onViewportStatusChanged(
           ViewportStatus.Idle,
           ViewportStatus.Transition(transition, targetState),
-          VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
+          ViewportStatusChangeReason.TRANSITION_STARTED
         )
       }
     }
@@ -214,7 +215,7 @@ class ViewportPluginImplTest {
           statusObserver.onViewportStatusChanged(
             ViewportStatus.Transition(transition, targetState),
             ViewportStatus.Idle,
-            VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
+            ViewportStatusChangeReason.TRANSITION_FAILED
           )
         }
       }
@@ -238,7 +239,7 @@ class ViewportPluginImplTest {
         statusObserver.onViewportStatusChanged(
           ViewportStatus.Idle,
           ViewportStatus.Transition(transition, targetState),
-          VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
+          ViewportStatusChangeReason.TRANSITION_STARTED
         )
       }
     }
@@ -262,7 +263,7 @@ class ViewportPluginImplTest {
         statusObserver.onViewportStatusChanged(
           ViewportStatus.Idle,
           ViewportStatus.Transition(transition, targetState),
-          VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
+          ViewportStatusChangeReason.TRANSITION_STARTED
         )
       }
     }
@@ -274,7 +275,7 @@ class ViewportPluginImplTest {
         statusObserver.onViewportStatusChanged(
           ViewportStatus.Transition(transition, targetState),
           ViewportStatus.State(targetState),
-          VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
+          ViewportStatusChangeReason.TRANSITION_SUCCEEDED
         )
       }
     }
@@ -302,7 +303,7 @@ class ViewportPluginImplTest {
         statusObserver.onViewportStatusChanged(
           ViewportStatus.Idle,
           ViewportStatus.Transition(transition, targetState),
-          VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
+          ViewportStatusChangeReason.TRANSITION_STARTED
         )
       }
     }
@@ -315,7 +316,7 @@ class ViewportPluginImplTest {
         statusObserver.onViewportStatusChanged(
           ViewportStatus.Transition(transition, targetState),
           ViewportStatus.State(targetState),
-          VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
+          ViewportStatusChangeReason.TRANSITION_SUCCEEDED
         )
       }
     }
@@ -326,7 +327,7 @@ class ViewportPluginImplTest {
         statusObserver.onViewportStatusChanged(
           ViewportStatus.State(targetState),
           ViewportStatus.Transition(transition, newState),
-          VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
+          ViewportStatusChangeReason.TRANSITION_STARTED
         )
       }
     }
@@ -352,7 +353,7 @@ class ViewportPluginImplTest {
         statusObserver.onViewportStatusChanged(
           ViewportStatus.Idle,
           ViewportStatus.Transition(transition, targetState),
-          VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
+          ViewportStatusChangeReason.TRANSITION_STARTED
         )
       }
     }
@@ -364,7 +365,7 @@ class ViewportPluginImplTest {
         statusObserver.onViewportStatusChanged(
           ViewportStatus.Transition(transition, targetState),
           ViewportStatus.Transition(transition, newState),
-          VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
+          ViewportStatusChangeReason.TRANSITION_STARTED
         )
       }
     }
@@ -389,7 +390,7 @@ class ViewportPluginImplTest {
         statusObserver.onViewportStatusChanged(
           ViewportStatus.Idle,
           ViewportStatus.Transition(transition, targetState),
-          VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
+          ViewportStatusChangeReason.TRANSITION_STARTED
         )
       }
     }
@@ -401,7 +402,7 @@ class ViewportPluginImplTest {
         statusObserver.onViewportStatusChanged(
           ViewportStatus.Transition(transition, targetState),
           ViewportStatus.Idle,
-          VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
+          ViewportStatusChangeReason.IDLE_REQUESTED
         )
       }
     }
@@ -422,7 +423,7 @@ class ViewportPluginImplTest {
         testObserver.onViewportStatusChanged(
           ViewportStatus.Idle,
           ViewportStatus.Transition(defaultTransition, targetState),
-          VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
+          ViewportStatusChangeReason.TRANSITION_STARTED
         )
       }
     }
@@ -433,7 +434,7 @@ class ViewportPluginImplTest {
         testObserver.onViewportStatusChanged(
           ViewportStatus.Transition(defaultTransition, targetState),
           ViewportStatus.Idle,
-          VIEWPORT_STATUS_OBSERVER_REASON_PROGRAMMATIC
+          ViewportStatusChangeReason.IDLE_REQUESTED
         )
       }
     }
