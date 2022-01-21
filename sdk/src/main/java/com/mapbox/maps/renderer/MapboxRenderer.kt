@@ -77,7 +77,7 @@ internal abstract class MapboxRenderer : MapClient {
       RenderEvent(
         runnable = { task.run() },
         needRender = false,
-        eventType = EventType.SDK
+        eventType = if (renderThread.nativeRenderDestroyCallChain) EventType.DESTROY_RENDERER else EventType.SDK
       )
     )
   }

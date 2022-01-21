@@ -16,4 +16,9 @@ internal enum class EventType {
    * In case render thread is not fully prepared - such messages will keep being rescheduled until thread is prepared or killed.
    */
   OTHER,
+
+  /**
+   * TODO remove when gl-native fix will land
+   */
+  DESTROY_RENDERER,
 }
