@@ -53,10 +53,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var paused = false
   private val surfaceValid: Boolean
-    @Synchronized
     get() = surface?.isValid == true
   private val renderThreadPrepared: Boolean
-    @Synchronized
     get() = surfaceValid && nativeRenderCreated
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var eglPrepared = false
@@ -383,7 +381,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @WorkerThread
   override fun doFrame(frameTimeNanos: Long) {
     // it makes sense to draw not only when EGL config is prepared but when native renderer is created
-    if (nativeRenderCreated && !paused) {
+    if (renderThreadPrepared && !paused) {
       draw()
       Logger.e("KIRYLDD", "draw + swapbuffers")
     }
