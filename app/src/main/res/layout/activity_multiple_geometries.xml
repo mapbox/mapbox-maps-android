@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.mapbox.maps.MapView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/mapView"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinator_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    mapbox:mapbox_cameraTargetLng="-77.039679"
-    mapbox:mapbox_cameraTargetLat="38.897435"
-    mapbox:mapbox_cameraZoom="11.3" />
+    android:orientation="vertical">
+
+    <com.mapbox.maps.MapView
+        xmlns:mapbox="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        mapbox:mapbox_cameraTargetLng="-77.039679"
+        mapbox:mapbox_cameraTargetLat="38.897435"
+        mapbox:mapbox_cameraZoom="11.3" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_layers"
+        android:tint="@color/primary"
+        android:contentDescription="@null"
+        app:backgroundTint="@android:color/white"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
