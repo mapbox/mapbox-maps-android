@@ -5,13 +5,13 @@ import java.util.Objects
 /**
  * Describes the camera bearing options for the [FollowingViewportState].
  */
-sealed class FollowingViewportStateBearing {
+sealed class FollowPuckViewportStateBearing {
   /**
    * The viewport's bearing is fixed to the given bearing.
    *
    * @param bearing The bearing that the [FollowingViewportState] uses to generate camera updates.
    */
-  class Constant(val bearing: Double) : FollowingViewportStateBearing() {
+  class Constant(val bearing: Double) : FollowPuckViewportStateBearing() {
     /**
      * Indicates whether some other object is "equal to" this one.
      */
@@ -34,7 +34,7 @@ sealed class FollowingViewportStateBearing {
    * When set to this mode, the viewport's bearing is driven by the location, thus guarantees
    * synchronization.
    */
-  object SyncWithLocationPuck : FollowingViewportStateBearing() {
+  object SyncWithLocationPuck : FollowPuckViewportStateBearing() {
     /**
      * Indicates whether some other object is "equal to" this one.
      */

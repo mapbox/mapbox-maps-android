@@ -21,9 +21,9 @@ import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.ViewportPlugin
 import com.mapbox.maps.plugin.viewport.ViewportStatus
-import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateOptions
+import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
-import com.mapbox.maps.plugin.viewport.state.FollowingViewportState
+import com.mapbox.maps.plugin.viewport.state.FollowPuckViewportState
 import com.mapbox.maps.plugin.viewport.state.OverviewViewportState
 import com.mapbox.maps.plugin.viewport.state.ViewportState
 import com.mapbox.maps.plugin.viewport.viewport
@@ -43,7 +43,7 @@ class ViewportShowcaseActivity : AppCompatActivity() {
   private lateinit var mapView: MapView
   private lateinit var viewportButton: Button
   private lateinit var viewport: ViewportPlugin
-  private lateinit var followingViewportState: FollowingViewportState
+  private lateinit var followPuckViewportState: FollowPuckViewportState
   private lateinit var overviewViewportState: OverviewViewportState
   private val pixelDensity = Resources.getSystem().displayMetrics.density
   private val simulateRouteLocationProvider by lazy {
@@ -126,8 +126,8 @@ class ViewportShowcaseActivity : AppCompatActivity() {
   @SuppressLint("SetTextI18n")
   private fun setupViewportPlugin() {
     viewport = mapView.viewport
-    followingViewportState =
-      viewport.makeFollowingViewportState(FollowingViewportStateOptions.Builder().build())
+    followPuckViewportState =
+      viewport.makeFollowPuckViewportState(FollowPuckViewportStateOptions.Builder().build())
     overviewViewportState =
       viewport.makeOverviewViewportState(
         OverviewViewportStateOptions.Builder().geometry(simulateRouteLocationProvider.route).build()
@@ -143,19 +143,19 @@ class ViewportShowcaseActivity : AppCompatActivity() {
         """.trimIndent()
       )
       when (to.getCurrentOrNextState()) {
-        is FollowingViewportState -> viewportButton.text = OVERVIEW
+        is FollowPuckViewportState -> viewportButton.text = OVERVIEW
         else -> viewportButton.text = FOLLOW
       }
     }
     if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-      followingViewportState.apply {
+      followPuckViewportState.apply {
         options = options.toBuilder().padding(landscapeFollowingPadding).build()
       }
       overviewViewportState.apply {
         options = options.toBuilder().padding(landscapeOverviewPadding).build()
       }
     } else {
-      followingViewportState.apply {
+      followPuckViewportState.apply {
         options = options.toBuilder().padding(followingPadding).build()
       }
       overviewViewportState.apply {
@@ -164,7 +164,7 @@ class ViewportShowcaseActivity : AppCompatActivity() {
     }
     viewportButton.setOnClickListener {
       when (viewportButton.text) {
-        FOLLOW -> viewport.transitionTo(followingViewportState)
+        FOLLOW -> viewport.transitionTo(followPuckViewportState)
         OVERVIEW -> viewport.transitionTo(overviewViewportState)
       }
     }
@@ -184,4 +184,5 @@ private fun ViewportStatus.getCurrentOrNextState(): ViewportState? =
   when (this) {
     is ViewportStatus.State -> state
     is ViewportStatus.Transition -> toState
+    ViewportStatus.Idle -> null
   }

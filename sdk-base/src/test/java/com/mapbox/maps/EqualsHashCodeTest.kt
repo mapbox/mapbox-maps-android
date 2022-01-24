@@ -5,8 +5,8 @@ import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.viewport.ViewportStatus
 import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
-import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateBearing
-import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateOptions
+import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing
+import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.ViewportOptions
 import nl.jqno.equalsverifier.EqualsVerifier
@@ -47,15 +47,15 @@ class EqualsHashCodeTest {
   }
 
   @Test
-  fun `FollowingViewportStateOptions hashCode and equals test`() {
-    EqualsVerifier.forClass(FollowingViewportStateOptions::class.java)
+  fun `FollowPuckViewportStateOptions hashCode and equals test`() {
+    EqualsVerifier.forClass(FollowPuckViewportStateOptions::class.java)
       .usingGetClass()
       .verify()
   }
 
   @Test
-  fun `FollowingViewportStateBearing hashCode and equals test`() {
-    EqualsVerifier.forClass(FollowingViewportStateBearing::class.java)
+  fun `FollowPuckViewportStateBearing hashCode and equals test`() {
+    EqualsVerifier.forClass(FollowPuckViewportStateBearing::class.java)
       .usingGetClass()
       .suppress(Warning.INHERITED_DIRECTLY_FROM_OBJECT)
       .verify()

@@ -18,8 +18,8 @@ import com.mapbox.maps.plugin.viewport.CAMERA_ANIMATIONS_UTILS
 import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_VIEWPORT_STATE_PITCH
 import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_VIEWPORT_STATE_ZOOM
 import com.mapbox.maps.plugin.viewport.LOCATION_COMPONENT_UTILS
-import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateBearing
-import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateOptions
+import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing
+import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.transition.MapboxViewportTransitionFactory
 import io.mockk.every
 import io.mockk.just
@@ -40,13 +40,13 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
-class FollowingViewportStateImplTest {
+class FollowPuckViewportStateImplTest {
   private val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
   private val mapPluginProviderDelegate = mockk<MapPluginProviderDelegate>(relaxed = true)
   private val cameraPlugin = mockk<CameraAnimationsPlugin>(relaxed = true)
   private val locationPlugin = mockk<LocationComponentPlugin>(relaxed = true)
   private val transitionFactory = mockk<MapboxViewportTransitionFactory>()
-  private lateinit var followingState: FollowingViewportStateImpl
+  private lateinit var followingState: FollowPuckViewportStateImpl
 
   @Before
   fun setup() {
@@ -58,9 +58,9 @@ class FollowingViewportStateImplTest {
     every { locationPlugin.addOnIndicatorBearingChangedListener(any()) } just runs
     every { locationPlugin.addOnIndicatorPositionChangedListener(any()) } just runs
     every { locationPlugin.enabled } returns true
-    followingState = FollowingViewportStateImpl(
+    followingState = FollowPuckViewportStateImpl(
       delegateProvider,
-      initialOptions = FollowingViewportStateOptions.Builder().build(),
+      initialOptions = FollowPuckViewportStateOptions.Builder().build(),
       transitionFactory
     )
   }
@@ -133,7 +133,7 @@ class FollowingViewportStateImplTest {
 
     // set the bearing to be constant
     followingState.apply {
-      options = options.toBuilder().bearing(FollowingViewportStateBearing.Constant(constantBearing)).build()
+      options = options.toBuilder().bearing(FollowPuckViewportStateBearing.Constant(constantBearing)).build()
     }
     // stop observing after the first data point
     every { dataObserver.onNewData(any()) } returns false
