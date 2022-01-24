@@ -14,23 +14,23 @@ import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
-import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateBearing
-import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateOptions
+import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing
+import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.transition.MapboxViewportTransitionFactory
 import java.util.concurrent.*
 
 /**
- * The actual implementation of [FollowingViewportState] that follows user's location.
+ * The actual implementation of [FollowPuckViewportState] that follows the location component's puck position.
  *
  * Note: [LocationComponentPlugin] should be enabled to use this viewport state.
  */
-internal class FollowingViewportStateImpl(
+internal class FollowPuckViewportStateImpl(
   mapDelegateProvider: MapDelegateProvider,
-  initialOptions: FollowingViewportStateOptions,
+  initialOptions: FollowPuckViewportStateOptions,
   private val transitionFactory: MapboxViewportTransitionFactory = MapboxViewportTransitionFactory(
     mapDelegateProvider
   )
-) : FollowingViewportState {
+) : FollowPuckViewportState {
   private val cameraPlugin = mapDelegateProvider.mapPluginProviderDelegate.camera
   private val locationComponent = mapDelegateProvider.mapPluginProviderDelegate.location
   private val dataSourceUpdateObservers = CopyOnWriteArraySet<ViewportStateDataObserver>()
@@ -50,14 +50,14 @@ internal class FollowingViewportStateImpl(
   }
 
   private val indicatorBearingChangedListener = OnIndicatorBearingChangedListener { bearing ->
-    if (options.bearing == FollowingViewportStateBearing.SyncWithLocationPuck) {
+    if (options.bearing == FollowPuckViewportStateBearing.SyncWithLocationPuck) {
       lastBearing = bearing
       notifyLatestViewportData()
     }
   }
 
   private fun notifyLatestViewportData() {
-    if (lastLocation != null && (options.bearing is FollowingViewportStateBearing.Constant || lastBearing != null)) {
+    if (lastLocation != null && (options.bearing is FollowPuckViewportStateBearing.Constant || lastBearing != null)) {
       val viewportData = evaluateViewportData()
       if (isFollowingStateRunning) {
         // Use instant update here since the location updates are already interpolated by the location component plugin
@@ -77,7 +77,7 @@ internal class FollowingViewportStateImpl(
       .bearing(
         with(options.bearing) {
           when (this) {
-            is FollowingViewportStateBearing.Constant -> bearing
+            is FollowPuckViewportStateBearing.Constant -> bearing
             else -> lastBearing
           }
         }
@@ -107,7 +107,7 @@ internal class FollowingViewportStateImpl(
   /**
    * Describes the configuration options of the state.
    */
-  override var options: FollowingViewportStateOptions = initialOptions
+  override var options: FollowPuckViewportStateOptions = initialOptions
     set(value) {
       field = value
       notifyLatestViewportData()
@@ -210,7 +210,7 @@ internal class FollowingViewportStateImpl(
     onComplete: ((isFinished: Boolean) -> Unit)? = null
   ) {
     startAnimation(
-      transitionFactory.transitionLinear(cameraOptions, options.frameAnimationDurationMs)
+      transitionFactory.transitionLinear(cameraOptions, options.animationDurationMs)
         .apply {
           addListener(
             object : Animator.AnimatorListener {

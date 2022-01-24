@@ -19,7 +19,7 @@ sealed class ViewportStatus {
     /**
      * The current [ViewportState].
      */
-    val state: ViewportState?
+    val state: ViewportState
   ) : ViewportStatus() {
     /**
      * Indicates whether some other object is "equal to" this one.
@@ -46,10 +46,6 @@ sealed class ViewportStatus {
      */
     val transition: ViewportTransition,
     /**
-     * The previous [ViewportState].
-     */
-    val fromState: ViewportState?,
-    /**
      * The target [ViewportState].
      */
     val toState: ViewportState
@@ -60,18 +56,27 @@ sealed class ViewportStatus {
     override fun equals(other: Any?): Boolean =
       other is Transition &&
         other.transition === this.transition &&
-        other.fromState === this.fromState &&
         other.toState === this.toState
 
     /**
      * Returns a hash code value for the object.
      */
-    override fun hashCode() = Objects.hash(transition, fromState, toState)
+    override fun hashCode() = Objects.hash(transition, toState)
 
     /**
      * Returns a String for the object.
      */
     override fun toString() =
-      "ViewportStatus#Transition(transition=$transition, fromState=$fromState, toState=$toState)"
+      "ViewportStatus#Transition(transition=$transition, toState=$toState)"
+  }
+
+  /**
+   * Represents the current status is Idle.
+   */
+  object Idle : ViewportStatus() {
+    /**
+     * Returns a String for the object.
+     */
+    override fun toString() = "ViewportStatus#Idle"
   }
 }
