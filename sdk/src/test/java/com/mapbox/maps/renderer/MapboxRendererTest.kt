@@ -9,10 +9,7 @@ import com.mapbox.maps.MapView
 import com.mapbox.maps.Size
 import com.mapbox.maps.Task
 import com.mapbox.maps.renderer.gl.PixelReader
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.slot
-import io.mockk.verify
+import io.mockk.*
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -34,7 +31,7 @@ internal abstract class MapboxRendererTest {
 
   @Before
   open fun setUp() {
-    renderThread = mockk(relaxed = true)
+    renderThread = mockk(relaxUnitFun = true)
   }
 
   @Test
@@ -47,14 +44,53 @@ internal abstract class MapboxRendererTest {
   @Test
   fun scheduleRepaintTest() {
     mapboxRenderer.scheduleRepaint()
-    verify { renderThread.requestRender() }
+    verify {
+      renderThread.queueRenderEvent(
+        RenderEvent(
+          null,
+          true,
+          EventType.SDK
+        )
+      )
+    }
   }
 
   @Test
   fun scheduleTaskTest() {
     val task = mockk<Task>(relaxUnitFun = true)
+    every { renderThread.nativeRenderDestroyCallChain } returns false
+    var actualNeedRender: Boolean? = null
+    var actualEventType: EventType? = null
+    every { renderThread.queueRenderEvent(any()) } answers {
+      actualNeedRender = firstArg<RenderEvent>().needRender
+      actualEventType = firstArg<RenderEvent>().eventType
+    }
     mapboxRenderer.scheduleTask(task)
-    verify { renderThread.queueEvent(any()) }
+    verify {
+      // no idea how to verify Task got transformed in correct lambda so checking call + desired properties
+      renderThread.queueRenderEvent(any())
+    }
+    assert(actualNeedRender == false)
+    assert(actualEventType == EventType.SDK)
+  }
+
+  @Test
+  fun scheduleDestroyTaskTest() {
+    val task = mockk<Task>(relaxUnitFun = true)
+    every { renderThread.nativeRenderDestroyCallChain } returns true
+    var actualNeedRender: Boolean? = null
+    var actualEventType: EventType? = null
+    every { renderThread.queueRenderEvent(any()) } answers {
+      actualNeedRender = firstArg<RenderEvent>().needRender
+      actualEventType = firstArg<RenderEvent>().eventType
+    }
+    mapboxRenderer.scheduleTask(task)
+    verify {
+      // no idea how to verify Task got transformed in correct lambda so checking call + desired properties
+      renderThread.queueRenderEvent(any())
+    }
+    assert(actualNeedRender == false)
+    assert(actualEventType == EventType.DESTROY_RENDERER)
   }
 
   @Test
@@ -79,14 +115,30 @@ internal abstract class MapboxRendererTest {
   fun queueEventTest() {
     val event = mockk<Runnable>(relaxUnitFun = true)
     mapboxRenderer.queueEvent(event)
-    verify { renderThread.queueEvent(event) }
+    verify {
+      renderThread.queueRenderEvent(
+        RenderEvent(
+          event,
+          false,
+          EventType.OTHER
+        )
+      )
+    }
   }
 
   @Test
   fun queueRenderEventTest() {
     val event = mockk<Runnable>(relaxUnitFun = true)
     mapboxRenderer.queueRenderEvent(event)
-    verify { renderThread.queueRenderEvent(event) }
+    verify {
+      renderThread.queueRenderEvent(
+        RenderEvent(
+          event,
+          true,
+          EventType.OTHER
+        )
+      )
+    }
   }
 
   @Test
@@ -158,7 +210,7 @@ internal abstract class MapboxRendererTest {
       handler = Handler(this.looper)
     }
     val runnable = slot<Runnable>()
-    every { renderThread.queueRenderEvent(capture(runnable)) } answers {
+    every { renderThread.queueSnapshot(capture(runnable)) } answers {
       handler.post(runnable.captured)
     }
     mapboxRenderer.pixelReader = pixelReader
@@ -183,7 +235,7 @@ internal abstract class MapboxRendererTest {
       handler = Handler(this.looper)
     }
     val runnable = slot<Runnable>()
-    every { renderThread.queueRenderEvent(capture(runnable)) } answers {
+    every { renderThread.queueSnapshot(capture(runnable)) } answers {
       handler.post(runnable.captured)
     }
     mapboxRenderer.pixelReader = pixelReader
@@ -212,7 +264,7 @@ internal abstract class MapboxRendererTest {
       handler = Handler(this.looper)
     }
     val runnable = slot<Runnable>()
-    every { renderThread.queueRenderEvent(capture(runnable)) } answers {
+    every { renderThread.queueSnapshot(capture(runnable)) } answers {
       handler.post(runnable.captured)
     }
     mapboxRenderer.pixelReader = pixelReader
