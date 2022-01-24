@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
@@ -27,6 +28,7 @@ internal class DefaultViewportTransitionImpl(
   private val cameraPlugin = delegateProvider.mapPluginProviderDelegate.camera
   private val cameraDelegate = delegateProvider.mapCameraManagerDelegate
   private var runningAnimation: AnimatorSet? = null
+  private var cachedAnchor: ScreenCoordinate? = null
 
   /**
    * Run the [ViewportTransition] from previous [ViewportState] to the target [ViewportState].
@@ -112,6 +114,11 @@ internal class DefaultViewportTransitionImpl(
     instant: Boolean,
   ) {
     cancelAnimation()
+    // cache the camera plugin's last anchor point, and reset it once transition is ended
+    cachedAnchor = cameraPlugin.anchor
+    // For the viewport transition, the anchor should be set to null to avoid unexpected center shift
+    // caused by the zoom/bearing animators.
+    cameraPlugin.anchor = null
     animatorSet.childAnimations.forEach {
       cameraPlugin.registerAnimators(it as ValueAnimator)
     }
@@ -129,5 +136,6 @@ internal class DefaultViewportTransitionImpl(
     if (runningAnimation == animatorSet) {
       runningAnimation = null
     }
+    cameraPlugin.anchor = cachedAnchor
   }
 }

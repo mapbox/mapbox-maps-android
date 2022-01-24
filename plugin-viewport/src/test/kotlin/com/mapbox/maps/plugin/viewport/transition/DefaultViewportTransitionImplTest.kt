@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.animation.camera
@@ -42,6 +43,7 @@ class DefaultViewportTransitionImplTest {
   private val dataObserverSlot = slot<ViewportStateDataObserver>()
   private val cancelable = mockk<Cancelable>()
   private val cameraOptions = mockk<CameraOptions>(relaxed = true)
+  private val cachedAnchor = mockk<ScreenCoordinate>()
   private lateinit var defaultTransition: DefaultViewportTransitionImpl
 
   @Before
@@ -50,6 +52,8 @@ class DefaultViewportTransitionImplTest {
     every { cancelable.cancel() } just runs
     mockkStatic(CAMERA_ANIMATIONS_UTILS)
     every { mapPluginProviderDelegate.camera } returns cameraPlugin
+    every { cameraPlugin.anchor } returns cachedAnchor
+    every { cameraPlugin.anchor = any() } just runs
     defaultTransition = DefaultViewportTransitionImpl(
       delegateProvider,
       options = DefaultViewportTransitionOptions.Builder().build(),
@@ -84,6 +88,8 @@ class DefaultViewportTransitionImplTest {
 
     verifySequence {
       animatorSet.addListener(capture(animatorListenerSlot))
+      cameraPlugin.anchor
+      cameraPlugin.anchor = null
       animatorSet.childAnimations
       cameraPlugin.registerAnimators(animator)
       animatorSet.start()
@@ -92,6 +98,7 @@ class DefaultViewportTransitionImplTest {
     animatorListenerSlot.captured.onAnimationEnd(mockk())
     verify { cameraPlugin.unregisterAnimators(animator) }
     verify { completionListener.onComplete(true) }
+    verify { cameraPlugin.anchor = cachedAnchor }
   }
 
   @Test
@@ -116,6 +123,8 @@ class DefaultViewportTransitionImplTest {
 
     verifySequence {
       animatorSet.addListener(capture(animatorListenerSlot))
+      cameraPlugin.anchor
+      cameraPlugin.anchor = null
       animatorSet.childAnimations
       cameraPlugin.registerAnimators(animator)
       animatorSet.start()
@@ -123,7 +132,11 @@ class DefaultViewportTransitionImplTest {
     // try to notify if animation is canceled
     transitionCancelable.cancel()
     verify { animatorSet.cancel() }
+    verify { cancelable.cancel() }
+    animatorListenerSlot.captured.onAnimationCancel(animator)
+    animatorListenerSlot.captured.onAnimationEnd(animator)
     verify { cameraPlugin.unregisterAnimators(animator) }
+    verify { cameraPlugin.anchor = cachedAnchor }
   }
 
   @Test
@@ -148,6 +161,8 @@ class DefaultViewportTransitionImplTest {
 
     verifySequence {
       animatorSet.addListener(capture(animatorListenerSlot))
+      cameraPlugin.anchor
+      cameraPlugin.anchor = null
       animatorSet.childAnimations
       cameraPlugin.registerAnimators(animator)
       animatorSet.start()
@@ -157,5 +172,6 @@ class DefaultViewportTransitionImplTest {
     animatorListenerSlot.captured.onAnimationEnd(mockk())
     verify { cameraPlugin.unregisterAnimators(animator) }
     verify { completionListener.onComplete(false) }
+    verify { cameraPlugin.anchor = cachedAnchor }
   }
 }
