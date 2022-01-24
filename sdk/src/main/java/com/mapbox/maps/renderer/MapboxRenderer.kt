@@ -61,13 +61,7 @@ internal abstract class MapboxRenderer : MapClient {
   @AnyThread
   override fun scheduleRepaint() {
     Logger.e("KIRYLDD", "scheduleRepaint!")
-    renderThread.queueRenderEvent(
-      RenderEvent(
-        runnable = null,
-        needRender = true,
-        eventType = EventType.SDK
-      )
-    )
+    renderThread.queueRenderEvent(renderEventSdk)
   }
 
   @AnyThread
@@ -228,5 +222,7 @@ internal abstract class MapboxRenderer : MapClient {
 
   companion object {
     private const val TAG = "Mbgl-Renderer"
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal val renderEventSdk = RenderEvent(null, true, EventType.SDK)
   }
 }

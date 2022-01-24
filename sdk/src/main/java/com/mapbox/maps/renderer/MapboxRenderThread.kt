@@ -38,7 +38,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   private var surface: Surface? = null
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal var eglSurface: EGLSurface? = null
+  internal var eglSurface: EGLSurface
   private var width: Int = 0
   private var height: Int = 0
 
@@ -46,19 +46,14 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var renderTimeNs = 0L
   private var expectedVsyncWakeTimeNs = 0L
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal var awaitingNextVsync = false
+  private var awaitingNextVsync = false
   private var sizeChanged = false
   @Volatile
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var paused = false
-  private val surfaceValid: Boolean
-    get() = surface?.isValid == true
-  private val renderThreadPrepared: Boolean
-    get() = surfaceValid && nativeRenderCreated
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal var eglPrepared = false
   private var nativeRenderCreated = false
+  private val renderThreadPrepared get() = surface?.isValid == true && nativeRenderCreated
+  private var eglPrepared = false
   private var nativeRenderNotSupported = false
 
   internal var fpsChangedListener: OnFpsChangedListener? = null
@@ -75,6 +70,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     this.translucentSurface = translucentSurface
     this.mapboxRenderer = mapboxRenderer
     this.eglCore = EGLCore(translucentSurface, antialiasingSampleCount)
+    this.eglSurface = eglCore.EGL_NO_SURFACE
     Logger.e("KIRYLDD", "CTOR")
     renderHandlerThread = RenderHandlerThread().apply { start() }
   }
@@ -89,6 +85,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     this.mapboxRenderer = mapboxRenderer
     this.renderHandlerThread = handlerThread
     this.eglCore = eglCore
+    this.eglSurface = eglCore.EGL_NO_SURFACE
   }
 
   private fun postPrepareRenderFrame(delayMillis: Long = 0L) {
@@ -151,7 +148,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun checkAndroidSurface(): Boolean {
-    return if (surfaceValid) {
+    return if (surface?.isValid == true) {
       true
     } else {
       Logger.w(TAG, "EGL was configured but Android surface is null or not valid, waiting for a new one...")
@@ -162,11 +159,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun checkEglSurface(surface: Surface): Boolean {
-    if (eglSurface == null || eglSurface == EGL10.EGL_NO_SURFACE) {
+    if (eglSurface == eglCore.EGL_NO_SURFACE) {
       eglSurface = eglCore.createWindowSurface(surface)
-      if (eglSurface == null) {
-        // Set EGL Surface as EGL_NO_SURFACE and try recreate it in next iteration.
-        eglSurface = EGL10.EGL_NO_SURFACE
+      if (eglSurface == eglCore.EGL_NO_SURFACE) {
+        // try recreate it in next iteration.
         postPrepareRenderFrame(delayMillis = RETRY_DELAY_MS)
         return false
       }
@@ -175,8 +171,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun checkEglContextCurrent(): Boolean {
-    // it's safe to use !! here as we configured EGLSurface before
-    val eglContextAttached = eglCore.makeCurrent(eglSurface!!)
+    val eglContextAttached = eglCore.makeCurrent(eglSurface)
     if (!eglContextAttached) {
       Logger.w(TAG, "EGL was configured but context could not be made current. Trying again in a moment...")
       postPrepareRenderFrame(delayMillis = RETRY_DELAY_MS)
@@ -219,17 +214,15 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         }
       }
     }
-    eglSurface?.let {
-      when (val swapStatus = eglCore.swapBuffers(it)) {
-        EGL10.EGL_SUCCESS -> {}
-        EGL11.EGL_CONTEXT_LOST -> {
-          Logger.w(TAG, "Context lost. Waiting for re-acquire")
-          releaseEgl()
-        }
-        else -> {
-          Logger.w(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
-          releaseEglSurface()
-        }
+    when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
+      EGL10.EGL_SUCCESS -> {}
+      EGL11.EGL_CONTEXT_LOST -> {
+        Logger.w(TAG, "Context lost. Waiting for re-acquire")
+        releaseEgl()
+      }
+      else -> {
+        Logger.w(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
+        releaseEglSurface()
       }
     }
     val actualEndRenderTimeNs = SystemClock.elapsedRealtimeNanos()
@@ -256,10 +249,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun releaseEglSurface() {
-    eglSurface?.let {
-      eglCore.releaseSurface(it)
-    }
-    eglSurface = null
+    eglCore.releaseSurface(eglSurface)
+    eglSurface = eglCore.EGL_NO_SURFACE
   }
 
   private fun releaseAll() {
@@ -341,33 +332,40 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
+  @WorkerThread
+  internal fun processAndroidSurface(surface: Surface, width: Int, height: Int) {
+    Logger.e("KIRYLDD", "onSurfaceCreated old: ${this.surface}, new: $surface")
+    if (this.surface != surface) {
+      if (this.surface != null) {
+        releaseEgl()
+        this.surface?.release()
+      }
+      this.surface = surface
+    }
+    this.width = width
+    this.height = height
+    // we clean only Mapbox events to avoid outdated runnables associated with previous EGL context
+    renderEventQueueLock.withLock {
+      // using iterator to avoid concurrent modification exception
+      val iterator = renderEventQueue.iterator()
+      while (iterator.hasNext()) {
+        val next = iterator.next()
+        if (next.eventType == EventType.SDK) {
+          iterator.remove()
+        }
+      }
+    }
+    // we do not want to clear render events scheduled by user
+    renderHandlerThread.clearMessageQueue(clearAll = false)
+    prepareRenderFrame(creatingSurface = true)
+  }
+
   @UiThread
   fun onSurfaceCreated(surface: Surface, width: Int, height: Int) {
     Logger.e("KIRYLDD", "onSurfaceCreated")
     lock.withLock {
       renderHandlerThread.post {
-        Logger.e("KIRYLDD", "onSurfaceCreated old: ${this.surface}, new: $surface")
-        if (this.surface != surface) {
-          releaseEgl()
-          this.surface?.release()
-          this.surface = surface
-        }
-        this.width = width
-        this.height = height
-        // we clean only Mapbox events to avoid outdated runnables associated with previous EGL context
-        renderEventQueueLock.withLock {
-          // using iterator to avoid concurrent modification exception
-          val iterator = renderEventQueue.iterator()
-          while (iterator.hasNext()) {
-            val next = iterator.next()
-            if (next.eventType == EventType.SDK) {
-              iterator.remove()
-            }
-          }
-        }
-        // we do not want to clear render events scheduled by user
-        renderHandlerThread.clearMessageQueue(clearAll = false)
-        prepareRenderFrame(creatingSurface = true)
+        processAndroidSurface(surface, width, height)
       }
       createCondition.await()
     }
@@ -486,10 +484,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     mapboxRenderer.map = null
   }
 
-  private companion object {
-    const val TAG = "Mbgl-RenderThread"
-    const val RETRY_DELAY_MS = 50L
-    val ONE_SECOND_NS = 10.0.pow(9.0).toLong()
-    val ONE_MILLISECOND_NS = 10.0.pow(6.0).toLong()
+  companion object {
+    private const val TAG = "Mbgl-RenderThread"
+    internal const val RETRY_DELAY_MS = 50L
+    private val ONE_SECOND_NS = 10.0.pow(9.0).toLong()
+    private val ONE_MILLISECOND_NS = 10.0.pow(6.0).toLong()
   }
 }

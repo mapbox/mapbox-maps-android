@@ -2,10 +2,11 @@ package com.mapbox.maps.renderer
 
 import android.view.Surface
 import com.mapbox.common.ShadowLogger
+import com.mapbox.maps.renderer.MapboxRenderThread.Companion.RETRY_DELAY_MS
 import com.mapbox.maps.renderer.egl.EGLCore
 import io.mockk.*
 import org.junit.After
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -16,6 +17,7 @@ import org.robolectric.annotation.LooperMode
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
+import javax.microedition.khronos.egl.EGL10
 
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowLogger::class])
@@ -26,14 +28,19 @@ class MapboxRenderThreadTest {
   private lateinit var mapboxRenderer: MapboxRenderer
   private lateinit var eglCore: EGLCore
   private lateinit var renderHandlerThread: RenderHandlerThread
-  private val renderEventSdk = RenderEvent(null, true, EventType.SDK)
   private val waitTime = 200L
 
-  private fun mockValidSurface() {
+  private fun mockValidSurface(): Surface {
     val surface = mockk<Surface>()
     every { surface.isValid } returns true
+    every { surface.release() } just Runs
+    every { eglCore.prepareEgl() } returns true
     every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
+    every { eglCore.makeNothingCurrent() } returns true
+    every { eglCore.makeCurrent(any()) } returns true
+    every { eglCore.swapBuffers(any()) } returns EGL10.EGL_SUCCESS
     mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
+    return surface
   }
 
   private fun mockCountdownRunnable(latch: CountDownLatch) = mockk<Runnable>(relaxUnitFun = true).also {
@@ -43,7 +50,8 @@ class MapboxRenderThreadTest {
   @Before
   fun setUp() {
     mapboxRenderer = mockk(relaxUnitFun = true)
-    eglCore = mockk(relaxed = true)
+    eglCore = mockk(relaxUnitFun = true)
+    every { eglCore.EGL_NO_SURFACE } returns mockk()
     renderHandlerThread = RenderHandlerThread()
     mapboxRenderThread = MapboxRenderThread(
       mapboxRenderer,
@@ -129,17 +137,13 @@ class MapboxRenderThreadTest {
   fun onSurfaceWithActivityDestroyedAfterSurfaceTest() {
     val latch = CountDownLatch(1)
     every { mapboxRenderer.onSurfaceDestroyed() } answers { latch.countDown() }
-    val surface = mockk<Surface>(relaxUnitFun = true)
-    every { surface.isValid } returns true
-//    every { eglCore.eglStatusSuccess } returns true
-    every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
-    mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
+    mockValidSurface()
     mapboxRenderThread.onSurfaceDestroyed()
     mapboxRenderThread.destroy()
     if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
-    assert(!mapboxRenderThread.eglPrepared)
+    verify(exactly = 1) { eglCore.release() }
     verify { mapboxRenderer.onSurfaceDestroyed() }
     assert(!renderHandlerThread.started)
   }
@@ -148,82 +152,15 @@ class MapboxRenderThreadTest {
   fun onSurfaceWithActivityDestroyedBeforeSurfaceTest() {
     val latch = CountDownLatch(1)
     every { mapboxRenderer.onSurfaceDestroyed() } answers { latch.countDown() }
-    val surface = mockk<Surface>(relaxUnitFun = true)
-    every { surface.isValid } returns true
-//    every { eglCore.eglStatusSuccess } returns true
-    every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
-    mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
+    mockValidSurface()
     mapboxRenderThread.destroy()
     mapboxRenderThread.onSurfaceDestroyed()
     if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
-    assert(!mapboxRenderThread.eglPrepared)
-    verify { mapboxRenderer.onSurfaceDestroyed() }
+    verify(exactly = 1) { eglCore.release() }
+    verify(exactly = 1) { mapboxRenderer.onSurfaceDestroyed() }
     assert(!renderHandlerThread.started)
-  }
-
-  @Test
-  fun onSurfaceDestroyedWithRenderCallAfterTestSurfaceView() {
-    mapboxRenderer = mockk<MapboxSurfaceRenderer>(relaxed = true)
-    mapboxRenderThread = MapboxRenderThread(
-      mapboxRenderer,
-      renderHandlerThread,
-      eglCore
-    ).apply {
-      renderHandlerThread.start()
-    }
-    val surface = mockk<Surface>(relaxUnitFun = true)
-    every { surface.isValid } returns true
-//    every { eglCore.eglStatusSuccess } returns true
-    every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
-    mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
-    mapboxRenderThread.onSurfaceDestroyed()
-    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
-    mapboxRenderThread.queueRenderEvent(renderEventSdk)
-    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
-    // we do not destroy native renderer if it's stop and not destroy
-    verify(exactly = 0) {
-      mapboxRenderer.onSurfaceDestroyed()
-    }
-    // EGL should still be prepared
-    assert(mapboxRenderThread.eglPrepared)
-    // EGL surface should be null
-    Assert.assertNull(mapboxRenderThread.eglSurface)
-  }
-
-  @Test
-  fun onSurfaceDestroyedWithRenderCallAfterTestTextureView() {
-    mapboxRenderer = mockk<MapboxTextureViewRenderer>(relaxed = true)
-    mapboxRenderThread = MapboxRenderThread(
-      mapboxRenderer,
-      renderHandlerThread,
-      eglCore
-    ).apply {
-      renderHandlerThread.start()
-    }
-    val latch = CountDownLatch(1)
-    every { mapboxRenderer.onSurfaceDestroyed() } answers { latch.countDown() }
-    val surface = mockk<Surface>(relaxUnitFun = true)
-    every { surface.isValid } returns true
-//    every { eglCore.eglStatusSuccess } returns true
-    every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
-    mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
-    mapboxRenderThread.onSurfaceDestroyed()
-    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
-    mapboxRenderThread.queueRenderEvent(renderEventSdk)
-    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
-    if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
-    }
-    // we do destroy native renderer if it's stop (for texture renderer)
-    verify(exactly = 1) {
-      mapboxRenderer.onSurfaceDestroyed()
-    }
-    // EGL should not be prepared
-    assert(!mapboxRenderThread.eglPrepared)
-    // EGL surface should be null
-    Assert.assertNull(mapboxRenderThread.eglSurface)
   }
 
   @Test
@@ -231,9 +168,9 @@ class MapboxRenderThreadTest {
     val latch = CountDownLatch(1)
     mockValidSurface()
     Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
-    mapboxRenderThread.queueRenderEvent(renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
-    mapboxRenderThread.queueRenderEvent(renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     latch.await(waitTime, TimeUnit.MILLISECONDS)
     // one swap buffer for surface creation, two for not squashed render requests
@@ -251,8 +188,8 @@ class MapboxRenderThreadTest {
     val latch = CountDownLatch(1)
     mockValidSurface()
     Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
-    mapboxRenderThread.queueRenderEvent(renderEventSdk)
-    mapboxRenderThread.queueRenderEvent(renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     latch.await(waitTime, TimeUnit.MILLISECONDS)
     // one swap buffer for surface creation, 2 render requests squash in one swap buffers call
@@ -272,11 +209,11 @@ class MapboxRenderThreadTest {
     val latch = CountDownLatch(1)
     mockValidSurface()
     Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
-    mapboxRenderThread.queueRenderEvent(renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     mapboxRenderThread.pause()
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
-    mapboxRenderThread.queueRenderEvent(renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     latch.await(waitTime, TimeUnit.MILLISECONDS)
     // one swap buffer for surface creation, one request render after pause is omitted
@@ -290,17 +227,17 @@ class MapboxRenderThreadTest {
     val latch = CountDownLatch(1)
     mockValidSurface()
     Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
-    mapboxRenderThread.queueRenderEvent(renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     mapboxRenderThread.pause()
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
-    mapboxRenderThread.queueRenderEvent(renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
-    mapboxRenderThread.queueRenderEvent(renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     mapboxRenderThread.resume()
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
-    mapboxRenderThread.queueRenderEvent(renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     latch.await(waitTime, TimeUnit.MILLISECONDS)
     // render requests after pause do not swap buffer, we do it on resume if needed once
@@ -314,17 +251,17 @@ class MapboxRenderThreadTest {
     val latch = CountDownLatch(1)
     mockValidSurface()
     Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
-    mapboxRenderThread.queueRenderEvent(renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     mapboxRenderThread.pause()
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     mapboxRenderThread.resume()
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
-    mapboxRenderThread.queueRenderEvent(renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     latch.await(waitTime, TimeUnit.MILLISECONDS)
-    // no actual swap buffer after resume as no calls were done after pause
-    verify(exactly = 3) {
+    // we always do extra render call on resume
+    verify(exactly = 4) {
       eglCore.swapBuffers(any())
     }
   }
@@ -348,6 +285,7 @@ class MapboxRenderThreadTest {
         EventType.OTHER
       )
     )
+    assertEquals(1, mapboxRenderThread.renderEventQueue.size)
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
@@ -361,11 +299,10 @@ class MapboxRenderThreadTest {
   }
 
   @Test
-  fun queueEventTestWithAwaitVsync() {
+  fun queueUserNonRenderEventTest() {
     val latch = CountDownLatch(1)
     mockValidSurface()
     val runnable = mockk<Runnable>(relaxUnitFun = true)
-    mapboxRenderThread.awaitingNextVsync = true
     Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
     mapboxRenderThread.queueRenderEvent(
       RenderEvent(
@@ -374,61 +311,82 @@ class MapboxRenderThreadTest {
         EventType.OTHER
       )
     )
-//    Assert.assertEquals(1, mapboxRenderThread.eventQueue.size)
-    mapboxRenderThread.queueRenderEvent(renderEventSdk)
+    // we do not add non-render event to the queue
+    assert(mapboxRenderThread.renderEventQueue.isEmpty())
+    // do not schedule any render requests explicitly
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     latch.await(waitTime, TimeUnit.MILLISECONDS)
-//    assert(mapboxRenderThread.eventQueue.isEmpty())
     verify { runnable.run() }
-    // one swap buffer from surface creation, one for custom event
-    verify(exactly = 2) {
-      eglCore.swapBuffers(any())
-    }
-  }
-
-  @Test
-  fun queueEventTestWithoutAwaitVsync() {
-    val latch = CountDownLatch(1)
-    mockValidSurface()
-    val runnable = mockCountdownRunnable(latch)
-    mapboxRenderThread.awaitingNextVsync = false
-    Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
-    mapboxRenderThread.queueRenderEvent(
-      RenderEvent(
-        runnable,
-        false,
-        EventType.OTHER
-      )
-    )
-//    Assert.assertEquals(0, mapboxRenderThread.eventQueue.size)
-    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
-    if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
-    }
-//    assert(mapboxRenderThread.eventQueue.isEmpty())
-    verify { runnable.run() }
-    // one swap buffer from surface creation and no from custom event
+    // one swap buffer from surface creation only
     verify(exactly = 1) {
       eglCore.swapBuffers(any())
     }
   }
 
   @Test
+  fun queueUserNonRenderEventLoosingSurfaceTest() {
+    val surface = mockValidSurface()
+    val runnable = mockk<Runnable>(relaxUnitFun = true)
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
+    mapboxRenderThread.queueRenderEvent(
+      RenderEvent(
+        runnable,
+        false,
+        EventType.OTHER
+      )
+    )
+    // simulate render thread is not fully prepared
+    every { surface.isValid } returns false
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
+    verify(exactly = 0) { runnable.run() }
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
+    // simulate render thread is fully prepared again
+    every { surface.isValid } returns true
+    mapboxRenderThread.processAndroidSurface(surface, 1, 1)
+    // taking into account we try to reschedule event with some delay
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idleFor(RETRY_DELAY_MS, TimeUnit.MILLISECONDS)
+    // user's runnable is executed when thread is fully prepared again
+    verify(exactly = 1) { runnable.run() }
+  }
+
+  @Test
+  fun queueSdkNonRenderEventLoosingSurfaceTest() {
+    val surface = mockValidSurface()
+    val runnable = mockk<Runnable>(relaxUnitFun = true)
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
+    mapboxRenderThread.queueRenderEvent(
+      RenderEvent(
+        runnable,
+        false,
+        EventType.SDK
+      )
+    )
+    // simulate render thread is not fully prepared
+    every { surface.isValid } returns false
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
+    verify(exactly = 0) { runnable.run() }
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
+    // simulate render thread is fully prepared again
+    every { surface.isValid } returns true
+    mapboxRenderThread.processAndroidSurface(surface, 1, 1)
+    // taking into account we try to reschedule event with some delay
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idleFor(RETRY_DELAY_MS, TimeUnit.MILLISECONDS)
+    // SDK's task is not executed with new surface
+    verify(exactly = 0) { runnable.run() }
+  }
+
+  @Test
   fun fpsListenerTest() {
     val latch = CountDownLatch(2)
     val listener = mockk<OnFpsChangedListener>(relaxUnitFun = true)
-    val surface = mockk<Surface>()
     every { listener.onFpsChanged(any()) } answers { latch.countDown() }
-    every { surface.isValid } returns true
-//    every { eglCore.eglStatusSuccess } returns true
-    every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
-    mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
+    mockValidSurface()
     mapboxRenderThread.fpsChangedListener = listener
     Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
-    mapboxRenderThread.queueRenderEvent(renderEventSdk)
-    mapboxRenderThread.queueRenderEvent(renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
-    mapboxRenderThread.queueRenderEvent(renderEventSdk)
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
@@ -442,18 +400,14 @@ class MapboxRenderThreadTest {
   fun surfaceCreatedCalledBeforeActivityStartTest() {
     val latch = CountDownLatch(1)
     every { mapboxRenderer.onSurfaceCreated() } answers { latch.countDown() }
-    val surface = mockk<Surface>()
-    every { surface.isValid } returns true
-//    every { eglCore.eglStatusSuccess } returns true
-    every { eglCore.createWindowSurface(any()) } returns mockk(relaxed = true)
     mapboxRenderThread.paused = true
-    mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
+    mockValidSurface()
     if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
-    verify { mapboxRenderer.onSurfaceCreated() }
-    // EGL should be prepared
-    assert(mapboxRenderThread.eglPrepared)
+    verify(exactly = 1) { mapboxRenderer.onSurfaceCreated() }
+    // EGL should be fully prepared
+    verify(exactly = 0) { eglCore.releaseSurface(any()) }
   }
 
   @Test
@@ -485,15 +439,48 @@ class MapboxRenderThreadTest {
   }
 
   @Test
-  fun renderWithMaxFpsSet() {
-    mockValidSurface()
-    mapboxRenderThread.setMaximumFps(15)
-    Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
-    mapboxRenderThread.requestRender()
-    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
-    // 1 swap when creating surface + 1 for request render call
-    verify(exactly = 2) {
-      eglCore.swapBuffers(any())
+  fun onSurfaceDestroyedWithRenderCallAfterTestSurfaceView() {
+    mapboxRenderer = mockk<MapboxSurfaceRenderer>(relaxUnitFun = true)
+    mapboxRenderThread = MapboxRenderThread(
+      mapboxRenderer,
+      renderHandlerThread,
+      eglCore
+    ).apply {
+      renderHandlerThread.start()
     }
+    mockValidSurface()
+    mapboxRenderThread.onSurfaceDestroyed()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
+    // we do not destroy native renderer if it's stop and not destroy
+    verify(exactly = 0) { mapboxRenderer.onSurfaceDestroyed() }
+    // we clear only EGLSurface but not all EGL
+    verify(exactly = 1) { eglCore.releaseSurface(any()) }
+    verify(exactly = 0) { eglCore.release() }
+  }
+
+  @Test
+  fun onSurfaceDestroyedWithRenderCallAfterTestTextureView() {
+    mapboxRenderer = mockk<MapboxTextureViewRenderer>(relaxUnitFun = true)
+    mapboxRenderThread = MapboxRenderThread(
+      mapboxRenderer,
+      renderHandlerThread,
+      eglCore
+    ).apply {
+      renderHandlerThread.start()
+    }
+    val latch = CountDownLatch(1)
+    every { mapboxRenderer.onSurfaceDestroyed() } answers { latch.countDown() }
+    mockValidSurface()
+    mapboxRenderThread.onSurfaceDestroyed()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
+    // we do destroy native renderer if it's stop (for texture renderer)
+    verify(exactly = 1) { mapboxRenderer.onSurfaceDestroyed() }
+    // we clear all EGL
+    verify(exactly = 1) { eglCore.releaseSurface(any()) }
+    verify(exactly = 1) { eglCore.release() }
   }
 }

@@ -20,6 +20,8 @@ internal class EGLCore(
   private var eglDisplay: EGLDisplay = EGL10.EGL_NO_DISPLAY
   private var eglContext: EGLContext = EGL10.EGL_NO_CONTEXT
 
+  internal val EGL_NO_SURFACE: EGLSurface = EGL10.EGL_NO_SURFACE
+
   fun prepareEgl(): Boolean {
     egl = EGLContext.getEGL() as EGL10
     eglDisplay = egl.eglGetDisplay(EGL10.EGL_DEFAULT_DISPLAY)
@@ -94,7 +96,7 @@ internal class EGLCore(
   /**
    * Creates an EGL surface associated with a Surface.
    */
-  fun createWindowSurface(surface: Surface): EGLSurface? {
+  fun createWindowSurface(surface: Surface): EGLSurface {
     // Create a window surface, and attach it to the Surface we received.
     val surfaceAttribs = intArrayOf(EGL10.EGL_NONE)
     val eglSurface = egl.eglCreateWindowSurface(
@@ -106,7 +108,7 @@ internal class EGLCore(
     val eglWindowCreated = checkEglErrorNoException("eglCreateWindowSurface")
     if (!eglWindowCreated || eglSurface == null) {
       Logger.e(TAG, "Surface was null")
-      return null
+      return EGL_NO_SURFACE
     }
     return eglSurface
   }
