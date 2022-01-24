@@ -34,6 +34,12 @@ checkApi:
 	echo "$(shell mbx-ci github reader token)" > gh_token.txt;\
 	sh scripts/java-api-check-all.sh "$(TAG)"
 
+.PHONY: checkChangelog
+checkChangelog:
+	unset GITHUB_TOKEN; \
+	echo "$(shell mbx-ci github reader token)" > gh_token.txt;\
+	sh scripts/check-changelog.sh
+
 .PHONY: proguard
 proguard:
 	./gradlew clean;
