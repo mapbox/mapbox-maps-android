@@ -19,7 +19,7 @@ import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.ViewportStatus
 import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
-import com.mapbox.maps.plugin.viewport.data.FollowingViewportStateOptions
+import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.ViewportOptions
 import com.mapbox.maps.plugin.viewport.viewport
@@ -40,8 +40,8 @@ class NavigationSimulator(
   private val locationProvider by lazy { SimulateRouteLocationProvider(routePoints) }
   private val handler = Handler(Looper.getMainLooper())
   private val viewportPlugin = mapView.viewport
-  private val followingViewportState =
-    viewportPlugin.makeFollowingViewportState(FollowingViewportStateOptions.Builder().build())
+  private val followPuckViewportState =
+    viewportPlugin.makeFollowPuckViewportState(FollowPuckViewportStateOptions.Builder().build())
   private val overviewViewportState = viewportPlugin.makeOverviewViewportState(
     OverviewViewportStateOptions.Builder().geometry(routePoints)
       .padding(EdgeInsets(100.0, 100.0, 100.0, 100.0)).build()
@@ -60,8 +60,8 @@ class NavigationSimulator(
     with(viewportPlugin.status) {
       if (this is ViewportStatus.State) {
         when (state) {
-          followingViewportState -> viewportPlugin.transitionTo(overviewViewportState)
-          else -> viewportPlugin.transitionTo(followingViewportState)
+          followPuckViewportState -> viewportPlugin.transitionTo(overviewViewportState)
+          else -> viewportPlugin.transitionTo(followPuckViewportState)
         }
       }
     }
@@ -163,7 +163,7 @@ class NavigationSimulator(
 
   override fun setCameraTrackingMode(cameraMode: CameraFollowMode) {
     when (cameraMode) {
-      CameraFollowMode.FOLLOW -> viewportPlugin.transitionTo(followingViewportState)
+      CameraFollowMode.FOLLOW -> viewportPlugin.transitionTo(followPuckViewportState)
       CameraFollowMode.OVERVIEW -> viewportPlugin.transitionTo(overviewViewportState)
       CameraFollowMode.NONE -> viewportPlugin.idle()
     }

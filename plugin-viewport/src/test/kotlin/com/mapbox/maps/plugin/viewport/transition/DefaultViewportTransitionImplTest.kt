@@ -37,7 +37,6 @@ class DefaultViewportTransitionImplTest {
   private val mapPluginProviderDelegate = mockk<MapPluginProviderDelegate>(relaxed = true)
   private val cameraPlugin = mockk<CameraAnimationsPlugin>(relaxed = true)
   private val transitionFactory = mockk<MapboxViewportTransitionFactory>()
-  private val previousState = mockk<ViewportState>()
   private val targetState = mockk<ViewportState>()
   private val completionListener = mockk<CompletionListener>()
   private val dataObserverSlot = slot<ViewportStateDataObserver>()
@@ -78,7 +77,7 @@ class DefaultViewportTransitionImplTest {
     every { targetState.observeDataSource(any()) } returns cancelable
     every { completionListener.onComplete(any()) } just runs
 
-    defaultTransition.run(previousState, targetState, completionListener)
+    defaultTransition.run(targetState, completionListener)
     verify { targetState.observeDataSource(capture(dataObserverSlot)) }
     // verify the default state only get the first data point and returned false
     assertFalse(dataObserverSlot.captured.onNewData(cameraOptions))
@@ -110,7 +109,7 @@ class DefaultViewportTransitionImplTest {
     every { targetState.observeDataSource(any()) } returns cancelable
     every { completionListener.onComplete(any()) } just runs
 
-    val transitionCancelable = defaultTransition.run(previousState, targetState, completionListener)
+    val transitionCancelable = defaultTransition.run(targetState, completionListener)
     verify { targetState.observeDataSource(capture(dataObserverSlot)) }
     // verify the default state only get the first data point and returned false
     assertFalse(dataObserverSlot.captured.onNewData(cameraOptions))
@@ -142,7 +141,7 @@ class DefaultViewportTransitionImplTest {
     every { targetState.observeDataSource(any()) } returns cancelable
     every { completionListener.onComplete(any()) } just runs
 
-    val cancelable = defaultTransition.run(previousState, targetState, completionListener)
+    val cancelable = defaultTransition.run(targetState, completionListener)
     verify { targetState.observeDataSource(capture(dataObserverSlot)) }
     // verify the default state only get the first data point and returned false
     assertFalse(dataObserverSlot.captured.onNewData(cameraOptions))

@@ -38,13 +38,11 @@ internal class DefaultViewportTransitionImpl(
    * provide a target camera in a timely manner or might update the target camera multiple times
    * during the transition (a "moving target").
    *
-   * @param from The previous [ViewportState], null if previous state is IDLE.
    * @param to The target [ViewportState]
    * @param completionListener The listener to observe the completion state.
    * @return a handle that can be used to cancel the current [ViewportTransition]
    */
   override fun run(
-    from: ViewportState?,
     to: ViewportState,
     completionListener: CompletionListener
   ): Cancelable {

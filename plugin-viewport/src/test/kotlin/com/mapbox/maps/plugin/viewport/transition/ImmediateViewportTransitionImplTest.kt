@@ -33,7 +33,6 @@ class ImmediateViewportTransitionImplTest {
   private val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
   private val mapPluginProviderDelegate = mockk<MapPluginProviderDelegate>(relaxed = true)
   private val cameraPlugin = mockk<CameraAnimationsPlugin>(relaxed = true)
-  private val previousState = mockk<ViewportState>()
   private val targetState = mockk<ViewportState>()
   private val completionListener = mockk<CompletionListener>()
   private val dataObserverSlot = slot<ViewportStateDataObserver>()
@@ -61,7 +60,7 @@ class ImmediateViewportTransitionImplTest {
     every { targetState.observeDataSource(any()) } returns cancelable
     every { completionListener.onComplete(any()) } just runs
 
-    immediateTransition.run(previousState, targetState, completionListener)
+    immediateTransition.run(targetState, completionListener)
     verify { targetState.observeDataSource(capture(dataObserverSlot)) }
     // verify the default state only get the first data point and returned false
     assertFalse(dataObserverSlot.captured.onNewData(cameraOptions))
