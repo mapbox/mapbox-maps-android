@@ -72,7 +72,6 @@ class ViewportPluginImplTest {
   @Test
   fun testCleanUp() {
     viewportPlugin.cleanup()
-    assert(viewportPlugin.status == ViewportStatus.Idle)
     verify { cameraPlugin.removeCameraAnimationsLifecycleListener(any()) }
   }
 

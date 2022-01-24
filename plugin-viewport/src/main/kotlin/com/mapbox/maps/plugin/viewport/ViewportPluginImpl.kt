@@ -282,7 +282,6 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
    * Called when the map is destroyed. Should be used to cleanup plugin resources for that map.
    */
   override fun cleanup() {
-    updateStatus(ViewportStatus.Idle, ViewportStatusChangeReason.IDLE_REQUESTED)
     cameraPlugin.removeCameraAnimationsLifecycleListener(cameraAnimationsLifecycleListener)
   }
 
