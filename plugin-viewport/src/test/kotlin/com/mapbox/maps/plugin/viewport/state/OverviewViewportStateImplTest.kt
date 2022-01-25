@@ -34,11 +34,11 @@ import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
 class OverviewViewportStateImplTest {
-  private val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
-  private val mapPluginProviderDelegate = mockk<MapPluginProviderDelegate>(relaxed = true)
-  private val mapCameraDelegate = mockk<MapCameraManagerDelegate>(relaxed = true)
-  private val cameraPlugin = mockk<CameraAnimationsPlugin>(relaxed = true)
-  private val cameraOptions = mockk<CameraOptions>(relaxed = true)
+  private val delegateProvider = mockk<MapDelegateProvider>()
+  private val mapPluginProviderDelegate = mockk<MapPluginProviderDelegate>()
+  private val mapCameraDelegate = mockk<MapCameraManagerDelegate>()
+  private val cameraPlugin = mockk<CameraAnimationsPlugin>()
+  private val cameraOptions = mockk<CameraOptions>()
   private val transitionFactory = mockk<MapboxViewportTransitionFactory>()
   private lateinit var overviewState: OverviewViewportStateImpl
 
@@ -49,6 +49,8 @@ class OverviewViewportStateImplTest {
     every { mapPluginProviderDelegate.camera } returns cameraPlugin
     every { delegateProvider.mapCameraManagerDelegate } returns mapCameraDelegate
     every { mapCameraDelegate.cameraForGeometry(any(), any(), any(), any()) } returns cameraOptions
+    every { cameraPlugin.registerAnimators(any()) } just runs
+    every { cameraPlugin.unregisterAnimators(any()) } just runs
     overviewState = OverviewViewportStateImpl(
       delegateProvider,
       initialOptions = OverviewViewportStateOptions.Builder().geometry(Point.fromLngLat(0.0, 0.0))
@@ -65,7 +67,7 @@ class OverviewViewportStateImplTest {
 
   @Test
   fun testObserveDataSourceForFirstDataPoint() {
-    val dataObserver = mockk<ViewportStateDataObserver>(relaxed = true)
+    val dataObserver = mockk<ViewportStateDataObserver>()
     val testGeometry = Point.fromLngLat(0.0, 0.0)
 
     // stop observing after the first data point
@@ -92,7 +94,7 @@ class OverviewViewportStateImplTest {
 
   @Test
   fun testObserveDataSourceContinuously() {
-    val dataObserver = mockk<ViewportStateDataObserver>(relaxed = true)
+    val dataObserver = mockk<ViewportStateDataObserver>()
     val testGeometry = Point.fromLngLat(0.0, 0.0)
 
     // keep observing after the first data point
