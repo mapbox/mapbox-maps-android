@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.viewport.transition
 
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
@@ -21,6 +22,7 @@ import io.mockk.slot
 import io.mockk.unmockkAll
 import io.mockk.unmockkStatic
 import io.mockk.verify
+import io.mockk.verifySequence
 import org.junit.After
 import org.junit.Assert.assertFalse
 import org.junit.Before
@@ -47,6 +49,8 @@ class ImmediateViewportTransitionImplTest {
     mockkStatic(CAMERA_ANIMATIONS_UTILS)
     every { mapPluginProviderDelegate.camera } returns cameraPlugin
     every { cameraPlugin.easeTo(any(), any()) } returns Cancelable { }
+    every { cameraPlugin.anchor } returns ScreenCoordinate(0.0, 0.0)
+    every { cameraPlugin.anchor = any() } just runs
     immediateTransition = ImmediateViewportTransition(delegateProvider)
   }
 
@@ -66,7 +70,9 @@ class ImmediateViewportTransitionImplTest {
     // verify the default state only get the first data point and returned false
     assertFalse(dataObserverSlot.captured.onNewData(cameraOptions))
 
-    verify {
+    verifySequence {
+      cameraPlugin.anchor
+      cameraPlugin.anchor = null
       cameraPlugin.easeTo(
         cameraOptions,
         MapAnimationOptions.mapAnimationOptions {
@@ -75,6 +81,7 @@ class ImmediateViewportTransitionImplTest {
           owner(ViewportPluginImpl.VIEWPORT_CAMERA_OWNER)
         }
       )
+      cameraPlugin.anchor = ScreenCoordinate(0.0, 0.0)
     }
     verify { completionListener.onComplete(true) }
   }

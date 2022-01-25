@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.viewport.transition
 
+import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.camera
@@ -14,6 +15,7 @@ import com.mapbox.maps.plugin.viewport.state.ViewportState
 internal class ImmediateViewportTransition(delegateProvider: MapDelegateProvider) :
   ViewportTransition {
   private val cameraPlugin = delegateProvider.mapPluginProviderDelegate.camera
+  private var cachedAnchor: ScreenCoordinate? = null
 
   /**
    * Run the [ViewportTransition] from previous [ViewportState] to the target [ViewportState].
@@ -34,6 +36,11 @@ internal class ImmediateViewportTransition(delegateProvider: MapDelegateProvider
     completionListener: CompletionListener
   ): Cancelable {
     return to.observeDataSource { cameraOptions ->
+      // cache the camera plugin's last anchor point, and reset it once transition is ended
+      cachedAnchor = cameraPlugin.anchor
+      // For the viewport transition, the anchor should be set to null to avoid unexpected center shift
+      // caused by the zoom/bearing animators.
+      cameraPlugin.anchor = null
       cameraPlugin.easeTo(
         cameraOptions,
         mapAnimationOptions {
@@ -42,6 +49,7 @@ internal class ImmediateViewportTransition(delegateProvider: MapDelegateProvider
           owner(VIEWPORT_CAMERA_OWNER)
         }
       )
+      cameraPlugin.anchor = cachedAnchor
       completionListener.onComplete(true)
       false
     }
