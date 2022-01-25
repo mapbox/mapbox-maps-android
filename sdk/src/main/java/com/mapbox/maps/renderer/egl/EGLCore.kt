@@ -20,7 +20,7 @@ internal class EGLCore(
   private var eglDisplay: EGLDisplay = EGL10.EGL_NO_DISPLAY
   private var eglContext: EGLContext = EGL10.EGL_NO_CONTEXT
 
-  internal val EGL_NO_SURFACE: EGLSurface = EGL10.EGL_NO_SURFACE
+  internal val eglNoSurface: EGLSurface = EGL10.EGL_NO_SURFACE
 
   fun prepareEgl(): Boolean {
     egl = EGLContext.getEGL() as EGL10
@@ -108,7 +108,7 @@ internal class EGLCore(
     val eglWindowCreated = checkEglErrorNoException("eglCreateWindowSurface")
     if (!eglWindowCreated || eglSurface == null) {
       Logger.e(TAG, "Surface was null")
-      return EGL_NO_SURFACE
+      return eglNoSurface
     }
     return eglSurface
   }

@@ -70,8 +70,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     this.translucentSurface = translucentSurface
     this.mapboxRenderer = mapboxRenderer
     this.eglCore = EGLCore(translucentSurface, antialiasingSampleCount)
-    this.eglSurface = eglCore.EGL_NO_SURFACE
-    Logger.e("KIRYLDD", "CTOR")
+    this.eglSurface = eglCore.eglNoSurface
     renderHandlerThread = RenderHandlerThread().apply { start() }
   }
 
@@ -85,7 +84,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     this.mapboxRenderer = mapboxRenderer
     this.renderHandlerThread = handlerThread
     this.eglCore = eglCore
-    this.eglSurface = eglCore.EGL_NO_SURFACE
+    this.eglSurface = eglCore.eglNoSurface
   }
 
   private fun postPrepareRenderFrame(delayMillis: Long = 0L) {
@@ -159,9 +158,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun checkEglSurface(surface: Surface): Boolean {
-    if (eglSurface == eglCore.EGL_NO_SURFACE) {
+    if (eglSurface == eglCore.eglNoSurface) {
       eglSurface = eglCore.createWindowSurface(surface)
-      if (eglSurface == eglCore.EGL_NO_SURFACE) {
+      if (eglSurface == eglCore.eglNoSurface) {
         // try recreate it in next iteration.
         postPrepareRenderFrame(delayMillis = RETRY_DELAY_MS)
         return false
@@ -250,7 +249,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   private fun releaseEglSurface() {
     eglCore.releaseSurface(eglSurface)
-    eglSurface = eglCore.EGL_NO_SURFACE
+    eglSurface = eglCore.eglNoSurface
   }
 
   private fun releaseAll() {
@@ -265,10 +264,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   private fun prepareRenderFrame(creatingSurface: Boolean = false) {
     // no need to do anything if we're waiting for next VSYNC already
     if (awaitingNextVsync) {
-      Logger.e("KIRYLDD", "prepareRenderFrame skipping as we're waiting for VSYNC already")
       return
     }
-    Logger.e("KIRYLDD", "prepareRenderFrame creatingSurface = $creatingSurface, paused = $paused, nativeRenderNotSupported = $nativeRenderNotSupported")
     // Check first if we have to stop rendering at all (even if there was no EGL config) and cleanup EGL.
     // We need to check it ASAP in order not to block thread that is calling `onSurfaceTextureDestroyed`.
     // After that check MapView could be actually rendered on this device (has valid EGL config).
@@ -302,7 +299,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @UiThread
   fun onSurfaceDestroyed() {
-    Logger.e("KIRYLDD", "onSurfaceDestroyed")
     lock.withLock {
       // in some situations `destroy` is called earlier than onSurfaceDestroyed - in that case no need to clean up
       if (renderHandlerThread.started) {
@@ -310,31 +306,22 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
           awaitingNextVsync = false
           Choreographer.getInstance().removeFrameCallback(this)
           lock.withLock {
-            Logger.e("KIRYLDD", "onSurfaceDestroyed renderHandlerThread inside lock")
             // TODO https://github.com/mapbox/mapbox-maps-android/issues/607
             if (nativeRenderCreated && mapboxRenderer is MapboxTextureViewRenderer) {
-              Logger.e("KIRYLDD", "onSurfaceDestroyed releaseAll")
               releaseAll()
-              Logger.e("KIRYLDD", "onSurfaceDestroyed releaseAll done")
             } else {
-              Logger.e("KIRYLDD", "onSurfaceDestroyed releaseEglSurface")
               releaseEglSurface()
-              Logger.e("KIRYLDD", "onSurfaceDestroyed releaseEglSurface done")
             }
-            Logger.e("KIRYLDD", "onSurfaceDestroyed renderHandlerThread inside lock signal!")
             destroyCondition.signal()
           }
         }
-        Logger.e("KIRYLDD", "onSurfaceDestroyed destroyCondition.await()...")
         destroyCondition.await()
-        Logger.e("KIRYLDD", "onSurfaceDestroyed resume main thread!")
       }
     }
   }
 
   @WorkerThread
   internal fun processAndroidSurface(surface: Surface, width: Int, height: Int) {
-    Logger.e("KIRYLDD", "onSurfaceCreated old: ${this.surface}, new: $surface")
     if (this.surface != surface) {
       if (this.surface != null) {
         releaseEgl()
@@ -362,7 +349,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @UiThread
   fun onSurfaceCreated(surface: Surface, width: Int, height: Int) {
-    Logger.e("KIRYLDD", "onSurfaceCreated")
     lock.withLock {
       renderHandlerThread.post {
         processAndroidSurface(surface, width, height)
@@ -381,7 +367,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     // it makes sense to draw not only when EGL config is prepared but when native renderer is created
     if (renderThreadPrepared && !paused) {
       draw()
-      Logger.e("KIRYLDD", "draw + swapbuffers")
     }
     awaitingNextVsync = false
   }
@@ -406,7 +391,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     } else {
       // no sense in scheduling non-render SDK tasks if thread is not fully ready for render
       // as render thread SDK tasks queue will be cleared when new surface will arrive
-      Logger.e("KIRYLDD", "Non render event, $renderThreadPrepared, $renderEvent")
       if (renderEvent.eventType == EventType.SDK) {
         if (renderThreadPrepared) {
           postNonRenderEvent(renderEvent)
@@ -420,9 +404,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   private fun postNonRenderEvent(renderEvent: RenderEvent, delayMillis: Long = 0L) {
     renderHandlerThread.postDelayed(
       {
-        Logger.e("KIRYLDD", "postNonRenderEvent, run ${renderEvent.runnable}...")
         if (renderThreadPrepared || renderEvent.eventType == EventType.DESTROY_RENDERER) {
-          Logger.e("KIRYLDD", "postNonRenderEvent, run success ${renderEvent.runnable}")
           renderEvent.runnable?.run()
         } else {
           Logger.w(TAG, "Non-render event could not be run, retrying in $RETRY_DELAY_MS ms...")
@@ -447,20 +429,16 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @UiThread
   fun pause() {
-    Logger.e("KIRYLDD", "pause")
     paused = true
-    Logger.e("KIRYLDD", "pause = true")
   }
 
   @UiThread
   fun resume() {
-    Logger.e("KIRYLDD", "resume")
     paused = false
     // schedule render if we resume not after first create (e.g. bring map back to front)
     if (renderThreadPrepared) {
       postPrepareRenderFrame()
     }
-    Logger.e("KIRYLDD", "pause = false")
   }
 
   @UiThread
@@ -486,8 +464,13 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   companion object {
     private const val TAG = "Mbgl-RenderThread"
-    internal const val RETRY_DELAY_MS = 50L
     private val ONE_SECOND_NS = 10.0.pow(9.0).toLong()
     private val ONE_MILLISECOND_NS = 10.0.pow(6.0).toLong()
+
+    /**
+     * If we hit some issue caused by invalid state (most likely caused by GPU driver) we start
+     * rescheduling configuration with that delay in order not to overflood handler thread message queue.
+     */
+    internal const val RETRY_DELAY_MS = 50L
   }
 }

@@ -51,7 +51,7 @@ class MapboxRenderThreadTest {
   fun setUp() {
     mapboxRenderer = mockk(relaxUnitFun = true)
     eglCore = mockk(relaxUnitFun = true)
-    every { eglCore.EGL_NO_SURFACE } returns mockk()
+    every { eglCore.eglNoSurface } returns mockk()
     renderHandlerThread = RenderHandlerThread()
     mapboxRenderThread = MapboxRenderThread(
       mapboxRenderer,
