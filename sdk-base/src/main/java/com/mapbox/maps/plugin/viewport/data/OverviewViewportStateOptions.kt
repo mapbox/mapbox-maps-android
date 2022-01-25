@@ -2,13 +2,15 @@ package com.mapbox.maps.plugin.viewport.data
 
 import com.mapbox.geojson.Geometry
 import com.mapbox.maps.EdgeInsets
-import com.mapbox.maps.plugin.viewport.DEFAULT_FRAME_ANIMATION_DURATION_MS
+import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.plugin.viewport.DEFAULT_STATE_ANIMATION_DURATION_MS
 import java.lang.IllegalArgumentException
 import java.util.*
 
 /**
  * Options that impact the [OverviewViewportState].
  */
+@MapboxExperimental
 class OverviewViewportStateOptions private constructor(
   /**
    * The geometry that the OverviewState should cover.
@@ -29,7 +31,7 @@ class OverviewViewportStateOptions private constructor(
   /**
    * The duration between frames in milliseconds.
    *
-   * Defaults to [DEFAULT_FRAME_ANIMATION_DURATION_MS] milliseconds
+   * Defaults to [DEFAULT_STATE_ANIMATION_DURATION_MS] milliseconds
    */
   val animationDurationMs: Long
 ) {
@@ -69,7 +71,7 @@ class OverviewViewportStateOptions private constructor(
     private var padding: EdgeInsets = EdgeInsets(0.0, 0.0, 0.0, 0.0)
     private var bearing: Double? = 0.0
     private var pitch: Double? = 0.0
-    private var animationDurationMs: Long = DEFAULT_FRAME_ANIMATION_DURATION_MS
+    private var animationDurationMs: Long = DEFAULT_STATE_ANIMATION_DURATION_MS
 
     /**
      * The geometry that the OverviewState should cover.
@@ -102,7 +104,7 @@ class OverviewViewportStateOptions private constructor(
     /**
      * The duration between frames in milliseconds.
      *
-     * Defaults to [DEFAULT_FRAME_ANIMATION_DURATION_MS] milliseconds
+     * Defaults to [DEFAULT_STATE_ANIMATION_DURATION_MS] milliseconds
      */
     fun animationDurationMs(duration: Long) = apply {
       this.animationDurationMs = duration

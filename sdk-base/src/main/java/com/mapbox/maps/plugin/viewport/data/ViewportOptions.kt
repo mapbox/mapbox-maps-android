@@ -1,13 +1,15 @@
 package com.mapbox.maps.plugin.viewport.data
 
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.viewport.state.ViewportState
 
 /**
  * Options that impact the [ViewportPlugin].
  */
+@MapboxExperimental
 class ViewportOptions private constructor(
   /**
-   * Indicates whether to transition [ViewportState] to IDLE (null) when user interact with the map
+   * Indicates whether to transition [ViewportState] to IDLE when user interact with the map
    * using gestures.
    *
    * Defaults to true.
@@ -43,7 +45,7 @@ class ViewportOptions private constructor(
     private var transitionsToIdleUponUserInteraction: Boolean = true
 
     /**
-     * Indicates whether to transition [ViewportState] to IDLE (null) when user interact with the map
+     * Indicates whether to transition [ViewportState] to IDLE when user interact with the map
      * using gestures.
      *
      * Defaults to true.

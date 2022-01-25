@@ -10,7 +10,7 @@ At any given time, the viewport is either:
   - transitioning (camera is being managed by a ViewportTransition)
 
 Two ViewportState are provided by default that user can create instance from the ViewportPlugin:
- * `viewport.makeFollowingViewportState(options): FollowingViewportState`
+ * `viewport.makeFollowPuckViewportState(options): FollowPuckViewportState`
 This state allows to follow user's location, and syncs the viewport position with the location puck provided by the LocationComponent.
  * `viewport.makeOverviewViewportState(options): OverviewViewportState`
 This state sets the viewport to cover user provided geometry with configurations.
@@ -50,7 +50,7 @@ allprojects {
 }
 // In the app build.gradle file
 dependencies {
-  implementation 'com.mapbox.plugin:maps-viewport:10.3.0-beta.1'
+  implementation 'com.mapbox.plugin:maps-viewport:10.3.0-rc.1'
 }
 ```
 
@@ -58,10 +58,10 @@ dependencies {
 
 ```kotlin
   val viewportPlugin = mapView.viewport
-  val followingViewportState: FollowingViewportState = viewportPlugin.makeFollowingViewportState(
-      FollowingViewportStateOptions.Builder()
-        .bearing(FollowingViewportStateBearing.Constant(0.0))
-        .frameAnimationDurationMs(500)
+  val followPuckViewportState: FollowPuckViewportState = viewportPlugin.makeFollowPuckViewportState(
+      FollowPuckViewportStateOptions.Builder()
+        .bearing(FollowPuckViewportStateBearing.Constant(0.0))
+        .animationDurationMs(500)
         .padding(EdgeInsets(200.0 * resources.displayMetrics.density, 0.0, 0.0, 0.0))
         .build()
     )
@@ -73,15 +73,14 @@ dependencies {
     )
   }
   val immediateTransition = viewportPlugin.makeImmediateViewportTransition()
-  viewportPlugin.setTransition(immediateTransition, from = followingViewportState, to = overviewViewportState)
-  // transition from idle(the default state) to the created followingViewportState
-  viewportPlugin.transitionTo(followingViewportState) { isFinished ->
-    // the transtion has been completed with flag to check the finished status
+  // transition from idle(the default state) to the created followPuckViewportState with default transition
+  viewportPlugin.transitionTo(followPuckViewportState) { isFinished ->
+    // the transition has been completed with flag to check the finished status
   }
   ...
-  // transition from followingViewportState to overviewViewportState with the customised immediate transiton
-  viewportPlugin.transitionTo(overviewViewportState) { isFinished ->
-    // the transtion has been completed with flag to check the finished status
+  // transition from followPuckViewportState to overviewViewportState with immediate transition
+  viewportPlugin.transitionTo(overviewViewportState, immediateTransition) { isFinished ->
+    // the transition has been completed with flag to check the finished status
   }
 ```
 

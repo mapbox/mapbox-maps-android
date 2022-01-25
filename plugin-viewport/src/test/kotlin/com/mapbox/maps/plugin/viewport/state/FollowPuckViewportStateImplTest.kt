@@ -15,8 +15,8 @@ import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListene
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.CAMERA_ANIMATIONS_UTILS
-import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_VIEWPORT_STATE_PITCH
-import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_VIEWPORT_STATE_ZOOM
+import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH
+import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM
 import com.mapbox.maps.plugin.viewport.LOCATION_COMPONENT_UTILS
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
@@ -109,8 +109,8 @@ class FollowPuckViewportStateImplTest {
         cameraOptions {
           bearing(testBearing)
           center(testCenter)
-          pitch(DEFAULT_FOLLOW_VIEWPORT_STATE_PITCH)
-          zoom(DEFAULT_FOLLOW_VIEWPORT_STATE_ZOOM)
+          pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
+          zoom(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM)
           padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
         }
       )
@@ -162,8 +162,8 @@ class FollowPuckViewportStateImplTest {
         cameraOptions {
           center(testCenter)
           bearing(constantBearing)
-          zoom(DEFAULT_FOLLOW_VIEWPORT_STATE_ZOOM)
-          pitch(DEFAULT_FOLLOW_VIEWPORT_STATE_PITCH)
+          zoom(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM)
+          pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
           padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
         }
       )
@@ -213,8 +213,8 @@ class FollowPuckViewportStateImplTest {
         cameraOptions {
           bearing(testBearing)
           center(testCenter)
-          pitch(DEFAULT_FOLLOW_VIEWPORT_STATE_PITCH)
-          zoom(DEFAULT_FOLLOW_VIEWPORT_STATE_ZOOM)
+          pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
+          zoom(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM)
           padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
         }
       )
@@ -228,8 +228,8 @@ class FollowPuckViewportStateImplTest {
         cameraOptions {
           bearing(testBearing)
           center(testCenter)
-          pitch(DEFAULT_FOLLOW_VIEWPORT_STATE_PITCH)
-          zoom(DEFAULT_FOLLOW_VIEWPORT_STATE_ZOOM)
+          pitch(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH)
+          zoom(DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM)
           padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
         }
       )
