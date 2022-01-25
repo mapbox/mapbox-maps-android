@@ -1,6 +1,7 @@
 package com.mapbox.maps.plugin.viewport.transition
 
 import android.animation.AnimatorSet
+import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
@@ -125,17 +126,10 @@ class MapboxViewportTransitionFactoryTest {
       every { zoom } returns 0.0
       every { bearing } returns 0.0
     }
-    val cameraOptions: CameraOptions = mockk {
-      every { center } returns mockk()
-      every { zoom } returns 0.0
-      every { bearing } returns 0.0
-      every { pitch } returns 0.0
-      every { padding } returns EdgeInsets(0.0, 0.0, 0.0, 0.0)
-    }
 
     val animator =
       transitionsFactory.transitionFromLowZoomToHighZoom(
-        cameraOptions,
+        TEST_CAMERA_OPTIONS,
         DEFAULT_STATE_TRANSITION_MAX_DURATION_MS
       )
 
@@ -150,17 +144,10 @@ class MapboxViewportTransitionFactoryTest {
       every { zoom } returns 0.0
       every { bearing } returns 0.0
     }
-    val cameraOptions: CameraOptions = mockk {
-      every { center } returns mockk()
-      every { zoom } returns 0.0
-      every { bearing } returns 0.0
-      every { pitch } returns 0.0
-      every { padding } returns EdgeInsets(0.0, 0.0, 0.0, 0.0)
-    }
 
     val animator =
       transitionsFactory.transitionFromHighZoomToLowZoom(
-        cameraOptions,
+        TEST_CAMERA_OPTIONS,
         DEFAULT_STATE_TRANSITION_MAX_DURATION_MS
       )
 
@@ -176,5 +163,12 @@ class MapboxViewportTransitionFactoryTest {
 
   private companion object {
     const val EPS = 0.0000000001
+    val TEST_CAMERA_OPTIONS: CameraOptions = CameraOptions.Builder()
+      .center(Point.fromLngLat(0.0, 0.0))
+      .zoom(0.0)
+      .bearing(0.0)
+      .pitch(0.0)
+      .padding(EdgeInsets(0.0, 0.0, 0.0, 0.0))
+      .build()
   }
 }

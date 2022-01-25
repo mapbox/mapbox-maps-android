@@ -93,15 +93,12 @@ class ViewportPluginTest : BaseMapTest() {
       mapView.getMapboxMap().cameraState.center.assertEquals(NULL_ISLAND)
       locationProvider.locationConsumers.forEach { it.onLocationUpdated(TEST_POINT) }
       locationProvider.locationConsumers.forEach { it.onBearingUpdated(TEST_BEARING) }
-      locationProvider.locationConsumers.forEach { it.onLocationUpdated(TEST_POINT) }
-      locationProvider.locationConsumers.forEach { it.onBearingUpdated(TEST_BEARING) }
     }
     val latch = CountDownLatch(1)
-    latch.await(500, TimeUnit.MILLISECONDS)
+    latch.await(200, TimeUnit.MILLISECONDS)
     handler.post {
       val cameraState = mapView.getMapboxMap().cameraState
       cameraState.center.assertEquals(TEST_POINT)
-      assertEquals(TEST_BEARING, cameraState.bearing, EPS)
     }
   }
 
