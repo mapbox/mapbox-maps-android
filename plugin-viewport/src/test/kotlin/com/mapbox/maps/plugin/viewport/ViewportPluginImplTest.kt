@@ -5,6 +5,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.animation.camera
+import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin
@@ -16,8 +17,10 @@ import com.mapbox.maps.plugin.viewport.data.ViewportStatusChangeReason
 import com.mapbox.maps.plugin.viewport.state.ViewportState
 import com.mapbox.maps.plugin.viewport.transition.ViewportTransition
 import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
 import io.mockk.mockkStatic
+import io.mockk.runs
 import io.mockk.slot
 import io.mockk.unmockkAll
 import io.mockk.unmockkStatic
@@ -34,23 +37,29 @@ import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
 class ViewportPluginImplTest {
-  private val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
-  private val mapPluginProviderDelegate = mockk<MapPluginProviderDelegate>(relaxed = true)
-  private val cameraPlugin = mockk<CameraAnimationsPlugin>(relaxed = true)
-  private val locationPlugin = mockk<LocationComponentPlugin>(relaxed = true)
-  private val handler = mockk<Handler>(relaxed = true)
+  private val delegateProvider = mockk<MapDelegateProvider>()
+  private val mapPluginProviderDelegate = mockk<MapPluginProviderDelegate>()
+  private val mapCameraManagerDelegate = mockk<MapCameraManagerDelegate>()
+  private val cameraPlugin = mockk<CameraAnimationsPlugin>()
+  private val locationPlugin = mockk<LocationComponentPlugin>()
+  private val handler = mockk<Handler>()
   private val completeSlot = slot<CompletionListener>()
   private val runnableSlot = slot<Runnable>()
-  private val statusObserver = mockk<ViewportStatusObserver>(relaxed = true)
+  private val statusObserver = mockk<ViewportStatusObserver>()
   private lateinit var viewportPlugin: ViewportPluginImpl
 
   @Before
   fun setup() {
     every { delegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
+    every { delegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
     mockkStatic(CAMERA_ANIMATIONS_UTILS)
     mockkStatic(LOCATION_COMPONENT_UTILS)
     every { mapPluginProviderDelegate.location } returns locationPlugin
     every { mapPluginProviderDelegate.camera } returns cameraPlugin
+    every { cameraPlugin.addCameraAnimationsLifecycleListener(any()) } just runs
+    every { cameraPlugin.removeCameraAnimationsLifecycleListener(any()) } just runs
+    every { handler.post(any()) } returns true
+    every { statusObserver.onViewportStatusChanged(any(), any(), any()) } just runs
     viewportPlugin = ViewportPluginImpl(handler)
     viewportPlugin.onDelegateProvider(delegateProvider)
     viewportPlugin.addStatusObserver(statusObserver)
@@ -112,9 +121,15 @@ class ViewportPluginImplTest {
 
   @Test
   fun testTransitionToWithDefaultTransition() {
-    val targetState = mockk<ViewportState>(relaxed = true)
-    val transition = mockk<ViewportTransition>(relaxed = true)
-    val transitionToCompletionListener = mockk<CompletionListener>(relaxed = true)
+    val targetState = mockk<ViewportState> {
+      every { startUpdatingCamera() } returns Cancelable { }
+    }
+    val transition = mockk<ViewportTransition> {
+      every { run(any(), any()) } returns Cancelable { }
+    }
+    val transitionToCompletionListener = mockk<CompletionListener> {
+      every { onComplete(any()) } just runs
+    }
     viewportPlugin.defaultTransition = transition
     // enter transition status
     viewportPlugin.transitionTo(targetState, null, transitionToCompletionListener)
@@ -149,10 +164,16 @@ class ViewportPluginImplTest {
 
   @Test
   fun testTransitionToWithCustomisedTransition() {
-    val targetState = mockk<ViewportState>(relaxed = true)
-    val transition = mockk<ViewportTransition>(relaxed = true)
-    val defaultTransition = mockk<ViewportTransition>(relaxed = true)
-    val transitionToCompletionListener = mockk<CompletionListener>(relaxed = true)
+    val targetState = mockk<ViewportState> {
+      every { startUpdatingCamera() } returns Cancelable { }
+    }
+    val transition = mockk<ViewportTransition> {
+      every { run(any(), any()) } returns Cancelable { }
+    }
+    val defaultTransition = mockk<ViewportTransition>()
+    val transitionToCompletionListener = mockk<CompletionListener> {
+      every { onComplete(any()) } just runs
+    }
     viewportPlugin.defaultTransition = defaultTransition
     // enter transition status
     viewportPlugin.transitionTo(targetState, transition, transitionToCompletionListener)
@@ -188,9 +209,13 @@ class ViewportPluginImplTest {
 
   @Test
   fun testTransitionToWithCanceledTransition() {
-    val targetState = mockk<ViewportState>(relaxed = true)
-    val transition = mockk<ViewportTransition>(relaxed = true)
-    val transitionToCompletionListener = mockk<CompletionListener>(relaxed = true)
+    val targetState = mockk<ViewportState>()
+    val transition = mockk<ViewportTransition> {
+      every { run(any(), any()) } returns Cancelable { }
+    }
+    val transitionToCompletionListener = mockk<CompletionListener> {
+      every { onComplete(any()) } just runs
+    }
     viewportPlugin.defaultTransition = transition
     // enter transition status
     viewportPlugin.transitionTo(targetState, null, transitionToCompletionListener)
@@ -225,9 +250,13 @@ class ViewportPluginImplTest {
 
   @Test
   fun testTransitionToSameStateWhileTransitionStatus() {
-    val targetState = mockk<ViewportState>(relaxed = true)
-    val transition = mockk<ViewportTransition>(relaxed = true)
-    val transitionToCompletionListener = mockk<CompletionListener>(relaxed = true)
+    val targetState = mockk<ViewportState>()
+    val transition = mockk<ViewportTransition> {
+      every { run(any(), any()) } returns Cancelable { }
+    }
+    val transitionToCompletionListener = mockk<CompletionListener> {
+      every { onComplete(any()) } just runs
+    }
     viewportPlugin.defaultTransition = transition
     // enter transition status
     viewportPlugin.transitionTo(targetState)
@@ -249,9 +278,15 @@ class ViewportPluginImplTest {
 
   @Test
   fun testTransitionToSameStateWhileStateStatus() {
-    val targetState = mockk<ViewportState>(relaxed = true)
-    val transition = mockk<ViewportTransition>(relaxed = true)
-    val transitionToCompletionListener = mockk<CompletionListener>(relaxed = true)
+    val targetState = mockk<ViewportState> {
+      every { startUpdatingCamera() } returns Cancelable { }
+    }
+    val transition = mockk<ViewportTransition> {
+      every { run(any(), any()) } returns Cancelable { }
+    }
+    val transitionToCompletionListener = mockk<CompletionListener> {
+      every { onComplete(any()) } just runs
+    }
     viewportPlugin.defaultTransition = transition
     // enter transition status
     viewportPlugin.transitionTo(targetState)
@@ -288,10 +323,14 @@ class ViewportPluginImplTest {
 
   @Test
   fun testTransitionToDifferentStateWhileInState() {
-    val targetState = mockk<ViewportState>(relaxed = true)
-    val newState = mockk<ViewportState>(relaxed = true)
-    val transition = mockk<ViewportTransition>(relaxed = true)
-    val stateUpdatingCancelable = mockk<Cancelable>(relaxed = true)
+    val targetState = mockk<ViewportState>()
+    val newState = mockk<ViewportState>()
+    val transition = mockk<ViewportTransition> {
+      every { run(any(), any()) } returns Cancelable { }
+    }
+    val stateUpdatingCancelable = mockk<Cancelable> {
+      every { cancel() } just runs
+    }
     every { targetState.startUpdatingCamera() } returns stateUpdatingCancelable
     viewportPlugin.defaultTransition = transition
     // enter transition status
@@ -338,10 +377,12 @@ class ViewportPluginImplTest {
 
   @Test
   fun testTransitionToDifferentStateWhileInTransition() {
-    val targetState = mockk<ViewportState>(relaxed = true)
-    val newState = mockk<ViewportState>(relaxed = true)
-    val transition = mockk<ViewportTransition>(relaxed = true)
-    val transitionUpdateCancelable = mockk<Cancelable>(relaxed = true)
+    val targetState = mockk<ViewportState>()
+    val newState = mockk<ViewportState>()
+    val transition = mockk<ViewportTransition>()
+    val transitionUpdateCancelable = mockk<Cancelable> {
+      every { cancel() } just runs
+    }
     every { transition.run(any(), any()) } returns transitionUpdateCancelable
     viewportPlugin.defaultTransition = transition
     // enter transition status
@@ -376,9 +417,11 @@ class ViewportPluginImplTest {
 
   @Test
   fun testIdle() {
-    val targetState = mockk<ViewportState>(relaxed = true)
-    val transition = mockk<ViewportTransition>(relaxed = true)
-    val transitionUpdateCancelable = mockk<Cancelable>(relaxed = true)
+    val targetState = mockk<ViewportState>()
+    val transition = mockk<ViewportTransition>()
+    val transitionUpdateCancelable = mockk<Cancelable> {
+      every { cancel() } just runs
+    }
     every { transition.run(any(), any()) } returns transitionUpdateCancelable
     viewportPlugin.defaultTransition = transition
     // enter transition status
@@ -411,9 +454,13 @@ class ViewportPluginImplTest {
 
   @Test
   fun testAddStatusObserver() {
-    val testObserver = mockk<ViewportStatusObserver>(relaxed = true)
-    val targetState = mockk<ViewportState>(relaxed = true)
-    val defaultTransition = mockk<ViewportTransition>(relaxed = true)
+    val testObserver = mockk<ViewportStatusObserver> {
+      every { onViewportStatusChanged(any(), any(), any()) } just runs
+    }
+    val targetState = mockk<ViewportState>()
+    val defaultTransition = mockk<ViewportTransition> {
+      every { run(any(), any()) } returns Cancelable { }
+    }
     viewportPlugin.defaultTransition = defaultTransition
     viewportPlugin.addStatusObserver(testObserver)
     viewportPlugin.transitionTo(targetState)

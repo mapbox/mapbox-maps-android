@@ -2,6 +2,7 @@ package com.mapbox.maps.plugin.viewport.transition
 
 import android.animation.AnimatorSet
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.camera
@@ -28,9 +29,9 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class MapboxViewportTransitionFactoryTest {
   private val mapCameraDelegate = mockk<MapCameraManagerDelegate>()
-  private val mapPluginProviderDelegate = mockk<MapPluginProviderDelegate>(relaxed = true)
+  private val mapPluginProviderDelegate = mockk<MapPluginProviderDelegate>()
   private val cameraPlugin = mockk<CameraAnimationsPlugin>()
-  private val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
+  private val delegateProvider = mockk<MapDelegateProvider>()
   private val animatorSet = mockk<AnimatorSet>()
   private val constrainedSet = mockk<AnimatorSet>()
   private lateinit var transitionsFactory: MapboxViewportTransitionFactory
@@ -124,7 +125,13 @@ class MapboxViewportTransitionFactoryTest {
       every { zoom } returns 0.0
       every { bearing } returns 0.0
     }
-    val cameraOptions: CameraOptions = mockk(relaxed = true)
+    val cameraOptions: CameraOptions = mockk {
+      every { center } returns mockk()
+      every { zoom } returns 0.0
+      every { bearing } returns 0.0
+      every { pitch } returns 0.0
+      every { padding } returns EdgeInsets(0.0, 0.0, 0.0, 0.0)
+    }
 
     val animator =
       transitionsFactory.transitionFromLowZoomToHighZoom(
@@ -143,7 +150,13 @@ class MapboxViewportTransitionFactoryTest {
       every { zoom } returns 0.0
       every { bearing } returns 0.0
     }
-    val cameraOptions: CameraOptions = mockk(relaxed = true)
+    val cameraOptions: CameraOptions = mockk {
+      every { center } returns mockk()
+      every { zoom } returns 0.0
+      every { bearing } returns 0.0
+      every { pitch } returns 0.0
+      every { padding } returns EdgeInsets(0.0, 0.0, 0.0, 0.0)
+    }
 
     val animator =
       transitionsFactory.transitionFromHighZoomToLowZoom(

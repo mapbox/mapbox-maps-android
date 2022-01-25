@@ -9,10 +9,7 @@ import com.mapbox.maps.plugin.locationcomponent.LocationConsumer
 import com.mapbox.maps.plugin.locationcomponent.LocationProvider
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.ViewportPlugin
-import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
 import com.mapbox.maps.plugin.viewport.state.FollowPuckViewportState
-import com.mapbox.maps.plugin.viewport.state.OverviewViewportState
-import com.mapbox.maps.plugin.viewport.transition.DefaultViewportTransition
 import com.mapbox.maps.plugin.viewport.transition.ViewportTransition
 import com.mapbox.maps.plugin.viewport.viewport
 import com.mapbox.maps.testapp.BaseMapTest

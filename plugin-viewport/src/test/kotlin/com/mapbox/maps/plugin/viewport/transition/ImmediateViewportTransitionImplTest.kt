@@ -30,14 +30,14 @@ import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
 class ImmediateViewportTransitionImplTest {
-  private val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
-  private val mapPluginProviderDelegate = mockk<MapPluginProviderDelegate>(relaxed = true)
-  private val cameraPlugin = mockk<CameraAnimationsPlugin>(relaxed = true)
+  private val delegateProvider = mockk<MapDelegateProvider>()
+  private val mapPluginProviderDelegate = mockk<MapPluginProviderDelegate>()
+  private val cameraPlugin = mockk<CameraAnimationsPlugin>()
   private val targetState = mockk<ViewportState>()
   private val completionListener = mockk<CompletionListener>()
   private val dataObserverSlot = slot<ViewportStateDataObserver>()
   private val cancelable = mockk<Cancelable>()
-  private val cameraOptions = mockk<CameraOptions>(relaxed = true)
+  private val cameraOptions = mockk<CameraOptions>()
   private lateinit var immediateTransition: ImmediateViewportTransition
 
   @Before
@@ -46,6 +46,7 @@ class ImmediateViewportTransitionImplTest {
     every { cancelable.cancel() } just runs
     mockkStatic(CAMERA_ANIMATIONS_UTILS)
     every { mapPluginProviderDelegate.camera } returns cameraPlugin
+    every { cameraPlugin.easeTo(any(), any()) } returns Cancelable { }
     immediateTransition = ImmediateViewportTransition(delegateProvider)
   }
 
