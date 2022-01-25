@@ -37,6 +37,7 @@ internal class ImmediateViewportTransition(delegateProvider: MapDelegateProvider
       cameraPlugin.easeTo(
         cameraOptions,
         mapAnimationOptions {
+          startDelay(0)
           duration(0)
           owner(VIEWPORT_CAMERA_OWNER)
         }

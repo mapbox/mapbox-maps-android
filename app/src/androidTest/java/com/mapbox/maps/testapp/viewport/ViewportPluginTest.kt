@@ -74,15 +74,9 @@ class ViewportPluginTest : BaseMapTest() {
     }
 
     val latch = CountDownLatch(1)
-    handler.postDelayed(
-      {
-        mapView.getMapboxMap().cameraState.center.assertEquals(TEST_POINT)
-        latch.countDown()
-      },
-      5000
-    )
-    if (!latch.await(6000, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
+    latch.await(4000, TimeUnit.MILLISECONDS)
+    handler.post {
+      mapView.getMapboxMap().cameraState.center.assertEquals(TEST_POINT)
     }
   }
 
@@ -95,6 +89,10 @@ class ViewportPluginTest : BaseMapTest() {
       mapView.getMapboxMap().cameraState.center.assertEquals(NULL_ISLAND)
       locationProvider.locationConsumers.forEach { it.onLocationUpdated(TEST_POINT) }
       locationProvider.locationConsumers.forEach { it.onBearingUpdated(testBearing) }
+    }
+    val latch = CountDownLatch(1)
+    latch.await(200, TimeUnit.MILLISECONDS)
+    handler.post {
       mapView.getMapboxMap().cameraState.center.assertEquals(TEST_POINT)
     }
   }
