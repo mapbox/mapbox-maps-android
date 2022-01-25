@@ -255,8 +255,12 @@ class LocationPuckManagerTest {
     locationPuckManager.styleScaling(settings)
     verify { locationLayerRenderer.styleScaling(capture(valueSlot)) }
     assertEquals(
-      "[interpolate, [exponential, 0.5], [zoom], 0.0, [literal, [1.0, 1.0, 1.0]], 0.0, [literal, [1.0, 1.0, 1.0]]]",
+      "[interpolate, [exponential, 0.5], [zoom], 0.5, [literal, [$MODEL_SCALE_CONSTANT, $MODEL_SCALE_CONSTANT, $MODEL_SCALE_CONSTANT]], 22.0, [literal, [1.0, 1.0, 1.0]]]",
       valueSlot.captured.toString()
     )
+  }
+
+  private companion object {
+    const val MODEL_SCALE_CONSTANT = 2965820.800757861
   }
 }

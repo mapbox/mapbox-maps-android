@@ -148,12 +148,15 @@ internal class LocationPuckManager(
     locationLayerRenderer.hide()
   }
 
+  /**
+   * Function to set scaling for [LocationPuck].
+   * In order to keep 3D puck size constant across all zoom levels, we interpolate the model based on
+   * current zoom level. MIN_ZOOM, MAX_ZOOM are used as two anchor points to calculate
+   * the scale expression.
+   */
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal fun styleScaling(settings: LocationComponentSettings) {
-    val puck = settings.locationPuck
-    val minZoom = delegateProvider.mapCameraManagerDelegate.getBounds().minZoom
-    val maxZoom = delegateProvider.mapCameraManagerDelegate.getBounds().maxZoom
-    when (puck) {
+    when (val puck = settings.locationPuck) {
       is LocationPuck2D -> {
         val scaleExpression = puck.scaleExpression
         if (scaleExpression != null) {
@@ -161,6 +164,7 @@ internal class LocationPuckManager(
         }
       }
       is LocationPuck3D -> {
+        val modelScaleConstant = 2.0.pow(MAX_ZOOM - MIN_ZOOM)
         val modelScaleExpression = puck.modelScaleExpression
         val scaleExpression = if (modelScaleExpression == null) {
           Value(
@@ -168,20 +172,20 @@ internal class LocationPuckManager(
               Value("interpolate"),
               Value(arrayListOf(Value("exponential"), Value(0.5))),
               Value(arrayListOf(Value("zoom"))),
-              Value(minZoom),
+              Value(MIN_ZOOM),
               Value(
                 arrayListOf(
                   Value("literal"),
                   Value(
                     arrayListOf(
-                      Value(2.0.pow(maxZoom - minZoom) * puck.modelScale[0].toDouble()),
-                      Value(2.0.pow(maxZoom - minZoom) * puck.modelScale[1].toDouble()),
-                      Value(2.0.pow(maxZoom - minZoom) * puck.modelScale[2].toDouble())
+                      Value(modelScaleConstant * puck.modelScale[0].toDouble()),
+                      Value(modelScaleConstant * puck.modelScale[1].toDouble()),
+                      Value(modelScaleConstant * puck.modelScale[2].toDouble())
                     )
                   )
                 )
               ),
-              Value(maxZoom),
+              Value(MAX_ZOOM),
               Value(
                 arrayListOf(
                   Value("literal"),
@@ -202,6 +206,11 @@ internal class LocationPuckManager(
         locationLayerRenderer.styleScaling(scaleExpression)
       }
     }
+  }
+
+  private companion object {
+    const val MIN_ZOOM = 0.50
+    const val MAX_ZOOM = 22.0
   }
 }
 
