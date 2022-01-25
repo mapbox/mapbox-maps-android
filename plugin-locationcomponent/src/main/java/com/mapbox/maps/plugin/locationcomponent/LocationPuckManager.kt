@@ -149,7 +149,7 @@ internal class LocationPuckManager(
   }
 
   /**
-   * function to set scaling for [LocationPuck].
+   * Function to set scaling for [LocationPuck].
    * In order to keep 3D puck size constant across all zoom levels, we interpolate the model based on
    * current zoom level. MIN_ZOOM, MAX_ZOOM are used as two anchor points to calculate
    * the scale expression.
