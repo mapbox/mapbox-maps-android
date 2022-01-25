@@ -70,6 +70,7 @@ class ImmediateViewportTransitionImplTest {
       cameraPlugin.easeTo(
         cameraOptions,
         MapAnimationOptions.mapAnimationOptions {
+          startDelay(0)
           duration(0)
           owner(ViewportPluginImpl.VIEWPORT_CAMERA_OWNER)
         }
