@@ -126,7 +126,6 @@ class ViewportShowcaseActivity : AppCompatActivity() {
   @SuppressLint("SetTextI18n")
   private fun setupViewportPlugin() {
     viewport = mapView.viewport
-    viewport.defaultTransition = viewport.makeImmediateViewportTransition()
     followPuckViewportState =
       viewport.makeFollowPuckViewportState(FollowPuckViewportStateOptions.Builder().build())
     overviewViewportState =
