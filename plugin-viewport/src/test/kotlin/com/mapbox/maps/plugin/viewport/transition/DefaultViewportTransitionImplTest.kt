@@ -3,11 +3,14 @@ package com.mapbox.maps.plugin.viewport.transition
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
-import com.mapbox.maps.CameraOptions
+import com.mapbox.geojson.Point
+import com.mapbox.maps.CameraState
+import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.animation.camera
+import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.plugin.viewport.CAMERA_ANIMATIONS_UTILS
@@ -15,6 +18,7 @@ import com.mapbox.maps.plugin.viewport.CompletionListener
 import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
 import com.mapbox.maps.plugin.viewport.state.ViewportState
 import com.mapbox.maps.plugin.viewport.state.ViewportStateDataObserver
+import com.mapbox.maps.toCameraOptions
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
@@ -34,26 +38,33 @@ import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
 class DefaultViewportTransitionImplTest {
-  private val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
-  private val mapPluginProviderDelegate = mockk<MapPluginProviderDelegate>(relaxed = true)
-  private val cameraPlugin = mockk<CameraAnimationsPlugin>(relaxed = true)
+  private val delegateProvider = mockk<MapDelegateProvider>()
+  private val mapPluginProviderDelegate = mockk<MapPluginProviderDelegate>()
+  private val mapCameraManagerDelegate = mockk<MapCameraManagerDelegate>()
+  private val cameraPlugin = mockk<CameraAnimationsPlugin>()
   private val transitionFactory = mockk<MapboxViewportTransitionFactory>()
   private val targetState = mockk<ViewportState>()
   private val completionListener = mockk<CompletionListener>()
   private val dataObserverSlot = slot<ViewportStateDataObserver>()
   private val cancelable = mockk<Cancelable>()
-  private val cameraOptions = mockk<CameraOptions>(relaxed = true)
+  private val cameraState =
+    CameraState(Point.fromLngLat(0.0, 0.0), EdgeInsets(0.0, 0.0, 0.0, 0.0), 0.0, 0.0, 0.0)
+  private val cameraOptions = cameraState.toCameraOptions()
   private val cachedAnchor = mockk<ScreenCoordinate>()
   private lateinit var defaultTransition: DefaultViewportTransitionImpl
 
   @Before
   fun setup() {
     every { delegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
+    every { delegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
+    every { mapCameraManagerDelegate.cameraState } returns cameraState
     every { cancelable.cancel() } just runs
     mockkStatic(CAMERA_ANIMATIONS_UTILS)
     every { mapPluginProviderDelegate.camera } returns cameraPlugin
     every { cameraPlugin.anchor } returns cachedAnchor
     every { cameraPlugin.anchor = any() } just runs
+    every { cameraPlugin.registerAnimators(any()) } just runs
+    every { cameraPlugin.unregisterAnimators(any()) } just runs
     defaultTransition = DefaultViewportTransitionImpl(
       delegateProvider,
       options = DefaultViewportTransitionOptions.Builder().build(),

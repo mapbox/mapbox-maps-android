@@ -41,10 +41,10 @@ import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
 class FollowPuckViewportStateImplTest {
-  private val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
-  private val mapPluginProviderDelegate = mockk<MapPluginProviderDelegate>(relaxed = true)
-  private val cameraPlugin = mockk<CameraAnimationsPlugin>(relaxed = true)
-  private val locationPlugin = mockk<LocationComponentPlugin>(relaxed = true)
+  private val delegateProvider = mockk<MapDelegateProvider>()
+  private val mapPluginProviderDelegate = mockk<MapPluginProviderDelegate>()
+  private val cameraPlugin = mockk<CameraAnimationsPlugin>()
+  private val locationPlugin = mockk<LocationComponentPlugin>()
   private val transitionFactory = mockk<MapboxViewportTransitionFactory>()
   private lateinit var followingState: FollowPuckViewportStateImpl
 
@@ -57,6 +57,8 @@ class FollowPuckViewportStateImplTest {
     every { mapPluginProviderDelegate.camera } returns cameraPlugin
     every { locationPlugin.addOnIndicatorBearingChangedListener(any()) } just runs
     every { locationPlugin.addOnIndicatorPositionChangedListener(any()) } just runs
+    every { locationPlugin.removeOnIndicatorPositionChangedListener(any()) } just runs
+    every { locationPlugin.removeOnIndicatorBearingChangedListener(any()) } just runs
     every { locationPlugin.enabled } returns true
     followingState = FollowPuckViewportStateImpl(
       delegateProvider,
@@ -76,7 +78,7 @@ class FollowPuckViewportStateImplTest {
   fun testObserveDataSourceForFirstDataPoint() {
     val indicatorBearingChangedListenerSlot = slot<OnIndicatorBearingChangedListener>()
     val indicatorPositionChangedListenerSlot = slot<OnIndicatorPositionChangedListener>()
-    val dataObserver = mockk<ViewportStateDataObserver>(relaxed = true)
+    val dataObserver = mockk<ViewportStateDataObserver>()
     val testBearing = 10.0
     val testCenter = Point.fromLngLat(0.0, 0.0)
 
@@ -126,7 +128,7 @@ class FollowPuckViewportStateImplTest {
   fun testObserveDataSourceForFirstDataPointWithConstantBearing() {
     val indicatorBearingChangedListenerSlot = slot<OnIndicatorBearingChangedListener>()
     val indicatorPositionChangedListenerSlot = slot<OnIndicatorPositionChangedListener>()
-    val dataObserver = mockk<ViewportStateDataObserver>(relaxed = true)
+    val dataObserver = mockk<ViewportStateDataObserver>()
     val testBearing = 10.0
     val testCenter = Point.fromLngLat(0.0, 0.0)
     val constantBearing = 45.0
@@ -182,7 +184,7 @@ class FollowPuckViewportStateImplTest {
   fun testObserveDataSourceContinuously() {
     val indicatorBearingChangedListenerSlot = slot<OnIndicatorBearingChangedListener>()
     val indicatorPositionChangedListenerSlot = slot<OnIndicatorPositionChangedListener>()
-    val dataObserver = mockk<ViewportStateDataObserver>(relaxed = true)
+    val dataObserver = mockk<ViewportStateDataObserver>()
     val testBearing = 10.0
     val testCenter = Point.fromLngLat(0.0, 0.0)
 
@@ -248,6 +250,8 @@ class FollowPuckViewportStateImplTest {
     every { animatorSet.addListener(any()) } just runs
     every { animatorSet.childAnimations } returns arrayListOf(animator)
     every { animatorSet.start() } just runs
+    every { cameraPlugin.registerAnimators(any()) } just runs
+    every { cameraPlugin.unregisterAnimators(any()) } just runs
 
     // test start updating camera
     followingState.startUpdatingCamera()
