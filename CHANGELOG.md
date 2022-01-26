@@ -6,7 +6,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Features ✨ and improvements 🏁
 * Refine viewport plugin's public APIs. ([#1069](https://github.com/mapbox/mapbox-maps-android/pull/1069))
-* Introduce `OfflineRegion#setMetadata` API for the legacy offline region. ([#1071](https://github.com/mapbox/mapbox-maps-android/pull/1071))
+* Reintroduce missing `OfflineRegion#setMetadata` API for parity with `OfflineRegion#updateMetadata` in v9. ([#1071](https://github.com/mapbox/mapbox-maps-android/pull/1071))
 * Improved frame rate when zooming in and out over terrain and globe. ([#1071](https://github.com/mapbox/mapbox-maps-android/pull/1071))
 * Thin out repeated line labels at overscaled tiles in order to avoid excessive memory usage. ([#1071](https://github.com/mapbox/mapbox-maps-android/pull/1071))
 
