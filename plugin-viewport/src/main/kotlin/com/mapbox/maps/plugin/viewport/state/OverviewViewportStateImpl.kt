@@ -80,15 +80,9 @@ internal class OverviewViewportStateImpl(
 
   /**
    * Start updating the camera for the current [ViewportState].
-   *
-   * @return a handle that cancels the camera updates.
    */
-  override fun startUpdatingCamera(): Cancelable {
+  override fun startUpdatingCamera() {
     isOverviewStateRunning = true
-    return Cancelable {
-      isOverviewStateRunning = false
-      cancelAnimation()
-    }
   }
 
   /**

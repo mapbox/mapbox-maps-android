@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.viewport.state
 
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.viewport.ViewportPlugin
 
@@ -12,6 +13,7 @@ import com.mapbox.maps.plugin.viewport.ViewportPlugin
  * Users are responsible to create the viewport states and keep a reference to these states for
  * future operations.
  */
+@MapboxExperimental
 interface ViewportState {
   /**
    * Observe the new camera options produced by the [ViewportState], it can be used to get the
@@ -24,10 +26,8 @@ interface ViewportState {
 
   /**
    * Start updating the camera for the current [ViewportState].
-   *
-   * @return a handle that cancels the camera updates.
    */
-  fun startUpdatingCamera(): Cancelable
+  fun startUpdatingCamera()
 
   /**
    * Stop updating the camera for the current [ViewportState].

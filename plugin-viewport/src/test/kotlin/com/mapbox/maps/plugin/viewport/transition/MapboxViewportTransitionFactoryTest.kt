@@ -11,8 +11,8 @@ import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.plugin.viewport.CAMERA_ANIMATIONS_UTILS
-import com.mapbox.maps.plugin.viewport.DEFAULT_FRAME_ANIMATION_DURATION_MS
-import com.mapbox.maps.plugin.viewport.DEFAULT_STATE_TRANSITION_MAX_DURATION_MS
+import com.mapbox.maps.plugin.viewport.DEFAULT_STATE_ANIMATION_DURATION_MS
+import com.mapbox.maps.plugin.viewport.DEFAULT_TRANSITION_MAX_DURATION_MS
 import com.mapbox.maps.plugin.viewport.TRANSITION_UTILS
 import io.mockk.every
 import io.mockk.mockk
@@ -70,7 +70,7 @@ class MapboxViewportTransitionFactoryTest {
     } returns mockk()
     transitionsFactory.transitionFromLowZoomToHighZoom(
       cameraOptions,
-      DEFAULT_STATE_TRANSITION_MAX_DURATION_MS
+      DEFAULT_TRANSITION_MAX_DURATION_MS
     )
 
     assertEquals(-10.0, valueSlot.captured.targets.last(), EPS)
@@ -93,7 +93,7 @@ class MapboxViewportTransitionFactoryTest {
     } returns mockk()
     transitionsFactory.transitionFromHighZoomToLowZoom(
       cameraOptions,
-      DEFAULT_STATE_TRANSITION_MAX_DURATION_MS
+      DEFAULT_TRANSITION_MAX_DURATION_MS
     )
 
     assertEquals(-10.0, valueSlot.captured.targets.last(), EPS)
@@ -113,7 +113,7 @@ class MapboxViewportTransitionFactoryTest {
     every {
       cameraPlugin.createBearingAnimator(capture(valueSlot), any(), any())
     } returns mockk()
-    transitionsFactory.transitionLinear(cameraOptions, DEFAULT_FRAME_ANIMATION_DURATION_MS)
+    transitionsFactory.transitionLinear(cameraOptions, DEFAULT_STATE_ANIMATION_DURATION_MS)
 
     assertEquals(-10.0, valueSlot.captured.targets.last(), EPS)
     verify { normalizeBearing(10.0, 350.0) }
@@ -130,10 +130,10 @@ class MapboxViewportTransitionFactoryTest {
     val animator =
       transitionsFactory.transitionFromLowZoomToHighZoom(
         TEST_CAMERA_OPTIONS,
-        DEFAULT_STATE_TRANSITION_MAX_DURATION_MS
+        DEFAULT_TRANSITION_MAX_DURATION_MS
       )
 
-    verify { animatorSet.constrainDurationTo(DEFAULT_STATE_TRANSITION_MAX_DURATION_MS) }
+    verify { animatorSet.constrainDurationTo(DEFAULT_TRANSITION_MAX_DURATION_MS) }
     assertEquals(constrainedSet, animator)
   }
 
@@ -148,10 +148,10 @@ class MapboxViewportTransitionFactoryTest {
     val animator =
       transitionsFactory.transitionFromHighZoomToLowZoom(
         TEST_CAMERA_OPTIONS,
-        DEFAULT_STATE_TRANSITION_MAX_DURATION_MS
+        DEFAULT_TRANSITION_MAX_DURATION_MS
       )
 
-    verify { animatorSet.constrainDurationTo(DEFAULT_STATE_TRANSITION_MAX_DURATION_MS) }
+    verify { animatorSet.constrainDurationTo(DEFAULT_TRANSITION_MAX_DURATION_MS) }
     assertEquals(constrainedSet, animator)
   }
 

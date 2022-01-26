@@ -1,15 +1,17 @@
 package com.mapbox.maps.plugin.viewport.data
 
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.viewport.ViewportStatus
 
 /**
  * The reason why the [ViewportStatus] has been changed.
  */
-class ViewportStatusChangeReason(
+@MapboxExperimental
+class ViewportStatusChangeReason private constructor(
   /**
    * The string describing the change reason.
    */
-  val reason: String
+  private val reason: String
 ) {
   /**
    * Indicates whether some other object is "equal to" this one.

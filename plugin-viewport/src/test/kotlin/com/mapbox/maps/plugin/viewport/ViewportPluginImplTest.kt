@@ -49,7 +49,6 @@ class ViewportPluginImplTest {
   private val targetState = mockk<ViewportState>()
   private val transition = mockk<ViewportTransition>()
   private val transitionToCompletionListener = mockk<CompletionListener>()
-  private val stateUpdatingCancelable = mockk<Cancelable>()
   private val transitionUpdateCancelable = mockk<Cancelable>()
   private lateinit var viewportPlugin: ViewportPluginImpl
 
@@ -63,12 +62,12 @@ class ViewportPluginImplTest {
     every { mapPluginProviderDelegate.camera } returns cameraPlugin
     every { cameraPlugin.addCameraAnimationsLifecycleListener(any()) } just runs
     every { cameraPlugin.removeCameraAnimationsLifecycleListener(any()) } just runs
-    every { targetState.startUpdatingCamera() } returns stateUpdatingCancelable
+    every { targetState.startUpdatingCamera() } just runs
+    every { targetState.stopUpdatingCamera() } just runs
     every { transition.run(any(), any()) } returns transitionUpdateCancelable
     every { transitionToCompletionListener.onComplete(any()) } just runs
     every { handler.post(any()) } returns true
     every { statusObserver.onViewportStatusChanged(any(), any(), any()) } just runs
-    every { stateUpdatingCancelable.cancel() } just runs
     every { transitionUpdateCancelable.cancel() } just runs
     viewportPlugin = ViewportPluginImpl(handler)
     viewportPlugin.onDelegateProvider(delegateProvider)
@@ -331,7 +330,7 @@ class ViewportPluginImplTest {
       }
     }
     verifyOrder {
-      stateUpdatingCancelable.cancel()
+      targetState.stopUpdatingCamera()
       transition.run(newState, any())
     }
   }
