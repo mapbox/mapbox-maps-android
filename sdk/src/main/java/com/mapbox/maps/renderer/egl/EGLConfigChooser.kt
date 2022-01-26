@@ -90,7 +90,8 @@ internal class EGLConfigChooser constructor(
   ): IntArray {
     val numConfigs = IntArray(1)
     val initialSampleCount = antialiasingSampleCount
-    while (true) {
+    var suitableConfigsFound = false
+    while (!suitableConfigsFound) {
       val success = egl.eglChooseConfig(display, configAttributes, null, 0, numConfigs)
       if (!success || numConfigs[0] < 1) {
         Logger.e(
@@ -105,13 +106,14 @@ internal class EGLConfigChooser constructor(
           Logger.w(TAG, "Reducing sample count in 2 times for MSAA as EGL_SAMPLES=$antialiasingSampleCount is not supported")
           antialiasingSampleCount /= 2
         } else {
-          // we did all we could, breaking the loop and indicating EGL config was not found
+          // we did all we could, return error
           Logger.e(TAG, "No suitable EGL configs were found.")
+          numConfigs[0] = 0
           eglChooserSuccess = false
-          break
+          return numConfigs
         }
       } else {
-        break
+        suitableConfigsFound = true
       }
     }
     if (initialSampleCount != antialiasingSampleCount) {
