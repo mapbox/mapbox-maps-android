@@ -14,9 +14,9 @@ import javax.microedition.khronos.egl.EGLDisplay
 
 internal class EGLConfigChooser constructor(
   private val translucentSurface: Boolean,
-  private val antialiasingSampleCount: Int,
+  private var antialiasingSampleCount: Int,
 ) {
-  private val antialiasingEnabled = antialiasingSampleCount > DEFAULT_ANTIALIASING_SAMPLE_COUNT
+  private val antialiasingEnabled get() = antialiasingSampleCount > DEFAULT_ANTIALIASING_SAMPLE_COUNT
 
   // Get all configs at least RGB 565 with 16 depth and 8 stencil
   private val configAttributes: IntArray
@@ -57,9 +57,8 @@ internal class EGLConfigChooser constructor(
   private var eglChooserSuccess = true
 
   fun chooseConfig(egl: EGL10, display: EGLDisplay): EGLConfig? {
-    val configAttrs = configAttributes
     // Determine number of possible configurations
-    val numConfigs = getNumberOfConfigurations(egl, display, configAttrs)
+    val numConfigs = getNumberOfConfigurations(egl, display)
     if (!eglChooserSuccess) {
       return null
     }
@@ -71,7 +70,6 @@ internal class EGLConfigChooser constructor(
     val possibleConfigurations = getPossibleConfigurations(
       egl,
       display,
-      configAttrs,
       numConfigs
     )
     if (!eglChooserSuccess) {
@@ -88,28 +86,50 @@ internal class EGLConfigChooser constructor(
 
   private fun getNumberOfConfigurations(
     egl: EGL10,
-    display: EGLDisplay,
-    configAttributes: IntArray
+    display: EGLDisplay
   ): IntArray {
     val numConfigs = IntArray(1)
-    if (!egl.eglChooseConfig(display, configAttributes, null, 0, numConfigs)) {
-      Logger.e(
-        TAG,
-        String.format(
-          MAPBOX_LOCALE,
-          "eglChooseConfig returned error %d",
-          egl.eglGetError()
+    val initialSampleCount = antialiasingSampleCount
+    var suitableConfigsFound = false
+    while (!suitableConfigsFound) {
+      val success = egl.eglChooseConfig(display, configAttributes, null, 0, numConfigs)
+      if (!success || numConfigs[0] < 1) {
+        Logger.e(
+          TAG,
+          String.format(
+            MAPBOX_LOCALE,
+            "eglChooseConfig returned error %d",
+            egl.eglGetError()
+          )
         )
-      )
-      eglChooserSuccess = false
+        if (antialiasingSampleCount > 1) {
+          Logger.w(TAG, "Reducing sample count in 2 times for MSAA as EGL_SAMPLES=$antialiasingSampleCount is not supported")
+          antialiasingSampleCount /= 2
+        } else {
+          // we did all we could, return error
+          Logger.e(TAG, "No suitable EGL configs were found.")
+          numConfigs[0] = 0
+          eglChooserSuccess = false
+          return numConfigs
+        }
+      } else {
+        suitableConfigsFound = true
+      }
     }
+    if (initialSampleCount != antialiasingSampleCount) {
+      if (antialiasingSampleCount == 1) {
+        Logger.w(TAG, "Found EGL configs only with MSAA disabled.")
+      } else {
+        Logger.w(TAG, "Found EGL configs with MSAA enabled, EGL_SAMPLES=$antialiasingSampleCount.")
+      }
+    }
+    eglChooserSuccess = true
     return numConfigs
   }
 
   private fun getPossibleConfigurations(
     egl: EGL10,
     display: EGLDisplay,
-    configAttributes: IntArray,
     numConfigs: IntArray
   ): Array<EGLConfig> {
     val configs = arrayOfNulls<EGLConfig>(numConfigs[0])
@@ -118,7 +138,7 @@ internal class EGLConfigChooser constructor(
         TAG,
         String.format(
           MAPBOX_LOCALE,
-          "eglChooseConfig() returned error %d",
+          "Weird: eglChooseConfig() returned error %d although ran fine before.",
           egl.eglGetError()
         )
       )

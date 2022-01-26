@@ -2,6 +2,11 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.3.0-rc.1 January 26, 2022
+
+## Bug fixes 🐞
+* Fix map not rendering on emulators when MSAA is enabled. ([#1077](https://github.com/mapbox/mapbox-maps-android/pull/1077))
+
 # 10.3.0-beta.1 January 12, 2022
 
 ## Features ✨ and improvements 🏁
