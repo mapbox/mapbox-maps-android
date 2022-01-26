@@ -1,14 +1,16 @@
 package com.mapbox.maps.plugin.viewport.data
 
 import com.mapbox.maps.EdgeInsets
-import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_VIEWPORT_STATE_PITCH
-import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_VIEWPORT_STATE_ZOOM
-import com.mapbox.maps.plugin.viewport.DEFAULT_FRAME_ANIMATION_DURATION_MS
+import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH
+import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM
+import com.mapbox.maps.plugin.viewport.DEFAULT_STATE_ANIMATION_DURATION_MS
 import java.util.Objects
 
 /**
- * Options that impact the [FollowingViewportState].
+ * Options that impact the [FollowPuckViewportState].
  */
+@MapboxExperimental
 class FollowPuckViewportStateOptions private constructor(
   /**
    * The edge padding of the map.
@@ -17,11 +19,11 @@ class FollowPuckViewportStateOptions private constructor(
   /**
    * The default zoom that will be generated for camera following frames.
    *
-   * Defaults to [DEFAULT_FOLLOW_VIEWPORT_STATE_ZOOM].
+   * Defaults to [DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM].
    */
   val zoom: Double?,
   /**
-   * The camera bearing configuration of the [FollowingViewportState].
+   * The camera bearing configuration of the [FollowPuckViewportState].
    *
    * Defaults to [FollowPuckViewportStateBearing.SyncWithLocationPuck]
    */
@@ -29,13 +31,13 @@ class FollowPuckViewportStateOptions private constructor(
   /**
    * The default pitch that will be generated for following camera frames.
    *
-   * Defaults to [DEFAULT_FOLLOW_VIEWPORT_STATE_PITCH] degrees.
+   * Defaults to [DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH] degrees.
    */
   val pitch: Double?,
   /**
    * The maximum duration between frames in milliseconds.
    *
-   * Defaults to [DEFAULT_FRAME_ANIMATION_DURATION_MS] milliseconds
+   * Defaults to [DEFAULT_STATE_ANIMATION_DURATION_MS] milliseconds
    */
   val animationDurationMs: Long
 ) {
@@ -65,18 +67,18 @@ class FollowPuckViewportStateOptions private constructor(
    * Returns a String for the object.
    */
   override fun toString() =
-    "FollowingViewportStateOptions(padding=$padding, zoom=$zoom, bearing=$bearing, pitch=$pitch, animationDurationMs=$animationDurationMs)"
+    "FollowPuckViewportStateOptions(padding=$padding, zoom=$zoom, bearing=$bearing, pitch=$pitch, animationDurationMs=$animationDurationMs)"
 
   /**
    * Builder for [FollowPuckViewportStateOptions]
    */
   class Builder {
     private var padding: EdgeInsets? = EdgeInsets(0.0, 0.0, 0.0, 0.0)
-    private var zoom: Double? = DEFAULT_FOLLOW_VIEWPORT_STATE_ZOOM
+    private var zoom: Double? = DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM
     private var bearing: FollowPuckViewportStateBearing? =
       FollowPuckViewportStateBearing.SyncWithLocationPuck
-    private var pitch: Double? = DEFAULT_FOLLOW_VIEWPORT_STATE_PITCH
-    private var animationDurationMs: Long = DEFAULT_FRAME_ANIMATION_DURATION_MS
+    private var pitch: Double? = DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH
+    private var animationDurationMs: Long = DEFAULT_STATE_ANIMATION_DURATION_MS
 
     /**
      * The edge padding of the map.
@@ -88,14 +90,14 @@ class FollowPuckViewportStateOptions private constructor(
     /**
      * The default zoom that will be generated for camera following frames.
      *
-     * Defaults to [DEFAULT_FOLLOW_VIEWPORT_STATE_ZOOM].
+     * Defaults to [DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM].
      */
     fun zoom(zoom: Double?) = apply {
       this.zoom = zoom
     }
 
     /**
-     * The camera bearing configuration of the [FollowingViewportState].
+     * The camera bearing configuration of the [FollowPuckViewportState].
      *
      * Defaults to [FollowPuckViewportStateBearing.SyncWithLocationPuck]
      */
@@ -106,7 +108,7 @@ class FollowPuckViewportStateOptions private constructor(
     /**
      * The default pitch that will be generated for following camera frames.
      *
-     * Defaults to [DEFAULT_FOLLOW_VIEWPORT_STATE_PITCH] degrees.
+     * Defaults to [DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH] degrees.
      */
     fun pitch(pitch: Double?) = apply {
       this.pitch = pitch
@@ -115,7 +117,7 @@ class FollowPuckViewportStateOptions private constructor(
     /**
      * The maximum duration between frames in milliseconds.
      *
-     * Defaults to [DEFAULT_FRAME_ANIMATION_DURATION_MS] milliseconds
+     * Defaults to [DEFAULT_STATE_ANIMATION_DURATION_MS] milliseconds
      */
     fun animationDurationMs(duration: Long) = apply {
       this.animationDurationMs = duration

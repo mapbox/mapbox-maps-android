@@ -1,15 +1,17 @@
 package com.mapbox.maps.plugin.viewport.data
 
+import com.mapbox.maps.MapboxExperimental
 import java.util.Objects
 
 /**
- * Describes the camera bearing options for the [FollowingViewportState].
+ * Describes the camera bearing options for the [FollowPuckViewportState].
  */
+@MapboxExperimental
 sealed class FollowPuckViewportStateBearing {
   /**
    * The viewport's bearing is fixed to the given bearing.
    *
-   * @param bearing The bearing that the [FollowingViewportState] uses to generate camera updates.
+   * @param bearing The bearing that the [FollowPuckViewportState] uses to generate camera updates.
    */
   class Constant(val bearing: Double) : FollowPuckViewportStateBearing() {
     /**
@@ -25,7 +27,7 @@ sealed class FollowPuckViewportStateBearing {
     /**
      * Returns a String for the object.
      */
-    override fun toString() = "FollowingViewportStateBearing#Constant(bearing=$bearing)"
+    override fun toString() = "FollowPuckViewportStateBearing#Constant(bearing=$bearing)"
   }
 
   /**
@@ -48,6 +50,6 @@ sealed class FollowPuckViewportStateBearing {
     /**
      * Returns a String for the object.
      */
-    override fun toString() = "FollowingViewportStateBearing#SyncWithLocationPuck"
+    override fun toString() = "FollowPuckViewportStateBearing#SyncWithLocationPuck"
   }
 }

@@ -166,7 +166,7 @@ class OverviewViewportStateImplTest {
     every { animatorSet.cancel() } just runs
 
     // test start updating camera
-    val cancelable = overviewState.startUpdatingCamera()
+    overviewState.startUpdatingCamera()
     assertTrue(overviewState.isOverviewStateRunning)
 
     // test updating overview state option to trigger an animation
@@ -181,7 +181,7 @@ class OverviewViewportStateImplTest {
     }
 
     // test stop updating camera
-    cancelable.cancel()
+    overviewState.stopUpdatingCamera()
     assertFalse(overviewState.isOverviewStateRunning)
     verify { animatorSet.cancel() }
     verify { cameraPlugin.unregisterAnimators(animator) }
