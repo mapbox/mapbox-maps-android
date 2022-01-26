@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.viewport
 
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.viewport.state.ViewportState
 import com.mapbox.maps.plugin.viewport.transition.ViewportTransition
 import java.util.*
@@ -9,11 +10,10 @@ import java.util.*
  *
  * It could be either a [ViewportState] or [ViewportTransition].
  */
+@MapboxExperimental
 sealed class ViewportStatus {
   /**
    * Represents the current status is a [ViewportState].
-   *
-   * The state is null if current status is IDLE.
    */
   class State(
     /**

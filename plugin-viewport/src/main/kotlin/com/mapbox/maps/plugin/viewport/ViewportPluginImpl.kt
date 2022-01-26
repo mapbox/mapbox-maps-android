@@ -153,7 +153,8 @@ class ViewportPluginImpl(private val handler: Handler = Handler(Looper.getMainLo
       completionBlockInvoked = true
       if (isFinished) {
         // transfer camera updating responsibility to targetState
-        currentCancelable = targetState.startUpdatingCamera()
+        targetState.startUpdatingCamera()
+        currentCancelable = Cancelable { targetState.stopUpdatingCamera() }
         updateStatus(
           ViewportStatus.State(targetState),
           ViewportStatusChangeReason.TRANSITION_SUCCEEDED

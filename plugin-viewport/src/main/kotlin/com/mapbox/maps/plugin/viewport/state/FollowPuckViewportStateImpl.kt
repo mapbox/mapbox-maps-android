@@ -134,17 +134,15 @@ internal class FollowPuckViewportStateImpl(
     if (!locationComponent.enabled) {
       Logger.w(
         TAG,
-        "Location component is required to be enabled to use FollowingViewportState, otherwise there would be no FollowingViewportState updates or ViewportTransition updates towards the FollowingViewportState."
+        "Location component is required to be enabled to use FollowPuckViewportState, otherwise there would be no FollowPuckViewportState updates or ViewportTransition updates towards the FollowPuckViewportState."
       )
     }
   }
 
   /**
    * Start updating the camera for the current [ViewportState].
-   *
-   * @return a handle that cancels the camera updates.
    */
-  override fun startUpdatingCamera(): Cancelable {
+  override fun startUpdatingCamera() {
     checkLocationComponentEnablement()
     addIndicatorListenerIfNeeded()
     updateFrame(
@@ -153,11 +151,6 @@ internal class FollowPuckViewportStateImpl(
       if (isFinished) {
         isFollowingStateRunning = true
       }
-    }
-    return Cancelable {
-      isFollowingStateRunning = false
-      cancelAnimation()
-      removeIndicatorListenerIfNeeded()
     }
   }
 
@@ -239,6 +232,6 @@ internal class FollowPuckViewportStateImpl(
   }
 
   private companion object {
-    const val TAG = "FollowingViewportStateImpl"
+    const val TAG = "FollowPuckViewportStateImpl"
   }
 }
