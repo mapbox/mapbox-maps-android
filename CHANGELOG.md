@@ -4,8 +4,22 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 10.3.0-rc.1 January 26, 2022
 
+## Features ✨ and improvements 🏁
+* Refine viewport plugin's public APIs. ([#1069](https://github.com/mapbox/mapbox-maps-android/pull/1069))
+* Reintroduce missing `OfflineRegion#setMetadata` API for parity with `OfflineRegion#updateMetadata` in v9. ([#1071](https://github.com/mapbox/mapbox-maps-android/pull/1071))
+* Improved frame rate when zooming in and out over terrain and globe. ([#1071](https://github.com/mapbox/mapbox-maps-android/pull/1071))
+* Thin out repeated line labels at overscaled tiles in order to avoid excessive memory usage. ([#1071](https://github.com/mapbox/mapbox-maps-android/pull/1071))
+
 ## Bug fixes 🐞
+* Fix an issue that causes transition to following viewport state not being fired when the bearing is set to constant. ([#1064](https://github.com/mapbox/mapbox-maps-android/pull/1064))
+* Fix an issue where 3D puck used to scale when changing coordinate bounds. ([#1067](https://github.com/mapbox/mapbox-maps-android/pull/1067))
+* Fix default viewport transition's anchor point. ([#1070](https://github.com/mapbox/mapbox-maps-android/pull/1070))
+* Fix screen coordinate queries when using zero pitch and high zoom values. ([#1071](https://github.com/mapbox/mapbox-maps-android/pull/1071))
+* Fix crash on destruction with ongoing tile-store downloads. ([#1071](https://github.com/mapbox/mapbox-maps-android/pull/1071))
 * Fix map not rendering on emulators when MSAA is enabled. ([#1077](https://github.com/mapbox/mapbox-maps-android/pull/1077))
+
+## Dependencies
+* Bump gl-native to v10.3.0-rc.1, common to v21.1.0-rc.1. ([#1071](https://github.com/mapbox/mapbox-maps-android/pull/1071))
 
 # 10.3.0-beta.1 January 12, 2022
 
