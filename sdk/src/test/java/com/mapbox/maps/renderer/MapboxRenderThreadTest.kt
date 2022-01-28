@@ -465,4 +465,17 @@ class MapboxRenderThreadTest {
       eglCore.swapBuffers(any())
     }
   }
+
+  @Test
+  fun renderWithMaxFpsSet() {
+    mockValidSurface()
+    mapboxRenderThread.setMaximumFps(15)
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
+    mapboxRenderThread.requestRender()
+    Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
+    // 1 swap when creating surface + 1 for request render call
+    verify(exactly = 2) {
+      eglCore.swapBuffers(any())
+    }
+  }
 }
