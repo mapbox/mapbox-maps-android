@@ -51,16 +51,16 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @Volatile
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var paused = false
-  private var nativeRenderCreated = false
-  private val renderThreadPrepared get() = surface?.isValid == true && nativeRenderCreated
+  private var renderCreated = false
+  private val renderThreadPrepared get() = surface?.isValid == true && renderCreated
   private var eglPrepared = false
-  private var nativeRenderNotSupported = false
+  private var renderNotSupported = false
 
   internal var fpsChangedListener: OnFpsChangedListener? = null
   private var timeElapsed = 0L
 
   // TODO needed for workaround until issue is fixed in gl-native
-  internal var nativeRenderDestroyCallChain = false
+  internal var renderDestroyCallChain = false
 
   constructor(
     mapboxRenderer: MapboxRenderer,
@@ -113,13 +113,13 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
             val eglContextOk = checkEglContextCurrent()
             // finally we can create native renderer if needed or just report OK
             if (eglContextOk) {
-              if (!nativeRenderCreated) {
-                mapboxRenderer.onSurfaceCreated()
+              if (!renderCreated) {
+                mapboxRenderer.createRenderer()
                 mapboxRenderer.onSurfaceChanged(
                   width = width,
                   height = height
                 )
-                nativeRenderCreated = true
+                renderCreated = true
               }
               return true
             }
@@ -139,7 +139,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         eglPrepared = true
       } else {
         Logger.e(TAG, "EGL was not configured, please check logs above.")
-        nativeRenderNotSupported = true
+        renderNotSupported = true
         return false
       }
     }
@@ -199,7 +199,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       postPrepareRenderFrame()
       return
     }
-    mapboxRenderer.onDrawFrame()
+    mapboxRenderer.render()
     // assuming render event queue holds user's runnables with OpenGL ES commands
     // it makes sense to execute them after drawing a map but before swapping buffers
     // **note** this queue also holds snapshot tasks
@@ -253,10 +253,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun releaseAll() {
-    nativeRenderDestroyCallChain = true
-    mapboxRenderer.onSurfaceDestroyed()
-    nativeRenderDestroyCallChain = false
-    nativeRenderCreated = false
+    renderDestroyCallChain = true
+    mapboxRenderer.destroyRenderer()
+    renderDestroyCallChain = false
+    renderCreated = false
     releaseEgl()
     surface?.release()
   }
@@ -270,7 +270,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     // We need to check it ASAP in order not to block thread that is calling `onSurfaceTextureDestroyed`.
     // After that check MapView could be actually rendered on this device (has valid EGL config).
     // After that we check if activity / fragment is paused.
-    if (nativeRenderNotSupported || paused) {
+    if (renderNotSupported || paused) {
       // at least on Android 8 devices we create surface before Activity#onStart
       // so we need to proceed to EGL creation in any case to avoid deadlock
       if (!creatingSurface) {
@@ -307,7 +307,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
           Choreographer.getInstance().removeFrameCallback(this)
           lock.withLock {
             // TODO https://github.com/mapbox/mapbox-maps-android/issues/607
-            if (nativeRenderCreated && mapboxRenderer is MapboxTextureViewRenderer) {
+            if (renderCreated && mapboxRenderer is MapboxTextureViewRenderer) {
               releaseAll()
             } else {
               releaseEglSurface()
@@ -448,7 +448,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       if (renderHandlerThread.started) {
         renderHandlerThread.post {
           lock.withLock {
-            if (nativeRenderCreated) {
+            if (renderCreated) {
               releaseAll()
             }
             renderHandlerThread.clearMessageQueue(clearAll = true)

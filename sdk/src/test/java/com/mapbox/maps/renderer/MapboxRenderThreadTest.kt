@@ -71,13 +71,13 @@ class MapboxRenderThreadTest {
   @Test
   fun onSurfaceCreatedTest() {
     val latch = CountDownLatch(1)
-    every { mapboxRenderer.onSurfaceCreated() } answers { latch.countDown() }
+    every { mapboxRenderer.createRenderer() } answers { latch.countDown() }
     mockValidSurface()
     if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
     verify {
-      mapboxRenderer.onSurfaceCreated()
+      mapboxRenderer.createRenderer()
       eglCore.makeNothingCurrent()
       mapboxRenderer.onSurfaceChanged(1, 1)
     }
@@ -93,7 +93,7 @@ class MapboxRenderThreadTest {
     mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
     latch.await(waitTime, TimeUnit.MILLISECONDS)
     verify(exactly = 0) {
-      mapboxRenderer.onSurfaceCreated()
+      mapboxRenderer.createRenderer()
       mapboxRenderer.onSurfaceChanged(1, 1)
     }
   }
@@ -101,7 +101,7 @@ class MapboxRenderThreadTest {
   @Test
   fun onSurfaceSizeChangedIndeedTest() {
     val latch = CountDownLatch(1)
-    every { mapboxRenderer.onSurfaceCreated() } answers { latch.countDown() }
+    every { mapboxRenderer.createRenderer() } answers { latch.countDown() }
     mockValidSurface()
     Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
     mapboxRenderThread.onSurfaceSizeChanged(2, 2)
@@ -110,7 +110,7 @@ class MapboxRenderThreadTest {
       throw TimeoutException()
     }
     verify {
-      mapboxRenderer.onSurfaceCreated()
+      mapboxRenderer.createRenderer()
       mapboxRenderer.onSurfaceChanged(1, 1)
       mapboxRenderer.onSurfaceChanged(2, 2)
     }
@@ -119,7 +119,7 @@ class MapboxRenderThreadTest {
   @Test
   fun onSurfaceSizeChangedSameSizeTest() {
     val latch = CountDownLatch(1)
-    every { mapboxRenderer.onSurfaceCreated() } answers { latch.countDown() }
+    every { mapboxRenderer.createRenderer() } answers { latch.countDown() }
     mockValidSurface()
     Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
     mapboxRenderThread.onSurfaceSizeChanged(1, 1)
@@ -128,7 +128,7 @@ class MapboxRenderThreadTest {
       throw TimeoutException()
     }
     verify {
-      mapboxRenderer.onSurfaceCreated()
+      mapboxRenderer.createRenderer()
       mapboxRenderer.onSurfaceChanged(1, 1)
     }
   }
@@ -136,7 +136,7 @@ class MapboxRenderThreadTest {
   @Test
   fun onSurfaceWithActivityDestroyedAfterSurfaceTest() {
     val latch = CountDownLatch(1)
-    every { mapboxRenderer.onSurfaceDestroyed() } answers { latch.countDown() }
+    every { mapboxRenderer.destroyRenderer() } answers { latch.countDown() }
     mockValidSurface()
     mapboxRenderThread.onSurfaceDestroyed()
     mapboxRenderThread.destroy()
@@ -144,14 +144,14 @@ class MapboxRenderThreadTest {
       throw TimeoutException()
     }
     verify(exactly = 1) { eglCore.release() }
-    verify { mapboxRenderer.onSurfaceDestroyed() }
+    verify { mapboxRenderer.destroyRenderer() }
     assert(!renderHandlerThread.started)
   }
 
   @Test
   fun onSurfaceWithActivityDestroyedBeforeSurfaceTest() {
     val latch = CountDownLatch(1)
-    every { mapboxRenderer.onSurfaceDestroyed() } answers { latch.countDown() }
+    every { mapboxRenderer.destroyRenderer() } answers { latch.countDown() }
     mockValidSurface()
     mapboxRenderThread.destroy()
     mapboxRenderThread.onSurfaceDestroyed()
@@ -159,7 +159,7 @@ class MapboxRenderThreadTest {
       throw TimeoutException()
     }
     verify(exactly = 1) { eglCore.release() }
-    verify(exactly = 1) { mapboxRenderer.onSurfaceDestroyed() }
+    verify(exactly = 1) { mapboxRenderer.destroyRenderer() }
     assert(!renderHandlerThread.started)
   }
 
@@ -399,13 +399,13 @@ class MapboxRenderThreadTest {
   @Test
   fun surfaceCreatedCalledBeforeActivityStartTest() {
     val latch = CountDownLatch(1)
-    every { mapboxRenderer.onSurfaceCreated() } answers { latch.countDown() }
+    every { mapboxRenderer.createRenderer() } answers { latch.countDown() }
     mapboxRenderThread.paused = true
     mockValidSurface()
     if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
-    verify(exactly = 1) { mapboxRenderer.onSurfaceCreated() }
+    verify(exactly = 1) { mapboxRenderer.createRenderer() }
     // EGL should be fully prepared
     verify(exactly = 0) { eglCore.releaseSurface(any()) }
   }
@@ -430,7 +430,7 @@ class MapboxRenderThreadTest {
       throw TimeoutException()
     }
     verifyOrder {
-      mapboxRenderer.onDrawFrame()
+      mapboxRenderer.render()
       runnable.run()
       runnable2.run()
       runnable3.run()
@@ -454,7 +454,7 @@ class MapboxRenderThreadTest {
     mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     // we do not destroy native renderer if it's stop and not destroy
-    verify(exactly = 0) { mapboxRenderer.onSurfaceDestroyed() }
+    verify(exactly = 0) { mapboxRenderer.destroyRenderer() }
     // we clear only EGLSurface but not all EGL
     verify(exactly = 1) { eglCore.releaseSurface(any()) }
     verify(exactly = 0) { eglCore.release() }
@@ -471,14 +471,14 @@ class MapboxRenderThreadTest {
       renderHandlerThread.start()
     }
     val latch = CountDownLatch(1)
-    every { mapboxRenderer.onSurfaceDestroyed() } answers { latch.countDown() }
+    every { mapboxRenderer.destroyRenderer() } answers { latch.countDown() }
     mockValidSurface()
     mapboxRenderThread.onSurfaceDestroyed()
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     // we do destroy native renderer if it's stop (for texture renderer)
-    verify(exactly = 1) { mapboxRenderer.onSurfaceDestroyed() }
+    verify(exactly = 1) { mapboxRenderer.destroyRenderer() }
     // we clear all EGL
     verify(exactly = 1) { eglCore.releaseSurface(any()) }
     verify(exactly = 1) { eglCore.release() }

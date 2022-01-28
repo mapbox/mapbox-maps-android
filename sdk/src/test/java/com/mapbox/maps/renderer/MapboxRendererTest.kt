@@ -58,7 +58,7 @@ internal abstract class MapboxRendererTest {
   @Test
   fun scheduleTaskTest() {
     val task = mockk<Task>(relaxUnitFun = true)
-    every { renderThread.nativeRenderDestroyCallChain } returns false
+    every { renderThread.renderDestroyCallChain } returns false
     var actualNeedRender: Boolean? = null
     var actualEventType: EventType? = null
     every { renderThread.queueRenderEvent(any()) } answers {
@@ -77,7 +77,7 @@ internal abstract class MapboxRendererTest {
   @Test
   fun scheduleDestroyTaskTest() {
     val task = mockk<Task>(relaxUnitFun = true)
-    every { renderThread.nativeRenderDestroyCallChain } returns true
+    every { renderThread.renderDestroyCallChain } returns true
     var actualNeedRender: Boolean? = null
     var actualEventType: EventType? = null
     every { renderThread.queueRenderEvent(any()) } answers {
@@ -145,7 +145,7 @@ internal abstract class MapboxRendererTest {
   fun onSurfaceCreatedTest() {
     val map = mockk<MapInterface>(relaxUnitFun = true)
     mapboxRenderer.map = map
-    mapboxRenderer.onSurfaceCreated()
+    mapboxRenderer.createRenderer()
     verify { map.createRenderer() }
   }
 
@@ -161,7 +161,7 @@ internal abstract class MapboxRendererTest {
   fun onSurfaceDestroyedTest() {
     val map = mockk<MapInterface>(relaxUnitFun = true)
     mapboxRenderer.map = map
-    mapboxRenderer.onSurfaceDestroyed()
+    mapboxRenderer.destroyRenderer()
     verify { map.destroyRenderer() }
   }
 
@@ -169,7 +169,7 @@ internal abstract class MapboxRendererTest {
   fun onDrawFrameTest() {
     val map = mockk<MapInterface>(relaxUnitFun = true)
     mapboxRenderer.map = map
-    mapboxRenderer.onDrawFrame()
+    mapboxRenderer.render()
     verify { map.render() }
   }
 

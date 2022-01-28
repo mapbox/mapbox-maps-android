@@ -69,7 +69,7 @@ internal abstract class MapboxRenderer : MapClient {
       RenderEvent(
         runnable = { task.run() },
         needRender = false,
-        eventType = if (renderThread.nativeRenderDestroyCallChain) EventType.DESTROY_RENDERER else EventType.SDK
+        eventType = if (renderThread.renderDestroyCallChain) EventType.DESTROY_RENDERER else EventType.SDK
       )
     )
   }
@@ -97,7 +97,7 @@ internal abstract class MapboxRenderer : MapClient {
   }
 
   @WorkerThread
-  fun onSurfaceCreated() {
+  fun createRenderer() {
     map?.createRenderer()
   }
 
@@ -112,14 +112,15 @@ internal abstract class MapboxRenderer : MapClient {
   }
 
   @WorkerThread
-  fun onSurfaceDestroyed() {
+  fun destroyRenderer() {
     map?.destroyRenderer()
+    // additionally it's correct moment to release pixel reader while we still have EGL context
     pixelReader?.release()
     pixelReader = null
   }
 
   @WorkerThread
-  fun onDrawFrame() {
+  fun render() {
     map?.render()
   }
 
