@@ -2,6 +2,10 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+## main
+## Bug fixes 🐞
+* Fix memory leak in location component. ([#1093](https://github.com/mapbox/mapbox-maps-android/pull/1093))
+
 # 10.4.0-beta.1
 
 ## Features ✨ and improvements 🏁
