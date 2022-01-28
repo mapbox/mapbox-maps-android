@@ -174,6 +174,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     val currentTimeNs = SystemClock.elapsedRealtimeNanos()
     val expectedEndRenderTimeNs = currentTimeNs + renderTimeNsCopy
     if (expectedVsyncWakeTimeNs > currentTimeNs) {
+      // when we have FPS limited and desire to skip core render - we must schedule new draw call
+      // otherwise map may remain in not fully loaded state
+      postPrepareRenderFrame()
       return
     }
     mapboxRenderer.onDrawFrame()
