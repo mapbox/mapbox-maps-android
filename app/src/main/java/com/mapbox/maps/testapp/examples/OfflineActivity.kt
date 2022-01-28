@@ -56,7 +56,8 @@ class OfflineActivity : AppCompatActivity() {
   private var mapView: MapView? = null
   private lateinit var handler: Handler
   private lateinit var binding: ActivityOfflineBinding
-
+  private var stylePackCancelable: Cancelable? = null
+  private var tilePackCancelable: Cancelable? = null
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     binding = ActivityOfflineBinding.inflate(layoutInflater)
@@ -76,11 +77,10 @@ class OfflineActivity : AppCompatActivity() {
     }
   }
 
-  private fun prepareCancelButton(cancelables: List<Cancelable>) {
+  private fun prepareCancelButton() {
     updateButton("CANCEL DOWNLOAD") {
-      cancelables.forEach {
-        it.cancel()
-      }
+      stylePackCancelable?.cancel()
+      tilePackCancelable?.cancel()
       prepareDownloadButton()
     }
   }
@@ -157,7 +157,7 @@ class OfflineActivity : AppCompatActivity() {
 
     // Style packs are stored in the disk cache database, but their resources are not subject to
     // the data eviction algorithm and are not considered when calculating the disk cache size.
-    val stylePackCancelable = offlineManager.loadStylePack(
+    stylePackCancelable = offlineManager.loadStylePack(
       Style.OUTDOORS,
       // Build Style pack load options
       StylePackLoadOptions.Builder()
@@ -220,7 +220,7 @@ class OfflineActivity : AppCompatActivity() {
     // unique for a particular file path, i.e. there is only ever one TileStore per unique path.
 
     // Note that the TileStore path must be the same with the TileStore used when initialise the MapView.
-    val tilePackCancelable = tileStore.loadTileRegion(
+    tilePackCancelable = tileStore.loadTileRegion(
       TILE_REGION_ID,
       TileRegionLoadOptions.Builder()
         .geometry(TOKYO)
@@ -253,7 +253,7 @@ class OfflineActivity : AppCompatActivity() {
         logErrorMessage("TileRegionError: $it")
       }
     }
-    prepareCancelButton(listOf(stylePackCancelable, tilePackCancelable))
+    prepareCancelButton()
   }
 
   private fun showDownloadedRegions() {
@@ -349,6 +349,9 @@ class OfflineActivity : AppCompatActivity() {
 
   override fun onDestroy() {
     super.onDestroy()
+    // Cancel the current downloading jobs
+    stylePackCancelable?.cancel()
+    tilePackCancelable?.cancel()
     // Remove downloaded style packs and tile regions.
     removeOfflineRegions()
     // Bring back the network connectivity when exiting the OfflineActivity.
