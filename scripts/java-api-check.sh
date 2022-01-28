@@ -51,7 +51,7 @@ CURRENT_RELEASE_DIR=$(dirname "${CURRENT_RELEASE}")
 PREVIOUS_RELEASE_DIR=$(dirname "${PREVIOUS_RELEASE}")
 
 gh auth login --with-token < ./gh_token.txt
-LAST_VERSION_TAG=$(gh release list -L 1) #android-v10.3.0-beta.1  Pre-release  (android-v10.3.0-beta.1)  about 5 days ago
+LAST_VERSION_TAG=$(gh -R mapbox/mapbox-maps-android release view --json name -q ".name") #android-v10.3.0
 LAST_VERSION_TAG_ARRAY=($LAST_VERSION_TAG)
 LAST_VERSION=${LAST_VERSION_TAG_ARRAY[0]:9}
 
