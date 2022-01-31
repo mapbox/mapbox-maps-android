@@ -147,12 +147,18 @@ internal abstract class MapboxRenderer : MapClient {
     val waitCondition = lock.newCondition()
     lock.withLock {
       var snapshot: Bitmap? = null
-      renderThread.queueSnapshot {
-        lock.withLock {
-          snapshot = performSnapshot()
-          waitCondition.signal()
-        }
-      }
+      renderThread.queueRenderEvent(
+        RenderEvent(
+          runnable = {
+            lock.withLock {
+              snapshot = performSnapshot()
+              waitCondition.signal()
+            }
+          },
+          needRender = true,
+          eventType = EventType.SDK
+        )
+      )
       waitCondition.await(1, TimeUnit.SECONDS)
       return snapshot
     }
@@ -164,9 +170,13 @@ internal abstract class MapboxRenderer : MapClient {
       Logger.e(TAG, "Could not take map snapshot because map is not ready yet.")
       listener.onSnapshotReady(null)
     }
-    renderThread.queueSnapshot {
-      listener.onSnapshotReady(performSnapshot())
-    }
+    renderThread.queueRenderEvent(
+      RenderEvent(
+        runnable = { listener.onSnapshotReady(performSnapshot()) },
+        needRender = true,
+        eventType = EventType.SDK
+      )
+    )
   }
 
   @AnyThread

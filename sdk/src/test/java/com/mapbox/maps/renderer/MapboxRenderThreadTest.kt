@@ -421,9 +421,9 @@ class MapboxRenderThreadTest {
     val runnable3 = mockCountdownRunnable(latch)
     Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
 
-    mapboxRenderThread.queueSnapshot(runnable)
-    mapboxRenderThread.queueSnapshot(runnable2)
-    mapboxRenderThread.queueSnapshot(runnable3)
+    mapboxRenderThread.queueRenderEvent(RenderEvent(runnable, true, EventType.SDK))
+    mapboxRenderThread.queueRenderEvent(RenderEvent(runnable2, true, EventType.SDK))
+    mapboxRenderThread.queueRenderEvent(RenderEvent(runnable3, true, EventType.SDK))
 
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()
     if (!latch.await(waitTime, TimeUnit.MILLISECONDS)) {

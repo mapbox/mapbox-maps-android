@@ -51,8 +51,21 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @Volatile
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var paused = false
+
+  /**
+   * We track moment when native renderer is prepared.
+   */
   private var renderCreated = false
-  private val renderThreadPrepared get() = surface?.isValid == true && renderCreated
+
+  /**
+   * We track moment when EGL context is created and associated with current Android surface.
+   */
+  private var eglContextCreated = false
+
+  /**
+   * Render thread should be treated as valid (prepared to render a map) when both flags are true.
+   */
+  private val renderThreadPrepared get() = eglContextCreated && renderCreated
   private var eglPrepared = false
   private var renderNotSupported = false
 
@@ -96,7 +109,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     )
   }
 
-  private fun isValidRenderingEnvironment(creatingSurface: Boolean): Boolean {
+  private fun setUpRenderThread(creatingSurface: Boolean): Boolean {
     lock.withLock {
       try {
         val eglConfigOk = checkEglConfig()
@@ -110,9 +123,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
           // it's safe to use !! here as we checked surface above
           val eglSurfaceOk = checkEglSurface(surface!!)
           if (eglSurfaceOk) {
-            val eglContextOk = checkEglContextCurrent()
+            eglContextCreated = checkEglContextCurrent()
             // finally we can create native renderer if needed or just report OK
-            if (eglContextOk) {
+            if (eglContextCreated) {
               if (!renderCreated) {
                 mapboxRenderer.createRenderer()
                 mapboxRenderer.onSurfaceChanged(
@@ -249,6 +262,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   private fun releaseEglSurface() {
     eglCore.releaseSurface(eglSurface)
+    eglContextCreated = false
     eglSurface = eglCore.eglNoSurface
   }
 
@@ -277,8 +291,12 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         return
       }
     }
-    if (!isValidRenderingEnvironment(creatingSurface)) {
-      return
+    // check for creatingSurface flag to make sure we don't hit deadlock
+    if (creatingSurface || !renderThreadPrepared) {
+      val renderThreadPreparedOk = setUpRenderThread(creatingSurface)
+      if (!renderThreadPreparedOk) {
+        return
+      }
     }
     checkSurfaceSizeChanged()
     Choreographer.getInstance().postFrameCallback(this)
@@ -413,17 +431,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       },
       delayMillis,
       renderEvent.eventType
-    )
-  }
-
-  @AnyThread
-  fun queueSnapshot(snapshotTask: Runnable) {
-    queueRenderEvent(
-      RenderEvent(
-        runnable = snapshotTask,
-        needRender = true,
-        eventType = EventType.SDK
-      )
     )
   }
 

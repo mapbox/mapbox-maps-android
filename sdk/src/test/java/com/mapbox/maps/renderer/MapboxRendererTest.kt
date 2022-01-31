@@ -184,9 +184,9 @@ internal abstract class MapboxRendererTest {
       start()
       handler = Handler(this.looper)
     }
-    val runnable = slot<Runnable>()
-    every { renderThread.queueSnapshot(capture(runnable)) } answers {
-      handler.post(runnable.captured)
+    val event = slot<RenderEvent>()
+    every { renderThread.queueRenderEvent(capture(event)) } answers {
+      handler.post(event.captured.runnable!!)
     }
     mapboxRenderer.pixelReader = pixelReader
     mapboxRenderer.readyForSnapshot = AtomicBoolean(true)
@@ -209,9 +209,9 @@ internal abstract class MapboxRendererTest {
       start()
       handler = Handler(this.looper)
     }
-    val runnable = slot<Runnable>()
-    every { renderThread.queueSnapshot(capture(runnable)) } answers {
-      handler.post(runnable.captured)
+    val event = slot<RenderEvent>()
+    every { renderThread.queueRenderEvent(capture(event)) } answers {
+      handler.post(event.captured.runnable!!)
     }
     mapboxRenderer.pixelReader = pixelReader
     mapboxRenderer.readyForSnapshot = AtomicBoolean(false)
@@ -234,9 +234,9 @@ internal abstract class MapboxRendererTest {
       start()
       handler = Handler(this.looper)
     }
-    val runnable = slot<Runnable>()
-    every { renderThread.queueSnapshot(capture(runnable)) } answers {
-      handler.post(runnable.captured)
+    val event = slot<RenderEvent>()
+    every { renderThread.queueRenderEvent(capture(event)) } answers {
+      handler.post(event.captured.runnable!!)
     }
     mapboxRenderer.pixelReader = pixelReader
     mapboxRenderer.readyForSnapshot = AtomicBoolean(true)
@@ -263,9 +263,9 @@ internal abstract class MapboxRendererTest {
       start()
       handler = Handler(this.looper)
     }
-    val runnable = slot<Runnable>()
-    every { renderThread.queueSnapshot(capture(runnable)) } answers {
-      handler.post(runnable.captured)
+    val event = slot<RenderEvent>()
+    every { renderThread.queueRenderEvent(capture(event)) } answers {
+      handler.post(event.captured.runnable!!)
     }
     mapboxRenderer.pixelReader = pixelReader
     mapboxRenderer.readyForSnapshot = AtomicBoolean(false)
