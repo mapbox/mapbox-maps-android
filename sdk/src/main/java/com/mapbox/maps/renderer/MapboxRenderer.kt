@@ -65,6 +65,7 @@ internal abstract class MapboxRenderer : MapClient {
 
   @AnyThread
   override fun scheduleTask(task: Task) {
+    Logger.e("KIRYLDD", "scheduleTask from core")
     renderThread.queueRenderEvent(
       RenderEvent(
         runnable = { task.run() },

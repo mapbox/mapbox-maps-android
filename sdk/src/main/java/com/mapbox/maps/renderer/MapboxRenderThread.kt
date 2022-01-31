@@ -10,6 +10,7 @@ import androidx.annotation.WorkerThread
 import com.mapbox.common.Logger
 import com.mapbox.maps.renderer.egl.EGLCore
 import java.util.LinkedList
+import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.locks.ReentrantLock
 import javax.microedition.khronos.egl.EGL10
 import javax.microedition.khronos.egl.EGL11
@@ -35,6 +36,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal val renderEventQueue = LinkedList<RenderEvent>()
   private val renderEventQueueLock = ReentrantLock()
+
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal val nonRenderEventQueue = LinkedList<RenderEvent>()
+  private val nonRenderEventQueueLock = ReentrantLock()
 
   private var surface: Surface? = null
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -360,6 +365,17 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         }
       }
     }
+    // TODO use function
+    nonRenderEventQueueLock.withLock {
+      // using iterator to avoid concurrent modification exception
+      val iterator = nonRenderEventQueue.iterator()
+      while (iterator.hasNext()) {
+        val next = iterator.next()
+        if (next.eventType == EventType.SDK) {
+          iterator.remove()
+        }
+      }
+    }
     // we do not want to clear render events scheduled by user
     renderHandlerThread.clearMessageQueue(clearAll = false)
     prepareRenderFrame(creatingSurface = true)
@@ -383,10 +399,28 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @WorkerThread
   override fun doFrame(frameTimeNanos: Long) {
     // it makes sense to draw not only when EGL config is prepared but when native renderer is created
+    Logger.e("KIRYLDD", "do Frame, size start: ${nonRenderEventQueue.size}")
     if (renderThreadPrepared && !paused) {
       draw()
     }
+    // TODO use function, logic same as for render
+    Logger.e("KIRYLDD", "doFrame before lock")
+    nonRenderEventQueueLock.withLock {
+      nonRenderEventQueue.apply {
+        if (isNotEmpty()) {
+          forEach {
+            Logger.e("KIRYLDD", "doFrame in lock, run ${it.runnable.hashCode()} start")
+            it.runnable?.run()
+            Logger.e("KIRYLDD", "doFrame in lock, run ${it.runnable.hashCode()} end")
+          }
+          Logger.e("KIRYLDD", "doFrame in lock clear")
+          clear()
+        }
+      }
+    }
+    Logger.e("KIRYLDD", "doFrame after lock")
     awaitingNextVsync = false
+    Logger.e("KIRYLDD", "do Frame, size end: ${nonRenderEventQueue.size}")
   }
 
   @AnyThread
@@ -420,18 +454,33 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun postNonRenderEvent(renderEvent: RenderEvent, delayMillis: Long = 0L) {
-    renderHandlerThread.postDelayed(
-      {
-        if (renderThreadPrepared || renderEvent.eventType == EventType.DESTROY_RENDERER) {
-          renderEvent.runnable?.run()
-        } else {
-          Logger.w(TAG, "Non-render event could not be run, retrying in $RETRY_DELAY_MS ms...")
-          postNonRenderEvent(renderEvent, delayMillis = RETRY_DELAY_MS)
-        }
-      },
-      delayMillis,
-      renderEvent.eventType
-    )
+    // if we already waiting listening for next VSYNC then add runnable to queue to execute
+    // after actual drawing otherwise execute asap on render thread;
+    if (awaitingNextVsync && !nonRenderEventQueueLock.isLocked) {
+      Logger.e("KIRYLDD", "postNonRenderEvent before lock")
+      nonRenderEventQueueLock.withLock {
+        Logger.e("KIRYLDD", "postNonRenderEvent in lock, add ${renderEvent.runnable.hashCode()}")
+        nonRenderEventQueue.add(renderEvent)
+      }
+      Logger.e("KIRYLDD", "postNonRenderEvent after lock")
+    } else {
+      Logger.e("KIRYLDD", "postNonRenderEvent postDelayed start")
+      renderHandlerThread.postDelayed(
+        {
+          if (renderThreadPrepared || renderEvent.eventType == EventType.DESTROY_RENDERER) {
+            Logger.e("KIRYLDD", "postNonRenderEvent postDelayed inside run ${renderEvent.runnable.hashCode()} start")
+            renderEvent.runnable?.run()
+            Logger.e("KIRYLDD", "postNonRenderEvent postDelayed inside run ${renderEvent.runnable.hashCode()} end")
+          } else {
+            Logger.w(TAG, "Non-render event could not be run, retrying in $RETRY_DELAY_MS ms...")
+            postNonRenderEvent(renderEvent, delayMillis = RETRY_DELAY_MS)
+          }
+        },
+        delayMillis,
+        renderEvent.eventType
+      )
+      Logger.e("KIRYLDD", "postNonRenderEvent postDelayed end")
+    }
   }
 
   @UiThread
