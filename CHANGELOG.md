@@ -2,6 +2,11 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.3.0 February 7, 2022
+
+## Dependencies
+* Update gl-native to v10.3.0, common to v21.1.0. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105))
+
 # 10.3.0-rc.1 January 26, 2022
 
 ## Features ✨ and improvements 🏁
