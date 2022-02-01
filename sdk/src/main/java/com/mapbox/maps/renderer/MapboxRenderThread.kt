@@ -10,7 +10,6 @@ import androidx.annotation.WorkerThread
 import com.mapbox.common.Logger
 import com.mapbox.maps.renderer.egl.EGLCore
 import java.util.LinkedList
-import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.locks.ReentrantLock
 import javax.microedition.khronos.egl.EGL10
 import javax.microedition.khronos.egl.EGL11
@@ -51,7 +50,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var renderTimeNs = 0L
   private var expectedVsyncWakeTimeNs = 0L
-  private var awaitingNextVsync = false
+
+  @Volatile
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal var awaitingNextVsync = false
   private var sizeChanged = false
   @Volatile
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -65,7 +67,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   /**
    * We track moment when EGL context is created and associated with current Android surface.
    */
-  private var eglContextCreated = false
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal var eglContextCreated = false
 
   /**
    * Render thread should be treated as valid (prepared to render a map) when both flags are true.
@@ -221,16 +224,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     // assuming render event queue holds user's runnables with OpenGL ES commands
     // it makes sense to execute them after drawing a map but before swapping buffers
     // **note** this queue also holds snapshot tasks
-    renderEventQueueLock.withLock {
-      renderEventQueue.apply {
-        if (isNotEmpty()) {
-          forEach {
-            it.runnable?.run()
-          }
-          clear()
-        }
-      }
-    }
+    drainQueue(renderEventQueueLock, renderEventQueue)
     when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
       EGL10.EGL_SUCCESS -> {}
       EGL11.EGL_CONTEXT_LOST -> {
@@ -354,28 +348,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
     this.width = width
     this.height = height
-    // we clean only Mapbox events to avoid outdated runnables associated with previous EGL context
-    renderEventQueueLock.withLock {
-      // using iterator to avoid concurrent modification exception
-      val iterator = renderEventQueue.iterator()
-      while (iterator.hasNext()) {
-        val next = iterator.next()
-        if (next.eventType == EventType.SDK) {
-          iterator.remove()
-        }
-      }
-    }
-    // TODO use function
-    nonRenderEventQueueLock.withLock {
-      // using iterator to avoid concurrent modification exception
-      val iterator = nonRenderEventQueue.iterator()
-      while (iterator.hasNext()) {
-        val next = iterator.next()
-        if (next.eventType == EventType.SDK) {
-          iterator.remove()
-        }
-      }
-    }
+    clearQueue(renderEventQueueLock, renderEventQueue)
+    clearQueue(nonRenderEventQueueLock, nonRenderEventQueue)
     // we do not want to clear render events scheduled by user
     renderHandlerThread.clearMessageQueue(clearAll = false)
     prepareRenderFrame(creatingSurface = true)
@@ -399,28 +373,12 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   @WorkerThread
   override fun doFrame(frameTimeNanos: Long) {
     // it makes sense to draw not only when EGL config is prepared but when native renderer is created
-    Logger.e("KIRYLDD", "do Frame, size start: ${nonRenderEventQueue.size}")
     if (renderThreadPrepared && !paused) {
       draw()
     }
-    // TODO use function, logic same as for render
-    Logger.e("KIRYLDD", "doFrame before lock")
-    nonRenderEventQueueLock.withLock {
-      nonRenderEventQueue.apply {
-        if (isNotEmpty()) {
-          forEach {
-            Logger.e("KIRYLDD", "doFrame in lock, run ${it.runnable.hashCode()} start")
-            it.runnable?.run()
-            Logger.e("KIRYLDD", "doFrame in lock, run ${it.runnable.hashCode()} end")
-          }
-          Logger.e("KIRYLDD", "doFrame in lock clear")
-          clear()
-        }
-      }
-    }
-    Logger.e("KIRYLDD", "doFrame after lock")
+    // we drain queue despite buffers swapped are not
+    drainQueue(nonRenderEventQueueLock, nonRenderEventQueue)
     awaitingNextVsync = false
-    Logger.e("KIRYLDD", "do Frame, size end: ${nonRenderEventQueue.size}")
   }
 
   @AnyThread
@@ -432,7 +390,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         }
       }
       // in case of native Mapbox events we schedule render event only when we're fully ready for render
-      // TODO ideally to be fixed in core
       if (renderEvent.eventType == EventType.SDK) {
         if (renderThreadPrepared) {
           postPrepareRenderFrame()
@@ -457,20 +414,14 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     // if we already waiting listening for next VSYNC then add runnable to queue to execute
     // after actual drawing otherwise execute asap on render thread;
     if (awaitingNextVsync && !nonRenderEventQueueLock.isLocked) {
-      Logger.e("KIRYLDD", "postNonRenderEvent before lock")
       nonRenderEventQueueLock.withLock {
-        Logger.e("KIRYLDD", "postNonRenderEvent in lock, add ${renderEvent.runnable.hashCode()}")
         nonRenderEventQueue.add(renderEvent)
       }
-      Logger.e("KIRYLDD", "postNonRenderEvent after lock")
     } else {
-      Logger.e("KIRYLDD", "postNonRenderEvent postDelayed start")
       renderHandlerThread.postDelayed(
         {
           if (renderThreadPrepared || renderEvent.eventType == EventType.DESTROY_RENDERER) {
-            Logger.e("KIRYLDD", "postNonRenderEvent postDelayed inside run ${renderEvent.runnable.hashCode()} start")
             renderEvent.runnable?.run()
-            Logger.e("KIRYLDD", "postNonRenderEvent postDelayed inside run ${renderEvent.runnable.hashCode()} end")
           } else {
             Logger.w(TAG, "Non-render event could not be run, retrying in $RETRY_DELAY_MS ms...")
             postNonRenderEvent(renderEvent, delayMillis = RETRY_DELAY_MS)
@@ -479,7 +430,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         delayMillis,
         renderEvent.eventType
       )
-      Logger.e("KIRYLDD", "postNonRenderEvent postDelayed end")
     }
   }
 
@@ -516,6 +466,33 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
     renderHandlerThread.stop()
     mapboxRenderer.map = null
+  }
+
+  private fun clearQueue(lock: ReentrantLock, queue: LinkedList<RenderEvent>) {
+    // we clean only Mapbox events to avoid outdated runnables associated with previous EGL context
+    lock.withLock {
+      // using iterator to avoid concurrent modification exception
+      val iterator = queue.iterator()
+      while (iterator.hasNext()) {
+        val next = iterator.next()
+        if (next.eventType == EventType.SDK) {
+          iterator.remove()
+        }
+      }
+    }
+  }
+
+  private fun drainQueue(lock: ReentrantLock, queue: LinkedList<RenderEvent>) {
+    lock.withLock {
+      queue.apply {
+        if (isNotEmpty()) {
+          forEach {
+            it.runnable?.run()
+          }
+          clear()
+        }
+      }
+    }
   }
 
   companion object {
