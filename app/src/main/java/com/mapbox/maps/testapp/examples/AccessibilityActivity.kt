@@ -2,12 +2,12 @@ package com.mapbox.maps.testapp.examples
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.customview.widget.ExploreByTouchHelper
 import com.mapbox.bindgen.Expected
+import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.extension.observable.eventdata.CameraChangedEventData
 import com.mapbox.maps.extension.observable.eventdata.MapIdleEventData
@@ -72,10 +72,6 @@ class AccessibilityActivity: AppCompatActivity(), OnCameraChangeListener, OnMapI
     ) { expected: Expected<String, MutableList<QueriedFeature>> ->
       if (!expected.isError) {
         onScreenFeatures = expected.value
-
-        expected.value?.forEach {
-          Log.d(TAG, "onCameraChanged: $it")
-        }
       }
     }
   }
@@ -87,13 +83,14 @@ class AccessibilityActivity: AppCompatActivity(), OnCameraChangeListener, OnMapI
   private val exploreByTouchHelper by lazy {
     object : ExploreByTouchHelper(mapView) {
       override fun getVirtualViewAt(x: Float, y: Float): Int {
-        return 0
+        // TODO implement
+        return 1
       }
 
       override fun getVisibleVirtualViews(virtualViewIds: MutableList<Int>) {
         val featureCount = onScreenFeatures?.size ?: 0
 
-        // maybe find a unique ID based off of lat,lng
+        // TODO right now we're simply using the indices as rendered by queryRenderedFeatures, for true accessibility support, we might want to sort these by location within the map relative to the bearing, so the user can navigate through POIs in an order that makes sense (similar to a document)
         for (i in 0 until featureCount) {
           virtualViewIds.add(i)
         }
@@ -104,8 +101,23 @@ class AccessibilityActivity: AppCompatActivity(), OnCameraChangeListener, OnMapI
         node: AccessibilityNodeInfoCompat
       ) {
         onScreenFeatures?.get(virtualViewId)?.let {
+          val screenCoordinate = mapboxMap.pixelForCoordinate(it.feature.geometry() as Point)
+          
           node.className = mapView::class.simpleName
-          node.contentDescription = "${it.feature.getStringProperty("shield")} ${it.feature.getStringProperty("ref")}"
+          node.setParent(mapView)
+
+          // TODO: account for screen density, might also be able to more accurately query map for the icon's rendered size, to fit bounding box
+          node.setBoundsInParent(Rect().apply {
+            top = screenCoordinate.y.toInt() - 25
+            bottom = screenCoordinate.y.toInt() + 25
+            right = screenCoordinate.x.toInt() + 25
+            left = screenCoordinate.x.toInt() - 25
+          })
+
+          val description = "${it.feature.getStringProperty("shield")} ${it.feature.getStringProperty("ref")}"
+
+          node.contentDescription = description
+          node.text = description
         }
       }
 
@@ -114,6 +126,8 @@ class AccessibilityActivity: AppCompatActivity(), OnCameraChangeListener, OnMapI
         action: Int,
         arguments: Bundle?
       ): Boolean {
+        // do nothing
+        // TODO eventually do something, potentially we could issue a fly to to center the map, with would then move some POIs off screen, and new POIs onto the screen. so we will want to account for this new order of accessibility nodes.
         return false
       }
 
