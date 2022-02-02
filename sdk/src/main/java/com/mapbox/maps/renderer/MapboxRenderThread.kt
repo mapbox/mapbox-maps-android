@@ -348,8 +348,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
     this.width = width
     this.height = height
-    clearQueue(renderEventQueueLock, renderEventQueue)
-    clearQueue(nonRenderEventQueueLock, nonRenderEventQueue)
+    clearQueueSdkEvents(renderEventQueueLock, renderEventQueue)
+    clearQueueSdkEvents(nonRenderEventQueueLock, nonRenderEventQueue)
     // we do not want to clear render events scheduled by user
     renderHandlerThread.clearMessageQueue(clearAll = false)
     prepareRenderFrame(creatingSurface = true)
@@ -413,6 +413,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   private fun postNonRenderEvent(renderEvent: RenderEvent, delayMillis: Long = 0L) {
     // if we already waiting listening for next VSYNC then add runnable to queue to execute
     // after actual drawing otherwise execute asap on render thread;
+    // ** Note ** : core could schedule tasks inside already scheduled tasks -
+    // to avoid issues with locks and concurrent collection modification we explicitly add them to render thread message queue
     if (awaitingNextVsync && !nonRenderEventQueueLock.isLocked) {
       nonRenderEventQueueLock.withLock {
         nonRenderEventQueue.add(renderEvent)
@@ -468,8 +470,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     mapboxRenderer.map = null
   }
 
-  private fun clearQueue(lock: ReentrantLock, queue: LinkedList<RenderEvent>) {
-    // we clean only Mapbox events to avoid outdated runnables associated with previous EGL context
+  private fun clearQueueSdkEvents(lock: ReentrantLock, queue: LinkedList<RenderEvent>) {
     lock.withLock {
       // using iterator to avoid concurrent modification exception
       val iterator = queue.iterator()

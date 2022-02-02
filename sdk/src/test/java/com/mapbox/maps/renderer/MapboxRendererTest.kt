@@ -59,38 +59,26 @@ internal abstract class MapboxRendererTest {
   fun scheduleTaskTest() {
     val task = mockk<Task>(relaxUnitFun = true)
     every { renderThread.renderDestroyCallChain } returns false
-    var actualNeedRender: Boolean? = null
-    var actualEventType: EventType? = null
-    every { renderThread.queueRenderEvent(any()) } answers {
-      actualNeedRender = firstArg<RenderEvent>().needRender
-      actualEventType = firstArg<RenderEvent>().eventType
-    }
+    val event = slot<RenderEvent>()
     mapboxRenderer.scheduleTask(task)
     verify {
-      // no idea how to verify Task got transformed in correct lambda so checking call + desired properties
-      renderThread.queueRenderEvent(any())
+      renderThread.queueRenderEvent(capture(event))
     }
-    assert(actualNeedRender == false)
-    assert(actualEventType == EventType.SDK)
+    assert(!event.captured.needRender)
+    assert(event.captured.eventType == EventType.SDK)
   }
 
   @Test
   fun scheduleDestroyTaskTest() {
     val task = mockk<Task>(relaxUnitFun = true)
     every { renderThread.renderDestroyCallChain } returns true
-    var actualNeedRender: Boolean? = null
-    var actualEventType: EventType? = null
-    every { renderThread.queueRenderEvent(any()) } answers {
-      actualNeedRender = firstArg<RenderEvent>().needRender
-      actualEventType = firstArg<RenderEvent>().eventType
-    }
+    val event = slot<RenderEvent>()
     mapboxRenderer.scheduleTask(task)
     verify {
-      // no idea how to verify Task got transformed in correct lambda so checking call + desired properties
-      renderThread.queueRenderEvent(any())
+      renderThread.queueRenderEvent(capture(event))
     }
-    assert(actualNeedRender == false)
-    assert(actualEventType == EventType.DESTROY_RENDERER)
+    assert(!event.captured.needRender)
+    assert(event.captured.eventType == EventType.DESTROY_RENDERER)
   }
 
   @Test

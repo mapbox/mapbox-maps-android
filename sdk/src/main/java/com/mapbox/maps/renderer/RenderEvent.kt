@@ -14,7 +14,8 @@ internal data class RenderEvent(
   /**
    * Whether that event requires actual render.
    * If set to `true` - render call will be scheduled, [runnable] will be put in a separate queue which is drained after native draw calls but before swapping buffers.
-   * If set to `false` - no render call will be scheduled, [runnable] will be simply put in a render thread message queue and executed asap if render thread is in correct state.
+   * If set to `false` - no render call will be scheduled, [runnable] will be either be put in a render thread message queue and executed asap if no pending VSYNC event
+   * or executed right after swapping buffers if VSYNC event is pending. Runnables are executed only if render thread is in fully prepared state.
    */
   val needRender: Boolean,
   /**
