@@ -90,4 +90,5 @@
     <string name="description_view_annotation_callout_annotation">Callout view using annotation plugin</string>
     <string name="description_viewport">Viewport camera showcase</string>
     <string name="description_advanced_viewport">Advanced viewport with gestures showcase</string>
+    <string name="description_accessibility">Make the map more accessible for screen readers</string>
 </resources>

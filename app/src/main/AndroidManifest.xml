@@ -1151,5 +1151,16 @@
         <activity
             android:name=".TestMapActivity"
             android:exported="true" />
+        <activity android:name=".examples.AccessibilityActivity"
+            android:description="@string/description_accessibility"
+            android:exported="true"
+            android:label="@string/description_accessibility">
+            <meta-data
+                android:name="@string/category"
+                android:value="@string/category_integration" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExampleOverviewActivity" />
+        </activity>
     </application>
 </manifest>
