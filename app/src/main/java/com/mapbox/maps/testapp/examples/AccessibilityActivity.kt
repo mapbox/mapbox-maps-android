@@ -2,6 +2,7 @@ package com.mapbox.maps.testapp.examples
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
@@ -9,15 +10,20 @@ import androidx.customview.widget.ExploreByTouchHelper
 import com.mapbox.bindgen.Expected
 import com.mapbox.maps.*
 import com.mapbox.maps.extension.observable.eventdata.CameraChangedEventData
+import com.mapbox.maps.extension.observable.eventdata.MapIdleEventData
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
+import com.mapbox.maps.plugin.delegates.listeners.OnMapIdleListener
 import com.mapbox.maps.testapp.databinding.ActivityAccessibilityBinding
 
-private lateinit var mapView: MapView
-private lateinit var mapboxMap: MapboxMap
-private val mapViewRect = Rect()
+class AccessibilityActivity: AppCompatActivity(), OnCameraChangeListener, OnMapIdleListener {
+  private lateinit var mapView: MapView
+  private lateinit var mapboxMap: MapboxMap
 
-class AccessibilityActivity: AppCompatActivity(), OnCameraChangeListener {
+  private val mapViewDrawingRect by lazy {
+    Rect().apply(mapView::getDrawingRect)
+  }
+
   private var onScreenFeatures: MutableList<QueriedFeature>? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,11 +31,12 @@ class AccessibilityActivity: AppCompatActivity(), OnCameraChangeListener {
     val binding = ActivityAccessibilityBinding.inflate(layoutInflater)
     setContentView(binding.root)
     mapView = binding.mapView
-    mapView.getDrawingRect(mapViewRect)
+
     ViewCompat.setAccessibilityDelegate(mapView, exploreByTouchHelper)
 
     mapboxMap = mapView.getMapboxMap()
     mapboxMap.addOnCameraChangeListener(this)
+    mapboxMap.addOnMapIdleListener(this)
     mapboxMap.loadStyleUri(Style.MAPBOX_STREETS)
   }
 
@@ -53,26 +60,34 @@ class AccessibilityActivity: AppCompatActivity(), OnCameraChangeListener {
     mapView.onDestroy()
   }
 
-  override fun onCameraChanged(eventData: CameraChangedEventData) {
+  override fun onMapIdle(eventData: MapIdleEventData) {
     mapboxMap.queryRenderedFeatures(
       RenderedQueryGeometry(
         ScreenBox(
-          ScreenCoordinate(mapViewRect.left.toDouble(), mapViewRect.top.toDouble()),
-          ScreenCoordinate(mapViewRect.right.toDouble(), mapViewRect.bottom.toDouble()),
+          ScreenCoordinate(mapViewDrawingRect.left.toDouble(), mapViewDrawingRect.top.toDouble()),
+          ScreenCoordinate(mapViewDrawingRect.right.toDouble(), mapViewDrawingRect.bottom.toDouble()),
         )
       ),
       RenderedQueryOptions(listOf(LAYER_ID), literal(true))
     ) { expected: Expected<String, MutableList<QueriedFeature>> ->
       if (!expected.isError) {
-        onScreenFeatures = expected.value!!
+        onScreenFeatures = expected.value
+
+        expected.value?.forEach {
+          Log.d(TAG, "onCameraChanged: $it")
+        }
       }
     }
+  }
+
+  override fun onCameraChanged(eventData: CameraChangedEventData) {
+    onScreenFeatures = null
   }
 
   private val exploreByTouchHelper by lazy {
     object : ExploreByTouchHelper(mapView) {
       override fun getVirtualViewAt(x: Float, y: Float): Int {
-        TODO("Get feature to screen coordinate and return ID")
+        return 0
       }
 
       override fun getVisibleVirtualViews(virtualViewIds: MutableList<Int>) {
@@ -88,7 +103,10 @@ class AccessibilityActivity: AppCompatActivity(), OnCameraChangeListener {
         virtualViewId: Int,
         node: AccessibilityNodeInfoCompat
       ) {
-        TODO("Populate View Description and IDs based of virtual View ID")
+        onScreenFeatures?.get(virtualViewId)?.let {
+          node.className = mapView::class.simpleName
+          node.contentDescription = "${it.feature.getStringProperty("shield")} ${it.feature.getStringProperty("ref")}"
+        }
       }
 
       override fun onPerformActionForVirtualView(
@@ -96,7 +114,7 @@ class AccessibilityActivity: AppCompatActivity(), OnCameraChangeListener {
         action: Int,
         arguments: Bundle?
       ): Boolean {
-        false
+        return false
       }
 
     }
