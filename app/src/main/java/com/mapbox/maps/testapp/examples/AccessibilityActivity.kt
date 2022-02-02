@@ -2,6 +2,7 @@ package com.mapbox.maps.testapp.examples
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
@@ -114,7 +115,7 @@ class AccessibilityActivity: AppCompatActivity(), OnCameraChangeListener, OnMapI
             left = screenCoordinate.x.toInt() - 25
           })
 
-          val description = "${it.feature.getStringProperty("shield")} ${it.feature.getStringProperty("ref")}"
+          val description = getDescriptionFromShield(it)
 
           node.contentDescription = description
           node.text = description
@@ -132,6 +133,25 @@ class AccessibilityActivity: AppCompatActivity(), OnCameraChangeListener, OnMapI
       }
 
     }
+  }
+
+  // this logic is localized to the united states, because it's querying these shields
+  // we don't have access to road names, potentially you would qRF roads as well, to look up
+  // full human friendly names, etc.
+  private fun getDescriptionFromShield(queriedFeature: QueriedFeature): String {
+    var result = ""
+
+    val shield = queriedFeature.feature.getStringProperty("shield")
+    val ref = queriedFeature.feature.getStringProperty("ref")
+
+    when (shield) {
+      "us-interstate" -> result = "interstate"
+      "us-highway" -> result = "highway"
+    }
+
+    result += " $ref"
+
+    return result
   }
 
   companion object {
