@@ -8,7 +8,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Refactor scheduling logic for render thread in general slightly improving rendering performance. ([#1068](https://github.com/mapbox/mapbox-maps-android/pull/1068))
 
 ## Bug fixes 🐞
-* Fix dropping / crashing in user events scheduled on a render thread with `MapView#queueEvent`. ([#1068](https://github.com/mapbox/mapbox-maps-android/pull/1068))
+* Fix skipping / crashing user events scheduled on a render thread with `MapView#queueEvent`. ([#1068](https://github.com/mapbox/mapbox-maps-android/pull/1068))
 
 # 10.3.0 February 7, 2022
 

@@ -10,6 +10,7 @@ import androidx.annotation.WorkerThread
 import com.mapbox.common.Logger
 import com.mapbox.maps.renderer.egl.EGLCore
 import java.util.LinkedList
+import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.locks.ReentrantLock
 import javax.microedition.khronos.egl.EGL10
 import javax.microedition.khronos.egl.EGL11
@@ -33,12 +34,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   private val destroyCondition = lock.newCondition()
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal val renderEventQueue = LinkedList<RenderEvent>()
-  private val renderEventQueueLock = ReentrantLock()
+  internal val renderEventQueue = ConcurrentLinkedQueue<RenderEvent>()
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal val nonRenderEventQueue = LinkedList<RenderEvent>()
-  private val nonRenderEventQueueLock = ReentrantLock()
+  internal val nonRenderEventQueue = ConcurrentLinkedQueue<RenderEvent>()
 
   private var surface: Surface? = null
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -224,7 +223,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     // assuming render event queue holds user's runnables with OpenGL ES commands
     // it makes sense to execute them after drawing a map but before swapping buffers
     // **note** this queue also holds snapshot tasks
-    drainQueue(renderEventQueueLock, renderEventQueue)
+    drainQueue(renderEventQueue)
     when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
       EGL10.EGL_SUCCESS -> {}
       EGL11.EGL_CONTEXT_LOST -> {
@@ -348,8 +347,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
     this.width = width
     this.height = height
-    clearQueueSdkEvents(renderEventQueueLock, renderEventQueue)
-    clearQueueSdkEvents(nonRenderEventQueueLock, nonRenderEventQueue)
+    renderEventQueue.removeAll { it.eventType == EventType.SDK }
+    nonRenderEventQueue.removeAll { it.eventType == EventType.SDK }
     // we do not want to clear render events scheduled by user
     renderHandlerThread.clearMessageQueue(clearAll = false)
     prepareRenderFrame(creatingSurface = true)
@@ -376,8 +375,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     if (renderThreadPrepared && !paused) {
       draw()
     }
-    // we drain queue despite buffers swapped are not
-    drainQueue(nonRenderEventQueueLock, nonRenderEventQueue)
+    // we drain queue despite buffers swapped or not
+    drainQueue(nonRenderEventQueue)
     awaitingNextVsync = false
   }
 
@@ -385,9 +384,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   fun queueRenderEvent(renderEvent: RenderEvent) {
     if (renderEvent.needRender) {
       renderEvent.runnable?.let {
-        renderEventQueueLock.withLock {
-          renderEventQueue.add(renderEvent)
-        }
+        renderEventQueue.add(renderEvent)
       }
       // in case of native Mapbox events we schedule render event only when we're fully ready for render
       if (renderEvent.eventType == EventType.SDK) {
@@ -412,13 +409,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   private fun postNonRenderEvent(renderEvent: RenderEvent, delayMillis: Long = 0L) {
     // if we already waiting listening for next VSYNC then add runnable to queue to execute
-    // after actual drawing otherwise execute asap on render thread;
-    // ** Note ** : core could schedule tasks inside already scheduled tasks -
-    // to avoid issues with locks and concurrent collection modification we explicitly add them to render thread message queue
-    if (awaitingNextVsync && !nonRenderEventQueueLock.isLocked) {
-      nonRenderEventQueueLock.withLock {
-        nonRenderEventQueue.add(renderEvent)
-      }
+    // after actual drawing otherwise execute asap on render thread
+    if (awaitingNextVsync) {
+      nonRenderEventQueue.add(renderEvent)
     } else {
       renderHandlerThread.postDelayed(
         {
@@ -470,27 +463,21 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     mapboxRenderer.map = null
   }
 
-  private fun clearQueueSdkEvents(lock: ReentrantLock, queue: LinkedList<RenderEvent>) {
-    lock.withLock {
-      // using iterator to avoid concurrent modification exception
-      val iterator = queue.iterator()
-      while (iterator.hasNext()) {
-        val next = iterator.next()
-        if (next.eventType == EventType.SDK) {
-          iterator.remove()
-        }
+  private fun drainQueue(originalQueue: ConcurrentLinkedQueue<RenderEvent>) {
+    if (originalQueue.isNotEmpty()) {
+      // we iterate over immutable copy in order to avoid executing recursive tasks
+      val localQueueCopy = LinkedList(originalQueue)
+      // clear original queue before executing
+      originalQueue.clear()
+      localQueueCopy.forEach {
+        it.runnable?.run()
       }
-    }
-  }
-
-  private fun drainQueue(lock: ReentrantLock, queue: LinkedList<RenderEvent>) {
-    lock.withLock {
-      queue.apply {
-        if (isNotEmpty()) {
-          forEach {
-            it.runnable?.run()
+      // recursive tasks (if any) were added to the original queue - post draining them in new callchain
+      if (originalQueue.isNotEmpty()) {
+        renderHandlerThread.post {
+          if (renderThreadPrepared) {
+            drainQueue(originalQueue)
           }
-          clear()
         }
       }
     }
