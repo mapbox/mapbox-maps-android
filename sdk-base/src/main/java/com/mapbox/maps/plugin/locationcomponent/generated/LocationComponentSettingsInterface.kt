@@ -3,7 +3,6 @@
 package com.mapbox.maps.plugin.locationcomponent.generated
 
 import com.mapbox.maps.plugin.LocationPuck
-import com.mapbox.maps.plugin.PuckBearingSource
 
 /**
  * Interface that defines the public settings interface for LocationComponentPlugin.
@@ -52,11 +51,6 @@ interface LocationComponentSettingsInterface {
    * Sets the id of the layer that's added below to when placing the component on the map.
    */
   var layerBelow: String?
-
-  /**
-   * The enum controls how the puck is oriented
-   */
-  var puckBearingSource: PuckBearingSource
 
   /**
    * Defines what the customised look of the location puck.
