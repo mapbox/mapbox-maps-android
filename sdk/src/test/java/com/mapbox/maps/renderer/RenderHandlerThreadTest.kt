@@ -42,12 +42,21 @@ class RenderHandlerThreadTest {
   }
 
   @Test
-  fun clearMessageQueueTest() {
+  fun clearMessageQueueAllTest() {
     renderHandlerThread.start()
     val handler = mockk<Handler>(relaxed = true)
     renderHandlerThread.handler = handler
     renderHandlerThread.clearMessageQueue()
     verify { renderHandlerThread.handler?.removeCallbacksAndMessages(null) }
+  }
+
+  @Test
+  fun clearMessageQueueSDKTest() {
+    renderHandlerThread.start()
+    val handler = mockk<Handler>(relaxed = true)
+    renderHandlerThread.handler = handler
+    renderHandlerThread.clearMessageQueue(false)
+    verify { renderHandlerThread.handler?.removeCallbacksAndMessages(EventType.SDK) }
   }
 
   @Test
@@ -69,7 +78,7 @@ class RenderHandlerThreadTest {
       post { actionOne() }
       post { actionTwo() }
     }
-    Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(10))
+    Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(50))
     verify(exactly = 1) { actionOne.invoke() }
     verify(exactly = 1) { actionTwo.invoke() }
   }

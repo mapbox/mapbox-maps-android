@@ -2,6 +2,14 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.4.0-beta.1
+
+## Features ✨ and improvements 🏁
+* Refactor scheduling logic for render thread in general slightly improving rendering performance. ([#1068](https://github.com/mapbox/mapbox-maps-android/pull/1068))
+
+## Bug fixes 🐞
+* Fix skipping / crashing user events scheduled on a render thread with `MapView#queueEvent`. ([#1068](https://github.com/mapbox/mapbox-maps-android/pull/1068))
+
 # 10.3.0 February 7, 2022
 
 ## Dependencies

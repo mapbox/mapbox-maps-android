@@ -9,10 +9,7 @@ import com.mapbox.maps.MapView
 import com.mapbox.maps.Size
 import com.mapbox.maps.Task
 import com.mapbox.maps.renderer.gl.PixelReader
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.slot
-import io.mockk.verify
+import io.mockk.*
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -34,7 +31,7 @@ internal abstract class MapboxRendererTest {
 
   @Before
   open fun setUp() {
-    renderThread = mockk(relaxed = true)
+    renderThread = mockk(relaxUnitFun = true)
   }
 
   @Test
@@ -47,14 +44,41 @@ internal abstract class MapboxRendererTest {
   @Test
   fun scheduleRepaintTest() {
     mapboxRenderer.scheduleRepaint()
-    verify { renderThread.requestRender() }
+    verify {
+      renderThread.queueRenderEvent(
+        RenderEvent(
+          null,
+          true,
+          EventType.SDK
+        )
+      )
+    }
   }
 
   @Test
   fun scheduleTaskTest() {
     val task = mockk<Task>(relaxUnitFun = true)
+    every { renderThread.renderDestroyCallChain } returns false
+    val event = slot<RenderEvent>()
     mapboxRenderer.scheduleTask(task)
-    verify { renderThread.queueEvent(any()) }
+    verify {
+      renderThread.queueRenderEvent(capture(event))
+    }
+    assert(!event.captured.needRender)
+    assert(event.captured.eventType == EventType.SDK)
+  }
+
+  @Test
+  fun scheduleDestroyTaskTest() {
+    val task = mockk<Task>(relaxUnitFun = true)
+    every { renderThread.renderDestroyCallChain } returns true
+    val event = slot<RenderEvent>()
+    mapboxRenderer.scheduleTask(task)
+    verify {
+      renderThread.queueRenderEvent(capture(event))
+    }
+    assert(!event.captured.needRender)
+    assert(event.captured.eventType == EventType.DESTROY_RENDERER)
   }
 
   @Test
@@ -79,21 +103,37 @@ internal abstract class MapboxRendererTest {
   fun queueEventTest() {
     val event = mockk<Runnable>(relaxUnitFun = true)
     mapboxRenderer.queueEvent(event)
-    verify { renderThread.queueEvent(event) }
+    verify {
+      renderThread.queueRenderEvent(
+        RenderEvent(
+          event,
+          false,
+          EventType.OTHER
+        )
+      )
+    }
   }
 
   @Test
   fun queueRenderEventTest() {
     val event = mockk<Runnable>(relaxUnitFun = true)
     mapboxRenderer.queueRenderEvent(event)
-    verify { renderThread.queueRenderEvent(event) }
+    verify {
+      renderThread.queueRenderEvent(
+        RenderEvent(
+          event,
+          true,
+          EventType.OTHER
+        )
+      )
+    }
   }
 
   @Test
   fun onSurfaceCreatedTest() {
     val map = mockk<MapInterface>(relaxUnitFun = true)
     mapboxRenderer.map = map
-    mapboxRenderer.onSurfaceCreated()
+    mapboxRenderer.createRenderer()
     verify { map.createRenderer() }
   }
 
@@ -109,7 +149,7 @@ internal abstract class MapboxRendererTest {
   fun onSurfaceDestroyedTest() {
     val map = mockk<MapInterface>(relaxUnitFun = true)
     mapboxRenderer.map = map
-    mapboxRenderer.onSurfaceDestroyed()
+    mapboxRenderer.destroyRenderer()
     verify { map.destroyRenderer() }
   }
 
@@ -117,7 +157,7 @@ internal abstract class MapboxRendererTest {
   fun onDrawFrameTest() {
     val map = mockk<MapInterface>(relaxUnitFun = true)
     mapboxRenderer.map = map
-    mapboxRenderer.onDrawFrame()
+    mapboxRenderer.render()
     verify { map.render() }
   }
 
@@ -132,9 +172,9 @@ internal abstract class MapboxRendererTest {
       start()
       handler = Handler(this.looper)
     }
-    val runnable = slot<Runnable>()
-    every { renderThread.queueSnapshot(capture(runnable)) } answers {
-      handler.post(runnable.captured)
+    val event = slot<RenderEvent>()
+    every { renderThread.queueRenderEvent(capture(event)) } answers {
+      handler.post(event.captured.runnable!!)
     }
     mapboxRenderer.pixelReader = pixelReader
     mapboxRenderer.readyForSnapshot = AtomicBoolean(true)
@@ -157,9 +197,9 @@ internal abstract class MapboxRendererTest {
       start()
       handler = Handler(this.looper)
     }
-    val runnable = slot<Runnable>()
-    every { renderThread.queueRenderEvent(capture(runnable)) } answers {
-      handler.post(runnable.captured)
+    val event = slot<RenderEvent>()
+    every { renderThread.queueRenderEvent(capture(event)) } answers {
+      handler.post(event.captured.runnable!!)
     }
     mapboxRenderer.pixelReader = pixelReader
     mapboxRenderer.readyForSnapshot = AtomicBoolean(false)
@@ -182,9 +222,9 @@ internal abstract class MapboxRendererTest {
       start()
       handler = Handler(this.looper)
     }
-    val runnable = slot<Runnable>()
-    every { renderThread.queueRenderEvent(capture(runnable)) } answers {
-      handler.post(runnable.captured)
+    val event = slot<RenderEvent>()
+    every { renderThread.queueRenderEvent(capture(event)) } answers {
+      handler.post(event.captured.runnable!!)
     }
     mapboxRenderer.pixelReader = pixelReader
     mapboxRenderer.readyForSnapshot = AtomicBoolean(true)
@@ -211,9 +251,9 @@ internal abstract class MapboxRendererTest {
       start()
       handler = Handler(this.looper)
     }
-    val runnable = slot<Runnable>()
-    every { renderThread.queueRenderEvent(capture(runnable)) } answers {
-      handler.post(runnable.captured)
+    val event = slot<RenderEvent>()
+    every { renderThread.queueRenderEvent(capture(event)) } answers {
+      handler.post(event.captured.runnable!!)
     }
     mapboxRenderer.pixelReader = pixelReader
     mapboxRenderer.readyForSnapshot = AtomicBoolean(false)

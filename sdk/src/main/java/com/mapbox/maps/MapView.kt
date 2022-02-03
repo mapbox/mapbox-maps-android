@@ -335,9 +335,9 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     @JvmStatic
     fun isRenderingSupported(): Boolean {
       EGLCore(false, DEFAULT_ANTIALIASING_SAMPLE_COUNT).apply {
-        prepareEgl()
+        val eglConfigOk = prepareEgl()
         release()
-        return eglStatusSuccess
+        return eglConfigOk
       }
     }
   }

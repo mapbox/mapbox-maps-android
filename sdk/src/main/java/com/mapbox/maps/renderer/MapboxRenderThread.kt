@@ -9,9 +9,8 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import com.mapbox.common.Logger
 import com.mapbox.maps.renderer.egl.EGLCore
-import java.util.concurrent.CopyOnWriteArrayList
-import java.util.concurrent.atomic.AtomicBoolean
-import java.util.concurrent.atomic.AtomicLong
+import java.util.LinkedList
+import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.locks.ReentrantLock
 import javax.microedition.khronos.egl.EGL10
 import javax.microedition.khronos.egl.EGL11
@@ -35,35 +34,53 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   private val destroyCondition = lock.newCondition()
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal val renderEventQueue = CopyOnWriteArrayList<Runnable>()
+  internal val renderEventQueue = ConcurrentLinkedQueue<RenderEvent>()
+
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal val eventQueue = CopyOnWriteArrayList<Runnable>()
-  private val snapshotQueue = CopyOnWriteArrayList<Runnable>()
+  internal val nonRenderEventQueue = ConcurrentLinkedQueue<RenderEvent>()
 
   private var surface: Surface? = null
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal var eglSurface: EGLSurface? = null
+  internal var eglSurface: EGLSurface
   private var width: Int = 0
   private var height: Int = 0
 
+  @Volatile
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal val renderTimeNs = AtomicLong(0)
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  private var needRenderOnResume = false
+  internal var renderTimeNs = 0L
   private var expectedVsyncWakeTimeNs = 0L
+
+  @Volatile
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal val awaitingNextVsync = AtomicBoolean(false)
+  internal var awaitingNextVsync = false
   private var sizeChanged = false
+  @Volatile
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var paused = false
-  private var shouldExit = false
+
+  /**
+   * We track moment when native renderer is prepared.
+   */
+  private var renderCreated = false
+
+  /**
+   * We track moment when EGL context is created and associated with current Android surface.
+   */
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal var eglPrepared = false
-  private var nativeRenderCreated = false
-  private var nativeRenderNotSupported = false
+  internal var eglContextCreated = false
+
+  /**
+   * Render thread should be treated as valid (prepared to render a map) when both flags are true.
+   */
+  private val renderThreadPrepared get() = eglContextCreated && renderCreated
+  private var eglPrepared = false
+  private var renderNotSupported = false
 
   internal var fpsChangedListener: OnFpsChangedListener? = null
   private var timeElapsed = 0L
+
+  // TODO needed for workaround until issue is fixed in gl-native
+  internal var renderDestroyCallChain = false
 
   constructor(
     mapboxRenderer: MapboxRenderer,
@@ -73,6 +90,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     this.translucentSurface = translucentSurface
     this.mapboxRenderer = mapboxRenderer
     this.eglCore = EGLCore(translucentSurface, antialiasingSampleCount)
+    this.eglSurface = eglCore.eglNoSurface
     renderHandlerThread = RenderHandlerThread().apply { start() }
   }
 
@@ -86,67 +104,98 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     this.mapboxRenderer = mapboxRenderer
     this.renderHandlerThread = handlerThread
     this.eglCore = eglCore
+    this.eglSurface = eglCore.eglNoSurface
   }
 
-  private fun postPrepareRenderFrame() {
-    renderHandlerThread.post { prepareRenderFrame() }
+  private fun postPrepareRenderFrame(delayMillis: Long = 0L) {
+    renderHandlerThread.postDelayed(
+      {
+        prepareRenderFrame()
+      },
+      delayMillis
+    )
   }
 
-  private fun checkSurfaceReady(creatingSurface: Boolean): Boolean {
+  private fun setUpRenderThread(creatingSurface: Boolean): Boolean {
     lock.withLock {
       try {
-        surface?.let {
-          if (eglSurface == null || eglSurface == EGL10.EGL_NO_SURFACE) {
-            return prepareEglSurface(it, creatingSurface)
+        val eglConfigOk = checkEglConfig()
+        val androidSurfaceOk = checkAndroidSurface()
+        if (eglConfigOk && androidSurfaceOk) {
+          // on Android SDK <= 23 at least on x86 emulators we need to force set EGL10.EGL_NO_CONTEXT
+          // when resuming activity
+          if (creatingSurface) {
+            eglCore.makeNothingCurrent()
           }
-        } ?: return false
-        return true
+          // it's safe to use !! here as we checked surface above
+          val eglSurfaceOk = checkEglSurface(surface!!)
+          if (eglSurfaceOk) {
+            eglContextCreated = checkEglContextCurrent()
+            // finally we can create native renderer if needed or just report OK
+            if (eglContextCreated) {
+              if (!renderCreated) {
+                mapboxRenderer.createRenderer()
+                mapboxRenderer.onSurfaceChanged(
+                  width = width,
+                  height = height
+                )
+                renderCreated = true
+              }
+              return true
+            }
+          }
+        }
+        return false
       } finally {
         createCondition.signal()
       }
     }
   }
 
-  private fun prepareEglSurface(surface: Surface, creatingSurface: Boolean): Boolean {
+  private fun checkEglConfig(): Boolean {
     if (!eglPrepared) {
-      eglCore.prepareEgl()
-      if (eglCore.eglStatusSuccess) {
+      val eglOk = eglCore.prepareEgl()
+      if (eglOk) {
         eglPrepared = true
       } else {
         Logger.e(TAG, "EGL was not configured, please check logs above.")
-        nativeRenderNotSupported = true
+        renderNotSupported = true
         return false
       }
     }
-    if (!surface.isValid) {
-      Logger.w(TAG, "EGL was configured but surface is not valid.")
-      postPrepareRenderFrame()
-      return false
-    }
-    // on Android SDK <= 23 at least on x86 emulators we need to force set EGL10.EGL_NO_CONTEXT
-    // when resuming activity
-    if (creatingSurface) {
-      eglCore.makeNothingCurrent()
-    }
-    eglSurface = eglCore.createWindowSurface(surface)
-    if (!eglCore.eglStatusSuccess) {
-      // Set EGL Surface as EGL_NO_SURFACE and try recreate it in next iteration.
-      eglSurface = EGL10.EGL_NO_SURFACE
-      postPrepareRenderFrame()
-      return false
-    }
-    eglSurface?.let {
-      eglCore.makeCurrent(it)
-    }
+    return true
+  }
 
-    if (!nativeRenderCreated) {
-      mapboxRenderer.onSurfaceCreated()
-      nativeRenderCreated = true
+  private fun checkAndroidSurface(): Boolean {
+    return if (surface?.isValid == true) {
+      true
+    } else {
+      Logger.w(TAG, "EGL was configured but Android surface is null or not valid, waiting for a new one...")
+      // give system a bit of time and try rendering again hoping surface will be valid now
+      postPrepareRenderFrame(delayMillis = RETRY_DELAY_MS)
+      false
     }
-    mapboxRenderer.onSurfaceChanged(
-      width = width,
-      height = height
-    )
+  }
+
+  private fun checkEglSurface(surface: Surface): Boolean {
+    if (eglSurface == eglCore.eglNoSurface) {
+      eglSurface = eglCore.createWindowSurface(surface)
+      if (eglSurface == eglCore.eglNoSurface) {
+        // try recreate it in next iteration.
+        postPrepareRenderFrame(delayMillis = RETRY_DELAY_MS)
+        return false
+      }
+    }
+    return true
+  }
+
+  private fun checkEglContextCurrent(): Boolean {
+    val eglContextAttached = eglCore.makeCurrent(eglSurface)
+    if (!eglContextAttached) {
+      Logger.w(TAG, "EGL was configured but context could not be made current. Trying again in a moment...")
+      postPrepareRenderFrame(delayMillis = RETRY_DELAY_MS)
+      return false
+    }
     return true
   }
 
@@ -160,17 +209,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
-  private fun drainQueue(queue: CopyOnWriteArrayList<Runnable>) {
-    queue.apply {
-      if (isNotEmpty()) {
-        forEach(Runnable::run)
-        clear()
-      }
-    }
-  }
-
   private fun draw() {
-    val renderTimeNsCopy = renderTimeNs.get()
+    val renderTimeNsCopy = renderTimeNs
     val currentTimeNs = SystemClock.elapsedRealtimeNanos()
     val expectedEndRenderTimeNs = currentTimeNs + renderTimeNsCopy
     if (expectedVsyncWakeTimeNs > currentTimeNs) {
@@ -179,20 +219,20 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       postPrepareRenderFrame()
       return
     }
-    mapboxRenderer.onDrawFrame()
-    // snapshots should be taken before swapBuffers otherwise buffers may be already empty
-    drainQueue(snapshotQueue)
-    eglSurface?.let {
-      when (val swapStatus = eglCore.swapBuffers(it)) {
-        EGL10.EGL_SUCCESS -> {}
-        EGL11.EGL_CONTEXT_LOST -> {
-          Logger.w(TAG, "Context lost. Waiting for re-acquire")
-          releaseEgl()
-        }
-        else -> {
-          Logger.w(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
-          releaseEglSurface()
-        }
+    mapboxRenderer.render()
+    // assuming render event queue holds user's runnables with OpenGL ES commands
+    // it makes sense to execute them after drawing a map but before swapping buffers
+    // **note** this queue also holds snapshot tasks
+    drainQueue(renderEventQueue)
+    when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
+      EGL10.EGL_SUCCESS -> {}
+      EGL11.EGL_CONTEXT_LOST -> {
+        Logger.w(TAG, "Context lost. Waiting for re-acquire")
+        releaseEgl()
+      }
+      else -> {
+        Logger.w(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
+        releaseEglSurface()
       }
     }
     val actualEndRenderTimeNs = SystemClock.elapsedRealtimeNanos()
@@ -219,43 +259,46 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun releaseEglSurface() {
-    eglSurface?.let {
-      eglCore.releaseSurface(it)
-    }
-    eglSurface = null
+    eglCore.releaseSurface(eglSurface)
+    eglContextCreated = false
+    eglSurface = eglCore.eglNoSurface
   }
 
   private fun releaseAll() {
-    mapboxRenderer.onSurfaceDestroyed()
-    nativeRenderCreated = false
+    renderDestroyCallChain = true
+    mapboxRenderer.destroyRenderer()
+    renderDestroyCallChain = false
+    renderCreated = false
     releaseEgl()
     surface?.release()
   }
 
   private fun prepareRenderFrame(creatingSurface: Boolean = false) {
+    // no need to do anything if we're waiting for next VSYNC already
+    if (awaitingNextVsync) {
+      return
+    }
     // Check first if we have to stop rendering at all (even if there was no EGL config) and cleanup EGL.
     // We need to check it ASAP in order not to block thread that is calling `onSurfaceTextureDestroyed`.
     // After that check MapView could be actually rendered on this device (has valid EGL config).
     // After that we check if activity / fragment is paused.
-    if (shouldExit || nativeRenderNotSupported || paused) {
-      if (paused) {
-        needRenderOnResume = true
-      }
+    if (renderNotSupported || paused) {
       // at least on Android 8 devices we create surface before Activity#onStart
       // so we need to proceed to EGL creation in any case to avoid deadlock
       if (!creatingSurface) {
         return
       }
     }
-    if (!checkSurfaceReady(creatingSurface)) {
-      return
+    // check for creatingSurface flag to make sure we don't hit deadlock
+    if (creatingSurface || !renderThreadPrepared) {
+      val renderThreadPreparedOk = setUpRenderThread(creatingSurface)
+      if (!renderThreadPreparedOk) {
+        return
+      }
     }
     checkSurfaceSizeChanged()
-    drainQueue(renderEventQueue)
-    // listen to next VSYNC event if not listening already
-    if (awaitingNextVsync.compareAndSet(false, true)) {
-      Choreographer.getInstance().postFrameCallback(this)
-    }
+    Choreographer.getInstance().postFrameCallback(this)
+    awaitingNextVsync = true
   }
 
   @UiThread
@@ -276,12 +319,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       // in some situations `destroy` is called earlier than onSurfaceDestroyed - in that case no need to clean up
       if (renderHandlerThread.started) {
         renderHandlerThread.post {
-          awaitingNextVsync.set(false)
+          awaitingNextVsync = false
           Choreographer.getInstance().removeFrameCallback(this)
-          shouldExit = true
           lock.withLock {
             // TODO https://github.com/mapbox/mapbox-maps-android/issues/607
-            if (nativeRenderCreated && mapboxRenderer is MapboxTextureViewRenderer) {
+            if (renderCreated && mapboxRenderer is MapboxTextureViewRenderer) {
               releaseAll()
             } else {
               releaseEglSurface()
@@ -294,23 +336,29 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
+  @WorkerThread
+  internal fun processAndroidSurface(surface: Surface, width: Int, height: Int) {
+    if (this.surface != surface) {
+      if (this.surface != null) {
+        releaseEgl()
+        this.surface?.release()
+      }
+      this.surface = surface
+    }
+    this.width = width
+    this.height = height
+    renderEventQueue.removeAll { it.eventType == EventType.SDK }
+    nonRenderEventQueue.removeAll { it.eventType == EventType.SDK }
+    // we do not want to clear render events scheduled by user
+    renderHandlerThread.clearMessageQueue(clearAll = false)
+    prepareRenderFrame(creatingSurface = true)
+  }
+
   @UiThread
   fun onSurfaceCreated(surface: Surface, width: Int, height: Int) {
     lock.withLock {
       renderHandlerThread.post {
-        if (this.surface != surface) {
-          releaseEgl()
-          this.surface?.release()
-          this.surface = surface
-        }
-        this.width = width
-        this.height = height
-        shouldExit = false
-        eventQueue.clear()
-        renderEventQueue.clear()
-        snapshotQueue.clear()
-        renderHandlerThread.clearMessageQueue()
-        prepareRenderFrame(creatingSurface = true)
+        processAndroidSurface(surface, width, height)
       }
       createCondition.await()
     }
@@ -318,72 +366,79 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   @AnyThread
   fun setMaximumFps(fps: Int) {
-    renderTimeNs.set(ONE_SECOND_NS / fps)
+    renderTimeNs = ONE_SECOND_NS / fps
   }
 
   @WorkerThread
   override fun doFrame(frameTimeNanos: Long) {
-    try {
-      awaitingNextVsync.set(false)
-      if (eglPrepared && !paused && !shouldExit) {
-        draw()
+    // it makes sense to draw not only when EGL config is prepared but when native renderer is created
+    if (renderThreadPrepared && !paused) {
+      draw()
+    }
+    // we drain queue despite buffers swapped or not
+    drainQueue(nonRenderEventQueue)
+    awaitingNextVsync = false
+  }
+
+  @AnyThread
+  fun queueRenderEvent(renderEvent: RenderEvent) {
+    if (renderEvent.needRender) {
+      renderEvent.runnable?.let {
+        renderEventQueue.add(renderEvent)
       }
-    } finally {
-      // regardless if we did drawing or not execute all non gl relative events
-      drainQueue(eventQueue)
+      // in case of native Mapbox events we schedule render event only when we're fully ready for render
+      if (renderEvent.eventType == EventType.SDK) {
+        if (renderThreadPrepared) {
+          postPrepareRenderFrame()
+        }
+      } else {
+        postPrepareRenderFrame()
+      }
+    } else {
+      // no sense in scheduling non-render SDK tasks if thread is not fully ready for render
+      // as render thread SDK tasks queue will be cleared when new surface will arrive
+      if (renderEvent.eventType == EventType.SDK) {
+        if (renderThreadPrepared) {
+          postNonRenderEvent(renderEvent)
+        }
+      } else {
+        postNonRenderEvent(renderEvent)
+      }
     }
   }
 
-  // MapRenderer delegate methods
-
-  @AnyThread
-  fun requestRender() {
-    postPrepareRenderFrame()
-  }
-
-  @AnyThread
-  fun queueRenderEvent(runnable: Runnable) {
-    renderEventQueue.add(runnable)
-    postPrepareRenderFrame()
-  }
-
-  @AnyThread
-  fun queueSnapshot(performSnapshotTask: Runnable) {
-    snapshotQueue.add(performSnapshotTask)
-    postPrepareRenderFrame()
-  }
-
-  @AnyThread
-  fun queueEvent(runnable: Runnable) {
+  private fun postNonRenderEvent(renderEvent: RenderEvent, delayMillis: Long = 0L) {
     // if we already waiting listening for next VSYNC then add runnable to queue to execute
     // after actual drawing otherwise execute asap on render thread
-    if (awaitingNextVsync.get()) {
-      eventQueue.add(runnable)
+    if (awaitingNextVsync) {
+      nonRenderEventQueue.add(renderEvent)
     } else {
-      renderHandlerThread.post {
-        // at the time we start executing surface may be already destroyed
-        if (!shouldExit) {
-          runnable.run()
-        }
-      }
+      renderHandlerThread.postDelayed(
+        {
+          if (renderThreadPrepared || renderEvent.eventType == EventType.DESTROY_RENDERER) {
+            renderEvent.runnable?.run()
+          } else {
+            Logger.w(TAG, "Non-render event could not be run, retrying in $RETRY_DELAY_MS ms...")
+            postNonRenderEvent(renderEvent, delayMillis = RETRY_DELAY_MS)
+          }
+        },
+        delayMillis,
+        renderEvent.eventType
+      )
     }
   }
 
   @UiThread
   fun pause() {
-    renderHandlerThread.post {
-      paused = true
-    }
+    paused = true
   }
 
   @UiThread
   fun resume() {
-    renderHandlerThread.post {
-      paused = false
-      if (needRenderOnResume) {
-        prepareRenderFrame()
-        needRenderOnResume = false
-      }
+    paused = false
+    // schedule render if we resume not after first create (e.g. bring map back to front)
+    if (renderThreadPrepared) {
+      postPrepareRenderFrame()
     }
   }
 
@@ -394,10 +449,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       if (renderHandlerThread.started) {
         renderHandlerThread.post {
           lock.withLock {
-            if (nativeRenderCreated) {
+            if (renderCreated) {
               releaseAll()
             }
-            renderHandlerThread.clearMessageQueue()
+            renderHandlerThread.clearMessageQueue(clearAll = true)
             destroyCondition.signal()
           }
         }
@@ -408,9 +463,35 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     mapboxRenderer.map = null
   }
 
+  private fun drainQueue(originalQueue: ConcurrentLinkedQueue<RenderEvent>) {
+    if (originalQueue.isNotEmpty()) {
+      // we iterate over immutable copy in order to avoid executing recursive tasks
+      val localQueueCopy = LinkedList(originalQueue)
+      // clear original queue before executing
+      originalQueue.clear()
+      localQueueCopy.forEach {
+        it.runnable?.run()
+      }
+      // recursive tasks (if any) were added to the original queue - post draining them in new callchain
+      if (originalQueue.isNotEmpty()) {
+        renderHandlerThread.post {
+          if (renderThreadPrepared) {
+            drainQueue(originalQueue)
+          }
+        }
+      }
+    }
+  }
+
   companion object {
     private const val TAG = "Mbgl-RenderThread"
     private val ONE_SECOND_NS = 10.0.pow(9.0).toLong()
     private val ONE_MILLISECOND_NS = 10.0.pow(6.0).toLong()
+
+    /**
+     * If we hit some issue caused by invalid state (most likely caused by GPU driver) we start
+     * rescheduling configuration with that delay in order not to overflood handler thread message queue.
+     */
+    internal const val RETRY_DELAY_MS = 50L
   }
 }

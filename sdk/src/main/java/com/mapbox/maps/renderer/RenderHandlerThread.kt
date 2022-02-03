@@ -2,6 +2,7 @@ package com.mapbox.maps.renderer
 
 import android.os.Handler
 import android.os.HandlerThread
+import android.os.Message
 import android.os.Process.THREAD_PRIORITY_DISPLAY
 import androidx.annotation.VisibleForTesting
 import com.mapbox.common.Logger
@@ -17,8 +18,14 @@ internal class RenderHandlerThread {
     get() = handlerThread.isAlive
 
   fun post(task: () -> Unit) {
+    postDelayed(task, 0, EventType.SDK)
+  }
+
+  fun postDelayed(task: () -> Unit, delayMillis: Long, eventType: EventType = EventType.SDK) {
     handler?.let {
-      it.post { task.invoke() }
+      val message = Message.obtain(it, task)
+      message.obj = eventType
+      it.sendMessageDelayed(message, delayMillis)
     } ?: Logger.w(TAG, "Thread $HANDLE_THREAD_NAME was not started, ignoring event")
   }
 
@@ -39,8 +46,12 @@ internal class RenderHandlerThread {
     }
   }
 
-  fun clearMessageQueue() {
-    handler?.removeCallbacksAndMessages(null)
+  fun clearMessageQueue(clearAll: Boolean = true) {
+    if (clearAll) {
+      handler?.removeCallbacksAndMessages(null)
+    } else {
+      handler?.removeCallbacksAndMessages(EventType.SDK)
+    }
   }
 
   companion object {

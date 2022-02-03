@@ -60,18 +60,44 @@ internal abstract class MapboxRenderer : MapClient {
 
   @AnyThread
   override fun scheduleRepaint() {
-    renderThread.requestRender()
+    renderThread.queueRenderEvent(renderEventSdk)
   }
 
   @AnyThread
   override fun scheduleTask(task: Task) {
-    renderThread.queueEvent {
-      task.run()
-    }
+    renderThread.queueRenderEvent(
+      RenderEvent(
+        runnable = { task.run() },
+        needRender = false,
+        eventType = if (renderThread.renderDestroyCallChain) EventType.DESTROY_RENDERER else EventType.SDK
+      )
+    )
+  }
+
+  @AnyThread
+  fun queueRenderEvent(runnable: Runnable) {
+    renderThread.queueRenderEvent(
+      RenderEvent(
+        runnable = runnable,
+        needRender = true,
+        eventType = EventType.OTHER
+      )
+    )
+  }
+
+  @AnyThread
+  fun queueEvent(runnable: Runnable) {
+    renderThread.queueRenderEvent(
+      RenderEvent(
+        runnable = runnable,
+        needRender = false,
+        eventType = EventType.OTHER
+      )
+    )
   }
 
   @WorkerThread
-  fun onSurfaceCreated() {
+  fun createRenderer() {
     map?.createRenderer()
   }
 
@@ -86,14 +112,15 @@ internal abstract class MapboxRenderer : MapClient {
   }
 
   @WorkerThread
-  fun onSurfaceDestroyed() {
+  fun destroyRenderer() {
     map?.destroyRenderer()
+    // additionally it's correct moment to release pixel reader while we still have EGL context
     pixelReader?.release()
     pixelReader = null
   }
 
   @WorkerThread
-  fun onDrawFrame() {
+  fun render() {
     map?.render()
   }
 
@@ -110,16 +137,6 @@ internal abstract class MapboxRenderer : MapClient {
     map?.subscribe(observer, listOf(MapEvents.RENDER_FRAME_FINISHED))
   }
 
-  @AnyThread
-  fun queueRenderEvent(runnable: Runnable) {
-    renderThread.queueRenderEvent(runnable)
-  }
-
-  @AnyThread
-  fun queueEvent(runnable: Runnable) {
-    renderThread.queueEvent(runnable)
-  }
-
   @WorkerThread
   fun snapshot(): Bitmap? {
     if (!readyForSnapshot.get()) {
@@ -130,12 +147,18 @@ internal abstract class MapboxRenderer : MapClient {
     val waitCondition = lock.newCondition()
     lock.withLock {
       var snapshot: Bitmap? = null
-      renderThread.queueSnapshot {
-        lock.withLock {
-          snapshot = performSnapshot()
-          waitCondition.signal()
-        }
-      }
+      renderThread.queueRenderEvent(
+        RenderEvent(
+          runnable = {
+            lock.withLock {
+              snapshot = performSnapshot()
+              waitCondition.signal()
+            }
+          },
+          needRender = true,
+          eventType = EventType.SDK
+        )
+      )
       waitCondition.await(1, TimeUnit.SECONDS)
       return snapshot
     }
@@ -147,9 +170,13 @@ internal abstract class MapboxRenderer : MapClient {
       Logger.e(TAG, "Could not take map snapshot because map is not ready yet.")
       listener.onSnapshotReady(null)
     }
-    renderThread.queueSnapshot {
-      listener.onSnapshotReady(performSnapshot())
-    }
+    renderThread.queueRenderEvent(
+      RenderEvent(
+        runnable = { listener.onSnapshotReady(performSnapshot()) },
+        needRender = true,
+        eventType = EventType.SDK
+      )
+    )
   }
 
   @AnyThread
@@ -204,5 +231,7 @@ internal abstract class MapboxRenderer : MapClient {
 
   companion object {
     private const val TAG = "Mbgl-Renderer"
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal val renderEventSdk = RenderEvent(null, true, EventType.SDK)
   }
 }
