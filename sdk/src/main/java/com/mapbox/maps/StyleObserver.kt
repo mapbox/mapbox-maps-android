@@ -20,7 +20,7 @@ internal class StyleObserver(
 ) : OnStyleLoadedListener, OnMapLoadErrorListener {
 
   @Volatile
-  private var loadStyleListener : Style.OnStyleLoaded? = null
+  private var loadStyleListener: Style.OnStyleLoaded? = null
   @Volatile
   private var loadStyleErrorListener: OnMapLoadErrorListener? = null
 
