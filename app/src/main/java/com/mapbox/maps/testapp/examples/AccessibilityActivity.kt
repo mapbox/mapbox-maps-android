@@ -2,7 +2,6 @@ package com.mapbox.maps.testapp.examples
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
@@ -61,12 +60,22 @@ class AccessibilityActivity: AppCompatActivity(), OnCameraChangeListener, OnMapI
     mapView.onDestroy()
   }
 
+  override fun onCameraChanged(eventData: CameraChangedEventData) {
+    onScreenFeatures = null
+
+    // TODO: Currently this implementation doesn't account for scrolling the camera, virtual
+    //  view Ids likely needs to be cleared and re-instantiated, and focus reset.
+  }
+
   override fun onMapIdle(eventData: MapIdleEventData) {
     mapboxMap.queryRenderedFeatures(
       RenderedQueryGeometry(
         ScreenBox(
           ScreenCoordinate(mapViewDrawingRect.left.toDouble(), mapViewDrawingRect.top.toDouble()),
-          ScreenCoordinate(mapViewDrawingRect.right.toDouble(), mapViewDrawingRect.bottom.toDouble()),
+          ScreenCoordinate(
+            mapViewDrawingRect.right.toDouble(),
+            mapViewDrawingRect.bottom.toDouble()
+          ),
         )
       ),
       RenderedQueryOptions(listOf(LAYER_ID), literal(true))
@@ -77,21 +86,20 @@ class AccessibilityActivity: AppCompatActivity(), OnCameraChangeListener, OnMapI
     }
   }
 
-  override fun onCameraChanged(eventData: CameraChangedEventData) {
-    onScreenFeatures = null
-  }
-
   private val exploreByTouchHelper by lazy {
     object : ExploreByTouchHelper(mapView) {
       override fun getVirtualViewAt(x: Float, y: Float): Int {
-        // TODO implement
-        return 1
+        // TODO: implement
+        return HOST_ID
       }
 
       override fun getVisibleVirtualViews(virtualViewIds: MutableList<Int>) {
         val featureCount = onScreenFeatures?.size ?: 0
 
-        // TODO right now we're simply using the indices as rendered by queryRenderedFeatures, for true accessibility support, we might want to sort these by location within the map relative to the bearing, so the user can navigate through POIs in an order that makes sense (similar to a document)
+        // TODO: right now we're simply using the indices as rendered by queryRenderedFeatures,
+        //  for true accessibility support, we might want to sort these by location within the
+        //  map relative to the bearing, so the user can navigate through POIs in an order that
+        //  makes sense (similar to a document)
         for (i in 0 until featureCount) {
           virtualViewIds.add(i)
         }
@@ -107,7 +115,8 @@ class AccessibilityActivity: AppCompatActivity(), OnCameraChangeListener, OnMapI
           node.className = mapView::class.simpleName
           node.setParent(mapView)
 
-          // TODO: account for screen density, might also be able to more accurately query map for the icon's rendered size, to fit bounding box
+          // TODO: account for screen density, might also be able to more accurately query map
+          //  for the icon's rendered size, to fit bounding box
           node.setBoundsInParent(Rect().apply {
             top = screenCoordinate.y.toInt() - 25
             bottom = screenCoordinate.y.toInt() + 25
@@ -128,7 +137,9 @@ class AccessibilityActivity: AppCompatActivity(), OnCameraChangeListener, OnMapI
         arguments: Bundle?
       ): Boolean {
         // do nothing
-        // TODO eventually do something, potentially we could issue a fly to to center the map, with would then move some POIs off screen, and new POIs onto the screen. so we will want to account for this new order of accessibility nodes.
+        // TODO: eventually do something, potentially we could issue a fly to to center the map,
+        //  with would then move some POIs off screen, and new POIs onto the screen. so we will
+        //  want to account for this new order of accessibility nodes.
         return false
       }
 
