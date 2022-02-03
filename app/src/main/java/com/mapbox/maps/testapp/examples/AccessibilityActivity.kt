@@ -65,6 +65,8 @@ class AccessibilityActivity: AppCompatActivity(), OnCameraChangeListener, OnMapI
 
     // TODO: Currently this implementation doesn't account for scrolling the camera, virtual
     //  view Ids likely needs to be cleared and re-instantiated, and focus reset.
+    //  Two finger scrolling the map, and then swiping too the right to focus the next feature
+    //  causes an array out of bound exception
   }
 
   override fun onMapIdle(eventData: MapIdleEventData) {
