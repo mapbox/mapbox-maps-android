@@ -25,22 +25,6 @@ enum class ScrollMode(val value: String) {
 }
 
 /**
- * The enum controls how the puck is oriented
- *
- * @param value String value of this property
- */
-enum class PuckBearingSource(val value: String) {
-  /**
-   * Orients the puck to match the direction in which the device is facing.
-   */
-  HEADING("heading"),
-  /**
-   * Orients the puck to match the direction in which the device is moving.
-   */
-  COURSE("course"),
-}
-
-/**
  * Sealed class representing a location-puck.
  */
 sealed class LocationPuck

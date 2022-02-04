@@ -12,21 +12,17 @@ import com.mapbox.android.core.location.LocationEngineResult
 import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
-import com.mapbox.maps.plugin.PuckBearingSource
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArrayList
 
 /**
  * Default Location Provider implementation, it can be overwritten by users.
  */
-internal class LocationProviderImpl(context: Context, var settings: LocationComponentSettings) :
-  LocationProvider,
-  LocationEngineCallback<LocationEngineResult>,
-  LocationCompassEngine.CompassListener {
+internal class LocationProviderImpl(context: Context) :
+  LocationProvider, LocationEngineCallback<LocationEngineResult> {
   private val contextWeekRef: WeakReference<Context> = WeakReference(context)
   private val locationEngine = LocationEngineProvider.getBestLocationEngine(context)
-  private val locationCompassEngine = LocationCompassEngine(context)
+
   private val locationEngineRequest =
     LocationEngineRequest.Builder(LocationComponentConstants.DEFAULT_INTERVAL_MILLIS)
       .setFastestInterval(LocationComponentConstants.DEFAULT_FASTEST_INTERVAL_MILLIS)
@@ -34,14 +30,10 @@ internal class LocationProviderImpl(context: Context, var settings: LocationComp
       .build()
 
   private val locationConsumers = CopyOnWriteArrayList<LocationConsumer>()
-  private var currentPuckBearingSource: PuckBearingSource = PuckBearingSource.COURSE
+
   private var handler: Handler? = null
   private lateinit var runnable: Runnable
   private var updateDelay = INIT_UPDATE_DELAY
-
-  init {
-    updateCompass()
-  }
 
   @SuppressLint("MissingPermission")
   private fun requestLocationUpdates() {
@@ -70,31 +62,7 @@ internal class LocationProviderImpl(context: Context, var settings: LocationComp
   private fun notifyLocationUpdates(location: Location) {
     locationConsumers.forEach { consumer ->
       consumer.onLocationUpdated(Point.fromLngLat(location.longitude, location.latitude))
-      if (currentPuckBearingSource == PuckBearingSource.COURSE) {
-        consumer.onBearingUpdated(location.bearing.toDouble())
-      }
-    }
-  }
-
-  fun updateSettings(settings: LocationComponentSettings) {
-    this.settings = settings
-    updateCompass()
-  }
-
-  private fun updateCompass() {
-    if (settings.puckBearingSource == currentPuckBearingSource) {
-      return
-    }
-    when (settings.puckBearingSource) {
-      PuckBearingSource.HEADING -> locationCompassEngine.addCompassListener(this)
-      PuckBearingSource.COURSE -> locationCompassEngine.removeCompassListener(this)
-    }
-    currentPuckBearingSource = settings.puckBearingSource
-  }
-
-  override fun onCompassChanged(userHeading: Float) {
-    locationConsumers.forEach { consumer ->
-      consumer.onBearingUpdated(userHeading.toDouble())
+      consumer.onBearingUpdated(location.bearing.toDouble())
     }
   }
 

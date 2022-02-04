@@ -20,9 +20,6 @@
     <!-- Sets the id of the layer that's added below to when placing the component on the map. -->
     <public name="mapbox_locationComponentLayerBelow" type="attr" />
 
-    <!-- The enum controls how the puck is oriented -->
-    <public name="mapbox_locationComponentPuckBearingSource" type="attr" />
-
     <!-- Location puck definitions for location_puck_2_d.  -->
 
     <!-- Name of image in sprite to use as the top of the location indicator. -->
