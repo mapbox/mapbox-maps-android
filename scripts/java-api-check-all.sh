@@ -4,6 +4,8 @@ set -Eeuo pipefail
 # Usage:
 #   ./java-api-check-all.sh <current release tag (empty for branches)>
 #
+# Note: if run locally, execute `mbx env` and `./gradlew assembleRelease` first.
+#
 CURRENT_DIR=$(dirname "$0")
 MAJOR_CHANGE_FILE=${CURRENT_DIR}/../api_compat_report/major.txt
 [ -e $MAJOR_CHANGE_FILE ] && rm $MAJOR_CHANGE_FILE

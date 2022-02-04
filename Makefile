@@ -28,7 +28,7 @@ build:
 	./gradlew plugin-lifecycle:assembleRelease;
 
 # Use `make checkApi TAG=ReleaseTag` to check the release tag or `make checkApi` to check current branch while running locally.
-# Note: if run locally, execute `mbx env` first.
+# Note: if run locally, execute `mbx env` and `./gradlew assembleRelease` first.
 .PHONY: checkApi
 checkApi:
 	unset GITHUB_TOKEN; \
