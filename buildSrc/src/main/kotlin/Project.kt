@@ -13,6 +13,8 @@ object Plugins {
   const val mapboxAccessToken = "com.mapbox.gradle.plugins:access-token:${Versions.mapboxAccessToken}"
   const val mapboxSdkRegistry = "com.mapbox.gradle.plugins:sdk-registry:${Versions.mapboxSdkRegistry}"
   const val mapboxSdkVersionsPlugin = "com.mapbox.mapboxsdk:mapbox-android-sdk-versions:${Versions.mapboxSdkVersionsPlugin}"
+  const val dokkaId = "org.jetbrains.dokka"
+  const val binaryCompatibilityValidatorId = "org.jetbrains.kotlinx.binary-compatibility-validator"
 }
 
 object Dependencies {
@@ -74,6 +76,7 @@ object Versions {
   const val pluginLicense = "0.8.5"
   const val pluginDokka =  "1.4.10.2"
   const val pluginJacoco = "0.2"
+  const val pluginBinaryCompatibilityValidator = "0.8.0"
   const val mapboxAccessToken="0.2.1"
   const val mapboxSdkRegistry="0.4.0"
   const val mapboxGestures = "0.7.0"

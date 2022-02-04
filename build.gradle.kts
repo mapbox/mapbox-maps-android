@@ -50,7 +50,8 @@ allprojects {
 }
 
 plugins {
-  id("org.jetbrains.dokka") version Versions.pluginDokka
+  id(Plugins.dokkaId) version Versions.pluginDokka
+  id(Plugins.binaryCompatibilityValidatorId) version Versions.pluginBinaryCompatibilityValidator
 }
 repositories {
   maven(url = "https://dl.bintray.com/kotlin/dokka")
@@ -60,4 +61,35 @@ tasks.withType<org.jetbrains.dokka.gradle.DokkaTask>().configureEach {
 }
 tasks.withType<Test> {
   maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).takeIf { it > 0 } ?: 1
+}
+
+apiValidation {
+  /**
+   * Packages that are excluded from public API dumps even if they
+   * contain public API.
+   */
+//  ignoredPackages.add("kotlinx.coroutines.internal")
+
+  /**
+   * Sub-projects that are excluded from API validation
+   */
+  ignoredProjects.addAll(listOf("extension-style-app", "android-auto-app", "app"))
+
+  /**
+   * Classes (fully qualified) that are excluded from public API dumps even if they
+   * contain public API.
+   */
+//  ignoredClasses.add("com.company.BuildConfig")
+
+  /**
+   * Set of annotations that exclude API from being public.
+   * Typically, it is all kinds of `@InternalApi` annotations that mark
+   * effectively private API that cannot be actually private for technical reasons.
+   */
+//  nonPublicMarkers.add("com.mapbox.maps.MapboxExperimental")
+
+  /**
+   * Flag to programmatically disable compatibility validator
+   */
+  validationDisabled = false
 }
