@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -Eeuxo pipefail
+set -Eeuo pipefail
 
 # Usage:
 #   ./java-api-check.sh <current release tag (empty for branches)> <path to current aar> <module name> <optional, path to previously released aar>
@@ -140,7 +140,7 @@ compare_aars() {
         -D revapi.java.non-public-part-of-api.report-unchanged=false \
         -D revapi.reporter.json.minSeverity=EQUIVALENT \
         -D revapi.reporter.json.output="${json_report}" \
-        -D revapi.reporter.text.minSeverity=NON_BREAKING \
+        -D revapi.reporter.text.minSeverity=BREAKING \
         -D revapi.reporter.text.output="${REPORT_DIR}/api_compat.txt" \
         -c ${CURRENT_DIR}/java-api-check.json \
         >&2
@@ -163,7 +163,8 @@ rm -rf "${TMPDIR}"
 echo "Compare result: $api_compat"
 
 if [[ $api_compat == major ]]; then
-  echo "${MODULE_NAME} " >> "${MAJOR_CHANGE_FILE}"
+  echo "======================== ${MODULE_NAME} ========================" >> "${MAJOR_CHANGE_FILE}"
+  cat ${REPORT_DIR}/api_compat.txt >> "${MAJOR_CHANGE_FILE}"
 fi
 
 "${CURRENT_DIR}"/semver-check.sh "${TAGGED_RELEASE_VERSION}" "${LAST_VERSION}" "${api_compat}"
