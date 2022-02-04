@@ -14,13 +14,6 @@
         <attr name="mapbox_locationComponentLayerAbove" format="string"/>
         <!-- Sets the id of the layer that's added below to when placing the component on the map. -->
         <attr name="mapbox_locationComponentLayerBelow" format="string"/>
-        <!-- The enum controls how the puck is oriented -->
-        <attr name="mapbox_locationComponentPuckBearingSource" format="enum">
-          <!-- Orients the puck to match the direction in which the device is facing. -->
-          <enum name="heading" value="0"/>
-          <!-- Orients the puck to match the direction in which the device is moving. -->
-          <enum name="course" value="1"/>
-        </attr>
         <!-- Defines what the customised look of the location puck. -->
         <attr name="mapbox_locationComponentLocationPuck" format="enum">
           <!--  -->

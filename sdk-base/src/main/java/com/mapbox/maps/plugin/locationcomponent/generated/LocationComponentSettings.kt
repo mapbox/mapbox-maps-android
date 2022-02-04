@@ -4,7 +4,6 @@ package com.mapbox.maps.plugin.locationcomponent.generated
 
 import android.graphics.Color
 import com.mapbox.maps.plugin.LocationPuck
-import com.mapbox.maps.plugin.PuckBearingSource
 /**
  * Shows a location puck on the map.
  */
@@ -39,11 +38,6 @@ data class LocationComponentSettings @JvmOverloads constructor(
    * Sets the id of the layer that's added below to when placing the component on the map.
    */
   var layerBelow: String? = null,
-
-  /**
-   * The enum controls how the puck is oriented
-   */
-  var puckBearingSource: PuckBearingSource = PuckBearingSource.HEADING,
 
   /**
    * Defines what the customised look of the location puck.
