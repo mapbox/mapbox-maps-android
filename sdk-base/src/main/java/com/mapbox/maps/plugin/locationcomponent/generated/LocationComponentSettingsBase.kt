@@ -3,7 +3,6 @@
 package com.mapbox.maps.plugin.locationcomponent.generated
 
 import com.mapbox.maps.plugin.LocationPuck
-import com.mapbox.maps.plugin.PuckBearingSource
 
 /**
  * Abstract settings class for LocationComponentPlugin.
@@ -109,18 +108,6 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
     set(value) {
       this.internalSettings.layerBelow = value
-      applySettings()
-    }
-
-  /**
-   * The enum controls how the puck is oriented
-   */
-  override var puckBearingSource: PuckBearingSource
-    get() {
-      return this.internalSettings.puckBearingSource
-    }
-    set(value) {
-      this.internalSettings.puckBearingSource = value
       applySettings()
     }
 
