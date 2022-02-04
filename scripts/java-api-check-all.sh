@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 
-set -Eeuxo pipefail
+set -Eeuo pipefail
 # Usage:
 #   ./java-api-check-all.sh <current release tag (empty for branches)>
 #
+# Note: if run locally, execute `mbx env` and `./gradlew assembleRelease` first.
+#
 CURRENT_DIR=$(dirname "$0")
 MAJOR_CHANGE_FILE=${CURRENT_DIR}/../api_compat_report/major.txt
+[ -e $MAJOR_CHANGE_FILE ] && rm $MAJOR_CHANGE_FILE
 REVAPI=`mktemp -d`
 mkdir -p "${REVAPI}"
 
@@ -44,7 +47,11 @@ rm -rf "${REVAPI}"
 
 # Fail the job when there is major changes.
 if [[ -f "$MAJOR_CHANGE_FILE" ]]; then
-  echo "Potential major level breaking change found:"
+  echo ""
+  echo "*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***"
+  echo "*** *** *** ***         Potential major level breaking change found         *** *** *** ***"
+  echo "*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***"
+  echo ""
   cat "$MAJOR_CHANGE_FILE"
   exit 1
 fi

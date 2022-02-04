@@ -28,12 +28,14 @@ build:
 	./gradlew plugin-lifecycle:assembleRelease;
 
 # Use `make checkApi TAG=ReleaseTag` to check the release tag or `make checkApi` to check current branch while running locally.
+# Note: if run locally, execute `mbx env` and `./gradlew assembleRelease` first.
 .PHONY: checkApi
 checkApi:
 	unset GITHUB_TOKEN; \
 	echo "$(shell mbx-ci github reader token)" > gh_token.txt;\
 	sh scripts/java-api-check-all.sh "$(TAG)"
 
+# Note: if run locally, execute `mbx env` first.
 .PHONY: checkChangelog
 checkChangelog:
 	unset GITHUB_TOKEN; \
@@ -77,6 +79,7 @@ generate-changelog:
 
 # Use `make update-android-docs TAG=YourReleaseTag` while running locally.
 # Run `make prepare-release-doc` first in the internal repository,
+# Note: if run locally, execute `mbx env` first.
 .PHONY: update-android-docs
 update-android-docs:
 	unset GITHUB_TOKEN; \
