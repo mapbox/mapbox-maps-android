@@ -1,0 +1,30 @@
+public final class com/mapbox/maps/plugin/overlay/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public static final field VERSION_CODE I
+	public static final field VERSION_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class com/mapbox/maps/plugin/overlay/MapOverlayPluginImpl : com/mapbox/maps/plugin/overlay/MapOverlayPlugin {
+	public fun <init> ()V
+	public fun cleanup ()V
+	public fun getEdgeInsets ()Lcom/mapbox/maps/EdgeInsets;
+	public fun initialize ()V
+	public fun onDelegateProvider (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+	public fun onSizeChanged (II)V
+	public fun reframe (Lcom/mapbox/maps/plugin/overlay/OnReframeFinished;)V
+	public fun registerMapOverlayCoordinatesProvider (Lcom/mapbox/maps/plugin/overlay/MapOverlayCoordinatesProvider;)V
+	public fun registerOverlay (Landroid/view/View;)V
+	public fun registerOverlays (Ljava/util/List;)V
+	public fun setDisplayingAreaMargins (IIII)V
+	public fun unregisterMapOverlayCoordinatesProvider ()V
+	public fun unregisterOverlay (Landroid/view/View;)V
+	public fun unregisterOverlays (Ljava/util/List;)V
+}
+
+public final class com/mapbox/maps/plugin/overlay/MapOverlayUtils {
+	public static final fun getOverlay (Lcom/mapbox/maps/plugin/delegates/MapPluginProviderDelegate;)Lcom/mapbox/maps/plugin/overlay/MapOverlayPlugin;
+}
+

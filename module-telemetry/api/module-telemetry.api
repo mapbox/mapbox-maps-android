@@ -1,0 +1,30 @@
+public final class com/mapbox/maps/module/telemetry/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public static final field MAPBOX_EVENTS_USER_AGENT Ljava/lang/String;
+	public static final field MAPBOX_SDK_IDENTIFIER Ljava/lang/String;
+	public static final field MAPBOX_SDK_VERSION Ljava/lang/String;
+	public static final field MAPBOX_VERSION_STRING Ljava/lang/String;
+	public static final field VERSION_CODE I
+	public static final field VERSION_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class com/mapbox/maps/module/telemetry/MapTelemetryImpl : com/mapbox/maps/module/MapTelemetry {
+	public fun <init> (Landroid/content/Context;Ljava/lang/String;)V
+	public fun <init> (Lcom/mapbox/android/telemetry/MapboxTelemetry;Landroid/content/Context;Ljava/lang/String;)V
+	public fun disableTelemetrySession ()V
+	public fun onAppUserTurnstileEvent ()V
+	public fun onPerformanceEvent (Landroid/os/Bundle;)V
+	public fun setDebugLoggingEnabled (Z)V
+	public fun setSessionIdRotationInterval (I)Z
+	public fun setUserTelemetryRequestState (Z)V
+}
+
+public final class com/mapbox/module/Mapbox_MapTelemetryModuleConfiguration {
+	public static final field INSTANCE Lcom/mapbox/module/Mapbox_MapTelemetryModuleConfiguration;
+	public static final fun getEnableConfiguration ()Z
+	public static final fun getImplClass ()Ljava/lang/Class;
+}
+

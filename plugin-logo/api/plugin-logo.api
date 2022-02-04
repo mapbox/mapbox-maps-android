@@ -1,0 +1,40 @@
+public final class com/mapbox/maps/plugin/logo/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public static final field VERSION_CODE I
+	public static final field VERSION_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class com/mapbox/maps/plugin/logo/LogoUtils {
+	public static final fun getLogo (Lcom/mapbox/maps/plugin/delegates/MapPluginProviderDelegate;)Lcom/mapbox/maps/plugin/logo/LogoPlugin;
+}
+
+public final class com/mapbox/maps/plugin/logo/LogoViewImpl : androidx/appcompat/widget/AppCompatImageView, com/mapbox/maps/plugin/logo/LogoView {
+	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+	public fun getLogoEnabled ()Z
+	public fun getLogoGravity ()I
+	public fun setLogoEnabled (Z)V
+	public fun setLogoGravity (I)V
+	public fun setLogoMargins (IIII)V
+}
+
+public class com/mapbox/maps/plugin/logo/LogoViewPlugin : com/mapbox/maps/plugin/logo/generated/LogoSettingsBase, com/mapbox/maps/plugin/logo/LogoPlugin {
+	public fun <init> ()V
+	public fun <init> (Lkotlin/jvm/functions/Function1;)V
+	public synthetic fun <init> (Lkotlin/jvm/functions/Function1;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	protected fun applySettings ()V
+	public fun bind (Landroid/widget/FrameLayout;Landroid/util/AttributeSet;F)Landroid/view/View;
+	public fun cleanup ()V
+	public fun getEnabled ()Z
+	protected fun getInternalSettings ()Lcom/mapbox/maps/plugin/logo/generated/LogoSettings;
+	public fun initialize ()V
+	public fun onDelegateProvider (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+	public fun onPluginView (Landroid/view/View;)V
+	public fun setEnabled (Z)V
+	protected fun setInternalSettings (Lcom/mapbox/maps/plugin/logo/generated/LogoSettings;)V
+}
+

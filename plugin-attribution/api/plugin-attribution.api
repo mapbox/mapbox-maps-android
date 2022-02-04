@@ -1,0 +1,55 @@
+public final class com/mapbox/maps/plugin/attribution/AttributionDialogManagerImpl : android/content/DialogInterface$OnClickListener, com/mapbox/maps/plugin/attribution/AttributionDialogManager {
+	public static final field Companion Lcom/mapbox/maps/plugin/attribution/AttributionDialogManagerImpl$Companion;
+	public fun <init> (Landroid/content/Context;)V
+	public fun onClick (Landroid/content/DialogInterface;I)V
+	public fun onStop ()V
+	public fun showAttribution (Lcom/mapbox/maps/plugin/delegates/MapAttributionDelegate;)V
+}
+
+public final class com/mapbox/maps/plugin/attribution/AttributionDialogManagerImpl$Companion {
+}
+
+public final class com/mapbox/maps/plugin/attribution/AttributionPluginImplKt {
+	public static final fun getAttribution (Lcom/mapbox/maps/plugin/delegates/MapPluginProviderDelegate;)Lcom/mapbox/maps/plugin/attribution/AttributionPlugin;
+}
+
+public final class com/mapbox/maps/plugin/attribution/AttributionViewImpl : androidx/appcompat/widget/AppCompatImageView, com/mapbox/maps/plugin/attribution/AttributionView {
+	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun setAttributionMargins (IIII)V
+	public fun setEnable (Z)V
+	public fun setGravity (I)V
+	public fun setIconColor (I)V
+	public fun setViewOnClickListener (Landroid/view/View$OnClickListener;)V
+}
+
+public class com/mapbox/maps/plugin/attribution/AttributionViewPlugin : com/mapbox/maps/plugin/attribution/generated/AttributionSettingsBase, android/view/View$OnClickListener, com/mapbox/maps/plugin/attribution/AttributionPlugin {
+	public fun <init> ()V
+	public fun <init> (Lkotlin/jvm/functions/Function1;)V
+	public synthetic fun <init> (Lkotlin/jvm/functions/Function1;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	protected fun applySettings ()V
+	public fun bind (Landroid/widget/FrameLayout;Landroid/util/AttributeSet;F)Landroid/view/View;
+	public fun cleanup ()V
+	protected fun getInternalSettings ()Lcom/mapbox/maps/plugin/attribution/generated/AttributionSettings;
+	public fun getMapAttributionDelegate ()Lcom/mapbox/maps/plugin/delegates/MapAttributionDelegate;
+	public fun initialize ()V
+	public fun onClick (Landroid/view/View;)V
+	public fun onDelegateProvider (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+	public fun onPluginView (Landroid/view/View;)V
+	public fun onStart ()V
+	public fun onStop ()V
+	public fun setCustomAttributionDialogManager (Lcom/mapbox/maps/plugin/attribution/AttributionDialogManager;)V
+	protected fun setInternalSettings (Lcom/mapbox/maps/plugin/attribution/generated/AttributionSettings;)V
+}
+
+public final class com/mapbox/maps/plugin/attribution/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public static final field VERSION_CODE I
+	public static final field VERSION_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
