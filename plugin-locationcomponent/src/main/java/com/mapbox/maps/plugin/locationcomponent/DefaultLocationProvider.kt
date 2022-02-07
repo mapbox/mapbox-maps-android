@@ -159,30 +159,30 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
     }
   }
 
+  private class CurrentLocationEngineCallback(locationProvider: DefaultLocationProvider) :
+    LocationEngineCallback<LocationEngineResult> {
+    private val locationProviderWeakReference: WeakReference<DefaultLocationProvider> =
+      WeakReference(locationProvider)
+
+    override fun onSuccess(result: LocationEngineResult) {
+      result.lastLocation?.let { location ->
+        locationProviderWeakReference.get()?.let {
+          it.notifyLocationUpdates(location)
+        }
+      }
+    }
+
+    override fun onFailure(exception: Exception) {
+      Logger.e(
+        TAG,
+        "Failed to obtain location update: $exception"
+      )
+    }
+  }
+
   private companion object {
     private const val TAG = "MapboxLocationProvider"
     private const val INIT_UPDATE_DELAY = 100L
     private const val MAX_UPDATE_DELAY = 5000L
-
-    private class CurrentLocationEngineCallback(locationProviderImpl: LocationProviderImpl) :
-      LocationEngineCallback<LocationEngineResult> {
-      private val componentWeakReference: WeakReference<LocationProviderImpl> =
-        WeakReference(locationProviderImpl)
-
-      override fun onSuccess(result: LocationEngineResult) {
-        result.lastLocation?.let { location ->
-          componentWeakReference.get()?.let {
-            it.notifyLocationUpdates(location)
-          }
-        }
-      }
-
-      override fun onFailure(exception: Exception) {
-        Logger.e(
-          TAG,
-          "Failed to obtain location update: $exception"
-        )
-      }
-    }
   }
 }
