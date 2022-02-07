@@ -174,11 +174,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
             )
           )
         }
-        locationPuckManager?.let {
-          if (!it.isLayerInitialised()) {
-            it.initialize(style)
-          }
-        }
+        locationPuckManager?.initialize(style)
         locationPuckManager?.onStart()
         locationProvider?.registerLocationConsumer(this)
         isLocationComponentActivated = true

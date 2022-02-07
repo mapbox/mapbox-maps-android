@@ -49,20 +49,22 @@ internal class LocationPuckManager(
     }
 
   fun initialize(style: StyleInterface) {
-    animationManager.setUpdateListeners(onLocationUpdated, onBearingUpdated)
-    animationManager.setLocationLayerRenderer(locationLayerRenderer)
-    animationManager.applyPulsingAnimationSettings(settings)
-    locationLayerRenderer.addLayers(positionManager)
-    lastLocation?.let {
-      updateCurrentPosition(it)
-    }
-    updateCurrentBearing(lastBearing)
-    locationLayerRenderer.initializeComponents(style)
-    styleScaling(settings)
-    if (lastLocation != null && settings.enabled) {
-      show()
-    } else {
-      hide()
+    if (!locationLayerRenderer.isRendererInitialised()) {
+      animationManager.setUpdateListeners(onLocationUpdated, onBearingUpdated)
+      animationManager.setLocationLayerRenderer(locationLayerRenderer)
+      animationManager.applyPulsingAnimationSettings(settings)
+      locationLayerRenderer.addLayers(positionManager)
+      lastLocation?.let {
+        updateCurrentPosition(it)
+      }
+      updateCurrentBearing(lastBearing)
+      locationLayerRenderer.initializeComponents(style)
+      styleScaling(settings)
+      if (lastLocation != null && settings.enabled) {
+        show()
+      } else {
+        hide()
+      }
     }
   }
 

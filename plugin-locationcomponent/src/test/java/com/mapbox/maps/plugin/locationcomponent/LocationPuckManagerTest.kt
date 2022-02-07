@@ -260,6 +260,20 @@ class LocationPuckManagerTest {
     )
   }
 
+  @Test
+  fun testDoesntInitialiseIfRendererInitialised() {
+    every { locationLayerRenderer.isRendererInitialised() } returns true
+
+    locationPuckManager.initialize(style)
+
+    verify(exactly = 0) { animationManager.setLocationLayerRenderer(locationLayerRenderer) }
+    verify(exactly = 0) { animationManager.setUpdateListeners(any(), any()) }
+    verify(exactly = 0) { animationManager.applyPulsingAnimationSettings(settings) }
+    verify(exactly = 0) { locationLayerRenderer.addLayers(positionManager) }
+    verify(exactly = 0) { locationLayerRenderer.initializeComponents(style) }
+    verify(exactly = 0) { locationLayerRenderer.hide() }
+  }
+
   private companion object {
     const val MODEL_SCALE_CONSTANT = 2965820.800757861
   }

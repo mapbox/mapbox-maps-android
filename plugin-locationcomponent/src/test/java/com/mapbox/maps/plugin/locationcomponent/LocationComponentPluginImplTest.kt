@@ -198,22 +198,6 @@ class LocationComponentPluginImplTest {
   }
 
   @Test
-  fun testOnStyleChanged() {
-    every { locationPuckManager.isLayerInitialised() } returns false
-    preparePluginInitialisationWithEnabled()
-    verify(exactly = 2) { locationPuckManager.isLayerInitialised() }
-    verify(exactly = 1) { locationPuckManager.initialize(style) }
-  }
-
-  @Test
-  fun testOnStyleChangedWhilePuckManagerInitialised() {
-    every { locationPuckManager.isLayerInitialised() } returns true
-    preparePluginInitialisationWithEnabled()
-    verify(exactly = 2) { locationPuckManager.isLayerInitialised() }
-    verify(exactly = 0) { locationPuckManager.initialize(style) }
-  }
-
-  @Test
   fun testOnStart() {
     every { locationPuckManager.isLayerInitialised() } returns false
     preparePluginInitialisationWithEnabled()
