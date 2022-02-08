@@ -50,6 +50,9 @@ public final class com/mapbox/maps/plugin/locationcomponent/LocationComponentPlu
 }
 
 public final class com/mapbox/maps/plugin/locationcomponent/LocationComponentUtils {
+	public static final fun createDefault2DPuck (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin;Landroid/content/Context;)Lcom/mapbox/maps/plugin/LocationPuck2D;
+	public static final fun createDefault2DPuck (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin;Landroid/content/Context;Z)Lcom/mapbox/maps/plugin/LocationPuck2D;
+	public static synthetic fun createDefault2DPuck$default (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin;Landroid/content/Context;ZILjava/lang/Object;)Lcom/mapbox/maps/plugin/LocationPuck2D;
 	public static final fun getLocationComponent (Lcom/mapbox/maps/plugin/delegates/MapPluginProviderDelegate;)Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin;
 }
 

@@ -5,6 +5,14 @@ public final class com/mapbox/maps/ExtensionUtils {
 	public static synthetic fun toCameraOptions$default (Lcom/mapbox/maps/CameraState;Lcom/mapbox/maps/ScreenCoordinate;ILjava/lang/Object;)Lcom/mapbox/maps/CameraOptions;
 }
 
+public final class com/mapbox/maps/MapboxAnnotationException : java/lang/RuntimeException {
+	public fun <init> (Ljava/lang/String;)V
+}
+
+public final class com/mapbox/maps/MapboxCameraAnimationException : java/lang/RuntimeException {
+	public fun <init> (Ljava/lang/String;)V
+}
+
 public abstract interface annotation class com/mapbox/maps/MapboxExperimental : java/lang/annotation/Annotation {
 }
 
@@ -13,6 +21,22 @@ public abstract interface class com/mapbox/maps/MapboxLifecycleObserver {
 	public abstract fun onLowMemory ()V
 	public abstract fun onStart ()V
 	public abstract fun onStop ()V
+}
+
+public final class com/mapbox/maps/MapboxLocationComponentException : java/lang/RuntimeException {
+	public fun <init> (Ljava/lang/String;)V
+}
+
+public final class com/mapbox/maps/MapboxMapException : java/lang/RuntimeException {
+	public fun <init> (Ljava/lang/String;)V
+}
+
+public final class com/mapbox/maps/MapboxStyleException : java/lang/RuntimeException {
+	public fun <init> (Ljava/lang/String;)V
+}
+
+public final class com/mapbox/maps/MapboxViewAnnotationException : java/lang/RuntimeException {
+	public fun <init> (Ljava/lang/String;)V
 }
 
 public final class com/mapbox/maps/base/BuildConfig {
@@ -302,6 +326,7 @@ public final class com/mapbox/maps/extension/observable/model/DataSourceType : j
 	public static final field FILE_SYSTEM Lcom/mapbox/maps/extension/observable/model/DataSourceType;
 	public static final field NETWORK Lcom/mapbox/maps/extension/observable/model/DataSourceType;
 	public static final field RESOURCE_LOADER Lcom/mapbox/maps/extension/observable/model/DataSourceType;
+	public final fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/observable/model/DataSourceType;
 	public static fun values ()[Lcom/mapbox/maps/extension/observable/model/DataSourceType;
 }
@@ -325,6 +350,7 @@ public final class com/mapbox/maps/extension/observable/model/MapLoadErrorType :
 	public static final field SPRITE Lcom/mapbox/maps/extension/observable/model/MapLoadErrorType;
 	public static final field STYLE Lcom/mapbox/maps/extension/observable/model/MapLoadErrorType;
 	public static final field TILE Lcom/mapbox/maps/extension/observable/model/MapLoadErrorType;
+	public final fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/observable/model/MapLoadErrorType;
 	public static fun values ()[Lcom/mapbox/maps/extension/observable/model/MapLoadErrorType;
 }
@@ -332,6 +358,7 @@ public final class com/mapbox/maps/extension/observable/model/MapLoadErrorType :
 public final class com/mapbox/maps/extension/observable/model/RenderMode : java/lang/Enum {
 	public static final field FULL Lcom/mapbox/maps/extension/observable/model/RenderMode;
 	public static final field PARTIAL Lcom/mapbox/maps/extension/observable/model/RenderMode;
+	public final fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/observable/model/RenderMode;
 	public static fun values ()[Lcom/mapbox/maps/extension/observable/model/RenderMode;
 }
@@ -356,6 +383,7 @@ public final class com/mapbox/maps/extension/observable/model/Request {
 public final class com/mapbox/maps/extension/observable/model/RequestPriority : java/lang/Enum {
 	public static final field LOW Lcom/mapbox/maps/extension/observable/model/RequestPriority;
 	public static final field REGULAR Lcom/mapbox/maps/extension/observable/model/RequestPriority;
+	public final fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/observable/model/RequestPriority;
 	public static fun values ()[Lcom/mapbox/maps/extension/observable/model/RequestPriority;
 }
@@ -369,6 +397,7 @@ public final class com/mapbox/maps/extension/observable/model/RequestType : java
 	public static final field STYLE Lcom/mapbox/maps/extension/observable/model/RequestType;
 	public static final field TILE Lcom/mapbox/maps/extension/observable/model/RequestType;
 	public static final field UNKNOWN Lcom/mapbox/maps/extension/observable/model/RequestType;
+	public final fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/observable/model/RequestType;
 	public static fun values ()[Lcom/mapbox/maps/extension/observable/model/RequestType;
 }
@@ -408,6 +437,7 @@ public final class com/mapbox/maps/extension/observable/model/ResponseErrorReaso
 	public static final field RATE_LIMIT Lcom/mapbox/maps/extension/observable/model/ResponseErrorReason;
 	public static final field SERVER Lcom/mapbox/maps/extension/observable/model/ResponseErrorReason;
 	public static final field SUCCESS Lcom/mapbox/maps/extension/observable/model/ResponseErrorReason;
+	public final fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/observable/model/ResponseErrorReason;
 	public static fun values ()[Lcom/mapbox/maps/extension/observable/model/ResponseErrorReason;
 }
@@ -417,6 +447,7 @@ public final class com/mapbox/maps/extension/observable/model/ResponseSourceType
 	public static final field LOCAL_FILE Lcom/mapbox/maps/extension/observable/model/ResponseSourceType;
 	public static final field NETWORK Lcom/mapbox/maps/extension/observable/model/ResponseSourceType;
 	public static final field TILE_STORE Lcom/mapbox/maps/extension/observable/model/ResponseSourceType;
+	public final fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/observable/model/ResponseSourceType;
 	public static fun values ()[Lcom/mapbox/maps/extension/observable/model/ResponseSourceType;
 }
@@ -424,6 +455,7 @@ public final class com/mapbox/maps/extension/observable/model/ResponseSourceType
 public final class com/mapbox/maps/extension/observable/model/SourceDataType : java/lang/Enum {
 	public static final field METADATA Lcom/mapbox/maps/extension/observable/model/SourceDataType;
 	public static final field TILE Lcom/mapbox/maps/extension/observable/model/SourceDataType;
+	public final fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/observable/model/SourceDataType;
 	public static fun values ()[Lcom/mapbox/maps/extension/observable/model/SourceDataType;
 }
@@ -432,6 +464,7 @@ public final class com/mapbox/maps/extension/observable/model/StyleDataType : ja
 	public static final field SOURCES Lcom/mapbox/maps/extension/observable/model/StyleDataType;
 	public static final field SPRITE Lcom/mapbox/maps/extension/observable/model/StyleDataType;
 	public static final field STYLE Lcom/mapbox/maps/extension/observable/model/StyleDataType;
+	public final fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/observable/model/StyleDataType;
 	public static fun values ()[Lcom/mapbox/maps/extension/observable/model/StyleDataType;
 }
@@ -648,6 +681,7 @@ public abstract class com/mapbox/maps/plugin/Plugin {
 	public static final field MAPBOX_LOGO_PLUGIN_ID Ljava/lang/String;
 	public static final field MAPBOX_MAP_OVERLAY_PLUGIN_ID Ljava/lang/String;
 	public static final field MAPBOX_SCALEBAR_PLUGIN_ID Ljava/lang/String;
+	public static final field MAPBOX_VIEWPORT_PLUGIN_ID Ljava/lang/String;
 	public synthetic fun <init> (Ljava/lang/String;Lcom/mapbox/maps/plugin/MapPlugin;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getId ()Ljava/lang/String;
@@ -817,12 +851,13 @@ public abstract interface class com/mapbox/maps/plugin/animation/Cancelable {
 
 public final class com/mapbox/maps/plugin/animation/MapAnimationOptions {
 	public static final field Companion Lcom/mapbox/maps/plugin/animation/MapAnimationOptions$Companion;
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/Long;Landroid/animation/TimeInterpolator;Landroid/animation/Animator$AnimatorListener;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/Long;Ljava/lang/Long;Landroid/animation/TimeInterpolator;Landroid/animation/Animator$AnimatorListener;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAnimatorListener ()Landroid/animation/Animator$AnimatorListener;
 	public final fun getDuration ()Ljava/lang/Long;
 	public final fun getInterpolator ()Landroid/animation/TimeInterpolator;
 	public final fun getOwner ()Ljava/lang/String;
+	public final fun getStartDelay ()Ljava/lang/Long;
 	public fun hashCode ()I
 }
 
@@ -833,6 +868,7 @@ public final class com/mapbox/maps/plugin/animation/MapAnimationOptions$Builder 
 	public final fun duration (J)Lcom/mapbox/maps/plugin/animation/MapAnimationOptions$Builder;
 	public final fun interpolator (Landroid/animation/TimeInterpolator;)Lcom/mapbox/maps/plugin/animation/MapAnimationOptions$Builder;
 	public final fun owner (Ljava/lang/String;)Lcom/mapbox/maps/plugin/animation/MapAnimationOptions$Builder;
+	public final fun startDelay (J)Lcom/mapbox/maps/plugin/animation/MapAnimationOptions$Builder;
 }
 
 public final class com/mapbox/maps/plugin/animation/MapAnimationOptions$Companion {
@@ -854,6 +890,7 @@ public abstract class com/mapbox/maps/plugin/annotation/Annotation {
 	public static final field MIN_MERCATOR_LATITUDE D
 	public fun <init> (JLcom/google/gson/JsonObject;Lcom/mapbox/geojson/Geometry;)V
 	public fun getData ()Lcom/google/gson/JsonElement;
+	public final fun getFeatureIdentifier ()Ljava/lang/String;
 	public final fun getGeometry ()Lcom/mapbox/geojson/Geometry;
 	public final fun getId ()J
 	protected final fun getJsonObject ()Lcom/google/gson/JsonObject;
@@ -2214,6 +2251,214 @@ public abstract interface class com/mapbox/maps/plugin/scalebar/generated/ScaleB
 	public abstract fun setTextSize (F)V
 	public abstract fun setUseContinuousRendering (Z)V
 	public abstract fun updateSettings (Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/viewport/CompletionListener {
+	public abstract fun onComplete (Z)V
+}
+
+public final class com/mapbox/maps/plugin/viewport/ViewportConstantsKt {
+	public static final field DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH D
+	public static final field DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM D
+	public static final field DEFAULT_STATE_ANIMATION_DURATION_MS J
+	public static final field DEFAULT_TRANSITION_MAX_DURATION_MS J
+}
+
+public abstract interface class com/mapbox/maps/plugin/viewport/ViewportPlugin : com/mapbox/maps/plugin/MapPlugin {
+	public abstract fun addStatusObserver (Lcom/mapbox/maps/plugin/viewport/ViewportStatusObserver;)V
+	public abstract fun getDefaultTransition ()Lcom/mapbox/maps/plugin/viewport/transition/ViewportTransition;
+	public abstract fun getOptions ()Lcom/mapbox/maps/plugin/viewport/data/ViewportOptions;
+	public abstract fun getStatus ()Lcom/mapbox/maps/plugin/viewport/ViewportStatus;
+	public abstract fun idle ()V
+	public abstract fun makeDefaultViewportTransition (Lcom/mapbox/maps/plugin/viewport/data/DefaultViewportTransitionOptions;)Lcom/mapbox/maps/plugin/viewport/transition/DefaultViewportTransition;
+	public abstract fun makeFollowPuckViewportState (Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions;)Lcom/mapbox/maps/plugin/viewport/state/FollowPuckViewportState;
+	public abstract fun makeImmediateViewportTransition ()Lcom/mapbox/maps/plugin/viewport/transition/ViewportTransition;
+	public abstract fun makeOverviewViewportState (Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions;)Lcom/mapbox/maps/plugin/viewport/state/OverviewViewportState;
+	public abstract fun removeStatusObserver (Lcom/mapbox/maps/plugin/viewport/ViewportStatusObserver;)V
+	public abstract fun setDefaultTransition (Lcom/mapbox/maps/plugin/viewport/transition/ViewportTransition;)V
+	public abstract fun setOptions (Lcom/mapbox/maps/plugin/viewport/data/ViewportOptions;)V
+	public abstract fun transitionTo (Lcom/mapbox/maps/plugin/viewport/state/ViewportState;Lcom/mapbox/maps/plugin/viewport/transition/ViewportTransition;Lcom/mapbox/maps/plugin/viewport/CompletionListener;)V
+}
+
+public final class com/mapbox/maps/plugin/viewport/ViewportPlugin$DefaultImpls {
+	public static fun cleanup (Lcom/mapbox/maps/plugin/viewport/ViewportPlugin;)V
+	public static fun initialize (Lcom/mapbox/maps/plugin/viewport/ViewportPlugin;)V
+	public static synthetic fun makeDefaultViewportTransition$default (Lcom/mapbox/maps/plugin/viewport/ViewportPlugin;Lcom/mapbox/maps/plugin/viewport/data/DefaultViewportTransitionOptions;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/viewport/transition/DefaultViewportTransition;
+	public static synthetic fun makeFollowPuckViewportState$default (Lcom/mapbox/maps/plugin/viewport/ViewportPlugin;Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/viewport/state/FollowPuckViewportState;
+	public static fun onDelegateProvider (Lcom/mapbox/maps/plugin/viewport/ViewportPlugin;Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+	public static synthetic fun transitionTo$default (Lcom/mapbox/maps/plugin/viewport/ViewportPlugin;Lcom/mapbox/maps/plugin/viewport/state/ViewportState;Lcom/mapbox/maps/plugin/viewport/transition/ViewportTransition;Lcom/mapbox/maps/plugin/viewport/CompletionListener;ILjava/lang/Object;)V
+}
+
+public abstract class com/mapbox/maps/plugin/viewport/ViewportStatus {
+}
+
+public final class com/mapbox/maps/plugin/viewport/ViewportStatus$Idle : com/mapbox/maps/plugin/viewport/ViewportStatus {
+	public static final field INSTANCE Lcom/mapbox/maps/plugin/viewport/ViewportStatus$Idle;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/viewport/ViewportStatus$State : com/mapbox/maps/plugin/viewport/ViewportStatus {
+	public fun <init> (Lcom/mapbox/maps/plugin/viewport/state/ViewportState;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getState ()Lcom/mapbox/maps/plugin/viewport/state/ViewportState;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/viewport/ViewportStatus$Transition : com/mapbox/maps/plugin/viewport/ViewportStatus {
+	public fun <init> (Lcom/mapbox/maps/plugin/viewport/transition/ViewportTransition;Lcom/mapbox/maps/plugin/viewport/state/ViewportState;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getToState ()Lcom/mapbox/maps/plugin/viewport/state/ViewportState;
+	public final fun getTransition ()Lcom/mapbox/maps/plugin/viewport/transition/ViewportTransition;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/mapbox/maps/plugin/viewport/ViewportStatusObserver {
+	public abstract fun onViewportStatusChanged (Lcom/mapbox/maps/plugin/viewport/ViewportStatus;Lcom/mapbox/maps/plugin/viewport/ViewportStatus;Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;)V
+}
+
+public final class com/mapbox/maps/plugin/viewport/data/DefaultViewportTransitionOptions {
+	public synthetic fun <init> (JLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMaxDurationMs ()J
+	public fun hashCode ()I
+	public final fun toBuilder ()Lcom/mapbox/maps/plugin/viewport/data/DefaultViewportTransitionOptions$Builder;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/viewport/data/DefaultViewportTransitionOptions$Builder {
+	public fun <init> ()V
+	public final fun build ()Lcom/mapbox/maps/plugin/viewport/data/DefaultViewportTransitionOptions;
+	public final fun maxDurationMs (J)Lcom/mapbox/maps/plugin/viewport/data/DefaultViewportTransitionOptions$Builder;
+}
+
+public abstract class com/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing {
+}
+
+public final class com/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing$Constant : com/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing {
+	public fun <init> (D)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBearing ()D
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing$SyncWithLocationPuck : com/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing {
+	public static final field INSTANCE Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing$SyncWithLocationPuck;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions {
+	public synthetic fun <init> (Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing;Ljava/lang/Double;JLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAnimationDurationMs ()J
+	public final fun getBearing ()Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing;
+	public final fun getPadding ()Lcom/mapbox/maps/EdgeInsets;
+	public final fun getPitch ()Ljava/lang/Double;
+	public final fun getZoom ()Ljava/lang/Double;
+	public fun hashCode ()I
+	public final fun toBuilder ()Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions$Builder;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions$Builder {
+	public fun <init> ()V
+	public final fun animationDurationMs (J)Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions$Builder;
+	public final fun bearing (Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing;)Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions$Builder;
+	public final fun build ()Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions;
+	public final fun padding (Lcom/mapbox/maps/EdgeInsets;)Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions$Builder;
+	public final fun pitch (Ljava/lang/Double;)Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions$Builder;
+	public final fun zoom (Ljava/lang/Double;)Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions$Builder;
+}
+
+public final class com/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions {
+	public synthetic fun <init> (Lcom/mapbox/geojson/Geometry;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Ljava/lang/Double;JLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAnimationDurationMs ()J
+	public final fun getBearing ()Ljava/lang/Double;
+	public final fun getGeometry ()Lcom/mapbox/geojson/Geometry;
+	public final fun getPadding ()Lcom/mapbox/maps/EdgeInsets;
+	public final fun getPitch ()Ljava/lang/Double;
+	public fun hashCode ()I
+	public final fun toBuilder ()Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions$Builder;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions$Builder {
+	public fun <init> ()V
+	public final fun animationDurationMs (J)Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions$Builder;
+	public final fun bearing (Ljava/lang/Double;)Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions$Builder;
+	public final fun build ()Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions;
+	public final fun geometry (Lcom/mapbox/geojson/Geometry;)Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions$Builder;
+	public final fun padding (Lcom/mapbox/maps/EdgeInsets;)Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions$Builder;
+	public final fun pitch (Ljava/lang/Double;)Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions$Builder;
+}
+
+public final class com/mapbox/maps/plugin/viewport/data/ViewportOptions {
+	public synthetic fun <init> (ZLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTransitionsToIdleUponUserInteraction ()Z
+	public fun hashCode ()I
+	public final fun toBuilder ()Lcom/mapbox/maps/plugin/viewport/data/ViewportOptions$Builder;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/viewport/data/ViewportOptions$Builder {
+	public fun <init> ()V
+	public final fun build ()Lcom/mapbox/maps/plugin/viewport/data/ViewportOptions;
+	public final fun transitionsToIdleUponUserInteraction (Z)Lcom/mapbox/maps/plugin/viewport/data/ViewportOptions$Builder;
+}
+
+public final class com/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason {
+	public static final field Companion Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason$Companion;
+	public fun equals (Ljava/lang/Object;)Z
+	public static final fun getIDLE_REQUESTED ()Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
+	public static final fun getTRANSITION_FAILED ()Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
+	public static final fun getTRANSITION_STARTED ()Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
+	public static final fun getTRANSITION_SUCCEEDED ()Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
+	public static final fun getUSER_INTERACTION ()Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason$Companion {
+	public final fun getIDLE_REQUESTED ()Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
+	public final fun getTRANSITION_FAILED ()Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
+	public final fun getTRANSITION_STARTED ()Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
+	public final fun getTRANSITION_SUCCEEDED ()Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
+	public final fun getUSER_INTERACTION ()Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
+}
+
+public abstract interface class com/mapbox/maps/plugin/viewport/state/FollowPuckViewportState : com/mapbox/maps/plugin/viewport/state/ViewportState {
+	public abstract fun getOptions ()Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions;
+	public abstract fun setOptions (Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/viewport/state/OverviewViewportState : com/mapbox/maps/plugin/viewport/state/ViewportState {
+	public abstract fun getOptions ()Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions;
+	public abstract fun setOptions (Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/viewport/state/ViewportState {
+	public abstract fun observeDataSource (Lcom/mapbox/maps/plugin/viewport/state/ViewportStateDataObserver;)Lcom/mapbox/maps/plugin/animation/Cancelable;
+	public abstract fun startUpdatingCamera ()V
+	public abstract fun stopUpdatingCamera ()V
+}
+
+public abstract interface class com/mapbox/maps/plugin/viewport/state/ViewportStateDataObserver {
+	public abstract fun onNewData (Lcom/mapbox/maps/CameraOptions;)Z
+}
+
+public abstract interface class com/mapbox/maps/plugin/viewport/transition/DefaultViewportTransition : com/mapbox/maps/plugin/viewport/transition/ViewportTransition {
+	public abstract fun getOptions ()Lcom/mapbox/maps/plugin/viewport/data/DefaultViewportTransitionOptions;
+	public abstract fun setOptions (Lcom/mapbox/maps/plugin/viewport/data/DefaultViewportTransitionOptions;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/viewport/transition/ViewportTransition {
+	public abstract fun run (Lcom/mapbox/maps/plugin/viewport/state/ViewportState;Lcom/mapbox/maps/plugin/viewport/CompletionListener;)Lcom/mapbox/maps/plugin/animation/Cancelable;
 }
 
 public final class com/mapbox/maps/util/MathUtils {
