@@ -6,6 +6,7 @@ import argparse
 import os
 import requests
 import sys
+import datetime
 
 MAIN_BRANCH_NAME = "main"
 
@@ -53,6 +54,7 @@ def Main():
             help="Build a specific branch, otherwise it will build the default branch.")
     parser.add_argument("--current-branch",
             help="Current branch name.")
+    parser.add_argument('--created', help="Provide a date string in ISO 8601 format (eg. 2030-12-30T09:10:20.304050)")
 
     args = parser.parse_args()
 
@@ -60,11 +62,16 @@ def Main():
         print("CircleCI token not set. Use --token or set CIRCLE_API_TOKEN.")
         sys.exit(1)
 
+    created = args.created
+    if not created:
+        created = datetime.datetime.utcnow().isoformat()
+
     params = {
         "mapbox_android_upstream": True,
         "mapbox_slug": args.origin_slug,
         "mapbox_android_hash": args.hash,
-        "mapbox_merge_main": args.current_branch == MAIN_BRANCH_NAME
+        "mapbox_merge_main": args.current_branch == MAIN_BRANCH_NAME,
+        "benchmark_date": created
     }
 
     TriggerPipeline(args.target_slug, args.token, args.branch, params)
