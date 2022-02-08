@@ -22,6 +22,8 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.Surface;
 
+import androidx.annotation.NonNull;
+
 import com.mapbox.android.gestures.AndroidGesturesManager;
 import com.mapbox.android.gestures.MoveGestureDetector;
 import com.mapbox.android.gestures.RotateGestureDetector;
@@ -89,6 +91,12 @@ import com.mapbox.maps.plugin.overlay.MapOverlayUtils;
 import com.mapbox.maps.plugin.scalebar.ScaleBarPlugin;
 import com.mapbox.maps.plugin.scalebar.ScaleBarUtils;
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings;
+import com.mapbox.maps.plugin.viewport.ViewportPlugin;
+import com.mapbox.maps.plugin.viewport.ViewportStatus;
+import com.mapbox.maps.plugin.viewport.ViewportStatusObserver;
+import com.mapbox.maps.plugin.viewport.ViewportUtils;
+import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions;
+import com.mapbox.maps.plugin.viewport.data.ViewportStatusChangeReason;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -510,5 +518,19 @@ public class JavaInterfaceChecker {
 
     private void scaleBar(MapView mapView) {
         ScaleBarPlugin scaleBar = ScaleBarUtils.getScaleBar(mapView);
+    }
+
+    private void viewport(MapView mapView) {
+        ViewportPlugin viewport = ViewportUtils.getViewport(mapView);
+        viewport.addStatusObserver((from, to, reason) -> {
+            if (reason == ViewportStatusChangeReason.USER_INTERACTION) {
+                viewport.transitionTo(
+                        viewport.makeFollowPuckViewportState(new FollowPuckViewportStateOptions.Builder().build()),
+                        viewport.makeImmediateViewportTransition(),
+                        isFinished -> {
+                            // no-ops
+                        });
+            }
+        });
     }
 }
