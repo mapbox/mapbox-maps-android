@@ -1333,6 +1333,12 @@ class MapboxMap internal constructor(
   /**
    * Returns if the style has been fully loaded.
    */
+  @Deprecated(
+    "Use getStyle()?.isStyleLoaded instead.",
+    replaceWith = ReplaceWith(
+      "getStyle()?.isStyleLoaded",
+    )
+  )
   override fun isFullyLoaded(): Boolean {
     return style?.isStyleLoaded ?: false
   }
