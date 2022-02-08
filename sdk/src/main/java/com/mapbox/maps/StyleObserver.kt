@@ -19,9 +19,7 @@ internal class StyleObserver(
   private val pixelRatio: Float
 ) : OnStyleLoadedListener, OnMapLoadErrorListener {
 
-  @Volatile
   private var loadStyleListener: Style.OnStyleLoaded? = null
-  @Volatile
   private var loadStyleErrorListener: OnMapLoadErrorListener? = null
 
   private val getStyleListeners = CopyOnWriteArrayList<Style.OnStyleLoaded>()
