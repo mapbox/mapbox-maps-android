@@ -9,7 +9,7 @@ package com.mapbox.maps.plugin.scalebar.generated
  */
 abstract class ScaleBarSettingsBase : ScaleBarSettingsInterface {
   /**
-   * The internalSettings that hold all the settings
+   * Shows the scale bar on the map.
    */
   protected abstract var internalSettings: ScaleBarSettings
 

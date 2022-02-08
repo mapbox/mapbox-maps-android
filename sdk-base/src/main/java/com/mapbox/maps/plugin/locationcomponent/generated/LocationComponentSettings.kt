@@ -5,7 +5,7 @@ package com.mapbox.maps.plugin.locationcomponent.generated
 import android.graphics.Color
 import com.mapbox.maps.plugin.LocationPuck
 /**
- * Settings for LocationComponent
+ * Shows a location puck on the map.
  */
 data class LocationComponentSettings @JvmOverloads constructor(
 

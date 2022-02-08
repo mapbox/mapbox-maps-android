@@ -6,8 +6,8 @@ import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.geojson.Point
 import com.mapbox.maps.plugin.locationcomponent.*
 import com.mapbox.maps.plugin.locationcomponent.LocationLayerRenderer
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAccuracyRingSettings
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
+import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2
 import com.mapbox.maps.util.MathUtils
 
 internal class PuckAnimatorManager(
@@ -96,7 +96,7 @@ internal class PuckAnimatorManager(
     accuracyRadiusAnimator.animate(*targets.toTypedArray(), options = options)
   }
 
-  fun applyAccuracyRadiusSettings(accuracyRadiusSettings: LocationComponentAccuracyRingSettings) {
+  fun applyAccuracyRadiusSettings(accuracyRadiusSettings: LocationComponentSettings2) {
     accuracyRadiusAnimator.apply {
       enabled = accuracyRadiusSettings.showAccuracyRing
       accuracyCircleColor = accuracyRadiusSettings.accuracyRingColor
@@ -104,7 +104,7 @@ internal class PuckAnimatorManager(
     }
   }
 
-  fun applyAnimationSettings(settings: LocationComponentSettings) {
+  fun applyPulsingAnimationSettings(settings: LocationComponentSettings) {
     pulsingAnimator.apply {
       enabled = settings.pulsingEnabled
       maxRadius = settings.pulsingMaxRadius.toDouble()

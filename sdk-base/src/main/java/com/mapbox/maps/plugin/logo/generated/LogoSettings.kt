@@ -4,7 +4,7 @@ package com.mapbox.maps.plugin.logo.generated
 
 import android.view.Gravity
 /**
- * Settings for Logo
+ * Shows the Mapbox logo on the map.
  */
 data class LogoSettings @JvmOverloads constructor(
 

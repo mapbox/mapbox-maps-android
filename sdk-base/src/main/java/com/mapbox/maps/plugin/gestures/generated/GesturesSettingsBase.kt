@@ -12,7 +12,7 @@ import com.mapbox.maps.plugin.ScrollMode
  */
 abstract class GesturesSettingsBase : GesturesSettingsInterface {
   /**
-   * The internalSettings that hold all the settings
+   * Gesture configuration allows to control the user touch interaction.
    */
   protected abstract var internalSettings: GesturesSettings
 

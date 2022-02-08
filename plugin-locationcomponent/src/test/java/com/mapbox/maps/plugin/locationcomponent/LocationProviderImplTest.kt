@@ -6,7 +6,6 @@ import com.mapbox.android.core.location.*
 import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.common.ShadowLogger
 import com.mapbox.geojson.Point
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAccuracyRingSettings
 import io.mockk.*
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -22,7 +21,6 @@ class LocationProviderImplTest {
   private val locationEngine = mockk<LocationEngine>(relaxed = true)
   private val locationConsumer1 = mockk<LocationConsumer>(relaxed = true)
   private val locationConsumer2 = mockk<LocationConsumer>(relaxed = true)
-  private val locationComponentAccuracyRadiusSettings = LocationComponentAccuracyRingSettings()
   private val locationEngineRequestSlot = CapturingSlot<LocationEngineRequest>()
   private val locationEngineCallbackSlot =
     CapturingSlot<LocationEngineCallback<LocationEngineResult>>()
@@ -33,7 +31,7 @@ class LocationProviderImplTest {
   fun setup() {
     mockkStatic(LocationEngineProvider::class)
     every { LocationEngineProvider.getBestLocationEngine(context) } returns locationEngine
-    locationProviderImpl = LocationProviderImpl(context, locationComponentAccuracyRadiusSettings)
+    locationProviderImpl = LocationProviderImpl(context)
   }
 
   @Test

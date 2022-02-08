@@ -15,7 +15,6 @@ import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.LOCAT
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_LAYER
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.*
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAccuracyRingAttributeParser
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttributeParser
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArraySet
@@ -189,7 +188,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
         if (locationPuckManager == null) {
           locationPuckManager = LocationPuckManager(
             settings = internalSettings,
-            accuracyRadiusSettings = internalAccuracyRingSettings,
+            settings2 = internalSettings2,
             delegateProvider = delegateProvider,
             positionManager = LocationComponentPositionManager(
               style,
@@ -241,12 +240,11 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
     this.context = WeakReference(context)
     internalSettings =
       LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, pixelRatio)
-    internalAccuracyRingSettings =
-      LocationComponentAccuracyRingAttributeParser.parseLocationComponentAccuracyRingSettings(context, attrs, pixelRatio)
+    internalSettings2 =
+      LocationComponentAttributeParser2.parseLocationComponentSettings2(context, attrs, pixelRatio)
 
     if (internalSettings.enabled && locationProvider == null) {
-      locationProvider =
-        LocationProviderImpl(context, internalAccuracyRingSettings)
+      locationProvider = LocationProviderImpl(context)
     }
   }
 
@@ -261,8 +259,8 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
     this.context = WeakReference(context)
     this.internalSettings =
       LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, pixelRatio)
-    this.internalAccuracyRingSettings =
-      LocationComponentAccuracyRingAttributeParser.parseLocationComponentAccuracyRingSettings(context, attrs, pixelRatio)
+    this.internalSettings2 =
+      LocationComponentAttributeParser2.parseLocationComponentSettings2(context, attrs, pixelRatio)
     this.locationProvider = locationProvider
     this.locationPuckManager = locationPuckManager
   }
@@ -353,7 +351,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
       context.get()?.let {
         if (locationProvider == null) {
           locationProvider =
-            LocationProviderImpl(it, internalAccuracyRingSettings)
+            LocationProviderImpl(it)
         }
         activateLocationComponent()
       }
@@ -365,16 +363,11 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
     }
   }
 
-  override lateinit var internalAccuracyRingSettings: LocationComponentAccuracyRingSettings
+  override lateinit var internalSettings2: LocationComponentSettings2
 
-  override fun applyAccuracyRingSettings() {
+  override fun applySettings2() {
     if (internalSettings.enabled) {
-      if (locationProvider != null && locationProvider is LocationProviderImpl) {
-        (locationProvider as LocationProviderImpl).updateAccuracyRadiusSettings(
-          internalAccuracyRingSettings
-        )
-      }
-      locationPuckManager?.updateSettings(internalSettings)
+      locationPuckManager?.updateSettings2(internalSettings2)
     }
   }
 }

@@ -19,7 +19,7 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
-class LocationComponentAccuracyRingAttributeParserTest {
+class LocationComponentAttributeParser2Test {
   private val context: Context = mockk(relaxed = true)
 
   private val attrs: AttributeSet = mockk(relaxUnitFun = true)
@@ -52,7 +52,7 @@ class LocationComponentAccuracyRingAttributeParserTest {
   @Test
   fun testTypedArrayRecycle() {
     every { typedArray.getBoolean(any(), any()) } returns true
-    val settings = LocationComponentAccuracyRingAttributeParser.parseLocationComponentAccuracyRingSettings(context, attrs, 1.2f)
+    val settings = LocationComponentAttributeParser2.parseLocationComponentSettings2(context, attrs, 1.2f)
     verify { typedArray.recycle() }
   }
 
@@ -60,7 +60,7 @@ class LocationComponentAccuracyRingAttributeParserTest {
   fun testTypedArrayRecycleWithException() {
     every { typedArray.getBoolean(any(), any()) }.throws(Exception(""))
     try {
-      val settings = LocationComponentAccuracyRingAttributeParser.parseLocationComponentAccuracyRingSettings(context, attrs, 1.2f)
+      val settings = LocationComponentAttributeParser2.parseLocationComponentSettings2(context, attrs, 1.2f)
     } catch (e: Exception) {
       // do nothing
     }
@@ -70,26 +70,26 @@ class LocationComponentAccuracyRingAttributeParserTest {
   @Test
   fun showAccuracyRingTestTrue() {
     every { typedArray.getBoolean(any(), any()) } returns true
-    val settings = LocationComponentAccuracyRingAttributeParser.parseLocationComponentAccuracyRingSettings(context, attrs, 1.2f)
+    val settings = LocationComponentAttributeParser2.parseLocationComponentSettings2(context, attrs, 1.2f)
     assertEquals(true, settings.showAccuracyRing)
   }
 
   @Test
   fun showAccuracyRingTestFalse() {
     every { typedArray.getBoolean(any(), any()) } returns false
-    val settings = LocationComponentAccuracyRingAttributeParser.parseLocationComponentAccuracyRingSettings(context, attrs, 1.2f)
+    val settings = LocationComponentAttributeParser2.parseLocationComponentSettings2(context, attrs, 1.2f)
     assertEquals(false, settings.showAccuracyRing)
   }
   @Test
   fun accuracyRingColorTest() {
     every { typedArray.getColor(any(), any()) } returns Color.parseColor("#4d89cff0")
-    val settings = LocationComponentAccuracyRingAttributeParser.parseLocationComponentAccuracyRingSettings(context, attrs, 1.2f)
+    val settings = LocationComponentAttributeParser2.parseLocationComponentSettings2(context, attrs, 1.2f)
     assertEquals(Color.parseColor("#4d89cff0"), settings.accuracyRingColor)
   }
   @Test
   fun accuracyRingBorderColorTest() {
     every { typedArray.getColor(any(), any()) } returns Color.parseColor("#4d89cff0")
-    val settings = LocationComponentAccuracyRingAttributeParser.parseLocationComponentAccuracyRingSettings(context, attrs, 1.2f)
+    val settings = LocationComponentAttributeParser2.parseLocationComponentSettings2(context, attrs, 1.2f)
     assertEquals(Color.parseColor("#4d89cff0"), settings.accuracyRingBorderColor)
   }
 }

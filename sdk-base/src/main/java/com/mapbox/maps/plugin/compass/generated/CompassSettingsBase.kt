@@ -11,7 +11,7 @@ import android.graphics.drawable.Drawable
  */
 abstract class CompassSettingsBase : CompassSettingsInterface {
   /**
-   * The internalSettings that hold all the settings
+   * Shows the compass on the map.
    */
   protected abstract var internalSettings: CompassSettings
 

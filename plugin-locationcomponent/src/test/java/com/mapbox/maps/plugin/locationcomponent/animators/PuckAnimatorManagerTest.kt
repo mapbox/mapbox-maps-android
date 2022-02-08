@@ -5,8 +5,8 @@ import android.graphics.Color
 import android.os.Looper
 import com.mapbox.geojson.Point
 import com.mapbox.maps.plugin.locationcomponent.LocationLayerRenderer
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAccuracyRingSettings
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
+import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -141,7 +141,7 @@ class PuckAnimatorManagerTest {
 
   @Test
   fun applyAccuracyRadiusSettingsOne() {
-    val settings = mockk<LocationComponentAccuracyRingSettings>(relaxed = true)
+    val settings = mockk<LocationComponentSettings2>(relaxed = true)
     every { settings.accuracyRingColor } returns Color.BLUE
     every { settings.showAccuracyRing } returns true
     puckAnimatorManager.applyAccuracyRadiusSettings(settings)
@@ -151,7 +151,7 @@ class PuckAnimatorManagerTest {
 
   @Test
   fun applyAccuracyRadiusSettingsTwo() {
-    val settings = mockk<LocationComponentAccuracyRingSettings>(relaxed = true)
+    val settings = mockk<LocationComponentSettings2>(relaxed = true)
     every { settings.accuracyRingColor } returns Color.GREEN
     every { settings.showAccuracyRing } returns false
     puckAnimatorManager.applyAccuracyRadiusSettings(settings)
@@ -165,7 +165,7 @@ class PuckAnimatorManagerTest {
     every { settings.pulsingEnabled } returns true
     every { settings.pulsingMaxRadius } returns 20.0f
 
-    puckAnimatorManager.applyAnimationSettings(settings)
+    puckAnimatorManager.applyPulsingAnimationSettings(settings)
     verify {
       pulsingAnimator.enabled = true
       pulsingAnimator.maxRadius = 20.0
@@ -178,7 +178,7 @@ class PuckAnimatorManagerTest {
     val settings = mockk<LocationComponentSettings>(relaxed = true)
     every { settings.pulsingEnabled } returns false
     every { settings.pulsingMaxRadius } returns 20.0f
-    puckAnimatorManager.applyAnimationSettings(settings)
+    puckAnimatorManager.applyPulsingAnimationSettings(settings)
     verify {
       pulsingAnimator.enabled = false
       pulsingAnimator.maxRadius = 20.0

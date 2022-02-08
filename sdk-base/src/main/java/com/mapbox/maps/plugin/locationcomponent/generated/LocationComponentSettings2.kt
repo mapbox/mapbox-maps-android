@@ -4,9 +4,9 @@ package com.mapbox.maps.plugin.locationcomponent.generated
 
 import android.graphics.Color
 /**
- * Settings for LocationComponent
+ * Shows a location puck on the map.
  */
-data class LocationComponentAccuracyRingSettings @JvmOverloads constructor(
+data class LocationComponentSettings2 @JvmOverloads constructor(
 
   /**
    * Whether show accuracy ring with location puck. Works for 2D location puck only.

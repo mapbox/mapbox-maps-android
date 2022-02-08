@@ -11,8 +11,8 @@ import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAccuracyRingSettings
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
+import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2
 import com.mapbox.maps.util.captureVararg
 import io.mockk.CapturingSlot
 import io.mockk.every
@@ -33,7 +33,7 @@ import org.robolectric.RobolectricTestRunner
 class LocationPuckManagerTest {
 
   private val settings = mockk<LocationComponentSettings>(relaxed = true)
-  private val accuracyRadiusSettings = mockk<LocationComponentAccuracyRingSettings>(relaxed = true)
+  private val accuracyRadiusSettings = mockk<LocationComponentSettings2>(relaxed = true)
   private val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
   private val mapCameraDelegate = mockk<MapCameraManagerDelegate>(relaxed = true)
   private val style = mockk<StyleInterface>(relaxed = true)
@@ -77,7 +77,7 @@ class LocationPuckManagerTest {
     locationPuckManager.initialize(style)
     verify { animationManager.setLocationLayerRenderer(locationLayerRenderer) }
     verify { animationManager.setUpdateListeners(any(), any(), any()) }
-    verify { animationManager.applyAnimationSettings(settings) }
+    verify { animationManager.applyPulsingAnimationSettings(settings) }
     verify { locationLayerRenderer.addLayers(positionManager) }
     verify { locationLayerRenderer.initializeComponents(style) }
     verify { locationLayerRenderer.hide() }
@@ -89,7 +89,7 @@ class LocationPuckManagerTest {
     locationPuckManager.initialize(style)
     verify { animationManager.setLocationLayerRenderer(locationLayerRenderer) }
     verify { animationManager.setUpdateListeners(any(), any(), any()) }
-    verify { animationManager.applyAnimationSettings(settings) }
+    verify { animationManager.applyPulsingAnimationSettings(settings) }
     verify { locationLayerRenderer.addLayers(positionManager) }
     verify { locationLayerRenderer.initializeComponents(style) }
     verify { locationLayerRenderer.show() }
@@ -270,7 +270,7 @@ class LocationPuckManagerTest {
     locationPuckManager.initialize(style)
 
     verify(exactly = 0) { animationManager.setLocationLayerRenderer(locationLayerRenderer) }
-    verify(exactly = 0) { animationManager.setUpdateListeners(any(), any()) }
+    verify(exactly = 0) { animationManager.setUpdateListeners(any(), any(), any()) }
     verify(exactly = 0) { animationManager.applyPulsingAnimationSettings(settings) }
     verify(exactly = 0) { locationLayerRenderer.addLayers(positionManager) }
     verify(exactly = 0) { locationLayerRenderer.initializeComponents(style) }

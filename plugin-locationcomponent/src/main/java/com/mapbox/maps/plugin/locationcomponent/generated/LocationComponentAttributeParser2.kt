@@ -10,17 +10,17 @@ import com.mapbox.maps.plugin.locationcomponent.R
 /**
  * Utility class for parsing [AttributeSet] to [LocationComponentSettings].
  */
-internal object LocationComponentAccuracyRingAttributeParser {
+internal object LocationComponentAttributeParser2 {
   /**
-   * Parse [AttributeSet] to [LocationComponentAccuracyRingSettings].
+   * Parse [AttributeSet] to [LocationComponentSettings2].
    *
    * @param context Context
    * @param attrs AttributionSet
    */
-  fun parseLocationComponentAccuracyRingSettings(context: Context, attrs: AttributeSet?, pixelRatio: Float = 1.0f): LocationComponentAccuracyRingSettings {
+  fun parseLocationComponentSettings2(context: Context, attrs: AttributeSet?, pixelRatio: Float = 1.0f): LocationComponentSettings2 {
     val typedArray = context.obtainStyledAttributes(attrs, R.styleable.mapbox_MapView, 0, 0)
     try {
-      return LocationComponentAccuracyRingSettings(
+      return LocationComponentSettings2(
         showAccuracyRing = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_locationComponentShowAccuracyRing, false),
         accuracyRingColor = typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentAccuracyRingColor, Color.parseColor("#4d89cff0")),
         accuracyRingBorderColor = typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentAccuracyRingBorderColor, Color.parseColor("#4d89cff0")),

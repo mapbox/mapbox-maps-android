@@ -101,12 +101,12 @@ class LocationComponentActivity : AppCompatActivity() {
         return true
       }
       R.id.action_accuracy_enabled -> {
-        binding.mapView.location2.updateAccuracyRingSettings { showAccuracyRing = true }
+        binding.mapView.location2.updateSettings2 { showAccuracyRing = true }
         item.isChecked = true
         return true
       }
       R.id.action_accuracy_disable -> {
-        binding.mapView.location2.updateAccuracyRingSettings { showAccuracyRing = false }
+        binding.mapView.location2.updateSettings2 { showAccuracyRing = false }
         item.isChecked = true
         return true
       }

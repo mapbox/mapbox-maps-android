@@ -12,13 +12,13 @@ import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAccuracyRingSettings
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
+import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2
 import kotlin.math.pow
 
 internal class LocationPuckManager(
   var settings: LocationComponentSettings,
-  var accuracyRadiusSettings: LocationComponentAccuracyRingSettings,
+  var settings2: LocationComponentSettings2,
   private val delegateProvider: MapDelegateProvider,
   private val positionManager: LocationComponentPositionManager,
   private val layerSourceProvider: LayerSourceProvider,
@@ -57,10 +57,10 @@ internal class LocationPuckManager(
 
   fun initialize(style: StyleInterface) {
     if (!locationLayerRenderer.isRendererInitialised()) {
-      animationManager.setUpdateListeners(onLocationUpdated, onBearingUpdated)
+      animationManager.setUpdateListeners(onLocationUpdated, onBearingUpdated, onAccuracyRadiusUpdated)
       animationManager.setLocationLayerRenderer(locationLayerRenderer)
       animationManager.applyPulsingAnimationSettings(settings)
-      animationManager.applyAccuracyRadiusSettings(accuracyRadiusSettings)
+      animationManager.applyAccuracyRadiusSettings(settings2)
       locationLayerRenderer.addLayers(positionManager)
       lastLocation?.let {
         updateCurrentPosition(it)
@@ -104,6 +104,11 @@ internal class LocationPuckManager(
     delegateProvider.getStyle {
       initialize(it)
     }
+  }
+
+  fun updateSettings2(settings2: LocationComponentSettings2) {
+    this.settings2 = settings2
+    animationManager.applyAccuracyRadiusSettings(settings2)
   }
 
   //

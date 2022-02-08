@@ -5,7 +5,7 @@ package com.mapbox.maps.plugin.scalebar.generated
 import android.graphics.Color
 import android.view.Gravity
 /**
- * Settings for ScaleBar
+ * Shows the scale bar on the map.
  */
 data class ScaleBarSettings @JvmOverloads constructor(
 

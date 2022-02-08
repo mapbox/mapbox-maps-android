@@ -11,7 +11,7 @@ import com.mapbox.maps.plugin.LocationPuck
  */
 abstract class LocationComponentSettingsBase : LocationComponentSettingsInterface {
   /**
-   * The internalSettings that hold all the settings
+   * Shows a location puck on the map.
    */
   protected abstract var internalSettings: LocationComponentSettings
 

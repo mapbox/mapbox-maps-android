@@ -11,14 +11,14 @@ interface LocationComponentSettingsInterface2 : LocationComponentSettingsInterfa
    *
    * @return locationcomponent settings
    */
-  fun getAccuracyRingSettings(): LocationComponentAccuracyRingSettings
+  fun getSettings2(): LocationComponentSettings2
 
   /**
    * Update locationcomponent configuration, the update will be applied to the plugin automatically.
    *
    * @param block the receiver function of LocationComponentSettings
    */
-  fun updateAccuracyRingSettings(block: LocationComponentAccuracyRingSettings.() -> Unit)
+  fun updateSettings2(block: LocationComponentSettings2.() -> Unit)
 
   /**
    * Whether show accuracy ring with location puck. Works for 2D location puck only.

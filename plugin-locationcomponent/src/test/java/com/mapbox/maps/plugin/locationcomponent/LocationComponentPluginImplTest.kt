@@ -14,8 +14,8 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAccuracyRingAttributeParser
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttributeParser
+import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttributeParser2
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import io.mockk.*
 import org.junit.Assert.*
@@ -50,7 +50,7 @@ class LocationComponentPluginImplTest {
   @Before
   fun setup() {
     mockkObject(LocationComponentAttributeParser)
-    mockkObject(LocationComponentAccuracyRingAttributeParser)
+    mockkObject(LocationComponentAttributeParser2)
     mockkStatic(LocationEngineProvider::class)
 
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray

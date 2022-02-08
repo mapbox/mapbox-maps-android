@@ -5,26 +5,26 @@ package com.mapbox.maps.plugin.locationcomponent.generated
 /**
  * Abstract settings class for LocationComponentPlugin.
  *
- * This abstract class exposes all the required public APIs to configure the AccuracyRing of the LocationComponentPlugin.
+ * This abstract class exposes all the required public APIs to configure the LocationComponentPlugin.
  */
 abstract class LocationComponentSettingsBase2 : LocationComponentSettingsInterface2, LocationComponentSettingsBase() {
   /**
-   * The internalSettings that hold all the settings
+   * Shows a location puck on the map.
    */
-  protected abstract var internalAccuracyRingSettings: LocationComponentAccuracyRingSettings
+  protected abstract var internalSettings2: LocationComponentSettings2
 
   /**
    * Apply the changes to the LocationComponentSettings to the LocationComponentPlugin.
    */
-  protected abstract fun applyAccuracyRingSettings()
+  protected abstract fun applySettings2()
 
   /**
    * Get current locationcomponent configuration.
    *
    * @return locationcomponent settings
    */
-  override fun getAccuracyRingSettings(): LocationComponentAccuracyRingSettings {
-    return internalAccuracyRingSettings.copy()
+  override fun getSettings2(): LocationComponentSettings2 {
+    return internalSettings2.copy()
   }
 
   /**
@@ -32,9 +32,9 @@ abstract class LocationComponentSettingsBase2 : LocationComponentSettingsInterfa
    *
    * @param block the receiver function of LocationComponentSettings
    */
-  override fun updateAccuracyRingSettings(block: LocationComponentAccuracyRingSettings.() -> Unit) {
-    this.internalAccuracyRingSettings.apply(block)
-    applyAccuracyRingSettings()
+  override fun updateSettings2(block: LocationComponentSettings2.() -> Unit) {
+    this.internalSettings2.apply(block)
+    applySettings2()
   }
 
   /**
@@ -42,11 +42,11 @@ abstract class LocationComponentSettingsBase2 : LocationComponentSettingsInterfa
    */
   override var showAccuracyRing: Boolean
     get() {
-      return this.internalAccuracyRingSettings.showAccuracyRing
+      return this.internalSettings2.showAccuracyRing
     }
     set(value) {
-      this.internalAccuracyRingSettings.showAccuracyRing = value
-      applyAccuracyRingSettings()
+      this.internalSettings2.showAccuracyRing = value
+      applySettings2()
     }
 
   /**
@@ -54,11 +54,11 @@ abstract class LocationComponentSettingsBase2 : LocationComponentSettingsInterfa
    */
   override var accuracyRingColor: Int
     get() {
-      return this.internalAccuracyRingSettings.accuracyRingColor
+      return this.internalSettings2.accuracyRingColor
     }
     set(value) {
-      this.internalAccuracyRingSettings.accuracyRingColor = value
-      applyAccuracyRingSettings()
+      this.internalSettings2.accuracyRingColor = value
+      applySettings2()
     }
 
   /**
@@ -66,11 +66,11 @@ abstract class LocationComponentSettingsBase2 : LocationComponentSettingsInterfa
    */
   override var accuracyRingBorderColor: Int
     get() {
-      return this.internalAccuracyRingSettings.accuracyRingBorderColor
+      return this.internalSettings2.accuracyRingBorderColor
     }
     set(value) {
-      this.internalAccuracyRingSettings.accuracyRingBorderColor = value
-      applyAccuracyRingSettings()
+      this.internalSettings2.accuracyRingBorderColor = value
+      applySettings2()
     }
 }
 
