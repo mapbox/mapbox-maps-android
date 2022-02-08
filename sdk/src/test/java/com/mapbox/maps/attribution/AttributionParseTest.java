@@ -330,7 +330,7 @@ public class AttributionParseTest {
             .withAttributionData(CUSTOM_ATTRIBUTION, CUSTOM_ATTRIBUTION_OPENSTREET)
             .build();
 
-    Set<Attribution> attributionList = attributionParser.getAttributions();
+    final Set<Attribution> attributionList = attributionParser.getAttributions();
     assertEquals("Size of list should match", 2, attributionList.size());
 
     int counter = 0;
