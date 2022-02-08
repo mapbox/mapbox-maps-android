@@ -37,31 +37,31 @@ class ViewportStatusChangeReason private constructor(
     /**
      * The [ViewportStatus] is changed by the Idle request.
      */
-    @JvmStatic
+    @JvmField
     val IDLE_REQUESTED = ViewportStatusChangeReason("IDLE_REQUESTED")
 
     /**
      * The [ViewportStatus] is changed by a transition started event.
      */
-    @JvmStatic
+    @JvmField
     val TRANSITION_STARTED = ViewportStatusChangeReason("TRANSITION_STARTED")
 
     /**
      * The [ViewportStatus] is changed by a transition succeeded event.
      */
-    @JvmStatic
+    @JvmField
     val TRANSITION_SUCCEEDED = ViewportStatusChangeReason("TRANSITION_SUCCEEDED")
 
     /**
      * The [ViewportStatus] is changed by a transition failed event.
      */
-    @JvmStatic
+    @JvmField
     val TRANSITION_FAILED = ViewportStatusChangeReason("TRANSITION_FAILED")
 
     /**
      * The [ViewportStatus] is changed by an user interaction event.
      */
-    @JvmStatic
+    @JvmField
     val USER_INTERACTION = ViewportStatusChangeReason("USER_INTERACTION")
   }
 }
