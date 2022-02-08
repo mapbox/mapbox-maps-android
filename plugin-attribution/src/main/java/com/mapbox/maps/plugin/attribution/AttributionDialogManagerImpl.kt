@@ -6,10 +6,15 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.VisibleForTesting
+import androidx.core.content.ContextCompat
 import com.mapbox.maps.module.MapTelemetry
 import com.mapbox.maps.plugin.delegates.MapAttributionDelegate
 
@@ -46,8 +51,7 @@ class AttributionDialogManagerImpl(
     }
     // check if hosting activity isn't finishing
     if (!isActivityFinishing) {
-      val attributionTitles = attributionList.map { it.title }.toTypedArray()
-      showAttributionDialog(attributionTitles)
+      showAttributionDialog(attributionList)
     }
   }
 
@@ -56,17 +60,30 @@ class AttributionDialogManagerImpl(
    *
    * @param attributionTitles an array of attribution titles
    */
-  private fun showAttributionDialog(attributionTitles: Array<String>) {
+  private fun showAttributionDialog(attributions: List<Attribution>) {
     val builder = AlertDialog.Builder(context)
     builder.setTitle(R.string.mapbox_attributionsDialogTitle)
-    builder.setAdapter(
-      ArrayAdapter(
-        context,
-        R.layout.mapbox_attribution_list_item,
-        attributionTitles
-      ),
-      this
-    )
+    val adapter: ArrayAdapter<Attribution> = object : ArrayAdapter<Attribution>(
+      context,
+      R.layout.mapbox_attribution_list_item, attributions
+    ) {
+      override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        val view = super.getView(position, convertView, parent)
+        val attribution = attributions[position]
+        view.findViewById<TextView>(android.R.id.text1).apply {
+          // if attribution url is empty, we show them as disabled.
+          setTextColor(
+            if (attribution.url.isEmpty()) Color.GRAY else ContextCompat.getColor(
+              context,
+              R.color.mapbox_blue
+            )
+          )
+          text = attribution.title
+        }
+        return view
+      }
+    }
+    builder.setAdapter(adapter, this)
     dialog = builder.show()
   }
 
@@ -115,7 +132,9 @@ class AttributionDialogManagerImpl(
         url = it.buildMapBoxFeedbackUrl(context)
       }
     }
-    showWebPage(url)
+    if (url.isNotEmpty()) {
+      showWebPage(url)
+    }
   }
 
   private fun showWebPage(url: String) {

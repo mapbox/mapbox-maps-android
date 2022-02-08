@@ -16,6 +16,8 @@ public class AttributionParseTest {
 
   private static final String STREETS_ATTRIBUTION = "<a href=\"https://www.mapbox.com/about/maps/\" target=\"_blank\">&copy; Mapbox</a> <a href=\"http://www.openstreetmap.org/about/\" target=\"_blank\">&copy; OpenStreetMap</a> <a class=\"mapbox-improve-map\" href=\"https://apps.mapbox.com/feedback/\" target=\"_blank\">Improve this map</a>\n";
   private static final String SATELLITE_ATTRIBUTION = "<a href=\"https://www.mapbox.com/about/maps/\" target=\"_blank\">&copy; Mapbox</a> <a href=\"http://www.openstreetmap.org/about/\" target=\"_blank\">&copy; OpenStreetMap</a> <a class=\"mapbox-improve-map\" href=\"https://apps.mapbox.com/feedback/\" target=\"_blank\">Improve this map</a> <a href=\"https://www.digitalglobe.com/\" target=\"_blank\">&copy; DigitalGlobe</a>\n";
+  private static final String CUSTOM_ATTRIBUTION = "&copy; Custom Contributors";
+  private static final String CUSTOM_ATTRIBUTION_OPENSTREET = "OpenStreetMap CC-BY-SA";
 
   @Test
   public void testParseAttributionStringSatellite() throws Exception {
@@ -263,7 +265,7 @@ public class AttributionParseTest {
   @Test
   public void testOutputSatelliteString() throws Exception {
     AttributionParser attributionParser = new AttributionParser.Options(RuntimeEnvironment.application)
-      .withAttributionData(STREETS_ATTRIBUTION, SATELLITE_ATTRIBUTION, "blabla", "")
+      .withAttributionData(STREETS_ATTRIBUTION, SATELLITE_ATTRIBUTION, "")
       .withImproveMap(false)
       .withCopyrightSign(false)
       .withMapboxAttribution(false)
@@ -279,7 +281,7 @@ public class AttributionParseTest {
   @Test
   public void testShortOpenStreetMapString() throws Exception {
     AttributionParser attributionParser = new AttributionParser.Options(RuntimeEnvironment.application)
-      .withAttributionData(STREETS_ATTRIBUTION, SATELLITE_ATTRIBUTION, "blabla", "")
+      .withAttributionData(STREETS_ATTRIBUTION, SATELLITE_ATTRIBUTION, "")
       .withImproveMap(false)
       .withCopyrightSign(false)
       .withMapboxAttribution(false)
@@ -295,7 +297,7 @@ public class AttributionParseTest {
   @Test
   public void testShortOpenStreetMapWithoutCopyrightString() throws Exception {
     AttributionParser attributionParser = new AttributionParser.Options(RuntimeEnvironment.application)
-      .withAttributionData(STREETS_ATTRIBUTION, SATELLITE_ATTRIBUTION, "blabla", "")
+      .withAttributionData(STREETS_ATTRIBUTION, SATELLITE_ATTRIBUTION, "")
       .withImproveMap(false)
       .withCopyrightSign(false)
       .build();
@@ -310,15 +312,40 @@ public class AttributionParseTest {
   @Test
   public void testWithImproveThisMapString() throws Exception {
     AttributionParser attributionParser = new AttributionParser.Options(RuntimeEnvironment.application)
-      .withAttributionData(STREETS_ATTRIBUTION, "blabla", "")
+      .withAttributionData(STREETS_ATTRIBUTION, CUSTOM_ATTRIBUTION, "")
       .withImproveMap(true)
       .withCopyrightSign(false)
       .build();
 
     assertEquals(
       "Attribution string should match",
-      "© Mapbox / OSM / Improve This Map",
+      "© Mapbox / OSM / Improve This Map / Custom Contributors",
       attributionParser.createAttributionString(true)
     );
+  }
+
+  @Test
+  public void testParseAttributionWithCustomStringAttribution() throws Exception {
+    AttributionParser attributionParser = new AttributionParser.Options(RuntimeEnvironment.application)
+            .withAttributionData(CUSTOM_ATTRIBUTION, CUSTOM_ATTRIBUTION_OPENSTREET)
+            .build();
+
+    final Set<Attribution> attributionList = attributionParser.getAttributions();
+    assertEquals("Size of list should match", 2, attributionList.size());
+
+    int counter = 0;
+    for (final Attribution attribution : attributionList) {
+      switch (counter) {
+        case 0:
+          assertEquals("URL should match", "", attribution.getUrl());
+          assertEquals("Title should match", "© Custom Contributors", attribution.getTitle());
+          break;
+        case 1:
+          assertEquals("URL should match", "", attribution.getUrl());
+          assertEquals("Title should match", "OpenStreetMap CC-BY-SA", attribution.getTitle());
+          break;
+      }
+      counter++;
+    }
   }
 }
