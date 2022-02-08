@@ -13,8 +13,35 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 10.3.0 February 7, 2022
 
+## Features ✨ and improvements 🏁
+* Improve performance for symbol layout rendering in continuous mode. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105))
+* Introduce metadata setter API for the legacy offline region. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105))
+* Optimize zooming on terrain and globe. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105))
+* Thin out repeated line labels at overscaled tiles in order to avoid excessive memory usage. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105))
+* Remove experimental designation from persistent layer APIs. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105))
+* Avoid re-creation of the available sprites set. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105))
+* Limit the delayed network request maximum time in the scheduler task queue, and thus avoid excessive memory usage. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105))
+* Fill extrusion layer support for globe view. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105))
+* Increase priority of a renderer thread. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105))
+
+
+## Bug fixes 🐞
+* Include geometry data buffer size when calculating total size of a tile. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105))
+* Fix screen coordinate queries when using zero pitch and high zoom values. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105))
+* View Annotation API: move internal Java files to the corresponding package. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105))
+* vector-tile updated to v1.0.4, fixing an end of buffer exception. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105))
+* Reduces drag sensitivity around and above horizon. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105))
+* Erase corrupt tiles from TileStore. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105))
+* Add perspective correction for non-rectangular images. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105))
+* Fix rendering artifacts when compressed and un-compresed raster tiles are rendered. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105))
+* Fixed terrain occluding 3D location indicator. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105))
+* Avoid creating new symbol instances if the feature is outside of tile boundaries to avoid incorrect symbol cross tile indexing. In the meanwhile, disable draping for this layer otherwise symbol will only be shown on the tile that has the symbol instance created. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105))
+* Fix location indicator layer rendering when SwiftShader is used. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105))
+* Avoid possible crash at program exit caused by dummy tracer accessed after destruction. ([#1116](https://github.com/mapbox/mapbox-maps-android/pull/1116))
+* Fix crash for the case when a map event is handled by an Observer of a destructed map. ([#1116](https://github.com/mapbox/mapbox-maps-android/pull/1116))
+
 ## Dependencies
-* Update gl-native to v10.3.0, common to v21.1.0. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105))
+* Update gl-native to v10.3.1, common to v21.1.0. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105), [#1116](https://github.com/mapbox/mapbox-maps-android/pull/1116))
 
 # 10.3.0-rc.1 January 26, 2022
 
