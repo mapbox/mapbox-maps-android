@@ -72,11 +72,12 @@ class AttributionDialogManagerImpl(
         val attribution = attributions[position]
         view.findViewById<TextView>(android.R.id.text1).apply {
           // if attribution url is empty, we show them as disabled.
-          if (attribution.url.isEmpty()) {
-            setTextColor(Color.GRAY)
-          } else {
-            setTextColor(ContextCompat.getColor(context, R.color.mapbox_blue))
-          }
+          setTextColor(
+            if (attribution.url.isEmpty()) Color.GRAY else ContextCompat.getColor(
+              context,
+              R.color.mapbox_blue
+            )
+          )
           text = attribution.title
         }
         return view

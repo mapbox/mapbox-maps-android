@@ -334,7 +334,7 @@ public class AttributionParseTest {
     assertEquals("Size of list should match", 2, attributionList.size());
 
     int counter = 0;
-    for (Attribution attribution : attributionList) {
+    for (final Attribution attribution : attributionList) {
       switch (counter) {
         case 0:
           assertEquals("URL should match", "", attribution.getUrl());

@@ -74,8 +74,8 @@ open class AttributionParser internal constructor(
   /**
    * Parse string literal to attribution with empty url.
    */
-  private fun parseStringLiteralToAttributions(stringLiteralArray: MutableList<String>) {
-    for (strLiteral in stringLiteralArray) {
+  private fun parseStringLiteralToAttributions(stringLiteralList: List<String>) {
+    for (strLiteral in stringLiteralList) {
       var htmlStr = fromHtml(strLiteral).toString()
       if (!withCopyrightSign) {
         htmlStr = stripCopyright(htmlStr)
