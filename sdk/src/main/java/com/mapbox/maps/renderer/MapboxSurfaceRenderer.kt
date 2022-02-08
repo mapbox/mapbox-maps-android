@@ -11,7 +11,6 @@ internal open class MapboxSurfaceRenderer : MapboxRenderer {
 
   constructor(antialiasingSampleCount: Int) {
     widgetRenderer = MapboxWidgetRenderer(
-      translucentSurface = false,
       antialiasingSampleCount = antialiasingSampleCount,
     )
     renderThread = MapboxRenderThread(
@@ -25,7 +24,6 @@ internal open class MapboxSurfaceRenderer : MapboxRenderer {
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal constructor(renderThread: MapboxRenderThread) {
     widgetRenderer = MapboxWidgetRenderer(
-      translucentSurface = false,
       antialiasingSampleCount = 1,
     )
     this.renderThread = renderThread

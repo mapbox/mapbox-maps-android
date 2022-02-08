@@ -1,6 +1,5 @@
 package com.mapbox.maps.renderer
 
-import android.opengl.GLES20
 import android.os.SystemClock
 import android.view.Choreographer
 import android.view.Surface
@@ -49,6 +48,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   private var height: Int = 0
 
   private val widgetRenderer: MapboxWidgetRenderer
+  private var widgetRenderCreated = false
   private val widgetTextureRenderer: TextureRenderer
 
   @Volatile
@@ -68,7 +68,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
    * We track moment when native renderer is prepared.
    */
   private var renderCreated = false
-  private var widgetRenderCreated = false
 
   /**
    * We track moment when EGL context is created and associated with current Android surface.
@@ -155,10 +154,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
                 )
                 renderCreated = true
               }
-              if (!widgetRenderCreated) {
-                widgetRenderer.onSharedContext(eglCore.eglContext)
-                widgetRenderCreated = true
-              }
+
               return true
             }
           }
@@ -225,6 +221,13 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
+  private fun checkWidgetRender() {
+    if (eglPrepared && !widgetRenderCreated && widgetRenderer.hasWidgets()) {
+      widgetRenderer.onSharedContext(eglCore.eglContext)
+      widgetRenderCreated = true
+    }
+  }
+
   private fun draw() {
     val renderTimeNsCopy = renderTimeNs
     val currentTimeNs = SystemClock.elapsedRealtimeNanos()
@@ -236,16 +239,19 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       return
     }
 
-    if (widgetRenderer.needRender) {
-      eglCore.makeNothingCurrent()
-      widgetRenderer.updateTexture()
-      eglCore.makeCurrent(eglSurface)
-    }
+    if (widgetRenderer.hasWidgets()) {
+      if (widgetRenderer.needRender) {
+        widgetRenderer.updateTexture()
+        eglCore.makeCurrent(eglSurface)
+      }
 
-    mapboxRenderer.render()
+      mapboxRenderer.render()
 
-    if (widgetRenderer.getTextureId() != 0) {
-      widgetTextureRenderer.render(widgetRenderer.getTextureId())
+      if (widgetRenderer.hasTexture()) {
+        widgetTextureRenderer.render(widgetRenderer.getTexture())
+      }
+    } else {
+      mapboxRenderer.render()
     }
 
     // assuming render event queue holds user's runnables with OpenGL ES commands
@@ -291,6 +297,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     eglCore.releaseSurface(eglSurface)
     eglContextCreated = false
     eglSurface = eglCore.eglNoSurface
+    widgetRenderCreated = false
     widgetRenderer.release()
   }
 
@@ -301,7 +308,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     renderCreated = false
     releaseEgl()
     surface?.release()
-    widgetRenderer.release()
   }
 
   private fun prepareRenderFrame(creatingSurface: Boolean = false) {
@@ -327,6 +333,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         return
       }
     }
+    checkWidgetRender()
     checkSurfaceSizeChanged()
     Choreographer.getInstance().postFrameCallback(this)
     awaitingNextVsync = true
@@ -370,6 +377,8 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   fun addWidget(widget: Widget) {
     widgetRenderer.addWidget(widget)
   }
+
+  fun removeWidget(widget: Widget) = widgetRenderer.removeWidget(widget)
 
   @WorkerThread
   internal fun processAndroidSurface(surface: Surface, width: Int, height: Int) {

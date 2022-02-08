@@ -11,7 +11,6 @@ internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTe
 
   constructor(textureView: TextureView, antialiasingSampleCount: Int) {
     val widgetRenderer = MapboxWidgetRenderer(
-      translucentSurface = false,
       antialiasingSampleCount = antialiasingSampleCount,
     )
     this.widgetRenderer = widgetRenderer
@@ -30,7 +29,6 @@ internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTe
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal constructor(renderThread: MapboxRenderThread) {
     val widgetRenderer = MapboxWidgetRenderer(
-      translucentSurface = false,
       antialiasingSampleCount = 1,
     )
     this.widgetRenderer = widgetRenderer

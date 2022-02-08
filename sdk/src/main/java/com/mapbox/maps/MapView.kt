@@ -311,12 +311,20 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   }
 
   /**
-   * Add static image widget to the map.
+   * Add [Widget] to the map.
    */
   @MapboxExperimental
   override fun addWidget(widget: Widget) {
     mapController.addWidget(widget)
   }
+
+  /**
+   * Remove [Widget] from the map.
+   *
+   * @return true if widget was removed
+   */
+  @MapboxExperimental
+  override fun removeWidget(widget: Widget) = mapController.removeWidget(widget)
 
   /**
    * Interface for getting snapshot result [Bitmap].

@@ -76,8 +76,16 @@ interface MapControllable : MapboxLifecycleObserver {
   fun setOnFpsChangedListener(listener: OnFpsChangedListener)
 
   /**
-   * Add static image widget to the map.
+   * Add [Widget] to the map.
    */
   @MapboxExperimental
   fun addWidget(widget: Widget)
+
+  /**
+   * Remove [Widget] from the map.
+   *
+   * @return true if widget was removed
+   */
+  @MapboxExperimental
+  fun removeWidget(widget: Widget) : Boolean
 }

@@ -61,7 +61,7 @@ class MapboxRenderThreadTest {
     every { eglCore.eglNoSurface } returns mockk()
     every { eglCore.swapBuffers(any()) } returns EGL10.EGL_SUCCESS
     mapboxWidgetRenderer = mockk(relaxUnitFun = true)
-    every { mapboxWidgetRenderer.getTextureId()  } returns 0
+    every { mapboxWidgetRenderer.getTexture()  } returns 0
     every { mapboxWidgetRenderer.needRender  } returns false
     renderHandlerThread = RenderHandlerThread()
     textureRenderer = mockk(relaxed = true)
@@ -550,7 +550,7 @@ class MapboxRenderThreadTest {
   fun onDrawDoesNotRenderWidgets() {
     mockValidSurface()
     every { mapboxWidgetRenderer.needRender  } returns false
-    every { mapboxWidgetRenderer.getTextureId()  } returns 0
+    every { mapboxWidgetRenderer.getTexture()  } returns 0
     Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
     mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
     mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
@@ -569,7 +569,7 @@ class MapboxRenderThreadTest {
     mockValidSurface()
     val textureId = 1
     every { mapboxWidgetRenderer.needRender  } returns true
-    every { mapboxWidgetRenderer.getTextureId()  } returns textureId
+    every { mapboxWidgetRenderer.getTexture()  } returns textureId
     Shadows.shadowOf(renderHandlerThread.handler?.looper).pause()
     mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
     Shadows.shadowOf(renderHandlerThread.handler?.looper).idle()

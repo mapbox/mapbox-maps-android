@@ -5,6 +5,7 @@ import android.opengl.GLES20
 import android.opengl.GLUtils
 import android.opengl.Matrix
 import com.mapbox.maps.renderer.gl.GlUtils
+import com.mapbox.maps.renderer.gl.GlUtils.put
 import com.mapbox.maps.renderer.gl.GlUtils.toFloatBuffer
 import java.nio.FloatBuffer
 
@@ -49,20 +50,6 @@ internal class BitmapWidgetRendererImpl(
   ).toFloatBuffer()
 
   override var needRender: Boolean = true
-
-  private fun FloatArray.put(vararg values: Float) {
-    values.forEachIndexed { index, value ->
-      this[index] = value
-    }
-  }
-
-  private fun FloatBuffer.put(vararg values: Float) {
-    rewind()
-    values.forEach { value ->
-      this.put(value)
-    }
-    rewind()
-  }
 
   override fun onSurfaceChanged(width: Int, height: Int) {
     surfaceWidth = width
@@ -301,6 +288,7 @@ internal class BitmapWidgetRendererImpl(
     private const val VERTEX_COUNT = 4
 
     private val VERTEX_SHADER_CODE = """
+      precision highp float;
       uniform mat4 uMvpMatrix;
       attribute vec2 aPosition;
       attribute vec2 aCoordinate;

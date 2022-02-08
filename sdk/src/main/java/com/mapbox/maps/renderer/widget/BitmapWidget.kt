@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import com.mapbox.maps.MapboxExperimental
 
 @MapboxExperimental
-open class BitmapWidget(
+open class BitmapWidget @JvmOverloads constructor(
   bitmap: Bitmap,
   position: WidgetPosition = WidgetPosition(
     vertical = WidgetPosition.Vertical.TOP,

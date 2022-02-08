@@ -9,6 +9,20 @@ import java.nio.FloatBuffer
 
 internal object GlUtils {
 
+  fun FloatArray.put(vararg values: Float) {
+    values.forEachIndexed { index, value ->
+      this[index] = value
+    }
+  }
+
+  fun FloatBuffer.put(vararg values: Float) {
+    rewind()
+    values.forEach { value ->
+      this.put(value)
+    }
+    rewind()
+  }
+
   fun FloatArray.toFloatBuffer(): FloatBuffer = ByteBuffer.allocateDirect(size * 4)
     .order(ByteOrder.nativeOrder())
     .asFloatBuffer().also {

@@ -210,6 +210,8 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     renderer.renderThread.addWidget(widget)
   }
 
+  override fun removeWidget(widget: Widget) = renderer.renderThread.removeWidget(widget)
+
   //
   // Telemetry
   //

@@ -124,16 +124,16 @@ internal class TextureRenderer(
     GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0)
   }
 
-  companion object {
-    private const val COORDS_PER_VERTEX = 3
-    private const val COORDS_PER_TEX = 2
-    private const val BYTES_PER_FLOAT = 4
-    private const val VERTEX_STRIDE = COORDS_PER_VERTEX * BYTES_PER_FLOAT
-    private const val TEX_STRIDE = COORDS_PER_TEX * BYTES_PER_FLOAT
-    private const val VERTEX_COUNT = 4
+  private companion object {
+    const val COORDS_PER_VERTEX = 3
+    const val COORDS_PER_TEX = 2
+    const val BYTES_PER_FLOAT = 4
+    const val VERTEX_STRIDE = COORDS_PER_VERTEX * BYTES_PER_FLOAT
+    const val TEX_STRIDE = COORDS_PER_TEX * BYTES_PER_FLOAT
+    const val VERTEX_COUNT = 4
 
-    private val VERTEX_SHADER_CODE = """
-        uniform mat4 uTexMatrix;
+    val VERTEX_SHADER_CODE = """
+        precision highp float;
         attribute vec4 aPosition;
         attribute vec2 aTexCoord;
         varying vec2 vTexCoord;
@@ -144,7 +144,7 @@ internal class TextureRenderer(
         }
     """.trimIndent()
 
-    private val FRAGMENT_SHADER_CODE = """
+    val FRAGMENT_SHADER_CODE = """
         precision mediump float;
         varying vec2 vTexCoord;
         uniform sampler2D uTexture;
