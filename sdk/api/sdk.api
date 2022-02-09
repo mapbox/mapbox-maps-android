@@ -473,6 +473,7 @@ public final class com/mapbox/maps/attribution/AttributionParser$Companion {
 }
 
 public final class com/mapbox/maps/attribution/AttributionParser$Options {
+	public static final field HTML_STYLE_REGEX Ljava/lang/String;
 	public fun <init> (Landroid/content/Context;)V
 	public final fun build ()Lcom/mapbox/maps/attribution/AttributionParser;
 	public final fun withAttributionData ([Ljava/lang/String;)Lcom/mapbox/maps/attribution/AttributionParser$Options;

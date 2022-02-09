@@ -1822,6 +1822,19 @@ public final class com/mapbox/maps/plugin/locationcomponent/LocationComponentPlu
 	public static fun onStop (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin;)V
 }
 
+public abstract interface class com/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin2 : com/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin, com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettingsInterface2 {
+	public abstract fun addOnIndicatorAccuracyRadiusChangedListener (Lcom/mapbox/maps/plugin/locationcomponent/OnIndicatorAccuracyRadiusChangedListener;)V
+	public abstract fun removeOnIndicatorAccuracyRadiusChangedListener (Lcom/mapbox/maps/plugin/locationcomponent/OnIndicatorAccuracyRadiusChangedListener;)V
+}
+
+public final class com/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin2$DefaultImpls {
+	public static fun cleanup (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin2;)V
+	public static fun initialize (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin2;)V
+	public static fun onDelegateProvider (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin2;Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+	public static fun onStart (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin2;)V
+	public static fun onStop (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin2;)V
+}
+
 public abstract interface class com/mapbox/maps/plugin/locationcomponent/LocationConsumer {
 	public abstract fun onBearingUpdated ([DLkotlin/jvm/functions/Function1;)V
 	public abstract fun onLocationUpdated ([Lcom/mapbox/geojson/Point;Lkotlin/jvm/functions/Function1;)V
@@ -1834,9 +1847,22 @@ public final class com/mapbox/maps/plugin/locationcomponent/LocationConsumer$Def
 	public static synthetic fun onLocationUpdated$default (Lcom/mapbox/maps/plugin/locationcomponent/LocationConsumer;[Lcom/mapbox/geojson/Point;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 }
 
+public abstract interface class com/mapbox/maps/plugin/locationcomponent/LocationConsumer2 : com/mapbox/maps/plugin/locationcomponent/LocationConsumer {
+	public abstract fun onAccuracyRadiusUpdated ([DLkotlin/jvm/functions/Function1;)V
+	public abstract fun onPuckAccuracyRadiusAnimatorDefaultOptionsUpdated (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class com/mapbox/maps/plugin/locationcomponent/LocationConsumer2$DefaultImpls {
+	public static synthetic fun onAccuracyRadiusUpdated$default (Lcom/mapbox/maps/plugin/locationcomponent/LocationConsumer2;[DLkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+}
+
 public abstract interface class com/mapbox/maps/plugin/locationcomponent/LocationProvider {
 	public abstract fun registerLocationConsumer (Lcom/mapbox/maps/plugin/locationcomponent/LocationConsumer;)V
 	public abstract fun unRegisterLocationConsumer (Lcom/mapbox/maps/plugin/locationcomponent/LocationConsumer;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/locationcomponent/OnIndicatorAccuracyRadiusChangedListener {
+	public abstract fun onIndicatorAccuracyRadiusChanged (D)V
 }
 
 public abstract interface class com/mapbox/maps/plugin/locationcomponent/OnIndicatorBearingChangedListener {
@@ -1888,6 +1914,28 @@ public final class com/mapbox/maps/plugin/locationcomponent/generated/LocationCo
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2 {
+	public fun <init> ()V
+	public fun <init> (Z)V
+	public fun <init> (ZI)V
+	public fun <init> (ZII)V
+	public synthetic fun <init> (ZIIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Z
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun copy (ZII)Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;ZIIILjava/lang/Object;)Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAccuracyRingBorderColor ()I
+	public final fun getAccuracyRingColor ()I
+	public final fun getShowAccuracyRing ()Z
+	public fun hashCode ()I
+	public final fun setAccuracyRingBorderColor (I)V
+	public final fun setAccuracyRingColor (I)V
+	public final fun setShowAccuracyRing (Z)V
+	public fun toString ()Ljava/lang/String;
+}
+
 public abstract class com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettingsBase : com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettingsInterface {
 	public fun <init> ()V
 	protected abstract fun applySettings ()V
@@ -1911,6 +1959,21 @@ public abstract class com/mapbox/maps/plugin/locationcomponent/generated/Locatio
 	public fun updateSettings (Lkotlin/jvm/functions/Function1;)V
 }
 
+public abstract class com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettingsBase2 : com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettingsBase, com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettingsInterface2 {
+	public fun <init> ()V
+	protected abstract fun applySettings2 ()V
+	public fun getAccuracyRingBorderColor ()I
+	public fun getAccuracyRingColor ()I
+	protected abstract fun getInternalSettings2 ()Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;
+	public fun getSettings2 ()Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;
+	public fun getShowAccuracyRing ()Z
+	public fun setAccuracyRingBorderColor (I)V
+	public fun setAccuracyRingColor (I)V
+	protected abstract fun setInternalSettings2 (Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;)V
+	public fun setShowAccuracyRing (Z)V
+	public fun updateSettings2 (Lkotlin/jvm/functions/Function1;)V
+}
+
 public abstract interface class com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettingsInterface {
 	public abstract fun getEnabled ()Z
 	public abstract fun getLayerAbove ()Ljava/lang/String;
@@ -1928,6 +1991,17 @@ public abstract interface class com/mapbox/maps/plugin/locationcomponent/generat
 	public abstract fun setPulsingEnabled (Z)V
 	public abstract fun setPulsingMaxRadius (F)V
 	public abstract fun updateSettings (Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettingsInterface2 : com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettingsInterface {
+	public abstract fun getAccuracyRingBorderColor ()I
+	public abstract fun getAccuracyRingColor ()I
+	public abstract fun getSettings2 ()Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;
+	public abstract fun getShowAccuracyRing ()Z
+	public abstract fun setAccuracyRingBorderColor (I)V
+	public abstract fun setAccuracyRingColor (I)V
+	public abstract fun setShowAccuracyRing (Z)V
+	public abstract fun updateSettings2 (Lkotlin/jvm/functions/Function1;)V
 }
 
 public abstract interface class com/mapbox/maps/plugin/logo/LogoPlugin : com/mapbox/maps/plugin/ViewPlugin, com/mapbox/maps/plugin/logo/generated/LogoSettingsInterface {
@@ -2414,22 +2488,17 @@ public final class com/mapbox/maps/plugin/viewport/data/ViewportOptions$Builder 
 
 public final class com/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason {
 	public static final field Companion Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason$Companion;
+	public static final field IDLE_REQUESTED Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
+	public static final field TRANSITION_FAILED Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
+	public static final field TRANSITION_STARTED Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
+	public static final field TRANSITION_SUCCEEDED Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
+	public static final field USER_INTERACTION Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
 	public fun equals (Ljava/lang/Object;)Z
-	public static final fun getIDLE_REQUESTED ()Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
-	public static final fun getTRANSITION_FAILED ()Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
-	public static final fun getTRANSITION_STARTED ()Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
-	public static final fun getTRANSITION_SUCCEEDED ()Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
-	public static final fun getUSER_INTERACTION ()Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class com/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason$Companion {
-	public final fun getIDLE_REQUESTED ()Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
-	public final fun getTRANSITION_FAILED ()Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
-	public final fun getTRANSITION_STARTED ()Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
-	public final fun getTRANSITION_SUCCEEDED ()Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
-	public final fun getUSER_INTERACTION ()Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
 }
 
 public abstract interface class com/mapbox/maps/plugin/viewport/state/FollowPuckViewportState : com/mapbox/maps/plugin/viewport/state/ViewportState {
