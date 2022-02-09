@@ -7,7 +7,13 @@ import com.mapbox.maps.MapboxExperimental
 abstract class Widget {
   internal abstract val renderer : WidgetRenderer
 
-  abstract fun updateBitmap(bitmap: Bitmap)
-  abstract fun translate(translateX: Float, translateY: Float)
-  abstract fun rotate(angleDegrees: Float)
+  /**
+   * Set absolute translation of widget in pixels.
+   */
+  abstract fun setTranslation(translateX: Float, translateY: Float)
+
+  /**
+   * Set absolute rotation of widget in angles.
+   */
+  abstract fun setRotation(angleDegrees: Float)
 }

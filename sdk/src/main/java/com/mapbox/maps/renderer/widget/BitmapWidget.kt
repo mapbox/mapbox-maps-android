@@ -3,6 +3,14 @@ package com.mapbox.maps.renderer.widget
 import android.graphics.Bitmap
 import com.mapbox.maps.MapboxExperimental
 
+/**
+ * Widget displaying bitmap within specified position and margins.
+ *
+ * @param bitmap bitmap used to draw widget
+ * @param position position of widget
+ * @param marginX horizontal margin in pixels
+ * @param marginY vertical margin in pixels
+ */
 @MapboxExperimental
 open class BitmapWidget @JvmOverloads constructor(
   bitmap: Bitmap,
@@ -20,15 +28,18 @@ open class BitmapWidget @JvmOverloads constructor(
     marginY = marginY,
   )
 
-  override fun updateBitmap(bitmap: Bitmap) {
+  /**
+   * Update bitmap widget uses.
+   */
+  fun updateBitmap(bitmap: Bitmap) {
     renderer.updateBitmap(bitmap)
   }
 
-  override fun translate(translateX: Float, translateY: Float) {
-    renderer.translate(translateX = translateX, translateY = translateY)
+  override fun setTranslation(translationX: Float, translationY: Float) {
+    renderer.setTranslation(translationX = translationX, translationY = translationY)
   }
 
-  override fun rotate(angleDegrees: Float) {
-    renderer.rotate(angleDegrees = angleDegrees)
+  override fun setRotation(angleDegrees: Float) {
+    renderer.setRotation(angleDegrees = angleDegrees)
   }
 }

@@ -7,17 +7,16 @@ import android.opengl.Matrix
 import com.mapbox.maps.renderer.gl.GlUtils
 import com.mapbox.maps.renderer.gl.GlUtils.put
 import com.mapbox.maps.renderer.gl.GlUtils.toFloatBuffer
-import java.nio.FloatBuffer
 
 internal class BitmapWidgetRendererImpl(
-  private var bitmap: Bitmap,
+  private var bitmap: Bitmap?,
   private val position: WidgetPosition,
   private val marginX: Float,
   private val marginY: Float,
 ) : WidgetRenderer {
 
-  private var bitmapWidth = bitmap.width
-  private var bitmapHeight = bitmap.height
+  private var bitmapWidth = bitmap?.width ?: 0
+  private var bitmapHeight = bitmap?.height ?: 0
 
   private var surfaceWidth = 0
   private var surfaceHeight = 0
@@ -223,7 +222,7 @@ internal class BitmapWidgetRendererImpl(
   }
 
   private fun textureFromBitmap() {
-    if (!bitmap.isRecycled) {
+    bitmap?.let {
       GLES20.glGenTextures(1, textures, 0)
       GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[0])
       GLES20.glTexParameterf(
@@ -246,8 +245,9 @@ internal class BitmapWidgetRendererImpl(
         GLES20.GL_TEXTURE_WRAP_T,
         GLES20.GL_CLAMP_TO_EDGE.toFloat()
       )
-      GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0)
-      bitmap.recycle()
+      GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, it, 0)
+
+      bitmap = null
     }
   }
 
@@ -260,20 +260,20 @@ internal class BitmapWidgetRendererImpl(
     needRender = true
   }
 
-  fun rotate(angleDegrees: Float) {
+  override fun setRotation(angleDegrees: Float) {
     Matrix.setIdentityM(rotationMatrix, 0)
     Matrix.setRotateM(rotationMatrix, 0, angleDegrees, 0f, 0f, 1f)
     updateMatrix = true
     needRender = true
   }
 
-  fun translate(translateX: Float, translateY: Float) {
+  override fun setTranslation(translationX: Float, translationY: Float) {
     Matrix.setIdentityM(translateMatrix, 0)
     Matrix.translateM(
       translateMatrix,
       0,
-      leftX() + translateX,
-      topY() + translateY,
+      leftX() + translationX,
+      topY() + translationY,
       0f
     )
 
@@ -281,13 +281,13 @@ internal class BitmapWidgetRendererImpl(
     needRender = true
   }
 
-  companion object {
-    private const val COORDS_PER_VERTEX = 2
-    private const val BYTES_PER_FLOAT = 4
-    private const val VERTEX_STRIDE = COORDS_PER_VERTEX * BYTES_PER_FLOAT
-    private const val VERTEX_COUNT = 4
+  private companion object {
+    const val COORDS_PER_VERTEX = 2
+    const val BYTES_PER_FLOAT = 4
+    const val VERTEX_STRIDE = COORDS_PER_VERTEX * BYTES_PER_FLOAT
+    const val VERTEX_COUNT = 4
 
-    private val VERTEX_SHADER_CODE = """
+    val VERTEX_SHADER_CODE = """
       precision highp float;
       uniform mat4 uMvpMatrix;
       attribute vec2 aPosition;
@@ -299,7 +299,7 @@ internal class BitmapWidgetRendererImpl(
       }
     """.trimIndent()
 
-    private val FRAGMENT_SHADER_CODE = """
+    val FRAGMENT_SHADER_CODE = """
       precision mediump float;
       uniform sampler2D uTexture;
       varying vec2 vCoordinate;

@@ -9,7 +9,6 @@ import java.util.concurrent.CopyOnWriteArraySet
 import javax.microedition.khronos.egl.EGLContext
 import javax.microedition.khronos.egl.EGLSurface
 
-@MapboxExperimental
 internal class MapboxWidgetRenderer(
   private val antialiasingSampleCount: Int,
 ) {
@@ -199,7 +198,7 @@ internal class MapboxWidgetRenderer(
 
   fun removeWidget(widget: Widget) = widgets.remove(widget)
 
-  companion object {
-    private const val TAG: String = "MapboxWidgetRenderer"
+  private companion object {
+    const val TAG: String = "MapboxWidgetRenderer"
   }
 }

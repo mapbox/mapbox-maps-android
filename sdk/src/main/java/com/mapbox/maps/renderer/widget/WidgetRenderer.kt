@@ -7,4 +7,7 @@ internal interface WidgetRenderer {
   fun prepare()
   fun render()
   fun release()
+
+  fun setRotation(angleDegrees: Float)
+  fun setTranslation(translationX: Float, translationY: Float)
 }

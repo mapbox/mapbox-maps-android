@@ -4,6 +4,8 @@ import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.content.res.Configuration
+import android.os.Handler
+import android.os.Looper
 import androidx.car.app.*
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapSurface
@@ -32,7 +34,11 @@ class MapSession : Session() {
       scrollListener = carCameraController,
     ) { surface ->
       val logo = LogoWidget(carContext)
-      val compass = CompassWidget(carContext)
+      val compass = CompassWidget(
+        carContext,
+        marginX = 26f,
+        marginY = 120f,
+      )
 
       mapSurface = surface
       carCameraController.init(
@@ -53,7 +59,7 @@ class MapSession : Session() {
 
       surface.getMapboxMap().apply {
         addOnCameraChangeListener {
-          compass.rotate(this.cameraState.bearing.toFloat())
+          compass.setRotation(this.cameraState.bearing.toFloat())
         }
       }
     }
