@@ -96,11 +96,14 @@ internal class PuckAnimatorManager(
     accuracyRadiusAnimator.animate(*targets.toTypedArray(), options = options)
   }
 
-  fun applyAccuracyRadiusSettings(accuracyRadiusSettings: LocationComponentSettings2) {
+  fun applySettings2(settings2: LocationComponentSettings2) {
     accuracyRadiusAnimator.apply {
-      enabled = accuracyRadiusSettings.showAccuracyRing
-      accuracyCircleColor = accuracyRadiusSettings.accuracyRingColor
-      accuracyCircleBorderColor = accuracyRadiusSettings.accuracyRingBorderColor
+      enabled = settings2.showAccuracyRing
+      accuracyCircleColor = settings2.accuracyRingColor
+      accuracyCircleBorderColor = settings2.accuracyRingBorderColor
+    }
+    bearingAnimator.apply {
+      enabled = settings2.puckBearingEnabled
     }
   }
 

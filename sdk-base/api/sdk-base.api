@@ -701,6 +701,14 @@ public final class com/mapbox/maps/plugin/Plugin$Mapbox : com/mapbox/maps/plugin
 	public fun <init> (Ljava/lang/String;)V
 }
 
+public final class com/mapbox/maps/plugin/PuckBearingSource : java/lang/Enum {
+	public static final field COURSE Lcom/mapbox/maps/plugin/PuckBearingSource;
+	public static final field HEADING Lcom/mapbox/maps/plugin/PuckBearingSource;
+	public final fun getValue ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/plugin/PuckBearingSource;
+	public static fun values ()[Lcom/mapbox/maps/plugin/PuckBearingSource;
+}
+
 public final class com/mapbox/maps/plugin/ScrollMode : java/lang/Enum {
 	public static final field HORIZONTAL Lcom/mapbox/maps/plugin/ScrollMode;
 	public static final field HORIZONTAL_AND_VERTICAL Lcom/mapbox/maps/plugin/ScrollMode;
@@ -1919,19 +1927,27 @@ public final class com/mapbox/maps/plugin/locationcomponent/generated/LocationCo
 	public fun <init> (Z)V
 	public fun <init> (ZI)V
 	public fun <init> (ZII)V
-	public synthetic fun <init> (ZIIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (ZIIZ)V
+	public fun <init> (ZIIZLcom/mapbox/maps/plugin/PuckBearingSource;)V
+	public synthetic fun <init> (ZIIZLcom/mapbox/maps/plugin/PuckBearingSource;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Z
 	public final fun component2 ()I
 	public final fun component3 ()I
-	public final fun copy (ZII)Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;ZIIILjava/lang/Object;)Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;
+	public final fun component4 ()Z
+	public final fun component5 ()Lcom/mapbox/maps/plugin/PuckBearingSource;
+	public final fun copy (ZIIZLcom/mapbox/maps/plugin/PuckBearingSource;)Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;ZIIZLcom/mapbox/maps/plugin/PuckBearingSource;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAccuracyRingBorderColor ()I
 	public final fun getAccuracyRingColor ()I
+	public final fun getPuckBearingEnabled ()Z
+	public final fun getPuckBearingSource ()Lcom/mapbox/maps/plugin/PuckBearingSource;
 	public final fun getShowAccuracyRing ()Z
 	public fun hashCode ()I
 	public final fun setAccuracyRingBorderColor (I)V
 	public final fun setAccuracyRingColor (I)V
+	public final fun setPuckBearingEnabled (Z)V
+	public final fun setPuckBearingSource (Lcom/mapbox/maps/plugin/PuckBearingSource;)V
 	public final fun setShowAccuracyRing (Z)V
 	public fun toString ()Ljava/lang/String;
 }
@@ -1965,11 +1981,15 @@ public abstract class com/mapbox/maps/plugin/locationcomponent/generated/Locatio
 	public fun getAccuracyRingBorderColor ()I
 	public fun getAccuracyRingColor ()I
 	protected abstract fun getInternalSettings2 ()Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;
+	public fun getPuckBearingEnabled ()Z
+	public fun getPuckBearingSource ()Lcom/mapbox/maps/plugin/PuckBearingSource;
 	public fun getSettings2 ()Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;
 	public fun getShowAccuracyRing ()Z
 	public fun setAccuracyRingBorderColor (I)V
 	public fun setAccuracyRingColor (I)V
 	protected abstract fun setInternalSettings2 (Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;)V
+	public fun setPuckBearingEnabled (Z)V
+	public fun setPuckBearingSource (Lcom/mapbox/maps/plugin/PuckBearingSource;)V
 	public fun setShowAccuracyRing (Z)V
 	public fun updateSettings2 (Lkotlin/jvm/functions/Function1;)V
 }
@@ -1996,10 +2016,14 @@ public abstract interface class com/mapbox/maps/plugin/locationcomponent/generat
 public abstract interface class com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettingsInterface2 : com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettingsInterface {
 	public abstract fun getAccuracyRingBorderColor ()I
 	public abstract fun getAccuracyRingColor ()I
+	public abstract fun getPuckBearingEnabled ()Z
+	public abstract fun getPuckBearingSource ()Lcom/mapbox/maps/plugin/PuckBearingSource;
 	public abstract fun getSettings2 ()Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;
 	public abstract fun getShowAccuracyRing ()Z
 	public abstract fun setAccuracyRingBorderColor (I)V
 	public abstract fun setAccuracyRingColor (I)V
+	public abstract fun setPuckBearingEnabled (Z)V
+	public abstract fun setPuckBearingSource (Lcom/mapbox/maps/plugin/PuckBearingSource;)V
 	public abstract fun setShowAccuracyRing (Z)V
 	public abstract fun updateSettings2 (Lkotlin/jvm/functions/Function1;)V
 }

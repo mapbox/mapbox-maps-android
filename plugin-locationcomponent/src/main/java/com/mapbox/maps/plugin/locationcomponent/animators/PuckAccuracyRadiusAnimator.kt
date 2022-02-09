@@ -7,7 +7,6 @@ import com.mapbox.maps.plugin.locationcomponent.OnIndicatorAccuracyRadiusChanged
 internal class PuckAccuracyRadiusAnimator(private val accuracyRadiusChangedListener: OnIndicatorAccuracyRadiusChangedListener) :
   PuckAnimator<Double>(Evaluators.DOUBLE) {
 
-  internal var enabled = false
   @ColorInt
   internal var accuracyCircleColor = Color.BLUE
   @ColorInt

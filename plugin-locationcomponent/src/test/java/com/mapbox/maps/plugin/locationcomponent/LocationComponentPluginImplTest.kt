@@ -5,7 +5,9 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.hardware.SensorManager
 import android.util.AttributeSet
+import android.view.WindowManager
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.bindgen.ExpectedFactory
@@ -40,7 +42,8 @@ class LocationComponentPluginImplTest {
   private val typedArray = mockk<TypedArray>(relaxed = true)
   private val pack = "com.mapbox.maps"
   private val drawable = mockk<Drawable>(relaxed = true)
-
+  private val windowManager = mockk<WindowManager>(relaxed = true)
+  private val sensorManager = mockk<SensorManager>(relaxed = true)
   private val locationEngine = mockk<LocationEngine>(relaxed = true)
 
   private val styleCallbackSlot = slot<(StyleInterface) -> Unit>()
@@ -55,8 +58,10 @@ class LocationComponentPluginImplTest {
 
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
     every { context.packageName } returns pack
+    every { context.getSystemService(Context.WINDOW_SERVICE) } returns windowManager
+    every { context.getSystemService(Context.SENSOR_SERVICE) } returns sensorManager
     every { typedArray.getString(any()) } returns "pk.token"
-    every { typedArray.getInt(any(), any()) } returns -1
+    every { typedArray.getInt(any(), any()) } returns 0
     every { typedArray.getBoolean(any(), any()) } returns true
     every { typedArray.getColor(any(), any()) } returns Color.BLUE
     every { typedArray.getDimension(any(), any()) } returns 10.0f

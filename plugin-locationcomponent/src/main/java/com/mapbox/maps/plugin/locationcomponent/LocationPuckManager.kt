@@ -60,7 +60,7 @@ internal class LocationPuckManager(
       animationManager.setUpdateListeners(onLocationUpdated, onBearingUpdated, onAccuracyRadiusUpdated)
       animationManager.setLocationLayerRenderer(locationLayerRenderer)
       animationManager.applyPulsingAnimationSettings(settings)
-      animationManager.applyAccuracyRadiusSettings(settings2)
+      animationManager.applySettings2(settings2)
       locationLayerRenderer.addLayers(positionManager)
       lastLocation?.let {
         updateCurrentPosition(it)
@@ -108,7 +108,7 @@ internal class LocationPuckManager(
 
   fun updateSettings2(settings2: LocationComponentSettings2) {
     this.settings2 = settings2
-    animationManager.applyAccuracyRadiusSettings(settings2)
+    animationManager.applySettings2(settings2)
   }
 
   //

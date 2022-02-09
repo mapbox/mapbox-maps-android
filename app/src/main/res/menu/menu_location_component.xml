@@ -16,6 +16,7 @@
     <item android:id="@+id/action_component_enabled"
         android:title="@string/location_enable_component"
         app:showAsAction="never"/>
+
     <item android:id="@+id/action_show_bearing"
         android:title="@string/location_show_bearing"
         app:showAsAction="never"/>
@@ -31,4 +32,18 @@
     <item android:id="@+id/action_accuracy_enabled"
         android:title="@string/location_enable_accuracy"
         app:showAsAction="never"/>
+
+    <group
+        android:id="@+id/group"
+        android:checkableBehavior="single">
+    <item
+        android:id="@+id/heading"
+        android:title="@string/heading"
+        android:checked="true"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/course"
+        android:title="@string/course"
+        app:showAsAction="never" />
+    </group>
 </menu>

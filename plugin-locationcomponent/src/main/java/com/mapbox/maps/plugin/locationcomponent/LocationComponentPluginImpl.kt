@@ -244,7 +244,9 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
       LocationComponentAttributeParser2.parseLocationComponentSettings2(context, attrs, pixelRatio)
 
     if (internalSettings.enabled && locationProvider == null) {
-      locationProvider = LocationProviderImpl(context)
+      locationProvider = LocationProviderImpl(context).apply {
+        updatePuckBearingSource(internalSettings2.puckBearingSource)
+      }
     }
   }
 
@@ -350,8 +352,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
     if (internalSettings.enabled && !isLocationComponentActivated) {
       context.get()?.let {
         if (locationProvider == null) {
-          locationProvider =
-            LocationProviderImpl(it)
+          locationProvider = LocationProviderImpl(it)
         }
         activateLocationComponent()
       }
@@ -368,6 +369,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
   override fun applySettings2() {
     if (internalSettings.enabled) {
       locationPuckManager?.updateSettings2(internalSettings2)
+      (locationProvider as? LocationProviderImpl)?.updatePuckBearingSource(internalSettings2.puckBearingSource)
     }
   }
 }

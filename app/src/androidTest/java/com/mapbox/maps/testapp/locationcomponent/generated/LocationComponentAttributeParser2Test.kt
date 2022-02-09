@@ -6,6 +6,7 @@ import android.graphics.Color
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.maps.R
+import com.mapbox.maps.plugin.PuckBearingSource
 import com.mapbox.maps.plugin.locationcomponent.location2
 import com.mapbox.maps.testapp.BaseMapTest
 import org.junit.Assert.assertEquals
@@ -45,6 +46,16 @@ class LocationComponentAttributeParser2Test : BaseMapTest() {
       "accuracyRingBorderColor test failed..",
       Color.BLACK,
       mapView.location2.getSettings2().accuracyRingBorderColor
+    )
+    assertEquals(
+      "puckBearingEnabled test failed..",
+      false,
+      mapView.location2.getSettings2().puckBearingEnabled
+    )
+    assertEquals(
+      "puckBearingSource test failed..",
+      PuckBearingSource.HEADING,
+      mapView.location2.getSettings2().puckBearingSource
     )
   }
 }

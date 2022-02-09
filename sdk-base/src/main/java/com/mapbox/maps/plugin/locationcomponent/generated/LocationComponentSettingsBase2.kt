@@ -1,6 +1,7 @@
 // This file is generated.
 
 package com.mapbox.maps.plugin.locationcomponent.generated
+import com.mapbox.maps.plugin.PuckBearingSource
 
 /**
  * Abstract settings class for LocationComponentPlugin.
@@ -70,6 +71,30 @@ abstract class LocationComponentSettingsBase2 : LocationComponentSettingsInterfa
     }
     set(value) {
       this.internalSettings2.accuracyRingBorderColor = value
+      applySettings2()
+    }
+
+  /**
+   * Whether the puck rotates to track the bearing source.
+   */
+  override var puckBearingEnabled: Boolean
+    get() {
+      return this.internalSettings2.puckBearingEnabled
+    }
+    set(value) {
+      this.internalSettings2.puckBearingEnabled = value
+      applySettings2()
+    }
+
+  /**
+   * The enum controls how the puck is oriented
+   */
+  override var puckBearingSource: PuckBearingSource
+    get() {
+      return this.internalSettings2.puckBearingSource
+    }
+    set(value) {
+      this.internalSettings2.puckBearingSource = value
       applySettings2()
     }
 }

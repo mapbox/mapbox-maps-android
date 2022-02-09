@@ -19,6 +19,7 @@ internal abstract class PuckAnimator<T>(
   @VisibleForTesting(otherwise = PRIVATE)
   internal var userConfiguredAnimator: ValueAnimator
   protected var locationRenderer: LocationLayerRenderer? = null
+  internal open var enabled = false
 
   abstract fun updateLayer(fraction: Float, value: T)
 

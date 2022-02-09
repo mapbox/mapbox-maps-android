@@ -20,6 +20,15 @@
         <attr name="mapbox_locationComponentLayerAbove" format="string"/>
         <!-- Sets the id of the layer that's added below to when placing the component on the map. -->
         <attr name="mapbox_locationComponentLayerBelow" format="string"/>
+        <!-- Whether the puck rotates to track the bearing source. -->
+        <attr name="mapbox_locationComponentPuckBearingEnabled" format="boolean"/>
+        <!-- The enum controls how the puck is oriented -->
+        <attr name="mapbox_locationComponentPuckBearingSource" format="enum">
+          <!-- Orients the puck to match the direction in which the device is facing. -->
+          <enum name="heading" value="0"/>
+          <!-- Orients the puck to match the direction in which the device is moving. -->
+          <enum name="course" value="1"/>
+        </attr>
         <!-- Defines what the customised look of the location puck. -->
         <attr name="mapbox_locationComponentLocationPuck" format="enum">
           <!--  -->
@@ -43,7 +52,7 @@
 
         <!-- An URL for the model file in gltf format. -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DModelUri" format="string"/>
-        <!-- The scale of the model. -->
+        <!-- The position of the model. -->
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DPosition_lon" format="float"/>
         <attr name="mapbox_locationComponentLocationPuckLocationPuck3DPosition_lat" format="float"/>
         <!-- The opacity of the model. -->

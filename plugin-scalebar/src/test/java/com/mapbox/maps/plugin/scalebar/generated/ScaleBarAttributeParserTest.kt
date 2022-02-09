@@ -32,7 +32,7 @@ class ScaleBarAttributeParserTest {
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
     every { typedArray.getString(any()) } returns "pk.token"
     every { typedArray.getBoolean(any(), any()) } returns true
-    every { typedArray.getInt(any(), any()) } returns 2
+    every { typedArray.getInt(any(), any()) } returns 0
     every { typedArray.getColor(any(), any()) } returns Color.RED
     every { typedArray.getDimension(any(), any()) } returns 10.0f
     every { typedArray.getFloat(any(), any()) } returns 10.0f
