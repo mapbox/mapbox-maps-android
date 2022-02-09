@@ -13,10 +13,12 @@ import com.mapbox.maps.plugin.LocationPuck3D
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
+import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2
 import kotlin.math.pow
 
 internal class LocationPuckManager(
   var settings: LocationComponentSettings,
+  var settings2: LocationComponentSettings2,
   private val delegateProvider: MapDelegateProvider,
   private val positionManager: LocationComponentPositionManager,
   private val layerSourceProvider: LayerSourceProvider,
@@ -37,6 +39,11 @@ internal class LocationPuckManager(
     lastBearing = it
   }
 
+  private var lastAccuracyRadius: Double = 0.0
+  private val onAccuracyRadiusUpdated: ((Double) -> Unit) = {
+    lastAccuracyRadius = it
+  }
+
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var locationLayerRenderer =
     when (val puck = settings.locationPuck) {
@@ -50,9 +57,10 @@ internal class LocationPuckManager(
 
   fun initialize(style: StyleInterface) {
     if (!locationLayerRenderer.isRendererInitialised()) {
-      animationManager.setUpdateListeners(onLocationUpdated, onBearingUpdated)
+      animationManager.setUpdateListeners(onLocationUpdated, onBearingUpdated, onAccuracyRadiusUpdated)
       animationManager.setLocationLayerRenderer(locationLayerRenderer)
       animationManager.applyPulsingAnimationSettings(settings)
+      animationManager.applyAccuracyRadiusSettings(settings2)
       locationLayerRenderer.addLayers(positionManager)
       lastLocation?.let {
         updateCurrentPosition(it)
@@ -98,6 +106,11 @@ internal class LocationPuckManager(
     }
   }
 
+  fun updateSettings2(settings2: LocationComponentSettings2) {
+    this.settings2 = settings2
+    animationManager.applyAccuracyRadiusSettings(settings2)
+  }
+
   //
   // Animations
   //
@@ -129,12 +142,24 @@ internal class LocationPuckManager(
     )
   }
 
+  fun updateAccuracyRadius(vararg radius: Double, options: (ValueAnimator.() -> Unit)? = null) {
+    val targets = doubleArrayOf(lastAccuracyRadius, *radius)
+    animationManager.animateAccuracyRadius(
+      *targets,
+      options = options
+    )
+  }
+
   fun updateLocationAnimator(block: ValueAnimator.() -> Unit) {
     animationManager.updatePositionAnimator(block)
   }
 
   fun updateBearingAnimator(block: ValueAnimator.() -> Unit) {
     animationManager.updateBearingAnimator(block)
+  }
+
+  fun updateAccuracyRadiusAnimator(block: ValueAnimator.() -> Unit) {
+    animationManager.updateAccuracyRadiusAnimator(block)
   }
 
   //

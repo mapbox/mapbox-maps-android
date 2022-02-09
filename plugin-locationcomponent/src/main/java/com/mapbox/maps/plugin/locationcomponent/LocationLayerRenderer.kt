@@ -18,7 +18,7 @@ internal interface LocationLayerRenderer {
 
   fun show()
 
-  fun styleAccuracy(accuracyAlpha: Float, accuracyColor: Int)
+  fun styleAccuracy(accuracyColor: Int, accuracyBorderColor: Int)
 
   fun setLatLng(latLng: Point)
 

@@ -23,4 +23,12 @@
     <item android:id="@+id/action_hide_bearing"
         android:title="@string/location_hide_bearing"
         app:showAsAction="never"/>
+
+    <item android:id="@+id/action_accuracy_disable"
+        android:title="@string/location_disable_accuracy"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_accuracy_enabled"
+        android:title="@string/location_enable_accuracy"
+        app:showAsAction="never"/>
 </menu>

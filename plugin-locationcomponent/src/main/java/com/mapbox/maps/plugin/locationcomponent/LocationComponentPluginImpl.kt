@@ -14,18 +14,17 @@ import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.LOCATION_INDICATOR_LAYER
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL_LAYER
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
+import com.mapbox.maps.plugin.locationcomponent.generated.*
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttributeParser
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
-import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettingsBase
 import java.lang.ref.WeakReference
-import java.util.concurrent.CopyOnWriteArrayList
+import java.util.concurrent.CopyOnWriteArraySet
 
 /**
  * Default implementation of the LocationComponentPlugin, it renders the configured location puck
  * to the user's current location.
  */
-class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
-  LocationComponentSettingsBase() {
+class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
+  LocationComponentSettingsBase2() {
   private lateinit var delegateProvider: MapDelegateProvider
 
   private lateinit var context: WeakReference<Context>
@@ -39,11 +38,14 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
   @VisibleForTesting(otherwise = PRIVATE)
   internal var isLocationComponentActivated = false
 
-  private val onIndicatorPositionChangedListener =
-    CopyOnWriteArrayList<OnIndicatorPositionChangedListener>()
+  private val onIndicatorPositionChangedListeners =
+    CopyOnWriteArraySet<OnIndicatorPositionChangedListener>()
 
-  private val onIndicatorBearingChangedListener =
-    CopyOnWriteArrayList<OnIndicatorBearingChangedListener>()
+  private val onIndicatorBearingChangedListeners =
+    CopyOnWriteArraySet<OnIndicatorBearingChangedListener>()
+
+  private val onIndicatorAccuracyRadiusChangedListeners =
+    CopyOnWriteArraySet<OnIndicatorAccuracyRadiusChangedListener>()
 
   /**
    * Adds a listener that gets invoked when indicator position changes.
@@ -51,7 +53,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
    * @param listener Listener that gets invoked when indicator position changes
    */
   override fun addOnIndicatorPositionChangedListener(listener: OnIndicatorPositionChangedListener) {
-    onIndicatorPositionChangedListener.add(listener)
+    onIndicatorPositionChangedListeners.add(listener)
   }
 
   /**
@@ -60,12 +62,12 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
    * @param listener Listener that gets invoked when indicator position changes.
    */
   override fun removeOnIndicatorPositionChangedListener(listener: OnIndicatorPositionChangedListener) {
-    onIndicatorPositionChangedListener.remove(listener)
+    onIndicatorPositionChangedListeners.remove(listener)
   }
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal val indicatorPositionChangedListener = OnIndicatorPositionChangedListener {
-    for (listener in onIndicatorPositionChangedListener) {
+    for (listener in onIndicatorPositionChangedListeners) {
       listener.onIndicatorPositionChanged(it)
     }
   }
@@ -76,7 +78,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
    * @param listener Listener that gets invoked when indicator bearing changes
    */
   override fun addOnIndicatorBearingChangedListener(listener: OnIndicatorBearingChangedListener) {
-    onIndicatorBearingChangedListener.add(listener)
+    onIndicatorBearingChangedListeners.add(listener)
   }
 
   /**
@@ -85,7 +87,25 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
    * @param listener Listener that gets invoked when indicator bearing changes.
    */
   override fun removeOnIndicatorBearingChangedListener(listener: OnIndicatorBearingChangedListener) {
-    onIndicatorBearingChangedListener.remove(listener)
+    onIndicatorBearingChangedListeners.remove(listener)
+  }
+
+  /**
+   * Adds a listener that gets invoked when indicator accuracy radius changes.
+   *
+   * @param listener Listener that gets invoked when indicator accuracy radius changes
+   */
+  override fun addOnIndicatorAccuracyRadiusChangedListener(listener: OnIndicatorAccuracyRadiusChangedListener) {
+    onIndicatorAccuracyRadiusChangedListeners.add(listener)
+  }
+
+  /**
+   * Removes a listener that gets invoked when indicator accuracy radius changes.
+   *
+   * @param listener Listener that gets invoked when indicator accuracy radius changes.
+   */
+  override fun removeOnIndicatorAccuracyRadiusChangedListener(listener: OnIndicatorAccuracyRadiusChangedListener) {
+    onIndicatorAccuracyRadiusChangedListeners.remove(listener)
   }
 
   /**
@@ -120,8 +140,15 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal val indicatorBearingChangedListener = OnIndicatorBearingChangedListener {
-    for (listener in onIndicatorBearingChangedListener) {
+    for (listener in onIndicatorBearingChangedListeners) {
       listener.onIndicatorBearingChanged(it)
+    }
+  }
+
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal val indicatorAccuracyRadiusChangedListener = OnIndicatorAccuracyRadiusChangedListener {
+    for (listener in onIndicatorAccuracyRadiusChangedListeners) {
+      listener.onIndicatorAccuracyRadiusChanged(it)
     }
   }
 
@@ -161,6 +188,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
         if (locationPuckManager == null) {
           locationPuckManager = LocationPuckManager(
             settings = internalSettings,
+            settings2 = internalSettings2,
             delegateProvider = delegateProvider,
             positionManager = LocationComponentPositionManager(
               style,
@@ -170,7 +198,8 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
             layerSourceProvider = LayerSourceProvider(),
             animationManager = PuckAnimatorManager(
               indicatorPositionChangedListener,
-              indicatorBearingChangedListener
+              indicatorBearingChangedListener,
+              indicatorAccuracyRadiusChangedListener
             )
           )
         }
@@ -211,6 +240,9 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
     this.context = WeakReference(context)
     internalSettings =
       LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, pixelRatio)
+    internalSettings2 =
+      LocationComponentAttributeParser2.parseLocationComponentSettings2(context, attrs, pixelRatio)
+
     if (internalSettings.enabled && locationProvider == null) {
       locationProvider = LocationProviderImpl(context)
     }
@@ -227,6 +259,8 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
     this.context = WeakReference(context)
     this.internalSettings =
       LocationComponentAttributeParser.parseLocationComponentSettings(context, attrs, pixelRatio)
+    this.internalSettings2 =
+      LocationComponentAttributeParser2.parseLocationComponentSettings2(context, attrs, pixelRatio)
     this.locationProvider = locationProvider
     this.locationPuckManager = locationPuckManager
   }
@@ -254,6 +288,20 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
   }
 
   /**
+   * Called whenever the accuracy radius is updated.
+   * @param radius - supports multiple radius value to create more complex animations with intermediate points.
+   *  Last [radius] value will always be the animator target for next animation.
+   * @param options - if specified explicitly will apply current animator option to radius animation.
+   *  Otherwise default animator options will be used.
+   */
+  override fun onAccuracyRadiusUpdated(
+    vararg radius: Double,
+    options: (ValueAnimator.() -> Unit)?
+  ) {
+    locationPuckManager?.updateAccuracyRadius(*radius, options = options)
+  }
+
+  /**
    * Update [ValueAnimator] options that will be used to animate between [Point] updates by default.
    * This will apply to all upcoming updates.
    */
@@ -267,6 +315,14 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
    */
   override fun onPuckBearingAnimatorDefaultOptionsUpdated(options: ValueAnimator.() -> Unit) {
     locationPuckManager?.updateBearingAnimator(options)
+  }
+
+  /**
+   * Update [ValueAnimator] options that will be used to animate between accuracy radius [Double] updates by default.
+   * This will apply to all upcoming updates.
+   */
+  override fun onPuckAccuracyRadiusAnimatorDefaultOptionsUpdated(options: ValueAnimator.() -> Unit) {
+    locationPuckManager?.updateAccuracyRadiusAnimator(options)
   }
 
   /**
@@ -294,7 +350,8 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
     if (internalSettings.enabled && !isLocationComponentActivated) {
       context.get()?.let {
         if (locationProvider == null) {
-          locationProvider = LocationProviderImpl(it)
+          locationProvider =
+            LocationProviderImpl(it)
         }
         activateLocationComponent()
       }
@@ -303,6 +360,14 @@ class LocationComponentPluginImpl : LocationComponentPlugin, LocationConsumer,
       locationPuckManager?.updateSettings(internalSettings)
     } else {
       deactivateLocationComponent()
+    }
+  }
+
+  override lateinit var internalSettings2: LocationComponentSettings2
+
+  override fun applySettings2() {
+    if (internalSettings.enabled) {
+      locationPuckManager?.updateSettings2(internalSettings2)
     }
   }
 }

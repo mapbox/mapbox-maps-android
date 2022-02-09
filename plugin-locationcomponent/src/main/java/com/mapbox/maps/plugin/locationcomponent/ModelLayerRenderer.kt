@@ -50,7 +50,7 @@ internal class ModelLayerRenderer(
     setLayerVisibility(true)
   }
 
-  override fun styleAccuracy(accuracyAlpha: Float, accuracyColor: Int) {
+  override fun styleAccuracy(accuracyColor: Int, accuracyBorderColor: Int) {
   }
 
   override fun setLatLng(latLng: Point) {

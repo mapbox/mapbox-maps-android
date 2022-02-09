@@ -1,16 +1,19 @@
 package com.mapbox.maps.plugin.locationcomponent.animators
 
 import android.animation.ValueAnimator
+import android.graphics.Color
 import android.os.Looper
 import com.mapbox.geojson.Point
 import com.mapbox.maps.plugin.locationcomponent.LocationLayerRenderer
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
+import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -25,7 +28,10 @@ class PuckAnimatorManagerTest {
   private lateinit var puckAnimatorManager: PuckAnimatorManager
 
   private val bearingAnimator: PuckBearingAnimator = PuckBearingAnimator(mockk(relaxUnitFun = true))
-  private val positionAnimator: PuckPositionAnimator = PuckPositionAnimator(mockk(relaxUnitFun = true))
+  private val positionAnimator: PuckPositionAnimator =
+    PuckPositionAnimator(mockk(relaxUnitFun = true))
+  private val accuracyRadiusAnimator: PuckAccuracyRadiusAnimator =
+    PuckAccuracyRadiusAnimator(mockk(relaxUnitFun = true))
   private val pulsingAnimator: PuckPulsingAnimator = mockk(relaxed = true)
 
   @Before
@@ -33,9 +39,11 @@ class PuckAnimatorManagerTest {
     puckAnimatorManager = PuckAnimatorManager(
       mockk(),
       mockk(),
+      mockk(),
       bearingAnimator,
       positionAnimator,
-      pulsingAnimator
+      pulsingAnimator,
+      accuracyRadiusAnimator
     )
   }
 
@@ -47,6 +55,7 @@ class PuckAnimatorManagerTest {
       bearingAnimator.setLocationLayerRenderer(locationLayerRenderer)
       positionAnimator.setLocationLayerRenderer(locationLayerRenderer)
       pulsingAnimator.setLocationLayerRenderer(locationLayerRenderer)
+      accuracyRadiusAnimator.setLocationLayerRenderer(locationLayerRenderer)
     }
   }
 
@@ -71,6 +80,7 @@ class PuckAnimatorManagerTest {
       bearingAnimator.cancelRunning()
       positionAnimator.cancelRunning()
       pulsingAnimator.cancelRunning()
+      accuracyRadiusAnimator.cancelRunning()
     }
   }
 
@@ -78,9 +88,15 @@ class PuckAnimatorManagerTest {
   fun setUpdateListeners() {
     val positionUpdateListener: ((Point) -> Unit) = {}
     val bearingUpdateListener: ((Double) -> Unit) = {}
-    puckAnimatorManager.setUpdateListeners(positionUpdateListener, bearingUpdateListener)
+    val accuracyRadiusUpdateListener: ((Double) -> Unit) = {}
+    puckAnimatorManager.setUpdateListeners(
+      positionUpdateListener,
+      bearingUpdateListener,
+      accuracyRadiusUpdateListener
+    )
     Assert.assertEquals(positionUpdateListener, positionAnimator.updateListener)
     Assert.assertEquals(bearingUpdateListener, bearingAnimator.updateListener)
+    Assert.assertEquals(accuracyRadiusUpdateListener, accuracyRadiusAnimator.updateListener)
   }
 
   @Test
@@ -93,7 +109,7 @@ class PuckAnimatorManagerTest {
       animatedValue = it
     }
     Shadows.shadowOf(Looper.getMainLooper()).pause()
-    puckAnimatorManager.setUpdateListeners({}, updateListener)
+    puckAnimatorManager.setUpdateListeners({}, updateListener, {})
     puckAnimatorManager.animateBearing(0.0, 10.0, options = options)
     verify {
       bearingAnimator.animate(0.0, 10.0, options = options)
@@ -113,7 +129,7 @@ class PuckAnimatorManagerTest {
       animatedValue = it
     }
     Shadows.shadowOf(Looper.getMainLooper()).pause()
-    puckAnimatorManager.setUpdateListeners(updateListener, {})
+    puckAnimatorManager.setUpdateListeners(updateListener, {}, {})
     puckAnimatorManager.animatePosition(START_POINT, END_POINT, options = options)
     verify {
       positionAnimator.animate(START_POINT, END_POINT, options = options)
@@ -124,24 +140,47 @@ class PuckAnimatorManagerTest {
   }
 
   @Test
-  fun applyPulsingAnimationSettingsOne() {
+  fun applyAccuracyRadiusSettingsOne() {
+    val settings = mockk<LocationComponentSettings2>(relaxed = true)
+    every { settings.accuracyRingColor } returns Color.BLUE
+    every { settings.showAccuracyRing } returns true
+    puckAnimatorManager.applyAccuracyRadiusSettings(settings)
+    assertTrue(accuracyRadiusAnimator.enabled)
+    assertEquals(Color.BLUE, accuracyRadiusAnimator.accuracyCircleColor)
+  }
+
+  @Test
+  fun applyAccuracyRadiusSettingsTwo() {
+    val settings = mockk<LocationComponentSettings2>(relaxed = true)
+    every { settings.accuracyRingColor } returns Color.GREEN
+    every { settings.showAccuracyRing } returns false
+    puckAnimatorManager.applyAccuracyRadiusSettings(settings)
+    assertFalse(accuracyRadiusAnimator.enabled)
+    assertEquals(Color.GREEN, accuracyRadiusAnimator.accuracyCircleColor)
+  }
+
+  @Test
+  fun applyAnimationSettingsOne() {
     val settings = mockk<LocationComponentSettings>(relaxed = true)
     every { settings.pulsingEnabled } returns true
     every { settings.pulsingMaxRadius } returns 20.0f
+
     puckAnimatorManager.applyPulsingAnimationSettings(settings)
     verify {
+      pulsingAnimator.enabled = true
       pulsingAnimator.maxRadius = 20.0
       pulsingAnimator.animateInfinite()
     }
   }
 
   @Test
-  fun applyPulsingAnimationSettingsTwo() {
+  fun applyAnimationSettingsTwo() {
     val settings = mockk<LocationComponentSettings>(relaxed = true)
     every { settings.pulsingEnabled } returns false
     every { settings.pulsingMaxRadius } returns 20.0f
     puckAnimatorManager.applyPulsingAnimationSettings(settings)
     verify {
+      pulsingAnimator.enabled = false
       pulsingAnimator.maxRadius = 20.0
       pulsingAnimator.cancelRunning()
     }
@@ -167,6 +206,17 @@ class PuckAnimatorManagerTest {
     puckAnimatorManager.updatePositionAnimator(options)
     Shadows.shadowOf(Looper.getMainLooper()).idle()
     Assert.assertEquals(5000, positionAnimator.duration)
+  }
+
+  @Test
+  fun updateAccuracyRadiusAnimator() {
+    val options: (ValueAnimator.() -> Unit) = {
+      duration = 5000
+    }
+    Shadows.shadowOf(Looper.getMainLooper()).pause()
+    puckAnimatorManager.updateAccuracyRadiusAnimator(options)
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    Assert.assertEquals(5000, accuracyRadiusAnimator.duration)
   }
 
   companion object {

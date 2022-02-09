@@ -83,6 +83,7 @@ import com.mapbox.maps.plugin.gestures.generated.GesturesSettings;
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin;
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentUtils;
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings;
+import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2;
 import com.mapbox.maps.plugin.logo.LogoPlugin;
 import com.mapbox.maps.plugin.logo.LogoUtils;
 import com.mapbox.maps.plugin.logo.generated.LogoSettings;
@@ -155,6 +156,13 @@ public class JavaInterfaceChecker {
         locationComponentSettings = new LocationComponentSettings(true, true, Color.BLACK, 1f, locationPuck);
         locationComponentSettings = new LocationComponentSettings(true, true, Color.BLACK, 1f, "id", locationPuck);
         locationComponentSettings = new LocationComponentSettings(true, true, Color.BLACK, 1f, "id", "id", locationPuck);
+    }
+
+    private void locationComponentSettings2() {
+        LocationComponentSettings2 locationComponentSettings2 = new LocationComponentSettings2();
+        locationComponentSettings2 = new LocationComponentSettings2(true);
+        locationComponentSettings2 = new LocationComponentSettings2(true, Color.BLUE);
+        locationComponentSettings2 = new LocationComponentSettings2(true, Color.BLUE, Color.RED);
     }
 
     private void locationComponent(Context context, MapView mapView) {

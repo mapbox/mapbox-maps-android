@@ -19,7 +19,8 @@ import java.util.concurrent.CopyOnWriteArrayList
  * Default Location Provider implementation, it can be overwritten by users.
  */
 internal class LocationProviderImpl(context: Context) :
-  LocationProvider, LocationEngineCallback<LocationEngineResult> {
+  LocationProvider,
+  LocationEngineCallback<LocationEngineResult> {
   private val contextWeekRef: WeakReference<Context> = WeakReference(context)
   private val locationEngine = LocationEngineProvider.getBestLocationEngine(context)
 
@@ -63,6 +64,9 @@ internal class LocationProviderImpl(context: Context) :
     locationConsumers.forEach { consumer ->
       consumer.onLocationUpdated(Point.fromLngLat(location.longitude, location.latitude))
       consumer.onBearingUpdated(location.bearing.toDouble())
+      if (consumer is LocationConsumer2) {
+        consumer.onAccuracyRadiusUpdated(location.accuracy.toDouble())
+      }
     }
   }
 

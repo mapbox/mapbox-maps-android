@@ -21,7 +21,6 @@ class LocationProviderImplTest {
   private val locationEngine = mockk<LocationEngine>(relaxed = true)
   private val locationConsumer1 = mockk<LocationConsumer>(relaxed = true)
   private val locationConsumer2 = mockk<LocationConsumer>(relaxed = true)
-
   private val locationEngineRequestSlot = CapturingSlot<LocationEngineRequest>()
   private val locationEngineCallbackSlot =
     CapturingSlot<LocationEngineCallback<LocationEngineResult>>()

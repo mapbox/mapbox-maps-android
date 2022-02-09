@@ -52,7 +52,7 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
 
   /**
-   * Whether the location puck is pulsing on the map. Only work for 2D location puck.
+   * Whether the location puck is pulsing on the map. Works for 2D location puck only.
    */
   override var pulsingEnabled: Boolean
     get() {
@@ -64,7 +64,7 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
 
   /**
-   * The color of the pulsing circle. Only work for 2D location puck.
+   * The color of the pulsing circle. Works for 2D location puck only.
    */
   override var pulsingColor: Int
     get() {
@@ -76,7 +76,7 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
     }
 
   /**
-   * The maximum radius of the pulsing circle. Only work for 2D location puck.
+   * The maximum radius of the pulsing circle. Works for 2D location puck only.
    */
   override var pulsingMaxRadius: Float
     get() {
