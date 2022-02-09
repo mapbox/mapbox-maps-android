@@ -1,35 +1,40 @@
 package com.mapbox
 
-import io.mockk.MockKVerificationScope
-import io.mockk.Ordering
-import io.mockk.verify
+import io.mockk.*
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeoutException
 
 internal fun verifyNo(
   ordering: Ordering = Ordering.UNORDERED,
-  inverse: Boolean = false,
   timeout: Long = 0,
   verifyBlock: MockKVerificationScope.() -> Unit
 ) = verify(
-  ordering,
-  inverse,
-  1,
-  Int.MAX_VALUE,
+  ordering = ordering,
   exactly = 0,
-  timeout,
-  verifyBlock
+  timeout = timeout,
+  verifyBlock = verifyBlock,
 )
 
 internal fun verifyOnce(
   ordering: Ordering = Ordering.UNORDERED,
-  inverse: Boolean = false,
   timeout: Long = 0,
   verifyBlock: MockKVerificationScope.() -> Unit
 ) = verify(
-  ordering,
-  inverse,
-  1,
-  Int.MAX_VALUE,
+  ordering = ordering,
   exactly = 1,
-  timeout,
-  verifyBlock
+  timeout = timeout,
+  verifyBlock = verifyBlock,
 )
+
+internal fun waitZeroCounter(startCounter: Int = 1, timeoutMillis: Int = 1000, runnable: CountDownLatch.() -> Unit) {
+  val countDownLatch = CountDownLatch(startCounter)
+  runnable(countDownLatch)
+  if (!countDownLatch.await(timeoutMillis.toLong(), TimeUnit.MILLISECONDS)) {
+    throw TimeoutException("Test had failed, counter is not zero but $startCounter after $timeoutMillis milliseconds!")
+  }
+}
+
+internal fun CountDownLatch.countDownEvery(stubBlock: MockKMatcherScope.() -> Unit) {
+  every(stubBlock).answers { countDown() }
+}
