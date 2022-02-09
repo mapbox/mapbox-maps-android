@@ -159,7 +159,6 @@ class MapboxMapTest {
   fun getStyleLoadedCallback() {
     val style = mockk<Style>()
     mapboxMap.style = style
-    mapboxMap.styleLoaded = true
     val styleLoadCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
     mapboxMap.getStyle(styleLoadCallback)
     verify { styleLoadCallback.onStyleLoaded(style) }
@@ -169,16 +168,7 @@ class MapboxMapTest {
   fun getStyleSynchronously() {
     val style = mockk<Style>()
     mapboxMap.style = style
-    mapboxMap.styleLoaded = true
     assertNotNull(mapboxMap.getStyle())
-  }
-
-  @Test
-  fun getStyleSynchronouslyNull() {
-    val style = mockk<Style>()
-    mapboxMap.style = style
-    mapboxMap.styleLoaded = false
-    assertNull(mapboxMap.getStyle())
   }
 
   @Test

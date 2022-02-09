@@ -69,7 +69,7 @@ class StyleLoadTest {
       }
     }
     countDownLatch.await(10, TimeUnit.SECONDS)
-    Assert.assertEquals(1, styleLoadedCount)
+    Assert.assertEquals(2, styleLoadedCount)
   }
 
   @Test

@@ -37,7 +37,7 @@ import java.util.*
  * @property style the map style.
  */
 class MapboxMap internal constructor(
-  internal val nativeMapWeakRef: WeakReference<MapInterface>,
+  private val nativeMapWeakRef: WeakReference<MapInterface>,
   private val nativeObserver: NativeObserver,
   pixelRatio: Float
 ) : MapTransformDelegate,
@@ -49,11 +49,15 @@ class MapboxMap internal constructor(
   MapCameraManagerDelegate,
   MapStyleStateDelegate {
 
-  internal lateinit var style: Style
+  internal var style: Style? = null
   internal var isStyleLoadInitiated = false
-  private val styleObserver = StyleObserver(this, nativeObserver, pixelRatio)
+  private val styleObserver = StyleObserver(
+    nativeMapWeakRef,
+    { style -> this.style = style },
+    nativeObserver,
+    pixelRatio
+  )
   internal var renderHandler: Handler? = null
-  internal var styleLoaded = false
 
   /**
    * Represents current camera state.
@@ -102,9 +106,9 @@ class MapboxMap internal constructor(
   ) {
     initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener)
     if (styleUri.isEmpty()) {
-      nativeMapWeakRef.call { (this as StyleManagerInterface).styleJSON = EMPTY_STYLE_JSON }
+      nativeMapWeakRef.call { styleJSON = EMPTY_STYLE_JSON }
     } else {
-      nativeMapWeakRef.call { (this as StyleManagerInterface).styleURI = styleUri }
+      nativeMapWeakRef.call { styleURI = styleUri }
     }
   }
 
@@ -138,7 +142,7 @@ class MapboxMap internal constructor(
   ) {
     initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener)
     nativeMapWeakRef.call {
-      (this as StyleManagerInterface).styleJSON = styleJson
+      styleJSON = styleJson
     }
   }
 
@@ -214,16 +218,12 @@ class MapboxMap internal constructor(
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
   ) {
-    // clear listeners from previous invocation
-    styleObserver.onNewStyleLoad(
-      {
-        styleLoaded = true
-        onStyleLoaded?.onStyleLoaded(it)
-      },
+    style = null
+    styleObserver.setLoadStyleListener(
+      onStyleLoaded,
       onMapLoadErrorListener
     )
     isStyleLoadInitiated = true
-    styleLoaded = false
   }
 
   /**
@@ -232,29 +232,15 @@ class MapboxMap internal constructor(
    * @param onStyleLoaded the callback to be invoked when the style is fully loaded
    */
   fun getStyle(onStyleLoaded: Style.OnStyleLoaded) {
-    if (::style.isInitialized) {
-      if (styleLoaded) {
-        // style has loaded, notify callback immediately
-        onStyleLoaded.onStyleLoaded(style)
-      } else {
-        // style load is occurring now, add callback
-        styleObserver.addOnStyleLoadListener(onStyleLoaded)
-      }
-    } else {
-      // no style has loaded yet, add callback
-      styleObserver.addOnStyleLoadListener(onStyleLoaded)
-    }
+    style?.let(onStyleLoaded::onStyleLoaded)
+      ?: styleObserver.addGetStyleListener(onStyleLoaded)
   }
 
   /**
    * Get the Style of the map synchronously, will return null is style is not loaded yet.
    */
   fun getStyle(): Style? {
-    if (::style.isInitialized && styleLoaded) {
-      // style has loaded, return it immediately
-      return style
-    }
-    return null
+    return style
   }
 
   /**
@@ -1347,8 +1333,14 @@ class MapboxMap internal constructor(
   /**
    * Returns if the style has been fully loaded.
    */
+  @Deprecated(
+    "Use getStyle()?.isStyleLoaded instead.",
+    replaceWith = ReplaceWith(
+      "getStyle()?.isStyleLoaded",
+    )
+  )
   override fun isFullyLoaded(): Boolean {
-    return style.isStyleLoaded
+    return style?.isStyleLoaded ?: false
   }
 
   /**

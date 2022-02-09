@@ -13,13 +13,16 @@ import java.util.concurrent.CopyOnWriteArrayList
  * and maintains and invokes user added listeners.
  */
 internal class StyleObserver(
-  private val mapboxMap: MapboxMap,
+  private val nativeMapWeakRef: WeakReference<MapInterface>,
+  private val styleLoadedListener: Style.OnStyleLoaded,
   private val nativeObserver: NativeObserver,
   private val pixelRatio: Float
 ) : OnStyleLoadedListener, OnMapLoadErrorListener {
 
-  private val awaitingStyleLoadListeners = CopyOnWriteArrayList<Style.OnStyleLoaded>()
-  private var awaitingStyleErrorListener: OnMapLoadErrorListener? = null
+  private var loadStyleListener: Style.OnStyleLoaded? = null
+  private var loadStyleErrorListener: OnMapLoadErrorListener? = null
+
+  private val getStyleListeners = CopyOnWriteArrayList<Style.OnStyleLoaded>()
 
   init {
     nativeObserver.addOnStyleLoadedListener(this)
@@ -27,37 +30,41 @@ internal class StyleObserver(
   }
 
   /**
-   * Clears previous added listeners and setup to receive callback for new style loaded or error events.
+   * Set a style listener coming from loadStyle request.
+   * Overwrites listener from previous loadStyle request.
+   * NOTE : listener is invoked only once after successful style load.
    */
-  fun onNewStyleLoad(
+  fun setLoadStyleListener(
     loadedListener: Style.OnStyleLoaded?,
     onMapLoadErrorListener: OnMapLoadErrorListener?
   ) {
-    awaitingStyleLoadListeners.clear()
-    loadedListener?.let {
-      awaitingStyleLoadListeners.add(loadedListener)
-    }
-    awaitingStyleErrorListener = onMapLoadErrorListener
+    loadStyleListener = loadedListener
+    loadStyleErrorListener = onMapLoadErrorListener
   }
 
   /**
-   * Add a style listener invoked when a new style loaded events occurs.
+   * Add a style listener coming from getStyle requests.
+   * NOTE : listener is invoked only once after successful style load.
    */
-  fun addOnStyleLoadListener(loadedListener: Style.OnStyleLoaded) {
-    awaitingStyleLoadListeners.add(loadedListener)
+  fun addGetStyleListener(loadedListener: Style.OnStyleLoaded) {
+    getStyleListeners.add(loadedListener)
   }
 
   /**
    * Invoked when a style has loaded
    */
   override fun onStyleLoaded(eventData: StyleLoadedEventData) {
-    mapboxMap.nativeMapWeakRef.get()?.let {
-      mapboxMap.style = Style(WeakReference(it as StyleManagerInterface), pixelRatio)
-      val iterator = awaitingStyleLoadListeners.iterator()
-      while (iterator.hasNext()) {
-        iterator.next().onStyleLoaded(mapboxMap.style)
+    nativeMapWeakRef.get()?.let {
+      val style = Style(WeakReference(it), pixelRatio)
+      styleLoadedListener.onStyleLoaded(style)
+
+      loadStyleListener?.onStyleLoaded(style)
+      loadStyleListener = null
+
+      getStyleListeners.forEach { listener ->
+        listener.onStyleLoaded(style)
       }
-      awaitingStyleLoadListeners.clear()
+      getStyleListeners.clear()
     }
   }
 
@@ -66,12 +73,13 @@ internal class StyleObserver(
       TAG,
       "OnMapLoadError: ${eventData.type}, message: ${eventData.message}, sourceID: ${eventData.sourceId}, tileID: ${eventData.tileId}"
     )
-    awaitingStyleErrorListener?.onMapLoadError(eventData)
+    loadStyleErrorListener?.onMapLoadError(eventData)
   }
 
   fun onDestroy() {
-    awaitingStyleLoadListeners.clear()
-    awaitingStyleErrorListener = null
+    loadStyleListener = null
+    loadStyleErrorListener = null
+    getStyleListeners.clear()
     nativeObserver.removeOnMapLoadErrorListener(this)
     nativeObserver.removeOnStyleLoadedListener(this)
   }
