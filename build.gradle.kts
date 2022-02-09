@@ -24,6 +24,7 @@ buildscript {
     classpath(Plugins.license)
     classpath(Plugins.mapboxAccessToken)
     classpath(Plugins.mapboxSdkRegistry)
+    classpath(Plugins.mapboxSdkVersionsPlugin)
   }
 }
 

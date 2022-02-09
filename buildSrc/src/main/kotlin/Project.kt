@@ -12,6 +12,7 @@ object Plugins {
   const val license = "com.jaredsburrows:gradle-license-plugin:${Versions.pluginLicense}"
   const val mapboxAccessToken = "com.mapbox.gradle.plugins:access-token:${Versions.mapboxAccessToken}"
   const val mapboxSdkRegistry = "com.mapbox.gradle.plugins:sdk-registry:${Versions.mapboxSdkRegistry}"
+  const val mapboxSdkVersionsPlugin = "com.mapbox.mapboxsdk:mapbox-android-sdk-versions:${Versions.mapboxSdkVersionsPlugin}"
 }
 
 object Dependencies {
@@ -108,4 +109,5 @@ object Versions {
   const val hamcrest = "2.1"
   const val equalsVerifier = "3.7"
   const val asyncInflater = "1.0.0"
+  const val mapboxSdkVersionsPlugin = "1.1.3"
 }

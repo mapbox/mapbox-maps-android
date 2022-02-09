@@ -6,6 +6,7 @@ plugins {
   kotlin("android")
   id("com.jaredsburrows.license")
   id("org.jetbrains.dokka")
+  id("com.mapbox.android.sdk.versions")
 }
 
 android {
