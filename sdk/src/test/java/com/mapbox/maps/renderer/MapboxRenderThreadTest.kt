@@ -119,6 +119,40 @@ class MapboxRenderThreadTest {
     }
   }
 
+  @Test
+  fun onInvalidSurfaceNotInitNativeRenderer() {
+    initRenderThread()
+    val surface = mockk<Surface>()
+    every { surface.isValid } returns false
+    mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
+    idleHandler()
+    verifyNo {
+      mapboxRenderer.createRenderer()
+      mapboxRenderer.onSurfaceChanged(1, 1)
+    }
+  }
+
+  @Test
+  fun onEglCorePrepareFailNotInitNativeRenderer() {
+    initRenderThread()
+    every { eglCore.prepareEgl() } returns false
+    provideValidSurface()
+    verifyNo {
+      mapboxRenderer.createRenderer()
+      mapboxRenderer.onSurfaceChanged(1, 1)
+    }
+  }
+
+  @Test
+  fun onMakeCurrentErrorNotInitNativeRenderer() {
+    initRenderThread()
+    every { eglCore.makeCurrent(any()) } returns false
+    provideValidSurface()
+    verifyNo {
+      mapboxRenderer.createRenderer()
+      mapboxRenderer.onSurfaceChanged(1, 1)
+    }
+  }
 
   @Test
   fun onSurfaceSizeChangedTest() {
@@ -482,11 +516,13 @@ class MapboxRenderThreadTest {
     idleHandler()
     mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
     idleHandler()
-    // we do not destroy native renderer if it's stop and not destroy
-    verifyNo { mapboxRenderer.destroyRenderer() }
+    verifyNo {
+      // we do not destroy native renderer if it's stop and not destroy
+      mapboxRenderer.destroyRenderer()
+      eglCore.release()
+    }
     // we clear only EGLSurface but not all EGL
     verifyOnce { eglCore.releaseSurface(any()) }
-    verifyNo { eglCore.release() }
   }
 
   @Test
@@ -497,11 +533,14 @@ class MapboxRenderThreadTest {
     idleHandler()
     mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
     idleHandler()
-    // we do destroy native renderer if it's stop (for texture renderer)
-    verifyOnce { mapboxRenderer.destroyRenderer() }
-    // we clear all EGL
-    verifyOnce { eglCore.releaseSurface(any()) }
-    verifyOnce { eglCore.release() }
+
+    verifyOnce {
+      // we do destroy native renderer if it's stop (for texture renderer)
+      mapboxRenderer.destroyRenderer()
+      // we clear all EGL
+      eglCore.releaseSurface(any())
+      eglCore.release()
+    }
   }
 
   @Test
@@ -531,8 +570,6 @@ class MapboxRenderThreadTest {
     idleHandler()
     verifyNo {
       mapboxWidgetRenderer.updateTexture()
-    }
-    verifyNo {
       textureRenderer.render(any())
     }
   }
@@ -553,8 +590,25 @@ class MapboxRenderThreadTest {
     idleHandler()
     verify(exactly = 2) {
       mapboxWidgetRenderer.updateTexture()
+      textureRenderer.render(textureId)
     }
-    verify(exactly = 2) {
+  }
+
+  @Test
+  fun onDrawRendersWidgetsBeforeMap() {
+    initRenderThread()
+    provideValidSurface()
+    val textureId = 1
+    every { mapboxWidgetRenderer.needTextureUpdate  } returns true
+    every { mapboxWidgetRenderer.hasWidgets()  } returns true
+    every { mapboxWidgetRenderer.hasTexture()  } returns true
+    every { mapboxWidgetRenderer.getTexture()  } returns textureId
+    pauseHandler()
+    mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
+    idleHandler()
+    verifyOrder {
+      mapboxWidgetRenderer.updateTexture()
+      mapboxRenderer.render()
       textureRenderer.render(textureId)
     }
   }
@@ -565,7 +619,7 @@ class MapboxRenderThreadTest {
     every { mapboxWidgetRenderer.hasWidgets() } returns true
     provideValidSurface()
     verifyOnce {
-      mapboxWidgetRenderer.onSharedContext(any())
+      mapboxWidgetRenderer.onSharedContext(eglCore.eglContext)
     }
   }
 
@@ -575,7 +629,7 @@ class MapboxRenderThreadTest {
     every { mapboxWidgetRenderer.hasWidgets() } returns false
     provideValidSurface()
     verifyNo {
-      mapboxWidgetRenderer.onSharedContext(eglCore.eglContext)
+      mapboxWidgetRenderer.onSharedContext(any())
     }
   }
 
