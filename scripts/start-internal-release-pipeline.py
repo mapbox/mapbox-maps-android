@@ -6,7 +6,7 @@ import argparse
 import os
 import requests
 import sys
-
+import datetime
 
 def triggerPipeline(slug, token, branch, params):
     url = "https://circleci.com/api/v2/project/github/%s/pipeline" % (slug)
@@ -61,7 +61,7 @@ def main():
 
     created = args.created
     if not created:
-        created = datetime.datetime.utcnow().isoformat()        
+        created = datetime.datetime.utcnow().isoformat()
 
     params = {
         "mapbox_android_upstream": True,
