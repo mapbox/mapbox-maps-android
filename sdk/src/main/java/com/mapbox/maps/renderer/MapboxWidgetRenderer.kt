@@ -2,7 +2,6 @@ package com.mapbox.maps.renderer
 
 import android.opengl.GLES20
 import com.mapbox.common.Logger
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.widget.Widget
 import java.util.concurrent.CopyOnWriteArraySet
@@ -20,12 +19,12 @@ internal class MapboxWidgetRenderer(
   private val textures = intArrayOf(0)
   private val framebuffers = intArrayOf(0)
 
-  private val widgets = CopyOnWriteArraySet<Widget>()
+  private val widgets = mutableListOf<Widget>()
 
   private var width = 0
   private var height = 0
 
-  val needRender: Boolean
+  val needTextureUpdate: Boolean
     get() = widgets.any { it.renderer.needRender }
 
   fun hasWidgets() = widgets.isNotEmpty()
@@ -121,7 +120,7 @@ internal class MapboxWidgetRenderer(
   }
 
   fun updateTexture() {
-    if (needRender) {
+    if (needTextureUpdate) {
       checkSizeChanged()
       checkEgl()
       val eglCore = this.eglCore

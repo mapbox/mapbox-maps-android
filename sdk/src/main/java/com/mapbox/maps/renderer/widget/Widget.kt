@@ -1,11 +1,13 @@
 package com.mapbox.maps.renderer.widget
 
-import android.graphics.Bitmap
 import com.mapbox.maps.MapboxExperimental
 
+/**
+ * Base class for widgets displayed on top of the map.
+ */
 @MapboxExperimental
 abstract class Widget {
-  internal abstract val renderer : WidgetRenderer
+  internal abstract val renderer: WidgetRenderer
 
   /**
    * Set absolute translation of widget in pixels.
