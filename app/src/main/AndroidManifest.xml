@@ -1137,10 +1137,10 @@
                 android:value=".ExampleOverviewActivity" />
         </activity>
         <activity
-            android:name=".examples.markersandcallouts.AnnotationWithCalloutActivity"
-            android:description="@string/description_view_annotation_callout_annotation"
+            android:name=".examples.markersandcallouts.ViewAnnotationWithPointAnnotationActivity"
+            android:description="@string/description_view_annotation_point_annotation"
             android:exported="true"
-            android:label="@string/activity_view_annotations_callout_annotation">
+            android:label="@string/activity_view_annotations_point_annotation">
             <meta-data
                 android:name="@string/category"
                 android:value="@string/category_markers_and_callouts" />

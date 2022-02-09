@@ -24,7 +24,7 @@ import com.mapbox.maps.viewannotation.viewAnnotationOptions
 /**
  * Example how to add view annotation to the point annotation.
  */
-class AnnotationWithCalloutActivity : AppCompatActivity() {
+class ViewAnnotationWithPointAnnotationActivity : AppCompatActivity() {
 
   private lateinit var pointAnnotationManager: PointAnnotationManager
   private lateinit var pointAnnotation: PointAnnotation
@@ -37,7 +37,7 @@ class AnnotationWithCalloutActivity : AppCompatActivity() {
     setContentView(binding.root)
 
     val iconBitmap = BitmapUtils.bitmapFromDrawableRes(
-      this@AnnotationWithCalloutActivity,
+      this@ViewAnnotationWithPointAnnotationActivity,
       R.drawable.blue_marker_view
     )!!
 
