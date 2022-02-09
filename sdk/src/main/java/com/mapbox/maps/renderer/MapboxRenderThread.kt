@@ -154,7 +154,6 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
                 )
                 renderCreated = true
               }
-
               return true
             }
           }
@@ -240,7 +239,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
 
     if (widgetRenderer.hasWidgets()) {
-      if (widgetRenderer.needRender) {
+      if (widgetRenderer.needTextureUpdate) {
         widgetRenderer.updateTexture()
         eglCore.makeCurrent(eglSurface)
       }

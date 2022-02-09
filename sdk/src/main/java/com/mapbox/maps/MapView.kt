@@ -321,7 +321,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   /**
    * Remove [Widget] from the map.
    *
-   * @return true if widget was removed
+   * @return true if widget was present and removed, false otherwise
    */
   @MapboxExperimental
   override fun removeWidget(widget: Widget) = mapController.removeWidget(widget)

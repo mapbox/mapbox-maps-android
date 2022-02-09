@@ -110,14 +110,14 @@ internal class TextureRenderer(
     GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[0])
     GLES20.glBufferData(
       GLES20.GL_ARRAY_BUFFER,
-      vertexArray.size * 4,
+      vertexArray.size * BYTES_PER_FLOAT,
       vertexArray.toFloatBuffer(),
       GLES20.GL_STATIC_DRAW
     )
     GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo[1])
     GLES20.glBufferData(
       GLES20.GL_ARRAY_BUFFER,
-      textureArray.size * 4,
+      textureArray.size * BYTES_PER_FLOAT,
       textureArray.toFloatBuffer(),
       GLES20.GL_STATIC_DRAW
     )
