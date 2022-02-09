@@ -87,7 +87,7 @@
     <string name="activity_osm">TileJson</string>
     <string name="activity_view_annotations">View annotations: advanced example</string>
     <string name="activity_view_annotations_basic">View annotations: basic example</string>
-    <string name="activity_view_annotations_callout_annotation">View annotations: annotation callout</string>
+    <string name="activity_view_annotations_point_annotation">View annotation with point annotation</string>
     <string name="activity_viewport">Viewport camera</string>
     <string name="activity_advanced_viewport">Advanced Viewport with gestures</string>
 </resources>
