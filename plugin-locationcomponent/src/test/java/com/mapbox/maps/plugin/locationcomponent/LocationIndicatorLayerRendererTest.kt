@@ -112,7 +112,7 @@ class LocationIndicatorLayerRendererTest {
     colorArray[3] = 1.0f
     val rgbaExpression = LocationIndicatorLayerRenderer.buildRGBAExpression(colorArray)
 
-    locationLayerRenderer.styleAccuracy(1.0f, Color.RED)
+    locationLayerRenderer.styleAccuracy(Color.RED, Color.RED)
 
     verify { layerWrapper.accuracyRadiusColor(capture(expressionSlot)) }
     assertEquals(rgbaExpression.toString(), expressionSlot.captured.toString())

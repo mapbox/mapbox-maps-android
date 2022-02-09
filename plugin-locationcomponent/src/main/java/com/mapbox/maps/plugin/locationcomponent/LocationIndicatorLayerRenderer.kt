@@ -46,12 +46,13 @@ internal class LocationIndicatorLayerRenderer(
     setLayerVisibility(true)
   }
 
-  override fun styleAccuracy(accuracyAlpha: Float, accuracyColor: Int) {
+  override fun styleAccuracy(accuracyColor: Int, accuracyBorderColor: Int) {
     val colorArray: FloatArray = colorToRgbaArray(accuracyColor)
-    colorArray[3] = accuracyAlpha
+    val borderColorArray: FloatArray = colorToRgbaArray(accuracyBorderColor)
     val rgbaExpression = buildRGBAExpression(colorArray)
+    val borderRgbaExpression = buildRGBAExpression(borderColorArray)
     layer.accuracyRadiusColor(rgbaExpression)
-    layer.accuracyRadiusBorderColor(rgbaExpression)
+    layer.accuracyRadiusBorderColor(borderRgbaExpression)
   }
 
   override fun setLatLng(latLng: Point) {

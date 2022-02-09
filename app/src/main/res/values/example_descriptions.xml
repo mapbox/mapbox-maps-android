@@ -87,7 +87,7 @@
     <string name="description_osm">Using raster source and layer to render OSM tiles with TileSet class</string>
     <string name="description_view_annotation">Add view annotation anchored to a symbol layer feature</string>
     <string name="description_view_annotation_basic">Add view annotation on a map click</string>
-    <string name="description_view_annotation_callout_annotation">Callout view using annotation plugin</string>
+    <string name="description_view_annotation_point_annotation">Add view annotation to a point annotation</string>
     <string name="description_viewport">Viewport camera showcase</string>
     <string name="description_advanced_viewport">Advanced viewport with gestures showcase</string>
 </resources>

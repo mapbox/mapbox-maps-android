@@ -22,6 +22,8 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.Surface;
 
+import androidx.annotation.NonNull;
+
 import com.mapbox.android.gestures.AndroidGesturesManager;
 import com.mapbox.android.gestures.MoveGestureDetector;
 import com.mapbox.android.gestures.RotateGestureDetector;
@@ -81,6 +83,7 @@ import com.mapbox.maps.plugin.gestures.generated.GesturesSettings;
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin;
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentUtils;
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings;
+import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2;
 import com.mapbox.maps.plugin.logo.LogoPlugin;
 import com.mapbox.maps.plugin.logo.LogoUtils;
 import com.mapbox.maps.plugin.logo.generated.LogoSettings;
@@ -89,6 +92,12 @@ import com.mapbox.maps.plugin.overlay.MapOverlayUtils;
 import com.mapbox.maps.plugin.scalebar.ScaleBarPlugin;
 import com.mapbox.maps.plugin.scalebar.ScaleBarUtils;
 import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings;
+import com.mapbox.maps.plugin.viewport.ViewportPlugin;
+import com.mapbox.maps.plugin.viewport.ViewportStatus;
+import com.mapbox.maps.plugin.viewport.ViewportStatusObserver;
+import com.mapbox.maps.plugin.viewport.ViewportUtils;
+import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions;
+import com.mapbox.maps.plugin.viewport.data.ViewportStatusChangeReason;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -147,6 +156,13 @@ public class JavaInterfaceChecker {
         locationComponentSettings = new LocationComponentSettings(true, true, Color.BLACK, 1f, locationPuck);
         locationComponentSettings = new LocationComponentSettings(true, true, Color.BLACK, 1f, "id", locationPuck);
         locationComponentSettings = new LocationComponentSettings(true, true, Color.BLACK, 1f, "id", "id", locationPuck);
+    }
+
+    private void locationComponentSettings2() {
+        LocationComponentSettings2 locationComponentSettings2 = new LocationComponentSettings2();
+        locationComponentSettings2 = new LocationComponentSettings2(true);
+        locationComponentSettings2 = new LocationComponentSettings2(true, Color.BLUE);
+        locationComponentSettings2 = new LocationComponentSettings2(true, Color.BLUE, Color.RED);
     }
 
     private void locationComponent(Context context, MapView mapView) {
@@ -510,5 +526,19 @@ public class JavaInterfaceChecker {
 
     private void scaleBar(MapView mapView) {
         ScaleBarPlugin scaleBar = ScaleBarUtils.getScaleBar(mapView);
+    }
+
+    private void viewport(MapView mapView) {
+        ViewportPlugin viewport = ViewportUtils.getViewport(mapView);
+        viewport.addStatusObserver((from, to, reason) -> {
+            if (reason == ViewportStatusChangeReason.USER_INTERACTION) {
+                viewport.transitionTo(
+                        viewport.makeFollowPuckViewportState(new FollowPuckViewportStateOptions.Builder().build()),
+                        viewport.makeImmediateViewportTransition(),
+                        isFinished -> {
+                            // no-ops
+                        });
+            }
+        });
     }
 }

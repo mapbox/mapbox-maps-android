@@ -16,6 +16,13 @@ val MapPluginProviderDelegate.location: LocationComponentPlugin
   @JvmName("getLocationComponent")
   get() = this.getPlugin(Plugin.MAPBOX_LOCATION_COMPONENT_PLUGIN_ID)!!
 
+/**
+ * Extension val to get the LocationComponentPlugin instance with interface LocationComponentPlugin2 to handle accuracy ring.
+ */
+val MapPluginProviderDelegate.location2: LocationComponentPlugin2
+  @JvmName("getLocationComponent2")
+  get() = this.getPlugin(Plugin.MAPBOX_LOCATION_COMPONENT_PLUGIN_ID)!!
+
 private fun Context.getCompatDrawable(@DrawableRes resId: Int) = ResourcesCompat.getDrawable(
   this.resources,
   resId,

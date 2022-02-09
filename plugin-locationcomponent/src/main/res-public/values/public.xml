@@ -5,14 +5,23 @@
     <!-- Whether the user location is visible on the map. -->
     <public name="mapbox_locationComponentEnabled" type="attr" />
 
-    <!-- Whether the location puck is pulsing on the map. Only work for 2D location puck. -->
+    <!-- Whether the location puck is pulsing on the map. Works for 2D location puck only. -->
     <public name="mapbox_locationComponentPulsingEnabled" type="attr" />
 
-    <!-- The color of the pulsing circle. Only work for 2D location puck. -->
+    <!-- The color of the pulsing circle. Works for 2D location puck only. -->
     <public name="mapbox_locationComponentPulsingColor" type="attr" />
 
-    <!-- The maximum radius of the pulsing circle. Only work for 2D location puck. -->
+    <!-- The maximum radius of the pulsing circle. Works for 2D location puck only. -->
     <public name="mapbox_locationComponentPulsingMaxRadius" type="attr" />
+
+    <!-- Whether show accuracy ring with location puck. Works for 2D location puck only. -->
+    <public name="mapbox_locationComponentShowAccuracyRing" type="attr" />
+
+    <!-- The color of the accuracy ring. Works for 2D location puck only. -->
+    <public name="mapbox_locationComponentAccuracyRingColor" type="attr" />
+
+    <!-- The color of the accuracy ring border. Works for 2D location puck only. -->
+    <public name="mapbox_locationComponentAccuracyRingBorderColor" type="attr" />
 
     <!-- Sets the id of the layer that's added above to when placing the component on the map. -->
     <public name="mapbox_locationComponentLayerAbove" type="attr" />

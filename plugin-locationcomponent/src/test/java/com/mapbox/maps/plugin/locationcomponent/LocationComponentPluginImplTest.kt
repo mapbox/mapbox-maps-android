@@ -15,6 +15,7 @@ import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttributeParser
+import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttributeParser2
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import io.mockk.*
 import org.junit.Assert.*
@@ -49,6 +50,7 @@ class LocationComponentPluginImplTest {
   @Before
   fun setup() {
     mockkObject(LocationComponentAttributeParser)
+    mockkObject(LocationComponentAttributeParser2)
     mockkStatic(LocationEngineProvider::class)
 
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
@@ -195,22 +197,6 @@ class LocationComponentPluginImplTest {
     verify(exactly = 1) { locationProvider.unRegisterLocationConsumer(any()) }
     verify(exactly = 0) { mockLocationProvider.registerLocationConsumer(any()) }
     assertEquals(mockLocationProvider, locationComponentPlugin.getLocationProvider())
-  }
-
-  @Test
-  fun testOnStyleChanged() {
-    every { locationPuckManager.isLayerInitialised() } returns false
-    preparePluginInitialisationWithEnabled()
-    verify(exactly = 2) { locationPuckManager.isLayerInitialised() }
-    verify(exactly = 1) { locationPuckManager.initialize(style) }
-  }
-
-  @Test
-  fun testOnStyleChangedWhilePuckManagerInitialised() {
-    every { locationPuckManager.isLayerInitialised() } returns true
-    preparePluginInitialisationWithEnabled()
-    verify(exactly = 2) { locationPuckManager.isLayerInitialised() }
-    verify(exactly = 0) { locationPuckManager.initialize(style) }
   }
 
   @Test

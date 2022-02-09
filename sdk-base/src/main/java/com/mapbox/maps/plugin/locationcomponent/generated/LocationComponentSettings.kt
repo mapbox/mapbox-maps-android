@@ -15,17 +15,17 @@ data class LocationComponentSettings @JvmOverloads constructor(
   var enabled: Boolean = false,
 
   /**
-   * Whether the location puck is pulsing on the map. Only work for 2D location puck.
+   * Whether the location puck is pulsing on the map. Works for 2D location puck only.
    */
   var pulsingEnabled: Boolean = false,
 
   /**
-   * The color of the pulsing circle. Only work for 2D location puck.
+   * The color of the pulsing circle. Works for 2D location puck only.
    */
   var pulsingColor: Int = Color.parseColor("#4A90E2"),
 
   /**
-   * The maximum radius of the pulsing circle. Only work for 2D location puck. This property is specified in pixels.
+   * The maximum radius of the pulsing circle. Works for 2D location puck only. This property is specified in pixels.
    */
   var pulsingMaxRadius: Float = 10f,
 

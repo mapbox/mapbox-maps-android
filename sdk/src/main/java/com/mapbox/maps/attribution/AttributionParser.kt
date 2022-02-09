@@ -10,6 +10,7 @@ import com.mapbox.maps.base.R
 import com.mapbox.maps.plugin.attribution.Attribution
 import java.lang.ref.WeakReference
 import java.util.*
+import java.util.regex.Pattern
 
 /**
  * Responsible for parsing attribution data coming from Sources and MapSnapshot.
@@ -68,6 +69,24 @@ open class AttributionParser internal constructor(
   protected fun parse() {
     parseAttributions()
     addAdditionalAttributions()
+  }
+
+  /**
+   * Parse string literal to attribution with empty url.
+   */
+  private fun parseStringLiteralToAttributions(stringLiteralList: List<String>) {
+    for (strLiteral in stringLiteralList) {
+      var htmlStr = fromHtml(strLiteral).toString()
+      if (!withCopyrightSign) {
+        htmlStr = stripCopyright(htmlStr)
+      }
+      attributions.add(
+        Attribution(
+          htmlStr,
+          ""
+        )
+      )
+    }
   }
 
   /**
@@ -262,6 +281,7 @@ open class AttributionParser internal constructor(
     private var withTelemetryAttribution = false
     private var withMapboxAttribution = true
     private var attributionDataStringArray: Array<String>? = null
+    private var stringLiteralArray = mutableListOf<String>()
 
     /**
      * Adds attribution data to the attribution parser builder
@@ -319,6 +339,8 @@ open class AttributionParser internal constructor(
           withMapboxAttribution
         )
       attributionParser.parse()
+      // parse string literals provided by source attribution.
+      attributionParser.parseStringLiteralToAttributions(stringLiteralArray)
       return attributionParser
     }
 
@@ -326,10 +348,20 @@ open class AttributionParser internal constructor(
       val builder = StringBuilder()
       for (attr in attribution) {
         if (attr.isNotEmpty()) {
-          builder.append(attr)
+          if (hasValidHTMLTag(attr)) builder.append(attr) else stringLiteralArray.add(attr)
         }
       }
       return builder.toString()
+    }
+
+    /**
+     * check if the string contains valid HTML tag.
+     */
+    private fun hasValidHTMLTag(htmlStr: String): Boolean =
+      Pattern.compile(HTML_STYLE_REGEX).matcher(htmlStr).find()
+
+    private companion object {
+      const val HTML_STYLE_REGEX = "<(\"[^\"]*\"|'[^']*'|[^'\">])*>"
     }
   }
 }
