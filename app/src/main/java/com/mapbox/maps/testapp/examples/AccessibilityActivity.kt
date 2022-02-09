@@ -2,6 +2,7 @@ package com.mapbox.maps.testapp.examples
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.view.accessibility.AccessibilityEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
@@ -62,6 +63,7 @@ class AccessibilityActivity: AppCompatActivity(), OnCameraChangeListener, OnMapI
 
   override fun onCameraChanged(eventData: CameraChangedEventData) {
     onScreenFeatures = null
+    mapView.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED)
 
     // TODO: Currently this implementation doesn't account for scrolling the camera, virtual
     //  view Ids likely needs to be cleared and re-instantiated, and focus reset.
