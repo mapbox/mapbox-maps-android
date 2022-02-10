@@ -6,11 +6,14 @@ import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimati
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.viewport.CompletionListener
+import com.mapbox.maps.plugin.viewport.ViewportPlugin
 import com.mapbox.maps.plugin.viewport.ViewportPluginImpl.Companion.VIEWPORT_CAMERA_OWNER
 import com.mapbox.maps.plugin.viewport.state.ViewportState
 
 /**
- * [ViewportTransition] that transition to target [ViewportState] immediately.
+ * The [ViewportTransition] that transition to target [ViewportState] immediately without any animation.
+ *
+ * Use [ViewportPlugin.makeImmediateViewportTransition] to create instances of ImmediateViewportTransition.
  */
 internal class ImmediateViewportTransition(delegateProvider: MapDelegateProvider) :
   ViewportTransition {

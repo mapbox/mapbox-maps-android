@@ -8,7 +8,10 @@ import java.util.*
 /**
  * Represents the status of the viewport.
  *
- * It could be either a [ViewportState] or [ViewportTransition].
+ * It could be either a [ViewportStatus.State], [ViewportStatus.Transition] or [ViewportStatus.Idle].
+ *
+ * The [ViewportStatus.State] amd [ViewportStatus.Transition] have associated values that are reference
+ * types, so equality and hash are implemented in terms of the identities of those objects.
  */
 @MapboxExperimental
 sealed class ViewportStatus {

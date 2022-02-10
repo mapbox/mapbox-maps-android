@@ -1,15 +1,18 @@
 package com.mapbox.maps.plugin.viewport.data
 
+import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.plugin.viewport.state.FollowPuckViewportState
 import java.util.Objects
 
 /**
- * Describes the camera bearing options for the [FollowPuckViewportState].
+ * Describes different ways that [FollowPuckViewportState] can obtain values to use when setting
+ * [CameraOptions.bearing].
  */
 @MapboxExperimental
 sealed class FollowPuckViewportStateBearing {
   /**
-   * The viewport's bearing is fixed to the given bearing.
+   * The [FollowPuckViewportState] sets the camera bearing to the constant value on every frame.
    *
    * @param bearing The bearing that the [FollowPuckViewportState] uses to generate camera updates.
    */
@@ -31,10 +34,10 @@ sealed class FollowPuckViewportStateBearing {
   }
 
   /**
-   * The viewport's bearing is set as the same as the location puck's bearing.
+   * The [FollowPuckViewportState] sets the camera bearing to the same as the location puck's bearing.
    *
    * When set to this mode, the viewport's bearing is driven by the location, thus guarantees
-   * synchronization.
+   * the synchronization of the location puck and camera position.
    */
   object SyncWithLocationPuck : FollowPuckViewportStateBearing() {
     /**
