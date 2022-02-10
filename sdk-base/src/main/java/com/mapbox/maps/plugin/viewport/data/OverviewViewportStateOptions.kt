@@ -4,32 +4,42 @@ import com.mapbox.geojson.Geometry
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.viewport.DEFAULT_STATE_ANIMATION_DURATION_MS
+import com.mapbox.maps.plugin.viewport.state.OverviewViewportState
 import java.lang.IllegalArgumentException
 import java.util.*
 
 /**
- * Options that impact the [OverviewViewportState].
+ * Configuration options that impact the [OverviewViewportState].
  */
 @MapboxExperimental
 class OverviewViewportStateOptions private constructor(
   /**
-   * The geometry that the OverviewState should cover.
+   * The geometry that the [OverviewViewportState] should use when calculating its camera.
    */
   val geometry: Geometry,
   /**
-   * The edge padding of the map.
+   * The edge padding that [OverviewViewportState] should use when calculating its camera.
+   *
+   * Defaults to 0 padding.
    */
   val padding: EdgeInsets,
   /**
-   * The bearing of the map.
+   * The bearing that [OverviewViewportState] should use when calculating its camera.
+   *
+   * Defaults to 0.
    */
   val bearing: Double?,
   /**
-   * The pitch of the map.
+   * The pitch that [OverviewViewportState] should use when calculating its camera.
+   *
+   * Defaults to 0.
    */
   val pitch: Double?,
   /**
-   * The duration between frames in milliseconds.
+   * The length of the animation performed in milliseconds by [OverviewViewportState] when it starts
+   * updating the camera and anytime [OverviewViewportState.options] is set.
+   *
+   * @see [OverviewViewportState.options] for details.
    *
    * Defaults to [DEFAULT_STATE_ANIMATION_DURATION_MS] milliseconds
    */
@@ -74,35 +84,44 @@ class OverviewViewportStateOptions private constructor(
     private var animationDurationMs: Long = DEFAULT_STATE_ANIMATION_DURATION_MS
 
     /**
-     * The geometry that the OverviewState should cover.
+     * The geometry that the [OverviewViewportState] should use when calculating its camera.
      */
     fun geometry(geometry: Geometry) = apply {
       this.geometry = geometry
     }
 
     /**
-     * The edge padding of the map.
+     * The edge padding that [OverviewViewportState] should use when calculating its camera.
+     *
+     * Defaults to 0 padding.
      */
     fun padding(padding: EdgeInsets) = apply {
       this.padding = padding
     }
 
     /**
-     * The bearing of the map.
+     * The bearing that [OverviewViewportState] should use when calculating its camera.
+     *
+     * Defaults to 0.
      */
     fun bearing(bearing: Double?) = apply {
       this.bearing = bearing
     }
 
     /**
-     * The pitch of the map.
+     * The pitch that [OverviewViewportState] should use when calculating its camera.
+     *
+     * Defaults to 0.
      */
     fun pitch(pitch: Double?) = apply {
       this.pitch = pitch
     }
 
     /**
-     * The duration between frames in milliseconds.
+     * The length of the animation performed by [OverviewViewportState] when it starts updating the
+     * camera and anytime [OverviewViewportState.options] is set.
+     *
+     * @see [OverviewViewportState.options] for details.
      *
      * Defaults to [DEFAULT_STATE_ANIMATION_DURATION_MS] milliseconds
      */
