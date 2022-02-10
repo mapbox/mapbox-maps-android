@@ -36,8 +36,8 @@ class OverviewViewportStateOptions private constructor(
    */
   val pitch: Double?,
   /**
-   * The length of the animation performed by [OverviewViewportState] when it starts updating the
-   * camera and anytime [OverviewViewportState.options] is set.
+   * The length of the animation performed in milliseconds by [OverviewViewportState] when it starts
+   * updating the camera and anytime [OverviewViewportState.options] is set.
    *
    * @see [OverviewViewportState.options] for details.
    *
