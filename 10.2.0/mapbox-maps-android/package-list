@@ -771,6 +771,7 @@ $dokka.location:com.mapbox.maps/OfflineRegion/getMetadata/#/PointingToDeclaratio
 $dokka.location:com.mapbox.maps/OfflineRegion/getTilePyramidDefinition/#/PointingToDeclaration/com.mapbox.maps/[android-jvm]-offline-region/get-tile-pyramid-definition.html
 $dokka.location:com.mapbox.maps/OfflineRegion/invalidate/#com.mapbox.maps.AsyncOperationResultCallback/PointingToDeclaration/com.mapbox.maps/[android-jvm]-offline-region/invalidate.html
 $dokka.location:com.mapbox.maps/OfflineRegion/purge/#com.mapbox.maps.AsyncOperationResultCallback/PointingToDeclaration/com.mapbox.maps/[android-jvm]-offline-region/purge.html
+$dokka.location:com.mapbox.maps/OfflineRegion/setMetadata/#byte[]#com.mapbox.maps.AsyncOperationResultCallback/PointingToDeclaration/com.mapbox.maps/[android-jvm]-offline-region/set-metadata.html
 $dokka.location:com.mapbox.maps/OfflineRegion/setOfflineRegionDownloadState/#com.mapbox.maps.OfflineRegionDownloadState/PointingToDeclaration/com.mapbox.maps/[android-jvm]-offline-region/set-offline-region-download-state.html
 $dokka.location:com.mapbox.maps/OfflineRegion/setOfflineRegionObserver/#com.mapbox.maps.OfflineRegionObserver/PointingToDeclaration/com.mapbox.maps/[android-jvm]-offline-region/set-offline-region-observer.html
 $dokka.location:com.mapbox.maps/OfflineRegionCallback///PointingToDeclaration/com.mapbox.maps/[android-jvm]-offline-region-callback/index.html
@@ -811,6 +812,7 @@ $dokka.location:com.mapbox.maps/OfflineRegionInterface/getMetadata/#/PointingToD
 $dokka.location:com.mapbox.maps/OfflineRegionInterface/getTilePyramidDefinition/#/PointingToDeclaration/com.mapbox.maps/[android-jvm]-offline-region-interface/get-tile-pyramid-definition.html
 $dokka.location:com.mapbox.maps/OfflineRegionInterface/invalidate/#com.mapbox.maps.AsyncOperationResultCallback/PointingToDeclaration/com.mapbox.maps/[android-jvm]-offline-region-interface/invalidate.html
 $dokka.location:com.mapbox.maps/OfflineRegionInterface/purge/#com.mapbox.maps.AsyncOperationResultCallback/PointingToDeclaration/com.mapbox.maps/[android-jvm]-offline-region-interface/purge.html
+$dokka.location:com.mapbox.maps/OfflineRegionInterface/setMetadata/#byte[]#com.mapbox.maps.AsyncOperationResultCallback/PointingToDeclaration/com.mapbox.maps/[android-jvm]-offline-region-interface/set-metadata.html
 $dokka.location:com.mapbox.maps/OfflineRegionInterface/setOfflineRegionDownloadState/#com.mapbox.maps.OfflineRegionDownloadState/PointingToDeclaration/com.mapbox.maps/[android-jvm]-offline-region-interface/set-offline-region-download-state.html
 $dokka.location:com.mapbox.maps/OfflineRegionInterface/setOfflineRegionObserver/#com.mapbox.maps.OfflineRegionObserver/PointingToDeclaration/com.mapbox.maps/[android-jvm]-offline-region-interface/set-offline-region-observer.html
 $dokka.location:com.mapbox.maps/OfflineRegionManager///PointingToDeclaration/com.mapbox.maps/[android-jvm]-offline-region-manager/index.html
