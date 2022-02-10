@@ -2,6 +2,7 @@ package com.mapbox.maps.extension.androidauto
 
 import android.content.Context
 import android.graphics.BitmapFactory
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.renderer.widget.BitmapWidget
 import com.mapbox.maps.renderer.widget.WidgetPosition
 
@@ -12,7 +13,8 @@ import com.mapbox.maps.renderer.widget.WidgetPosition
  * @param marginX horizontal margin in pixels
  * @param marginY vertical margin in pixels
  */
-class LogoWidget(
+@MapboxExperimental
+class LogoWidget constructor(
   context: Context,
   position: WidgetPosition = WidgetPosition(
     horizontal = WidgetPosition.Horizontal.LEFT,

@@ -222,7 +222,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
 
   private fun checkWidgetRender() {
     if (eglPrepared && !widgetRenderCreated && widgetRenderer.hasWidgets()) {
-      widgetRenderer.onSharedContext(eglCore.eglContext)
+      widgetRenderer.setSharedContext(eglCore.eglContext)
       widgetRenderCreated = true
     }
   }

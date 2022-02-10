@@ -32,7 +32,7 @@ internal class MapboxWidgetRenderer(
 
   fun getTexture() = textures[0]
 
-  fun onSharedContext(sharedContext: EGLContext) {
+  fun setSharedContext(sharedContext: EGLContext) {
     if (eglPrepared) {
       release()
     }

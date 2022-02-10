@@ -619,7 +619,7 @@ class MapboxRenderThreadTest {
     every { mapboxWidgetRenderer.hasWidgets() } returns true
     provideValidSurface()
     verifyOnce {
-      mapboxWidgetRenderer.onSharedContext(eglCore.eglContext)
+      mapboxWidgetRenderer.setSharedContext(eglCore.eglContext)
     }
   }
 
@@ -629,7 +629,7 @@ class MapboxRenderThreadTest {
     every { mapboxWidgetRenderer.hasWidgets() } returns false
     provideValidSurface()
     verifyNo {
-      mapboxWidgetRenderer.onSharedContext(any())
+      mapboxWidgetRenderer.setSharedContext(any())
     }
   }
 
@@ -639,7 +639,7 @@ class MapboxRenderThreadTest {
     every { eglCore.prepareEgl() } returns false
     provideValidSurface()
     verifyNo {
-      mapboxWidgetRenderer.onSharedContext(any())
+      mapboxWidgetRenderer.setSharedContext(any())
     }
   }
 
@@ -651,7 +651,7 @@ class MapboxRenderThreadTest {
     mapboxRenderThread.onSurfaceCreated(surface, 1, 1)
     idleHandler()
     verifyNo {
-      mapboxWidgetRenderer.onSharedContext(any())
+      mapboxWidgetRenderer.setSharedContext(any())
     }
   }
 
@@ -661,7 +661,7 @@ class MapboxRenderThreadTest {
     every { eglCore.createWindowSurface(any()) } returns eglCore.eglNoSurface
     provideValidSurface()
     verifyNo {
-      mapboxWidgetRenderer.onSharedContext(any())
+      mapboxWidgetRenderer.setSharedContext(any())
     }
   }
 
@@ -671,7 +671,7 @@ class MapboxRenderThreadTest {
     every { eglCore.makeCurrent(any()) } returns false
     provideValidSurface()
     verifyNo {
-      mapboxWidgetRenderer.onSharedContext(any())
+      mapboxWidgetRenderer.setSharedContext(any())
     }
   }
 }

@@ -9,6 +9,7 @@ import com.mapbox.maps.renderer.gl.GlUtils.put
 import com.mapbox.maps.renderer.gl.GlUtils.toFloatBuffer
 
 internal class BitmapWidgetRenderer(
+  @Volatile
   private var bitmap: Bitmap?,
   private val position: WidgetPosition,
   private val marginX: Float,
@@ -167,9 +168,8 @@ internal class BitmapWidgetRenderer(
 
     GLES20.glUniformMatrix4fv(uniformMvpMatrix, 1, false, mvpMatrixBuffer)
 
-    textureFromBitmap()
+    textureFromBitmapIfChanged()
 
-    GLES20.glActiveTexture(GLES20.GL_TEXTURE0)
     GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[0])
 
     GLES20.glUniform1i(uniformTexture, 0)
@@ -202,6 +202,7 @@ internal class BitmapWidgetRenderer(
     GLES20.glDisableVertexAttribArray(attributeVertexPosition)
     GLES20.glDisableVertexAttribArray(attributeTexturePosition)
     GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0)
+    GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0)
     GLES20.glUseProgram(0)
 
     needRender = false
@@ -221,9 +222,14 @@ internal class BitmapWidgetRenderer(
     needRender = false
   }
 
-  private fun textureFromBitmap() {
+  /**
+   * Updates texture from bitmap once and nullifies bitmap.
+   */
+  private fun textureFromBitmapIfChanged() {
     bitmap?.let {
-      GLES20.glGenTextures(1, textures, 0)
+      if (textures[0] == 0) {
+        GLES20.glGenTextures(1, textures, 0)
+      }
       GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[0])
       GLES20.glTexParameterf(
         GLES20.GL_TEXTURE_2D,
@@ -246,6 +252,7 @@ internal class BitmapWidgetRenderer(
         GLES20.GL_CLAMP_TO_EDGE.toFloat()
       )
       GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, it, 0)
+      GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0)
 
       bitmap = null
     }

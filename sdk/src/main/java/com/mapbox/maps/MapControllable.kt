@@ -84,7 +84,7 @@ interface MapControllable : MapboxLifecycleObserver {
   /**
    * Remove [Widget] from the map.
    *
-   * @return true if widget was removed
+   * @return true if widget was present and removed, false otherwise
    */
   @MapboxExperimental
   fun removeWidget(widget: Widget): Boolean
