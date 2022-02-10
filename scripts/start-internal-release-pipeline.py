@@ -6,7 +6,7 @@ import argparse
 import os
 import requests
 import sys
-
+import datetime
 
 def triggerPipeline(slug, token, branch, params):
     url = "https://circleci.com/api/v2/project/github/%s/pipeline" % (slug)
@@ -51,6 +51,7 @@ def main():
             help="Build a specific branch, otherwise it will build the default branch.")
     parser.add_argument("--release_tag", required=True,
             help="The release tag name, must provide.")
+    parser.add_argument('--created', help="Provide a date string in ISO 8601 format (eg. 2030-12-30T09:10:20.304050)")
 
     args = parser.parse_args()
 
@@ -58,11 +59,16 @@ def main():
         print("CircleCI token not set. Use --token or set CIRCLE_API_TOKEN.")
         sys.exit(1)
 
+    created = args.created
+    if not created:
+        created = datetime.datetime.utcnow().isoformat()
+
     params = {
         "mapbox_android_upstream": True,
         "mapbox_slug": args.origin_slug,
         "mapbox_android_hash": args.hash,
-        "mapbox_release_tag": args.release_tag
+        "mapbox_release_tag": args.release_tag,
+        "benchmark_date": created
     }
 
     triggerPipeline(slug = args.target_slug, token = args.token, branch = args.branch, params = params)
