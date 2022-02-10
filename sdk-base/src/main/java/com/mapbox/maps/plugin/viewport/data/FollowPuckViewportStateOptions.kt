@@ -1,41 +1,62 @@
 package com.mapbox.maps.plugin.viewport.data
 
+import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH
 import com.mapbox.maps.plugin.viewport.DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM
 import com.mapbox.maps.plugin.viewport.DEFAULT_STATE_ANIMATION_DURATION_MS
+import com.mapbox.maps.plugin.viewport.state.FollowPuckViewportState
+import com.mapbox.maps.plugin.viewport.transition.DefaultViewportTransition
 import java.util.Objects
 
 /**
- * Options that impact the [FollowPuckViewportState].
+ * Configuration options that impact the [FollowPuckViewportState].
+ *
+ * Each of the [CameraOptions] related properties is optional, so that the state can be configured
+ * to only modify certain aspects of the camera if desired. This can be used, to achieve effects like
+ * allowing zoom gestures to work simultaneously with [FollowPuckViewportState].
+ *
+ * @see [ViewportOptions.transitionsToIdleUponUserInteraction]
  */
 @MapboxExperimental
 class FollowPuckViewportStateOptions private constructor(
   /**
-   * The edge padding of the map.
+   * The value to use for setting [CameraOptions.padding]. If null, padding will not be modified by
+   * the [FollowPuckViewportState].
+   *
+   * Defaults to 0 padding.
    */
   val padding: EdgeInsets?,
   /**
-   * The default zoom that will be generated for camera following frames.
+   * The value to use for setting [CameraOptions.zoom]. If null, zoom will not be modified by
+   * the [FollowPuckViewportState].
    *
    * Defaults to [DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM].
    */
   val zoom: Double?,
   /**
-   * The camera bearing configuration of the [FollowPuckViewportState].
+   * Indicates how to obtain the value to use for [CameraOptions.bearing] when setting the camera.
+   * If set to null, bearing will not be modified by the [FollowPuckViewportState].
    *
    * Defaults to [FollowPuckViewportStateBearing.SyncWithLocationPuck]
    */
   val bearing: FollowPuckViewportStateBearing?,
   /**
-   * The default pitch that will be generated for following camera frames.
+   * The value to use for setting [CameraOptions.pitch]. If null, pitch will not be modified by
+   * the [FollowPuckViewportState].
    *
    * Defaults to [DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH] degrees.
    */
   val pitch: Double?,
   /**
-   * The maximum duration between frames in milliseconds.
+   * The duration of an animation that happens once when [FollowPuckViewportState.startUpdatingCamera]
+   * is invoked.
+   *
+   * Note: At the moment, [DefaultViewportTransition] calculates its animations based on the puck location
+   * at the beginning of the transition, so the farther the puck moves while the transition is in progress,
+   * the larger the jump when it completes and control is transferred to the target state. Tune this value
+   * for your use case to reduce the visibility of that jump.
    *
    * Defaults to [DEFAULT_STATE_ANIMATION_DURATION_MS] milliseconds
    */
@@ -81,14 +102,18 @@ class FollowPuckViewportStateOptions private constructor(
     private var animationDurationMs: Long = DEFAULT_STATE_ANIMATION_DURATION_MS
 
     /**
-     * The edge padding of the map.
+     * The value to use for setting [CameraOptions.padding]. If null, padding will not be modified by
+     * the [FollowPuckViewportState].
+     *
+     * Defaults to 0 padding.
      */
     fun padding(padding: EdgeInsets?) = apply {
       this.padding = padding
     }
 
     /**
-     * The default zoom that will be generated for camera following frames.
+     * The value to use for setting [CameraOptions.zoom]. If null, zoom will not be modified by
+     * the [FollowPuckViewportState].
      *
      * Defaults to [DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM].
      */
@@ -97,7 +122,8 @@ class FollowPuckViewportStateOptions private constructor(
     }
 
     /**
-     * The camera bearing configuration of the [FollowPuckViewportState].
+     * Indicates how to obtain the value to use for [CameraOptions.bearing] when setting the camera.
+     * If set to null, bearing will not be modified by the [FollowPuckViewportState].
      *
      * Defaults to [FollowPuckViewportStateBearing.SyncWithLocationPuck]
      */
@@ -106,7 +132,8 @@ class FollowPuckViewportStateOptions private constructor(
     }
 
     /**
-     * The default pitch that will be generated for following camera frames.
+     * The value to use for setting [CameraOptions.pitch]. If null, pitch will not be modified by
+     * the [FollowPuckViewportState].
      *
      * Defaults to [DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH] degrees.
      */
@@ -115,7 +142,13 @@ class FollowPuckViewportStateOptions private constructor(
     }
 
     /**
-     * The maximum duration between frames in milliseconds.
+     * The duration of an animation that happens once when [FollowPuckViewportState.startUpdatingCamera]
+     * is invoked.
+     *
+     * Note: At the moment, [DefaultViewportTransition] calculates its animations based on the puck location
+     * at the beginning of the transition, so the farther the puck moves while the transition is in progress,
+     * the larger the jump when it completes and control is transferred to the target state. Tune this value
+     * for your use case to reduce the visibility of that jump.
      *
      * Defaults to [DEFAULT_STATE_ANIMATION_DURATION_MS] milliseconds
      */

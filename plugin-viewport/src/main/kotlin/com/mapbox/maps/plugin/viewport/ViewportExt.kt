@@ -8,6 +8,11 @@ import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 
 /**
  * Extension val for MapView to get the [ViewportPlugin] instance.
+ *
+ * [ViewportPlugin] is a high-level and extensible API for driving the map camera. It
+ * provides built-in states for following the location puck and showing an overview of
+ * a GeoJSON geometry. Transitions between states can be animated with a built-in
+ * default transition and via custom transitions.
  */
 @MapboxExperimental
 val MapPluginProviderDelegate.viewport: ViewportPlugin
