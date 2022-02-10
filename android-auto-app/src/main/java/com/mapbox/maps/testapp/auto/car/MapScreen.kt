@@ -12,6 +12,7 @@ import androidx.core.graphics.drawable.IconCompat
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.extension.androidauto.DefaultMapboxCarMapGestureHandler
 import com.mapbox.maps.extension.androidauto.MapboxCarMap
 import com.mapbox.maps.testapp.auto.R
 
@@ -120,9 +121,11 @@ class MapScreen(
     lifecycle.addObserver(object : DefaultLifecycleObserver {
       override fun onCreate(owner: LifecycleOwner) {
         mapboxCarMap.registerObserver(carCameraController)
+        mapboxCarMap.setGestureHandler(carCameraController.gestureHandler)
       }
 
       override fun onDestroy(owner: LifecycleOwner) {
+        mapboxCarMap.setGestureHandler(DefaultMapboxCarMapGestureHandler())
         mapboxCarMap.unregisterObserver(carCameraController)
       }
     })

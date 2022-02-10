@@ -7,6 +7,7 @@ import com.mapbox.common.Logger
 import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapSurface
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.ScreenCoordinate
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -18,6 +19,7 @@ import io.mockk.unmockkAll
 import io.mockk.verify
 import io.mockk.verifyOrder
 import org.junit.After
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
@@ -216,5 +218,89 @@ class MapboxCarMapTest {
     verify(exactly = 0) { observer.onAttached(any()) }
     verify(exactly = 0) { observer.onVisibleAreaChanged(any(), any()) }
     verify(exactly = 0) { observer.onDetached(any()) }
+  }
+
+  @Test
+  fun `setGestures allows you to provide custom gestures`() {
+    val surfaceCallbackSlot = slot<SurfaceCallback>()
+    val mapInitOptions = mockk<MapInitOptions> {
+      every { context } returns mockk<CarContext> {
+        every { getCarService(AppManager::class.java) } returns mockk {
+          every { setSurfaceCallback(capture(surfaceCallbackSlot)) } just Runs
+        }
+      }
+    }
+
+    val mapboxCarMap = MapboxCarMap(mapInitOptions)
+    val testGestures = TestMapboxCarMapGestures()
+    mapboxCarMap.setGestureHandler(testGestures)
+
+    surfaceCallbackSlot.captured.onSurfaceAvailable(mockk(relaxed = true))
+    surfaceCallbackSlot.captured.onVisibleAreaChanged(mockk(relaxed = true))
+    surfaceCallbackSlot.captured.onScroll(0.0f, 0.0f)
+    surfaceCallbackSlot.captured.onFling(0.0f, 0.0f)
+    surfaceCallbackSlot.captured.onScale(0.0f, 0.0f, 0.0f)
+
+    assertTrue(testGestures.capturedOnScroll)
+    assertTrue(testGestures.capturedOnFling)
+    assertTrue(testGestures.capturedOnScale)
+  }
+
+  @Test
+  fun `setGestures is not called before surface is available`() {
+    val surfaceCallbackSlot = slot<SurfaceCallback>()
+    val mapInitOptions = mockk<MapInitOptions> {
+      every { context } returns mockk<CarContext> {
+        every { getCarService(AppManager::class.java) } returns mockk {
+          every { setSurfaceCallback(capture(surfaceCallbackSlot)) } just Runs
+        }
+      }
+    }
+
+    val mapboxCarMap = MapboxCarMap(mapInitOptions)
+    val testGestures = TestMapboxCarMapGestures()
+    mapboxCarMap.setGestureHandler(testGestures)
+
+    surfaceCallbackSlot.captured.onScroll(0.0f, 0.0f)
+    surfaceCallbackSlot.captured.onFling(0.0f, 0.0f)
+    surfaceCallbackSlot.captured.onScale(0.0f, 0.0f, 0.0f)
+    surfaceCallbackSlot.captured.onSurfaceAvailable(mockk(relaxed = true))
+    surfaceCallbackSlot.captured.onVisibleAreaChanged(mockk(relaxed = true))
+
+    assertFalse(testGestures.capturedOnScroll)
+    assertFalse(testGestures.capturedOnFling)
+    assertFalse(testGestures.capturedOnScale)
+  }
+
+  class TestMapboxCarMapGestures : MapboxCarMapGestureHandler {
+    var capturedOnScroll = false
+    var capturedOnScale = false
+    var capturedOnFling = false
+
+    override fun onScroll(
+      mapboxCarMapSurface: MapboxCarMapSurface,
+      visibleCenter: ScreenCoordinate,
+      distanceX: Float,
+      distanceY: Float
+    ) {
+      capturedOnScroll = true
+    }
+
+    override fun onFling(
+      mapboxCarMapSurface: MapboxCarMapSurface,
+      velocityX: Float,
+      velocityY: Float
+    ) {
+      capturedOnFling = true
+    }
+
+    override fun onScale(
+      mapboxCarMapSurface: MapboxCarMapSurface,
+      focusX: Float,
+      focusY: Float,
+      scaleFactor: Float
+    ) {
+      capturedOnScale = true
+    }
   }
 }

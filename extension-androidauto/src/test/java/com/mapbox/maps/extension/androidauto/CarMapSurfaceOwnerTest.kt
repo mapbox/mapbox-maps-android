@@ -3,15 +3,10 @@
 package com.mapbox.maps.extension.androidauto
 
 import android.graphics.Rect
-import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapSurface
 import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.MapboxMap
-import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.extension.androidauto.testing.ShadowLogger
-import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
-import com.mapbox.maps.plugin.animation.camera
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -32,7 +27,8 @@ import org.robolectric.annotation.Config
 @Config(shadows = [ShadowLogger::class])
 class CarMapSurfaceOwnerTest {
 
-  private val carMapSurfaceOwner = CarMapSurfaceOwner()
+  private val carMapGestures = mockk<DefaultMapboxCarMapGestureHandler>(relaxed = true)
+  private val carMapSurfaceOwner = CarMapSurfaceOwner(carMapGestures)
 
   @Test
   fun `should not notify observer loaded when there is no surface`() {
@@ -318,303 +314,34 @@ class CarMapSurfaceOwnerTest {
     assertEquals(246.5, visibleCenter.y, 0.0001)
   }
 
-  // This test may be deleted in the future, if we create or need a better way to detect
-  // start and end drag events. But for now, we're verifying that each scroll is completing a
-  // drag movement.
   @Test
-  fun `scroll will start and stop dragging`() {
-    val observer: MapboxCarMapObserver = mockk(relaxed = true)
-    val mapboxMap: MapboxMap = mockk(relaxed = true)
-    carMapSurfaceOwner.registerObserver(observer)
-    carMapSurfaceOwner.surfaceAvailable(
-      mockk {
-        every { surfaceContainer } returns mockk {
-          every { width } returns 800
-          every { height } returns 400
-        }
-        every { mapSurface } returns mockk {
-          every { getMapboxMap() } returns mapboxMap
-        }
-      }
-    )
-    val visibleRect = Rect(100, 50, 800, 400)
-    carMapSurfaceOwner.surfaceVisibleAreaChanged(visibleRect)
+  fun `gesture detector is not called before surface is ready`() {
+    carMapSurfaceOwner.scroll(1f, 1f)
+    carMapSurfaceOwner.fling(1f, 1f)
+    carMapSurfaceOwner.scale(50f, 100f, 1f)
 
-    carMapSurfaceOwner.scroll(3.0f, -3.0f)
-
-    verifyOrder {
-      mapboxMap.dragStart(ScreenCoordinate(450.0, 225.0))
-      mapboxMap.setCamera(any<CameraOptions>())
-      mapboxMap.dragEnd()
-    }
+    verify(exactly = 0) { carMapGestures.onScale(any(), any(), any(), any()) }
+    verify(exactly = 0) { carMapGestures.onFling(any(), any(), any()) }
+    verify(exactly = 0) { carMapGestures.onScale(any(), any(), any(), any()) }
   }
 
   @Test
-  fun `scroll will move camera from visibleCenter to the delta distance`() {
-    val observer: MapboxCarMapObserver = mockk(relaxed = true)
-    val mapboxMap: MapboxMap = mockk(relaxed = true)
-    carMapSurfaceOwner.registerObserver(observer)
+  fun `default gesture detector is called after surface is ready`() {
     carMapSurfaceOwner.surfaceAvailable(
       mockk {
         every { surfaceContainer } returns mockk {
-          every { width } returns 800
-          every { height } returns 400
-        }
-        every { mapSurface } returns mockk {
-          every { getMapboxMap() } returns mapboxMap
+          every { width } returns 805
+          every { height } returns 405
         }
       }
     )
-    val visibleRect = Rect(100, 50, 800, 400)
-    carMapSurfaceOwner.surfaceVisibleAreaChanged(visibleRect)
-    val fromCoordinateSlot = slot<ScreenCoordinate>()
-    val toCoordinateSlot = slot<ScreenCoordinate>()
-    every {
-      mapboxMap.getDragCameraOptions(capture(fromCoordinateSlot), capture(toCoordinateSlot))
-    } returns mockk(relaxed = true)
 
-    carMapSurfaceOwner.scroll(3.3f, -3.3f)
+    carMapSurfaceOwner.scroll(1f, 1f)
+    carMapSurfaceOwner.fling(1f, 1f)
+    carMapSurfaceOwner.scale(50f, 100f, 1f)
 
-    assertEquals(450.0, fromCoordinateSlot.captured.x, 0.0001)
-    assertEquals(225.0, fromCoordinateSlot.captured.y, 0.0001)
-    assertEquals(446.7, toCoordinateSlot.captured.x, 0.0001)
-    assertEquals(228.3, toCoordinateSlot.captured.y, 0.0001)
-  }
-
-  @Test
-  fun `scroll is ignored if the observer returns true`() {
-    val observer: MapboxCarMapObserver = mockk(relaxed = true) {
-      every { onScroll(any(), any(), any()) } returns true
-    }
-    val mapboxMap: MapboxMap = mockk(relaxed = true)
-    carMapSurfaceOwner.registerObserver(observer)
-    carMapSurfaceOwner.surfaceAvailable(
-      mockk {
-        every { surfaceContainer } returns mockk {
-          every { width } returns 800
-          every { height } returns 400
-        }
-        every { mapSurface } returns mockk {
-          every { getMapboxMap() } returns mapboxMap
-        }
-      }
-    )
-    val visibleRect = Rect(100, 50, 800, 400)
-    carMapSurfaceOwner.surfaceVisibleAreaChanged(visibleRect)
-    val fromCoordinateSlot = slot<ScreenCoordinate>()
-    val toCoordinateSlot = slot<ScreenCoordinate>()
-    every {
-      mapboxMap.getDragCameraOptions(capture(fromCoordinateSlot), capture(toCoordinateSlot))
-    } returns mockk(relaxed = true)
-
-    carMapSurfaceOwner.scroll(3.3f, -3.3f)
-
-    verify(exactly = 0) { mapboxMap.dragStart(any()) }
-    verify(exactly = 0) { mapboxMap.setCamera(any<CameraOptions>()) }
-    verify(exactly = 0) { mapboxMap.dragEnd() }
-  }
-
-  @Test
-  fun `scale double-tap-gesture will easeTo new zoom`() {
-    val observer: MapboxCarMapObserver = mockk(relaxed = true)
-    val cameraPlugin: CameraAnimationsPlugin = mockk(relaxed = true)
-    carMapSurfaceOwner.registerObserver(observer)
-    carMapSurfaceOwner.surfaceAvailable(
-      mockk {
-        every { surfaceContainer } returns mockk {
-          every { width } returns 800
-          every { height } returns 400
-        }
-        every { mapSurface } returns mockk {
-          every { getMapboxMap() } returns mockk {
-            every { cameraState } returns mockk {
-              every { zoom } returns 10.0
-            }
-          }
-          every { camera } returns cameraPlugin
-        }
-      }
-    )
-    val visibleRect = Rect(100, 50, 800, 400)
-    carMapSurfaceOwner.surfaceVisibleAreaChanged(visibleRect)
-    val cameraOptionsSlot = slot<CameraOptions>()
-    every {
-      cameraPlugin.easeTo(capture(cameraOptionsSlot))
-    } returns mockk(relaxed = true)
-
-    carMapSurfaceOwner.scale(526.0f, 260.0f, 2.0f)
-
-    with(cameraOptionsSlot.captured) {
-      assertEquals(526.0, anchor!!.x, 0.0001)
-      assertEquals(260.0, anchor!!.y, 0.0001)
-      assertEquals(11.0, zoom!!, 0.0001)
-    }
-  }
-
-  @Test
-  fun `scale will use the focus as the anchor point`() {
-    val observer: MapboxCarMapObserver = mockk(relaxed = true)
-    val mapboxMap: MapboxMap = mockk(relaxed = true) {
-      every { cameraState } returns mockk {
-        every { zoom } returns 16.50
-      }
-    }
-    carMapSurfaceOwner.registerObserver(observer)
-    carMapSurfaceOwner.surfaceAvailable(
-      mockk {
-        every { surfaceContainer } returns mockk {
-          every { width } returns 800
-          every { height } returns 400
-        }
-        every { mapSurface } returns mockk {
-          every { getMapboxMap() } returns mapboxMap
-        }
-      }
-    )
-    val cameraOptionsSlot = slot<CameraOptions>()
-    every {
-      mapboxMap.setCamera(capture(cameraOptionsSlot))
-    } returns mockk(relaxed = true)
-
-    carMapSurfaceOwner.scale(224.4f, 117.1f, 0.98f)
-
-    with(cameraOptionsSlot.captured.anchor!!) {
-      assertEquals(224.4, x, 0.0001)
-      assertEquals(117.1, y, 0.0001)
-    }
-  }
-
-  @Test
-  fun `scale with factor less than one will zoom out`() {
-    val expectedFromZoom = 16.50
-    val expectedToZoom = 16.48
-    val observer: MapboxCarMapObserver = mockk(relaxed = true)
-    val mapboxMap: MapboxMap = mockk(relaxed = true) {
-      every { cameraState } returns mockk {
-        every { zoom } returns expectedFromZoom
-      }
-    }
-    carMapSurfaceOwner.registerObserver(observer)
-    carMapSurfaceOwner.surfaceAvailable(
-      mockk {
-        every { surfaceContainer } returns mockk {
-          every { width } returns 800
-          every { height } returns 400
-        }
-        every { mapSurface } returns mockk {
-          every { getMapboxMap() } returns mapboxMap
-        }
-      }
-    )
-    val cameraOptionsSlot = slot<CameraOptions>()
-    every {
-      mapboxMap.setCamera(capture(cameraOptionsSlot))
-    } returns mockk(relaxed = true)
-
-    carMapSurfaceOwner.scale(400.0f, 200.0f, 0.98f)
-
-    assertEquals(expectedToZoom, cameraOptionsSlot.captured.zoom!!, 0.0001)
-  }
-
-  @Test
-  fun `scale with factor greater than one will zoom in`() {
-    val expectedFromZoom = 16.50
-    val expectedToZoom = 16.52
-    val observer: MapboxCarMapObserver = mockk(relaxed = true)
-    val mapboxMap: MapboxMap = mockk(relaxed = true) {
-      every { cameraState } returns mockk {
-        every { zoom } returns expectedFromZoom
-      }
-    }
-    carMapSurfaceOwner.registerObserver(observer)
-    carMapSurfaceOwner.surfaceAvailable(
-      mockk {
-        every { surfaceContainer } returns mockk {
-          every { width } returns 800
-          every { height } returns 400
-        }
-        every { mapSurface } returns mockk {
-          every { getMapboxMap() } returns mapboxMap
-        }
-      }
-    )
-    val cameraOptionsSlot = slot<CameraOptions>()
-    every {
-      mapboxMap.setCamera(capture(cameraOptionsSlot))
-    } returns mockk(relaxed = true)
-
-    carMapSurfaceOwner.scale(400.0f, 200.0f, 1.02f)
-
-    assertEquals(expectedToZoom, cameraOptionsSlot.captured.zoom!!, 0.0001)
-  }
-
-  @Test
-  fun `scale observer can set min and max thresholds`() {
-    val expectedFromZoom = 29.99
-    val observer: MapboxCarMapObserver = mockk(relaxed = true) {
-      every { onScale(any(), any(), any(), any()) } answers {
-        val toZoom: Double = arg(3)
-        assertEquals(29.99, arg(2), 0.001)
-        assertEquals(30.14, toZoom, 0.001)
-        toZoom >= 30 // Returning true makes 30 the maximum threshold
-      }
-    }
-    val mapboxMap: MapboxMap = mockk(relaxed = true) {
-      every { cameraState } returns mockk {
-        every { zoom } returns expectedFromZoom
-      }
-    }
-    carMapSurfaceOwner.registerObserver(observer)
-    carMapSurfaceOwner.surfaceAvailable(
-      mockk {
-        every { surfaceContainer } returns mockk {
-          every { width } returns 800
-          every { height } returns 400
-        }
-        every { mapSurface } returns mockk {
-          every { getMapboxMap() } returns mapboxMap
-        }
-      }
-    )
-    val cameraOptionsSlot = slot<CameraOptions>()
-    every {
-      mapboxMap.setCamera(capture(cameraOptionsSlot))
-    } returns mockk(relaxed = true)
-
-    carMapSurfaceOwner.scale(400.0f, 200.0f, 1.15f)
-
-    verify(exactly = 0) { mapboxMap.setCamera(any<CameraOptions>()) }
-  }
-
-  @Test
-  fun `scale is ignored if the observer returns true`() {
-    val observer: MapboxCarMapObserver = mockk(relaxed = true) {
-      every { onScale(any(), any(), any(), any()) } returns true
-    }
-    val mapboxMap: MapboxMap = mockk(relaxed = true) {
-      every { cameraState } returns mockk {
-        every { zoom } returns 10.0
-      }
-    }
-    carMapSurfaceOwner.registerObserver(observer)
-    carMapSurfaceOwner.surfaceAvailable(
-      mockk {
-        every { surfaceContainer } returns mockk {
-          every { width } returns 800
-          every { height } returns 400
-        }
-        every { mapSurface } returns mockk {
-          every { getMapboxMap() } returns mapboxMap
-        }
-      }
-    )
-    val cameraOptionsSlot = slot<CameraOptions>()
-    every {
-      mapboxMap.setCamera(capture(cameraOptionsSlot))
-    } returns mockk(relaxed = true)
-
-    carMapSurfaceOwner.scale(400.0f, 200.0f, 1.15f)
-
-    verify(exactly = 0) { mapboxMap.setCamera(any<CameraOptions>()) }
+    verify(exactly = 1) { carMapGestures.onScale(any(), any(), any(), any()) }
+    verify(exactly = 1) { carMapGestures.onFling(any(), any(), any()) }
+    verify(exactly = 1) { carMapGestures.onScale(any(), any(), any(), any()) }
   }
 }

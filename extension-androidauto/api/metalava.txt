@@ -1,6 +1,10 @@
 // Signature format: 3.0
 package com.mapbox.maps.extension.androidauto {
 
+  @com.mapbox.maps.MapboxExperimental public class DefaultMapboxCarMapGestureHandler implements com.mapbox.maps.extension.androidauto.MapboxCarMapGestureHandler {
+    ctor public DefaultMapboxCarMapGestureHandler();
+  }
+
   @com.mapbox.maps.MapboxExperimental public final class MapboxCarMap {
     ctor public MapboxCarMap(com.mapbox.maps.MapInitOptions mapInitOptions);
     method public void clearObservers();
@@ -9,6 +13,7 @@ package com.mapbox.maps.extension.androidauto {
     method public com.mapbox.maps.EdgeInsets? getEdgeInsets();
     method public android.graphics.Rect? getVisibleArea();
     method public com.mapbox.maps.extension.androidauto.MapboxCarMap registerObserver(com.mapbox.maps.extension.androidauto.MapboxCarMapObserver mapboxCarMapObserver);
+    method public void setGestureHandler(com.mapbox.maps.extension.androidauto.MapboxCarMapGestureHandler? gestureHandler);
     method public void unregisterObserver(com.mapbox.maps.extension.androidauto.MapboxCarMapObserver mapboxCarMapObserver);
     property public final androidx.car.app.CarContext carContext;
     property public final com.mapbox.maps.extension.androidauto.MapboxCarMapSurface? carMapSurface;
@@ -16,12 +21,15 @@ package com.mapbox.maps.extension.androidauto {
     property public final android.graphics.Rect? visibleArea;
   }
 
+  @com.mapbox.maps.MapboxExperimental public interface MapboxCarMapGestureHandler {
+    method public default void onFling(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface, float velocityX, float velocityY);
+    method public default void onScale(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface, float focusX, float focusY, float scaleFactor);
+    method public default void onScroll(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface, com.mapbox.maps.ScreenCoordinate visibleCenter, float distanceX, float distanceY);
+  }
+
   @com.mapbox.maps.MapboxExperimental public interface MapboxCarMapObserver {
     method public default void onAttached(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface);
     method public default void onDetached(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface);
-    method public default boolean onFling(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface, float velocityX, float velocityY);
-    method public default boolean onScale(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface, com.mapbox.maps.ScreenCoordinate anchor, double fromZoom, double toZoom);
-    method public default boolean onScroll(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface, float distanceX, float distanceY);
     method public default void onVisibleAreaChanged(android.graphics.Rect visibleArea, com.mapbox.maps.EdgeInsets edgeInsets);
   }
 

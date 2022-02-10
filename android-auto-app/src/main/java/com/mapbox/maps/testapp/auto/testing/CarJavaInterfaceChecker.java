@@ -12,6 +12,8 @@ import com.mapbox.maps.MapSurface;
 import com.mapbox.maps.MapboxExperimental;
 import com.mapbox.maps.ScreenCoordinate;
 import com.mapbox.maps.extension.androidauto.MapboxCarMap;
+import com.mapbox.maps.extension.androidauto.DefaultMapboxCarMapGestureHandler;
+import com.mapbox.maps.extension.androidauto.MapboxCarMapGestureHandler;
 import com.mapbox.maps.extension.androidauto.MapboxCarMapObserver;
 import com.mapbox.maps.extension.androidauto.MapboxCarMapSurface;
 
@@ -39,21 +41,6 @@ class CarJavaInterfaceChecker {
     MapboxCarMapObserver observer = new MapboxCarMapObserver() {
 
       @Override
-      public boolean onScale(@NonNull MapboxCarMapSurface mapboxCarMapSurface, @NonNull ScreenCoordinate anchor, double fromZoom, double toZoom) {
-        return false;
-      }
-
-      @Override
-      public boolean onFling(@NonNull MapboxCarMapSurface mapboxCarMapSurface, float velocityX, float velocityY) {
-        return false;
-      }
-
-      @Override
-      public boolean onScroll(@NonNull MapboxCarMapSurface mapboxCarMapSurface, float distanceX, float distanceY) {
-        return false;
-      }
-
-      @Override
       public void onVisibleAreaChanged(@NonNull Rect visibleArea, @NonNull EdgeInsets edgeInsets) {
 
       }
@@ -73,4 +60,19 @@ class CarJavaInterfaceChecker {
     mapboxCarMap.clearObservers();
   }
 
+  private void gestures(MapboxCarMap mapboxCarMap) {
+    MapboxCarMapGestureHandler gestures = new MapboxCarMapGestureHandler() {
+      @Override
+      public void onScale(@NonNull MapboxCarMapSurface mapboxCarMapSurface, float focusX, float focusY, float scaleFactor) {}
+
+      @Override
+      public void onFling(@NonNull MapboxCarMapSurface mapboxCarMapSurface, float velocityX, float velocityY) {}
+
+      @Override
+      public void onScroll(@NonNull MapboxCarMapSurface mapboxCarMapSurface, @NonNull ScreenCoordinate visibleCenter, float distanceX, float distanceY) {}
+    };
+    mapboxCarMap.setGestureHandler(gestures);
+    mapboxCarMap.setGestureHandler(new DefaultMapboxCarMapGestureHandler());
+    mapboxCarMap.setGestureHandler(null);
+  }
 }

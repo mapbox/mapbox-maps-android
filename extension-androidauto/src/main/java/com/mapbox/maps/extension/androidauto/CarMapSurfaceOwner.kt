@@ -2,11 +2,9 @@ package com.mapbox.maps.extension.androidauto
 
 import android.graphics.Rect
 import com.mapbox.common.Logger
-import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ScreenCoordinate
-import com.mapbox.maps.plugin.animation.camera
 import java.util.concurrent.CopyOnWriteArraySet
 
 /**
@@ -14,8 +12,10 @@ import java.util.concurrent.CopyOnWriteArraySet
  *
  * Maintains the surface state for [MapboxCarMap].
  */
-@OptIn(MapboxExperimental::class)
-internal class CarMapSurfaceOwner {
+@MapboxExperimental
+internal class CarMapSurfaceOwner(
+  var gestureHandler: MapboxCarMapGestureHandler? = DefaultMapboxCarMapGestureHandler()
+) {
 
   internal var mapboxCarMapSurface: MapboxCarMapSurface? = null
     private set
@@ -118,56 +118,17 @@ internal class CarMapSurfaceOwner {
 
   fun scroll(distanceX: Float, distanceY: Float) {
     val carMapSurface = mapboxCarMapSurface ?: return
-    val handled = carMapObservers.any { it.onScroll(carMapSurface, distanceX, distanceY) }
-    if (handled) return
-
-    with(carMapSurface.mapSurface.getMapboxMap()) {
-      val fromCoordinate = visibleCenter
-      dragStart(fromCoordinate)
-      val toCoordinate = ScreenCoordinate(
-        fromCoordinate.x - distanceX,
-        fromCoordinate.y - distanceY
-      )
-      Logger.i(TAG, "scroll from $fromCoordinate to $toCoordinate")
-      setCamera(getDragCameraOptions(fromCoordinate, toCoordinate))
-      dragEnd()
-    }
+    gestureHandler?.onScroll(carMapSurface, visibleCenter, distanceX, distanceY)
   }
 
   fun fling(velocityX: Float, velocityY: Float) {
     val carMapSurface = mapboxCarMapSurface ?: return
-    val handled = carMapObservers.any { it.onFling(carMapSurface, velocityX, velocityY) }
-    if (handled) return
-
-    Logger.i(TAG, "fling $velocityX, $velocityY")
-    // TODO implement fling
-    // https://github.com/mapbox/mapbox-navigation-android-examples/issues/67
+    gestureHandler?.onFling(carMapSurface, velocityX, velocityY)
   }
 
   fun scale(focusX: Float, focusY: Float, scaleFactor: Float) {
     val carMapSurface = mapboxCarMapSurface ?: return
-    with(carMapSurface.mapSurface.getMapboxMap()) {
-      val fromZoom = cameraState.zoom
-      val toZoom = fromZoom - (1.0 - scaleFactor.toDouble())
-      val anchor = ScreenCoordinate(
-        focusX.toDouble(),
-        focusY.toDouble()
-      )
-      val handled = carMapObservers.any { it.onScale(carMapSurface, anchor, fromZoom, toZoom) }
-      if (handled) return
-
-      val cameraOptions = CameraOptions.Builder()
-        .zoom(toZoom)
-        .anchor(anchor)
-        .build()
-
-      Logger.i(TAG, "scale with $focusX, $focusY $scaleFactor -> $fromZoom $toZoom")
-      if (scaleFactor == DOUBLE_TAP_SCALE_FACTOR) {
-        carMapSurface.mapSurface.camera.easeTo(cameraOptions)
-      } else {
-        setCamera(cameraOptions)
-      }
-    }
+    gestureHandler?.onScale(carMapSurface, focusX, focusY, scaleFactor)
   }
 
   private companion object {
@@ -181,12 +142,5 @@ internal class CarMapSurfaceOwner {
       val container = carMapSurface.surfaceContainer
       ScreenCoordinate(container.width / 2.0, container.height / 2.0)
     }
-
-    /**
-     * This appears to be undocumented from android auto. But when running from the emulator,
-     * you can double tap the screen and zoom in to reproduce this value.
-     * It is a jarring experience if you do not easeTo the zoom.
-     */
-    private const val DOUBLE_TAP_SCALE_FACTOR = 2.0f
   }
 }

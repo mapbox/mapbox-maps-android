@@ -99,4 +99,14 @@ class MapboxCarMap(
   fun clearObservers() {
     carMapSurfaceOwner.clearObservers()
   }
+
+  /**
+   * Override the car gestures with your own implementation. If you would like to build a custom
+   * experience for handling gestures, you can implement the [MapboxCarMapGestureHandler]
+   * interface, or override the [DefaultMapboxCarMapGestureHandler], or set to null to disable
+   * gesture handling.
+   */
+  fun setGestureHandler(gestureHandler: MapboxCarMapGestureHandler?) {
+    carMapSurfaceOwner.gestureHandler = gestureHandler
+  }
 }
