@@ -2,15 +2,15 @@ package com.mapbox.maps.plugin.viewport.data
 
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.viewport.DEFAULT_TRANSITION_MAX_DURATION_MS
+import com.mapbox.maps.plugin.viewport.transition.DefaultViewportTransition
 
 /**
- * Options that impact the [DefaultViewportTransition].
+ * Configuration options that impact the [DefaultViewportTransition].
  */
 @MapboxExperimental
 class DefaultViewportTransitionOptions private constructor(
   /**
-   * The maximum duration of the transitions in milliseconds,
-   * including delays between animators and their respective durations.
+   * The maximum duration of the transitions in milliseconds.
    *
    * Defaults to [DEFAULT_TRANSITION_MAX_DURATION_MS] milliseconds.
    */
@@ -45,8 +45,7 @@ class DefaultViewportTransitionOptions private constructor(
     private var maxDurationMs: Long = DEFAULT_TRANSITION_MAX_DURATION_MS
 
     /**
-     * Sets maximum duration of the generated transitions set in milliseconds,
-     * including delays between animators and their respective durations.
+     * Sets maximum duration of the generated transitions set in milliseconds.
      *
      * Defaults to [DEFAULT_TRANSITION_MAX_DURATION_MS] milliseconds.
      */

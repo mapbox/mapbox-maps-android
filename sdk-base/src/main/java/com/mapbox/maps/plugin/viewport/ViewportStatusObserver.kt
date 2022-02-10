@@ -5,6 +5,9 @@ import com.mapbox.maps.plugin.viewport.data.ViewportStatusChangeReason
 
 /**
  * Observer that gets notified whenever [ViewportStatus] changes.
+ *
+ * @see [ViewportPlugin.addStatusObserver]
+ * @see [ViewportPlugin.removeStatusObserver]
  */
 @MapboxExperimental
 fun interface ViewportStatusObserver {

@@ -2,14 +2,16 @@ package com.mapbox.maps.plugin.viewport.state
 
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin
+import com.mapbox.maps.plugin.viewport.ViewportPlugin
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 
 /**
- * The [ViewportState] that follows that follows the location component's puck position.
+ * The [ViewportState] that tracks the location puck's position.
  *
- * Note: [LocationComponentPlugin] should be enabled to use this viewport state.
+ * Use [ViewportPlugin.makeFollowPuckViewportState] to create instances of [FollowPuckViewportState].
  *
- * Users are responsible to create the viewport states and keep a reference to these states for
+ * Note: [LocationComponentPlugin] should be enabled to use this viewport state, and Users are
+ * responsible to create the viewport states and keep a reference to these states for
  * future operations.
  */
 @MapboxExperimental
