@@ -4,6 +4,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Features ✨ and improvements 🏁
 * Add accuracy radius support for LocationComponent. ([#1016](https://github.com/mapbox/mapbox-maps-android/pull/1016))
+* Add support for custom widgets rendered on top of the map. ([#1036](https://github.com/mapbox/mapbox-maps-android/pull/1036))
 
 # 10.4.0-beta.1
 
