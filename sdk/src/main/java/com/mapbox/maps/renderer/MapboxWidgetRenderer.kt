@@ -4,7 +4,6 @@ import android.opengl.GLES20
 import com.mapbox.common.Logger
 import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.widget.Widget
-import java.util.concurrent.CopyOnWriteArraySet
 import javax.microedition.khronos.egl.EGLContext
 import javax.microedition.khronos.egl.EGLSurface
 

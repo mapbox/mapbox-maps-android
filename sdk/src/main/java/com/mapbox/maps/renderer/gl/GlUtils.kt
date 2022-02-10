@@ -43,14 +43,16 @@ internal object GlUtils {
     if (BuildConfig.DEBUG) {
       when (val error = GLES20.glGetError()) {
         GLES20.GL_NO_ERROR -> {}
-        else -> throw java.lang.RuntimeException("$cmd - error in GL : ${when (error) {
-          GLES20.GL_INVALID_ENUM -> "GL_INVALID_ENUM"
-          GLES20.GL_INVALID_VALUE -> "GL_INVALID_VALUE"
-          GLES20.GL_INVALID_OPERATION -> "GL_INVALID_OPERATION"
-          GLES20.GL_INVALID_FRAMEBUFFER_OPERATION -> "GL_INVALID_FRAMEBUFFER_OPERATION"
-          GLES20.GL_OUT_OF_MEMORY -> "GL_OUT_OF_MEMORY"
-          else -> error
-        }}")
+        else -> throw java.lang.RuntimeException(
+          "$cmd - error in GL : ${when (error) {
+            GLES20.GL_INVALID_ENUM -> "GL_INVALID_ENUM"
+            GLES20.GL_INVALID_VALUE -> "GL_INVALID_VALUE"
+            GLES20.GL_INVALID_OPERATION -> "GL_INVALID_OPERATION"
+            GLES20.GL_INVALID_FRAMEBUFFER_OPERATION -> "GL_INVALID_FRAMEBUFFER_OPERATION"
+            GLES20.GL_OUT_OF_MEMORY -> "GL_OUT_OF_MEMORY"
+            else -> error
+          }}"
+        )
       }
     }
   }

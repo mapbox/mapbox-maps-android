@@ -60,10 +60,10 @@ class MapboxRenderThreadTest {
 
   private fun mockWidgetRenderer() {
     mapboxWidgetRenderer = mockk(relaxUnitFun = true)
-    every { mapboxWidgetRenderer.getTexture()  } returns 0
-    every { mapboxWidgetRenderer.hasTexture()  } returns false
-    every { mapboxWidgetRenderer.needTextureUpdate  } returns false
-    every { mapboxWidgetRenderer.hasWidgets()  } returns false
+    every { mapboxWidgetRenderer.getTexture() } returns 0
+    every { mapboxWidgetRenderer.hasTexture() } returns false
+    every { mapboxWidgetRenderer.needTextureUpdate } returns false
+    every { mapboxWidgetRenderer.hasWidgets() } returns false
   }
 
   private fun mockEglCore() {
@@ -561,8 +561,8 @@ class MapboxRenderThreadTest {
   fun onDrawDoesNotRenderWidgets() {
     initRenderThread()
     provideValidSurface()
-    every { mapboxWidgetRenderer.needTextureUpdate  } returns false
-    every { mapboxWidgetRenderer.getTexture()  } returns 0
+    every { mapboxWidgetRenderer.needTextureUpdate } returns false
+    every { mapboxWidgetRenderer.getTexture() } returns 0
     pauseHandler()
     mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
     idleHandler()
@@ -579,10 +579,10 @@ class MapboxRenderThreadTest {
     initRenderThread()
     provideValidSurface()
     val textureId = 1
-    every { mapboxWidgetRenderer.needTextureUpdate  } returns true
-    every { mapboxWidgetRenderer.hasWidgets()  } returns true
-    every { mapboxWidgetRenderer.hasTexture()  } returns true
-    every { mapboxWidgetRenderer.getTexture()  } returns textureId
+    every { mapboxWidgetRenderer.needTextureUpdate } returns true
+    every { mapboxWidgetRenderer.hasWidgets() } returns true
+    every { mapboxWidgetRenderer.hasTexture() } returns true
+    every { mapboxWidgetRenderer.getTexture() } returns textureId
     pauseHandler()
     mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
     idleHandler()
@@ -599,10 +599,10 @@ class MapboxRenderThreadTest {
     initRenderThread()
     provideValidSurface()
     val textureId = 1
-    every { mapboxWidgetRenderer.needTextureUpdate  } returns true
-    every { mapboxWidgetRenderer.hasWidgets()  } returns true
-    every { mapboxWidgetRenderer.hasTexture()  } returns true
-    every { mapboxWidgetRenderer.getTexture()  } returns textureId
+    every { mapboxWidgetRenderer.needTextureUpdate } returns true
+    every { mapboxWidgetRenderer.hasWidgets() } returns true
+    every { mapboxWidgetRenderer.hasTexture() } returns true
+    every { mapboxWidgetRenderer.getTexture() } returns textureId
     pauseHandler()
     mapboxRenderThread.queueRenderEvent(MapboxRenderer.renderEventSdk)
     idleHandler()

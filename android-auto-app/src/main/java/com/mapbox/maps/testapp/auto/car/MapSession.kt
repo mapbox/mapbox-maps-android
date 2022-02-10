@@ -4,8 +4,6 @@ import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.content.res.Configuration
-import android.os.Handler
-import android.os.Looper
 import androidx.car.app.*
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapSurface

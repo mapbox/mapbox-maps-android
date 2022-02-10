@@ -21,7 +21,7 @@ open class BitmapWidget @JvmOverloads constructor(
   marginX: Float = 0f,
   marginY: Float = 0f,
 ) : Widget() {
-  override val renderer = BitmapWidgetRendererImpl(
+  override val renderer = BitmapWidgetRenderer(
     bitmap = bitmap,
     position = position,
     marginX = marginX,

@@ -8,7 +8,7 @@ import com.mapbox.maps.renderer.gl.GlUtils
 import com.mapbox.maps.renderer.gl.GlUtils.put
 import com.mapbox.maps.renderer.gl.GlUtils.toFloatBuffer
 
-internal class BitmapWidgetRendererImpl(
+internal class BitmapWidgetRenderer(
   private var bitmap: Bitmap?,
   private val position: WidgetPosition,
   private val marginX: Float,
