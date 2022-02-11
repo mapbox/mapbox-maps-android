@@ -10,10 +10,10 @@ plugins {
 val VERSION_NAME: String by project
 
 android {
-  compileSdkVersion(AndroidVersions.compileSdkVersion)
+  compileSdk = AndroidVersions.compileSdkVersion
   defaultConfig {
-    minSdkVersion(AndroidVersions.minSdkVersion)
-    targetSdkVersion(AndroidVersions.targetSdkVersion)
+    minSdk = AndroidVersions.minSdkVersion
+    targetSdk = AndroidVersions.targetSdkVersion
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     buildConfigField("String", "MAPBOX_SDK_IDENTIFIER", String.format("\"%s\"", "mapbox-maps-android"))
     buildConfigField("String", "MAPBOX_SDK_VERSION", String.format("\"%s\"", VERSION_NAME))
