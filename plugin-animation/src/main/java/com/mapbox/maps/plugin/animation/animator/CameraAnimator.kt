@@ -2,6 +2,7 @@ package com.mapbox.maps.plugin.animation.animator
 
 import android.animation.TypeEvaluator
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import com.mapbox.common.Logger
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
@@ -10,6 +11,7 @@ import com.mapbox.maps.plugin.animation.CameraAnimatorType
 /**
  * Base generic class for all camera animators.
  */
+@SuppressLint("Recycle")
 abstract class CameraAnimator<out T> (
   /**
    * [TypeEvaluator] for generic type
