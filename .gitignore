@@ -28,3 +28,4 @@ release-docs.zip
 /tmp/checksum.txt
 api_compat_report/
 logs/
+**/src/main/assets/sdk_versions/
