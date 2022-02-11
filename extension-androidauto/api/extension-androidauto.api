@@ -7,6 +7,16 @@ public final class com/mapbox/maps/extension/androidauto/BuildConfig {
 	public fun <init> ()V
 }
 
+public final class com/mapbox/maps/extension/androidauto/CompassWidget : com/mapbox/maps/renderer/widget/BitmapWidget {
+	public fun <init> (Landroid/content/Context;Lcom/mapbox/maps/renderer/widget/WidgetPosition;FF)V
+	public synthetic fun <init> (Landroid/content/Context;Lcom/mapbox/maps/renderer/widget/WidgetPosition;FFILkotlin/jvm/internal/DefaultConstructorMarker;)V
+}
+
+public final class com/mapbox/maps/extension/androidauto/LogoWidget : com/mapbox/maps/renderer/widget/BitmapWidget {
+	public fun <init> (Landroid/content/Context;Lcom/mapbox/maps/renderer/widget/WidgetPosition;FF)V
+	public synthetic fun <init> (Landroid/content/Context;Lcom/mapbox/maps/renderer/widget/WidgetPosition;FFILkotlin/jvm/internal/DefaultConstructorMarker;)V
+}
+
 public abstract interface class com/mapbox/maps/extension/androidauto/MapSurfaceReadyCallback {
 	public abstract fun onMapSurfaceReady (Lcom/mapbox/maps/MapSurface;)V
 }
@@ -14,9 +24,10 @@ public abstract interface class com/mapbox/maps/extension/androidauto/MapSurface
 public final class com/mapbox/maps/extension/androidauto/MapboxCarUtilsKt {
 	public static final fun initMapSurface (Landroidx/car/app/Session;Lcom/mapbox/maps/MapInitOptions;Lcom/mapbox/maps/extension/androidauto/MapSurfaceReadyCallback;)V
 	public static final fun initMapSurface (Landroidx/car/app/Session;Lcom/mapbox/maps/MapInitOptions;Lcom/mapbox/maps/extension/androidauto/OnMapScrollListener;Lcom/mapbox/maps/extension/androidauto/MapSurfaceReadyCallback;)V
+	public static final fun initMapSurface (Landroidx/car/app/Session;Lcom/mapbox/maps/MapInitOptions;Lcom/mapbox/maps/extension/androidauto/OnMapScrollListener;Lcom/mapbox/maps/extension/androidauto/OnMapScaleListener;Landroidx/car/app/SurfaceCallback;Lcom/mapbox/maps/extension/androidauto/MapSurfaceReadyCallback;)V
 	public static final fun initMapSurface (Landroidx/car/app/Session;Lcom/mapbox/maps/MapInitOptions;Lcom/mapbox/maps/extension/androidauto/OnMapScrollListener;Lcom/mapbox/maps/extension/androidauto/OnMapScaleListener;Lcom/mapbox/maps/extension/androidauto/MapSurfaceReadyCallback;)V
 	public static final fun initMapSurface (Landroidx/car/app/Session;Lcom/mapbox/maps/extension/androidauto/MapSurfaceReadyCallback;)V
-	public static synthetic fun initMapSurface$default (Landroidx/car/app/Session;Lcom/mapbox/maps/MapInitOptions;Lcom/mapbox/maps/extension/androidauto/OnMapScrollListener;Lcom/mapbox/maps/extension/androidauto/OnMapScaleListener;Lcom/mapbox/maps/extension/androidauto/MapSurfaceReadyCallback;ILjava/lang/Object;)V
+	public static synthetic fun initMapSurface$default (Landroidx/car/app/Session;Lcom/mapbox/maps/MapInitOptions;Lcom/mapbox/maps/extension/androidauto/OnMapScrollListener;Lcom/mapbox/maps/extension/androidauto/OnMapScaleListener;Landroidx/car/app/SurfaceCallback;Lcom/mapbox/maps/extension/androidauto/MapSurfaceReadyCallback;ILjava/lang/Object;)V
 }
 
 public abstract interface class com/mapbox/maps/extension/androidauto/OnMapScaleListener {

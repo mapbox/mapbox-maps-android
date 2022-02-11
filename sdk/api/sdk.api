@@ -9,11 +9,13 @@ public final class com/mapbox/maps/BuildConfig {
 }
 
 public abstract interface class com/mapbox/maps/MapControllable : com/mapbox/maps/MapboxLifecycleObserver {
+	public abstract fun addWidget (Lcom/mapbox/maps/renderer/widget/Widget;)V
 	public abstract fun getMapboxMap ()Lcom/mapbox/maps/MapboxMap;
 	public abstract fun onGenericMotionEvent (Landroid/view/MotionEvent;)Z
 	public abstract fun onSizeChanged (II)V
 	public abstract fun onTouchEvent (Landroid/view/MotionEvent;)Z
 	public abstract fun queueEvent (Ljava/lang/Runnable;Z)V
+	public abstract fun removeWidget (Lcom/mapbox/maps/renderer/widget/Widget;)Z
 	public abstract fun setMaximumFps (I)V
 	public abstract fun setOnFpsChangedListener (Lcom/mapbox/maps/renderer/OnFpsChangedListener;)V
 	public abstract fun snapshot ()Landroid/graphics/Bitmap;
@@ -83,8 +85,10 @@ public final class com/mapbox/maps/MapSurface : com/mapbox/maps/MapControllable,
 	public fun <init> (Landroid/content/Context;Landroid/view/Surface;)V
 	public fun <init> (Landroid/content/Context;Landroid/view/Surface;Lcom/mapbox/maps/MapInitOptions;)V
 	public synthetic fun <init> (Landroid/content/Context;Landroid/view/Surface;Lcom/mapbox/maps/MapInitOptions;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun addWidget (Lcom/mapbox/maps/renderer/widget/Widget;)V
 	public fun getMapboxMap ()Lcom/mapbox/maps/MapboxMap;
 	public fun getPlugin (Ljava/lang/String;)Lcom/mapbox/maps/plugin/MapPlugin;
+	public final fun getSurface ()Landroid/view/Surface;
 	public fun onDestroy ()V
 	public fun onGenericMotionEvent (Landroid/view/MotionEvent;)Z
 	public fun onLowMemory ()V
@@ -93,6 +97,7 @@ public final class com/mapbox/maps/MapSurface : com/mapbox/maps/MapControllable,
 	public fun onStop ()V
 	public fun onTouchEvent (Landroid/view/MotionEvent;)Z
 	public fun queueEvent (Ljava/lang/Runnable;Z)V
+	public fun removeWidget (Lcom/mapbox/maps/renderer/widget/Widget;)Z
 	public fun setMaximumFps (I)V
 	public fun setOnFpsChangedListener (Lcom/mapbox/maps/renderer/OnFpsChangedListener;)V
 	public fun snapshot ()Landroid/graphics/Bitmap;
@@ -109,6 +114,7 @@ public class com/mapbox/maps/MapView : android/widget/FrameLayout, com/mapbox/ma
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
 	public fun <init> (Landroid/content/Context;Lcom/mapbox/maps/MapInitOptions;)V
 	public synthetic fun <init> (Landroid/content/Context;Lcom/mapbox/maps/MapInitOptions;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun addWidget (Lcom/mapbox/maps/renderer/widget/Widget;)V
 	public final fun createPlugin (Lcom/mapbox/maps/plugin/Plugin;)V
 	public fun getMapboxMap ()Lcom/mapbox/maps/MapboxMap;
 	public fun getPlugin (Ljava/lang/String;)Lcom/mapbox/maps/plugin/MapPlugin;
@@ -124,6 +130,7 @@ public class com/mapbox/maps/MapView : android/widget/FrameLayout, com/mapbox/ma
 	public fun onStop ()V
 	public fun onTouchEvent (Landroid/view/MotionEvent;)Z
 	public fun queueEvent (Ljava/lang/Runnable;Z)V
+	public fun removeWidget (Lcom/mapbox/maps/renderer/widget/Widget;)Z
 	public fun setMaximumFps (I)V
 	public fun setOnFpsChangedListener (Lcom/mapbox/maps/renderer/OnFpsChangedListener;)V
 	public fun snapshot ()Landroid/graphics/Bitmap;
@@ -494,6 +501,46 @@ public abstract interface class com/mapbox/maps/renderer/OnFpsChangedListener {
 public final class com/mapbox/maps/renderer/RenderHandlerThread$sam$i$java_lang_Runnable$0 : java/lang/Runnable {
 	public fun <init> (Lkotlin/jvm/functions/Function0;)V
 	public final synthetic fun run ()V
+}
+
+public class com/mapbox/maps/renderer/widget/BitmapWidget : com/mapbox/maps/renderer/widget/Widget {
+	public fun <init> (Landroid/graphics/Bitmap;)V
+	public fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;)V
+	public fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;F)V
+	public fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;FF)V
+	public synthetic fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;FFILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun getRenderer$sdk_release ()Lcom/mapbox/maps/renderer/widget/WidgetRenderer;
+	public fun setRotation (F)V
+	public fun setTranslation (FF)V
+	public final fun updateBitmap (Landroid/graphics/Bitmap;)V
+}
+
+public abstract class com/mapbox/maps/renderer/widget/Widget {
+	public fun <init> ()V
+	public abstract fun setRotation (F)V
+	public abstract fun setTranslation (FF)V
+}
+
+public final class com/mapbox/maps/renderer/widget/WidgetPosition {
+	public fun <init> (Lcom/mapbox/maps/renderer/widget/WidgetPosition$Horizontal;Lcom/mapbox/maps/renderer/widget/WidgetPosition$Vertical;)V
+	public final fun getHorizontal ()Lcom/mapbox/maps/renderer/widget/WidgetPosition$Horizontal;
+	public final fun getVertical ()Lcom/mapbox/maps/renderer/widget/WidgetPosition$Vertical;
+}
+
+public final class com/mapbox/maps/renderer/widget/WidgetPosition$Horizontal : java/lang/Enum {
+	public static final field CENTER Lcom/mapbox/maps/renderer/widget/WidgetPosition$Horizontal;
+	public static final field LEFT Lcom/mapbox/maps/renderer/widget/WidgetPosition$Horizontal;
+	public static final field RIGHT Lcom/mapbox/maps/renderer/widget/WidgetPosition$Horizontal;
+	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/renderer/widget/WidgetPosition$Horizontal;
+	public static fun values ()[Lcom/mapbox/maps/renderer/widget/WidgetPosition$Horizontal;
+}
+
+public final class com/mapbox/maps/renderer/widget/WidgetPosition$Vertical : java/lang/Enum {
+	public static final field BOTTOM Lcom/mapbox/maps/renderer/widget/WidgetPosition$Vertical;
+	public static final field CENTER Lcom/mapbox/maps/renderer/widget/WidgetPosition$Vertical;
+	public static final field TOP Lcom/mapbox/maps/renderer/widget/WidgetPosition$Vertical;
+	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/renderer/widget/WidgetPosition$Vertical;
+	public static fun values ()[Lcom/mapbox/maps/renderer/widget/WidgetPosition$Vertical;
 }
 
 public abstract interface class com/mapbox/maps/viewannotation/ViewAnnotationManager {
