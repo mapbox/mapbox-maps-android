@@ -1,0 +1,63 @@
+public final class com/mapbox/maps/plugin/locationcomponent/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public static final field VERSION_CODE I
+	public static final field VERSION_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class com/mapbox/maps/plugin/locationcomponent/LocationComponentConstants {
+	public static final field ACCURACY_RADIUS_ANIMATION_DURATION J
+	public static final field BEARING_ICON Ljava/lang/String;
+	public static final field COMPASS_UPDATE_RATE_MS J
+	public static final field DEFAULT_FASTEST_INTERVAL_MILLIS J
+	public static final field DEFAULT_INTERVAL_MILLIS J
+	public static final field DEFAULT_TRACKING_PADDING_ANIM_DURATION J
+	public static final field DEFAULT_TRACKING_TILT_ANIM_DURATION J
+	public static final field DEFAULT_TRACKING_ZOOM_ANIM_DURATION J
+	public static final field INSTANCE Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentConstants;
+	public static final field INSTANT_LOCATION_TRANSITION_THRESHOLD D
+	public static final field LOCATION_INDICATOR_LAYER Ljava/lang/String;
+	public static final field MAX_ANIMATION_DURATION_MS J
+	public static final field MODEL_LAYER Ljava/lang/String;
+	public static final field MODEL_SOURCE Ljava/lang/String;
+	public static final field SHADOW_ICON Ljava/lang/String;
+	public static final field TOP_ICON Ljava/lang/String;
+	public static final field TRANSITION_ANIMATION_DURATION_MS J
+}
+
+public final class com/mapbox/maps/plugin/locationcomponent/LocationComponentPluginImpl : com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettingsBase2, com/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin2, com/mapbox/maps/plugin/locationcomponent/LocationConsumer2 {
+	public fun <init> ()V
+	public fun addOnIndicatorAccuracyRadiusChangedListener (Lcom/mapbox/maps/plugin/locationcomponent/OnIndicatorAccuracyRadiusChangedListener;)V
+	public fun addOnIndicatorBearingChangedListener (Lcom/mapbox/maps/plugin/locationcomponent/OnIndicatorBearingChangedListener;)V
+	public fun addOnIndicatorPositionChangedListener (Lcom/mapbox/maps/plugin/locationcomponent/OnIndicatorPositionChangedListener;)V
+	public fun bind (Landroid/content/Context;Landroid/util/AttributeSet;F)V
+	public fun cleanup ()V
+	public fun getLocationProvider ()Lcom/mapbox/maps/plugin/locationcomponent/LocationProvider;
+	public fun initialize ()V
+	public fun isLocatedAt (Lcom/mapbox/geojson/Point;Lcom/mapbox/maps/plugin/locationcomponent/PuckLocatedAtPointListener;)V
+	public fun onAccuracyRadiusUpdated ([DLkotlin/jvm/functions/Function1;)V
+	public fun onBearingUpdated ([DLkotlin/jvm/functions/Function1;)V
+	public fun onDelegateProvider (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+	public fun onLocationUpdated ([Lcom/mapbox/geojson/Point;Lkotlin/jvm/functions/Function1;)V
+	public fun onPuckAccuracyRadiusAnimatorDefaultOptionsUpdated (Lkotlin/jvm/functions/Function1;)V
+	public fun onPuckBearingAnimatorDefaultOptionsUpdated (Lkotlin/jvm/functions/Function1;)V
+	public fun onPuckLocationAnimatorDefaultOptionsUpdated (Lkotlin/jvm/functions/Function1;)V
+	public fun onStart ()V
+	public fun onStop ()V
+	public fun onStyleChanged (Lcom/mapbox/maps/extension/style/StyleInterface;)V
+	public fun removeOnIndicatorAccuracyRadiusChangedListener (Lcom/mapbox/maps/plugin/locationcomponent/OnIndicatorAccuracyRadiusChangedListener;)V
+	public fun removeOnIndicatorBearingChangedListener (Lcom/mapbox/maps/plugin/locationcomponent/OnIndicatorBearingChangedListener;)V
+	public fun removeOnIndicatorPositionChangedListener (Lcom/mapbox/maps/plugin/locationcomponent/OnIndicatorPositionChangedListener;)V
+	public fun setLocationProvider (Lcom/mapbox/maps/plugin/locationcomponent/LocationProvider;)V
+}
+
+public final class com/mapbox/maps/plugin/locationcomponent/LocationComponentUtils {
+	public static final fun createDefault2DPuck (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin;Landroid/content/Context;)Lcom/mapbox/maps/plugin/LocationPuck2D;
+	public static final fun createDefault2DPuck (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin;Landroid/content/Context;Z)Lcom/mapbox/maps/plugin/LocationPuck2D;
+	public static synthetic fun createDefault2DPuck$default (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin;Landroid/content/Context;ZILjava/lang/Object;)Lcom/mapbox/maps/plugin/LocationPuck2D;
+	public static final fun getLocationComponent (Lcom/mapbox/maps/plugin/delegates/MapPluginProviderDelegate;)Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin;
+	public static final fun getLocationComponent2 (Lcom/mapbox/maps/plugin/delegates/MapPluginProviderDelegate;)Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin2;
+}
+

@@ -1,0 +1,2537 @@
+public final class com/mapbox/maps/ExtensionUtils {
+	public static final fun bitmap (Lcom/mapbox/maps/MapSnapshotInterface;)Landroid/graphics/Bitmap;
+	public static final fun toCameraOptions (Lcom/mapbox/maps/CameraState;)Lcom/mapbox/maps/CameraOptions;
+	public static final fun toCameraOptions (Lcom/mapbox/maps/CameraState;Lcom/mapbox/maps/ScreenCoordinate;)Lcom/mapbox/maps/CameraOptions;
+	public static synthetic fun toCameraOptions$default (Lcom/mapbox/maps/CameraState;Lcom/mapbox/maps/ScreenCoordinate;ILjava/lang/Object;)Lcom/mapbox/maps/CameraOptions;
+}
+
+public final class com/mapbox/maps/MapboxAnnotationException : java/lang/RuntimeException {
+	public fun <init> (Ljava/lang/String;)V
+}
+
+public final class com/mapbox/maps/MapboxCameraAnimationException : java/lang/RuntimeException {
+	public fun <init> (Ljava/lang/String;)V
+}
+
+public abstract interface annotation class com/mapbox/maps/MapboxExperimental : java/lang/annotation/Annotation {
+}
+
+public abstract interface class com/mapbox/maps/MapboxLifecycleObserver {
+	public abstract fun onDestroy ()V
+	public abstract fun onLowMemory ()V
+	public abstract fun onStart ()V
+	public abstract fun onStop ()V
+}
+
+public final class com/mapbox/maps/MapboxLocationComponentException : java/lang/RuntimeException {
+	public fun <init> (Ljava/lang/String;)V
+}
+
+public final class com/mapbox/maps/MapboxMapException : java/lang/RuntimeException {
+	public fun <init> (Ljava/lang/String;)V
+}
+
+public final class com/mapbox/maps/MapboxStyleException : java/lang/RuntimeException {
+	public fun <init> (Ljava/lang/String;)V
+}
+
+public final class com/mapbox/maps/MapboxViewAnnotationException : java/lang/RuntimeException {
+	public fun <init> (Ljava/lang/String;)V
+}
+
+public final class com/mapbox/maps/base/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public static final field VERSION_CODE I
+	public static final field VERSION_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class com/mapbox/maps/dsl/CameraOptionsKtxKt {
+	public static final fun cameraOptions (Lcom/mapbox/maps/CameraState;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/CameraOptions;
+	public static final fun cameraOptions (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/CameraOptions;
+}
+
+public final class com/mapbox/maps/extension/observable/ObservableExtensionKt {
+	public static final fun getCameraChangedEventData (Lcom/mapbox/maps/Event;)Lcom/mapbox/maps/extension/observable/eventdata/CameraChangedEventData;
+	public static final fun getMapIdleEventData (Lcom/mapbox/maps/Event;)Lcom/mapbox/maps/extension/observable/eventdata/MapIdleEventData;
+	public static final fun getMapLoadedEventData (Lcom/mapbox/maps/Event;)Lcom/mapbox/maps/extension/observable/eventdata/MapLoadedEventData;
+	public static final fun getMapLoadingErrorEventData (Lcom/mapbox/maps/Event;)Lcom/mapbox/maps/extension/observable/eventdata/MapLoadingErrorEventData;
+	public static final fun getRenderFrameFinishedEventData (Lcom/mapbox/maps/Event;)Lcom/mapbox/maps/extension/observable/eventdata/RenderFrameFinishedEventData;
+	public static final fun getRenderFrameStartedEventData (Lcom/mapbox/maps/Event;)Lcom/mapbox/maps/extension/observable/eventdata/RenderFrameStartedEventData;
+	public static final fun getResourceEventData (Lcom/mapbox/maps/Event;)Lcom/mapbox/maps/extension/observable/eventdata/ResourceEventData;
+	public static final fun getSourceAddedEventData (Lcom/mapbox/maps/Event;)Lcom/mapbox/maps/extension/observable/eventdata/SourceAddedEventData;
+	public static final fun getSourceDataLoadedEventData (Lcom/mapbox/maps/Event;)Lcom/mapbox/maps/extension/observable/eventdata/SourceDataLoadedEventData;
+	public static final fun getSourceRemovedEventData (Lcom/mapbox/maps/Event;)Lcom/mapbox/maps/extension/observable/eventdata/SourceRemovedEventData;
+	public static final fun getStyleDataLoadedEventData (Lcom/mapbox/maps/Event;)Lcom/mapbox/maps/extension/observable/eventdata/StyleDataLoadedEventData;
+	public static final fun getStyleImageMissingEventData (Lcom/mapbox/maps/Event;)Lcom/mapbox/maps/extension/observable/eventdata/StyleImageMissingEventData;
+	public static final fun getStyleImageUnusedEventData (Lcom/mapbox/maps/Event;)Lcom/mapbox/maps/extension/observable/eventdata/StyleImageUnusedEventData;
+	public static final fun getStyleLoadedEventData (Lcom/mapbox/maps/Event;)Lcom/mapbox/maps/extension/observable/eventdata/StyleLoadedEventData;
+	public static final fun subscribeCameraChange (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun subscribeMapIdle (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun subscribeMapLoaded (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun subscribeMapLoadingError (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun subscribeRenderFrameFinished (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun subscribeRenderFrameStarted (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun subscribeResourceRequest (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun subscribeSourceAdded (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun subscribeSourceDataLoaded (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun subscribeSourceRemoved (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun subscribeStyleDataLoaded (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun subscribeStyleImageMissing (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun subscribeStyleImageUnused (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun subscribeStyleLoaded (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun unsubscribeCameraChange (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun unsubscribeMapIdle (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun unsubscribeMapLoaded (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun unsubscribeMapLoadingError (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun unsubscribeRenderFrameFinished (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun unsubscribeRenderFrameStarted (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun unsubscribeResourceRequest (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun unsubscribeSourceAdded (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun unsubscribeSourceDataLoaded (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun unsubscribeSourceRemoved (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun unsubscribeStyleDataFinished (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun unsubscribeStyleImageMissing (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun unsubscribeStyleImageUnused (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+	public static final fun unsubscribeStyleLoaded (Lcom/mapbox/maps/ObservableInterface;Lcom/mapbox/maps/Observer;)V
+}
+
+public final class com/mapbox/maps/extension/observable/eventdata/CameraChangedEventData {
+	public fun <init> (JLjava/lang/Long;)V
+	public final fun component1 ()J
+	public final fun component2 ()Ljava/lang/Long;
+	public final fun copy (JLjava/lang/Long;)Lcom/mapbox/maps/extension/observable/eventdata/CameraChangedEventData;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/observable/eventdata/CameraChangedEventData;JLjava/lang/Long;ILjava/lang/Object;)Lcom/mapbox/maps/extension/observable/eventdata/CameraChangedEventData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBegin ()J
+	public final fun getEnd ()Ljava/lang/Long;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/observable/eventdata/MapIdleEventData {
+	public fun <init> (JLjava/lang/Long;)V
+	public final fun component1 ()J
+	public final fun component2 ()Ljava/lang/Long;
+	public final fun copy (JLjava/lang/Long;)Lcom/mapbox/maps/extension/observable/eventdata/MapIdleEventData;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/observable/eventdata/MapIdleEventData;JLjava/lang/Long;ILjava/lang/Object;)Lcom/mapbox/maps/extension/observable/eventdata/MapIdleEventData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBegin ()J
+	public final fun getEnd ()Ljava/lang/Long;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/observable/eventdata/MapLoadedEventData {
+	public fun <init> (JLjava/lang/Long;)V
+	public final fun component1 ()J
+	public final fun component2 ()Ljava/lang/Long;
+	public final fun copy (JLjava/lang/Long;)Lcom/mapbox/maps/extension/observable/eventdata/MapLoadedEventData;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/observable/eventdata/MapLoadedEventData;JLjava/lang/Long;ILjava/lang/Object;)Lcom/mapbox/maps/extension/observable/eventdata/MapLoadedEventData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBegin ()J
+	public final fun getEnd ()Ljava/lang/Long;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/observable/eventdata/MapLoadingErrorEventData {
+	public fun <init> (JLjava/lang/Long;Lcom/mapbox/maps/extension/observable/model/MapLoadErrorType;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/observable/model/TileID;)V
+	public final fun component1 ()J
+	public final fun component2 ()Ljava/lang/Long;
+	public final fun component3 ()Lcom/mapbox/maps/extension/observable/model/MapLoadErrorType;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Lcom/mapbox/maps/extension/observable/model/TileID;
+	public final fun copy (JLjava/lang/Long;Lcom/mapbox/maps/extension/observable/model/MapLoadErrorType;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/observable/model/TileID;)Lcom/mapbox/maps/extension/observable/eventdata/MapLoadingErrorEventData;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/observable/eventdata/MapLoadingErrorEventData;JLjava/lang/Long;Lcom/mapbox/maps/extension/observable/model/MapLoadErrorType;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/extension/observable/model/TileID;ILjava/lang/Object;)Lcom/mapbox/maps/extension/observable/eventdata/MapLoadingErrorEventData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBegin ()J
+	public final fun getEnd ()Ljava/lang/Long;
+	public final fun getMessage ()Ljava/lang/String;
+	public final fun getSourceId ()Ljava/lang/String;
+	public final fun getTileId ()Lcom/mapbox/maps/extension/observable/model/TileID;
+	public final fun getType ()Lcom/mapbox/maps/extension/observable/model/MapLoadErrorType;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/observable/eventdata/RenderFrameFinishedEventData {
+	public fun <init> (JLjava/lang/Long;Lcom/mapbox/maps/extension/observable/model/RenderMode;ZZ)V
+	public final fun component1 ()J
+	public final fun component2 ()Ljava/lang/Long;
+	public final fun component3 ()Lcom/mapbox/maps/extension/observable/model/RenderMode;
+	public final fun component4 ()Z
+	public final fun component5 ()Z
+	public final fun copy (JLjava/lang/Long;Lcom/mapbox/maps/extension/observable/model/RenderMode;ZZ)Lcom/mapbox/maps/extension/observable/eventdata/RenderFrameFinishedEventData;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/observable/eventdata/RenderFrameFinishedEventData;JLjava/lang/Long;Lcom/mapbox/maps/extension/observable/model/RenderMode;ZZILjava/lang/Object;)Lcom/mapbox/maps/extension/observable/eventdata/RenderFrameFinishedEventData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBegin ()J
+	public final fun getEnd ()Ljava/lang/Long;
+	public final fun getNeedsRepaint ()Z
+	public final fun getPlacementChanged ()Z
+	public final fun getRenderMode ()Lcom/mapbox/maps/extension/observable/model/RenderMode;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/observable/eventdata/RenderFrameStartedEventData {
+	public fun <init> (JLjava/lang/Long;)V
+	public final fun component1 ()J
+	public final fun component2 ()Ljava/lang/Long;
+	public final fun copy (JLjava/lang/Long;)Lcom/mapbox/maps/extension/observable/eventdata/RenderFrameStartedEventData;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/observable/eventdata/RenderFrameStartedEventData;JLjava/lang/Long;ILjava/lang/Object;)Lcom/mapbox/maps/extension/observable/eventdata/RenderFrameStartedEventData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBegin ()J
+	public final fun getEnd ()Ljava/lang/Long;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/observable/eventdata/ResourceEventData {
+	public fun <init> (JLjava/lang/Long;Lcom/mapbox/maps/extension/observable/model/DataSourceType;Lcom/mapbox/maps/extension/observable/model/Request;Lcom/mapbox/maps/extension/observable/model/Response;Z)V
+	public final fun component1 ()J
+	public final fun component2 ()Ljava/lang/Long;
+	public final fun component3 ()Lcom/mapbox/maps/extension/observable/model/DataSourceType;
+	public final fun component4 ()Lcom/mapbox/maps/extension/observable/model/Request;
+	public final fun component5 ()Lcom/mapbox/maps/extension/observable/model/Response;
+	public final fun component6 ()Z
+	public final fun copy (JLjava/lang/Long;Lcom/mapbox/maps/extension/observable/model/DataSourceType;Lcom/mapbox/maps/extension/observable/model/Request;Lcom/mapbox/maps/extension/observable/model/Response;Z)Lcom/mapbox/maps/extension/observable/eventdata/ResourceEventData;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/observable/eventdata/ResourceEventData;JLjava/lang/Long;Lcom/mapbox/maps/extension/observable/model/DataSourceType;Lcom/mapbox/maps/extension/observable/model/Request;Lcom/mapbox/maps/extension/observable/model/Response;ZILjava/lang/Object;)Lcom/mapbox/maps/extension/observable/eventdata/ResourceEventData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBegin ()J
+	public final fun getCancelled ()Z
+	public final fun getDataSource ()Lcom/mapbox/maps/extension/observable/model/DataSourceType;
+	public final fun getEnd ()Ljava/lang/Long;
+	public final fun getRequest ()Lcom/mapbox/maps/extension/observable/model/Request;
+	public final fun getResponse ()Lcom/mapbox/maps/extension/observable/model/Response;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/observable/eventdata/SourceAddedEventData {
+	public fun <init> (JLjava/lang/Long;Ljava/lang/String;)V
+	public final fun component1 ()J
+	public final fun component2 ()Ljava/lang/Long;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (JLjava/lang/Long;Ljava/lang/String;)Lcom/mapbox/maps/extension/observable/eventdata/SourceAddedEventData;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/observable/eventdata/SourceAddedEventData;JLjava/lang/Long;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/observable/eventdata/SourceAddedEventData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBegin ()J
+	public final fun getEnd ()Ljava/lang/Long;
+	public final fun getId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/observable/eventdata/SourceDataLoadedEventData {
+	public fun <init> (JLjava/lang/Long;Ljava/lang/String;Lcom/mapbox/maps/extension/observable/model/SourceDataType;Ljava/lang/Boolean;Lcom/mapbox/maps/extension/observable/model/TileID;)V
+	public final fun component1 ()J
+	public final fun component2 ()Ljava/lang/Long;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Lcom/mapbox/maps/extension/observable/model/SourceDataType;
+	public final fun component5 ()Ljava/lang/Boolean;
+	public final fun component6 ()Lcom/mapbox/maps/extension/observable/model/TileID;
+	public final fun copy (JLjava/lang/Long;Ljava/lang/String;Lcom/mapbox/maps/extension/observable/model/SourceDataType;Ljava/lang/Boolean;Lcom/mapbox/maps/extension/observable/model/TileID;)Lcom/mapbox/maps/extension/observable/eventdata/SourceDataLoadedEventData;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/observable/eventdata/SourceDataLoadedEventData;JLjava/lang/Long;Ljava/lang/String;Lcom/mapbox/maps/extension/observable/model/SourceDataType;Ljava/lang/Boolean;Lcom/mapbox/maps/extension/observable/model/TileID;ILjava/lang/Object;)Lcom/mapbox/maps/extension/observable/eventdata/SourceDataLoadedEventData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBegin ()J
+	public final fun getEnd ()Ljava/lang/Long;
+	public final fun getId ()Ljava/lang/String;
+	public final fun getLoaded ()Ljava/lang/Boolean;
+	public final fun getTileID ()Lcom/mapbox/maps/extension/observable/model/TileID;
+	public final fun getType ()Lcom/mapbox/maps/extension/observable/model/SourceDataType;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/observable/eventdata/SourceRemovedEventData {
+	public fun <init> (JLjava/lang/Long;Ljava/lang/String;)V
+	public final fun component1 ()J
+	public final fun component2 ()Ljava/lang/Long;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (JLjava/lang/Long;Ljava/lang/String;)Lcom/mapbox/maps/extension/observable/eventdata/SourceRemovedEventData;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/observable/eventdata/SourceRemovedEventData;JLjava/lang/Long;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/observable/eventdata/SourceRemovedEventData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBegin ()J
+	public final fun getEnd ()Ljava/lang/Long;
+	public final fun getId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/observable/eventdata/StyleDataLoadedEventData {
+	public fun <init> (JLjava/lang/Long;Lcom/mapbox/maps/extension/observable/model/StyleDataType;)V
+	public final fun component1 ()J
+	public final fun component2 ()Ljava/lang/Long;
+	public final fun component3 ()Lcom/mapbox/maps/extension/observable/model/StyleDataType;
+	public final fun copy (JLjava/lang/Long;Lcom/mapbox/maps/extension/observable/model/StyleDataType;)Lcom/mapbox/maps/extension/observable/eventdata/StyleDataLoadedEventData;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/observable/eventdata/StyleDataLoadedEventData;JLjava/lang/Long;Lcom/mapbox/maps/extension/observable/model/StyleDataType;ILjava/lang/Object;)Lcom/mapbox/maps/extension/observable/eventdata/StyleDataLoadedEventData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBegin ()J
+	public final fun getEnd ()Ljava/lang/Long;
+	public final fun getType ()Lcom/mapbox/maps/extension/observable/model/StyleDataType;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/observable/eventdata/StyleImageMissingEventData {
+	public fun <init> (JLjava/lang/Long;Ljava/lang/String;)V
+	public final fun component1 ()J
+	public final fun component2 ()Ljava/lang/Long;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (JLjava/lang/Long;Ljava/lang/String;)Lcom/mapbox/maps/extension/observable/eventdata/StyleImageMissingEventData;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/observable/eventdata/StyleImageMissingEventData;JLjava/lang/Long;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/observable/eventdata/StyleImageMissingEventData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBegin ()J
+	public final fun getEnd ()Ljava/lang/Long;
+	public final fun getId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/observable/eventdata/StyleImageUnusedEventData {
+	public fun <init> (JLjava/lang/Long;Ljava/lang/String;)V
+	public final fun component1 ()J
+	public final fun component2 ()Ljava/lang/Long;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (JLjava/lang/Long;Ljava/lang/String;)Lcom/mapbox/maps/extension/observable/eventdata/StyleImageUnusedEventData;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/observable/eventdata/StyleImageUnusedEventData;JLjava/lang/Long;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/observable/eventdata/StyleImageUnusedEventData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBegin ()J
+	public final fun getEnd ()Ljava/lang/Long;
+	public final fun getId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/observable/eventdata/StyleLoadedEventData {
+	public fun <init> (JLjava/lang/Long;)V
+	public final fun component1 ()J
+	public final fun component2 ()Ljava/lang/Long;
+	public final fun copy (JLjava/lang/Long;)Lcom/mapbox/maps/extension/observable/eventdata/StyleLoadedEventData;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/observable/eventdata/StyleLoadedEventData;JLjava/lang/Long;ILjava/lang/Object;)Lcom/mapbox/maps/extension/observable/eventdata/StyleLoadedEventData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBegin ()J
+	public final fun getEnd ()Ljava/lang/Long;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/observable/model/DataSourceType : java/lang/Enum {
+	public static final field ASSET Lcom/mapbox/maps/extension/observable/model/DataSourceType;
+	public static final field DATABASE Lcom/mapbox/maps/extension/observable/model/DataSourceType;
+	public static final field FILE_SYSTEM Lcom/mapbox/maps/extension/observable/model/DataSourceType;
+	public static final field NETWORK Lcom/mapbox/maps/extension/observable/model/DataSourceType;
+	public static final field RESOURCE_LOADER Lcom/mapbox/maps/extension/observable/model/DataSourceType;
+	public final fun getValue ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/observable/model/DataSourceType;
+	public static fun values ()[Lcom/mapbox/maps/extension/observable/model/DataSourceType;
+}
+
+public final class com/mapbox/maps/extension/observable/model/Error {
+	public fun <init> (Lcom/mapbox/maps/extension/observable/model/ResponseErrorReason;Ljava/lang/String;)V
+	public final fun component1 ()Lcom/mapbox/maps/extension/observable/model/ResponseErrorReason;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Lcom/mapbox/maps/extension/observable/model/ResponseErrorReason;Ljava/lang/String;)Lcom/mapbox/maps/extension/observable/model/Error;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/observable/model/Error;Lcom/mapbox/maps/extension/observable/model/ResponseErrorReason;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/observable/model/Error;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMessage ()Ljava/lang/String;
+	public final fun getReason ()Lcom/mapbox/maps/extension/observable/model/ResponseErrorReason;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/observable/model/MapLoadErrorType : java/lang/Enum {
+	public static final field GLYPHS Lcom/mapbox/maps/extension/observable/model/MapLoadErrorType;
+	public static final field SOURCE Lcom/mapbox/maps/extension/observable/model/MapLoadErrorType;
+	public static final field SPRITE Lcom/mapbox/maps/extension/observable/model/MapLoadErrorType;
+	public static final field STYLE Lcom/mapbox/maps/extension/observable/model/MapLoadErrorType;
+	public static final field TILE Lcom/mapbox/maps/extension/observable/model/MapLoadErrorType;
+	public final fun getValue ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/observable/model/MapLoadErrorType;
+	public static fun values ()[Lcom/mapbox/maps/extension/observable/model/MapLoadErrorType;
+}
+
+public final class com/mapbox/maps/extension/observable/model/RenderMode : java/lang/Enum {
+	public static final field FULL Lcom/mapbox/maps/extension/observable/model/RenderMode;
+	public static final field PARTIAL Lcom/mapbox/maps/extension/observable/model/RenderMode;
+	public final fun getValue ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/observable/model/RenderMode;
+	public static fun values ()[Lcom/mapbox/maps/extension/observable/model/RenderMode;
+}
+
+public final class com/mapbox/maps/extension/observable/model/Request {
+	public fun <init> (Ljava/util/List;Ljava/lang/String;Lcom/mapbox/maps/extension/observable/model/RequestType;Lcom/mapbox/maps/extension/observable/model/RequestPriority;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Lcom/mapbox/maps/extension/observable/model/RequestType;
+	public final fun component4 ()Lcom/mapbox/maps/extension/observable/model/RequestPriority;
+	public final fun copy (Ljava/util/List;Ljava/lang/String;Lcom/mapbox/maps/extension/observable/model/RequestType;Lcom/mapbox/maps/extension/observable/model/RequestPriority;)Lcom/mapbox/maps/extension/observable/model/Request;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/observable/model/Request;Ljava/util/List;Ljava/lang/String;Lcom/mapbox/maps/extension/observable/model/RequestType;Lcom/mapbox/maps/extension/observable/model/RequestPriority;ILjava/lang/Object;)Lcom/mapbox/maps/extension/observable/model/Request;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getKind ()Lcom/mapbox/maps/extension/observable/model/RequestType;
+	public final fun getLoadingMethod ()Ljava/util/List;
+	public final fun getPriority ()Lcom/mapbox/maps/extension/observable/model/RequestPriority;
+	public final fun getUrl ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/observable/model/RequestPriority : java/lang/Enum {
+	public static final field LOW Lcom/mapbox/maps/extension/observable/model/RequestPriority;
+	public static final field REGULAR Lcom/mapbox/maps/extension/observable/model/RequestPriority;
+	public final fun getValue ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/observable/model/RequestPriority;
+	public static fun values ()[Lcom/mapbox/maps/extension/observable/model/RequestPriority;
+}
+
+public final class com/mapbox/maps/extension/observable/model/RequestType : java/lang/Enum {
+	public static final field GLYPHS Lcom/mapbox/maps/extension/observable/model/RequestType;
+	public static final field IMAGE Lcom/mapbox/maps/extension/observable/model/RequestType;
+	public static final field SOURCE Lcom/mapbox/maps/extension/observable/model/RequestType;
+	public static final field SPRITE_IMAGE Lcom/mapbox/maps/extension/observable/model/RequestType;
+	public static final field SPRITE_JSON Lcom/mapbox/maps/extension/observable/model/RequestType;
+	public static final field STYLE Lcom/mapbox/maps/extension/observable/model/RequestType;
+	public static final field TILE Lcom/mapbox/maps/extension/observable/model/RequestType;
+	public static final field UNKNOWN Lcom/mapbox/maps/extension/observable/model/RequestType;
+	public final fun getValue ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/observable/model/RequestType;
+	public static fun values ()[Lcom/mapbox/maps/extension/observable/model/RequestType;
+}
+
+public final class com/mapbox/maps/extension/observable/model/Response {
+	public fun <init> (Ljava/lang/String;ZZLjava/lang/String;Lcom/mapbox/maps/extension/observable/model/ResponseSourceType;ZLjava/lang/String;ILcom/mapbox/maps/extension/observable/model/Error;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Z
+	public final fun component3 ()Z
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Lcom/mapbox/maps/extension/observable/model/ResponseSourceType;
+	public final fun component6 ()Z
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()I
+	public final fun component9 ()Lcom/mapbox/maps/extension/observable/model/Error;
+	public final fun copy (Ljava/lang/String;ZZLjava/lang/String;Lcom/mapbox/maps/extension/observable/model/ResponseSourceType;ZLjava/lang/String;ILcom/mapbox/maps/extension/observable/model/Error;)Lcom/mapbox/maps/extension/observable/model/Response;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/observable/model/Response;Ljava/lang/String;ZZLjava/lang/String;Lcom/mapbox/maps/extension/observable/model/ResponseSourceType;ZLjava/lang/String;ILcom/mapbox/maps/extension/observable/model/Error;ILjava/lang/Object;)Lcom/mapbox/maps/extension/observable/model/Response;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getETag ()Ljava/lang/String;
+	public final fun getError ()Lcom/mapbox/maps/extension/observable/model/Error;
+	public final fun getExpires ()Ljava/lang/String;
+	public final fun getModified ()Ljava/lang/String;
+	public final fun getMustRevalidate ()Z
+	public final fun getNoContent ()Z
+	public final fun getNotModified ()Z
+	public final fun getSize ()I
+	public final fun getSource ()Lcom/mapbox/maps/extension/observable/model/ResponseSourceType;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/extension/observable/model/ResponseErrorReason : java/lang/Enum {
+	public static final field CONNECTION Lcom/mapbox/maps/extension/observable/model/ResponseErrorReason;
+	public static final field IN_OFFLINE_MODE Lcom/mapbox/maps/extension/observable/model/ResponseErrorReason;
+	public static final field NOT_FOUND Lcom/mapbox/maps/extension/observable/model/ResponseErrorReason;
+	public static final field OTHER Lcom/mapbox/maps/extension/observable/model/ResponseErrorReason;
+	public static final field RATE_LIMIT Lcom/mapbox/maps/extension/observable/model/ResponseErrorReason;
+	public static final field SERVER Lcom/mapbox/maps/extension/observable/model/ResponseErrorReason;
+	public static final field SUCCESS Lcom/mapbox/maps/extension/observable/model/ResponseErrorReason;
+	public final fun getValue ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/observable/model/ResponseErrorReason;
+	public static fun values ()[Lcom/mapbox/maps/extension/observable/model/ResponseErrorReason;
+}
+
+public final class com/mapbox/maps/extension/observable/model/ResponseSourceType : java/lang/Enum {
+	public static final field CACHE Lcom/mapbox/maps/extension/observable/model/ResponseSourceType;
+	public static final field LOCAL_FILE Lcom/mapbox/maps/extension/observable/model/ResponseSourceType;
+	public static final field NETWORK Lcom/mapbox/maps/extension/observable/model/ResponseSourceType;
+	public static final field TILE_STORE Lcom/mapbox/maps/extension/observable/model/ResponseSourceType;
+	public final fun getValue ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/observable/model/ResponseSourceType;
+	public static fun values ()[Lcom/mapbox/maps/extension/observable/model/ResponseSourceType;
+}
+
+public final class com/mapbox/maps/extension/observable/model/SourceDataType : java/lang/Enum {
+	public static final field METADATA Lcom/mapbox/maps/extension/observable/model/SourceDataType;
+	public static final field TILE Lcom/mapbox/maps/extension/observable/model/SourceDataType;
+	public final fun getValue ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/observable/model/SourceDataType;
+	public static fun values ()[Lcom/mapbox/maps/extension/observable/model/SourceDataType;
+}
+
+public final class com/mapbox/maps/extension/observable/model/StyleDataType : java/lang/Enum {
+	public static final field SOURCES Lcom/mapbox/maps/extension/observable/model/StyleDataType;
+	public static final field SPRITE Lcom/mapbox/maps/extension/observable/model/StyleDataType;
+	public static final field STYLE Lcom/mapbox/maps/extension/observable/model/StyleDataType;
+	public final fun getValue ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/observable/model/StyleDataType;
+	public static fun values ()[Lcom/mapbox/maps/extension/observable/model/StyleDataType;
+}
+
+public final class com/mapbox/maps/extension/observable/model/TileID {
+	public fun <init> (JJJ)V
+	public final fun component1 ()J
+	public final fun component2 ()J
+	public final fun component3 ()J
+	public final fun copy (JJJ)Lcom/mapbox/maps/extension/observable/model/TileID;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/extension/observable/model/TileID;JJJILjava/lang/Object;)Lcom/mapbox/maps/extension/observable/model/TileID;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getX ()J
+	public final fun getY ()J
+	public final fun getZoom ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/mapbox/maps/extension/style/StyleContract {
+}
+
+public abstract interface class com/mapbox/maps/extension/style/StyleContract$StyleExtension {
+	public abstract fun getImages ()Ljava/util/List;
+	public abstract fun getLayers ()Ljava/util/List;
+	public abstract fun getLight ()Lcom/mapbox/maps/extension/style/StyleContract$StyleLightExtension;
+	public abstract fun getSources ()Ljava/util/List;
+	public abstract fun getStyleUri ()Ljava/lang/String;
+	public abstract fun getTerrain ()Lcom/mapbox/maps/extension/style/StyleContract$StyleTerrainExtension;
+}
+
+public abstract interface class com/mapbox/maps/extension/style/StyleContract$StyleImageExtension {
+	public abstract fun bindTo (Lcom/mapbox/maps/extension/style/StyleInterface;)V
+}
+
+public abstract interface class com/mapbox/maps/extension/style/StyleContract$StyleLayerExtension {
+	public abstract fun bindTo (Lcom/mapbox/maps/extension/style/StyleInterface;Lcom/mapbox/maps/LayerPosition;)V
+}
+
+public final class com/mapbox/maps/extension/style/StyleContract$StyleLayerExtension$DefaultImpls {
+	public static synthetic fun bindTo$default (Lcom/mapbox/maps/extension/style/StyleContract$StyleLayerExtension;Lcom/mapbox/maps/extension/style/StyleInterface;Lcom/mapbox/maps/LayerPosition;ILjava/lang/Object;)V
+}
+
+public abstract interface class com/mapbox/maps/extension/style/StyleContract$StyleLightExtension {
+	public abstract fun bindTo (Lcom/mapbox/maps/extension/style/StyleInterface;)V
+}
+
+public abstract interface class com/mapbox/maps/extension/style/StyleContract$StyleSourceExtension {
+	public abstract fun bindTo (Lcom/mapbox/maps/extension/style/StyleInterface;)V
+}
+
+public abstract interface class com/mapbox/maps/extension/style/StyleContract$StyleTerrainExtension {
+	public abstract fun bindTo (Lcom/mapbox/maps/extension/style/StyleInterface;)V
+}
+
+public abstract interface class com/mapbox/maps/extension/style/StyleInterface : com/mapbox/maps/StyleManagerInterface {
+	public abstract fun addImage (Ljava/lang/String;Landroid/graphics/Bitmap;)Lcom/mapbox/bindgen/Expected;
+	public abstract fun getPixelRatio ()F
+}
+
+public abstract interface class com/mapbox/maps/module/MapTelemetry {
+	public abstract fun disableTelemetrySession ()V
+	public abstract fun onAppUserTurnstileEvent ()V
+	public abstract fun onPerformanceEvent (Landroid/os/Bundle;)V
+	public abstract fun setDebugLoggingEnabled (Z)V
+	public abstract fun setSessionIdRotationInterval (I)Z
+	public abstract fun setUserTelemetryRequestState (Z)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/ContextBinder {
+	public abstract fun bind (Landroid/content/Context;Landroid/util/AttributeSet;F)V
+}
+
+public final class com/mapbox/maps/plugin/InvalidPluginConfigurationException : java/lang/Exception {
+	public fun <init> (Ljava/lang/String;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/LifecyclePlugin {
+	public abstract fun onStart ()V
+	public abstract fun onStop ()V
+}
+
+public final class com/mapbox/maps/plugin/LifecyclePlugin$DefaultImpls {
+	public static fun onStart (Lcom/mapbox/maps/plugin/LifecyclePlugin;)V
+	public static fun onStop (Lcom/mapbox/maps/plugin/LifecyclePlugin;)V
+}
+
+public abstract class com/mapbox/maps/plugin/LocationPuck {
+}
+
+public final class com/mapbox/maps/plugin/LocationPuck2D : com/mapbox/maps/plugin/LocationPuck {
+	public fun <init> ()V
+	public fun <init> (Landroid/graphics/drawable/Drawable;)V
+	public fun <init> (Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;)V
+	public fun <init> (Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;)V
+	public fun <init> (Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Ljava/lang/String;)V
+	public synthetic fun <init> (Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Landroid/graphics/drawable/Drawable;
+	public final fun component2 ()Landroid/graphics/drawable/Drawable;
+	public final fun component3 ()Landroid/graphics/drawable/Drawable;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun copy (Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Ljava/lang/String;)Lcom/mapbox/maps/plugin/LocationPuck2D;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/LocationPuck2D;Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/LocationPuck2D;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBearingImage ()Landroid/graphics/drawable/Drawable;
+	public final fun getScaleExpression ()Ljava/lang/String;
+	public final fun getShadowImage ()Landroid/graphics/drawable/Drawable;
+	public final fun getTopImage ()Landroid/graphics/drawable/Drawable;
+	public fun hashCode ()I
+	public final fun setBearingImage (Landroid/graphics/drawable/Drawable;)V
+	public final fun setScaleExpression (Ljava/lang/String;)V
+	public final fun setShadowImage (Landroid/graphics/drawable/Drawable;)V
+	public final fun setTopImage (Landroid/graphics/drawable/Drawable;)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/LocationPuck3D : com/mapbox/maps/plugin/LocationPuck {
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
+	public fun <init> (Ljava/lang/String;Ljava/util/List;F)V
+	public fun <init> (Ljava/lang/String;Ljava/util/List;FLjava/util/List;)V
+	public fun <init> (Ljava/lang/String;Ljava/util/List;FLjava/util/List;Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/util/List;FLjava/util/List;Ljava/lang/String;Ljava/util/List;)V
+	public fun <init> (Ljava/lang/String;Ljava/util/List;FLjava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/List;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;FLjava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/List;
+	public final fun component3 ()F
+	public final fun component4 ()Ljava/util/List;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/util/List;
+	public final fun component7 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/util/List;FLjava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/List;)Lcom/mapbox/maps/plugin/LocationPuck3D;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/LocationPuck3D;Ljava/lang/String;Ljava/util/List;FLjava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/LocationPuck3D;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getModelOpacity ()F
+	public final fun getModelRotation ()Ljava/util/List;
+	public final fun getModelScale ()Ljava/util/List;
+	public final fun getModelScaleExpression ()Ljava/lang/String;
+	public final fun getModelTranslation ()Ljava/util/List;
+	public final fun getModelUri ()Ljava/lang/String;
+	public final fun getPosition ()Ljava/util/List;
+	public fun hashCode ()I
+	public final fun setModelOpacity (F)V
+	public final fun setModelRotation (Ljava/util/List;)V
+	public final fun setModelScale (Ljava/util/List;)V
+	public final fun setModelScaleExpression (Ljava/lang/String;)V
+	public final fun setModelTranslation (Ljava/util/List;)V
+	public final fun setModelUri (Ljava/lang/String;)V
+	public final fun setPosition (Ljava/util/List;)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/mapbox/maps/plugin/MapCameraPlugin : com/mapbox/maps/plugin/MapPlugin {
+	public abstract fun onCameraMove (DDDDD[Ljava/lang/Double;)V
+}
+
+public final class com/mapbox/maps/plugin/MapCameraPlugin$DefaultImpls {
+	public static fun cleanup (Lcom/mapbox/maps/plugin/MapCameraPlugin;)V
+	public static fun initialize (Lcom/mapbox/maps/plugin/MapCameraPlugin;)V
+	public static fun onDelegateProvider (Lcom/mapbox/maps/plugin/MapCameraPlugin;Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/MapPlugin {
+	public abstract fun cleanup ()V
+	public abstract fun initialize ()V
+	public abstract fun onDelegateProvider (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+}
+
+public final class com/mapbox/maps/plugin/MapPlugin$DefaultImpls {
+	public static fun cleanup (Lcom/mapbox/maps/plugin/MapPlugin;)V
+	public static fun initialize (Lcom/mapbox/maps/plugin/MapPlugin;)V
+	public static fun onDelegateProvider (Lcom/mapbox/maps/plugin/MapPlugin;Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+}
+
+public abstract class com/mapbox/maps/plugin/MapProjection {
+	public static final field Companion Lcom/mapbox/maps/plugin/MapProjection$Companion;
+	public static final field TRANSITION_ZOOM_LEVEL D
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/MapProjection$Companion {
+}
+
+public final class com/mapbox/maps/plugin/MapProjection$Globe : com/mapbox/maps/plugin/MapProjection {
+	public static final field INSTANCE Lcom/mapbox/maps/plugin/MapProjection$Globe;
+}
+
+public final class com/mapbox/maps/plugin/MapProjection$Mercator : com/mapbox/maps/plugin/MapProjection {
+	public static final field INSTANCE Lcom/mapbox/maps/plugin/MapProjection$Mercator;
+}
+
+public abstract interface class com/mapbox/maps/plugin/MapSizePlugin {
+	public abstract fun onSizeChanged (II)V
+}
+
+public final class com/mapbox/maps/plugin/MapSizePlugin$DefaultImpls {
+	public static fun onSizeChanged (Lcom/mapbox/maps/plugin/MapSizePlugin;II)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/MapStyleObserverPlugin {
+	public abstract fun onStyleChanged (Lcom/mapbox/maps/extension/style/StyleInterface;)V
+}
+
+public abstract class com/mapbox/maps/plugin/Plugin {
+	public static final field Companion Lcom/mapbox/maps/plugin/Plugin$Companion;
+	public static final field MAPBOX_ANNOTATION_PLUGIN_ID Ljava/lang/String;
+	public static final field MAPBOX_ATTRIBUTION_PLUGIN_ID Ljava/lang/String;
+	public static final field MAPBOX_CAMERA_PLUGIN_ID Ljava/lang/String;
+	public static final field MAPBOX_COMPASS_PLUGIN_ID Ljava/lang/String;
+	public static final field MAPBOX_GESTURES_PLUGIN_ID Ljava/lang/String;
+	public static final field MAPBOX_LIFECYCLE_PLUGIN_ID Ljava/lang/String;
+	public static final field MAPBOX_LOCATION_COMPONENT_PLUGIN_ID Ljava/lang/String;
+	public static final field MAPBOX_LOGO_PLUGIN_ID Ljava/lang/String;
+	public static final field MAPBOX_MAP_OVERLAY_PLUGIN_ID Ljava/lang/String;
+	public static final field MAPBOX_SCALEBAR_PLUGIN_ID Ljava/lang/String;
+	public static final field MAPBOX_VIEWPORT_PLUGIN_ID Ljava/lang/String;
+	public synthetic fun <init> (Ljava/lang/String;Lcom/mapbox/maps/plugin/MapPlugin;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getId ()Ljava/lang/String;
+	public final fun getInstance ()Lcom/mapbox/maps/plugin/MapPlugin;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/Plugin$Companion {
+}
+
+public final class com/mapbox/maps/plugin/Plugin$Custom : com/mapbox/maps/plugin/Plugin {
+	public fun <init> (Ljava/lang/String;Lcom/mapbox/maps/plugin/MapPlugin;)V
+}
+
+public final class com/mapbox/maps/plugin/Plugin$Mapbox : com/mapbox/maps/plugin/Plugin {
+	public fun <init> (Ljava/lang/String;)V
+}
+
+public final class com/mapbox/maps/plugin/ScrollMode : java/lang/Enum {
+	public static final field HORIZONTAL Lcom/mapbox/maps/plugin/ScrollMode;
+	public static final field HORIZONTAL_AND_VERTICAL Lcom/mapbox/maps/plugin/ScrollMode;
+	public static final field VERTICAL Lcom/mapbox/maps/plugin/ScrollMode;
+	public final fun getValue ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/plugin/ScrollMode;
+	public static fun values ()[Lcom/mapbox/maps/plugin/ScrollMode;
+}
+
+public abstract interface class com/mapbox/maps/plugin/ViewPlugin : com/mapbox/maps/plugin/MapPlugin {
+	public abstract fun bind (Landroid/widget/FrameLayout;Landroid/util/AttributeSet;F)Landroid/view/View;
+	public abstract fun onPluginView (Landroid/view/View;)V
+}
+
+public final class com/mapbox/maps/plugin/ViewPlugin$DefaultImpls {
+	public static fun cleanup (Lcom/mapbox/maps/plugin/ViewPlugin;)V
+	public static fun initialize (Lcom/mapbox/maps/plugin/ViewPlugin;)V
+	public static fun onDelegateProvider (Lcom/mapbox/maps/plugin/ViewPlugin;Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+	public static fun onPluginView (Lcom/mapbox/maps/plugin/ViewPlugin;Landroid/view/View;)V
+}
+
+public final class com/mapbox/maps/plugin/ViewPlugin$Initializer {
+	public fun <init> (Ljava/lang/ref/WeakReference;Landroid/content/res/TypedArray;F)V
+	public final fun component1 ()Ljava/lang/ref/WeakReference;
+	public final fun component2 ()Landroid/content/res/TypedArray;
+	public final fun component3 ()F
+	public final fun copy (Ljava/lang/ref/WeakReference;Landroid/content/res/TypedArray;F)Lcom/mapbox/maps/plugin/ViewPlugin$Initializer;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/ViewPlugin$Initializer;Ljava/lang/ref/WeakReference;Landroid/content/res/TypedArray;FILjava/lang/Object;)Lcom/mapbox/maps/plugin/ViewPlugin$Initializer;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAttributes ()Landroid/content/res/TypedArray;
+	public final fun getContext ()Ljava/lang/ref/WeakReference;
+	public final fun getPixelRatio ()F
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/mapbox/maps/plugin/animation/CameraAnimationsLifecycleListener {
+	public abstract fun onAnimatorCancelling (Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;Landroid/animation/ValueAnimator;Ljava/lang/String;)V
+	public abstract fun onAnimatorEnding (Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;Landroid/animation/ValueAnimator;Ljava/lang/String;)V
+	public abstract fun onAnimatorInterrupting (Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;Landroid/animation/ValueAnimator;Ljava/lang/String;Landroid/animation/ValueAnimator;Ljava/lang/String;)V
+	public abstract fun onAnimatorStarting (Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;Landroid/animation/ValueAnimator;Ljava/lang/String;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/animation/CameraAnimationsPlugin : com/mapbox/maps/plugin/MapPlugin {
+	public abstract fun addCameraAnchorChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorNullableChangeListener;)V
+	public abstract fun addCameraAnimationsLifecycleListener (Lcom/mapbox/maps/plugin/animation/CameraAnimationsLifecycleListener;)V
+	public abstract fun addCameraBearingChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
+	public abstract fun addCameraCenterChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
+	public abstract fun addCameraPaddingChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
+	public abstract fun addCameraPitchChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
+	public abstract fun addCameraZoomChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
+	public abstract fun calculateScaleBy (DD)D
+	public abstract fun cancelAllAnimators (Ljava/util/List;)V
+	public abstract fun createAnchorAnimator (Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;)Landroid/animation/ValueAnimator;
+	public abstract fun createBearingAnimator (Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;ZLkotlin/jvm/functions/Function1;)Landroid/animation/ValueAnimator;
+	public abstract fun createCenterAnimator (Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;)Landroid/animation/ValueAnimator;
+	public abstract fun createPaddingAnimator (Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;)Landroid/animation/ValueAnimator;
+	public abstract fun createPitchAnimator (Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;)Landroid/animation/ValueAnimator;
+	public abstract fun createZoomAnimator (Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;)Landroid/animation/ValueAnimator;
+	public abstract fun easeTo (Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
+	public abstract fun flyTo (Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
+	public abstract fun getAnchor ()Lcom/mapbox/maps/ScreenCoordinate;
+	public abstract fun getDebugMode ()Z
+	public abstract fun moveBy (Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
+	public abstract fun pitchBy (DLcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
+	public abstract fun playAnimatorsSequentially ([Landroid/animation/ValueAnimator;)V
+	public abstract fun playAnimatorsTogether ([Landroid/animation/ValueAnimator;)V
+	public abstract fun registerAnimators ([Landroid/animation/ValueAnimator;)V
+	public abstract fun removeCameraAnchorChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorNullableChangeListener;)V
+	public abstract fun removeCameraAnimationsLifecycleListener (Lcom/mapbox/maps/plugin/animation/CameraAnimationsLifecycleListener;)V
+	public abstract fun removeCameraBearingChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
+	public abstract fun removeCameraCenterChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
+	public abstract fun removeCameraPaddingChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
+	public abstract fun removeCameraPitchChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
+	public abstract fun removeCameraZoomChangeListener (Lcom/mapbox/maps/plugin/animation/CameraAnimatorChangeListener;)V
+	public abstract fun rotateBy (Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
+	public abstract fun scaleBy (DLcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;)Lcom/mapbox/maps/plugin/animation/Cancelable;
+	public abstract fun setAnchor (Lcom/mapbox/maps/ScreenCoordinate;)V
+	public abstract fun setDebugMode (Z)V
+	public abstract fun unregisterAnimators ([Landroid/animation/ValueAnimator;Z)V
+}
+
+public final class com/mapbox/maps/plugin/animation/CameraAnimationsPlugin$DefaultImpls {
+	public static synthetic fun cancelAllAnimators$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Ljava/util/List;ILjava/lang/Object;)V
+	public static fun cleanup (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;)V
+	public static synthetic fun createAnchorAnimator$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Landroid/animation/ValueAnimator;
+	public static synthetic fun createBearingAnimator$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;ZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)Landroid/animation/ValueAnimator;
+	public static synthetic fun createCenterAnimator$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Landroid/animation/ValueAnimator;
+	public static synthetic fun createPaddingAnimator$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Landroid/animation/ValueAnimator;
+	public static synthetic fun createPitchAnimator$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Landroid/animation/ValueAnimator;
+	public static synthetic fun createZoomAnimator$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Landroid/animation/ValueAnimator;
+	public static synthetic fun easeTo$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/animation/Cancelable;
+	public static synthetic fun flyTo$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/animation/Cancelable;
+	public static fun initialize (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;)V
+	public static synthetic fun moveBy$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/animation/Cancelable;
+	public static fun onDelegateProvider (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+	public static synthetic fun pitchBy$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;DLcom/mapbox/maps/plugin/animation/MapAnimationOptions;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/animation/Cancelable;
+	public static synthetic fun rotateBy$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/animation/Cancelable;
+	public static synthetic fun scaleBy$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;DLcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/animation/Cancelable;
+	public static synthetic fun unregisterAnimators$default (Lcom/mapbox/maps/plugin/animation/CameraAnimationsPlugin;[Landroid/animation/ValueAnimator;ZILjava/lang/Object;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/animation/CameraAnimatorChangeListener {
+	public abstract fun onChanged (Ljava/lang/Object;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/animation/CameraAnimatorNullableChangeListener {
+	public abstract fun onChanged (Ljava/lang/Object;)V
+}
+
+public final class com/mapbox/maps/plugin/animation/CameraAnimatorOptions {
+	public static final field Companion Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions$Companion;
+	public synthetic fun <init> ([Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getOwner ()Ljava/lang/String;
+	public final fun getStartValue ()Ljava/lang/Object;
+	public final fun getTargets ()[Ljava/lang/Object;
+	public fun hashCode ()I
+}
+
+public final class com/mapbox/maps/plugin/animation/CameraAnimatorOptions$Builder {
+	public fun <init> ([Ljava/lang/Object;)V
+	public final fun build ()Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;
+	public final fun getTargets ()[Ljava/lang/Object;
+	public final fun owner (Ljava/lang/String;)Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions$Builder;
+	public final fun startValue (Ljava/lang/Object;)Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions$Builder;
+}
+
+public final class com/mapbox/maps/plugin/animation/CameraAnimatorOptions$Companion {
+	public final fun cameraAnimatorOptions ([Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;
+	public static synthetic fun cameraAnimatorOptions$default (Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions$Companion;[Ljava/lang/Object;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/animation/CameraAnimatorOptions;
+}
+
+public final class com/mapbox/maps/plugin/animation/CameraAnimatorType : java/lang/Enum {
+	public static final field ANCHOR Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;
+	public static final field BEARING Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;
+	public static final field CENTER Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;
+	public static final field PADDING Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;
+	public static final field PITCH Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;
+	public static final field ZOOM Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;
+	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;
+	public static fun values ()[Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;
+}
+
+public abstract interface class com/mapbox/maps/plugin/animation/Cancelable {
+	public abstract fun cancel ()V
+}
+
+public final class com/mapbox/maps/plugin/animation/MapAnimationOptions {
+	public static final field Companion Lcom/mapbox/maps/plugin/animation/MapAnimationOptions$Companion;
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/Long;Ljava/lang/Long;Landroid/animation/TimeInterpolator;Landroid/animation/Animator$AnimatorListener;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAnimatorListener ()Landroid/animation/Animator$AnimatorListener;
+	public final fun getDuration ()Ljava/lang/Long;
+	public final fun getInterpolator ()Landroid/animation/TimeInterpolator;
+	public final fun getOwner ()Ljava/lang/String;
+	public final fun getStartDelay ()Ljava/lang/Long;
+	public fun hashCode ()I
+}
+
+public final class com/mapbox/maps/plugin/animation/MapAnimationOptions$Builder {
+	public fun <init> ()V
+	public final fun animatorListener (Landroid/animation/Animator$AnimatorListener;)Lcom/mapbox/maps/plugin/animation/MapAnimationOptions$Builder;
+	public final fun build ()Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;
+	public final fun duration (J)Lcom/mapbox/maps/plugin/animation/MapAnimationOptions$Builder;
+	public final fun interpolator (Landroid/animation/TimeInterpolator;)Lcom/mapbox/maps/plugin/animation/MapAnimationOptions$Builder;
+	public final fun owner (Ljava/lang/String;)Lcom/mapbox/maps/plugin/animation/MapAnimationOptions$Builder;
+	public final fun startDelay (J)Lcom/mapbox/maps/plugin/animation/MapAnimationOptions$Builder;
+}
+
+public final class com/mapbox/maps/plugin/animation/MapAnimationOptions$Companion {
+	public final fun mapAnimationOptions (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/plugin/animation/MapAnimationOptions;
+}
+
+public final class com/mapbox/maps/plugin/animation/MapAnimationOwnerRegistry {
+	public static final field COMPASS Ljava/lang/String;
+	public static final field GESTURES Ljava/lang/String;
+	public static final field INSTANCE Lcom/mapbox/maps/plugin/animation/MapAnimationOwnerRegistry;
+	public static final field INTERNAL Ljava/lang/String;
+	public static final field LOCATION Ljava/lang/String;
+}
+
+public abstract class com/mapbox/maps/plugin/annotation/Annotation {
+	public static final field Companion Lcom/mapbox/maps/plugin/annotation/Annotation$Companion;
+	public static final field ID_DATA Ljava/lang/String;
+	public static final field MAX_MERCATOR_LATITUDE D
+	public static final field MIN_MERCATOR_LATITUDE D
+	public fun <init> (JLcom/google/gson/JsonObject;Lcom/mapbox/geojson/Geometry;)V
+	public fun getData ()Lcom/google/gson/JsonElement;
+	public final fun getFeatureIdentifier ()Ljava/lang/String;
+	public final fun getGeometry ()Lcom/mapbox/geojson/Geometry;
+	public final fun getId ()J
+	protected final fun getJsonObject ()Lcom/google/gson/JsonObject;
+	public final fun getJsonObjectCopy ()Lcom/google/gson/JsonObject;
+	public abstract fun getOffsetGeometry (Lcom/mapbox/maps/plugin/delegates/MapCameraManagerDelegate;Lcom/mapbox/android/gestures/MoveDistancesObject;)Lcom/mapbox/geojson/Geometry;
+	public abstract fun getType ()Lcom/mapbox/maps/plugin/annotation/AnnotationType;
+	public final fun isDraggable ()Z
+	public final fun isSelected ()Z
+	public fun setData (Lcom/google/gson/JsonElement;)V
+	public final fun setDraggable (Z)V
+	public final fun setGeometry (Lcom/mapbox/geojson/Geometry;)V
+	public final fun setSelected (Z)V
+	public abstract fun setUsedDataDrivenProperties ()V
+}
+
+public final class com/mapbox/maps/plugin/annotation/Annotation$Companion {
+}
+
+public final class com/mapbox/maps/plugin/annotation/AnnotationConfig {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationSourceOptions;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationSourceOptions;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Lcom/mapbox/maps/plugin/annotation/AnnotationSourceOptions;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationSourceOptions;)Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/plugin/annotation/AnnotationSourceOptions;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAnnotationSourceOptions ()Lcom/mapbox/maps/plugin/annotation/AnnotationSourceOptions;
+	public final fun getBelowLayerId ()Ljava/lang/String;
+	public final fun getLayerId ()Ljava/lang/String;
+	public final fun getSourceId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/mapbox/maps/plugin/annotation/AnnotationManager {
+	public abstract fun addClickListener (Lcom/mapbox/maps/plugin/annotation/OnAnnotationClickListener;)Z
+	public abstract fun addDragListener (Lcom/mapbox/maps/plugin/annotation/OnAnnotationDragListener;)Z
+	public abstract fun addInteractionListener (Lcom/mapbox/maps/plugin/annotation/OnAnnotationInteractionListener;)Z
+	public abstract fun addLongClickListener (Lcom/mapbox/maps/plugin/annotation/OnAnnotationLongClickListener;)Z
+	public abstract fun create (Lcom/mapbox/maps/plugin/annotation/AnnotationOptions;)Lcom/mapbox/maps/plugin/annotation/Annotation;
+	public abstract fun create (Ljava/util/List;)Ljava/util/List;
+	public abstract fun delete (Lcom/mapbox/maps/plugin/annotation/Annotation;)V
+	public abstract fun delete (Ljava/util/List;)V
+	public abstract fun deleteAll ()V
+	public abstract fun enableDataDrivenProperty (Ljava/lang/String;)V
+	public abstract fun getAnnotations ()Ljava/util/List;
+	public abstract fun getClickListeners ()Ljava/util/List;
+	public abstract fun getDelegateProvider ()Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;
+	public abstract fun getDragListeners ()Ljava/util/List;
+	public abstract fun getInteractionListener ()Ljava/util/List;
+	public abstract fun getLongClickListeners ()Ljava/util/List;
+	public abstract fun onDestroy ()V
+	public abstract fun onSizeChanged (II)V
+	public abstract fun removeClickListener (Lcom/mapbox/maps/plugin/annotation/OnAnnotationClickListener;)Z
+	public abstract fun removeDragListener (Lcom/mapbox/maps/plugin/annotation/OnAnnotationDragListener;)Z
+	public abstract fun removeInteractionListener (Lcom/mapbox/maps/plugin/annotation/OnAnnotationInteractionListener;)Z
+	public abstract fun removeLongClickListener (Lcom/mapbox/maps/plugin/annotation/OnAnnotationLongClickListener;)Z
+	public abstract fun selectAnnotation (Lcom/mapbox/maps/plugin/annotation/Annotation;)V
+	public abstract fun update (Lcom/mapbox/maps/plugin/annotation/Annotation;)V
+	public abstract fun update (Ljava/util/List;)V
+}
+
+public final class com/mapbox/maps/plugin/annotation/AnnotationManager$DefaultImpls {
+	public static fun addClickListener (Lcom/mapbox/maps/plugin/annotation/AnnotationManager;Lcom/mapbox/maps/plugin/annotation/OnAnnotationClickListener;)Z
+	public static fun addDragListener (Lcom/mapbox/maps/plugin/annotation/AnnotationManager;Lcom/mapbox/maps/plugin/annotation/OnAnnotationDragListener;)Z
+	public static fun addInteractionListener (Lcom/mapbox/maps/plugin/annotation/AnnotationManager;Lcom/mapbox/maps/plugin/annotation/OnAnnotationInteractionListener;)Z
+	public static fun addLongClickListener (Lcom/mapbox/maps/plugin/annotation/AnnotationManager;Lcom/mapbox/maps/plugin/annotation/OnAnnotationLongClickListener;)Z
+	public static fun removeClickListener (Lcom/mapbox/maps/plugin/annotation/AnnotationManager;Lcom/mapbox/maps/plugin/annotation/OnAnnotationClickListener;)Z
+	public static fun removeDragListener (Lcom/mapbox/maps/plugin/annotation/AnnotationManager;Lcom/mapbox/maps/plugin/annotation/OnAnnotationDragListener;)Z
+	public static fun removeInteractionListener (Lcom/mapbox/maps/plugin/annotation/AnnotationManager;Lcom/mapbox/maps/plugin/annotation/OnAnnotationInteractionListener;)Z
+	public static fun removeLongClickListener (Lcom/mapbox/maps/plugin/annotation/AnnotationManager;Lcom/mapbox/maps/plugin/annotation/OnAnnotationLongClickListener;)Z
+}
+
+public abstract interface class com/mapbox/maps/plugin/annotation/AnnotationOptions {
+	public abstract fun build (JLcom/mapbox/maps/plugin/annotation/AnnotationManager;)Lcom/mapbox/maps/plugin/annotation/Annotation;
+}
+
+public abstract interface class com/mapbox/maps/plugin/annotation/AnnotationPlugin : com/mapbox/maps/plugin/MapPlugin, com/mapbox/maps/plugin/MapSizePlugin, com/mapbox/maps/plugin/MapStyleObserverPlugin {
+	public abstract fun createAnnotationManager (Landroid/view/View;Lcom/mapbox/maps/plugin/annotation/AnnotationType;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;)Lcom/mapbox/maps/plugin/annotation/AnnotationManager;
+	public abstract fun createAnnotationManager (Lcom/mapbox/maps/plugin/annotation/AnnotationType;Lcom/mapbox/maps/plugin/annotation/AnnotationConfig;)Lcom/mapbox/maps/plugin/annotation/AnnotationManager;
+	public abstract fun removeAnnotationManager (Lcom/mapbox/maps/plugin/annotation/AnnotationManager;)V
+}
+
+public final class com/mapbox/maps/plugin/annotation/AnnotationPlugin$DefaultImpls {
+	public static fun cleanup (Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;)V
+	public static fun initialize (Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;)V
+	public static fun onDelegateProvider (Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+	public static fun onSizeChanged (Lcom/mapbox/maps/plugin/annotation/AnnotationPlugin;II)V
+}
+
+public final class com/mapbox/maps/plugin/annotation/AnnotationSourceOptions {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/Long;)V
+	public fun <init> (Ljava/lang/Long;Ljava/lang/Long;)V
+	public fun <init> (Ljava/lang/Long;Ljava/lang/Long;Ljava/lang/Boolean;)V
+	public fun <init> (Ljava/lang/Long;Ljava/lang/Long;Ljava/lang/Boolean;Ljava/lang/Double;)V
+	public fun <init> (Ljava/lang/Long;Ljava/lang/Long;Ljava/lang/Boolean;Ljava/lang/Double;Lcom/mapbox/maps/plugin/annotation/ClusterOptions;)V
+	public synthetic fun <init> (Ljava/lang/Long;Ljava/lang/Long;Ljava/lang/Boolean;Ljava/lang/Double;Lcom/mapbox/maps/plugin/annotation/ClusterOptions;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/Long;
+	public final fun component2 ()Ljava/lang/Long;
+	public final fun component3 ()Ljava/lang/Boolean;
+	public final fun component4 ()Ljava/lang/Double;
+	public final fun component5 ()Lcom/mapbox/maps/plugin/annotation/ClusterOptions;
+	public final fun copy (Ljava/lang/Long;Ljava/lang/Long;Ljava/lang/Boolean;Ljava/lang/Double;Lcom/mapbox/maps/plugin/annotation/ClusterOptions;)Lcom/mapbox/maps/plugin/annotation/AnnotationSourceOptions;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/annotation/AnnotationSourceOptions;Ljava/lang/Long;Ljava/lang/Long;Ljava/lang/Boolean;Ljava/lang/Double;Lcom/mapbox/maps/plugin/annotation/ClusterOptions;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/annotation/AnnotationSourceOptions;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBuffer ()Ljava/lang/Long;
+	public final fun getClusterOptions ()Lcom/mapbox/maps/plugin/annotation/ClusterOptions;
+	public final fun getLineMetrics ()Ljava/lang/Boolean;
+	public final fun getMaxZoom ()Ljava/lang/Long;
+	public final fun getTolerance ()Ljava/lang/Double;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/annotation/AnnotationType : java/lang/Enum {
+	public static final field CircleAnnotation Lcom/mapbox/maps/plugin/annotation/AnnotationType;
+	public static final field PointAnnotation Lcom/mapbox/maps/plugin/annotation/AnnotationType;
+	public static final field PolygonAnnotation Lcom/mapbox/maps/plugin/annotation/AnnotationType;
+	public static final field PolylineAnnotation Lcom/mapbox/maps/plugin/annotation/AnnotationType;
+	public final fun getValue ()I
+	public final fun setValue (I)V
+	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/plugin/annotation/AnnotationType;
+	public static fun values ()[Lcom/mapbox/maps/plugin/annotation/AnnotationType;
+}
+
+public final class com/mapbox/maps/plugin/annotation/ClusterOptions {
+	public fun <init> ()V
+	public fun <init> (Z)V
+	public fun <init> (ZJ)V
+	public fun <init> (ZJLcom/mapbox/bindgen/Value;)V
+	public fun <init> (ZJLcom/mapbox/bindgen/Value;D)V
+	public fun <init> (ZJLcom/mapbox/bindgen/Value;DLcom/mapbox/bindgen/Value;)V
+	public fun <init> (ZJLcom/mapbox/bindgen/Value;DLcom/mapbox/bindgen/Value;I)V
+	public fun <init> (ZJLcom/mapbox/bindgen/Value;DLcom/mapbox/bindgen/Value;ILcom/mapbox/bindgen/Value;)V
+	public fun <init> (ZJLcom/mapbox/bindgen/Value;DLcom/mapbox/bindgen/Value;ILcom/mapbox/bindgen/Value;D)V
+	public fun <init> (ZJLcom/mapbox/bindgen/Value;DLcom/mapbox/bindgen/Value;ILcom/mapbox/bindgen/Value;DLcom/mapbox/bindgen/Value;)V
+	public fun <init> (ZJLcom/mapbox/bindgen/Value;DLcom/mapbox/bindgen/Value;ILcom/mapbox/bindgen/Value;DLcom/mapbox/bindgen/Value;J)V
+	public fun <init> (ZJLcom/mapbox/bindgen/Value;DLcom/mapbox/bindgen/Value;ILcom/mapbox/bindgen/Value;DLcom/mapbox/bindgen/Value;JLjava/util/List;)V
+	public fun <init> (ZJLcom/mapbox/bindgen/Value;DLcom/mapbox/bindgen/Value;ILcom/mapbox/bindgen/Value;DLcom/mapbox/bindgen/Value;JLjava/util/List;Ljava/util/HashMap;)V
+	public synthetic fun <init> (ZJLcom/mapbox/bindgen/Value;DLcom/mapbox/bindgen/Value;ILcom/mapbox/bindgen/Value;DLcom/mapbox/bindgen/Value;JLjava/util/List;Ljava/util/HashMap;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Z
+	public final fun component10 ()J
+	public final fun component11 ()Ljava/util/List;
+	public final fun component12 ()Ljava/util/HashMap;
+	public final fun component2 ()J
+	public final fun component3 ()Lcom/mapbox/bindgen/Value;
+	public final fun component4 ()D
+	public final fun component5 ()Lcom/mapbox/bindgen/Value;
+	public final fun component6 ()I
+	public final fun component7 ()Lcom/mapbox/bindgen/Value;
+	public final fun component8 ()D
+	public final fun component9 ()Lcom/mapbox/bindgen/Value;
+	public final fun copy (ZJLcom/mapbox/bindgen/Value;DLcom/mapbox/bindgen/Value;ILcom/mapbox/bindgen/Value;DLcom/mapbox/bindgen/Value;JLjava/util/List;Ljava/util/HashMap;)Lcom/mapbox/maps/plugin/annotation/ClusterOptions;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/annotation/ClusterOptions;ZJLcom/mapbox/bindgen/Value;DLcom/mapbox/bindgen/Value;ILcom/mapbox/bindgen/Value;DLcom/mapbox/bindgen/Value;JLjava/util/List;Ljava/util/HashMap;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/annotation/ClusterOptions;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCircleRadius ()D
+	public final fun getCircleRadiusExpression ()Lcom/mapbox/bindgen/Value;
+	public final fun getCluster ()Z
+	public final fun getClusterMaxZoom ()J
+	public final fun getClusterProperties ()Ljava/util/HashMap;
+	public final fun getClusterRadius ()J
+	public final fun getColorLevels ()Ljava/util/List;
+	public final fun getTextColor ()I
+	public final fun getTextColorExpression ()Lcom/mapbox/bindgen/Value;
+	public final fun getTextField ()Lcom/mapbox/bindgen/Value;
+	public final fun getTextSize ()D
+	public final fun getTextSizeExpression ()Lcom/mapbox/bindgen/Value;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/mapbox/maps/plugin/annotation/OnAnnotationClickListener {
+	public abstract fun onAnnotationClick (Lcom/mapbox/maps/plugin/annotation/Annotation;)Z
+}
+
+public abstract interface class com/mapbox/maps/plugin/annotation/OnAnnotationDragListener {
+	public abstract fun onAnnotationDrag (Lcom/mapbox/maps/plugin/annotation/Annotation;)V
+	public abstract fun onAnnotationDragFinished (Lcom/mapbox/maps/plugin/annotation/Annotation;)V
+	public abstract fun onAnnotationDragStarted (Lcom/mapbox/maps/plugin/annotation/Annotation;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/annotation/OnAnnotationInteractionListener {
+	public abstract fun onDeselectAnnotation (Lcom/mapbox/maps/plugin/annotation/Annotation;)V
+	public abstract fun onSelectAnnotation (Lcom/mapbox/maps/plugin/annotation/Annotation;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/annotation/OnAnnotationLongClickListener {
+	public abstract fun onAnnotationLongClick (Lcom/mapbox/maps/plugin/annotation/Annotation;)Z
+}
+
+public final class com/mapbox/maps/plugin/attribution/Attribution {
+	public static final field ABOUT_MAPS_URL Ljava/lang/String;
+	public static final field ABOUT_TELEMETRY_URL Ljava/lang/String;
+	public static final field Companion Lcom/mapbox/maps/plugin/attribution/Attribution$Companion;
+	public static final field OSM Ljava/lang/String;
+	public static final field OSM_ABBR Ljava/lang/String;
+	public static final field TELEMETRY_SETTINGS Ljava/lang/String;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/maps/plugin/attribution/Attribution;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/attribution/Attribution;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/attribution/Attribution;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTitle ()Ljava/lang/String;
+	public final fun getTitleAbbreviated ()Ljava/lang/String;
+	public final fun getUrl ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/attribution/Attribution$Companion {
+}
+
+public abstract interface class com/mapbox/maps/plugin/attribution/AttributionDialogManager {
+	public abstract fun onStop ()V
+	public abstract fun showAttribution (Lcom/mapbox/maps/plugin/delegates/MapAttributionDelegate;)V
+}
+
+public final class com/mapbox/maps/plugin/attribution/AttributionParserConfig {
+	public fun <init> ()V
+	public fun <init> (Z)V
+	public fun <init> (ZZ)V
+	public fun <init> (ZZZ)V
+	public fun <init> (ZZZZ)V
+	public synthetic fun <init> (ZZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getWithCopyrightSign ()Z
+	public final fun getWithImproveMap ()Z
+	public final fun getWithMapboxAttribution ()Z
+	public final fun getWithTelemetryAttribution ()Z
+	public final fun setWithCopyrightSign (Z)V
+	public final fun setWithImproveMap (Z)V
+	public final fun setWithMapboxAttribution (Z)V
+	public final fun setWithTelemetryAttribution (Z)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/attribution/AttributionPlugin : com/mapbox/maps/plugin/LifecyclePlugin, com/mapbox/maps/plugin/ViewPlugin, com/mapbox/maps/plugin/attribution/generated/AttributionSettingsInterface {
+	public abstract fun getMapAttributionDelegate ()Lcom/mapbox/maps/plugin/delegates/MapAttributionDelegate;
+	public abstract fun setCustomAttributionDialogManager (Lcom/mapbox/maps/plugin/attribution/AttributionDialogManager;)V
+}
+
+public final class com/mapbox/maps/plugin/attribution/AttributionPlugin$DefaultImpls {
+	public static fun cleanup (Lcom/mapbox/maps/plugin/attribution/AttributionPlugin;)V
+	public static fun initialize (Lcom/mapbox/maps/plugin/attribution/AttributionPlugin;)V
+	public static fun onDelegateProvider (Lcom/mapbox/maps/plugin/attribution/AttributionPlugin;Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+	public static fun onPluginView (Lcom/mapbox/maps/plugin/attribution/AttributionPlugin;Landroid/view/View;)V
+	public static fun onStart (Lcom/mapbox/maps/plugin/attribution/AttributionPlugin;)V
+	public static fun onStop (Lcom/mapbox/maps/plugin/attribution/AttributionPlugin;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/attribution/AttributionView {
+	public abstract fun requestLayout ()V
+	public abstract fun setAttributionMargins (IIII)V
+	public abstract fun setEnable (Z)V
+	public abstract fun setGravity (I)V
+	public abstract fun setIconColor (I)V
+	public abstract fun setViewOnClickListener (Landroid/view/View$OnClickListener;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/attribution/OnAttributionClickListener {
+	public abstract fun onAttributionClick ()V
+}
+
+public final class com/mapbox/maps/plugin/attribution/generated/AttributionSettings {
+	public fun <init> ()V
+	public fun <init> (Z)V
+	public fun <init> (ZI)V
+	public fun <init> (ZII)V
+	public fun <init> (ZIIF)V
+	public fun <init> (ZIIFF)V
+	public fun <init> (ZIIFFF)V
+	public fun <init> (ZIIFFFF)V
+	public fun <init> (ZIIFFFFZ)V
+	public synthetic fun <init> (ZIIFFFFZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Z
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun component4 ()F
+	public final fun component5 ()F
+	public final fun component6 ()F
+	public final fun component7 ()F
+	public final fun component8 ()Z
+	public final fun copy (ZIIFFFFZ)Lcom/mapbox/maps/plugin/attribution/generated/AttributionSettings;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/attribution/generated/AttributionSettings;ZIIFFFFZILjava/lang/Object;)Lcom/mapbox/maps/plugin/attribution/generated/AttributionSettings;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getClickable ()Z
+	public final fun getEnabled ()Z
+	public final fun getIconColor ()I
+	public final fun getMarginBottom ()F
+	public final fun getMarginLeft ()F
+	public final fun getMarginRight ()F
+	public final fun getMarginTop ()F
+	public final fun getPosition ()I
+	public fun hashCode ()I
+	public final fun setClickable (Z)V
+	public final fun setEnabled (Z)V
+	public final fun setIconColor (I)V
+	public final fun setMarginBottom (F)V
+	public final fun setMarginLeft (F)V
+	public final fun setMarginRight (F)V
+	public final fun setMarginTop (F)V
+	public final fun setPosition (I)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class com/mapbox/maps/plugin/attribution/generated/AttributionSettingsBase : com/mapbox/maps/plugin/attribution/generated/AttributionSettingsInterface {
+	public fun <init> ()V
+	protected abstract fun applySettings ()V
+	public fun getClickable ()Z
+	public fun getEnabled ()Z
+	public fun getIconColor ()I
+	protected abstract fun getInternalSettings ()Lcom/mapbox/maps/plugin/attribution/generated/AttributionSettings;
+	public fun getMarginBottom ()F
+	public fun getMarginLeft ()F
+	public fun getMarginRight ()F
+	public fun getMarginTop ()F
+	public fun getPosition ()I
+	public fun getSettings ()Lcom/mapbox/maps/plugin/attribution/generated/AttributionSettings;
+	public fun setClickable (Z)V
+	public fun setEnabled (Z)V
+	public fun setIconColor (I)V
+	protected abstract fun setInternalSettings (Lcom/mapbox/maps/plugin/attribution/generated/AttributionSettings;)V
+	public fun setMarginBottom (F)V
+	public fun setMarginLeft (F)V
+	public fun setMarginRight (F)V
+	public fun setMarginTop (F)V
+	public fun setPosition (I)V
+	public fun updateSettings (Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/attribution/generated/AttributionSettingsInterface {
+	public abstract fun getClickable ()Z
+	public abstract fun getEnabled ()Z
+	public abstract fun getIconColor ()I
+	public abstract fun getMarginBottom ()F
+	public abstract fun getMarginLeft ()F
+	public abstract fun getMarginRight ()F
+	public abstract fun getMarginTop ()F
+	public abstract fun getPosition ()I
+	public abstract fun getSettings ()Lcom/mapbox/maps/plugin/attribution/generated/AttributionSettings;
+	public abstract fun setClickable (Z)V
+	public abstract fun setEnabled (Z)V
+	public abstract fun setIconColor (I)V
+	public abstract fun setMarginBottom (F)V
+	public abstract fun setMarginLeft (F)V
+	public abstract fun setMarginRight (F)V
+	public abstract fun setMarginTop (F)V
+	public abstract fun setPosition (I)V
+	public abstract fun updateSettings (Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/compass/CompassPlugin : com/mapbox/maps/plugin/LifecyclePlugin, com/mapbox/maps/plugin/MapCameraPlugin, com/mapbox/maps/plugin/ViewPlugin, com/mapbox/maps/plugin/compass/generated/CompassSettingsInterface {
+	public abstract fun addCompassClickListener (Lcom/mapbox/maps/plugin/compass/OnCompassClickListener;)V
+	public abstract fun onCompassClicked ()V
+	public abstract fun removeCompassClickListener (Lcom/mapbox/maps/plugin/compass/OnCompassClickListener;)V
+}
+
+public final class com/mapbox/maps/plugin/compass/CompassPlugin$DefaultImpls {
+	public static fun cleanup (Lcom/mapbox/maps/plugin/compass/CompassPlugin;)V
+	public static fun initialize (Lcom/mapbox/maps/plugin/compass/CompassPlugin;)V
+	public static fun onDelegateProvider (Lcom/mapbox/maps/plugin/compass/CompassPlugin;Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+	public static fun onPluginView (Lcom/mapbox/maps/plugin/compass/CompassPlugin;Landroid/view/View;)V
+	public static fun onStart (Lcom/mapbox/maps/plugin/compass/CompassPlugin;)V
+	public static fun onStop (Lcom/mapbox/maps/plugin/compass/CompassPlugin;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/compass/CompassView {
+	public abstract fun getCompassGravity ()I
+	public abstract fun getCompassImage ()Landroid/graphics/drawable/Drawable;
+	public abstract fun getCompassRotation ()F
+	public abstract fun isCompassEnabled ()Z
+	public abstract fun isCompassVisible ()Z
+	public abstract fun requestLayout ()V
+	public abstract fun setCompassAlpha (F)V
+	public abstract fun setCompassEnabled (Z)V
+	public abstract fun setCompassGravity (I)V
+	public abstract fun setCompassImage (Landroid/graphics/drawable/Drawable;)V
+	public abstract fun setCompassMargins (IIII)V
+	public abstract fun setCompassRotation (F)V
+	public abstract fun setCompassVisible (Z)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/compass/OnCompassClickListener {
+	public abstract fun onCompassClick ()V
+}
+
+public final class com/mapbox/maps/plugin/compass/generated/CompassSettings {
+	public fun <init> ()V
+	public fun <init> (Z)V
+	public fun <init> (ZI)V
+	public fun <init> (ZIF)V
+	public fun <init> (ZIFF)V
+	public fun <init> (ZIFFF)V
+	public fun <init> (ZIFFFF)V
+	public fun <init> (ZIFFFFF)V
+	public fun <init> (ZIFFFFFF)V
+	public fun <init> (ZIFFFFFFZ)V
+	public fun <init> (ZIFFFFFFZZ)V
+	public fun <init> (ZIFFFFFFZZZ)V
+	public fun <init> (ZIFFFFFFZZZLandroid/graphics/drawable/Drawable;)V
+	public synthetic fun <init> (ZIFFFFFFZZZLandroid/graphics/drawable/Drawable;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Z
+	public final fun component10 ()Z
+	public final fun component11 ()Z
+	public final fun component12 ()Landroid/graphics/drawable/Drawable;
+	public final fun component2 ()I
+	public final fun component3 ()F
+	public final fun component4 ()F
+	public final fun component5 ()F
+	public final fun component6 ()F
+	public final fun component7 ()F
+	public final fun component8 ()F
+	public final fun component9 ()Z
+	public final fun copy (ZIFFFFFFZZZLandroid/graphics/drawable/Drawable;)Lcom/mapbox/maps/plugin/compass/generated/CompassSettings;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/compass/generated/CompassSettings;ZIFFFFFFZZZLandroid/graphics/drawable/Drawable;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/compass/generated/CompassSettings;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getClickable ()Z
+	public final fun getEnabled ()Z
+	public final fun getFadeWhenFacingNorth ()Z
+	public final fun getImage ()Landroid/graphics/drawable/Drawable;
+	public final fun getMarginBottom ()F
+	public final fun getMarginLeft ()F
+	public final fun getMarginRight ()F
+	public final fun getMarginTop ()F
+	public final fun getOpacity ()F
+	public final fun getPosition ()I
+	public final fun getRotation ()F
+	public final fun getVisibility ()Z
+	public fun hashCode ()I
+	public final fun setClickable (Z)V
+	public final fun setEnabled (Z)V
+	public final fun setFadeWhenFacingNorth (Z)V
+	public final fun setImage (Landroid/graphics/drawable/Drawable;)V
+	public final fun setMarginBottom (F)V
+	public final fun setMarginLeft (F)V
+	public final fun setMarginRight (F)V
+	public final fun setMarginTop (F)V
+	public final fun setOpacity (F)V
+	public final fun setPosition (I)V
+	public final fun setRotation (F)V
+	public final fun setVisibility (Z)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class com/mapbox/maps/plugin/compass/generated/CompassSettingsBase : com/mapbox/maps/plugin/compass/generated/CompassSettingsInterface {
+	public fun <init> ()V
+	protected abstract fun applySettings ()V
+	public fun getClickable ()Z
+	public fun getEnabled ()Z
+	public fun getFadeWhenFacingNorth ()Z
+	public fun getImage ()Landroid/graphics/drawable/Drawable;
+	protected abstract fun getInternalSettings ()Lcom/mapbox/maps/plugin/compass/generated/CompassSettings;
+	public fun getMarginBottom ()F
+	public fun getMarginLeft ()F
+	public fun getMarginRight ()F
+	public fun getMarginTop ()F
+	public fun getOpacity ()F
+	public fun getPosition ()I
+	public fun getRotation ()F
+	public fun getSettings ()Lcom/mapbox/maps/plugin/compass/generated/CompassSettings;
+	public fun getVisibility ()Z
+	public fun setClickable (Z)V
+	public fun setEnabled (Z)V
+	public fun setFadeWhenFacingNorth (Z)V
+	public fun setImage (Landroid/graphics/drawable/Drawable;)V
+	protected abstract fun setInternalSettings (Lcom/mapbox/maps/plugin/compass/generated/CompassSettings;)V
+	public fun setMarginBottom (F)V
+	public fun setMarginLeft (F)V
+	public fun setMarginRight (F)V
+	public fun setMarginTop (F)V
+	public fun setOpacity (F)V
+	public fun setPosition (I)V
+	public fun setRotation (F)V
+	public fun setVisibility (Z)V
+	public fun updateSettings (Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/compass/generated/CompassSettingsInterface {
+	public abstract fun getClickable ()Z
+	public abstract fun getEnabled ()Z
+	public abstract fun getFadeWhenFacingNorth ()Z
+	public abstract fun getImage ()Landroid/graphics/drawable/Drawable;
+	public abstract fun getMarginBottom ()F
+	public abstract fun getMarginLeft ()F
+	public abstract fun getMarginRight ()F
+	public abstract fun getMarginTop ()F
+	public abstract fun getOpacity ()F
+	public abstract fun getPosition ()I
+	public abstract fun getRotation ()F
+	public abstract fun getSettings ()Lcom/mapbox/maps/plugin/compass/generated/CompassSettings;
+	public abstract fun getVisibility ()Z
+	public abstract fun setClickable (Z)V
+	public abstract fun setEnabled (Z)V
+	public abstract fun setFadeWhenFacingNorth (Z)V
+	public abstract fun setImage (Landroid/graphics/drawable/Drawable;)V
+	public abstract fun setMarginBottom (F)V
+	public abstract fun setMarginLeft (F)V
+	public abstract fun setMarginRight (F)V
+	public abstract fun setMarginTop (F)V
+	public abstract fun setOpacity (F)V
+	public abstract fun setPosition (I)V
+	public abstract fun setRotation (F)V
+	public abstract fun setVisibility (Z)V
+	public abstract fun updateSettings (Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/delegates/MapAttributionDelegate {
+	public abstract fun buildMapBoxFeedbackUrl (Landroid/content/Context;)Ljava/lang/String;
+	public abstract fun parseAttributions (Landroid/content/Context;Lcom/mapbox/maps/plugin/attribution/AttributionParserConfig;)Ljava/util/List;
+	public abstract fun telemetry ()Lcom/mapbox/maps/module/MapTelemetry;
+}
+
+public abstract interface class com/mapbox/maps/plugin/delegates/MapCameraManagerDelegate {
+	public abstract fun cameraForCoordinateBounds (Lcom/mapbox/maps/CoordinateBounds;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Ljava/lang/Double;)Lcom/mapbox/maps/CameraOptions;
+	public abstract fun cameraForCoordinates (Ljava/util/List;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/ScreenBox;)Lcom/mapbox/maps/CameraOptions;
+	public abstract fun cameraForCoordinates (Ljava/util/List;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Ljava/lang/Double;)Lcom/mapbox/maps/CameraOptions;
+	public abstract fun cameraForGeometry (Lcom/mapbox/geojson/Geometry;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Ljava/lang/Double;)Lcom/mapbox/maps/CameraOptions;
+	public abstract fun coordinateBoundsForCamera (Lcom/mapbox/maps/CameraOptions;)Lcom/mapbox/maps/CoordinateBounds;
+	public abstract fun coordinateBoundsZoomForCamera (Lcom/mapbox/maps/CameraOptions;)Lcom/mapbox/maps/CoordinateBoundsZoom;
+	public abstract fun coordinateBoundsZoomForCameraUnwrapped (Lcom/mapbox/maps/CameraOptions;)Lcom/mapbox/maps/CoordinateBoundsZoom;
+	public abstract fun coordinateForPixel (Lcom/mapbox/maps/ScreenCoordinate;)Lcom/mapbox/geojson/Point;
+	public abstract fun coordinatesForPixels (Ljava/util/List;)Ljava/util/List;
+	public abstract fun dragEnd ()V
+	public abstract fun dragStart (Lcom/mapbox/maps/ScreenCoordinate;)V
+	public abstract fun getBounds ()Lcom/mapbox/maps/CameraBounds;
+	public abstract fun getCameraState ()Lcom/mapbox/maps/CameraState;
+	public abstract fun getDragCameraOptions (Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/ScreenCoordinate;)Lcom/mapbox/maps/CameraOptions;
+	public abstract fun getFreeCameraOptions ()Lcom/mapbox/maps/FreeCameraOptions;
+	public abstract fun pixelForCoordinate (Lcom/mapbox/geojson/Point;)Lcom/mapbox/maps/ScreenCoordinate;
+	public abstract fun pixelsForCoordinates (Ljava/util/List;)Ljava/util/List;
+	public abstract fun setBounds (Lcom/mapbox/maps/CameraBoundsOptions;)Lcom/mapbox/bindgen/Expected;
+	public abstract fun setCamera (Lcom/mapbox/maps/CameraOptions;)V
+	public abstract fun setCamera (Lcom/mapbox/maps/FreeCameraOptions;)V
+}
+
+public final class com/mapbox/maps/plugin/delegates/MapCameraManagerDelegate$DefaultImpls {
+	public static synthetic fun cameraForCoordinateBounds$default (Lcom/mapbox/maps/plugin/delegates/MapCameraManagerDelegate;Lcom/mapbox/maps/CoordinateBounds;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Ljava/lang/Double;ILjava/lang/Object;)Lcom/mapbox/maps/CameraOptions;
+	public static synthetic fun cameraForCoordinates$default (Lcom/mapbox/maps/plugin/delegates/MapCameraManagerDelegate;Ljava/util/List;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Ljava/lang/Double;ILjava/lang/Object;)Lcom/mapbox/maps/CameraOptions;
+	public static synthetic fun cameraForGeometry$default (Lcom/mapbox/maps/plugin/delegates/MapCameraManagerDelegate;Lcom/mapbox/geojson/Geometry;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Ljava/lang/Double;ILjava/lang/Object;)Lcom/mapbox/maps/CameraOptions;
+}
+
+public abstract interface class com/mapbox/maps/plugin/delegates/MapDelegateProvider {
+	public abstract fun getMapAttributionDelegate ()Lcom/mapbox/maps/plugin/delegates/MapAttributionDelegate;
+	public abstract fun getMapCameraManagerDelegate ()Lcom/mapbox/maps/plugin/delegates/MapCameraManagerDelegate;
+	public abstract fun getMapFeatureQueryDelegate ()Lcom/mapbox/maps/plugin/delegates/MapFeatureQueryDelegate;
+	public abstract fun getMapListenerDelegate ()Lcom/mapbox/maps/plugin/delegates/MapListenerDelegate;
+	public abstract fun getMapPluginProviderDelegate ()Lcom/mapbox/maps/plugin/delegates/MapPluginProviderDelegate;
+	public abstract fun getMapProjectionDelegate ()Lcom/mapbox/maps/plugin/delegates/MapProjectionDelegate;
+	public abstract fun getMapTransformDelegate ()Lcom/mapbox/maps/plugin/delegates/MapTransformDelegate;
+	public abstract fun getStyle (Lkotlin/jvm/functions/Function1;)V
+	public abstract fun getStyleStateDelegate ()Lcom/mapbox/maps/plugin/delegates/MapStyleStateDelegate;
+}
+
+public abstract interface class com/mapbox/maps/plugin/delegates/MapFeatureQueryDelegate {
+	public abstract fun executeOnRenderThread (Ljava/lang/Runnable;)V
+	public abstract fun queryRenderedFeatures (Lcom/mapbox/maps/RenderedQueryGeometry;Lcom/mapbox/maps/RenderedQueryOptions;Lcom/mapbox/maps/QueryFeaturesCallback;)Lcom/mapbox/common/Cancelable;
+	public abstract fun queryRenderedFeatures (Lcom/mapbox/maps/ScreenBox;Lcom/mapbox/maps/RenderedQueryOptions;Lcom/mapbox/maps/QueryFeaturesCallback;)V
+	public abstract fun queryRenderedFeatures (Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/RenderedQueryOptions;Lcom/mapbox/maps/QueryFeaturesCallback;)V
+	public abstract fun queryRenderedFeatures (Ljava/util/List;Lcom/mapbox/maps/RenderedQueryOptions;Lcom/mapbox/maps/QueryFeaturesCallback;)V
+	public abstract fun querySourceFeatures (Ljava/lang/String;Lcom/mapbox/maps/SourceQueryOptions;Lcom/mapbox/maps/QueryFeaturesCallback;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/delegates/MapListenerDelegate {
+	public abstract fun addOnCameraChangeListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnCameraChangeListener;)V
+	public abstract fun addOnMapIdleListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnMapIdleListener;)V
+	public abstract fun addOnMapLoadErrorListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnMapLoadErrorListener;)V
+	public abstract fun addOnMapLoadedListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnMapLoadedListener;)V
+	public abstract fun addOnRenderFrameFinishedListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnRenderFrameFinishedListener;)V
+	public abstract fun addOnRenderFrameStartedListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnRenderFrameStartedListener;)V
+	public abstract fun addOnSourceAddedListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnSourceAddedListener;)V
+	public abstract fun addOnSourceDataLoadedListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnSourceDataLoadedListener;)V
+	public abstract fun addOnSourceRemovedListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnSourceRemovedListener;)V
+	public abstract fun addOnStyleDataLoadedListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnStyleDataLoadedListener;)V
+	public abstract fun addOnStyleImageMissingListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnStyleImageMissingListener;)V
+	public abstract fun addOnStyleImageUnusedListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnStyleImageUnusedListener;)V
+	public abstract fun addOnStyleLoadedListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnStyleLoadedListener;)V
+	public abstract fun removeOnCameraChangeListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnCameraChangeListener;)V
+	public abstract fun removeOnMapIdleListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnMapIdleListener;)V
+	public abstract fun removeOnMapLoadErrorListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnMapLoadErrorListener;)V
+	public abstract fun removeOnMapLoadedListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnMapLoadedListener;)V
+	public abstract fun removeOnRenderFrameFinishedListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnRenderFrameFinishedListener;)V
+	public abstract fun removeOnRenderFrameStartedListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnRenderFrameStartedListener;)V
+	public abstract fun removeOnSourceAddedListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnSourceAddedListener;)V
+	public abstract fun removeOnSourceDataLoadedListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnSourceDataLoadedListener;)V
+	public abstract fun removeOnSourceRemovedListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnSourceRemovedListener;)V
+	public abstract fun removeOnStyleDataLoadedListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnStyleDataLoadedListener;)V
+	public abstract fun removeOnStyleImageMissingListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnStyleImageMissingListener;)V
+	public abstract fun removeOnStyleImageUnusedListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnStyleImageUnusedListener;)V
+	public abstract fun removeOnStyleLoadedListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnStyleLoadedListener;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/delegates/MapPluginExtensionsDelegate {
+	public abstract fun cameraAnimationsPlugin (Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public abstract fun gesturesPlugin (Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+}
+
+public abstract interface class com/mapbox/maps/plugin/delegates/MapPluginProviderDelegate {
+	public abstract fun getPlugin (Ljava/lang/String;)Lcom/mapbox/maps/plugin/MapPlugin;
+}
+
+public abstract interface class com/mapbox/maps/plugin/delegates/MapProjectionDelegate {
+	public abstract fun coordinateForProjectedMeters (Lcom/mapbox/maps/ProjectedMeters;)Lcom/mapbox/geojson/Point;
+	public abstract fun getMapProjection ()Lcom/mapbox/maps/plugin/MapProjection;
+	public abstract fun getMetersPerPixelAtLatitude (D)D
+	public abstract fun getMetersPerPixelAtLatitude (DD)D
+	public abstract fun project (Lcom/mapbox/geojson/Point;D)Lcom/mapbox/maps/MercatorCoordinate;
+	public abstract fun projectedMetersForCoordinate (Lcom/mapbox/geojson/Point;)Lcom/mapbox/maps/ProjectedMeters;
+	public abstract fun setMapProjection (Lcom/mapbox/maps/plugin/MapProjection;)V
+	public abstract fun unproject (Lcom/mapbox/maps/MercatorCoordinate;D)Lcom/mapbox/geojson/Point;
+}
+
+public abstract interface class com/mapbox/maps/plugin/delegates/MapStyleStateDelegate {
+	public abstract fun isFullyLoaded ()Z
+}
+
+public abstract interface class com/mapbox/maps/plugin/delegates/MapTransformDelegate {
+	public abstract fun getMapOptions ()Lcom/mapbox/maps/MapOptions;
+	public abstract fun getSize ()Lcom/mapbox/maps/Size;
+	public abstract fun isGestureInProgress ()Z
+	public abstract fun isUserAnimationInProgress ()Z
+	public abstract fun setConstrainMode (Lcom/mapbox/maps/ConstrainMode;)V
+	public abstract fun setGestureInProgress (Z)V
+	public abstract fun setNorthOrientation (Lcom/mapbox/maps/NorthOrientation;)V
+	public abstract fun setUserAnimationInProgress (Z)V
+	public abstract fun setViewportMode (Lcom/mapbox/maps/ViewportMode;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/delegates/listeners/OnCameraChangeListener {
+	public abstract fun onCameraChanged (Lcom/mapbox/maps/extension/observable/eventdata/CameraChangedEventData;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/delegates/listeners/OnMapIdleListener {
+	public abstract fun onMapIdle (Lcom/mapbox/maps/extension/observable/eventdata/MapIdleEventData;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/delegates/listeners/OnMapLoadErrorListener {
+	public abstract fun onMapLoadError (Lcom/mapbox/maps/extension/observable/eventdata/MapLoadingErrorEventData;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/delegates/listeners/OnMapLoadedListener {
+	public abstract fun onMapLoaded (Lcom/mapbox/maps/extension/observable/eventdata/MapLoadedEventData;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/delegates/listeners/OnRenderFrameFinishedListener {
+	public abstract fun onRenderFrameFinished (Lcom/mapbox/maps/extension/observable/eventdata/RenderFrameFinishedEventData;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/delegates/listeners/OnRenderFrameStartedListener {
+	public abstract fun onRenderFrameStarted (Lcom/mapbox/maps/extension/observable/eventdata/RenderFrameStartedEventData;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/delegates/listeners/OnSourceAddedListener {
+	public abstract fun onSourceAdded (Lcom/mapbox/maps/extension/observable/eventdata/SourceAddedEventData;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/delegates/listeners/OnSourceDataLoadedListener {
+	public abstract fun onSourceDataLoaded (Lcom/mapbox/maps/extension/observable/eventdata/SourceDataLoadedEventData;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/delegates/listeners/OnSourceRemovedListener {
+	public abstract fun onSourceRemoved (Lcom/mapbox/maps/extension/observable/eventdata/SourceRemovedEventData;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/delegates/listeners/OnStyleDataLoadedListener {
+	public abstract fun onStyleDataLoaded (Lcom/mapbox/maps/extension/observable/eventdata/StyleDataLoadedEventData;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/delegates/listeners/OnStyleImageMissingListener {
+	public abstract fun onStyleImageMissing (Lcom/mapbox/maps/extension/observable/eventdata/StyleImageMissingEventData;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/delegates/listeners/OnStyleImageUnusedListener {
+	public abstract fun onStyleImageUnused (Lcom/mapbox/maps/extension/observable/eventdata/StyleImageUnusedEventData;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/delegates/listeners/OnStyleLoadedListener {
+	public abstract fun onStyleLoaded (Lcom/mapbox/maps/extension/observable/eventdata/StyleLoadedEventData;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/gestures/GesturesPlugin : com/mapbox/maps/plugin/ContextBinder, com/mapbox/maps/plugin/MapPlugin, com/mapbox/maps/plugin/MapSizePlugin, com/mapbox/maps/plugin/gestures/generated/GesturesSettingsInterface {
+	public abstract fun addOnFlingListener (Lcom/mapbox/maps/plugin/gestures/OnFlingListener;)V
+	public abstract fun addOnMapClickListener (Lcom/mapbox/maps/plugin/gestures/OnMapClickListener;)V
+	public abstract fun addOnMapLongClickListener (Lcom/mapbox/maps/plugin/gestures/OnMapLongClickListener;)V
+	public abstract fun addOnMoveListener (Lcom/mapbox/maps/plugin/gestures/OnMoveListener;)V
+	public abstract fun addOnRotateListener (Lcom/mapbox/maps/plugin/gestures/OnRotateListener;)V
+	public abstract fun addOnScaleListener (Lcom/mapbox/maps/plugin/gestures/OnScaleListener;)V
+	public abstract fun addOnShoveListener (Lcom/mapbox/maps/plugin/gestures/OnShoveListener;)V
+	public abstract fun addProtectedAnimationOwner (Ljava/lang/String;)V
+	public abstract fun getGesturesManager ()Lcom/mapbox/android/gestures/AndroidGesturesManager;
+	public abstract fun onGenericMotionEvent (Landroid/view/MotionEvent;)Z
+	public abstract fun onTouchEvent (Landroid/view/MotionEvent;)Z
+	public abstract fun removeOnFlingListener (Lcom/mapbox/maps/plugin/gestures/OnFlingListener;)V
+	public abstract fun removeOnMapClickListener (Lcom/mapbox/maps/plugin/gestures/OnMapClickListener;)V
+	public abstract fun removeOnMapLongClickListener (Lcom/mapbox/maps/plugin/gestures/OnMapLongClickListener;)V
+	public abstract fun removeOnMoveListener (Lcom/mapbox/maps/plugin/gestures/OnMoveListener;)V
+	public abstract fun removeOnRotateListener (Lcom/mapbox/maps/plugin/gestures/OnRotateListener;)V
+	public abstract fun removeOnScaleListener (Lcom/mapbox/maps/plugin/gestures/OnScaleListener;)V
+	public abstract fun removeOnShoveListener (Lcom/mapbox/maps/plugin/gestures/OnShoveListener;)V
+	public abstract fun removeProtectedAnimationOwner (Ljava/lang/String;)V
+	public abstract fun setGesturesManager (Lcom/mapbox/android/gestures/AndroidGesturesManager;ZZ)V
+}
+
+public final class com/mapbox/maps/plugin/gestures/GesturesPlugin$DefaultImpls {
+	public static fun cleanup (Lcom/mapbox/maps/plugin/gestures/GesturesPlugin;)V
+	public static fun initialize (Lcom/mapbox/maps/plugin/gestures/GesturesPlugin;)V
+	public static fun onDelegateProvider (Lcom/mapbox/maps/plugin/gestures/GesturesPlugin;Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+	public static fun onSizeChanged (Lcom/mapbox/maps/plugin/gestures/GesturesPlugin;II)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/gestures/OnFlingListener {
+	public abstract fun onFling ()V
+}
+
+public abstract interface class com/mapbox/maps/plugin/gestures/OnMapClickListener {
+	public abstract fun onMapClick (Lcom/mapbox/geojson/Point;)Z
+}
+
+public abstract interface class com/mapbox/maps/plugin/gestures/OnMapLongClickListener {
+	public abstract fun onMapLongClick (Lcom/mapbox/geojson/Point;)Z
+}
+
+public abstract interface class com/mapbox/maps/plugin/gestures/OnMoveListener {
+	public abstract fun onMove (Lcom/mapbox/android/gestures/MoveGestureDetector;)Z
+	public abstract fun onMoveBegin (Lcom/mapbox/android/gestures/MoveGestureDetector;)V
+	public abstract fun onMoveEnd (Lcom/mapbox/android/gestures/MoveGestureDetector;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/gestures/OnRotateListener {
+	public abstract fun onRotate (Lcom/mapbox/android/gestures/RotateGestureDetector;)V
+	public abstract fun onRotateBegin (Lcom/mapbox/android/gestures/RotateGestureDetector;)V
+	public abstract fun onRotateEnd (Lcom/mapbox/android/gestures/RotateGestureDetector;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/gestures/OnScaleListener {
+	public abstract fun onScale (Lcom/mapbox/android/gestures/StandardScaleGestureDetector;)V
+	public abstract fun onScaleBegin (Lcom/mapbox/android/gestures/StandardScaleGestureDetector;)V
+	public abstract fun onScaleEnd (Lcom/mapbox/android/gestures/StandardScaleGestureDetector;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/gestures/OnShoveListener {
+	public abstract fun onShove (Lcom/mapbox/android/gestures/ShoveGestureDetector;)V
+	public abstract fun onShoveBegin (Lcom/mapbox/android/gestures/ShoveGestureDetector;)V
+	public abstract fun onShoveEnd (Lcom/mapbox/android/gestures/ShoveGestureDetector;)V
+}
+
+public final class com/mapbox/maps/plugin/gestures/generated/GesturesSettings {
+	public fun <init> ()V
+	public fun <init> (Z)V
+	public fun <init> (ZZ)V
+	public fun <init> (ZZZ)V
+	public fun <init> (ZZZZ)V
+	public fun <init> (ZZZZZ)V
+	public fun <init> (ZZZZZLcom/mapbox/maps/plugin/ScrollMode;)V
+	public fun <init> (ZZZZZLcom/mapbox/maps/plugin/ScrollMode;Z)V
+	public fun <init> (ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZ)V
+	public fun <init> (ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZZ)V
+	public fun <init> (ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZZLcom/mapbox/maps/ScreenCoordinate;)V
+	public fun <init> (ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZZLcom/mapbox/maps/ScreenCoordinate;Z)V
+	public fun <init> (ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZZLcom/mapbox/maps/ScreenCoordinate;ZZ)V
+	public fun <init> (ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZZLcom/mapbox/maps/ScreenCoordinate;ZZZ)V
+	public fun <init> (ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZZLcom/mapbox/maps/ScreenCoordinate;ZZZZ)V
+	public fun <init> (ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZZLcom/mapbox/maps/ScreenCoordinate;ZZZZZ)V
+	public fun <init> (ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZZLcom/mapbox/maps/ScreenCoordinate;ZZZZZF)V
+	public synthetic fun <init> (ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZZLcom/mapbox/maps/ScreenCoordinate;ZZZZZFILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Z
+	public final fun component10 ()Lcom/mapbox/maps/ScreenCoordinate;
+	public final fun component11 ()Z
+	public final fun component12 ()Z
+	public final fun component13 ()Z
+	public final fun component14 ()Z
+	public final fun component15 ()Z
+	public final fun component16 ()F
+	public final fun component2 ()Z
+	public final fun component3 ()Z
+	public final fun component4 ()Z
+	public final fun component5 ()Z
+	public final fun component6 ()Lcom/mapbox/maps/plugin/ScrollMode;
+	public final fun component7 ()Z
+	public final fun component8 ()Z
+	public final fun component9 ()Z
+	public final fun copy (ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZZLcom/mapbox/maps/ScreenCoordinate;ZZZZZF)Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZZLcom/mapbox/maps/ScreenCoordinate;ZZZZZFILjava/lang/Object;)Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDoubleTapToZoomInEnabled ()Z
+	public final fun getDoubleTouchToZoomOutEnabled ()Z
+	public final fun getFocalPoint ()Lcom/mapbox/maps/ScreenCoordinate;
+	public final fun getIncreasePinchToZoomThresholdWhenRotating ()Z
+	public final fun getIncreaseRotateThresholdWhenPinchingToZoom ()Z
+	public final fun getPinchToZoomDecelerationEnabled ()Z
+	public final fun getPinchToZoomEnabled ()Z
+	public final fun getPitchEnabled ()Z
+	public final fun getQuickZoomEnabled ()Z
+	public final fun getRotateDecelerationEnabled ()Z
+	public final fun getRotateEnabled ()Z
+	public final fun getScrollDecelerationEnabled ()Z
+	public final fun getScrollEnabled ()Z
+	public final fun getScrollMode ()Lcom/mapbox/maps/plugin/ScrollMode;
+	public final fun getSimultaneousRotateAndPinchToZoomEnabled ()Z
+	public final fun getZoomAnimationAmount ()F
+	public fun hashCode ()I
+	public final fun setDoubleTapToZoomInEnabled (Z)V
+	public final fun setDoubleTouchToZoomOutEnabled (Z)V
+	public final fun setFocalPoint (Lcom/mapbox/maps/ScreenCoordinate;)V
+	public final fun setIncreasePinchToZoomThresholdWhenRotating (Z)V
+	public final fun setIncreaseRotateThresholdWhenPinchingToZoom (Z)V
+	public final fun setPinchToZoomDecelerationEnabled (Z)V
+	public final fun setPinchToZoomEnabled (Z)V
+	public final fun setPitchEnabled (Z)V
+	public final fun setQuickZoomEnabled (Z)V
+	public final fun setRotateDecelerationEnabled (Z)V
+	public final fun setRotateEnabled (Z)V
+	public final fun setScrollDecelerationEnabled (Z)V
+	public final fun setScrollEnabled (Z)V
+	public final fun setScrollMode (Lcom/mapbox/maps/plugin/ScrollMode;)V
+	public final fun setSimultaneousRotateAndPinchToZoomEnabled (Z)V
+	public final fun setZoomAnimationAmount (F)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class com/mapbox/maps/plugin/gestures/generated/GesturesSettingsBase : com/mapbox/maps/plugin/gestures/generated/GesturesSettingsInterface {
+	public fun <init> ()V
+	protected abstract fun applySettings ()V
+	public fun getDoubleTapToZoomInEnabled ()Z
+	public fun getDoubleTouchToZoomOutEnabled ()Z
+	public fun getFocalPoint ()Lcom/mapbox/maps/ScreenCoordinate;
+	public fun getIncreasePinchToZoomThresholdWhenRotating ()Z
+	public fun getIncreaseRotateThresholdWhenPinchingToZoom ()Z
+	protected abstract fun getInternalSettings ()Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;
+	public fun getPinchToZoomDecelerationEnabled ()Z
+	public fun getPinchToZoomEnabled ()Z
+	public fun getPitchEnabled ()Z
+	public fun getQuickZoomEnabled ()Z
+	public fun getRotateDecelerationEnabled ()Z
+	public fun getRotateEnabled ()Z
+	public fun getScrollDecelerationEnabled ()Z
+	public fun getScrollEnabled ()Z
+	public fun getScrollMode ()Lcom/mapbox/maps/plugin/ScrollMode;
+	public fun getSettings ()Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;
+	public fun getSimultaneousRotateAndPinchToZoomEnabled ()Z
+	public fun getZoomAnimationAmount ()F
+	public fun setDoubleTapToZoomInEnabled (Z)V
+	public fun setDoubleTouchToZoomOutEnabled (Z)V
+	public fun setFocalPoint (Lcom/mapbox/maps/ScreenCoordinate;)V
+	public fun setIncreasePinchToZoomThresholdWhenRotating (Z)V
+	public fun setIncreaseRotateThresholdWhenPinchingToZoom (Z)V
+	protected abstract fun setInternalSettings (Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;)V
+	public fun setPinchToZoomDecelerationEnabled (Z)V
+	public fun setPinchToZoomEnabled (Z)V
+	public fun setPitchEnabled (Z)V
+	public fun setQuickZoomEnabled (Z)V
+	public fun setRotateDecelerationEnabled (Z)V
+	public fun setRotateEnabled (Z)V
+	public fun setScrollDecelerationEnabled (Z)V
+	public fun setScrollEnabled (Z)V
+	public fun setScrollMode (Lcom/mapbox/maps/plugin/ScrollMode;)V
+	public fun setSimultaneousRotateAndPinchToZoomEnabled (Z)V
+	public fun setZoomAnimationAmount (F)V
+	public fun updateSettings (Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/gestures/generated/GesturesSettingsInterface {
+	public abstract fun getDoubleTapToZoomInEnabled ()Z
+	public abstract fun getDoubleTouchToZoomOutEnabled ()Z
+	public abstract fun getFocalPoint ()Lcom/mapbox/maps/ScreenCoordinate;
+	public abstract fun getIncreasePinchToZoomThresholdWhenRotating ()Z
+	public abstract fun getIncreaseRotateThresholdWhenPinchingToZoom ()Z
+	public abstract fun getPinchToZoomDecelerationEnabled ()Z
+	public abstract fun getPinchToZoomEnabled ()Z
+	public abstract fun getPitchEnabled ()Z
+	public abstract fun getQuickZoomEnabled ()Z
+	public abstract fun getRotateDecelerationEnabled ()Z
+	public abstract fun getRotateEnabled ()Z
+	public abstract fun getScrollDecelerationEnabled ()Z
+	public abstract fun getScrollEnabled ()Z
+	public abstract fun getScrollMode ()Lcom/mapbox/maps/plugin/ScrollMode;
+	public abstract fun getSettings ()Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;
+	public abstract fun getSimultaneousRotateAndPinchToZoomEnabled ()Z
+	public abstract fun getZoomAnimationAmount ()F
+	public abstract fun setDoubleTapToZoomInEnabled (Z)V
+	public abstract fun setDoubleTouchToZoomOutEnabled (Z)V
+	public abstract fun setFocalPoint (Lcom/mapbox/maps/ScreenCoordinate;)V
+	public abstract fun setIncreasePinchToZoomThresholdWhenRotating (Z)V
+	public abstract fun setIncreaseRotateThresholdWhenPinchingToZoom (Z)V
+	public abstract fun setPinchToZoomDecelerationEnabled (Z)V
+	public abstract fun setPinchToZoomEnabled (Z)V
+	public abstract fun setPitchEnabled (Z)V
+	public abstract fun setQuickZoomEnabled (Z)V
+	public abstract fun setRotateDecelerationEnabled (Z)V
+	public abstract fun setRotateEnabled (Z)V
+	public abstract fun setScrollDecelerationEnabled (Z)V
+	public abstract fun setScrollEnabled (Z)V
+	public abstract fun setScrollMode (Lcom/mapbox/maps/plugin/ScrollMode;)V
+	public abstract fun setSimultaneousRotateAndPinchToZoomEnabled (Z)V
+	public abstract fun setZoomAnimationAmount (F)V
+	public abstract fun updateSettings (Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/lifecycle/MapboxLifecyclePlugin : com/mapbox/maps/plugin/MapPlugin {
+	public abstract fun registerLifecycleObserver (Landroid/view/View;Lcom/mapbox/maps/MapboxLifecycleObserver;)V
+}
+
+public final class com/mapbox/maps/plugin/lifecycle/MapboxLifecyclePlugin$DefaultImpls {
+	public static fun cleanup (Lcom/mapbox/maps/plugin/lifecycle/MapboxLifecyclePlugin;)V
+	public static fun initialize (Lcom/mapbox/maps/plugin/lifecycle/MapboxLifecyclePlugin;)V
+	public static fun onDelegateProvider (Lcom/mapbox/maps/plugin/lifecycle/MapboxLifecyclePlugin;Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin : com/mapbox/maps/plugin/ContextBinder, com/mapbox/maps/plugin/LifecyclePlugin, com/mapbox/maps/plugin/MapPlugin, com/mapbox/maps/plugin/MapStyleObserverPlugin, com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettingsInterface {
+	public abstract fun addOnIndicatorBearingChangedListener (Lcom/mapbox/maps/plugin/locationcomponent/OnIndicatorBearingChangedListener;)V
+	public abstract fun addOnIndicatorPositionChangedListener (Lcom/mapbox/maps/plugin/locationcomponent/OnIndicatorPositionChangedListener;)V
+	public abstract fun getLocationProvider ()Lcom/mapbox/maps/plugin/locationcomponent/LocationProvider;
+	public abstract fun isLocatedAt (Lcom/mapbox/geojson/Point;Lcom/mapbox/maps/plugin/locationcomponent/PuckLocatedAtPointListener;)V
+	public abstract fun removeOnIndicatorBearingChangedListener (Lcom/mapbox/maps/plugin/locationcomponent/OnIndicatorBearingChangedListener;)V
+	public abstract fun removeOnIndicatorPositionChangedListener (Lcom/mapbox/maps/plugin/locationcomponent/OnIndicatorPositionChangedListener;)V
+	public abstract fun setLocationProvider (Lcom/mapbox/maps/plugin/locationcomponent/LocationProvider;)V
+}
+
+public final class com/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin$DefaultImpls {
+	public static fun cleanup (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin;)V
+	public static fun initialize (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin;)V
+	public static fun onDelegateProvider (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin;Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+	public static fun onStart (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin;)V
+	public static fun onStop (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin2 : com/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin, com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettingsInterface2 {
+	public abstract fun addOnIndicatorAccuracyRadiusChangedListener (Lcom/mapbox/maps/plugin/locationcomponent/OnIndicatorAccuracyRadiusChangedListener;)V
+	public abstract fun removeOnIndicatorAccuracyRadiusChangedListener (Lcom/mapbox/maps/plugin/locationcomponent/OnIndicatorAccuracyRadiusChangedListener;)V
+}
+
+public final class com/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin2$DefaultImpls {
+	public static fun cleanup (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin2;)V
+	public static fun initialize (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin2;)V
+	public static fun onDelegateProvider (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin2;Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+	public static fun onStart (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin2;)V
+	public static fun onStop (Lcom/mapbox/maps/plugin/locationcomponent/LocationComponentPlugin2;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/locationcomponent/LocationConsumer {
+	public abstract fun onBearingUpdated ([DLkotlin/jvm/functions/Function1;)V
+	public abstract fun onLocationUpdated ([Lcom/mapbox/geojson/Point;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun onPuckBearingAnimatorDefaultOptionsUpdated (Lkotlin/jvm/functions/Function1;)V
+	public abstract fun onPuckLocationAnimatorDefaultOptionsUpdated (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class com/mapbox/maps/plugin/locationcomponent/LocationConsumer$DefaultImpls {
+	public static synthetic fun onBearingUpdated$default (Lcom/mapbox/maps/plugin/locationcomponent/LocationConsumer;[DLkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static synthetic fun onLocationUpdated$default (Lcom/mapbox/maps/plugin/locationcomponent/LocationConsumer;[Lcom/mapbox/geojson/Point;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/locationcomponent/LocationConsumer2 : com/mapbox/maps/plugin/locationcomponent/LocationConsumer {
+	public abstract fun onAccuracyRadiusUpdated ([DLkotlin/jvm/functions/Function1;)V
+	public abstract fun onPuckAccuracyRadiusAnimatorDefaultOptionsUpdated (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class com/mapbox/maps/plugin/locationcomponent/LocationConsumer2$DefaultImpls {
+	public static synthetic fun onAccuracyRadiusUpdated$default (Lcom/mapbox/maps/plugin/locationcomponent/LocationConsumer2;[DLkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/locationcomponent/LocationProvider {
+	public abstract fun registerLocationConsumer (Lcom/mapbox/maps/plugin/locationcomponent/LocationConsumer;)V
+	public abstract fun unRegisterLocationConsumer (Lcom/mapbox/maps/plugin/locationcomponent/LocationConsumer;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/locationcomponent/OnIndicatorAccuracyRadiusChangedListener {
+	public abstract fun onIndicatorAccuracyRadiusChanged (D)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/locationcomponent/OnIndicatorBearingChangedListener {
+	public abstract fun onIndicatorBearingChanged (D)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/locationcomponent/OnIndicatorPositionChangedListener {
+	public abstract fun onIndicatorPositionChanged (Lcom/mapbox/geojson/Point;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/locationcomponent/PuckLocatedAtPointListener {
+	public abstract fun onResult (Z)V
+}
+
+public final class com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings {
+	public fun <init> (Lcom/mapbox/maps/plugin/LocationPuck;)V
+	public fun <init> (ZLcom/mapbox/maps/plugin/LocationPuck;)V
+	public fun <init> (ZZIFLcom/mapbox/maps/plugin/LocationPuck;)V
+	public fun <init> (ZZIFLjava/lang/String;Lcom/mapbox/maps/plugin/LocationPuck;)V
+	public fun <init> (ZZIFLjava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/plugin/LocationPuck;)V
+	public synthetic fun <init> (ZZIFLjava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/plugin/LocationPuck;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (ZZILcom/mapbox/maps/plugin/LocationPuck;)V
+	public fun <init> (ZZLcom/mapbox/maps/plugin/LocationPuck;)V
+	public final fun component1 ()Z
+	public final fun component2 ()Z
+	public final fun component3 ()I
+	public final fun component4 ()F
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Lcom/mapbox/maps/plugin/LocationPuck;
+	public final fun copy (ZZIFLjava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/plugin/LocationPuck;)Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings;ZZIFLjava/lang/String;Ljava/lang/String;Lcom/mapbox/maps/plugin/LocationPuck;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEnabled ()Z
+	public final fun getLayerAbove ()Ljava/lang/String;
+	public final fun getLayerBelow ()Ljava/lang/String;
+	public final fun getLocationPuck ()Lcom/mapbox/maps/plugin/LocationPuck;
+	public final fun getPulsingColor ()I
+	public final fun getPulsingEnabled ()Z
+	public final fun getPulsingMaxRadius ()F
+	public fun hashCode ()I
+	public final fun setEnabled (Z)V
+	public final fun setLayerAbove (Ljava/lang/String;)V
+	public final fun setLayerBelow (Ljava/lang/String;)V
+	public final fun setLocationPuck (Lcom/mapbox/maps/plugin/LocationPuck;)V
+	public final fun setPulsingColor (I)V
+	public final fun setPulsingEnabled (Z)V
+	public final fun setPulsingMaxRadius (F)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2 {
+	public fun <init> ()V
+	public fun <init> (Z)V
+	public fun <init> (ZI)V
+	public fun <init> (ZII)V
+	public synthetic fun <init> (ZIIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Z
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun copy (ZII)Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;ZIIILjava/lang/Object;)Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAccuracyRingBorderColor ()I
+	public final fun getAccuracyRingColor ()I
+	public final fun getShowAccuracyRing ()Z
+	public fun hashCode ()I
+	public final fun setAccuracyRingBorderColor (I)V
+	public final fun setAccuracyRingColor (I)V
+	public final fun setShowAccuracyRing (Z)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettingsBase : com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettingsInterface {
+	public fun <init> ()V
+	protected abstract fun applySettings ()V
+	public fun getEnabled ()Z
+	protected abstract fun getInternalSettings ()Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings;
+	public fun getLayerAbove ()Ljava/lang/String;
+	public fun getLayerBelow ()Ljava/lang/String;
+	public fun getLocationPuck ()Lcom/mapbox/maps/plugin/LocationPuck;
+	public fun getPulsingColor ()I
+	public fun getPulsingEnabled ()Z
+	public fun getPulsingMaxRadius ()F
+	public fun getSettings ()Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings;
+	public fun setEnabled (Z)V
+	protected abstract fun setInternalSettings (Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings;)V
+	public fun setLayerAbove (Ljava/lang/String;)V
+	public fun setLayerBelow (Ljava/lang/String;)V
+	public fun setLocationPuck (Lcom/mapbox/maps/plugin/LocationPuck;)V
+	public fun setPulsingColor (I)V
+	public fun setPulsingEnabled (Z)V
+	public fun setPulsingMaxRadius (F)V
+	public fun updateSettings (Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract class com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettingsBase2 : com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettingsBase, com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettingsInterface2 {
+	public fun <init> ()V
+	protected abstract fun applySettings2 ()V
+	public fun getAccuracyRingBorderColor ()I
+	public fun getAccuracyRingColor ()I
+	protected abstract fun getInternalSettings2 ()Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;
+	public fun getSettings2 ()Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;
+	public fun getShowAccuracyRing ()Z
+	public fun setAccuracyRingBorderColor (I)V
+	public fun setAccuracyRingColor (I)V
+	protected abstract fun setInternalSettings2 (Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;)V
+	public fun setShowAccuracyRing (Z)V
+	public fun updateSettings2 (Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettingsInterface {
+	public abstract fun getEnabled ()Z
+	public abstract fun getLayerAbove ()Ljava/lang/String;
+	public abstract fun getLayerBelow ()Ljava/lang/String;
+	public abstract fun getLocationPuck ()Lcom/mapbox/maps/plugin/LocationPuck;
+	public abstract fun getPulsingColor ()I
+	public abstract fun getPulsingEnabled ()Z
+	public abstract fun getPulsingMaxRadius ()F
+	public abstract fun getSettings ()Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings;
+	public abstract fun setEnabled (Z)V
+	public abstract fun setLayerAbove (Ljava/lang/String;)V
+	public abstract fun setLayerBelow (Ljava/lang/String;)V
+	public abstract fun setLocationPuck (Lcom/mapbox/maps/plugin/LocationPuck;)V
+	public abstract fun setPulsingColor (I)V
+	public abstract fun setPulsingEnabled (Z)V
+	public abstract fun setPulsingMaxRadius (F)V
+	public abstract fun updateSettings (Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettingsInterface2 : com/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettingsInterface {
+	public abstract fun getAccuracyRingBorderColor ()I
+	public abstract fun getAccuracyRingColor ()I
+	public abstract fun getSettings2 ()Lcom/mapbox/maps/plugin/locationcomponent/generated/LocationComponentSettings2;
+	public abstract fun getShowAccuracyRing ()Z
+	public abstract fun setAccuracyRingBorderColor (I)V
+	public abstract fun setAccuracyRingColor (I)V
+	public abstract fun setShowAccuracyRing (Z)V
+	public abstract fun updateSettings2 (Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/logo/LogoPlugin : com/mapbox/maps/plugin/ViewPlugin, com/mapbox/maps/plugin/logo/generated/LogoSettingsInterface {
+}
+
+public final class com/mapbox/maps/plugin/logo/LogoPlugin$DefaultImpls {
+	public static fun cleanup (Lcom/mapbox/maps/plugin/logo/LogoPlugin;)V
+	public static fun initialize (Lcom/mapbox/maps/plugin/logo/LogoPlugin;)V
+	public static fun onDelegateProvider (Lcom/mapbox/maps/plugin/logo/LogoPlugin;Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+	public static fun onPluginView (Lcom/mapbox/maps/plugin/logo/LogoPlugin;Landroid/view/View;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/logo/LogoView {
+	public abstract fun getLogoEnabled ()Z
+	public abstract fun getLogoGravity ()I
+	public abstract fun requestLayout ()V
+	public abstract fun setLogoEnabled (Z)V
+	public abstract fun setLogoGravity (I)V
+	public abstract fun setLogoMargins (IIII)V
+}
+
+public final class com/mapbox/maps/plugin/logo/generated/LogoSettings {
+	public fun <init> ()V
+	public fun <init> (Z)V
+	public fun <init> (ZI)V
+	public fun <init> (ZIF)V
+	public fun <init> (ZIFF)V
+	public fun <init> (ZIFFF)V
+	public fun <init> (ZIFFFF)V
+	public synthetic fun <init> (ZIFFFFILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Z
+	public final fun component2 ()I
+	public final fun component3 ()F
+	public final fun component4 ()F
+	public final fun component5 ()F
+	public final fun component6 ()F
+	public final fun copy (ZIFFFF)Lcom/mapbox/maps/plugin/logo/generated/LogoSettings;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/logo/generated/LogoSettings;ZIFFFFILjava/lang/Object;)Lcom/mapbox/maps/plugin/logo/generated/LogoSettings;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEnabled ()Z
+	public final fun getMarginBottom ()F
+	public final fun getMarginLeft ()F
+	public final fun getMarginRight ()F
+	public final fun getMarginTop ()F
+	public final fun getPosition ()I
+	public fun hashCode ()I
+	public final fun setEnabled (Z)V
+	public final fun setMarginBottom (F)V
+	public final fun setMarginLeft (F)V
+	public final fun setMarginRight (F)V
+	public final fun setMarginTop (F)V
+	public final fun setPosition (I)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class com/mapbox/maps/plugin/logo/generated/LogoSettingsBase : com/mapbox/maps/plugin/logo/generated/LogoSettingsInterface {
+	public fun <init> ()V
+	protected abstract fun applySettings ()V
+	public fun getEnabled ()Z
+	protected abstract fun getInternalSettings ()Lcom/mapbox/maps/plugin/logo/generated/LogoSettings;
+	public fun getMarginBottom ()F
+	public fun getMarginLeft ()F
+	public fun getMarginRight ()F
+	public fun getMarginTop ()F
+	public fun getPosition ()I
+	public fun getSettings ()Lcom/mapbox/maps/plugin/logo/generated/LogoSettings;
+	public fun setEnabled (Z)V
+	protected abstract fun setInternalSettings (Lcom/mapbox/maps/plugin/logo/generated/LogoSettings;)V
+	public fun setMarginBottom (F)V
+	public fun setMarginLeft (F)V
+	public fun setMarginRight (F)V
+	public fun setMarginTop (F)V
+	public fun setPosition (I)V
+	public fun updateSettings (Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/logo/generated/LogoSettingsInterface {
+	public abstract fun getEnabled ()Z
+	public abstract fun getMarginBottom ()F
+	public abstract fun getMarginLeft ()F
+	public abstract fun getMarginRight ()F
+	public abstract fun getMarginTop ()F
+	public abstract fun getPosition ()I
+	public abstract fun getSettings ()Lcom/mapbox/maps/plugin/logo/generated/LogoSettings;
+	public abstract fun setEnabled (Z)V
+	public abstract fun setMarginBottom (F)V
+	public abstract fun setMarginLeft (F)V
+	public abstract fun setMarginRight (F)V
+	public abstract fun setMarginTop (F)V
+	public abstract fun setPosition (I)V
+	public abstract fun updateSettings (Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/overlay/MapOverlayCoordinatesProvider {
+	public abstract fun getShownCoordinates ()Ljava/util/List;
+}
+
+public abstract interface class com/mapbox/maps/plugin/overlay/MapOverlayPlugin : com/mapbox/maps/plugin/MapPlugin, com/mapbox/maps/plugin/MapSizePlugin {
+	public abstract fun getEdgeInsets ()Lcom/mapbox/maps/EdgeInsets;
+	public abstract fun reframe (Lcom/mapbox/maps/plugin/overlay/OnReframeFinished;)V
+	public abstract fun registerMapOverlayCoordinatesProvider (Lcom/mapbox/maps/plugin/overlay/MapOverlayCoordinatesProvider;)V
+	public abstract fun registerOverlay (Landroid/view/View;)V
+	public abstract fun registerOverlays (Ljava/util/List;)V
+	public abstract fun setDisplayingAreaMargins (IIII)V
+	public abstract fun unregisterMapOverlayCoordinatesProvider ()V
+	public abstract fun unregisterOverlay (Landroid/view/View;)V
+	public abstract fun unregisterOverlays (Ljava/util/List;)V
+}
+
+public final class com/mapbox/maps/plugin/overlay/MapOverlayPlugin$DefaultImpls {
+	public static fun cleanup (Lcom/mapbox/maps/plugin/overlay/MapOverlayPlugin;)V
+	public static fun initialize (Lcom/mapbox/maps/plugin/overlay/MapOverlayPlugin;)V
+	public static fun onDelegateProvider (Lcom/mapbox/maps/plugin/overlay/MapOverlayPlugin;Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+	public static fun onSizeChanged (Lcom/mapbox/maps/plugin/overlay/MapOverlayPlugin;II)V
+	public static synthetic fun reframe$default (Lcom/mapbox/maps/plugin/overlay/MapOverlayPlugin;Lcom/mapbox/maps/plugin/overlay/OnReframeFinished;ILjava/lang/Object;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/overlay/OnReframeFinished {
+	public abstract fun onReframeFinished (Lcom/mapbox/maps/CameraOptions;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/scalebar/ScaleBar {
+	public abstract fun getDistancePerPixel ()F
+	public abstract fun getEnable ()Z
+	public abstract fun getMapViewWidth ()F
+	public abstract fun getPixelRatio ()F
+	public abstract fun getSettings ()Lcom/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings;
+	public abstract fun getUseContinuousRendering ()Z
+	public abstract fun setDistancePerPixel (F)V
+	public abstract fun setEnable (Z)V
+	public abstract fun setMapViewWidth (F)V
+	public abstract fun setPixelRatio (F)V
+	public abstract fun setSettings (Lcom/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings;)V
+	public abstract fun setUseContinuousRendering (Z)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/scalebar/ScaleBarPlugin : com/mapbox/maps/plugin/MapSizePlugin, com/mapbox/maps/plugin/ViewPlugin, com/mapbox/maps/plugin/scalebar/generated/ScaleBarSettingsInterface {
+	public abstract fun getDistancePerPixel ()F
+	public abstract fun setDistancePerPixel (F)V
+}
+
+public final class com/mapbox/maps/plugin/scalebar/ScaleBarPlugin$DefaultImpls {
+	public static fun cleanup (Lcom/mapbox/maps/plugin/scalebar/ScaleBarPlugin;)V
+	public static fun initialize (Lcom/mapbox/maps/plugin/scalebar/ScaleBarPlugin;)V
+	public static fun onDelegateProvider (Lcom/mapbox/maps/plugin/scalebar/ScaleBarPlugin;Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+	public static fun onPluginView (Lcom/mapbox/maps/plugin/scalebar/ScaleBarPlugin;Landroid/view/View;)V
+	public static fun onSizeChanged (Lcom/mapbox/maps/plugin/scalebar/ScaleBarPlugin;II)V
+}
+
+public final class com/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings {
+	public fun <init> ()V
+	public fun <init> (Z)V
+	public fun <init> (ZI)V
+	public fun <init> (ZIF)V
+	public fun <init> (ZIFF)V
+	public fun <init> (ZIFFF)V
+	public fun <init> (ZIFFFF)V
+	public fun <init> (ZIFFFFI)V
+	public fun <init> (ZIFFFFII)V
+	public fun <init> (ZIFFFFIII)V
+	public fun <init> (ZIFFFFIIIF)V
+	public fun <init> (ZIFFFFIIIFF)V
+	public fun <init> (ZIFFFFIIIFFF)V
+	public fun <init> (ZIFFFFIIIFFFF)V
+	public fun <init> (ZIFFFFIIIFFFFF)V
+	public fun <init> (ZIFFFFIIIFFFFFZ)V
+	public fun <init> (ZIFFFFIIIFFFFFZJ)V
+	public fun <init> (ZIFFFFIIIFFFFFZJZ)V
+	public fun <init> (ZIFFFFIIIFFFFFZJZF)V
+	public fun <init> (ZIFFFFIIIFFFFFZJZFZ)V
+	public synthetic fun <init> (ZIFFFFIIIFFFFFZJZFZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Z
+	public final fun component10 ()F
+	public final fun component11 ()F
+	public final fun component12 ()F
+	public final fun component13 ()F
+	public final fun component14 ()F
+	public final fun component15 ()Z
+	public final fun component16 ()J
+	public final fun component17 ()Z
+	public final fun component18 ()F
+	public final fun component19 ()Z
+	public final fun component2 ()I
+	public final fun component3 ()F
+	public final fun component4 ()F
+	public final fun component5 ()F
+	public final fun component6 ()F
+	public final fun component7 ()I
+	public final fun component8 ()I
+	public final fun component9 ()I
+	public final fun copy (ZIFFFFIIIFFFFFZJZFZ)Lcom/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings;ZIFFFFIIIFFFFFZJZFZILjava/lang/Object;)Lcom/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBorderWidth ()F
+	public final fun getEnabled ()Z
+	public final fun getHeight ()F
+	public final fun getMarginBottom ()F
+	public final fun getMarginLeft ()F
+	public final fun getMarginRight ()F
+	public final fun getMarginTop ()F
+	public final fun getPosition ()I
+	public final fun getPrimaryColor ()I
+	public final fun getRatio ()F
+	public final fun getRefreshInterval ()J
+	public final fun getSecondaryColor ()I
+	public final fun getShowTextBorder ()Z
+	public final fun getTextBarMargin ()F
+	public final fun getTextBorderWidth ()F
+	public final fun getTextColor ()I
+	public final fun getTextSize ()F
+	public final fun getUseContinuousRendering ()Z
+	public fun hashCode ()I
+	public final fun isMetricUnits ()Z
+	public final fun setBorderWidth (F)V
+	public final fun setEnabled (Z)V
+	public final fun setHeight (F)V
+	public final fun setMarginBottom (F)V
+	public final fun setMarginLeft (F)V
+	public final fun setMarginRight (F)V
+	public final fun setMarginTop (F)V
+	public final fun setMetricUnits (Z)V
+	public final fun setPosition (I)V
+	public final fun setPrimaryColor (I)V
+	public final fun setRatio (F)V
+	public final fun setRefreshInterval (J)V
+	public final fun setSecondaryColor (I)V
+	public final fun setShowTextBorder (Z)V
+	public final fun setTextBarMargin (F)V
+	public final fun setTextBorderWidth (F)V
+	public final fun setTextColor (I)V
+	public final fun setTextSize (F)V
+	public final fun setUseContinuousRendering (Z)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class com/mapbox/maps/plugin/scalebar/generated/ScaleBarSettingsBase : com/mapbox/maps/plugin/scalebar/generated/ScaleBarSettingsInterface {
+	public fun <init> ()V
+	protected abstract fun applySettings ()V
+	public fun getBorderWidth ()F
+	public fun getEnabled ()Z
+	public fun getHeight ()F
+	protected abstract fun getInternalSettings ()Lcom/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings;
+	public fun getMarginBottom ()F
+	public fun getMarginLeft ()F
+	public fun getMarginRight ()F
+	public fun getMarginTop ()F
+	public fun getPosition ()I
+	public fun getPrimaryColor ()I
+	public fun getRatio ()F
+	public fun getRefreshInterval ()J
+	public fun getSecondaryColor ()I
+	public fun getSettings ()Lcom/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings;
+	public fun getShowTextBorder ()Z
+	public fun getTextBarMargin ()F
+	public fun getTextBorderWidth ()F
+	public fun getTextColor ()I
+	public fun getTextSize ()F
+	public fun getUseContinuousRendering ()Z
+	public fun isMetricUnits ()Z
+	public fun setBorderWidth (F)V
+	public fun setEnabled (Z)V
+	public fun setHeight (F)V
+	protected abstract fun setInternalSettings (Lcom/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings;)V
+	public fun setMarginBottom (F)V
+	public fun setMarginLeft (F)V
+	public fun setMarginRight (F)V
+	public fun setMarginTop (F)V
+	public fun setMetricUnits (Z)V
+	public fun setPosition (I)V
+	public fun setPrimaryColor (I)V
+	public fun setRatio (F)V
+	public fun setRefreshInterval (J)V
+	public fun setSecondaryColor (I)V
+	public fun setShowTextBorder (Z)V
+	public fun setTextBarMargin (F)V
+	public fun setTextBorderWidth (F)V
+	public fun setTextColor (I)V
+	public fun setTextSize (F)V
+	public fun setUseContinuousRendering (Z)V
+	public fun updateSettings (Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/scalebar/generated/ScaleBarSettingsInterface {
+	public abstract fun getBorderWidth ()F
+	public abstract fun getEnabled ()Z
+	public abstract fun getHeight ()F
+	public abstract fun getMarginBottom ()F
+	public abstract fun getMarginLeft ()F
+	public abstract fun getMarginRight ()F
+	public abstract fun getMarginTop ()F
+	public abstract fun getPosition ()I
+	public abstract fun getPrimaryColor ()I
+	public abstract fun getRatio ()F
+	public abstract fun getRefreshInterval ()J
+	public abstract fun getSecondaryColor ()I
+	public abstract fun getSettings ()Lcom/mapbox/maps/plugin/scalebar/generated/ScaleBarSettings;
+	public abstract fun getShowTextBorder ()Z
+	public abstract fun getTextBarMargin ()F
+	public abstract fun getTextBorderWidth ()F
+	public abstract fun getTextColor ()I
+	public abstract fun getTextSize ()F
+	public abstract fun getUseContinuousRendering ()Z
+	public abstract fun isMetricUnits ()Z
+	public abstract fun setBorderWidth (F)V
+	public abstract fun setEnabled (Z)V
+	public abstract fun setHeight (F)V
+	public abstract fun setMarginBottom (F)V
+	public abstract fun setMarginLeft (F)V
+	public abstract fun setMarginRight (F)V
+	public abstract fun setMarginTop (F)V
+	public abstract fun setMetricUnits (Z)V
+	public abstract fun setPosition (I)V
+	public abstract fun setPrimaryColor (I)V
+	public abstract fun setRatio (F)V
+	public abstract fun setRefreshInterval (J)V
+	public abstract fun setSecondaryColor (I)V
+	public abstract fun setShowTextBorder (Z)V
+	public abstract fun setTextBarMargin (F)V
+	public abstract fun setTextBorderWidth (F)V
+	public abstract fun setTextColor (I)V
+	public abstract fun setTextSize (F)V
+	public abstract fun setUseContinuousRendering (Z)V
+	public abstract fun updateSettings (Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/viewport/CompletionListener {
+	public abstract fun onComplete (Z)V
+}
+
+public final class com/mapbox/maps/plugin/viewport/ViewportConstantsKt {
+	public static final field DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_PITCH D
+	public static final field DEFAULT_FOLLOW_PUCK_VIEWPORT_STATE_ZOOM D
+	public static final field DEFAULT_STATE_ANIMATION_DURATION_MS J
+	public static final field DEFAULT_TRANSITION_MAX_DURATION_MS J
+}
+
+public abstract interface class com/mapbox/maps/plugin/viewport/ViewportPlugin : com/mapbox/maps/plugin/MapPlugin {
+	public abstract fun addStatusObserver (Lcom/mapbox/maps/plugin/viewport/ViewportStatusObserver;)V
+	public abstract fun getDefaultTransition ()Lcom/mapbox/maps/plugin/viewport/transition/ViewportTransition;
+	public abstract fun getOptions ()Lcom/mapbox/maps/plugin/viewport/data/ViewportOptions;
+	public abstract fun getStatus ()Lcom/mapbox/maps/plugin/viewport/ViewportStatus;
+	public abstract fun idle ()V
+	public abstract fun makeDefaultViewportTransition (Lcom/mapbox/maps/plugin/viewport/data/DefaultViewportTransitionOptions;)Lcom/mapbox/maps/plugin/viewport/transition/DefaultViewportTransition;
+	public abstract fun makeFollowPuckViewportState (Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions;)Lcom/mapbox/maps/plugin/viewport/state/FollowPuckViewportState;
+	public abstract fun makeImmediateViewportTransition ()Lcom/mapbox/maps/plugin/viewport/transition/ViewportTransition;
+	public abstract fun makeOverviewViewportState (Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions;)Lcom/mapbox/maps/plugin/viewport/state/OverviewViewportState;
+	public abstract fun removeStatusObserver (Lcom/mapbox/maps/plugin/viewport/ViewportStatusObserver;)V
+	public abstract fun setDefaultTransition (Lcom/mapbox/maps/plugin/viewport/transition/ViewportTransition;)V
+	public abstract fun setOptions (Lcom/mapbox/maps/plugin/viewport/data/ViewportOptions;)V
+	public abstract fun transitionTo (Lcom/mapbox/maps/plugin/viewport/state/ViewportState;Lcom/mapbox/maps/plugin/viewport/transition/ViewportTransition;Lcom/mapbox/maps/plugin/viewport/CompletionListener;)V
+}
+
+public final class com/mapbox/maps/plugin/viewport/ViewportPlugin$DefaultImpls {
+	public static fun cleanup (Lcom/mapbox/maps/plugin/viewport/ViewportPlugin;)V
+	public static fun initialize (Lcom/mapbox/maps/plugin/viewport/ViewportPlugin;)V
+	public static synthetic fun makeDefaultViewportTransition$default (Lcom/mapbox/maps/plugin/viewport/ViewportPlugin;Lcom/mapbox/maps/plugin/viewport/data/DefaultViewportTransitionOptions;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/viewport/transition/DefaultViewportTransition;
+	public static synthetic fun makeFollowPuckViewportState$default (Lcom/mapbox/maps/plugin/viewport/ViewportPlugin;Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions;ILjava/lang/Object;)Lcom/mapbox/maps/plugin/viewport/state/FollowPuckViewportState;
+	public static fun onDelegateProvider (Lcom/mapbox/maps/plugin/viewport/ViewportPlugin;Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
+	public static synthetic fun transitionTo$default (Lcom/mapbox/maps/plugin/viewport/ViewportPlugin;Lcom/mapbox/maps/plugin/viewport/state/ViewportState;Lcom/mapbox/maps/plugin/viewport/transition/ViewportTransition;Lcom/mapbox/maps/plugin/viewport/CompletionListener;ILjava/lang/Object;)V
+}
+
+public abstract class com/mapbox/maps/plugin/viewport/ViewportStatus {
+}
+
+public final class com/mapbox/maps/plugin/viewport/ViewportStatus$Idle : com/mapbox/maps/plugin/viewport/ViewportStatus {
+	public static final field INSTANCE Lcom/mapbox/maps/plugin/viewport/ViewportStatus$Idle;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/viewport/ViewportStatus$State : com/mapbox/maps/plugin/viewport/ViewportStatus {
+	public fun <init> (Lcom/mapbox/maps/plugin/viewport/state/ViewportState;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getState ()Lcom/mapbox/maps/plugin/viewport/state/ViewportState;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/viewport/ViewportStatus$Transition : com/mapbox/maps/plugin/viewport/ViewportStatus {
+	public fun <init> (Lcom/mapbox/maps/plugin/viewport/transition/ViewportTransition;Lcom/mapbox/maps/plugin/viewport/state/ViewportState;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getToState ()Lcom/mapbox/maps/plugin/viewport/state/ViewportState;
+	public final fun getTransition ()Lcom/mapbox/maps/plugin/viewport/transition/ViewportTransition;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/mapbox/maps/plugin/viewport/ViewportStatusObserver {
+	public abstract fun onViewportStatusChanged (Lcom/mapbox/maps/plugin/viewport/ViewportStatus;Lcom/mapbox/maps/plugin/viewport/ViewportStatus;Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;)V
+}
+
+public final class com/mapbox/maps/plugin/viewport/data/DefaultViewportTransitionOptions {
+	public synthetic fun <init> (JLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMaxDurationMs ()J
+	public fun hashCode ()I
+	public final fun toBuilder ()Lcom/mapbox/maps/plugin/viewport/data/DefaultViewportTransitionOptions$Builder;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/viewport/data/DefaultViewportTransitionOptions$Builder {
+	public fun <init> ()V
+	public final fun build ()Lcom/mapbox/maps/plugin/viewport/data/DefaultViewportTransitionOptions;
+	public final fun maxDurationMs (J)Lcom/mapbox/maps/plugin/viewport/data/DefaultViewportTransitionOptions$Builder;
+}
+
+public abstract class com/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing {
+}
+
+public final class com/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing$Constant : com/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing {
+	public fun <init> (D)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBearing ()D
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing$SyncWithLocationPuck : com/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing {
+	public static final field INSTANCE Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing$SyncWithLocationPuck;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions {
+	public synthetic fun <init> (Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing;Ljava/lang/Double;JLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAnimationDurationMs ()J
+	public final fun getBearing ()Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing;
+	public final fun getPadding ()Lcom/mapbox/maps/EdgeInsets;
+	public final fun getPitch ()Ljava/lang/Double;
+	public final fun getZoom ()Ljava/lang/Double;
+	public fun hashCode ()I
+	public final fun toBuilder ()Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions$Builder;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions$Builder {
+	public fun <init> ()V
+	public final fun animationDurationMs (J)Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions$Builder;
+	public final fun bearing (Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateBearing;)Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions$Builder;
+	public final fun build ()Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions;
+	public final fun padding (Lcom/mapbox/maps/EdgeInsets;)Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions$Builder;
+	public final fun pitch (Ljava/lang/Double;)Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions$Builder;
+	public final fun zoom (Ljava/lang/Double;)Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions$Builder;
+}
+
+public final class com/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions {
+	public synthetic fun <init> (Lcom/mapbox/geojson/Geometry;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Ljava/lang/Double;JLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAnimationDurationMs ()J
+	public final fun getBearing ()Ljava/lang/Double;
+	public final fun getGeometry ()Lcom/mapbox/geojson/Geometry;
+	public final fun getPadding ()Lcom/mapbox/maps/EdgeInsets;
+	public final fun getPitch ()Ljava/lang/Double;
+	public fun hashCode ()I
+	public final fun toBuilder ()Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions$Builder;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions$Builder {
+	public fun <init> ()V
+	public final fun animationDurationMs (J)Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions$Builder;
+	public final fun bearing (Ljava/lang/Double;)Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions$Builder;
+	public final fun build ()Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions;
+	public final fun geometry (Lcom/mapbox/geojson/Geometry;)Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions$Builder;
+	public final fun padding (Lcom/mapbox/maps/EdgeInsets;)Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions$Builder;
+	public final fun pitch (Ljava/lang/Double;)Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions$Builder;
+}
+
+public final class com/mapbox/maps/plugin/viewport/data/ViewportOptions {
+	public synthetic fun <init> (ZLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTransitionsToIdleUponUserInteraction ()Z
+	public fun hashCode ()I
+	public final fun toBuilder ()Lcom/mapbox/maps/plugin/viewport/data/ViewportOptions$Builder;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/viewport/data/ViewportOptions$Builder {
+	public fun <init> ()V
+	public final fun build ()Lcom/mapbox/maps/plugin/viewport/data/ViewportOptions;
+	public final fun transitionsToIdleUponUserInteraction (Z)Lcom/mapbox/maps/plugin/viewport/data/ViewportOptions$Builder;
+}
+
+public final class com/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason {
+	public static final field Companion Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason$Companion;
+	public static final field IDLE_REQUESTED Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
+	public static final field TRANSITION_FAILED Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
+	public static final field TRANSITION_STARTED Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
+	public static final field TRANSITION_SUCCEEDED Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
+	public static final field USER_INTERACTION Lcom/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/mapbox/maps/plugin/viewport/data/ViewportStatusChangeReason$Companion {
+}
+
+public abstract interface class com/mapbox/maps/plugin/viewport/state/FollowPuckViewportState : com/mapbox/maps/plugin/viewport/state/ViewportState {
+	public abstract fun getOptions ()Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions;
+	public abstract fun setOptions (Lcom/mapbox/maps/plugin/viewport/data/FollowPuckViewportStateOptions;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/viewport/state/OverviewViewportState : com/mapbox/maps/plugin/viewport/state/ViewportState {
+	public abstract fun getOptions ()Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions;
+	public abstract fun setOptions (Lcom/mapbox/maps/plugin/viewport/data/OverviewViewportStateOptions;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/viewport/state/ViewportState {
+	public abstract fun observeDataSource (Lcom/mapbox/maps/plugin/viewport/state/ViewportStateDataObserver;)Lcom/mapbox/maps/plugin/animation/Cancelable;
+	public abstract fun startUpdatingCamera ()V
+	public abstract fun stopUpdatingCamera ()V
+}
+
+public abstract interface class com/mapbox/maps/plugin/viewport/state/ViewportStateDataObserver {
+	public abstract fun onNewData (Lcom/mapbox/maps/CameraOptions;)Z
+}
+
+public abstract interface class com/mapbox/maps/plugin/viewport/transition/DefaultViewportTransition : com/mapbox/maps/plugin/viewport/transition/ViewportTransition {
+	public abstract fun getOptions ()Lcom/mapbox/maps/plugin/viewport/data/DefaultViewportTransitionOptions;
+	public abstract fun setOptions (Lcom/mapbox/maps/plugin/viewport/data/DefaultViewportTransitionOptions;)V
+}
+
+public abstract interface class com/mapbox/maps/plugin/viewport/transition/ViewportTransition {
+	public abstract fun run (Lcom/mapbox/maps/plugin/viewport/state/ViewportState;Lcom/mapbox/maps/plugin/viewport/CompletionListener;)Lcom/mapbox/maps/plugin/animation/Cancelable;
+}
+
+public final class com/mapbox/maps/util/MathUtils {
+	public static final field INSTANCE Lcom/mapbox/maps/util/MathUtils;
+	public final fun prepareOptimalBearingPath ([D)[D
+}
+

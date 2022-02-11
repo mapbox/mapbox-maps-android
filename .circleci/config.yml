@@ -23,6 +23,9 @@ workflows:
       - verify-docs:
           requires:
             - verify-code
+      - verify-kotlin-binary-compatibility:
+          requires:
+            - verify-code
       - verify-api:
           requires:
             - verify-code
@@ -371,6 +374,17 @@ jobs:
           no_output_timeout: 30m
           name: docs
           command: sh scripts/kdoc-validate.sh
+
+  verify-kotlin-binary-compatibility:
+    executor: ubuntu
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - run:
+          no_output_timeout: 30m
+          name: verify-kotlin-binary-compatibility
+          command: |
+            ./gradlew apiCheck
 
   verify-api:
     executor: ubuntu
