@@ -7,10 +7,10 @@ plugins {
 }
 
 android {
-  compileSdkVersion(AndroidVersions.compileSdkVersion_AndroidAuto)
+  compileSdk = AndroidVersions.compileSdkVersion_AndroidAuto
   defaultConfig {
-    minSdkVersion(AndroidVersions.minSdkVersion_AndroidAuto)
-    targetSdkVersion(AndroidVersions.targetSdkVersion_AndroidAuto)
+    minSdk = AndroidVersions.minSdkVersion_AndroidAuto
+    targetSdk = AndroidVersions.targetSdkVersion_AndroidAuto
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
