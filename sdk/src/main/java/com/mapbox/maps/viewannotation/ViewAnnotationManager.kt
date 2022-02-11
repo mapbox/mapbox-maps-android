@@ -24,7 +24,7 @@ import com.mapbox.maps.ViewAnnotationOptions
  * by visibility of given feature.
  */
 @MapboxExperimental
-interface ViewAnnotationManager {
+open class ViewAnnotationManager {
 
   /**
    * Add view annotation inflated from [resId] synchronously.
@@ -41,10 +41,12 @@ interface ViewAnnotationManager {
    *
    * @throws [RuntimeException] if options did not include geometry.
    */
-  fun addViewAnnotation(
+  open fun addViewAnnotation(
     @LayoutRes resId: Int,
     options: ViewAnnotationOptions
-  ): View
+  ): View {
+    throw RuntimeException(EXCEPTION_CLASS_NOT_FOR_PUBLIC_USAGE)
+  }
 
   /**
    * Add view annotation inflated from [resId] asynchronously.
@@ -63,12 +65,14 @@ interface ViewAnnotationManager {
    *
    * @throws [RuntimeException] if options did not include geometry.
    */
-  fun addViewAnnotation(
+  open fun addViewAnnotation(
     @LayoutRes resId: Int,
     options: ViewAnnotationOptions,
     asyncInflater: AsyncLayoutInflater,
     asyncInflateCallback: (View) -> Unit
-  )
+  ) {
+    throw RuntimeException(EXCEPTION_CLASS_NOT_FOR_PUBLIC_USAGE)
+  }
 
   /**
    * Add annotation [View] which is already inflated.
@@ -85,17 +89,21 @@ interface ViewAnnotationManager {
    *
    * @throws [RuntimeException] if options did not include geometry.
    */
-  fun addViewAnnotation(
+  open fun addViewAnnotation(
     view: View,
     options: ViewAnnotationOptions
-  )
+  ) {
+    throw RuntimeException(EXCEPTION_CLASS_NOT_FOR_PUBLIC_USAGE)
+  }
 
   /**
    * Remove given annotation [view] from the map if it was present.
    *
    * @return true if view was removed and false if view was not found on the map.
    */
-  fun removeViewAnnotation(view: View): Boolean
+  open fun removeViewAnnotation(view: View): Boolean {
+    throw RuntimeException(EXCEPTION_CLASS_NOT_FOR_PUBLIC_USAGE)
+  }
 
   /**
    * Update given view annotation [view] with [ViewAnnotationOptions].
@@ -104,29 +112,41 @@ interface ViewAnnotationManager {
    *
    * @return true if view was updated and false if view was not found on the map.
    */
-  fun updateViewAnnotation(
+  open fun updateViewAnnotation(
     view: View,
     options: ViewAnnotationOptions
-  ): Boolean
+  ): Boolean {
+    throw RuntimeException(EXCEPTION_CLASS_NOT_FOR_PUBLIC_USAGE)
+  }
 
   /**
    * Find [View] by feature id if it was specified as part of [ViewAnnotationOptions.associatedFeatureId].
    *
    * @return [View] if view was found and NULL otherwise.
    */
-  fun getViewAnnotationByFeatureId(featureId: String): View?
+  open fun getViewAnnotationByFeatureId(featureId: String): View? {
+    throw RuntimeException(EXCEPTION_CLASS_NOT_FOR_PUBLIC_USAGE)
+  }
 
   /**
    * Find [ViewAnnotationOptions] of view annotation by feature id if it was specified as part of [ViewAnnotationOptions.associatedFeatureId].
    *
    * @return [ViewAnnotationOptions] if view annotation was found and NULL otherwise.
    */
-  fun getViewAnnotationOptionsByFeatureId(featureId: String): ViewAnnotationOptions?
+  open fun getViewAnnotationOptionsByFeatureId(featureId: String): ViewAnnotationOptions? {
+    throw RuntimeException(EXCEPTION_CLASS_NOT_FOR_PUBLIC_USAGE)
+  }
 
   /**
    * Get current [ViewAnnotationOptions] for given [view].
    *
    * @return [ViewAnnotationOptions] if view was found and NULL otherwise.
    */
-  fun getViewAnnotationOptionsByView(view: View): ViewAnnotationOptions?
+  open fun getViewAnnotationOptionsByView(view: View): ViewAnnotationOptions? {
+    throw RuntimeException(EXCEPTION_CLASS_NOT_FOR_PUBLIC_USAGE)
+  }
+
+  private companion object {
+    const val EXCEPTION_CLASS_NOT_FOR_PUBLIC_USAGE = "ViewAnnotationManager class is not designed for public inheritance!"
+  }
 }
