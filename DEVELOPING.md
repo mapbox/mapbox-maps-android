@@ -124,6 +124,16 @@ Check if format is correct with `ktlint` or `./gradlew ktlint`.
 Run `ktlintFormat` or `./gradlew ktlintFormat` or `make fix` to automatically reformat everything and 
 fix all the issues.
 
+### Public API changes tracking
+We use [binary-compatibility-validator](https://github.com/Kotlin/binary-compatibility-validator) and [Metalava](https://android.googlesource.com/platform/tools/metalava/) for tracking binary and source compatibility of the APIs we ship.
+
+* When doing code changes that do not imply any changes in public API, no additional
+actions should be performed. check task on your CI will validate everything.
+* When doing code changes that imply changes in public API, whether it is a new API or
+adjustments in existing one, check task will start to fail. apiDump should be executed manually,
+the resulting diff in .api file should be verified: only signatures you expected to change should be changed.
+* Commit the resulting .api diff along with code changes.
+
 ## Code
 
 ### Project overview
