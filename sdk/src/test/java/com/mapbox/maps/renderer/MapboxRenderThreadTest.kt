@@ -22,6 +22,7 @@ import org.robolectric.annotation.LooperMode
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import javax.microedition.khronos.egl.EGL10
+import javax.microedition.khronos.egl.EGLContext
 
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowLogger::class])
@@ -616,10 +617,12 @@ class MapboxRenderThreadTest {
   @Test
   fun onSurfaceCreatedWidgetsInitWidgetRender() {
     initRenderThread()
+    val eglContext = mockk<EGLContext>()
+    every { eglCore.eglContext } returns eglContext
     every { mapboxWidgetRenderer.hasWidgets() } returns true
     provideValidSurface()
     verifyOnce {
-      mapboxWidgetRenderer.setSharedContext(eglCore.eglContext)
+      mapboxWidgetRenderer.setSharedContext(eglContext)
     }
   }
 
