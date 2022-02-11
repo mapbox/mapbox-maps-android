@@ -35,6 +35,7 @@ import java.util.*
  * Example showing how to add Symbol annotations
  */
 class PointAnnotationActivity : AppCompatActivity() {
+
   private var pointAnnotationManager: PointAnnotationManager? = null
   private var circleAnnotationManager: CircleAnnotationManager? = null
   private var pointAnnotation: PointAnnotation? = null
@@ -77,6 +78,29 @@ class PointAnnotationActivity : AppCompatActivity() {
 
           override fun onAnnotationDragFinished(annotation: Annotation<*>) {}
         })
+
+        IconAnchor.values().forEachIndexed { index, anchor ->
+          val view = MarkerView(this@PointAnnotationActivity)
+          view.setAnchor(anchor)
+          val icon = view.render()
+          val point = Point.fromLngLat(
+            AIRPORT_LONGITUDE + (index.toDouble() * 0.1),
+            AIRPORT_LATITUDE + (index.toDouble() * 0.1)
+          )
+          val options = PointAnnotationOptions()
+            .withIconImage(icon)
+            .withIconAnchor(anchor)
+            .withGeometry(point)
+          create(options)
+          create(
+            PointAnnotationOptions()
+              .withTextSize(64.0)
+              .withTextAnchor(TextAnchor.CENTER)
+              .withTextField(".")
+              .withGeometry(point)
+          )
+        }
+
         addClickListener(
           OnPointAnnotationClickListener {
             Toast.makeText(this@PointAnnotationActivity, "Click1: ${it.id}", Toast.LENGTH_SHORT)
@@ -325,6 +349,7 @@ class PointAnnotationActivity : AppCompatActivity() {
   }
 
   companion object {
+
     private const val ID_ICON_AIRPORT = "airport"
     private const val MAKI_ICON_CAR = "car-15"
     private const val MAKI_ICON_CAFE = "cafe-15"

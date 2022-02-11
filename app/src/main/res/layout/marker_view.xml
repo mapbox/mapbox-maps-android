@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
+    >
+
+    <View
+        android:id="@+id/vIcon"
+        android:layout_width="128dp"
+        android:layout_height="32dp"
+        android:background="#AA1E8CAB"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/tvNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/vIcon"
+        app:layout_constraintEnd_toEndOf="@+id/vIcon"
+        app:layout_constraintStart_toStartOf="@+id/vIcon"
+        app:layout_constraintTop_toTopOf="@+id/vIcon"
+        tools:text="TOP_LEFT"
+        />
+</merge>
