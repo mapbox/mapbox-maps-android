@@ -8,7 +8,8 @@
         android:label="extension-style-app"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
-        <activity android:name="androidx.appcompat.app.AppCompatActivity">
+        <activity android:name="androidx.appcompat.app.AppCompatActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
