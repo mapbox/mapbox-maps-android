@@ -8,6 +8,7 @@ import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 import com.mapbox.maps.renderer.MapboxSurfaceRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
+import com.mapbox.maps.renderer.widget.Widget
 
 /**
  * A [MapSurface] provides an embeddable map interface.
@@ -27,7 +28,7 @@ import com.mapbox.maps.renderer.OnFpsChangedListener
  */
 class MapSurface @JvmOverloads constructor(
   context: Context,
-  private val surface: Surface,
+  val surface: Surface,
   mapInitOptions: MapInitOptions = MapInitOptions(context)
 ) : MapPluginProviderDelegate, MapControllable {
 
@@ -177,6 +178,22 @@ class MapSurface @JvmOverloads constructor(
   override fun onLowMemory() {
     mapController.onLowMemory()
   }
+
+  /**
+   * Add [Widget] to the map.
+   */
+  @MapboxExperimental
+  override fun addWidget(widget: Widget) {
+    mapController.addWidget(widget)
+  }
+
+  /**
+   * Remove [Widget] from the map.
+   *
+   * @return true if widget was present and removed, false otherwise
+   */
+  @MapboxExperimental
+  override fun removeWidget(widget: Widget) = mapController.removeWidget(widget)
 
   /**
    * Get the plugin instance.

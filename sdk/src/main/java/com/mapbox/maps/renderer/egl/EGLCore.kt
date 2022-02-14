@@ -14,11 +14,12 @@ import javax.microedition.khronos.egl.*
 internal class EGLCore(
   private val translucentSurface: Boolean,
   private val antialiasingSampleCount: Int,
+  private val sharedContext: EGLContext = EGL10.EGL_NO_CONTEXT,
 ) {
   private lateinit var egl: EGL10
   private lateinit var eglConfig: EGLConfig
   private var eglDisplay: EGLDisplay = EGL10.EGL_NO_DISPLAY
-  private var eglContext: EGLContext = EGL10.EGL_NO_CONTEXT
+  internal var eglContext: EGLContext = EGL10.EGL_NO_CONTEXT
 
   internal val eglNoSurface: EGLSurface = EGL10.EGL_NO_SURFACE
 
@@ -45,7 +46,7 @@ internal class EGLCore(
     val context = egl.eglCreateContext(
       eglDisplay,
       eglConfig,
-      EGL10.EGL_NO_CONTEXT,
+      sharedContext,
       intArrayOf(EGL_CONTEXT_CLIENT_VERSION, 2, EGL10.EGL_NONE)
     )
     val contextCreated = checkEglErrorNoException("eglCreateContext")
@@ -114,6 +115,25 @@ internal class EGLCore(
   }
 
   /**
+   * Creates an EGL surface associated with an offscreen buffer.
+   */
+  fun createOffscreenSurface(width: Int, height: Int): EGLSurface {
+    val surfaceAttribs =
+      intArrayOf(EGL10.EGL_WIDTH, width, EGL10.EGL_HEIGHT, height, EGL10.EGL_NONE)
+    val eglSurface = egl.eglCreatePbufferSurface(
+      eglDisplay,
+      eglConfig,
+      surfaceAttribs
+    )
+    checkEglErrorNoException("eglCreatePbufferSurface")
+    if (eglSurface == null) {
+      Logger.e(TAG, "Offscreen surface was null")
+      return eglNoSurface
+    }
+    return eglSurface
+  }
+
+  /**
    * Makes no context current.
    */
   fun makeNothingCurrent(): Boolean {
@@ -145,7 +165,7 @@ internal class EGLCore(
   }
 
   /**
-   * Calls eglSwapBuffers.  Use this to "publish" the current frame.
+   * Calls eglSwapBuffers. Use this to "publish" the current frame.
    */
   fun swapBuffers(eglSurface: EGLSurface): Int {
     val swapStatus = egl.eglSwapBuffers(eglDisplay, eglSurface)

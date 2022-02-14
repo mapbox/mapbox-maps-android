@@ -20,6 +20,7 @@ internal abstract class MapboxRenderer : MapClient {
 
   @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
   internal lateinit var renderThread: MapboxRenderThread
+  internal abstract val widgetRenderer: MapboxWidgetRenderer
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal var map: MapInterface? = null

@@ -4,12 +4,12 @@ import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.content.res.Configuration
-import androidx.car.app.Screen
-import androidx.car.app.ScreenManager
-import androidx.car.app.Session
+import androidx.car.app.*
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapSurface
 import com.mapbox.maps.Style
+import com.mapbox.maps.extension.androidauto.CompassWidget
+import com.mapbox.maps.extension.androidauto.LogoWidget
 import com.mapbox.maps.extension.androidauto.initMapSurface
 import com.mapbox.maps.extension.style.layers.generated.skyLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.SkyType
@@ -28,7 +28,16 @@ class MapSession : Session() {
 
   override fun onCreateScreen(intent: Intent): Screen {
     val mapScreen = MapScreen(carContext)
-    initMapSurface(scrollListener = carCameraController) { surface ->
+    initMapSurface(
+      scrollListener = carCameraController,
+    ) { surface ->
+      val logo = LogoWidget(carContext)
+      val compass = CompassWidget(
+        carContext,
+        marginX = 26f,
+        marginY = 120f,
+      )
+
       mapSurface = surface
       carCameraController.init(
         mapSurface,
@@ -42,6 +51,15 @@ class MapSession : Session() {
       mapScreen.setMapCameraController(carCameraController)
       loadStyle(surface)
       initLocationComponent(surface)
+
+      surface.addWidget(logo)
+      surface.addWidget(compass)
+
+      surface.getMapboxMap().apply {
+        addOnCameraChangeListener {
+          compass.setRotation(this.cameraState.bearing.toFloat())
+        }
+      }
     }
     return if (carContext.checkSelfPermission(ACCESS_FINE_LOCATION) != PERMISSION_GRANTED) {
       carContext.getCarService(ScreenManager::class.java).push(mapScreen)
@@ -73,6 +91,7 @@ class MapSession : Session() {
       locationPuck = CarLocationPuck.duckLocationPuckLowZoom
       enabled = true
       addOnIndicatorPositionChangedListener(carCameraController)
+      addOnIndicatorBearingChangedListener(carCameraController)
     }
   }
 

@@ -3,6 +3,7 @@ package com.mapbox.maps
 import android.graphics.Bitmap
 import android.view.MotionEvent
 import com.mapbox.maps.renderer.OnFpsChangedListener
+import com.mapbox.maps.renderer.widget.Widget
 
 /**
  * MapControllable interface is the gateway for public API to talk to the internal map controller.
@@ -73,4 +74,18 @@ interface MapControllable : MapboxLifecycleObserver {
    * Set [OnFpsChangedListener] to get map rendering FPS.
    */
   fun setOnFpsChangedListener(listener: OnFpsChangedListener)
+
+  /**
+   * Add [Widget] to the map.
+   */
+  @MapboxExperimental
+  fun addWidget(widget: Widget)
+
+  /**
+   * Remove [Widget] from the map.
+   *
+   * @return true if widget was present and removed, false otherwise
+   */
+  @MapboxExperimental
+  fun removeWidget(widget: Widget): Boolean
 }

@@ -7,9 +7,16 @@ import androidx.annotation.VisibleForTesting
 
 internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTextureListener {
 
+  override val widgetRenderer: MapboxWidgetRenderer
+
   constructor(textureView: TextureView, antialiasingSampleCount: Int) {
+    val widgetRenderer = MapboxWidgetRenderer(
+      antialiasingSampleCount = antialiasingSampleCount,
+    )
+    this.widgetRenderer = widgetRenderer
     renderThread = MapboxRenderThread(
       mapboxRenderer = this,
+      mapboxWidgetRenderer = widgetRenderer,
       translucentSurface = true,
       antialiasingSampleCount = antialiasingSampleCount,
     )
@@ -21,6 +28,10 @@ internal class MapboxTextureViewRenderer : MapboxRenderer, TextureView.SurfaceTe
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal constructor(renderThread: MapboxRenderThread) {
+    val widgetRenderer = MapboxWidgetRenderer(
+      antialiasingSampleCount = 1,
+    )
+    this.widgetRenderer = widgetRenderer
     this.renderThread = renderThread
   }
 

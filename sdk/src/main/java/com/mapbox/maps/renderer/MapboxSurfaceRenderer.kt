@@ -7,9 +7,15 @@ internal open class MapboxSurfaceRenderer : MapboxRenderer {
 
   private var createSurface = false
 
+  override val widgetRenderer: MapboxWidgetRenderer
+
   constructor(antialiasingSampleCount: Int) {
+    widgetRenderer = MapboxWidgetRenderer(
+      antialiasingSampleCount = antialiasingSampleCount,
+    )
     renderThread = MapboxRenderThread(
       mapboxRenderer = this,
+      mapboxWidgetRenderer = widgetRenderer,
       translucentSurface = false,
       antialiasingSampleCount = antialiasingSampleCount,
     )
@@ -17,6 +23,9 @@ internal open class MapboxSurfaceRenderer : MapboxRenderer {
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal constructor(renderThread: MapboxRenderThread) {
+    widgetRenderer = MapboxWidgetRenderer(
+      antialiasingSampleCount = 1,
+    )
     this.renderThread = renderThread
   }
 

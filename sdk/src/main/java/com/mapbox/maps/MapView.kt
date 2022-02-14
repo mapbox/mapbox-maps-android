@@ -20,6 +20,7 @@ import com.mapbox.maps.renderer.MapboxSurfaceHolderRenderer
 import com.mapbox.maps.renderer.MapboxTextureViewRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import com.mapbox.maps.renderer.egl.EGLCore
+import com.mapbox.maps.renderer.widget.Widget
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 
 /**
@@ -308,6 +309,22 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   override fun setOnFpsChangedListener(listener: OnFpsChangedListener) {
     mapController.setOnFpsChangedListener(listener)
   }
+
+  /**
+   * Add [Widget] to the map.
+   */
+  @MapboxExperimental
+  override fun addWidget(widget: Widget) {
+    mapController.addWidget(widget)
+  }
+
+  /**
+   * Remove [Widget] from the map.
+   *
+   * @return true if widget was present and removed, false otherwise
+   */
+  @MapboxExperimental
+  override fun removeWidget(widget: Widget) = mapController.removeWidget(widget)
 
   /**
    * Interface for getting snapshot result [Bitmap].

@@ -57,11 +57,13 @@ fun Session.initMapSurface(
   mapInitOptions: MapInitOptions = MapInitOptions(carContext),
   scrollListener: OnMapScrollListener? = null,
   scaleListener: OnMapScaleListener? = null,
+  callback: SurfaceCallback? = null,
   mapSurfaceReadyCallback: MapSurfaceReadyCallback
 ) {
   var mapSurface: MapSurface? = null
   val surfaceCallback: SurfaceCallback = object : SurfaceCallback {
     override fun onSurfaceAvailable(surfaceContainer: SurfaceContainer) {
+      callback?.onSurfaceAvailable(surfaceContainer)
       synchronized(this) {
         Logger.i(TAG, "Surface available $surfaceContainer")
         surfaceContainer.surface?.let { surface ->
@@ -119,7 +121,6 @@ fun Session.initMapSurface(
   lifecycle.addObserver(
     object : DefaultLifecycleObserver {
       override fun onCreate(owner: LifecycleOwner) {
-        Logger.i(TAG, "SurfaceRenderer created")
         synchronized(this) {
           carContext.getCarService(AppManager::class.java)
             .setSurfaceCallback(surfaceCallback)
@@ -127,21 +128,18 @@ fun Session.initMapSurface(
       }
 
       override fun onStart(owner: LifecycleOwner) {
-        Logger.i(TAG, "onStart")
         synchronized(this) {
           mapSurface?.onStart()
         }
       }
 
       override fun onStop(owner: LifecycleOwner) {
-        Logger.i(TAG, "onStop")
         synchronized(this) {
           mapSurface?.onStop()
         }
       }
 
       override fun onDestroy(owner: LifecycleOwner) {
-        Logger.i(TAG, "onDestroy")
         synchronized(this) {
           mapSurface?.onDestroy()
         }
@@ -151,7 +149,6 @@ fun Session.initMapSurface(
 }
 
 private fun MapSurface.onScroll(distanceX: Float, distanceY: Float) {
-  Logger.i(TAG, "handleScroll $distanceX, $distanceY")
   synchronized(this) {
     val centerScreen = ScreenCoordinate(0.0, 0.0)
     getMapboxMap().apply {
@@ -170,7 +167,6 @@ private fun MapSurface.onScroll(distanceX: Float, distanceY: Float) {
 }
 
 private fun MapSurface.onScale(focusX: Float, focusY: Float, scaleFactor: Float) {
-  Logger.i(TAG, "handleScale $focusX, $focusY. $scaleFactor")
   synchronized(this) {
     val cameraState = getMapboxMap().cameraState
     Logger.i(TAG, "setting zoom ${cameraState.zoom * scaleFactor}")
