@@ -6,8 +6,19 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Features ✨ and improvements 🏁
 * Refactor scheduling logic for render thread in general slightly improving rendering performance. ([#1068](https://github.com/mapbox/mapbox-maps-android/pull/1068))
-* Add accuracy radius support for location component plugin. ([#1016](https://github.com/mapbox/mapbox-maps-android/pull/1016))
-* Add LocationCompassEngine for location component plugin. ([#1131](https://github.com/mapbox/mapbox-maps-android/pull/1131))
+* Add LocationCompassEngine and accuracy radius support for location component plugin. ([#1016](https://github.com/mapbox/mapbox-maps-android/pull/1016)) ([#1131](https://github.com/mapbox/mapbox-maps-android/pull/1131))
+Inorder to avoid breaking api changes, interface location2 is introduced for updating `puckBearingSource`, `puckBearingEnabled` and `showAccuracyRing` properties.
+```
+// Change the puck bearing source.
+mapView.location2.puckBearingSource = PuckBearingSource.HEADING
+mapView.location2.puckBearingSource = PuckBearingSource.COURSE
+// Change the visibility of accuracy ring.
+mapView.location2.showAccuracyRing = true
+mapView.location2.showAccuracyRing = false
+// Change the puck bearing enabled.
+mapView.location2.puckBearingEnabled = true
+mapView.location2.puckBearingEnabled = false
+```
 * Add support for custom widgets rendered on top of the map. ([#1036](https://github.com/mapbox/mapbox-maps-android/pull/1036))
 
 ## Bug fixes 🐞
