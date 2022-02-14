@@ -60,7 +60,7 @@ data class LocationPuck3D @JvmOverloads constructor(
    */
   var modelUri: String,
   /**
-   * The scale of the model.
+   * The position of the model.
    */
   var position: List<Float> = listOf(0f, 0f),
   /**
