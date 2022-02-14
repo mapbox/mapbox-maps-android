@@ -527,6 +527,9 @@ class Style internal constructor(
   override fun removeStyleImage(imageId: String): Expected<String, None> =
     styleManagerRef.call { this.removeStyleImage(imageId) }
 
+  override fun hasStyleImage(imageId: String): Boolean =
+    styleManagerRef.call { this.hasStyleImage(imageId) }
+
   /**
    * Gets style layer properties.
    *
