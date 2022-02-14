@@ -7,6 +7,7 @@ import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
+import com.mapbox.maps.viewannotation.ViewAnnotationPositionsUpdateListener
 import java.util.*
 
 internal class NativeMapImpl(private val map: MapInterface) :
@@ -375,6 +376,10 @@ internal class NativeMapImpl(private val map: MapInterface) :
 
   override fun removeStyleImage(imageId: String): Expected<String, None> {
     return map.removeStyleImage(imageId)
+  }
+
+  override fun hasStyleImage(imageId: String): Boolean {
+    return map.hasStyleImage(imageId)
   }
 
   override fun queryRenderedFeatures(

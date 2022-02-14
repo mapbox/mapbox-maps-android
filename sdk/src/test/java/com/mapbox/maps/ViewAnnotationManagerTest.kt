@@ -5,7 +5,8 @@ import android.widget.FrameLayout
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
-import com.mapbox.maps.ViewAnnotationManagerImpl.Companion.EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS
+import com.mapbox.maps.viewannotation.ViewAnnotationManager
+import com.mapbox.maps.viewannotation.ViewAnnotationManager.Companion.EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import io.mockk.*
 import org.junit.After
@@ -17,7 +18,7 @@ class ViewAnnotationManagerTest {
   private val mapboxMap: MapboxMap = mockk(relaxUnitFun = true)
   private val mapView: MapView = mockk(relaxUnitFun = true)
 
-  private lateinit var viewAnnotationManager: ViewAnnotationManagerImpl
+  private lateinit var viewAnnotationManager: ViewAnnotationManager
   private lateinit var frameLayoutParams: FrameLayout.LayoutParams
   private lateinit var view: View
 
@@ -25,7 +26,7 @@ class ViewAnnotationManagerTest {
   fun setUp() {
     every { mapView.getMapboxMap() } returns mapboxMap
     every { mapView.mapController.pluginRegistry.viewPlugins } returns mutableMapOf()
-    viewAnnotationManager = ViewAnnotationManagerImpl(mapView)
+    viewAnnotationManager = ViewAnnotationManager(mapView)
     frameLayoutParams = mockk()
     frameLayoutParams.width = 20
     frameLayoutParams.height = 20

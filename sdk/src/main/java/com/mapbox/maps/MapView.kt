@@ -39,7 +39,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
   internal var mapController: MapController
     private set
 
-  private val viewAnnotationManagerDelegate = lazy { ViewAnnotationManagerImpl(this) }
+  private val viewAnnotationManagerDelegate = lazy { ViewAnnotationManager(this) }
   /**
    * Get view annotation manager instance to add / update / remove view annotations
    * represented as Android views.
@@ -213,7 +213,7 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
    */
   override fun onDestroy() {
     if (viewAnnotationManagerDelegate.isInitialized()) {
-      (viewAnnotationManager as ViewAnnotationManagerImpl).destroy()
+      viewAnnotationManager.destroy()
     }
     mapController.onDestroy()
   }
