@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
+import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.eq
 import com.mapbox.maps.extension.style.expressions.generated.Expression.Companion.get
@@ -20,6 +21,7 @@ import com.mapbox.maps.extension.style.expressions.generated.Expression.Companio
 import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder
 import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
+import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.plugin.annotation.Annotation
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.annotations
@@ -53,6 +55,10 @@ class PointAnnotationActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val binding = ActivityAnnotationBinding.inflate(layoutInflater)
     setContentView(binding.root)
+    binding.mapView.getMapboxMap().flyTo( CameraOptions.Builder()
+      .center(Point.fromLngLat( AIRPORT_LONGITUDE ,AIRPORT_LATITUDE))
+      .zoom(10.0)
+      .build())
     binding.mapView.getMapboxMap().loadStyleUri(nextStyle) {
       annotationPlugin = binding.mapView.annotations
       circleAnnotationManager = annotationPlugin.createCircleAnnotationManager().apply {
@@ -65,7 +71,8 @@ class PointAnnotationActivity : AppCompatActivity() {
       }
       pointAnnotationManager = annotationPlugin.createPointAnnotationManager().apply {
         textFont = listOf("Arial Unicode MS Bold", "Open Sans Regular")
-
+        iconAllowOverlap = true
+        textAllowOverlap = true
         addDragListener(object : OnPointAnnotationDragListener {
           override fun onAnnotationDragStarted(annotation: Annotation<*>) {}
 
@@ -78,29 +85,33 @@ class PointAnnotationActivity : AppCompatActivity() {
 
           override fun onAnnotationDragFinished(annotation: Annotation<*>) {}
         })
-
-        IconAnchor.values().forEachIndexed { index, anchor ->
-          val view = MarkerView(this@PointAnnotationActivity)
-          view.setAnchor(anchor)
-          val icon = view.render()
-          val point = Point.fromLngLat(
-            AIRPORT_LONGITUDE + (index.toDouble() * 0.1),
-            AIRPORT_LATITUDE + (index.toDouble() * 0.1)
-          )
-          val options = PointAnnotationOptions()
-            .withIconImage(icon)
-            .withIconAnchor(anchor)
-            .withGeometry(point)
-          create(options)
-          create(
-            PointAnnotationOptions()
-              .withTextSize(64.0)
-              .withTextAnchor(TextAnchor.CENTER)
-              .withTextField(".")
+        bitmapFromDrawableRes(
+          this@PointAnnotationActivity,
+          R.drawable.ic_airplanemode_active_black_24dp
+        )?.let {
+          IconAnchor.values().forEachIndexed { index, anchor ->
+            val view = MarkerView(this@PointAnnotationActivity)
+            view.setAnchor(anchor)
+            val icon = view.render()
+            val point = Point.fromLngLat(
+              AIRPORT_LONGITUDE + (index.toDouble() * 0.1),
+              AIRPORT_LATITUDE + (index.toDouble() * 0.1)
+            )
+            val options = PointAnnotationOptions()
+              .withIconImage(icon)
+              .withIconAnchor(anchor)
               .withGeometry(point)
-          )
+            create(options)
+            create(
+              PointAnnotationOptions()
+                .withTextSize(64.0)
+                .withIconImage(it)
+                .withIconAnchor(IconAnchor.CENTER)
+                .withTextField(".")
+                .withGeometry(point)
+            )
+          }
         }
-
         addClickListener(
           OnPointAnnotationClickListener {
             Toast.makeText(this@PointAnnotationActivity, "Click1: ${it.id}", Toast.LENGTH_SHORT)
@@ -151,69 +162,69 @@ class PointAnnotationActivity : AppCompatActivity() {
           }
         })
 
-        bitmapFromDrawableRes(
-          this@PointAnnotationActivity,
-          R.drawable.ic_airplanemode_active_black_24dp
-        )?.let {
-          // create a symbol
-          val pointAnnotationOptions: PointAnnotationOptions = PointAnnotationOptions()
-            .withPoint(Point.fromLngLat(AIRPORT_LONGITUDE, AIRPORT_LATITUDE))
-            .withIconImage(it)
-            .withTextField(ID_ICON_AIRPORT)
-            .withTextOffset(listOf(0.0, -2.0))
-            .withTextColor(Color.RED)
-            .withIconSize(1.3)
-            .withIconOffset(listOf(0.0, -5.0))
-            .withSymbolSortKey(10.0)
-            .withDraggable(true)
-          pointAnnotation = create(pointAnnotationOptions)
-
-          // random add symbols across the globe
-          val pointAnnotationOptionsList: MutableList<PointAnnotationOptions> = ArrayList()
-          for (i in 0..5) {
-            pointAnnotationOptionsList.add(
-              PointAnnotationOptions()
-                .withPoint(AnnotationUtils.createRandomPoint())
-                .withIconImage(it)
-                .withDraggable(true)
-            )
-          }
-          create(pointAnnotationOptionsList)
-        }
-
-        bitmapFromDrawableRes(
-          this@PointAnnotationActivity,
-          R.drawable.mapbox_user_icon
-        )?.let {
-          blueBitmap = it
-          // create nearby symbols
-          val nearbyOptions: PointAnnotationOptions = PointAnnotationOptions()
-            .withPoint(Point.fromLngLat(NEARBY_LONGITUDE, NEARBY_LATITUDE))
-            .withIconImage(it)
-            .withIconSize(2.5)
-            .withTextField(ID_ICON_AIRPORT)
-            .withSymbolSortKey(5.0)
-            .withDraggable(true)
-          create(nearbyOptions)
-        }
-        // random add symbols across the globe
-        val pointAnnotationOptionsList: MutableList<PointAnnotationOptions> = ArrayList()
-        for (i in 0..20) {
-          pointAnnotationOptionsList.add(
-            PointAnnotationOptions()
-              .withPoint(AnnotationUtils.createRandomPoint())
-              .withIconImage(MAKI_ICON_CAR)
-              .withDraggable(true)
-          )
-        }
-        create(pointAnnotationOptionsList)
-
-        AnnotationUtils.loadStringFromAssets(
-          this@PointAnnotationActivity,
-          "annotations.json"
-        )?.let {
-          create(FeatureCollection.fromJson(it))
-        }
+//        bitmapFromDrawableRes(
+//          this@PointAnnotationActivity,
+//          R.drawable.ic_airplanemode_active_black_24dp
+//        )?.let {
+//          // create a symbol
+//          val pointAnnotationOptions: PointAnnotationOptions = PointAnnotationOptions()
+//            .withPoint(Point.fromLngLat(AIRPORT_LONGITUDE, AIRPORT_LATITUDE))
+//            .withIconImage(it)
+//            .withTextField(ID_ICON_AIRPORT)
+//            .withTextOffset(listOf(0.0, -2.0))
+//            .withTextColor(Color.RED)
+//            .withIconSize(1.3)
+//            .withIconOffset(listOf(0.0, -5.0))
+//            .withSymbolSortKey(10.0)
+//            .withDraggable(true)
+//          pointAnnotation = create(pointAnnotationOptions)
+//
+//          // random add symbols across the globe
+//          val pointAnnotationOptionsList: MutableList<PointAnnotationOptions> = ArrayList()
+//          for (i in 0..5) {
+//            pointAnnotationOptionsList.add(
+//              PointAnnotationOptions()
+//                .withPoint(AnnotationUtils.createRandomPoint())
+//                .withIconImage(it)
+//                .withDraggable(true)
+//            )
+//          }
+//          create(pointAnnotationOptionsList)
+//        }
+//
+//        bitmapFromDrawableRes(
+//          this@PointAnnotationActivity,
+//          R.drawable.mapbox_user_icon
+//        )?.let {
+//          blueBitmap = it
+//          // create nearby symbols
+//          val nearbyOptions: PointAnnotationOptions = PointAnnotationOptions()
+//            .withPoint(Point.fromLngLat(NEARBY_LONGITUDE, NEARBY_LATITUDE))
+//            .withIconImage(it)
+//            .withIconSize(2.5)
+//            .withTextField(ID_ICON_AIRPORT)
+//            .withSymbolSortKey(5.0)
+//            .withDraggable(true)
+//          create(nearbyOptions)
+//        }
+//        // random add symbols across the globe
+//        val pointAnnotationOptionsList: MutableList<PointAnnotationOptions> = ArrayList()
+//        for (i in 0..20) {
+//          pointAnnotationOptionsList.add(
+//            PointAnnotationOptions()
+//              .withPoint(AnnotationUtils.createRandomPoint())
+//              .withIconImage(MAKI_ICON_CAR)
+//              .withDraggable(true)
+//          )
+//        }
+//        create(pointAnnotationOptionsList)
+//
+//        AnnotationUtils.loadStringFromAssets(
+//          this@PointAnnotationActivity,
+//          "annotations.json"
+//        )?.let {
+//          create(FeatureCollection.fromJson(it))
+//        }
       }
 
       binding.mapView.getMapboxMap().addOnMapClickListener {
