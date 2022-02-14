@@ -1,8 +1,10 @@
 object AndroidVersions {
   const val minSdkVersion = 21
-  const val minAndroidAutoSdkVersion = 23
   const val targetSdkVersion = 30
   const val compileSdkVersion = 30
+  const val minSdkVersion_AndroidAuto = 23
+  const val targetSdkVersion_AndroidAuto = 30
+  const val compileSdkVersion_AndroidAuto = 31
 }
 
 object Plugins {
@@ -102,7 +104,7 @@ object Versions {
   const val squareLeakCanary = "2.4"
   const val materialDesign = "1.2.0"
   const val googlePlayServicesLocation = "18.0.0"
-  const val googleCarAppLibrary= "1.1.0-alpha01"
+  const val googleCarAppLibrary= "1.1.0"
   const val kotlinCoroutines = "1.3.9"
   const val junit = "4.13"
   const val mockk = "1.9.3"

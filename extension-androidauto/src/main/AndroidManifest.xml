@@ -1,1 +1,6 @@
-<manifest package="com.mapbox.maps.extension.androidauto" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mapbox.maps.extension.androidauto">
+
+    <uses-permission android:name="androidx.car.app.ACCESS_SURFACE" />
+
+</manifest>

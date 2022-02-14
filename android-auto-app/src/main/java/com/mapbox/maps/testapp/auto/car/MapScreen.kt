@@ -1,32 +1,33 @@
 package com.mapbox.maps.testapp.auto.car
 
-import androidx.car.app.CarContext
 import androidx.car.app.CarToast
 import androidx.car.app.Screen
-import androidx.car.app.model.*
+import androidx.car.app.model.Action
+import androidx.car.app.model.ActionStrip
+import androidx.car.app.model.CarColor
+import androidx.car.app.model.CarIcon
+import androidx.car.app.model.Template
 import androidx.car.app.navigation.model.NavigationTemplate
 import androidx.core.graphics.drawable.IconCompat
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.extension.androidauto.MapboxCarMap
 import com.mapbox.maps.testapp.auto.R
-import java.lang.ref.WeakReference
 
 /**
  * Simple demo of how to show a Mapbox Map on the Android Auto screen.
  */
-class MapScreen(carContext: CarContext) : Screen(carContext) {
+@OptIn(MapboxExperimental::class)
+class MapScreen(
+  val mapboxCarMap: MapboxCarMap
+) : Screen(mapboxCarMap.carContext) {
   private var isInPanMode: Boolean = false
-  private lateinit var carCameraController: WeakReference<CarCameraController>
-
-  /**
-   * Set the map camera controller, so that the UI elements(such as action button) in the template
-   * can interact with the camera.
-   */
-  fun setMapCameraController(controller: CarCameraController) {
-    carCameraController = WeakReference(controller)
-  }
+  private val carCameraController = CarCameraController()
 
   override fun onGetTemplate(): Template {
     val builder = NavigationTemplate.Builder()
-    builder.setBackgroundColor(CarColor.SECONDARY)
+      .setBackgroundColor(CarColor.SECONDARY)
 
     builder.setActionStrip(
       ActionStrip.Builder()
@@ -41,7 +42,7 @@ class MapScreen(carContext: CarContext) : Screen(carContext) {
               ).build()
             )
             .setOnClickListener {
-              carCameraController.get()?.focusOnLocationPuck()
+              carCameraController.focusOnLocationPuck()
             }
             .build()
         )
@@ -76,7 +77,7 @@ class MapScreen(carContext: CarContext) : Screen(carContext) {
             )
             .setOnClickListener {
               // handle zoom out
-              carCameraController.get()?.zoomBy(0.95)
+              carCameraController.zoomOutAction()
             }
             .build()
         )
@@ -91,7 +92,7 @@ class MapScreen(carContext: CarContext) : Screen(carContext) {
               ).build()
             )
             .setOnClickListener {
-              carCameraController.get()?.zoomBy(1.05)
+              carCameraController.zoomInAction()
             }
             .build()
         )
@@ -113,5 +114,17 @@ class MapScreen(carContext: CarContext) : Screen(carContext) {
     }
 
     return builder.build()
+  }
+
+  init {
+    lifecycle.addObserver(object : DefaultLifecycleObserver {
+      override fun onCreate(owner: LifecycleOwner) {
+        mapboxCarMap.registerObserver(carCameraController)
+      }
+
+      override fun onDestroy(owner: LifecycleOwner) {
+        mapboxCarMap.unregisterObserver(carCameraController)
+      }
+    })
   }
 }

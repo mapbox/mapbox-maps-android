@@ -1,8 +1,9 @@
-package com.mapbox.maps.extension.androidauto
+package com.mapbox.maps.extension.androidauto.widgets
 
 import android.content.Context
 import android.graphics.BitmapFactory
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.extension.androidauto.R
 import com.mapbox.maps.renderer.widget.BitmapWidget
 import com.mapbox.maps.renderer.widget.WidgetPosition
 
