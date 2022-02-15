@@ -1,13 +1,3 @@
-public final class com/mapbox/maps/BuildConfig {
-	public static final field BUILD_TYPE Ljava/lang/String;
-	public static final field DEBUG Z
-	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
-	public static final field RUN_FROM_IDE Z
-	public static final field VERSION_CODE I
-	public static final field VERSION_NAME Ljava/lang/String;
-	public fun <init> ()V
-}
-
 public abstract interface class com/mapbox/maps/MapControllable : com/mapbox/maps/MapboxLifecycleObserver {
 	public abstract fun addWidget (Lcom/mapbox/maps/renderer/widget/Widget;)V
 	public abstract fun getMapboxMap ()Lcom/mapbox/maps/MapboxMap;

@@ -1,12 +1,3 @@
-public final class com/mapbox/maps/plugin/locationcomponent/BuildConfig {
-	public static final field BUILD_TYPE Ljava/lang/String;
-	public static final field DEBUG Z
-	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
-	public static final field VERSION_CODE I
-	public static final field VERSION_NAME Ljava/lang/String;
-	public fun <init> ()V
-}
-
 public final class com/mapbox/maps/plugin/locationcomponent/LocationComponentConstants {
 	public static final field ACCURACY_RADIUS_ANIMATION_DURATION J
 	public static final field BEARING_ICON Ljava/lang/String;

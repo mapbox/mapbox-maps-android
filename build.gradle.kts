@@ -79,7 +79,27 @@ apiValidation {
    * Classes (fully qualified) that are excluded from public API dumps even if they
    * contain public API.
    */
-//  ignoredClasses.add("com.company.BuildConfig")
+  ignoredClasses.addAll(
+    listOf(
+      "com.mapbox.maps.extension.androidauto.BuildConfig",
+      "com.mapbox.maps.extension.style.BuildConfig",
+      "com.mapbox.maps.extension.localization.BuildConfig",
+      "com.mapbox.maps.module.telemetry.BuildConfig",
+      "com.mapbox.maps.plugin.camera.animation.BuildConfig",
+      "com.mapbox.maps.plugin.annotation.BuildConfig",
+      "com.mapbox.maps.plugin.attribution.BuildConfig",
+      "com.mapbox.maps.plugin.compass.BuildConfig",
+      "com.mapbox.maps.plugin.gestures.BuildConfig",
+      "com.mapbox.maps.plugin.lifecycle.BuildConfig",
+      "com.mapbox.maps.plugin.locationcomponent.BuildConfig",
+      "com.mapbox.maps.plugin.logo.BuildConfig",
+      "com.mapbox.maps.plugin.overlay.BuildConfig",
+      "com.mapbox.maps.plugin.scalebar.BuildConfig",
+      "com.mapbox.maps.plugin.viewport.BuildConfig",
+      "com.mapbox.maps.BuildConfig",
+      "com.mapbox.maps.base.BuildConfig"
+    )
+  )
 
   /**
    * Set of annotations that exclude API from being public.
