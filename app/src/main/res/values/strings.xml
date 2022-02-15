@@ -123,6 +123,10 @@
     <string name="change_language_instruction">Make sure that the device\'s default language is not English</string>
     <string name="map_not_localized">Map localized to selected language</string>
     <string name="map_localized">Map localized to device language</string>
+
+    <!--Location component Activity-->
+    <string name="heading">Bearing source: Heading</string>
+    <string name="course">Bearing source: Course</string>
     <string name="english">English</string>
     <string name="spanish">Spanish</string>
     <string name="french">French</string>

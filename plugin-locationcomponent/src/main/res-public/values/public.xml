@@ -29,6 +29,12 @@
     <!-- Sets the id of the layer that's added below to when placing the component on the map. -->
     <public name="mapbox_locationComponentLayerBelow" type="attr" />
 
+    <!-- Whether the puck rotates to track the bearing source. -->
+    <public name="mapbox_locationComponentPuckBearingEnabled" type="attr" />
+
+    <!-- The enum controls how the puck is oriented -->
+    <public name="mapbox_locationComponentPuckBearingSource" type="attr" />
+
     <!-- Location puck definitions for location_puck_2_d.  -->
 
     <!-- Name of image in sprite to use as the top of the location indicator. -->
@@ -44,7 +50,7 @@
 
     <!-- An URL for the model file in gltf format. -->
     <public name="mapbox_locationComponentLocationPuckLocationPuck3DModelUri" type="attr" />
-    <!-- The scale of the model. -->
+    <!-- The position of the model. -->
     <public name="mapbox_locationComponentLocationPuckLocationPuck3DPosition_lon" type="attr" />
     <public name="mapbox_locationComponentLocationPuckLocationPuck3DPosition_lat" type="attr" />
     <!-- The opacity of the model. -->

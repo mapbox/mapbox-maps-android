@@ -144,7 +144,7 @@ class PuckAnimatorManagerTest {
     val settings = mockk<LocationComponentSettings2>(relaxed = true)
     every { settings.accuracyRingColor } returns Color.BLUE
     every { settings.showAccuracyRing } returns true
-    puckAnimatorManager.applyAccuracyRadiusSettings(settings)
+    puckAnimatorManager.applySettings2(settings)
     assertTrue(accuracyRadiusAnimator.enabled)
     assertEquals(Color.BLUE, accuracyRadiusAnimator.accuracyCircleColor)
   }
@@ -154,7 +154,7 @@ class PuckAnimatorManagerTest {
     val settings = mockk<LocationComponentSettings2>(relaxed = true)
     every { settings.accuracyRingColor } returns Color.GREEN
     every { settings.showAccuracyRing } returns false
-    puckAnimatorManager.applyAccuracyRadiusSettings(settings)
+    puckAnimatorManager.applySettings2(settings)
     assertFalse(accuracyRadiusAnimator.enabled)
     assertEquals(Color.GREEN, accuracyRadiusAnimator.accuracyCircleColor)
   }

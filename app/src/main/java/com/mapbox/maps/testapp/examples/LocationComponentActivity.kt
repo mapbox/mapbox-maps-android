@@ -11,6 +11,7 @@ import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
+import com.mapbox.maps.plugin.PuckBearingSource
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.*
 import com.mapbox.maps.testapp.R
@@ -100,13 +101,23 @@ class LocationComponentActivity : AppCompatActivity() {
         }
         return true
       }
+      R.id.heading -> {
+        binding.mapView.location2.puckBearingSource = PuckBearingSource.HEADING
+        item.isChecked = true
+        return true
+      }
+      R.id.course -> {
+        binding.mapView.location2.puckBearingSource = PuckBearingSource.COURSE
+        item.isChecked = true
+        return true
+      }
       R.id.action_accuracy_enabled -> {
-        binding.mapView.location2.updateSettings2 { showAccuracyRing = true }
+        binding.mapView.location2.showAccuracyRing = true
         item.isChecked = true
         return true
       }
       R.id.action_accuracy_disable -> {
-        binding.mapView.location2.updateSettings2 { showAccuracyRing = false }
+        binding.mapView.location2.showAccuracyRing = false
         item.isChecked = true
         return true
       }

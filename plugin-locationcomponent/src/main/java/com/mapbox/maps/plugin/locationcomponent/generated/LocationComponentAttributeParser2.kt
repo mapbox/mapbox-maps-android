@@ -5,6 +5,7 @@ package com.mapbox.maps.plugin.locationcomponent.generated
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
+import com.mapbox.maps.plugin.PuckBearingSource
 import com.mapbox.maps.plugin.locationcomponent.R
 
 /**
@@ -24,6 +25,8 @@ internal object LocationComponentAttributeParser2 {
         showAccuracyRing = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_locationComponentShowAccuracyRing, false),
         accuracyRingColor = typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentAccuracyRingColor, Color.parseColor("#4d89cff0")),
         accuracyRingBorderColor = typedArray.getColor(R.styleable.mapbox_MapView_mapbox_locationComponentAccuracyRingBorderColor, Color.parseColor("#4d89cff0")),
+        puckBearingEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_locationComponentPuckBearingEnabled, true),
+        puckBearingSource = PuckBearingSource.values()[typedArray.getInt(R.styleable.mapbox_MapView_mapbox_locationComponentPuckBearingSource, 0)],
       )
     } finally {
       typedArray.recycle()

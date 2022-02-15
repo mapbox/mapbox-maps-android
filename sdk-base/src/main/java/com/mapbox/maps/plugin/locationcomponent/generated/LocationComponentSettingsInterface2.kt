@@ -2,6 +2,8 @@
 
 package com.mapbox.maps.plugin.locationcomponent.generated
 
+import com.mapbox.maps.plugin.PuckBearingSource
+
 /**
  * Interface that defines the public settings interface for LocationComponentPlugin.
  */
@@ -34,6 +36,16 @@ interface LocationComponentSettingsInterface2 : LocationComponentSettingsInterfa
    * The color of the accuracy ring border. Works for 2D location puck only.
    */
   var accuracyRingBorderColor: Int
+
+  /**
+   * Whether the puck rotates to track the bearing source.
+   */
+  var puckBearingEnabled: Boolean
+
+  /**
+   * The enum controls how the puck is oriented
+   */
+  var puckBearingSource: PuckBearingSource
 }
 
 // End of generated file.

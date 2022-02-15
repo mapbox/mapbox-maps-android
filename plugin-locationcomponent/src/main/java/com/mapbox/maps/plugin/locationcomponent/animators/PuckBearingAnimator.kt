@@ -4,8 +4,12 @@ import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListene
 
 internal class PuckBearingAnimator(private val indicatorBearingChangedListener: OnIndicatorBearingChangedListener) : PuckAnimator<Double>(Evaluators.DOUBLE) {
 
+  override var enabled = true
+
   override fun updateLayer(fraction: Float, value: Double) {
-    locationRenderer?.setBearing(value)
-    indicatorBearingChangedListener.onIndicatorBearingChanged(value)
+    if (enabled) {
+      locationRenderer?.setBearing(value)
+      indicatorBearingChangedListener.onIndicatorBearingChanged(value)
+    }
   }
 }

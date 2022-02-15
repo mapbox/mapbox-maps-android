@@ -12,6 +12,8 @@
     mapbox:mapbox_locationComponentAccuracyRingBorderColor = "#000000"
     mapbox:mapbox_locationComponentLayerAbove = "testString"
     mapbox:mapbox_locationComponentLayerBelow = "testString"
+    mapbox:mapbox_locationComponentPuckBearingEnabled = "false"
+    mapbox:mapbox_locationComponentPuckBearingSource = "heading"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
 <!-- End of generated file. -->

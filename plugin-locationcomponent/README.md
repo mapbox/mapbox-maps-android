@@ -128,6 +128,20 @@ private inner class CustomLocationProvider : LocationProvider {
 }
 ```
 
+#### Interface location2
+Inorder to avoid breaking api changes, interface location2 is introduced for updating `puckBearingSource`, `puckBearingEnabled` and `showAccuracyRing` properties.
+```
+// Change the puck bearing source.
+mapView.location2.puckBearingSource = PuckBearingSource.HEADING
+mapView.location2.puckBearingSource = PuckBearingSource.COURSE
+// Change the visibility of accuracy ring.
+mapView.location2.showAccuracyRing = true
+mapView.location2.showAccuracyRing = false
+// Change the puck bearing enabled.
+mapView.location2.puckBearingEnabled = true
+mapView.location2.puckBearingEnabled = false
+```
+
 More concrete examples of the location component plugin can be found in our [test application](https://github.com/mapbox/mapbox-maps-android/tree/master/app/src/main/java/com/mapbox/maps/testapp).
 
 #### Dependencies
