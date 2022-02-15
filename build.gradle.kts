@@ -79,7 +79,7 @@ apiValidation {
    * Classes (fully qualified) that are excluded from public API dumps even if they
    * contain public API.
    */
-  ignoredClasses.add("com.mapbox.maps.BuildConfig")
+//  ignoredClasses.add("com.mapbox.maps.BuildConfig")
 
   /**
    * Set of annotations that exclude API from being public.

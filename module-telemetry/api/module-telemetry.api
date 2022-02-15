@@ -6,8 +6,6 @@ public final class com/mapbox/maps/module/telemetry/BuildConfig {
 	public static final field MAPBOX_SDK_IDENTIFIER Ljava/lang/String;
 	public static final field MAPBOX_SDK_VERSION Ljava/lang/String;
 	public static final field MAPBOX_VERSION_STRING Ljava/lang/String;
-	public static final field VERSION_CODE I
-	public static final field VERSION_NAME Ljava/lang/String;
 	public fun <init> ()V
 }
 
