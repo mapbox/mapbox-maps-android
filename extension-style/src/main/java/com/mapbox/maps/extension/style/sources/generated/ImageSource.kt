@@ -30,16 +30,12 @@ class ImageSource(builder: Builder) : Source(builder.sourceId) {
     return "image"
   }
 
-  /**
-   * URL that points to an image.
-   */
+  /// URL that points to an image.
   fun url(value: String) = apply {
     setProperty(PropertyValue("url", TypeUtils.wrapToValue(value)))
   }
 
-  /**
-   * URL that points to an image.
-   */
+  /// URL that points to an image.
   val url: String?
     /**
      * Get the Url property
@@ -48,16 +44,12 @@ class ImageSource(builder: Builder) : Source(builder.sourceId) {
      */
     get() = getPropertyValue("url")
 
-  /**
-   * Corners of image specified in longitude, latitude pairs.
-   */
+  /// Corners of image specified in longitude, latitude pairs.
   fun coordinates(value: List<List<Double>>) = apply {
     setProperty(PropertyValue("coordinates", TypeUtils.wrapToValue(value)))
   }
 
-  /**
-   * Corners of image specified in longitude, latitude pairs.
-   */
+  /// Corners of image specified in longitude, latitude pairs.
   val coordinates: List<List<Double>>?
     /**
      * Get the Coordinates property
@@ -66,24 +58,12 @@ class ImageSource(builder: Builder) : Source(builder.sourceId) {
      */
     get() = getPropertyValue("coordinates")
 
-  /**
-   * When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map
-   * will first request a tile at zoom level lower than zoom - delta, but so that
-   * the zoom level is multiple of delta, in an attempt to display a full map at
-   * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
-   * The default delta is 4.
-   */
+  /// When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map will first request a tile at zoom level lower than zoom - delta, but so that the zoom level is multiple of delta, in an attempt to display a full map at lower resolution as quick as possible. It will get clamped at the tile source minimum zoom. The default delta is 4.
   fun prefetchZoomDelta(value: Long = 4L) = apply {
     setVolatileProperty(PropertyValue("prefetch-zoom-delta", TypeUtils.wrapToValue(value)))
   }
 
-  /**
-   * When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map
-   * will first request a tile at zoom level lower than zoom - delta, but so that
-   * the zoom level is multiple of delta, in an attempt to display a full map at
-   * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
-   * The default delta is 4.
-   */
+  /// When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map will first request a tile at zoom level lower than zoom - delta, but so that the zoom level is multiple of delta, in an attempt to display a full map at lower resolution as quick as possible. It will get clamped at the tile source minimum zoom. The default delta is 4.
   val prefetchZoomDelta: Long?
     /**
      * Get the PrefetchZoomDelta property
@@ -103,29 +83,19 @@ class ImageSource(builder: Builder) : Source(builder.sourceId) {
     // Properties that only settable after the source is added to the style.
     internal val volatileProperties = HashMap<String, PropertyValue<*>>()
 
-    /**
-     * URL that points to an image.
-     */
+    /// URL that points to an image.
     fun url(value: String) = apply {
       val propertyValue = PropertyValue("url", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
 
-    /**
-     * Corners of image specified in longitude, latitude pairs.
-     */
+    /// Corners of image specified in longitude, latitude pairs.
     fun coordinates(value: List<List<Double>>) = apply {
       val propertyValue = PropertyValue("coordinates", TypeUtils.wrapToValue(value))
       properties[propertyValue.propertyName] = propertyValue
     }
 
-    /**
-     * When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map
-     * will first request a tile at zoom level lower than zoom - delta, but so that
-     * the zoom level is multiple of delta, in an attempt to display a full map at
-     * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
-     * The default delta is 4.
-     */
+    /// When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map will first request a tile at zoom level lower than zoom - delta, but so that the zoom level is multiple of delta, in an attempt to display a full map at lower resolution as quick as possible. It will get clamped at the tile source minimum zoom. The default delta is 4.
     fun prefetchZoomDelta(value: Long = 4L) = apply {
       val propertyValue = PropertyValue("prefetch-zoom-delta", TypeUtils.wrapToValue(value))
       volatileProperties[propertyValue.propertyName] = propertyValue
@@ -143,13 +113,7 @@ class ImageSource(builder: Builder) : Source(builder.sourceId) {
    */
   companion object {
 
-    /**
-     * When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map
-     * will first request a tile at zoom level lower than zoom - delta, but so that
-     * the zoom level is multiple of delta, in an attempt to display a full map at
-     * lower resolution as quick as possible. It will get clamped at the tile source minimum zoom.
-     * The default delta is 4.
-     */
+    /// When loading a map, if PrefetchZoomDelta is set to any number greater than 0, the map will first request a tile at zoom level lower than zoom - delta, but so that the zoom level is multiple of delta, in an attempt to display a full map at lower resolution as quick as possible. It will get clamped at the tile source minimum zoom. The default delta is 4.
     val defaultPrefetchZoomDelta: Long?
       /**
        * Get the PrefetchZoomDelta property
