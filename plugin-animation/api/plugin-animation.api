@@ -114,12 +114,3 @@ public final class com/mapbox/maps/plugin/animation/animator/Evaluators {
 	public final fun getSCREEN_COORDINATE ()Landroid/animation/TypeEvaluator;
 }
 
-public final class com/mapbox/maps/plugin/camera/animation/BuildConfig {
-	public static final field BUILD_TYPE Ljava/lang/String;
-	public static final field DEBUG Z
-	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
-	public static final field VERSION_CODE I
-	public static final field VERSION_NAME Ljava/lang/String;
-	public fun <init> ()V
-}
-
