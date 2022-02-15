@@ -377,6 +377,10 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.removeStyleImage(imageId)
   }
 
+  override fun hasStyleImage(imageId: String): Boolean {
+    return map.hasStyleImage(imageId)
+  }
+
   override fun queryRenderedFeatures(
     shape: MutableList<ScreenCoordinate>,
     options: RenderedQueryOptions,

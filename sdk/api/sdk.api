@@ -397,6 +397,7 @@ public final class com/mapbox/maps/Style : com/mapbox/maps/extension/style/Style
 	public fun getStyleTerrainProperty (Ljava/lang/String;)Lcom/mapbox/maps/StylePropertyValue;
 	public fun getStyleTransition ()Lcom/mapbox/maps/TransitionOptions;
 	public fun getStyleURI ()Ljava/lang/String;
+	public fun hasStyleImage (Ljava/lang/String;)Z
 	public fun invalidateStyleCustomGeometrySourceRegion (Ljava/lang/String;Lcom/mapbox/maps/CoordinateBounds;)Lcom/mapbox/bindgen/Expected;
 	public fun invalidateStyleCustomGeometrySourceTile (Ljava/lang/String;Lcom/mapbox/maps/CanonicalTileID;)Lcom/mapbox/bindgen/Expected;
 	public fun isStyleLayerPersistent (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;

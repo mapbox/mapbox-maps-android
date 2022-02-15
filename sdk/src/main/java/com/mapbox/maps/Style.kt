@@ -528,6 +528,17 @@ class Style internal constructor(
     styleManagerRef.call { this.removeStyleImage(imageId) }
 
   /**
+   * Checks whether an image exists.
+   *
+   * @param imageId The identifier of the image.
+   *
+   * @return True if image exists, false otherwise.
+   */
+  override fun hasStyleImage(imageId: String): Boolean {
+    return styleManagerRef.call { this.hasStyleImage(imageId) }
+  }
+
+  /**
    * Gets style layer properties.
    *
    * @param layerId Optional filter to specify specific layer type for query.

@@ -54,13 +54,13 @@ android {
     javaMaxHeapSize = "4g"
   }
 
-  if (buildFromSource.toBoolean()) {
     packagingOptions {
-      pickFirst("**/libc++_shared.so")
-      pickFirst("**/libmapbox-common.so")
+      if (buildFromSource.toBoolean()) {
+        jniLibs.pickFirsts.add("**/libc++_shared.so")
+      }
+      jniLibs.pickFirsts.add("**/libmapbox-common.so")
     }
   }
-}
 
 dependencies {
   implementation(project(":sdk"))

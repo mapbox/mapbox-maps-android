@@ -62,6 +62,12 @@ class StyleTest {
   }
 
   @Test
+  fun hasImage() {
+    style.hasStyleImage("id")
+    verify { nativeMap.hasStyleImage("id") }
+  }
+
+  @Test
   fun addBitmap() {
     val bitmap: Bitmap = mockk(relaxed = true)
     style.addImage("foobar", bitmap)

@@ -317,6 +317,13 @@ class NativeMapTest {
   }
 
   @Test
+  fun hasStyleImage() {
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.hasStyleImage("foo")
+    verify { map.hasStyleImage("foo") }
+  }
+
+  @Test
   fun addStyleCustomGeometrySource() {
     val value = mockk<CustomGeometrySourceOptions>()
     val nativeMap = NativeMapImpl(map)
