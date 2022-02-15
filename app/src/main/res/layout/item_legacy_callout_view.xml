@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="16dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="14dp"
+    android:background="@drawable/ic_legacy_callout">
+
+    <TextView
+        android:id="@+id/infowindow_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:textIsSelectable="false"
+        android:maxEms="17"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/infowindow_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
+        android:textIsSelectable="false"
+        android:lineSpacingExtra="1dp"
+        android:maxEms="17"
+        android:textColor="@color/mapbox_gray"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxEms="17"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:visibility="gone"/>
+
+</LinearLayout>
