@@ -12,6 +12,7 @@
           "regex": true,
           "include": ["com\\.mapbox\\.maps\\..*"],
           "exclude": [
+            "com\\.mapbox\\.maps\\.extension\\.style\\.layers\\.properties\\.PropertyValue",
             "com\\.mapbox\\.maps\\.NativeMapImpl",
             "com\\.mapbox\\.maps\\.MapController",
             "com\\.mapbox\\.maps\\.Snapshot",
