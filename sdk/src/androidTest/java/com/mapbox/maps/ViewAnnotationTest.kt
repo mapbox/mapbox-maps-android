@@ -701,6 +701,41 @@ class ViewAnnotationTest(
     )
   }
 
+  @Test
+  fun viewAnnotationUpdateListener() {
+    var callbackTriggerCount = 0
+    var actualWidth = 0
+    var actualHeight = 0
+    var actualLeftTop = ScreenCoordinate(0.0, 0.0)
+    viewAnnotationTestHelper(
+      performAction = {
+        viewAnnotationManager.addOnViewAnnotationPositionUpdatedListener { view, leftTop, width, height ->
+          if (firstView == view) {
+            callbackTriggerCount++
+            actualLeftTop = leftTop
+            actualWidth = width
+            actualHeight = height
+          }
+        }
+        firstView = viewAnnotationManager.addViewAnnotation(
+          resId = layoutResId,
+          options = viewAnnotationOptions {
+            geometry(CAMERA_CENTER)
+            anchor(ViewAnnotationAnchor.TOP_LEFT)
+          }
+        )
+      },
+      makeChecks = {
+        // callback should be triggered once and contain correct placement data
+        assert(callbackTriggerCount == 1)
+        assertEquals(firstView.translationX.toDouble(), actualLeftTop.x, ADMISSIBLE_ERROR_PX)
+        assertEquals(firstView.translationY.toDouble(), actualLeftTop.y, ADMISSIBLE_ERROR_PX)
+        assertEquals(firstView.width, actualWidth)
+        assertEquals(firstView.height, actualHeight)
+      }
+    )
+  }
+
   private fun prepareStyle(style: Style, visibility: Visibility) {
     style.addSource(
       geoJsonSource("source") {

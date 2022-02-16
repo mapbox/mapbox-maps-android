@@ -8,10 +8,12 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.VisibleForTesting
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.bindgen.Expected
+import com.mapbox.maps.viewannotation.OnViewAnnotationPositionUpdatedListener
 import com.mapbox.maps.viewannotation.ViewAnnotation
 import com.mapbox.maps.viewannotation.ViewAnnotation.Companion.USER_FIXED_DIMENSION
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.collections.HashMap
 
 internal class ViewAnnotationManagerImpl(
@@ -33,6 +35,9 @@ internal class ViewAnnotationManagerImpl(
 
   // struct needed for drawing, declare it only once
   private val currentViewsDrawnMap = HashMap<String, ScreenCoordinate>()
+
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal val viewPositionUpdatedListenerList = CopyOnWriteArrayList<OnViewAnnotationPositionUpdatedListener>()
 
   override fun addViewAnnotation(
     @LayoutRes resId: Int,
@@ -75,6 +80,18 @@ internal class ViewAnnotationManagerImpl(
     return true
   }
 
+  override fun removeAllViewAnnotations() {
+    annotationMap.forEach { (id, annotation) ->
+      getValue(mapboxMap.removeViewAnnotation(id))
+      annotation.view.removeOnAttachStateChangeListener(annotation.attachStateListener)
+      annotation.attachStateListener = null
+      mapView.removeView(annotation.view)
+    }
+    currentViewsDrawnMap.clear()
+    annotationMap.clear()
+    idLookupMap.clear()
+  }
+
   override fun updateViewAnnotation(
     view: View,
     options: ViewAnnotationOptions,
@@ -109,21 +126,22 @@ internal class ViewAnnotationManagerImpl(
     return getValue(mapboxMap.getViewAnnotationOptions(id))
   }
 
+  override fun addOnViewAnnotationPositionUpdatedListener(listener: OnViewAnnotationPositionUpdatedListener) {
+    viewPositionUpdatedListenerList.add(listener)
+  }
+
+  override fun removeOnViewAnnotationPositionUpdatedListener(listener: OnViewAnnotationPositionUpdatedListener) {
+    viewPositionUpdatedListenerList.remove(listener)
+  }
+
   override fun onViewAnnotationPositionsUpdate(positions: MutableList<ViewAnnotationPositionDescriptor>) {
     drawAnnotationViews(positions)
   }
 
   fun destroy() {
     mapboxMap.setViewAnnotationPositionsUpdateListener(null)
-    annotationMap.forEach { (id, annotation) ->
-      getValue(mapboxMap.removeViewAnnotation(id))
-      annotation.view.removeOnAttachStateChangeListener(annotation.attachStateListener)
-      annotation.attachStateListener = null
-      mapView.removeView(annotation.view)
-    }
-    currentViewsDrawnMap.clear()
-    annotationMap.clear()
-    idLookupMap.clear()
+    viewPositionUpdatedListenerList.clear()
+    removeAllViewAnnotations()
   }
 
   private fun validateOptions(options: ViewAnnotationOptions) {
@@ -273,6 +291,20 @@ internal class ViewAnnotationManagerImpl(
         }
         if (!currentViewsDrawnMap.keys.contains(descriptor.identifier) && mapView.indexOfChild(annotation.view) == -1) {
           mapView.addView(annotation.view, annotation.viewLayoutParams)
+        }
+        if (viewPositionUpdatedListenerList.isNotEmpty()) {
+          viewPositionUpdatedListenerList.forEach {
+            // when using wrap_content dimensions width and height could report -2
+            // it makes sense to notify user only when width and height are calculated
+            if (descriptor.width > 0 && descriptor.height > 0) {
+              it.onViewAnnotationPositionUpdated(
+                annotation.view,
+                descriptor.leftTopCoordinate,
+                descriptor.width,
+                descriptor.height,
+              )
+            }
+          }
         }
         hiddenViewMap[annotation.view]?.let { zIndex ->
           annotation.view.translationZ = zIndex
