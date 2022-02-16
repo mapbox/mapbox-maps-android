@@ -1,12 +1,10 @@
 package com.mapbox.maps.testapp.examples.markersandcallouts.infowindow
 
-import android.os.Handler
-import android.os.Looper
 import android.view.View
-import android.view.ViewTreeObserver
 import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
+import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationClickListener
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
@@ -15,6 +13,7 @@ import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.gestures.removeOnMapClickListener
+import com.mapbox.maps.viewannotation.ViewPositioningListener
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.math.abs
@@ -110,62 +109,47 @@ class MarkerManager(
       view,
       viewAnnotationOptions {
         selected(false)
+        // reset offset to default value
+        offsetX(0)
       }
     )
     view.visibility = View.INVISIBLE
   }
 
   // if info window view is shown near screen edge - we adjust offsetX so that it fully appears on the screen
-  private fun adjustViewAnnotationOffsets(view: View) {
-    Logger.e("KIRYLDD", "outer W = ${view.measuredWidth}, H = ${view.measuredHeight}")
-    // fixed dimensions are used - we could calculate right now
-    if (view.measuredWidth > 0 && view.measuredHeight > 0) {
-      updateOffsetX(view)
-    } else {
-      // TODO this could be simplified with some additional API exposed
-      // wrap content dimensions are used - we need to calculate offset when dimensions are measured
-      var onAttachStateChangeListener: View.OnAttachStateChangeListener? = null
-      val globalLayoutListener = object: ViewTreeObserver.OnGlobalLayoutListener {
-        override fun onGlobalLayout() {
-          Logger.e("KIRYLDD", "inner W = ${view.measuredWidth}, H = ${view.measuredHeight}")
-          if (view.measuredWidth > 0 && view.measuredHeight > 0) {
-            updateOffsetX(view)
-          }
-          view.viewTreeObserver.removeOnGlobalLayoutListener(this)
-          view.removeOnAttachStateChangeListener(onAttachStateChangeListener)
+  private fun adjustViewAnnotationOffsets(viewToAdjust: View) {
+    mapView.viewAnnotationManager.addViewPositioningListener(object : ViewPositioningListener {
+      override fun onViewAnnotationPositionUpdated(
+        view: View,
+        leftTopCoordinate: ScreenCoordinate,
+        width: Int,
+        height: Int
+      ) {
+        if (view == viewToAdjust && width > 0 && height > 0) {
+          updateOffsetX(viewToAdjust, leftTopCoordinate, width, height)
+          mapView.viewAnnotationManager.removeViewPositioningListener(this)
         }
       }
-      onAttachStateChangeListener = object : View.OnAttachStateChangeListener {
-        override fun onViewAttachedToWindow(v: View?) {
-          view.viewTreeObserver.addOnGlobalLayoutListener(globalLayoutListener)
-        }
-
-        override fun onViewDetachedFromWindow(v: View?) {
-          view.viewTreeObserver.removeOnGlobalLayoutListener(globalLayoutListener)
-        }
-      }
-      view.addOnAttachStateChangeListener(onAttachStateChangeListener)
-    }
+    })
   }
 
-  private fun updateOffsetX(view: View) {
-    val currentOffsetX = mapView.viewAnnotationManager.getViewAnnotationOptionsByView(view)?.offsetX ?: 0
-    var resultOffsetX = currentOffsetX
-    val res = IntArray(2)
-    view.getLocationOnScreen(res)
-    Logger.e("KIRYLDD", "updateOffsetX: view.translationX=${res[0]}, map width=${mapView.getMapboxMap().getSize().width}")
-    if (view.translationX < 0) {
-      resultOffsetX += abs(view.translationX.toInt())
-    } else if (view.translationX + view.measuredWidth > mapView.getMapboxMap().getSize().width) {
-      resultOffsetX += (view.translationX + view.measuredWidth - mapView.getMapboxMap().getSize().width).toInt()
+  private fun updateOffsetX(view: View, leftTop: ScreenCoordinate, width: Int, height: Int) {
+    var resultOffsetX = 0
+    if (leftTop.x < 0) {
+      resultOffsetX = abs(leftTop.x.toInt()) + ADDITIONAL_EDGE_PADDING_PX
+    } else if (leftTop.x + width > mapView.getMapboxMap().getSize().width) {
+      resultOffsetX = (mapView.getMapboxMap().getSize().width - leftTop.x - width - ADDITIONAL_EDGE_PADDING_PX).toInt()
     }
-    if (resultOffsetX != currentOffsetX) {
-      mapView.viewAnnotationManager.updateViewAnnotation(
-        view,
-        viewAnnotationOptions {
-          offsetX(currentOffsetX )
-        }
-      )
-    }
+    mapView.viewAnnotationManager.updateViewAnnotation(
+      view,
+      viewAnnotationOptions {
+        offsetX(resultOffsetX)
+      }
+    )
+  }
+
+  companion object {
+    // additional padding when offsetting view near the screen edge
+    private const val ADDITIONAL_EDGE_PADDING_PX = 20
   }
 }
