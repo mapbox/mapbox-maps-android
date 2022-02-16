@@ -1,7 +1,6 @@
 package com.mapbox.maps.testapp.examples.markersandcallouts.infowindow
 
 import android.view.View
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
 import com.mapbox.maps.ScreenCoordinate
@@ -13,7 +12,7 @@ import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.gestures.removeOnMapClickListener
-import com.mapbox.maps.viewannotation.ViewPositioningListener
+import com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.math.abs
@@ -23,7 +22,7 @@ import kotlin.math.abs
  */
 class MarkerManager(
   private val mapView: MapView
-): OnPointAnnotationClickListener, OnMapClickListener {
+) : OnPointAnnotationClickListener, OnMapClickListener {
 
   private val pointAnnotationManager: PointAnnotationManager = mapView.annotations.createPointAnnotationManager()
   // using copy on write just in case as potentially remove may be called while we're iterating in on click listener
@@ -52,7 +51,7 @@ class MarkerManager(
 
   fun addMarker(marker: Marker): Marker {
     marker.prepareAnnotationMarker(pointAnnotationManager)
-    marker.prepareViewAnnotation(mapView)
+    marker.prepareViewAnnotation(mapView.viewAnnotationManager)
     markerList.add(marker)
     // do not show info window by default
     deselectMarker(marker)
@@ -69,7 +68,7 @@ class MarkerManager(
   }
 
   fun selectMarker(marker: Marker, deselectIfSelected: Boolean = false) {
-    if (mapView.viewAnnotationManager.getViewAnnotationOptionsByView(marker.viewAnnotation)?.selected == true) {
+    if (marker.isSelected()) {
       if (deselectIfSelected) {
         deselectMarker(marker)
       }
@@ -99,7 +98,6 @@ class MarkerManager(
 
   fun destroy() {
     markerList.forEach { removeMarker(it) }
-    markerList.clear()
     pointAnnotationManager.removeClickListener(this)
     mapView.getMapboxMap().removeOnMapClickListener(this)
   }
@@ -118,22 +116,26 @@ class MarkerManager(
 
   // if info window view is shown near screen edge - we adjust offsetX so that it fully appears on the screen
   private fun adjustViewAnnotationOffsets(viewToAdjust: View) {
-    mapView.viewAnnotationManager.addViewPositioningListener(object : ViewPositioningListener {
+    mapView.viewAnnotationManager.addOnViewAnnotationUpdatedListener(object : OnViewAnnotationUpdatedListener {
       override fun onViewAnnotationPositionUpdated(
         view: View,
         leftTopCoordinate: ScreenCoordinate,
         width: Int,
         height: Int
       ) {
-        if (view == viewToAdjust && width > 0 && height > 0) {
-          updateOffsetX(viewToAdjust, leftTopCoordinate, width, height)
-          mapView.viewAnnotationManager.removeViewPositioningListener(this)
+        if (view == viewToAdjust) {
+          updateOffsetX(viewToAdjust, leftTopCoordinate, width)
+          mapView.viewAnnotationManager.removeOnViewAnnotationUpdatedListener(this)
         }
+      }
+
+      override fun onViewAnnotationVisibilityUpdated(view: View, visible: Boolean) {
+        // not needed
       }
     })
   }
 
-  private fun updateOffsetX(view: View, leftTop: ScreenCoordinate, width: Int, height: Int) {
+  private fun updateOffsetX(view: View, leftTop: ScreenCoordinate, width: Int) {
     var resultOffsetX = 0
     if (leftTop.x < 0) {
       resultOffsetX = abs(leftTop.x.toInt()) + ADDITIONAL_EDGE_PADDING_PX
@@ -148,8 +150,11 @@ class MarkerManager(
     )
   }
 
-  companion object {
+  private fun Marker.isSelected() =
+    mapView.viewAnnotationManager.getViewAnnotationOptionsByView(viewAnnotation)?.selected == true
+
+  private companion object {
     // additional padding when offsetting view near the screen edge
-    private const val ADDITIONAL_EDGE_PADDING_PX = 20
+    const val ADDITIONAL_EDGE_PADDING_PX = 20
   }
 }

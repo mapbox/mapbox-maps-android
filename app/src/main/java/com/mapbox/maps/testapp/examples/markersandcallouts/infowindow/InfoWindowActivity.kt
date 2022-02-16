@@ -1,12 +1,10 @@
 package com.mapbox.maps.testapp.examples.markersandcallouts.infowindow
 
-import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
-import com.mapbox.maps.Style
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
@@ -17,10 +15,10 @@ import com.mapbox.maps.testapp.utils.BitmapUtils
 import java.text.DecimalFormat
 
 /**
- * Test activity showcasing using the legacy InfoWindow API above Washington D.C
- * using new View Annotation API.
+ * Test activity showcasing markers above Washington D.C
+ * using View Annotation API and point annotations.
  *
- * @see [legacy example code](https://github.com/mapbox/mapbox-gl-native-android/blob/main/MapboxGLAndroidSDKTestApp/src/main/java/com/mapbox/mapboxsdk/testapp/activity/infowindow/InfoWindowActivity.java)
+ * This example is replicating similar activity from Maps v9 that was using InfoWindow API.
  */
 class InfoWindowActivity : AppCompatActivity(), OnMapLongClickListener {
 
@@ -30,7 +28,6 @@ class InfoWindowActivity : AppCompatActivity(), OnMapLongClickListener {
   private lateinit var markerManager: MarkerManager
   private var customMarker: Marker? = null
 
-  @SuppressLint("SetTextI18n")
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     mapView = MapView(this)
@@ -47,7 +44,7 @@ class InfoWindowActivity : AppCompatActivity(), OnMapLongClickListener {
           zoom(15.0)
         }
       )
-      loadStyleUri(Style.MAPBOX_STREETS) {
+      getStyle {
         markerManager = MarkerManager(mapView)
         addMarkers()
       }
@@ -74,9 +71,11 @@ class InfoWindowActivity : AppCompatActivity(), OnMapLongClickListener {
     val marker = markerManager.addMarker(
       Marker(
         title = "White House",
-        snippet = "The official residence and principal workplace of the President of the United States, "
-          + "located at 1600 Pennsylvania Avenue NW in Washington, D.C. It has been the residence of every"
-          + "U.S. president since John Adams in 1800.",
+        snippet = """
+          The official residence and principal workplace of the President of the United States,
+          located at 1600 Pennsylvania Avenue NW in Washington, D.C. It has been the residence of every
+          U.S. president since John Adams in 1800.
+        """.trimIndent(),
         icon = icon,
         position = Point.fromLngLat(-77.03655168667463, 38.897705003219784)
       )
