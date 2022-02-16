@@ -13,7 +13,7 @@ import com.mapbox.maps.viewannotation.ViewAnnotation
 import com.mapbox.maps.viewannotation.ViewAnnotation.Companion.USER_FIXED_DIMENSION
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.CopyOnWriteArrayList
+import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.collections.HashMap
 
 internal class ViewAnnotationManagerImpl(
@@ -36,8 +36,9 @@ internal class ViewAnnotationManagerImpl(
   // struct needed for drawing, declare it only once
   private val currentViewsDrawnMap = HashMap<String, ScreenCoordinate>()
 
+  // using copy on write as user could remove listener while callback is invoked
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal val viewPositionUpdatedListenerList = CopyOnWriteArrayList<OnViewAnnotationPositionUpdatedListener>()
+  internal val viewPositionUpdatedListenerList = CopyOnWriteArraySet<OnViewAnnotationPositionUpdatedListener>()
 
   override fun addViewAnnotation(
     @LayoutRes resId: Int,
