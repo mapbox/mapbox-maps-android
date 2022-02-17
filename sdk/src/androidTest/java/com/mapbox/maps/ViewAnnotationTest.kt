@@ -109,7 +109,7 @@ class ViewAnnotationTest(
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    latch.throwExceptionOnTimeoutMs()
+    latch.throwExceptionOnTimeoutMs(timeoutMs = 10_000L)
   }
 
   // checking some use-cases when adding view annotation
