@@ -65,6 +65,7 @@ task javadocsJar(type: Jar, dependsOn: dokkaJavadoc) {
 task androidSourcesJar(type: Jar) {
     classifier "sources"
     from android.sourceSets.main.java.srcDirs
+    from android.sourceSets.main.kotlin.srcDirs
 }
 
 tasks.withType(Javadoc) {

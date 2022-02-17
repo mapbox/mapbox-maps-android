@@ -30,10 +30,14 @@ The only requirement is to install the latest version of
 [`sdkmanager`](https://developer.android.com/studio/command-line/sdkmanager) command line or
 through the GUI interface to make sure the extra requirements to build Android are met.
 
+Note: We use Android gradle plugin v7.0+ to build the project, which requires JDK 11.
+when building project, make sure you have JDK 11 installed and set it as JAVA_HOME variable.
+If you need more help, follow the guide [`how to set JDK 11.`](https://developer.android.com/studio/releases/gradle-plugin#jdk-11)
+
 ```
 $ ${ANDROID_HOME}/tools/bin/sdkmanager \
       "platform-tools" \
-      "platforms;android-29" \
+      "platforms;android-30" \
       "build-tools;30.0.3" \
       "extras;android;m2repository" \
       "patcher;v4" \
