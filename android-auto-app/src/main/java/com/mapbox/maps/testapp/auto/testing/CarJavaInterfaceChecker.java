@@ -9,11 +9,13 @@ import androidx.car.app.SurfaceContainer;
 import com.mapbox.maps.EdgeInsets;
 import com.mapbox.maps.MapInitOptions;
 import com.mapbox.maps.MapSurface;
+import com.mapbox.maps.MapboxExperimental;
 import com.mapbox.maps.ScreenCoordinate;
 import com.mapbox.maps.extension.androidauto.MapboxCarMap;
 import com.mapbox.maps.extension.androidauto.MapboxCarMapObserver;
 import com.mapbox.maps.extension.androidauto.MapboxCarMapSurface;
 
+@MapboxExperimental
 class CarJavaInterfaceChecker {
 
   void constructors(MapInitOptions mapInitOptions) {

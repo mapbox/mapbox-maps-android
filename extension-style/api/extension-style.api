@@ -3411,16 +3411,16 @@ public final class com/mapbox/maps/extension/style/sources/TileSet : java/util/H
 	public fun containsValue (Lcom/mapbox/bindgen/Value;)Z
 	public final fun containsValue (Ljava/lang/Object;)Z
 	public final fun entrySet ()Ljava/util/Set;
-	public final fun get (Ljava/lang/Object;)Ljava/lang/Object;
+	public final fun get (Ljava/lang/Object;)Lcom/mapbox/bindgen/Value;
 	public fun get (Ljava/lang/String;)Lcom/mapbox/bindgen/Value;
 	public fun getEntries ()Ljava/util/Set;
 	public fun getKeys ()Ljava/util/Set;
-	public final fun getOrDefault (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+	public final fun getOrDefault (Ljava/lang/Object;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Value;
 	public fun getOrDefault (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Value;
 	public fun getSize ()I
 	public fun getValues ()Ljava/util/Collection;
 	public final fun keySet ()Ljava/util/Set;
-	public final fun remove (Ljava/lang/Object;)Ljava/lang/Object;
+	public final fun remove (Ljava/lang/Object;)Lcom/mapbox/bindgen/Value;
 	public final fun remove (Ljava/lang/Object;Ljava/lang/Object;)Z
 	public fun remove (Ljava/lang/String;)Lcom/mapbox/bindgen/Value;
 	public fun remove (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Z

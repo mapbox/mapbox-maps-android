@@ -73,14 +73,14 @@ object Dependencies {
 }
 
 object Versions {
-  const val pluginAndroidGradle = "4.0.1"
-  const val pluginKotlin = "1.4.0"
-  const val pluginLicense = "0.8.5"
+  const val pluginAndroidGradle = "7.0.4"
+  const val pluginKotlin = "1.5.31"
+  const val pluginLicense = "0.8.80"
   const val pluginDokka =  "1.4.10.2"
   const val pluginJacoco = "0.2"
   const val pluginBinaryCompatibilityValidator = "0.8.0"
-  const val mapboxAccessToken="0.2.1"
-  const val mapboxSdkRegistry="0.4.0"
+  const val mapboxAccessToken="0.4.0"
+  const val mapboxSdkRegistry="0.7.0"
   const val mapboxGestures = "0.7.0"
   const val mapboxJavaServices = "5.4.1"
   const val mapboxBase = "0.5.0"

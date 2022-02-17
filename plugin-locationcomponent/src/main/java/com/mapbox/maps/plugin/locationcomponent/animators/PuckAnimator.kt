@@ -4,12 +4,14 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.TypeEvaluator
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.view.animation.LinearInterpolator
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants
 import com.mapbox.maps.plugin.locationcomponent.LocationLayerRenderer
 
+@SuppressLint("Recycle")
 internal abstract class PuckAnimator<T>(
   evaluator: TypeEvaluator<T>
 ) : ValueAnimator() {

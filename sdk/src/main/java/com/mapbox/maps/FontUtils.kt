@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import android.annotation.SuppressLint
 import android.graphics.Typeface
 import android.os.Build
 import android.util.Log
@@ -26,10 +27,7 @@ internal object FontUtils {
    * @return the selected font
    */
   fun extractValidFont(font: String?): String {
-    var validFonts: List<String>? = null
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-      validFonts = deviceFonts
-    }
+    var validFonts: List<String>? = deviceFonts
     if (validFonts == null || validFonts.isEmpty()) {
       validFonts = DEFAULT_FONT_STACKS
     }
@@ -46,6 +44,7 @@ internal object FontUtils {
 
   @get:RequiresApi(Build.VERSION_CODES.LOLLIPOP)
   private val deviceFonts: List<String>
+    @SuppressLint("DiscouragedPrivateApi")
     get() {
       val fonts: MutableList<String> = ArrayList()
       try {

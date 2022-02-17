@@ -10,16 +10,13 @@ plugins {
 }
 
 android {
-  compileSdkVersion(AndroidVersions.compileSdkVersion)
-
+  compileSdk = AndroidVersions.compileSdkVersion
   defaultConfig {
-    minSdkVersion(AndroidVersions.minSdkVersion)
-    targetSdkVersion(AndroidVersions.targetSdkVersion)
+    minSdk = AndroidVersions.minSdkVersion
+    targetSdk = AndroidVersions.targetSdkVersion
     consumerProguardFiles("proguard-rules.pro")
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    testInstrumentationRunnerArguments = mapOf(
-      "clearPackageData" to "true"
-    )
+    testInstrumentationRunnerArguments(mapOf("clearPackageData" to "true"))
 
     if (project.hasProperty("android.injected.invoked.from.ide")) {
       buildConfigField("boolean", "RUN_FROM_IDE", "true")

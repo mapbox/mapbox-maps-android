@@ -7,18 +7,16 @@ plugins {
 val buildFromSource: String by project
 
 android {
-  compileSdkVersion(AndroidVersions.compileSdkVersion)
+  compileSdk = AndroidVersions.compileSdkVersion
   defaultConfig {
     applicationId = "com.mapbox.maps.testapp"
-    minSdkVersion(AndroidVersions.minSdkVersion)
-    targetSdkVersion(AndroidVersions.targetSdkVersion)
+    minSdk = AndroidVersions.minSdkVersion
+    targetSdk = AndroidVersions.targetSdkVersion
     versionCode = 1
     versionName = "0.1.0"
     multiDexEnabled = true
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    testInstrumentationRunnerArguments = mapOf(
-      "clearPackageData" to "true"
-    )
+    testInstrumentationRunnerArguments(mapOf("clearPackageData" to "true"))
   }
   buildTypes {
     getByName("release") {

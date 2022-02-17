@@ -26,6 +26,9 @@ mapView.location2.puckBearingEnabled = false
 * Fix location puck not being shown if map is created without initial style (e.g. MapInitOptions.styleUri == null) and then loaded asynchronously. ([#1114](https://github.com/mapbox/mapbox-maps-android/pull/1114))
 * Fix crash within location plugin that happens when style is reloaded simultaneously with location plugin updates. ([#1112](https://github.com/mapbox/mapbox-maps-android/pull/1112))
 
+## Dependencies
+* Update android gradle plugin to v7.0.4, gradle version to v7.0.2, Gradle licence plugin to 0.8.80, Kotlin gradle plugin to 1.5.31, Jacoco to 0.8.7. ([#1118](https://github.com/mapbox/mapbox-maps-android/pull/1118))
+
 # 10.3.0 February 10, 2022
 
 ## Features ✨ and improvements 🏁

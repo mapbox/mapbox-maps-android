@@ -488,11 +488,6 @@ public abstract interface class com/mapbox/maps/renderer/OnFpsChangedListener {
 	public abstract fun onFpsChanged (D)V
 }
 
-public final class com/mapbox/maps/renderer/RenderHandlerThread$sam$i$java_lang_Runnable$0 : java/lang/Runnable {
-	public fun <init> (Lkotlin/jvm/functions/Function0;)V
-	public final synthetic fun run ()V
-}
-
 public class com/mapbox/maps/renderer/widget/BitmapWidget : com/mapbox/maps/renderer/widget/Widget {
 	public fun <init> (Landroid/graphics/Bitmap;)V
 	public fun <init> (Landroid/graphics/Bitmap;Lcom/mapbox/maps/renderer/widget/WidgetPosition;)V
