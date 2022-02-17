@@ -1,0 +1,34 @@
+// Signature format: 3.0
+package com.mapbox.maps.plugin.logo {
+
+  public final class LogoUtils {
+    method public static com.mapbox.maps.plugin.logo.LogoPlugin getLogo(com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate);
+  }
+
+  public final class LogoViewImpl extends androidx.appcompat.widget.AppCompatImageView implements com.mapbox.maps.plugin.logo.LogoView {
+    ctor public LogoViewImpl(android.content.Context context);
+    ctor public LogoViewImpl(android.content.Context context, android.util.AttributeSet attrs);
+    ctor public LogoViewImpl(android.content.Context context, android.util.AttributeSet attrs, int defStyleAttr);
+    method public boolean getLogoEnabled();
+    method public int getLogoGravity();
+    method public void setLogoEnabled(boolean value);
+    method public void setLogoGravity(int value);
+    method public void setLogoMargins(int left, int top, int right, int bottom);
+    property public boolean logoEnabled;
+    property public int logoGravity;
+  }
+
+  public class LogoViewPlugin extends com.mapbox.maps.plugin.logo.generated.LogoSettingsBase implements com.mapbox.maps.plugin.logo.LogoPlugin {
+    ctor public LogoViewPlugin(kotlin.jvm.functions.Function1<? super android.content.Context,com.mapbox.maps.plugin.logo.LogoViewImpl> viewImplProvider = { it -> return <init>(it) });
+    method protected void applySettings();
+    method public android.view.View bind(android.widget.FrameLayout mapView, android.util.AttributeSet? attrs, float pixelRatio);
+    method protected com.mapbox.maps.plugin.logo.generated.LogoSettings getInternalSettings();
+    method public void initialize();
+    method public void onPluginView(android.view.View view);
+    method protected void setInternalSettings(com.mapbox.maps.plugin.logo.generated.LogoSettings p);
+    property public boolean enabled;
+    property protected com.mapbox.maps.plugin.logo.generated.LogoSettings internalSettings;
+  }
+
+}
+

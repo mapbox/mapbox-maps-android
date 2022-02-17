@@ -1,0 +1,50 @@
+// Signature format: 3.0
+package com.mapbox.maps.extension.androidauto {
+
+  @com.mapbox.maps.MapboxExperimental public final class MapboxCarMap {
+    ctor public MapboxCarMap(com.mapbox.maps.MapInitOptions mapInitOptions);
+    method public void clearObservers();
+    method public androidx.car.app.CarContext getCarContext();
+    method public com.mapbox.maps.extension.androidauto.MapboxCarMapSurface? getCarMapSurface();
+    method public com.mapbox.maps.EdgeInsets? getEdgeInsets();
+    method public android.graphics.Rect? getVisibleArea();
+    method public com.mapbox.maps.extension.androidauto.MapboxCarMap registerObserver(com.mapbox.maps.extension.androidauto.MapboxCarMapObserver mapboxCarMapObserver);
+    method public void unregisterObserver(com.mapbox.maps.extension.androidauto.MapboxCarMapObserver mapboxCarMapObserver);
+    property public final androidx.car.app.CarContext carContext;
+    property public final com.mapbox.maps.extension.androidauto.MapboxCarMapSurface? carMapSurface;
+    property public final com.mapbox.maps.EdgeInsets? edgeInsets;
+    property public final android.graphics.Rect? visibleArea;
+  }
+
+  @com.mapbox.maps.MapboxExperimental public interface MapboxCarMapObserver {
+    method public default void onAttached(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface);
+    method public default void onDetached(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface);
+    method public default boolean onFling(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface, float velocityX, float velocityY);
+    method public default boolean onScale(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface, com.mapbox.maps.ScreenCoordinate anchor, double fromZoom, double toZoom);
+    method public default boolean onScroll(com.mapbox.maps.extension.androidauto.MapboxCarMapSurface mapboxCarMapSurface, float distanceX, float distanceY);
+    method public default void onVisibleAreaChanged(android.graphics.Rect visibleArea, com.mapbox.maps.EdgeInsets edgeInsets);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class MapboxCarMapSurface {
+    method public androidx.car.app.CarContext getCarContext();
+    method public com.mapbox.maps.MapSurface getMapSurface();
+    method public androidx.car.app.SurfaceContainer getSurfaceContainer();
+    property public final androidx.car.app.CarContext carContext;
+    property public final com.mapbox.maps.MapSurface mapSurface;
+    property public final androidx.car.app.SurfaceContainer surfaceContainer;
+  }
+
+}
+
+package com.mapbox.maps.extension.androidauto.widgets {
+
+  @com.mapbox.maps.MapboxExperimental public final class CompassWidget extends com.mapbox.maps.renderer.widget.BitmapWidget {
+    ctor public CompassWidget(android.content.Context context, com.mapbox.maps.renderer.widget.WidgetPosition position = com.mapbox.maps.renderer.widget.WidgetPosition(WidgetPosition.Horizontal.RIGHT, WidgetPosition.Vertical.TOP), float marginX = 20f, float marginY = 20f);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public final class LogoWidget extends com.mapbox.maps.renderer.widget.BitmapWidget {
+    ctor public LogoWidget(android.content.Context context, com.mapbox.maps.renderer.widget.WidgetPosition position = com.mapbox.maps.renderer.widget.WidgetPosition(WidgetPosition.Horizontal.LEFT, WidgetPosition.Vertical.BOTTOM), float marginX = 20f, float marginY = 20f);
+  }
+
+}
+

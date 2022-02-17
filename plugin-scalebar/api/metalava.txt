@@ -1,0 +1,65 @@
+// Signature format: 3.0
+package com.mapbox.maps.plugin.scalebar {
+
+  public final class LocaleUnitResolver {
+    method public boolean isMetricSystem();
+    property public final boolean isMetricSystem;
+    field public static final com.mapbox.maps.plugin.scalebar.LocaleUnitResolver INSTANCE;
+  }
+
+  public final class ScaleBarConstantKt {
+  }
+
+  public final class ScaleBarImpl extends android.view.View implements com.mapbox.maps.plugin.scalebar.ScaleBar {
+    ctor public ScaleBarImpl(android.content.Context context);
+    ctor public ScaleBarImpl(android.content.Context context, android.util.AttributeSet attrs);
+    ctor public ScaleBarImpl(android.content.Context context, android.util.AttributeSet attrs, int defStyleAttr);
+    method public float getDistancePerPixel();
+    method public boolean getEnable();
+    method public float getMapViewWidth();
+    method public float getPixelRatio();
+    method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings getSettings();
+    method public boolean getUseContinuousRendering();
+    method public void setDistancePerPixel(float value);
+    method public void setEnable(boolean value);
+    method public void setMapViewWidth(float value);
+    method public void setPixelRatio(float p);
+    method public void setSettings(com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings value);
+    method public void setUseContinuousRendering(boolean value);
+    property public float distancePerPixel;
+    property public boolean enable;
+    property public float mapViewWidth;
+    property public float pixelRatio;
+    property public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings settings;
+    property public boolean useContinuousRendering;
+    field public static final com.mapbox.maps.plugin.scalebar.ScaleBarImpl.Companion Companion;
+  }
+
+  public static final class ScaleBarImpl.Companion {
+  }
+
+  public class ScaleBarPluginImpl extends com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettingsBase implements com.mapbox.maps.plugin.scalebar.ScaleBarPlugin {
+    ctor public ScaleBarPluginImpl(kotlin.jvm.functions.Function1<? super android.content.Context,com.mapbox.maps.plugin.scalebar.ScaleBarImpl> viewImplProvider = { it -> return <init>(it) });
+    method protected void applySettings();
+    method public android.view.View bind(android.widget.FrameLayout mapView, android.util.AttributeSet? attrs, float pixelRatio);
+    method public void cleanup();
+    method public float getDistancePerPixel();
+    method protected com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings getInternalSettings();
+    method public void initialize();
+    method public void onDelegateProvider(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider);
+    method public void onPluginView(android.view.View view);
+    method public void onSizeChanged(int width, int height);
+    method public void setDistancePerPixel(float value);
+    method protected void setInternalSettings(com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings p);
+    property public float distancePerPixel;
+    property public boolean enabled;
+    property protected com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings internalSettings;
+    property public boolean useContinuousRendering;
+  }
+
+  public final class ScaleBarUtils {
+    method public static com.mapbox.maps.plugin.scalebar.ScaleBarPlugin getScaleBar(com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate);
+  }
+
+}
+

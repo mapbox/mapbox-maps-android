@@ -1,0 +1,16 @@
+// Signature format: 3.0
+package com.mapbox.maps.extension.localization {
+
+  public final class LocalizationKt {
+  }
+
+  public final class StyleInterfaceExtensionKt {
+    method public static void localizeLabels(com.mapbox.maps.extension.style.StyleInterface, java.util.Locale locale, java.util.List<java.lang.String>? layerIds = null);
+    method public static void localizeLabels(com.mapbox.maps.extension.style.StyleInterface, java.util.Locale locale);
+  }
+
+  public final class SupportedLanguagesKt {
+  }
+
+}
+
