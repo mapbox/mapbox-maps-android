@@ -13,6 +13,10 @@ android {
     targetSdk = AndroidVersions.targetSdkVersion
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
+  compileOptions {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+  }
 }
 
 dependencies {
@@ -42,6 +46,8 @@ tasks.withType<DokkaTask>().configureEach {
     }
   }
 }
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> { kotlinOptions.jvmTarget = "1.8" }
 
 project.apply {
   from("$rootDir/gradle/ktlint.gradle")
