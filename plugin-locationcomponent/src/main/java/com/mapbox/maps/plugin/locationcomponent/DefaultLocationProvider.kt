@@ -5,6 +5,8 @@ import android.content.Context
 import android.location.Location
 import android.os.Handler
 import android.os.Looper
+import androidx.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting.PRIVATE
 import com.mapbox.android.core.location.LocationEngineCallback
 import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.android.core.location.LocationEngineRequest
@@ -17,17 +19,15 @@ import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArrayList
 
 /**
- * Default Location Provider implementation, it can be overwritten by users.
+ * Default Location Provider implementation that produces location updates according to the device's
+ * GPS or magnetic field sensor data.
  */
-internal class LocationProviderImpl(
+class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal constructor(
   context: Context,
-  private val locationCompassEngine: LocationCompassEngine = LocationCompassEngine(
-    context
-  )
-) :
-  LocationProvider,
-  LocationEngineCallback<LocationEngineResult>,
-  LocationCompassEngine.CompassListener {
+  private val locationCompassEngine: LocationCompassEngine
+) : LocationProvider {
+  constructor(context: Context) : this(context, LocationCompassEngine(context))
+
   private val contextWeekRef: WeakReference<Context> = WeakReference(context)
   private val locationEngine = LocationEngineProvider.getBestLocationEngine(context)
   private val locationEngineRequest =
@@ -42,11 +42,44 @@ internal class LocationProviderImpl(
   private lateinit var runnable: Runnable
   private var updateDelay = INIT_UPDATE_DELAY
 
+  private val locationEngineCallback = object : LocationEngineCallback<LocationEngineResult> {
+    /**
+     * Invoked when new data available.
+     *
+     * @param result updated data.
+     */
+    override fun onSuccess(result: LocationEngineResult) {
+      result.lastLocation?.let {
+        notifyLocationUpdates(it)
+      }
+    }
+
+    /**
+     * Invoked when engine exception occurs.
+     *
+     * @param exception
+     */
+    override fun onFailure(exception: Exception) {
+      Logger.e(
+        TAG,
+        "Failed to obtain location update: $exception"
+      )
+    }
+  }
+
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal val locationCompassListener =
+    LocationCompassEngine.CompassListener { userHeading ->
+      locationConsumers.forEach { consumer ->
+        consumer.onBearingUpdated(userHeading.toDouble())
+      }
+    }
+
   @SuppressLint("MissingPermission")
   private fun requestLocationUpdates() {
     if (PermissionsManager.areLocationPermissionsGranted(contextWeekRef.get())) {
       locationEngine.requestLocationUpdates(
-        locationEngineRequest, this, Looper.getMainLooper()
+        locationEngineRequest, locationEngineCallback, Looper.getMainLooper()
       )
     } else {
       if (handler == null) {
@@ -78,6 +111,11 @@ internal class LocationProviderImpl(
     }
   }
 
+  /**
+   * Update the data source that drives the bearing updates of the [LocationProvider].
+   *
+   * @param source The [PuckBearingSource] used to drive the bearing updates.
+   */
   fun updatePuckBearingSource(source: PuckBearingSource) {
     if (source == currentPuckBearingSource) {
       return
@@ -87,39 +125,14 @@ internal class LocationProviderImpl(
     // No need to request compass update if no location consumer is registered.
     if (!locationConsumers.isEmpty()) {
       when (currentPuckBearingSource) {
-        PuckBearingSource.HEADING -> locationCompassEngine.addCompassListener(this)
-        PuckBearingSource.COURSE -> locationCompassEngine.removeCompassListener(this)
+        PuckBearingSource.HEADING -> locationCompassEngine.addCompassListener(
+          locationCompassListener
+        )
+        PuckBearingSource.COURSE -> locationCompassEngine.removeCompassListener(
+          locationCompassListener
+        )
       }
     }
-  }
-
-  override fun onCompassChanged(userHeading: Float) {
-    locationConsumers.forEach { consumer ->
-      consumer.onBearingUpdated(userHeading.toDouble())
-    }
-  }
-
-  /**
-   * Invoked when new data available.
-   *
-   * @param result updated data.
-   */
-  override fun onSuccess(result: LocationEngineResult) {
-    result.lastLocation?.let {
-      notifyLocationUpdates(it)
-    }
-  }
-
-  /**
-   * Invoked when engine exception occurs.
-   *
-   * @param exception
-   */
-  override fun onFailure(exception: Exception) {
-    Logger.e(
-      TAG,
-      "Failed to obtain location update: $exception"
-    )
   }
 
   /**
@@ -136,12 +149,12 @@ internal class LocationProviderImpl(
 
       // Start to listen compass change in HEADING mode.
       if (currentPuckBearingSource == PuckBearingSource.HEADING) {
-        locationCompassEngine.addCompassListener(this)
+        locationCompassEngine.addCompassListener(locationCompassListener)
       }
     }
     locationConsumers.add(locationConsumer)
     if (PermissionsManager.areLocationPermissionsGranted(contextWeekRef.get())) {
-      locationEngine.getLastLocation(this)
+      locationEngine.getLastLocation(locationEngineCallback)
     } else {
       Logger.w(
         TAG,
@@ -158,12 +171,12 @@ internal class LocationProviderImpl(
   override fun unRegisterLocationConsumer(locationConsumer: LocationConsumer) {
     locationConsumers.remove(locationConsumer)
     if (locationConsumers.isEmpty()) {
-      locationEngine.removeLocationUpdates(this)
+      locationEngine.removeLocationUpdates(locationEngineCallback)
       handler?.removeCallbacks(runnable)
 
       // Stop listening compass change when no consumer is registered to save power.
       if (currentPuckBearingSource == PuckBearingSource.HEADING) {
-        locationCompassEngine.removeCompassListener(this)
+        locationCompassEngine.removeCompassListener(locationCompassListener)
       }
     }
   }

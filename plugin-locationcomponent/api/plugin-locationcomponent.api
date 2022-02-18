@@ -1,3 +1,10 @@
+public final class com/mapbox/maps/plugin/locationcomponent/DefaultLocationProvider : com/mapbox/maps/plugin/locationcomponent/LocationProvider {
+	public fun <init> (Landroid/content/Context;)V
+	public fun registerLocationConsumer (Lcom/mapbox/maps/plugin/locationcomponent/LocationConsumer;)V
+	public fun unRegisterLocationConsumer (Lcom/mapbox/maps/plugin/locationcomponent/LocationConsumer;)V
+	public final fun updatePuckBearingSource (Lcom/mapbox/maps/plugin/PuckBearingSource;)V
+}
+
 public final class com/mapbox/maps/plugin/locationcomponent/LocationComponentConstants {
 	public static final field ACCURACY_RADIUS_ANIMATION_DURATION J
 	public static final field BEARING_ICON Ljava/lang/String;

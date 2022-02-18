@@ -17,7 +17,7 @@ import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowLogger::class])
-class LocationProviderImplTest {
+class DefaultLocationProviderTest {
   private val context = mockk<Context>(relaxed = true)
   private val locationEngine = mockk<LocationEngine>(relaxed = true)
   private val locationConsumer1 = mockk<LocationConsumer>(relaxed = true)
@@ -27,13 +27,13 @@ class LocationProviderImplTest {
   private val locationEngineCallbackSlot =
     CapturingSlot<LocationEngineCallback<LocationEngineResult>>()
 
-  private lateinit var locationProviderImpl: LocationProviderImpl
+  private lateinit var defaultLocationProvider: DefaultLocationProvider
 
   @Before
   fun setup() {
     mockkStatic(LocationEngineProvider::class)
     every { LocationEngineProvider.getBestLocationEngine(context) } returns locationEngine
-    locationProviderImpl = LocationProviderImpl(context, locationCompassEngine)
+    defaultLocationProvider = DefaultLocationProvider(context, locationCompassEngine)
   }
 
   @Test
@@ -54,7 +54,7 @@ class LocationProviderImplTest {
   fun testAddLocationConsumerWithoutPermission() {
     mockkStatic(PermissionsManager::class)
     every { PermissionsManager.areLocationPermissionsGranted(any()) } returns false
-    locationProviderImpl.registerLocationConsumer(locationConsumer1)
+    defaultLocationProvider.registerLocationConsumer(locationConsumer1)
     verify(exactly = 0) {
       locationEngine.requestLocationUpdates(
         any(),
@@ -72,10 +72,10 @@ class LocationProviderImplTest {
 
   @Test
   fun testAddLocationConsumerWithPermission() {
-    locationProviderImpl.updatePuckBearingSource(PuckBearingSource.HEADING)
+    defaultLocationProvider.updatePuckBearingSource(PuckBearingSource.HEADING)
     mockkStatic(PermissionsManager::class)
     every { PermissionsManager.areLocationPermissionsGranted(any()) } returns true
-    locationProviderImpl.registerLocationConsumer(locationConsumer1)
+    defaultLocationProvider.registerLocationConsumer(locationConsumer1)
     verify {
       locationEngine.requestLocationUpdates(
         capture(locationEngineRequestSlot),
@@ -105,9 +105,9 @@ class LocationProviderImplTest {
 
   @Test
   fun testAddTwoLocationConsumer() {
-    locationProviderImpl.updatePuckBearingSource(PuckBearingSource.HEADING)
-    locationProviderImpl.registerLocationConsumer(locationConsumer1)
-    locationProviderImpl.registerLocationConsumer(locationConsumer2)
+    defaultLocationProvider.updatePuckBearingSource(PuckBearingSource.HEADING)
+    defaultLocationProvider.registerLocationConsumer(locationConsumer1)
+    defaultLocationProvider.registerLocationConsumer(locationConsumer2)
     verify(exactly = 1) {
       locationEngine.requestLocationUpdates(
         capture(locationEngineRequestSlot),
@@ -125,11 +125,11 @@ class LocationProviderImplTest {
 
   @Test
   fun testUpdatePuckBearingSourceWithConsumer() {
-    locationProviderImpl.registerLocationConsumer(locationConsumer1)
+    defaultLocationProvider.registerLocationConsumer(locationConsumer1)
     verify(exactly = 0) {
       locationCompassEngine.addCompassListener(any())
     }
-    locationProviderImpl.updatePuckBearingSource(PuckBearingSource.HEADING)
+    defaultLocationProvider.updatePuckBearingSource(PuckBearingSource.HEADING)
     verify(exactly = 1) {
       locationCompassEngine.addCompassListener(any())
     }
@@ -137,9 +137,9 @@ class LocationProviderImplTest {
 
   @Test
   fun testRemoveLocationConsumer() {
-    locationProviderImpl.registerLocationConsumer(locationConsumer1)
-    locationProviderImpl.registerLocationConsumer(locationConsumer2)
-    locationProviderImpl.unRegisterLocationConsumer(locationConsumer2)
+    defaultLocationProvider.registerLocationConsumer(locationConsumer1)
+    defaultLocationProvider.registerLocationConsumer(locationConsumer2)
+    defaultLocationProvider.unRegisterLocationConsumer(locationConsumer2)
     verify(exactly = 0) {
       locationEngine.removeLocationUpdates(any() as LocationEngineCallback<LocationEngineResult>)
     }
@@ -150,11 +150,11 @@ class LocationProviderImplTest {
 
   @Test
   fun testRemoveAllLocationConsumer() {
-    locationProviderImpl.updatePuckBearingSource(PuckBearingSource.HEADING)
-    locationProviderImpl.registerLocationConsumer(locationConsumer1)
-    locationProviderImpl.registerLocationConsumer(locationConsumer2)
-    locationProviderImpl.unRegisterLocationConsumer(locationConsumer2)
-    locationProviderImpl.unRegisterLocationConsumer(locationConsumer1)
+    defaultLocationProvider.updatePuckBearingSource(PuckBearingSource.HEADING)
+    defaultLocationProvider.registerLocationConsumer(locationConsumer1)
+    defaultLocationProvider.registerLocationConsumer(locationConsumer2)
+    defaultLocationProvider.unRegisterLocationConsumer(locationConsumer2)
+    defaultLocationProvider.unRegisterLocationConsumer(locationConsumer1)
     verify(exactly = 1) {
       locationEngine.removeLocationUpdates(any() as LocationEngineCallback<LocationEngineResult>)
     }
@@ -172,8 +172,8 @@ class LocationProviderImplTest {
     every { location.latitude } returns 34.0
     every { location.bearing } returns 90.0f
 
-    locationProviderImpl.registerLocationConsumer(locationConsumer1)
-    locationProviderImpl.registerLocationConsumer(locationConsumer2)
+    defaultLocationProvider.registerLocationConsumer(locationConsumer1)
+    defaultLocationProvider.registerLocationConsumer(locationConsumer2)
     verify(exactly = 1) {
       locationEngine.requestLocationUpdates(
         any(),
@@ -190,7 +190,7 @@ class LocationProviderImplTest {
 
   @Test
   fun testLocationUpdateWithCompass() {
-    locationProviderImpl.updatePuckBearingSource(PuckBearingSource.HEADING)
+    defaultLocationProvider.updatePuckBearingSource(PuckBearingSource.HEADING)
     val locationEngineResult = mockk<LocationEngineResult>(relaxed = true)
     val location = mockk<Location>(relaxed = true)
     every { locationEngineResult.lastLocation } returns location
@@ -198,8 +198,8 @@ class LocationProviderImplTest {
     every { location.latitude } returns 34.0
     every { location.bearing } returns 90.0f
 
-    locationProviderImpl.registerLocationConsumer(locationConsumer1)
-    locationProviderImpl.registerLocationConsumer(locationConsumer2)
+    defaultLocationProvider.registerLocationConsumer(locationConsumer1)
+    defaultLocationProvider.registerLocationConsumer(locationConsumer2)
     verify(exactly = 1) {
       locationEngine.requestLocationUpdates(
         any(),
@@ -212,7 +212,7 @@ class LocationProviderImplTest {
     verify(exactly = 0) { locationConsumer1.onBearingUpdated(90.0) }
     verify { locationConsumer2.onLocationUpdated(Point.fromLngLat(12.0, 34.0)) }
     verify(exactly = 0) { locationConsumer2.onBearingUpdated(90.0) }
-    locationProviderImpl.onCompassChanged(90.0f)
+    defaultLocationProvider.locationCompassListener.onCompassChanged(90.0f)
     verify { locationConsumer1.onBearingUpdated(90.0) }
     verify { locationConsumer2.onBearingUpdated(90.0) }
   }

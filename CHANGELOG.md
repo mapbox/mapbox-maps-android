@@ -20,6 +20,7 @@ mapView.location2.puckBearingEnabled = true
 mapView.location2.puckBearingEnabled = false
 ```
 * Add support for custom widgets rendered on top of the map. ([#1036](https://github.com/mapbox/mapbox-maps-android/pull/1036))
+* Expose DefaultLocationProvider as public class. ([#1168](https://github.com/mapbox/mapbox-maps-android/pull/1168))
 
 ## Bug fixes 🐞
 * Fix skipping / crashing user events scheduled on a render thread with `MapView#queueEvent`. ([#1068](https://github.com/mapbox/mapbox-maps-android/pull/1068))
