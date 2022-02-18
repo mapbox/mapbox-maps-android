@@ -393,6 +393,7 @@ jobs:
           no_output_timeout: 30m
           name: verify-api-metalava
           command: |
+            ./gradlew assembleRelease
             ./gradlew checkApi
 
   verify-api-kotlin-binary-compatibility:
