@@ -21,7 +21,7 @@ mapView.location2.puckBearingEnabled = false
 ```
 * Add support for custom widgets rendered on top of the map. ([#1036](https://github.com/mapbox/mapbox-maps-android/pull/1036))
 * Expose DefaultLocationProvider as public class. ([#1168](https://github.com/mapbox/mapbox-maps-android/pull/1168))
-* Add new methods to View Annotation API: `ViewAnnotationManager.removeAllViewAnnotations()` and `ViewAnnotationManager.addOnViewAnnotationPositionUpdatedListener(listener: OnViewAnnotationPositionUpdatedListener)` / `ViewAnnotationManager.removeOnViewAnnotationPositionUpdatedListener(listener: OnViewAnnotationPositionUpdatedListener)`. ([#1165](https://github.com/mapbox/mapbox-maps-android/pull/1165))
+* Add new methods to View Annotation API: `ViewAnnotationManager.removeAllViewAnnotations()` and `ViewAnnotationManager.addOnViewAnnotationUpdatedListener(listener: OnViewAnnotationUpdatedListener)` / `ViewAnnotationManager.removeOnViewAnnotationUpdatedListener(listener: OnViewAnnotationUpdatedListener)`. ([#1165](https://github.com/mapbox/mapbox-maps-android/pull/1165))
 * Improve rendering performance by coalescing map updates when possible. ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
 * Add `StyleManager::hasStyleImage` API that checks whether an image is in the style or not. ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
 * Improve Snapshotter performance by using a lightweight scheduler instead of platform runloop. ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))

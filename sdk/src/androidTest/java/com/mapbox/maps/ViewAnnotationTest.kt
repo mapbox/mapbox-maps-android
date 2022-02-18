@@ -15,6 +15,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.Visibility
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.test.R
+import com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import org.hamcrest.MatcherAssert
@@ -703,20 +704,36 @@ class ViewAnnotationTest(
 
   @Test
   fun viewAnnotationUpdateListener() {
-    var callbackTriggerCount = 0
+    var positionCallbackTriggerCount = 0
+    var visibilityCallbackTriggerCount = 0
     var actualWidth = 0
     var actualHeight = 0
     var actualLeftTop = ScreenCoordinate(0.0, 0.0)
+    var actualVisibility = false
     viewAnnotationTestHelper(
       performAction = {
-        viewAnnotationManager.addOnViewAnnotationPositionUpdatedListener { view, leftTop, width, height ->
-          if (firstView == view) {
-            callbackTriggerCount++
-            actualLeftTop = leftTop
-            actualWidth = width
-            actualHeight = height
+        viewAnnotationManager.addOnViewAnnotationUpdatedListener(object : OnViewAnnotationUpdatedListener {
+          override fun onViewAnnotationPositionUpdated(
+            view: View,
+            leftTopCoordinate: ScreenCoordinate,
+            width: Int,
+            height: Int
+          ) {
+            if (firstView == view) {
+              positionCallbackTriggerCount++
+              actualLeftTop = leftTopCoordinate
+              actualWidth = width
+              actualHeight = height
+            }
           }
-        }
+
+          override fun onViewAnnotationVisibilityUpdated(view: View, visible: Boolean) {
+            if (firstView == view) {
+              visibilityCallbackTriggerCount++
+              actualVisibility = visible
+            }
+          }
+        })
         firstView = viewAnnotationManager.addViewAnnotation(
           resId = layoutResId,
           options = viewAnnotationOptions {
@@ -727,11 +744,14 @@ class ViewAnnotationTest(
       },
       makeChecks = {
         // callback should be triggered once and contain correct placement data
-        assert(callbackTriggerCount == 1)
+        assert(positionCallbackTriggerCount == 1)
         assertEquals(firstView.translationX.toDouble(), actualLeftTop.x, ADMISSIBLE_ERROR_PX)
         assertEquals(firstView.translationY.toDouble(), actualLeftTop.y, ADMISSIBLE_ERROR_PX)
         assertEquals(firstView.width, actualWidth)
         assertEquals(firstView.height, actualHeight)
+        // callback should be triggered once and contain correct visibility data
+        assert(visibilityCallbackTriggerCount == 1)
+        assertEquals(true, actualVisibility)
       }
     )
   }

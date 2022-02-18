@@ -138,12 +138,12 @@ interface ViewAnnotationManager {
   fun getViewAnnotationOptionsByView(view: View): ViewAnnotationOptions?
 
   /**
-   * Add an instance of [OnViewAnnotationPositionUpdatedListener].
+   * Add an instance of [OnViewAnnotationUpdatedListener].
    */
-  fun addOnViewAnnotationPositionUpdatedListener(listener: OnViewAnnotationPositionUpdatedListener)
+  fun addOnViewAnnotationUpdatedListener(listener: OnViewAnnotationUpdatedListener)
 
   /**
-   * Remove an instance of [OnViewAnnotationPositionUpdatedListener].
+   * Remove an instance of [OnViewAnnotationUpdatedListener].
    */
-  fun removeOnViewAnnotationPositionUpdatedListener(listener: OnViewAnnotationPositionUpdatedListener)
+  fun removeOnViewAnnotationUpdatedListener(listener: OnViewAnnotationUpdatedListener)
 }

@@ -6,7 +6,7 @@ import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.ViewAnnotationManagerImpl.Companion.EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS
-import com.mapbox.maps.viewannotation.OnViewAnnotationPositionUpdatedListener
+import com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import io.mockk.*
 import org.junit.After
@@ -292,17 +292,17 @@ class ViewAnnotationManagerTest {
 
   @Test
   fun addViewPositioningListener() {
-    val listener = mockk<OnViewAnnotationPositionUpdatedListener>()
-    viewAnnotationManager.addOnViewAnnotationPositionUpdatedListener(listener)
-    assert(viewAnnotationManager.viewPositionUpdatedListenerList.contains(listener))
+    val listener = mockk<OnViewAnnotationUpdatedListener>()
+    viewAnnotationManager.addOnViewAnnotationUpdatedListener(listener)
+    assert(viewAnnotationManager.viewUpdatedListenerSet.contains(listener))
   }
 
   @Test
   fun removeViewPositioningListener() {
-    val listener = mockk<OnViewAnnotationPositionUpdatedListener>()
-    viewAnnotationManager.addOnViewAnnotationPositionUpdatedListener(listener)
-    viewAnnotationManager.removeOnViewAnnotationPositionUpdatedListener(listener)
-    assert(viewAnnotationManager.viewPositionUpdatedListenerList.isEmpty())
+    val listener = mockk<OnViewAnnotationUpdatedListener>()
+    viewAnnotationManager.addOnViewAnnotationUpdatedListener(listener)
+    viewAnnotationManager.removeOnViewAnnotationUpdatedListener(listener)
+    assert(viewAnnotationManager.viewUpdatedListenerSet.isEmpty())
   }
 
   private companion object {

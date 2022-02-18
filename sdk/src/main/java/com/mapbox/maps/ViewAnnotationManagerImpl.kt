@@ -8,7 +8,7 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.VisibleForTesting
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.mapbox.bindgen.Expected
-import com.mapbox.maps.viewannotation.OnViewAnnotationPositionUpdatedListener
+import com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener
 import com.mapbox.maps.viewannotation.ViewAnnotation
 import com.mapbox.maps.viewannotation.ViewAnnotation.Companion.USER_FIXED_DIMENSION
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
@@ -38,7 +38,7 @@ internal class ViewAnnotationManagerImpl(
 
   // using copy on write as user could remove listener while callback is invoked
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal val viewPositionUpdatedListenerList = CopyOnWriteArraySet<OnViewAnnotationPositionUpdatedListener>()
+  internal val viewUpdatedListenerSet = CopyOnWriteArraySet<OnViewAnnotationUpdatedListener>()
 
   override fun addViewAnnotation(
     @LayoutRes resId: Int,
@@ -77,6 +77,7 @@ internal class ViewAnnotationManagerImpl(
     val annotation = annotationMap.remove(id) ?: return false
     annotation.view.removeOnAttachStateChangeListener(annotation.attachStateListener)
     mapView.removeView(view)
+    notifyViewAnnotationVisibilityChanged(annotation, false)
     getValue(mapboxMap.removeViewAnnotation(id))
     return true
   }
@@ -127,12 +128,12 @@ internal class ViewAnnotationManagerImpl(
     return getValue(mapboxMap.getViewAnnotationOptions(id))
   }
 
-  override fun addOnViewAnnotationPositionUpdatedListener(listener: OnViewAnnotationPositionUpdatedListener) {
-    viewPositionUpdatedListenerList.add(listener)
+  override fun addOnViewAnnotationUpdatedListener(listener: OnViewAnnotationUpdatedListener) {
+    viewUpdatedListenerSet.add(listener)
   }
 
-  override fun removeOnViewAnnotationPositionUpdatedListener(listener: OnViewAnnotationPositionUpdatedListener) {
-    viewPositionUpdatedListenerList.remove(listener)
+  override fun removeOnViewAnnotationUpdatedListener(listener: OnViewAnnotationUpdatedListener) {
+    viewUpdatedListenerSet.remove(listener)
   }
 
   override fun onViewAnnotationPositionsUpdate(positions: MutableList<ViewAnnotationPositionDescriptor>) {
@@ -141,7 +142,7 @@ internal class ViewAnnotationManagerImpl(
 
   fun destroy() {
     mapboxMap.setViewAnnotationPositionsUpdateListener(null)
-    viewPositionUpdatedListenerList.clear()
+    viewUpdatedListenerSet.clear()
     removeAllViewAnnotations()
   }
 
@@ -176,6 +177,7 @@ internal class ViewAnnotationManagerImpl(
       view = inflatedView,
       handleVisibilityAutomatically = (options.visible == null),
       visible = (inflatedView.visibility == View.VISIBLE),
+      shown = null,
       viewLayoutParams = inflatedViewLayout,
       measuredWidth = if (options.width != null) USER_FIXED_DIMENSION else inflatedViewLayout.width,
       measuredHeight = if (options.height != null) USER_FIXED_DIMENSION else inflatedViewLayout.height,
@@ -211,6 +213,7 @@ internal class ViewAnnotationManagerImpl(
       }
       if (viewAnnotation.handleVisibilityAutomatically) {
         val isVisibleNow = (inflatedView.visibility == View.VISIBLE)
+        var isShownNow = isVisibleNow
         if (isVisibleNow == viewAnnotation.visible) {
           return@OnGlobalLayoutListener
         }
@@ -219,7 +222,13 @@ internal class ViewAnnotationManagerImpl(
         if (isVisibleNow) {
           hiddenViewMap[inflatedView] = inflatedView.translationZ
           inflatedView.translationZ = mapView.translationZ - 1f
+          // view will actually be shown when we will restore translationZ
+          isShownNow = false
         }
+        notifyViewAnnotationVisibilityChanged(
+          viewAnnotation,
+          isShownNow
+        )
         if (getValue(mapboxMap.getViewAnnotationOptions(viewAnnotation.id))?.visible != isVisibleNow) {
           getValue(
             mapboxMap.updateViewAnnotation(
@@ -270,6 +279,7 @@ internal class ViewAnnotationManagerImpl(
           // still be handled by OnGlobalLayoutListener
           if (annotation.view.visibility == View.VISIBLE) {
             mapView.removeView(annotation.view)
+            notifyViewAnnotationVisibilityChanged(annotation, false)
           }
         }
       }
@@ -292,17 +302,21 @@ internal class ViewAnnotationManagerImpl(
         }
         if (!currentViewsDrawnMap.keys.contains(descriptor.identifier) && mapView.indexOfChild(annotation.view) == -1) {
           mapView.addView(annotation.view, annotation.viewLayoutParams)
+          notifyViewAnnotationVisibilityChanged(
+            annotation,
+            annotation.view.visibility == View.VISIBLE
+          )
         }
-        if (viewPositionUpdatedListenerList.isNotEmpty()) {
-          viewPositionUpdatedListenerList.forEach {
+        if (viewUpdatedListenerSet.isNotEmpty()) {
+          viewUpdatedListenerSet.forEach {
             // when using wrap_content dimensions width and height could report -2
             // it makes sense to notify user only when width and height are calculated
             if (descriptor.width > 0 && descriptor.height > 0) {
               it.onViewAnnotationPositionUpdated(
-                annotation.view,
-                descriptor.leftTopCoordinate,
-                descriptor.width,
-                descriptor.height,
+                view = annotation.view,
+                leftTopCoordinate = descriptor.leftTopCoordinate,
+                width = descriptor.width,
+                height = descriptor.height,
               )
             }
           }
@@ -310,6 +324,7 @@ internal class ViewAnnotationManagerImpl(
         hiddenViewMap[annotation.view]?.let { zIndex ->
           annotation.view.translationZ = zIndex
           hiddenViewMap.remove(annotation.view)
+          notifyViewAnnotationVisibilityChanged(annotation, true)
         }
         // as we preserve correct order we bring each view to the front and correct order will be preserved
         annotation.view.bringToFront()
@@ -330,6 +345,24 @@ internal class ViewAnnotationManagerImpl(
       throw MapboxViewAnnotationException(expected.error)
     }
     return expected.value
+  }
+
+  private fun notifyViewAnnotationVisibilityChanged(
+    annotation: ViewAnnotation,
+    isShownNow: Boolean
+  ) {
+    if (annotation.shown == isShownNow) {
+      return
+    }
+    annotation.shown = isShownNow
+    if (viewUpdatedListenerSet.isNotEmpty()) {
+      viewUpdatedListenerSet.forEach {
+        it.onViewAnnotationVisibilityUpdated(
+          view = annotation.view,
+          visible = isShownNow
+        )
+      }
+    }
   }
 
   companion object {
