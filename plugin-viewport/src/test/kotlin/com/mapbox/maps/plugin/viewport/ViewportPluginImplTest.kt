@@ -44,7 +44,7 @@ class ViewportPluginImplTest {
   private val locationPlugin = mockk<LocationComponentPlugin>()
   private val handler = mockk<Handler>()
   private val completeSlot = slot<CompletionListener>()
-  private val runnableSlot = slot<Runnable>()
+  private val runnableSlot = mutableListOf<Runnable>()
   private val statusObserver = mockk<ViewportStatusObserver>()
   private val targetState = mockk<ViewportState>()
   private val transition = mockk<ViewportTransition>()
@@ -432,7 +432,7 @@ class ViewportPluginImplTest {
 
   private fun runHandlerAndTest(test: () -> Unit) {
     verify { handler.post(capture(runnableSlot)) }
-    runnableSlot.captured.run()
+    runnableSlot.last().run()
     test.invoke()
   }
 }
