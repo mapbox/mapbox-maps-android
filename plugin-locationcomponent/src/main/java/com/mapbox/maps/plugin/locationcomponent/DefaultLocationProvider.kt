@@ -22,11 +22,12 @@ import java.util.concurrent.CopyOnWriteArrayList
  * Default Location Provider implementation that produces location updates according to the device's
  * GPS or magnetic field sensor data.
  */
-class DefaultLocationProvider(context: Context) : LocationProvider {
-  @VisibleForTesting(otherwise = PRIVATE)
-  internal var locationCompassEngine: LocationCompassEngine = LocationCompassEngine(
-    context
-  )
+class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal constructor(
+  context: Context,
+  private val locationCompassEngine: LocationCompassEngine
+) : LocationProvider {
+  constructor(context: Context) : this(context, LocationCompassEngine(context))
+
   private val contextWeekRef: WeakReference<Context> = WeakReference(context)
   private val locationEngine = LocationEngineProvider.getBestLocationEngine(context)
   private val locationEngineRequest =
@@ -40,8 +41,8 @@ class DefaultLocationProvider(context: Context) : LocationProvider {
   private var handler: Handler? = null
   private lateinit var runnable: Runnable
   private var updateDelay = INIT_UPDATE_DELAY
-  @VisibleForTesting(otherwise = PRIVATE)
-  internal val locationEngineCallback = object : LocationEngineCallback<LocationEngineResult> {
+
+  private val locationEngineCallback = object : LocationEngineCallback<LocationEngineResult> {
     /**
      * Invoked when new data available.
      *
@@ -124,8 +125,12 @@ class DefaultLocationProvider(context: Context) : LocationProvider {
     // No need to request compass update if no location consumer is registered.
     if (!locationConsumers.isEmpty()) {
       when (currentPuckBearingSource) {
-        PuckBearingSource.HEADING -> locationCompassEngine.addCompassListener(locationCompassListener)
-        PuckBearingSource.COURSE -> locationCompassEngine.removeCompassListener(locationCompassListener)
+        PuckBearingSource.HEADING -> locationCompassEngine.addCompassListener(
+          locationCompassListener
+        )
+        PuckBearingSource.COURSE -> locationCompassEngine.removeCompassListener(
+          locationCompassListener
+        )
       }
     }
   }

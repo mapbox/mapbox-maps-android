@@ -33,8 +33,7 @@ class DefaultLocationProviderTest {
   fun setup() {
     mockkStatic(LocationEngineProvider::class)
     every { LocationEngineProvider.getBestLocationEngine(context) } returns locationEngine
-    defaultLocationProvider = DefaultLocationProvider(context)
-    defaultLocationProvider.locationCompassEngine = locationCompassEngine
+    defaultLocationProvider = DefaultLocationProvider(context, locationCompassEngine)
   }
 
   @Test
