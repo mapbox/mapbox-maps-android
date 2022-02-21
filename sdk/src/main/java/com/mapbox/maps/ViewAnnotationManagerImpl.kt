@@ -75,19 +75,13 @@ internal class ViewAnnotationManagerImpl(
   override fun removeViewAnnotation(view: View): Boolean {
     val id = idLookupMap.remove(view) ?: return false
     val annotation = annotationMap.remove(id) ?: return false
-    annotation.view.removeOnAttachStateChangeListener(annotation.attachStateListener)
-    mapView.removeView(view)
-    notifyViewAnnotationVisibilityChanged(annotation, false)
-    getValue(mapboxMap.removeViewAnnotation(id))
+    remove(id, annotation)
     return true
   }
 
   override fun removeAllViewAnnotations() {
     annotationMap.forEach { (id, annotation) ->
-      getValue(mapboxMap.removeViewAnnotation(id))
-      annotation.view.removeOnAttachStateChangeListener(annotation.attachStateListener)
-      annotation.attachStateListener = null
-      mapView.removeView(annotation.view)
+      remove(id, annotation)
     }
     currentViewsDrawnMap.clear()
     annotationMap.clear()
@@ -213,7 +207,6 @@ internal class ViewAnnotationManagerImpl(
       }
       if (viewAnnotation.handleVisibilityAutomatically) {
         val isVisibleNow = (inflatedView.visibility == View.VISIBLE)
-        var isShownNow = isVisibleNow
         if (isVisibleNow == viewAnnotation.visible) {
           return@OnGlobalLayoutListener
         }
@@ -222,12 +215,12 @@ internal class ViewAnnotationManagerImpl(
         if (isVisibleNow) {
           hiddenViewMap[inflatedView] = inflatedView.translationZ
           inflatedView.translationZ = mapView.translationZ - 1f
-          // view will actually be shown when we will restore translationZ
-          isShownNow = false
         }
+        // view will actually be shown (if it's visible) when we will restore translationZ,
+        // for now we consider it always hidden
         notifyViewAnnotationVisibilityChanged(
           viewAnnotation,
-          isShownNow
+          false
         )
         if (getValue(mapboxMap.getViewAnnotationOptions(viewAnnotation.id))?.visible != isVisibleNow) {
           getValue(
@@ -363,6 +356,14 @@ internal class ViewAnnotationManagerImpl(
         )
       }
     }
+  }
+
+  private fun remove(internalId: String, annotation: ViewAnnotation) {
+    mapView.removeView(annotation.view)
+    notifyViewAnnotationVisibilityChanged(annotation, false)
+    annotation.view.removeOnAttachStateChangeListener(annotation.attachStateListener)
+    annotation.attachStateListener = null
+    getValue(mapboxMap.removeViewAnnotation(internalId))
   }
 
   companion object {

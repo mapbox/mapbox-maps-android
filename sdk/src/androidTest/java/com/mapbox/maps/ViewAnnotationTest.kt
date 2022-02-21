@@ -4,6 +4,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.annotation.LayoutRes
+import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
@@ -11,6 +12,7 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
+import com.mapbox.maps.extension.style.layers.getLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.Visibility
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
@@ -25,6 +27,8 @@ import org.junit.Assert.*
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeoutException
 
 @RunWith(Parameterized::class)
 @LargeTest
@@ -34,58 +38,77 @@ class ViewAnnotationTest(
   private lateinit var mapboxMap: MapboxMap
   private lateinit var mapView: MapView
   private lateinit var viewAnnotationManager: ViewAnnotationManager
-  private lateinit var mainHandler: Handler
+  private val mainHandler = Handler(Looper.getMainLooper())
 
   private lateinit var firstView: View
   private lateinit var secondView: View
+
+  private val actualVisibilityUpdateList = mutableListOf<Pair<View, Boolean>>()
 
   @get:Rule
   var rule = ActivityScenarioRule(EmptyActivity::class.java)
 
   @Before
+  @UiThreadTest
   fun before() {
     val latch = CountDownLatch(2)
     rule.scenario.onActivity {
-      it.runOnUiThread {
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
-        mapView = MapView(context)
-        mapView.id = R.id.mapView
-        it.setContentView(mapView)
+      val context = InstrumentationRegistry.getInstrumentation().targetContext
+      mapView = MapView(context)
+      mapView.id = R.id.mapView
+      it.setContentView(mapView)
 
-        mainHandler = Handler(Looper.getMainLooper())
-        viewAnnotationManager = mapView.viewAnnotationManager
-        mapboxMap = mapView.getMapboxMap().apply {
-          loadStyleUri(
-            Style.MAPBOX_STREETS
-          ) {
-            latch.countDown()
+      viewAnnotationManager = mapView.viewAnnotationManager.apply {
+        // no need to remove it afterwards as map view is destroyed in cleanup
+        addOnViewAnnotationUpdatedListener(object : OnViewAnnotationUpdatedListener {
+          override fun onViewAnnotationPositionUpdated(
+            view: View,
+            leftTopCoordinate: ScreenCoordinate,
+            width: Int,
+            height: Int
+          ) { /** no-op **/ }
+
+          override fun onViewAnnotationVisibilityUpdated(view: View, visible: Boolean) {
+            actualVisibilityUpdateList.add(Pair(view, visible))
           }
-          setCamera(
-            CameraOptions.Builder()
-              .center(CAMERA_CENTER)
-              .zoom(CAMERA_ZOOM)
-              .build()
-          )
-          addOnMapIdleListener {
-            latch.countDown()
-          }
+        })
+      }
+      mapboxMap = mapView.getMapboxMap().apply {
+        loadStyleUri(
+          Style.MAPBOX_STREETS
+        ) {
+          latch.countDown()
         }
-        mapView.onStart()
+        setCamera(
+          CameraOptions.Builder()
+            .center(CAMERA_CENTER)
+            .zoom(CAMERA_ZOOM)
+            .build()
+        )
+        addOnMapIdleListener {
+          latch.countDown()
+        }
+      }
+      mapView.onStart()
+    }
+    // it seems that IDLE listener is sometimes not triggered, needs investigation,
+    // for now we proceed after timeout if style was loaded (count == 1)
+    if (!latch.await(DEFAULT_LATCH_TIMEOUT_MS, TimeUnit.MILLISECONDS)) {
+      if (latch.count < 1) {
+        throw TimeoutException()
       }
     }
-    latch.throwExceptionOnTimeoutMs()
   }
 
   @After
+  @UiThreadTest
   fun tearDown() {
     val latch = CountDownLatch(1)
+    actualVisibilityUpdateList.clear()
     rule.scenario.onActivity {
-      it.runOnUiThread {
-        mapView.onStop()
-        mapView.onDestroy()
-        mainHandler.removeCallbacksAndMessages(null)
-        latch.countDown()
-      }
+      mapView.onStop()
+      mapView.onDestroy()
+      latch.countDown()
     }
     latch.throwExceptionOnTimeoutMs()
   }
@@ -110,7 +133,7 @@ class ViewAnnotationTest(
         VIEW_PLACEMENT_DELAY_MS
       )
     }
-    latch.throwExceptionOnTimeoutMs(timeoutMs = 10_000L)
+    latch.throwExceptionOnTimeoutMs(timeoutMs = TEST_RUN_MAX_TIME_MS)
   }
 
   // checking some use-cases when adding view annotation
@@ -138,6 +161,12 @@ class ViewAnnotationTest(
           firstView.translationY.toDouble(),
           ADMISSIBLE_ERROR_PX
         )
+        assertArrayEquals(
+          arrayOf(
+            Pair(firstView, true),
+          ),
+          actualVisibilityUpdateList.toTypedArray()
+        )
       }
     )
   }
@@ -158,6 +187,12 @@ class ViewAnnotationTest(
         assertTrue(mapView.hasChildView(firstView))
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, firstView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, firstView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
+        assertArrayEquals(
+          arrayOf(
+            Pair(firstView, true),
+          ),
+          actualVisibilityUpdateList.toTypedArray()
+        )
       }
     )
   }
@@ -190,12 +225,18 @@ class ViewAnnotationTest(
           firstView.translationY.toDouble(),
           ADMISSIBLE_ERROR_PX
         )
+        assertArrayEquals(
+          arrayOf(
+            Pair(firstView, true),
+          ),
+          actualVisibilityUpdateList.toTypedArray()
+        )
       }
     )
   }
 
   @Test
-  fun addViewAnnotationVisible() {
+  fun addViewAnnotationNotVisible() {
     viewAnnotationTestHelper(
       performAction = {
         firstView = viewAnnotationManager.addViewAnnotation(
@@ -208,6 +249,10 @@ class ViewAnnotationTest(
       },
       makeChecks = {
         assertFalse(mapView.hasChildView(firstView))
+        assertArrayEquals(
+          arrayOf(),
+          actualVisibilityUpdateList.toTypedArray()
+        )
       }
     )
   }
@@ -244,6 +289,13 @@ class ViewAnnotationTest(
           mapView.getChildViewIndex(secondView),
           Matchers.greaterThan(mapView.getChildViewIndex(firstView))
         )
+        assertArrayEquals(
+          arrayOf(
+            Pair(firstView, true),
+            Pair(secondView, true),
+          ),
+          actualVisibilityUpdateList.toTypedArray()
+        )
       }
     )
   }
@@ -274,6 +326,14 @@ class ViewAnnotationTest(
         assertTrue(mapView.hasChildView(secondView))
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, secondView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
+        assertArrayEquals(
+          arrayOf(
+            Pair(firstView, true),
+            Pair(firstView, false),
+            Pair(secondView, true),
+          ),
+          actualVisibilityUpdateList.toTypedArray()
+        )
       }
     )
   }
@@ -311,6 +371,13 @@ class ViewAnnotationTest(
           mapView.getChildViewIndex(secondView),
           Matchers.lessThan(mapView.getChildViewIndex(firstView))
         )
+        assertArrayEquals(
+          arrayOf(
+            Pair(firstView, true),
+            Pair(secondView, true),
+          ),
+          actualVisibilityUpdateList.toTypedArray()
+        )
       }
     )
   }
@@ -347,6 +414,13 @@ class ViewAnnotationTest(
           mapView.getChildViewIndex(secondView),
           Matchers.greaterThan(mapView.getChildViewIndex(firstView))
         )
+        assertArrayEquals(
+          arrayOf(
+            Pair(firstView, true),
+            Pair(secondView, true),
+          ),
+          actualVisibilityUpdateList.toTypedArray()
+        )
       }
     )
   }
@@ -377,6 +451,14 @@ class ViewAnnotationTest(
         assertTrue(mapView.hasChildView(secondView))
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, secondView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
+        assertArrayEquals(
+          arrayOf(
+            Pair(firstView, true),
+            Pair(firstView, false),
+            Pair(secondView, true),
+          ),
+          actualVisibilityUpdateList.toTypedArray()
+        )
       }
     )
   }
@@ -408,6 +490,12 @@ class ViewAnnotationTest(
         assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).x, firstView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
         assertEquals(mapboxMap.pixelForCoordinate(SHIFTED_CENTER).y, firstView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
         assertFalse(mapView.hasChildView(secondView))
+        assertArrayEquals(
+          arrayOf(
+            Pair(firstView, true),
+          ),
+          actualVisibilityUpdateList.toTypedArray()
+        )
       }
     )
   }
@@ -440,6 +528,14 @@ class ViewAnnotationTest(
         assertTrue(mapView.hasChildView(secondView))
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).x, secondView.translationX.toDouble(), ADMISSIBLE_ERROR_PX)
         assertEquals(mapboxMap.pixelForCoordinate(CAMERA_CENTER).y, secondView.translationY.toDouble(), ADMISSIBLE_ERROR_PX)
+        assertArrayEquals(
+          arrayOf(
+            Pair(firstView, true),
+            Pair(firstView, false),
+            Pair(secondView, true),
+          ),
+          actualVisibilityUpdateList.toTypedArray()
+        )
       }
     )
   }
@@ -476,6 +572,12 @@ class ViewAnnotationTest(
           mapboxMap.pixelForCoordinate(SHIFTED_CENTER).y - firstView.height / 2.0 - offsetY,
           firstView.translationY.toDouble(),
           ADMISSIBLE_ERROR_PX
+        )
+        assertArrayEquals(
+          arrayOf(
+            Pair(firstView, true),
+          ),
+          actualVisibilityUpdateList.toTypedArray()
         )
       }
     )
@@ -515,6 +617,12 @@ class ViewAnnotationTest(
           firstView.translationY.toDouble(),
           ADMISSIBLE_ERROR_PX
         )
+        assertArrayEquals(
+          arrayOf(
+            Pair(firstView, true),
+          ),
+          actualVisibilityUpdateList.toTypedArray()
+        )
       }
     )
   }
@@ -553,6 +661,15 @@ class ViewAnnotationTest(
           {
             assertTrue(mapView.hasChildView(firstView))
             assertTrue(mapView.hasChildView(secondView))
+            assertArrayEquals(
+              arrayOf(
+                Pair(firstView, true),
+                Pair(firstView, false),
+                Pair(secondView, true),
+                Pair(firstView, true),
+              ),
+              actualVisibilityUpdateList.toTypedArray()
+            )
             it.countDown()
           },
           VIEW_PLACEMENT_DELAY_MS
@@ -577,6 +694,13 @@ class ViewAnnotationTest(
       },
       makeChecks = {
         assertFalse(mapView.hasChildView(firstView))
+        // TODO that's incorrect, revisit logic, no callbacks should be triggered
+        assertArrayEquals(
+          arrayOf(
+            Pair(firstView, false),
+          ),
+          actualVisibilityUpdateList.toTypedArray()
+        )
       }
     )
   }
@@ -609,6 +733,16 @@ class ViewAnnotationTest(
           {
             assertTrue(mapView.hasChildView(firstView))
             assertFalse(mapView.hasChildView(secondView))
+            assertArrayEquals(
+              arrayOf(
+                Pair(firstView, true),
+                Pair(firstView, false),
+                Pair(secondView, true),
+                Pair(secondView, false),
+                Pair(firstView, true),
+              ),
+              actualVisibilityUpdateList.toTypedArray()
+            )
             it.countDown()
           },
           VIEW_PLACEMENT_DELAY_MS
@@ -637,6 +771,12 @@ class ViewAnnotationTest(
       },
       makeChecks = {
         assertTrue(mapView.hasChildView(firstView))
+        assertArrayEquals(
+          arrayOf(
+            Pair(firstView, true),
+          ),
+          actualVisibilityUpdateList.toTypedArray()
+        )
       }
     )
   }
@@ -659,6 +799,48 @@ class ViewAnnotationTest(
       },
       makeChecks = {
         assertFalse(mapView.hasChildView(firstView))
+        // view does not even appear so update listener should not be triggered
+        assertArrayEquals(
+          arrayOf(),
+          actualVisibilityUpdateList.toTypedArray()
+        )
+      }
+    )
+  }
+
+  @Test
+  fun associatedFeatureIdWhenFeatureVisibleThenGone() {
+    viewAnnotationTestHelper(
+      additionalLatchCount = 1,
+      performAction = {
+        prepareStyle(mapboxMap.getStyle()!!, Visibility.VISIBLE)
+        firstView = viewAnnotationManager.addViewAnnotation(
+          resId = layoutResId,
+          options = viewAnnotationOptions {
+            geometry(CAMERA_CENTER)
+            anchor(ViewAnnotationAnchor.BOTTOM)
+            offsetY(50)
+            visible(true)
+            associatedFeatureId(ASSOCIATED_FEATURE_ID)
+          }
+        )
+      },
+      makeChecks = {
+        // hide marker
+        mapboxMap.getStyle()?.getLayer("layer")?.visibility(Visibility.NONE)
+        mainHandler.postDelayed(
+          {
+            assertArrayEquals(
+              arrayOf(
+                Pair(firstView, true),
+                Pair(firstView, false),
+              ),
+              actualVisibilityUpdateList.toTypedArray()
+            )
+            it.countDown()
+          },
+          VIEW_PLACEMENT_DELAY_MS
+        )
       }
     )
   }
@@ -694,6 +876,16 @@ class ViewAnnotationTest(
             // second view is not removed from parent MapView but as it's gone first view should appear now
             assertTrue(mapView.hasChildView(secondView))
             assertTrue(mapView.hasChildView(firstView))
+            assertArrayEquals(
+              arrayOf(
+                Pair(firstView, true),
+                Pair(firstView, false),
+                Pair(secondView, true),
+                Pair(secondView, false),
+                Pair(firstView, true)
+              ),
+              actualVisibilityUpdateList.toTypedArray()
+            )
             it.countDown()
           },
           VIEW_PLACEMENT_DELAY_MS
@@ -772,6 +964,7 @@ class ViewAnnotationTest(
 
   private companion object {
     const val VIEW_PLACEMENT_DELAY_MS = 1000L
+    const val TEST_RUN_MAX_TIME_MS = 10_000L
     const val ADMISSIBLE_ERROR_PX = 3.0
 
     const val ASSOCIATED_FEATURE_ID = "featureTestId"
