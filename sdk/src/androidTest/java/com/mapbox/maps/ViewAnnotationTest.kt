@@ -43,7 +43,7 @@ class ViewAnnotationTest(
   private lateinit var firstView: View
   private lateinit var secondView: View
 
-  private val actualVisibilityUpdateList = mutableListOf<Pair<View, Boolean>>()
+  private lateinit var actualVisibilityUpdateList: MutableList<Pair<View, Boolean>>
 
   @get:Rule
   var rule = ActivityScenarioRule(EmptyActivity::class.java)
@@ -52,6 +52,7 @@ class ViewAnnotationTest(
   @UiThreadTest
   fun before() {
     val latch = CountDownLatch(2)
+    actualVisibilityUpdateList = mutableListOf()
     rule.scenario.onActivity {
       val context = InstrumentationRegistry.getInstrumentation().targetContext
       mapView = MapView(context)
@@ -93,6 +94,7 @@ class ViewAnnotationTest(
     }
     // it seems that IDLE listener is sometimes not triggered, needs investigation,
     // for now we proceed after timeout if style was loaded (count == 1)
+    // TODO https://github.com/mapbox/mapbox-maps-android/issues/1170
     if (!latch.await(DEFAULT_LATCH_TIMEOUT_MS, TimeUnit.MILLISECONDS)) {
       if (latch.count < 1) {
         throw TimeoutException()
@@ -104,7 +106,6 @@ class ViewAnnotationTest(
   @UiThreadTest
   fun tearDown() {
     val latch = CountDownLatch(1)
-    actualVisibilityUpdateList.clear()
     rule.scenario.onActivity {
       mapView.onStop()
       mapView.onDestroy()

@@ -207,10 +207,8 @@ internal class ViewAnnotationManagerImpl(
       }
       if (viewAnnotation.handleVisibilityAutomatically) {
         val isAndroidViewVisible = (inflatedView.visibility == View.VISIBLE)
-        val isViewAnnotationVisible = viewAnnotation.visibility == ViewAnnotationVisibility.VISIBLE_AND_POSITIONED ||
-          viewAnnotation.visibility == ViewAnnotationVisibility.VISIBLE_AND_NOT_POSITIONED
-        if (isAndroidViewVisible && isViewAnnotationVisible ||
-          !isAndroidViewVisible && viewAnnotation.visibility == ViewAnnotationVisibility.INVISIBLE
+        if ((isAndroidViewVisible && viewAnnotation.isVisible) ||
+          (!isAndroidViewVisible && viewAnnotation.visibility == ViewAnnotationVisibility.INVISIBLE)
         ) {
           return@OnGlobalLayoutListener
         }
@@ -357,10 +355,7 @@ internal class ViewAnnotationManagerImpl(
     ) {
       return
     }
-    val wasVisibleBefore = (
-      annotation.visibility == ViewAnnotationVisibility.VISIBLE_AND_POSITIONED ||
-        annotation.visibility == ViewAnnotationVisibility.VISIBLE_AND_NOT_POSITIONED
-      )
+    val wasVisibleBefore = annotation.isVisible
     val isVisibleNow = (
       currentVisibility == ViewAnnotationVisibility.VISIBLE_AND_POSITIONED ||
         currentVisibility == ViewAnnotationVisibility.VISIBLE_AND_NOT_POSITIONED

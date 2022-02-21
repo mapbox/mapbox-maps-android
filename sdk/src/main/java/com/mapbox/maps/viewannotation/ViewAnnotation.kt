@@ -40,6 +40,12 @@ internal data class ViewAnnotation(
    */
   val id: String = (VIEW_ANNOTATION_CURRENT_ID++).toString()
 
+  /**
+   * Helper function to understand if view is visible from Android visibility perspective.
+   */
+  val isVisible get() = visibility == ViewAnnotationVisibility.VISIBLE_AND_POSITIONED ||
+    visibility == ViewAnnotationVisibility.VISIBLE_AND_NOT_POSITIONED
+
   companion object {
     private var VIEW_ANNOTATION_CURRENT_ID = 42
     internal val USER_FIXED_DIMENSION = -1

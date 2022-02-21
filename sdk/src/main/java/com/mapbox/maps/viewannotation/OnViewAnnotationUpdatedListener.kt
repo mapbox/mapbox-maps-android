@@ -36,7 +36,7 @@ interface OnViewAnnotationUpdatedListener {
    *
    * Note: this callback is triggered when using view annotation with not explicitly setting
    * [ViewAnnotationOptions.visible] meaning view annotation manager handles showing / hiding automatically
-   * based on [View.getVisibility].
+   * based on [View.getVisibility] on top of the map until it is not positioned correctly.
    *
    * @param view view that is updated.
    * @param visible true when [view] is shown on top of the map
