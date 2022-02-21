@@ -19,14 +19,9 @@ internal data class ViewAnnotation(
    */
   var handleVisibilityAutomatically: Boolean,
   /**
-   * Cached value if view is visible before OnGlobalLayoutListener was triggered.
+   * View annotation visibility state.
    */
-  var visible: Boolean,
-  /**
-   * Cached value if view is actually shown. View could already be visible (and be treated as visible by core)
-   * but it takes some time to actually show it on top of the map.
-   */
-  var shown: Boolean?,
+  var visibility: ViewAnnotationVisibility,
   /**
    * Layout params needed to position Android view correctly on the screen.
    */

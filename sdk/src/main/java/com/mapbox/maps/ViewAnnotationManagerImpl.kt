@@ -12,6 +12,7 @@ import com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener
 import com.mapbox.maps.viewannotation.ViewAnnotation
 import com.mapbox.maps.viewannotation.ViewAnnotation.Companion.USER_FIXED_DIMENSION
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
+import com.mapbox.maps.viewannotation.ViewAnnotationVisibility
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.collections.HashMap
@@ -170,8 +171,7 @@ internal class ViewAnnotationManagerImpl(
     val viewAnnotation = ViewAnnotation(
       view = inflatedView,
       handleVisibilityAutomatically = (options.visible == null),
-      visible = (inflatedView.visibility == View.VISIBLE),
-      shown = null,
+      visibility = ViewAnnotationVisibility.INITIAL,
       viewLayoutParams = inflatedViewLayout,
       measuredWidth = if (options.width != null) USER_FIXED_DIMENSION else inflatedViewLayout.width,
       measuredHeight = if (options.height != null) USER_FIXED_DIMENSION else inflatedViewLayout.height,
@@ -206,28 +206,32 @@ internal class ViewAnnotationManagerImpl(
         )
       }
       if (viewAnnotation.handleVisibilityAutomatically) {
-        val isVisibleNow = (inflatedView.visibility == View.VISIBLE)
-        if (isVisibleNow == viewAnnotation.visible) {
+        val isAndroidViewVisible = (inflatedView.visibility == View.VISIBLE)
+        val isViewAnnotationVisible = viewAnnotation.visibility == ViewAnnotationVisibility.VISIBLE_AND_POSITIONED ||
+          viewAnnotation.visibility == ViewAnnotationVisibility.VISIBLE_AND_NOT_POSITIONED
+        if (isAndroidViewVisible && isViewAnnotationVisible ||
+          !isAndroidViewVisible && viewAnnotation.visibility == ViewAnnotationVisibility.INVISIBLE
+        ) {
           return@OnGlobalLayoutListener
         }
-        viewAnnotation.visible = isVisibleNow
         // hide view below map surface and pull it back when new position from core will arrive
-        if (isVisibleNow) {
+        if (isAndroidViewVisible) {
           hiddenViewMap[inflatedView] = inflatedView.translationZ
           inflatedView.translationZ = mapView.translationZ - 1f
         }
-        // view will actually be shown (if it's visible) when we will restore translationZ,
-        // for now we consider it always hidden
-        notifyViewAnnotationVisibilityChanged(
+        updateVisibilityAndNotifyUpdateListeners(
           viewAnnotation,
-          false
+          if (isAndroidViewVisible)
+            ViewAnnotationVisibility.VISIBLE_AND_NOT_POSITIONED
+          else
+            ViewAnnotationVisibility.INVISIBLE
         )
-        if (getValue(mapboxMap.getViewAnnotationOptions(viewAnnotation.id))?.visible != isVisibleNow) {
+        if (getValue(mapboxMap.getViewAnnotationOptions(viewAnnotation.id))?.visible != isAndroidViewVisible) {
           getValue(
             mapboxMap.updateViewAnnotation(
               viewAnnotation.id,
               ViewAnnotationOptions.Builder()
-                .visible(isVisibleNow)
+                .visible(isAndroidViewVisible)
                 .build()
             )
           )
@@ -272,7 +276,7 @@ internal class ViewAnnotationManagerImpl(
           // still be handled by OnGlobalLayoutListener
           if (annotation.view.visibility == View.VISIBLE) {
             mapView.removeView(annotation.view)
-            notifyViewAnnotationVisibilityChanged(annotation, false)
+            updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.INVISIBLE)
           }
         }
       }
@@ -295,9 +299,12 @@ internal class ViewAnnotationManagerImpl(
         }
         if (!currentViewsDrawnMap.keys.contains(descriptor.identifier) && mapView.indexOfChild(annotation.view) == -1) {
           mapView.addView(annotation.view, annotation.viewLayoutParams)
-          notifyViewAnnotationVisibilityChanged(
+          updateVisibilityAndNotifyUpdateListeners(
             annotation,
-            annotation.view.visibility == View.VISIBLE
+            if (annotation.view.visibility == View.VISIBLE)
+              ViewAnnotationVisibility.VISIBLE_AND_POSITIONED
+            else
+              ViewAnnotationVisibility.INVISIBLE
           )
         }
         if (viewUpdatedListenerSet.isNotEmpty()) {
@@ -317,7 +324,7 @@ internal class ViewAnnotationManagerImpl(
         hiddenViewMap[annotation.view]?.let { zIndex ->
           annotation.view.translationZ = zIndex
           hiddenViewMap.remove(annotation.view)
-          notifyViewAnnotationVisibilityChanged(annotation, true)
+          updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.VISIBLE_AND_POSITIONED)
         }
         // as we preserve correct order we bring each view to the front and correct order will be preserved
         annotation.view.bringToFront()
@@ -340,20 +347,30 @@ internal class ViewAnnotationManagerImpl(
     return expected.value
   }
 
-  private fun notifyViewAnnotationVisibilityChanged(
+  private fun updateVisibilityAndNotifyUpdateListeners(
     annotation: ViewAnnotation,
-    isShownNow: Boolean
+    currentVisibility: ViewAnnotationVisibility
   ) {
-    // we do nothing if shown value did not change and additionally if view is just added but not shown
-    if (annotation.shown == isShownNow || (annotation.shown == null && !isShownNow)) {
+    // we do nothing if currentVisibility value did not change and additionally if view is just added but not shown
+    if (annotation.visibility == currentVisibility ||
+      (annotation.visibility == ViewAnnotationVisibility.INITIAL && currentVisibility == ViewAnnotationVisibility.INVISIBLE)
+    ) {
       return
     }
-    annotation.shown = isShownNow
-    if (viewUpdatedListenerSet.isNotEmpty()) {
+    val wasVisibleBefore = (
+      annotation.visibility == ViewAnnotationVisibility.VISIBLE_AND_POSITIONED ||
+        annotation.visibility == ViewAnnotationVisibility.VISIBLE_AND_NOT_POSITIONED
+      )
+    val isVisibleNow = (
+      currentVisibility == ViewAnnotationVisibility.VISIBLE_AND_POSITIONED ||
+        currentVisibility == ViewAnnotationVisibility.VISIBLE_AND_NOT_POSITIONED
+      )
+    annotation.visibility = currentVisibility
+    if (viewUpdatedListenerSet.isNotEmpty() && isVisibleNow != wasVisibleBefore) {
       viewUpdatedListenerSet.forEach {
         it.onViewAnnotationVisibilityUpdated(
           view = annotation.view,
-          visible = isShownNow
+          visible = isVisibleNow
         )
       }
     }
@@ -361,7 +378,7 @@ internal class ViewAnnotationManagerImpl(
 
   private fun remove(internalId: String, annotation: ViewAnnotation) {
     mapView.removeView(annotation.view)
-    notifyViewAnnotationVisibilityChanged(annotation, false)
+    updateVisibilityAndNotifyUpdateListeners(annotation, ViewAnnotationVisibility.INVISIBLE)
     annotation.view.removeOnAttachStateChangeListener(annotation.attachStateListener)
     annotation.attachStateListener = null
     getValue(mapboxMap.removeViewAnnotation(internalId))

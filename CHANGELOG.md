@@ -5,7 +5,7 @@ Mapbox welcomes participation and contributions from everyone.
 # 10.4.0-beta.1
 
 ## Features ✨ and improvements 🏁
-* Refactor scheduling logic for render thread slightly improving rendering performance. ([#1068](https://github.com/mapbox/mapbox-maps-android/pull/1068))
+* Refactor scheduling logic for render thread improving rendering performance. ([#1068](https://github.com/mapbox/mapbox-maps-android/pull/1068))
 * Add LocationCompassEngine and accuracy radius support for location component plugin. ([#1016](https://github.com/mapbox/mapbox-maps-android/pull/1016)) ([#1131](https://github.com/mapbox/mapbox-maps-android/pull/1131))
 Inorder to avoid breaking api changes, interface location2 is introduced for updating `puckBearingSource`, `puckBearingEnabled` and `showAccuracyRing` properties.
 ```
