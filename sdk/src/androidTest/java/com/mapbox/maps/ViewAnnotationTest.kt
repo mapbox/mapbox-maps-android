@@ -694,11 +694,8 @@ class ViewAnnotationTest(
       },
       makeChecks = {
         assertFalse(mapView.hasChildView(firstView))
-        // TODO that's incorrect, revisit logic, no callbacks should be triggered
         assertArrayEquals(
-          arrayOf(
-            Pair(firstView, false),
-          ),
+          arrayOf(),
           actualVisibilityUpdateList.toTypedArray()
         )
       }

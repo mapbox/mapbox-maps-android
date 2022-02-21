@@ -344,7 +344,8 @@ internal class ViewAnnotationManagerImpl(
     annotation: ViewAnnotation,
     isShownNow: Boolean
   ) {
-    if (annotation.shown == isShownNow) {
+    // we do nothing if shown value did not change and additionally if view is just added but not shown
+    if (annotation.shown == isShownNow || (annotation.shown == null && !isShownNow)) {
       return
     }
     annotation.shown = isShownNow
