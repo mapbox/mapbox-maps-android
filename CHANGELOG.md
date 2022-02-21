@@ -25,13 +25,29 @@ mapView.location2.puckBearingEnabled = false
 ```
 * Add support for custom widgets rendered on top of the map. ([#1036](https://github.com/mapbox/mapbox-maps-android/pull/1036))
 * Expose DefaultLocationProvider as public class. ([#1168](https://github.com/mapbox/mapbox-maps-android/pull/1168))
+* Improve rendering performance by coalescing map updates when possible. ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
+* Add `StyleManager::hasStyleImage` API that checks whether an image is in the style or not. ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
+* Improve Snapshotter performance by using a lightweight scheduler instead of platform runloop. ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
+* Map now waits on sprite sheet loading before rendering. ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
+* Improve map rendering performance by avoiding calculations for all the non-transitional style layer paint properties. ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
+* Enable using of tile pack scheme from TileJSON. ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
+* Improve map rendering performance by decreasing de/allocations in map placement code. ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
+* Avoid style layer properties transition calculation when `TransitionOptions::duration` is set to 0. ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
+* Enable tile packs for DEM terrain tiles, it includes both Offline API and `TileStoreUsageMode::ReadAndUpdate` resource option. ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
+* Render tiles with partial content while the glyph dependencies are loading. ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
+* Canonicalize URLs and enable Offline API usage for the 3dtiles/v1 tiles. ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
 
 ## Bug fixes 🐞
 * Fix skipping / crashing user events scheduled on a render thread with `MapView#queueEvent`. ([#1068](https://github.com/mapbox/mapbox-maps-android/pull/1068))
 * Fix location puck not being shown if map is created without initial style (e.g. MapInitOptions.styleUri == null) and then loaded asynchronously. ([#1114](https://github.com/mapbox/mapbox-maps-android/pull/1114))
 * Fix crash within location plugin that happens when style is reloaded simultaneously with location plugin updates. ([#1112](https://github.com/mapbox/mapbox-maps-android/pull/1112))
+* Fix screen coordinate queries when using zero pitch and high zoom values. ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
+* Avoid possible crash at program exit caused by dummy tracer accessed after the destruction. ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
+* Fix crash for the case when a map event is handled by an Observer of a destructed map. ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
+* Fix shimmering artifact when pitched raster tiles with compressed textures are rendered. ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
 
 ## Dependencies
+* Bump gl-native to 10.4.0-beta.1, mapbox-common to v21.2.0-beta.1 ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
 * Update android gradle plugin to v7.0.4, gradle version to v7.0.2, Gradle licence plugin to 0.8.80, Kotlin gradle plugin to 1.5.31, Jacoco to 0.8.7. ([#1118](https://github.com/mapbox/mapbox-maps-android/pull/1118))
 
 # 10.3.0 February 10, 2022
