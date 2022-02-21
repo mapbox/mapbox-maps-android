@@ -1,6 +1,13 @@
 // Signature format: 3.0
 package com.mapbox.maps.plugin.locationcomponent {
 
+  public final class DefaultLocationProvider implements com.mapbox.maps.plugin.locationcomponent.LocationProvider {
+    ctor public DefaultLocationProvider(android.content.Context context);
+    method public void registerLocationConsumer(com.mapbox.maps.plugin.locationcomponent.LocationConsumer locationConsumer);
+    method public void unRegisterLocationConsumer(com.mapbox.maps.plugin.locationcomponent.LocationConsumer locationConsumer);
+    method public void updatePuckBearingSource(com.mapbox.maps.plugin.PuckBearingSource source);
+  }
+
   public final class LocationComponentConstants {
     field public static final long ACCURACY_RADIUS_ANIMATION_DURATION = 250L; // 0xfaL
     field public static final String BEARING_ICON = "mapbox-location-bearing-icon";
