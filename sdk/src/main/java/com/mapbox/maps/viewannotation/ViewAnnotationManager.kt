@@ -22,6 +22,8 @@ import com.mapbox.maps.ViewAnnotationOptions
  * View annotations are not explicitly bound to any sources however [ViewAnnotationOptions.associatedFeatureId] could be
  * used to bind given view annotation with some [Feature] by [Feature.id] meaning visibility of view annotation will be driven
  * by visibility of given feature.
+ *
+ * View annotation manager instance is destroyed automatically when [MapView.onDestroy] is called.
  */
 @MapboxExperimental
 interface ViewAnnotationManager {
@@ -98,6 +100,11 @@ interface ViewAnnotationManager {
   fun removeViewAnnotation(view: View): Boolean
 
   /**
+   * Remove all view annotations.
+   */
+  fun removeAllViewAnnotations()
+
+  /**
    * Update given view annotation [view] with [ViewAnnotationOptions].
    * Important thing to keep in mind that only properties present in [options] will be updated,
    * all other will remain the same as specified before.
@@ -129,4 +136,14 @@ interface ViewAnnotationManager {
    * @return [ViewAnnotationOptions] if view was found and NULL otherwise.
    */
   fun getViewAnnotationOptionsByView(view: View): ViewAnnotationOptions?
+
+  /**
+   * Add an instance of [OnViewAnnotationUpdatedListener].
+   */
+  fun addOnViewAnnotationUpdatedListener(listener: OnViewAnnotationUpdatedListener)
+
+  /**
+   * Remove an instance of [OnViewAnnotationUpdatedListener].
+   */
+  fun removeOnViewAnnotationUpdatedListener(listener: OnViewAnnotationUpdatedListener)
 }

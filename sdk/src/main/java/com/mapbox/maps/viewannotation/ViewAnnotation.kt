@@ -19,9 +19,9 @@ internal data class ViewAnnotation(
    */
   var handleVisibilityAutomatically: Boolean,
   /**
-   * Cached value if view is visible before OnGlobalLayoutListener was triggered.
+   * View annotation visibility state.
    */
-  var visible: Boolean,
+  var visibility: ViewAnnotationVisibility,
   /**
    * Layout params needed to position Android view correctly on the screen.
    */
@@ -39,6 +39,12 @@ internal data class ViewAnnotation(
    * String id needed to call functions from gl-native
    */
   val id: String = (VIEW_ANNOTATION_CURRENT_ID++).toString()
+
+  /**
+   * Helper function to understand if view is visible from Android visibility perspective.
+   */
+  val isVisible get() = visibility == ViewAnnotationVisibility.VISIBLE_AND_POSITIONED ||
+    visibility == ViewAnnotationVisibility.VISIBLE_AND_NOT_POSITIONED
 
   companion object {
     private var VIEW_ANNOTATION_CURRENT_ID = 42

@@ -6,6 +6,7 @@ import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.ViewAnnotationManagerImpl.Companion.EXCEPTION_TEXT_ASSOCIATED_FEATURE_ID_ALREADY_EXISTS
+import com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import io.mockk.*
 import org.junit.After
@@ -29,13 +30,17 @@ class ViewAnnotationManagerTest {
     frameLayoutParams = mockk()
     frameLayoutParams.width = 20
     frameLayoutParams.height = 20
+    every { mapView.context } returns mockk()
     view = mockk()
+    mockView(view)
+    every { mapboxMap.addViewAnnotation(any(), any()) } returns ExpectedFactory.createNone()
+  }
+
+  private fun mockView(view: View) {
     every { view.layoutParams } returns frameLayoutParams
     every { view.visibility } returns View.VISIBLE
     every { view.viewTreeObserver } returns mockk(relaxed = true)
-    every { mapView.context } returns mockk()
     every { view.addOnAttachStateChangeListener(any()) } just Runs
-    every { mapboxMap.addViewAnnotation(any(), any()) } returns ExpectedFactory.createNone()
   }
 
   @After
@@ -187,6 +192,34 @@ class ViewAnnotationManagerTest {
   }
 
   @Test
+  fun removeAllViewAnnotations() {
+    every { mapboxMap.removeViewAnnotation(any()) } returns ExpectedFactory.createNone()
+    every { view.removeOnAttachStateChangeListener(any()) } just Runs
+    // add first view
+    viewAnnotationManager.addViewAnnotation(
+      view,
+      viewAnnotationOptions {
+        geometry(DEFAULT_GEOMETRY)
+      }
+    )
+    val anotherView = mockk<View>()
+    every { anotherView.removeOnAttachStateChangeListener(any()) } just Runs
+    mockView(anotherView)
+    // add another view
+    viewAnnotationManager.addViewAnnotation(
+      anotherView,
+      viewAnnotationOptions {
+        geometry(Point.fromLngLat(90.0, 90.0))
+      }
+    )
+    viewAnnotationManager.removeAllViewAnnotations()
+    assert(viewAnnotationManager.idLookupMap.isEmpty())
+    verify(exactly = 2) { mapboxMap.removeViewAnnotation(any()) }
+    verify(exactly = 1) { mapView.removeView(view) }
+    verify(exactly = 1) { mapView.removeView(anotherView) }
+  }
+
+  @Test
   fun getViewAnnotationByFeatureIdSuccess() {
     val viewAnnotationOptions = viewAnnotationOptions {
       geometry(DEFAULT_GEOMETRY)
@@ -255,6 +288,21 @@ class ViewAnnotationManagerTest {
   @Test
   fun getViewAnnotationOptionsByViewNoViewFailure() {
     assertNull(viewAnnotationManager.getViewAnnotationOptionsByView(view))
+  }
+
+  @Test
+  fun addViewPositioningListener() {
+    val listener = mockk<OnViewAnnotationUpdatedListener>()
+    viewAnnotationManager.addOnViewAnnotationUpdatedListener(listener)
+    assert(viewAnnotationManager.viewUpdatedListenerSet.contains(listener))
+  }
+
+  @Test
+  fun removeViewPositioningListener() {
+    val listener = mockk<OnViewAnnotationUpdatedListener>()
+    viewAnnotationManager.addOnViewAnnotationUpdatedListener(listener)
+    viewAnnotationManager.removeOnViewAnnotationUpdatedListener(listener)
+    assert(viewAnnotationManager.viewUpdatedListenerSet.isEmpty())
   }
 
   private companion object {

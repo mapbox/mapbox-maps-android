@@ -529,13 +529,21 @@ public final class com/mapbox/maps/renderer/widget/WidgetPosition$Vertical : jav
 	public static fun values ()[Lcom/mapbox/maps/renderer/widget/WidgetPosition$Vertical;
 }
 
+public abstract interface class com/mapbox/maps/viewannotation/OnViewAnnotationUpdatedListener {
+	public abstract fun onViewAnnotationPositionUpdated (Landroid/view/View;Lcom/mapbox/maps/ScreenCoordinate;II)V
+	public abstract fun onViewAnnotationVisibilityUpdated (Landroid/view/View;Z)V
+}
+
 public abstract interface class com/mapbox/maps/viewannotation/ViewAnnotationManager {
+	public abstract fun addOnViewAnnotationUpdatedListener (Lcom/mapbox/maps/viewannotation/OnViewAnnotationUpdatedListener;)V
 	public abstract fun addViewAnnotation (ILcom/mapbox/maps/ViewAnnotationOptions;)Landroid/view/View;
 	public abstract fun addViewAnnotation (ILcom/mapbox/maps/ViewAnnotationOptions;Landroidx/asynclayoutinflater/view/AsyncLayoutInflater;Lkotlin/jvm/functions/Function1;)V
 	public abstract fun addViewAnnotation (Landroid/view/View;Lcom/mapbox/maps/ViewAnnotationOptions;)V
 	public abstract fun getViewAnnotationByFeatureId (Ljava/lang/String;)Landroid/view/View;
 	public abstract fun getViewAnnotationOptionsByFeatureId (Ljava/lang/String;)Lcom/mapbox/maps/ViewAnnotationOptions;
 	public abstract fun getViewAnnotationOptionsByView (Landroid/view/View;)Lcom/mapbox/maps/ViewAnnotationOptions;
+	public abstract fun removeAllViewAnnotations ()V
+	public abstract fun removeOnViewAnnotationUpdatedListener (Lcom/mapbox/maps/viewannotation/OnViewAnnotationUpdatedListener;)V
 	public abstract fun removeViewAnnotation (Landroid/view/View;)Z
 	public abstract fun updateViewAnnotation (Landroid/view/View;Lcom/mapbox/maps/ViewAnnotationOptions;)Z
 }
