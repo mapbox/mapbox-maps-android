@@ -42,30 +42,8 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
   private lateinit var runnable: Runnable
   private var updateDelay = INIT_UPDATE_DELAY
 
-  private val locationEngineCallback = object : LocationEngineCallback<LocationEngineResult> {
-    /**
-     * Invoked when new data available.
-     *
-     * @param result updated data.
-     */
-    override fun onSuccess(result: LocationEngineResult) {
-      result.lastLocation?.let {
-        notifyLocationUpdates(it)
-      }
-    }
-
-    /**
-     * Invoked when engine exception occurs.
-     *
-     * @param exception
-     */
-    override fun onFailure(exception: Exception) {
-      Logger.e(
-        TAG,
-        "Failed to obtain location update: $exception"
-      )
-    }
-  }
+  private val locationEngineCallback: LocationEngineCallback<LocationEngineResult> =
+    CurrentLocationEngineCallback(this)
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal val locationCompassListener =
@@ -178,6 +156,27 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
       if (currentPuckBearingSource == PuckBearingSource.HEADING) {
         locationCompassEngine.removeCompassListener(locationCompassListener)
       }
+    }
+  }
+
+  private class CurrentLocationEngineCallback(locationProvider: DefaultLocationProvider) :
+    LocationEngineCallback<LocationEngineResult> {
+    private val locationProviderWeakReference: WeakReference<DefaultLocationProvider> =
+      WeakReference(locationProvider)
+
+    override fun onSuccess(result: LocationEngineResult) {
+      result.lastLocation?.let { location ->
+        locationProviderWeakReference.get()?.let {
+          it.notifyLocationUpdates(location)
+        }
+      }
+    }
+
+    override fun onFailure(exception: Exception) {
+      Logger.e(
+        TAG,
+        "Failed to obtain location update: $exception"
+      )
     }
   }
 
