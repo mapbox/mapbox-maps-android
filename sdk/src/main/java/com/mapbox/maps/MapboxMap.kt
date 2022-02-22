@@ -36,11 +36,8 @@ import java.util.*
  *
  * @property style the map style.
  */
-class MapboxMap internal constructor(
-  private val nativeMapWeakRef: WeakReference<MapInterface>,
-  private val nativeObserver: NativeObserver,
-  pixelRatio: Float
-) : MapTransformDelegate,
+class MapboxMap :
+  MapTransformDelegate,
   MapProjectionDelegate,
   MapFeatureQueryDelegate,
   ObservableInterface,
@@ -49,14 +46,12 @@ class MapboxMap internal constructor(
   MapCameraManagerDelegate,
   MapStyleStateDelegate {
 
+  private val nativeMapWeakRef: WeakReference<MapInterface>
+  private val nativeObserver: NativeObserver
+
   internal var style: Style? = null
   internal var isStyleLoadInitiated = false
-  private val styleObserver = StyleObserver(
-    nativeMapWeakRef,
-    { style -> this.style = style },
-    nativeObserver,
-    pixelRatio
-  )
+  private val styleObserver: StyleObserver
   internal var renderHandler: Handler? = null
 
   /**
@@ -72,6 +67,32 @@ class MapboxMap internal constructor(
   internal var gesturesPlugin: WeakReference<GesturesPlugin>? = null
 
   private var styleTransitionOptions: TransitionOptions? = null
+
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal constructor(
+    nativeMapWeakRef: WeakReference<MapInterface>,
+    nativeObserver: NativeObserver,
+    styleObserver: StyleObserver
+  ) {
+    this.nativeMapWeakRef = nativeMapWeakRef
+    this.nativeObserver = nativeObserver
+    this.styleObserver = styleObserver
+  }
+
+  internal constructor(
+    nativeMapWeakRef: WeakReference<MapInterface>,
+    nativeObserver: NativeObserver,
+    pixelRatio: Float
+  ) {
+    this.nativeMapWeakRef = nativeMapWeakRef
+    this.nativeObserver = nativeObserver
+    this.styleObserver = StyleObserver(
+      nativeMapWeakRef,
+      { style -> this.style = style },
+      nativeObserver,
+      pixelRatio
+    )
+  }
 
   /**
    * Will load a new map style asynchronous from the specified URI.

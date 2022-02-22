@@ -23,6 +23,7 @@ class StyleObserverTest {
     StyleObserver(mockk(), mockk(relaxed = true), nativeObserver, 1.0f)
     verify { nativeObserver.addOnStyleLoadedListener(any()) }
     verify { nativeObserver.addOnMapLoadErrorListener(any()) }
+    verify { nativeObserver.addOnStyleDataLoadedListener(any()) }
   }
 
   /**
@@ -34,6 +35,7 @@ class StyleObserverTest {
     StyleObserver(mockk(), mockk(relaxed = true), nativeObserver, 1.0f).onDestroy()
     verify { nativeObserver.removeOnStyleLoadedListener(any()) }
     verify { nativeObserver.removeOnMapLoadErrorListener(any()) }
+    verify { nativeObserver.removeOnStyleDataLoadedListener(any()) }
   }
 
   /**
@@ -49,7 +51,7 @@ class StyleObserverTest {
       pixelRatio = 1.0f
     )
     val styleLoaded = mockk<Style.OnStyleLoaded>(relaxed = true)
-    styleObserver.setLoadStyleListener(styleLoaded, null)
+    styleObserver.setLoadStyleListener(null, styleLoaded, null)
     styleObserver.onStyleLoaded(mockk())
     verify { styleLoaded.onStyleLoaded(any()) }
     verify { mainStyleLoadedListener.onStyleLoaded(any()) }
@@ -67,7 +69,7 @@ class StyleObserverTest {
       pixelRatio = 1.0f
     )
     val loadStyleListener = mockk<Style.OnStyleLoaded>(relaxed = true)
-    styleObserver.setLoadStyleListener(loadStyleListener, null)
+    styleObserver.setLoadStyleListener(null, loadStyleListener, null)
     val getStyleListener = mockk<Style.OnStyleLoaded>(relaxed = true)
     styleObserver.addGetStyleListener(getStyleListener)
     val getStyleListener2 = mockk<Style.OnStyleLoaded>(relaxed = true)
@@ -90,9 +92,9 @@ class StyleObserverTest {
       pixelRatio = 1.0f
     )
     val styleLoadedFail = mockk<Style.OnStyleLoaded>(relaxed = true)
-    styleObserver.setLoadStyleListener(styleLoadedFail, null)
+    styleObserver.setLoadStyleListener(null, styleLoadedFail, null)
     val styleLoadedSuccess = mockk<Style.OnStyleLoaded>(relaxed = true)
-    styleObserver.setLoadStyleListener(styleLoadedSuccess, null)
+    styleObserver.setLoadStyleListener(null, styleLoadedSuccess, null)
     styleObserver.onStyleLoaded(mockk())
     verify(exactly = 0) { styleLoadedFail.onStyleLoaded(any()) }
     verify { styleLoadedSuccess.onStyleLoaded(any()) }
@@ -110,7 +112,7 @@ class StyleObserverTest {
       pixelRatio = 1.0f
     )
     val errorListener = mockk<OnMapLoadErrorListener>(relaxed = true)
-    styleObserver.setLoadStyleListener(mockk(relaxed = true), errorListener)
+    styleObserver.setLoadStyleListener(null, mockk(relaxed = true), errorListener)
     styleObserver.onMapLoadError(mockk(relaxed = true))
     verify { errorListener.onMapLoadError(any()) }
   }
@@ -127,9 +129,9 @@ class StyleObserverTest {
       pixelRatio = 1.0f
     )
     val errorListenerFail = mockk<OnMapLoadErrorListener>(relaxed = true)
-    styleObserver.setLoadStyleListener(mockk(relaxed = true), errorListenerFail)
+    styleObserver.setLoadStyleListener(null, mockk(relaxed = true), errorListenerFail)
     val errorListenerSuccess = mockk<OnMapLoadErrorListener>(relaxed = true)
-    styleObserver.setLoadStyleListener(mockk(relaxed = true), errorListenerSuccess)
+    styleObserver.setLoadStyleListener(null, mockk(relaxed = true), errorListenerSuccess)
     styleObserver.onMapLoadError(mockk(relaxed = true))
     verify(exactly = 0) { errorListenerFail.onMapLoadError(any()) }
     verify { errorListenerSuccess.onMapLoadError(any()) }

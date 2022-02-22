@@ -34,6 +34,7 @@ class MapboxMapTest {
   private val nativeObserver: NativeObserver = mockk(relaxed = true)
   private val resourceOptions = mockk<ResourceOptions>(relaxed = true)
 
+  private lateinit var styleObserver: StyleObserver
   private lateinit var mapboxMap: MapboxMap
 
   @Before
@@ -41,7 +42,8 @@ class MapboxMapTest {
     mockkStatic(Map::class)
     every { Map.clearData(any(), any()) } just runs
     every { nativeMap.resourceOptions } returns resourceOptions
-    mapboxMap = MapboxMap(WeakReference(nativeMap), nativeObserver, 1.0f)
+    styleObserver = mockk(relaxUnitFun = true)
+    mapboxMap = MapboxMap(WeakReference(nativeMap), nativeObserver, styleObserver)
   }
 
   @Test
@@ -1032,5 +1034,15 @@ class MapboxMapTest {
     val memoryBudget = mockk<MapMemoryBudget>()
     mapboxMap.setMemoryBudget(memoryBudget)
     verify { nativeMap.setMemoryBudget(memoryBudget) }
+  }
+
+  @Test
+  fun setStyleTransition() {
+    val options = mockk<TransitionOptions>(relaxed = true)
+    mapboxMap.setStyleTransition(options)
+    mapboxMap.loadStyleUri("style")
+    verify(exactly = 1) {
+      styleObserver.setLoadStyleListener(options, null, null)
+    }
   }
 }

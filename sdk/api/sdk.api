@@ -259,6 +259,7 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/ObservableInterfa
 	public fun setNorthOrientation (Lcom/mapbox/maps/NorthOrientation;)V
 	public final fun setPrefetchZoomDelta (B)V
 	public final fun setRenderCacheOptions (Lcom/mapbox/maps/RenderCacheOptions;)V
+	public final fun setStyleTransition (Lcom/mapbox/maps/TransitionOptions;)V
 	public fun setUserAnimationInProgress (Z)V
 	public fun setViewportMode (Lcom/mapbox/maps/ViewportMode;)V
 	public fun subscribe (Lcom/mapbox/maps/Observer;Ljava/util/List;)V
