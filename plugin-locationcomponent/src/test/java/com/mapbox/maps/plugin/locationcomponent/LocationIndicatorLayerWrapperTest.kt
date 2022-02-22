@@ -36,7 +36,7 @@ class LocationIndicatorLayerWrapperTest {
   @Test
   fun testInitialProperties() {
     val value = layer.toValue()
-    assertEquals("{image-pitch-displacement=4.0, location-transition={duration=0, delay=0}, perspective-compensation=0.9, id=indicatorLayerId, type=location-indicator}", value.toString())
+    assertEquals("{bearing-transition={duration=0, delay=0}, image-pitch-displacement=4.0, location-transition={duration=0, delay=0}, perspective-compensation=0.9, id=indicatorLayerId, type=location-indicator}", value.toString())
   }
 
   @Test
