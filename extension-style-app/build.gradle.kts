@@ -35,7 +35,6 @@ android {
     if (buildFromSource.toBoolean()) {
       jniLibs.pickFirsts.add("**/libc++_shared.so")
     }
-    jniLibs.pickFirsts.add("**/libmapbox-common.so")
   }
 }
 
