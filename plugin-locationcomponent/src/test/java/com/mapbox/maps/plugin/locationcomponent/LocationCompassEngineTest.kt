@@ -31,8 +31,8 @@ class LocationCompassEngineTest {
     every { sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) } returns compassSensor
     every { sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) } returns gravitySensor
     every { sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) } returns magneticFieldSensor
-    every { context.getSystemService(Context.WINDOW_SERVICE) } returns windowManager
-    every { context.getSystemService(Context.SENSOR_SERVICE) } returns sensorManager
+    every { context.applicationContext.getSystemService(Context.WINDOW_SERVICE) } returns windowManager
+    every { context.applicationContext.getSystemService(Context.SENSOR_SERVICE) } returns sensorManager
   }
 
   @Test
