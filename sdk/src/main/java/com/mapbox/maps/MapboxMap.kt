@@ -71,6 +71,8 @@ class MapboxMap internal constructor(
   @VisibleForTesting(otherwise = PRIVATE)
   internal var gesturesPlugin: WeakReference<GesturesPlugin>? = null
 
+  private var styleTransitionOptions: TransitionOptions? = null
+
   /**
    * Will load a new map style asynchronous from the specified URI.
    *
@@ -192,6 +194,16 @@ class MapboxMap internal constructor(
   ) = loadStyle(styleExtension, null, null)
 
   /**
+   * Set style transition options that will be applied to all style loads happening after.
+   *
+   * In order to obtain current transition options please use [Style.getStyleTransition]
+   * when style will be loaded.
+   */
+  fun setStyleTransition(transitionOptions: TransitionOptions) {
+    styleTransitionOptions = transitionOptions
+  }
+
+  /**
    * Handle the style loading from Style Extension.
    */
   internal fun onFinishLoadingStyleExtension(
@@ -220,6 +232,7 @@ class MapboxMap internal constructor(
   ) {
     style = null
     styleObserver.setLoadStyleListener(
+      styleTransitionOptions,
       onStyleLoaded,
       onMapLoadErrorListener
     )

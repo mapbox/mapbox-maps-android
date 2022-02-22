@@ -91,6 +91,10 @@ class Style internal constructor(
    *
    * @param transitionOptions Map style transition options.
    */
+  @Deprecated(
+    "Given transition options will not be applied properly, please use another function.",
+    replaceWith = ReplaceWith("mapboxMap.setStyleTransition")
+  )
   override fun setStyleTransition(transitionOptions: TransitionOptions) =
     styleManagerRef.call { this.styleTransition = transitionOptions }
 
