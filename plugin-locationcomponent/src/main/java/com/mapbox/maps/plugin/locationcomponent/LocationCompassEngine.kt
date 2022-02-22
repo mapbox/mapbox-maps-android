@@ -15,9 +15,9 @@ import com.mapbox.common.Logger
  */
 internal class LocationCompassEngine(context: Context) : SensorEventListener {
   private val windowManager: WindowManager =
-    context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    context.applicationContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager
   private val sensorManager: SensorManager =
-    context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+    context.applicationContext.getSystemService(Context.SENSOR_SERVICE) as SensorManager
   private val compassListeners = mutableSetOf<CompassListener>()
 
   // Not all devices have a compassSensor

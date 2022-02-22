@@ -26,10 +26,10 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
   context: Context,
   private val locationCompassEngine: LocationCompassEngine
 ) : LocationProvider {
-  constructor(context: Context) : this(context, LocationCompassEngine(context))
+  constructor(context: Context) : this(context, LocationCompassEngine(context.applicationContext))
 
-  private val contextWeekRef: WeakReference<Context> = WeakReference(context)
-  private val locationEngine = LocationEngineProvider.getBestLocationEngine(context)
+  private val applicationContext = context.applicationContext
+  private val locationEngine = LocationEngineProvider.getBestLocationEngine(applicationContext)
   private val locationEngineRequest =
     LocationEngineRequest.Builder(LocationComponentConstants.DEFAULT_INTERVAL_MILLIS)
       .setFastestInterval(LocationComponentConstants.DEFAULT_FASTEST_INTERVAL_MILLIS)
@@ -55,7 +55,7 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
 
   @SuppressLint("MissingPermission")
   private fun requestLocationUpdates() {
-    if (PermissionsManager.areLocationPermissionsGranted(contextWeekRef.get())) {
+    if (PermissionsManager.areLocationPermissionsGranted(applicationContext)) {
       locationEngine.requestLocationUpdates(
         locationEngineRequest, locationEngineCallback, Looper.getMainLooper()
       )
@@ -131,7 +131,7 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
       }
     }
     locationConsumers.add(locationConsumer)
-    if (PermissionsManager.areLocationPermissionsGranted(contextWeekRef.get())) {
+    if (PermissionsManager.areLocationPermissionsGranted(applicationContext)) {
       locationEngine.getLastLocation(locationEngineCallback)
     } else {
       Logger.w(
@@ -159,6 +159,8 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
     }
   }
 
+  // Callbacks may leak after GoogleLocationEngineImpl.removeLocationUpdates,
+  // see https://github.com/mapbox/mapbox-events-android/issues/562 for more details
   private class CurrentLocationEngineCallback(locationProvider: DefaultLocationProvider) :
     LocationEngineCallback<LocationEngineResult> {
     private val locationProviderWeakReference: WeakReference<DefaultLocationProvider> =
