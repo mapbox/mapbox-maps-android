@@ -227,6 +227,12 @@ commands:
                   if [[ $CIRCLE_TAG == android-v* ||  $CIRCLE_BRANCH == main ]]; then
                     make sdkRegistryUpload
                   fi
+                  if [[ $CIRCLE_TAG == android-v* ]]; then
+                    git config --global user.email "MapboxCI@users.noreply.github.com"
+                    git config --global user.name "MapboxCI"
+                    export GITHUB_TOKEN=$(./mbx-ci github writer private token)
+                    make sdkRegistryPublish
+                  fi
 
   publish-sdk-registry-named-snapshot:
     steps:
