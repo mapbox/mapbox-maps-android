@@ -22,7 +22,6 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import kotlin.math.abs
 
-
 @RunWith(RobolectricTestRunner::class)
 class LocationPuckManagerTest {
 
@@ -265,8 +264,6 @@ class LocationPuckManagerTest {
         assert(absoluteDifference < 2 * maxUlp)
       }
   }
-
-
 
   @Test
   fun testDoesntInitialiseIfRendererInitialised() {
