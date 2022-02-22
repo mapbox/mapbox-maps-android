@@ -38,9 +38,6 @@ android {
       targetCompatibility = JavaVersion.VERSION_1_8
     }
   }
-  packagingOptions {
-    jniLibs.pickFirsts.add("**/libmapbox-common.so")
-  }
   sourceSets {
     // limit amount of exposed library resources
     getByName("main").res.srcDirs("src/main/res-public")
