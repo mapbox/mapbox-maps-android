@@ -33,10 +33,10 @@ class CircleLayerClusteringActivity : AppCompatActivity() {
     setContentView(mapView)
     val mapboxMap = mapView.getMapboxMap()
 
-    // Disable any type of fading transition when icons collide on the map. This enhances the visual
-    // look of the data clustering together and breaking apart.
     mapboxMap.loadStyleUri(
       styleUri = Style.LIGHT,
+      // Disable any type of fading transition when icons collide on the map. This enhances the visual
+      // look of the data clustering together and breaking apart.
       styleTransitionOptions = TransitionOptions.Builder()
         .duration(0)
         .delay(0)
