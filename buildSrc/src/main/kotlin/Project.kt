@@ -11,7 +11,7 @@ object Plugins {
   const val android = "com.android.tools.build:gradle:${Versions.pluginAndroidGradle}"
   const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.pluginKotlin}"
   const val jacoco = "com.hiya:jacoco-android:${Versions.pluginJacoco}"
-  const val kover = "org.jetbrains.kotlinx:kover:${Versions.pluginKover}"
+  const val koverId = "org.jetbrains.kotlinx.kover"
   const val license = "com.jaredsburrows:gradle-license-plugin:${Versions.pluginLicense}"
   const val mapboxAccessToken = "com.mapbox.gradle.plugins:access-token:${Versions.mapboxAccessToken}"
   const val mapboxSdkRegistry = "com.mapbox.gradle.plugins:sdk-registry:${Versions.mapboxSdkRegistry}"

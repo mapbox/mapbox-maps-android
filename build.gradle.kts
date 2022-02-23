@@ -21,7 +21,6 @@ buildscript {
     classpath(Plugins.android)
     classpath(Plugins.kotlin)
     classpath(Plugins.jacoco)
-    classpath(Plugins.kover)
     classpath(Plugins.license)
     classpath(Plugins.mapboxAccessToken)
     classpath(Plugins.mapboxSdkRegistry)
@@ -51,7 +50,7 @@ allprojects {
 }
 
 plugins {
-  id(Plugins.kover) version Versions.pluginKover
+  id(Plugins.koverId) version Versions.pluginKover
   id(Plugins.dokkaId) version Versions.pluginDokka
   id(Plugins.binaryCompatibilityValidatorId) version Versions.pluginBinaryCompatibilityValidator
 }
