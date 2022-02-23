@@ -48,6 +48,7 @@ import com.mapbox.maps.ScreenCoordinate;
 import com.mapbox.maps.SnapshotOverlayOptions;
 import com.mapbox.maps.Snapshotter;
 import com.mapbox.maps.Style;
+import com.mapbox.maps.TransitionOptions;
 import com.mapbox.maps.extension.style.StyleContract;
 import com.mapbox.maps.extension.style.StyleInterface;
 import com.mapbox.maps.extension.style.expressions.generated.Expression;
@@ -347,12 +348,15 @@ public class JavaInterfaceChecker {
         mapboxMap.loadStyleUri(Style.MAPBOX_STREETS);
         mapboxMap.loadStyleUri(Style.MAPBOX_STREETS, onStyleLoaded);
         mapboxMap.loadStyleUri(Style.MAPBOX_STREETS, onStyleLoaded, onMapLoadErrorListener);
+        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS, new TransitionOptions.Builder().build(), onStyleLoaded, onMapLoadErrorListener);
         mapboxMap.loadStyleJson("json");
         mapboxMap.loadStyleJson("json", onStyleLoaded);
         mapboxMap.loadStyleJson("json", onStyleLoaded, onMapLoadErrorListener);
+        mapboxMap.loadStyleJson("json", new TransitionOptions.Builder().build(), onStyleLoaded, onMapLoadErrorListener);
         mapboxMap.loadStyle(styleExtension);
         mapboxMap.loadStyle(styleExtension, onStyleLoaded);
         mapboxMap.loadStyle(styleExtension, onStyleLoaded, onMapLoadErrorListener);
+        mapboxMap.loadStyle(styleExtension, new TransitionOptions.Builder().build(), onStyleLoaded, onMapLoadErrorListener);
     }
 
     private void mapInitOptionsOverloads(Context context,
