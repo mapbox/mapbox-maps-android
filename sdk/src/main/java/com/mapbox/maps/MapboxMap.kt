@@ -66,8 +66,6 @@ class MapboxMap :
   @VisibleForTesting(otherwise = PRIVATE)
   internal var gesturesPlugin: WeakReference<GesturesPlugin>? = null
 
-  private var styleTransitionOptions: TransitionOptions? = null
-
   @VisibleForTesting(otherwise = PRIVATE)
   internal constructor(
     nativeMapWeakRef: WeakReference<MapInterface>,
@@ -88,14 +86,53 @@ class MapboxMap :
     this.nativeObserver = nativeObserver
     this.styleObserver = StyleObserver(
       nativeMapWeakRef,
-      { style ->
-        this.style = style
-        // when style is loaded there is no need to store cached options as we can access them directly
-        this.styleTransitionOptions = null
-      },
+      { style -> this.style = style },
       nativeObserver,
       pixelRatio
     )
+  }
+
+  /**
+   * Will load a new map style asynchronous from the specified URI.
+   *
+   * URI can take the following forms:
+   *
+   * - **Constants**: load one of the bundled styles in [Style].
+   *
+   * - **`mapbox://styles/<user>/<style>`**:
+   * loads the style from a [Mapbox account](https://www.mapbox.com/account/).
+   * *user* is your username. *style* is the ID of your custom
+   * style created in [Mapbox Studio](https://www.mapbox.com/studio).
+   *
+   * - **`http://...` or `https://...`**:
+   * loads the style over the Internet from any web server.
+   *
+   * - **`asset://...`**:
+   * loads the style from the APK *assets* directory.
+   * This is used to load a style bundled with your app.
+   *
+   * - **`file://...`**:
+   * loads the style from a file path. This is used to load a style from disk.
+   *
+   * Will load an empty json `{}` if the styleUri is empty.
+   *
+   * @param styleUri The style URI
+   * @param styleTransitionOptions style transition options applied when loading the style
+   * @param onStyleLoaded The OnStyleLoaded callback
+   * @param onMapLoadErrorListener The OnMapLoadErrorListener callback
+   */
+  fun loadStyleUri(
+    styleUri: String,
+    styleTransitionOptions: TransitionOptions? = null,
+    onStyleLoaded: Style.OnStyleLoaded? = null,
+    onMapLoadErrorListener: OnMapLoadErrorListener? = null
+  ) {
+    initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, styleTransitionOptions)
+    if (styleUri.isEmpty()) {
+      nativeMapWeakRef.call { styleJSON = EMPTY_STYLE_JSON }
+    } else {
+      nativeMapWeakRef.call { styleURI = styleUri }
+    }
   }
 
   /**
@@ -131,7 +168,7 @@ class MapboxMap :
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
   ) {
-    initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener)
+    initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, null)
     if (styleUri.isEmpty()) {
       nativeMapWeakRef.call { styleJSON = EMPTY_STYLE_JSON }
     } else {
@@ -148,7 +185,7 @@ class MapboxMap :
   fun loadStyleUri(
     styleUri: String,
     onStyleLoaded: Style.OnStyleLoaded
-  ) = loadStyleUri(styleUri, onStyleLoaded, null)
+  ) = loadStyleUri(styleUri, null, onStyleLoaded, null)
 
   /**
    * Will load a new map style asynchronous from the specified URI.
@@ -157,7 +194,22 @@ class MapboxMap :
    */
   fun loadStyleUri(
     styleUri: String,
-  ) = loadStyleUri(styleUri, null, null)
+  ) = loadStyleUri(styleUri, null, null, null)
+
+  /**
+   * Load style JSON
+   */
+  fun loadStyleJson(
+    styleJson: String,
+    styleTransitionOptions: TransitionOptions? = null,
+    onStyleLoaded: Style.OnStyleLoaded? = null,
+    onMapLoadErrorListener: OnMapLoadErrorListener? = null,
+  ) {
+    initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, styleTransitionOptions)
+    nativeMapWeakRef.call {
+      styleJSON = styleJson
+    }
+  }
 
   /**
    * Load style JSON
@@ -167,7 +219,7 @@ class MapboxMap :
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
   ) {
-    initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener)
+    initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, null)
     nativeMapWeakRef.call {
       styleJSON = styleJson
     }
@@ -179,14 +231,31 @@ class MapboxMap :
   fun loadStyleJson(
     styleJson: String,
     onStyleLoaded: Style.OnStyleLoaded
-  ) = loadStyleJson(styleJson, onStyleLoaded, null)
+  ) = loadStyleJson(styleJson, null, onStyleLoaded, null)
 
   /**
    * Load style JSON.
    */
   fun loadStyleJson(
     styleJson: String
-  ) = loadStyleJson(styleJson, null, null)
+  ) = loadStyleJson(styleJson, null, null, null)
+
+  /**
+   * Load the style from Style Extension.
+   */
+  fun loadStyle(
+    styleExtension: StyleContract.StyleExtension,
+    transitionOptions: TransitionOptions? = null,
+    onStyleLoaded: Style.OnStyleLoaded? = null,
+    onMapLoadErrorListener: OnMapLoadErrorListener? = null,
+  ) {
+    this.loadStyleUri(
+      styleExtension.styleUri,
+      transitionOptions,
+      { style -> onFinishLoadingStyleExtension(style, styleExtension, onStyleLoaded) },
+      onMapLoadErrorListener
+    )
+  }
 
   /**
    * Load the style from Style Extension.
@@ -194,10 +263,11 @@ class MapboxMap :
   fun loadStyle(
     styleExtension: StyleContract.StyleExtension,
     onStyleLoaded: Style.OnStyleLoaded? = null,
-    onMapLoadErrorListener: OnMapLoadErrorListener? = null
+    onMapLoadErrorListener: OnMapLoadErrorListener? = null,
   ) {
     this.loadStyleUri(
       styleExtension.styleUri,
+      null,
       { style -> onFinishLoadingStyleExtension(style, styleExtension, onStyleLoaded) },
       onMapLoadErrorListener
     )
@@ -209,75 +279,14 @@ class MapboxMap :
   fun loadStyle(
     styleExtension: StyleContract.StyleExtension,
     onStyleLoaded: Style.OnStyleLoaded
-  ) = loadStyle(styleExtension, onStyleLoaded, null)
+  ) = loadStyle(styleExtension, null, onStyleLoaded, null)
 
   /**
    * Load the style from Style Extension.
    */
   fun loadStyle(
     styleExtension: StyleContract.StyleExtension
-  ) = loadStyle(styleExtension, null, null)
-
-  /**
-   * Overrides the map style's transition options with user-provided options.
-   *
-   * The style transition is re-evaluated when a new style is loaded.
-   *
-   * Style transition options will be applied to current style immediately if it is loaded and
-   * to the upcoming style as well if [forUpcomingStyle] is True.
-   * If no style is loaded [transitionOptions] will be applied to an upcoming style not taking
-   * [forUpcomingStyle] flag in consideration.
-   */
-  @JvmOverloads
-  fun setStyleTransition(
-    transitionOptions: TransitionOptions,
-    forUpcomingStyle: Boolean = true
-  ) {
-    // apply immediately if style was already loaded in any case
-    style?.let {
-      nativeMapWeakRef.get()?.styleTransition = transitionOptions
-    }
-    // apply for an upcoming style if no style loaded or forUpcomingStyle is true
-    if (style == null || forUpcomingStyle) {
-      styleTransitionOptions = transitionOptions
-    }
-  }
-
-  /**
-   * Returns the map style's transition options. By default, the style parser will attempt
-   * to read the style default transition options, if any, fallbacking to an immediate transition
-   * otherwise. Transition options can be overridden via [setStyleTransition], but the options are
-   * reset once a new style has been loaded.
-   *
-   * The style transition is re-evaluated when a new style is loaded.
-   *
-   * If no style was loaded and [setStyleTransition] was not called -
-   * default Mapbox transition options will be returned.
-   *
-   * If no style was loaded and [setStyleTransition] was called -
-   * options from setter will be returned which will be applied when style will be loaded.
-   *
-   * If style was loaded - current style or cached upcoming style transition options will be returned based on [forUpcomingStyle] flag.
-   *
-   * @param forUpcomingStyle if set to False and some style is already loaded -
-   * current style transition options will be returned.
-   * If set to True and some style is already loaded -
-   * upcoming style transition options will be returned.
-   * If style is not loaded at all -
-   * upcoming style transition options will be returned not taking [forUpcomingStyle] flag in consideration.
-   *
-   * @return [TransitionOptions] object as described above or NULL if native map instance was already deallocated.
-   */
-  @JvmOverloads
-  fun getStyleTransition(forUpcomingStyle: Boolean = false): TransitionOptions? {
-    return if (style != null && !forUpcomingStyle) {
-      nativeMapWeakRef.get()?.styleTransition
-    } else if (styleTransitionOptions == null) {
-      DEFAULT_STYLE_TRANSITION
-    } else {
-      styleTransitionOptions
-    }
-  }
+  ) = loadStyle(styleExtension, null, null, null)
 
   /**
    * Handle the style loading from Style Extension.
@@ -304,7 +313,8 @@ class MapboxMap :
 
   private fun initializeStyleLoad(
     onStyleLoaded: Style.OnStyleLoaded? = null,
-    onMapLoadErrorListener: OnMapLoadErrorListener? = null
+    onMapLoadErrorListener: OnMapLoadErrorListener? = null,
+    styleTransitionOptions: TransitionOptions? = null
   ) {
     style = null
     styleObserver.setLoadStyleListener(
@@ -1576,13 +1586,6 @@ class MapboxMap :
     fun clearData(resourceOptions: ResourceOptions, callback: AsyncOperationResultCallback) {
       Map.clearData(resourceOptions, callback)
     }
-
-    @VisibleForTesting(otherwise = PRIVATE)
-    internal val DEFAULT_STYLE_TRANSITION = TransitionOptions.Builder()
-      .duration(300)
-      .delay(null)
-      .enablePlacementTransitions(true)
-      .build()
 
     private const val TAG_PROJECTION = "MbxProjection"
     private const val EMPTY_STYLE_JSON = "{}"

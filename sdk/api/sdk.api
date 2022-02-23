@@ -202,24 +202,27 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/ObservableInterfa
 	public fun getSize ()Lcom/mapbox/maps/Size;
 	public final fun getStyle ()Lcom/mapbox/maps/Style;
 	public final fun getStyle (Lcom/mapbox/maps/Style$OnStyleLoaded;)V
-	public final fun getStyleTransition ()Lcom/mapbox/maps/TransitionOptions;
-	public final fun getStyleTransition (Z)Lcom/mapbox/maps/TransitionOptions;
-	public static synthetic fun getStyleTransition$default (Lcom/mapbox/maps/MapboxMap;ZILjava/lang/Object;)Lcom/mapbox/maps/TransitionOptions;
 	public fun isFullyLoaded ()Z
 	public fun isGestureInProgress ()Z
 	public fun isUserAnimationInProgress ()Z
 	public final fun loadStyle (Lcom/mapbox/maps/extension/style/StyleContract$StyleExtension;)V
 	public final fun loadStyle (Lcom/mapbox/maps/extension/style/StyleContract$StyleExtension;Lcom/mapbox/maps/Style$OnStyleLoaded;)V
 	public final fun loadStyle (Lcom/mapbox/maps/extension/style/StyleContract$StyleExtension;Lcom/mapbox/maps/Style$OnStyleLoaded;Lcom/mapbox/maps/plugin/delegates/listeners/OnMapLoadErrorListener;)V
+	public final fun loadStyle (Lcom/mapbox/maps/extension/style/StyleContract$StyleExtension;Lcom/mapbox/maps/TransitionOptions;Lcom/mapbox/maps/Style$OnStyleLoaded;Lcom/mapbox/maps/plugin/delegates/listeners/OnMapLoadErrorListener;)V
 	public static synthetic fun loadStyle$default (Lcom/mapbox/maps/MapboxMap;Lcom/mapbox/maps/extension/style/StyleContract$StyleExtension;Lcom/mapbox/maps/Style$OnStyleLoaded;Lcom/mapbox/maps/plugin/delegates/listeners/OnMapLoadErrorListener;ILjava/lang/Object;)V
+	public static synthetic fun loadStyle$default (Lcom/mapbox/maps/MapboxMap;Lcom/mapbox/maps/extension/style/StyleContract$StyleExtension;Lcom/mapbox/maps/TransitionOptions;Lcom/mapbox/maps/Style$OnStyleLoaded;Lcom/mapbox/maps/plugin/delegates/listeners/OnMapLoadErrorListener;ILjava/lang/Object;)V
 	public final fun loadStyleJson (Ljava/lang/String;)V
 	public final fun loadStyleJson (Ljava/lang/String;Lcom/mapbox/maps/Style$OnStyleLoaded;)V
 	public final fun loadStyleJson (Ljava/lang/String;Lcom/mapbox/maps/Style$OnStyleLoaded;Lcom/mapbox/maps/plugin/delegates/listeners/OnMapLoadErrorListener;)V
+	public final fun loadStyleJson (Ljava/lang/String;Lcom/mapbox/maps/TransitionOptions;Lcom/mapbox/maps/Style$OnStyleLoaded;Lcom/mapbox/maps/plugin/delegates/listeners/OnMapLoadErrorListener;)V
 	public static synthetic fun loadStyleJson$default (Lcom/mapbox/maps/MapboxMap;Ljava/lang/String;Lcom/mapbox/maps/Style$OnStyleLoaded;Lcom/mapbox/maps/plugin/delegates/listeners/OnMapLoadErrorListener;ILjava/lang/Object;)V
+	public static synthetic fun loadStyleJson$default (Lcom/mapbox/maps/MapboxMap;Ljava/lang/String;Lcom/mapbox/maps/TransitionOptions;Lcom/mapbox/maps/Style$OnStyleLoaded;Lcom/mapbox/maps/plugin/delegates/listeners/OnMapLoadErrorListener;ILjava/lang/Object;)V
 	public final fun loadStyleUri (Ljava/lang/String;)V
 	public final fun loadStyleUri (Ljava/lang/String;Lcom/mapbox/maps/Style$OnStyleLoaded;)V
 	public final fun loadStyleUri (Ljava/lang/String;Lcom/mapbox/maps/Style$OnStyleLoaded;Lcom/mapbox/maps/plugin/delegates/listeners/OnMapLoadErrorListener;)V
+	public final fun loadStyleUri (Ljava/lang/String;Lcom/mapbox/maps/TransitionOptions;Lcom/mapbox/maps/Style$OnStyleLoaded;Lcom/mapbox/maps/plugin/delegates/listeners/OnMapLoadErrorListener;)V
 	public static synthetic fun loadStyleUri$default (Lcom/mapbox/maps/MapboxMap;Ljava/lang/String;Lcom/mapbox/maps/Style$OnStyleLoaded;Lcom/mapbox/maps/plugin/delegates/listeners/OnMapLoadErrorListener;ILjava/lang/Object;)V
+	public static synthetic fun loadStyleUri$default (Lcom/mapbox/maps/MapboxMap;Ljava/lang/String;Lcom/mapbox/maps/TransitionOptions;Lcom/mapbox/maps/Style$OnStyleLoaded;Lcom/mapbox/maps/plugin/delegates/listeners/OnMapLoadErrorListener;ILjava/lang/Object;)V
 	public fun pixelForCoordinate (Lcom/mapbox/geojson/Point;)Lcom/mapbox/maps/ScreenCoordinate;
 	public fun pixelsForCoordinates (Ljava/util/List;)Ljava/util/List;
 	public fun project (Lcom/mapbox/geojson/Point;D)Lcom/mapbox/maps/MercatorCoordinate;
@@ -262,9 +265,6 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/ObservableInterfa
 	public fun setNorthOrientation (Lcom/mapbox/maps/NorthOrientation;)V
 	public final fun setPrefetchZoomDelta (B)V
 	public final fun setRenderCacheOptions (Lcom/mapbox/maps/RenderCacheOptions;)V
-	public final fun setStyleTransition (Lcom/mapbox/maps/TransitionOptions;)V
-	public final fun setStyleTransition (Lcom/mapbox/maps/TransitionOptions;Z)V
-	public static synthetic fun setStyleTransition$default (Lcom/mapbox/maps/MapboxMap;Lcom/mapbox/maps/TransitionOptions;ZILjava/lang/Object;)V
 	public fun setUserAnimationInProgress (Z)V
 	public fun setViewportMode (Lcom/mapbox/maps/ViewportMode;)V
 	public fun subscribe (Lcom/mapbox/maps/Observer;Ljava/util/List;)V

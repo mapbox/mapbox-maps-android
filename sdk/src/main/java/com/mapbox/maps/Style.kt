@@ -79,16 +79,8 @@ class Style internal constructor(
    *
    * The style transition is re-evaluated when a new style is loaded.
    *
-   * Deprecated: please use [MapboxMap.getStyleTransition].
-   *
    * @return Returns the map style transition options.
    */
-  @Deprecated(
-    "Calling this method does not always produce correct results.",
-    ReplaceWith(
-      "mapboxMap.getStyleTransition()"
-    )
-  )
   override fun getStyleTransition(): TransitionOptions =
     styleManagerRef.call { this.styleTransition }
 
@@ -97,16 +89,8 @@ class Style internal constructor(
    *
    * The style transition is re-evaluated when a new style is loaded.
    *
-   * Deprecated: please use [MapboxMap.setStyleTransition].
-   *
    * @param transitionOptions Map style transition options.
    */
-  @Deprecated(
-    "Calling this method does not always produce correct results.",
-    ReplaceWith(
-      "mapboxMap.setStyleTransition(transitionOptions)"
-    )
-  )
   override fun setStyleTransition(transitionOptions: TransitionOptions) =
     styleManagerRef.call { this.styleTransition = transitionOptions }
 

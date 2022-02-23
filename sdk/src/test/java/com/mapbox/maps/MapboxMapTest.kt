@@ -5,6 +5,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.common.ShadowLogger
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
+import com.mapbox.maps.extension.observable.eventdata.MapLoadingErrorEventData
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.MapProjection
@@ -1039,10 +1040,16 @@ class MapboxMapTest {
   @Test
   fun setStyleTransition() {
     val options = mockk<TransitionOptions>(relaxed = true)
-    mapboxMap.setStyleTransition(options)
-    mapboxMap.loadStyleUri("style")
+    mapboxMap.loadStyleUri(
+      "style",
+      options,
+      {},
+      object : OnMapLoadErrorListener {
+        override fun onMapLoadError(eventData: MapLoadingErrorEventData) {}
+      }
+    )
     verify(exactly = 1) {
-      styleObserver.setLoadStyleListener(options, null, null)
+      styleObserver.setLoadStyleListener(options, any(), any())
     }
   }
 }
