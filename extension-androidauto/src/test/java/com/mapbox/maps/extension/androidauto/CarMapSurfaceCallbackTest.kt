@@ -68,7 +68,7 @@ class CarMapSurfaceCallbackTest {
   @Test
   fun `onSurfaceAvailable should notify surfaceAvailable when style is loaded`() {
     every { testMapSurface.getMapboxMap() } returns mockk(relaxed = true) {
-      every { loadStyleUri(any(), any(), any()) } answers {
+      every { loadStyleUri(any(), onStyleLoaded = any(), any()) } answers {
         secondArg<Style.OnStyleLoaded>().onStyleLoaded(mockk())
       }
     }
