@@ -6,6 +6,9 @@ dependencies {
     // Metalava isn't released yet. Check in its jar and explicitly track its transitive deps.
     metalava files('../metalava/metalava.jar')
 
+    // this version of JNA fixes issue with warnings on M1
+    metalava "net.java.dev.jna:jna:5.7.0"
+
     metalava "com.android.tools.external.org-jetbrains:uast:27.2.0-alpha11"
     metalava "com.android.tools.external.com-intellij:kotlin-compiler:27.2.0-alpha11"
     metalava "com.android.tools.external.com-intellij:intellij-core:27.2.0-alpha11"
