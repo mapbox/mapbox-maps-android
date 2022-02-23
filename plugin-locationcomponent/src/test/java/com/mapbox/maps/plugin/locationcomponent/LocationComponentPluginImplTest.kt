@@ -58,8 +58,8 @@ class LocationComponentPluginImplTest {
 
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
     every { context.packageName } returns pack
-    every { context.getSystemService(Context.WINDOW_SERVICE) } returns windowManager
-    every { context.getSystemService(Context.SENSOR_SERVICE) } returns sensorManager
+    every { context.applicationContext.applicationContext.applicationContext.getSystemService(Context.WINDOW_SERVICE) } returns windowManager
+    every { context.applicationContext.applicationContext.applicationContext.getSystemService(Context.SENSOR_SERVICE) } returns sensorManager
     every { typedArray.getString(any()) } returns "pk.token"
     every { typedArray.getInt(any(), any()) } returns 0
     every { typedArray.getBoolean(any(), any()) } returns true
@@ -70,7 +70,7 @@ class LocationComponentPluginImplTest {
     every { typedArray.hasValue(any()) } returns true
     every { typedArray.recycle() } returns Unit
 
-    every { LocationEngineProvider.getBestLocationEngine(context) } returns locationEngine
+    every { LocationEngineProvider.getBestLocationEngine(context.applicationContext.applicationContext) } returns locationEngine
 
     locationComponentPlugin = LocationComponentPluginImpl()
   }

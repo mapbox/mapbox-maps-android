@@ -244,7 +244,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
       LocationComponentAttributeParser2.parseLocationComponentSettings2(context, attrs, pixelRatio)
 
     if (internalSettings.enabled && locationProvider == null) {
-      locationProvider = DefaultLocationProvider(context).apply {
+      locationProvider = DefaultLocationProvider(context.applicationContext).apply {
         updatePuckBearingSource(internalSettings2.puckBearingSource)
       }
     }

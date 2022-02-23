@@ -38,7 +38,7 @@ mapView.location2.puckBearingEnabled = false
 * Fix skipping / crashing user events scheduled on a render thread with `MapView#queueEvent`. ([#1068](https://github.com/mapbox/mapbox-maps-android/pull/1068))
 * Fix location puck not being shown if map is created without initial style (e.g. MapInitOptions.styleUri == null) and then loaded asynchronously. ([#1114](https://github.com/mapbox/mapbox-maps-android/pull/1114))
 * Fix crash within location plugin that happens when style is reloaded simultaneously with location plugin updates. ([#1112](https://github.com/mapbox/mapbox-maps-android/pull/1112))
-* Fix memory leak in location component. ([#1093](https://github.com/mapbox/mapbox-maps-android/pull/1093))
+* Fix memory leak in location component. ([#1093](https://github.com/mapbox/mapbox-maps-android/pull/1093), [#1172](https://github.com/mapbox/mapbox-maps-android/pull/1172))
 * Fix screen coordinate queries when using zero pitch and high zoom values. ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
 * Avoid possible crash at program exit caused by dummy tracer accessed after the destruction. ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
 * Fix crash for the case when a map event is handled by an Observer of a destructed map. ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
