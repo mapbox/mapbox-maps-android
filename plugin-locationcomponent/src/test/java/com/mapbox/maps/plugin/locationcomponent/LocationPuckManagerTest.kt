@@ -14,20 +14,13 @@ import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2
 import com.mapbox.maps.util.captureVararg
-import io.mockk.CapturingSlot
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.mockkStatic
-import io.mockk.verify
-import io.mockk.verifyOrder
-import org.junit.Assert.assertArrayEquals
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
+import io.mockk.*
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import kotlin.math.abs
 
 @RunWith(RobolectricTestRunner::class)
 class LocationPuckManagerTest {
@@ -257,10 +250,19 @@ class LocationPuckManagerTest {
     every { Value.fromJson(any()) } returns ExpectedFactory.createValue(Value("expression"))
     locationPuckManager.styleScaling(settings)
     verify { locationLayerRenderer.styleScaling(capture(valueSlot)) }
-    assertEquals(
-      "[interpolate, [exponential, 0.5], [zoom], 0.5, [literal, [$MODEL_SCALE_CONSTANT, $MODEL_SCALE_CONSTANT, $MODEL_SCALE_CONSTANT]], 22.0, [literal, [1.0, 1.0, 1.0]]]",
-      valueSlot.captured.toString()
-    )
+    val value = valueSlot.captured.toString()
+    assertTrue(value.startsWith("[interpolate, [exponential, 0.5], [zoom], 0.5, [literal, ["))
+    assertTrue(value.endsWith("]], 22.0, [literal, [1.0, 1.0, 1.0]]]"))
+    value
+      .replace("[interpolate, [exponential, 0.5], [zoom], 0.5, [literal, [", "")
+      .replace("]], 22.0, [literal, [1.0, 1.0, 1.0]]]", "")
+      .split(", ")
+      .map { it.toDouble() }
+      .forEach {
+        val absoluteDifference: Float = abs(it - MODEL_SCALE_CONSTANT).toFloat()
+        val maxUlp = Math.ulp(it).coerceAtLeast(Math.ulp(MODEL_SCALE_CONSTANT)).toFloat()
+        assert(absoluteDifference < 2 * maxUlp)
+      }
   }
 
   @Test

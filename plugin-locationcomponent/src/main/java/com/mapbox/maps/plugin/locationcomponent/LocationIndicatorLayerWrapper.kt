@@ -8,6 +8,7 @@ internal class LocationIndicatorLayerWrapper(layerId: String) : LocationLayerWra
     layerProperties["id"] = Value(layerId)
     layerProperties["type"] = Value("location-indicator")
     layerProperties["location-transition"] = buildTransition(delay = 0, duration = 0)
+    layerProperties["bearing-transition"] = buildTransition(delay = 0, duration = 0)
     layerProperties["perspective-compensation"] = Value(0.9)
     layerProperties["image-pitch-displacement"] = Value(4.0)
   }
