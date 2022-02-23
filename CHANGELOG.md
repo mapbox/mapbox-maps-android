@@ -33,6 +33,7 @@ mapView.location2.puckBearingEnabled = false
 * Enable tile packs for DEM terrain tiles, it includes both Offline API and `TileStoreUsageMode::ReadAndUpdate` resource option. ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
 * Render tiles with partial content while the glyph dependencies are loading. ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
 * Canonicalize URLs and enable Offline API usage for the 3dtiles/v1 tiles. ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
+* Add optional `TransitionOptions` parameter to `MapboxMap.loadStyleUri`, `MapboxMap.loadStyleJson`, `MapboxMap.loadStyle` to apply transition to style being loaded. ([#1174](https://github.com/mapbox/mapbox-maps-android/pull/1174))
 
 ## Bug fixes 🐞
 * Fix skipping / crashing user events scheduled on a render thread with `MapView#queueEvent`. ([#1068](https://github.com/mapbox/mapbox-maps-android/pull/1068))

@@ -2,8 +2,11 @@ package com.mapbox.maps
 
 import com.mapbox.common.Logger
 import com.mapbox.maps.extension.observable.eventdata.MapLoadingErrorEventData
+import com.mapbox.maps.extension.observable.eventdata.StyleDataLoadedEventData
 import com.mapbox.maps.extension.observable.eventdata.StyleLoadedEventData
+import com.mapbox.maps.extension.observable.model.StyleDataType
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
+import com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener
 import com.mapbox.maps.plugin.delegates.listeners.OnStyleLoadedListener
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArrayList
@@ -17,16 +20,18 @@ internal class StyleObserver(
   private val styleLoadedListener: Style.OnStyleLoaded,
   private val nativeObserver: NativeObserver,
   private val pixelRatio: Float
-) : OnStyleLoadedListener, OnMapLoadErrorListener {
+) : OnStyleLoadedListener, OnMapLoadErrorListener, OnStyleDataLoadedListener {
 
   private var loadStyleListener: Style.OnStyleLoaded? = null
   private var loadStyleErrorListener: OnMapLoadErrorListener? = null
+  private var loadStyleTransitionOptions: TransitionOptions? = null
 
   private val getStyleListeners = CopyOnWriteArrayList<Style.OnStyleLoaded>()
 
   init {
     nativeObserver.addOnStyleLoadedListener(this)
     nativeObserver.addOnMapLoadErrorListener(this)
+    nativeObserver.addOnStyleDataLoadedListener(this)
   }
 
   /**
@@ -35,9 +40,11 @@ internal class StyleObserver(
    * NOTE : listener is invoked only once after successful style load.
    */
   fun setLoadStyleListener(
+    transitionOptions: TransitionOptions?,
     loadedListener: Style.OnStyleLoaded?,
     onMapLoadErrorListener: OnMapLoadErrorListener?
   ) {
+    loadStyleTransitionOptions = transitionOptions
     loadStyleListener = loadedListener
     loadStyleErrorListener = onMapLoadErrorListener
   }
@@ -76,12 +83,26 @@ internal class StyleObserver(
     loadStyleErrorListener?.onMapLoadError(eventData)
   }
 
+  override fun onStyleDataLoaded(eventData: StyleDataLoadedEventData) {
+    // style data arrives in following order: STYLE, SOURCES, SPRITE
+    // transition options must be applied after style but before sprite and sources to take effect
+    loadStyleTransitionOptions?.let {
+      if (eventData.type == StyleDataType.STYLE) {
+        nativeMapWeakRef.get()?.styleTransition = it
+        // per gl-native docs style transition options should be reset for a new style so resetting them here
+        loadStyleTransitionOptions = null
+      }
+    }
+  }
+
   fun onDestroy() {
     loadStyleListener = null
     loadStyleErrorListener = null
+    loadStyleTransitionOptions = null
     getStyleListeners.clear()
     nativeObserver.removeOnMapLoadErrorListener(this)
     nativeObserver.removeOnStyleLoadedListener(this)
+    nativeObserver.removeOnStyleDataLoadedListener(this)
   }
 
   companion object {

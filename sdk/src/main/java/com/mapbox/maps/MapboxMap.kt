@@ -36,11 +36,8 @@ import java.util.*
  *
  * @property style the map style.
  */
-class MapboxMap internal constructor(
-  private val nativeMapWeakRef: WeakReference<MapInterface>,
-  private val nativeObserver: NativeObserver,
-  pixelRatio: Float
-) : MapTransformDelegate,
+class MapboxMap :
+  MapTransformDelegate,
   MapProjectionDelegate,
   MapFeatureQueryDelegate,
   ObservableInterface,
@@ -49,14 +46,12 @@ class MapboxMap internal constructor(
   MapCameraManagerDelegate,
   MapStyleStateDelegate {
 
+  private val nativeMapWeakRef: WeakReference<MapInterface>
+  private val nativeObserver: NativeObserver
+
   internal var style: Style? = null
   internal var isStyleLoadInitiated = false
-  private val styleObserver = StyleObserver(
-    nativeMapWeakRef,
-    { style -> this.style = style },
-    nativeObserver,
-    pixelRatio
-  )
+  private val styleObserver: StyleObserver
   internal var renderHandler: Handler? = null
 
   /**
@@ -70,6 +65,75 @@ class MapboxMap internal constructor(
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal var gesturesPlugin: WeakReference<GesturesPlugin>? = null
+
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal constructor(
+    nativeMapWeakRef: WeakReference<MapInterface>,
+    nativeObserver: NativeObserver,
+    styleObserver: StyleObserver
+  ) {
+    this.nativeMapWeakRef = nativeMapWeakRef
+    this.nativeObserver = nativeObserver
+    this.styleObserver = styleObserver
+  }
+
+  internal constructor(
+    nativeMapWeakRef: WeakReference<MapInterface>,
+    nativeObserver: NativeObserver,
+    pixelRatio: Float
+  ) {
+    this.nativeMapWeakRef = nativeMapWeakRef
+    this.nativeObserver = nativeObserver
+    this.styleObserver = StyleObserver(
+      nativeMapWeakRef,
+      { style -> this.style = style },
+      nativeObserver,
+      pixelRatio
+    )
+  }
+
+  /**
+   * Will load a new map style asynchronous from the specified URI.
+   *
+   * URI can take the following forms:
+   *
+   * - **Constants**: load one of the bundled styles in [Style].
+   *
+   * - **`mapbox://styles/<user>/<style>`**:
+   * loads the style from a [Mapbox account](https://www.mapbox.com/account/).
+   * *user* is your username. *style* is the ID of your custom
+   * style created in [Mapbox Studio](https://www.mapbox.com/studio).
+   *
+   * - **`http://...` or `https://...`**:
+   * loads the style over the Internet from any web server.
+   *
+   * - **`asset://...`**:
+   * loads the style from the APK *assets* directory.
+   * This is used to load a style bundled with your app.
+   *
+   * - **`file://...`**:
+   * loads the style from a file path. This is used to load a style from disk.
+   *
+   * Will load an empty json `{}` if the styleUri is empty.
+   *
+   * @param styleUri The style URI
+   * @param styleTransitionOptions style transition options applied when loading the style
+   * @param onStyleLoaded The OnStyleLoaded callback
+   * @param onMapLoadErrorListener The OnMapLoadErrorListener callback
+   */
+  fun loadStyleUri(
+    styleUri: String,
+    styleTransitionOptions: TransitionOptions? = null,
+    onStyleLoaded: Style.OnStyleLoaded? = null,
+    onMapLoadErrorListener: OnMapLoadErrorListener? = null
+  ) {
+    initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, styleTransitionOptions)
+    if (styleUri.isEmpty()) {
+      nativeMapWeakRef.call { styleJSON = EMPTY_STYLE_JSON }
+    } else {
+      nativeMapWeakRef.call { styleURI = styleUri }
+    }
+  }
 
   /**
    * Will load a new map style asynchronous from the specified URI.
@@ -104,7 +168,7 @@ class MapboxMap internal constructor(
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
   ) {
-    initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener)
+    initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, null)
     if (styleUri.isEmpty()) {
       nativeMapWeakRef.call { styleJSON = EMPTY_STYLE_JSON }
     } else {
@@ -121,7 +185,7 @@ class MapboxMap internal constructor(
   fun loadStyleUri(
     styleUri: String,
     onStyleLoaded: Style.OnStyleLoaded
-  ) = loadStyleUri(styleUri, onStyleLoaded, null)
+  ) = loadStyleUri(styleUri, null, onStyleLoaded, null)
 
   /**
    * Will load a new map style asynchronous from the specified URI.
@@ -130,7 +194,22 @@ class MapboxMap internal constructor(
    */
   fun loadStyleUri(
     styleUri: String,
-  ) = loadStyleUri(styleUri, null, null)
+  ) = loadStyleUri(styleUri, null, null, null)
+
+  /**
+   * Load style JSON
+   */
+  fun loadStyleJson(
+    styleJson: String,
+    styleTransitionOptions: TransitionOptions? = null,
+    onStyleLoaded: Style.OnStyleLoaded? = null,
+    onMapLoadErrorListener: OnMapLoadErrorListener? = null,
+  ) {
+    initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, styleTransitionOptions)
+    nativeMapWeakRef.call {
+      styleJSON = styleJson
+    }
+  }
 
   /**
    * Load style JSON
@@ -140,7 +219,7 @@ class MapboxMap internal constructor(
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
   ) {
-    initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener)
+    initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, null)
     nativeMapWeakRef.call {
       styleJSON = styleJson
     }
@@ -152,14 +231,31 @@ class MapboxMap internal constructor(
   fun loadStyleJson(
     styleJson: String,
     onStyleLoaded: Style.OnStyleLoaded
-  ) = loadStyleJson(styleJson, onStyleLoaded, null)
+  ) = loadStyleJson(styleJson, null, onStyleLoaded, null)
 
   /**
    * Load style JSON.
    */
   fun loadStyleJson(
     styleJson: String
-  ) = loadStyleJson(styleJson, null, null)
+  ) = loadStyleJson(styleJson, null, null, null)
+
+  /**
+   * Load the style from Style Extension.
+   */
+  fun loadStyle(
+    styleExtension: StyleContract.StyleExtension,
+    transitionOptions: TransitionOptions? = null,
+    onStyleLoaded: Style.OnStyleLoaded? = null,
+    onMapLoadErrorListener: OnMapLoadErrorListener? = null,
+  ) {
+    this.loadStyleUri(
+      styleExtension.styleUri,
+      transitionOptions,
+      { style -> onFinishLoadingStyleExtension(style, styleExtension, onStyleLoaded) },
+      onMapLoadErrorListener
+    )
+  }
 
   /**
    * Load the style from Style Extension.
@@ -167,10 +263,11 @@ class MapboxMap internal constructor(
   fun loadStyle(
     styleExtension: StyleContract.StyleExtension,
     onStyleLoaded: Style.OnStyleLoaded? = null,
-    onMapLoadErrorListener: OnMapLoadErrorListener? = null
+    onMapLoadErrorListener: OnMapLoadErrorListener? = null,
   ) {
     this.loadStyleUri(
       styleExtension.styleUri,
+      null,
       { style -> onFinishLoadingStyleExtension(style, styleExtension, onStyleLoaded) },
       onMapLoadErrorListener
     )
@@ -182,14 +279,14 @@ class MapboxMap internal constructor(
   fun loadStyle(
     styleExtension: StyleContract.StyleExtension,
     onStyleLoaded: Style.OnStyleLoaded
-  ) = loadStyle(styleExtension, onStyleLoaded, null)
+  ) = loadStyle(styleExtension, null, onStyleLoaded, null)
 
   /**
    * Load the style from Style Extension.
    */
   fun loadStyle(
     styleExtension: StyleContract.StyleExtension
-  ) = loadStyle(styleExtension, null, null)
+  ) = loadStyle(styleExtension, null, null, null)
 
   /**
    * Handle the style loading from Style Extension.
@@ -216,10 +313,12 @@ class MapboxMap internal constructor(
 
   private fun initializeStyleLoad(
     onStyleLoaded: Style.OnStyleLoaded? = null,
-    onMapLoadErrorListener: OnMapLoadErrorListener? = null
+    onMapLoadErrorListener: OnMapLoadErrorListener? = null,
+    styleTransitionOptions: TransitionOptions? = null
   ) {
     style = null
     styleObserver.setLoadStyleListener(
+      styleTransitionOptions,
       onStyleLoaded,
       onMapLoadErrorListener
     )
