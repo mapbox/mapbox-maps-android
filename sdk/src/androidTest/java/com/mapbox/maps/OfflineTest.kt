@@ -589,7 +589,7 @@ class OfflineTest {
     val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
     device.waitForIdle()
     // adopted for current CI device
-    device.findObject(UiSelector().textContains("Airplane")).click()
+    device.findObject(UiSelector().textMatches("On|Off|Airplane")).click()
     device.waitForIdle()
     val latch = CountDownLatch(1)
     // need to wait some time for pretty slow CI device
