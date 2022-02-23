@@ -295,7 +295,6 @@ commands:
                 --app << parameters.app_target >>/build/outputs/apk/debug/<< parameters.app_target >>-debug.apk \
                 --test << parameters.module_target >>/build/outputs/apk/androidTest/debug/<< parameters.module_target >>-debug-androidTest.apk \
                 --device model=harpia,version=23,locale=en,orientation=portrait \
-                --device model=AOP_sprout,version=28,locale=en,orientation=portrait \
                 --timeout 45m --use-orchestrator --no-record-video --num-flaky-test-attempts 3 \
                 --num-uniform-shards 4
               fi
@@ -310,7 +309,6 @@ commands:
             if [[ -n "${GCLOUD_SERVICE_ACCOUNT_JSON}" ]]; then
               gcloud firebase test android run --type robo \
                 --app app/build/outputs/apk/release/app-release.apk \
-                --device model=AOP_sprout,version=28,locale=en,orientation=portrait \
                 --device model=harpia,version=23,locale=en,orientation=portrait \
                 --device model=Pixel2,version=30,locale=en,orientation=portrait \
                 --device model=G8142,version=25,locale=en,orientation=portrait \
