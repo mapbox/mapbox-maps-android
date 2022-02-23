@@ -46,7 +46,7 @@ mapView.location2.puckBearingEnabled = false
 * Fix bearing of the puck reseted on settings change. ([#1144](https://github.com/mapbox/mapbox-maps-android/pull/1144))
 
 ## Dependencies
-* Bump gl-native to 10.4.0-beta.1, mapbox-common to v21.2.0-beta.1 ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160))
+* Bump gl-native to 10.4.0-beta.2, mapbox-common to v21.2.0-beta.1 ([#1160](https://github.com/mapbox/mapbox-maps-android/pull/1160), [#1175](https://github.com/mapbox/mapbox-maps-android/pull/1175))
 * Update android gradle plugin to v7.0.4, gradle version to v7.0.2, Gradle licence plugin to 0.8.80, Kotlin gradle plugin to 1.5.31, Jacoco to 0.8.7. ([#1118](https://github.com/mapbox/mapbox-maps-android/pull/1118))
 
 # 10.3.0 February 10, 2022

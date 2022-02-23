@@ -961,7 +961,7 @@ class ViewAnnotationTest(
   }
 
   private companion object {
-    const val VIEW_PLACEMENT_DELAY_MS = 1000L
+    const val VIEW_PLACEMENT_DELAY_MS = 3000L
     const val TEST_RUN_MAX_TIME_MS = 10_000L
     const val ADMISSIBLE_ERROR_PX = 3.0
 
