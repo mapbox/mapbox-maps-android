@@ -1,7 +1,10 @@
 package com.mapbox.maps
 
 import com.mapbox.common.ShadowLogger
+import com.mapbox.maps.extension.observable.eventdata.StyleDataLoadedEventData
+import com.mapbox.maps.extension.observable.model.StyleDataType
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Test
@@ -39,22 +42,28 @@ class StyleObserverTest {
   }
 
   /**
-   * Verifies if the user provided OnStyleLoaded is called when style loading finishes
+   * Verifies if the user provided OnStyleLoaded is called when style loading finishes.
+   * Additionally verify we don't apply transition options if they were not specified.
    */
   @Test
   fun onStyleLoadSuccess() {
     val mainStyleLoadedListener = mockk<Style.OnStyleLoaded>(relaxed = true)
+    val nativeMapWeakRef = WeakReference(mockk<MapInterface>(relaxed = true))
     val styleObserver = StyleObserver(
-      nativeMapWeakRef = WeakReference(mockk(relaxed = true)),
+      nativeMapWeakRef = nativeMapWeakRef,
       styleLoadedListener = mainStyleLoadedListener,
       nativeObserver = mockk(relaxed = true),
       pixelRatio = 1.0f
     )
     val styleLoaded = mockk<Style.OnStyleLoaded>(relaxed = true)
+    val styleDataLoaded = mockk<StyleDataLoadedEventData>(relaxed = true)
+    every { styleDataLoaded.type } returns StyleDataType.STYLE
     styleObserver.setLoadStyleListener(null, styleLoaded, null)
     styleObserver.onStyleLoaded(mockk())
-    verify { styleLoaded.onStyleLoaded(any()) }
-    verify { mainStyleLoadedListener.onStyleLoaded(any()) }
+    styleObserver.onStyleDataLoaded(styleDataLoaded)
+    verify(exactly = 1) { styleLoaded.onStyleLoaded(any()) }
+    verify(exactly = 1) { mainStyleLoadedListener.onStyleLoaded(any()) }
+    verify(exactly = 0) { nativeMapWeakRef.get()?.styleTransition = any() }
   }
 
   /**
@@ -135,5 +144,32 @@ class StyleObserverTest {
     styleObserver.onMapLoadError(mockk(relaxed = true))
     verify(exactly = 0) { errorListenerFail.onMapLoadError(any()) }
     verify { errorListenerSuccess.onMapLoadError(any()) }
+  }
+
+  /**
+   * Verify we trigger core set style transition when callback is triggered.
+   */
+  @Test
+  fun onStyleDataLoadedCustomTransitionOptions() {
+    val nativeMapWeakRef = WeakReference(mockk<MapInterface>(relaxed = true))
+    val styleObserver = StyleObserver(
+      nativeMapWeakRef = nativeMapWeakRef,
+      styleLoadedListener = mockk(relaxUnitFun = true),
+      nativeObserver = mockk(relaxed = true),
+      pixelRatio = 1.0f
+    )
+    val transitionOptions = mockk<TransitionOptions>()
+    styleObserver.setLoadStyleListener(transitionOptions, mockk(), null)
+    val styleDataLoaded = mockk<StyleDataLoadedEventData>()
+    every { styleDataLoaded.type } returns StyleDataType.STYLE
+    styleObserver.onStyleDataLoaded(styleDataLoaded)
+    // verify we do call native method after style
+    verify(exactly = 1) { nativeMapWeakRef.get()?.styleTransition = transitionOptions }
+    every { styleDataLoaded.type } returns StyleDataType.SOURCES
+    styleObserver.onStyleDataLoaded(styleDataLoaded)
+    every { styleDataLoaded.type } returns StyleDataType.SPRITE
+    styleObserver.onStyleDataLoaded(styleDataLoaded)
+    // verify no more calls did happen (meaning there should be one method call)
+    verify(exactly = 1) { nativeMapWeakRef.get()?.styleTransition = transitionOptions }
   }
 }

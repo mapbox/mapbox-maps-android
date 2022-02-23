@@ -33,17 +33,18 @@ class CircleLayerClusteringActivity : AppCompatActivity() {
     setContentView(mapView)
     val mapboxMap = mapView.getMapboxMap()
 
-    mapboxMap.loadStyleUri(
-      Style.LIGHT
-    ) {
-      // Disable any type of fading transition when icons collide on the map. This enhances the visual
-      // look of the data clustering together and breaking apart.
-      it.styleTransition = TransitionOptions.Builder()
+    // Disable any type of fading transition when icons collide on the map. This enhances the visual
+    // look of the data clustering together and breaking apart.
+    mapboxMap.setStyleTransition(
+      TransitionOptions.Builder()
         .duration(0)
         .delay(0)
         .enablePlacementTransitions(false)
         .build()
-
+    )
+    mapboxMap.loadStyleUri(
+      Style.LIGHT
+    ) {
       mapboxMap.flyTo(
         CameraOptions.Builder()
           .center(Point.fromLngLat(-79.045, 12.099))

@@ -84,6 +84,7 @@ internal class StyleObserver(
   }
 
   override fun onStyleDataLoaded(eventData: StyleDataLoadedEventData) {
+    // style data arrives in following order: STYLE, SOURCES, SPRITE
     // transition options must be applied after style but before sprite and sources to take effect
     loadStyleTransitionOptions?.let {
       if (eventData.type == StyleDataType.STYLE) {

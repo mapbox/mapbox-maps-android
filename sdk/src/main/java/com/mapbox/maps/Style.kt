@@ -89,11 +89,17 @@ class Style internal constructor(
    *
    * The style transition is re-evaluated when a new style is loaded.
    *
+   * Deprecated: please use [MapboxMap.setStyleTransition] before loading style
+   * to apply [transitionOptions] properly.
+   *
    * @param transitionOptions Map style transition options.
    */
   @Deprecated(
-    "Transition options will not be applied properly, please use another function.",
-    replaceWith = ReplaceWith("mapboxMap.setStyleTransition")
+    "Transition options will not always be applied properly " +
+      "as Style instance is returned when style is already loaded.",
+    ReplaceWith(
+      "mapboxMap.setStyleTransition(transitionOptions)"
+    )
   )
   override fun setStyleTransition(transitionOptions: TransitionOptions) =
     styleManagerRef.call { this.styleTransition = transitionOptions }
