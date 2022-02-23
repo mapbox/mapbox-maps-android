@@ -102,9 +102,9 @@ commands:
   jvm-unit-tests:
     steps:
       - run:
-          name: Run JVM unit tests & create jacoco code coverage report
+          name: Run JVM unit tests & create kover code coverage report
           no_output_timeout: 30m
-          command: ./gradlew jacocoTestDebugUnitTestReport
+          command: ./gradlew koverCollectReports
 #      - run:
 #          name: Upload codecov
 #          command: bash <(curl -sSfL https://codecov.io/bash)
