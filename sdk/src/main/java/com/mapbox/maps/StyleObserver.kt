@@ -89,6 +89,8 @@ internal class StyleObserver(
     loadStyleTransitionOptions?.let {
       if (eventData.type == StyleDataType.STYLE) {
         nativeMapWeakRef.get()?.styleTransition = it
+        // per gl-native docs style transition options should be reset for a new style so resetting them here
+        loadStyleTransitionOptions = null
       }
     }
   }

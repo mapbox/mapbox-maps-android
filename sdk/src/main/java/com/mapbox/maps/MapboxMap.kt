@@ -88,7 +88,11 @@ class MapboxMap :
     this.nativeObserver = nativeObserver
     this.styleObserver = StyleObserver(
       nativeMapWeakRef,
-      { style -> this.style = style },
+      { style ->
+        this.style = style
+        // when style is loaded there is no need to store cached options as we can access them directly
+        this.styleTransitionOptions = null
+      },
       nativeObserver,
       pixelRatio
     )
@@ -215,13 +219,64 @@ class MapboxMap :
   ) = loadStyle(styleExtension, null, null)
 
   /**
-   * Set style transition options that will be applied to all style loads happening after.
+   * Overrides the map style's transition options with user-provided options.
    *
-   * In order to obtain current transition options please use [Style.getStyleTransition]
-   * when style will be loaded.
+   * The style transition is re-evaluated when a new style is loaded.
+   *
+   * Style transition options will be applied to current style immediately if it is loaded and
+   * to the upcoming style as well if [forUpcomingStyle] is True.
+   * If no style is loaded [transitionOptions] will be applied to an upcoming style not taking
+   * [forUpcomingStyle] flag in consideration.
    */
-  fun setStyleTransition(transitionOptions: TransitionOptions) {
-    styleTransitionOptions = transitionOptions
+  @JvmOverloads
+  fun setStyleTransition(
+    transitionOptions: TransitionOptions,
+    forUpcomingStyle: Boolean = true
+  ) {
+    // apply immediately if style was already loaded in any case
+    style?.let {
+      nativeMapWeakRef.get()?.styleTransition = transitionOptions
+    }
+    // apply for an upcoming style if no style loaded or forUpcomingStyle is true
+    if (style == null || forUpcomingStyle) {
+      styleTransitionOptions = transitionOptions
+    }
+  }
+
+  /**
+   * Returns the map style's transition options. By default, the style parser will attempt
+   * to read the style default transition options, if any, fallbacking to an immediate transition
+   * otherwise. Transition options can be overridden via [setStyleTransition], but the options are
+   * reset once a new style has been loaded.
+   *
+   * The style transition is re-evaluated when a new style is loaded.
+   *
+   * If no style was loaded and [setStyleTransition] was not called -
+   * default Mapbox transition options will be returned.
+   *
+   * If no style was loaded and [setStyleTransition] was called -
+   * options from setter will be returned which will be applied when style will be loaded.
+   *
+   * If style was loaded - current style or cached upcoming style transition options will be returned based on [forUpcomingStyle] flag.
+   *
+   * @param forUpcomingStyle if set to False and some style is already loaded -
+   * current style transition options will be returned.
+   * If set to True and some style is already loaded -
+   * upcoming style transition options will be returned.
+   * If style is not loaded at all -
+   * upcoming style transition options will be returned not taking [forUpcomingStyle] flag in consideration.
+   *
+   * @return [TransitionOptions] object as described above or NULL if native map instance was already deallocated.
+   */
+  @JvmOverloads
+  fun getStyleTransition(forUpcomingStyle: Boolean = false): TransitionOptions? {
+    return if (style != null && !forUpcomingStyle) {
+      nativeMapWeakRef.get()?.styleTransition
+    } else if (styleTransitionOptions == null) {
+      DEFAULT_STYLE_TRANSITION
+    } else {
+      styleTransitionOptions
+    }
   }
 
   /**
@@ -1521,6 +1576,13 @@ class MapboxMap :
     fun clearData(resourceOptions: ResourceOptions, callback: AsyncOperationResultCallback) {
       Map.clearData(resourceOptions, callback)
     }
+
+    @VisibleForTesting(otherwise = PRIVATE)
+    internal val DEFAULT_STYLE_TRANSITION = TransitionOptions.Builder()
+      .duration(300)
+      .delay(null)
+      .enablePlacementTransitions(true)
+      .build()
 
     private const val TAG_PROJECTION = "MbxProjection"
     private const val EMPTY_STYLE_JSON = "{}"
