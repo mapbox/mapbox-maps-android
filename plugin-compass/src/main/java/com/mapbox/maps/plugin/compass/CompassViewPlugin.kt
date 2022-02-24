@@ -23,7 +23,7 @@ import com.mapbox.maps.plugin.compass.generated.CompassSettingsBase
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
-import java.util.concurrent.CopyOnWriteArrayList
+import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.math.abs
 
 /**
@@ -45,8 +45,8 @@ open class CompassViewPlugin(
 
   override var internalSettings: CompassSettings = CompassSettings()
 
-  private val compassClickListeners: CopyOnWriteArrayList<OnCompassClickListener> =
-    CopyOnWriteArrayList()
+  private val compassClickListeners: CopyOnWriteArraySet<OnCompassClickListener> =
+    CopyOnWriteArraySet()
 
   init {
     fadeAnimator.apply {

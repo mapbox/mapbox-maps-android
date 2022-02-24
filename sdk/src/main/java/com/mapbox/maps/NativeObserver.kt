@@ -5,32 +5,32 @@ import com.mapbox.maps.extension.observable.*
 import com.mapbox.maps.extension.observable.eventdata.*
 import com.mapbox.maps.plugin.delegates.listeners.*
 import java.lang.ref.WeakReference
-import java.util.concurrent.CopyOnWriteArrayList
+import java.util.concurrent.CopyOnWriteArraySet
 
 @UiThread
 internal class NativeObserver(
   private val observable: WeakReference<ObservableInterface>
 ) : Observer {
-  val onCameraChangeListeners = CopyOnWriteArrayList<OnCameraChangeListener>()
+  val onCameraChangeListeners = CopyOnWriteArraySet<OnCameraChangeListener>()
 
-  val onMapIdleListeners = CopyOnWriteArrayList<OnMapIdleListener>()
-  val onMapLoadErrorListeners = CopyOnWriteArrayList<OnMapLoadErrorListener>()
-  val onMapLoadedListeners = CopyOnWriteArrayList<OnMapLoadedListener>()
+  val onMapIdleListeners = CopyOnWriteArraySet<OnMapIdleListener>()
+  val onMapLoadErrorListeners = CopyOnWriteArraySet<OnMapLoadErrorListener>()
+  val onMapLoadedListeners = CopyOnWriteArraySet<OnMapLoadedListener>()
 
-  val onRenderFrameFinishedListeners = CopyOnWriteArrayList<OnRenderFrameFinishedListener>()
-  val onRenderFrameStartedListeners = CopyOnWriteArrayList<OnRenderFrameStartedListener>()
+  val onRenderFrameFinishedListeners = CopyOnWriteArraySet<OnRenderFrameFinishedListener>()
+  val onRenderFrameStartedListeners = CopyOnWriteArraySet<OnRenderFrameStartedListener>()
 
-  val onSourceAddedListeners = CopyOnWriteArrayList<OnSourceAddedListener>()
-  val onSourceRemovedListeners = CopyOnWriteArrayList<OnSourceRemovedListener>()
+  val onSourceAddedListeners = CopyOnWriteArraySet<OnSourceAddedListener>()
+  val onSourceRemovedListeners = CopyOnWriteArraySet<OnSourceRemovedListener>()
 
-  val onSourceDataLoadedListeners = CopyOnWriteArrayList<OnSourceDataLoadedListener>()
+  val onSourceDataLoadedListeners = CopyOnWriteArraySet<OnSourceDataLoadedListener>()
 
-  val onStyleDataLoadedListeners = CopyOnWriteArrayList<OnStyleDataLoadedListener>()
-  val onStyleLoadedListeners = CopyOnWriteArrayList<OnStyleLoadedListener>()
-  val onStyleImageMissingListeners = CopyOnWriteArrayList<OnStyleImageMissingListener>()
-  val onStyleImageUnusedListeners = CopyOnWriteArrayList<OnStyleImageUnusedListener>()
+  val onStyleDataLoadedListeners = CopyOnWriteArraySet<OnStyleDataLoadedListener>()
+  val onStyleLoadedListeners = CopyOnWriteArraySet<OnStyleLoadedListener>()
+  val onStyleImageMissingListeners = CopyOnWriteArraySet<OnStyleImageMissingListener>()
+  val onStyleImageUnusedListeners = CopyOnWriteArraySet<OnStyleImageUnusedListener>()
 
-  var observedEvents = CopyOnWriteArrayList<String>()
+  var observedEvents = CopyOnWriteArraySet<String>()
   //
   // Internal callbacks
   //
