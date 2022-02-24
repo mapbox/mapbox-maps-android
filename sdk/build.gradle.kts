@@ -92,7 +92,7 @@ dependencies {
 
 tasks.withType<DokkaTask>().configureEach {
   dokkaSourceSets {
-    configureEach {
+    named("main") {
       reportUndocumented.set(true)
       // https://github.com/mapbox/mapbox-maps-android/issues/301#issuecomment-712736885
       failOnWarning.set(false)
@@ -104,6 +104,7 @@ tasks.withType<DokkaTask>().configureEach {
         }
       }
     }
+
   }
 }
 
