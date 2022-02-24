@@ -4,7 +4,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 10.4.0-rc.1
 ## Bug fixes 🐞
-* Change CopyOnWriteArrayList to CopyOnWriteArrayList in the sdk to hold listeners. ([1183](https://github.com/mapbox/mapbox-maps-android/pull/1183))
+* Change CopyOnWriteArrayList to CopyOnWriteArraySet in the sdk to hold listeners. ([1183](https://github.com/mapbox/mapbox-maps-android/pull/1183))
 
 # 10.4.0-beta.1 February 24, 2022
 
