@@ -351,7 +351,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
           }
 
           // Cancel any animation
-          cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwners)
+          cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwners.toList())
 
           // Get the vertical scroll amount, one click = 1
           val scrollDist = event.getAxisValue(MotionEvent.AXIS_VSCROLL)
@@ -1023,7 +1023,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         return false
       }
 
-      cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwners)
+      cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwners.toList())
 
       val zoomFocalPoint: ScreenCoordinate
       // Single finger double tap
@@ -1150,7 +1150,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   private fun cancelTransitionsIfRequired() {
     // we need to cancel core transitions only if there is no started gesture yet
     if (noGesturesInProgress()) {
-      cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwners)
+      cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwners.toList())
     }
   }
 
@@ -1277,7 +1277,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     val offsetY =
       if (internalSettings.isScrollVerticallyLimited()) 0.0 else velocityY.toDouble() / pitchFactor
 
-    cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwners)
+    cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwners.toList())
 
     // calculate animation time based on displacement
     // velocityXY ranges from VELOCITY_THRESHOLD_IGNORE_FLING to ~5000
@@ -1382,7 +1382,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   }
 
   internal fun handleSingleTapUpEvent(): Boolean {
-    cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwners)
+    cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwners.toList())
     return true
   }
 
