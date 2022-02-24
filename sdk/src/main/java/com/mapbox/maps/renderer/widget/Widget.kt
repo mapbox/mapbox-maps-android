@@ -6,7 +6,7 @@ import com.mapbox.maps.MapboxExperimental
  * Base class for widgets displayed on top of the map.
  */
 @MapboxExperimental
-abstract class Widget {
+abstract class Widget internal constructor() {
   internal abstract val renderer: WidgetRenderer
 
   /**

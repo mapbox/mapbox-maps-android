@@ -508,7 +508,6 @@ public class com/mapbox/maps/renderer/widget/BitmapWidget : com/mapbox/maps/rend
 }
 
 public abstract class com/mapbox/maps/renderer/widget/Widget {
-	public fun <init> ()V
 	public abstract fun setRotation (F)V
 	public abstract fun setTranslation (FF)V
 }
