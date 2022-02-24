@@ -64,6 +64,18 @@ tasks.withType<Test> {
   maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).takeIf { it > 0 } ?: 1
 }
 
+tasks.withType(Test::class).configureEach {
+  extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
+    if ("testDebugUnitTest".contentEquals(name)) {
+      isDisabled = false
+      excludes = listOf(".*BuildConfig.*")
+      binaryReportFile.set(file("$buildDir/kover/$name/report.bin"))
+    } else {
+      isDisabled = true
+    }
+  }
+}
+
 apiValidation {
   /**
    * Packages that are excluded from public API dumps even if they
