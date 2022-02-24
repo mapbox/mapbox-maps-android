@@ -1387,109 +1387,83 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   }
 
   private fun notifyOnFlingListeners() {
-    if (!onFlingListeners.isEmpty()) {
-      for (listener in onFlingListeners) {
-        listener.onFling()
-      }
+    for (listener in onFlingListeners) {
+      listener.onFling()
     }
   }
 
   private fun notifyOnMoveBeginListeners(detector: MoveGestureDetector) {
-    if (!onMoveListeners.isEmpty()) {
-      for (listener in onMoveListeners) {
-        listener.onMoveBegin(detector)
-      }
+    for (listener in onMoveListeners) {
+      listener.onMoveBegin(detector)
     }
   }
 
   private fun notifyOnMoveListeners(detector: MoveGestureDetector): Boolean {
-    if (!onMoveListeners.isEmpty()) {
-      for (listener in onMoveListeners) {
-        if (listener.onMove(detector)) {
-          return true
-        }
+    for (listener in onMoveListeners) {
+      if (listener.onMove(detector)) {
+        return true
       }
     }
     return false
   }
 
   private fun notifyOnMoveEndListeners(detector: MoveGestureDetector) {
-    if (!onMoveListeners.isEmpty()) {
-      for (listener in onMoveListeners) {
-        listener.onMoveEnd(detector)
-      }
+    for (listener in onMoveListeners) {
+      listener.onMoveEnd(detector)
     }
   }
 
   private fun notifyOnRotateBeginListeners(detector: RotateGestureDetector) {
-    if (!onRotateListeners.isEmpty()) {
-      for (listener in onRotateListeners) {
-        listener.onRotateBegin(detector)
-      }
+    for (listener in onRotateListeners) {
+      listener.onRotateBegin(detector)
     }
   }
 
   private fun notifyOnRotateListeners(detector: RotateGestureDetector) {
-    if (!onRotateListeners.isEmpty()) {
-      for (listener in onRotateListeners) {
-        listener.onRotate(detector)
-      }
+    for (listener in onRotateListeners) {
+      listener.onRotate(detector)
     }
   }
 
   private fun notifyOnRotateEndListeners(detector: RotateGestureDetector) {
-    if (!onRotateListeners.isEmpty()) {
-      for (listener in onRotateListeners) {
-        listener.onRotateEnd(detector)
-      }
+    for (listener in onRotateListeners) {
+      listener.onRotateEnd(detector)
     }
   }
 
   private fun notifyOnScaleBeginListeners(detector: StandardScaleGestureDetector) {
-    if (!onScaleListeners.isEmpty()) {
-      for (listener in onScaleListeners) {
-        listener.onScaleBegin(detector)
-      }
+    for (listener in onScaleListeners) {
+      listener.onScaleBegin(detector)
     }
   }
 
   private fun notifyOnScaleListeners(detector: StandardScaleGestureDetector) {
-    if (!onScaleListeners.isEmpty()) {
-      for (listener in onScaleListeners) {
-        listener.onScale(detector)
-      }
+    for (listener in onScaleListeners) {
+      listener.onScale(detector)
     }
   }
 
   private fun notifyOnScaleEndListeners(detector: StandardScaleGestureDetector) {
-    if (!onScaleListeners.isEmpty()) {
-      for (listener in onScaleListeners) {
-        listener.onScaleEnd(detector)
-      }
+    for (listener in onScaleListeners) {
+      listener.onScaleEnd(detector)
     }
   }
 
   private fun notifyOnShoveBeginListeners(detector: ShoveGestureDetector) {
-    if (!onShoveListeners.isEmpty()) {
-      for (listener in onShoveListeners) {
-        listener.onShoveBegin(detector)
-      }
+    for (listener in onShoveListeners) {
+      listener.onShoveBegin(detector)
     }
   }
 
   private fun notifyOnShoveListeners(detector: ShoveGestureDetector) {
-    if (!onShoveListeners.isEmpty()) {
-      for (listener in onShoveListeners) {
-        listener.onShove(detector)
-      }
+    for (listener in onShoveListeners) {
+      listener.onShove(detector)
     }
   }
 
   private fun notifyOnShoveEndListeners(detector: ShoveGestureDetector) {
-    if (!onShoveListeners.isEmpty()) {
-      for (listener in onShoveListeners) {
-        listener.onShoveEnd(detector)
-      }
+    for (listener in onShoveListeners) {
+      listener.onShoveEnd(detector)
     }
   }
 
