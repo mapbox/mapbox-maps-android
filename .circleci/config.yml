@@ -99,31 +99,57 @@ commands:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "./tmp/checksum.txt" }}
 
-  jvm-unit-tests:
+  kover-for-module:
+    parameters:
+      module:
+        type: string
     steps:
       - run:
-          name: Run JVM unit tests & create kover code coverage report
-          no_output_timeout: 30m
+          name: Unit tests & create kover code coverage report for << parameters.module >>
+          no_output_timeout: 5m
           command: |
-            ./gradlew :extension-androidauto:koverXmlReport
-            ./gradlew :extension-style:koverXmlReport
-            ./gradlew :extension-localization:koverXmlReport
-            ./gradlew :extension-style-app:koverXmlReport
-            ./gradlew :mapbox-lint:koverXmlReport
-            ./gradlew :module-telemetry:koverXmlReport
-            ./gradlew :plugin-animation:koverXmlReport
-            ./gradlew :plugin-annotation:koverXmlReport
-            ./gradlew :plugin-attribution:koverXmlReport
-            ./gradlew :plugin-compass:koverXmlReport
-            ./gradlew :plugin-gestures:koverXmlReport
-            ./gradlew :plugin-lifecycle:koverXmlReport
-            ./gradlew :plugin-locationcomponent:koverXmlReport
-            ./gradlew :plugin-logo:koverXmlReport
-            ./gradlew :plugin-overlay:koverXmlReport
-            ./gradlew :plugin-scalebar:koverXmlReport
-            ./gradlew :plugin-viewport:koverXmlReport
-            ./gradlew :sdk:koverXmlReport
-            ./gradlew :sdk-base:koverXmlReport
+            ./gradlew :<< parameters.module >>:koverXmlReport
+
+  jvm-unit-tests:
+    steps:
+      - kover-for-module:
+          module: "extension-androidauto"
+      - kover-for-module:
+          module: "extension-style"
+      - kover-for-module:
+          module: "extension-localization"
+      - kover-for-module:
+          module: "extension-style-app"
+      - kover-for-module:
+          module: "mapbox-lint"
+      - kover-for-module:
+          module: "module-telemetry"
+      - kover-for-module:
+          module: "plugin-animation"
+      - kover-for-module:
+          module: "plugin-annotation"
+      - kover-for-module:
+          module: "plugin-attribution"
+      - kover-for-module:
+          module: "plugin-compass"
+      - kover-for-module:
+          module: "plugin-gestures"
+      - kover-for-module:
+          module: "plugin-lifecycle"
+      - kover-for-module:
+          module: "plugin-locationcomponent"
+      - kover-for-module:
+          module: "plugin-logo"
+      - kover-for-module:
+          module: "plugin-overlay"
+      - kover-for-module:
+          module: "plugin-scalebar"
+      - kover-for-module:
+          module: "plugin-viewport"
+      - kover-for-module:
+          module: "sdk"
+      - kover-for-module:
+          module: "sdk-base"
       - run:
           name: Collect all reports in one folder
           command: ./gradlew koverCollectReports
