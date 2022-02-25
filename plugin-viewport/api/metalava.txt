@@ -1,0 +1,40 @@
+// Signature format: 3.0
+package com.mapbox.maps.plugin.viewport {
+
+  @com.mapbox.maps.MapboxExperimental public final class ViewportPluginImpl implements com.mapbox.maps.plugin.viewport.ViewportPlugin {
+    ctor public ViewportPluginImpl(android.os.Handler handler = Handler(Looper.getMainLooper()));
+    method public void addStatusObserver(com.mapbox.maps.plugin.viewport.ViewportStatusObserver viewportStatusObserver);
+    method public void cleanup();
+    method public com.mapbox.maps.plugin.viewport.transition.ViewportTransition getDefaultTransition();
+    method public com.mapbox.maps.plugin.viewport.data.ViewportOptions getOptions();
+    method public com.mapbox.maps.plugin.viewport.ViewportStatus getStatus();
+    method public void idle();
+    method public com.mapbox.maps.plugin.viewport.transition.DefaultViewportTransition makeDefaultViewportTransition(com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions options);
+    method public com.mapbox.maps.plugin.viewport.state.FollowPuckViewportState makeFollowPuckViewportState(com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions options);
+    method public com.mapbox.maps.plugin.viewport.transition.ViewportTransition makeImmediateViewportTransition();
+    method public com.mapbox.maps.plugin.viewport.state.OverviewViewportState makeOverviewViewportState(com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions options);
+    method public void onDelegateProvider(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider);
+    method public void removeStatusObserver(com.mapbox.maps.plugin.viewport.ViewportStatusObserver viewportStatusObserver);
+    method public void setDefaultTransition(com.mapbox.maps.plugin.viewport.transition.ViewportTransition p);
+    method public void setOptions(com.mapbox.maps.plugin.viewport.data.ViewportOptions p);
+    method public void transitionTo(com.mapbox.maps.plugin.viewport.state.ViewportState targetState, com.mapbox.maps.plugin.viewport.transition.ViewportTransition? transition, com.mapbox.maps.plugin.viewport.CompletionListener? completionListener);
+    property public com.mapbox.maps.plugin.viewport.transition.ViewportTransition defaultTransition;
+    property public com.mapbox.maps.plugin.viewport.data.ViewportOptions options;
+    property public com.mapbox.maps.plugin.viewport.ViewportStatus status;
+    field public static final String VIEWPORT_CAMERA_OWNER = "VIEWPORT_CAMERA_OWNER";
+    field public com.mapbox.maps.plugin.viewport.transition.ViewportTransition defaultTransition;
+  }
+
+  public final class ViewportUtils {
+    method public static com.mapbox.maps.plugin.viewport.ViewportPlugin getViewport(com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate);
+  }
+
+}
+
+package com.mapbox.maps.plugin.viewport.transition {
+
+  public final class TransitionUtilsKt {
+  }
+
+}
+

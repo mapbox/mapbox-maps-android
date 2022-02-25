@@ -1,16 +1,3 @@
-buildscript {
-
-    repositories {
-        mavenCentral()
-        google()
-    }
-
-    dependencies {
-        classpath "com.android.tools.build:gradle:4.0.1"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.0"
-    }
-}
-
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply from: "${rootDir}/gradle/metalava.gradle"
@@ -21,8 +8,15 @@ android.libraryVariants.all { variant ->
         return
     }
     task updateApi(type: JavaExec) {
-        inputs.dir('src/main/java')
-        outputs.file('api/current.txt')
+        def inputDir = ""
+        if (file("src/main/java").exists()) {
+            inputDir = "src/main/java"
+        }
+        if (file("src/main/kotlin").exists()) {
+            inputDir = "src/main/kotlin"
+        }
+        inputs.dir(inputDir)
+        outputs.file('api/metalava.txt')
 
         classpath = configurations.metalava
         main = 'com.android.tools.metalava.Driver'
@@ -30,14 +24,14 @@ android.libraryVariants.all { variant ->
         doFirst {
             args = [
                     '--no-banner',
-                    '--source-path', 'src/main/java',
+                    '--source-path', inputDir,
                     '--compatible-output=no',
                     '--omit-common-packages=yes',
                     '--output-kotlin-nulls=yes',
                     '--hide', 'HiddenSuperclass',
                     '--hide', 'DeprecationMismatch',
                     '--classpath', (project.files(android.getBootClasspath()) + variant.javaCompile.classpath).join(File.pathSeparator),
-                    '--api', 'api/current.txt'
+                    '--api', 'api/metalava.txt'
             ]
             if (project.hasProperty('hidePackage')) {
                 args += '--hide-package'
@@ -51,9 +45,16 @@ android.libraryVariants.all { variant ->
     }
 
     task checkApi(type: JavaExec) {
-        inputs.file('api/current.txt')
-        inputs.dir('src/main/java')
-        outputs.file('api/current.txt')
+        def inputDir = ""
+        if (file("src/main/java").exists()) {
+            inputDir = "src/main/java"
+        }
+        if (file("src/main/kotlin").exists()) {
+            inputDir = "src/main/kotlin"
+        }
+        inputs.file('api/metalava.txt')
+        inputs.dir(inputDir)
+        outputs.file('api/metalava.txt')
 
         classpath = configurations.metalava
         main = 'com.android.tools.metalava.Driver'
@@ -61,7 +62,7 @@ android.libraryVariants.all { variant ->
         doFirst {
             args = [
                     '--no-banner',
-                    '--source-path', 'src/main/java',
+                    '--source-path', inputDir,
                     '--compatible-output=no',
                     '--omit-common-packages=yes',
                     '--output-kotlin-nulls=yes',
@@ -69,7 +70,7 @@ android.libraryVariants.all { variant ->
                     '--hide', 'HiddenSuperclass',
                     '--hide', 'DeprecationMismatch',
                     '--classpath', (project.files(android.getBootClasspath()) + variant.javaCompile.classpath).join(File.pathSeparator),
-                    '--check-compatibility:api:current', 'api/current.txt'
+                    '--check-compatibility:api:current', 'api/metalava.txt'
             ]
             if (project.hasProperty('hidePackage')) {
                 args += '--hide-package'

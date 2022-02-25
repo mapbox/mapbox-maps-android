@@ -1,0 +1,25 @@
+// Signature format: 3.0
+package com.mapbox.maps.plugin.overlay {
+
+  @com.mapbox.maps.MapboxExperimental public final class MapOverlayPluginImpl implements com.mapbox.maps.plugin.overlay.MapOverlayPlugin {
+    ctor public MapOverlayPluginImpl();
+    method public void cleanup();
+    method public com.mapbox.maps.EdgeInsets getEdgeInsets();
+    method public void onDelegateProvider(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider);
+    method public void onSizeChanged(int width, int height);
+    method public void reframe(com.mapbox.maps.plugin.overlay.OnReframeFinished? onReframeFinished);
+    method public void registerMapOverlayCoordinatesProvider(com.mapbox.maps.plugin.overlay.MapOverlayCoordinatesProvider provider);
+    method public void registerOverlay(android.view.View overlay);
+    method public void registerOverlays(java.util.List<? extends android.view.View> overlays);
+    method public void setDisplayingAreaMargins(int marginTop, int marginLeft, int marginBottom, int marginRight);
+    method public void unregisterMapOverlayCoordinatesProvider();
+    method public void unregisterOverlay(android.view.View overlay);
+    method public void unregisterOverlays(java.util.List<? extends android.view.View> overlays);
+  }
+
+  public final class MapOverlayUtils {
+    method public static com.mapbox.maps.plugin.overlay.MapOverlayPlugin getOverlay(com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate);
+  }
+
+}
+

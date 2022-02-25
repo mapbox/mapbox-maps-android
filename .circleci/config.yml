@@ -23,10 +23,13 @@ workflows:
       - verify-docs:
           requires:
             - verify-code
-      - verify-kotlin-binary-compatibility:
+      - verify-api-kotlin-binary-compatibility:
           requires:
             - verify-code
-      - verify-api:
+      - verify-api-metalava:
+          requires:
+            - verify-code
+      - verify-api-revapi:
           requires:
             - verify-code
       - verify-internal:
@@ -381,18 +384,30 @@ jobs:
           name: docs
           command: sh scripts/kdoc-validate.sh
 
-  verify-kotlin-binary-compatibility:
+  verify-api-metalava:
     executor: ubuntu
     steps:
       - checkout
       - restore-gradle-cache
       - run:
           no_output_timeout: 30m
-          name: verify-kotlin-binary-compatibility
+          name: verify-api-metalava
+          command: |
+            ./gradlew assembleRelease
+            ./gradlew checkApi
+
+  verify-api-kotlin-binary-compatibility:
+    executor: ubuntu
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - run:
+          no_output_timeout: 30m
+          name: verify-api-kotlin-binary-compatibility
           command: |
             ./gradlew apiCheck
 
-  verify-api:
+  verify-api-revapi:
     executor: ubuntu
     steps:
       - checkout
@@ -400,7 +415,7 @@ jobs:
       - init-aws
       - run:
           no_output_timeout: 30m
-          name: verfiy-api
+          name: verify-api-revapi
           command: |
             make build
             echo "$(./mbx-ci github reader token)" > gh_token.txt

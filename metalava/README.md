@@ -16,14 +16,21 @@ sh ./scripts/update_metalava.sh
 -e
 Dependencies:
 
-com.android.tools.external.org-jetbrains:uast:27.1.0-alpha10
-com.android.tools.external.com-intellij:intellij-core:27.1.0-alpha10
-com.android.tools.lint:lint-api:27.1.0-alpha10
-com.android.tools.lint:lint-checks:27.1.0-alpha10
-com.android.tools.lint:lint-gradle:27.1.0-alpha10
-com.android.tools.lint:lint:27.1.0-alpha10
-org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.72
-org.jetbrains.kotlin:kotlin-reflect:1.3.72
+com.android.tools.external.org-jetbrains:uast:30.0.0-alpha14
+com.android.tools.external.com-intellij:kotlin-compiler:30.0.0-alpha14
+com.android.tools.external.com-intellij:intellij-core:30.0.0-alpha14
+com.android.tools.lint:lint-api:30.0.0-alpha14
+com.android.tools.lint:lint-checks:30.0.0-alpha14
+com.android.tools.lint:lint-gradle:30.0.0-alpha14
+com.android.tools.lint:lint:30.0.0-alpha14
+com.android.tools:common:30.0.0-alpha14
+com.android.tools:sdk-common:30.0.0-alpha14
+com.android.tools:sdklib:30.0.0-alpha14
+org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.0
+org.jetbrains.kotlin:kotlin-reflect:1.5.0
+org.ow2.asm:asm:8.0
+org.ow2.asm:asm-tree:8.0
+
 ```
 
 - That places the latest `metalava.jar` into this folder and prints out its deps 👀
