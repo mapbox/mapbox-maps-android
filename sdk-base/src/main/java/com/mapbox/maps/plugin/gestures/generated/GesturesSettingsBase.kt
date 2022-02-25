@@ -48,8 +48,10 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
       return this.internalSettings.rotateEnabled
     }
     set(value) {
-      this.internalSettings.rotateEnabled = value
-      applySettings()
+      if (this.internalSettings.rotateEnabled != value) {
+        this.internalSettings.rotateEnabled = value
+        applySettings()
+      }
     }
 
   /**
@@ -60,8 +62,10 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
       return this.internalSettings.pinchToZoomEnabled
     }
     set(value) {
-      this.internalSettings.pinchToZoomEnabled = value
-      applySettings()
+      if (this.internalSettings.pinchToZoomEnabled != value) {
+        this.internalSettings.pinchToZoomEnabled = value
+        applySettings()
+      }
     }
 
   /**
@@ -72,8 +76,10 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
       return this.internalSettings.scrollEnabled
     }
     set(value) {
-      this.internalSettings.scrollEnabled = value
-      applySettings()
+      if (this.internalSettings.scrollEnabled != value) {
+        this.internalSettings.scrollEnabled = value
+        applySettings()
+      }
     }
 
   /**
@@ -84,8 +90,10 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
       return this.internalSettings.simultaneousRotateAndPinchToZoomEnabled
     }
     set(value) {
-      this.internalSettings.simultaneousRotateAndPinchToZoomEnabled = value
-      applySettings()
+      if (this.internalSettings.simultaneousRotateAndPinchToZoomEnabled != value) {
+        this.internalSettings.simultaneousRotateAndPinchToZoomEnabled = value
+        applySettings()
+      }
     }
 
   /**
@@ -96,8 +104,10 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
       return this.internalSettings.pitchEnabled
     }
     set(value) {
-      this.internalSettings.pitchEnabled = value
-      applySettings()
+      if (this.internalSettings.pitchEnabled != value) {
+        this.internalSettings.pitchEnabled = value
+        applySettings()
+      }
     }
 
   /**
@@ -108,8 +118,10 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
       return this.internalSettings.scrollMode
     }
     set(value) {
-      this.internalSettings.scrollMode = value
-      applySettings()
+      if (this.internalSettings.scrollMode != value) {
+        this.internalSettings.scrollMode = value
+        applySettings()
+      }
     }
 
   /**
@@ -120,8 +132,10 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
       return this.internalSettings.doubleTapToZoomInEnabled
     }
     set(value) {
-      this.internalSettings.doubleTapToZoomInEnabled = value
-      applySettings()
+      if (this.internalSettings.doubleTapToZoomInEnabled != value) {
+        this.internalSettings.doubleTapToZoomInEnabled = value
+        applySettings()
+      }
     }
 
   /**
@@ -132,8 +146,10 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
       return this.internalSettings.doubleTouchToZoomOutEnabled
     }
     set(value) {
-      this.internalSettings.doubleTouchToZoomOutEnabled = value
-      applySettings()
+      if (this.internalSettings.doubleTouchToZoomOutEnabled != value) {
+        this.internalSettings.doubleTouchToZoomOutEnabled = value
+        applySettings()
+      }
     }
 
   /**
@@ -144,8 +160,10 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
       return this.internalSettings.quickZoomEnabled
     }
     set(value) {
-      this.internalSettings.quickZoomEnabled = value
-      applySettings()
+      if (this.internalSettings.quickZoomEnabled != value) {
+        this.internalSettings.quickZoomEnabled = value
+        applySettings()
+      }
     }
 
   /**
@@ -156,8 +174,10 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
       return this.internalSettings.focalPoint
     }
     set(value) {
-      this.internalSettings.focalPoint = value
-      applySettings()
+      if (this.internalSettings.focalPoint != value) {
+        this.internalSettings.focalPoint = value
+        applySettings()
+      }
     }
 
   /**
@@ -168,8 +188,10 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
       return this.internalSettings.pinchToZoomDecelerationEnabled
     }
     set(value) {
-      this.internalSettings.pinchToZoomDecelerationEnabled = value
-      applySettings()
+      if (this.internalSettings.pinchToZoomDecelerationEnabled != value) {
+        this.internalSettings.pinchToZoomDecelerationEnabled = value
+        applySettings()
+      }
     }
 
   /**
@@ -180,8 +202,10 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
       return this.internalSettings.rotateDecelerationEnabled
     }
     set(value) {
-      this.internalSettings.rotateDecelerationEnabled = value
-      applySettings()
+      if (this.internalSettings.rotateDecelerationEnabled != value) {
+        this.internalSettings.rotateDecelerationEnabled = value
+        applySettings()
+      }
     }
 
   /**
@@ -192,8 +216,10 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
       return this.internalSettings.scrollDecelerationEnabled
     }
     set(value) {
-      this.internalSettings.scrollDecelerationEnabled = value
-      applySettings()
+      if (this.internalSettings.scrollDecelerationEnabled != value) {
+        this.internalSettings.scrollDecelerationEnabled = value
+        applySettings()
+      }
     }
 
   /**
@@ -204,8 +230,10 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
       return this.internalSettings.increaseRotateThresholdWhenPinchingToZoom
     }
     set(value) {
-      this.internalSettings.increaseRotateThresholdWhenPinchingToZoom = value
-      applySettings()
+      if (this.internalSettings.increaseRotateThresholdWhenPinchingToZoom != value) {
+        this.internalSettings.increaseRotateThresholdWhenPinchingToZoom = value
+        applySettings()
+      }
     }
 
   /**
@@ -216,8 +244,10 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
       return this.internalSettings.increasePinchToZoomThresholdWhenRotating
     }
     set(value) {
-      this.internalSettings.increasePinchToZoomThresholdWhenRotating = value
-      applySettings()
+      if (this.internalSettings.increasePinchToZoomThresholdWhenRotating != value) {
+        this.internalSettings.increasePinchToZoomThresholdWhenRotating = value
+        applySettings()
+      }
     }
 
   /**
@@ -228,8 +258,10 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
       return this.internalSettings.zoomAnimationAmount
     }
     set(value) {
-      this.internalSettings.zoomAnimationAmount = value
-      applySettings()
+      if (this.internalSettings.zoomAnimationAmount != value) {
+        this.internalSettings.zoomAnimationAmount = value
+        applySettings()
+      }
     }
 }
 

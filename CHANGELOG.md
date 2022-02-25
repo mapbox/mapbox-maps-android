@@ -2,6 +2,12 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
+# 10.4.0-rc
+## Features ✨ and improvements 🏁
+* Add checks while applySettings to plugins. Only apply setting when setting a new value. ([#1189](https://github.com/mapbox/mapbox-maps-android/pull/1189))
+
+## Bug fixes 🐞
+
 # 10.4.0-beta.1 February 24, 2022
 
 ## Features ✨ and improvements 🏁

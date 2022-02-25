@@ -47,8 +47,10 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
       return this.internalSettings.enabled
     }
     set(value) {
-      this.internalSettings.enabled = value
-      applySettings()
+      if (this.internalSettings.enabled != value) {
+        this.internalSettings.enabled = value
+        applySettings()
+      }
     }
 
   /**
@@ -59,8 +61,10 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
       return this.internalSettings.position
     }
     set(value) {
-      this.internalSettings.position = value
-      applySettings()
+      if (this.internalSettings.position != value) {
+        this.internalSettings.position = value
+        applySettings()
+      }
     }
 
   /**
@@ -71,8 +75,10 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
       return this.internalSettings.marginLeft
     }
     set(value) {
-      this.internalSettings.marginLeft = value
-      applySettings()
+      if (this.internalSettings.marginLeft != value) {
+        this.internalSettings.marginLeft = value
+        applySettings()
+      }
     }
 
   /**
@@ -83,8 +89,10 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
       return this.internalSettings.marginTop
     }
     set(value) {
-      this.internalSettings.marginTop = value
-      applySettings()
+      if (this.internalSettings.marginTop != value) {
+        this.internalSettings.marginTop = value
+        applySettings()
+      }
     }
 
   /**
@@ -95,8 +103,10 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
       return this.internalSettings.marginRight
     }
     set(value) {
-      this.internalSettings.marginRight = value
-      applySettings()
+      if (this.internalSettings.marginRight != value) {
+        this.internalSettings.marginRight = value
+        applySettings()
+      }
     }
 
   /**
@@ -107,8 +117,10 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
       return this.internalSettings.marginBottom
     }
     set(value) {
-      this.internalSettings.marginBottom = value
-      applySettings()
+      if (this.internalSettings.marginBottom != value) {
+        this.internalSettings.marginBottom = value
+        applySettings()
+      }
     }
 
   /**
@@ -119,8 +131,10 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
       return this.internalSettings.opacity
     }
     set(value) {
-      this.internalSettings.opacity = value
-      applySettings()
+      if (this.internalSettings.opacity != value) {
+        this.internalSettings.opacity = value
+        applySettings()
+      }
     }
 
   /**
@@ -131,8 +145,10 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
       return this.internalSettings.rotation
     }
     set(value) {
-      this.internalSettings.rotation = value
-      applySettings()
+      if (this.internalSettings.rotation != value) {
+        this.internalSettings.rotation = value
+        applySettings()
+      }
     }
 
   /**
@@ -143,8 +159,10 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
       return this.internalSettings.visibility
     }
     set(value) {
-      this.internalSettings.visibility = value
-      applySettings()
+      if (this.internalSettings.visibility != value) {
+        this.internalSettings.visibility = value
+        applySettings()
+      }
     }
 
   /**
@@ -155,8 +173,10 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
       return this.internalSettings.fadeWhenFacingNorth
     }
     set(value) {
-      this.internalSettings.fadeWhenFacingNorth = value
-      applySettings()
+      if (this.internalSettings.fadeWhenFacingNorth != value) {
+        this.internalSettings.fadeWhenFacingNorth = value
+        applySettings()
+      }
     }
 
   /**
@@ -167,8 +187,10 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
       return this.internalSettings.clickable
     }
     set(value) {
-      this.internalSettings.clickable = value
-      applySettings()
+      if (this.internalSettings.clickable != value) {
+        this.internalSettings.clickable = value
+        applySettings()
+      }
     }
 
   /**
@@ -179,8 +201,10 @@ abstract class CompassSettingsBase : CompassSettingsInterface {
       return this.internalSettings.image
     }
     set(value) {
-      this.internalSettings.image = value
-      applySettings()
+      if (this.internalSettings.image != value) {
+        this.internalSettings.image = value
+        applySettings()
+      }
     }
 }
 
