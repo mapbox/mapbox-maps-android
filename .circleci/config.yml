@@ -105,16 +105,33 @@ commands:
           name: Run JVM unit tests & create kover code coverage report
           no_output_timeout: 30m
           command: |
+            ./gradlew :extension-androidauto:koverXmlReport
+            ./gradlew :extension-style:koverXmlReport
+            ./gradlew :extension-localization:koverXmlReport
+            ./gradlew :extension-style-app:koverXmlReport
+            ./gradlew :mapbox-lint:koverXmlReport
+            ./gradlew :module-telemetry:koverXmlReport
+            ./gradlew :plugin-animation:koverXmlReport
+            ./gradlew :plugin-annotation:koverXmlReport
+            ./gradlew :plugin-attribution:koverXmlReport
+            ./gradlew :plugin-compass:koverXmlReport
+            ./gradlew :plugin-gestures:koverXmlReport
+            ./gradlew :plugin-lifecycle:koverXmlReport
+            ./gradlew :plugin-locationcomponent:koverXmlReport
+            ./gradlew :plugin-logo:koverXmlReport
+            ./gradlew :plugin-overlay:koverXmlReport
+            ./gradlew :plugin-scalebar:koverXmlReport
+            ./gradlew :plugin-viewport:koverXmlReport
             ./gradlew :sdk:koverXmlReport
             ./gradlew :sdk-base:koverXmlReport
-            ./gradlew :plugin-logo:koverXmlReport
       - run:
           name: Collect all reports in one folder
           command: ./gradlew koverCollectReports
       - run:
           name: Parser code coverage and publish as a message
           command: |
-            python3 scripts/code-coverage-parser.py --slug << pipeline.parameters.mapbox_slug >> --hash << pipeline.parameters.mapbox_hash >>
+            COMMIT_SHA=$(git rev-parse --short HEAD)
+            python3 scripts/code-coverage-parser.py --slug mapbox/mapbox-maps-android --hash ${COMMIT_SHA}
 #      - run:
 #          name: Upload codecov
 #          command: bash <(curl -sSfL https://codecov.io/bash)
