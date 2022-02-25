@@ -76,6 +76,10 @@ tasks.withType(Test::class).configureEach {
   }
 }
 
+kover {
+  jacocoEngineVersion.set("0.8.4")
+}
+
 apiValidation {
   /**
    * Packages that are excluded from public API dumps even if they
