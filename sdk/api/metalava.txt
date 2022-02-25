@@ -203,12 +203,15 @@ package com.mapbox.maps {
     method @Deprecated public boolean isFullyLoaded();
     method public boolean isGestureInProgress();
     method public boolean isUserAnimationInProgress();
+    method public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.TransitionOptions? transitionOptions = null, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
     method public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
     method public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.Style.OnStyleLoaded onStyleLoaded);
     method public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension);
+    method public void loadStyleJson(String styleJson, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
     method public void loadStyleJson(String styleJson, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
     method public void loadStyleJson(String styleJson, com.mapbox.maps.Style.OnStyleLoaded onStyleLoaded);
     method public void loadStyleJson(String styleJson);
+    method public void loadStyleUri(String styleUri, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
     method public void loadStyleUri(String styleUri, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
     method public void loadStyleUri(String styleUri, com.mapbox.maps.Style.OnStyleLoaded onStyleLoaded);
     method public void loadStyleUri(String styleUri);
@@ -368,6 +371,7 @@ package com.mapbox.maps {
     method public com.mapbox.maps.StylePropertyValue getStyleTerrainProperty(String property);
     method public com.mapbox.maps.TransitionOptions getStyleTransition();
     method public String getStyleURI();
+    method public boolean hasStyleImage(String imageId);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> invalidateStyleCustomGeometrySourceRegion(String sourceId, com.mapbox.maps.CoordinateBounds coordinateBounds);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> invalidateStyleCustomGeometrySourceTile(String sourceId, com.mapbox.maps.CanonicalTileID tileId);
     method public com.mapbox.bindgen.Expected<java.lang.String,java.lang.Boolean> isStyleLayerPersistent(String layerId);
@@ -500,7 +504,6 @@ package com.mapbox.maps.renderer.widget {
   }
 
   @com.mapbox.maps.MapboxExperimental public abstract class Widget {
-    ctor public Widget();
     method public abstract void setRotation(float angleDegrees);
     method public abstract void setTranslation(float translateX, float translateY);
   }
@@ -529,13 +532,21 @@ package com.mapbox.maps.renderer.widget {
 
 package com.mapbox.maps.viewannotation {
 
+  public interface OnViewAnnotationUpdatedListener {
+    method public void onViewAnnotationPositionUpdated(android.view.View view, com.mapbox.maps.ScreenCoordinate leftTopCoordinate, int width, int height);
+    method public void onViewAnnotationVisibilityUpdated(android.view.View view, boolean visible);
+  }
+
   @com.mapbox.maps.MapboxExperimental public interface ViewAnnotationManager {
+    method public void addOnViewAnnotationUpdatedListener(com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener listener);
     method public android.view.View addViewAnnotation(@LayoutRes int resId, com.mapbox.maps.ViewAnnotationOptions options);
     method public void addViewAnnotation(@LayoutRes int resId, com.mapbox.maps.ViewAnnotationOptions options, androidx.asynclayoutinflater.view.AsyncLayoutInflater asyncInflater, kotlin.jvm.functions.Function1<? super android.view.View,kotlin.Unit> asyncInflateCallback);
     method public void addViewAnnotation(android.view.View view, com.mapbox.maps.ViewAnnotationOptions options);
     method public android.view.View? getViewAnnotationByFeatureId(String featureId);
     method public com.mapbox.maps.ViewAnnotationOptions? getViewAnnotationOptionsByFeatureId(String featureId);
     method public com.mapbox.maps.ViewAnnotationOptions? getViewAnnotationOptionsByView(android.view.View view);
+    method public void removeAllViewAnnotations();
+    method public void removeOnViewAnnotationUpdatedListener(com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener listener);
     method public boolean removeViewAnnotation(android.view.View view);
     method public boolean updateViewAnnotation(android.view.View view, com.mapbox.maps.ViewAnnotationOptions options);
   }
