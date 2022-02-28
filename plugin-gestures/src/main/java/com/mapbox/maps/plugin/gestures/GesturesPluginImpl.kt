@@ -35,7 +35,7 @@ import com.mapbox.maps.plugin.gestures.generated.GesturesAttributeParser
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettings
 import com.mapbox.maps.plugin.gestures.generated.GesturesSettingsBase
 import java.util.*
-import java.util.concurrent.CopyOnWriteArrayList
+import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.math.*
 
 /**
@@ -54,16 +54,16 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   private lateinit var mapPluginProviderDelegate: MapPluginProviderDelegate
   private lateinit var cameraAnimationsPlugin: CameraAnimationsPlugin
 
-  private val protectedCameraAnimatorOwnerList = CopyOnWriteArrayList<String>()
+  private val protectedCameraAnimatorOwners = CopyOnWriteArraySet<String>()
 
   // Listeners
-  private val onMapClickListenerList = CopyOnWriteArrayList<OnMapClickListener>()
-  private val onMapLongClickListenerList = CopyOnWriteArrayList<OnMapLongClickListener>()
-  private val onFlingListenerList = CopyOnWriteArrayList<OnFlingListener>()
-  private val onMoveListenerList = CopyOnWriteArrayList<OnMoveListener>()
-  private val onRotateListenerList = CopyOnWriteArrayList<OnRotateListener>()
-  private val onScaleListenerList = CopyOnWriteArrayList<OnScaleListener>()
-  private val onShoveListenerList = CopyOnWriteArrayList<OnShoveListener>()
+  private val onMapClickListeners = CopyOnWriteArraySet<OnMapClickListener>()
+  private val onMapLongClickListeners = CopyOnWriteArraySet<OnMapLongClickListener>()
+  private val onFlingListeners = CopyOnWriteArraySet<OnFlingListener>()
+  private val onMoveListeners = CopyOnWriteArraySet<OnMoveListener>()
+  private val onRotateListeners = CopyOnWriteArraySet<OnRotateListener>()
+  private val onScaleListeners = CopyOnWriteArraySet<OnScaleListener>()
+  private val onShoveListeners = CopyOnWriteArraySet<OnShoveListener>()
 
   // FocalPoint
   private var doubleTapFocalPoint = ScreenCoordinate(0.0, 0.0)
@@ -351,7 +351,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
           }
 
           // Cancel any animation
-          cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
+          cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwners.toList())
 
           // Get the vertical scroll amount, one click = 1
           val scrollDist = event.getAxisValue(MotionEvent.AXIS_VSCROLL)
@@ -1023,7 +1023,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         return false
       }
 
-      cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
+      cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwners.toList())
 
       val zoomFocalPoint: ScreenCoordinate
       // Single finger double tap
@@ -1150,7 +1150,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   private fun cancelTransitionsIfRequired() {
     // we need to cancel core transitions only if there is no started gesture yet
     if (noGesturesInProgress()) {
-      cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
+      cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwners.toList())
     }
   }
 
@@ -1164,9 +1164,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   }
 
   internal fun handleLongPressEvent(screenCoordinate: ScreenCoordinate) {
-    if (!onMapLongClickListenerList.isEmpty()) {
+    if (!onMapLongClickListeners.isEmpty()) {
       val clickedPoint = mapCameraManagerDelegate.coordinateForPixel(screenCoordinate)
-      for (listener in onMapLongClickListenerList) {
+      for (listener in onMapLongClickListeners) {
         if (listener.onMapLongClick(clickedPoint)) {
           return
         }
@@ -1175,9 +1175,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   }
 
   internal fun handleClickEvent(screenCoordinate: ScreenCoordinate): Boolean {
-    if (!onMapClickListenerList.isEmpty()) {
+    if (!onMapClickListeners.isEmpty()) {
       val clickedPoint = mapCameraManagerDelegate.coordinateForPixel(screenCoordinate)
-      for (listener in onMapClickListenerList) {
+      for (listener in onMapClickListeners) {
         if (listener.onMapClick(clickedPoint)) {
           return true
         }
@@ -1277,7 +1277,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
     val offsetY =
       if (internalSettings.isScrollVerticallyLimited()) 0.0 else velocityY.toDouble() / pitchFactor
 
-    cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
+    cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwners.toList())
 
     // calculate animation time based on displacement
     // velocityXY ranges from VELOCITY_THRESHOLD_IGNORE_FLING to ~5000
@@ -1382,114 +1382,88 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   }
 
   internal fun handleSingleTapUpEvent(): Boolean {
-    cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwnerList)
+    cameraAnimationsPlugin.cancelAllAnimators(protectedCameraAnimatorOwners.toList())
     return true
   }
 
   private fun notifyOnFlingListeners() {
-    if (!onFlingListenerList.isEmpty()) {
-      for (listener in onFlingListenerList) {
-        listener.onFling()
-      }
+    for (listener in onFlingListeners) {
+      listener.onFling()
     }
   }
 
   private fun notifyOnMoveBeginListeners(detector: MoveGestureDetector) {
-    if (!onMoveListenerList.isEmpty()) {
-      for (listener in onMoveListenerList) {
-        listener.onMoveBegin(detector)
-      }
+    for (listener in onMoveListeners) {
+      listener.onMoveBegin(detector)
     }
   }
 
   private fun notifyOnMoveListeners(detector: MoveGestureDetector): Boolean {
-    if (!onMoveListenerList.isEmpty()) {
-      for (listener in onMoveListenerList) {
-        if (listener.onMove(detector)) {
-          return true
-        }
+    for (listener in onMoveListeners) {
+      if (listener.onMove(detector)) {
+        return true
       }
     }
     return false
   }
 
   private fun notifyOnMoveEndListeners(detector: MoveGestureDetector) {
-    if (!onMoveListenerList.isEmpty()) {
-      for (listener in onMoveListenerList) {
-        listener.onMoveEnd(detector)
-      }
+    for (listener in onMoveListeners) {
+      listener.onMoveEnd(detector)
     }
   }
 
   private fun notifyOnRotateBeginListeners(detector: RotateGestureDetector) {
-    if (!onRotateListenerList.isEmpty()) {
-      for (listener in onRotateListenerList) {
-        listener.onRotateBegin(detector)
-      }
+    for (listener in onRotateListeners) {
+      listener.onRotateBegin(detector)
     }
   }
 
   private fun notifyOnRotateListeners(detector: RotateGestureDetector) {
-    if (!onRotateListenerList.isEmpty()) {
-      for (listener in onRotateListenerList) {
-        listener.onRotate(detector)
-      }
+    for (listener in onRotateListeners) {
+      listener.onRotate(detector)
     }
   }
 
   private fun notifyOnRotateEndListeners(detector: RotateGestureDetector) {
-    if (!onRotateListenerList.isEmpty()) {
-      for (listener in onRotateListenerList) {
-        listener.onRotateEnd(detector)
-      }
+    for (listener in onRotateListeners) {
+      listener.onRotateEnd(detector)
     }
   }
 
   private fun notifyOnScaleBeginListeners(detector: StandardScaleGestureDetector) {
-    if (!onScaleListenerList.isEmpty()) {
-      for (listener in onScaleListenerList) {
-        listener.onScaleBegin(detector)
-      }
+    for (listener in onScaleListeners) {
+      listener.onScaleBegin(detector)
     }
   }
 
   private fun notifyOnScaleListeners(detector: StandardScaleGestureDetector) {
-    if (!onScaleListenerList.isEmpty()) {
-      for (listener in onScaleListenerList) {
-        listener.onScale(detector)
-      }
+    for (listener in onScaleListeners) {
+      listener.onScale(detector)
     }
   }
 
   private fun notifyOnScaleEndListeners(detector: StandardScaleGestureDetector) {
-    if (!onScaleListenerList.isEmpty()) {
-      for (listener in onScaleListenerList) {
-        listener.onScaleEnd(detector)
-      }
+    for (listener in onScaleListeners) {
+      listener.onScaleEnd(detector)
     }
   }
 
   private fun notifyOnShoveBeginListeners(detector: ShoveGestureDetector) {
-    if (!onShoveListenerList.isEmpty()) {
-      for (listener in onShoveListenerList) {
-        listener.onShoveBegin(detector)
-      }
+    for (listener in onShoveListeners) {
+      listener.onShoveBegin(detector)
     }
   }
 
   private fun notifyOnShoveListeners(detector: ShoveGestureDetector) {
-    if (!onShoveListenerList.isEmpty()) {
-      for (listener in onShoveListenerList) {
-        listener.onShove(detector)
-      }
+    for (listener in onShoveListeners) {
+      listener.onShove(detector)
     }
   }
 
   private fun notifyOnShoveEndListeners(detector: ShoveGestureDetector) {
-    if (!onShoveListenerList.isEmpty()) {
-      for (listener in onShoveListenerList) {
-        listener.onShoveEnd(detector)
-      }
+    for (listener in onShoveListeners) {
+      listener.onShoveEnd(detector)
     }
   }
 
@@ -1497,98 +1471,98 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
    * Add a callback that is invoked when the map is clicked.
    */
   override fun addOnMapClickListener(onMapClickListener: OnMapClickListener) {
-    onMapClickListenerList.add(onMapClickListener)
+    onMapClickListeners.add(onMapClickListener)
   }
 
   /**
    * Remove a callback that is invoked when the map is clicked.
    */
   override fun removeOnMapClickListener(onMapClickListener: OnMapClickListener) {
-    onMapClickListenerList.remove(onMapClickListener)
+    onMapClickListeners.remove(onMapClickListener)
   }
 
   /**
    * Add a callback that is invoked when the map is long clicked.
    */
   override fun addOnMapLongClickListener(onMapLongClickListener: OnMapLongClickListener) {
-    onMapLongClickListenerList.add(onMapLongClickListener)
+    onMapLongClickListeners.add(onMapLongClickListener)
   }
 
   /**
    * Remove a callback that is invoked when the map is long clicked.
    */
   override fun removeOnMapLongClickListener(onMapLongClickListener: OnMapLongClickListener) {
-    onMapLongClickListenerList.remove(onMapLongClickListener)
+    onMapLongClickListeners.remove(onMapLongClickListener)
   }
 
   /**
    * Add a callback that is invoked when the map is has received a fling gesture.
    */
   override fun addOnFlingListener(onFlingListener: OnFlingListener) {
-    onFlingListenerList.add(onFlingListener)
+    onFlingListeners.add(onFlingListener)
   }
 
   /**
    * Remove a callback that is invoked when the map is has received a fling gesture.
    */
   override fun removeOnFlingListener(onFlingListener: OnFlingListener) {
-    onFlingListenerList.remove(onFlingListener)
+    onFlingListeners.remove(onFlingListener)
   }
 
   /**
    * Add a callback that is invoked when the map is moved.
    */
   override fun addOnMoveListener(onMoveListener: OnMoveListener) {
-    onMoveListenerList.add(onMoveListener)
+    onMoveListeners.add(onMoveListener)
   }
 
   /**
    * Remove a callback that is invoked when the map is moved.
    */
   override fun removeOnMoveListener(listener: OnMoveListener) {
-    onMoveListenerList.remove(listener)
+    onMoveListeners.remove(listener)
   }
 
   /**
    * Add a callback that is invoked when the map is rotated.
    */
   override fun addOnRotateListener(onRotateListener: OnRotateListener) {
-    onRotateListenerList.add(onRotateListener)
+    onRotateListeners.add(onRotateListener)
   }
 
   /**
    * Remove a callback that is invoked when the map is rotated.
    */
   override fun removeOnRotateListener(listener: OnRotateListener) {
-    onRotateListenerList.remove(listener)
+    onRotateListeners.remove(listener)
   }
 
   /**
    * Add a callback that is invoked when the map is scaled.
    */
   override fun addOnScaleListener(onScaleListener: OnScaleListener) {
-    onScaleListenerList.add(onScaleListener)
+    onScaleListeners.add(onScaleListener)
   }
 
   /**
    * Remove a callback that is invoked when the map is scaled.
    */
   override fun removeOnScaleListener(listener: OnScaleListener) {
-    onScaleListenerList.remove(listener)
+    onScaleListeners.remove(listener)
   }
 
   /**
    * Add a callback that is invoked when the map is shoved.
    */
   override fun addOnShoveListener(onShoveListener: OnShoveListener) {
-    onShoveListenerList.add(onShoveListener)
+    onShoveListeners.add(onShoveListener)
   }
 
   /**
    * Remove a callback that is invoked when the map is shoved.
    */
   override fun removeOnShoveListener(listener: OnShoveListener) {
-    onShoveListenerList.remove(listener)
+    onShoveListeners.remove(listener)
   }
 
   /**
@@ -1597,7 +1571,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
    * When specified, you are responsible for listening to gesture interactions and canceling the specified owners' animations to avoid competing with gestures.
    */
   override fun addProtectedAnimationOwner(owner: String) {
-    protectedCameraAnimatorOwnerList.add(owner)
+    protectedCameraAnimatorOwners.add(owner)
   }
 
   /**
@@ -1606,7 +1580,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
    * When specified, you are responsible for listening to gesture interactions and canceling the specified owners' animations to avoid competing with gestures.
    */
   override fun removeProtectedAnimationOwner(owner: String) {
-    protectedCameraAnimatorOwnerList.remove(owner)
+    protectedCameraAnimatorOwners.remove(owner)
   }
 
   /**
@@ -1649,7 +1623,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
    * Called when the map is destroyed. Should be used to cleanup plugin resources for that map.
    */
   override fun cleanup() {
-    protectedCameraAnimatorOwnerList.clear()
+    protectedCameraAnimatorOwners.clear()
   }
 
   /**

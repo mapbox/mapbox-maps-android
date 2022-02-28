@@ -1,0 +1,70 @@
+// Signature format: 3.0
+package com.mapbox.maps.plugin.gestures {
+
+  public final class GesturesConstantsKt {
+  }
+
+  public final class GesturesPluginImpl extends com.mapbox.maps.plugin.gestures.generated.GesturesSettingsBase implements com.mapbox.maps.plugin.gestures.GesturesPlugin {
+    ctor public GesturesPluginImpl(android.content.Context context, float pixelRatio);
+    ctor public GesturesPluginImpl(android.content.Context context, android.util.AttributeSet attributeSet, float pixelRatio);
+    method public void addOnFlingListener(com.mapbox.maps.plugin.gestures.OnFlingListener onFlingListener);
+    method public void addOnMapClickListener(com.mapbox.maps.plugin.gestures.OnMapClickListener onMapClickListener);
+    method public void addOnMapLongClickListener(com.mapbox.maps.plugin.gestures.OnMapLongClickListener onMapLongClickListener);
+    method public void addOnMoveListener(com.mapbox.maps.plugin.gestures.OnMoveListener onMoveListener);
+    method public void addOnRotateListener(com.mapbox.maps.plugin.gestures.OnRotateListener onRotateListener);
+    method public void addOnScaleListener(com.mapbox.maps.plugin.gestures.OnScaleListener onScaleListener);
+    method public void addOnShoveListener(com.mapbox.maps.plugin.gestures.OnShoveListener onShoveListener);
+    method public void addProtectedAnimationOwner(String owner);
+    method protected void applySettings();
+    method public void bind(android.content.Context context, android.util.AttributeSet? attrs, float pixelRatio);
+    method public void cleanup();
+    method public com.mapbox.android.gestures.AndroidGesturesManager getGesturesManager();
+    method protected com.mapbox.maps.plugin.gestures.generated.GesturesSettings getInternalSettings();
+    method public void initialize();
+    method public void onDelegateProvider(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider);
+    method public boolean onGenericMotionEvent(android.view.MotionEvent event);
+    method public void onSizeChanged(int width, int height);
+    method public boolean onTouchEvent(android.view.MotionEvent? motionEvent);
+    method public void removeOnFlingListener(com.mapbox.maps.plugin.gestures.OnFlingListener onFlingListener);
+    method public void removeOnMapClickListener(com.mapbox.maps.plugin.gestures.OnMapClickListener onMapClickListener);
+    method public void removeOnMapLongClickListener(com.mapbox.maps.plugin.gestures.OnMapLongClickListener onMapLongClickListener);
+    method public void removeOnMoveListener(com.mapbox.maps.plugin.gestures.OnMoveListener listener);
+    method public void removeOnRotateListener(com.mapbox.maps.plugin.gestures.OnRotateListener listener);
+    method public void removeOnScaleListener(com.mapbox.maps.plugin.gestures.OnScaleListener listener);
+    method public void removeOnShoveListener(com.mapbox.maps.plugin.gestures.OnShoveListener listener);
+    method public void removeProtectedAnimationOwner(String owner);
+    method public void setGesturesManager(com.mapbox.android.gestures.AndroidGesturesManager internalGesturesManager, boolean attachDefaultListeners, boolean setDefaultMutuallyExclusives);
+    method protected void setInternalSettings(com.mapbox.maps.plugin.gestures.generated.GesturesSettings p);
+    property protected com.mapbox.maps.plugin.gestures.generated.GesturesSettings internalSettings;
+    field public static final float MAX_SHOVE_ANGLE = 45.0f;
+    field public static final float ROTATION_ANGLE_THRESHOLD = 3.0f;
+  }
+
+  public final class GesturesPluginImplKt {
+  }
+
+  public final class GesturesUtils {
+    method public static void addOnFlingListener(com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate, com.mapbox.maps.plugin.gestures.OnFlingListener onFlingListener);
+    method public static void addOnMapClickListener(com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate, com.mapbox.maps.plugin.gestures.OnMapClickListener onMapClickListener);
+    method public static void addOnMapLongClickListener(com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate, com.mapbox.maps.plugin.gestures.OnMapLongClickListener onMapLongClickListener);
+    method public static void addOnMoveListener(com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate, com.mapbox.maps.plugin.gestures.OnMoveListener listener);
+    method public static void addOnRotateListener(com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate, com.mapbox.maps.plugin.gestures.OnRotateListener listener);
+    method public static void addOnScaleListener(com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate, com.mapbox.maps.plugin.gestures.OnScaleListener listener);
+    method public static void addOnShoveListener(com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate, com.mapbox.maps.plugin.gestures.OnShoveListener listener);
+    method public static com.mapbox.maps.plugin.gestures.GesturesPlugin getGestures(com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate);
+    method public static com.mapbox.android.gestures.AndroidGesturesManager? getGesturesManager(com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate);
+    method @Deprecated public static com.mapbox.maps.plugin.gestures.generated.GesturesSettings? getGesturesSettings(com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate);
+    method public static boolean isScrollHorizontallyLimited(com.mapbox.maps.plugin.gestures.generated.GesturesSettings);
+    method public static boolean isScrollVerticallyLimited(com.mapbox.maps.plugin.gestures.generated.GesturesSettings);
+    method public static void removeOnFlingListener(com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate, com.mapbox.maps.plugin.gestures.OnFlingListener onFlingListener);
+    method public static void removeOnMapClickListener(com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate, com.mapbox.maps.plugin.gestures.OnMapClickListener onMapClickListener);
+    method public static void removeOnMapLongClickListener(com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate, com.mapbox.maps.plugin.gestures.OnMapLongClickListener onMapLongClickListener);
+    method public static void removeOnMoveListener(com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate, com.mapbox.maps.plugin.gestures.OnMoveListener listener);
+    method public static void removeOnRotateListener(com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate, com.mapbox.maps.plugin.gestures.OnRotateListener listener);
+    method public static void removeOnScaleListener(com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate, com.mapbox.maps.plugin.gestures.OnScaleListener listener);
+    method public static void removeOnShoveListener(com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate, com.mapbox.maps.plugin.gestures.OnShoveListener listener);
+    method public static void setGesturesManager(com.mapbox.maps.plugin.delegates.MapPluginExtensionsDelegate, com.mapbox.android.gestures.AndroidGesturesManager androidGesturesManager, boolean attachDefaultListeners, boolean setDefaultMutuallyExclusives);
+  }
+
+}
+

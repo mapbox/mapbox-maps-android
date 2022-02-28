@@ -23,10 +23,13 @@ workflows:
       - verify-docs:
           requires:
             - verify-code
-      - verify-kotlin-binary-compatibility:
+      - verify-api-kotlin-binary-compatibility:
           requires:
             - verify-code
-      - verify-api:
+      - verify-api-metalava:
+          requires:
+            - verify-code
+      - verify-api-revapi:
           requires:
             - verify-code
       - verify-internal:
@@ -287,7 +290,7 @@ commands:
                 gcloud beta firebase test android run --type instrumentation \
                   --app << parameters.app_target >>/build/outputs/apk/debug/<< parameters.app_target >>-debug.apk \
                   --test << parameters.module_target >>/build/outputs/apk/androidTest/debug/<< parameters.module_target >>-debug-androidTest.apk \
-                  --device model=AOP_sprout,version=28,locale=en,orientation=portrait \
+                  --device model=blueline,version=28,locale=en,orientation=portrait \
                   --timeout 45m --use-orchestrator --no-record-video --num-flaky-test-attempts 3 \
                   --num-uniform-shards 3
               else
@@ -295,6 +298,7 @@ commands:
                 --app << parameters.app_target >>/build/outputs/apk/debug/<< parameters.app_target >>-debug.apk \
                 --test << parameters.module_target >>/build/outputs/apk/androidTest/debug/<< parameters.module_target >>-debug-androidTest.apk \
                 --device model=harpia,version=23,locale=en,orientation=portrait \
+                --device model=blueline,version=28,locale=en,orientation=portrait \
                 --timeout 45m --use-orchestrator --no-record-video --num-flaky-test-attempts 3 \
                 --num-uniform-shards 4
               fi
@@ -310,6 +314,7 @@ commands:
               gcloud firebase test android run --type robo \
                 --app app/build/outputs/apk/release/app-release.apk \
                 --device model=harpia,version=23,locale=en,orientation=portrait \
+                --device model=blueline,version=28,locale=en,orientation=portrait \
                 --device model=Pixel2,version=30,locale=en,orientation=portrait \
                 --device model=G8142,version=25,locale=en,orientation=portrait \
                 --timeout 90s
@@ -379,18 +384,30 @@ jobs:
           name: docs
           command: sh scripts/kdoc-validate.sh
 
-  verify-kotlin-binary-compatibility:
+  verify-api-metalava:
     executor: ubuntu
     steps:
       - checkout
       - restore-gradle-cache
       - run:
           no_output_timeout: 30m
-          name: verify-kotlin-binary-compatibility
+          name: verify-api-metalava
+          command: |
+            ./gradlew assembleRelease
+            ./gradlew checkApi
+
+  verify-api-kotlin-binary-compatibility:
+    executor: ubuntu
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - run:
+          no_output_timeout: 30m
+          name: verify-api-kotlin-binary-compatibility
           command: |
             ./gradlew apiCheck
 
-  verify-api:
+  verify-api-revapi:
     executor: ubuntu
     steps:
       - checkout
@@ -398,7 +415,7 @@ jobs:
       - init-aws
       - run:
           no_output_timeout: 30m
-          name: verfiy-api
+          name: verify-api-revapi
           command: |
             make build
             echo "$(./mbx-ci github reader token)" > gh_token.txt

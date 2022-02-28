@@ -2,11 +2,12 @@
 
 Mapbox welcomes participation and contributions from everyone.
 
-# 10.4.0-rc
+# main
 ## Features ✨ and improvements 🏁
 * Add checks while applySettings to plugins. Only apply setting when setting a new value. ([#1189](https://github.com/mapbox/mapbox-maps-android/pull/1189))
 
 ## Bug fixes 🐞
+* Fix an issue when user subscribe sdk listeners multiple times, by changing CopyOnWriteArrayList to CopyOnWriteArraySet in the sdk to hold listeners. ([1183](https://github.com/mapbox/mapbox-maps-android/pull/1183))
 
 # 10.4.0-beta.1 February 24, 2022
 

@@ -1,0 +1,47 @@
+// Signature format: 3.0
+package com.mapbox.maps.plugin.attribution {
+
+  public final class AttributionDialogManagerImpl implements com.mapbox.maps.plugin.attribution.AttributionDialogManager android.content.DialogInterface.OnClickListener {
+    ctor public AttributionDialogManagerImpl(android.content.Context context);
+    method public void onClick(android.content.DialogInterface dialog, int which);
+    method public void onStop();
+    method public void showAttribution(com.mapbox.maps.plugin.delegates.MapAttributionDelegate mapAttributionDelegate);
+    field public static final com.mapbox.maps.plugin.attribution.AttributionDialogManagerImpl.Companion Companion;
+  }
+
+  public static final class AttributionDialogManagerImpl.Companion {
+  }
+
+  public final class AttributionPluginImplKt {
+    method public static com.mapbox.maps.plugin.attribution.AttributionPlugin getAttribution(com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate);
+  }
+
+  public final class AttributionViewImpl extends androidx.appcompat.widget.AppCompatImageView implements com.mapbox.maps.plugin.attribution.AttributionView {
+    ctor public AttributionViewImpl(android.content.Context context, android.util.AttributeSet? attrs = null, int defStyleAttr = 0);
+    ctor public AttributionViewImpl(android.content.Context context, android.util.AttributeSet? attrs = null);
+    ctor public AttributionViewImpl(android.content.Context context);
+    method public void setAttributionMargins(int left, int top, int right, int bottom);
+    method public void setEnable(boolean enabled);
+    method public void setGravity(int gravity);
+    method public void setIconColor(int color);
+    method public void setViewOnClickListener(android.view.View.OnClickListener listener);
+  }
+
+  public class AttributionViewPlugin extends com.mapbox.maps.plugin.attribution.generated.AttributionSettingsBase implements com.mapbox.maps.plugin.attribution.AttributionPlugin android.view.View.OnClickListener {
+    ctor public AttributionViewPlugin(kotlin.jvm.functions.Function1<? super android.content.Context,com.mapbox.maps.plugin.attribution.AttributionViewImpl> viewImplProvider = { it -> return <init>(it) });
+    method protected void applySettings();
+    method public android.view.View bind(android.widget.FrameLayout mapView, android.util.AttributeSet? attrs, float pixelRatio);
+    method protected com.mapbox.maps.plugin.attribution.generated.AttributionSettings getInternalSettings();
+    method public com.mapbox.maps.plugin.delegates.MapAttributionDelegate getMapAttributionDelegate();
+    method public void initialize();
+    method public void onClick(android.view.View? v);
+    method public void onDelegateProvider(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider);
+    method public void onPluginView(android.view.View view);
+    method public void onStop();
+    method public void setCustomAttributionDialogManager(com.mapbox.maps.plugin.attribution.AttributionDialogManager dialogManager);
+    method protected void setInternalSettings(com.mapbox.maps.plugin.attribution.generated.AttributionSettings p);
+    property protected com.mapbox.maps.plugin.attribution.generated.AttributionSettings internalSettings;
+  }
+
+}
+

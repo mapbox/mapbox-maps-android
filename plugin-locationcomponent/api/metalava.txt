@@ -1,0 +1,76 @@
+// Signature format: 3.0
+package com.mapbox.maps.plugin.locationcomponent {
+
+  public final class DefaultLocationProvider implements com.mapbox.maps.plugin.locationcomponent.LocationProvider {
+    ctor public DefaultLocationProvider(android.content.Context context);
+    method public void registerLocationConsumer(com.mapbox.maps.plugin.locationcomponent.LocationConsumer locationConsumer);
+    method public void unRegisterLocationConsumer(com.mapbox.maps.plugin.locationcomponent.LocationConsumer locationConsumer);
+    method public void updatePuckBearingSource(com.mapbox.maps.plugin.PuckBearingSource source);
+  }
+
+  public final class LocationComponentConstants {
+    field public static final long ACCURACY_RADIUS_ANIMATION_DURATION = 250L; // 0xfaL
+    field public static final String BEARING_ICON = "mapbox-location-bearing-icon";
+    field public static final long COMPASS_UPDATE_RATE_MS = 500L; // 0x1f4L
+    field public static final long DEFAULT_FASTEST_INTERVAL_MILLIS = 1000L; // 0x3e8L
+    field public static final long DEFAULT_INTERVAL_MILLIS = 1000L; // 0x3e8L
+    field public static final long DEFAULT_TRACKING_PADDING_ANIM_DURATION = 750L; // 0x2eeL
+    field public static final long DEFAULT_TRACKING_TILT_ANIM_DURATION = 1250L; // 0x4e2L
+    field public static final long DEFAULT_TRACKING_ZOOM_ANIM_DURATION = 750L; // 0x2eeL
+    field public static final com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants INSTANCE;
+    field public static final double INSTANT_LOCATION_TRANSITION_THRESHOLD = 50000.0;
+    field public static final String LOCATION_INDICATOR_LAYER = "mapbox-location-indicator-layer";
+    field public static final long MAX_ANIMATION_DURATION_MS = 2000L; // 0x7d0L
+    field public static final String MODEL_LAYER = "mapbox-location-model-layer";
+    field public static final String MODEL_SOURCE = "mapbox-location-model-source";
+    field public static final String SHADOW_ICON = "mapbox-location-shadow-icon";
+    field public static final String TOP_ICON = "mapbox-location-top-icon";
+    field public static final long TRANSITION_ANIMATION_DURATION_MS = 750L; // 0x2eeL
+  }
+
+  public final class LocationComponentPluginImpl extends com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettingsBase2 implements com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin2 com.mapbox.maps.plugin.locationcomponent.LocationConsumer2 {
+    ctor public LocationComponentPluginImpl();
+    method public void addOnIndicatorAccuracyRadiusChangedListener(com.mapbox.maps.plugin.locationcomponent.OnIndicatorAccuracyRadiusChangedListener listener);
+    method public void addOnIndicatorBearingChangedListener(com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener listener);
+    method public void addOnIndicatorPositionChangedListener(com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener listener);
+    method protected void applySettings();
+    method protected void applySettings2();
+    method public void bind(android.content.Context context, android.util.AttributeSet? attrs, float pixelRatio);
+    method protected com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings getInternalSettings();
+    method protected com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2 getInternalSettings2();
+    method public com.mapbox.maps.plugin.locationcomponent.LocationProvider? getLocationProvider();
+    method public void isLocatedAt(com.mapbox.geojson.Point point, com.mapbox.maps.plugin.locationcomponent.PuckLocatedAtPointListener listener);
+    method public void onAccuracyRadiusUpdated(double[] radius, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? options);
+    method public void onBearingUpdated(double[] bearing, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? options);
+    method public void onDelegateProvider(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider);
+    method public void onLocationUpdated(com.mapbox.geojson.Point![] location, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? options);
+    method public void onPuckAccuracyRadiusAnimatorDefaultOptionsUpdated(kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit> options);
+    method public void onPuckBearingAnimatorDefaultOptionsUpdated(kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit> options);
+    method public void onPuckLocationAnimatorDefaultOptionsUpdated(kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit> options);
+    method public void onStart();
+    method public void onStop();
+    method public void onStyleChanged(com.mapbox.maps.extension.style.StyleInterface styleDelegate);
+    method public void removeOnIndicatorAccuracyRadiusChangedListener(com.mapbox.maps.plugin.locationcomponent.OnIndicatorAccuracyRadiusChangedListener listener);
+    method public void removeOnIndicatorBearingChangedListener(com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener listener);
+    method public void removeOnIndicatorPositionChangedListener(com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener listener);
+    method protected void setInternalSettings(com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings p);
+    method protected void setInternalSettings2(com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2 p);
+    method public void setLocationProvider(com.mapbox.maps.plugin.locationcomponent.LocationProvider locationProvider);
+    property protected com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings internalSettings;
+    property protected com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2 internalSettings2;
+    field protected com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings internalSettings;
+    field protected com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2 internalSettings2;
+  }
+
+  public final class LocationComponentUtils {
+    method public static com.mapbox.maps.plugin.LocationPuck2D createDefault2DPuck(com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin, android.content.Context context, boolean withBearing = false);
+    method public static com.mapbox.maps.plugin.LocationPuck2D createDefault2DPuck(com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin, android.content.Context context);
+    method public static com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin getLocationComponent(com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate);
+    method public static com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin2 getLocationComponent2(com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate);
+  }
+
+  public final class LocationPuckManagerKt {
+  }
+
+}
+

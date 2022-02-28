@@ -16,7 +16,7 @@ import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.plugin.PuckBearingSource
 import java.lang.ref.WeakReference
-import java.util.concurrent.CopyOnWriteArrayList
+import java.util.concurrent.CopyOnWriteArraySet
 
 /**
  * Default Location Provider implementation that produces location updates according to the device's
@@ -36,7 +36,7 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
       .setPriority(LocationEngineRequest.PRIORITY_HIGH_ACCURACY)
       .build()
 
-  private val locationConsumers = CopyOnWriteArrayList<LocationConsumer>()
+  private val locationConsumers = CopyOnWriteArraySet<LocationConsumer>()
   private var currentPuckBearingSource: PuckBearingSource = PuckBearingSource.COURSE
   private var handler: Handler? = null
   private lateinit var runnable: Runnable

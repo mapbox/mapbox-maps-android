@@ -45,6 +45,7 @@ fun StyleManagerInterface.getLayer(layerId: String): Layer? {
  * @param layerId the layer id
  * @return T if layer is T, otherwise null
  */
+@SuppressWarnings("ChangedType")
 inline fun <reified T : Layer> StyleManagerInterface.getLayerAs(layerId: String): T? {
   val layer = getLayer(layerId) as? T
   if (layer == null) {

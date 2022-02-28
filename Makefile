@@ -104,15 +104,17 @@ instrumentation-clean:
 generate-sanity-test:
 	node scripts/sanity-test/generate-sanity-test.js
 
-# Metalava: check API
+# Metalava & kotlin binary compatibility validator: check API
 .PHONY: check-api
 check-api:
-	./gradlew checkApi
+	./gradlew checkApi;
+	./gradlew apiCheck;
 
-# Metalava: update API
+# Metalava & kotlin binary compatibility validator: update API
 .PHONY: update-api
 update-api:
-	./gradlew updateApi
+	./gradlew updateApi;
+	./gradlew apiDump;
 
 # Metalava: update metalava version
 .PHONY: update-metalava

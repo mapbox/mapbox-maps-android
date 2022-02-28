@@ -9,7 +9,7 @@ import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
 import com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener
 import com.mapbox.maps.plugin.delegates.listeners.OnStyleLoadedListener
 import java.lang.ref.WeakReference
-import java.util.concurrent.CopyOnWriteArrayList
+import java.util.concurrent.CopyOnWriteArraySet
 
 /**
  * Class that listens to style error and load events
@@ -26,7 +26,7 @@ internal class StyleObserver(
   private var loadStyleErrorListener: OnMapLoadErrorListener? = null
   private var loadStyleTransitionOptions: TransitionOptions? = null
 
-  private val getStyleListeners = CopyOnWriteArrayList<Style.OnStyleLoaded>()
+  private val getStyleListeners = CopyOnWriteArraySet<Style.OnStyleLoaded>()
 
   init {
     nativeObserver.addOnStyleLoadedListener(this)
