@@ -33,6 +33,10 @@ package com.mapbox.maps {
     ctor public MapboxMapException(String? exceptionText);
   }
 
+  public final class MapboxMapMemoryLeakException extends java.lang.IllegalStateException {
+    ctor public MapboxMapMemoryLeakException(String? exceptionText = "You are keeping reference to a destroyed view, you are leaking memory");
+  }
+
   public final class MapboxStyleException extends java.lang.RuntimeException {
     ctor public MapboxStyleException(String? exceptionText);
   }

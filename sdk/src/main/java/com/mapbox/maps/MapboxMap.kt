@@ -366,7 +366,9 @@ class MapboxMap :
    *
    * @param callback Called once the request is complete or an error occurred.
    */
-  fun clearData(callback: AsyncOperationResultCallback) = getNativeMap().apply { Map.clearData(this.resourceOptions, callback) }
+  fun clearData(callback: AsyncOperationResultCallback) {
+    getNativeMap().apply { Map.clearData(this.resourceOptions, callback) }
+  }
 
   /**
    * Changes the map view by any combination of center, zoom, bearing, and pitch, without an animated transition.
@@ -460,8 +462,9 @@ class MapboxMap :
    *
    * @param delta The prefetch zoom delta
    */
-  fun setPrefetchZoomDelta(delta: Byte) =
+  fun setPrefetchZoomDelta(delta: Byte) {
     getNativeMap().apply { this.prefetchZoomDelta = delta }
+  }
 
   /**
    * Get the prefetch zoom delta
@@ -492,8 +495,9 @@ class MapboxMap :
   /**
    * Set debug options
    */
-  fun setDebug(debugOptions: List<MapDebugOptions>, enabled: Boolean) =
+  fun setDebug(debugOptions: List<MapDebugOptions>, enabled: Boolean) {
     getNativeMap().apply { this.setDebug(debugOptions, enabled) }
+  }
 
   /**
    * Convert to a camera options from a given LatLngBounds, padding, bearing and pitch values.
@@ -1033,7 +1037,7 @@ class MapboxMap :
     featureId: String,
     state: Value
   ) =
-    getNativeMap().apply { this.setFeatureState(sourceId, sourceLayerId, featureId, state) }
+    getNativeMap().setFeatureState(sourceId, sourceLayerId, featureId, state)
 
   /**
    * Get the state map of a feature within a style source.
