@@ -46,7 +46,7 @@ class MapboxMap :
   MapCameraManagerDelegate,
   MapStyleStateDelegate {
 
-  private val nativeMapWeakRef: WeakReference<MapInterface>
+  private val nativeMap: MapInterface?
   private val nativeObserver: NativeObserver
 
   internal var style: Style? = null
@@ -54,11 +54,17 @@ class MapboxMap :
   private val styleObserver: StyleObserver
   internal var renderHandler: Handler? = null
 
+  private fun getNativeMap(): MapInterface {
+    if (nativeMap == null) {
+      throw MapboxMapMemoryLeakException()
+    }
+    return nativeMap
+  }
   /**
    * Represents current camera state.
    */
   override val cameraState: CameraState
-    get() = nativeMapWeakRef.call { this.cameraState }
+    get() = getNativeMap().cameraState
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal var cameraAnimationsPlugin: WeakReference<CameraAnimationsPlugin>? = null
@@ -68,24 +74,24 @@ class MapboxMap :
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal constructor(
-    nativeMapWeakRef: WeakReference<MapInterface>,
+    nativeMap: MapInterface,
     nativeObserver: NativeObserver,
     styleObserver: StyleObserver
   ) {
-    this.nativeMapWeakRef = nativeMapWeakRef
+    this.nativeMap = nativeMap
     this.nativeObserver = nativeObserver
     this.styleObserver = styleObserver
   }
 
   internal constructor(
-    nativeMapWeakRef: WeakReference<MapInterface>,
+    nativeMap: MapInterface,
     nativeObserver: NativeObserver,
     pixelRatio: Float
   ) {
-    this.nativeMapWeakRef = nativeMapWeakRef
+    this.nativeMap = nativeMap
     this.nativeObserver = nativeObserver
     this.styleObserver = StyleObserver(
-      nativeMapWeakRef,
+      WeakReference(nativeMap),
       { style -> this.style = style },
       nativeObserver,
       pixelRatio
@@ -129,9 +135,9 @@ class MapboxMap :
   ) {
     initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, styleTransitionOptions)
     if (styleUri.isEmpty()) {
-      nativeMapWeakRef.call { styleJSON = EMPTY_STYLE_JSON }
+      getNativeMap().apply { styleJSON = EMPTY_STYLE_JSON }
     } else {
-      nativeMapWeakRef.call { styleURI = styleUri }
+      getNativeMap().apply { styleURI = styleUri }
     }
   }
 
@@ -170,9 +176,9 @@ class MapboxMap :
   ) {
     initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, null)
     if (styleUri.isEmpty()) {
-      nativeMapWeakRef.call { styleJSON = EMPTY_STYLE_JSON }
+      getNativeMap().apply { styleJSON = EMPTY_STYLE_JSON }
     } else {
-      nativeMapWeakRef.call { styleURI = styleUri }
+      getNativeMap().apply { styleURI = styleUri }
     }
   }
 
@@ -206,7 +212,7 @@ class MapboxMap :
     onMapLoadErrorListener: OnMapLoadErrorListener? = null,
   ) {
     initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, styleTransitionOptions)
-    nativeMapWeakRef.call {
+    getNativeMap().apply {
       styleJSON = styleJson
     }
   }
@@ -220,7 +226,7 @@ class MapboxMap :
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
   ) {
     initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, null)
-    nativeMapWeakRef.call {
+    getNativeMap().apply {
       styleJSON = styleJson
     }
   }
@@ -347,9 +353,7 @@ class MapboxMap :
    *
    * @return resourceOptions The resource options of the map
    */
-  fun getResourceOptions(): ResourceOptions {
-    return nativeMapWeakRef.call { this.resourceOptions }
-  }
+  fun getResourceOptions(): ResourceOptions = getNativeMap().resourceOptions
 
   /**
    * Clears temporary map data.
@@ -362,9 +366,7 @@ class MapboxMap :
    *
    * @param callback Called once the request is complete or an error occurred.
    */
-  fun clearData(callback: AsyncOperationResultCallback) {
-    return nativeMapWeakRef.call { Map.clearData(this.resourceOptions, callback) }
-  }
+  fun clearData(callback: AsyncOperationResultCallback) = getNativeMap().apply { Map.clearData(this.resourceOptions, callback) }
 
   /**
    * Changes the map view by any combination of center, zoom, bearing, and pitch, without an animated transition.
@@ -375,22 +377,23 @@ class MapboxMap :
    * @param cameraOptions New camera options
    */
   override fun setCamera(cameraOptions: CameraOptions) =
-    nativeMapWeakRef.call { this.setCamera(cameraOptions) }
+    getNativeMap().setCamera(cameraOptions)
 
   /**
    * Notify map about gesture being in progress.
    *
    * @param inProgress True if gesture is in progress
    */
-  override fun setGestureInProgress(inProgress: Boolean) =
-    nativeMapWeakRef.call { this.isGestureInProgress = inProgress }
+  override fun setGestureInProgress(inProgress: Boolean) {
+    getNativeMap().isGestureInProgress = inProgress
+  }
 
   /**
    * Returns if a gesture is in progress.
    *
    * @return Returns if a gesture is in progress
    */
-  override fun isGestureInProgress(): Boolean = nativeMapWeakRef.call { this.isGestureInProgress }
+  override fun isGestureInProgress(): Boolean = getNativeMap().isGestureInProgress
 
   /**
    * Set the map north orientation
@@ -398,23 +401,24 @@ class MapboxMap :
    * @param northOrientation The map north orientation to set
    */
   override fun setNorthOrientation(northOrientation: NorthOrientation) =
-    nativeMapWeakRef.call { this.setNorthOrientation(northOrientation) }
+    getNativeMap().setNorthOrientation(northOrientation)
 
   /**
    * Set the map constrain mode
    *
    * @param constrainMode The map constraint mode to set
    */
-  override fun setConstrainMode(constrainMode: ConstrainMode) =
-    nativeMapWeakRef.call { this.setConstrainMode(constrainMode) }
-
+  override fun setConstrainMode(constrainMode: ConstrainMode) {
+    getNativeMap().apply { this.setConstrainMode(constrainMode) }
+  }
   /**
    * Set the map viewport mode
    *
    * @param viewportMode The map viewport mode to set
    */
-  override fun setViewportMode(viewportMode: ViewportMode) =
-    nativeMapWeakRef.call { this.setViewportMode(viewportMode) }
+  override fun setViewportMode(viewportMode: ViewportMode) {
+    getNativeMap().apply { this.setViewportMode(viewportMode) }
+  }
 
   /**
    * Set the map bounds.
@@ -422,14 +426,14 @@ class MapboxMap :
    * @param options the map bound options
    */
   override fun setBounds(options: CameraBoundsOptions): Expected<String, None> =
-    nativeMapWeakRef.call { this.setBounds(options) }
+    getNativeMap().setBounds(options)
 
   /**
    * Get the map bounds options.
    *
    * @return Returns the map bounds options
    */
-  override fun getBounds(): CameraBounds = nativeMapWeakRef.call { this.bounds }
+  override fun getBounds(): CameraBounds = getNativeMap().bounds
 
   /**
    * Tells the map rendering engine that the animation is currently performed by the
@@ -439,7 +443,7 @@ class MapboxMap :
    * @param inProgress Bool representing if user animation is in progress
    */
   override fun setUserAnimationInProgress(inProgress: Boolean) {
-    nativeMapWeakRef.call { this.isUserAnimationInProgress = inProgress }
+    getNativeMap().apply { this.isUserAnimationInProgress = inProgress }
   }
 
   /**
@@ -448,7 +452,7 @@ class MapboxMap :
    * @return Return true if a user animation is in progress.
    */
   override fun isUserAnimationInProgress(): Boolean {
-    return nativeMapWeakRef.call { this.isUserAnimationInProgress }
+    return getNativeMap().isUserAnimationInProgress
   }
 
   /**
@@ -457,39 +461,39 @@ class MapboxMap :
    * @param delta The prefetch zoom delta
    */
   fun setPrefetchZoomDelta(delta: Byte) =
-    nativeMapWeakRef.call { this.prefetchZoomDelta = delta }
+    getNativeMap().apply { this.prefetchZoomDelta = delta }
 
   /**
    * Get the prefetch zoom delta
    *
    * @return Returns the prefetch zoom delta
    */
-  fun getPrefetchZoomDelta(): Byte = nativeMapWeakRef.call { this.prefetchZoomDelta }
+  fun getPrefetchZoomDelta(): Byte = getNativeMap().prefetchZoomDelta
 
   /**
    * Get map options.
    *
    * @return Returns map options
    */
-  override fun getMapOptions(): MapOptions = nativeMapWeakRef.call { this.mapOptions }
+  override fun getMapOptions(): MapOptions = getNativeMap().mapOptions
 
   /**
    * Gets the size of the map.
    *
    * @return size The size of the map in MapOptions#size platform pixels
    */
-  override fun getSize() = nativeMapWeakRef.call { this.size }
+  override fun getSize() = getNativeMap().size
 
   /**
    * Get debug options
    */
-  fun getDebug(): List<MapDebugOptions> = nativeMapWeakRef.call { this.debug }
+  fun getDebug(): List<MapDebugOptions> = getNativeMap().debug
 
   /**
    * Set debug options
    */
   fun setDebug(debugOptions: List<MapDebugOptions>, enabled: Boolean) =
-    nativeMapWeakRef.call { this.setDebug(debugOptions, enabled) }
+    getNativeMap().apply { this.setDebug(debugOptions, enabled) }
 
   /**
    * Convert to a camera options from a given LatLngBounds, padding, bearing and pitch values.
@@ -511,14 +515,12 @@ class MapboxMap :
     bearing: Double?,
     pitch: Double?
   ): CameraOptions =
-    nativeMapWeakRef.call {
-      this.cameraForCoordinateBounds(
-        bounds,
-        padding,
-        bearing,
-        pitch
-      )
-    }
+    getNativeMap().cameraForCoordinateBounds(
+      bounds,
+      padding,
+      bearing,
+      pitch
+    )
 
   /**
    * Convert to a camera options from a given list of points, padding, bearing and pitch values.
@@ -540,7 +542,7 @@ class MapboxMap :
     bearing: Double?,
     pitch: Double?
   ): CameraOptions =
-    nativeMapWeakRef.call { this.cameraForCoordinates(coordinates, padding, bearing, pitch) }
+    getNativeMap().cameraForCoordinates(coordinates, padding, bearing, pitch)
 
   /**
    * Convenience method that returns the camera options object for given arguments
@@ -564,7 +566,7 @@ class MapboxMap :
     camera: CameraOptions,
     box: ScreenBox
   ): CameraOptions =
-    nativeMapWeakRef.call { this.cameraForCoordinates(coordinates, camera, box) }
+    getNativeMap().cameraForCoordinates(coordinates, camera, box)
 
   /**
    * Convert to a camera options from a given geometry, padding, bearing and pitch values.
@@ -586,7 +588,7 @@ class MapboxMap :
     bearing: Double?,
     pitch: Double?
   ): CameraOptions =
-    nativeMapWeakRef.call { this.cameraForGeometry(geometry, padding, bearing, pitch) }
+    getNativeMap().cameraForGeometry(geometry, padding, bearing, pitch)
 
   /**
    * Convert to a LatLngBounds from a given camera options.
@@ -600,7 +602,7 @@ class MapboxMap :
    * @return Returns the converted LatLngBounds
    */
   override fun coordinateBoundsForCamera(camera: CameraOptions): CoordinateBounds =
-    nativeMapWeakRef.call { this.coordinateBoundsForCamera(camera) }
+    getNativeMap().coordinateBoundsForCamera(camera)
 
   /**
    *  Returns the coordinate bounds and zoom for a given camera.
@@ -617,7 +619,7 @@ class MapboxMap :
    *  @return Returns the coordinate bounds and zoom for a given camera.
    */
   override fun coordinateBoundsZoomForCamera(camera: CameraOptions): CoordinateBoundsZoom =
-    nativeMapWeakRef.call { this.coordinateBoundsZoomForCamera(camera) }
+    getNativeMap().coordinateBoundsZoomForCamera(camera)
 
   /**
    * Returns the unwrapped coordinate bounds and zoom for a given camera.
@@ -631,7 +633,7 @@ class MapboxMap :
    *  @return Returns the unwrapped coordinate bounds and zoom for a given camera.
    */
   override fun coordinateBoundsZoomForCameraUnwrapped(camera: CameraOptions): CoordinateBoundsZoom =
-    nativeMapWeakRef.call { this.coordinateBoundsZoomForCameraUnwrapped(camera) }
+    getNativeMap().coordinateBoundsZoomForCameraUnwrapped(camera)
 
   /**
    * Calculate a screen coordinate that corresponds to a geographical coordinate
@@ -647,7 +649,7 @@ class MapboxMap :
    * @return Returns a screen coordinate on the screen in [MapOptions.size] platform pixels.
    */
   override fun pixelForCoordinate(coordinate: Point): ScreenCoordinate =
-    nativeMapWeakRef.call { this.pixelForCoordinate(coordinate) }
+    getNativeMap().pixelForCoordinate(coordinate)
 
   /**
    * Calculate screen coordinates that corresponds to geographical coordinates
@@ -663,7 +665,7 @@ class MapboxMap :
    * @return Returns a batch of screen coordinates on the screen in [MapOptions.size] platform pixels.
    */
   override fun pixelsForCoordinates(coordinates: List<Point>): List<ScreenCoordinate> =
-    nativeMapWeakRef.call { this.pixelsForCoordinates(coordinates) }
+    getNativeMap().pixelsForCoordinates(coordinates)
 
   /**
    * Calculate a geographical coordinate(i.e., longitude-latitude pair) that corresponds
@@ -680,7 +682,7 @@ class MapboxMap :
    * on the screen.
    */
   override fun coordinateForPixel(pixel: ScreenCoordinate): Point =
-    nativeMapWeakRef.call { this.coordinateForPixel(pixel) }
+    getNativeMap().coordinateForPixel(pixel)
 
   /**
    * Calculate geographical coordinates(i.e., longitude-latitude pair) that corresponds
@@ -697,7 +699,7 @@ class MapboxMap :
    * on the screen.
    */
   override fun coordinatesForPixels(pixels: List<ScreenCoordinate>): List<Point> =
-    nativeMapWeakRef.call { this.coordinatesForPixels(pixels) }
+    getNativeMap().coordinatesForPixels(pixels)
 
   /**
    * Calculate distance spanned by one pixel at the specified latitude
@@ -793,7 +795,7 @@ class MapboxMap :
     options: RenderedQueryOptions,
     callback: QueryFeaturesCallback
   ) {
-    nativeMapWeakRef.call {
+    getNativeMap().apply {
       this.queryRenderedFeatures(shape, options, callback)
     }
   }
@@ -819,7 +821,7 @@ class MapboxMap :
     options: RenderedQueryOptions,
     callback: QueryFeaturesCallback
   ) {
-    nativeMapWeakRef.call {
+    getNativeMap().apply {
       this.queryRenderedFeatures(box, options, callback)
     }
   }
@@ -845,7 +847,7 @@ class MapboxMap :
     options: RenderedQueryOptions,
     callback: QueryFeaturesCallback
   ) {
-    nativeMapWeakRef.call {
+    getNativeMap().apply {
       this.queryRenderedFeatures(pixel, options, callback)
     }
   }
@@ -863,9 +865,7 @@ class MapboxMap :
     options: RenderedQueryOptions,
     callback: QueryFeaturesCallback
   ): Cancelable {
-    return nativeMapWeakRef.call {
-      this.queryRenderedFeatures(geometry, options, callback)
-    }
+    return getNativeMap().queryRenderedFeatures(geometry, options, callback)
   }
 
   /**
@@ -881,7 +881,7 @@ class MapboxMap :
     options: SourceQueryOptions,
     callback: QueryFeaturesCallback
   ) {
-    nativeMapWeakRef.call { this.querySourceFeatures(sourceId, options, callback) }
+    getNativeMap().apply { this.querySourceFeatures(sourceId, options, callback) }
   }
 
   /**
@@ -935,7 +935,7 @@ class MapboxMap :
     args: HashMap<String, Value>?,
     callback: QueryFeatureExtensionCallback
   ) {
-    nativeMapWeakRef.call {
+    getNativeMap().apply {
       this.queryFeatureExtensions(
         sourceIdentifier,
         feature,
@@ -1033,7 +1033,7 @@ class MapboxMap :
     featureId: String,
     state: Value
   ) =
-    nativeMapWeakRef.call { this.setFeatureState(sourceId, sourceLayerId, featureId, state) }
+    getNativeMap().apply { this.setFeatureState(sourceId, sourceLayerId, featureId, state) }
 
   /**
    * Get the state map of a feature within a style source.
@@ -1053,7 +1053,7 @@ class MapboxMap :
     featureId: String,
     callback: QueryFeatureStateCallback
   ) {
-    nativeMapWeakRef.call { this.getFeatureState(sourceId, sourceLayerId, featureId, callback) }
+    getNativeMap().apply { this.getFeatureState(sourceId, sourceLayerId, featureId, callback) }
   }
 
   /**
@@ -1076,7 +1076,7 @@ class MapboxMap :
     featureId: String,
     stateKey: String? = null
   ) {
-    nativeMapWeakRef.call {
+    getNativeMap().apply {
       this.removeFeatureState(
         sourceId,
         sourceLayerId,
@@ -1090,7 +1090,7 @@ class MapboxMap :
    * Reduce memory use. Useful to call when the application gets paused or sent to background.
    */
   fun reduceMemoryUse() {
-    nativeMapWeakRef.call { this.reduceMemoryUse() }
+    getNativeMap().apply { this.reduceMemoryUse() }
   }
 
   /**
@@ -1103,7 +1103,7 @@ class MapboxMap :
    * @param events an array of event types to be subscribed to.
    */
   override fun subscribe(observer: Observer, events: List<String>) {
-    nativeMapWeakRef.call {
+    getNativeMap().apply {
       (this as ObservableInterface).subscribe(observer, events)
     }
   }
@@ -1115,7 +1115,7 @@ class MapboxMap :
    * @param events an array of event types to be unsubscribed from.
    */
   override fun unsubscribe(observer: Observer, events: List<String>) {
-    nativeMapWeakRef.call {
+    getNativeMap().apply {
       (this as ObservableInterface).unsubscribe(observer, events)
     }
   }
@@ -1126,7 +1126,7 @@ class MapboxMap :
    * @param observer an Observer
    */
   override fun unsubscribe(observer: Observer) {
-    nativeMapWeakRef.call {
+    getNativeMap().apply {
       (this as ObservableInterface).unsubscribe(observer)
     }
   }
@@ -1340,14 +1340,14 @@ class MapboxMap :
    * Triggers a repaint of the map.
    */
   fun triggerRepaint() {
-    nativeMapWeakRef.call { this.triggerRepaint() }
+    getNativeMap().apply { this.triggerRepaint() }
   }
 
   /**
    * Get the map's current free camera options. After mutation, it should be set back to the map.
    * @return The current free camera options.
    */
-  override fun getFreeCameraOptions() = nativeMapWeakRef.call { this.freeCameraOptions }
+  override fun getFreeCameraOptions() = getNativeMap().freeCameraOptions
 
   /**
    * Sets the map view with the free camera options.
@@ -1361,7 +1361,7 @@ class MapboxMap :
    * @param freeCameraOptions The free camera options to set.
    */
   override fun setCamera(freeCameraOptions: FreeCameraOptions) {
-    nativeMapWeakRef.call { this.setCamera(freeCameraOptions) }
+    getNativeMap().apply { this.setCamera(freeCameraOptions) }
   }
 
   /**
@@ -1371,7 +1371,7 @@ class MapboxMap :
    *
    * @return Elevation (in meters) multiplied by current terrain exaggeration, or empty if elevation for the coordinate is not available.
    */
-  fun getElevation(coordinate: Point) = nativeMapWeakRef.call { this.getElevation(coordinate) }
+  fun getElevation(coordinate: Point) = getNativeMap().getElevation(coordinate)
 
   /**
    * Enables or disables the experimental render cache feature.
@@ -1389,13 +1389,13 @@ class MapboxMap :
   @MapboxExperimental
   fun setRenderCacheOptions(options: RenderCacheOptions) {
     options.size?.let { size ->
-      nativeMapWeakRef.call {
+      getNativeMap().apply {
         this.renderCacheOptions = if (size >= 0)
           options
         else
           throw IllegalArgumentException("Render cache size must be >= 0!")
       }
-    } ?: nativeMapWeakRef.call {
+    } ?: getNativeMap().apply {
       this.renderCacheOptions = RenderCacheOptions.Builder().setDisabled().build()
     }
   }
@@ -1407,7 +1407,7 @@ class MapboxMap :
    */
   @MapboxExperimental
   fun getRenderCacheOptions(): RenderCacheOptions {
-    return nativeMapWeakRef.call { this.renderCacheOptions }
+    return getNativeMap().renderCacheOptions
   }
 
   /**
@@ -1426,7 +1426,7 @@ class MapboxMap :
    */
   @MapboxExperimental
   fun setMemoryBudget(memoryBudget: MapMemoryBudget?) {
-    nativeMapWeakRef.call { this.setMemoryBudget(memoryBudget) }
+    getNativeMap().apply { this.setMemoryBudget(memoryBudget) }
   }
 
   /**
@@ -1450,7 +1450,7 @@ class MapboxMap :
    * @param point The pivot coordinate, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
    */
   override fun dragStart(point: ScreenCoordinate) {
-    nativeMapWeakRef.call { this.dragStart(point) }
+    getNativeMap().apply { this.dragStart(point) }
   }
 
   /**
@@ -1458,7 +1458,7 @@ class MapboxMap :
    * This function should be called always after the user has ended a drag gesture initiated by `dragStart`.
    */
   override fun dragEnd() {
-    nativeMapWeakRef.call { this.dragEnd() }
+    getNativeMap().apply { this.dragEnd() }
   }
 
   /**
@@ -1473,7 +1473,7 @@ class MapboxMap :
     fromPoint: ScreenCoordinate,
     toPoint: ScreenCoordinate
   ): CameraOptions {
-    return nativeMapWeakRef.call { this.getDragCameraOptions(fromPoint, toPoint) }
+    return getNativeMap().getDragCameraOptions(fromPoint, toPoint)
   }
 
   internal fun setCameraAnimationPlugin(cameraAnimationsPlugin: CameraAnimationsPlugin?) {
@@ -1525,7 +1525,7 @@ class MapboxMap :
    */
   @MapboxExperimental
   override fun setMapProjection(mapProjection: MapProjection) {
-    val expected = nativeMapWeakRef.call { this.setMapProjection(mapProjection.toValue()) }
+    val expected = getNativeMap().setMapProjection(mapProjection.toValue())
     if (expected.isError) {
       Logger.e(TAG_PROJECTION, "Map projection is not supported!")
     }
@@ -1542,28 +1542,34 @@ class MapboxMap :
    */
   @MapboxExperimental
   override fun getMapProjection(): MapProjection {
-    val value = nativeMapWeakRef.call { this.mapProjection }
+    val value = getNativeMap().mapProjection
     return MapProjectionUtils.fromValue(value)
   }
 
-  internal fun addViewAnnotation(viewId: String, options: ViewAnnotationOptions): Expected<String, None> {
-    return nativeMapWeakRef.call { this.addViewAnnotation(viewId, options) }
+  internal fun addViewAnnotation(
+    viewId: String,
+    options: ViewAnnotationOptions
+  ): Expected<String, None> {
+    return getNativeMap().addViewAnnotation(viewId, options)
   }
 
-  internal fun updateViewAnnotation(viewId: String, options: ViewAnnotationOptions): Expected<String, None> {
-    return nativeMapWeakRef.call { this.updateViewAnnotation(viewId, options) }
+  internal fun updateViewAnnotation(
+    viewId: String,
+    options: ViewAnnotationOptions
+  ): Expected<String, None> {
+    return getNativeMap().updateViewAnnotation(viewId, options)
   }
 
   internal fun removeViewAnnotation(viewId: String): Expected<String, None> {
-    return nativeMapWeakRef.call { this.removeViewAnnotation(viewId) }
+    return getNativeMap().removeViewAnnotation(viewId)
   }
 
   internal fun getViewAnnotationOptions(identifier: String): Expected<String, ViewAnnotationOptions> {
-    return nativeMapWeakRef.call { this.getViewAnnotationOptions(identifier) }
+    return getNativeMap().getViewAnnotationOptions(identifier)
   }
 
   internal fun setViewAnnotationPositionsUpdateListener(listener: ViewAnnotationPositionsUpdateListener?) {
-    return nativeMapWeakRef.call { this.setViewAnnotationPositionsUpdateListener(listener) }
+    return getNativeMap().setViewAnnotationPositionsUpdateListener(listener)
   }
 
   /**

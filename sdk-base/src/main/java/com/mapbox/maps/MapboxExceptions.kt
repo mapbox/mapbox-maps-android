@@ -41,3 +41,10 @@ class MapboxCameraAnimationException(
 class MapboxStyleException(
   exceptionText: String?
 ) : RuntimeException(exceptionText)
+
+/**
+ * Mapbox exception class flagging a memory leak did occur.
+ */
+class MapboxMapMemoryLeakException(
+  exceptionText: String? = "You are keeping reference to a destroyed view, you are leaking memory"
+) : IllegalStateException(exceptionText)
