@@ -25,7 +25,7 @@ package com.mapbox.maps.plugin.logo {
     method protected com.mapbox.maps.plugin.logo.generated.LogoSettings getInternalSettings();
     method public void initialize();
     method public void onPluginView(android.view.View view);
-    method protected void setInternalSettings(com.mapbox.maps.plugin.logo.generated.LogoSettings p);
+    method protected void setInternalSettings(com.mapbox.maps.plugin.logo.generated.LogoSettings internalSettings);
     property public boolean enabled;
     property protected com.mapbox.maps.plugin.logo.generated.LogoSettings internalSettings;
   }

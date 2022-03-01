@@ -39,7 +39,7 @@ package com.mapbox.maps.plugin.attribution {
     method public void onPluginView(android.view.View view);
     method public void onStop();
     method public void setCustomAttributionDialogManager(com.mapbox.maps.plugin.attribution.AttributionDialogManager dialogManager);
-    method protected void setInternalSettings(com.mapbox.maps.plugin.attribution.generated.AttributionSettings p);
+    method protected void setInternalSettings(com.mapbox.maps.plugin.attribution.generated.AttributionSettings internalSettings);
     property protected com.mapbox.maps.plugin.attribution.generated.AttributionSettings internalSettings;
   }
 

@@ -44,13 +44,13 @@ package com.mapbox.maps {
     method public com.mapbox.maps.ResourceOptions getResourceOptions();
     method public String? getStyleUri();
     method public boolean getTextureView();
-    method public void setAntialiasingSampleCount(int p);
-    method public void setAttrs(android.util.AttributeSet? p);
-    method public void setCameraOptions(com.mapbox.maps.CameraOptions? p);
-    method public void setMapOptions(com.mapbox.maps.MapOptions p);
-    method public void setPlugins(java.util.List<? extends com.mapbox.maps.plugin.Plugin> p);
-    method public void setResourceOptions(com.mapbox.maps.ResourceOptions p);
-    method public void setTextureView(boolean p);
+    method public void setAntialiasingSampleCount(int antialiasingSampleCount);
+    method public void setAttrs(android.util.AttributeSet? attrs);
+    method public void setCameraOptions(com.mapbox.maps.CameraOptions? cameraOptions);
+    method public void setMapOptions(com.mapbox.maps.MapOptions mapOptions);
+    method public void setPlugins(java.util.List<? extends com.mapbox.maps.plugin.Plugin> plugins);
+    method public void setResourceOptions(com.mapbox.maps.ResourceOptions resourceOptions);
+    method public void setTextureView(boolean textureView);
     property public final int antialiasingSampleCount;
     property public final android.util.AttributeSet? attrs;
     property public final com.mapbox.maps.CameraOptions? cameraOptions;
@@ -76,7 +76,7 @@ package com.mapbox.maps {
   }
 
   public final class MapSurface implements com.mapbox.maps.MapControllable com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate {
-    ctor public MapSurface(android.content.Context context, android.view.Surface surface, com.mapbox.maps.MapInitOptions mapInitOptions = MapInitOptions(context));
+    ctor public MapSurface(android.content.Context context, android.view.Surface surface, com.mapbox.maps.MapInitOptions mapInitOptions = com.mapbox.maps.MapInitOptions(context));
     ctor public MapSurface(android.content.Context context, android.view.Surface surface);
     method @com.mapbox.maps.MapboxExperimental public void addWidget(com.mapbox.maps.renderer.widget.Widget widget);
     method public com.mapbox.maps.MapboxMap getMapboxMap();
@@ -102,7 +102,7 @@ package com.mapbox.maps {
   }
 
   public class MapView extends android.widget.FrameLayout implements com.mapbox.maps.MapControllable com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate {
-    ctor public MapView(android.content.Context context, com.mapbox.maps.MapInitOptions mapInitOptions = MapInitOptions(context));
+    ctor public MapView(android.content.Context context, com.mapbox.maps.MapInitOptions mapInitOptions = com.mapbox.maps.MapInitOptions(context));
     ctor public MapView(android.content.Context context);
     ctor public MapView(android.content.Context context, android.util.AttributeSet? attrs);
     ctor public MapView(android.content.Context context, android.util.AttributeSet? attrs, int defStyleAttr);
@@ -281,7 +281,7 @@ package com.mapbox.maps {
     method public com.mapbox.maps.ResourceOptions component1();
     method public com.mapbox.maps.ResourceOptionsManager copy(com.mapbox.maps.ResourceOptions resourceOptions);
     method public com.mapbox.maps.ResourceOptions getResourceOptions();
-    method public void setResourceOptions(com.mapbox.maps.ResourceOptions p);
+    method public void setResourceOptions(com.mapbox.maps.ResourceOptions resourceOptions);
     method public void update(kotlin.jvm.functions.Function1<? super com.mapbox.maps.ResourceOptions.Builder,kotlin.Unit> block);
     property public final com.mapbox.maps.ResourceOptions resourceOptions;
     field public static final com.mapbox.maps.ResourceOptionsManager.Companion Companion;
@@ -316,7 +316,7 @@ package com.mapbox.maps {
   }
 
   public class Snapshotter {
-    ctor public Snapshotter(android.content.Context context, com.mapbox.maps.MapSnapshotOptions options, com.mapbox.maps.SnapshotOverlayOptions overlayOptions = SnapshotOverlayOptions());
+    ctor public Snapshotter(android.content.Context context, com.mapbox.maps.MapSnapshotOptions options, com.mapbox.maps.SnapshotOverlayOptions overlayOptions = com.mapbox.maps.SnapshotOverlayOptions());
     ctor public Snapshotter(android.content.Context context, com.mapbox.maps.MapSnapshotOptions options);
     method public final com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.EdgeInsets padding, double bearing, double pitch);
     method public final void cancel();
@@ -492,9 +492,9 @@ package com.mapbox.maps.renderer {
 package com.mapbox.maps.renderer.widget {
 
   @com.mapbox.maps.MapboxExperimental public class BitmapWidget extends com.mapbox.maps.renderer.widget.Widget {
-    ctor public BitmapWidget(android.graphics.Bitmap bitmap, com.mapbox.maps.renderer.widget.WidgetPosition position = WidgetPosition(com.mapbox.maps.renderer.widget.WidgetPosition.Vertical.TOP, com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal.LEFT), float marginX = 0f, float marginY = 0f);
-    ctor public BitmapWidget(android.graphics.Bitmap bitmap, com.mapbox.maps.renderer.widget.WidgetPosition position = WidgetPosition(com.mapbox.maps.renderer.widget.WidgetPosition.Vertical.TOP, com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal.LEFT), float marginX = 0f);
-    ctor public BitmapWidget(android.graphics.Bitmap bitmap, com.mapbox.maps.renderer.widget.WidgetPosition position = WidgetPosition(com.mapbox.maps.renderer.widget.WidgetPosition.Vertical.TOP, com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal.LEFT));
+    ctor public BitmapWidget(android.graphics.Bitmap bitmap, com.mapbox.maps.renderer.widget.WidgetPosition position = com.mapbox.maps.renderer.widget.WidgetPosition(com.mapbox.maps.renderer.widget.WidgetPosition.Vertical.TOP, com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal.LEFT), float marginX = 0f, float marginY = 0f);
+    ctor public BitmapWidget(android.graphics.Bitmap bitmap, com.mapbox.maps.renderer.widget.WidgetPosition position = com.mapbox.maps.renderer.widget.WidgetPosition(com.mapbox.maps.renderer.widget.WidgetPosition.Vertical.TOP, com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal.LEFT), float marginX = 0f);
+    ctor public BitmapWidget(android.graphics.Bitmap bitmap, com.mapbox.maps.renderer.widget.WidgetPosition position = com.mapbox.maps.renderer.widget.WidgetPosition(com.mapbox.maps.renderer.widget.WidgetPosition.Vertical.TOP, com.mapbox.maps.renderer.widget.WidgetPosition.Horizontal.LEFT));
     ctor public BitmapWidget(android.graphics.Bitmap bitmap);
     method public com.mapbox.maps.renderer.widget.BitmapWidgetRenderer getRenderer$metalava_module();
     method public void setRotation(float angleDegrees);

@@ -133,7 +133,7 @@ package com.mapbox.maps.extension.style.expressions.dsl.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression pow(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression pow(double first, double second);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression product(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public static com.mapbox.maps.extension.style.expressions.generated.Expression product(double... p);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression product(double... double);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression properties();
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression resolvedLocale(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression rgb(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
@@ -154,7 +154,7 @@ package com.mapbox.maps.extension.style.expressions.dsl.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression subtract(double first, double second);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression subtract(double value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression sum(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public static com.mapbox.maps.extension.style.expressions.generated.Expression sum(double... p);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression sum(double... double);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression switchCase(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression tan(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression tan(double value);
@@ -275,7 +275,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression pow(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression pow(double first, double second);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression product(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
-    method public static com.mapbox.maps.extension.style.expressions.generated.Expression product(double... p);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression product(double... double);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression properties();
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression resolvedLocale(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression rgb(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
@@ -296,7 +296,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression subtract(double first, double second);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression subtract(double value);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression sum(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
-    method public static com.mapbox.maps.extension.style.expressions.generated.Expression sum(double... p);
+    method public static com.mapbox.maps.extension.style.expressions.generated.Expression sum(double... double);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression switchCase(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression tan(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public static com.mapbox.maps.extension.style.expressions.generated.Expression tan(double value);
@@ -480,7 +480,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression pow(double first, double second);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression product(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression product(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public com.mapbox.maps.extension.style.expressions.generated.Expression product(double... p);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression product(double... double);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression properties();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression resolvedLocale(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression resolvedLocale(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
@@ -512,7 +512,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression subtract(double value);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression sum(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression sum(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public com.mapbox.maps.extension.style.expressions.generated.Expression sum(double... p);
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression sum(double... double);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression switchCase(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression switchCase(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.expressions.generated.Expression tan(com.mapbox.maps.extension.style.expressions.generated.Expression... expressions);
@@ -634,7 +634,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public final void pow(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public final void pow(double first, double second);
     method public final void product(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void product(double... p);
+    method public final void product(double... double);
     method public final void properties();
     method public final void resolvedLocale(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public final void rgb(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
@@ -657,7 +657,7 @@ package com.mapbox.maps.extension.style.expressions.generated {
     method public final void subtract(double first, double second);
     method public final void subtract(double value);
     method public final void sum(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
-    method public final void sum(double... p);
+    method public final void sum(double... double);
     method public final void switchCase(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public final void tan(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.expressions.generated.Expression.ExpressionBuilder,kotlin.Unit> block);
     method public final void tan(double value);
@@ -739,9 +739,9 @@ package com.mapbox.maps.extension.style.expressions.types {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getFontScale();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getTextColor();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getTextFont();
-    method public void setFontScale(com.mapbox.maps.extension.style.expressions.generated.Expression? p);
-    method public void setTextColor(com.mapbox.maps.extension.style.expressions.generated.Expression? p);
-    method public void setTextFont(com.mapbox.maps.extension.style.expressions.generated.Expression? p);
+    method public void setFontScale(com.mapbox.maps.extension.style.expressions.generated.Expression? fontScale);
+    method public void setTextColor(com.mapbox.maps.extension.style.expressions.generated.Expression? textColor);
+    method public void setTextFont(com.mapbox.maps.extension.style.expressions.generated.Expression? textFont);
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression content;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? fontScale;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? textColor;
@@ -3733,57 +3733,57 @@ package com.mapbox.maps.extension.style.layers.properties {
 package com.mapbox.maps.extension.style.layers.properties.generated {
 
   public enum Anchor {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.Anchor MAP;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.Anchor VIEWPORT;
   }
 
   public enum CirclePitchAlignment {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment MAP;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchAlignment VIEWPORT;
   }
 
   public enum CirclePitchScale {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchScale MAP;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.CirclePitchScale VIEWPORT;
   }
 
   public enum CircleTranslateAnchor {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor MAP;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.CircleTranslateAnchor VIEWPORT;
   }
 
   public enum FillExtrusionTranslateAnchor {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionTranslateAnchor MAP;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.FillExtrusionTranslateAnchor VIEWPORT;
   }
 
   public enum FillTranslateAnchor {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor MAP;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.FillTranslateAnchor VIEWPORT;
   }
 
   public enum HillshadeIlluminationAnchor {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.HillshadeIlluminationAnchor MAP;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.HillshadeIlluminationAnchor VIEWPORT;
   }
 
   public enum IconAnchor {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor BOTTOM;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor BOTTOM_LEFT;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor BOTTOM_RIGHT;
@@ -3796,24 +3796,24 @@ package com.mapbox.maps.extension.style.layers.properties.generated {
   }
 
   public enum IconPitchAlignment {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment AUTO;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment MAP;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconPitchAlignment VIEWPORT;
   }
 
   public enum IconRotationAlignment {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment AUTO;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment MAP;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconRotationAlignment VIEWPORT;
   }
 
   public enum IconTextFit {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit BOTH;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit HEIGHT;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconTextFit NONE;
@@ -3821,68 +3821,68 @@ package com.mapbox.maps.extension.style.layers.properties.generated {
   }
 
   public enum IconTranslateAnchor {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor MAP;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.IconTranslateAnchor VIEWPORT;
   }
 
   public enum LineCap {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.LineCap BUTT;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.LineCap ROUND;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.LineCap SQUARE;
   }
 
   public enum LineJoin {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin BEVEL;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin MITER;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.LineJoin ROUND;
   }
 
   public enum LineTranslateAnchor {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor MAP;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor VIEWPORT;
   }
 
   public enum RasterResampling {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.RasterResampling LINEAR;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.RasterResampling NEAREST;
   }
 
   public enum SkyType {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.SkyType ATMOSPHERE;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.SkyType GRADIENT;
   }
 
   public enum SymbolPlacement {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement LINE;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement LINE_CENTER;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.SymbolPlacement POINT;
   }
 
   public enum SymbolZOrder {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder AUTO;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder SOURCE;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.SymbolZOrder VIEWPORT_Y;
   }
 
   public enum TextAnchor {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor BOTTOM;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor BOTTOM_LEFT;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor BOTTOM_RIGHT;
@@ -3895,8 +3895,8 @@ package com.mapbox.maps.extension.style.layers.properties.generated {
   }
 
   public enum TextJustify {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextJustify AUTO;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextJustify CENTER;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextJustify LEFT;
@@ -3904,46 +3904,46 @@ package com.mapbox.maps.extension.style.layers.properties.generated {
   }
 
   public enum TextPitchAlignment {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextPitchAlignment AUTO;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextPitchAlignment MAP;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextPitchAlignment VIEWPORT;
   }
 
   public enum TextRotationAlignment {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextRotationAlignment AUTO;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextRotationAlignment MAP;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextRotationAlignment VIEWPORT;
   }
 
   public enum TextTransform {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextTransform LOWERCASE;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextTransform NONE;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextTransform UPPERCASE;
   }
 
   public enum TextTranslateAnchor {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor MAP;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextTranslateAnchor VIEWPORT;
   }
 
   public enum TextWritingMode {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextWritingMode HORIZONTAL;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.TextWritingMode VERTICAL;
   }
 
   public enum Visibility {
-    method public String getValue();
-    property public String value;
+    method public String! getValue();
+    property public String! value;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.Visibility NONE;
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.Visibility VISIBLE;
   }
@@ -3954,7 +3954,7 @@ package com.mapbox.maps.extension.style.light {
 
   @com.mapbox.maps.extension.style.types.LightDsl public final class LightPosition {
     ctor public LightPosition(double radialCoordinate, double azimuthalAngle, double polarAngle);
-    method @com.mapbox.maps.extension.style.types.LightDsl public com.mapbox.maps.extension.style.light.LightPosition copy(double radialCoordinate, double azimuthalAngle, double polarAngle);
+    method public com.mapbox.maps.extension.style.light.LightPosition copy(double radialCoordinate, double azimuthalAngle, double polarAngle);
     method public double[] toDoubleArray();
     method public java.util.List<java.lang.Double> toList();
     method public com.mapbox.bindgen.Value toValue();
@@ -4032,7 +4032,7 @@ package com.mapbox.maps.extension.style.light.generated {
     method public com.mapbox.maps.extension.style.light.generated.Light intensityTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.light.generated.Light intensityTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.light.generated.Light position(double radialCoordinate, double azimuthalAngle, double polarAngle);
-    method public com.mapbox.maps.extension.style.light.generated.Light position(com.mapbox.maps.extension.style.light.LightPosition position = LightPosition(1.15, 210.0, 30.0));
+    method public com.mapbox.maps.extension.style.light.generated.Light position(com.mapbox.maps.extension.style.light.LightPosition position = com.mapbox.maps.extension.style.light.LightPosition(1.15, 210.0, 30.0));
     method public com.mapbox.maps.extension.style.light.generated.Light position(com.mapbox.maps.extension.style.expressions.generated.Expression position);
     method public com.mapbox.maps.extension.style.light.generated.Light positionTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.light.generated.Light positionTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
@@ -4123,8 +4123,8 @@ package com.mapbox.maps.extension.style.sources {
 package com.mapbox.maps.extension.style.sources.generated {
 
   public enum Encoding {
-    method public final String getValue();
-    property public final String value;
+    method public final String! getValue();
+    property public final String! value;
     enum_constant public static final com.mapbox.maps.extension.style.sources.generated.Encoding MAPBOX;
     enum_constant public static final com.mapbox.maps.extension.style.sources.generated.Encoding TERRARIUM;
   }
@@ -4434,8 +4434,8 @@ package com.mapbox.maps.extension.style.sources.generated {
   }
 
   public enum Scheme {
-    method public final String getValue();
-    property public final String value;
+    method public final String! getValue();
+    property public final String! value;
     enum_constant public static final com.mapbox.maps.extension.style.sources.generated.Scheme TMS;
     enum_constant public static final com.mapbox.maps.extension.style.sources.generated.Scheme XYZ;
   }
@@ -4599,15 +4599,15 @@ package com.mapbox.maps.extension.style.types {
     method public Double? component2();
     method public java.util.List<java.lang.String>? component3();
     method public String? component4();
-    method @Keep @com.mapbox.maps.extension.style.types.LayersDsl public com.mapbox.maps.extension.style.types.FormattedSection copy(String text, Double? fontScale, java.util.List<java.lang.String>? fontStack, String? textColor);
+    method public com.mapbox.maps.extension.style.types.FormattedSection copy(String text, Double? fontScale, java.util.List<java.lang.String>? fontStack, String? textColor);
     method public Double? getFontScale();
     method public java.util.List<java.lang.String>? getFontStack();
     method public String getText();
     method public String? getTextColor();
     method @ColorInt public int getTextColorAsInt();
-    method public void setFontScale(Double? p);
-    method public void setFontStack(java.util.List<java.lang.String>? p);
-    method public void setTextColor(String? p);
+    method public void setFontScale(Double? fontScale);
+    method public void setFontStack(java.util.List<java.lang.String>? fontStack);
+    method public void setTextColor(String? textColor);
     method public void setTextColorAsInt(@ColorInt int value);
     property public final Double? fontScale;
     property public final java.util.List<java.lang.String>? fontStack;
@@ -4627,7 +4627,7 @@ package com.mapbox.maps.extension.style.types {
     ctor public PromoteId(String propertyName);
     method public String component1();
     method public String? component2();
-    method @Keep public com.mapbox.maps.extension.style.types.PromoteId copy(String propertyName, String? sourceId);
+    method public com.mapbox.maps.extension.style.types.PromoteId copy(String propertyName, String? sourceId);
     method public String getPropertyName();
     method public String? getSourceId();
     property public final String propertyName;
