@@ -46,8 +46,10 @@ abstract class LocationComponentSettingsBase2 : LocationComponentSettingsInterfa
       return this.internalSettings2.showAccuracyRing
     }
     set(value) {
-      this.internalSettings2.showAccuracyRing = value
-      applySettings2()
+      if (this.internalSettings2.showAccuracyRing != value) {
+        this.internalSettings2.showAccuracyRing = value
+        applySettings2()
+      }
     }
 
   /**
@@ -58,8 +60,10 @@ abstract class LocationComponentSettingsBase2 : LocationComponentSettingsInterfa
       return this.internalSettings2.accuracyRingColor
     }
     set(value) {
-      this.internalSettings2.accuracyRingColor = value
-      applySettings2()
+      if (this.internalSettings2.accuracyRingColor != value) {
+        this.internalSettings2.accuracyRingColor = value
+        applySettings2()
+      }
     }
 
   /**
@@ -70,8 +74,10 @@ abstract class LocationComponentSettingsBase2 : LocationComponentSettingsInterfa
       return this.internalSettings2.accuracyRingBorderColor
     }
     set(value) {
-      this.internalSettings2.accuracyRingBorderColor = value
-      applySettings2()
+      if (this.internalSettings2.accuracyRingBorderColor != value) {
+        this.internalSettings2.accuracyRingBorderColor = value
+        applySettings2()
+      }
     }
 
   /**
@@ -82,8 +88,10 @@ abstract class LocationComponentSettingsBase2 : LocationComponentSettingsInterfa
       return this.internalSettings2.puckBearingEnabled
     }
     set(value) {
-      this.internalSettings2.puckBearingEnabled = value
-      applySettings2()
+      if (this.internalSettings2.puckBearingEnabled != value) {
+        this.internalSettings2.puckBearingEnabled = value
+        applySettings2()
+      }
     }
 
   /**
@@ -94,8 +102,10 @@ abstract class LocationComponentSettingsBase2 : LocationComponentSettingsInterfa
       return this.internalSettings2.puckBearingSource
     }
     set(value) {
-      this.internalSettings2.puckBearingSource = value
-      applySettings2()
+      if (this.internalSettings2.puckBearingSource != value) {
+        this.internalSettings2.puckBearingSource = value
+        applySettings2()
+      }
     }
 }
 

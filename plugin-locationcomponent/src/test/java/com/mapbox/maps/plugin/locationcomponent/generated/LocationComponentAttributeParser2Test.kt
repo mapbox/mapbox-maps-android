@@ -107,11 +107,19 @@ class LocationComponentAttributeParser2Test {
     val settings = LocationComponentAttributeParser2.parseLocationComponentSettings2(context, attrs, 1.2f)
     assertEquals(false, settings.puckBearingEnabled)
   }
+
   @Test
-  fun puckBearingSourceTest() {
+  fun puckBearingSourceTestHEADING() {
     every { typedArray.getInt(any(), any()) } returns PuckBearingSource.HEADING.ordinal
     val settings = LocationComponentAttributeParser2.parseLocationComponentSettings2(context, attrs, 1.2f)
     assertEquals(PuckBearingSource.HEADING, settings.puckBearingSource)
+  }
+
+  @Test
+  fun puckBearingSourceTestCOURSE() {
+    every { typedArray.getInt(any(), any()) } returns PuckBearingSource.COURSE.ordinal
+    val settings = LocationComponentAttributeParser2.parseLocationComponentSettings2(context, attrs, 1.2f)
+    assertEquals(PuckBearingSource.COURSE, settings.puckBearingSource)
   }
 }
 

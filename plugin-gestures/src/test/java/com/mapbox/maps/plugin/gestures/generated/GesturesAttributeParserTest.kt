@@ -135,8 +135,23 @@ class GesturesAttributeParserTest {
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
     assertEquals(false, settings.pitchEnabled)
   }
+
   @Test
-  fun scrollModeTest() {
+  fun scrollModeTestHORIZONTAL() {
+    every { typedArray.getInt(any(), any()) } returns ScrollMode.HORIZONTAL.ordinal
+    val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
+    assertEquals(ScrollMode.HORIZONTAL, settings.scrollMode)
+  }
+
+  @Test
+  fun scrollModeTestVERTICAL() {
+    every { typedArray.getInt(any(), any()) } returns ScrollMode.VERTICAL.ordinal
+    val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
+    assertEquals(ScrollMode.VERTICAL, settings.scrollMode)
+  }
+
+  @Test
+  fun scrollModeTestHORIZONTAL_AND_VERTICAL() {
     every { typedArray.getInt(any(), any()) } returns ScrollMode.HORIZONTAL_AND_VERTICAL.ordinal
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
     assertEquals(ScrollMode.HORIZONTAL_AND_VERTICAL, settings.scrollMode)
