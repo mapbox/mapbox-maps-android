@@ -50,16 +50,13 @@ android {
       path = file("src/main/cpp/CMakeLists.txt")
     }
   }
-  dexOptions {
-    javaMaxHeapSize = "4g"
-  }
 
-    packagingOptions {
-      if (buildFromSource.toBoolean()) {
-        jniLibs.pickFirsts.add("**/libc++_shared.so")
-      }
+  packagingOptions {
+    if (buildFromSource.toBoolean()) {
+      jniLibs.pickFirsts.add("**/libc++_shared.so")
     }
   }
+}
 
 dependencies {
   implementation(project(":sdk"))
