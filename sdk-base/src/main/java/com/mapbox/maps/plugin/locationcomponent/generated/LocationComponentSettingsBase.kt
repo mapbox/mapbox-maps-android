@@ -47,8 +47,10 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
       return this.internalSettings.enabled
     }
     set(value) {
-      this.internalSettings.enabled = value
-      applySettings()
+      if (this.internalSettings.enabled != value) {
+        this.internalSettings.enabled = value
+        applySettings()
+      }
     }
 
   /**
@@ -59,8 +61,10 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
       return this.internalSettings.pulsingEnabled
     }
     set(value) {
-      this.internalSettings.pulsingEnabled = value
-      applySettings()
+      if (this.internalSettings.pulsingEnabled != value) {
+        this.internalSettings.pulsingEnabled = value
+        applySettings()
+      }
     }
 
   /**
@@ -71,8 +75,10 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
       return this.internalSettings.pulsingColor
     }
     set(value) {
-      this.internalSettings.pulsingColor = value
-      applySettings()
+      if (this.internalSettings.pulsingColor != value) {
+        this.internalSettings.pulsingColor = value
+        applySettings()
+      }
     }
 
   /**
@@ -83,8 +89,10 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
       return this.internalSettings.pulsingMaxRadius
     }
     set(value) {
-      this.internalSettings.pulsingMaxRadius = value
-      applySettings()
+      if (this.internalSettings.pulsingMaxRadius != value) {
+        this.internalSettings.pulsingMaxRadius = value
+        applySettings()
+      }
     }
 
   /**
@@ -95,8 +103,10 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
       return this.internalSettings.layerAbove
     }
     set(value) {
-      this.internalSettings.layerAbove = value
-      applySettings()
+      if (this.internalSettings.layerAbove != value) {
+        this.internalSettings.layerAbove = value
+        applySettings()
+      }
     }
 
   /**
@@ -107,8 +117,10 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
       return this.internalSettings.layerBelow
     }
     set(value) {
-      this.internalSettings.layerBelow = value
-      applySettings()
+      if (this.internalSettings.layerBelow != value) {
+        this.internalSettings.layerBelow = value
+        applySettings()
+      }
     }
 
   /**
@@ -119,8 +131,10 @@ abstract class LocationComponentSettingsBase : LocationComponentSettingsInterfac
       return this.internalSettings.locationPuck
     }
     set(value) {
-      this.internalSettings.locationPuck = value
-      applySettings()
+      if (this.internalSettings.locationPuck != value) {
+        this.internalSettings.locationPuck = value
+        applySettings()
+      }
     }
 }
 
