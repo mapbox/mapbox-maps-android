@@ -41,7 +41,7 @@ class Style internal constructor(
    * @param events an array of event types to be subscribed to.
    */
   override fun subscribe(observer: Observer, events: MutableList<String>) {
-    getStyleManager().apply { this.subscribe(observer, events) }
+    getStyleManager().subscribe(observer, events)
   }
 
   /**
@@ -51,7 +51,7 @@ class Style internal constructor(
    * @param events an array of event types to be unsubscribed from.
    */
   override fun unsubscribe(observer: Observer, events: MutableList<String>) {
-    getStyleManager().apply { this.unsubscribe(observer, events) }
+    getStyleManager().unsubscribe(observer, events)
   }
 
   /**
@@ -60,7 +60,7 @@ class Style internal constructor(
    * @param observer an Observer
    */
   override fun unsubscribe(observer: Observer) {
-    getStyleManager().apply { this.unsubscribe(observer) }
+    getStyleManager().unsubscribe(observer)
   }
 
   /**
@@ -180,9 +180,7 @@ class Style internal constructor(
    * @param uri URI where the style should be loaded from.
    */
   override fun setStyleURI(uri: String) {
-    getStyleManager().apply {
-      this.styleURI = uri
-    }
+    getStyleManager().styleURI = uri
   }
 
   /**
@@ -546,9 +544,7 @@ class Style internal constructor(
    * @param json A JSON string containing a serialized Mapbox Style.
    */
   override fun setStyleJSON(json: String) {
-    getStyleManager().apply {
-      this.styleJSON = json
-    }
+    getStyleManager().styleJSON = json
   }
 
   /**

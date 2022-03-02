@@ -135,9 +135,9 @@ class MapboxMap :
   ) {
     initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, styleTransitionOptions)
     if (styleUri.isEmpty()) {
-      getNativeMap().apply { styleJSON = EMPTY_STYLE_JSON }
+      getNativeMap().styleJSON = EMPTY_STYLE_JSON
     } else {
-      getNativeMap().apply { styleURI = styleUri }
+      getNativeMap().styleURI = styleUri
     }
   }
 
@@ -176,9 +176,9 @@ class MapboxMap :
   ) {
     initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, null)
     if (styleUri.isEmpty()) {
-      getNativeMap().apply { styleJSON = EMPTY_STYLE_JSON }
+      getNativeMap().styleJSON = EMPTY_STYLE_JSON
     } else {
-      getNativeMap().apply { styleURI = styleUri }
+      getNativeMap().styleURI = styleUri
     }
   }
 
@@ -212,9 +212,7 @@ class MapboxMap :
     onMapLoadErrorListener: OnMapLoadErrorListener? = null,
   ) {
     initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, styleTransitionOptions)
-    getNativeMap().apply {
-      styleJSON = styleJson
-    }
+    getNativeMap().styleJSON = styleJson
   }
 
   /**
@@ -226,9 +224,7 @@ class MapboxMap :
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
   ) {
     initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, null)
-    getNativeMap().apply {
-      styleJSON = styleJson
-    }
+    getNativeMap().styleJSON = styleJson
   }
 
   /**
@@ -367,7 +363,7 @@ class MapboxMap :
    * @param callback Called once the request is complete or an error occurred.
    */
   fun clearData(callback: AsyncOperationResultCallback) {
-    getNativeMap().apply { Map.clearData(this.resourceOptions, callback) }
+    Map.clearData(getNativeMap().resourceOptions, callback)
   }
 
   /**
@@ -411,7 +407,7 @@ class MapboxMap :
    * @param constrainMode The map constraint mode to set
    */
   override fun setConstrainMode(constrainMode: ConstrainMode) {
-    getNativeMap().apply { this.setConstrainMode(constrainMode) }
+    getNativeMap().setConstrainMode(constrainMode)
   }
   /**
    * Set the map viewport mode
@@ -419,7 +415,7 @@ class MapboxMap :
    * @param viewportMode The map viewport mode to set
    */
   override fun setViewportMode(viewportMode: ViewportMode) {
-    getNativeMap().apply { this.setViewportMode(viewportMode) }
+    getNativeMap().setViewportMode(viewportMode)
   }
 
   /**
@@ -445,7 +441,7 @@ class MapboxMap :
    * @param inProgress Bool representing if user animation is in progress
    */
   override fun setUserAnimationInProgress(inProgress: Boolean) {
-    getNativeMap().apply { this.isUserAnimationInProgress = inProgress }
+    getNativeMap().isUserAnimationInProgress = inProgress
   }
 
   /**
@@ -463,7 +459,7 @@ class MapboxMap :
    * @param delta The prefetch zoom delta
    */
   fun setPrefetchZoomDelta(delta: Byte) {
-    getNativeMap().apply { this.prefetchZoomDelta = delta }
+    getNativeMap().prefetchZoomDelta = delta
   }
 
   /**
@@ -496,7 +492,7 @@ class MapboxMap :
    * Set debug options
    */
   fun setDebug(debugOptions: List<MapDebugOptions>, enabled: Boolean) {
-    getNativeMap().apply { this.setDebug(debugOptions, enabled) }
+    getNativeMap().setDebug(debugOptions, enabled)
   }
 
   /**
@@ -799,9 +795,7 @@ class MapboxMap :
     options: RenderedQueryOptions,
     callback: QueryFeaturesCallback
   ) {
-    getNativeMap().apply {
-      this.queryRenderedFeatures(shape, options, callback)
-    }
+    getNativeMap().queryRenderedFeatures(shape, options, callback)
   }
 
   /**
@@ -825,9 +819,7 @@ class MapboxMap :
     options: RenderedQueryOptions,
     callback: QueryFeaturesCallback
   ) {
-    getNativeMap().apply {
-      this.queryRenderedFeatures(box, options, callback)
-    }
+    getNativeMap().queryRenderedFeatures(box, options, callback)
   }
 
   /**
@@ -851,9 +843,7 @@ class MapboxMap :
     options: RenderedQueryOptions,
     callback: QueryFeaturesCallback
   ) {
-    getNativeMap().apply {
-      this.queryRenderedFeatures(pixel, options, callback)
-    }
+    getNativeMap().queryRenderedFeatures(pixel, options, callback)
   }
 
   /**
@@ -885,7 +875,7 @@ class MapboxMap :
     options: SourceQueryOptions,
     callback: QueryFeaturesCallback
   ) {
-    getNativeMap().apply { this.querySourceFeatures(sourceId, options, callback) }
+    getNativeMap().querySourceFeatures(sourceId, options, callback)
   }
 
   /**
@@ -939,16 +929,14 @@ class MapboxMap :
     args: HashMap<String, Value>?,
     callback: QueryFeatureExtensionCallback
   ) {
-    getNativeMap().apply {
-      this.queryFeatureExtensions(
-        sourceIdentifier,
-        feature,
-        extension,
-        extensionField,
-        args,
-        callback
-      )
-    }
+    getNativeMap().queryFeatureExtensions(
+      sourceIdentifier,
+      feature,
+      extension,
+      extensionField,
+      args,
+      callback
+    )
   }
 
   /**
@@ -1057,7 +1045,7 @@ class MapboxMap :
     featureId: String,
     callback: QueryFeatureStateCallback
   ) {
-    getNativeMap().apply { this.getFeatureState(sourceId, sourceLayerId, featureId, callback) }
+    getNativeMap().getFeatureState(sourceId, sourceLayerId, featureId, callback)
   }
 
   /**
@@ -1080,21 +1068,19 @@ class MapboxMap :
     featureId: String,
     stateKey: String? = null
   ) {
-    getNativeMap().apply {
-      this.removeFeatureState(
-        sourceId,
-        sourceLayerId,
-        featureId,
-        stateKey
-      )
-    }
+    getNativeMap().removeFeatureState(
+      sourceId,
+      sourceLayerId,
+      featureId,
+      stateKey
+    )
   }
 
   /**
    * Reduce memory use. Useful to call when the application gets paused or sent to background.
    */
   fun reduceMemoryUse() {
-    getNativeMap().apply { this.reduceMemoryUse() }
+    getNativeMap().reduceMemoryUse()
   }
 
   /**
@@ -1107,9 +1093,7 @@ class MapboxMap :
    * @param events an array of event types to be subscribed to.
    */
   override fun subscribe(observer: Observer, events: List<String>) {
-    getNativeMap().apply {
-      (this as ObservableInterface).subscribe(observer, events)
-    }
+    getNativeMap().subscribe(observer, events)
   }
 
   /**
@@ -1119,9 +1103,7 @@ class MapboxMap :
    * @param events an array of event types to be unsubscribed from.
    */
   override fun unsubscribe(observer: Observer, events: List<String>) {
-    getNativeMap().apply {
-      (this as ObservableInterface).unsubscribe(observer, events)
-    }
+    getNativeMap().unsubscribe(observer, events)
   }
 
   /**
@@ -1130,9 +1112,7 @@ class MapboxMap :
    * @param observer an Observer
    */
   override fun unsubscribe(observer: Observer) {
-    getNativeMap().apply {
-      (this as ObservableInterface).unsubscribe(observer)
-    }
+    getNativeMap().unsubscribe(observer)
   }
 
   /**
@@ -1344,7 +1324,7 @@ class MapboxMap :
    * Triggers a repaint of the map.
    */
   fun triggerRepaint() {
-    getNativeMap().apply { this.triggerRepaint() }
+    getNativeMap().triggerRepaint()
   }
 
   /**
@@ -1365,7 +1345,7 @@ class MapboxMap :
    * @param freeCameraOptions The free camera options to set.
    */
   override fun setCamera(freeCameraOptions: FreeCameraOptions) {
-    getNativeMap().apply { this.setCamera(freeCameraOptions) }
+    getNativeMap().setCamera(freeCameraOptions)
   }
 
   /**
@@ -1393,12 +1373,10 @@ class MapboxMap :
   @MapboxExperimental
   fun setRenderCacheOptions(options: RenderCacheOptions) {
     options.size?.let { size ->
-      getNativeMap().apply {
-        this.renderCacheOptions = if (size >= 0)
-          options
-        else
-          throw IllegalArgumentException("Render cache size must be >= 0!")
-      }
+      getNativeMap().renderCacheOptions = if (size >= 0)
+        options
+      else
+        throw IllegalArgumentException("Render cache size must be >= 0!")
     } ?: getNativeMap().apply {
       this.renderCacheOptions = RenderCacheOptions.Builder().setDisabled().build()
     }
@@ -1430,7 +1408,7 @@ class MapboxMap :
    */
   @MapboxExperimental
   fun setMemoryBudget(memoryBudget: MapMemoryBudget?) {
-    getNativeMap().apply { this.setMemoryBudget(memoryBudget) }
+    getNativeMap().setMemoryBudget(memoryBudget)
   }
 
   /**
@@ -1454,7 +1432,7 @@ class MapboxMap :
    * @param point The pivot coordinate, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
    */
   override fun dragStart(point: ScreenCoordinate) {
-    getNativeMap().apply { this.dragStart(point) }
+    getNativeMap().dragStart(point)
   }
 
   /**
@@ -1462,7 +1440,7 @@ class MapboxMap :
    * This function should be called always after the user has ended a drag gesture initiated by `dragStart`.
    */
   override fun dragEnd() {
-    getNativeMap().apply { this.dragEnd() }
+    getNativeMap().dragEnd()
   }
 
   /**
