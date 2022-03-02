@@ -23,7 +23,7 @@ package com.mapbox.maps.plugin.scalebar {
     method public void setDistancePerPixel(float value);
     method public void setEnable(boolean value);
     method public void setMapViewWidth(float value);
-    method public void setPixelRatio(float p);
+    method public void setPixelRatio(float pixelRatio);
     method public void setSettings(com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings value);
     method public void setUseContinuousRendering(boolean value);
     property public float distancePerPixel;
@@ -50,7 +50,7 @@ package com.mapbox.maps.plugin.scalebar {
     method public void onPluginView(android.view.View view);
     method public void onSizeChanged(int width, int height);
     method public void setDistancePerPixel(float value);
-    method protected void setInternalSettings(com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings p);
+    method protected void setInternalSettings(com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings internalSettings);
     property public float distancePerPixel;
     property public boolean enabled;
     property protected com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings internalSettings;

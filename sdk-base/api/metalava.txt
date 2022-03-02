@@ -104,7 +104,7 @@ package com.mapbox.maps.extension.observable {
 package com.mapbox.maps.extension.observable.eventdata {
 
   public final class CameraChangedEventData {
-    ctor public CameraChangedEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end);
+    ctor public CameraChangedEventData(@com.google.gson.annotations.SerializedName long begin, @com.google.gson.annotations.SerializedName Long? end);
     method public long component1();
     method public Long? component2();
     method public com.mapbox.maps.extension.observable.eventdata.CameraChangedEventData copy(long begin, Long? end);
@@ -115,7 +115,7 @@ package com.mapbox.maps.extension.observable.eventdata {
   }
 
   public final class MapIdleEventData {
-    ctor public MapIdleEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end);
+    ctor public MapIdleEventData(@com.google.gson.annotations.SerializedName long begin, @com.google.gson.annotations.SerializedName Long? end);
     method public long component1();
     method public Long? component2();
     method public com.mapbox.maps.extension.observable.eventdata.MapIdleEventData copy(long begin, Long? end);
@@ -126,7 +126,7 @@ package com.mapbox.maps.extension.observable.eventdata {
   }
 
   public final class MapLoadedEventData {
-    ctor public MapLoadedEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end);
+    ctor public MapLoadedEventData(@com.google.gson.annotations.SerializedName long begin, @com.google.gson.annotations.SerializedName Long? end);
     method public long component1();
     method public Long? component2();
     method public com.mapbox.maps.extension.observable.eventdata.MapLoadedEventData copy(long begin, Long? end);
@@ -137,7 +137,7 @@ package com.mapbox.maps.extension.observable.eventdata {
   }
 
   public final class MapLoadingErrorEventData {
-    ctor public MapLoadingErrorEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end, @com.google.gson.annotations.SerializedName("type") com.mapbox.maps.extension.observable.model.MapLoadErrorType type, @com.google.gson.annotations.SerializedName("message") String message, @com.google.gson.annotations.SerializedName("source-id") String? sourceId, @com.google.gson.annotations.SerializedName("tile-id") com.mapbox.maps.extension.observable.model.TileID? tileId);
+    ctor public MapLoadingErrorEventData(@com.google.gson.annotations.SerializedName long begin, @com.google.gson.annotations.SerializedName Long? end, @com.google.gson.annotations.SerializedName com.mapbox.maps.extension.observable.model.MapLoadErrorType type, @com.google.gson.annotations.SerializedName String message, @com.google.gson.annotations.SerializedName String? sourceId, @com.google.gson.annotations.SerializedName com.mapbox.maps.extension.observable.model.TileID? tileId);
     method public long component1();
     method public Long? component2();
     method public com.mapbox.maps.extension.observable.model.MapLoadErrorType component3();
@@ -160,7 +160,7 @@ package com.mapbox.maps.extension.observable.eventdata {
   }
 
   public final class RenderFrameFinishedEventData {
-    ctor public RenderFrameFinishedEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end, @com.google.gson.annotations.SerializedName("render-mode") com.mapbox.maps.extension.observable.model.RenderMode renderMode, @com.google.gson.annotations.SerializedName("needs-repaint") boolean needsRepaint, @com.google.gson.annotations.SerializedName("placement-changed") boolean placementChanged);
+    ctor public RenderFrameFinishedEventData(@com.google.gson.annotations.SerializedName long begin, @com.google.gson.annotations.SerializedName Long? end, @com.google.gson.annotations.SerializedName com.mapbox.maps.extension.observable.model.RenderMode renderMode, @com.google.gson.annotations.SerializedName boolean needsRepaint, @com.google.gson.annotations.SerializedName boolean placementChanged);
     method public long component1();
     method public Long? component2();
     method public com.mapbox.maps.extension.observable.model.RenderMode component3();
@@ -180,7 +180,7 @@ package com.mapbox.maps.extension.observable.eventdata {
   }
 
   public final class RenderFrameStartedEventData {
-    ctor public RenderFrameStartedEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end);
+    ctor public RenderFrameStartedEventData(@com.google.gson.annotations.SerializedName long begin, @com.google.gson.annotations.SerializedName Long? end);
     method public long component1();
     method public Long? component2();
     method public com.mapbox.maps.extension.observable.eventdata.RenderFrameStartedEventData copy(long begin, Long? end);
@@ -191,7 +191,7 @@ package com.mapbox.maps.extension.observable.eventdata {
   }
 
   public final class ResourceEventData {
-    ctor public ResourceEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end, @com.google.gson.annotations.SerializedName("data-source") com.mapbox.maps.extension.observable.model.DataSourceType dataSource, @com.google.gson.annotations.SerializedName("request") com.mapbox.maps.extension.observable.model.Request request, @com.google.gson.annotations.SerializedName("response") com.mapbox.maps.extension.observable.model.Response? response, @com.google.gson.annotations.SerializedName("cancelled") boolean cancelled);
+    ctor public ResourceEventData(@com.google.gson.annotations.SerializedName long begin, @com.google.gson.annotations.SerializedName Long? end, @com.google.gson.annotations.SerializedName com.mapbox.maps.extension.observable.model.DataSourceType dataSource, @com.google.gson.annotations.SerializedName com.mapbox.maps.extension.observable.model.Request request, @com.google.gson.annotations.SerializedName com.mapbox.maps.extension.observable.model.Response? response, @com.google.gson.annotations.SerializedName boolean cancelled);
     method public long component1();
     method public Long? component2();
     method public com.mapbox.maps.extension.observable.model.DataSourceType component3();
@@ -214,7 +214,7 @@ package com.mapbox.maps.extension.observable.eventdata {
   }
 
   public final class SourceAddedEventData {
-    ctor public SourceAddedEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end, @com.google.gson.annotations.SerializedName("id") String id);
+    ctor public SourceAddedEventData(@com.google.gson.annotations.SerializedName long begin, @com.google.gson.annotations.SerializedName Long? end, @com.google.gson.annotations.SerializedName String id);
     method public long component1();
     method public Long? component2();
     method public String component3();
@@ -228,7 +228,7 @@ package com.mapbox.maps.extension.observable.eventdata {
   }
 
   public final class SourceDataLoadedEventData {
-    ctor public SourceDataLoadedEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end, @com.google.gson.annotations.SerializedName("id") String id, @com.google.gson.annotations.SerializedName("type") com.mapbox.maps.extension.observable.model.SourceDataType type, @com.google.gson.annotations.SerializedName("loaded") Boolean? loaded, @com.google.gson.annotations.SerializedName("tile-id") com.mapbox.maps.extension.observable.model.TileID? tileID);
+    ctor public SourceDataLoadedEventData(@com.google.gson.annotations.SerializedName long begin, @com.google.gson.annotations.SerializedName Long? end, @com.google.gson.annotations.SerializedName String id, @com.google.gson.annotations.SerializedName com.mapbox.maps.extension.observable.model.SourceDataType type, @com.google.gson.annotations.SerializedName Boolean? loaded, @com.google.gson.annotations.SerializedName com.mapbox.maps.extension.observable.model.TileID? tileID);
     method public long component1();
     method public Long? component2();
     method public String component3();
@@ -251,7 +251,7 @@ package com.mapbox.maps.extension.observable.eventdata {
   }
 
   public final class SourceRemovedEventData {
-    ctor public SourceRemovedEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end, @com.google.gson.annotations.SerializedName("id") String id);
+    ctor public SourceRemovedEventData(@com.google.gson.annotations.SerializedName long begin, @com.google.gson.annotations.SerializedName Long? end, @com.google.gson.annotations.SerializedName String id);
     method public long component1();
     method public Long? component2();
     method public String component3();
@@ -265,7 +265,7 @@ package com.mapbox.maps.extension.observable.eventdata {
   }
 
   public final class StyleDataLoadedEventData {
-    ctor public StyleDataLoadedEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end, @com.google.gson.annotations.SerializedName("type") com.mapbox.maps.extension.observable.model.StyleDataType type);
+    ctor public StyleDataLoadedEventData(@com.google.gson.annotations.SerializedName long begin, @com.google.gson.annotations.SerializedName Long? end, @com.google.gson.annotations.SerializedName com.mapbox.maps.extension.observable.model.StyleDataType type);
     method public long component1();
     method public Long? component2();
     method public com.mapbox.maps.extension.observable.model.StyleDataType component3();
@@ -279,7 +279,7 @@ package com.mapbox.maps.extension.observable.eventdata {
   }
 
   public final class StyleImageMissingEventData {
-    ctor public StyleImageMissingEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end, @com.google.gson.annotations.SerializedName("id") String id);
+    ctor public StyleImageMissingEventData(@com.google.gson.annotations.SerializedName long begin, @com.google.gson.annotations.SerializedName Long? end, @com.google.gson.annotations.SerializedName String id);
     method public long component1();
     method public Long? component2();
     method public String component3();
@@ -293,7 +293,7 @@ package com.mapbox.maps.extension.observable.eventdata {
   }
 
   public final class StyleImageUnusedEventData {
-    ctor public StyleImageUnusedEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end, @com.google.gson.annotations.SerializedName("id") String id);
+    ctor public StyleImageUnusedEventData(@com.google.gson.annotations.SerializedName long begin, @com.google.gson.annotations.SerializedName Long? end, @com.google.gson.annotations.SerializedName String id);
     method public long component1();
     method public Long? component2();
     method public String component3();
@@ -307,7 +307,7 @@ package com.mapbox.maps.extension.observable.eventdata {
   }
 
   public final class StyleLoadedEventData {
-    ctor public StyleLoadedEventData(@com.google.gson.annotations.SerializedName("begin") long begin, @com.google.gson.annotations.SerializedName("end") Long? end);
+    ctor public StyleLoadedEventData(@com.google.gson.annotations.SerializedName long begin, @com.google.gson.annotations.SerializedName Long? end);
     method public long component1();
     method public Long? component2();
     method public com.mapbox.maps.extension.observable.eventdata.StyleLoadedEventData copy(long begin, Long? end);
@@ -322,8 +322,8 @@ package com.mapbox.maps.extension.observable.eventdata {
 package com.mapbox.maps.extension.observable.model {
 
   public enum DataSourceType {
-    method public final String getValue();
-    property public final String value;
+    method public final String! getValue();
+    property public final String! value;
     enum_constant @com.google.gson.annotations.SerializedName("asset") public static final com.mapbox.maps.extension.observable.model.DataSourceType ASSET;
     enum_constant @com.google.gson.annotations.SerializedName("database") public static final com.mapbox.maps.extension.observable.model.DataSourceType DATABASE;
     enum_constant @com.google.gson.annotations.SerializedName("file-system") public static final com.mapbox.maps.extension.observable.model.DataSourceType FILE_SYSTEM;
@@ -332,7 +332,7 @@ package com.mapbox.maps.extension.observable.model {
   }
 
   public final class Error {
-    ctor public Error(@com.google.gson.annotations.SerializedName("reason") com.mapbox.maps.extension.observable.model.ResponseErrorReason reason, @com.google.gson.annotations.SerializedName("message") String message);
+    ctor public Error(@com.google.gson.annotations.SerializedName com.mapbox.maps.extension.observable.model.ResponseErrorReason reason, @com.google.gson.annotations.SerializedName String message);
     method public com.mapbox.maps.extension.observable.model.ResponseErrorReason component1();
     method public String component2();
     method public com.mapbox.maps.extension.observable.model.Error copy(com.mapbox.maps.extension.observable.model.ResponseErrorReason reason, String message);
@@ -343,8 +343,8 @@ package com.mapbox.maps.extension.observable.model {
   }
 
   public enum MapLoadErrorType {
-    method public final String getValue();
-    property public final String value;
+    method public final String! getValue();
+    property public final String! value;
     enum_constant @com.google.gson.annotations.SerializedName("glyphs") public static final com.mapbox.maps.extension.observable.model.MapLoadErrorType GLYPHS;
     enum_constant @com.google.gson.annotations.SerializedName("source") public static final com.mapbox.maps.extension.observable.model.MapLoadErrorType SOURCE;
     enum_constant @com.google.gson.annotations.SerializedName("sprite") public static final com.mapbox.maps.extension.observable.model.MapLoadErrorType SPRITE;
@@ -353,14 +353,14 @@ package com.mapbox.maps.extension.observable.model {
   }
 
   public enum RenderMode {
-    method public final String getValue();
-    property public final String value;
+    method public final String! getValue();
+    property public final String! value;
     enum_constant @com.google.gson.annotations.SerializedName("full") public static final com.mapbox.maps.extension.observable.model.RenderMode FULL;
     enum_constant @com.google.gson.annotations.SerializedName("partial") public static final com.mapbox.maps.extension.observable.model.RenderMode PARTIAL;
   }
 
   public final class Request {
-    ctor public Request(@com.google.gson.annotations.SerializedName("loading-method") java.util.List<java.lang.String> loadingMethod, @com.google.gson.annotations.SerializedName("url") String url, @com.google.gson.annotations.SerializedName("kind") com.mapbox.maps.extension.observable.model.RequestType kind, @com.google.gson.annotations.SerializedName("priority") com.mapbox.maps.extension.observable.model.RequestPriority priority);
+    ctor public Request(@com.google.gson.annotations.SerializedName java.util.List<java.lang.String> loadingMethod, @com.google.gson.annotations.SerializedName String url, @com.google.gson.annotations.SerializedName com.mapbox.maps.extension.observable.model.RequestType kind, @com.google.gson.annotations.SerializedName com.mapbox.maps.extension.observable.model.RequestPriority priority);
     method public java.util.List<java.lang.String> component1();
     method public String component2();
     method public com.mapbox.maps.extension.observable.model.RequestType component3();
@@ -377,15 +377,15 @@ package com.mapbox.maps.extension.observable.model {
   }
 
   public enum RequestPriority {
-    method public final String getValue();
-    property public final String value;
+    method public final String! getValue();
+    property public final String! value;
     enum_constant @com.google.gson.annotations.SerializedName("low") public static final com.mapbox.maps.extension.observable.model.RequestPriority LOW;
     enum_constant @com.google.gson.annotations.SerializedName("regular") public static final com.mapbox.maps.extension.observable.model.RequestPriority REGULAR;
   }
 
   public enum RequestType {
-    method public final String getValue();
-    property public final String value;
+    method public final String! getValue();
+    property public final String! value;
     enum_constant @com.google.gson.annotations.SerializedName("glyphs") public static final com.mapbox.maps.extension.observable.model.RequestType GLYPHS;
     enum_constant @com.google.gson.annotations.SerializedName("image") public static final com.mapbox.maps.extension.observable.model.RequestType IMAGE;
     enum_constant @com.google.gson.annotations.SerializedName("source") public static final com.mapbox.maps.extension.observable.model.RequestType SOURCE;
@@ -397,7 +397,7 @@ package com.mapbox.maps.extension.observable.model {
   }
 
   public final class Response {
-    ctor public Response(@com.google.gson.annotations.SerializedName("etag") String? eTag, @com.google.gson.annotations.SerializedName("must-revalidate") boolean mustRevalidate, @com.google.gson.annotations.SerializedName("no-content") boolean noContent, @com.google.gson.annotations.SerializedName("modified") String? modified, @com.google.gson.annotations.SerializedName("source") com.mapbox.maps.extension.observable.model.ResponseSourceType source, @com.google.gson.annotations.SerializedName("not-modified") boolean notModified, @com.google.gson.annotations.SerializedName("expires") String? expires, @com.google.gson.annotations.SerializedName("size") int size, @com.google.gson.annotations.SerializedName("error") com.mapbox.maps.extension.observable.model.Error? error);
+    ctor public Response(@com.google.gson.annotations.SerializedName String? eTag, @com.google.gson.annotations.SerializedName boolean mustRevalidate, @com.google.gson.annotations.SerializedName boolean noContent, @com.google.gson.annotations.SerializedName String? modified, @com.google.gson.annotations.SerializedName com.mapbox.maps.extension.observable.model.ResponseSourceType source, @com.google.gson.annotations.SerializedName boolean notModified, @com.google.gson.annotations.SerializedName String? expires, @com.google.gson.annotations.SerializedName int size, @com.google.gson.annotations.SerializedName com.mapbox.maps.extension.observable.model.Error? error);
     method public String? component1();
     method public boolean component2();
     method public boolean component3();
@@ -429,8 +429,8 @@ package com.mapbox.maps.extension.observable.model {
   }
 
   public enum ResponseErrorReason {
-    method public final String getValue();
-    property public final String value;
+    method public final String! getValue();
+    property public final String! value;
     enum_constant @com.google.gson.annotations.SerializedName("connection") public static final com.mapbox.maps.extension.observable.model.ResponseErrorReason CONNECTION;
     enum_constant @com.google.gson.annotations.SerializedName("in-offline-mode") public static final com.mapbox.maps.extension.observable.model.ResponseErrorReason IN_OFFLINE_MODE;
     enum_constant @com.google.gson.annotations.SerializedName("not-found") public static final com.mapbox.maps.extension.observable.model.ResponseErrorReason NOT_FOUND;
@@ -441,8 +441,8 @@ package com.mapbox.maps.extension.observable.model {
   }
 
   public enum ResponseSourceType {
-    method public final String getValue();
-    property public final String value;
+    method public final String! getValue();
+    property public final String! value;
     enum_constant @com.google.gson.annotations.SerializedName("cache") public static final com.mapbox.maps.extension.observable.model.ResponseSourceType CACHE;
     enum_constant @com.google.gson.annotations.SerializedName("local-file") public static final com.mapbox.maps.extension.observable.model.ResponseSourceType LOCAL_FILE;
     enum_constant @com.google.gson.annotations.SerializedName("network") public static final com.mapbox.maps.extension.observable.model.ResponseSourceType NETWORK;
@@ -450,22 +450,22 @@ package com.mapbox.maps.extension.observable.model {
   }
 
   public enum SourceDataType {
-    method public final String getValue();
-    property public final String value;
+    method public final String! getValue();
+    property public final String! value;
     enum_constant @com.google.gson.annotations.SerializedName("metadata") public static final com.mapbox.maps.extension.observable.model.SourceDataType METADATA;
     enum_constant @com.google.gson.annotations.SerializedName("tile") public static final com.mapbox.maps.extension.observable.model.SourceDataType TILE;
   }
 
   public enum StyleDataType {
-    method public final String getValue();
-    property public final String value;
+    method public final String! getValue();
+    property public final String! value;
     enum_constant @com.google.gson.annotations.SerializedName("sources") public static final com.mapbox.maps.extension.observable.model.StyleDataType SOURCES;
     enum_constant @com.google.gson.annotations.SerializedName("sprite") public static final com.mapbox.maps.extension.observable.model.StyleDataType SPRITE;
     enum_constant @com.google.gson.annotations.SerializedName("style") public static final com.mapbox.maps.extension.observable.model.StyleDataType STYLE;
   }
 
   public final class TileID {
-    ctor public TileID(@com.google.gson.annotations.SerializedName("z") long zoom, @com.google.gson.annotations.SerializedName("x") long x, @com.google.gson.annotations.SerializedName("y") long y);
+    ctor public TileID(@com.google.gson.annotations.SerializedName long zoom, @com.google.gson.annotations.SerializedName long x, @com.google.gson.annotations.SerializedName long y);
     method public long component1();
     method public long component2();
     method public long component3();
@@ -573,10 +573,10 @@ package com.mapbox.maps.plugin {
     method public String? getScaleExpression();
     method public android.graphics.drawable.Drawable? getShadowImage();
     method public android.graphics.drawable.Drawable? getTopImage();
-    method public void setBearingImage(android.graphics.drawable.Drawable? p);
-    method public void setScaleExpression(String? p);
-    method public void setShadowImage(android.graphics.drawable.Drawable? p);
-    method public void setTopImage(android.graphics.drawable.Drawable? p);
+    method public void setBearingImage(android.graphics.drawable.Drawable? bearingImage);
+    method public void setScaleExpression(String? scaleExpression);
+    method public void setShadowImage(android.graphics.drawable.Drawable? shadowImage);
+    method public void setTopImage(android.graphics.drawable.Drawable? topImage);
     property public final android.graphics.drawable.Drawable? bearingImage;
     property public final String? scaleExpression;
     property public final android.graphics.drawable.Drawable? shadowImage;
@@ -606,13 +606,13 @@ package com.mapbox.maps.plugin {
     method public java.util.List<java.lang.Float> getModelTranslation();
     method public String getModelUri();
     method public java.util.List<java.lang.Float> getPosition();
-    method public void setModelOpacity(float p);
-    method public void setModelRotation(java.util.List<java.lang.Float> p);
-    method public void setModelScale(java.util.List<java.lang.Float> p);
-    method public void setModelScaleExpression(String? p);
-    method public void setModelTranslation(java.util.List<java.lang.Float> p);
-    method public void setModelUri(String p);
-    method public void setPosition(java.util.List<java.lang.Float> p);
+    method public void setModelOpacity(float modelOpacity);
+    method public void setModelRotation(java.util.List<java.lang.Float> modelRotation);
+    method public void setModelScale(java.util.List<java.lang.Float> modelScale);
+    method public void setModelScaleExpression(String? modelScaleExpression);
+    method public void setModelTranslation(java.util.List<java.lang.Float> modelTranslation);
+    method public void setModelUri(String modelUri);
+    method public void setPosition(java.util.List<java.lang.Float> position);
     property public final float modelOpacity;
     property public final java.util.List<java.lang.Float> modelRotation;
     property public final java.util.List<java.lang.Float> modelScale;
@@ -687,15 +687,15 @@ package com.mapbox.maps.plugin {
   }
 
   public enum PuckBearingSource {
-    method public final String getValue();
-    property public final String value;
+    method public final String! getValue();
+    property public final String! value;
     enum_constant public static final com.mapbox.maps.plugin.PuckBearingSource COURSE;
     enum_constant public static final com.mapbox.maps.plugin.PuckBearingSource HEADING;
   }
 
   public enum ScrollMode {
-    method public final String getValue();
-    property public final String value;
+    method public final String! getValue();
+    property public final String! value;
     enum_constant public static final com.mapbox.maps.plugin.ScrollMode HORIZONTAL;
     enum_constant public static final com.mapbox.maps.plugin.ScrollMode HORIZONTAL_AND_VERTICAL;
     enum_constant public static final com.mapbox.maps.plugin.ScrollMode VERTICAL;
@@ -765,8 +765,8 @@ package com.mapbox.maps.plugin.animation {
     method public void removeCameraZoomChangeListener(com.mapbox.maps.plugin.animation.CameraAnimatorChangeListener<java.lang.Double> listener);
     method public com.mapbox.maps.plugin.animation.Cancelable rotateBy(com.mapbox.maps.ScreenCoordinate first, com.mapbox.maps.ScreenCoordinate second, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null);
     method public com.mapbox.maps.plugin.animation.Cancelable scaleBy(double amount, com.mapbox.maps.ScreenCoordinate? screenCoordinate, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions = null);
-    method public void setAnchor(com.mapbox.maps.ScreenCoordinate? p);
-    method public void setDebugMode(boolean p);
+    method public void setAnchor(com.mapbox.maps.ScreenCoordinate? anchor);
+    method public void setDebugMode(boolean debugMode);
     method public void unregisterAnimators(android.animation.ValueAnimator![] cameraAnimators, boolean cancelAnimators = true);
     property public abstract com.mapbox.maps.ScreenCoordinate? anchor;
     property public abstract boolean debugMode;
@@ -781,11 +781,11 @@ package com.mapbox.maps.plugin.animation {
   }
 
   public final class CameraAnimatorOptions<T> {
-    method public String? getOwner();
-    method public T? getStartValue();
+    method public String! getOwner();
+    method public T! getStartValue();
     method public T![]! getTargets();
-    property public final String? owner;
-    property public final T? startValue;
+    property public final String! owner;
+    property public final T! startValue;
     property public final T![]! targets;
     field public static final com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion Companion;
   }
@@ -793,10 +793,10 @@ package com.mapbox.maps.plugin.animation {
   public static final class CameraAnimatorOptions.Builder<T> {
     ctor public CameraAnimatorOptions.Builder(T?... targets);
     method public com.mapbox.maps.plugin.animation.CameraAnimatorOptions<T> build();
-    method public T![]! getTargets();
+    method public T![] getTargets();
     method public com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Builder<T> owner(String owner);
     method public com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Builder<T> startValue(T? startValue);
-    property public final T![]! targets;
+    property public final T![] targets;
   }
 
   public static final class CameraAnimatorOptions.Companion {
@@ -817,16 +817,16 @@ package com.mapbox.maps.plugin.animation {
   }
 
   public final class MapAnimationOptions {
-    method public android.animation.Animator.AnimatorListener? getAnimatorListener();
-    method public Long? getDuration();
-    method public android.animation.TimeInterpolator? getInterpolator();
-    method public String? getOwner();
-    method public Long? getStartDelay();
-    property public final android.animation.Animator.AnimatorListener? animatorListener;
-    property public final Long? duration;
-    property public final android.animation.TimeInterpolator? interpolator;
-    property public final String? owner;
-    property public final Long? startDelay;
+    method public android.animation.Animator.AnimatorListener! getAnimatorListener();
+    method public Long! getDuration();
+    method public android.animation.TimeInterpolator! getInterpolator();
+    method public String! getOwner();
+    method public Long! getStartDelay();
+    property public final android.animation.Animator.AnimatorListener! animatorListener;
+    property public final Long! duration;
+    property public final android.animation.TimeInterpolator! interpolator;
+    property public final String! owner;
+    property public final Long! startDelay;
     field public static final com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion Companion;
   }
 
@@ -869,9 +869,9 @@ package com.mapbox.maps.plugin.annotation {
     method public final boolean isDraggable();
     method public final boolean isSelected();
     method public void setData(com.google.gson.JsonElement? jsonElement);
-    method public final void setDraggable(boolean p);
-    method public final void setGeometry(T p);
-    method public final void setSelected(boolean p);
+    method public final void setDraggable(boolean isDraggable);
+    method public final void setGeometry(T geometry);
+    method public final void setSelected(boolean isSelected);
     method public abstract void setUsedDataDrivenProperties();
     property public final String featureIdentifier;
     property public final T geometry;
@@ -978,7 +978,7 @@ package com.mapbox.maps.plugin.annotation {
 
   public enum AnnotationType {
     method public final int getValue();
-    method public final void setValue(int p);
+    method public final void setValue(int value);
     property public final int value;
     enum_constant public static final com.mapbox.maps.plugin.annotation.AnnotationType CircleAnnotation;
     enum_constant public static final com.mapbox.maps.plugin.annotation.AnnotationType PointAnnotation;
@@ -1097,10 +1097,10 @@ package com.mapbox.maps.plugin.attribution {
     method public boolean getWithImproveMap();
     method public boolean getWithMapboxAttribution();
     method public boolean getWithTelemetryAttribution();
-    method public void setWithCopyrightSign(boolean p);
-    method public void setWithImproveMap(boolean p);
-    method public void setWithMapboxAttribution(boolean p);
-    method public void setWithTelemetryAttribution(boolean p);
+    method public void setWithCopyrightSign(boolean withCopyrightSign);
+    method public void setWithImproveMap(boolean withImproveMap);
+    method public void setWithMapboxAttribution(boolean withMapboxAttribution);
+    method public void setWithTelemetryAttribution(boolean withTelemetryAttribution);
     property public final boolean withCopyrightSign;
     property public final boolean withImproveMap;
     property public final boolean withMapboxAttribution;
@@ -1155,14 +1155,14 @@ package com.mapbox.maps.plugin.attribution.generated {
     method public float getMarginRight();
     method public float getMarginTop();
     method public int getPosition();
-    method public void setClickable(boolean p);
-    method public void setEnabled(boolean p);
-    method public void setIconColor(int p);
-    method public void setMarginBottom(float p);
-    method public void setMarginLeft(float p);
-    method public void setMarginRight(float p);
-    method public void setMarginTop(float p);
-    method public void setPosition(int p);
+    method public void setClickable(boolean clickable);
+    method public void setEnabled(boolean enabled);
+    method public void setIconColor(int iconColor);
+    method public void setMarginBottom(float marginBottom);
+    method public void setMarginLeft(float marginLeft);
+    method public void setMarginRight(float marginRight);
+    method public void setMarginTop(float marginTop);
+    method public void setPosition(int position);
     property public final boolean clickable;
     property public final boolean enabled;
     property public final int iconColor;
@@ -1189,7 +1189,7 @@ package com.mapbox.maps.plugin.attribution.generated {
     method public void setClickable(boolean value);
     method public void setEnabled(boolean value);
     method public void setIconColor(int value);
-    method protected abstract void setInternalSettings(com.mapbox.maps.plugin.attribution.generated.AttributionSettings p);
+    method protected abstract void setInternalSettings(com.mapbox.maps.plugin.attribution.generated.AttributionSettings internalSettings);
     method public void setMarginBottom(float value);
     method public void setMarginLeft(float value);
     method public void setMarginRight(float value);
@@ -1217,14 +1217,14 @@ package com.mapbox.maps.plugin.attribution.generated {
     method public float getMarginTop();
     method public int getPosition();
     method public com.mapbox.maps.plugin.attribution.generated.AttributionSettings getSettings();
-    method public void setClickable(boolean p);
-    method public void setEnabled(boolean p);
-    method public void setIconColor(int p);
-    method public void setMarginBottom(float p);
-    method public void setMarginLeft(float p);
-    method public void setMarginRight(float p);
-    method public void setMarginTop(float p);
-    method public void setPosition(int p);
+    method public void setClickable(boolean clickable);
+    method public void setEnabled(boolean enabled);
+    method public void setIconColor(int iconColor);
+    method public void setMarginBottom(float marginBottom);
+    method public void setMarginLeft(float marginLeft);
+    method public void setMarginRight(float marginRight);
+    method public void setMarginTop(float marginTop);
+    method public void setPosition(int position);
     method public void updateSettings(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.attribution.generated.AttributionSettings,kotlin.Unit> block);
     property public abstract boolean clickable;
     property public abstract boolean enabled;
@@ -1253,13 +1253,13 @@ package com.mapbox.maps.plugin.compass {
     method public boolean isCompassEnabled();
     method public boolean isCompassVisible();
     method public void requestLayout();
-    method public void setCompassAlpha(float p);
-    method public void setCompassEnabled(boolean p);
-    method public void setCompassGravity(int p);
-    method public void setCompassImage(android.graphics.drawable.Drawable p);
+    method public void setCompassAlpha(float float);
+    method public void setCompassEnabled(boolean isCompassEnabled);
+    method public void setCompassGravity(int compassGravity);
+    method public void setCompassImage(android.graphics.drawable.Drawable compassImage);
     method public void setCompassMargins(@Px int left, @Px int top, @Px int right, @Px int bottom);
-    method public void setCompassRotation(float p);
-    method public void setCompassVisible(boolean p);
+    method public void setCompassRotation(float compassRotation);
+    method public void setCompassVisible(boolean isCompassVisible);
     property public abstract int compassGravity;
     property public abstract android.graphics.drawable.Drawable compassImage;
     property public abstract float compassRotation;
@@ -1313,18 +1313,18 @@ package com.mapbox.maps.plugin.compass.generated {
     method public int getPosition();
     method public float getRotation();
     method public boolean getVisibility();
-    method public void setClickable(boolean p);
-    method public void setEnabled(boolean p);
-    method public void setFadeWhenFacingNorth(boolean p);
-    method public void setImage(android.graphics.drawable.Drawable? p);
-    method public void setMarginBottom(float p);
-    method public void setMarginLeft(float p);
-    method public void setMarginRight(float p);
-    method public void setMarginTop(float p);
-    method public void setOpacity(float p);
-    method public void setPosition(int p);
-    method public void setRotation(float p);
-    method public void setVisibility(boolean p);
+    method public void setClickable(boolean clickable);
+    method public void setEnabled(boolean enabled);
+    method public void setFadeWhenFacingNorth(boolean fadeWhenFacingNorth);
+    method public void setImage(android.graphics.drawable.Drawable? image);
+    method public void setMarginBottom(float marginBottom);
+    method public void setMarginLeft(float marginLeft);
+    method public void setMarginRight(float marginRight);
+    method public void setMarginTop(float marginTop);
+    method public void setOpacity(float opacity);
+    method public void setPosition(int position);
+    method public void setRotation(float rotation);
+    method public void setVisibility(boolean visibility);
     property public final boolean clickable;
     property public final boolean enabled;
     property public final boolean fadeWhenFacingNorth;
@@ -1360,7 +1360,7 @@ package com.mapbox.maps.plugin.compass.generated {
     method public void setEnabled(boolean value);
     method public void setFadeWhenFacingNorth(boolean value);
     method public void setImage(android.graphics.drawable.Drawable? value);
-    method protected abstract void setInternalSettings(com.mapbox.maps.plugin.compass.generated.CompassSettings p);
+    method protected abstract void setInternalSettings(com.mapbox.maps.plugin.compass.generated.CompassSettings internalSettings);
     method public void setMarginBottom(float value);
     method public void setMarginLeft(float value);
     method public void setMarginRight(float value);
@@ -1399,18 +1399,18 @@ package com.mapbox.maps.plugin.compass.generated {
     method public float getRotation();
     method public com.mapbox.maps.plugin.compass.generated.CompassSettings getSettings();
     method public boolean getVisibility();
-    method public void setClickable(boolean p);
-    method public void setEnabled(boolean p);
-    method public void setFadeWhenFacingNorth(boolean p);
-    method public void setImage(android.graphics.drawable.Drawable? p);
-    method public void setMarginBottom(float p);
-    method public void setMarginLeft(float p);
-    method public void setMarginRight(float p);
-    method public void setMarginTop(float p);
-    method public void setOpacity(float p);
-    method public void setPosition(int p);
-    method public void setRotation(float p);
-    method public void setVisibility(boolean p);
+    method public void setClickable(boolean clickable);
+    method public void setEnabled(boolean enabled);
+    method public void setFadeWhenFacingNorth(boolean fadeWhenFacingNorth);
+    method public void setImage(android.graphics.drawable.Drawable? image);
+    method public void setMarginBottom(float marginBottom);
+    method public void setMarginLeft(float marginLeft);
+    method public void setMarginRight(float marginRight);
+    method public void setMarginTop(float marginTop);
+    method public void setOpacity(float opacity);
+    method public void setPosition(int position);
+    method public void setRotation(float rotation);
+    method public void setVisibility(boolean visibility);
     method public void updateSettings(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.compass.generated.CompassSettings,kotlin.Unit> block);
     property public abstract boolean clickable;
     property public abstract boolean enabled;
@@ -1437,10 +1437,10 @@ package com.mapbox.maps.plugin.delegates {
   }
 
   public interface MapCameraManagerDelegate {
-    method public com.mapbox.maps.CameraOptions cameraForCoordinateBounds(com.mapbox.maps.CoordinateBounds bounds, com.mapbox.maps.EdgeInsets padding = EdgeInsets(0.0, 0.0, 0.0, 0.0), Double? bearing = null, Double? pitch = null);
-    method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.EdgeInsets padding = EdgeInsets(0.0, 0.0, 0.0, 0.0), Double? bearing = null, Double? pitch = null);
+    method public com.mapbox.maps.CameraOptions cameraForCoordinateBounds(com.mapbox.maps.CoordinateBounds bounds, com.mapbox.maps.EdgeInsets padding = com.mapbox.maps.EdgeInsets(0.0, 0.0, 0.0, 0.0), Double? bearing = null, Double? pitch = null);
+    method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.EdgeInsets padding = com.mapbox.maps.EdgeInsets(0.0, 0.0, 0.0, 0.0), Double? bearing = null, Double? pitch = null);
     method public com.mapbox.maps.CameraOptions cameraForCoordinates(java.util.List<com.mapbox.geojson.Point> coordinates, com.mapbox.maps.CameraOptions camera, com.mapbox.maps.ScreenBox box);
-    method public com.mapbox.maps.CameraOptions cameraForGeometry(com.mapbox.geojson.Geometry geometry, com.mapbox.maps.EdgeInsets padding = EdgeInsets(0.0, 0.0, 0.0, 0.0), Double? bearing = null, Double? pitch = null);
+    method public com.mapbox.maps.CameraOptions cameraForGeometry(com.mapbox.geojson.Geometry geometry, com.mapbox.maps.EdgeInsets padding = com.mapbox.maps.EdgeInsets(0.0, 0.0, 0.0, 0.0), Double? bearing = null, Double? pitch = null);
     method public com.mapbox.maps.CoordinateBounds coordinateBoundsForCamera(com.mapbox.maps.CameraOptions camera);
     method public com.mapbox.maps.CoordinateBoundsZoom coordinateBoundsZoomForCamera(com.mapbox.maps.CameraOptions camera);
     method public com.mapbox.maps.CoordinateBoundsZoom coordinateBoundsZoomForCameraUnwrapped(com.mapbox.maps.CameraOptions camera);
@@ -1727,22 +1727,22 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public com.mapbox.maps.plugin.ScrollMode getScrollMode();
     method public boolean getSimultaneousRotateAndPinchToZoomEnabled();
     method public float getZoomAnimationAmount();
-    method public void setDoubleTapToZoomInEnabled(boolean p);
-    method public void setDoubleTouchToZoomOutEnabled(boolean p);
-    method public void setFocalPoint(com.mapbox.maps.ScreenCoordinate? p);
-    method public void setIncreasePinchToZoomThresholdWhenRotating(boolean p);
-    method public void setIncreaseRotateThresholdWhenPinchingToZoom(boolean p);
-    method public void setPinchToZoomDecelerationEnabled(boolean p);
-    method public void setPinchToZoomEnabled(boolean p);
-    method public void setPitchEnabled(boolean p);
-    method public void setQuickZoomEnabled(boolean p);
-    method public void setRotateDecelerationEnabled(boolean p);
-    method public void setRotateEnabled(boolean p);
-    method public void setScrollDecelerationEnabled(boolean p);
-    method public void setScrollEnabled(boolean p);
-    method public void setScrollMode(com.mapbox.maps.plugin.ScrollMode p);
-    method public void setSimultaneousRotateAndPinchToZoomEnabled(boolean p);
-    method public void setZoomAnimationAmount(float p);
+    method public void setDoubleTapToZoomInEnabled(boolean doubleTapToZoomInEnabled);
+    method public void setDoubleTouchToZoomOutEnabled(boolean doubleTouchToZoomOutEnabled);
+    method public void setFocalPoint(com.mapbox.maps.ScreenCoordinate? focalPoint);
+    method public void setIncreasePinchToZoomThresholdWhenRotating(boolean increasePinchToZoomThresholdWhenRotating);
+    method public void setIncreaseRotateThresholdWhenPinchingToZoom(boolean increaseRotateThresholdWhenPinchingToZoom);
+    method public void setPinchToZoomDecelerationEnabled(boolean pinchToZoomDecelerationEnabled);
+    method public void setPinchToZoomEnabled(boolean pinchToZoomEnabled);
+    method public void setPitchEnabled(boolean pitchEnabled);
+    method public void setQuickZoomEnabled(boolean quickZoomEnabled);
+    method public void setRotateDecelerationEnabled(boolean rotateDecelerationEnabled);
+    method public void setRotateEnabled(boolean rotateEnabled);
+    method public void setScrollDecelerationEnabled(boolean scrollDecelerationEnabled);
+    method public void setScrollEnabled(boolean scrollEnabled);
+    method public void setScrollMode(com.mapbox.maps.plugin.ScrollMode scrollMode);
+    method public void setSimultaneousRotateAndPinchToZoomEnabled(boolean simultaneousRotateAndPinchToZoomEnabled);
+    method public void setZoomAnimationAmount(float zoomAnimationAmount);
     property public final boolean doubleTapToZoomInEnabled;
     property public final boolean doubleTouchToZoomOutEnabled;
     property public final com.mapbox.maps.ScreenCoordinate? focalPoint;
@@ -1787,7 +1787,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public void setFocalPoint(com.mapbox.maps.ScreenCoordinate? value);
     method public void setIncreasePinchToZoomThresholdWhenRotating(boolean value);
     method public void setIncreaseRotateThresholdWhenPinchingToZoom(boolean value);
-    method protected abstract void setInternalSettings(com.mapbox.maps.plugin.gestures.generated.GesturesSettings p);
+    method protected abstract void setInternalSettings(com.mapbox.maps.plugin.gestures.generated.GesturesSettings internalSettings);
     method public void setPinchToZoomDecelerationEnabled(boolean value);
     method public void setPinchToZoomEnabled(boolean value);
     method public void setPitchEnabled(boolean value);
@@ -1837,22 +1837,22 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings getSettings();
     method public boolean getSimultaneousRotateAndPinchToZoomEnabled();
     method public float getZoomAnimationAmount();
-    method public void setDoubleTapToZoomInEnabled(boolean p);
-    method public void setDoubleTouchToZoomOutEnabled(boolean p);
-    method public void setFocalPoint(com.mapbox.maps.ScreenCoordinate? p);
-    method public void setIncreasePinchToZoomThresholdWhenRotating(boolean p);
-    method public void setIncreaseRotateThresholdWhenPinchingToZoom(boolean p);
-    method public void setPinchToZoomDecelerationEnabled(boolean p);
-    method public void setPinchToZoomEnabled(boolean p);
-    method public void setPitchEnabled(boolean p);
-    method public void setQuickZoomEnabled(boolean p);
-    method public void setRotateDecelerationEnabled(boolean p);
-    method public void setRotateEnabled(boolean p);
-    method public void setScrollDecelerationEnabled(boolean p);
-    method public void setScrollEnabled(boolean p);
-    method public void setScrollMode(com.mapbox.maps.plugin.ScrollMode p);
-    method public void setSimultaneousRotateAndPinchToZoomEnabled(boolean p);
-    method public void setZoomAnimationAmount(float p);
+    method public void setDoubleTapToZoomInEnabled(boolean doubleTapToZoomInEnabled);
+    method public void setDoubleTouchToZoomOutEnabled(boolean doubleTouchToZoomOutEnabled);
+    method public void setFocalPoint(com.mapbox.maps.ScreenCoordinate? focalPoint);
+    method public void setIncreasePinchToZoomThresholdWhenRotating(boolean increasePinchToZoomThresholdWhenRotating);
+    method public void setIncreaseRotateThresholdWhenPinchingToZoom(boolean increaseRotateThresholdWhenPinchingToZoom);
+    method public void setPinchToZoomDecelerationEnabled(boolean pinchToZoomDecelerationEnabled);
+    method public void setPinchToZoomEnabled(boolean pinchToZoomEnabled);
+    method public void setPitchEnabled(boolean pitchEnabled);
+    method public void setQuickZoomEnabled(boolean quickZoomEnabled);
+    method public void setRotateDecelerationEnabled(boolean rotateDecelerationEnabled);
+    method public void setRotateEnabled(boolean rotateEnabled);
+    method public void setScrollDecelerationEnabled(boolean scrollDecelerationEnabled);
+    method public void setScrollEnabled(boolean scrollEnabled);
+    method public void setScrollMode(com.mapbox.maps.plugin.ScrollMode scrollMode);
+    method public void setSimultaneousRotateAndPinchToZoomEnabled(boolean simultaneousRotateAndPinchToZoomEnabled);
+    method public void setZoomAnimationAmount(float zoomAnimationAmount);
     method public void updateSettings(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.gestures.generated.GesturesSettings,kotlin.Unit> block);
     property public abstract boolean doubleTapToZoomInEnabled;
     property public abstract boolean doubleTouchToZoomOutEnabled;
@@ -1959,13 +1959,13 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     method public int getPulsingColor();
     method public boolean getPulsingEnabled();
     method public float getPulsingMaxRadius();
-    method public void setEnabled(boolean p);
-    method public void setLayerAbove(String? p);
-    method public void setLayerBelow(String? p);
-    method public void setLocationPuck(com.mapbox.maps.plugin.LocationPuck p);
-    method public void setPulsingColor(int p);
-    method public void setPulsingEnabled(boolean p);
-    method public void setPulsingMaxRadius(float p);
+    method public void setEnabled(boolean enabled);
+    method public void setLayerAbove(String? layerAbove);
+    method public void setLayerBelow(String? layerBelow);
+    method public void setLocationPuck(com.mapbox.maps.plugin.LocationPuck locationPuck);
+    method public void setPulsingColor(int pulsingColor);
+    method public void setPulsingEnabled(boolean pulsingEnabled);
+    method public void setPulsingMaxRadius(float pulsingMaxRadius);
     property public final boolean enabled;
     property public final String? layerAbove;
     property public final String? layerBelow;
@@ -1992,11 +1992,11 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     method public boolean getPuckBearingEnabled();
     method public com.mapbox.maps.plugin.PuckBearingSource getPuckBearingSource();
     method public boolean getShowAccuracyRing();
-    method public void setAccuracyRingBorderColor(int p);
-    method public void setAccuracyRingColor(int p);
-    method public void setPuckBearingEnabled(boolean p);
-    method public void setPuckBearingSource(com.mapbox.maps.plugin.PuckBearingSource p);
-    method public void setShowAccuracyRing(boolean p);
+    method public void setAccuracyRingBorderColor(int accuracyRingBorderColor);
+    method public void setAccuracyRingColor(int accuracyRingColor);
+    method public void setPuckBearingEnabled(boolean puckBearingEnabled);
+    method public void setPuckBearingSource(com.mapbox.maps.plugin.PuckBearingSource puckBearingSource);
+    method public void setShowAccuracyRing(boolean showAccuracyRing);
     property public final int accuracyRingBorderColor;
     property public final int accuracyRingColor;
     property public final boolean puckBearingEnabled;
@@ -2017,7 +2017,7 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     method public float getPulsingMaxRadius();
     method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings getSettings();
     method public void setEnabled(boolean value);
-    method protected abstract void setInternalSettings(com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings p);
+    method protected abstract void setInternalSettings(com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings internalSettings);
     method public void setLayerAbove(String? value);
     method public void setLayerBelow(String? value);
     method public void setLocationPuck(com.mapbox.maps.plugin.LocationPuck value);
@@ -2047,7 +2047,7 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     method public boolean getShowAccuracyRing();
     method public void setAccuracyRingBorderColor(int value);
     method public void setAccuracyRingColor(int value);
-    method protected abstract void setInternalSettings2(com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2 p);
+    method protected abstract void setInternalSettings2(com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2 internalSettings2);
     method public void setPuckBearingEnabled(boolean value);
     method public void setPuckBearingSource(com.mapbox.maps.plugin.PuckBearingSource value);
     method public void setShowAccuracyRing(boolean value);
@@ -2069,13 +2069,13 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     method public boolean getPulsingEnabled();
     method public float getPulsingMaxRadius();
     method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings getSettings();
-    method public void setEnabled(boolean p);
-    method public void setLayerAbove(String? p);
-    method public void setLayerBelow(String? p);
-    method public void setLocationPuck(com.mapbox.maps.plugin.LocationPuck p);
-    method public void setPulsingColor(int p);
-    method public void setPulsingEnabled(boolean p);
-    method public void setPulsingMaxRadius(float p);
+    method public void setEnabled(boolean enabled);
+    method public void setLayerAbove(String? layerAbove);
+    method public void setLayerBelow(String? layerBelow);
+    method public void setLocationPuck(com.mapbox.maps.plugin.LocationPuck locationPuck);
+    method public void setPulsingColor(int pulsingColor);
+    method public void setPulsingEnabled(boolean pulsingEnabled);
+    method public void setPulsingMaxRadius(float pulsingMaxRadius);
     method public void updateSettings(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings,kotlin.Unit> block);
     property public abstract boolean enabled;
     property public abstract String? layerAbove;
@@ -2093,11 +2093,11 @@ package com.mapbox.maps.plugin.locationcomponent.generated {
     method public com.mapbox.maps.plugin.PuckBearingSource getPuckBearingSource();
     method public com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2 getSettings2();
     method public boolean getShowAccuracyRing();
-    method public void setAccuracyRingBorderColor(int p);
-    method public void setAccuracyRingColor(int p);
-    method public void setPuckBearingEnabled(boolean p);
-    method public void setPuckBearingSource(com.mapbox.maps.plugin.PuckBearingSource p);
-    method public void setShowAccuracyRing(boolean p);
+    method public void setAccuracyRingBorderColor(int accuracyRingBorderColor);
+    method public void setAccuracyRingColor(int accuracyRingColor);
+    method public void setPuckBearingEnabled(boolean puckBearingEnabled);
+    method public void setPuckBearingSource(com.mapbox.maps.plugin.PuckBearingSource puckBearingSource);
+    method public void setShowAccuracyRing(boolean showAccuracyRing);
     method public void updateSettings2(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2,kotlin.Unit> block);
     property public abstract int accuracyRingBorderColor;
     property public abstract int accuracyRingColor;
@@ -2117,8 +2117,8 @@ package com.mapbox.maps.plugin.logo {
     method public boolean getLogoEnabled();
     method public int getLogoGravity();
     method public void requestLayout();
-    method public void setLogoEnabled(boolean p);
-    method public void setLogoGravity(int p);
+    method public void setLogoEnabled(boolean logoEnabled);
+    method public void setLogoGravity(int logoGravity);
     method public void setLogoMargins(@Px int left, @Px int top, @Px int right, @Px int bottom);
     property public abstract boolean logoEnabled;
     property public abstract int logoGravity;
@@ -2148,12 +2148,12 @@ package com.mapbox.maps.plugin.logo.generated {
     method public float getMarginRight();
     method public float getMarginTop();
     method public int getPosition();
-    method public void setEnabled(boolean p);
-    method public void setMarginBottom(float p);
-    method public void setMarginLeft(float p);
-    method public void setMarginRight(float p);
-    method public void setMarginTop(float p);
-    method public void setPosition(int p);
+    method public void setEnabled(boolean enabled);
+    method public void setMarginBottom(float marginBottom);
+    method public void setMarginLeft(float marginLeft);
+    method public void setMarginRight(float marginRight);
+    method public void setMarginTop(float marginTop);
+    method public void setPosition(int position);
     property public final boolean enabled;
     property public final float marginBottom;
     property public final float marginLeft;
@@ -2174,7 +2174,7 @@ package com.mapbox.maps.plugin.logo.generated {
     method public int getPosition();
     method public com.mapbox.maps.plugin.logo.generated.LogoSettings getSettings();
     method public void setEnabled(boolean value);
-    method protected abstract void setInternalSettings(com.mapbox.maps.plugin.logo.generated.LogoSettings p);
+    method protected abstract void setInternalSettings(com.mapbox.maps.plugin.logo.generated.LogoSettings internalSettings);
     method public void setMarginBottom(float value);
     method public void setMarginLeft(float value);
     method public void setMarginRight(float value);
@@ -2198,12 +2198,12 @@ package com.mapbox.maps.plugin.logo.generated {
     method public float getMarginTop();
     method public int getPosition();
     method public com.mapbox.maps.plugin.logo.generated.LogoSettings getSettings();
-    method public void setEnabled(boolean p);
-    method public void setMarginBottom(float p);
-    method public void setMarginLeft(float p);
-    method public void setMarginRight(float p);
-    method public void setMarginTop(float p);
-    method public void setPosition(int p);
+    method public void setEnabled(boolean enabled);
+    method public void setMarginBottom(float marginBottom);
+    method public void setMarginLeft(float marginLeft);
+    method public void setMarginRight(float marginRight);
+    method public void setMarginTop(float marginTop);
+    method public void setPosition(int position);
     method public void updateSettings(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.logo.generated.LogoSettings,kotlin.Unit> block);
     property public abstract boolean enabled;
     property public abstract float marginBottom;
@@ -2248,12 +2248,12 @@ package com.mapbox.maps.plugin.scalebar {
     method public float getPixelRatio();
     method public com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings getSettings();
     method public boolean getUseContinuousRendering();
-    method public void setDistancePerPixel(float p);
-    method public void setEnable(boolean p);
-    method public void setMapViewWidth(float p);
-    method public void setPixelRatio(float p);
-    method public void setSettings(com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings p);
-    method public void setUseContinuousRendering(boolean p);
+    method public void setDistancePerPixel(float distancePerPixel);
+    method public void setEnable(boolean enable);
+    method public void setMapViewWidth(float mapViewWidth);
+    method public void setPixelRatio(float pixelRatio);
+    method public void setSettings(com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings settings);
+    method public void setUseContinuousRendering(boolean useContinuousRendering);
     property public abstract float distancePerPixel;
     property public abstract boolean enable;
     property public abstract float mapViewWidth;
@@ -2264,7 +2264,7 @@ package com.mapbox.maps.plugin.scalebar {
 
   public interface ScaleBarPlugin extends com.mapbox.maps.plugin.ViewPlugin com.mapbox.maps.plugin.MapSizePlugin com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettingsInterface {
     method public float getDistancePerPixel();
-    method public void setDistancePerPixel(float p);
+    method public void setDistancePerPixel(float distancePerPixel);
     property public abstract float distancePerPixel;
   }
 
@@ -2331,25 +2331,25 @@ package com.mapbox.maps.plugin.scalebar.generated {
     method public float getTextSize();
     method public boolean getUseContinuousRendering();
     method public boolean isMetricUnits();
-    method public void setBorderWidth(float p);
-    method public void setEnabled(boolean p);
-    method public void setHeight(float p);
-    method public void setMarginBottom(float p);
-    method public void setMarginLeft(float p);
-    method public void setMarginRight(float p);
-    method public void setMarginTop(float p);
-    method public void setMetricUnits(boolean p);
-    method public void setPosition(int p);
-    method public void setPrimaryColor(int p);
-    method public void setRatio(float p);
-    method public void setRefreshInterval(long p);
-    method public void setSecondaryColor(int p);
-    method public void setShowTextBorder(boolean p);
-    method public void setTextBarMargin(float p);
-    method public void setTextBorderWidth(float p);
-    method public void setTextColor(int p);
-    method public void setTextSize(float p);
-    method public void setUseContinuousRendering(boolean p);
+    method public void setBorderWidth(float borderWidth);
+    method public void setEnabled(boolean enabled);
+    method public void setHeight(float height);
+    method public void setMarginBottom(float marginBottom);
+    method public void setMarginLeft(float marginLeft);
+    method public void setMarginRight(float marginRight);
+    method public void setMarginTop(float marginTop);
+    method public void setMetricUnits(boolean isMetricUnits);
+    method public void setPosition(int position);
+    method public void setPrimaryColor(int primaryColor);
+    method public void setRatio(float ratio);
+    method public void setRefreshInterval(long refreshInterval);
+    method public void setSecondaryColor(int secondaryColor);
+    method public void setShowTextBorder(boolean showTextBorder);
+    method public void setTextBarMargin(float textBarMargin);
+    method public void setTextBorderWidth(float textBorderWidth);
+    method public void setTextColor(int textColor);
+    method public void setTextSize(float textSize);
+    method public void setUseContinuousRendering(boolean useContinuousRendering);
     property public final float borderWidth;
     property public final boolean enabled;
     property public final float height;
@@ -2398,7 +2398,7 @@ package com.mapbox.maps.plugin.scalebar.generated {
     method public void setBorderWidth(float value);
     method public void setEnabled(boolean value);
     method public void setHeight(float value);
-    method protected abstract void setInternalSettings(com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings p);
+    method protected abstract void setInternalSettings(com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings internalSettings);
     method public void setMarginBottom(float value);
     method public void setMarginLeft(float value);
     method public void setMarginRight(float value);
@@ -2459,25 +2459,25 @@ package com.mapbox.maps.plugin.scalebar.generated {
     method public float getTextSize();
     method public boolean getUseContinuousRendering();
     method public boolean isMetricUnits();
-    method public void setBorderWidth(float p);
-    method public void setEnabled(boolean p);
-    method public void setHeight(float p);
-    method public void setMarginBottom(float p);
-    method public void setMarginLeft(float p);
-    method public void setMarginRight(float p);
-    method public void setMarginTop(float p);
-    method public void setMetricUnits(boolean p);
-    method public void setPosition(int p);
-    method public void setPrimaryColor(int p);
-    method public void setRatio(float p);
-    method public void setRefreshInterval(long p);
-    method public void setSecondaryColor(int p);
-    method public void setShowTextBorder(boolean p);
-    method public void setTextBarMargin(float p);
-    method public void setTextBorderWidth(float p);
-    method public void setTextColor(int p);
-    method public void setTextSize(float p);
-    method public void setUseContinuousRendering(boolean p);
+    method public void setBorderWidth(float borderWidth);
+    method public void setEnabled(boolean enabled);
+    method public void setHeight(float height);
+    method public void setMarginBottom(float marginBottom);
+    method public void setMarginLeft(float marginLeft);
+    method public void setMarginRight(float marginRight);
+    method public void setMarginTop(float marginTop);
+    method public void setMetricUnits(boolean isMetricUnits);
+    method public void setPosition(int position);
+    method public void setPrimaryColor(int primaryColor);
+    method public void setRatio(float ratio);
+    method public void setRefreshInterval(long refreshInterval);
+    method public void setSecondaryColor(int secondaryColor);
+    method public void setShowTextBorder(boolean showTextBorder);
+    method public void setTextBarMargin(float textBarMargin);
+    method public void setTextBorderWidth(float textBorderWidth);
+    method public void setTextColor(int textColor);
+    method public void setTextSize(float textSize);
+    method public void setUseContinuousRendering(boolean useContinuousRendering);
     method public void updateSettings(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings,kotlin.Unit> block);
     property public abstract float borderWidth;
     property public abstract boolean enabled;
@@ -2526,8 +2526,8 @@ package com.mapbox.maps.plugin.viewport {
     method public com.mapbox.maps.plugin.viewport.transition.ViewportTransition makeImmediateViewportTransition();
     method public com.mapbox.maps.plugin.viewport.state.OverviewViewportState makeOverviewViewportState(com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions options);
     method public void removeStatusObserver(com.mapbox.maps.plugin.viewport.ViewportStatusObserver viewportStatusObserver);
-    method public void setDefaultTransition(com.mapbox.maps.plugin.viewport.transition.ViewportTransition p);
-    method public void setOptions(com.mapbox.maps.plugin.viewport.data.ViewportOptions p);
+    method public void setDefaultTransition(com.mapbox.maps.plugin.viewport.transition.ViewportTransition defaultTransition);
+    method public void setOptions(com.mapbox.maps.plugin.viewport.data.ViewportOptions options);
     method public void transitionTo(com.mapbox.maps.plugin.viewport.state.ViewportState targetState, com.mapbox.maps.plugin.viewport.transition.ViewportTransition? transition = null, com.mapbox.maps.plugin.viewport.CompletionListener? completionListener = null);
     property public abstract com.mapbox.maps.plugin.viewport.transition.ViewportTransition defaultTransition;
     property public abstract com.mapbox.maps.plugin.viewport.data.ViewportOptions options;
@@ -2590,16 +2590,16 @@ package com.mapbox.maps.plugin.viewport.data {
 
   @com.mapbox.maps.MapboxExperimental public final class FollowPuckViewportStateOptions {
     method public long getAnimationDurationMs();
-    method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing? getBearing();
-    method public com.mapbox.maps.EdgeInsets? getPadding();
-    method public Double? getPitch();
-    method public Double? getZoom();
+    method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing! getBearing();
+    method public com.mapbox.maps.EdgeInsets! getPadding();
+    method public Double! getPitch();
+    method public Double! getZoom();
     method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions.Builder toBuilder();
     property public final long animationDurationMs;
-    property public final com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing? bearing;
-    property public final com.mapbox.maps.EdgeInsets? padding;
-    property public final Double? pitch;
-    property public final Double? zoom;
+    property public final com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing! bearing;
+    property public final com.mapbox.maps.EdgeInsets! padding;
+    property public final Double! pitch;
+    property public final Double! zoom;
   }
 
   public static final class FollowPuckViewportStateOptions.Builder {
@@ -2614,16 +2614,16 @@ package com.mapbox.maps.plugin.viewport.data {
 
   @com.mapbox.maps.MapboxExperimental public final class OverviewViewportStateOptions {
     method public long getAnimationDurationMs();
-    method public Double? getBearing();
-    method public com.mapbox.geojson.Geometry getGeometry();
-    method public com.mapbox.maps.EdgeInsets getPadding();
-    method public Double? getPitch();
+    method public Double! getBearing();
+    method public com.mapbox.geojson.Geometry! getGeometry();
+    method public com.mapbox.maps.EdgeInsets! getPadding();
+    method public Double! getPitch();
     method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions.Builder toBuilder();
     property public final long animationDurationMs;
-    property public final Double? bearing;
-    property public final com.mapbox.geojson.Geometry geometry;
-    property public final com.mapbox.maps.EdgeInsets padding;
-    property public final Double? pitch;
+    property public final Double! bearing;
+    property public final com.mapbox.geojson.Geometry! geometry;
+    property public final com.mapbox.maps.EdgeInsets! padding;
+    property public final Double! pitch;
   }
 
   public static final class OverviewViewportStateOptions.Builder {
@@ -2666,13 +2666,13 @@ package com.mapbox.maps.plugin.viewport.state {
 
   @com.mapbox.maps.MapboxExperimental public interface FollowPuckViewportState extends com.mapbox.maps.plugin.viewport.state.ViewportState {
     method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions getOptions();
-    method public void setOptions(com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions p);
+    method public void setOptions(com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions options);
     property public abstract com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions options;
   }
 
   @com.mapbox.maps.MapboxExperimental public interface OverviewViewportState extends com.mapbox.maps.plugin.viewport.state.ViewportState {
     method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions getOptions();
-    method public void setOptions(com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions p);
+    method public void setOptions(com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions options);
     property public abstract com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions options;
   }
 
@@ -2692,7 +2692,7 @@ package com.mapbox.maps.plugin.viewport.transition {
 
   @com.mapbox.maps.MapboxExperimental public interface DefaultViewportTransition extends com.mapbox.maps.plugin.viewport.transition.ViewportTransition {
     method public com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions getOptions();
-    method public void setOptions(com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions p);
+    method public void setOptions(com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions options);
     property public abstract com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions options;
   }
 

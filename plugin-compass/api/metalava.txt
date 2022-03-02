@@ -10,7 +10,7 @@ package com.mapbox.maps.plugin.compass {
     method public float getCompassRotation();
     method public boolean isCompassEnabled();
     method public boolean isCompassVisible();
-    method public void setCompassAlpha(float p);
+    method public void setCompassAlpha(float float);
     method public void setCompassEnabled(boolean value);
     method public void setCompassGravity(int value);
     method public void setCompassImage(android.graphics.drawable.Drawable compass);
@@ -25,7 +25,7 @@ package com.mapbox.maps.plugin.compass {
   }
 
   public class CompassViewPlugin extends com.mapbox.maps.plugin.compass.generated.CompassSettingsBase implements com.mapbox.maps.plugin.compass.CompassPlugin {
-    ctor public CompassViewPlugin(kotlin.jvm.functions.Function1<? super android.content.Context,? extends com.mapbox.maps.plugin.compass.CompassViewImpl> viewImplProvider = { it -> return <init>(it) }, android.animation.ValueAnimator fadeAnimator = ValueAnimator.ofFloat(1.0, 0.0), android.os.Handler mainHandler = Handler(Looper.getMainLooper()));
+    ctor public CompassViewPlugin(kotlin.jvm.functions.Function1<? super android.content.Context,? extends com.mapbox.maps.plugin.compass.CompassViewImpl> viewImplProvider = { it -> return <init>(it) }, android.animation.ValueAnimator fadeAnimator = ValueAnimator.ofFloat(1.0, 0.0), android.os.Handler mainHandler = android.os.Handler(Looper.getMainLooper()));
     method public void addCompassClickListener(com.mapbox.maps.plugin.compass.OnCompassClickListener onClickListener);
     method protected void applySettings();
     method public android.view.View bind(android.widget.FrameLayout mapView, android.util.AttributeSet? attrs, float pixelRatio);
@@ -39,7 +39,7 @@ package com.mapbox.maps.plugin.compass {
     method public void onStart();
     method public void onStop();
     method public void removeCompassClickListener(com.mapbox.maps.plugin.compass.OnCompassClickListener onClickListener);
-    method protected void setInternalSettings(com.mapbox.maps.plugin.compass.generated.CompassSettings p);
+    method protected void setInternalSettings(com.mapbox.maps.plugin.compass.generated.CompassSettings internalSettings);
     property public boolean enabled;
     property protected com.mapbox.maps.plugin.compass.generated.CompassSettings internalSettings;
     field public static final com.mapbox.maps.plugin.compass.CompassViewPlugin.Companion Companion;

@@ -39,9 +39,9 @@ package com.mapbox.maps.plugin.animation {
     method public void removeCameraZoomChangeListener(com.mapbox.maps.plugin.animation.CameraAnimatorChangeListener<java.lang.Double> listener);
     method public com.mapbox.maps.plugin.animation.Cancelable rotateBy(com.mapbox.maps.ScreenCoordinate first, com.mapbox.maps.ScreenCoordinate second, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions);
     method public com.mapbox.maps.plugin.animation.Cancelable scaleBy(double amount, com.mapbox.maps.ScreenCoordinate? screenCoordinate, com.mapbox.maps.plugin.animation.MapAnimationOptions? animationOptions);
-    method public void setAnchor(com.mapbox.maps.ScreenCoordinate? p);
-    method public void setCameraAnimationsFactory(com.mapbox.maps.plugin.animation.CameraAnimatorsFactory p);
-    method public void setDebugMode(boolean p);
+    method public void setAnchor(com.mapbox.maps.ScreenCoordinate? anchor);
+    method public void setCameraAnimationsFactory(com.mapbox.maps.plugin.animation.CameraAnimatorsFactory cameraAnimationsFactory);
+    method public void setDebugMode(boolean debugMode);
     method public void unregisterAllAnimators();
     method public void unregisterAnimators(android.animation.ValueAnimator![] cameraAnimators, boolean cancelAnimators);
     property public com.mapbox.maps.ScreenCoordinate? anchor;
@@ -103,7 +103,7 @@ package com.mapbox.maps.plugin.animation.animator {
     method public final void removeAllUpdateListeners();
     method public final void removeListener(android.animation.Animator.AnimatorListener? listener);
     method public final void removeUpdateListener(android.animation.ValueAnimator.AnimatorUpdateListener? listener);
-    method public final void setEvaluator(android.animation.TypeEvaluator<?>? value);
+    method public final void setEvaluator(android.animation.TypeEvaluator<T!>? value);
     method public final void setObjectValues(java.lang.Object?... values);
     method public final void start();
     property public final String? owner;

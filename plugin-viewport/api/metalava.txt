@@ -2,7 +2,7 @@
 package com.mapbox.maps.plugin.viewport {
 
   @com.mapbox.maps.MapboxExperimental public final class ViewportPluginImpl implements com.mapbox.maps.plugin.viewport.ViewportPlugin {
-    ctor public ViewportPluginImpl(android.os.Handler handler = Handler(Looper.getMainLooper()));
+    ctor public ViewportPluginImpl(android.os.Handler handler = android.os.Handler(Looper.getMainLooper()));
     method public void addStatusObserver(com.mapbox.maps.plugin.viewport.ViewportStatusObserver viewportStatusObserver);
     method public void cleanup();
     method public com.mapbox.maps.plugin.viewport.transition.ViewportTransition getDefaultTransition();
@@ -15,8 +15,8 @@ package com.mapbox.maps.plugin.viewport {
     method public com.mapbox.maps.plugin.viewport.state.OverviewViewportState makeOverviewViewportState(com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions options);
     method public void onDelegateProvider(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider);
     method public void removeStatusObserver(com.mapbox.maps.plugin.viewport.ViewportStatusObserver viewportStatusObserver);
-    method public void setDefaultTransition(com.mapbox.maps.plugin.viewport.transition.ViewportTransition p);
-    method public void setOptions(com.mapbox.maps.plugin.viewport.data.ViewportOptions p);
+    method public void setDefaultTransition(com.mapbox.maps.plugin.viewport.transition.ViewportTransition defaultTransition);
+    method public void setOptions(com.mapbox.maps.plugin.viewport.data.ViewportOptions options);
     method public void transitionTo(com.mapbox.maps.plugin.viewport.state.ViewportState targetState, com.mapbox.maps.plugin.viewport.transition.ViewportTransition? transition, com.mapbox.maps.plugin.viewport.CompletionListener? completionListener);
     property public com.mapbox.maps.plugin.viewport.transition.ViewportTransition defaultTransition;
     property public com.mapbox.maps.plugin.viewport.data.ViewportOptions options;
