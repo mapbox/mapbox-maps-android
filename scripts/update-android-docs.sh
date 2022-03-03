@@ -90,12 +90,12 @@ function update_constants_and_map_version_numbers() {
   git remote set-url origin https://x-access-token:"$GITHUB_TOKEN"@github.com/mapbox/android-docs.git
 
   MAP_VERSION_NUMBERS_FILE_TMP="${MAP_VERSION_NUMBERS_FILE}.tmp"
-  if [[ $1 == *beta* ]] || [[ $1 == *alpha* ]] || [[ $1 == *rc* ]]; then
-    jq --arg version $1 '.[-1] |= $version' $MAP_VERSION_NUMBERS_FILE >$MAP_VERSION_NUMBERS_FILE_TMP
-  else
-    jq --arg version $1 '. += [$version]' $MAP_VERSION_NUMBERS_FILE >$MAP_VERSION_NUMBERS_FILE_TMP
 
-    # Only update version in constants for stable release
+  # Append new version to the end of file
+  jq --arg version $1 '. += [$version]' $MAP_VERSION_NUMBERS_FILE >$MAP_VERSION_NUMBERS_FILE_TMP
+
+  # Update version in constants for stable release
+  if [[ $1 != *alpha* ]] && [[ $1 != *beta* ]] && [[ $1 != *rc* ]]; then
     CONSTANTS_FILE_TMP="${CONSTANTS_FILE}.tmp"
     jq --arg version $1 '.MAP_SDK_VERSION=$version' $CONSTANTS_FILE >$CONSTANTS_FILE_TMP
     mv $CONSTANTS_FILE_TMP $CONSTANTS_FILE
