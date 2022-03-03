@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="language_array_key">
+        <item>auto</item>
+        <item>ru</item>
+        <item>pt</item>
+        <item>Arabic(UAE) ara-ARE-Arab</item>
+        <item>Czech (Czech Republic) ces-CZE-Latn</item>
+        <item>Danish (Denmark) dan-DNK-Latn</item>
+        <item>Dutch (Netherlands) nld-NLD-Latn</item>
+        <item>Dutch (Belgium) nld-BEL-Latn</item>
+        <item>English UK eng-GBR-Latn</item>
+        <item>English US eng-USA-Latn</item>
+        <item>Finnish (Finland) -Suomi fin-FIN-Latn</item>
+        <item>French (Canadian) fra-CAN-Latn</item>
+        <item>French (France) fra-FRA-Latn</item>
+        <item>German (Germany) deu-DEU-Latn</item>
+        <item>Greek (Greece) ell-GRC-Grek</item>
+        <item>Hebrew (Modern) heb-ISR-Hebr</item>
+        <item>Hungarian (Hungary) hun-HUN-Latn</item>
+        <item>Indonesian (Indonesia) ind-IDN-Latn</item>
+        <item>Italien (Italy) ita-ITA-Latn</item>
+        <item>Norwegian (Norway) nor-NOR-Latn</item>
+        <item>Polish (Poland) pol-POL-Latn</item>
+        <item>Portuguese (Brazil) por-BRA-Latn</item>
+        <item>Portuguese (Portugal) por-PRT-Latn</item>
+        <item>Romanian ron-ROU-Latn</item>
+        <item>Russian (Russia) rus-RUS-Cyrl</item>
+        <item>Slovak (Slovakia) slk-SVK-Latn</item>
+        <item>Slovenian (Slovenia) slv-SVN-Latn</item>
+        <item>Spanish US (Mexican) spa-USA-Latn</item>
+        <item>Spanish (Spain) spa-ESP-Latn</item>
+        <item>Swedish (Sweden) swe-SWE-Latn</item>
+        <item>Thai (Thailand) tha-THA-Thai</item>
+        <item>Turkish (Turkey) tur-TUR-Latn</item>
+        <item>Ukrainian (UK) ukr-UKR-Cyrl</item>
+        <item>Vietnamese vie-VNM-Latn</item>
+        <item>Japanese jpn-JPN-Jpan</item>
+        <item>Hindi (India) hi-IN-Latn</item>
+    </string-array>
+    <string-array name="language_array_value">
+        <item>auto</item>
+        <item>ru</item>
+        <item>pt</item>
+        <item>ara-ARE-Arab</item>
+        <item>ces-CZE-Latn</item>
+        <item>dan-DNK-Latn</item>
+        <item>nld-NLD-Latn</item>
+        <item>nld-BEL-Latn</item>
+        <item>eng-GBR-Latn</item>
+        <item>eng-USA-Latn</item>
+        <item>fin-FIN-Latn</item>
+        <item>fra-CAN-Latn</item>
+        <item>fra-FRA-Latn</item>
+        <item>deu-DEU-Latn</item>
+        <item>ell-GRC-Grek</item>
+        <item>heb-ISR-Hebr</item>
+        <item>hun-HUN-Latn</item>
+        <item>ind-IDN-Latn</item>
+        <item>ita-ITA-Latn</item>
+        <item>nor-NOR-Latn</item>
+        <item>pol-POL-Latn</item>
+        <item>por-BRA-Latn</item>
+        <item>por-PRT-Latn</item>
+        <item>ron-ROU-Latn</item>
+        <item>rus-RUS-Cyrl</item>
+        <item>slk-SVK-Latn</item>
+        <item>slv-SVN-Latn</item>
+        <item>spa-USA-Latn</item>
+        <item>spa-ESP-Latn</item>
+        <item>swe-SWE-Latn</item>
+        <item>tha-THA-Thai</item>
+        <item>tur-TUR-Latn</item>
+        <item>ukr-UKR-Cyrl</item>
+        <item>vie-VNM-Latn</item>
+        <item>jpn-JPN-Jpan</item>
+        <item>hi-IN-Latn</item>
+    </string-array>
+
+    <string-array name="worldview_array">
+        <item>auto</item>
+        <item>RU</item>
+        <item>IN</item>
+        <item>US</item>
+    </string-array>
+</resources>

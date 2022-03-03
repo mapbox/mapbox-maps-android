@@ -78,6 +78,11 @@
             app:showAsAction="never" />
 
         <item
+            android:id="@+id/hindi"
+            android:title="@string/hindi"
+            app:showAsAction="never" />
+
+        <item
             android:id="@+id/local"
             android:title="@string/local_names"
             app:showAsAction="never" />

@@ -1,11 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.mapbox.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mapView"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraint_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    mapbox:mapbox_cameraTargetLat="37.753574"
-    mapbox:mapbox_cameraTargetLng="-122.447303"
-    mapbox:mapbox_cameraZoom="13"
-    tools:context=".examples.VectorTileSourceActivity" />
+    android:layout_height="match_parent">
+
+
+    <com.mapbox.maps.MapView xmlns:mapbox="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        mapbox:mapbox_cameraTargetLat="37.753574"
+        mapbox:mapbox_cameraTargetLng="-122.447303"
+        mapbox:mapbox_cameraZoom="13"
+        tools:context=".examples.VectorTileSourceActivity" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/mapbox_location_layer_gray"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCheck"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/languageTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/languageTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/languageView"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:background="@color/mapbox_gray"
+            android:entries="@array/language_array_key"
+            android:layout_marginStart="@dimen/fab_margin"
+            android:theme="@style/CameraPredefinedAnimationsActivityTheme"
+            app:layout_constraintStart_toEndOf="@+id/languageTextView"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/worldViewTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/worldViewTextView"
+            android:layout_marginStart="@dimen/fab_margin"
+            app:layout_constraintStart_toEndOf="@+id/languageView"
+            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/worldView"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:background="@color/mapbox_gray"
+            android:entries="@array/worldview_array"
+            android:theme="@style/CameraPredefinedAnimationsActivityTheme"
+            app:layout_constraintStart_toEndOf="@+id/worldViewTextView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/buttonCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="20dp"
+        android:padding="10dp"
+        android:text="@string/apply"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

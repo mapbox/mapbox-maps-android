@@ -139,6 +139,7 @@
     <string name="korean">Korean</string>
     <string name="vietnamese">Vietnamese</string>
     <string name="italian">Italian</string>
+    <string name="hindi">Hindi</string>
     <string name="local_names">Local names</string>
     <string name="country_label">Country label</string>
     <string name="state_label">State label</string>
@@ -159,4 +160,7 @@
     <string name="set_tile_request_delay">Set tile request delay to 2 sec</string>
     <string name="set_tile_network_request_delay">Set tile network delay to 2 sec</string>
     <string name="follow">Follow</string>
+    <string name="apply">Get settings</string>
+    <string name="languageTextView">Langugage</string>
+    <string name="worldViewTextView">Worldview</string>
 </resources>
