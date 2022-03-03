@@ -41,9 +41,11 @@ import com.mapbox.maps.MapSnapshotOptions;
 import com.mapbox.maps.MapSurface;
 import com.mapbox.maps.MapView;
 import com.mapbox.maps.MapboxMap;
+import com.mapbox.maps.MapboxMapUtils;
 import com.mapbox.maps.QueryFeatureExtensionCallback;
 import com.mapbox.maps.QueryFeatureStateCallback;
 import com.mapbox.maps.ResourceOptions;
+import com.mapbox.maps.ScreenBox;
 import com.mapbox.maps.ScreenCoordinate;
 import com.mapbox.maps.SnapshotOverlayOptions;
 import com.mapbox.maps.Snapshotter;
@@ -110,6 +112,10 @@ import java.util.Locale;
 import kotlin.Pair;
 
 public class JavaInterfaceChecker {
+    private void coordinatesForPixels(MapboxMap mapboxMap, ScreenBox screenBox) {
+        MapboxMapUtils.coordinatesForPixels(mapboxMap, screenBox);
+    }
+
     private void getClusterLeaves(MapboxMap mapboxMap, String sourcdId, Feature cluster, QueryFeatureExtensionCallback callback) {
         mapboxMap.getGeoJsonClusterLeaves(sourcdId, cluster, callback);
         mapboxMap.getGeoJsonClusterLeaves(sourcdId, cluster, 1, callback);

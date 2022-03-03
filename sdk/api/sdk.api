@@ -278,6 +278,10 @@ public final class com/mapbox/maps/MapboxMap$Companion {
 	public final fun clearData (Lcom/mapbox/maps/ResourceOptions;Lcom/mapbox/maps/AsyncOperationResultCallback;)V
 }
 
+public final class com/mapbox/maps/MapboxMapUtils {
+	public static final fun coordinatesForPixels (Lcom/mapbox/maps/plugin/delegates/MapCameraManagerDelegate;Lcom/mapbox/maps/ScreenBox;)Ljava/util/List;
+}
+
 public final class com/mapbox/maps/RenderCacheOptionsExtKt {
 	public static final fun setDisabled (Lcom/mapbox/maps/RenderCacheOptions$Builder;)Lcom/mapbox/maps/RenderCacheOptions$Builder;
 	public static final fun setLargeSize (Lcom/mapbox/maps/RenderCacheOptions$Builder;)Lcom/mapbox/maps/RenderCacheOptions$Builder;

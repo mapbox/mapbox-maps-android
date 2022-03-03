@@ -270,6 +270,10 @@ package com.mapbox.maps {
     method public void clearData(com.mapbox.maps.ResourceOptions resourceOptions, com.mapbox.maps.AsyncOperationResultCallback callback);
   }
 
+  public final class MapboxMapUtils {
+    method public static java.util.List<com.mapbox.geojson.Point> coordinatesForPixels(com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate, com.mapbox.maps.ScreenBox screenBox);
+  }
+
   public final class RenderCacheOptionsExtKt {
     method public static com.mapbox.maps.RenderCacheOptions.Builder setDisabled(com.mapbox.maps.RenderCacheOptions.Builder);
     method public static com.mapbox.maps.RenderCacheOptions.Builder setLargeSize(com.mapbox.maps.RenderCacheOptions.Builder);

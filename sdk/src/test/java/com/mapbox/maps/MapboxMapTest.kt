@@ -588,6 +588,14 @@ class MapboxMapTest {
   }
 
   @Test
+  fun coordinatesForPixelsWithScreenBox() {
+    val point1 = mockk<ScreenCoordinate>()
+    val point2 = mockk<ScreenCoordinate>()
+    mapboxMap.coordinatesForPixels(ScreenBox(point1, point2))
+    verify { nativeMap.coordinatesForPixels(listOf(point1, point2)) }
+  }
+
+  @Test
   fun getBounds() {
     mapboxMap.getBounds()
     verify { nativeMap.bounds }
