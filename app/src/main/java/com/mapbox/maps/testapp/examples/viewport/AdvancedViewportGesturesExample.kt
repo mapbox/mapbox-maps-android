@@ -44,6 +44,8 @@ import com.mapbox.maps.testapp.utils.SimulateRouteLocationProvider
  * Showcase the use age of viewport plugin with advanced gestures customisation.
  *
  * Touch the map to toggle the following and overview mode.
+ *
+ * @see [User location guide](https://docs.mapbox.com/android/maps/guides/user-location/#location-tracking)
  */
 @MapboxExperimental
 class AdvancedViewportGesturesExample : AppCompatActivity() {

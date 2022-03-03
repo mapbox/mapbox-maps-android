@@ -36,6 +36,8 @@ import com.mapbox.maps.testapp.utils.SimulateRouteLocationProvider
  * Showcase the use age of viewport plugin.
  *
  * Use button to toggle the following and overview mode.
+ *
+ * @see [User location guide](https://docs.mapbox.com/android/maps/guides/user-location/#location-tracking)
  */
 @MapboxExperimental
 class ViewportShowcaseActivity : AppCompatActivity() {
