@@ -4,7 +4,10 @@
 
 The Mapbox Maps Location Component Plugin for Android is an public library for displaying a 2D or 3D location puck at user's location. By default the plugin provides a default 2D location puck. Users has the flexibility to customise location puck.
 
-A full overview of classes and interfaces can be found in our [API documentation](https://docs.mapbox.com/android/beta/maps/guides/).
+**Note**:
+With v10, the puck and camera updates have been decoupled, the location component plugin will only handle the location puck updates. Camera updates can be manually handled and synced. And the [Mapbox Viewport Plugin](https://github.com/mapbox/mapbox-maps-android/tree/main/plugin-viewport) is introduced as the successor of the location tracking modes of v9.
+
+A full overview of classes and interfaces can be found in our [User location guide](https://docs.mapbox.com/android/maps/guides/user-location) and [API documentation](https://docs.mapbox.com/android/maps/api-reference/).
 
 ### Getting Started
 

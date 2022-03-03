@@ -25,7 +25,7 @@ The immediate viewport transition allows user to transition from one state to an
 
 And users are free to add their own ViewportTransition and set to specifically to animate transition from the desired fromState and targetState.
 
-A full overview of classes and interfaces can be found in our [API documentation](https://docs.mapbox.com/android/beta/maps/guides/).
+A full overview of classes and interfaces can be found in our [User location guide](https://docs.mapbox.com/android/maps/guides/user-location/#location-tracking) and [API documentation](https://docs.mapbox.com/android/maps/api-reference/).
 
 ### Getting Started
 
