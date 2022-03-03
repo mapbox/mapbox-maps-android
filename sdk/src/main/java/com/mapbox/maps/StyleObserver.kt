@@ -62,7 +62,7 @@ internal class StyleObserver(
    */
   override fun onStyleLoaded(eventData: StyleLoadedEventData) {
     nativeMapWeakRef.get()?.let {
-      val style = Style(WeakReference(it), pixelRatio)
+      val style = Style(it, pixelRatio)
       styleLoadedListener.onStyleLoaded(style)
 
       loadStyleListener?.onStyleLoaded(style)

@@ -41,3 +41,12 @@ class MapboxCameraAnimationException(
 class MapboxStyleException(
   exceptionText: String?
 ) : RuntimeException(exceptionText)
+
+/**
+ * Mapbox exception class flagging a memory leak did occur.
+ */
+class MapboxMapMemoryLeakException(
+  exceptionText: String = MEMORY_LEAK_EXCEPTION_TEXT
+) : IllegalStateException(exceptionText)
+
+private const val MEMORY_LEAK_EXCEPTION_TEXT = "You are keeping reference to a destroyed view, you are leaking memory"
