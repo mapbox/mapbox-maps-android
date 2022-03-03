@@ -20,6 +20,7 @@ val buildFromSource: String by project
 dependencies {
   implementation(Dependencies.kotlin)
   implementation(Dependencies.androidxAnnotations)
+  api("com.mapbox.maps:android-core-shadow:10.0.0-SNAPSHOT")
   compileOnly(Dependencies.robolectric)
   compileOnly(Dependencies.mapboxGlNative)
   compileOnly(Dependencies.mapboxCoreCommon)
