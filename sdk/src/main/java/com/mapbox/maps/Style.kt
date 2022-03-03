@@ -6,7 +6,6 @@ import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Feature
 import com.mapbox.maps.extension.style.StyleInterface
-import java.lang.ref.WeakReference
 import java.nio.ByteBuffer
 
 /**
@@ -21,9 +20,17 @@ import java.nio.ByteBuffer
  * @property pixelRatio the scale ratio of the style, default the device pixel ratio
  */
 class Style internal constructor(
-  private val styleManagerRef: WeakReference<StyleManagerInterface>,
+  private val styleManagerRef: StyleManagerInterface,
   override val pixelRatio: Float
 ) : StyleInterface {
+
+  private fun getStyleManager(): StyleManagerInterface {
+    if (styleManagerRef == null) {
+      throw MapboxMapMemoryLeakException()
+    }
+    return styleManagerRef
+  }
+
   /**
    * Subscribes an Observer to a provided list of event types.
    * Observable will hold a strong reference to an Observer instance, therefore,
@@ -34,7 +41,7 @@ class Style internal constructor(
    * @param events an array of event types to be subscribed to.
    */
   override fun subscribe(observer: Observer, events: MutableList<String>) {
-    styleManagerRef.call { this.subscribe(observer, events) }
+    getStyleManager().subscribe(observer, events)
   }
 
   /**
@@ -44,7 +51,7 @@ class Style internal constructor(
    * @param events an array of event types to be unsubscribed from.
    */
   override fun unsubscribe(observer: Observer, events: MutableList<String>) {
-    styleManagerRef.call { this.unsubscribe(observer, events) }
+    getStyleManager().unsubscribe(observer, events)
   }
 
   /**
@@ -53,7 +60,7 @@ class Style internal constructor(
    * @param observer an Observer
    */
   override fun unsubscribe(observer: Observer) {
-    styleManagerRef.call { this.unsubscribe(observer) }
+    getStyleManager().unsubscribe(observer)
   }
 
   /**
@@ -69,7 +76,7 @@ class Style internal constructor(
    * @return Returns the map style default camera.
    */
   override fun getStyleDefaultCamera(): CameraOptions =
-    styleManagerRef.call { this.styleDefaultCamera }
+    getStyleManager().styleDefaultCamera
 
   /**
    * Returns the map style's transition options. By default, the style parser will attempt
@@ -82,7 +89,7 @@ class Style internal constructor(
    * @return Returns the map style transition options.
    */
   override fun getStyleTransition(): TransitionOptions =
-    styleManagerRef.call { this.styleTransition }
+    getStyleManager().styleTransition
 
   /**
    * Overrides the map style's transition options with user-provided options.
@@ -91,22 +98,23 @@ class Style internal constructor(
    *
    * @param transitionOptions Map style transition options.
    */
-  override fun setStyleTransition(transitionOptions: TransitionOptions) =
-    styleManagerRef.call { this.styleTransition = transitionOptions }
+  override fun setStyleTransition(transitionOptions: TransitionOptions) {
+    getStyleManager().styleTransition = transitionOptions
+  }
 
   /**
    * Get the URI of the current Mapbox Style in use.
    *
    * @return A string containing a Mapbox style URI.
    */
-  override fun getStyleURI() = styleManagerRef.call { this.styleURI }
+  override fun getStyleURI() = getStyleManager().styleURI
 
   /**
    * Get the JSON serialization string of the current Mapbox Style in use.
    *
    * @return A JSON string containing a serialized Mapbox Style.
    */
-  override fun getStyleJSON() = styleManagerRef.call { this.styleJSON }
+  override fun getStyleJSON() = getStyleManager().styleJSON
 
   /**
    * Adds a new style layer.
@@ -121,7 +129,7 @@ class Style internal constructor(
    * @return A string describing an error if the operation was not successful, or empty otherwise.
    */
   override fun addStyleLayer(parameters: Value, position: LayerPosition?): Expected<String, None> =
-    styleManagerRef.call { this.addStyleLayer(parameters, position) }
+    getStyleManager().addStyleLayer(parameters, position)
 
   /**
    * Removes an existing style layer
@@ -133,7 +141,7 @@ class Style internal constructor(
    * @return A string describing an error if the operation was not successful, or empty otherwise.
    */
   override fun removeStyleLayer(layerId: String): Expected<String, None> =
-    styleManagerRef.call { this.removeStyleLayer(layerId) }
+    getStyleManager().removeStyleLayer(layerId)
 
   /**
    * Moves an existing style layer.
@@ -144,7 +152,7 @@ class Style internal constructor(
    * @return A string describing an error if the operation was not successful, or empty otherwise.
    */
   override fun moveStyleLayer(layerId: String, layerPosition: LayerPosition?): Expected<String, None> =
-    styleManagerRef.call { this.moveStyleLayer(layerId, layerPosition) }
+    getStyleManager().moveStyleLayer(layerId, layerPosition)
 
   /**
    * Checks whether a given style layer exists.
@@ -156,7 +164,7 @@ class Style internal constructor(
    * @return True if the given style layer exists, false otherwise.
    */
   override fun styleLayerExists(layerId: String): Boolean =
-    styleManagerRef.call { this.styleLayerExists(layerId) }
+    getStyleManager().styleLayerExists(layerId)
 
   /**
    * Load style from provided URI.
@@ -172,9 +180,7 @@ class Style internal constructor(
    * @param uri URI where the style should be loaded from.
    */
   override fun setStyleURI(uri: String) {
-    styleManagerRef.call {
-      this.styleURI = uri
-    }
+    getStyleManager().styleURI = uri
   }
 
   /**
@@ -185,7 +191,7 @@ class Style internal constructor(
    * @return The value of \p property in the layer with \p layerId.
    */
   override fun getStyleLayerProperty(layerId: String, property: String): StylePropertyValue =
-    styleManagerRef.call { this.getStyleLayerProperty(layerId, property) }
+    getStyleManager().getStyleLayerProperty(layerId, property)
 
   /**
    * Sets a value to a style layer property.
@@ -201,7 +207,7 @@ class Style internal constructor(
     property: String,
     value: Value
   ): Expected<String, None> =
-    styleManagerRef.call { this.setStyleLayerProperty(layerId, property, value) }
+    getStyleManager().setStyleLayerProperty(layerId, property, value)
 
   /**
    * Adds a new style source.
@@ -214,9 +220,7 @@ class Style internal constructor(
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
   override fun addStyleSource(sourceId: String, properties: Value): Expected<String, None> =
-    styleManagerRef.call {
-      this.addStyleSource(sourceId, properties)
-    }
+    getStyleManager().addStyleSource(sourceId, properties)
 
   /**
    * Invalidate region for provided custom geometry source.
@@ -230,7 +234,7 @@ class Style internal constructor(
     sourceId: String,
     coordinateBounds: CoordinateBounds
   ): Expected<String, None> =
-    styleManagerRef.call { this.invalidateStyleCustomGeometrySourceRegion(sourceId, coordinateBounds) }
+    getStyleManager().invalidateStyleCustomGeometrySourceRegion(sourceId, coordinateBounds)
 
   /**
    * Invalidate tile for provided custom geometry source.
@@ -244,7 +248,7 @@ class Style internal constructor(
     sourceId: String,
     tileId: CanonicalTileID
   ): Expected<String, None> =
-    styleManagerRef.call { this.invalidateStyleCustomGeometrySourceTile(sourceId, tileId) }
+    getStyleManager().invalidateStyleCustomGeometrySourceTile(sourceId, tileId)
 
   /**
    * Updates the image of an image style source.
@@ -257,18 +261,16 @@ class Style internal constructor(
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
   override fun updateStyleImageSourceImage(sourceId: String, image: Image): Expected<String, None> =
-    styleManagerRef.call {
-      this.updateStyleImageSourceImage(sourceId, image)
-    }
+    getStyleManager()
+      .updateStyleImageSourceImage(sourceId, image)
 
   /**
    * Removes an existing style source.
    *
    * @param sourceId Identifier of the style source to remove.
    */
-  override fun removeStyleSource(sourceId: String): Expected<String, None> = styleManagerRef.call {
-    this.removeStyleSource(sourceId)
-  }
+  override fun removeStyleSource(sourceId: String): Expected<String, None> = getStyleManager()
+    .removeStyleSource(sourceId)
 
   /**
    * Set tile data of a custom geometry.
@@ -282,9 +284,7 @@ class Style internal constructor(
     tileId: CanonicalTileID,
     featureCollection: MutableList<Feature>
   ): Expected<String, None> {
-    return styleManagerRef.call {
-      this.setStyleCustomGeometrySourceTileData(sourceId, tileId, featureCollection)
-    }
+    return getStyleManager().setStyleCustomGeometrySourceTileData(sourceId, tileId, featureCollection)
   }
 
   /**
@@ -294,9 +294,7 @@ class Style internal constructor(
    *
    * @return True if the given source exists, false otherwise.
    */
-  override fun styleSourceExists(sourceId: String): Boolean = styleManagerRef.call {
-    this.styleSourceExists(sourceId)
-  }
+  override fun styleSourceExists(sourceId: String): Boolean = getStyleManager().styleSourceExists(sourceId)
 
   /**
    * Sets the style global light source properties.
@@ -307,9 +305,8 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  override fun setStyleLight(parameters: Value): Expected<String, None> = styleManagerRef.call {
-    this.setStyleLight(parameters)
-  }
+  override fun setStyleLight(parameters: Value): Expected<String, None> = getStyleManager()
+    .setStyleLight(parameters)
 
   /**
    * Sets a value to the the style light property.
@@ -320,9 +317,8 @@ class Style internal constructor(
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
   override fun setStyleLightProperty(id: String, light: Value): Expected<String, None> =
-    styleManagerRef.call {
-      this.setStyleLightProperty(id, light)
-    }
+    getStyleManager()
+      .setStyleLightProperty(id, light)
 
   /**
    * Sets the style global terrain source properties.
@@ -333,9 +329,8 @@ class Style internal constructor(
    *
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
-  override fun setStyleTerrain(properties: Value): Expected<String, None> = styleManagerRef.call {
-    this.setStyleTerrain(properties)
-  }
+  override fun setStyleTerrain(properties: Value): Expected<String, None> = getStyleManager()
+    .setStyleTerrain(properties)
 
   /**
    * Get the value of a style terrain property.
@@ -344,9 +339,7 @@ class Style internal constructor(
    * @return Style terrain property value.
    */
   override fun getStyleTerrainProperty(property: String): StylePropertyValue =
-    styleManagerRef.call {
-      this.getStyleTerrainProperty(property)
-    }
+    getStyleManager().getStyleTerrainProperty(property)
 
   /**
    * Gets the value of a style terrain property.
@@ -355,9 +348,7 @@ class Style internal constructor(
    * @return Style terrain property value.
    */
   override fun setStyleTerrainProperty(property: String, value: Value): Expected<String, None> =
-    styleManagerRef.call {
-      this.setStyleTerrainProperty(property, value)
-    }
+    getStyleManager().setStyleTerrainProperty(property, value)
 
   /**
    * Gets the value of a style light property.
@@ -365,9 +356,8 @@ class Style internal constructor(
    * @param property Style light property name.
    * @return Style light property value.
    */
-  override fun getStyleLightProperty(property: String): StylePropertyValue = styleManagerRef.call {
-    this.getStyleLightProperty(property)
-  }
+  override fun getStyleLightProperty(property: String): StylePropertyValue = getStyleManager()
+    .getStyleLightProperty(property)
 
   /**
    * Adds an image to be used in the style. This API can also be used for updating
@@ -402,17 +392,15 @@ class Style internal constructor(
     stretchY: List<ImageStretches>,
     content: ImageContent?
   ): Expected<String, None> =
-    styleManagerRef.call {
-      this.addStyleImage(
-        imageId,
-        scale,
-        image,
-        sdf,
-        stretchX,
-        stretchY,
-        content
-      )
-    }
+    getStyleManager().addStyleImage(
+      imageId,
+      scale,
+      image,
+      sdf,
+      stretchX,
+      stretchY,
+      content
+    )
 
   /**
    * Adds an image to be used in the style. This API can also be used for updating
@@ -515,7 +503,7 @@ class Style internal constructor(
    * associated with that ID.
    */
   override fun getStyleImage(imageId: String): Image? =
-    styleManagerRef.call { this.getStyleImage(imageId) }
+    getStyleManager().getStyleImage(imageId)
 
   /**
    * Removes an image from the style.
@@ -525,7 +513,7 @@ class Style internal constructor(
    * @return A string describing an error if the operation was not successful, empty otherwise.
    */
   override fun removeStyleImage(imageId: String): Expected<String, None> =
-    styleManagerRef.call { this.removeStyleImage(imageId) }
+    getStyleManager().removeStyleImage(imageId)
 
   /**
    * Checks whether an image exists.
@@ -535,7 +523,7 @@ class Style internal constructor(
    * @return True if image exists, false otherwise.
    */
   override fun hasStyleImage(imageId: String): Boolean {
-    return styleManagerRef.call { this.hasStyleImage(imageId) }
+    return getStyleManager().hasStyleImage(imageId)
   }
 
   /**
@@ -545,7 +533,7 @@ class Style internal constructor(
    * @return Style layer metadata or a string describing an error if the operation was not successful.
    */
   override fun getStyleLayerProperties(layerId: String): Expected<String, Value> {
-    return styleManagerRef.call { this.getStyleLayerProperties(layerId) }
+    return getStyleManager().getStyleLayerProperties(layerId)
   }
 
   /**
@@ -556,9 +544,7 @@ class Style internal constructor(
    * @param json A JSON string containing a serialized Mapbox Style.
    */
   override fun setStyleJSON(json: String) {
-    styleManagerRef.call {
-      this.styleJSON = json
-    }
+    getStyleManager().styleJSON = json
   }
 
   /**
@@ -569,7 +555,7 @@ class Style internal constructor(
    * @return a string describing an error if the operation was not successful.
    */
   override fun setStyleLayerProperties(layerId: String, properties: Value): Expected<String, None> {
-    return styleManagerRef.call { this.setStyleLayerProperties(layerId, properties) }
+    return getStyleManager().setStyleLayerProperties(layerId, properties)
   }
 
   /**
@@ -580,9 +566,7 @@ class Style internal constructor(
    * @return The value of \p property in the source with \p sourceId.
    */
   override fun getStyleSourceProperty(sourceId: String, property: String): StylePropertyValue {
-    return styleManagerRef.call {
-      this.getStyleSourceProperty(sourceId, property)
-    }
+    return getStyleManager().getStyleSourceProperty(sourceId, property)
   }
 
   /**
@@ -599,9 +583,7 @@ class Style internal constructor(
     property: String,
     value: Value
   ): Expected<String, None> {
-    return styleManagerRef.call {
-      this.setStyleSourceProperty(sourceId, property, value)
-    }
+    return getStyleManager().setStyleSourceProperty(sourceId, property, value)
   }
 
   /**
@@ -625,9 +607,7 @@ class Style internal constructor(
     layerHost: CustomLayerHost,
     layerPosition: LayerPosition?
   ): Expected<String, None> {
-    return styleManagerRef.call {
-      this.addStyleCustomLayer(layerId, layerHost, layerPosition)
-    }
+    return getStyleManager().addStyleCustomLayer(layerId, layerHost, layerPosition)
   }
 
   /**
@@ -651,9 +631,7 @@ class Style internal constructor(
     properties: Value,
     layerPosition: LayerPosition?
   ): Expected<String, None> {
-    return styleManagerRef.call {
-      this.addPersistentStyleLayer(properties, layerPosition)
-    }
+    return getStyleManager().addPersistentStyleLayer(properties, layerPosition)
   }
 
   /**
@@ -679,9 +657,7 @@ class Style internal constructor(
     layerHost: CustomLayerHost,
     layerPosition: LayerPosition?
   ): Expected<String, None> {
-    return styleManagerRef.call {
-      this.addPersistentStyleCustomLayer(layerId, layerHost, layerPosition)
-    }
+    return getStyleManager().addPersistentStyleCustomLayer(layerId, layerHost, layerPosition)
   }
 
   /**
@@ -691,9 +667,7 @@ class Style internal constructor(
    * @return A string describing an error if the operation was not successful, boolean representing state otherwise.
    */
   override fun isStyleLayerPersistent(layerId: String): Expected<String, Boolean> {
-    return styleManagerRef.call {
-      this.isStyleLayerPersistent(layerId)
-    }
+    return getStyleManager().isStyleLayerPersistent(layerId)
   }
 
   /**
@@ -706,7 +680,7 @@ class Style internal constructor(
     sourceId: String,
     options: CustomGeometrySourceOptions
   ): Expected<String, None> =
-    styleManagerRef.call { this.addStyleCustomGeometrySource(sourceId, options) }
+    getStyleManager().addStyleCustomGeometrySource(sourceId, options)
 
   /**
    * Returns the existing style sources.
@@ -714,7 +688,7 @@ class Style internal constructor(
    * @return The list containing the ids of the existing style sources.
    */
   override fun getStyleSources(): List<StyleObjectInfo> {
-    return styleManagerRef.call { this.styleSources }
+    return getStyleManager().styleSources
   }
 
   /**
@@ -741,7 +715,7 @@ class Style internal constructor(
    * @return The list containing the ids of the existing style layers.
    */
   override fun getStyleLayers(): List<StyleObjectInfo> {
-    return styleManagerRef.call { this.styleLayers }
+    return getStyleManager().styleLayers
   }
 
   /**
@@ -753,7 +727,7 @@ class Style internal constructor(
    * @return Style source parameters or a string describing an error if the operation was not successful.
    */
   override fun getStyleSourceProperties(sourceId: String): Expected<String, Value> {
-    return styleManagerRef.call { this.getStyleSourceProperties(sourceId) }
+    return getStyleManager().getStyleSourceProperties(sourceId)
   }
 
   /**
@@ -772,7 +746,7 @@ class Style internal constructor(
     sourceId: String,
     properties: Value
   ): Expected<String, None> {
-    return styleManagerRef.call { this.setStyleSourceProperties(sourceId, properties) }
+    return getStyleManager().setStyleSourceProperties(sourceId, properties)
   }
 
   /**
@@ -781,7 +755,7 @@ class Style internal constructor(
    * @return TRUE if and only if the style JSON contents, the style specified sprite and sources are all loaded, otherwise returns FALSE.
    */
   override fun isStyleLoaded(): Boolean {
-    return styleManagerRef.call { this.isStyleLoaded }
+    return getStyleManager().isStyleLoaded
   }
 
   /**

@@ -70,7 +70,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     )
     this.nativeObserver = NativeObserver(WeakReference(nativeMap))
     this.mapboxMap =
-      MapProvider.getMapboxMap(WeakReference(nativeMap), nativeObserver, mapInitOptions.mapOptions.pixelRatio)
+      MapProvider.getMapboxMap(nativeMap, nativeObserver, mapInitOptions.mapOptions.pixelRatio)
     this.mapboxMap.renderHandler = renderer.renderThread.renderHandlerThread.handler
     this.pluginRegistry = MapProvider.getMapPluginRegistry(
       mapboxMap,

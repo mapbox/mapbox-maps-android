@@ -44,7 +44,7 @@ class MapboxMapTest {
     every { Map.clearData(any(), any()) } just runs
     every { nativeMap.resourceOptions } returns resourceOptions
     styleObserver = mockk(relaxUnitFun = true)
-    mapboxMap = MapboxMap(WeakReference(nativeMap), nativeObserver, styleObserver)
+    mapboxMap = MapboxMap(nativeMap, nativeObserver, styleObserver)
   }
 
   @Test
