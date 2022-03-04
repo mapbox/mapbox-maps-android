@@ -112,7 +112,7 @@ commands:
           name: Parser code coverage and publish as a message
           command: |
             COMMIT_SHA=$(git rev-parse --short HEAD)
-            python3 scripts/code-coverage-parser.py --slug mapbox/mapbox-maps-android --hash ${COMMIT_SHA}
+            python3 scripts/code-coverage-parser.py --token $GITHUB_ACCESS_TOKEN --slug mapbox/mapbox-maps-android --hash ${COMMIT_SHA}
 #      - run:
 #          name: Upload codecov
 #          command: bash <(curl -sSfL https://codecov.io/bash)

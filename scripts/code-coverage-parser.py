@@ -32,11 +32,14 @@ def _get_total_coverage():
 
 
 if __name__ == '__main__':
+    token = os.getenv("GITHUB_ACCESS_TOKEN")
     parser = argparse.ArgumentParser(description="Sets the status of a commit on GitHUB.")
 
-    parser.add_argument("--slug", default="mapbox/mapbox-gl-native",
+    parser.add_argument("--token", default=token, dest="token",
+                        help="GitHub token, otherwise environment GITHUB_API_TOKEN. Needs repo:status scope.")
+    parser.add_argument("--slug", dest="slug", default="mapbox/mapbox-gl-native",
                         help="Repository slug, example: mapbox/mapbox-gl-native.")
-    parser.add_argument("--hash", required=True,
+    parser.add_argument("--hash", dest="hash", required=True,
                         help="Commit git hash.")
 
     args = parser.parse_args()
@@ -46,8 +49,8 @@ if __name__ == '__main__':
     print(description_message)
 
     subprocess.Popen(
-        "scripts/ci-github-set-commit-status.py --slug %s --hash %s --description %s" % (
-            args.slug, args.hash, description_message),
+        "scripts/ci-github-set-commit-status.py --token %s --slug %s --hash %s --description %s" % (
+            args.token, args.slug, args.hash, description_message),
         shell=True
     )
 
