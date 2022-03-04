@@ -46,7 +46,7 @@ class MapboxMap :
   MapCameraManagerDelegate,
   MapStyleStateDelegate {
 
-  private val nativeMap: MapInterface?
+  private var nativeMap: MapInterface?
   private val nativeObserver: NativeObserver
 
   internal var style: Style? = null
@@ -58,7 +58,7 @@ class MapboxMap :
     if (nativeMap == null) {
       throw MapboxMapMemoryLeakException()
     }
-    return nativeMap
+    return nativeMap!!
   }
   /**
    * Represents current camera state.
@@ -1497,6 +1497,8 @@ class MapboxMap :
   }
 
   internal fun onDestroy() {
+    nativeMap = null
+    style?.onDestroy()
     styleObserver.onDestroy()
   }
 

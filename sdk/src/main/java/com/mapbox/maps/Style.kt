@@ -20,15 +20,19 @@ import java.nio.ByteBuffer
  * @property pixelRatio the scale ratio of the style, default the device pixel ratio
  */
 class Style internal constructor(
-  private val styleManagerRef: StyleManagerInterface,
+  private var styleManager: StyleManagerInterface?,
   override val pixelRatio: Float
 ) : StyleInterface {
 
+  internal fun onDestroy() {
+    styleManager = null
+  }
+
   private fun getStyleManager(): StyleManagerInterface {
-    if (styleManagerRef == null) {
+    if (styleManager == null) {
       throw MapboxMapMemoryLeakException()
     }
-    return styleManagerRef
+    return styleManager!!
   }
 
   /**
