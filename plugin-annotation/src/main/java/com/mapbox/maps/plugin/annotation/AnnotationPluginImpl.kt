@@ -112,6 +112,7 @@ class AnnotationPluginImpl : AnnotationPlugin {
     managerList.forEach {
       it.get()?.onDestroy()
     }
+    managerList.clear()
   }
 
   /**

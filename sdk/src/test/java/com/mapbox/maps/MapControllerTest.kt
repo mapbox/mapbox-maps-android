@@ -131,10 +131,10 @@ class MapControllerTest {
     testMapController.onDestroy()
 
     verifySequence {
-      mockMapboxMap.onDestroy()
+      mockPluginRegistry.cleanup()
       mockNativeObserver.onDestroy()
       mockRenderer.onDestroy()
-      mockPluginRegistry.cleanup()
+      mockMapboxMap.onDestroy()
     }
   }
 

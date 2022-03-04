@@ -387,6 +387,8 @@ class MapboxMapTest {
   @Test
   fun removeObserver() {
     val observer = mockk<Observer>()
+    val debugList = arrayListOf<String>()
+    mapboxMap.subscribe(observer, debugList)
     mapboxMap.unsubscribe(observer)
     verify { (nativeMap as ObservableInterface).unsubscribe(observer) }
   }
@@ -395,6 +397,7 @@ class MapboxMapTest {
   fun removeObserverList() {
     val observer = mockk<Observer>()
     val debugList = arrayListOf<String>()
+    mapboxMap.subscribe(observer, debugList)
     mapboxMap.unsubscribe(observer, debugList)
     verify { (nativeMap as ObservableInterface).unsubscribe(observer, debugList) }
   }

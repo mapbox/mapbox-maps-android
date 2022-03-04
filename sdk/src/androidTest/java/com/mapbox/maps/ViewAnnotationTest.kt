@@ -102,18 +102,6 @@ class ViewAnnotationTest(
     }
   }
 
-  @After
-  @UiThreadTest
-  fun tearDown() {
-    val latch = CountDownLatch(1)
-    rule.scenario.onActivity {
-      mapView.onStop()
-      mapView.onDestroy()
-      latch.countDown()
-    }
-    latch.throwExceptionOnTimeoutMs()
-  }
-
   /**
    * Helper function that performs some action and verifies result after some delay
    * when view annotations are fixed in the viewport

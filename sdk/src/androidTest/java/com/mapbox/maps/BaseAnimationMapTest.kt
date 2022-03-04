@@ -75,17 +75,5 @@ abstract class BaseAnimationMapTest {
         executeShellCommand("settings put global animator_duration_scale 0")
       }
     }
-    val latch = CountDownLatch(1)
-    rule.scenario.onActivity {
-      it.runOnUiThread {
-        mapView.onStop()
-        mapView.onDestroy()
-        latch.countDown()
-      }
-    }
-
-    if (!latch.await(10000, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
-    }
   }
 }

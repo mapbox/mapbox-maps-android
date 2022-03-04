@@ -23,6 +23,7 @@ import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.GesturesPluginImpl
 import java.lang.ref.WeakReference
 import java.util.*
+import java.util.concurrent.CopyOnWriteArraySet
 
 /**
  * The general class to interact with in the Mapbox Maps SDK for Android.
@@ -48,7 +49,7 @@ class MapboxMap :
 
   private var nativeMap: MapInterface?
   private val nativeObserver: NativeObserver
-
+  private val observers = CopyOnWriteArraySet<Observer>()
   internal var style: Style? = null
   internal var isStyleLoadInitiated = false
   private val styleObserver: StyleObserver
@@ -1093,7 +1094,9 @@ class MapboxMap :
    * @param events an array of event types to be subscribed to.
    */
   override fun subscribe(observer: Observer, events: List<String>) {
-    getNativeMap().subscribe(observer, events)
+    if (observers.add(observer)) {
+      getNativeMap().subscribe(observer, events)
+    }
   }
 
   /**
@@ -1103,7 +1106,9 @@ class MapboxMap :
    * @param events an array of event types to be unsubscribed from.
    */
   override fun unsubscribe(observer: Observer, events: List<String>) {
-    getNativeMap().unsubscribe(observer, events)
+    if (observers.remove(observer)) {
+      getNativeMap().unsubscribe(observer, events)
+    }
   }
 
   /**
@@ -1112,7 +1117,9 @@ class MapboxMap :
    * @param observer an Observer
    */
   override fun unsubscribe(observer: Observer) {
-    getNativeMap().unsubscribe(observer)
+    if (observers.remove(observer)) {
+      getNativeMap().unsubscribe(observer)
+    }
   }
 
   /**
@@ -1497,6 +1504,10 @@ class MapboxMap :
   }
 
   internal fun onDestroy() {
+    observers.forEach {
+      getNativeMap().unsubscribe(it)
+    }
+    observers.clear()
     nativeMap = null
     style?.onDestroy()
     styleObserver.onDestroy()

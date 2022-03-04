@@ -1624,6 +1624,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
    */
   override fun cleanup() {
     protectedCameraAnimatorOwners.clear()
+    mainHandler?.removeCallbacksAndMessages(null)
+    animationsTimeoutHandler.removeCallbacksAndMessages(null)
   }
 
   /**

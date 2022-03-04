@@ -158,11 +158,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       return
     }
     lifecycleState = LifecycleState.STATE_DESTROYED
-
-    mapboxMap.onDestroy()
+    pluginRegistry.cleanup()
     nativeObserver.onDestroy()
     renderer.onDestroy()
-    pluginRegistry.cleanup()
+    mapboxMap.onDestroy()
   }
 
   override fun onLowMemory() {
