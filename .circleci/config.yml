@@ -116,7 +116,7 @@ commands:
           command: |
             COMMIT_SHA=$(git rev-parse --short HEAD)
             export GITHUB_ACCESS_TOKEN=$(./mbx-ci github notifier token)
-            python3 scripts/ci-github-set-commit-status.py --slug mapbox/mapbox-maps-android --hash ${COMMIT_SHA} --description 71.79
+            python3 scripts/ci-github-set-commit-status.py --success --slug mapbox/mapbox-maps-android --hash ${COMMIT_SHA} --description 71.79
       - run:
           name: Run JVM unit tests & create jacoco code coverage report
           no_output_timeout: 30m
