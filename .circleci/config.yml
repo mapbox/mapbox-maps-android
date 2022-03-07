@@ -108,6 +108,7 @@ commands:
           name: Run JVM unit tests & create jacoco code coverage report
           no_output_timeout: 30m
           command: ./gradlew jacocoTestDebugUnitTestReport
+      - init-aws
       - run:
           name: Parser code coverage and publish as a message
           command: |
