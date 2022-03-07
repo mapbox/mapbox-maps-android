@@ -21,6 +21,7 @@ dependencies {
   implementation(Dependencies.kotlin)
   implementation(Dependencies.androidxAnnotations)
   api("com.mapbox.maps:android-core-shadow:10.0.0-SNAPSHOT")
+  api("com.mapbox.common:common-shadow:21.2.0-rc.1-SNAPSHOT")
   compileOnly(Dependencies.robolectric)
   compileOnly(Dependencies.mapboxGlNative)
   compileOnly(Dependencies.mapboxCoreCommon)
