@@ -725,6 +725,46 @@ class LocationIndicatorLayerTest {
   }
 
   @Test
+  fun bearingTransitionSet() {
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    layer.bearingTransition(
+      transitionOptions {
+        duration(100)
+        delay(200)
+      }
+    )
+    verify { style.setStyleLayerProperty("id", "bearing-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
+  fun bearingTransitionGet() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    assertEquals(transition.toValue().toString(), layer.bearingTransition?.toValue().toString())
+    verify { style.getStyleLayerProperty("id", "bearing-transition") }
+  }
+
+  @Test
+  fun bearingTransitionSetDsl() {
+    val layer = locationIndicatorLayer("id") {}
+    layer.bindTo(style)
+    layer.bearingTransition {
+      duration(100)
+      delay(200)
+    }
+    verify { style.setStyleLayerProperty("id", "bearing-transition", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "{duration=100, delay=200}")
+  }
+
+  @Test
   fun bearingImageSizeSet() {
     val layer = locationIndicatorLayer("id") {}
     val testValue = 1.0
@@ -1904,6 +1944,19 @@ class LocationIndicatorLayerTest {
     assertEquals(1.0, LocationIndicatorLayer.defaultBearingAsExpression?.contents as Double, 1E-5)
     assertEquals(1.0, LocationIndicatorLayer.defaultBearing!!, 1E-5)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "bearing") }
+  }
+
+  @Test
+  fun defaultBearingTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(transition)
+    every { styleProperty.kind } returns StylePropertyValueKind.TRANSITION
+
+    assertEquals(transition.toValue().toString(), LocationIndicatorLayer.defaultBearingTransition?.toValue().toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "bearing-transition") }
   }
 
   @Test
