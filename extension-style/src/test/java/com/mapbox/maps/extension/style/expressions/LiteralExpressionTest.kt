@@ -1,6 +1,7 @@
 package com.mapbox.maps.extension.style.expressions
 
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
+import com.mapbox.maps.extension.style.expressions.dsl.generated.match
 import com.mapbox.maps.extension.style.expressions.dsl.generated.sum
 import org.junit.Assert.*
 import org.junit.Test
@@ -70,5 +71,25 @@ class LiteralExpressionTest {
     }
     assertFalse(expression.isLiteral())
     assertNull(expression.getLiteral())
+  }
+
+  @Test
+  fun literal_inside_match_expression() {
+    val expression = match {
+      get {
+        literal("ethnicity")
+      }
+      literal(listOf("white", "Black", "Hispanic", "Asian"))
+      rgb(251.0, 176.0, 59.0)
+      literal("Other")
+      rgb(204.0, 204.0, 204.0)
+      rgb(0.0, 0.0, 0.0)
+    }
+    assertEquals(
+      """
+      ["match",["get","ethnicity"],["white","Black","Hispanic","Asian"],["rgb",251.0,176.0,59.0],"Other",["rgb",204.0,204.0,204.0],["rgb",0.0,0.0,0.0]]
+      """.trimIndent(),
+      expression.toJson()
+    )
   }
 }

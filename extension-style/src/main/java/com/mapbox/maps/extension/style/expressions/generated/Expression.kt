@@ -599,7 +599,14 @@ class Expression : Value {
      * Provides a literal array or object value.
      */
     fun literal(value: List<Any>) {
-      this@ExpressionBuilder.arguments.add(Companion.literal(value))
+      // https://github.com/mapbox/mapbox-maps-android/issues/965
+      // the match expression is an exception and it takes raw list instead of a list wrapped into
+      // literal expression.
+      if (this@ExpressionBuilder.operator == "match") {
+        this@ExpressionBuilder.arguments.add(Expression(value))
+      } else {
+        this@ExpressionBuilder.arguments.add(Companion.literal(value))
+      }
     }
 
     /**
