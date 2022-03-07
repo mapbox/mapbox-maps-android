@@ -115,7 +115,13 @@ commands:
             COMMIT_SHA=$(git rev-parse --short HEAD)
             export GITHUB_ACCESS_TOKEN=$(./mbx-ci github writer private token)
             python3 scripts/code-coverage-parser.py --token $GITHUB_ACCESS_TOKEN --slug mapbox/mapbox-maps-android --hash ${COMMIT_SHA}
-#      - run:
+      - run:
+          name: Publish code coverage as a message
+          command: |
+            COMMIT_SHA=$(git rev-parse --short HEAD)
+            export GITHUB_ACCESS_TOKEN=$(./mbx-ci github writer private token)
+            python3 scripts/ci-github-set-commit-status.py --token $GITHUB_ACCESS_TOKEN --slug mapbox/mapbox-maps-android --hash ${COMMIT_SHA} --description 71.79
+  #      - run:
 #          name: Upload codecov
 #          command: bash <(curl -sSfL https://codecov.io/bash)
 
