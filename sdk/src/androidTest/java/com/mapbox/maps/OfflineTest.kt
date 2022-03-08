@@ -546,7 +546,7 @@ class OfflineTest {
           .networkRestriction(NetworkRestriction.NONE)
           .build(),
         { progress ->
-          Logger.i("TAG", "completedResourceCount: ${progress.completedResourceCount}, requiredResourceCount: ${progress.requiredResourceCount}")
+          Logger.i(TAG, "completedResourceCount: ${progress.completedResourceCount}, requiredResourceCount: ${progress.requiredResourceCount}")
         }
       ) {
         if (it.isValue) {

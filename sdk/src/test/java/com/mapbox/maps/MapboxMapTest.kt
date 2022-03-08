@@ -52,6 +52,7 @@ class MapboxMapTest {
   fun cleanUp() {
     unmockkObject(MapProjectionUtils)
   }
+
   @Test
   fun loadStyleUri() {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
