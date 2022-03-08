@@ -29,10 +29,15 @@ class Style internal constructor(
   }
 
   private fun getStyleManager(): StyleManagerInterface {
-    if (styleManager == null) {
-      throw MapboxMapMemoryLeakException()
-    }
-    return styleManager!!
+    return styleManager ?: throw MapboxMapMemoryLeakException()
+  }
+
+  /**
+   * Whether the Style instance is valid. Style will be invalid after MapView is destroyed or a new style is loaded and
+   * accessing Style will throw [MapboxMapMemoryLeakException].
+   */
+  fun isValid(): Boolean {
+    return styleManager != null
   }
 
   /**

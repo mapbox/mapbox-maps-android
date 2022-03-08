@@ -7,6 +7,8 @@ import com.mapbox.geojson.Feature
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
@@ -18,6 +20,13 @@ class StyleTest {
   @Before
   fun setUp() {
     style = Style(nativeMap as StyleManagerInterface, 1.0f)
+  }
+
+  @Test
+  fun isValid() {
+    assertTrue(style.isValid())
+    style.onDestroy()
+    assertFalse(style.isValid())
   }
 
   @Test

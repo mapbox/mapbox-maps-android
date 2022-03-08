@@ -32,13 +32,12 @@ import java.util.concurrent.TimeoutException
 class UpdateAnnotationTest : BaseMapTest() {
   private val updateDelay = 100L
   private var index = 0
-  private var stopUpdate = false
   private val latch = CountDownLatch(AnnotationUtils.STYLES.size * 3)
   private lateinit var pointAnnotationManager: PointAnnotationManager
   private lateinit var pointAnnotation: PointAnnotation
   private lateinit var handler: Handler
   private val runnable = Runnable {
-    if (!stopUpdate) {
+    if (mapboxMap.isValid()) {
       mapboxMap.loadStyleUri(AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]) {
         runRunnable()
       }
@@ -60,7 +59,6 @@ class UpdateAnnotationTest : BaseMapTest() {
     if (!latch.await(30000, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
-    stopUpdate = true
     handler.removeCallbacksAndMessages(null)
   }
 

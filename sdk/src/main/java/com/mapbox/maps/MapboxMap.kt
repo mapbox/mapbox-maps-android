@@ -56,11 +56,17 @@ class MapboxMap :
   internal var renderHandler: Handler? = null
 
   private fun getNativeMap(): MapInterface {
-    if (nativeMap == null) {
-      throw MapboxMapMemoryLeakException()
-    }
-    return nativeMap!!
+    return nativeMap ?: throw MapboxMapMemoryLeakException()
   }
+
+  /**
+   * Whether the MapboxMap instance is valid. MapboxMap will be invalid after MapView is destroyed and
+   * accessing MapboxMap will throw [MapboxMapMemoryLeakException].
+   */
+  fun isValid(): Boolean {
+    return nativeMap != null
+  }
+
   /**
    * Represents current camera state.
    */
@@ -319,6 +325,8 @@ class MapboxMap :
     onMapLoadErrorListener: OnMapLoadErrorListener? = null,
     styleTransitionOptions: TransitionOptions? = null
   ) {
+    // Destroy the previous style when loading a new style to remove the reference to native map
+    this.style?.onDestroy()
     style = null
     styleObserver.setLoadStyleListener(
       styleTransitionOptions,

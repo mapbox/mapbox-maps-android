@@ -5,7 +5,9 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 ## Features ✨ and improvements 🏁
 * Optimize how plugins handle settings changes. Call `applySettings` only when settings value changes. ([#1189](https://github.com/mapbox/mapbox-maps-android/pull/1189))
-* Add exception type `MapboxMapMemoryLeakException` which will be thrown when users try to invoke functions related with `nativeMap` in `MapboxMap` and `Style`. Automatically unsubscribe all observers in MapboxMap when `MapboxMap.onDestroy()` is invoked. ([1193](https://github.com/mapbox/mapbox-maps-android/pull/1193)) ([1202](https://github.com/mapbox/mapbox-maps-android/pull/1202))
+* Add exception type `MapboxMapMemoryLeakException` which will be thrown when users try to invoke functions related with `nativeMap` in `MapboxMap` and `Style` after onDestroy.
+  Users check the status of MapboxMap and Style by new method MapboxMap.isValid() and Style.isValid() to avoid such exception.
+  Automatically unsubscribe all observers in MapboxMap when `MapboxMap.onDestroy()` is invoked. ([1193](https://github.com/mapbox/mapbox-maps-android/pull/1193)) ([1202](https://github.com/mapbox/mapbox-maps-android/pull/1202))
 
 ## Bug fixes 🐞
 * Fix an issue when user subscribe sdk listeners multiple times, by changing CopyOnWriteArrayList to CopyOnWriteArraySet in the sdk to hold listeners. ([1183](https://github.com/mapbox/mapbox-maps-android/pull/1183))

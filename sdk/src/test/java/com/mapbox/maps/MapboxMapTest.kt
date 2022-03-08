@@ -54,6 +54,13 @@ class MapboxMapTest {
   }
 
   @Test
+  fun isValid() {
+    assertTrue(mapboxMap.isValid())
+    mapboxMap.onDestroy()
+    assertFalse(mapboxMap.isValid())
+  }
+
+  @Test
   fun loadStyleUri() {
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     assertFalse(mapboxMap.isStyleLoadInitiated)
