@@ -7,9 +7,15 @@ Mapbox welcomes participation and contributions from everyone.
 * Optimize how plugins handle settings changes. Call `applySettings` only when settings value changes. ([#1189](https://github.com/mapbox/mapbox-maps-android/pull/1189))
 * Add new Exception type `MapboxMapMemoryLeakException` which will be thrown when there is a leak for nativeMap. ([1193](https://github.com/mapbox/mapbox-maps-android/pull/1193))
 
+# 10.4.0-rc.1 March 9, 2022
+
 ## Bug fixes 🐞
 * Fix an issue when user subscribe sdk listeners multiple times, by changing CopyOnWriteArrayList to CopyOnWriteArraySet in the sdk to hold listeners. ([1183](https://github.com/mapbox/mapbox-maps-android/pull/1183))
 * Fix an issue when label list is used within the match expression DSL. ([1204](https://github.com/mapbox/mapbox-maps-android/pull/1204))
+* Fixed an issue where small bounds returned by Map::latLngBoundsZoomForCamera with tilted view and Map::latLngBoundsZoomForCameraUnwrapped when viewing >360° longitude. ([#1208](https://github.com/mapbox/mapbox-maps-android/pull/1208))
+
+## Dependencies
+* Bump gl-native to 10.4.0-rc.1, mapbox-common to v21.2.0-rc.1 ([#1208](https://github.com/mapbox/mapbox-maps-android/pull/1208))
 
 # 10.4.0-beta.1 February 24, 2022
 
