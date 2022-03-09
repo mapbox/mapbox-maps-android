@@ -325,8 +325,6 @@ class MapboxMap :
     onMapLoadErrorListener: OnMapLoadErrorListener? = null,
     styleTransitionOptions: TransitionOptions? = null
   ) {
-    // Destroy the previous style when loading a new style to remove the reference to native map
-    this.style?.onDestroy()
     style = null
     styleObserver.setLoadStyleListener(
       styleTransitionOptions,
@@ -1517,7 +1515,6 @@ class MapboxMap :
     }
     observers.clear()
     nativeMap = null
-    style?.onDestroy()
     styleObserver.onDestroy()
   }
 

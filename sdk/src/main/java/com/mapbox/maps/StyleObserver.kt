@@ -27,7 +27,7 @@ internal class StyleObserver(
   private var loadStyleTransitionOptions: TransitionOptions? = null
 
   private val getStyleListeners = CopyOnWriteArraySet<Style.OnStyleLoaded>()
-
+  private val styleWeakReferenceList = CopyOnWriteArraySet<WeakReference<Style>>()
   init {
     nativeObserver.addOnStyleLoadedListener(this)
     nativeObserver.addOnMapLoadErrorListener(this)
@@ -63,6 +63,8 @@ internal class StyleObserver(
   override fun onStyleLoaded(eventData: StyleLoadedEventData) {
     nativeMapWeakRef.get()?.let {
       val style = Style(it, pixelRatio)
+      // Cache all the weak reference for new styles
+      styleWeakReferenceList.add(WeakReference(style))
       styleLoadedListener.onStyleLoaded(style)
 
       loadStyleListener?.onStyleLoaded(style)
@@ -99,6 +101,11 @@ internal class StyleObserver(
     loadStyleListener = null
     loadStyleErrorListener = null
     loadStyleTransitionOptions = null
+    styleWeakReferenceList.forEach {
+      // Destroy all the styles to release the reference to styleManager
+      it.get()?.onDestroy()
+    }
+    styleWeakReferenceList.clear()
     getStyleListeners.clear()
     nativeObserver.removeOnMapLoadErrorListener(this)
     nativeObserver.removeOnStyleLoadedListener(this)
