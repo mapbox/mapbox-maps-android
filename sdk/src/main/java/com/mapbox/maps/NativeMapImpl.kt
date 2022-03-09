@@ -163,6 +163,10 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.coordinateBoundsForCamera(cameraOptions)
   }
 
+  override fun coordinateBoundsForCameraUnwrapped(cameraOptions: CameraOptions): CoordinateBounds {
+    return map.coordinateBoundsForCamera(cameraOptions)
+  }
+
   override fun coordinateBoundsZoomForCameraUnwrapped(cameraOptions: CameraOptions): CoordinateBoundsZoom {
     return map.coordinateBoundsZoomForCameraUnwrapped(cameraOptions)
   }
