@@ -1,0 +1,456 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>TileStore</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+    <link href="../../../styles/style.css" rel="Stylesheet">
+    <link href="../../../styles/logo-styles.css" rel="Stylesheet">
+    <link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+    <link href="../../../styles/main.css" rel="Stylesheet">
+    <script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+    <script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+    <script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+    <script type="text/javascript" src="../../../scripts/main.js" async="async"></script>
+    <script>var pathToRoot = "../../../";</script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="leftColumn">
+        <div id="logo"></div>
+        <div id="paneSearch"></div>
+        <div id="sideMenu"></div>
+      </div>
+      <div id="main">
+        <div id="leftToggler"><span class="icon-toggler"></span></div>
+        <div id="searchBar"></div>
+        <script type="text/javascript" src="../../../scripts/pages.js"></script>
+        <script type="text/javascript" src="../../../scripts/main.js"></script>
+        <div id="content" pageIds="com.mapbox.common/TileStore///PointingToDeclaration//1158692394">
+          <div class="breadcrumbs"><a href="../../index.html">mapbox-maps-android</a>/<a href="../index.html">com.mapbox.common</a>/<a href="index.html">TileStore</a></div>
+          <div class="cover ">
+            <div class="filter-section" id="filter-section"><button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":sdk-base:dokkaHtml/release">androidJvm</button></div>
+            <h1 class="cover"><span>Tile</span><wbr></wbr><span>Store</span></h1>
+            <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open class <a href="index.html">TileStore</a><span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div><p class="paragraph">TileStore manages downloads and storage for requests to tile-related API endpoints, enforcing a disk usage quota: tiles available on disk may be deleted to make room for a new download. This interface can be used by an app developer to set the disk quota. The rest of TileStore API is intended for native SDK consumption only.</p></div></div>
+          </div>
+          <div class="tabbedcontent">
+            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Functions">Functions</button></div>
+            <div class="tabs-section-body">
+              <h2 class="">Functions</h2>
+              <div class="table" data-togglable="Functions"><a data-name="%5Bcom.mapbox.common%2FTileStore%2FaddObserver%2F%23com.mapbox.common.TileStoreObserver%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="addObserver" id="%5Bcom.mapbox.common%2FTileStore%2FaddObserver%2F%23com.mapbox.common.TileStoreObserver%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="add-observer.html">addObserver</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.common%2FTileStore%2FaddObserver%2F%23com.mapbox.common.TileStoreObserver%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag jvm-like">androidJvm</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="add-observer.html">addObserver</a>(observer: <a href="../-tile-store-observer/index.html">TileStoreObserver</a>)<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FaddObserver%2F%23com.mapbox.common.TileStoreObserver%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="addObserver" id="%5Bcom.mapbox.common%2FTileStore%2FaddObserver%2F%23com.mapbox.common.TileStoreObserver%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.common%2FTileStore%2FaddObserver%2F%23com.mapbox.common.TileStoreObserver%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="addObserver" id="%5Bcom.mapbox.common%2FTileStore%2FaddObserver%2F%23com.mapbox.common.TileStoreObserver%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Adds a new observer to the TileStore instance.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FcomputeCoveredArea%2F%23java.util.List%3Ccom.mapbox.common.TilesetDescriptor%3E%23com.mapbox.common.TileRegionGeometryCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="computeCoveredArea" id="%5Bcom.mapbox.common%2FTileStore%2FcomputeCoveredArea%2F%23java.util.List%3Ccom.mapbox.common.TilesetDescriptor%3E%23com.mapbox.common.TileRegionGeometryCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="compute-covered-area.html">computeCoveredArea</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.common%2FTileStore%2FcomputeCoveredArea%2F%23java.util.List%3Ccom.mapbox.common.TilesetDescriptor%3E%23com.mapbox.common.TileRegionGeometryCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag jvm-like">androidJvm</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="compute-covered-area.html">computeCoveredArea</a>(descriptors: <a href="https://developer.android.com/reference/kotlin/java/util/List.html">List</a>&lt;<a href="../-tileset-descriptor/index.html">TilesetDescriptor</a>&gt;, callback: <a href="../-tile-region-geometry-callback/index.html">TileRegionGeometryCallback</a>)<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FcomputeCoveredArea%2F%23java.util.List%3Ccom.mapbox.common.TilesetDescriptor%3E%23com.mapbox.common.TileRegionGeometryCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="computeCoveredArea" id="%5Bcom.mapbox.common%2FTileStore%2FcomputeCoveredArea%2F%23java.util.List%3Ccom.mapbox.common.TilesetDescriptor%3E%23com.mapbox.common.TileRegionGeometryCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.common%2FTileStore%2FcomputeCoveredArea%2F%23java.util.List%3Ccom.mapbox.common.TilesetDescriptor%3E%23com.mapbox.common.TileRegionGeometryCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="computeCoveredArea" id="%5Bcom.mapbox.common%2FTileStore%2FcomputeCoveredArea%2F%23java.util.List%3Ccom.mapbox.common.TilesetDescriptor%3E%23com.mapbox.common.TileRegionGeometryCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Computes a polygon of the area covered by the tiles cached in TileStore with the specified TilesetDescriptors.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2Fcreate%2F%23%2FPointingToDeclaration%2F%2C+com.mapbox.common%2FTileStore%2Fcreate%2F%23java.lang.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="create" id="%5Bcom.mapbox.common%2FTileStore%2Fcreate%2F%23%2FPointingToDeclaration%2F%2C+com.mapbox.common%2FTileStore%2Fcreate%2F%23java.lang.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="create.html">create</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.common%2FTileStore%2Fcreate%2F%23%2FPointingToDeclaration%2F%2C+com.mapbox.common%2FTileStore%2Fcreate%2F%23java.lang.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag jvm-like">androidJvm</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block">@<a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html">NonNull</a>()</div></div>open fun <a href="create.html">create</a>(): <a href="index.html">TileStore</a><span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2Fcreate%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="create" id="%5Bcom.mapbox.common%2FTileStore%2Fcreate%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.common%2FTileStore%2Fcreate%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="create" id="%5Bcom.mapbox.common%2FTileStore%2Fcreate%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Creates a TileStore instance at the default location.</div></div>
+<div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block">@<a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html">NonNull</a>()</div></div>open fun <a href="create.html">create</a>(path: <a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a>): <a href="index.html">TileStore</a><span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2Fcreate%2F%23java.lang.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="create" id="%5Bcom.mapbox.common%2FTileStore%2Fcreate%2F%23java.lang.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.common%2FTileStore%2Fcreate%2F%23java.lang.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="create" id="%5Bcom.mapbox.common%2FTileStore%2Fcreate%2F%23java.lang.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Creates a TileStore instance for the given storage path.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FgetAllTileRegions%2F%23com.mapbox.common.TileRegionsCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="getAllTileRegions" id="%5Bcom.mapbox.common%2FTileStore%2FgetAllTileRegions%2F%23com.mapbox.common.TileRegionsCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="get-all-tile-regions.html">getAllTileRegions</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.common%2FTileStore%2FgetAllTileRegions%2F%23com.mapbox.common.TileRegionsCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag jvm-like">androidJvm</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="get-all-tile-regions.html">getAllTileRegions</a>(callback: <a href="../-tile-regions-callback/index.html">TileRegionsCallback</a>)<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FgetAllTileRegions%2F%23com.mapbox.common.TileRegionsCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="getAllTileRegions" id="%5Bcom.mapbox.common%2FTileStore%2FgetAllTileRegions%2F%23com.mapbox.common.TileRegionsCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.common%2FTileStore%2FgetAllTileRegions%2F%23com.mapbox.common.TileRegionsCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="getAllTileRegions" id="%5Bcom.mapbox.common%2FTileStore%2FgetAllTileRegions%2F%23com.mapbox.common.TileRegionsCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Returns a list of the existing tile regions.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FgetTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="getTileRegion" id="%5Bcom.mapbox.common%2FTileStore%2FgetTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="get-tile-region.html">getTileRegion</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.common%2FTileStore%2FgetTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag jvm-like">androidJvm</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="get-tile-region.html">getTileRegion</a>(id: <a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a>, callback: <a href="../-tile-region-callback/index.html">TileRegionCallback</a>)<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FgetTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="getTileRegion" id="%5Bcom.mapbox.common%2FTileStore%2FgetTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.common%2FTileStore%2FgetTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="getTileRegion" id="%5Bcom.mapbox.common%2FTileStore%2FgetTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Returns a tile region by its id.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FgetTileRegionGeometry%2F%23java.lang.String%23com.mapbox.common.TileRegionGeometryCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="getTileRegionGeometry" id="%5Bcom.mapbox.common%2FTileStore%2FgetTileRegionGeometry%2F%23java.lang.String%23com.mapbox.common.TileRegionGeometryCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="get-tile-region-geometry.html">getTileRegionGeometry</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.common%2FTileStore%2FgetTileRegionGeometry%2F%23java.lang.String%23com.mapbox.common.TileRegionGeometryCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag jvm-like">androidJvm</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="get-tile-region-geometry.html">getTileRegionGeometry</a>(id: <a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a>, callback: <a href="../-tile-region-geometry-callback/index.html">TileRegionGeometryCallback</a>)<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FgetTileRegionGeometry%2F%23java.lang.String%23com.mapbox.common.TileRegionGeometryCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="getTileRegionGeometry" id="%5Bcom.mapbox.common%2FTileStore%2FgetTileRegionGeometry%2F%23java.lang.String%23com.mapbox.common.TileRegionGeometryCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.common%2FTileStore%2FgetTileRegionGeometry%2F%23java.lang.String%23com.mapbox.common.TileRegionGeometryCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="getTileRegionGeometry" id="%5Bcom.mapbox.common%2FTileStore%2FgetTileRegionGeometry%2F%23java.lang.String%23com.mapbox.common.TileRegionGeometryCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Returns a tile region's associated geometry The region associated geometry is provided by the client and it represents the area, which the tile region must cover.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FgetTileRegionMetadata%2F%23java.lang.String%23com.mapbox.common.TileRegionMetadataCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="getTileRegionMetadata" id="%5Bcom.mapbox.common%2FTileStore%2FgetTileRegionMetadata%2F%23java.lang.String%23com.mapbox.common.TileRegionMetadataCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="get-tile-region-metadata.html">getTileRegionMetadata</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.common%2FTileStore%2FgetTileRegionMetadata%2F%23java.lang.String%23com.mapbox.common.TileRegionMetadataCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag jvm-like">androidJvm</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="get-tile-region-metadata.html">getTileRegionMetadata</a>(id: <a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a>, callback: <a href="../-tile-region-metadata-callback/index.html">TileRegionMetadataCallback</a>)<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FgetTileRegionMetadata%2F%23java.lang.String%23com.mapbox.common.TileRegionMetadataCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="getTileRegionMetadata" id="%5Bcom.mapbox.common%2FTileStore%2FgetTileRegionMetadata%2F%23java.lang.String%23com.mapbox.common.TileRegionMetadataCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.common%2FTileStore%2FgetTileRegionMetadata%2F%23java.lang.String%23com.mapbox.common.TileRegionMetadataCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="getTileRegionMetadata" id="%5Bcom.mapbox.common%2FTileStore%2FgetTileRegionMetadata%2F%23java.lang.String%23com.mapbox.common.TileRegionMetadataCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Returns a tile region's associated metadata The region's associated metadata that a user previously set for this region.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FloadTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionLoadOptions%2FPointingToDeclaration%2F%2C+com.mapbox.common%2FTileStore%2FloadTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionLoadOptions%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%2C+com.mapbox.common%2FTileStore%2FloadTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionLoadOptions%23com.mapbox.common.TileRegionLoadProgressCallback%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="loadTileRegion" id="%5Bcom.mapbox.common%2FTileStore%2FloadTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionLoadOptions%2FPointingToDeclaration%2F%2C+com.mapbox.common%2FTileStore%2FloadTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionLoadOptions%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%2C+com.mapbox.common%2FTileStore%2FloadTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionLoadOptions%23com.mapbox.common.TileRegionLoadProgressCallback%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="load-tile-region.html">loadTileRegion</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.common%2FTileStore%2FloadTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionLoadOptions%2FPointingToDeclaration%2F%2C+com.mapbox.common%2FTileStore%2FloadTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionLoadOptions%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%2C+com.mapbox.common%2FTileStore%2FloadTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionLoadOptions%23com.mapbox.common.TileRegionLoadProgressCallback%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag jvm-like">androidJvm</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block">@<a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html">NonNull</a>()</div></div>open fun <a href="load-tile-region.html">loadTileRegion</a>(id: <a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a>, loadOptions: <a href="../-tile-region-load-options/index.html">TileRegionLoadOptions</a>): <span data-unresolved-link="com.mapbox.common/Cancelable///PointingToDeclaration/">Cancelable</span><span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FloadTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionLoadOptions%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="loadTileRegion" id="%5Bcom.mapbox.common%2FTileStore%2FloadTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionLoadOptions%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.common%2FTileStore%2FloadTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionLoadOptions%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="loadTileRegion" id="%5Bcom.mapbox.common%2FTileStore%2FloadTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionLoadOptions%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>An overloaded version that does not report progess or finished status of the loading operation.</div></div>
+<div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block">@<a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html">NonNull</a>()</div></div>open fun <a href="load-tile-region.html">loadTileRegion</a>(id: <a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a>, loadOptions: <a href="../-tile-region-load-options/index.html">TileRegionLoadOptions</a>, onFinished: <a href="../-tile-region-callback/index.html">TileRegionCallback</a>): <span data-unresolved-link="com.mapbox.common/Cancelable///PointingToDeclaration/">Cancelable</span><span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FloadTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionLoadOptions%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="loadTileRegion" id="%5Bcom.mapbox.common%2FTileStore%2FloadTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionLoadOptions%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.common%2FTileStore%2FloadTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionLoadOptions%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="loadTileRegion" id="%5Bcom.mapbox.common%2FTileStore%2FloadTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionLoadOptions%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>An overloaded version that does not report progess of the loading operation.</div></div>
+<div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block">@<a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html">NonNull</a>()</div></div>open fun <a href="load-tile-region.html">loadTileRegion</a>(id: <a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a>, loadOptions: <a href="../-tile-region-load-options/index.html">TileRegionLoadOptions</a>, onProgress: <a href="../-tile-region-load-progress-callback/index.html">TileRegionLoadProgressCallback</a>, onFinished: <a href="../-tile-region-callback/index.html">TileRegionCallback</a>): <span data-unresolved-link="com.mapbox.common/Cancelable///PointingToDeclaration/">Cancelable</span><span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FloadTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionLoadOptions%23com.mapbox.common.TileRegionLoadProgressCallback%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="loadTileRegion" id="%5Bcom.mapbox.common%2FTileStore%2FloadTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionLoadOptions%23com.mapbox.common.TileRegionLoadProgressCallback%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.common%2FTileStore%2FloadTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionLoadOptions%23com.mapbox.common.TileRegionLoadProgressCallback%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="loadTileRegion" id="%5Bcom.mapbox.common%2FTileStore%2FloadTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionLoadOptions%23com.mapbox.common.TileRegionLoadProgressCallback%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Loads a new tile region or updates the existing one.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FremoveObserver%2F%23com.mapbox.common.TileStoreObserver%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="removeObserver" id="%5Bcom.mapbox.common%2FTileStore%2FremoveObserver%2F%23com.mapbox.common.TileStoreObserver%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="remove-observer.html">removeObserver</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.common%2FTileStore%2FremoveObserver%2F%23com.mapbox.common.TileStoreObserver%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag jvm-like">androidJvm</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="remove-observer.html">removeObserver</a>(observer: <a href="../-tile-store-observer/index.html">TileStoreObserver</a>)<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FremoveObserver%2F%23com.mapbox.common.TileStoreObserver%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="removeObserver" id="%5Bcom.mapbox.common%2FTileStore%2FremoveObserver%2F%23com.mapbox.common.TileStoreObserver%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.common%2FTileStore%2FremoveObserver%2F%23com.mapbox.common.TileStoreObserver%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="removeObserver" id="%5Bcom.mapbox.common%2FTileStore%2FremoveObserver%2F%23com.mapbox.common.TileStoreObserver%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Removes an existing observer from the TileStore instance.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FremoveTileRegion%2F%23java.lang.String%2FPointingToDeclaration%2F%2C+com.mapbox.common%2FTileStore%2FremoveTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="removeTileRegion" id="%5Bcom.mapbox.common%2FTileStore%2FremoveTileRegion%2F%23java.lang.String%2FPointingToDeclaration%2F%2C+com.mapbox.common%2FTileStore%2FremoveTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="remove-tile-region.html">removeTileRegion</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.common%2FTileStore%2FremoveTileRegion%2F%23java.lang.String%2FPointingToDeclaration%2F%2C+com.mapbox.common%2FTileStore%2FremoveTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag jvm-like">androidJvm</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="remove-tile-region.html">removeTileRegion</a>(id: <a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a>)<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FremoveTileRegion%2F%23java.lang.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="removeTileRegion" id="%5Bcom.mapbox.common%2FTileStore%2FremoveTileRegion%2F%23java.lang.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.common%2FTileStore%2FremoveTileRegion%2F%23java.lang.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="removeTileRegion" id="%5Bcom.mapbox.common%2FTileStore%2FremoveTileRegion%2F%23java.lang.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Removes a tile region.</div></div>
+<div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="remove-tile-region.html">removeTileRegion</a>(id: <a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a>, callback: <a href="../-tile-region-callback/index.html">TileRegionCallback</a>)<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FremoveTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="removeTileRegion" id="%5Bcom.mapbox.common%2FTileStore%2FremoveTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.common%2FTileStore%2FremoveTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="removeTileRegion" id="%5Bcom.mapbox.common%2FTileStore%2FremoveTileRegion%2F%23java.lang.String%23com.mapbox.common.TileRegionCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>An overloaded version with a callback for feedback.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FsetOption%2F%23java.lang.String%23com.mapbox.bindgen.Value%2FPointingToDeclaration%2F%2C+com.mapbox.common%2FTileStore%2FsetOption%2F%23java.lang.String%23com.mapbox.common.TileDataDomain%23com.mapbox.bindgen.Value%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="setOption" id="%5Bcom.mapbox.common%2FTileStore%2FsetOption%2F%23java.lang.String%23com.mapbox.bindgen.Value%2FPointingToDeclaration%2F%2C+com.mapbox.common%2FTileStore%2FsetOption%2F%23java.lang.String%23com.mapbox.common.TileDataDomain%23com.mapbox.bindgen.Value%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="set-option.html">setOption</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.common%2FTileStore%2FsetOption%2F%23java.lang.String%23com.mapbox.bindgen.Value%2FPointingToDeclaration%2F%2C+com.mapbox.common%2FTileStore%2FsetOption%2F%23java.lang.String%23com.mapbox.common.TileDataDomain%23com.mapbox.bindgen.Value%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag jvm-like">androidJvm</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="set-option.html">setOption</a>(key: <a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a>, value: <a href="../../com.mapbox.bindgen/-value/index.html">Value</a>)<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FsetOption%2F%23java.lang.String%23com.mapbox.bindgen.Value%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="setOption" id="%5Bcom.mapbox.common%2FTileStore%2FsetOption%2F%23java.lang.String%23com.mapbox.bindgen.Value%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.common%2FTileStore%2FsetOption%2F%23java.lang.String%23com.mapbox.bindgen.Value%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="setOption" id="%5Bcom.mapbox.common%2FTileStore%2FsetOption%2F%23java.lang.String%23com.mapbox.bindgen.Value%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Sets additional options for this instance.</div></div>
+<div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="set-option.html">setOption</a>(key: <a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a>, domain: <a href="../-tile-data-domain/index.html">TileDataDomain</a>, value: <a href="../../com.mapbox.bindgen/-value/index.html">Value</a>)<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FsetOption%2F%23java.lang.String%23com.mapbox.common.TileDataDomain%23com.mapbox.bindgen.Value%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="setOption" id="%5Bcom.mapbox.common%2FTileStore%2FsetOption%2F%23java.lang.String%23com.mapbox.common.TileDataDomain%23com.mapbox.bindgen.Value%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.common%2FTileStore%2FsetOption%2F%23java.lang.String%23com.mapbox.common.TileDataDomain%23com.mapbox.bindgen.Value%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="setOption" id="%5Bcom.mapbox.common%2FTileStore%2FsetOption%2F%23java.lang.String%23com.mapbox.common.TileDataDomain%23com.mapbox.bindgen.Value%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Sets additional options for this instance that are specific to a data type.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FtileRegionContainsDescriptors%2F%23java.lang.String%23java.util.List%3Ccom.mapbox.common.TilesetDescriptor%3E%23com.mapbox.common.TileRegionBooleanCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="tileRegionContainsDescriptors" id="%5Bcom.mapbox.common%2FTileStore%2FtileRegionContainsDescriptors%2F%23java.lang.String%23java.util.List%3Ccom.mapbox.common.TilesetDescriptor%3E%23com.mapbox.common.TileRegionBooleanCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="tile-region-contains-descriptors.html">tileRegionContainsDescriptors</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Bcom.mapbox.common%2FTileStore%2FtileRegionContainsDescriptors%2F%23java.lang.String%23java.util.List%3Ccom.mapbox.common.TilesetDescriptor%3E%23com.mapbox.common.TileRegionBooleanCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.2496 5.3C20.3496 4.5 19.2496 4 18.0496 4C16.8496 4 15.6496 4.5 14.8496 5.3L10.3496 9.8L11.7496 11.2L16.2496 6.7C17.2496 5.7 18.8496 5.7 19.8496 6.7C20.8496 7.7 20.8496 9.3 19.8496 10.3L15.3496 14.8L16.7496 16.2L21.2496 11.7C22.1496 10.8 22.5496 9.7 22.5496 8.5C22.5496 7.3 22.1496 6.2 21.2496 5.3Z"/>
+    <path d="M8.35 16.7998C7.35 17.7998 5.75 17.7998 4.75 16.7998C3.75 15.7998 3.75 14.1998 4.75 13.1998L9.25 8.6998L7.85 7.2998L3.35 11.7998C1.55 13.5998 1.55 16.3998 3.35 18.1998C4.25 19.0998 5.35 19.4998 6.55 19.4998C7.75 19.4998 8.85 19.0998 9.75 18.1998L14.25 13.6998L12.85 12.2998L8.35 16.7998Z"/>
+</svg></span>
+                          <div class="copy-popup-wrapper "><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="platform-tags ">
+                        <div class="platform-tag jvm-like">androidJvm</div>
+                      </div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":sdk-base:dokkaHtml/release" data-filterable-set=":sdk-base:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":sdk-base:dokkaHtml/release"><div class="symbol monospace">open fun <a href="tile-region-contains-descriptors.html">tileRegionContainsDescriptors</a>(id: <a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a>, descriptors: <a href="https://developer.android.com/reference/kotlin/java/util/List.html">List</a>&lt;<a href="../-tileset-descriptor/index.html">TilesetDescriptor</a>&gt;, callback: <a href="../-tile-region-boolean-callback/index.html">TileRegionBooleanCallback</a>)<span class="top-right-position"><span class="copy-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4H15V16H5V4ZM17 7H19V18V20H17H8V18H17V7Z" fill="black"/>
+                       </svg></span><div class="copy-popup-wrapper popup-to-left"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 9C18 14 14 18 9 18C4 18 0 14 0 9C0 4 4 0 9 0C14 0 18 4 18 9ZM14.2 6.2L12.8 4.8L7.5 10.1L5.3 7.8L3.8 9.2L7.5 13L14.2 6.2Z" fill="#4DBB5F"/>
+</svg><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="%5Bcom.mapbox.common%2FTileStore%2FtileRegionContainsDescriptors%2F%23java.lang.String%23java.util.List%3Ccom.mapbox.common.TilesetDescriptor%3E%23com.mapbox.common.TileRegionBooleanCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="tileRegionContainsDescriptors" id="%5Bcom.mapbox.common%2FTileStore%2FtileRegionContainsDescriptors%2F%23java.lang.String%23java.util.List%3Ccom.mapbox.common.TilesetDescriptor%3E%23com.mapbox.common.TileRegionBooleanCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a><div class="brief "><a data-name="%5Bcom.mapbox.common%2FTileStore%2FtileRegionContainsDescriptors%2F%23java.lang.String%23java.util.List%3Ccom.mapbox.common.TilesetDescriptor%3E%23com.mapbox.common.TileRegionBooleanCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" anchor-label="tileRegionContainsDescriptors" id="%5Bcom.mapbox.common%2FTileStore%2FtileRegionContainsDescriptors%2F%23java.lang.String%23java.util.List%3Ccom.mapbox.common.TilesetDescriptor%3E%23com.mapbox.common.TileRegionBooleanCallback%2FPointingToDeclaration%2F%5D%2FFunctions%2F1158692394" data-filterable-set=":sdk-base:dokkaHtml/release"></a>Checks if a tile region with the given id contains all tilesets from all of the given tileset descriptors.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="go-to-top-icon"><a href="#container"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M11.3337 9.66683H0.666992L6.00033 3.66683L11.3337 9.66683Z" fill="black"/>
+    <path d="M0.666992 0.333496H11.3337V1.66683H0.666992V0.333496Z" fill="black"/>
+</svg></a></span><span>© 2020 Copyright</span><span class="pull-right"><span>Sponsored and developed by dokka</span><a href="https://github.com/Kotlin/dokka"><span class="padded-icon"><svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8 0H2.3949L4.84076 2.44586L0 7.28662L0.713376 8L5.55414 3.15924L8 5.6051V0Z" fill="black"/>
+</svg></span></a></span></div>
+      </div>
+    </div>
+  </body>
+</html>
+
