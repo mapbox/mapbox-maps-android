@@ -89,16 +89,28 @@ interface MapCameraManagerDelegate {
   ): CameraOptions
 
   /**
-   * Returns the coordinate bounds for a given camera.
+   * Returns the [CoordinateBounds] for a given camera.
    *
-   * @param camera The camera information to use
-   *
-   * @return Returns the CoordinateBounds object representing the provided params
-   *
-   * Note that if the given camera shows the antimeridian, the returned wrapped bounds
+   * Note that if the given `camera` shows the antimeridian, the returned wrapped [CoordinateBounds]
    * might not represent the minimum bounding box.
+   *
+   * @param camera The [CameraOptions] to use for calculating [CoordinateBounds].
+   *
+   * @return The [CoordinateBounds] object representing a given `camera`.
+   *
    */
   fun coordinateBoundsForCamera(camera: CameraOptions): CoordinateBounds
+
+  /**
+   * Returns the [CoordinateBounds] for a given camera.
+   *
+   * This method is useful if the `camera` shows the antimeridian.
+   *
+   * @param camera The [CameraOptions] to use for calculating [CoordinateBounds].
+   *
+   * @return The [CoordinateBounds] object representing a given `camera`.
+   */
+  fun coordinateBoundsForCameraUnwrapped(camera: CameraOptions): CoordinateBounds
 
   /**
    * Returns the coordinate bounds and zoom for a given camera.

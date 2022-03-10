@@ -168,6 +168,7 @@ package com.mapbox.maps {
     method public void clearData(com.mapbox.maps.AsyncOperationResultCallback callback);
     method public static void clearData(com.mapbox.maps.ResourceOptions resourceOptions, com.mapbox.maps.AsyncOperationResultCallback callback);
     method public com.mapbox.maps.CoordinateBounds coordinateBoundsForCamera(com.mapbox.maps.CameraOptions camera);
+    method public com.mapbox.maps.CoordinateBounds coordinateBoundsForCameraUnwrapped(com.mapbox.maps.CameraOptions camera);
     method public com.mapbox.maps.CoordinateBoundsZoom coordinateBoundsZoomForCamera(com.mapbox.maps.CameraOptions camera);
     method public com.mapbox.maps.CoordinateBoundsZoom coordinateBoundsZoomForCameraUnwrapped(com.mapbox.maps.CameraOptions camera);
     method public com.mapbox.geojson.Point coordinateForPixel(com.mapbox.maps.ScreenCoordinate pixel);

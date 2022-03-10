@@ -8,6 +8,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Add exception type `MapboxMapMemoryLeakException` which will be thrown when users try to invoke functions related with `nativeMap` in `MapboxMap` and `Style` after onDestroy.
   Users check the status of MapboxMap and Style by new method MapboxMap.isValid() and Style.isValid() to avoid such exception.
   Automatically unsubscribe all observers in MapboxMap when `MapboxMap.onDestroy()` is invoked. ([1193](https://github.com/mapbox/mapbox-maps-android/pull/1193)) ([1202](https://github.com/mapbox/mapbox-maps-android/pull/1202))
+* Add `MapboxMap#coordinateBoundsForCameraUnwrapped` method for API consistency. ([1222](https://github.com/mapbox/mapbox-maps-android/pull/1222))
 
 # 10.4.0
 

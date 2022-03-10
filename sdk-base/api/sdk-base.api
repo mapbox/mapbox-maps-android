@@ -1420,6 +1420,7 @@ public abstract interface class com/mapbox/maps/plugin/delegates/MapCameraManage
 	public abstract fun cameraForCoordinates (Ljava/util/List;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Ljava/lang/Double;)Lcom/mapbox/maps/CameraOptions;
 	public abstract fun cameraForGeometry (Lcom/mapbox/geojson/Geometry;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Ljava/lang/Double;)Lcom/mapbox/maps/CameraOptions;
 	public abstract fun coordinateBoundsForCamera (Lcom/mapbox/maps/CameraOptions;)Lcom/mapbox/maps/CoordinateBounds;
+	public abstract fun coordinateBoundsForCameraUnwrapped (Lcom/mapbox/maps/CameraOptions;)Lcom/mapbox/maps/CoordinateBounds;
 	public abstract fun coordinateBoundsZoomForCamera (Lcom/mapbox/maps/CameraOptions;)Lcom/mapbox/maps/CoordinateBoundsZoom;
 	public abstract fun coordinateBoundsZoomForCameraUnwrapped (Lcom/mapbox/maps/CameraOptions;)Lcom/mapbox/maps/CoordinateBoundsZoom;
 	public abstract fun coordinateForPixel (Lcom/mapbox/maps/ScreenCoordinate;)Lcom/mapbox/geojson/Point;
