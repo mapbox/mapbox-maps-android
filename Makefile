@@ -107,19 +107,15 @@ generate-sanity-test:
 
 # Metalava & kotlin binary compatibility validator: check API
 .PHONY: check-api
-check-api: build
-	# validate api surface for metalava
+check-api:
+	# validate api surface for both metalava and kotlin binary compatibility validator
 	./gradlew checkApi;
-	# validate api surface for kotlin binary compatibility validator
-	./gradlew apiCheck;
 
 # Metalava & kotlin binary compatibility validator: update API
 .PHONY: update-api
-update-api: build
-	# generate api file for metalava
+update-api:
+	# generate api file for both metalava and kotlin binary compatibility validator
 	./gradlew updateApi;
-	# generate api file for kotlin binary compatibility validator
-	./gradlew apiDump;
 
 # Metalava: update metalava version
 .PHONY: update-metalava

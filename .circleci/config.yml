@@ -393,8 +393,7 @@ jobs:
           no_output_timeout: 30m
           name: verify-api-metalava
           command: |
-            ./gradlew assembleRelease
-            ./gradlew checkApi
+            ./gradlew checkApiMetalava
 
   verify-api-kotlin-binary-compatibility:
     executor: ubuntu
@@ -405,7 +404,7 @@ jobs:
           no_output_timeout: 30m
           name: verify-api-kotlin-binary-compatibility
           command: |
-            ./gradlew apiCheck
+            ./gradlew checkApiKotlinValidator
 
   verify-api-revapi:
     executor: ubuntu
