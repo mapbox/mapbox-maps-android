@@ -9,6 +9,7 @@ Mapbox welcomes participation and contributions from everyone.
   Users check the status of MapboxMap and Style by new method MapboxMap.isValid() and Style.isValid() to avoid such exception.
   Automatically unsubscribe all observers in MapboxMap when `MapboxMap.onDestroy()` is invoked. ([1193](https://github.com/mapbox/mapbox-maps-android/pull/1193)) ([1202](https://github.com/mapbox/mapbox-maps-android/pull/1202))
 * Add `MapboxMap#coordinateBoundsForCameraUnwrapped` method for API consistency. ([1222](https://github.com/mapbox/mapbox-maps-android/pull/1222))
+* Add `LocationIndicatorLayer.bearingTransition` API to control transition of bearing property. (([1207](https://github.com/mapbox/mapbox-maps-android/pull/1207)))
 
 # 10.4.0
 
