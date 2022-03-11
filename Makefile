@@ -26,6 +26,7 @@ build:
 	./gradlew plugin-overlay:assembleRelease;
 	./gradlew plugin-scalebar:assembleRelease;
 	./gradlew plugin-lifecycle:assembleRelease;
+	./gradlew plugin-viewport:assembleRelease;
 
 # Use `make checkApi TAG=ReleaseTag` to check the release tag or `make checkApi` to check current branch while running locally.
 # Note: if run locally, execute `mbx env` and `./gradlew assembleRelease` first.
@@ -107,14 +108,14 @@ generate-sanity-test:
 # Metalava & kotlin binary compatibility validator: check API
 .PHONY: check-api
 check-api:
+	# validate api surface for both metalava and kotlin binary compatibility validator
 	./gradlew checkApi;
-	./gradlew apiCheck;
 
 # Metalava & kotlin binary compatibility validator: update API
 .PHONY: update-api
 update-api:
+	# generate api file for both metalava and kotlin binary compatibility validator
 	./gradlew updateApi;
-	./gradlew apiDump;
 
 # Metalava: update metalava version
 .PHONY: update-metalava
