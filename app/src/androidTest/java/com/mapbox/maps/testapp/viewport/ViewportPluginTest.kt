@@ -63,7 +63,6 @@ class ViewportPluginTest : BaseMapTest() {
 
   @After
   fun cleanUp() {
-    super.tearDown()
     locationProvider.locationConsumers.clear()
   }
 

@@ -39,11 +39,39 @@ class StyleLoadTest {
     rule.scenario.onActivity {
       it.runOnUiThread {
         mapView.onStart()
-        mapboxMap.getStyle { callbackInvoked = true }
+        mapboxMap.getStyle {
+          callbackInvoked = true
+          countDownLatch.countDown()
+        }
       }
     }
     countDownLatch.await(5, TimeUnit.SECONDS)
     assertTrue(callbackInvoked)
+  }
+
+  @Test
+  fun testDestroyAllStyle() {
+    countDownLatch = CountDownLatch(1)
+    var styleList = mutableListOf<Style>()
+    rule.scenario.onActivity { style ->
+      style.runOnUiThread {
+        mapboxMap.getStyle { styleList.add(it) }
+        mapboxMap.loadStyleUri(
+          Style.MAPBOX_STREETS
+        ) { newStyle ->
+          styleList.add(newStyle)
+          countDownLatch.countDown()
+        }
+        mapView.onStart()
+      }
+    }
+    countDownLatch.await(10, TimeUnit.SECONDS)
+    Assert.assertEquals(2, styleList.size)
+    assertTrue(styleList[0].isValid())
+    assertTrue(styleList[1].isValid())
+    mapboxMap.onDestroy()
+    assertFalse(styleList[0].isValid())
+    assertFalse(styleList[1].isValid())
   }
 
   @Test
@@ -64,6 +92,7 @@ class StyleLoadTest {
           assertNotNull("Style should but non null", style)
           assertTrue("Style should be fully loaded", style.isStyleLoaded)
           styleLoadedCount++
+          countDownLatch.countDown()
         }
         mapView.onStart()
       }

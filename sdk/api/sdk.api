@@ -205,6 +205,7 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/ObservableInterfa
 	public fun isFullyLoaded ()Z
 	public fun isGestureInProgress ()Z
 	public fun isUserAnimationInProgress ()Z
+	public final fun isValid ()Z
 	public final fun loadStyle (Lcom/mapbox/maps/extension/style/StyleContract$StyleExtension;)V
 	public final fun loadStyle (Lcom/mapbox/maps/extension/style/StyleContract$StyleExtension;Lcom/mapbox/maps/Style$OnStyleLoaded;)V
 	public final fun loadStyle (Lcom/mapbox/maps/extension/style/StyleContract$StyleExtension;Lcom/mapbox/maps/Style$OnStyleLoaded;Lcom/mapbox/maps/plugin/delegates/listeners/OnMapLoadErrorListener;)V
@@ -408,6 +409,7 @@ public final class com/mapbox/maps/Style : com/mapbox/maps/extension/style/Style
 	public fun invalidateStyleCustomGeometrySourceTile (Ljava/lang/String;Lcom/mapbox/maps/CanonicalTileID;)Lcom/mapbox/bindgen/Expected;
 	public fun isStyleLayerPersistent (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun isStyleLoaded ()Z
+	public final fun isValid ()Z
 	public fun moveStyleLayer (Ljava/lang/String;Lcom/mapbox/maps/LayerPosition;)Lcom/mapbox/bindgen/Expected;
 	public fun removeStyleImage (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun removeStyleLayer (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;

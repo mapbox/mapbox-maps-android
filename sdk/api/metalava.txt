@@ -203,6 +203,7 @@ package com.mapbox.maps {
     method @Deprecated public boolean isFullyLoaded();
     method public boolean isGestureInProgress();
     method public boolean isUserAnimationInProgress();
+    method public boolean isValid();
     method public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.TransitionOptions? transitionOptions = null, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
     method public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
     method public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.Style.OnStyleLoaded onStyleLoaded);
@@ -376,6 +377,7 @@ package com.mapbox.maps {
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> invalidateStyleCustomGeometrySourceTile(String sourceId, com.mapbox.maps.CanonicalTileID tileId);
     method public com.mapbox.bindgen.Expected<java.lang.String,java.lang.Boolean> isStyleLayerPersistent(String layerId);
     method public boolean isStyleLoaded();
+    method public boolean isValid();
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> moveStyleLayer(String layerId, com.mapbox.maps.LayerPosition? layerPosition);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> removeStyleImage(String imageId);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> removeStyleLayer(String layerId);

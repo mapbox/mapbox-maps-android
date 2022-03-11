@@ -545,7 +545,9 @@ class OfflineTest {
           .acceptExpired(true)
           .networkRestriction(NetworkRestriction.NONE)
           .build(),
-        {}
+        { progress ->
+          Logger.i(TAG, "completedResourceCount: ${progress.completedResourceCount}, requiredResourceCount: ${progress.requiredResourceCount}")
+        }
       ) {
         if (it.isValue) {
           it.value?.let { latch.countDown() }

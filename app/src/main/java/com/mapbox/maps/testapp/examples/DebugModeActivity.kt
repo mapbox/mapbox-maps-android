@@ -9,7 +9,6 @@ import com.mapbox.maps.*
 import com.mapbox.maps.extension.observable.eventdata.MapLoadingErrorEventData
 import com.mapbox.maps.extension.observable.getResourceEventData
 import com.mapbox.maps.extension.observable.subscribeResourceRequest
-import com.mapbox.maps.extension.observable.unsubscribeResourceRequest
 import com.mapbox.maps.plugin.compass.compass
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
 import com.mapbox.maps.testapp.R
@@ -170,12 +169,6 @@ class DebugModeActivity : AppCompatActivity() {
         binding.fpsView.text = getString(R.string.fps, it.toInt().toString())
       }
     }
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    mapboxMap.unsubscribe(observable)
-    mapboxMap.unsubscribeResourceRequest(extensionObservable)
   }
 
   companion object {

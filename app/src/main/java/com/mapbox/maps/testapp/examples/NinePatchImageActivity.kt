@@ -26,7 +26,6 @@ class NinePatchImageActivity : AppCompatActivity() {
   private var appendTextCounter = 1
   private lateinit var style: Style
   private lateinit var mapView: MapView
-
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     mapView = MapView(this)
@@ -60,22 +59,30 @@ class NinePatchImageActivity : AppCompatActivity() {
     )
   }
 
+  private val runnable = {
+    if (style.isValid()) {
+      val layer = (style.getLayer(LAYER_ID) as SymbolLayer)
+      layer.textField("${layer.textField?.getTextAsString()} $TEXT_BASE")
+      appendTextCounter++
+      if (appendTextCounter.rem(3) == 0) {
+        layer.textField("${layer.textField?.getTextAsString()}\n")
+      }
+      updateIconText()
+    }
+  }
+
   // start appending text in a loop, stretching icon in both X and Y
   private fun updateIconText() {
     mapView.postDelayed(
-      {
-        val layer = (style.getLayer(LAYER_ID) as SymbolLayer)
-        layer.textField("${layer.textField?.getTextAsString()} $TEXT_BASE")
-        appendTextCounter++
-        if (appendTextCounter.rem(3) == 0) {
-          layer.textField("${layer.textField?.getTextAsString()}\n")
-        }
-        updateIconText()
-      },
+      runnable,
       TEXT_UPDATE_TIME_MS
     )
   }
 
+  override fun onStop() {
+    super.onStop()
+    mapView.removeCallbacks(runnable)
+  }
   companion object {
     private const val NINE_PATCH_ID = "red"
     private const val SOURCE_ID = "source_id"

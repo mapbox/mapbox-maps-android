@@ -20,15 +20,24 @@ import java.nio.ByteBuffer
  * @property pixelRatio the scale ratio of the style, default the device pixel ratio
  */
 class Style internal constructor(
-  private val styleManagerRef: StyleManagerInterface,
+  private var styleManager: StyleManagerInterface?,
   override val pixelRatio: Float
 ) : StyleInterface {
 
+  internal fun onDestroy() {
+    styleManager = null
+  }
+
   private fun getStyleManager(): StyleManagerInterface {
-    if (styleManagerRef == null) {
-      throw MapboxMapMemoryLeakException()
-    }
-    return styleManagerRef
+    return styleManager ?: throw MapboxMapMemoryLeakException()
+  }
+
+  /**
+   * Whether the Style instance is valid. Style will be invalid after MapView is destroyed or a new style is loaded and
+   * accessing Style will throw [MapboxMapMemoryLeakException].
+   */
+  fun isValid(): Boolean {
+    return styleManager != null
   }
 
   /**

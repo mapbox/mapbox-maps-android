@@ -7,7 +7,6 @@ import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.mapbox.maps.*
 import com.mapbox.maps.R
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.runner.RunWith
@@ -36,21 +35,6 @@ abstract class BaseMapTest {
     pixelRatio = context.resources.displayMetrics.density
     initialiseMapView()
     loadMap()
-  }
-
-  @After
-  fun tearDown() {
-    val latch = CountDownLatch(1)
-    rule.scenario.onActivity {
-      it.runOnUiThread {
-        mapView.onStop()
-        mapView.onDestroy()
-        latch.countDown()
-      }
-    }
-    if (!latch.await(10000, TimeUnit.MILLISECONDS)) {
-      throw TimeoutException()
-    }
   }
 
   protected open fun initialiseMapView() {

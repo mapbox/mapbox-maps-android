@@ -65,8 +65,9 @@ class AnnotationPluginImplTest {
 
     annotationPluginImpl.removeAnnotationManager(circleAnnotationManager)
     annotationPluginImpl.removeAnnotationManager(pointAnnotationManager)
-    annotationPluginImpl.removeAnnotationManager(polygonAnnotationManager)
-    annotationPluginImpl.removeAnnotationManager(polylineAnnotationManager)
+    assertEquals(2, annotationPluginImpl.managerList.size)
+
+    annotationPluginImpl.cleanup()
     assertEquals(0, annotationPluginImpl.managerList.size)
   }
 }

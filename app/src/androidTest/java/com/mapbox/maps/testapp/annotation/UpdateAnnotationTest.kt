@@ -37,8 +37,10 @@ class UpdateAnnotationTest : BaseMapTest() {
   private lateinit var pointAnnotation: PointAnnotation
   private lateinit var handler: Handler
   private val runnable = Runnable {
-    mapboxMap.loadStyleUri(AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]) {
-      runRunnable()
+    if (mapboxMap.isValid()) {
+      mapboxMap.loadStyleUri(AnnotationUtils.STYLES[index++ % AnnotationUtils.STYLES.size]) {
+        runRunnable()
+      }
     }
   }
 
@@ -57,6 +59,7 @@ class UpdateAnnotationTest : BaseMapTest() {
     if (!latch.await(30000, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
+    handler.removeCallbacksAndMessages(null)
   }
 
   override fun loadMap() {
