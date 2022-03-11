@@ -33,9 +33,8 @@ If this PR introduces user-facing changes, please note them here.
  - [ ] Optimize code for java consumption (`@JvmOverloads`, `@file:JvmName`, etc).
  - [ ] Add example if relevant.
  - [ ] Document any changes to public APIs.
- - [ ] Run `make update-api` to update generated api files, if there's public API changes, otherwise the `verify-kotlin-binary-compatibility` CI will fail.
- - [ ] Apply changelog label ('breaking change', 'bug :beetle:', 'build', 'docs', 'feature :green_apple:', 'performance :zap:', 'testing :100:') or use the label 'skip changelog'
- - [ ] Add an entry inside this element for inclusion in the `mapbox-maps-android` changelog: `<changelog></changelog>`.
+ - [ ] Run `make update-api` to update generated api files, if there's public API changes, otherwise the `verify-api-*` CI steps might fail.
+ - [ ] Update [CHANGELOG.md](../CHANGELOG.md) or use the label 'skip changelog', otherwise `check changelog` CI step will fail.
  - [ ] If this PR is a `v10.[version]` release branch fix / enhancement, merge it to `main` firstly and then port to `v10.[version]` release branch.
 
 Fixes: < Link to related issues that will be fixed by this pull request, if they exist >
