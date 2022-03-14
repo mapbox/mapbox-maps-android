@@ -24,7 +24,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Avoid possible crash at program exit. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
 
 ## Dependencies
-* Bump gl-native to 10.4.1, mapbox-common to v21.2.0 ([#1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
+* Bump gl-native to v10.4.1, mapbox-common to v21.2.0 ([#1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
 
 # 10.4.0-rc.1 March 9, 2022
 
