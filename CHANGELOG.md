@@ -9,6 +9,23 @@ Mapbox welcomes participation and contributions from everyone.
   Users check the status of MapboxMap and Style by new method MapboxMap.isValid() and Style.isValid() to avoid such exception.
   Automatically unsubscribe all observers in MapboxMap when `MapboxMap.onDestroy()` is invoked. ([1193](https://github.com/mapbox/mapbox-maps-android/pull/1193)) ([1202](https://github.com/mapbox/mapbox-maps-android/pull/1202))
 
+# 10.4.0
+
+## Features ✨ and improvements 🏁
+* Rendering performance improvements. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
+* Add support for 3D terrain tilepacks. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
+* Add `Style#hasStyleImage` method that checks whether an image is in the style. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
+
+## Bug fixes 🐞
+* Fixed too small bounds returned by `Map#latLngBoundsZoomForCamera` with tilted view and `Map#latLngBoundsZoomForCameraUnwrapped` when viewing >360° longitude. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
+* Fix screen coordinate queries when using zero pitch and high zoom values. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
+* Fix crash for the case when a map event is handled by an Observer of a destructed Map. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
+* Fix shimmering artifact when pitched raster tiles with compressed textures are rendered. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
+* Avoid possible crash at program exit. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
+
+## Dependencies
+* Bump gl-native to v10.4.1, mapbox-common to v21.2.0 ([#1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
+
 # 10.4.0-rc.1 March 9, 2022
 
 ## Bug fixes 🐞
