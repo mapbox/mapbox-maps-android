@@ -168,6 +168,7 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/ObservableInterfa
 	public final fun clearData (Lcom/mapbox/maps/AsyncOperationResultCallback;)V
 	public static final fun clearData (Lcom/mapbox/maps/ResourceOptions;Lcom/mapbox/maps/AsyncOperationResultCallback;)V
 	public fun coordinateBoundsForCamera (Lcom/mapbox/maps/CameraOptions;)Lcom/mapbox/maps/CoordinateBounds;
+	public fun coordinateBoundsForCameraUnwrapped (Lcom/mapbox/maps/CameraOptions;)Lcom/mapbox/maps/CoordinateBounds;
 	public fun coordinateBoundsZoomForCamera (Lcom/mapbox/maps/CameraOptions;)Lcom/mapbox/maps/CoordinateBoundsZoom;
 	public fun coordinateBoundsZoomForCameraUnwrapped (Lcom/mapbox/maps/CameraOptions;)Lcom/mapbox/maps/CoordinateBoundsZoom;
 	public fun coordinateForPixel (Lcom/mapbox/maps/ScreenCoordinate;)Lcom/mapbox/geojson/Point;

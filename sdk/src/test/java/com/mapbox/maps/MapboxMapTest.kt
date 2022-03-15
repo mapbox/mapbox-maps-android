@@ -495,6 +495,13 @@ class MapboxMapTest {
   }
 
   @Test
+  fun coordinateBoundsForCameraUnwrapped() {
+    val cameraOptions = mockk<CameraOptions>()
+    mapboxMap.coordinateBoundsForCameraUnwrapped(cameraOptions)
+    verify { nativeMap.coordinateBoundsForCameraUnwrapped(cameraOptions) }
+  }
+
+  @Test
   fun coordinateBoundsZoomForCamera() {
     val cameraOptions = mockk<CameraOptions>()
     mapboxMap.coordinateBoundsZoomForCamera(cameraOptions)

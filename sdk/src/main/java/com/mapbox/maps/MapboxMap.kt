@@ -598,18 +598,30 @@ class MapboxMap :
     getNativeMap().cameraForGeometry(geometry, padding, bearing, pitch)
 
   /**
-   * Convert to a LatLngBounds from a given camera options.
+   * Returns the [CoordinateBounds] for a given camera.
    *
-   * In order for this method to produce correct results [MapView] must be already
-   * measured and inflated to have correct width and height values.
-   * Calling this method in [Activity.onCreate] will lead to incorrect results.
+   * Note that if the given `camera` shows the antimeridian, the returned wrapped [CoordinateBounds]
+   * might not represent the minimum bounding box.
    *
-   * @param camera The camera options to take in account when converting
+   * @param camera The [CameraOptions] to use for calculating [CoordinateBounds].
    *
-   * @return Returns the converted LatLngBounds
+   * @return The [CoordinateBounds] object representing a given `camera`.
+   *
    */
   override fun coordinateBoundsForCamera(camera: CameraOptions): CoordinateBounds =
     getNativeMap().coordinateBoundsForCamera(camera)
+
+  /**
+   * Returns the [CoordinateBounds] for a given camera.
+   *
+   * This method is useful if the `camera` shows the antimeridian.
+   *
+   * @param camera The [CameraOptions] to use for calculating [CoordinateBounds].
+   *
+   * @return The [CoordinateBounds] object representing a given `camera`.
+   */
+  override fun coordinateBoundsForCameraUnwrapped(camera: CameraOptions): CoordinateBounds =
+    getNativeMap().coordinateBoundsForCameraUnwrapped(camera)
 
   /**
    *  Returns the coordinate bounds and zoom for a given camera.
