@@ -10,7 +10,7 @@ Mapbox welcomes participation and contributions from everyone.
   Automatically unsubscribe all observers in MapboxMap when `MapboxMap.onDestroy()` is invoked. ([1193](https://github.com/mapbox/mapbox-maps-android/pull/1193)) ([1202](https://github.com/mapbox/mapbox-maps-android/pull/1202))
 * Add `MapboxMap#coordinateBoundsForCameraUnwrapped` method for API consistency. ([1222](https://github.com/mapbox/mapbox-maps-android/pull/1222))
 
-# 10.4.0
+# 10.4.0 Next minor release
 
 ## Features ✨ and improvements 🏁
 * Rendering performance improvements. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
@@ -23,6 +23,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix crash for the case when a map event is handled by an Observer of a destructed Map. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
 * Fix shimmering artifact when pitched raster tiles with compressed textures are rendered. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
 * Avoid possible crash at program exit. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
+* Clearing diffuse shaded flag for 3D puck when set by batched 3D rendering. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
 
 ## Dependencies
 * Bump gl-native to v10.4.1, mapbox-common to v21.2.0 ([#1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
