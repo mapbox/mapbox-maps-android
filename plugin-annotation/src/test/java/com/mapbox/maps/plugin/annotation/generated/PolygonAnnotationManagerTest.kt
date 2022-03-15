@@ -13,11 +13,7 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
 import com.mapbox.geojson.Polygon
-import com.mapbox.maps.LayerPosition
-import com.mapbox.maps.QueriedFeature
-import com.mapbox.maps.QueryFeaturesCallback
-import com.mapbox.maps.RenderedQueryGeometry
-import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.addPersistentLayer
@@ -41,7 +37,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
+@Config(shadows = [ShadowLogger::class, ShadowProjection::class])
 class PolygonAnnotationManagerTest {
   private val delegateProvider: MapDelegateProvider = mockk()
   private val style: StyleInterface = mockk()
@@ -66,6 +62,7 @@ class PolygonAnnotationManagerTest {
   fun setUp() {
     mockkStatic("com.mapbox.maps.extension.style.layers.LayerUtils")
     mockkStatic("com.mapbox.maps.extension.style.sources.SourceUtils")
+    mockkStatic(Projection::class)
     val captureCallback = slot<(StyleInterface) -> Unit>()
     every { delegateProvider.getStyle(capture(captureCallback)) } answers {
       captureCallback.captured.invoke(style)
@@ -94,6 +91,7 @@ class PolygonAnnotationManagerTest {
     every { mapListenerDelegate.addOnMapIdleListener(any()) } just Runs
     every { mapCameraManagerDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
     every { mapCameraManagerDelegate.pixelForCoordinate(any()) } returns ScreenCoordinate(1.0, 1.0)
+    every { mapCameraManagerDelegate.cameraState } returns mockk(relaxed = true)
     every { layer.layerId } returns "layer0"
     every { source.sourceId } returns "source0"
     every { source.featureCollection(any()) } answers { source }

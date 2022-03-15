@@ -6,6 +6,8 @@ import androidx.annotation.ColorInt
 import com.google.gson.*
 import com.mapbox.android.gestures.MoveDistancesObject
 import com.mapbox.geojson.*
+import com.mapbox.maps.MercatorCoordinate
+import com.mapbox.maps.Projection
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.extension.style.utils.ColorUtils
@@ -389,20 +391,34 @@ class PolylineAnnotation(
     moveDistancesObject: MoveDistancesObject
   ): LineString? {
     val points = geometry.coordinates()
-      .map {
-        mapCameraManagerDelegate.pixelForCoordinate(it)
-      }.map {
-        mapCameraManagerDelegate.coordinateForPixel(
-          ScreenCoordinate(
-            it.x - moveDistancesObject.distanceXSinceLast,
-            it.y - moveDistancesObject.distanceYSinceLast
-          )
-        )
-      }
-    if (points.any { it.latitude() > MAX_MERCATOR_LATITUDE || it.latitude() < MIN_MERCATOR_LATITUDE }) {
+    if (points.isEmpty()) return null
+
+    val centerPoint = Point.fromLngLat(points.map { it.longitude() }.average(), points.map { it.latitude() }.average())
+    val centerScreenCoordinate = mapCameraManagerDelegate.pixelForCoordinate(centerPoint)
+    val targetPoint = mapCameraManagerDelegate.coordinateForPixel(
+      ScreenCoordinate(
+        centerScreenCoordinate.x - moveDistancesObject.distanceXSinceLast,
+        centerScreenCoordinate.y - moveDistancesObject.distanceYSinceLast
+      )
+    )
+
+    val centerMercatorCoordinate =
+      Projection.project(centerPoint, mapCameraManagerDelegate.cameraState.zoom)
+    val targetMercatorCoordinate =
+      Projection.project(targetPoint, mapCameraManagerDelegate.cameraState.zoom)
+
+    // Get the shift in Mercator coordinates
+    val shiftX = targetMercatorCoordinate.x - centerMercatorCoordinate.x
+    val shiftY = targetMercatorCoordinate.y - centerMercatorCoordinate.y
+    val targetPoints =
+      points.map { Projection.project(it, mapCameraManagerDelegate.cameraState.zoom) } // transform point to Mercator point
+        .map { MercatorCoordinate(it.x + shiftX, it.y + shiftY) } // calculate the target Mercator point
+        .map { Projection.unproject(it, mapCameraManagerDelegate.cameraState.zoom) } // transform Mercator point to point
+
+    if (targetPoints.any { it.latitude() > MAX_MERCATOR_LATITUDE || it.latitude() < MIN_MERCATOR_LATITUDE }) {
       return null
     }
-    return LineString.fromLngLats(points)
+    return LineString.fromLngLats(targetPoints)
   }
 
   /**
