@@ -1917,6 +1917,8 @@ public final class com/mapbox/maps/extension/style/layers/generated/LocationIndi
 	public fun bearingImageSize (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun bearingImageSizeTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun bearingImageSizeTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
+	public fun bearingTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
+	public fun bearingTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun emphasisCircleColor (I)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun emphasisCircleColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public fun emphasisCircleColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
@@ -1944,6 +1946,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/LocationIndi
 	public final fun getBearingImageSize ()Ljava/lang/Double;
 	public final fun getBearingImageSizeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getBearingImageSizeTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getBearingTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getEmphasisCircleColor ()Ljava/lang/String;
 	public final fun getEmphasisCircleColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getEmphasisCircleColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
@@ -2019,6 +2022,7 @@ public final class com/mapbox/maps/extension/style/layers/generated/LocationIndi
 	public final fun getDefaultBearingImageSize ()Ljava/lang/Double;
 	public final fun getDefaultBearingImageSizeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public final fun getDefaultBearingImageSizeTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
+	public final fun getDefaultBearingTransition ()Lcom/mapbox/maps/extension/style/types/StyleTransition;
 	public final fun getDefaultEmphasisCircleColor ()Ljava/lang/String;
 	public final fun getDefaultEmphasisCircleColorAsColorInt ()Ljava/lang/Integer;
 	public final fun getDefaultEmphasisCircleColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
@@ -2071,6 +2075,8 @@ public abstract interface class com/mapbox/maps/extension/style/layers/generated
 	public abstract fun bearingImageSize (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun bearingImageSizeTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun bearingImageSizeTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
+	public abstract fun bearingTransition (Lcom/mapbox/maps/extension/style/types/StyleTransition;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
+	public abstract fun bearingTransition (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun emphasisCircleColor (I)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun emphasisCircleColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;
 	public abstract fun emphasisCircleColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/generated/LocationIndicatorLayer;

@@ -632,6 +632,36 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
   }
 
   /**
+   * Transition options for Bearing.
+   */
+  val bearingTransition: StyleTransition?
+    /**
+     * Get the Bearing property transition options
+     *
+     * @return transition options for Double
+     */
+    get() {
+      return getPropertyValue("bearing-transition")
+    }
+
+  /**
+   * Set the Bearing property transition options
+   *
+   * @param options transition options for Double
+   */
+  override fun bearingTransition(options: StyleTransition) = apply {
+    val propertyValue = PropertyValue("bearing-transition", options)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * DSL for [bearingTransition].
+   */
+  override fun bearingTransition(block: StyleTransition.Builder.() -> Unit) = apply {
+    bearingTransition(StyleTransition.Builder().apply(block).build())
+  }
+
+  /**
    * The size of the bearing image, as a scale factor applied to the size of the specified image.
    */
   val bearingImageSize: Double?
@@ -1635,6 +1665,17 @@ class LocationIndicatorLayer(override val layerId: String) : LocationIndicatorLa
       }
 
     /**
+     * Transition options for Bearing.
+     */
+    val defaultBearingTransition: StyleTransition?
+      /**
+       * Get the Bearing property transition options
+       *
+       * @return transition options for Double
+       */
+      get() = StyleManager.getStyleLayerPropertyDefaultValue("location-indicator", "bearing-transition").silentUnwrap()
+
+    /**
      * The size of the bearing image, as a scale factor applied to the size of the specified image.
      */
     val defaultBearingImageSize: Double?
@@ -2170,6 +2211,18 @@ interface LocationIndicatorLayerDsl {
    * @param bearing value of bearing as Expression
    */
   fun bearing(bearing: Expression): LocationIndicatorLayer
+
+  /**
+   * Set the Bearing property transition options
+   *
+   * @param options transition options for Double
+   */
+  fun bearingTransition(options: StyleTransition): LocationIndicatorLayer
+
+  /**
+   * DSL for [bearingTransition].
+   */
+  fun bearingTransition(block: StyleTransition.Builder.() -> Unit): LocationIndicatorLayer
 
   /**
    * Set the BearingImageSize property

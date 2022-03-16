@@ -2238,6 +2238,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer bearingImageSize(com.mapbox.maps.extension.style.expressions.generated.Expression bearingImageSize);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer bearingImageSizeTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer bearingImageSizeTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer bearingTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer bearingTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleColor(String emphasisCircleColor);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleColor(com.mapbox.maps.extension.style.expressions.generated.Expression emphasisCircleColor);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleColor(@ColorInt int emphasisCircleColor);
@@ -2265,6 +2267,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public Double? getBearingImageSize();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getBearingImageSizeAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getBearingImageSizeTransition();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getBearingTransition();
     method public String? getEmphasisCircleColor();
     method @ColorInt public Integer? getEmphasisCircleColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getEmphasisCircleColorAsExpression();
@@ -2335,6 +2338,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final Double? bearingImageSize;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? bearingImageSizeAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? bearingImageSizeTransition;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? bearingTransition;
     property public final String? emphasisCircleColor;
     property @ColorInt public final Integer? emphasisCircleColorAsColorInt;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? emphasisCircleColorAsExpression;
@@ -2385,6 +2389,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public Double? getDefaultBearingImageSize();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultBearingImageSizeAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultBearingImageSizeTransition();
+    method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultBearingTransition();
     method public String? getDefaultEmphasisCircleColor();
     method @ColorInt public Integer? getDefaultEmphasisCircleColorAsColorInt();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultEmphasisCircleColorAsExpression();
@@ -2430,6 +2435,7 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final Double? defaultBearingImageSize;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultBearingImageSizeAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultBearingImageSizeTransition;
+    property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultBearingTransition;
     property public final String? defaultEmphasisCircleColor;
     property @ColorInt public final Integer? defaultEmphasisCircleColorAsColorInt;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultEmphasisCircleColorAsExpression;
@@ -2482,6 +2488,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer bearingImageSize(com.mapbox.maps.extension.style.expressions.generated.Expression bearingImageSize);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer bearingImageSizeTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer bearingImageSizeTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer bearingTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
+    method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer bearingTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleColor(String emphasisCircleColor = "#ffffff");
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleColor(com.mapbox.maps.extension.style.expressions.generated.Expression emphasisCircleColor);
     method public com.mapbox.maps.extension.style.layers.generated.LocationIndicatorLayer emphasisCircleColor(@ColorInt int emphasisCircleColor);

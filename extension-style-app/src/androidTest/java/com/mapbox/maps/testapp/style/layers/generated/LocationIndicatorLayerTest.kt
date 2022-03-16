@@ -316,6 +316,37 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun bearingTransitionTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = locationIndicatorLayer("id") {
+      bearingTransition(transition)
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.bearingTransition)
+  }
+
+  @Test
+  @UiThreadTest
+  fun bearingTransitionSetDslTest() {
+    val transition = transitionOptions {
+      duration(100)
+      delay(200)
+    }
+    val layer = locationIndicatorLayer("id") {
+      bearingTransition {
+        duration(100)
+        delay(200)
+      }
+    }
+    setupLayer(layer)
+    assertEquals(transition, layer.bearingTransition)
+  }
+
+  @Test
+  @UiThreadTest
   fun bearingImageSizeTest() {
     val testValue = 1.0
     val layer = locationIndicatorLayer("id") {
@@ -745,6 +776,7 @@ class LocationIndicatorLayerTest : BaseStyleTest() {
     assertNotNull("defaultAccuracyRadiusColorTransition should not be null", LocationIndicatorLayer.defaultAccuracyRadiusColorTransition)
     assertNotNull("defaultBearing should not be null", LocationIndicatorLayer.defaultBearing)
     assertNotNull("defaultBearingAsExpression should not be null", LocationIndicatorLayer.defaultBearingAsExpression)
+    assertNotNull("defaultBearingTransition should not be null", LocationIndicatorLayer.defaultBearingTransition)
     assertNotNull("defaultBearingImageSize should not be null", LocationIndicatorLayer.defaultBearingImageSize)
     assertNotNull("defaultBearingImageSizeAsExpression should not be null", LocationIndicatorLayer.defaultBearingImageSizeAsExpression)
     assertNotNull("defaultBearingImageSizeTransition should not be null", LocationIndicatorLayer.defaultBearingImageSizeTransition)
