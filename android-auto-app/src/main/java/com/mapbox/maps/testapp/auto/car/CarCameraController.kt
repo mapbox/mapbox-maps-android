@@ -5,7 +5,9 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.dsl.cameraOptions
+import com.mapbox.maps.extension.androidauto.DefaultMapboxCarMapGestureHandler
 import com.mapbox.maps.extension.androidauto.MapboxCarMapObserver
 import com.mapbox.maps.extension.androidauto.MapboxCarMapSurface
 import com.mapbox.maps.plugin.animation.camera
@@ -48,6 +50,17 @@ class CarCameraController : MapboxCarMapObserver {
     }
   }
 
+  val gestureHandler = object : DefaultMapboxCarMapGestureHandler() {
+    override fun onScroll(
+      mapboxCarMapSurface: MapboxCarMapSurface,
+      visibleCenter: ScreenCoordinate,
+      distanceX: Float,
+      distanceY: Float
+    ) {
+      isTrackingPuck = false
+    }
+  }
+
   /**
    * Initialise the car camera controller with a map surface.
    */
@@ -81,15 +94,6 @@ class CarCameraController : MapboxCarMapObserver {
 
   override fun onVisibleAreaChanged(visibleArea: Rect, edgeInsets: EdgeInsets) {
     insets = edgeInsets
-  }
-
-  override fun onScroll(
-    mapboxCarMapSurface: MapboxCarMapSurface,
-    distanceX: Float,
-    distanceY: Float
-  ): Boolean {
-    isTrackingPuck = false
-    return false
   }
 
   /**

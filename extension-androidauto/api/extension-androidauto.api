@@ -1,3 +1,10 @@
+public class com/mapbox/maps/extension/androidauto/DefaultMapboxCarMapGestureHandler : com/mapbox/maps/extension/androidauto/MapboxCarMapGestureHandler {
+	public fun <init> ()V
+	public fun onFling (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;FF)V
+	public fun onScale (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;FFF)V
+	public fun onScroll (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;Lcom/mapbox/maps/ScreenCoordinate;FF)V
+}
+
 public final class com/mapbox/maps/extension/androidauto/MapboxCarMap {
 	public fun <init> (Lcom/mapbox/maps/MapInitOptions;)V
 	public final fun clearObservers ()V
@@ -6,24 +13,31 @@ public final class com/mapbox/maps/extension/androidauto/MapboxCarMap {
 	public final fun getEdgeInsets ()Lcom/mapbox/maps/EdgeInsets;
 	public final fun getVisibleArea ()Landroid/graphics/Rect;
 	public final fun registerObserver (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;)Lcom/mapbox/maps/extension/androidauto/MapboxCarMap;
+	public final fun setGestureHandler (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapGestureHandler;)V
 	public final fun unregisterObserver (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;)V
+}
+
+public abstract interface class com/mapbox/maps/extension/androidauto/MapboxCarMapGestureHandler {
+	public abstract fun onFling (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;FF)V
+	public abstract fun onScale (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;FFF)V
+	public abstract fun onScroll (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;Lcom/mapbox/maps/ScreenCoordinate;FF)V
+}
+
+public final class com/mapbox/maps/extension/androidauto/MapboxCarMapGestureHandler$DefaultImpls {
+	public static fun onFling (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapGestureHandler;Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;FF)V
+	public static fun onScale (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapGestureHandler;Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;FFF)V
+	public static fun onScroll (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapGestureHandler;Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;Lcom/mapbox/maps/ScreenCoordinate;FF)V
 }
 
 public abstract interface class com/mapbox/maps/extension/androidauto/MapboxCarMapObserver {
 	public abstract fun onAttached (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;)V
 	public abstract fun onDetached (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;)V
-	public abstract fun onFling (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;FF)Z
-	public abstract fun onScale (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;Lcom/mapbox/maps/ScreenCoordinate;DD)Z
-	public abstract fun onScroll (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;FF)Z
 	public abstract fun onVisibleAreaChanged (Landroid/graphics/Rect;Lcom/mapbox/maps/EdgeInsets;)V
 }
 
 public final class com/mapbox/maps/extension/androidauto/MapboxCarMapObserver$DefaultImpls {
 	public static fun onAttached (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;)V
 	public static fun onDetached (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;)V
-	public static fun onFling (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;FF)Z
-	public static fun onScale (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;Lcom/mapbox/maps/ScreenCoordinate;DD)Z
-	public static fun onScroll (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;Lcom/mapbox/maps/extension/androidauto/MapboxCarMapSurface;FF)Z
 	public static fun onVisibleAreaChanged (Lcom/mapbox/maps/extension/androidauto/MapboxCarMapObserver;Landroid/graphics/Rect;Lcom/mapbox/maps/EdgeInsets;)V
 }
 

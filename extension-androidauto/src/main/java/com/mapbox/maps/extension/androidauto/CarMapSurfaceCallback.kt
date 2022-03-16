@@ -16,7 +16,7 @@ import com.mapbox.maps.MapboxExperimental
  * level calls that manage the map surface. This class handles the surface callbacks and forwards
  * them to the [CarMapSurfaceOwner] where [MapboxCarMapObserver] instances are notified.
  */
-@OptIn(MapboxExperimental::class)
+@MapboxExperimental
 internal class CarMapSurfaceCallback internal constructor(
   private val carContext: CarContext,
   private val carMapSurfaceOwner: CarMapSurfaceOwner,
