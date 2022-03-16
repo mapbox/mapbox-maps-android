@@ -6,14 +6,13 @@ import androidx.annotation.ColorInt
 import com.google.gson.*
 import com.mapbox.android.gestures.MoveDistancesObject
 import com.mapbox.geojson.*
-import com.mapbox.maps.MercatorCoordinate
-import com.mapbox.maps.Projection
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.extension.style.layers.properties.generated.*
 import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.Annotation
 import com.mapbox.maps.plugin.annotation.AnnotationManager
 import com.mapbox.maps.plugin.annotation.AnnotationType
+import com.mapbox.maps.plugin.annotation.ConvertUtils
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 
 /**
@@ -303,16 +302,9 @@ class PolygonAnnotation(
       )
     )
 
-    val centerMercatorCoordinate = Projection.project(centerPoint, mapCameraManagerDelegate.cameraState.zoom)
-    val targetMercatorCoordinate = Projection.project(targetPoint, mapCameraManagerDelegate.cameraState.zoom)
-
-    // Get the shift in Mercator coordinates
-    val shiftX = targetMercatorCoordinate.x - centerMercatorCoordinate.x
-    val shiftY = targetMercatorCoordinate.y - centerMercatorCoordinate.y
+    val shiftMercatorCoordinate = ConvertUtils.calculateMercatorCoordinateShift(centerPoint, targetPoint, mapCameraManagerDelegate.cameraState.zoom)
     val targetPoints = geometry.coordinates().map { sublist ->
-      sublist.map { Projection.project(it, mapCameraManagerDelegate.cameraState.zoom) } // transform point to Mercator point
-        .map { MercatorCoordinate(it.x + shiftX, it.y + shiftY) } // calculate the target Mercator point
-        .map { Projection.unproject(it, mapCameraManagerDelegate.cameraState.zoom) } // transform Mercator point to point
+      sublist.map { ConvertUtils.shiftPointWithMercatorCoordinate(it, shiftMercatorCoordinate, mapCameraManagerDelegate.cameraState.zoom) }
     }
     if (targetPoints.any { subPointList -> subPointList.any { it.latitude() > MAX_MERCATOR_LATITUDE || it.latitude() < MIN_MERCATOR_LATITUDE } }) {
       return null
