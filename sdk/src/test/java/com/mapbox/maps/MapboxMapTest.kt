@@ -579,10 +579,31 @@ class MapboxMapTest {
   }
 
   @Test
-  fun pixelForCoordinate() {
+  fun pixelForCoordinateOutsideMapView() {
     val point = mockk<Point>()
-    mapboxMap.pixelForCoordinate(point)
-    verify { nativeMap.pixelForCoordinate(point) }
+    val convertedScreenCoordinate = ScreenCoordinate(100.0, 100.0)
+    every { nativeMap.size } returns Size(10f, 10f)
+    every { nativeMap.pixelForCoordinate(point) } returns convertedScreenCoordinate
+    val screenCoordinate = mapboxMap.pixelForCoordinate(point)
+    verifySequence {
+      nativeMap.pixelForCoordinate(point)
+      nativeMap.size
+    }
+    assertEquals(ScreenCoordinate(-1.0, -1.0), screenCoordinate)
+  }
+
+  @Test
+  fun pixelForCoordinateWithinMapView() {
+    val point = mockk<Point>()
+    val convertedScreenCoordinate = ScreenCoordinate(10.0, 10.0)
+    every { nativeMap.size } returns Size(100f, 100f)
+    every { nativeMap.pixelForCoordinate(point) } returns convertedScreenCoordinate
+    val screenCoordinate = mapboxMap.pixelForCoordinate(point)
+    verifySequence {
+      nativeMap.pixelForCoordinate(point)
+      nativeMap.size
+    }
+    assertEquals(convertedScreenCoordinate, screenCoordinate)
   }
 
   @Test
