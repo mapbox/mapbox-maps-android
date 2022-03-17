@@ -265,6 +265,7 @@ package com.mapbox.maps {
     method public void unsubscribe(com.mapbox.maps.Observer observer, java.util.List<java.lang.String> events);
     method public void unsubscribe(com.mapbox.maps.Observer observer);
     property public com.mapbox.maps.CameraState cameraState;
+    property public final boolean isValid;
     field public static final com.mapbox.maps.MapboxMap.Companion Companion;
   }
 
@@ -401,6 +402,7 @@ package com.mapbox.maps {
     method public void unsubscribe(com.mapbox.maps.Observer observer, java.util.List<java.lang.String> events);
     method public void unsubscribe(com.mapbox.maps.Observer observer);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> updateStyleImageSourceImage(String sourceId, com.mapbox.maps.Image image);
+    property public final boolean isValid;
     property public float pixelRatio;
     field public static final com.mapbox.maps.Style.Companion Companion;
     field public static final String DARK = "mapbox://styles/mapbox/dark-v10";
