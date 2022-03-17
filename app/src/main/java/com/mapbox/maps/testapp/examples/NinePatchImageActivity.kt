@@ -60,7 +60,7 @@ class NinePatchImageActivity : AppCompatActivity() {
   }
 
   private val runnable = {
-    if (style.isValid()) {
+    if (style.isValid) {
       val layer = (style.getLayer(LAYER_ID) as SymbolLayer)
       layer.textField("${layer.textField?.getTextAsString()} $TEXT_BASE")
       appendTextCounter++
