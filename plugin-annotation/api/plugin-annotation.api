@@ -77,8 +77,10 @@ public final class com/mapbox/maps/plugin/annotation/AnnotationPluginImplKt {
 
 public final class com/mapbox/maps/plugin/annotation/ConvertUtils {
 	public static final field INSTANCE Lcom/mapbox/maps/plugin/annotation/ConvertUtils;
+	public final fun calculateMercatorCoordinateShift (Lcom/mapbox/geojson/Point;Lcom/mapbox/geojson/Point;D)Lcom/mapbox/maps/MercatorCoordinate;
 	public final fun convertDoubleArray (Ljava/util/List;)Lcom/google/gson/JsonArray;
 	public final fun convertStringArray (Ljava/util/List;)Lcom/google/gson/JsonArray;
+	public final fun shiftPointWithMercatorCoordinate (Lcom/mapbox/geojson/Point;Lcom/mapbox/maps/MercatorCoordinate;D)Lcom/mapbox/geojson/Point;
 	public final fun toDoubleArray (Lcom/google/gson/JsonArray;)Ljava/util/List;
 	public final fun toStringArray (Lcom/google/gson/JsonArray;)Ljava/util/List;
 }
