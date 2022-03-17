@@ -4,12 +4,11 @@ import androidx.annotation.UiThread
 import com.mapbox.maps.extension.observable.*
 import com.mapbox.maps.extension.observable.eventdata.*
 import com.mapbox.maps.plugin.delegates.listeners.*
-import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArraySet
 
 @UiThread
 internal class NativeObserver(
-  private val observable: WeakReference<ObservableInterface>
+  private val observable: ObservableInterface
 ) : Observer {
   val onCameraChangeListeners = CopyOnWriteArraySet<OnCameraChangeListener>()
 
@@ -103,12 +102,12 @@ internal class NativeObserver(
   //
 
   private fun subscribeNewEvent(eventType: String) {
-    observable.get()?.subscribe(this, listOf(eventType))
+    observable.subscribe(this, listOf(eventType))
     observedEvents.add(eventType)
   }
 
   private fun unsubscribeUnusedEvent(eventType: String) {
-    observable.get()?.unsubscribe(this, listOf(eventType))
+    observable.unsubscribe(this, listOf(eventType))
     observedEvents.remove(eventType)
   }
 
@@ -299,7 +298,7 @@ internal class NativeObserver(
   }
 
   fun onDestroy() {
-    observable.get()?.unsubscribe(this)
+    observable.unsubscribe(this)
 
     onCameraChangeListeners.clear()
 

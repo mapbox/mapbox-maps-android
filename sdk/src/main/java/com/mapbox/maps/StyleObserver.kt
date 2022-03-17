@@ -16,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArraySet
  * and maintains and invokes user added listeners.
  */
 internal class StyleObserver(
-  private val nativeMapWeakRef: WeakReference<MapInterface>,
+  private val nativeMap: MapInterface,
   private val styleLoadedListener: Style.OnStyleLoaded,
   private val nativeObserver: NativeObserver,
   private val pixelRatio: Float
@@ -61,20 +61,18 @@ internal class StyleObserver(
    * Invoked when a style has loaded
    */
   override fun onStyleLoaded(eventData: StyleLoadedEventData) {
-    nativeMapWeakRef.get()?.let {
-      val style = Style(it, pixelRatio)
-      // Cache all the weak reference for new styles
-      styleWeakReferenceList.add(WeakReference(style))
-      styleLoadedListener.onStyleLoaded(style)
+    val style = Style(nativeMap, pixelRatio)
+    // Cache all the weak reference for new styles
+    styleWeakReferenceList.add(WeakReference(style))
+    styleLoadedListener.onStyleLoaded(style)
 
-      loadStyleListener?.onStyleLoaded(style)
-      loadStyleListener = null
+    loadStyleListener?.onStyleLoaded(style)
+    loadStyleListener = null
 
-      getStyleListeners.forEach { listener ->
-        listener.onStyleLoaded(style)
-      }
-      getStyleListeners.clear()
+    getStyleListeners.forEach { listener ->
+      listener.onStyleLoaded(style)
     }
+    getStyleListeners.clear()
   }
 
   override fun onMapLoadError(eventData: MapLoadingErrorEventData) {
@@ -90,7 +88,7 @@ internal class StyleObserver(
     // transition options must be applied after style but before sprite and sources to take effect
     loadStyleTransitionOptions?.let {
       if (eventData.type == StyleDataType.STYLE) {
-        nativeMapWeakRef.get()?.styleTransition = it
+        nativeMap.styleTransition = it
         // per gl-native docs style transition options should be reset for a new style so resetting them here
         loadStyleTransitionOptions = null
       }

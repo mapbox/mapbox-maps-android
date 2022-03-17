@@ -11,7 +11,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import java.lang.ref.WeakReference
 
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowLogger::class])
@@ -48,9 +47,9 @@ class StyleObserverTest {
   @Test
   fun onStyleLoadSuccess() {
     val mainStyleLoadedListener = mockk<Style.OnStyleLoaded>(relaxed = true)
-    val nativeMapWeakRef = WeakReference(mockk<MapInterface>(relaxed = true))
+    val nativeMap = mockk<MapInterface>(relaxed = true)
     val styleObserver = StyleObserver(
-      nativeMapWeakRef = nativeMapWeakRef,
+      nativeMap = nativeMap,
       styleLoadedListener = mainStyleLoadedListener,
       nativeObserver = mockk(relaxed = true),
       pixelRatio = 1.0f
@@ -63,7 +62,7 @@ class StyleObserverTest {
     styleObserver.onStyleDataLoaded(styleDataLoaded)
     verify(exactly = 1) { styleLoaded.onStyleLoaded(any()) }
     verify(exactly = 1) { mainStyleLoadedListener.onStyleLoaded(any()) }
-    verify(exactly = 0) { nativeMapWeakRef.get()?.styleTransition = any() }
+    verify(exactly = 0) { nativeMap.styleTransition = any() }
   }
 
   /**
@@ -72,7 +71,7 @@ class StyleObserverTest {
   @Test
   fun onStyleLoadSuccessMulti() {
     val styleObserver = StyleObserver(
-      nativeMapWeakRef = WeakReference(mockk(relaxed = true)),
+      nativeMap = mockk(relaxed = true),
       styleLoadedListener = mockk(relaxed = true),
       nativeObserver = mockk(relaxed = true),
       pixelRatio = 1.0f
@@ -95,7 +94,7 @@ class StyleObserverTest {
   @Test
   fun onStyleLoadedOverwritten() {
     val styleObserver = StyleObserver(
-      nativeMapWeakRef = WeakReference(mockk(relaxed = true)),
+      nativeMap = mockk(relaxed = true),
       styleLoadedListener = mockk(relaxed = true),
       nativeObserver = mockk(relaxed = true),
       pixelRatio = 1.0f
@@ -115,7 +114,7 @@ class StyleObserverTest {
   @Test
   fun onStyleLoadError() {
     val styleObserver = StyleObserver(
-      nativeMapWeakRef = WeakReference(mockk(relaxed = true)),
+      nativeMap = mockk(relaxed = true),
       styleLoadedListener = mockk(relaxed = true),
       nativeObserver = mockk(relaxed = true),
       pixelRatio = 1.0f
@@ -132,7 +131,7 @@ class StyleObserverTest {
   @Test
   fun onStyleLoadErrorNotCalled() {
     val styleObserver = StyleObserver(
-      nativeMapWeakRef = WeakReference(mockk(relaxed = true)),
+      nativeMap = mockk(relaxed = true),
       styleLoadedListener = mockk(relaxed = true),
       nativeObserver = mockk(relaxed = true),
       pixelRatio = 1.0f
@@ -151,9 +150,9 @@ class StyleObserverTest {
    */
   @Test
   fun onStyleDataLoadedCustomTransitionOptions() {
-    val nativeMapWeakRef = WeakReference(mockk<MapInterface>(relaxed = true))
+    val nativeMap = mockk<MapInterface>(relaxed = true)
     val styleObserver = StyleObserver(
-      nativeMapWeakRef = nativeMapWeakRef,
+      nativeMap = nativeMap,
       styleLoadedListener = mockk(relaxUnitFun = true),
       nativeObserver = mockk(relaxed = true),
       pixelRatio = 1.0f
@@ -164,12 +163,12 @@ class StyleObserverTest {
     every { styleDataLoaded.type } returns StyleDataType.STYLE
     styleObserver.onStyleDataLoaded(styleDataLoaded)
     // verify we do call native method after style
-    verify(exactly = 1) { nativeMapWeakRef.get()?.styleTransition = transitionOptions }
+    verify(exactly = 1) { nativeMap.styleTransition = transitionOptions }
     every { styleDataLoaded.type } returns StyleDataType.SOURCES
     styleObserver.onStyleDataLoaded(styleDataLoaded)
     every { styleDataLoaded.type } returns StyleDataType.SPRITE
     styleObserver.onStyleDataLoaded(styleDataLoaded)
     // verify no more calls did happen (meaning there should be one method call)
-    verify(exactly = 1) { nativeMapWeakRef.get()?.styleTransition = transitionOptions }
+    verify(exactly = 1) { nativeMap.styleTransition = transitionOptions }
   }
 }

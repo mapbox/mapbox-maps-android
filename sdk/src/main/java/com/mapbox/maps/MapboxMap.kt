@@ -92,7 +92,7 @@ class MapboxMap :
     this.nativeMap = nativeMap
     this.nativeObserver = nativeObserver
     this.styleObserver = StyleObserver(
-      WeakReference(nativeMap),
+      nativeMap,
       { style -> this.style = style },
       nativeObserver,
       pixelRatio
