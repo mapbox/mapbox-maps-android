@@ -1,16 +1,17 @@
 package com.mapbox.maps.testapp.examples
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
+import com.mapbox.common.Logger
+import com.mapbox.geojson.Point
+import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.Style
-import com.mapbox.maps.extension.style.expressions.dsl.generated.switchCase
-import com.mapbox.maps.extension.style.image.image
-import com.mapbox.maps.extension.style.layers.generated.symbolLayer
-import com.mapbox.maps.extension.style.layers.properties.generated.IconAnchor
+import com.mapbox.maps.extension.style.expressions.dsl.generated.match
+import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.sources.generated.vectorSource
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityIconPropertyBinding
 
 /**
@@ -20,80 +21,126 @@ import com.mapbox.maps.testapp.databinding.ActivityIconPropertyBinding
  */
 class IconPropertyActivity : AppCompatActivity() {
 
+  var currentIdx = 0
+  var tailLen = 5
+  lateinit var mainHandler: Handler
+  private lateinit var style: Style
+  private val layerList = listOf(
+    LAYER_LOW_ID,
+    LAYER_MED_ID,
+    LAYER_HIGH_ID,
+  )
+
+  private val updateTextTask = object : Runnable {
+    override fun run() {
+      currentIdx++
+      updateLayer(currentIdx)
+      if (currentIdx > 16) {
+        currentIdx = 1
+      }
+      mainHandler.postDelayed(this, 200)
+    }
+  }
+
+  override fun onPause() {
+    super.onPause()
+    mainHandler.removeCallbacks(updateTextTask)
+  }
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+
     val binding = ActivityIconPropertyBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
+    mainHandler = Handler(Looper.getMainLooper())
+
+    binding.mapView.getMapboxMap().setCamera(
+      CameraOptions.Builder()
+        .center(Point.fromLngLat(139.0, 36.475))
+        .zoom(4.1)
+        .build()
+    )
+
     binding.mapView.getMapboxMap().loadStyle(
-      styleExtension = style(Style.OUTDOORS) {
-        // Add icons from the U.S. National Parks Service to the map's style.
-        +image(RESTROOMS) {
-          bitmap(BitmapFactory.decodeResource(resources, R.drawable.nps_restrooms))
+      styleExtension = style(Style.DARK) {
+        +vectorSource(SOURCE_LOW) {
+          url(SOURCE_LOW_URI)
         }
-        +image(TRAIL_HEAD) {
-          bitmap(BitmapFactory.decodeResource(resources, R.drawable.nps_trailhead))
-        }
-        +image(PICNIC_AREA) {
-          bitmap(BitmapFactory.decodeResource(resources, R.drawable.nps_picnic_area))
-        }
-        // Access a vector tileset that contains places of interest at Yosemite National Park.
-        // This tileset was created by uploading NPS shape files to Mapbox Studio.
-        +vectorSource(SOURCE_ID) {
-          url(SOURCE_URI)
-        }
-        // Create a symbol layer and access the layer contained.
-        +symbolLayer(LAYER_ID, SOURCE_ID) {
-          // Access the layer that contains the Point of Interest (POI) data.
-          // The source layer property is a unique identifier for a layer within a vector tile source.
+        +circleLayer(LAYER_LOW_ID, SOURCE_LOW) {
           sourceLayer(SOURCE_LAYER_ID)
-          // Expression that adds conditions to the source to determine styling.
-          // `POITYPE` refers to a key in the data source. The values tell us which icon to use from the sprite sheet
-          iconImage(
-            switchCase {
-              eq {
-                get {
-                  literal(ICON_KEY)
-                }
-                literal(KEY_PICNIC_AREA)
-              }
-              literal(PICNIC_AREA)
-              eq {
-                get {
-                  literal(ICON_KEY)
-                }
-                literal(KEY_RESTROOMS)
-              }
-              literal(RESTROOMS)
-              eq {
-                get {
-                  literal(ICON_KEY)
-                }
-                literal(KEY_TRAIL_HEAD)
-              }
-              literal(TRAIL_HEAD)
-              // default case is to return an empty string so no icon will be loaded
-              literal("")
-            }
-          )
-          iconAllowOverlap(true)
-          iconAnchor(IconAnchor.BOTTOM)
+          circleRadius(2.0)
+          circleColor("hsla(0, 0%, 100%, 0)")
+          minZoom(3.0)
+          maxZoom(6.0)
+        }
+        +vectorSource(SOURCE_MED) {
+          url(SOURCE_MED_URI)
+        }
+        +circleLayer(LAYER_MED_ID, SOURCE_MED) {
+          sourceLayer(SOURCE_LAYER_ID)
+          circleRadius(2.0)
+          circleColor("hsla(0, 0%, 100%, 0)")
+          minZoom(6.0)
+          maxZoom(9.0)
+        }
+        +vectorSource(SOURCE_HIGH) {
+          url(SOURCE_HIGH_URI)
+        }
+        +circleLayer(LAYER_HIGH_ID, SOURCE_HIGH) {
+          sourceLayer(SOURCE_LAYER_ID)
+          circleRadius(3.0)
+          circleColor("hsla(0, 0%, 100%, 0)")
+          minZoom(9.0)
+          maxZoom(22.0)
         }
       }
-    )
+    ) {
+      style = it
+      mainHandler.post(updateTextTask)
+    }
+  }
+
+  fun updateLayer(layerId: Int) {
+    Logger.i("layer", "updatelayer")
+
+    for (layer in layerList) {
+      style.setStyleLayerProperty(
+        layer,
+        "circle-color",
+        match {
+          get {
+            literal("value")
+          }
+          // head color
+          literal(layerId.toLong())
+          literal("hsla(0, 0%, 100%, 0.3)")
+
+          // tail color
+          repeat(tailLen) { i ->
+            literal((layerId - (i + 1)).toLong())
+            literal("hsla(0, 14%, 93%, 0.15)")
+          }
+
+          // rest are transparent
+          literal("hsla(0, 0%, 100%, 0)")
+        })
+    }
   }
 
   companion object {
-    private const val SOURCE_URI = "mapbox://examples.ciuz0vpc"
-    private const val SOURCE_LAYER_ID = "Yosemite_POI-38jhes"
-    private const val RESTROOMS = "restrooms"
-    private const val TRAIL_HEAD = "trailhead"
-    private const val PICNIC_AREA = "picnic-area"
-    private const val KEY_PICNIC_AREA = "Picnic Area"
-    private const val KEY_RESTROOMS = "Restroom"
-    private const val KEY_TRAIL_HEAD = "Trailhead"
-    private const val SOURCE_ID = "source_id"
-    private const val LAYER_ID = "layer_id"
-    private const val ICON_KEY = "POITYPE"
+    private const val SOURCE_LAYER_ID = "wind-line"
+
+    private const val SOURCE_LOW_URI = "mapbox://takutosuzukimapbox.wind-lowzoom-planet"
+    private const val SOURCE_LOW = "source-low"
+    private const val LAYER_LOW_ID = "layer-low"
+
+    private const val SOURCE_MED_URI = "mapbox://takutosuzukimapbox.wind-midzoom-planet"
+    private const val SOURCE_MED = "source-med"
+    private const val LAYER_MED_ID = "layer-med"
+
+    private const val SOURCE_HIGH_URI = "mapbox://takutosuzukimapbox.wind-highzoom-planet"
+    private const val SOURCE_HIGH = "source-high"
+    private const val LAYER_HIGH_ID = "layer-high"
   }
 }
