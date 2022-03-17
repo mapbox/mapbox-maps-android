@@ -1725,7 +1725,8 @@ class MapboxMap :
 
   private fun checkNativeMap(methodName: String) {
     if (!isValid) {
-      Logger.e(TAG, "Accessing MapboxMap.$methodName after MapView is already destroyed meaning you are leaking MapboxMap object.")
+      val message = String.format("Accessing `MapboxMap.%s` after MapView is already destroyed meaning you are leaking MapboxMap object.", methodName)
+      Logger.e(TAG, message)
     }
   }
 
