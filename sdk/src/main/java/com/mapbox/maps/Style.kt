@@ -840,8 +840,7 @@ class Style internal constructor(
 
   private fun checkNativeStyle(methodName: String) {
     if (!isValid) {
-      val message = String.format("Accessing Style.%s after MapView is already destroyed meaning you are leaking Style object.", methodName)
-      Logger.e(TAG, message)
+      Logger.e(TAG, "Accessing Style.$methodName after MapView is already destroyed meaning you are leaking Style object.")
     }
   }
 

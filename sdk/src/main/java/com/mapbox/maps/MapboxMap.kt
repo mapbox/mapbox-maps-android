@@ -65,7 +65,10 @@ class MapboxMap :
    * Represents current camera state.
    */
   override val cameraState: CameraState
-    get() = nativeMap.cameraState
+    get() {
+      checkNativeMap("cameraState")
+      return nativeMap.cameraState
+    }
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal var cameraAnimationsPlugin: WeakReference<CameraAnimationsPlugin>? = null
@@ -1725,8 +1728,7 @@ class MapboxMap :
 
   private fun checkNativeMap(methodName: String) {
     if (!isValid) {
-      val message = String.format("Accessing `MapboxMap.%s` after MapView is already destroyed meaning you are leaking MapboxMap object.", methodName)
-      Logger.e(TAG, message)
+      Logger.e(TAG, "Accessing `MapboxMap.$methodName` after MapView is already destroyed meaning you are leaking MapboxMap object.")
     }
   }
 
