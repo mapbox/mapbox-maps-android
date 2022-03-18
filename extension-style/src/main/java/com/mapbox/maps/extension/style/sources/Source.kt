@@ -8,7 +8,9 @@ import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
+import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.utils.unwrap
+import java.lang.reflect.Method
 
 /**
  * Base class for sources.
@@ -48,6 +50,8 @@ abstract class Source(
 
   internal var delegate: StyleManagerInterface? = null
 
+  private var styleObjectIsValidMethod: Method? = null
+
   /**
    * Add the source to the Style.
    *
@@ -55,6 +59,22 @@ abstract class Source(
    */
   override fun bindTo(delegate: StyleInterface) {
     this.delegate = delegate
+    // geojson source is the only one holding async logic -
+    // in order to avoid accessing native style object when MapView is destroyed we need to check
+    // if delegate is still valid.
+    // Sadly due to current architecture it's now easily achievable with reflection only
+    // as this module does not have dependency on main SDK module and Style object
+    if (this is GeoJsonSource) {
+      try {
+        val clazz = Class.forName(delegate.javaClass.name)
+        styleObjectIsValidMethod = clazz.getMethod("isValid")
+      } catch (e: Exception) {
+        // if exception did occur - nothing critical will happen,
+        // we will simply most likely access native object after MapView destruction leading
+        // to printing some logs, no actual leak will be introduced
+        Logger.e(TAG, e.message ?: "")
+      }
+    }
     val expected = delegate.addStyleSource(sourceId, getCachedSourceProperties())
     expected.error?.let {
       Log.e(TAG, getCachedSourceProperties().toString())
@@ -93,6 +113,14 @@ abstract class Source(
   private fun updateProperty(property: PropertyValue<*>, throwRuntimeException: Boolean = true) {
     delegate?.let { styleDelegate ->
       try {
+        if (this is GeoJsonSource) {
+          val isNativeStyleValid = styleObjectIsValidMethod?.invoke(styleDelegate)
+          // explicitly reset native reference and return
+          if (isNativeStyleValid == false) {
+            delegate = null
+            return@let
+          }
+        }
         val expected = styleDelegate.setStyleSourceProperty(
           sourceId,
           property.propertyName,

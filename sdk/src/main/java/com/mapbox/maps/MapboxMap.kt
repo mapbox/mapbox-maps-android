@@ -1728,7 +1728,7 @@ class MapboxMap :
 
   private fun checkNativeMap(methodName: String) {
     if (!isValid) {
-      Logger.e(TAG, "Accessing `MapboxMap.$methodName` after MapView is already destroyed meaning you are leaking MapboxMap object.")
+      Logger.e(TAG, "Mapbox SDK memory leak detected! MapboxMap object (accessing $methodName) should not be stored and used after MapView is destroyed.")
     }
   }
 

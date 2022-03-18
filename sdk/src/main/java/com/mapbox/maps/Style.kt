@@ -840,7 +840,7 @@ class Style internal constructor(
 
   private fun checkNativeStyle(methodName: String) {
     if (!isValid) {
-      Logger.e(TAG, "Accessing Style.$methodName after MapView is already destroyed meaning you are leaking Style object.")
+      Logger.e(TAG, "Mapbox SDK memory leak detected! Style object (accessing $methodName) should not be stored and used after MapView is destroyed.")
     }
   }
 
