@@ -67,11 +67,11 @@ class StyleLoadTest {
     }
     countDownLatch.await(10, TimeUnit.SECONDS)
     Assert.assertEquals(2, styleList.size)
-    assertTrue(styleList[0].isValid)
-    assertTrue(styleList[1].isValid)
+    assertTrue(styleList[0].isValid())
+    assertTrue(styleList[1].isValid())
     mapboxMap.onDestroy()
-    assertFalse(styleList[0].isValid)
-    assertFalse(styleList[1].isValid)
+    assertFalse(styleList[0].isValid())
+    assertFalse(styleList[1].isValid())
   }
 
   @Test

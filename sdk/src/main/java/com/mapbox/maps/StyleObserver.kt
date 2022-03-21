@@ -8,7 +8,6 @@ import com.mapbox.maps.extension.observable.model.StyleDataType
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
 import com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener
 import com.mapbox.maps.plugin.delegates.listeners.OnStyleLoadedListener
-import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArraySet
 
 /**
@@ -27,7 +26,7 @@ internal class StyleObserver(
   private var loadStyleTransitionOptions: TransitionOptions? = null
 
   private val getStyleListeners = CopyOnWriteArraySet<Style.OnStyleLoaded>()
-  private val styleWeakReferenceList = CopyOnWriteArraySet<WeakReference<Style>>()
+  private val loadedStyleList = CopyOnWriteArraySet<Style>()
   init {
     nativeObserver.addOnStyleLoadedListener(this)
     nativeObserver.addOnMapLoadErrorListener(this)
@@ -62,8 +61,9 @@ internal class StyleObserver(
    */
   override fun onStyleLoaded(eventData: StyleLoadedEventData) {
     val style = Style(nativeMap, pixelRatio)
-    // Cache all the weak reference for new styles
-    styleWeakReferenceList.add(WeakReference(style))
+    // cache loaded style as users may have saved strong reference in their code -
+    // so we want to mark that style as not valid when MapView will be destroyed
+    loadedStyleList.add(style)
     styleLoadedListener.onStyleLoaded(style)
 
     loadStyleListener?.onStyleLoaded(style)
@@ -99,11 +99,11 @@ internal class StyleObserver(
     loadStyleListener = null
     loadStyleErrorListener = null
     loadStyleTransitionOptions = null
-    styleWeakReferenceList.forEach {
+    loadedStyleList.forEach {
       // Destroy all the styles to release the reference to styleManager
-      it.get()?.onDestroy()
+      it.onMapViewDestroyed()
     }
-    styleWeakReferenceList.clear()
+    loadedStyleList.clear()
     getStyleListeners.clear()
     nativeObserver.removeOnMapLoadErrorListener(this)
     nativeObserver.removeOnStyleLoadedListener(this)

@@ -48,12 +48,16 @@ class MapboxMap :
   MapStyleStateDelegate {
 
   private val nativeMap: MapInterface
+  private var isMapValid = true
+
   /**
    * Whether the MapboxMap instance is valid.
    * MapboxMap will be invalid after MapView is destroyed.
    */
-  var isValid = true
-    private set
+  fun isValid(): Boolean {
+    return isMapValid
+  }
+
   private val nativeObserver: NativeObserver
   private val observers = CopyOnWriteArraySet<Observer>()
   internal var style: Style? = null
@@ -1662,7 +1666,7 @@ class MapboxMap :
     }
     observers.clear()
     styleObserver.onDestroy()
-    isValid = false
+    isMapValid = false
   }
 
   /**
@@ -1727,7 +1731,7 @@ class MapboxMap :
   }
 
   private fun checkNativeMap(methodName: String) {
-    if (!isValid) {
+    if (!isMapValid) {
       Logger.e(TAG, "Mapbox SDK memory leak detected! MapboxMap object (accessing $methodName) should not be stored and used after MapView is destroyed.")
     }
   }

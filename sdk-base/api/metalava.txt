@@ -523,6 +523,7 @@ package com.mapbox.maps.extension.style {
   public interface StyleInterface extends com.mapbox.maps.StyleManagerInterface {
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addImage(String imageId, android.graphics.Bitmap bitmap);
     method public float getPixelRatio();
+    method public boolean isValid();
     property public abstract float pixelRatio;
   }
 

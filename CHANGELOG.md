@@ -5,7 +5,7 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 ## Features ✨ and improvements 🏁
 * Optimize how plugins handle settings changes. Call `applySettings` only when settings value changes. ([#1189](https://github.com/mapbox/mapbox-maps-android/pull/1189))
-* Add `MapboxMap.isValid` and `Style.isValid` properties. Map and style become invalid when `MapView.onDestroy` is called: after that map and style objects are treated as not valid and accessing any method will cause printing error log and introduce a memory leak in user's code. Additionally unsubscribe all map observers when `MapboxMap.onDestroy()` is invoked. ([1193](https://github.com/mapbox/mapbox-maps-android/pull/1193)) ([1202](https://github.com/mapbox/mapbox-maps-android/pull/1202) ([1230](https://github.com/mapbox/mapbox-maps-android/pull/1230)))
+* Add `MapboxMap.isValid()` and `Style.isValid()` methods. Map and style become invalid when `MapView.onDestroy` is called: after that map and style objects are treated as not valid and accessing any method will cause printing error log and introduce a memory leak in user's code. Additionally unsubscribe all map observers when `MapboxMap.onDestroy()` is invoked. ([1193](https://github.com/mapbox/mapbox-maps-android/pull/1193)) ([1202](https://github.com/mapbox/mapbox-maps-android/pull/1202) ([1230](https://github.com/mapbox/mapbox-maps-android/pull/1230)))
 * Add `MapboxMap#coordinateBoundsForCameraUnwrapped` method for API consistency. ([1222](https://github.com/mapbox/mapbox-maps-android/pull/1222))
 * Add `LocationIndicatorLayer.bearingTransition` API to control transition of bearing property. (([1207](https://github.com/mapbox/mapbox-maps-android/pull/1207)))
 

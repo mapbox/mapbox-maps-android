@@ -1,17 +1,14 @@
 package com.mapbox.maps.extension.style.sources
 
 import android.util.Log
-import androidx.annotation.VisibleForTesting
 import com.mapbox.bindgen.Value
 import com.mapbox.common.Logger
 import com.mapbox.maps.MapboxStyleException
-import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.utils.unwrap
-import java.lang.reflect.Method
 
 /**
  * Base class for sources.
@@ -49,10 +46,7 @@ abstract class Source(
     HashMap<String, PropertyValue<*>>()
   }
 
-  internal var delegate: StyleManagerInterface? = null
-
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal var styleObjectIsValidMethod: Method? = null
+  internal var delegate: StyleInterface? = null
 
   /**
    * Add the source to the Style.
@@ -61,24 +55,6 @@ abstract class Source(
    */
   override fun bindTo(delegate: StyleInterface) {
     this.delegate = delegate
-    // geojson source is the only one holding async logic -
-    // in order to avoid accessing native style object when MapView is destroyed we need to check
-    // if delegate is still valid.
-    // Sadly due to current architecture it's now easily achievable with reflection only
-    // as this module does not have dependency on main SDK module and Style object
-    if (this is GeoJsonSource) {
-      try {
-        if (styleObjectIsValidMethod == null) {
-          val clazz = Class.forName(delegate.javaClass.name)
-          styleObjectIsValidMethod = clazz.getMethod("isValid")
-        }
-      } catch (e: Exception) {
-        // if exception did occur - nothing critical will happen,
-        // we will simply most likely access native object after MapView destruction leading
-        // to printing some logs, no actual leak will be introduced
-        Logger.e(TAG, e.message ?: "")
-      }
-    }
     val expected = delegate.addStyleSource(sourceId, getCachedSourceProperties())
     expected.error?.let {
       Log.e(TAG, getCachedSourceProperties().toString())
@@ -117,10 +93,10 @@ abstract class Source(
   private fun updateProperty(property: PropertyValue<*>, throwRuntimeException: Boolean = true) {
     delegate?.let { styleDelegate ->
       try {
+        // checking for validness makes sense only for geojson as it uses async parsing
         if (this is GeoJsonSource) {
-          val isNativeStyleValid = styleObjectIsValidMethod?.invoke(styleDelegate)
-          // explicitly reset native reference and return
-          if (isNativeStyleValid == false) {
+          // explicitly reset native reference and return if map is not valid anymore
+          if (!styleDelegate.isValid()) {
             delegate = null
             return@let
           }

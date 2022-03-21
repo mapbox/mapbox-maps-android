@@ -514,6 +514,7 @@ public abstract interface class com/mapbox/maps/extension/style/StyleContract$St
 public abstract interface class com/mapbox/maps/extension/style/StyleInterface : com/mapbox/maps/StyleManagerInterface {
 	public abstract fun addImage (Ljava/lang/String;Landroid/graphics/Bitmap;)Lcom/mapbox/bindgen/Expected;
 	public abstract fun getPixelRatio ()F
+	public abstract fun isValid ()Z
 }
 
 public abstract interface class com/mapbox/maps/module/MapTelemetry {

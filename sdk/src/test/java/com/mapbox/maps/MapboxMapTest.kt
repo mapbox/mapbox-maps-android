@@ -55,9 +55,9 @@ class MapboxMapTest {
 
   @Test
   fun isValid() {
-    assertTrue(mapboxMap.isValid)
+    assertTrue(mapboxMap.isValid())
     mapboxMap.onDestroy()
-    assertFalse(mapboxMap.isValid)
+    assertFalse(mapboxMap.isValid())
   }
 
   @Test
