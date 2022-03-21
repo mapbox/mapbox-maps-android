@@ -133,11 +133,6 @@ class InsetMapActivity : AppCompatActivity(), OnCameraChangeListener {
     )
   }
 
-  override fun onDestroy() {
-    super.onDestroy()
-    mainMapboxMap.removeOnCameraChangeListener(this)
-  }
-
   companion object {
     private const val STYLE_URL = "mapbox://styles/mapbox/cj5l80zrp29942rmtg0zctjto"
     private const val INSET_FRAGMENT_TAG = "com.mapbox.insetMapFragment"

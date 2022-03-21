@@ -1,6 +1,7 @@
 package com.mapbox.maps.extension.style.sources
 
 import android.util.Log
+import androidx.annotation.VisibleForTesting
 import com.mapbox.bindgen.Value
 import com.mapbox.common.Logger
 import com.mapbox.maps.MapboxStyleException
@@ -50,7 +51,8 @@ abstract class Source(
 
   internal var delegate: StyleManagerInterface? = null
 
-  private var styleObjectIsValidMethod: Method? = null
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal var styleObjectIsValidMethod: Method? = null
 
   /**
    * Add the source to the Style.
@@ -66,8 +68,10 @@ abstract class Source(
     // as this module does not have dependency on main SDK module and Style object
     if (this is GeoJsonSource) {
       try {
-        val clazz = Class.forName(delegate.javaClass.name)
-        styleObjectIsValidMethod = clazz.getMethod("isValid")
+        if (styleObjectIsValidMethod == null) {
+          val clazz = Class.forName(delegate.javaClass.name)
+          styleObjectIsValidMethod = clazz.getMethod("isValid")
+        }
       } catch (e: Exception) {
         // if exception did occur - nothing critical will happen,
         // we will simply most likely access native object after MapView destruction leading

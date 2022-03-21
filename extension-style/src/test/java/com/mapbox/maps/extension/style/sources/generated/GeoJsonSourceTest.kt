@@ -29,6 +29,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
 import org.robolectric.annotation.Config
+import java.lang.reflect.Method
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
@@ -75,6 +76,9 @@ class GeoJsonSourceTest {
     val testSource = geoJsonSource("testId") {
       data(TEST_GEOJSON)
     }
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     verify { style.addStyleSource("testId", capture(valueSlot)) }
@@ -84,6 +88,9 @@ class GeoJsonSourceTest {
   @Test
   fun dataSetAfterBind() {
     val testSource = geoJsonSource("testId") {}
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
@@ -99,6 +106,9 @@ class GeoJsonSourceTest {
   fun dataGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(TEST_GEOJSON)
     val testSource = geoJsonSource("testId") {}
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     assertEquals(TEST_GEOJSON.toString(), testSource.data?.toString())
@@ -110,6 +120,9 @@ class GeoJsonSourceTest {
     val testSource = geoJsonSource("testId") {
       url("testUrl")
     }
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     verify { style.addStyleSource("testId", capture(valueSlot)) }
@@ -119,6 +132,9 @@ class GeoJsonSourceTest {
   @Test
   fun urlSetAfterBindTest() {
     val testSource = geoJsonSource("testId") {}
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
@@ -135,6 +151,9 @@ class GeoJsonSourceTest {
     val testSource = geoJsonSource("testId") {
       maxzoom(1L)
     }
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     verify { style.addStyleSource("testId", capture(valueSlot)) }
@@ -145,6 +164,9 @@ class GeoJsonSourceTest {
   fun maxzoomGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
     val testSource = geoJsonSource("testId") {}
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     assertEquals(1L.toString(), testSource.maxzoom?.toString())
@@ -156,6 +178,9 @@ class GeoJsonSourceTest {
     val testSource = geoJsonSource("testId") {
       attribution("abc")
     }
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     verify { style.addStyleSource("testId", capture(valueSlot)) }
@@ -166,6 +191,9 @@ class GeoJsonSourceTest {
   fun attributionGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue("abc")
     val testSource = geoJsonSource("testId") {}
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     assertEquals("abc".toString(), testSource.attribution?.toString())
@@ -177,6 +205,9 @@ class GeoJsonSourceTest {
     val testSource = geoJsonSource("testId") {
       buffer(1L)
     }
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     verify { style.addStyleSource("testId", capture(valueSlot)) }
@@ -187,6 +218,9 @@ class GeoJsonSourceTest {
   fun bufferGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
     val testSource = geoJsonSource("testId") {}
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     assertEquals(1L.toString(), testSource.buffer?.toString())
@@ -198,6 +232,9 @@ class GeoJsonSourceTest {
     val testSource = geoJsonSource("testId") {
       tolerance(1.0)
     }
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     verify { style.addStyleSource("testId", capture(valueSlot)) }
@@ -208,6 +245,9 @@ class GeoJsonSourceTest {
   fun toleranceGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1.0)
     val testSource = geoJsonSource("testId") {}
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     assertEquals(1.0.toString(), testSource.tolerance?.toString())
@@ -219,6 +259,9 @@ class GeoJsonSourceTest {
     val testSource = geoJsonSource("testId") {
       cluster(true)
     }
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     verify { style.addStyleSource("testId", capture(valueSlot)) }
@@ -229,6 +272,9 @@ class GeoJsonSourceTest {
   fun clusterGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(true)
     val testSource = geoJsonSource("testId") {}
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     assertEquals(true.toString(), testSource.cluster?.toString())
@@ -240,6 +286,9 @@ class GeoJsonSourceTest {
     val testSource = geoJsonSource("testId") {
       clusterRadius(1L)
     }
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     verify { style.addStyleSource("testId", capture(valueSlot)) }
@@ -250,6 +299,9 @@ class GeoJsonSourceTest {
   fun clusterRadiusGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
     val testSource = geoJsonSource("testId") {}
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     assertEquals(1L.toString(), testSource.clusterRadius?.toString())
@@ -261,6 +313,9 @@ class GeoJsonSourceTest {
     val testSource = geoJsonSource("testId") {
       clusterMaxZoom(1L)
     }
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     verify { style.addStyleSource("testId", capture(valueSlot)) }
@@ -271,6 +326,9 @@ class GeoJsonSourceTest {
   fun clusterMaxZoomGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
     val testSource = geoJsonSource("testId") {}
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     assertEquals(1L.toString(), testSource.clusterMaxZoom?.toString())
@@ -282,6 +340,9 @@ class GeoJsonSourceTest {
     val testSource = geoJsonSource("testId") {
       clusterProperties((hashMapOf("key1" to "x", "key2" to "y") as HashMap<String, Any>))
     }
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     verify { style.addStyleSource("testId", capture(valueSlot)) }
@@ -292,6 +353,9 @@ class GeoJsonSourceTest {
   fun clusterPropertiesGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue((hashMapOf("key1" to "x", "key2" to "y") as HashMap<String, Any>))
     val testSource = geoJsonSource("testId") {}
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     assertEquals((hashMapOf("key1" to "x", "key2" to "y") as HashMap<String, Any>).toString(), testSource.clusterProperties?.toString())
@@ -303,6 +367,9 @@ class GeoJsonSourceTest {
     val testSource = geoJsonSource("testId") {
       clusterProperty("sum", sum { get { literal("scalerank") } })
     }
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
     verify { style.addStyleSource("testId", capture(valueSlot)) }
     assertTrue(
@@ -326,6 +393,9 @@ class GeoJsonSourceTest {
         }
       )
     }
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
     verify { style.addStyleSource("testId", capture(valueSlot)) }
     assertTrue(
@@ -351,6 +421,9 @@ class GeoJsonSourceTest {
         }
       )
     }
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
     verify { style.addStyleSource("testId", capture(valueSlot)) }
     assertTrue(
@@ -364,6 +437,9 @@ class GeoJsonSourceTest {
     val testSource = geoJsonSource("testId") {
       lineMetrics(true)
     }
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     verify { style.addStyleSource("testId", capture(valueSlot)) }
@@ -374,6 +450,9 @@ class GeoJsonSourceTest {
   fun lineMetricsGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(true)
     val testSource = geoJsonSource("testId") {}
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     assertEquals(true.toString(), testSource.lineMetrics?.toString())
@@ -385,6 +464,9 @@ class GeoJsonSourceTest {
     val testSource = geoJsonSource("testId") {
       generateId(true)
     }
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     verify { style.addStyleSource("testId", capture(valueSlot)) }
@@ -395,6 +477,9 @@ class GeoJsonSourceTest {
   fun generateIdGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(true)
     val testSource = geoJsonSource("testId") {}
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     assertEquals(true.toString(), testSource.generateId?.toString())
@@ -406,6 +491,9 @@ class GeoJsonSourceTest {
     val testSource = geoJsonSource("testId") {
       promoteId(PromoteId(propertyName = "abc"))
     }
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     verify { style.addStyleSource("testId", capture(valueSlot)) }
@@ -416,6 +504,9 @@ class GeoJsonSourceTest {
   fun promoteIdGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue("abc")
     val testSource = geoJsonSource("testId") {}
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     assertEquals(PromoteId(propertyName = "abc"), testSource.promoteId)
@@ -427,6 +518,9 @@ class GeoJsonSourceTest {
     val testSource = geoJsonSource("testId") {
       prefetchZoomDelta(1L)
     }
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     verify { style.setStyleSourceProperty("testId", "prefetch-zoom-delta", capture(valueSlot)) }
@@ -436,6 +530,9 @@ class GeoJsonSourceTest {
   @Test
   fun prefetchZoomDeltaSetAfterBind() {
     val testSource = geoJsonSource("testId") {}
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
     testSource.prefetchZoomDelta(1L)
 
@@ -447,6 +544,9 @@ class GeoJsonSourceTest {
   fun prefetchZoomDeltaGet() {
     every { styleProperty.value } returns TypeUtils.wrapToValue(1L)
     val testSource = geoJsonSource("testId") {}
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     assertEquals(1L.toString(), testSource.prefetchZoomDelta?.toString())
@@ -456,6 +556,9 @@ class GeoJsonSourceTest {
   @Test
   fun emptyDataTest() {
     val testSource = geoJsonSource("testId")
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
 
     verify { style.addStyleSource("testId", capture(valueSlot)) }
@@ -479,6 +582,9 @@ class GeoJsonSourceTest {
       """.trimIndent()
     )
     val testSource = geoJsonSource("testId") {}
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
@@ -516,6 +622,9 @@ class GeoJsonSourceTest {
       """.trimIndent()
     )
     val testSource = geoJsonSource("testId") {}
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
@@ -542,6 +651,9 @@ class GeoJsonSourceTest {
       """.trimIndent()
     )
     val testSource = geoJsonSource("testId") {}
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
     Shadows.shadowOf(Looper.getMainLooper()).pause()
     Shadows.shadowOf(GeoJsonSource.workerThread.looper).pause()
@@ -570,6 +682,9 @@ class GeoJsonSourceTest {
     val testSource = geoJsonSource("testId") {
       feature(feature)
     }
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
     verify { style.addStyleSource("testId", capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("type=geojson"))
@@ -605,6 +720,9 @@ class GeoJsonSourceTest {
     val testSource = geoJsonSource("testId") {
       featureCollection(featureCollection)
     }
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
     verify { style.addStyleSource("testId", capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("type=geojson"))
@@ -629,6 +747,9 @@ class GeoJsonSourceTest {
     val testSource = geoJsonSource("testId") {
       geometry(feature.geometry()!!)
     }
+    val isValidMethod = mockk<Method>()
+    every { isValidMethod.invoke(style) } returns true
+    testSource.styleObjectIsValidMethod = isValidMethod
     testSource.bindTo(style)
     verify { style.addStyleSource("testId", capture(valueSlot)) }
     assertTrue(valueSlot.captured.toString().contains("type=geojson"))

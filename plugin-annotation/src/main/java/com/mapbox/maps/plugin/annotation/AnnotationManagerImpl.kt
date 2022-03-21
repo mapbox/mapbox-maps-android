@@ -543,6 +543,8 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
     gesturesPlugin.removeOnMapClickListener(mapClickResolver)
     gesturesPlugin.removeOnMapLongClickListener(mapLongClickResolver)
     gesturesPlugin.removeOnMoveListener(mapMoveResolver)
+    annotationMap.clear()
+    dragAnnotationMap.clear()
     dragListeners.clear()
     clickListeners.clear()
     longClickListeners.clear()
