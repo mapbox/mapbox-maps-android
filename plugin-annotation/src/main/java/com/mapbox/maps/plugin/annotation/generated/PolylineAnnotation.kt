@@ -12,6 +12,7 @@ import com.mapbox.maps.extension.style.utils.ColorUtils
 import com.mapbox.maps.plugin.annotation.Annotation
 import com.mapbox.maps.plugin.annotation.AnnotationManager
 import com.mapbox.maps.plugin.annotation.AnnotationType
+import com.mapbox.maps.plugin.annotation.ConvertUtils
 import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import java.util.Locale
 
@@ -389,20 +390,24 @@ class PolylineAnnotation(
     moveDistancesObject: MoveDistancesObject
   ): LineString? {
     val points = geometry.coordinates()
-      .map {
-        mapCameraManagerDelegate.pixelForCoordinate(it)
-      }.map {
-        mapCameraManagerDelegate.coordinateForPixel(
-          ScreenCoordinate(
-            it.x - moveDistancesObject.distanceXSinceLast,
-            it.y - moveDistancesObject.distanceYSinceLast
-          )
-        )
-      }
-    if (points.any { it.latitude() > MAX_MERCATOR_LATITUDE || it.latitude() < MIN_MERCATOR_LATITUDE }) {
+    if (points.isEmpty()) return null
+
+    val centerPoint = Point.fromLngLat(points.map { it.longitude() }.average(), points.map { it.latitude() }.average())
+    val centerScreenCoordinate = mapCameraManagerDelegate.pixelForCoordinate(centerPoint)
+    val targetPoint = mapCameraManagerDelegate.coordinateForPixel(
+      ScreenCoordinate(
+        centerScreenCoordinate.x - moveDistancesObject.distanceXSinceLast,
+        centerScreenCoordinate.y - moveDistancesObject.distanceYSinceLast
+      )
+    )
+
+    val shiftMercatorCoordinate = ConvertUtils.calculateMercatorCoordinateShift(centerPoint, targetPoint, mapCameraManagerDelegate.cameraState.zoom)
+    val targetPoints =
+      points.map { ConvertUtils.shiftPointWithMercatorCoordinate(it, shiftMercatorCoordinate, mapCameraManagerDelegate.cameraState.zoom) }
+    if (targetPoints.any { it.latitude() > MAX_MERCATOR_LATITUDE || it.latitude() < MIN_MERCATOR_LATITUDE }) {
       return null
     }
-    return LineString.fromLngLats(points)
+    return LineString.fromLngLats(targetPoints)
   }
 
   /**

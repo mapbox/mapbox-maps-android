@@ -7,7 +7,10 @@ Mapbox welcomes participation and contributions from everyone.
 * Optimize how plugins handle settings changes. Call `applySettings` only when settings value changes. ([#1189](https://github.com/mapbox/mapbox-maps-android/pull/1189))
 * Add new Exception type `MapboxMapMemoryLeakException` which will be thrown when there is a leak for nativeMap. ([1193](https://github.com/mapbox/mapbox-maps-android/pull/1193))
 
-# 10.4.0
+## Bug fixes 🐞
+* Fix PolygonAnnotation and PolylineAnnotation being distorted while dragging with 3D terrain. ([#1223](https://github.com/mapbox/mapbox-maps-android/pull/1223))
+
+# 10.4.0 Next minor release
 
 ## Features ✨ and improvements 🏁
 * Rendering performance improvements. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
