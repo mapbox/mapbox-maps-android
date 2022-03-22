@@ -109,22 +109,26 @@ commands:
         default: "mapbox/mapbox-maps-android"
     steps:
       - init-aws
-#      - run:
-#          name: Parser code coverage and publish as a message
-#          command: |
-#            COMMIT_SHA=$(git rev-parse --short HEAD)
-#            export GITHUB_ACCESS_TOKEN=$(./mbx-ci github notifier private token)
-#            python3 scripts/code-coverage-parser.py --token $GITHUB_ACCESS_TOKEN --slug mapbox/mapbox-maps-android --hash ${COMMIT_SHA}
-      - run:
-          name: Publish code coverage as a message
-          command: |
-            COMMIT_SHA=$(git rev-parse --short HEAD)
-            export GITHUB_ACCESS_TOKEN=$(./mbx-ci github notifier token)
-            python3 scripts/ci-github-set-commit-status.py --success --slug << parameters.tmp_mapbox_slug >> --hash ${COMMIT_SHA} --description "test"
       - run:
           name: Run JVM unit tests & create jacoco code coverage report
           no_output_timeout: 30m
           command: ./gradlew jacocoTestDebugUnitTestReport
+      - run:
+          name: Parser code coverage and publish as a message
+          command: |
+            COMMIT_SHA=$(git rev-parse --short HEAD)
+            export GITHUB_ACCESS_TOKEN=$(./mbx-ci github notifier private token)
+            python3 scripts/code-coverage-parser.py --slug mapbox/mapbox-maps-android --hash ${COMMIT_SHA}
+#      - run:
+#          name: Publish code coverage as a message
+#          command: |
+#            COMMIT_SHA=$(git rev-parse --short HEAD)
+#            export GITHUB_ACCESS_TOKEN=$(./mbx-ci github notifier token)
+#            python3 scripts/ci-github-set-commit-status.py --success --slug << parameters.tmp_mapbox_slug >> --hash ${COMMIT_SHA} --description "test"
+#      - run:
+#          name: Run JVM unit tests & create jacoco code coverage report
+#          no_output_timeout: 30m
+#          command: ./gradlew jacocoTestDebugUnitTestReport
   #      - run:
 #          name: Upload codecov
 #          command: bash <(curl -sSfL https://codecov.io/bash)

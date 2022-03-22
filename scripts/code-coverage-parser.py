@@ -9,6 +9,24 @@ import glob
 CODECOV_FILE_PATTERN = "*/build/jacoco/jacoco.xml"
 
 
+def setCommitStatus(slug, hash, token, description):
+    url = "https://api.github.com/repos/%s/statuses/%s" % (slug, hash)
+
+    params = {
+        "description": description,
+    }
+
+    headers = {
+        "Authorization": "token %s" % token
+    }
+
+    r = requests.post(url, headers=headers, json=params)
+
+    if r.status_code != 201:
+        print("Error setting commit status: %s." % r.status_code)
+        sys.exit(1)
+
+
 def _parse_code_coverage(path):
     root = ET.parse(path).getroot()
     for mutation in root:
@@ -49,9 +67,5 @@ if __name__ == '__main__':
     description_message = "Code coverage: %s" % total_coverage
     print(description_message)
 
-    subprocess.Popen(
-        "scripts/ci-github-set-commit-status.py --token %s --slug %s --hash %s --description %s" % (
-            args.token, args.slug, args.hash, description_message),
-        shell=True
-    )
+    setCommitStatus(args.slug, args.hash, args.token, description_message)
 
