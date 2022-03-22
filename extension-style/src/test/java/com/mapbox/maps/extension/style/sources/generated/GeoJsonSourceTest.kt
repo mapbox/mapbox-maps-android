@@ -50,6 +50,7 @@ class GeoJsonSourceTest {
     every { expected.error } returns null
     every { expectedDelta.error } returns null
     every { styleProperty.kind } returns StylePropertyValueKind.CONSTANT
+    every { style.isValid() } returns true
 
     // For default property getters
     mockkStatic(StyleManager::class)

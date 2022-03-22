@@ -410,7 +410,7 @@ public final class com/mapbox/maps/Style : com/mapbox/maps/extension/style/Style
 	public fun invalidateStyleCustomGeometrySourceTile (Ljava/lang/String;Lcom/mapbox/maps/CanonicalTileID;)Lcom/mapbox/bindgen/Expected;
 	public fun isStyleLayerPersistent (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun isStyleLoaded ()Z
-	public final fun isValid ()Z
+	public fun isValid ()Z
 	public fun moveStyleLayer (Ljava/lang/String;Lcom/mapbox/maps/LayerPosition;)Lcom/mapbox/bindgen/Expected;
 	public fun removeStyleImage (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun removeStyleLayer (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;

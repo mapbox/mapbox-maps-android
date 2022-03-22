@@ -220,6 +220,10 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
 
   /**
    * Returns a [MapboxMap] object that can be used to interact with the map.
+   *
+   * Note: keeping the reference to an invalid [MapboxMap] instance introduces significant native memory leak,
+   * see [MapboxMap.isValid] for more details.
+   *
    * @return [MapboxMap] object to interact with the map.
    */
   override fun getMapboxMap(): MapboxMap = mapController.getMapboxMap()

@@ -42,7 +42,6 @@ import com.mapbox.maps.plugin.viewport.ViewportPluginImpl
 import com.mapbox.maps.renderer.MapboxRenderer
 import com.mapbox.maps.renderer.OnFpsChangedListener
 import com.mapbox.maps.renderer.widget.Widget
-import java.lang.ref.WeakReference
 
 internal class MapController : MapPluginProviderDelegate, MapControllable {
 
@@ -68,7 +67,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
       mapInitOptions,
       renderer,
     )
-    this.nativeObserver = NativeObserver(WeakReference(nativeMap))
+    this.nativeObserver = NativeObserver(nativeMap)
     this.mapboxMap =
       MapProvider.getMapboxMap(nativeMap, nativeObserver, mapInitOptions.mapOptions.pixelRatio)
     this.mapboxMap.renderHandler = renderer.renderThread.renderHandlerThread.handler

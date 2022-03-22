@@ -3,6 +3,7 @@ package com.mapbox.maps.testapp.examples
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.common.Logger
@@ -35,7 +36,7 @@ import retrofit2.http.GET
  */
 class SpaceStationLocationActivity : AppCompatActivity() {
 
-  private val handler = Handler()
+  private val handler = Handler(Looper.getMainLooper())
   private var runnable: (() -> Unit) = {}
   private var call: Call<IssModel>? = null
   private lateinit var mapboxMap: MapboxMap
@@ -181,6 +182,7 @@ class SpaceStationLocationActivity : AppCompatActivity() {
     // When the user leaves the activity, there is no need in calling the API since the map
     // isn't in view.
     handler.removeCallbacksAndMessages(null)
+    call?.cancel()
   }
 
   companion object {

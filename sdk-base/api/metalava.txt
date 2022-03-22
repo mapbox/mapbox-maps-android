@@ -15,9 +15,6 @@ package com.mapbox.maps {
     ctor public MapboxCameraAnimationException(String? exceptionText);
   }
 
-  public final class MapboxExceptionsKt {
-  }
-
   @kotlin.RequiresOptIn(level=kotlin.RequiresOptIn.Level, message="This API is experimental. It may be changed in the future without notice.") @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget, kotlin.annotation.AnnotationTarget, kotlin.annotation.AnnotationTarget}) public @interface MapboxExperimental {
   }
 
@@ -34,10 +31,6 @@ package com.mapbox.maps {
 
   public final class MapboxMapException extends java.lang.RuntimeException {
     ctor public MapboxMapException(String? exceptionText);
-  }
-
-  public final class MapboxMapMemoryLeakException extends java.lang.IllegalStateException {
-    ctor public MapboxMapMemoryLeakException(String exceptionText = "You are accessing MapboxMap or Style after MapView is destroyed.");
   }
 
   public final class MapboxStyleException extends java.lang.RuntimeException {
@@ -530,6 +523,7 @@ package com.mapbox.maps.extension.style {
   public interface StyleInterface extends com.mapbox.maps.StyleManagerInterface {
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> addImage(String imageId, android.graphics.Bitmap bitmap);
     method public float getPixelRatio();
+    method public boolean isValid();
     property public abstract float pixelRatio;
   }
 

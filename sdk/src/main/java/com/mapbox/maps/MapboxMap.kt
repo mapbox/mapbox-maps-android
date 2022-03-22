@@ -47,7 +47,23 @@ class MapboxMap :
   MapCameraManagerDelegate,
   MapStyleStateDelegate {
 
-  private var nativeMap: MapInterface?
+  private val nativeMap: MapInterface
+  private var isMapValid = true
+
+  /**
+   * Whether the [MapboxMap] instance is valid.
+   *
+   * [MapboxMap] becomes invalid after [MapView.onDestroy] is invoked,
+   * calling any method then could result in undefined behaviour and will print an error log.
+   *
+   * Keeping the reference to an invalid [MapboxMap] instance introduces significant native memory leak.
+   *
+   * @return True if [MapboxMap] is valid and false otherwise.
+   */
+  fun isValid(): Boolean {
+    return isMapValid
+  }
+
   private val nativeObserver: NativeObserver
   private val observers = CopyOnWriteArraySet<Observer>()
   internal var style: Style? = null
@@ -55,23 +71,14 @@ class MapboxMap :
   private val styleObserver: StyleObserver
   internal var renderHandler: Handler? = null
 
-  private fun getNativeMap(): MapInterface {
-    return nativeMap ?: throw MapboxMapMemoryLeakException()
-  }
-
-  /**
-   * Whether the MapboxMap instance is valid. MapboxMap will be invalid after MapView is destroyed and
-   * accessing MapboxMap will throw [MapboxMapMemoryLeakException].
-   */
-  fun isValid(): Boolean {
-    return nativeMap != null
-  }
-
   /**
    * Represents current camera state.
    */
   override val cameraState: CameraState
-    get() = getNativeMap().cameraState
+    get() {
+      checkNativeMap("cameraState")
+      return nativeMap.cameraState
+    }
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal var cameraAnimationsPlugin: WeakReference<CameraAnimationsPlugin>? = null
@@ -98,7 +105,7 @@ class MapboxMap :
     this.nativeMap = nativeMap
     this.nativeObserver = nativeObserver
     this.styleObserver = StyleObserver(
-      WeakReference(nativeMap),
+      nativeMap,
       { style -> this.style = style },
       nativeObserver,
       pixelRatio
@@ -140,11 +147,12 @@ class MapboxMap :
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
   ) {
+    checkNativeMap("loadStyleUri")
     initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, styleTransitionOptions)
     if (styleUri.isEmpty()) {
-      getNativeMap().styleJSON = EMPTY_STYLE_JSON
+      nativeMap.styleJSON = EMPTY_STYLE_JSON
     } else {
-      getNativeMap().styleURI = styleUri
+      nativeMap.styleURI = styleUri
     }
   }
 
@@ -181,11 +189,12 @@ class MapboxMap :
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
   ) {
+    checkNativeMap("loadStyleUri")
     initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, null)
     if (styleUri.isEmpty()) {
-      getNativeMap().styleJSON = EMPTY_STYLE_JSON
+      nativeMap.styleJSON = EMPTY_STYLE_JSON
     } else {
-      getNativeMap().styleURI = styleUri
+      nativeMap.styleURI = styleUri
     }
   }
 
@@ -218,8 +227,9 @@ class MapboxMap :
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null,
   ) {
+    checkNativeMap("loadStyleJson")
     initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, styleTransitionOptions)
-    getNativeMap().styleJSON = styleJson
+    nativeMap.styleJSON = styleJson
   }
 
   /**
@@ -230,8 +240,9 @@ class MapboxMap :
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
   ) {
+    checkNativeMap("loadStyleJson")
     initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, null)
-    getNativeMap().styleJSON = styleJson
+    nativeMap.styleJSON = styleJson
   }
 
   /**
@@ -247,7 +258,10 @@ class MapboxMap :
    */
   fun loadStyleJson(
     styleJson: String
-  ) = loadStyleJson(styleJson, null, null, null)
+  ) {
+    checkNativeMap("loadStyleJson")
+    loadStyleJson(styleJson, null, null, null)
+  }
 
   /**
    * Load the style from Style Extension.
@@ -258,6 +272,7 @@ class MapboxMap :
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null,
   ) {
+    checkNativeMap("loadStyle")
     this.loadStyleUri(
       styleExtension.styleUri,
       transitionOptions,
@@ -274,6 +289,7 @@ class MapboxMap :
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null,
   ) {
+    checkNativeMap("loadStyle")
     this.loadStyleUri(
       styleExtension.styleUri,
       null,
@@ -335,19 +351,29 @@ class MapboxMap :
   }
 
   /**
-   * Get the Style of the map asynchronously.
+   * Get the [Style] of the map asynchronously.
+   *
+   * Note: keeping the reference to an invalid [Style] instance introduces significant native memory leak,
+   * see [Style.isValid] for more details.
    *
    * @param onStyleLoaded the callback to be invoked when the style is fully loaded
    */
   fun getStyle(onStyleLoaded: Style.OnStyleLoaded) {
+    checkNativeMap("getStyle")
     style?.let(onStyleLoaded::onStyleLoaded)
       ?: styleObserver.addGetStyleListener(onStyleLoaded)
   }
 
   /**
    * Get the Style of the map synchronously, will return null is style is not loaded yet.
+   *
+   * Note: keeping the reference to an invalid [Style] instance introduces significant native memory leak,
+   * see [Style.isValid] for more details.
+   *
+   * @return currently loaded [Style] object or NULL if it is not loaded.
    */
   fun getStyle(): Style? {
+    checkNativeMap("getStyle")
     return style
   }
 
@@ -356,7 +382,10 @@ class MapboxMap :
    *
    * @return resourceOptions The resource options of the map
    */
-  fun getResourceOptions(): ResourceOptions = getNativeMap().resourceOptions
+  fun getResourceOptions(): ResourceOptions {
+    checkNativeMap("getResourceOptions")
+    return nativeMap.resourceOptions
+  }
 
   /**
    * Clears temporary map data.
@@ -370,7 +399,8 @@ class MapboxMap :
    * @param callback Called once the request is complete or an error occurred.
    */
   fun clearData(callback: AsyncOperationResultCallback) {
-    Map.clearData(getNativeMap().resourceOptions, callback)
+    checkNativeMap("clearData")
+    Map.clearData(nativeMap.resourceOptions, callback)
   }
 
   /**
@@ -381,8 +411,10 @@ class MapboxMap :
    *
    * @param cameraOptions New camera options
    */
-  override fun setCamera(cameraOptions: CameraOptions) =
-    getNativeMap().setCamera(cameraOptions)
+  override fun setCamera(cameraOptions: CameraOptions) {
+    checkNativeMap("setCamera")
+    nativeMap.setCamera(cameraOptions)
+  }
 
   /**
    * Notify map about gesture being in progress.
@@ -390,7 +422,8 @@ class MapboxMap :
    * @param inProgress True if gesture is in progress
    */
   override fun setGestureInProgress(inProgress: Boolean) {
-    getNativeMap().isGestureInProgress = inProgress
+    checkNativeMap("setGestureInProgress")
+    nativeMap.isGestureInProgress = inProgress
   }
 
   /**
@@ -398,15 +431,20 @@ class MapboxMap :
    *
    * @return Returns if a gesture is in progress
    */
-  override fun isGestureInProgress(): Boolean = getNativeMap().isGestureInProgress
+  override fun isGestureInProgress(): Boolean {
+    checkNativeMap("isGestureInProgress")
+    return nativeMap.isGestureInProgress
+  }
 
   /**
    * Set the map north orientation
    *
    * @param northOrientation The map north orientation to set
    */
-  override fun setNorthOrientation(northOrientation: NorthOrientation) =
-    getNativeMap().setNorthOrientation(northOrientation)
+  override fun setNorthOrientation(northOrientation: NorthOrientation) {
+    checkNativeMap("setNorthOrientation")
+    nativeMap.setNorthOrientation(northOrientation)
+  }
 
   /**
    * Set the map constrain mode
@@ -414,7 +452,8 @@ class MapboxMap :
    * @param constrainMode The map constraint mode to set
    */
   override fun setConstrainMode(constrainMode: ConstrainMode) {
-    getNativeMap().setConstrainMode(constrainMode)
+    checkNativeMap("setConstrainMode")
+    nativeMap.setConstrainMode(constrainMode)
   }
   /**
    * Set the map viewport mode
@@ -422,7 +461,8 @@ class MapboxMap :
    * @param viewportMode The map viewport mode to set
    */
   override fun setViewportMode(viewportMode: ViewportMode) {
-    getNativeMap().setViewportMode(viewportMode)
+    checkNativeMap("setViewportMode")
+    nativeMap.setViewportMode(viewportMode)
   }
 
   /**
@@ -430,15 +470,20 @@ class MapboxMap :
    *
    * @param options the map bound options
    */
-  override fun setBounds(options: CameraBoundsOptions): Expected<String, None> =
-    getNativeMap().setBounds(options)
+  override fun setBounds(options: CameraBoundsOptions): Expected<String, None> {
+    checkNativeMap("setBounds")
+    return nativeMap.setBounds(options)
+  }
 
   /**
    * Get the map bounds options.
    *
    * @return Returns the map bounds options
    */
-  override fun getBounds(): CameraBounds = getNativeMap().bounds
+  override fun getBounds(): CameraBounds {
+    checkNativeMap("getBounds")
+    return nativeMap.bounds
+  }
 
   /**
    * Tells the map rendering engine that the animation is currently performed by the
@@ -448,7 +493,8 @@ class MapboxMap :
    * @param inProgress Bool representing if user animation is in progress
    */
   override fun setUserAnimationInProgress(inProgress: Boolean) {
-    getNativeMap().isUserAnimationInProgress = inProgress
+    checkNativeMap("setUserAnimationInProgress")
+    nativeMap.isUserAnimationInProgress = inProgress
   }
 
   /**
@@ -457,7 +503,8 @@ class MapboxMap :
    * @return Return true if a user animation is in progress.
    */
   override fun isUserAnimationInProgress(): Boolean {
-    return getNativeMap().isUserAnimationInProgress
+    checkNativeMap("isUserAnimationInProgress")
+    return nativeMap.isUserAnimationInProgress
   }
 
   /**
@@ -466,7 +513,8 @@ class MapboxMap :
    * @param delta The prefetch zoom delta
    */
   fun setPrefetchZoomDelta(delta: Byte) {
-    getNativeMap().prefetchZoomDelta = delta
+    checkNativeMap("setPrefetchZoomDelta")
+    nativeMap.prefetchZoomDelta = delta
   }
 
   /**
@@ -474,32 +522,45 @@ class MapboxMap :
    *
    * @return Returns the prefetch zoom delta
    */
-  fun getPrefetchZoomDelta(): Byte = getNativeMap().prefetchZoomDelta
+  fun getPrefetchZoomDelta(): Byte {
+    checkNativeMap("getPrefetchZoomDelta")
+    return nativeMap.prefetchZoomDelta
+  }
 
   /**
    * Get map options.
    *
    * @return Returns map options
    */
-  override fun getMapOptions(): MapOptions = getNativeMap().mapOptions
+  override fun getMapOptions(): MapOptions {
+    checkNativeMap("getMapOptions")
+    return nativeMap.mapOptions
+  }
 
   /**
    * Gets the size of the map.
    *
    * @return size The size of the map in MapOptions#size platform pixels
    */
-  override fun getSize() = getNativeMap().size
+  override fun getSize(): Size {
+    checkNativeMap("getSize")
+    return nativeMap.size
+  }
 
   /**
    * Get debug options
    */
-  fun getDebug(): List<MapDebugOptions> = getNativeMap().debug
+  fun getDebug(): List<MapDebugOptions> {
+    checkNativeMap("getDebug")
+    return nativeMap.debug
+  }
 
   /**
    * Set debug options
    */
   fun setDebug(debugOptions: List<MapDebugOptions>, enabled: Boolean) {
-    getNativeMap().setDebug(debugOptions, enabled)
+    checkNativeMap("setDebug")
+    nativeMap.setDebug(debugOptions, enabled)
   }
 
   /**
@@ -521,13 +582,15 @@ class MapboxMap :
     padding: EdgeInsets,
     bearing: Double?,
     pitch: Double?
-  ): CameraOptions =
-    getNativeMap().cameraForCoordinateBounds(
+  ): CameraOptions {
+    checkNativeMap("cameraForCoordinateBounds")
+    return nativeMap.cameraForCoordinateBounds(
       bounds,
       padding,
       bearing,
       pitch
     )
+  }
 
   /**
    * Convert to a camera options from a given list of points, padding, bearing and pitch values.
@@ -548,8 +611,10 @@ class MapboxMap :
     padding: EdgeInsets,
     bearing: Double?,
     pitch: Double?
-  ): CameraOptions =
-    getNativeMap().cameraForCoordinates(coordinates, padding, bearing, pitch)
+  ): CameraOptions {
+    checkNativeMap("getDebug")
+    return nativeMap.cameraForCoordinates(coordinates, padding, bearing, pitch)
+  }
 
   /**
    * Convenience method that returns the camera options object for given arguments
@@ -572,8 +637,10 @@ class MapboxMap :
     coordinates: List<Point>,
     camera: CameraOptions,
     box: ScreenBox
-  ): CameraOptions =
-    getNativeMap().cameraForCoordinates(coordinates, camera, box)
+  ): CameraOptions {
+    checkNativeMap("cameraForCoordinates")
+    return nativeMap.cameraForCoordinates(coordinates, camera, box)
+  }
 
   /**
    * Convert to a camera options from a given geometry, padding, bearing and pitch values.
@@ -594,8 +661,10 @@ class MapboxMap :
     padding: EdgeInsets,
     bearing: Double?,
     pitch: Double?
-  ): CameraOptions =
-    getNativeMap().cameraForGeometry(geometry, padding, bearing, pitch)
+  ): CameraOptions {
+    checkNativeMap("cameraForGeometry")
+    return nativeMap.cameraForGeometry(geometry, padding, bearing, pitch)
+  }
 
   /**
    * Returns the [CoordinateBounds] for a given camera.
@@ -608,8 +677,10 @@ class MapboxMap :
    * @return The [CoordinateBounds] object representing a given `camera`.
    *
    */
-  override fun coordinateBoundsForCamera(camera: CameraOptions): CoordinateBounds =
-    getNativeMap().coordinateBoundsForCamera(camera)
+  override fun coordinateBoundsForCamera(camera: CameraOptions): CoordinateBounds {
+    checkNativeMap("coordinateBoundsForCamera")
+    return nativeMap.coordinateBoundsForCamera(camera)
+  }
 
   /**
    * Returns the [CoordinateBounds] for a given camera.
@@ -620,8 +691,10 @@ class MapboxMap :
    *
    * @return The [CoordinateBounds] object representing a given `camera`.
    */
-  override fun coordinateBoundsForCameraUnwrapped(camera: CameraOptions): CoordinateBounds =
-    getNativeMap().coordinateBoundsForCameraUnwrapped(camera)
+  override fun coordinateBoundsForCameraUnwrapped(camera: CameraOptions): CoordinateBounds {
+    checkNativeMap("coordinateBoundsForCameraUnwrapped")
+    return nativeMap.coordinateBoundsForCameraUnwrapped(camera)
+  }
 
   /**
    *  Returns the coordinate bounds and zoom for a given camera.
@@ -637,8 +710,10 @@ class MapboxMap :
    *
    *  @return Returns the coordinate bounds and zoom for a given camera.
    */
-  override fun coordinateBoundsZoomForCamera(camera: CameraOptions): CoordinateBoundsZoom =
-    getNativeMap().coordinateBoundsZoomForCamera(camera)
+  override fun coordinateBoundsZoomForCamera(camera: CameraOptions): CoordinateBoundsZoom {
+    checkNativeMap("coordinateBoundsZoomForCamera")
+    return nativeMap.coordinateBoundsZoomForCamera(camera)
+  }
 
   /**
    * Returns the unwrapped coordinate bounds and zoom for a given camera.
@@ -651,8 +726,10 @@ class MapboxMap :
    *
    *  @return Returns the unwrapped coordinate bounds and zoom for a given camera.
    */
-  override fun coordinateBoundsZoomForCameraUnwrapped(camera: CameraOptions): CoordinateBoundsZoom =
-    getNativeMap().coordinateBoundsZoomForCameraUnwrapped(camera)
+  override fun coordinateBoundsZoomForCameraUnwrapped(camera: CameraOptions): CoordinateBoundsZoom {
+    checkNativeMap("coordinateBoundsZoomForCameraUnwrapped")
+    return nativeMap.coordinateBoundsZoomForCameraUnwrapped(camera)
+  }
 
   /**
    * Calculate a screen coordinate that corresponds to a geographical coordinate
@@ -667,8 +744,10 @@ class MapboxMap :
    *
    * @return Returns a screen coordinate on the screen in [MapOptions.size] platform pixels.
    */
-  override fun pixelForCoordinate(coordinate: Point): ScreenCoordinate =
-    getNativeMap().pixelForCoordinate(coordinate)
+  override fun pixelForCoordinate(coordinate: Point): ScreenCoordinate {
+    checkNativeMap("pixelForCoordinate")
+    return nativeMap.pixelForCoordinate(coordinate)
+  }
 
   /**
    * Calculate screen coordinates that corresponds to geographical coordinates
@@ -683,8 +762,10 @@ class MapboxMap :
    *
    * @return Returns a batch of screen coordinates on the screen in [MapOptions.size] platform pixels.
    */
-  override fun pixelsForCoordinates(coordinates: List<Point>): List<ScreenCoordinate> =
-    getNativeMap().pixelsForCoordinates(coordinates)
+  override fun pixelsForCoordinates(coordinates: List<Point>): List<ScreenCoordinate> {
+    checkNativeMap("pixelsForCoordinates")
+    return nativeMap.pixelsForCoordinates(coordinates)
+  }
 
   /**
    * Calculate a geographical coordinate(i.e., longitude-latitude pair) that corresponds
@@ -700,8 +781,10 @@ class MapboxMap :
    * @return Returns a geographical coordinate corresponding to the x y coordinates
    * on the screen.
    */
-  override fun coordinateForPixel(pixel: ScreenCoordinate): Point =
-    getNativeMap().coordinateForPixel(pixel)
+  override fun coordinateForPixel(pixel: ScreenCoordinate): Point {
+    checkNativeMap("coordinateForPixel")
+    return nativeMap.coordinateForPixel(pixel)
+  }
 
   /**
    * Calculate geographical coordinates(i.e., longitude-latitude pair) that corresponds
@@ -717,8 +800,10 @@ class MapboxMap :
    * @return Returns a batch of geographical coordinates corresponding to the screen coordinates
    * on the screen.
    */
-  override fun coordinatesForPixels(pixels: List<ScreenCoordinate>): List<Point> =
-    getNativeMap().coordinatesForPixels(pixels)
+  override fun coordinatesForPixels(pixels: List<ScreenCoordinate>): List<Point> {
+    checkNativeMap("coordinatesForPixels")
+    return nativeMap.coordinatesForPixels(pixels)
+  }
 
   /**
    * Calculate distance spanned by one pixel at the specified latitude
@@ -729,8 +814,10 @@ class MapboxMap :
    *
    * @return Returns the distance measured in meters.
    */
-  override fun getMetersPerPixelAtLatitude(latitude: Double, zoom: Double): Double =
-    Projection.getMetersPerPixelAtLatitude(latitude, zoom)
+  override fun getMetersPerPixelAtLatitude(latitude: Double, zoom: Double): Double {
+    checkNativeMap("getMetersPerPixelAtLatitude")
+    return Projection.getMetersPerPixelAtLatitude(latitude, zoom)
+  }
 
   /**
    * Calculate distance spanned by one pixel at the specified latitude
@@ -740,8 +827,10 @@ class MapboxMap :
    *
    * @return Returns the distance measured in meters.
    */
-  override fun getMetersPerPixelAtLatitude(latitude: Double): Double =
-    Projection.getMetersPerPixelAtLatitude(latitude, cameraState.zoom)
+  override fun getMetersPerPixelAtLatitude(latitude: Double): Double {
+    checkNativeMap("getMetersPerPixelAtLatitude")
+    return Projection.getMetersPerPixelAtLatitude(latitude, cameraState.zoom)
+  }
 
   /**
    * Calculate Spherical Mercator ProjectedMeters coordinates.
@@ -751,8 +840,10 @@ class MapboxMap :
    *
    * @return Returns Spherical Mercator ProjectedMeters coordinates
    */
-  override fun projectedMetersForCoordinate(point: Point): ProjectedMeters =
-    Projection.projectedMetersForCoordinate(point)
+  override fun projectedMetersForCoordinate(point: Point): ProjectedMeters {
+    checkNativeMap("projectedMetersForCoordinate")
+    return Projection.projectedMetersForCoordinate(point)
+  }
 
   /**
    * Calculate a longitude-latitude pair for a Spherical Mercator projected
@@ -763,8 +854,10 @@ class MapboxMap :
    *
    * @return Returns a longitude-latitude pair.
    */
-  override fun coordinateForProjectedMeters(projectedMeters: ProjectedMeters): Point =
-    Projection.coordinateForProjectedMeters(projectedMeters)
+  override fun coordinateForProjectedMeters(projectedMeters: ProjectedMeters): Point {
+    checkNativeMap("coordinateForProjectedMeters")
+    return Projection.coordinateForProjectedMeters(projectedMeters)
+  }
 
   /**
    * Calculate a point on the map in Mercator Projection for a given
@@ -777,8 +870,10 @@ class MapboxMap :
    *
    * @return Returns a point on the map in Mercator projection.
    */
-  override fun project(point: Point, zoomScale: Double): MercatorCoordinate =
-    Projection.project(point, zoomScale)
+  override fun project(point: Point, zoomScale: Double): MercatorCoordinate {
+    checkNativeMap("project")
+    return Projection.project(point, zoomScale)
+  }
 
   /**
    * Calculate a coordinate for a given point on the map in Mercator Projection.
@@ -790,8 +885,10 @@ class MapboxMap :
    *
    * @return Returns a coordinate.
    */
-  override fun unproject(coordinate: MercatorCoordinate, zoomScale: Double): Point =
-    Projection.unproject(coordinate, zoomScale)
+  override fun unproject(coordinate: MercatorCoordinate, zoomScale: Double): Point {
+    checkNativeMap("unproject")
+    return Projection.unproject(coordinate, zoomScale)
+  }
 
   /**
    * Queries the map for rendered features.
@@ -814,7 +911,8 @@ class MapboxMap :
     options: RenderedQueryOptions,
     callback: QueryFeaturesCallback
   ) {
-    getNativeMap().queryRenderedFeatures(shape, options, callback)
+    checkNativeMap("queryRenderedFeatures")
+    nativeMap.queryRenderedFeatures(shape, options, callback)
   }
 
   /**
@@ -838,7 +936,8 @@ class MapboxMap :
     options: RenderedQueryOptions,
     callback: QueryFeaturesCallback
   ) {
-    getNativeMap().queryRenderedFeatures(box, options, callback)
+    checkNativeMap("queryRenderedFeatures")
+    nativeMap.queryRenderedFeatures(box, options, callback)
   }
 
   /**
@@ -862,7 +961,8 @@ class MapboxMap :
     options: RenderedQueryOptions,
     callback: QueryFeaturesCallback
   ) {
-    getNativeMap().queryRenderedFeatures(pixel, options, callback)
+    checkNativeMap("queryRenderedFeatures")
+    nativeMap.queryRenderedFeatures(pixel, options, callback)
   }
 
   /**
@@ -878,7 +978,8 @@ class MapboxMap :
     options: RenderedQueryOptions,
     callback: QueryFeaturesCallback
   ): Cancelable {
-    return getNativeMap().queryRenderedFeatures(geometry, options, callback)
+    checkNativeMap("queryRenderedFeatures")
+    return nativeMap.queryRenderedFeatures(geometry, options, callback)
   }
 
   /**
@@ -894,7 +995,8 @@ class MapboxMap :
     options: SourceQueryOptions,
     callback: QueryFeaturesCallback
   ) {
-    getNativeMap().querySourceFeatures(sourceId, options, callback)
+    checkNativeMap("querySourceFeatures")
+    nativeMap.querySourceFeatures(sourceId, options, callback)
   }
 
   /**
@@ -915,6 +1017,7 @@ class MapboxMap :
    * }
    */
   override fun executeOnRenderThread(runnable: Runnable) {
+    checkNativeMap("executeOnRenderThread")
     renderHandler?.post(runnable)
   }
 
@@ -948,7 +1051,8 @@ class MapboxMap :
     args: HashMap<String, Value>?,
     callback: QueryFeatureExtensionCallback
   ) {
-    getNativeMap().queryFeatureExtensions(
+    checkNativeMap("queryFeatureExtensions")
+    nativeMap.queryFeatureExtensions(
       sourceIdentifier,
       feature,
       extension,
@@ -1043,8 +1147,10 @@ class MapboxMap :
     sourceLayerId: String? = null,
     featureId: String,
     state: Value
-  ) =
-    getNativeMap().setFeatureState(sourceId, sourceLayerId, featureId, state)
+  ) {
+    checkNativeMap("setFeatureState")
+    nativeMap.setFeatureState(sourceId, sourceLayerId, featureId, state)
+  }
 
   /**
    * Get the state map of a feature within a style source.
@@ -1064,7 +1170,8 @@ class MapboxMap :
     featureId: String,
     callback: QueryFeatureStateCallback
   ) {
-    getNativeMap().getFeatureState(sourceId, sourceLayerId, featureId, callback)
+    checkNativeMap("getFeatureState")
+    nativeMap.getFeatureState(sourceId, sourceLayerId, featureId, callback)
   }
 
   /**
@@ -1087,7 +1194,8 @@ class MapboxMap :
     featureId: String,
     stateKey: String? = null
   ) {
-    getNativeMap().removeFeatureState(
+    checkNativeMap("removeFeatureState")
+    nativeMap.removeFeatureState(
       sourceId,
       sourceLayerId,
       featureId,
@@ -1099,7 +1207,8 @@ class MapboxMap :
    * Reduce memory use. Useful to call when the application gets paused or sent to background.
    */
   fun reduceMemoryUse() {
-    getNativeMap().reduceMemoryUse()
+    checkNativeMap("reduceMemoryUse")
+    nativeMap.reduceMemoryUse()
   }
 
   /**
@@ -1112,8 +1221,9 @@ class MapboxMap :
    * @param events an array of event types to be subscribed to.
    */
   override fun subscribe(observer: Observer, events: List<String>) {
+    checkNativeMap("subscribe")
     if (observers.add(observer)) {
-      getNativeMap().subscribe(observer, events)
+      nativeMap.subscribe(observer, events)
     }
   }
 
@@ -1124,8 +1234,9 @@ class MapboxMap :
    * @param events an array of event types to be unsubscribed from.
    */
   override fun unsubscribe(observer: Observer, events: List<String>) {
+    checkNativeMap("unsubscribe")
     if (observers.remove(observer)) {
-      getNativeMap().unsubscribe(observer, events)
+      nativeMap.unsubscribe(observer, events)
     }
   }
 
@@ -1135,8 +1246,9 @@ class MapboxMap :
    * @param observer an Observer
    */
   override fun unsubscribe(observer: Observer) {
+    checkNativeMap("unsubscribe")
     if (observers.remove(observer)) {
-      getNativeMap().unsubscribe(observer)
+      nativeMap.unsubscribe(observer)
     }
   }
 
@@ -1144,6 +1256,7 @@ class MapboxMap :
    * Add a listener that's going to be invoked whenever map camera changes.
    */
   override fun addOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener) {
+    checkNativeMap("addOnCameraChangeListener")
     nativeObserver.addOnCameraChangeListener(onCameraChangeListener)
   }
 
@@ -1151,6 +1264,7 @@ class MapboxMap :
    * Remove the camera change listener.
    */
   override fun removeOnCameraChangeListener(onCameraChangeListener: OnCameraChangeListener) {
+    checkNativeMap("removeOnCameraChangeListener")
     nativeObserver.removeOnCameraChangeListener(onCameraChangeListener)
   }
 
@@ -1162,6 +1276,7 @@ class MapboxMap :
    * available tiles.
    */
   override fun addOnMapIdleListener(onMapIdleListener: OnMapIdleListener) {
+    checkNativeMap("addOnMapIdleListener")
     nativeObserver.addOnMapIdleListener(onMapIdleListener)
   }
 
@@ -1169,6 +1284,7 @@ class MapboxMap :
    * Remove the map idle listener.
    */
   override fun removeOnMapIdleListener(onMapIdleListener: OnMapIdleListener) {
+    checkNativeMap("removeOnMapIdleListener")
     nativeObserver.removeOnMapIdleListener(onMapIdleListener)
   }
 
@@ -1176,6 +1292,7 @@ class MapboxMap :
    * Add a listener that's going to be invoked whenever there's a map load error.
    */
   override fun addOnMapLoadErrorListener(onMapLoadErrorListener: OnMapLoadErrorListener) {
+    checkNativeMap("addOnMapLoadErrorListener")
     nativeObserver.addOnMapLoadErrorListener(onMapLoadErrorListener)
   }
 
@@ -1183,6 +1300,7 @@ class MapboxMap :
    * Remove the map error listener.
    */
   override fun removeOnMapLoadErrorListener(onMapLoadErrorListener: OnMapLoadErrorListener) {
+    checkNativeMap("removeOnMapLoadErrorListener")
     nativeObserver.removeOnMapLoadErrorListener(onMapLoadErrorListener)
   }
 
@@ -1191,6 +1309,7 @@ class MapboxMap :
    * the Map has rendered all visible tiles.
    */
   override fun addOnMapLoadedListener(onMapLoadedListener: OnMapLoadedListener) {
+    checkNativeMap("addOnMapLoadedListener")
     nativeObserver.addOnMapLoadedListener(onMapLoadedListener)
   }
 
@@ -1198,6 +1317,7 @@ class MapboxMap :
    * Remove the map loaded listener.
    */
   override fun removeOnMapLoadedListener(onMapLoadedListener: OnMapLoadedListener) {
+    checkNativeMap("removeOnMapLoadedListener")
     nativeObserver.removeOnMapLoadedListener(onMapLoadedListener)
   }
 
@@ -1206,6 +1326,7 @@ class MapboxMap :
    * Add a listener that's going to be invoked whenever the Map started rendering a frame.
    */
   override fun addOnRenderFrameStartedListener(onRenderFrameStartedListener: OnRenderFrameStartedListener) {
+    checkNativeMap("addOnRenderFrameStartedListener")
     nativeObserver.addOnRenderFrameStartedListener(onRenderFrameStartedListener)
   }
 
@@ -1213,6 +1334,7 @@ class MapboxMap :
    * Remove the render frame started listener.
    */
   override fun removeOnRenderFrameStartedListener(onRenderFrameStartedListener: OnRenderFrameStartedListener) {
+    checkNativeMap("removeOnRenderFrameStartedListener")
     nativeObserver.removeOnRenderFrameStartedListener(onRenderFrameStartedListener)
   }
 
@@ -1224,6 +1346,7 @@ class MapboxMap :
    * The placement-changed value tells if the symbol placement has been changed in the visible viewport.
    */
   override fun addOnRenderFrameFinishedListener(onRenderFrameFinishedListener: OnRenderFrameFinishedListener) {
+    checkNativeMap("addOnRenderFrameFinishedListener")
     nativeObserver.addOnRenderFrameFinishedListener(onRenderFrameFinishedListener)
   }
 
@@ -1231,6 +1354,7 @@ class MapboxMap :
    * Remove the render frame finished listener.
    */
   override fun removeOnRenderFrameFinishedListener(onRenderFrameFinishedListener: OnRenderFrameFinishedListener) {
+    checkNativeMap("removeOnRenderFrameFinishedListener")
     nativeObserver.removeOnRenderFrameFinishedListener(onRenderFrameFinishedListener)
   }
 
@@ -1240,6 +1364,7 @@ class MapboxMap :
    * runtime API.
    */
   override fun addOnSourceAddedListener(onSourceAddedListener: OnSourceAddedListener) {
+    checkNativeMap("addOnSourceAddedListener")
     nativeObserver.addOnSourceAddedListener(onSourceAddedListener)
   }
 
@@ -1247,6 +1372,7 @@ class MapboxMap :
    * Remove the source added listener.
    */
   override fun removeOnSourceAddedListener(onSourceAddedListener: OnSourceAddedListener) {
+    checkNativeMap("removeOnSourceAddedListener")
     nativeObserver.removeOnSourceAddedListener(onSourceAddedListener)
   }
 
@@ -1254,6 +1380,7 @@ class MapboxMap :
    * Add a listener that's going to be invoked whenever the source data has been loaded.
    */
   override fun addOnSourceDataLoadedListener(onSourceDataLoadedListener: OnSourceDataLoadedListener) {
+    checkNativeMap("addOnSourceDataLoadedListener")
     nativeObserver.addOnSourceDataLoadedListener(onSourceDataLoadedListener)
   }
 
@@ -1261,6 +1388,7 @@ class MapboxMap :
    * Remove the source data loaded listener.
    */
   override fun removeOnSourceDataLoadedListener(onSourceDataLoadedListener: OnSourceDataLoadedListener) {
+    checkNativeMap("removeOnSourceDataLoadedListener")
     nativeObserver.removeOnSourceDataLoadedListener(onSourceDataLoadedListener)
   }
 
@@ -1269,6 +1397,7 @@ class MapboxMap :
    * runtime API.
    */
   override fun addOnSourceRemovedListener(onSourceRemovedListener: OnSourceRemovedListener) {
+    checkNativeMap("addOnSourceRemovedListener")
     nativeObserver.addOnSourceRemovedListener(onSourceRemovedListener)
   }
 
@@ -1276,6 +1405,7 @@ class MapboxMap :
    * Remove the source removed listener.
    */
   override fun removeOnSourceRemovedListener(onSourceRemovedListener: OnSourceRemovedListener) {
+    checkNativeMap("removeOnSourceRemovedListener")
     nativeObserver.removeOnSourceRemovedListener(onSourceRemovedListener)
   }
 
@@ -1285,6 +1415,7 @@ class MapboxMap :
    * including the style specified sprite and sources.
    */
   override fun addOnStyleLoadedListener(onStyleLoadedListener: OnStyleLoadedListener) {
+    checkNativeMap("addOnStyleLoadedListener")
     nativeObserver.addOnStyleLoadedListener(onStyleLoadedListener)
   }
 
@@ -1292,6 +1423,7 @@ class MapboxMap :
    * Remove the style loaded listener.
    */
   override fun removeOnStyleLoadedListener(onStyleLoadedListener: OnStyleLoadedListener) {
+    checkNativeMap("removeOnStyleLoadedListener")
     nativeObserver.removeOnStyleLoadedListener(onStyleLoadedListener)
   }
 
@@ -1303,6 +1435,7 @@ class MapboxMap :
    * before style is fully loaded.
    */
   override fun addOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener) {
+    checkNativeMap("addOnStyleDataLoadedListener")
     nativeObserver.addOnStyleDataLoadedListener(onStyleDataLoadedListener)
   }
 
@@ -1310,6 +1443,7 @@ class MapboxMap :
    * Remove the style data loaded listener
    */
   override fun removeOnStyleDataLoadedListener(onStyleDataLoadedListener: OnStyleDataLoadedListener) {
+    checkNativeMap("removeOnStyleDataLoadedListener")
     nativeObserver.removeOnStyleDataLoadedListener(onStyleDataLoadedListener)
   }
 
@@ -1320,6 +1454,7 @@ class MapboxMap :
    * missing in the sprite sheet.
    */
   override fun addOnStyleImageMissingListener(onStyleImageMissingListener: OnStyleImageMissingListener) {
+    checkNativeMap("addOnStyleImageMissingListener")
     nativeObserver.addOnStyleImageMissingListener(onStyleImageMissingListener)
   }
 
@@ -1327,6 +1462,7 @@ class MapboxMap :
    * Remove the style image missing listener.
    */
   override fun removeOnStyleImageMissingListener(onStyleImageMissingListener: OnStyleImageMissingListener) {
+    checkNativeMap("removeOnStyleImageMissingListener")
     nativeObserver.removeOnStyleImageMissingListener(onStyleImageMissingListener)
   }
 
@@ -1335,6 +1471,7 @@ class MapboxMap :
    * needed and can be removed using StyleManager#removeStyleImage method.
    */
   override fun addOnStyleImageUnusedListener(onStyleImageUnusedListener: OnStyleImageUnusedListener) {
+    checkNativeMap("addOnStyleImageUnusedListener")
     nativeObserver.addOnStyleImageUnusedListener(onStyleImageUnusedListener)
   }
 
@@ -1342,6 +1479,7 @@ class MapboxMap :
    * Remove the style image unused listener.
    */
   override fun removeOnStyleImageUnusedListener(onStyleImageUnusedListener: OnStyleImageUnusedListener) {
+    checkNativeMap("removeOnStyleImageUnusedListener")
     nativeObserver.removeOnStyleImageUnusedListener(onStyleImageUnusedListener)
   }
 
@@ -1349,14 +1487,18 @@ class MapboxMap :
    * Triggers a repaint of the map.
    */
   fun triggerRepaint() {
-    getNativeMap().triggerRepaint()
+    checkNativeMap("triggerRepaint")
+    nativeMap.triggerRepaint()
   }
 
   /**
    * Get the map's current free camera options. After mutation, it should be set back to the map.
    * @return The current free camera options.
    */
-  override fun getFreeCameraOptions() = getNativeMap().freeCameraOptions
+  override fun getFreeCameraOptions(): FreeCameraOptions {
+    checkNativeMap("getFreeCameraOptions")
+    return nativeMap.freeCameraOptions
+  }
 
   /**
    * Sets the map view with the free camera options.
@@ -1370,7 +1512,8 @@ class MapboxMap :
    * @param freeCameraOptions The free camera options to set.
    */
   override fun setCamera(freeCameraOptions: FreeCameraOptions) {
-    getNativeMap().setCamera(freeCameraOptions)
+    checkNativeMap("setCamera")
+    nativeMap.setCamera(freeCameraOptions)
   }
 
   /**
@@ -1380,7 +1523,10 @@ class MapboxMap :
    *
    * @return Elevation (in meters) multiplied by current terrain exaggeration, or empty if elevation for the coordinate is not available.
    */
-  fun getElevation(coordinate: Point) = getNativeMap().getElevation(coordinate)
+  fun getElevation(coordinate: Point): Double? {
+    checkNativeMap("getElevation")
+    return nativeMap.getElevation(coordinate)
+  }
 
   /**
    * Enables or disables the experimental render cache feature.
@@ -1397,12 +1543,13 @@ class MapboxMap :
    */
   @MapboxExperimental
   fun setRenderCacheOptions(options: RenderCacheOptions) {
+    checkNativeMap("setRenderCacheOptions")
     options.size?.let { size ->
-      getNativeMap().renderCacheOptions = if (size >= 0)
+      nativeMap.renderCacheOptions = if (size >= 0)
         options
       else
         throw IllegalArgumentException("Render cache size must be >= 0!")
-    } ?: getNativeMap().apply {
+    } ?: nativeMap.apply {
       this.renderCacheOptions = RenderCacheOptions.Builder().setDisabled().build()
     }
   }
@@ -1414,7 +1561,8 @@ class MapboxMap :
    */
   @MapboxExperimental
   fun getRenderCacheOptions(): RenderCacheOptions {
-    return getNativeMap().renderCacheOptions
+    checkNativeMap("getRenderCacheOptions")
+    return nativeMap.renderCacheOptions
   }
 
   /**
@@ -1433,7 +1581,8 @@ class MapboxMap :
    */
   @MapboxExperimental
   fun setMemoryBudget(memoryBudget: MapMemoryBudget?) {
-    getNativeMap().setMemoryBudget(memoryBudget)
+    checkNativeMap("setMemoryBudget")
+    nativeMap.setMemoryBudget(memoryBudget)
   }
 
   /**
@@ -1446,6 +1595,7 @@ class MapboxMap :
     )
   )
   override fun isFullyLoaded(): Boolean {
+    checkNativeMap("isFullyLoaded")
     return style?.isStyleLoaded ?: false
   }
 
@@ -1457,7 +1607,8 @@ class MapboxMap :
    * @param point The pivot coordinate, measured in \link MapOptions#size platform pixels \endlink from top to bottom and from left to right.
    */
   override fun dragStart(point: ScreenCoordinate) {
-    getNativeMap().dragStart(point)
+    checkNativeMap("dragStart")
+    nativeMap.dragStart(point)
   }
 
   /**
@@ -1465,7 +1616,8 @@ class MapboxMap :
    * This function should be called always after the user has ended a drag gesture initiated by `dragStart`.
    */
   override fun dragEnd() {
-    getNativeMap().dragEnd()
+    checkNativeMap("dragEnd")
+    nativeMap.dragEnd()
   }
 
   /**
@@ -1480,7 +1632,8 @@ class MapboxMap :
     fromPoint: ScreenCoordinate,
     toPoint: ScreenCoordinate
   ): CameraOptions {
-    return getNativeMap().getDragCameraOptions(fromPoint, toPoint)
+    checkNativeMap("getDragCameraOptions")
+    return nativeMap.getDragCameraOptions(fromPoint, toPoint)
   }
 
   internal fun setCameraAnimationPlugin(cameraAnimationsPlugin: CameraAnimationsPlugin?) {
@@ -1523,11 +1676,11 @@ class MapboxMap :
 
   internal fun onDestroy() {
     observers.forEach {
-      getNativeMap().unsubscribe(it)
+      nativeMap.unsubscribe(it)
     }
     observers.clear()
-    nativeMap = null
     styleObserver.onDestroy()
+    isMapValid = false
   }
 
   /**
@@ -1537,7 +1690,8 @@ class MapboxMap :
    */
   @MapboxExperimental
   override fun setMapProjection(mapProjection: MapProjection) {
-    val expected = getNativeMap().setMapProjection(mapProjection.toValue())
+    checkNativeMap("setMapProjection")
+    val expected = nativeMap.setMapProjection(mapProjection.toValue())
     if (expected.isError) {
       Logger.e(TAG_PROJECTION, "Map projection is not supported!")
     }
@@ -1554,7 +1708,8 @@ class MapboxMap :
    */
   @MapboxExperimental
   override fun getMapProjection(): MapProjection {
-    val value = getNativeMap().mapProjection
+    checkNativeMap("getMapProjection")
+    val value = nativeMap.mapProjection
     return MapProjectionUtils.fromValue(value)
   }
 
@@ -1562,26 +1717,37 @@ class MapboxMap :
     viewId: String,
     options: ViewAnnotationOptions
   ): Expected<String, None> {
-    return getNativeMap().addViewAnnotation(viewId, options)
+    checkNativeMap("addViewAnnotation")
+    return nativeMap.addViewAnnotation(viewId, options)
   }
 
   internal fun updateViewAnnotation(
     viewId: String,
     options: ViewAnnotationOptions
   ): Expected<String, None> {
-    return getNativeMap().updateViewAnnotation(viewId, options)
+    checkNativeMap("updateViewAnnotation")
+    return nativeMap.updateViewAnnotation(viewId, options)
   }
 
   internal fun removeViewAnnotation(viewId: String): Expected<String, None> {
-    return getNativeMap().removeViewAnnotation(viewId)
+    checkNativeMap("removeViewAnnotation")
+    return nativeMap.removeViewAnnotation(viewId)
   }
 
   internal fun getViewAnnotationOptions(identifier: String): Expected<String, ViewAnnotationOptions> {
-    return getNativeMap().getViewAnnotationOptions(identifier)
+    checkNativeMap("getViewAnnotationOptions")
+    return nativeMap.getViewAnnotationOptions(identifier)
   }
 
   internal fun setViewAnnotationPositionsUpdateListener(listener: ViewAnnotationPositionsUpdateListener?) {
-    return getNativeMap().setViewAnnotationPositionsUpdateListener(listener)
+    checkNativeMap("setViewAnnotationPositionsUpdateListener")
+    return nativeMap.setViewAnnotationPositionsUpdateListener(listener)
+  }
+
+  private fun checkNativeMap(methodName: String) {
+    if (!isMapValid) {
+      Logger.e(TAG, "Mapbox SDK memory leak detected! MapboxMap object (accessing $methodName) should not be stored and used after MapView is destroyed.")
+    }
   }
 
   /**
@@ -1605,6 +1771,7 @@ class MapboxMap :
       Map.clearData(resourceOptions, callback)
     }
 
+    private const val TAG = "Mbgl-MapboxMap"
     private const val TAG_PROJECTION = "MbxProjection"
     private const val EMPTY_STYLE_JSON = "{}"
     internal const val QFE_SUPER_CLUSTER = "supercluster"

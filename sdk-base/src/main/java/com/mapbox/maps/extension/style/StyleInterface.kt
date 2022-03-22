@@ -16,6 +16,18 @@ interface StyleInterface : StyleManagerInterface {
   val pixelRatio: Float
 
   /**
+   * Whether the Style instance is valid.
+   *
+   * Style becomes invalid after MapView.onDestroy() is invoked,
+   * calling any method then could result in undefined behaviour and will print an error log.
+   *
+   * Keeping the reference to an invalid Style instance introduces significant native memory leak.
+   *
+   * @return True if Style is valid and false otherwise.
+   */
+  fun isValid(): Boolean
+
+  /**
    * Adds an image to be used in the style. This API can also be used for updating
    * an image. If the image \a id was already added, it gets replaced by the new image.
    *

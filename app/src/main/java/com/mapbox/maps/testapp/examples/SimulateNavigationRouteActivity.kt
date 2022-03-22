@@ -61,13 +61,13 @@ class SimulateNavigationRouteActivity : AppCompatActivity() {
 
   override fun onDestroy() {
     super.onDestroy()
+    handler.removeCallbacksAndMessages(null)
     if (this::navigationSimulator.isInitialized) {
       navigationSimulator.onDestroy()
     }
   }
 
   companion object {
-    private const val TAG = "NavigationRouteActivity"
     private const val NAVIGATION_ROUTE_JSON_NAME = "navigation_route.json"
     private const val INITIAL_OVERVIEW_DELAY_MS = 3000L
     private const val FIRST_FOLLOW_MODE_DELAY_MS = 8000L

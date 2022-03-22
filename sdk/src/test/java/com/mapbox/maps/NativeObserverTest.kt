@@ -8,7 +8,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import java.lang.ref.WeakReference
 
 @RunWith(RobolectricTestRunner::class)
 class NativeObserverTest {
@@ -18,7 +17,7 @@ class NativeObserverTest {
 
   @Before
   fun setUp() {
-    nativeObserver = NativeObserver(WeakReference(observableInterface))
+    nativeObserver = NativeObserver(observableInterface)
   }
 
   private fun notifyEvents(type: String, value: Value = Value(hashMapOf(Pair("id", Value("")), Pair("begin", Value(123456))))) {

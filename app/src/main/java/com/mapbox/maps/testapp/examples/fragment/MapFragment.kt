@@ -19,7 +19,7 @@ class MapFragment : Fragment() {
     inflater: LayoutInflater,
     container: ViewGroup?,
     savedInstanceState: Bundle?
-  ): View? {
+  ): View {
     mapView = MapView(
       inflater.context,
       MapInitOptions(inflater.context)
@@ -39,7 +39,7 @@ class MapFragment : Fragment() {
     callback.invoke(mapboxMap)
   } else this.onMapReady = callback
 
-  fun getMapView(): MapView? {
+  fun getMapView(): MapView {
     return mapView
   }
 }
