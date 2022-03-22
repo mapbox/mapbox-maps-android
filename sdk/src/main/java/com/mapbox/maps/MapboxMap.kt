@@ -51,8 +51,14 @@ class MapboxMap :
   private var isMapValid = true
 
   /**
-   * Whether the MapboxMap instance is valid.
-   * MapboxMap will be invalid after MapView is destroyed.
+   * Whether the [MapboxMap] instance is valid.
+   *
+   * [MapboxMap] becomes invalid after [MapView.onDestroy] is invoked,
+   * calling any method then could result in undefined behaviour and will print an error log.
+   *
+   * Keeping the reference to an invalid [MapboxMap] instance introduces significant native memory leak.
+   *
+   * @return True if [MapboxMap] is valid and false otherwise.
    */
   fun isValid(): Boolean {
     return isMapValid

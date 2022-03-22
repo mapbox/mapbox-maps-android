@@ -17,7 +17,13 @@ interface StyleInterface : StyleManagerInterface {
 
   /**
    * Whether the Style instance is valid.
-   * Style will be invalid after MapView is destroyed or a new style is loaded.
+   *
+   * Style becomes invalid after MapView.onDestroy() is invoked,
+   * calling any method then could result in undefined behaviour and will print an error log.
+   *
+   * Keeping the reference to an invalid Style instance introduces significant native memory leak.
+   *
+   * @return True if Style is valid and false otherwise.
    */
   fun isValid(): Boolean
 

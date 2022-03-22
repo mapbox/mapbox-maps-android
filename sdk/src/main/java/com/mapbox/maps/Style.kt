@@ -27,13 +27,19 @@ class Style internal constructor(
 
   private var isStyleValid = true
 
-  internal fun markStyleInvalid() {
+  internal fun onMapViewDestroyed() {
     isStyleValid = false
   }
 
   /**
    * Whether the Style instance is valid.
-   * Style will be invalid after MapView is destroyed or a new style is loaded.
+   *
+   * Style becomes invalid after MapView.onDestroy() is invoked,
+   * calling any method then could result in undefined behaviour and will print an error log.
+   *
+   * Keeping the reference to an invalid Style instance introduces significant native memory leak.
+   *
+   * @return True if Style is valid and false otherwise.
    */
   override fun isValid(): Boolean {
     return isStyleValid
@@ -843,7 +849,7 @@ class Style internal constructor(
 
   private fun checkNativeStyle(methodName: String) {
     if (!isStyleValid) {
-      Logger.e(TAG, "Mapbox SDK memory leak detected! Style object (accessing $methodName) should not be stored and used after MapView is destroyed or new style has been loaded.")
+      Logger.e(TAG, "Mapbox SDK memory leak detected! Style object (accessing $methodName) should not be stored and used after MapView is destroyed.")
     }
   }
 
