@@ -16,8 +16,11 @@ def setCommitStatus(slug, hash, token, description):
         "description": description,
     }
 
+    token = token.replace('\r','').replace('\n','')
+    authorization = f'token {token}'
     headers = {
-        "Authorization": "token %s" % token.replace('\r','')
+        "Accept": "application/vnd.github.v3+json",
+        "Authorization" : authorization,
     }
 
     r = requests.post(url, headers=headers, json=params)
