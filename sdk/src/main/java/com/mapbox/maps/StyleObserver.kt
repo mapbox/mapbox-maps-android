@@ -62,7 +62,7 @@ internal class StyleObserver(
   override fun onStyleLoaded(eventData: StyleLoadedEventData) {
     val style = Style(nativeMap, pixelRatio)
     // cache loaded style as users may have saved strong reference in their code -
-    // so we want to mark that style as not valid when MapView will be destroyed
+    // so we want to mark that style as not valid when MapView is destroyed
     loadedStyleList.add(style)
     styleLoadedListener.onStyleLoaded(style)
 

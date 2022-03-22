@@ -351,7 +351,10 @@ class MapboxMap :
   }
 
   /**
-   * Get the Style of the map asynchronously.
+   * Get the [Style] of the map asynchronously.
+   *
+   * Note: keeping the reference to an invalid [Style] instance introduces significant native memory leak,
+   * see [Style.isValid] for more details.
    *
    * @param onStyleLoaded the callback to be invoked when the style is fully loaded
    */
@@ -363,6 +366,11 @@ class MapboxMap :
 
   /**
    * Get the Style of the map synchronously, will return null is style is not loaded yet.
+   *
+   * Note: keeping the reference to an invalid [Style] instance introduces significant native memory leak,
+   * see [Style.isValid] for more details.
+   *
+   * @return currently loaded [Style] object or NULL if it is not loaded.
    */
   fun getStyle(): Style? {
     checkNativeMap("getStyle")
