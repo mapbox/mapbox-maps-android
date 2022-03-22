@@ -51,7 +51,7 @@ def _get_total_coverage():
 
 
 if __name__ == '__main__':
-    mbx_ci_proc = subprocess.run(["mbx-ci github notifier token"], capture_output=True, shell=True)
+    mbx_ci_proc = subprocess.run(["mbx-ci github notifier private token"], capture_output=True, shell=True)
     token = mbx_ci_proc.stdout.decode("utf-8")
 
     parser = argparse.ArgumentParser(description="Sets the status of a commit on GitHUB.")
