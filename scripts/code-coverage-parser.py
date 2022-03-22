@@ -16,11 +16,8 @@ def setCommitStatus(slug, hash, token, description):
         "description": description,
     }
 
-    token = token.replace('\r','').replace('\n','')
-    authorization = f'token {token}'
     headers = {
-        "Accept": "application/vnd.github.v3+json",
-        "Authorization" : authorization,
+        "Authorization": "token %s" % token
     }
 
     r = requests.post(url, headers=headers, json=params)
@@ -54,7 +51,9 @@ def _get_total_coverage():
 
 
 if __name__ == '__main__':
-    token = os.getenv("GITHUB_ACCESS_TOKEN")
+    mbx_ci_proc = subprocess.run(["mbx-ci github notifier token"], capture_output=True, shell=True)
+    token = mbx_ci_proc.stdout.decode("utf-8")
+
     parser = argparse.ArgumentParser(description="Sets the status of a commit on GitHUB.")
 
     parser.add_argument("--token", default=token, dest="token",
