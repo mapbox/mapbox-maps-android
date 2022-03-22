@@ -24,9 +24,10 @@ internal class StyleObserver(
   private var loadStyleListener: Style.OnStyleLoaded? = null
   private var loadStyleErrorListener: OnMapLoadErrorListener? = null
   private var loadStyleTransitionOptions: TransitionOptions? = null
+  private var loadedStyle: Style? = null
 
   private val getStyleListeners = CopyOnWriteArraySet<Style.OnStyleLoaded>()
-  private val loadedStyleList = CopyOnWriteArraySet<Style>()
+
   init {
     nativeObserver.addOnStyleLoadedListener(this)
     nativeObserver.addOnMapLoadErrorListener(this)
@@ -61,9 +62,10 @@ internal class StyleObserver(
    */
   override fun onStyleLoaded(eventData: StyleLoadedEventData) {
     val style = Style(nativeMap, pixelRatio)
-    // cache loaded style as users may have saved strong reference in their code -
-    // so we want to mark that style as not valid when MapView will be destroyed
-    loadedStyleList.add(style)
+    // if some style was already loaded - we mark it as not valid anymore
+    // although method calls on that style will be reflecting newly loaded style
+    loadedStyle?.markStyleInvalid()
+    loadedStyle = style
     styleLoadedListener.onStyleLoaded(style)
 
     loadStyleListener?.onStyleLoaded(style)
@@ -99,11 +101,7 @@ internal class StyleObserver(
     loadStyleListener = null
     loadStyleErrorListener = null
     loadStyleTransitionOptions = null
-    loadedStyleList.forEach {
-      // Destroy all the styles to release the reference to styleManager
-      it.onMapViewDestroyed()
-    }
-    loadedStyleList.clear()
+    loadedStyle?.markStyleInvalid()
     getStyleListeners.clear()
     nativeObserver.removeOnMapLoadErrorListener(this)
     nativeObserver.removeOnStyleLoadedListener(this)
