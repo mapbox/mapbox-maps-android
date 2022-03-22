@@ -185,7 +185,7 @@ commands:
           name: Start internal CI release flow
           command: |
             if [[ $CIRCLE_TAG == android-v* ]]; then
-              python3 scripts/start-internal-release-pipeline.py --token ${MOBILE_METRICS_TOKEN} --origin-slug mapbox/mapbox-maps-android --target-slug mapbox/mapbox-maps-android-internal --release_tag $CIRCLE_TAG
+              python3 scripts/start-internal-release-pipeline.py --token ${MAPBOX_MAPS_ANDROID_INTERNAL} --origin-slug mapbox/mapbox-maps-android --target-slug mapbox/mapbox-maps-android-internal --release_tag $CIRCLE_TAG
             fi
   track-metrics:
     steps:
@@ -209,7 +209,7 @@ commands:
       - run:
           name: Trigger generated code validation
           command: |
-            python3 scripts/ci-circleci-start-pipeline.py --token ${MOBILE_METRICS_TOKEN} --origin-slug mapbox/mapbox-maps-android --target-slug mapbox/mapbox-maps-android-internal --current-branch ${CIRCLE_BRANCH}
+            python3 scripts/ci-circleci-start-pipeline.py --token ${MAPBOX_MAPS_ANDROID_INTERNAL} --origin-slug mapbox/mapbox-maps-android --target-slug mapbox/mapbox-maps-android-internal --current-branch ${CIRCLE_BRANCH}
 
   init-aws:
     steps:
