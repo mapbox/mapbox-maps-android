@@ -17,7 +17,7 @@ def setCommitStatus(slug, hash, token, description):
     }
 
     headers = {
-        "Authorization": "token %s" % token
+        "Authorization": "token %s" % token.replace('\r','')
     }
 
     r = requests.post(url, headers=headers, json=params)
