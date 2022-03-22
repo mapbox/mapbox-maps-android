@@ -103,6 +103,10 @@ commands:
           key: v1-dependencies-{{ checksum "./tmp/checksum.txt" }}
 
   jvm-unit-tests:
+    parameters:
+      tmp_mapbox_slug:
+        type: string
+        default: "mapbox/mapbox-maps-android"
     steps:
       - init-aws
 #      - run:
@@ -116,7 +120,7 @@ commands:
           command: |
             COMMIT_SHA=$(git rev-parse --short HEAD)
             export GITHUB_ACCESS_TOKEN=$(./mbx-ci github notifier token)
-            python3 scripts/ci-github-set-commit-status.py --success --slug mapbox/mapbox-maps-android --hash ${COMMIT_SHA} --description test
+            python3 scripts/ci-github-set-commit-status.py --success --slug << parameters.tmp_mapbox_slug >> --hash ${COMMIT_SHA} --description "test"
       - run:
           name: Run JVM unit tests & create jacoco code coverage report
           no_output_timeout: 30m
