@@ -12,23 +12,49 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix PolygonAnnotation and PolylineAnnotation being distorted while dragging with 3D terrain. ([#1223](https://github.com/mapbox/mapbox-maps-android/pull/1223))
 
-# 10.4.0 Next minor release
-
+# 10.4.0 March 23, 2022
+[Changes](https://github.com/mapbox/mapbox-maps-android/compare/android-v10.3.0...android-v10.4.0) since [Mapbox Maps SDK for Android 10.3.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/android-v10.3.0)
 ## Features ✨ and improvements 🏁
+* Refactor scheduling logic for render thread improving rendering performance. ([#1068](https://github.com/mapbox/mapbox-maps-android/pull/1068))
+* Add LocationCompassEngine and accuracy radius support for location component plugin. ([#1016](https://github.com/mapbox/mapbox-maps-android/pull/1016)) ([#1131](https://github.com/mapbox/mapbox-maps-android/pull/1131))
+Inorder to avoid breaking api changes, interface location2 is introduced for updating `puckBearingSource`, `puckBearingEnabled` and `showAccuracyRing` properties.
+```
+// Change the puck bearing source.
+mapView.location2.puckBearingSource = PuckBearingSource.HEADING
+mapView.location2.puckBearingSource = PuckBearingSource.COURSE
+// Change the visibility of accuracy ring.
+mapView.location2.showAccuracyRing = true
+mapView.location2.showAccuracyRing = false
+// Change the puck bearing enabled.
+mapView.location2.puckBearingEnabled = true
+mapView.location2.puckBearingEnabled = false
+```
+* Add support for custom widgets rendered on top of the map. ([#1036](https://github.com/mapbox/mapbox-maps-android/pull/1036))
+* Expose DefaultLocationProvider as public class. ([#1168](https://github.com/mapbox/mapbox-maps-android/pull/1168))
+* Add new methods to View Annotation API: `ViewAnnotationManager.removeAllViewAnnotations()` and `ViewAnnotationManager.addOnViewAnnotationUpdatedListener(listener: OnViewAnnotationUpdatedListener)` / `ViewAnnotationManager.removeOnViewAnnotationUpdatedListener(listener: OnViewAnnotationUpdatedListener)`. ([#1165](https://github.com/mapbox/mapbox-maps-android/pull/1165))
+* Add optional `TransitionOptions` parameter to `MapboxMap.loadStyleUri`, `MapboxMap.loadStyleJson`, `MapboxMap.loadStyle` to apply transition to style being loaded. ([#1174](https://github.com/mapbox/mapbox-maps-android/pull/1174))
 * Rendering performance improvements. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
 * Add support for 3D terrain tilepacks. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
 * Add `Style#hasStyleImage` method that checks whether an image is in the style. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
 
 ## Bug fixes 🐞
-* Fixed too small bounds returned by `Map#latLngBoundsZoomForCamera` with tilted view and `Map#latLngBoundsZoomForCameraUnwrapped` when viewing >360° longitude. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
+* Fix skipping / crashing user events scheduled on a render thread with `MapView#queueEvent`. ([#1068](https://github.com/mapbox/mapbox-maps-android/pull/1068))
+* Fix location puck not being shown if map is created without initial style (e.g. MapInitOptions.styleUri == null) and then loaded asynchronously. ([#1114](https://github.com/mapbox/mapbox-maps-android/pull/1114))
+* Fix crash within location plugin that happens when style is reloaded simultaneously with location plugin updates. ([#1112](https://github.com/mapbox/mapbox-maps-android/pull/1112))
+* Fix memory leak in location component. ([#1093](https://github.com/mapbox/mapbox-maps-android/pull/1093), [#1172](https://github.com/mapbox/mapbox-maps-android/pull/1172))
+* Fix bearing of the puck reseted on settings change. ([#1144](https://github.com/mapbox/mapbox-maps-android/pull/1144))
+* Fix an issue when user subscribe sdk listeners multiple times, by changing CopyOnWriteArrayList to CopyOnWriteArraySet in the sdk to hold listeners. ([1183](https://github.com/mapbox/mapbox-maps-android/pull/1183))
+* Fix an issue when label list is used within the match expression DSL. ([1204](https://github.com/mapbox/mapbox-maps-android/pull/1204))
+* Fix too small bounds returned by `Map#latLngBoundsZoomForCamera` with tilted view and `Map#latLngBoundsZoomForCameraUnwrapped` when viewing >360° longitude. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
 * Fix screen coordinate queries when using zero pitch and high zoom values. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
 * Fix crash for the case when a map event is handled by an Observer of a destructed Map. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
 * Fix shimmering artifact when pitched raster tiles with compressed textures are rendered. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
-* Avoid possible crash at program exit. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
+* Avoid possible crash at program exit caused by dummy tracer accessed after the destruction. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
 * Clearing diffuse shaded flag for 3D puck when set by batched 3D rendering. ([1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
 
 ## Dependencies
 * Bump gl-native to v10.4.1, mapbox-common to v21.2.0 ([#1215](https://github.com/mapbox/mapbox-maps-android/pull/1215))
+* Update android gradle plugin to v7.0.4, gradle version to v7.0.2, Gradle licence plugin to 0.8.80, Kotlin gradle plugin to 1.5.31, Jacoco to 0.8.7. ([#1118](https://github.com/mapbox/mapbox-maps-android/pull/1118))
 
 # 10.4.0-rc.1 March 9, 2022
 
@@ -89,7 +115,7 @@ mapView.location2.puckBearingEnabled = false
 * Update android gradle plugin to v7.0.4, gradle version to v7.0.2, Gradle licence plugin to 0.8.80, Kotlin gradle plugin to 1.5.31, Jacoco to 0.8.7. ([#1118](https://github.com/mapbox/mapbox-maps-android/pull/1118))
 
 # 10.3.0 February 10, 2022
-
+[Changes](https://github.com/mapbox/mapbox-maps-android/compare/android-v10.2.0...android-v10.3.0) since [Mapbox Maps SDK for Android 10.2.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/android-v10.2.0)
 ## Features ✨ and improvements 🏁
 * Improve performance for symbol layout rendering in continuous mode. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105))
 * Introduce metadata setter API for the legacy offline region. ([#1105](https://github.com/mapbox/mapbox-maps-android/pull/1105))
@@ -200,7 +226,7 @@ mapView.location2.puckBearingEnabled = false
 * Bump gl-native to v10.3.0-beta.1, common to v21.1.0-beta.1. ([#1035](https://github.com/mapbox/mapbox-maps-android/pull/1035))
 
 # 10.2.0 December 15, 2021
-
+[Changes](https://github.com/mapbox/mapbox-maps-android/compare/android-v10.1.0...android-v10.2.0) since [Mapbox Maps SDK for Android 10.1.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/android-v10.1.0)
 ## Features ✨ and improvements 🏁
 * Introduce view annotation support which allows adding Android views on top of the `MapView` anchored to geo-point. ([#834](https://github.com/mapbox/mapbox-maps-android/pull/834))
 * Remove `MapView` argument when constructing `AnnotationManager`. Constructor taking `MapView` as parameter is marked as deprecated. ([#766](https://github.com/mapbox/mapbox-maps-android/pull/766))
@@ -323,7 +349,7 @@ mapView.location2.puckBearingEnabled = false
 * Bump gl-native to v10.2.0-beta.2 and common to v21.0.0-rc.1. ([#852](https://github.com/mapbox/mapbox-maps-android/pull/852))
 
 # 10.1.0 November 4, 2021
-
+[Changes](https://github.com/mapbox/mapbox-maps-android/compare/android-v10.0.0...android-v10.1.0) since [Mapbox Maps SDK for Android 10.0.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/android-v10.0.0)
 ## Features ✨ and improvements 🏁
 * Set thread priorities and set thread CPU affinity based on the thread's priority to improve overall map performance.([#810](https://github.com/mapbox/mapbox-maps-android/pull/810))
 * Introduce option to enable multisample anti-aliasing (MSAA) for map rendering. ([#741](https://github.com/mapbox/mapbox-maps-android/pull/741))
