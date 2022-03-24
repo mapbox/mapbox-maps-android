@@ -2,6 +2,7 @@ package com.mapbox.maps.plugin.locationcomponent
 
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Assert.assertFalse
@@ -116,5 +117,16 @@ class LocationComponentPositionManagerTest {
     positionManager.addLayerToMap(layerWrapper)
 
     verify { layerWrapper.bindTo(style, LayerPosition(null, "below", null)) }
+  }
+
+  @Test
+  fun updateStyle() {
+    val positionManager = LocationComponentPositionManager(style, null, null)
+    val newStyle = mockk<StyleInterface>()
+    positionManager.updateStyle(newStyle)
+    positionManager.update(null, "below")
+    positionManager.addLayerToMap(layerWrapper)
+    verify(exactly = 0) { layerWrapper.bindTo(style, LayerPosition(null, "below", null)) }
+    verify(exactly = 1) { layerWrapper.bindTo(newStyle, LayerPosition(null, "below", null)) }
   }
 }

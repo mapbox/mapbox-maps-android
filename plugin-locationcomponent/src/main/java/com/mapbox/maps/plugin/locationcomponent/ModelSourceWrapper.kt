@@ -6,16 +6,15 @@ import com.mapbox.common.Logger
 import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleInterface
-import com.mapbox.maps.plugin.MapStyleObserverPlugin
 
 internal class ModelSourceWrapper(
   val sourceId: String,
   private var url: String,
   position: List<Double>
-) : MapStyleObserverPlugin {
+) {
 
   private var sourceProperties = HashMap<String, Value>()
-  private var styleDelegate: StyleManagerInterface? = null
+  private var style: StyleManagerInterface? = null
 
   init {
     val modelProperties = HashMap<String, Value>()
@@ -30,12 +29,12 @@ internal class ModelSourceWrapper(
     sourceProperties[MODELS] = Value(models)
   }
 
-  override fun onStyleChanged(styleDelegate: StyleInterface) {
-    this.styleDelegate = styleDelegate
+  fun updateStyle(style: StyleInterface) {
+    this.style = style
   }
 
   fun bindTo(delegate: StyleManagerInterface) {
-    this.styleDelegate = delegate
+    this.style = delegate
     val expected = delegate.addStyleSource(sourceId, toValue())
     expected.error?.let {
       Log.e(TAG, sourceProperties.toString())
@@ -53,7 +52,7 @@ internal class ModelSourceWrapper(
 
   private fun updateProperty(propertyName: String, value: Value) {
     sourceProperties[propertyName] = value
-    styleDelegate?.let { styleDelegate ->
+    style?.let { styleDelegate ->
       if (styleDelegate.styleSourceExists(sourceId)) {
         val expected = styleDelegate.setStyleSourceProperty(
           sourceId,

@@ -3,13 +3,12 @@ package com.mapbox.maps.plugin.locationcomponent
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleInterface
-import com.mapbox.maps.plugin.MapStyleObserverPlugin
 
 internal class LocationComponentPositionManager(
   private var style: StyleManagerInterface,
   internal var layerAbove: String?,
   internal var layerBelow: String?
-) : MapStyleObserverPlugin {
+) {
   /**
    * Returns true whenever layer above/below configuration has changed and requires re-layout.
    */
@@ -32,7 +31,7 @@ internal class LocationComponentPositionManager(
     }
   }
 
-  override fun onStyleChanged(styleDelegate: StyleInterface) {
-    this.style = styleDelegate
+  fun updateStyle(style: StyleInterface) {
+    this.style = style
   }
 }

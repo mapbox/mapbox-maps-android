@@ -6,15 +6,14 @@ import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleInterface
-import com.mapbox.maps.plugin.MapStyleObserverPlugin
 
-internal open class LocationLayerWrapper(val layerId: String) : MapStyleObserverPlugin {
+internal open class LocationLayerWrapper(val layerId: String) {
 
   protected var layerProperties = HashMap<String, Value>()
   private var mapStyleDelegate: StyleManagerInterface? = null
 
-  override fun onStyleChanged(styleDelegate: StyleInterface) {
-    this.mapStyleDelegate = styleDelegate
+  fun updateStyle(style: StyleInterface) {
+    this.mapStyleDelegate = style
   }
 
   fun bindTo(mapStyleDelegate: StyleManagerInterface, position: LayerPosition? = null) {

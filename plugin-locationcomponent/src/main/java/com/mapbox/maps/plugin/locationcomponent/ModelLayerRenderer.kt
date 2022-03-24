@@ -98,9 +98,9 @@ internal class ModelLayerRenderer(
   override fun clearBitmaps() {
   }
 
-  override fun onStyleChanged(styleDelegate: StyleInterface) {
-    this.style = styleDelegate
-    modelLayer.onStyleChanged(styleDelegate)
-    source.onStyleChanged(styleDelegate)
+  override fun updateStyle(style: StyleInterface) {
+    this.style = style
+    modelLayer.updateStyle(style)
+    source.updateStyle(style)
   }
 }

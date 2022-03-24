@@ -93,9 +93,9 @@ internal class LocationIndicatorLayerRenderer(
     style?.removeStyleImage(SHADOW_ICON)
   }
 
-  override fun onStyleChanged(styleDelegate: StyleInterface) {
-    this.style = styleDelegate
-    layer.onStyleChanged(styleDelegate)
+  override fun updateStyle(style: StyleInterface) {
+    this.style = style
+    layer.updateStyle(style)
   }
 
   private fun setLayerVisibility(visible: Boolean) {

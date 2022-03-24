@@ -5,6 +5,7 @@ import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -60,6 +61,23 @@ class ModelSourceWrapperTest {
     val property = hashMapOf(Pair(ModelSourceWrapper.POSITION, Value(position.map { Value(it) })), Pair(ModelSourceWrapper.URL, Value("uri")))
     val updateModel = hashMapOf(Pair(ModelSourceWrapper.DEFAULT_MODEL_NAME, Value(property)))
     verify(exactly = 0) { style.setStyleSourceProperty(SOURCE_ID, ModelSourceWrapper.MODELS, Value(updateModel)) }
+  }
+
+  @Test
+  fun testUpdateStyle() {
+    val modelSource = ModelSourceWrapper(SOURCE_ID, "uri", listOf(1.0, 2.0))
+    modelSource.bindTo(style)
+    val newStyle = mockk<StyleInterface>()
+    every { newStyle.styleSourceExists(any()) } returns true
+    every { newStyle.addStyleSource(any(), any()) } returns expected
+    every { newStyle.setStyleSourceProperty(any(), any(), any()) } returns expected
+    modelSource.updateStyle(newStyle)
+    val position = arrayListOf(5.0)
+    modelSource.setPosition(position)
+    val property = hashMapOf(Pair(ModelSourceWrapper.POSITION, Value(position.map { Value(it) })), Pair(ModelSourceWrapper.URL, Value("uri")))
+    val updateModel = hashMapOf(Pair(ModelSourceWrapper.DEFAULT_MODEL_NAME, Value(property)))
+    verify(exactly = 0) { style.setStyleSourceProperty(SOURCE_ID, ModelSourceWrapper.MODELS, Value(updateModel)) }
+    verify(exactly = 1) { newStyle.setStyleSourceProperty(SOURCE_ID, ModelSourceWrapper.MODELS, Value(updateModel)) }
   }
 
   companion object {

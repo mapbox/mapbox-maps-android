@@ -10,7 +10,6 @@ import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
-import com.mapbox.maps.plugin.MapStyleObserverPlugin
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
@@ -24,7 +23,7 @@ internal class LocationPuckManager(
   private val positionManager: LocationComponentPositionManager,
   private val layerSourceProvider: LayerSourceProvider,
   private val animationManager: PuckAnimatorManager
-) : MapStyleObserverPlugin {
+) {
 
   var isHidden = true
     private set
@@ -56,9 +55,9 @@ internal class LocationPuckManager(
       }
     }
 
-  override fun onStyleChanged(styleDelegate: StyleInterface) {
-    locationLayerRenderer.onStyleChanged(styleDelegate)
-    positionManager.onStyleChanged(styleDelegate)
+  fun updateStyle(style: StyleInterface) {
+    locationLayerRenderer.updateStyle(style)
+    positionManager.updateStyle(style)
   }
 
   fun initialize(style: StyleInterface) {

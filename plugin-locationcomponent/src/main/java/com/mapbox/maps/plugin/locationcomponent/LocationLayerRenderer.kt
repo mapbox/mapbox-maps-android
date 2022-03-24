@@ -4,9 +4,8 @@ import androidx.annotation.ColorInt
 import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleInterface
-import com.mapbox.maps.plugin.MapStyleObserverPlugin
 
-internal interface LocationLayerRenderer : MapStyleObserverPlugin {
+internal interface LocationLayerRenderer {
   fun initializeComponents(style: StyleInterface)
 
   fun isRendererInitialised(): Boolean
@@ -39,4 +38,6 @@ internal interface LocationLayerRenderer : MapStyleObserverPlugin {
   )
 
   fun clearBitmaps()
+
+  fun updateStyle(style: StyleInterface)
 }
