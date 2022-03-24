@@ -75,4 +75,20 @@ class LocationLayerWrapperTest {
     locationLayerWrapper.visibility(true)
     verify(exactly = 1) { mapStyleDelegate.setStyleLayerProperty(layerId, "visibility", Value("visible")) }
   }
+
+  @Test
+  fun updateStyle() {
+    every { mapStyleDelegate.addPersistentStyleLayer(any(), any()) } returns ExpectedFactory.createNone()
+    every { mapStyleDelegate.setStyleLayerProperty(layerId, any(), any()) } returns ExpectedFactory.createNone()
+    every { mapStyleDelegate.styleLayerExists(any()) } returns true
+    val position = LayerPosition("above", "below", 0)
+    locationLayerWrapper.bindTo(mapStyleDelegate, position)
+    val newStyle = mockk<StyleInterface>()
+    every { newStyle.setStyleLayerProperty(layerId, any(), any()) } returns ExpectedFactory.createNone()
+    every { newStyle.styleLayerExists(any()) } returns true
+    locationLayerWrapper.updateStyle(newStyle)
+    locationLayerWrapper.visibility(true)
+    verify(exactly = 0) { mapStyleDelegate.setStyleLayerProperty(layerId, "visibility", Value("visible")) }
+    verify(exactly = 1) { newStyle.setStyleLayerProperty(layerId, "visibility", Value("visible")) }
+  }
 }

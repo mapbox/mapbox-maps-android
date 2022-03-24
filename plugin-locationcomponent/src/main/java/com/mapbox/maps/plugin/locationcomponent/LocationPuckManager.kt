@@ -55,6 +55,11 @@ internal class LocationPuckManager(
       }
     }
 
+  fun updateStyle(style: StyleInterface) {
+    locationLayerRenderer.updateStyle(style)
+    positionManager.updateStyle(style)
+  }
+
   fun initialize(style: StyleInterface) {
     if (!locationLayerRenderer.isRendererInitialised()) {
       animationManager.setUpdateListeners(onLocationUpdated, onBearingUpdated, onAccuracyRadiusUpdated)

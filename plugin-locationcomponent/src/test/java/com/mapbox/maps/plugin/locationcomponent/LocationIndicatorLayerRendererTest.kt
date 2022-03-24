@@ -177,5 +177,15 @@ class LocationIndicatorLayerRendererTest {
     }
   }
 
+  @Test
+  fun updateStyle() {
+    val newStyle = mockk<StyleInterface>(relaxed = true)
+    locationLayerRenderer.updateStyle(newStyle)
+    verify { layerWrapper.updateStyle(newStyle) }
+    locationLayerRenderer.removeLayers()
+    verify(exactly = 0) { style.removeStyleLayer(any()) }
+    verify(exactly = 1) { newStyle.removeStyleLayer(any()) }
+  }
+
   private fun Point.toLocationList() = listOf(latitude(), longitude(), 0.0)
 }

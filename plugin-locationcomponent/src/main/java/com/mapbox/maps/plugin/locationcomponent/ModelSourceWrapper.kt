@@ -5,6 +5,7 @@ import com.mapbox.bindgen.Value
 import com.mapbox.common.Logger
 import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 
 internal class ModelSourceWrapper(
   val sourceId: String,
@@ -13,7 +14,7 @@ internal class ModelSourceWrapper(
 ) {
 
   private var sourceProperties = HashMap<String, Value>()
-  private var styleDelegate: StyleManagerInterface? = null
+  private var style: StyleManagerInterface? = null
 
   init {
     val modelProperties = HashMap<String, Value>()
@@ -28,9 +29,13 @@ internal class ModelSourceWrapper(
     sourceProperties[MODELS] = Value(models)
   }
 
-  fun bindTo(delegate: StyleManagerInterface) {
-    this.styleDelegate = delegate
-    val expected = delegate.addStyleSource(sourceId, toValue())
+  fun updateStyle(style: StyleInterface) {
+    this.style = style
+  }
+
+  fun bindTo(style: StyleManagerInterface) {
+    this.style = style
+    val expected = style.addStyleSource(sourceId, toValue())
     expected.error?.let {
       Log.e(TAG, sourceProperties.toString())
       throw MapboxLocationComponentException("Add source failed: $it")
@@ -47,7 +52,7 @@ internal class ModelSourceWrapper(
 
   private fun updateProperty(propertyName: String, value: Value) {
     sourceProperties[propertyName] = value
-    styleDelegate?.let { styleDelegate ->
+    style?.let { styleDelegate ->
       if (styleDelegate.styleSourceExists(sourceId)) {
         val expected = styleDelegate.setStyleSourceProperty(
           sourceId,

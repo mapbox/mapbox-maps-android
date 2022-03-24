@@ -336,4 +336,12 @@ class LocationComponentPluginImplTest {
     verify(exactly = 2) { locationProvider.registerLocationConsumer(any()) }
     verify(exactly = 1) { locationProvider.unRegisterLocationConsumer(any()) }
   }
+
+  @Test
+  fun testOnStyleChanged() {
+    val style = mockk<StyleInterface>()
+    preparePluginInitialisationWithEnabled()
+    locationComponentPlugin.onStyleChanged(style)
+    verify { locationPuckManager.updateStyle(style) }
+  }
 }

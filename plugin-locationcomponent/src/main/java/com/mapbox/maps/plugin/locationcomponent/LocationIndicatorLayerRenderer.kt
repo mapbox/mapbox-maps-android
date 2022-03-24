@@ -17,10 +17,11 @@ import java.util.Locale
 internal class LocationIndicatorLayerRenderer(
   private val puckOptions: LocationPuck2D,
   layerSourceProvider: LayerSourceProvider
-) :
-  LocationLayerRenderer {
+) : LocationLayerRenderer {
+
   private var style: StyleInterface? = null
   private var layer = layerSourceProvider.getLocationIndicatorLayer()
+
   override fun initializeComponents(style: StyleInterface) {
     this.style = style
     setupBitmaps()
@@ -90,6 +91,11 @@ internal class LocationIndicatorLayerRenderer(
     style?.removeStyleImage(TOP_ICON)
     style?.removeStyleImage(BEARING_ICON)
     style?.removeStyleImage(SHADOW_ICON)
+  }
+
+  override fun updateStyle(style: StyleInterface) {
+    this.style = style
+    layer.updateStyle(style)
   }
 
   private fun setLayerVisibility(visible: Boolean) {

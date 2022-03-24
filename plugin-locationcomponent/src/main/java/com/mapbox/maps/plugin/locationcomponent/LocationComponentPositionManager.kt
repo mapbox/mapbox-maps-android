@@ -2,9 +2,10 @@ package com.mapbox.maps.plugin.locationcomponent
 
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 
 internal class LocationComponentPositionManager(
-  private val style: StyleManagerInterface,
+  private var style: StyleManagerInterface,
   internal var layerAbove: String?,
   internal var layerBelow: String?
 ) {
@@ -28,5 +29,9 @@ internal class LocationComponentPositionManager(
       layerBelow != null -> layer.bindTo(style, LayerPosition(null, layerBelow, null))
       else -> layer.bindTo(style, null)
     }
+  }
+
+  fun updateStyle(style: StyleInterface) {
+    this.style = style
   }
 }

@@ -279,6 +279,16 @@ class LocationPuckManagerTest {
     verify(exactly = 0) { locationLayerRenderer.hide() }
   }
 
+  @Test
+  fun testUpdateStyle() {
+    val style = mockk<StyleInterface>()
+    locationPuckManager.updateStyle(style)
+    verify {
+      locationLayerRenderer.updateStyle(style)
+      positionManager.updateStyle(style)
+    }
+  }
+
   private companion object {
     const val MODEL_SCALE_CONSTANT = 2965820.800757861
   }

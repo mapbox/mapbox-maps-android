@@ -92,4 +92,17 @@ class ModelLayerRendererTest {
     locationLayerRenderer.setBearing(bearing)
     verify { layerWrapper.modelRotation(listOf(0.0, 0.0, bearing)) }
   }
+
+  @Test
+  fun updateStyle() {
+    val newStyle = mockk<StyleInterface>(relaxed = true)
+    locationLayerRenderer.updateStyle(newStyle)
+    verify {
+      sourceWrapper.updateStyle(newStyle)
+      layerWrapper.updateStyle(newStyle)
+    }
+    locationLayerRenderer.removeLayers()
+    verify(exactly = 0) { style.removeStyleLayer(any()) }
+    verify(exactly = 1) { newStyle.removeStyleLayer(any()) }
+  }
 }

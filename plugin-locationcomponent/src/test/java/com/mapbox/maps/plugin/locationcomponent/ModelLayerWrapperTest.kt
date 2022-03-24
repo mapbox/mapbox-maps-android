@@ -5,6 +5,7 @@ import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
 import io.mockk.every
 import io.mockk.mockk
@@ -68,6 +69,18 @@ class ModelLayerWrapperTest {
     val scale = arrayListOf(1.0, 2.0)
     layer.modelScale(scale)
     verify(exactly = 0) { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-scale", Value(scale.map { Value(it) })) }
+  }
+
+  @Test
+  fun testUpdateStyle() {
+    val newStyle = mockk<StyleInterface>(relaxed = true)
+    every { newStyle.styleLayerExists(any()) } returns true
+    every { newStyle.setStyleLayerProperty(any(), any(), any()) } returns expected
+    layer.updateStyle(newStyle)
+    val scale = listOf(1.0, 2.0, 3.0)
+    layer.modelScale(scale)
+    verify(exactly = 0) { style.setStyleLayerProperty(MODEL_LAYER_ID, "model-scale", Value(scale.map { Value(it) })) }
+    verify(exactly = 1) { newStyle.setStyleLayerProperty(MODEL_LAYER_ID, "model-scale", Value(scale.map { Value(it) })) }
   }
 
   companion object {

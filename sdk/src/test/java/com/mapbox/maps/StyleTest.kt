@@ -25,7 +25,7 @@ class StyleTest {
   @Test
   fun isValid() {
     assertTrue(style.isValid())
-    style.onMapViewDestroyed()
+    style.markInvalid()
     assertFalse(style.isValid())
   }
 

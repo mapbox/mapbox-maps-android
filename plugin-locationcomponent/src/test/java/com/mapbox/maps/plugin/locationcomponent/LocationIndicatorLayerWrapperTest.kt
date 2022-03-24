@@ -5,6 +5,7 @@ import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -147,6 +148,18 @@ class LocationIndicatorLayerWrapperTest {
     val bearing = 1.0
     layer.bearing(bearing)
     verify(exactly = 0) { style.setStyleLayerProperty(INDICATOR_LAYER_ID, "bearing", Value(bearing)) }
+  }
+
+  @Test
+  fun testUpdateStyle() {
+    val newStyle = mockk<StyleInterface>(relaxed = true)
+    every { newStyle.styleLayerExists(any()) } returns true
+    every { newStyle.setStyleLayerProperty(any(), any(), any()) } returns expected
+    layer.updateStyle(newStyle)
+    val radius = 1.0
+    layer.accuracyRadius(radius)
+    verify(exactly = 0) { style.setStyleLayerProperty(INDICATOR_LAYER_ID, "accuracy-radius", Value.valueOf(radius)) }
+    verify(exactly = 1) { newStyle.setStyleLayerProperty(INDICATOR_LAYER_ID, "accuracy-radius", Value.valueOf(radius)) }
   }
 
   companion object {

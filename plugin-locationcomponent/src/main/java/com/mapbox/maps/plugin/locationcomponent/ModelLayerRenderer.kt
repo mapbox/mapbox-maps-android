@@ -10,8 +10,8 @@ import com.mapbox.maps.plugin.locationcomponent.LocationComponentConstants.MODEL
 internal class ModelLayerRenderer(
   layerSourceProvider: LayerSourceProvider,
   private val locationModelLayerOptions: LocationPuck3D
-) :
-  LocationLayerRenderer {
+) : LocationLayerRenderer {
+
   private var style: StyleInterface? = null
   private var modelLayer = layerSourceProvider.getModelLayer(locationModelLayerOptions)
   private var source = layerSourceProvider.getModelSource(locationModelLayerOptions)
@@ -96,5 +96,11 @@ internal class ModelLayerRenderer(
   }
 
   override fun clearBitmaps() {
+  }
+
+  override fun updateStyle(style: StyleInterface) {
+    this.style = style
+    modelLayer.updateStyle(style)
+    source.updateStyle(style)
   }
 }

@@ -5,11 +5,16 @@ import com.mapbox.common.Logger
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
 
 internal open class LocationLayerWrapper(val layerId: String) {
 
   protected var layerProperties = HashMap<String, Value>()
   private var mapStyleDelegate: StyleManagerInterface? = null
+
+  fun updateStyle(style: StyleInterface) {
+    this.mapStyleDelegate = style
+  }
 
   fun bindTo(mapStyleDelegate: StyleManagerInterface, position: LayerPosition? = null) {
     this.mapStyleDelegate = mapStyleDelegate

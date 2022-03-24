@@ -340,7 +340,7 @@ class LocationComponentPluginImpl : LocationComponentPlugin2, LocationConsumer2,
    * @param styleDelegate
    */
   override fun onStyleChanged(styleDelegate: StyleInterface) {
-    // no-ops
+    locationPuckManager?.updateStyle(styleDelegate)
   }
 
   override lateinit var internalSettings: LocationComponentSettings
