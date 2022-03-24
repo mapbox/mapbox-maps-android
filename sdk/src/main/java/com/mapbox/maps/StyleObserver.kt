@@ -62,7 +62,7 @@ internal class StyleObserver(
    */
   override fun onStyleLoaded(eventData: StyleLoadedEventData) {
     val style = Style(nativeMap, pixelRatio)
-    loadedStyle?.markStyleInvalid()
+    loadedStyle?.markInvalid()
     loadedStyle = style
     styleLoadedListener.onStyleLoaded(style)
 
@@ -99,7 +99,8 @@ internal class StyleObserver(
     loadStyleListener = null
     loadStyleErrorListener = null
     loadStyleTransitionOptions = null
-    loadedStyle?.markStyleInvalid()
+    loadedStyle?.markInvalid()
+    loadedStyle = null
     getStyleListeners.clear()
     nativeObserver.removeOnMapLoadErrorListener(this)
     nativeObserver.removeOnStyleLoadedListener(this)

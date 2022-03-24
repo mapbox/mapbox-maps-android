@@ -33,9 +33,9 @@ internal class ModelSourceWrapper(
     this.style = style
   }
 
-  fun bindTo(delegate: StyleManagerInterface) {
-    this.style = delegate
-    val expected = delegate.addStyleSource(sourceId, toValue())
+  fun bindTo(style: StyleManagerInterface) {
+    this.style = style
+    val expected = style.addStyleSource(sourceId, toValue())
     expected.error?.let {
       Log.e(TAG, sourceProperties.toString())
       throw MapboxLocationComponentException("Add source failed: $it")

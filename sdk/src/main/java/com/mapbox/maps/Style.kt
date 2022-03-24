@@ -27,7 +27,7 @@ class Style internal constructor(
 
   private var isStyleValid = true
 
-  internal fun markStyleInvalid() {
+  internal fun markInvalid() {
     isStyleValid = false
   }
 
