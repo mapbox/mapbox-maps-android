@@ -5,12 +5,14 @@ import com.mapbox.bindgen.Value
 import com.mapbox.common.Logger
 import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.plugin.MapStyleObserverPlugin
 
 internal class ModelSourceWrapper(
   val sourceId: String,
   private var url: String,
   position: List<Double>
-) {
+) : MapStyleObserverPlugin {
 
   private var sourceProperties = HashMap<String, Value>()
   private var styleDelegate: StyleManagerInterface? = null
@@ -26,6 +28,10 @@ internal class ModelSourceWrapper(
 
     sourceProperties["type"] = Value(TYPE)
     sourceProperties[MODELS] = Value(models)
+  }
+
+  override fun onStyleChanged(styleDelegate: StyleInterface) {
+    this.styleDelegate = styleDelegate
   }
 
   fun bindTo(delegate: StyleManagerInterface) {

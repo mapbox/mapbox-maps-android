@@ -2,12 +2,14 @@ package com.mapbox.maps.plugin.locationcomponent
 
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.StyleManagerInterface
+import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.plugin.MapStyleObserverPlugin
 
 internal class LocationComponentPositionManager(
-  private val style: StyleManagerInterface,
+  private var style: StyleManagerInterface,
   internal var layerAbove: String?,
   internal var layerBelow: String?
-) {
+) : MapStyleObserverPlugin {
   /**
    * Returns true whenever layer above/below configuration has changed and requires re-layout.
    */
@@ -28,5 +30,9 @@ internal class LocationComponentPositionManager(
       layerBelow != null -> layer.bindTo(style, LayerPosition(null, layerBelow, null))
       else -> layer.bindTo(style, null)
     }
+  }
+
+  override fun onStyleChanged(styleDelegate: StyleInterface) {
+    this.style = styleDelegate
   }
 }
