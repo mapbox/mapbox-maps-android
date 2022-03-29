@@ -2,6 +2,7 @@ buildscript {
   repositories {
     google()
     mavenCentral()
+    mavenLocal()
     maven {
       url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
       credentials {
@@ -52,6 +53,10 @@ allprojects {
 plugins {
   id(Plugins.dokkaId) version Versions.pluginDokka
   id(Plugins.binaryCompatibilityValidatorId) version Versions.pluginBinaryCompatibilityValidator
+  // Used to print dependency tree of the task, useful to debug gradle tasks
+  // Ticket to track adding this feature to gradle officially: https://github.com/gradle/gradle/issues/980
+  id(Plugins.taskTreeId) version Versions.pluginTaskTree
+
 }
 repositories {
   maven(url = "https://dl.bintray.com/kotlin/dokka")
