@@ -75,7 +75,9 @@ class AccessibilityActivity: AppCompatActivity(), OnCameraChangeListener, OnMapI
     mapboxMap.queryRenderedFeatures(
       RenderedQueryGeometry(
         ScreenBox(
-          ScreenCoordinate(mapViewDrawingRect.left.toDouble(), mapViewDrawingRect.top.toDouble()),
+          ScreenCoordinate(
+            mapViewDrawingRect.left.toDouble(),
+            mapViewDrawingRect.top.toDouble()),
           ScreenCoordinate(
             mapViewDrawingRect.right.toDouble(),
             mapViewDrawingRect.bottom.toDouble()
