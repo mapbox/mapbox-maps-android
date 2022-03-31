@@ -238,7 +238,7 @@ commands:
                     export GITHUB_TOKEN=$(./mbx-ci github writer private token)
                     make sdkRegistryPublish
                   fi
-                  if [[ $CIRCLE_TAG == android-auto-extension-v* ]]; then
+                  if [[ $CIRCLE_TAG == extension-androidauto-v* ]]; then
                     make sdkRegistryUploadAndroidAuto
                     make sdkRegistryPublishAndroidAuto
                   fi

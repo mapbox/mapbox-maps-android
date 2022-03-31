@@ -69,7 +69,7 @@ sdkRegistryUploadAndroidAutoExtension:
 
 .PHONY: sdkRegistryPublishAndroidAutoExtension
 sdkRegistryPublishAndroidAutoExtension:
-    python3 -m pip install git-pull-request;
+	python3 -m pip install git-pull-request;
     ./gradlew extension-androidauto:mapboxSDKRegistryPublish;
 
 .PHONY: clean
