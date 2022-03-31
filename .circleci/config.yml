@@ -19,7 +19,7 @@ workflows:
       - verify-code:
           filters:
             tags:
-              only: /android-v.*/
+              only: /(android-v.*|extension-androidauto-v.*)/
       - verify-docs:
           requires:
             - verify-code
@@ -54,7 +54,7 @@ workflows:
             - verify-code
           filters:
             tags:
-              only: /android-v.*/
+              only: /(android-v.*|extension-androidauto-v.*)/
       - run-app-instrumentation-test:
           requires:
             - build-modules-and-instrumentation-tests
