@@ -413,6 +413,21 @@ class Style internal constructor(
     return styleManager.setStyleTerrainProperty(property, value)
   }
 
+  override fun setStyleProjection(properties: Value): Expected<String, None> {
+    checkNativeStyle("setStyleProjection")
+    return styleManager.setStyleProjection(properties)
+  }
+
+  override fun getStyleProjectionProperty(property: String): StylePropertyValue {
+    checkNativeStyle("getStyleProjectionProperty")
+    return styleManager.getStyleProjectionProperty(property)
+  }
+
+  override fun setStyleProjectionProperty(property: String, value: Value): Expected<String, None> {
+    checkNativeStyle("setStyleProjectionProperty")
+    return styleManager.setStyleProjectionProperty(property,value)
+  }
+
   /**
    * Gets the value of a style light property.
    *

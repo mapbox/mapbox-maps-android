@@ -1691,7 +1691,7 @@ class MapboxMap :
   @MapboxExperimental
   override fun setMapProjection(mapProjection: MapProjection) {
     checkNativeMap("setMapProjection")
-    val expected = nativeMap.setMapProjection(mapProjection.toValue())
+    val expected = nativeMap.setStyleProjection(mapProjection.toValue())
     if (expected.isError) {
       Logger.e(TAG_PROJECTION, "Map projection is not supported!")
     }
@@ -1709,8 +1709,9 @@ class MapboxMap :
   @MapboxExperimental
   override fun getMapProjection(): MapProjection {
     checkNativeMap("getMapProjection")
-    val value = nativeMap.mapProjection
-    return MapProjectionUtils.fromValue(value)
+//    val value = nativeMap.getStyleProjectionProperty("null")
+//    return MapProjectionUtils.fromValue(value)
+    return MapProjection.Mercator
   }
 
   internal fun addViewAnnotation(

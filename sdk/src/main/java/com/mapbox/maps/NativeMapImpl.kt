@@ -91,6 +91,18 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.setStyleTerrainProperty(property, value)
   }
 
+  override fun setStyleProjection(properties: Value): Expected<String, None> {
+    return map.setStyleProjection(properties)
+  }
+
+  override fun getStyleProjectionProperty(property: String): StylePropertyValue {
+    return map.getStyleProjectionProperty(property)
+  }
+
+  override fun setStyleProjectionProperty(property: String, value: Value): Expected<String, None> {
+    return map.setStyleProjectionProperty(property,value)
+  }
+
   override fun cameraForCoordinates(
     points: List<Point>,
     edgeInsets: EdgeInsets,
@@ -155,9 +167,9 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.getViewAnnotationOptions(identifier)
   }
 
-  override fun setMapProjection(value: Value) = map.setMapProjection(value)
-
-  override fun getMapProjection(): Value = map.mapProjection
+//  override fun setMapProjection(value: Value) = map.setMapProjection(value)
+//
+//  override fun getMapProjection(): Value = map.mapProjection
 
   override fun coordinateBoundsForCamera(cameraOptions: CameraOptions): CoordinateBounds {
     return map.coordinateBoundsForCamera(cameraOptions)
