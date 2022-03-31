@@ -13,6 +13,7 @@ import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.GeoJson
 import com.mapbox.geojson.Geometry
 import com.mapbox.maps.MapEvents
+import com.mapbox.maps.MapboxConcurrentGeometryModificationException
 import com.mapbox.maps.Observer
 import com.mapbox.maps.StyleManager
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -280,9 +281,10 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * if data parsing error has occurred.
    *
    * Note: This method is not thread-safe. The Feature is parsed on a worker thread, please make sure
-   * the Feature is immutable.
+   * the Feature is immutable as well as all collections that are used to build it.
    *
    * @param value the feature
+   * @throws [MapboxConcurrentGeometryModificationException]
    */
   fun feature(value: Feature): GeoJsonSource = applyGeoJsonData(value)
 
@@ -296,9 +298,10 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * if data parsing error has occurred.
    *
    * Note: This method is not thread-safe. The FeatureCollection is parsed on a worker thread, please make sure
-   * the FeatureCollection is immutable.
+   * the FeatureCollection is immutable as well as all collections that are used to build it.
    *
    * @param value the feature collection
+   * @throws [MapboxConcurrentGeometryModificationException]
    */
   fun featureCollection(value: FeatureCollection): GeoJsonSource = applyGeoJsonData(value)
 
@@ -312,21 +315,34 @@ class GeoJsonSource(builder: Builder) : Source(builder.sourceId) {
    * if data parsing error has occurred.
    *
    * Note: This method is not thread-safe. The Geometry is parsed on a worker thread, please make sure
-   * the Geometry is immutable.
+   * the Geometry is immutable as well as all collections that are used to build it.
    *
    * @param value the geometry
+   * @throws [MapboxConcurrentGeometryModificationException]
    */
   fun geometry(value: Geometry): GeoJsonSource = applyGeoJsonData(value)
 
-  private fun GeoJson.toPropertyValue() = PropertyValue(
-    "data",
-    when (this) {
-      is Geometry -> toValue()
-      is FeatureCollection -> toValue()
-      is Feature -> toValue()
-      else -> RuntimeException("GeoJson data must be Geometry, FeatureCollection or Feature!")
+  private fun GeoJson.toPropertyValue(): PropertyValue<*> {
+    try {
+      return PropertyValue(
+        "data",
+        when (this) {
+          is Geometry -> toValue()
+          is FeatureCollection -> toValue()
+          is Feature -> toValue()
+          else -> RuntimeException("GeoJson data must be Geometry, FeatureCollection or Feature!")
+        }
+      )
+    } catch (e: ConcurrentModificationException) {
+      throw MapboxConcurrentGeometryModificationException(
+        """While applying ${javaClass.simpleName} to geojson source with id="$sourceId" some collection was mutated which is not allowed as data parsing happens on another thread.
+        Please make sure all collections passed via `geometry`, `feature`, `featureCollection` methods are immutable.
+        Easiest way to achieve this is either always pass the fresh copy or use https://developer.android.com/reference/java/util/concurrent/CopyOnWriteArrayList.
+        """.trimIndent(),
+        sourceId
+      )
     }
-  )
+  }
 
   private fun applyGeoJsonData(
     data: GeoJson
