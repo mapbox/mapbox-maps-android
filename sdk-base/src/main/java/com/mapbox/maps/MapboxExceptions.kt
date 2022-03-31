@@ -41,3 +41,11 @@ class MapboxCameraAnimationException(
 class MapboxStyleException(
   exceptionText: String?
 ) : RuntimeException(exceptionText)
+
+/**
+ * Mapbox exception thrown when any collection used to build GeoJson data is mutated.
+ */
+class MapboxConcurrentGeometryModificationException(
+  exceptionText: String,
+  sourceId: String
+) : ConcurrentModificationException(exceptionText)

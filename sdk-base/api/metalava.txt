@@ -15,6 +15,10 @@ package com.mapbox.maps {
     ctor public MapboxCameraAnimationException(String? exceptionText);
   }
 
+  public final class MapboxConcurrentGeometryModificationException extends java.util.ConcurrentModificationException {
+    ctor public MapboxConcurrentGeometryModificationException(String exceptionText, String sourceId);
+  }
+
   @kotlin.RequiresOptIn(level=kotlin.RequiresOptIn.Level, message="This API is experimental. It may be changed in the future without notice.") @kotlin.annotation.Retention(kotlin.annotation.AnnotationRetention) @kotlin.annotation.Target(allowedTargets={kotlin.annotation.AnnotationTarget, kotlin.annotation.AnnotationTarget, kotlin.annotation.AnnotationTarget}) public @interface MapboxExperimental {
   }
 
