@@ -44,7 +44,7 @@ afterEvaluate {
 registry {
     sdkName = project.ext.mapboxRegistrySdkName
     override = project.ext.versionName.endsWith("-SNAPSHOT")
-    dryRun = true
+    dryRun = false
     publish = true
     snapshot = project.ext.versionName.endsWith("-SNAPSHOT")
     publishMessage = "cc @mapbox/maps-android"
