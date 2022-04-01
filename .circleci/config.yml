@@ -3,12 +3,15 @@ parameters:
   mapbox_upstream:
     type: boolean
     default: false
-  mapbox_slug:
-    type: string
-    default: "owner/repo"
   mapbox_hash:
     type: string
     default: "000000"
+  mapbox_slug:
+    type: string
+    default: "owner/repo"
+  mapbox_config:
+    type: string
+    default: empty
 
 workflows:
   version: 2
@@ -46,6 +49,11 @@ workflows:
       - run-style-test:
           requires:
             - start-run-style-test
+      - start-run-compatibility-test:
+          type: approval
+      - run-compatibility-test:
+          requires:
+            - start-run-compatibility-test
       - build-android-auto-app:
           requires:
             - verify-code
@@ -513,6 +521,20 @@ jobs:
       - run-firebase-instrumentation:
           module_target: "extension-style-app"
           app_target: "extension-style-app"
+
+  run-compatibility-test:
+    executor: ubuntu
+    steps:
+      - checkout
+      - run:
+          name: Install yaml
+          command: |
+            pip3 install PyYAML
+            pip3 install GitPython
+      - run:
+          name: Trigger compatibility test
+          command: |
+            python3 scripts/ci-compatibility-start-pipeline.py --target-slug mapbox/mapbox-sdk --token ${MOBILE_METRICS_TOKEN} --config mapbox-maps-android=${CIRCLE_SHA1} --origin-slug mapbox/mapbox-maps-android --platform android
 
   build-android-auto-app:
     executor: ubuntu
