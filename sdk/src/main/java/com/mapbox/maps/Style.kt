@@ -414,6 +414,45 @@ class Style internal constructor(
   }
 
   /**
+   * Sets the map's [projection](https://docs.mapbox.com/mapbox-gl-js/style-spec/projection/). If called with `null`, the map will reset to Mercator.
+   *
+   * @param properties A map of style projection values, with their names as a key.
+   * Supported projections are:
+   *  * Mercator
+   *  * Globe
+   *
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  override fun setStyleProjection(properties: Value): Expected<String, None> {
+    checkNativeStyle("setStyleProjection")
+    return styleManager.setStyleProjection(properties)
+  }
+
+  /**
+   * Gets the value of a style projection property.
+   *
+   * @param property The style projection property name.
+   * @return The style projection property value.
+   */
+  override fun getStyleProjectionProperty(property: String): StylePropertyValue {
+    checkNativeStyle("getStyleProjectionProperty")
+    return styleManager.getStyleProjectionProperty(property)
+  }
+
+  /**
+   * Sets a value to the the style projection property.
+   *
+   * @param property The style projection property name.
+   * @param value The style projection property value.
+   *
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  override fun setStyleProjectionProperty(property: String, value: Value): Expected<String, None> {
+    checkNativeStyle("setStyleProjectionProperty")
+    return styleManager.setStyleProjectionProperty(property, value)
+  }
+
+  /**
    * Gets the value of a style light property.
    *
    * @param property Style light property name.

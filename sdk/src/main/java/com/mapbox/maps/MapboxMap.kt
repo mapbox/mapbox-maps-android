@@ -12,7 +12,6 @@ import com.mapbox.common.Logger
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
-import com.mapbox.maps.MapProjectionUtils.toValue
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.plugin.MapProjection
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
@@ -455,6 +454,7 @@ class MapboxMap :
     checkNativeMap("setConstrainMode")
     nativeMap.setConstrainMode(constrainMode)
   }
+
   /**
    * Set the map viewport mode
    *
@@ -1691,7 +1691,7 @@ class MapboxMap :
   @MapboxExperimental
   override fun setMapProjection(mapProjection: MapProjection) {
     checkNativeMap("setMapProjection")
-    val expected = nativeMap.setMapProjection(mapProjection.toValue())
+    val expected = nativeMap.setStyleProjection(Value.nullValue())
     if (expected.isError) {
       Logger.e(TAG_PROJECTION, "Map projection is not supported!")
     }
@@ -1709,8 +1709,7 @@ class MapboxMap :
   @MapboxExperimental
   override fun getMapProjection(): MapProjection {
     checkNativeMap("getMapProjection")
-    val value = nativeMap.mapProjection
-    return MapProjectionUtils.fromValue(value)
+    return MapProjection.Mercator
   }
 
   internal fun addViewAnnotation(
