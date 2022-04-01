@@ -1213,6 +1213,60 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
   }
 
   /**
+   * The line trim-off percentage range based on the whole line gradinet range [0.0, 1.0]. The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. If either 'trim-start' or 'trim-end' offset is out of valid range, the default range will be set.
+   */
+  val lineTrimOffset: List<Double>?
+    /**
+     * Get the LineTrimOffset property
+     *
+     * @return List<Double>
+     */
+    get() {
+      return getPropertyValue<List<Double>>("line-trim-offset")
+    }
+
+  /**
+   * Set the LineTrimOffset property
+   *
+   * @param lineTrimOffset value of lineTrimOffset
+   */
+  override fun lineTrimOffset(lineTrimOffset: List<Double>) = apply {
+    val propertyValue = PropertyValue("line-trim-offset", lineTrimOffset)
+    setProperty(propertyValue)
+  }
+
+  /**
+   * This is an Expression representation of "line-trim-offset".
+   *
+   * The line trim-off percentage range based on the whole line gradinet range [0.0, 1.0]. The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. If either 'trim-start' or 'trim-end' offset is out of valid range, the default range will be set.
+   */
+  val lineTrimOffsetAsExpression: Expression?
+    /**
+     * Get the LineTrimOffset property as an Expression
+     *
+     * @return List<Double>
+     */
+    get() {
+      getPropertyValue<Expression>("line-trim-offset")?.let {
+        return it
+      }
+      lineTrimOffset?.let {
+        return Expression.literal(it)
+      }
+      return null
+    }
+
+  /**
+   * Set the LineTrimOffset property
+   *
+   * @param lineTrimOffset value of lineTrimOffset as Expression
+   */
+  override fun lineTrimOffset(lineTrimOffset: Expression) = apply {
+    val propertyValue = PropertyValue("line-trim-offset", lineTrimOffset)
+    setProperty(propertyValue)
+  }
+
+  /**
    * Stroke thickness.
    */
   val lineWidth: Double?
@@ -1946,6 +2000,40 @@ class LineLayer(override val layerId: String, val sourceId: String) : LineLayerD
       }
 
     /**
+     * The line trim-off percentage range based on the whole line gradinet range [0.0, 1.0]. The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. If either 'trim-start' or 'trim-end' offset is out of valid range, the default range will be set.
+     */
+    val defaultLineTrimOffset: List<Double>?
+      /**
+       * Get the default value of LineTrimOffset property
+       *
+       * @return List<Double>
+       */
+      get() {
+        return StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-offset").silentUnwrap()
+      }
+
+    /**
+     * This is an Expression representation of "line-trim-offset".
+     *
+     * The line trim-off percentage range based on the whole line gradinet range [0.0, 1.0]. The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. If either 'trim-start' or 'trim-end' offset is out of valid range, the default range will be set.
+     */
+    val defaultLineTrimOffsetAsExpression: Expression?
+      /**
+       * Get default value of the LineTrimOffset property as an Expression
+       *
+       * @return List<Double>
+       */
+      get() {
+        StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-offset").silentUnwrap<Expression>()?.let {
+          return it
+        }
+        defaultLineTrimOffset?.let {
+          return Expression.literal(it)
+        }
+        return null
+      }
+
+    /**
      * Stroke thickness.
      */
     val defaultLineWidth: Double?
@@ -2342,6 +2430,20 @@ interface LineLayerDsl {
    * @param lineTranslateAnchor value of lineTranslateAnchor as Expression
    */
   fun lineTranslateAnchor(lineTranslateAnchor: Expression): LineLayer
+
+  /**
+   * Set the LineTrimOffset property
+   *
+   * @param lineTrimOffset value of lineTrimOffset
+   */
+  fun lineTrimOffset(lineTrimOffset: List<Double> = listOf(0.0, 0.0)): LineLayer
+
+  /**
+   * Set the LineTrimOffset property
+   *
+   * @param lineTrimOffset value of lineTrimOffset as Expression
+   */
+  fun lineTrimOffset(lineTrimOffset: Expression): LineLayer
 
   /**
    * Set the LineWidth property

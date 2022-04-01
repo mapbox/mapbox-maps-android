@@ -727,6 +727,30 @@ class LineLayerTest : BaseStyleTest() {
 
   @Test
   @UiThreadTest
+  fun lineTrimOffsetTest() {
+    val testValue = listOf(0.0, 1.0)
+    val layer = lineLayer("id", "source") {
+      lineTrimOffset(testValue)
+    }
+    setupLayer(layer)
+    assertEquals(testValue.toString(), layer.lineTrimOffset?.toString())
+  }
+
+  @Test
+  @UiThreadTest
+  fun lineTrimOffsetAsExpressionTest() {
+    val expression = literal(listOf(0.0, 1.0))
+    val layer = lineLayer("id", "source") {
+      lineTrimOffset(expression)
+    }
+    setupLayer(layer)
+
+    assertEquals(expression.toString(), layer.lineTrimOffsetAsExpression.toString())
+    assertEquals(listOf(0.0, 1.0), layer.lineTrimOffset!!)
+  }
+
+  @Test
+  @UiThreadTest
   fun lineWidthTest() {
     val testValue = 1.0
     val layer = lineLayer("id", "source") {
@@ -839,6 +863,8 @@ class LineLayerTest : BaseStyleTest() {
     assertNotNull("defaultLineTranslateTransition should not be null", LineLayer.defaultLineTranslateTransition)
     assertNotNull("defaultLineTranslateAnchor should not be null", LineLayer.defaultLineTranslateAnchor)
     assertNotNull("defaultLineTranslateAnchorAsExpression should not be null", LineLayer.defaultLineTranslateAnchorAsExpression)
+    assertNotNull("defaultLineTrimOffset should not be null", LineLayer.defaultLineTrimOffset)
+    assertNotNull("defaultLineTrimOffsetAsExpression should not be null", LineLayer.defaultLineTrimOffsetAsExpression)
     assertNotNull("defaultLineWidth should not be null", LineLayer.defaultLineWidth)
     assertNotNull("defaultLineWidthAsExpression should not be null", LineLayer.defaultLineWidthAsExpression)
     assertNotNull("defaultLineWidthTransition should not be null", LineLayer.defaultLineWidthTransition)
