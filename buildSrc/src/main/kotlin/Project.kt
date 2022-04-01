@@ -17,6 +17,7 @@ object Plugins {
   const val mapboxSdkVersionsPlugin = "com.mapbox.mapboxsdk:mapbox-android-sdk-versions:${Versions.mapboxSdkVersionsPlugin}"
   const val dokkaId = "org.jetbrains.dokka"
   const val binaryCompatibilityValidatorId = "org.jetbrains.kotlinx.binary-compatibility-validator"
+  const val taskTreeId = "com.dorongold.task-tree"
 }
 
 object Dependencies {
@@ -79,8 +80,9 @@ object Versions {
   const val pluginDokka =  "1.4.10.2"
   const val pluginJacoco = "0.2"
   const val pluginBinaryCompatibilityValidator = "0.8.0"
+  const val pluginTaskTree = "2.1.0"
   const val mapboxAccessToken="0.4.0"
-  const val mapboxSdkRegistry="0.7.0"
+  const val mapboxSdkRegistry="0.8.0"
   const val mapboxGestures = "0.7.0"
   const val mapboxJavaServices = "5.4.1"
   const val mapboxBase = "0.5.0"

@@ -49,6 +49,7 @@ registry {
     snapshot = project.ext.versionName.endsWith("-SNAPSHOT")
     publishMessage = "cc @mapbox/maps-android"
     publications = ["release"]
+    excludeFromRootProject = project.ext.mapboxRegistryExcludeFromRootProject
 }
 
 task androidJavadocs(type: Javadoc) {

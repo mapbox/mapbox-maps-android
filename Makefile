@@ -56,12 +56,21 @@ fix:
 
 .PHONY: sdkRegistryUpload
 sdkRegistryUpload:
-	./gradlew mapboxSDKRegistryUpload;
+	./gradlew mapboxSDKRegistryUpload -x extension-androidauto:mapboxSDKRegistryUpload;
 
 .PHONY: sdkRegistryPublish
 sdkRegistryPublish:
 	python3 -m pip install git-pull-request;
 	./gradlew mapboxSDKRegistryPublishAll;
+
+.PHONY: sdkRegistryUploadAndroidAutoExtension
+sdkRegistryUploadAndroidAutoExtension:
+	./gradlew extension-androidauto:mapboxSDKRegistryUpload;
+
+.PHONY: sdkRegistryPublishAndroidAutoExtension
+sdkRegistryPublishAndroidAutoExtension:
+	python3 -m pip install git-pull-request;
+	./gradlew extension-androidauto:mapboxSDKRegistryPublish;
 
 .PHONY: clean
 clean:

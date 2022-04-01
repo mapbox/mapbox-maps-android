@@ -19,7 +19,7 @@ workflows:
       - verify-code:
           filters:
             tags:
-              only: /android-v.*/
+              only: /(android-v.*|extension-androidauto-v.*)/
       - verify-docs:
           requires:
             - verify-code
@@ -54,7 +54,7 @@ workflows:
             - verify-code
           filters:
             tags:
-              only: /android-v.*/
+              only: /(android-v.*|extension-androidauto-v.*)/
       - run-app-instrumentation-test:
           requires:
             - build-modules-and-instrumentation-tests
@@ -174,6 +174,8 @@ commands:
           command: |
             if [[ $CIRCLE_TAG == android-v* ]]; then
               sed -i -e "s/^VERSION_NAME=.*/VERSION_NAME=${CIRCLE_TAG:9}/" gradle.properties
+            elif [[ $CIRCLE_TAG == extension-androidauto-v* ]]; then
+              sed -i -e "s/^MODULE_VERSION_NAME=.*/MODULE_VERSION_NAME=${CIRCLE_TAG:23}/" extension-androidauto/gradle.properties
             elif [[ $CIRCLE_BRANCH == main ]]; then
               COMMIT_SHA=$(git rev-parse --short HEAD)
               sed -i -e "s/-SNAPSHOT.*/-${COMMIT_SHA}-SNAPSHOT/" gradle.properties
@@ -235,6 +237,13 @@ commands:
                     git config --global user.name "MapboxCI"
                     export GITHUB_TOKEN=$(./mbx-ci github writer private token)
                     make sdkRegistryPublish
+                  fi
+                  if [[ $CIRCLE_TAG == extension-androidauto-v* ]]; then
+                    git config --global user.email "MapboxCI@users.noreply.github.com"
+                    git config --global user.name "MapboxCI"
+                    export GITHUB_TOKEN=$(./mbx-ci github writer private token)
+                    make sdkRegistryUploadAndroidAutoExtension
+                    make sdkRegistryPublishAndroidAutoExtension
                   fi
 
   publish-sdk-registry-named-snapshot:
