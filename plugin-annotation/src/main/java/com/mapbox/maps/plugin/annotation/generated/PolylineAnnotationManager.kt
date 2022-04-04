@@ -320,6 +320,32 @@ class PolylineAnnotationManager(
     }
 
   /**
+   * The LineTrimOffset property
+   *
+   * The line trim-off percentage range based on the whole line gradinet range [0.0, 1.0]. The line part between [trim-start, trim-end] will be marked as transparent to make a route vanishing effect. If either 'trim-start' or 'trim-end' offset is out of valid range, the default range will be set.
+   */
+  var lineTrimOffset: List<Double>?
+    /**
+     * Get the LineTrimOffset property
+     *
+     * @return property wrapper value around List<Double>
+     */
+    get(): List<Double>? {
+      return layer?.lineTrimOffset
+    }
+    /**
+     * Set the LineTrimOffset property
+     * @param value property wrapper value around List<Double>
+     */
+    set(value) {
+      val newValue = value ?: StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-offset").silentUnwrap()
+      newValue?.let {
+        layer?.lineTrimOffset(it)
+        dragLayer?.lineTrimOffset(it)
+      }
+    }
+
+  /**
    * Create the layer for managed annotations
    *
    * @return the layer created

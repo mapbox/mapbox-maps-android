@@ -1949,6 +1949,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineTranslateAnchorAsExpression();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineTranslateAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getLineTranslateTransition();
+    method public java.util.List<java.lang.Double>? getLineTrimOffset();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineTrimOffsetAsExpression();
     method public Double? getLineWidth();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getLineWidthAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getLineWidthTransition();
@@ -2004,6 +2006,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineTranslateAnchor(com.mapbox.maps.extension.style.expressions.generated.Expression lineTranslateAnchor);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineTranslateTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineTranslateTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineTrimOffset(java.util.List<java.lang.Double> lineTrimOffset);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineTrimOffset(com.mapbox.maps.extension.style.expressions.generated.Expression lineTrimOffset);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineWidth(double lineWidth);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineWidth(com.mapbox.maps.extension.style.expressions.generated.Expression lineWidth);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineWidthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
@@ -2052,6 +2056,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineTranslateAnchorAsExpression;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineTranslateAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? lineTranslateTransition;
+    property public final java.util.List<java.lang.Double>? lineTrimOffset;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineTrimOffsetAsExpression;
     property public final Double? lineWidth;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? lineWidthAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? lineWidthTransition;
@@ -2101,6 +2107,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineTranslateAnchorAsExpression();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineTranslateAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultLineTranslateTransition();
+    method public java.util.List<java.lang.Double>? getDefaultLineTrimOffset();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineTrimOffsetAsExpression();
     method public Double? getDefaultLineWidth();
     method public com.mapbox.maps.extension.style.expressions.generated.Expression? getDefaultLineWidthAsExpression();
     method public com.mapbox.maps.extension.style.types.StyleTransition? getDefaultLineWidthTransition();
@@ -2144,6 +2152,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineTranslateAnchorAsExpression;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineTranslateAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultLineTranslateTransition;
+    property public final java.util.List<java.lang.Double>? defaultLineTrimOffset;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineTrimOffsetAsExpression;
     property public final Double? defaultLineWidth;
     property public final com.mapbox.maps.extension.style.expressions.generated.Expression? defaultLineWidthAsExpression;
     property public final com.mapbox.maps.extension.style.types.StyleTransition? defaultLineWidthTransition;
@@ -2200,6 +2210,8 @@ package com.mapbox.maps.extension.style.layers.generated {
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineTranslateAnchor(com.mapbox.maps.extension.style.expressions.generated.Expression lineTranslateAnchor);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineTranslateTransition(com.mapbox.maps.extension.style.types.StyleTransition options);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineTranslateTransition(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.types.StyleTransition.Builder,kotlin.Unit> block);
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineTrimOffset(java.util.List<java.lang.Double> lineTrimOffset = listOf(0.0, 0.0));
+    method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineTrimOffset(com.mapbox.maps.extension.style.expressions.generated.Expression lineTrimOffset);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineWidth(double lineWidth = 1.0);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineWidth(com.mapbox.maps.extension.style.expressions.generated.Expression lineWidth);
     method public com.mapbox.maps.extension.style.layers.generated.LineLayer lineWidthTransition(com.mapbox.maps.extension.style.types.StyleTransition options);

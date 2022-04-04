@@ -1544,6 +1544,73 @@ class LineLayerTest {
   }
 
   @Test
+  fun lineTrimOffsetSet() {
+    val layer = lineLayer("id", "source") {}
+    val testValue = listOf(0.0, 1.0)
+    layer.bindTo(style)
+    layer.lineTrimOffset(testValue)
+    verify { style.setStyleLayerProperty("id", "line-trim-offset", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[0.0, 1.0]")
+  }
+
+  @Test
+  fun lineTrimOffsetGet() {
+    val testValue = listOf(0.0, 1.0)
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    val expectedValue = listOf(0.0, 1.0)
+    assertEquals(expectedValue.toString(), layer.lineTrimOffset?.toString())
+    verify { style.getStyleLayerProperty("id", "line-trim-offset") }
+  }
+  // Expression Tests
+
+  @Test
+  fun lineTrimOffsetAsExpressionSet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    val layer = lineLayer("id", "source") {}
+    layer.bindTo(style)
+    layer.lineTrimOffset(expression)
+    verify { style.setStyleLayerProperty("id", "line-trim-offset", capture(valueSlot)) }
+    assertEquals(valueSlot.captured.toString(), "[+, 2, 3]")
+  }
+
+  @Test
+  fun lineTrimOffsetAsExpressionGet() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(expression.toString(), layer.lineTrimOffsetAsExpression?.toString())
+    verify { style.getStyleLayerProperty("id", "line-trim-offset") }
+  }
+
+  @Test
+  fun lineTrimOffsetAsExpressionGetNull() {
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals(null, layer.lineTrimOffsetAsExpression)
+    verify { style.getStyleLayerProperty("id", "line-trim-offset") }
+  }
+
+  @Test
+  fun lineTrimOffsetAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
+    val layer = lineLayer("id", "source") { }
+    layer.bindTo(style)
+    assertEquals("[literal, [0.0, 1.0]]", layer.lineTrimOffsetAsExpression.toString())
+    assertEquals(listOf(0.0, 1.0), layer.lineTrimOffset!!)
+    verify { style.getStyleLayerProperty("id", "line-trim-offset") }
+  }
+
+  @Test
   fun lineWidthSet() {
     val layer = lineLayer("id", "source") {}
     val testValue = 1.0
@@ -2273,6 +2340,37 @@ class LineLayerTest {
     assertEquals(LineTranslateAnchor.MAP.value, LineLayer.defaultLineTranslateAnchorAsExpression.toString())
     assertEquals(LineTranslateAnchor.MAP, LineLayer.defaultLineTranslateAnchor)
     verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-translate-anchor") }
+  }
+
+  @Test
+  fun defaultLineTrimOffsetTest() {
+    val testValue = listOf(0.0, 1.0)
+    every { styleProperty.value } returns TypeUtils.wrapToValue(testValue)
+    val expectedValue = listOf(0.0, 1.0)
+    assertEquals(expectedValue.toString(), LineLayer.defaultLineTrimOffset?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-offset") }
+  }
+  // Expression Tests
+
+  @Test
+  fun defaultLineTrimOffsetAsExpressionTest() {
+    val expression = sum {
+      literal(2)
+      literal(3)
+    }
+    every { styleProperty.value } returns TypeUtils.wrapToValue(expression)
+    every { styleProperty.kind } returns StylePropertyValueKind.EXPRESSION
+
+    assertEquals(expression.toString(), LineLayer.defaultLineTrimOffsetAsExpression?.toString())
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-offset") }
+  }
+
+  @Test
+  fun defaultLineTrimOffsetAsExpressionGetFromLiteral() {
+    every { styleProperty.value } returns TypeUtils.wrapToValue(listOf(0.0, 1.0))
+    assertEquals("[literal, [0.0, 1.0]]", LineLayer.defaultLineTrimOffsetAsExpression.toString())
+    assertEquals(listOf(0.0, 1.0), LineLayer.defaultLineTrimOffset!!)
+    verify { StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-offset") }
   }
 
   @Test
