@@ -6,6 +6,7 @@ import com.mapbox.maps.extension.style.image.ImageExtensionImpl
 import com.mapbox.maps.extension.style.image.ImageNinePatchExtensionImpl
 import com.mapbox.maps.extension.style.layers.*
 import com.mapbox.maps.extension.style.light.generated.Light
+import com.mapbox.maps.extension.style.projection.generated.Projection
 import com.mapbox.maps.extension.style.sources.*
 import com.mapbox.maps.extension.style.terrain.generated.Terrain
 
@@ -47,6 +48,11 @@ class StyleExtensionImpl private constructor(
   override val terrain: Terrain? = builder.terrain
 
   /**
+   * The map projection of the style.
+   */
+  override val projection: Projection? = builder.projection
+
+  /**
    * The builder for style extension.
    */
   class Builder(
@@ -60,6 +66,7 @@ class StyleExtensionImpl private constructor(
     internal val images = mutableListOf<StyleContract.StyleImageExtension>()
     internal var light: Light? = null
     internal var terrain: Terrain? = null
+    internal var projection: Projection? = null
 
     /**
      * Extension function for [Layer] to overload Unary operations.
@@ -109,6 +116,16 @@ class StyleExtensionImpl private constructor(
     @JvmName("setTerrain")
     operator fun Terrain.unaryPlus() {
       terrain = this
+    }
+
+    /**
+     * Extension function for [Projection] to overload Unary operations.
+     *
+     * Apply +[Projection] will add specific map projection to the [StyleExtensionImpl].
+     */
+    @JvmName("setProjection")
+    operator fun Projection.unaryPlus() {
+      projection = this
     }
 
     /**
