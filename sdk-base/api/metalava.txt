@@ -15,7 +15,7 @@ package com.mapbox.maps {
     ctor public MapboxCameraAnimationException(String? exceptionText);
   }
 
-  public final class MapboxConcurrentGeometryModificationException extends java.util.ConcurrentModificationException {
+  public final class MapboxConcurrentGeometryModificationException {
     ctor public MapboxConcurrentGeometryModificationException(String exceptionText, String sourceId);
   }
 
@@ -493,12 +493,14 @@ package com.mapbox.maps.extension.style {
     method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleImageExtension> getImages();
     method public java.util.List<kotlin.Pair<com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension,com.mapbox.maps.LayerPosition>> getLayers();
     method public com.mapbox.maps.extension.style.StyleContract.StyleLightExtension? getLight();
+    method public com.mapbox.maps.extension.style.StyleContract.StyleProjectionExtension? getProjection();
     method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleSourceExtension> getSources();
     method public String getStyleUri();
     method public com.mapbox.maps.extension.style.StyleContract.StyleTerrainExtension? getTerrain();
     property public abstract java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleImageExtension> images;
     property public abstract java.util.List<kotlin.Pair<com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension,com.mapbox.maps.LayerPosition>> layers;
     property public abstract com.mapbox.maps.extension.style.StyleContract.StyleLightExtension? light;
+    property public abstract com.mapbox.maps.extension.style.StyleContract.StyleProjectionExtension? projection;
     property public abstract java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleSourceExtension> sources;
     property public abstract String styleUri;
     property public abstract com.mapbox.maps.extension.style.StyleContract.StyleTerrainExtension? terrain;
@@ -513,6 +515,10 @@ package com.mapbox.maps.extension.style {
   }
 
   public static fun interface StyleContract.StyleLightExtension {
+    method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
+  }
+
+  public static fun interface StyleContract.StyleProjectionExtension {
     method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
   }
 
@@ -589,12 +595,12 @@ package com.mapbox.maps.plugin {
   }
 
   public final class LocationPuck3D extends com.mapbox.maps.plugin.LocationPuck {
-    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = listOf(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = listOf(0.0, 0.0, 0.0), java.util.List<java.lang.Float> modelRotation = listOf(0.0, 0.0, 90.0));
-    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = listOf(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = listOf(0.0, 0.0, 0.0));
-    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = listOf(1.0, 1.0, 1.0), String? modelScaleExpression = null);
-    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = listOf(1.0, 1.0, 1.0));
-    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0), float modelOpacity = 1f);
-    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = listOf(0.0, 0.0));
+    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = <anonymous class>(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = <anonymous class>(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = <anonymous class>(0.0, 0.0, 0.0), java.util.List<java.lang.Float> modelRotation = <anonymous class>(0.0, 0.0, 90.0));
+    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = <anonymous class>(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = <anonymous class>(1.0, 1.0, 1.0), String? modelScaleExpression = null, java.util.List<java.lang.Float> modelTranslation = <anonymous class>(0.0, 0.0, 0.0));
+    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = <anonymous class>(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = <anonymous class>(1.0, 1.0, 1.0), String? modelScaleExpression = null);
+    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = <anonymous class>(0.0, 0.0), float modelOpacity = 1f, java.util.List<java.lang.Float> modelScale = <anonymous class>(1.0, 1.0, 1.0));
+    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = <anonymous class>(0.0, 0.0), float modelOpacity = 1f);
+    ctor public LocationPuck3D(String modelUri, java.util.List<java.lang.Float> position = <anonymous class>(0.0, 0.0));
     ctor public LocationPuck3D(String modelUri);
     method public String component1();
     method public java.util.List<java.lang.Float> component2();
@@ -635,22 +641,6 @@ package com.mapbox.maps.plugin {
     method public default void cleanup();
     method public default void initialize();
     method public default void onDelegateProvider(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider);
-  }
-
-  @com.mapbox.maps.MapboxExperimental public abstract sealed class MapProjection {
-    field public static final com.mapbox.maps.plugin.MapProjection.Companion Companion;
-    field public static final double TRANSITION_ZOOM_LEVEL = 5.0;
-  }
-
-  public static final class MapProjection.Companion {
-  }
-
-  public static final class MapProjection.Globe extends com.mapbox.maps.plugin.MapProjection {
-    field public static final com.mapbox.maps.plugin.MapProjection.Globe INSTANCE;
-  }
-
-  public static final class MapProjection.Mercator extends com.mapbox.maps.plugin.MapProjection {
-    field public static final com.mapbox.maps.plugin.MapProjection.Mercator INSTANCE;
   }
 
   public interface MapSizePlugin {
@@ -745,7 +735,7 @@ package com.mapbox.maps.plugin.animation {
     method public void addCameraPitchChangeListener(com.mapbox.maps.plugin.animation.CameraAnimatorChangeListener<java.lang.Double> listener);
     method public void addCameraZoomChangeListener(com.mapbox.maps.plugin.animation.CameraAnimatorChangeListener<java.lang.Double> listener);
     method public double calculateScaleBy(double amount, double currentZoom);
-    method public void cancelAllAnimators(java.util.List<java.lang.String> exceptOwnerList = emptyList());
+    method public void cancelAllAnimators(java.util.List<java.lang.String> exceptOwnerList = <anonymous class>());
     method public android.animation.ValueAnimator createAnchorAnimator(com.mapbox.maps.plugin.animation.CameraAnimatorOptions<com.mapbox.maps.ScreenCoordinate> options, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? block = null);
     method public android.animation.ValueAnimator createBearingAnimator(com.mapbox.maps.plugin.animation.CameraAnimatorOptions<java.lang.Double> options, boolean useShortestPath = true, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? block = null);
     method public android.animation.ValueAnimator createCenterAnimator(com.mapbox.maps.plugin.animation.CameraAnimatorOptions<com.mapbox.geojson.Point> options, kotlin.jvm.functions.Function1<? super android.animation.ValueAnimator,kotlin.Unit>? block = null);
@@ -799,8 +789,8 @@ package com.mapbox.maps.plugin.animation {
     ctor public CameraAnimatorOptions.Builder(T?... targets);
     method public com.mapbox.maps.plugin.animation.CameraAnimatorOptions<T> build();
     method public T![] getTargets();
-    method public com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Builder<T> owner(String owner);
-    method public com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Builder<T> startValue(T? startValue);
+    method public error.NonExistentClass! owner(String owner);
+    method public error.NonExistentClass! startValue(T? startValue);
     property public final T![] targets;
   }
 
@@ -837,16 +827,16 @@ package com.mapbox.maps.plugin.animation {
 
   public static final class MapAnimationOptions.Builder {
     ctor public MapAnimationOptions.Builder();
-    method public com.mapbox.maps.plugin.animation.MapAnimationOptions.Builder animatorListener(android.animation.Animator.AnimatorListener animatorListener);
+    method public error.NonExistentClass! animatorListener(android.animation.Animator.AnimatorListener animatorListener);
     method public com.mapbox.maps.plugin.animation.MapAnimationOptions build();
-    method public com.mapbox.maps.plugin.animation.MapAnimationOptions.Builder duration(long duration);
-    method public com.mapbox.maps.plugin.animation.MapAnimationOptions.Builder interpolator(android.animation.TimeInterpolator interpolator);
-    method public com.mapbox.maps.plugin.animation.MapAnimationOptions.Builder owner(String owner);
-    method public com.mapbox.maps.plugin.animation.MapAnimationOptions.Builder startDelay(long startDelay);
+    method public error.NonExistentClass! duration(long duration);
+    method public error.NonExistentClass! interpolator(android.animation.TimeInterpolator interpolator);
+    method public error.NonExistentClass! owner(String owner);
+    method public error.NonExistentClass! startDelay(long startDelay);
   }
 
   public static final class MapAnimationOptions.Companion {
-    method public inline com.mapbox.maps.plugin.animation.MapAnimationOptions mapAnimationOptions(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.animation.MapAnimationOptions.Builder,kotlin.Unit> block);
+    method public inline error.NonExistentClass! mapAnimationOptions(kotlin.jvm.functions.Function1<? super com.mapbox.maps.plugin.animation.MapAnimationOptions.Builder,kotlin.Unit> block);
   }
 
   public final class MapAnimationOwnerRegistry {
@@ -992,8 +982,8 @@ package com.mapbox.maps.plugin.annotation {
   }
 
   public final class ClusterOptions {
-    ctor public ClusterOptions(boolean cluster = true, long clusterRadius = 50, com.mapbox.bindgen.Value? circleRadiusExpression = null, double circleRadius = 18.0, com.mapbox.bindgen.Value? textColorExpression = null, int textColor = -1, com.mapbox.bindgen.Value? textSizeExpression = null, double textSize = 12.0, com.mapbox.bindgen.Value? textField = null, long clusterMaxZoom = 14, java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> colorLevels = listOf(<init>(0, Color.BLUE)), java.util.HashMap<java.lang.String,java.lang.Object>? clusterProperties = null);
-    ctor public ClusterOptions(boolean cluster = true, long clusterRadius = 50, com.mapbox.bindgen.Value? circleRadiusExpression = null, double circleRadius = 18.0, com.mapbox.bindgen.Value? textColorExpression = null, int textColor = -1, com.mapbox.bindgen.Value? textSizeExpression = null, double textSize = 12.0, com.mapbox.bindgen.Value? textField = null, long clusterMaxZoom = 14, java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> colorLevels = listOf(<init>(0, Color.BLUE)));
+    ctor public ClusterOptions(boolean cluster = true, long clusterRadius = 50, com.mapbox.bindgen.Value? circleRadiusExpression = null, double circleRadius = 18.0, com.mapbox.bindgen.Value? textColorExpression = null, int textColor = -1, com.mapbox.bindgen.Value? textSizeExpression = null, double textSize = 12.0, com.mapbox.bindgen.Value? textField = null, long clusterMaxZoom = 14, java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> colorLevels = <anonymous class>(<init>(0, Color.BLUE)), error.NonExistentClass? clusterProperties = null);
+    ctor public ClusterOptions(boolean cluster = true, long clusterRadius = 50, com.mapbox.bindgen.Value? circleRadiusExpression = null, double circleRadius = 18.0, com.mapbox.bindgen.Value? textColorExpression = null, int textColor = -1, com.mapbox.bindgen.Value? textSizeExpression = null, double textSize = 12.0, com.mapbox.bindgen.Value? textField = null, long clusterMaxZoom = 14, java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> colorLevels = <anonymous class>(<init>(0, Color.BLUE)));
     ctor public ClusterOptions(boolean cluster = true, long clusterRadius = 50, com.mapbox.bindgen.Value? circleRadiusExpression = null, double circleRadius = 18.0, com.mapbox.bindgen.Value? textColorExpression = null, int textColor = -1, com.mapbox.bindgen.Value? textSizeExpression = null, double textSize = 12.0, com.mapbox.bindgen.Value? textField = null, long clusterMaxZoom = 14);
     ctor public ClusterOptions(boolean cluster = true, long clusterRadius = 50, com.mapbox.bindgen.Value? circleRadiusExpression = null, double circleRadius = 18.0, com.mapbox.bindgen.Value? textColorExpression = null, int textColor = -1, com.mapbox.bindgen.Value? textSizeExpression = null, double textSize = 12.0, com.mapbox.bindgen.Value? textField = null);
     ctor public ClusterOptions(boolean cluster = true, long clusterRadius = 50, com.mapbox.bindgen.Value? circleRadiusExpression = null, double circleRadius = 18.0, com.mapbox.bindgen.Value? textColorExpression = null, int textColor = -1, com.mapbox.bindgen.Value? textSizeExpression = null, double textSize = 12.0);
@@ -1007,7 +997,7 @@ package com.mapbox.maps.plugin.annotation {
     method public boolean component1();
     method public long component10();
     method public java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> component11();
-    method public java.util.HashMap<java.lang.String,java.lang.Object>? component12();
+    method public error.NonExistentClass! component12();
     method public long component2();
     method public com.mapbox.bindgen.Value? component3();
     method public double component4();
@@ -1016,12 +1006,12 @@ package com.mapbox.maps.plugin.annotation {
     method public com.mapbox.bindgen.Value? component7();
     method public double component8();
     method public com.mapbox.bindgen.Value? component9();
-    method public com.mapbox.maps.plugin.annotation.ClusterOptions copy(boolean cluster, long clusterRadius, com.mapbox.bindgen.Value? circleRadiusExpression, double circleRadius, com.mapbox.bindgen.Value? textColorExpression, int textColor, com.mapbox.bindgen.Value? textSizeExpression, double textSize, com.mapbox.bindgen.Value? textField, long clusterMaxZoom, java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> colorLevels, java.util.HashMap<java.lang.String,java.lang.Object>? clusterProperties);
+    method public com.mapbox.maps.plugin.annotation.ClusterOptions copy(boolean cluster, long clusterRadius, com.mapbox.bindgen.Value? circleRadiusExpression, double circleRadius, com.mapbox.bindgen.Value? textColorExpression, int textColor, com.mapbox.bindgen.Value? textSizeExpression, double textSize, com.mapbox.bindgen.Value? textField, long clusterMaxZoom, java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> colorLevels, error.NonExistentClass! clusterProperties);
     method public double getCircleRadius();
     method public com.mapbox.bindgen.Value? getCircleRadiusExpression();
     method public boolean getCluster();
     method public long getClusterMaxZoom();
-    method public java.util.HashMap<java.lang.String,java.lang.Object>? getClusterProperties();
+    method public error.NonExistentClass! getClusterProperties();
     method public long getClusterRadius();
     method public java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> getColorLevels();
     method public int getTextColor();
@@ -1033,7 +1023,7 @@ package com.mapbox.maps.plugin.annotation {
     property public final com.mapbox.bindgen.Value? circleRadiusExpression;
     property public final boolean cluster;
     property public final long clusterMaxZoom;
-    property public final java.util.HashMap<java.lang.String,java.lang.Object>? clusterProperties;
+    property public final error.NonExistentClass! clusterProperties;
     property public final long clusterRadius;
     property public final java.util.List<kotlin.Pair<java.lang.Integer,java.lang.Integer>> colorLevels;
     property public final int textColor;
@@ -1535,12 +1525,10 @@ package com.mapbox.maps.plugin.delegates {
 
   public interface MapProjectionDelegate {
     method public com.mapbox.geojson.Point coordinateForProjectedMeters(com.mapbox.maps.ProjectedMeters projectedMeters);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.MapProjection getMapProjection();
     method public double getMetersPerPixelAtLatitude(double latitude, double zoom);
     method public double getMetersPerPixelAtLatitude(double latitude);
     method public com.mapbox.maps.MercatorCoordinate project(com.mapbox.geojson.Point point, double zoomScale);
     method public com.mapbox.maps.ProjectedMeters projectedMetersForCoordinate(com.mapbox.geojson.Point point);
-    method @com.mapbox.maps.MapboxExperimental public void setMapProjection(com.mapbox.maps.plugin.MapProjection mapProjection);
     method public com.mapbox.geojson.Point unproject(com.mapbox.maps.MercatorCoordinate coordinate, double zoomScale);
   }
 
@@ -2571,14 +2559,14 @@ package com.mapbox.maps.plugin.viewport.data {
 
   @com.mapbox.maps.MapboxExperimental public final class DefaultViewportTransitionOptions {
     method public long getMaxDurationMs();
-    method public com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions.Builder toBuilder();
+    method public error.NonExistentClass! toBuilder();
     property public final long maxDurationMs;
   }
 
   public static final class DefaultViewportTransitionOptions.Builder {
     ctor public DefaultViewportTransitionOptions.Builder();
     method public com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions build();
-    method public com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions.Builder maxDurationMs(long maxDurationMs);
+    method public error.NonExistentClass! maxDurationMs(long maxDurationMs);
   }
 
   @com.mapbox.maps.MapboxExperimental public abstract sealed class FollowPuckViewportStateBearing {
@@ -2600,7 +2588,7 @@ package com.mapbox.maps.plugin.viewport.data {
     method public com.mapbox.maps.EdgeInsets! getPadding();
     method public Double! getPitch();
     method public Double! getZoom();
-    method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions.Builder toBuilder();
+    method public error.NonExistentClass! toBuilder();
     property public final long animationDurationMs;
     property public final com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing! bearing;
     property public final com.mapbox.maps.EdgeInsets! padding;
@@ -2610,12 +2598,12 @@ package com.mapbox.maps.plugin.viewport.data {
 
   public static final class FollowPuckViewportStateOptions.Builder {
     ctor public FollowPuckViewportStateOptions.Builder();
-    method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions.Builder animationDurationMs(long duration);
-    method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions.Builder bearing(com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing? options);
+    method public error.NonExistentClass! animationDurationMs(long duration);
+    method public error.NonExistentClass! bearing(com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing? options);
     method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions build();
-    method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions.Builder padding(com.mapbox.maps.EdgeInsets? padding);
-    method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions.Builder pitch(Double? pitch);
-    method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions.Builder zoom(Double? zoom);
+    method public error.NonExistentClass! padding(com.mapbox.maps.EdgeInsets? padding);
+    method public error.NonExistentClass! pitch(Double? pitch);
+    method public error.NonExistentClass! zoom(Double? zoom);
   }
 
   @com.mapbox.maps.MapboxExperimental public final class OverviewViewportStateOptions {
@@ -2624,7 +2612,7 @@ package com.mapbox.maps.plugin.viewport.data {
     method public com.mapbox.geojson.Geometry! getGeometry();
     method public com.mapbox.maps.EdgeInsets! getPadding();
     method public Double! getPitch();
-    method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions.Builder toBuilder();
+    method public error.NonExistentClass! toBuilder();
     property public final long animationDurationMs;
     property public final Double! bearing;
     property public final com.mapbox.geojson.Geometry! geometry;
@@ -2634,24 +2622,24 @@ package com.mapbox.maps.plugin.viewport.data {
 
   public static final class OverviewViewportStateOptions.Builder {
     ctor public OverviewViewportStateOptions.Builder();
-    method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions.Builder animationDurationMs(long duration);
-    method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions.Builder bearing(Double? bearing);
-    method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions build();
-    method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions.Builder geometry(com.mapbox.geojson.Geometry geometry);
-    method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions.Builder padding(com.mapbox.maps.EdgeInsets padding);
-    method public com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions.Builder pitch(Double? pitch);
+    method public error.NonExistentClass! animationDurationMs(long duration);
+    method public error.NonExistentClass! bearing(Double? bearing);
+    method public error.NonExistentClass! build();
+    method public error.NonExistentClass! geometry(com.mapbox.geojson.Geometry geometry);
+    method public error.NonExistentClass! padding(com.mapbox.maps.EdgeInsets padding);
+    method public error.NonExistentClass! pitch(Double? pitch);
   }
 
   @com.mapbox.maps.MapboxExperimental public final class ViewportOptions {
     method public boolean getTransitionsToIdleUponUserInteraction();
-    method public com.mapbox.maps.plugin.viewport.data.ViewportOptions.Builder toBuilder();
+    method public error.NonExistentClass! toBuilder();
     property public final boolean transitionsToIdleUponUserInteraction;
   }
 
   public static final class ViewportOptions.Builder {
     ctor public ViewportOptions.Builder();
     method public com.mapbox.maps.plugin.viewport.data.ViewportOptions build();
-    method public com.mapbox.maps.plugin.viewport.data.ViewportOptions.Builder transitionsToIdleUponUserInteraction(boolean transitionsToIdleUponUserInteraction);
+    method public error.NonExistentClass! transitionsToIdleUponUserInteraction(boolean transitionsToIdleUponUserInteraction);
   }
 
   @com.mapbox.maps.MapboxExperimental public final class ViewportStatusChangeReason {

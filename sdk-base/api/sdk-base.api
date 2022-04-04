@@ -486,6 +486,7 @@ public abstract interface class com/mapbox/maps/extension/style/StyleContract$St
 	public abstract fun getImages ()Ljava/util/List;
 	public abstract fun getLayers ()Ljava/util/List;
 	public abstract fun getLight ()Lcom/mapbox/maps/extension/style/StyleContract$StyleLightExtension;
+	public abstract fun getProjection ()Lcom/mapbox/maps/extension/style/StyleContract$StyleProjectionExtension;
 	public abstract fun getSources ()Ljava/util/List;
 	public abstract fun getStyleUri ()Ljava/lang/String;
 	public abstract fun getTerrain ()Lcom/mapbox/maps/extension/style/StyleContract$StyleTerrainExtension;
@@ -504,6 +505,10 @@ public final class com/mapbox/maps/extension/style/StyleContract$StyleLayerExten
 }
 
 public abstract interface class com/mapbox/maps/extension/style/StyleContract$StyleLightExtension {
+	public abstract fun bindTo (Lcom/mapbox/maps/extension/style/StyleInterface;)V
+}
+
+public abstract interface class com/mapbox/maps/extension/style/StyleContract$StyleProjectionExtension {
 	public abstract fun bindTo (Lcom/mapbox/maps/extension/style/StyleInterface;)V
 }
 
@@ -634,23 +639,6 @@ public final class com/mapbox/maps/plugin/MapPlugin$DefaultImpls {
 	public static fun cleanup (Lcom/mapbox/maps/plugin/MapPlugin;)V
 	public static fun initialize (Lcom/mapbox/maps/plugin/MapPlugin;)V
 	public static fun onDelegateProvider (Lcom/mapbox/maps/plugin/MapPlugin;Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
-}
-
-public abstract class com/mapbox/maps/plugin/MapProjection {
-	public static final field Companion Lcom/mapbox/maps/plugin/MapProjection$Companion;
-	public static final field TRANSITION_ZOOM_LEVEL D
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class com/mapbox/maps/plugin/MapProjection$Companion {
-}
-
-public final class com/mapbox/maps/plugin/MapProjection$Globe : com/mapbox/maps/plugin/MapProjection {
-	public static final field INSTANCE Lcom/mapbox/maps/plugin/MapProjection$Globe;
-}
-
-public final class com/mapbox/maps/plugin/MapProjection$Mercator : com/mapbox/maps/plugin/MapProjection {
-	public static final field INSTANCE Lcom/mapbox/maps/plugin/MapProjection$Mercator;
 }
 
 public abstract interface class com/mapbox/maps/plugin/MapSizePlugin {
@@ -1504,12 +1492,10 @@ public abstract interface class com/mapbox/maps/plugin/delegates/MapPluginProvid
 
 public abstract interface class com/mapbox/maps/plugin/delegates/MapProjectionDelegate {
 	public abstract fun coordinateForProjectedMeters (Lcom/mapbox/maps/ProjectedMeters;)Lcom/mapbox/geojson/Point;
-	public abstract fun getMapProjection ()Lcom/mapbox/maps/plugin/MapProjection;
 	public abstract fun getMetersPerPixelAtLatitude (D)D
 	public abstract fun getMetersPerPixelAtLatitude (DD)D
 	public abstract fun project (Lcom/mapbox/geojson/Point;D)Lcom/mapbox/maps/MercatorCoordinate;
 	public abstract fun projectedMetersForCoordinate (Lcom/mapbox/geojson/Point;)Lcom/mapbox/maps/ProjectedMeters;
-	public abstract fun setMapProjection (Lcom/mapbox/maps/plugin/MapProjection;)V
 	public abstract fun unproject (Lcom/mapbox/maps/MercatorCoordinate;D)Lcom/mapbox/geojson/Point;
 }
 
