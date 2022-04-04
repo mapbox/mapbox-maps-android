@@ -18,6 +18,7 @@ import com.mapbox.android.gestures.*
 import com.mapbox.common.Logger
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.StylePropertyValueKind
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.MapStyleObserverPlugin
