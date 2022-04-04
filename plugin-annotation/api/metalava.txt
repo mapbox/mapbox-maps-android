@@ -870,6 +870,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public Double? getLineRoundLimit();
     method public java.util.List<java.lang.Double>? getLineTranslate();
     method public com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor? getLineTranslateAnchor();
+    method public java.util.List<java.lang.Double>? getLineTrimOffset();
     method protected String getSourceId();
     method protected void initializeDataDrivenPropertyMap();
     method protected void setDataDrivenPropertyIsUsed(String property);
@@ -880,6 +881,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     method public void setLineRoundLimit(Double? value);
     method public void setLineTranslate(java.util.List<java.lang.Double>? value);
     method public void setLineTranslateAnchor(com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor? value);
+    method public void setLineTrimOffset(java.util.List<java.lang.Double>? value);
     property protected String dragLayerId;
     property protected String dragSourceId;
     property public com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
@@ -890,6 +892,7 @@ package com.mapbox.maps.plugin.annotation.generated {
     property public final Double? lineRoundLimit;
     property public final java.util.List<java.lang.Double>? lineTranslate;
     property public final com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor? lineTranslateAnchor;
+    property public final java.util.List<java.lang.Double>? lineTrimOffset;
     property protected String sourceId;
     field public static final com.mapbox.maps.plugin.annotation.generated.PolylineAnnotationManager.Companion Companion;
   }
