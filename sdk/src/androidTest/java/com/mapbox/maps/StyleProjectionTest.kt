@@ -10,7 +10,7 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
-class GlobeIntegrationTest {
+class StyleProjectionTest {
 
   @get:Rule
   val rule = ActivityScenarioRule(EmptyActivity::class.java)
@@ -89,6 +89,29 @@ class GlobeIntegrationTest {
           setCamera(CameraOptions.Builder().zoom(13.0).build())
           getStyle { style ->
             style.setProjectionName(Name.GLOBE)
+          }
+        }
+      }
+    }
+    if (!countDownLatch.await(LATCH_TIMEOUT_SEC, TimeUnit.SECONDS)) {
+      throw TimeoutException()
+    }
+  }
+
+  @Test
+  fun testNotSupportedProjection() {
+    countDownLatch = CountDownLatch(1)
+    rule.scenario.onActivity {
+      it.runOnUiThread {
+        mapboxMap.apply {
+          setCamera(CameraOptions.Builder().zoom(13.0).build())
+          getStyle { style ->
+            try {
+              style.setProjectionName(Name.WINKELTRIPEL)
+            } catch (e: MapboxStyleException) {
+              assert(true)
+              countDownLatch.countDown()
+            }
           }
         }
       }
