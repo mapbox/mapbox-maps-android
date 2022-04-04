@@ -712,4 +712,27 @@ class NativeMapTest {
     nativeMap.moveStyleLayer("layerId", LayerPosition("above", "below", 0))
     verify { map.moveStyleLayer("layerId", LayerPosition("above", "below", 0)) }
   }
+
+  @Test
+  fun setStyleProjection() {
+    val value = mockk<Value>()
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.setStyleProjection(value)
+    verify { map.setStyleProjection(value) }
+  }
+
+  @Test
+  fun getStyleProjectionProperty() {
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.getStyleProjectionProperty("foo")
+    verify { map.getStyleProjectionProperty("foo") }
+  }
+
+  @Test
+  fun setStyleProjectionProperty() {
+    val value = mockk<Value>()
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.setStyleProjectionProperty("foo", value)
+    verify { map.setStyleProjectionProperty("foo", value) }
+  }
 }

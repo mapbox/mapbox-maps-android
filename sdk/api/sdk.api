@@ -398,6 +398,7 @@ public final class com/mapbox/maps/Style : com/mapbox/maps/extension/style/Style
 	public fun getStyleLayerProperty (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/maps/StylePropertyValue;
 	public fun getStyleLayers ()Ljava/util/List;
 	public fun getStyleLightProperty (Ljava/lang/String;)Lcom/mapbox/maps/StylePropertyValue;
+	public fun getStyleProjectionProperty (Ljava/lang/String;)Lcom/mapbox/maps/StylePropertyValue;
 	public fun getStyleSourceProperties (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun getStyleSourceProperty (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/maps/StylePropertyValue;
 	public fun getStyleSources ()Ljava/util/List;
@@ -421,6 +422,8 @@ public final class com/mapbox/maps/Style : com/mapbox/maps/extension/style/Style
 	public fun setStyleLayerProperty (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleLight (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleLightProperty (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
+	public fun setStyleProjection (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
+	public fun setStyleProjectionProperty (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleSourceProperties (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleSourceProperty (Ljava/lang/String;Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleTerrain (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;

@@ -8,7 +8,6 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.observable.eventdata.MapLoadingErrorEventData
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.plugin.MapProjection
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
@@ -24,7 +23,6 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.LooperMode
-import java.lang.RuntimeException
 import java.lang.ref.WeakReference
 
 @RunWith(RobolectricTestRunner::class)
@@ -1009,49 +1007,49 @@ class MapboxMapTest {
     verify { Map.clearData(resourceOptions, callback) }
   }
 
-  @Test
-  fun setMapProjectionMercator() {
-    verifySetMapProjection(MapProjection.Mercator, MapProjectionUtils.MERCATOR_PROJECTION_NAME)
-  }
-
-  @Test
-  fun setMapProjectionGlobe() {
-    verifySetMapProjection(MapProjection.Globe, MapProjectionUtils.GLOBE_PROJECTION_NAME)
-  }
-
-  private fun verifySetMapProjection(givenProjection: MapProjection, expectedValue: String) {
-    mapboxMap.setMapProjection(givenProjection)
-    verify {
-      nativeMap.mapProjection = Value.valueOf(
-        hashMapOf(
-          MapProjectionUtils.NAME_KEY to Value(
-            expectedValue
-          )
-        )
-      )
-    }
-  }
-
-  @Test
-  fun getMapProjection() {
-    mockkObject(MapProjectionUtils)
-    every { MapProjectionUtils.fromValue(any()) } returns MapProjection.Globe
-    val projection = mapboxMap.getMapProjection()
-    verify { nativeMap.mapProjection }
-    assertEquals(MapProjection.Globe, projection)
-  }
-
-  @Test
-  fun getMapProjectionInvalid() {
-    // as we don't mock anything Value from core could not be converted to anything
-    val exception = assertThrows(RuntimeException::class.java) {
-      mapboxMap.getMapProjection()
-    }
-    assertEquals(
-      "Could not cast given Value to valid MapProjection!",
-      exception.message
-    )
-  }
+//  @Test
+//  fun setMapProjectionMercator() {
+//    verifySetMapProjection(MapProjection.Mercator, MapProjectionUtils.MERCATOR_PROJECTION_NAME)
+//  }
+//
+//  @Test
+//  fun setMapProjectionGlobe() {
+//    verifySetMapProjection(MapProjection.Globe, MapProjectionUtils.GLOBE_PROJECTION_NAME)
+//  }
+//
+//  private fun verifySetMapProjection(givenProjection: MapProjection, expectedValue: String) {
+//    mapboxMap.setMapProjection(givenProjection)
+//    verify {
+//      nativeMap.mapProjection = Value.valueOf(
+//        hashMapOf(
+//          MapProjectionUtils.NAME_KEY to Value(
+//            expectedValue
+//          )
+//        )
+//      )
+//    }
+//  }
+//
+//  @Test
+//  fun getMapProjection() {
+//    mockkObject(MapProjectionUtils)
+//    every { MapProjectionUtils.fromValue(any()) } returns MapProjection.Globe
+//    val projection = mapboxMap.getMapProjection()
+//    verify { nativeMap.mapProjection }
+//    assertEquals(MapProjection.Globe, projection)
+//  }
+//
+//  @Test
+//  fun getMapProjectionInvalid() {
+//    // as we don't mock anything Value from core could not be converted to anything
+//    val exception = assertThrows(RuntimeException::class.java) {
+//      mapboxMap.getMapProjection()
+//    }
+//    assertEquals(
+//      "Could not cast given Value to valid MapProjection!",
+//      exception.message
+//    )
+//  }
 
   @Test
   fun setMemoryBudget() {

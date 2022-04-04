@@ -28,6 +28,22 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 
 ===========================================================================
 
+Mapbox Maps Android uses portions of the Android DataStore.
+
+URL: [https://developer.android.com/jetpack/androidx/releases/datastore#1.0.0](https://developer.android.com/jetpack/androidx/releases/datastore#1.0.0)
+
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Maps Android uses portions of the Android DataStore Core.
+
+URL: [https://developer.android.com/jetpack/androidx/releases/datastore#1.0.0](https://developer.android.com/jetpack/androidx/releases/datastore#1.0.0)
+
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
 Mapbox Maps Android uses portions of the Android Lifecycle Runtime.
 
 URL: [https://developer.android.com/topic/libraries/architecture/index.html](https://developer.android.com/topic/libraries/architecture/index.html)
@@ -39,6 +55,22 @@ License: [The Apache Software License, Version 2.0](http://www.apache.org/licens
 Mapbox Maps Android uses portions of the Android Lifecycle-Common.
 
 URL: [https://developer.android.com/topic/libraries/architecture/index.html](https://developer.android.com/topic/libraries/architecture/index.html)
+
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Maps Android uses portions of the Android Preferences DataStore.
+
+URL: [https://developer.android.com/jetpack/androidx/releases/datastore#1.0.0](https://developer.android.com/jetpack/androidx/releases/datastore#1.0.0)
+
+License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Maps Android uses portions of the Android Preferences DataStore Core.
+
+URL: [https://developer.android.com/jetpack/androidx/releases/datastore#1.0.0](https://developer.android.com/jetpack/androidx/releases/datastore#1.0.0)
 
 License: [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
@@ -135,6 +167,22 @@ Mapbox Maps Android uses portions of the Kotlin Stdlib Jdk8.
 URL: [https://kotlinlang.org/](https://kotlinlang.org/)
 
 License: [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Maps Android uses portions of the kotlinx-coroutines-android.
+
+URL: [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+
+License: [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+===========================================================================
+
+Mapbox Maps Android uses portions of the kotlinx-coroutines-core.
+
+URL: [https://github.com/Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+
+License: [The Apache Software License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
 ===========================================================================
 

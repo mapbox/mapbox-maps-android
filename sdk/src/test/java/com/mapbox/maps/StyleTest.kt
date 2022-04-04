@@ -205,7 +205,11 @@ class StyleTest {
     every { nativeMap.styleSources } returns listOf(source)
     val valueMap = HashMap<String, Value>()
     valueMap.put("attribution", mockk())
-    every { nativeMap.getStyleSourceProperties(any()) } returns ExpectedFactory.createValue(Value.valueOf(valueMap))
+    every { nativeMap.getStyleSourceProperties(any()) } returns ExpectedFactory.createValue(
+      Value.valueOf(
+        valueMap
+      )
+    )
     style.getStyleSourcesAttribution()
     verify { nativeMap.getStyleSourceProperties("id") }
   }
@@ -361,5 +365,25 @@ class StyleTest {
     val value = mockk<Value>()
     style.setStyleTerrainProperty("id", value)
     verify { nativeMap.setStyleTerrainProperty("id", value) }
+  }
+
+  @Test
+  fun setStyleProjection() {
+    val value = mockk<Value>()
+    style.setStyleProjection(value)
+    verify { nativeMap.setStyleProjection(value) }
+  }
+
+  @Test
+  fun getStyleProjectionProperty() {
+    style.getStyleProjectionProperty("foo")
+    verify { nativeMap.getStyleProjectionProperty("foo") }
+  }
+
+  @Test
+  fun setStyleProjectionProperty() {
+    val value = mockk<Value>()
+    style.setStyleProjectionProperty("foo", value)
+    verify { nativeMap.setStyleProjectionProperty("foo", value) }
   }
 }
