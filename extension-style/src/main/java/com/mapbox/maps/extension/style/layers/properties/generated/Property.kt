@@ -547,7 +547,7 @@ enum class Name(override val value: String) : LayerProperty {
   /**
    * An Equal Earth projection.
    */
-  EQUALEARTH("equalEarth"),
+  EQUAL_EARTH("equalEarth"),
   /**
    * An Equirectangular projection. This projection is very similar to the Plate Carrée projection.
    */
@@ -555,7 +555,7 @@ enum class Name(override val value: String) : LayerProperty {
   /**
    * A Lambert conformal conic projection. You can configure the projection for a region by setting {@link CENTER} and {@link PARALLELS} properties. You may want to set max bounds to constrain the map to the relevant region.
    */
-  LAMBERTCONFORMALCONIC("lambertConformalConic"),
+  LAMBERT_CONFORMAL_CONIC("lambertConformalConic"),
   /**
    * The Mercator projection is the default projection.
    */
@@ -563,11 +563,11 @@ enum class Name(override val value: String) : LayerProperty {
   /**
    * A Natural Earth projection.
    */
-  NATURALEARTH("naturalEarth"),
+  NATURAL_EARTH("naturalEarth"),
   /**
    * A Winkel Tripel projection.
    */
-  WINKELTRIPEL("winkelTripel"),
+  WINKEL_TRIPEL("winkelTripel"),
   /**
    * A globe projection.
    */

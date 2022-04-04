@@ -107,7 +107,7 @@ class StyleProjectionTest {
           setCamera(CameraOptions.Builder().zoom(13.0).build())
           getStyle { style ->
             try {
-              style.setProjectionName(Name.WINKELTRIPEL)
+              style.setProjectionName(Name.WINKEL_TRIPEL)
             } catch (e: MapboxStyleException) {
               assert(true)
               countDownLatch.countDown()
