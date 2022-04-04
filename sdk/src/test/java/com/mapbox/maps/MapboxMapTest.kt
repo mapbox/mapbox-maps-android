@@ -14,7 +14,6 @@ import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.OnMoveListener
 import io.mockk.*
 import junit.framework.Assert.*
-import org.junit.After
 import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test
@@ -44,11 +43,6 @@ class MapboxMapTest {
     every { nativeMap.resourceOptions } returns resourceOptions
     styleObserver = mockk(relaxUnitFun = true)
     mapboxMap = MapboxMap(nativeMap, nativeObserver, styleObserver)
-  }
-
-  @After
-  fun cleanUp() {
-    unmockkObject(MapProjectionUtils)
   }
 
   @Test
@@ -156,6 +150,9 @@ class MapboxMapTest {
     val terrain = mockk<StyleContract.StyleTerrainExtension>(relaxed = true)
     every { styleExtension.terrain } returns terrain
 
+    val projection = mockk<StyleContract.StyleProjectionExtension>(relaxed = true)
+    every { styleExtension.projection } returns projection
+
     val styleLoadCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
 
     mapboxMap.onFinishLoadingStyleExtension(style, styleExtension, styleLoadCallback)
@@ -166,6 +163,7 @@ class MapboxMapTest {
     verify { layer.bindTo(style, layerPosition) }
     verify { light.bindTo(style) }
     verify { terrain.bindTo(style) }
+    verify { projection.bindTo(style) }
     verify { styleLoadCallback.onStyleLoaded(style) }
   }
 
@@ -1006,50 +1004,6 @@ class MapboxMapTest {
     mapboxMap.clearData(callback)
     verify { Map.clearData(resourceOptions, callback) }
   }
-
-//  @Test
-//  fun setMapProjectionMercator() {
-//    verifySetMapProjection(MapProjection.Mercator, MapProjectionUtils.MERCATOR_PROJECTION_NAME)
-//  }
-//
-//  @Test
-//  fun setMapProjectionGlobe() {
-//    verifySetMapProjection(MapProjection.Globe, MapProjectionUtils.GLOBE_PROJECTION_NAME)
-//  }
-//
-//  private fun verifySetMapProjection(givenProjection: MapProjection, expectedValue: String) {
-//    mapboxMap.setMapProjection(givenProjection)
-//    verify {
-//      nativeMap.mapProjection = Value.valueOf(
-//        hashMapOf(
-//          MapProjectionUtils.NAME_KEY to Value(
-//            expectedValue
-//          )
-//        )
-//      )
-//    }
-//  }
-//
-//  @Test
-//  fun getMapProjection() {
-//    mockkObject(MapProjectionUtils)
-//    every { MapProjectionUtils.fromValue(any()) } returns MapProjection.Globe
-//    val projection = mapboxMap.getMapProjection()
-//    verify { nativeMap.mapProjection }
-//    assertEquals(MapProjection.Globe, projection)
-//  }
-//
-//  @Test
-//  fun getMapProjectionInvalid() {
-//    // as we don't mock anything Value from core could not be converted to anything
-//    val exception = assertThrows(RuntimeException::class.java) {
-//      mapboxMap.getMapProjection()
-//    }
-//    assertEquals(
-//      "Could not cast given Value to valid MapProjection!",
-//      exception.message
-//    )
-//  }
 
   @Test
   fun setMemoryBudget() {

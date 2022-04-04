@@ -1,5 +1,5 @@
 // This file is generated.
-@file:JvmName("ProjectionUtils")
+@file:JvmName("StyleProjectionUtils")
 
 package com.mapbox.maps.extension.style.projection.generated
 

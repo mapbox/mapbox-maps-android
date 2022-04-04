@@ -15,7 +15,6 @@ import androidx.annotation.VisibleForTesting.PRIVATE
 import androidx.core.animation.addListener
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.android.gestures.*
-import com.mapbox.common.Logger
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.StylePropertyValueKind
@@ -154,6 +153,20 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
     internalSettings =
       GesturesAttributeParser.parseGesturesSettings(context, attributeSet, pixelRatio)
     mainHandler = Handler(Looper.getMainLooper())
+  }
+
+  @VisibleForTesting
+  internal constructor(
+    context: Context,
+    attributeSet: AttributeSet,
+    style: StyleInterface
+  ) {
+    this.context = context
+    this.pixelRatio = 1.0f
+    internalSettings =
+      GesturesAttributeParser.parseGesturesSettings(context, attributeSet, pixelRatio)
+    mainHandler = Handler(Looper.getMainLooper())
+    this.style = style
   }
 
   @VisibleForTesting
@@ -1692,7 +1705,6 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
    * Called when new style is loaded.
    */
   override fun onStyleChanged(styleDelegate: StyleInterface) {
-    Logger.e("KIRYLDD", "new style: $styleDelegate")
     style = styleDelegate
   }
 
