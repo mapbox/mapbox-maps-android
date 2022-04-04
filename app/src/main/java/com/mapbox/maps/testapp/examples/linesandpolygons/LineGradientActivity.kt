@@ -8,7 +8,9 @@ import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
+import com.mapbox.maps.extension.style.layers.generated.LineLayer
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
+import com.mapbox.maps.extension.style.layers.getLayerAs
 import com.mapbox.maps.extension.style.layers.properties.generated.LineCap
 import com.mapbox.maps.extension.style.layers.properties.generated.LineJoin
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
@@ -21,8 +23,14 @@ class LineGradientActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val binding = ActivityLineGradientBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    binding.mapView.getMapboxMap().loadStyle(createStyle()) {
-      Logger.d(TAG, "Style loaded: ${it.styleURI}")
+    binding.mapView.getMapboxMap().loadStyle(createStyle()) { style ->
+      Logger.d(TAG, "Style loaded: ${style.styleURI}")
+      // Increase trim offset when user click the increase trim offset button.
+      binding.trimOffsetButton.setOnClickListener {
+        val linelayer = style.getLayerAs<LineLayer>(LAYER_ID)
+        val lastTrimPosition = linelayer?.lineTrimOffset?.last() ?: 0.0
+        linelayer?.lineTrimOffset(listOf(0.0, (lastTrimPosition + 0.05).coerceAtMost(1.0)))
+      }
     }
   }
 
