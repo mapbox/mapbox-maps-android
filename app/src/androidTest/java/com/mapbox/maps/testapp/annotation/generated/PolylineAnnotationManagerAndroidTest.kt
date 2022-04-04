@@ -100,6 +100,16 @@ class PolylineAnnotationManagerAndroidTest : BaseMapTest() {
   }
 
   @Test
+  fun testLineTrimOffset() {
+    val expectedValue = listOf(0.0, 1.0)
+    val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
+    polylineAnnotationManager.lineTrimOffset = expectedValue
+    assertEquals(expectedValue, polylineAnnotationManager.lineTrimOffset)
+    polylineAnnotationManager.lineTrimOffset = null
+    assertEquals(StyleManager.getStyleLayerPropertyDefaultValue("line", "line-trim-offset").silentUnwrap(), polylineAnnotationManager.lineTrimOffset)
+  }
+
+  @Test
   fun create() {
     val polylineAnnotationManager = mapView.annotations.createPolylineAnnotationManager()
     val annotation = polylineAnnotationManager.create(
