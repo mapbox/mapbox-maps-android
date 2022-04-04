@@ -13,16 +13,16 @@ package com.mapbox.maps.plugin.annotation {
     method public void enableDataDrivenProperty(String property);
     method public abstract String getAnnotationIdKey();
     method public java.util.List<T> getAnnotations();
-    method public error.NonExistentClass! getClickListeners();
+    method public java.util.List<U> getClickListeners();
     method protected final java.util.Map<java.lang.String,java.lang.Boolean> getDataDrivenPropertyUsageMap();
     method public final com.mapbox.maps.plugin.delegates.MapDelegateProvider getDelegateProvider();
     method protected abstract String getDragLayerId();
-    method public error.NonExistentClass! getDragListeners();
+    method public java.util.List<D> getDragListeners();
     method protected abstract String getDragSourceId();
-    method public error.NonExistentClass! getInteractionListener();
+    method public java.util.List<I> getInteractionListener();
     method public abstract com.mapbox.maps.extension.style.expressions.generated.Expression? getLayerFilter();
     method protected abstract String getLayerId();
-    method public error.NonExistentClass! getLongClickListeners();
+    method public java.util.List<V> getLongClickListeners();
     method protected abstract String getSourceId();
     method protected final void initLayerAndSource(com.mapbox.maps.extension.style.StyleInterface style);
     method protected abstract void initializeDataDrivenPropertyMap();
@@ -36,16 +36,16 @@ package com.mapbox.maps.plugin.annotation {
     method public void update(T annotation);
     method public void update(java.util.List<? extends T> annotations);
     property public java.util.List<T> annotations;
-    property public error.NonExistentClass! clickListeners;
+    property public java.util.List<U> clickListeners;
     property protected final java.util.Map<java.lang.String,java.lang.Boolean> dataDrivenPropertyUsageMap;
     property public final com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider;
     property protected abstract String dragLayerId;
-    property public error.NonExistentClass! dragListeners;
+    property public java.util.List<D> dragListeners;
     property protected abstract String dragSourceId;
-    property public error.NonExistentClass! interactionListener;
+    property public java.util.List<I> interactionListener;
     property public abstract com.mapbox.maps.extension.style.expressions.generated.Expression? layerFilter;
     property protected abstract String layerId;
-    property public error.NonExistentClass! longClickListeners;
+    property public java.util.List<V> longClickListeners;
     property protected abstract String sourceId;
   }
 

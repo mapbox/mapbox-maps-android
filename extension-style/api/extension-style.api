@@ -3190,13 +3190,13 @@ public final class com/mapbox/maps/extension/style/layers/properties/generated/L
 
 public final class com/mapbox/maps/extension/style/layers/properties/generated/Name : java/lang/Enum, com/mapbox/maps/extension/style/layers/properties/generated/LayerProperty {
 	public static final field ALBERS Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
-	public static final field EQUALEARTH Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
+	public static final field EQUAL_EARTH Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
 	public static final field EQUIRECTANGULAR Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
 	public static final field GLOBE Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
-	public static final field LAMBERTCONFORMALCONIC Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
+	public static final field LAMBERT_CONFORMAL_CONIC Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
 	public static final field MERCATOR Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
-	public static final field NATURALEARTH Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
-	public static final field WINKELTRIPEL Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
+	public static final field NATURAL_EARTH Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
+	public static final field WINKEL_TRIPEL Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
 	public fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
 	public static fun values ()[Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
