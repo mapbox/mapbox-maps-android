@@ -533,41 +533,17 @@ enum class Anchor(override val value: String) : LayerProperty {
    */
   VIEWPORT("viewport"),
 }
-// NAME: The name of the projection to be used for rendering the map.
+// PROJECTIONNAME: The name of the projection to be used for rendering the map.
 /**
  * The name of the projection to be used for rendering the map.
  *
  * @param value String value of this property
  */
-enum class Name(override val value: String) : LayerProperty {
-  /**
-   * An Albers equal-area projection centered on the continental United States. You can configure the projection for a different region by setting {@link CENTER} and {@link PARALLELS} properties. You may want to set max bounds to constrain the map to the relevant region.
-   */
-  ALBERS("albers"),
-  /**
-   * An Equal Earth projection.
-   */
-  EQUAL_EARTH("equalEarth"),
-  /**
-   * An Equirectangular projection. This projection is very similar to the Plate Carrée projection.
-   */
-  EQUIRECTANGULAR("equirectangular"),
-  /**
-   * A Lambert conformal conic projection. You can configure the projection for a region by setting {@link CENTER} and {@link PARALLELS} properties. You may want to set max bounds to constrain the map to the relevant region.
-   */
-  LAMBERT_CONFORMAL_CONIC("lambertConformalConic"),
+enum class ProjectionName(override val value: String) : LayerProperty {
   /**
    * The Mercator projection is the default projection.
    */
   MERCATOR("mercator"),
-  /**
-   * A Natural Earth projection.
-   */
-  NATURAL_EARTH("naturalEarth"),
-  /**
-   * A Winkel Tripel projection.
-   */
-  WINKEL_TRIPEL("winkelTripel"),
   /**
    * A globe projection.
    */

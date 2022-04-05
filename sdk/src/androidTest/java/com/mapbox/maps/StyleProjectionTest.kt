@@ -2,7 +2,7 @@ package com.mapbox.maps
 
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import com.mapbox.maps.extension.style.layers.properties.generated.Name
+import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 import com.mapbox.maps.extension.style.projection.generated.getProjectionName
 import com.mapbox.maps.extension.style.projection.generated.setProjectionName
 import org.junit.*
@@ -41,7 +41,7 @@ class StyleProjectionTest {
       it.runOnUiThread {
         mapboxMap.getStyle { style ->
           Assert.assertEquals(
-            Name.MERCATOR,
+            ProjectionName.MERCATOR,
             style.getProjectionName()
           )
         }
@@ -57,13 +57,13 @@ class StyleProjectionTest {
         mapboxMap.apply {
           addOnMapIdleListener {
             getStyle { style ->
-              Assert.assertEquals(Name.GLOBE, style.getProjectionName())
+              Assert.assertEquals(ProjectionName.GLOBE, style.getProjectionName())
               countDownLatch.countDown()
             }
           }
           setCamera(CameraOptions.Builder().zoom(3.0).build())
           getStyle { style ->
-            style.setProjectionName(Name.GLOBE)
+            style.setProjectionName(ProjectionName.GLOBE)
           }
         }
       }
@@ -82,36 +82,13 @@ class StyleProjectionTest {
           addOnMapIdleListener {
             getStyle { style ->
               // although actual projection looks like Mercator - we now report still it's Globe
-              Assert.assertEquals(Name.GLOBE, style.getProjectionName())
+              Assert.assertEquals(ProjectionName.GLOBE, style.getProjectionName())
               countDownLatch.countDown()
             }
           }
           setCamera(CameraOptions.Builder().zoom(13.0).build())
           getStyle { style ->
-            style.setProjectionName(Name.GLOBE)
-          }
-        }
-      }
-    }
-    if (!countDownLatch.await(LATCH_TIMEOUT_SEC, TimeUnit.SECONDS)) {
-      throw TimeoutException()
-    }
-  }
-
-  @Test
-  fun testNotSupportedProjection() {
-    countDownLatch = CountDownLatch(1)
-    rule.scenario.onActivity {
-      it.runOnUiThread {
-        mapboxMap.apply {
-          setCamera(CameraOptions.Builder().zoom(13.0).build())
-          getStyle { style ->
-            try {
-              style.setProjectionName(Name.WINKEL_TRIPEL)
-            } catch (e: MapboxStyleException) {
-              assert(true)
-              countDownLatch.countDown()
-            }
+            style.setProjectionName(ProjectionName.GLOBE)
           }
         }
       }

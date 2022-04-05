@@ -12,7 +12,7 @@ import com.mapbox.maps.extension.style.expressions.dsl.generated.eq
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.generated.fillExtrusionLayer
 import com.mapbox.maps.extension.style.layers.generated.skyLayer
-import com.mapbox.maps.extension.style.layers.properties.generated.Name
+import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 import com.mapbox.maps.extension.style.layers.properties.generated.SkyType
 import com.mapbox.maps.extension.style.projection.generated.getProjectionName
 import com.mapbox.maps.extension.style.projection.generated.projection
@@ -35,7 +35,7 @@ class GlobeActivity : AppCompatActivity() {
    * Current projection.
    * However depending on zoom level actual projection may be mercator even if [currentProjection] is Globe.
    */
-  private var currentProjectionName: Name = Name.GLOBE
+  private var currentProjectionName: ProjectionName = ProjectionName.GLOBE
   private lateinit var mapboxMap: MapboxMap
   private lateinit var infoTextView: TextView
 
@@ -74,10 +74,10 @@ class GlobeActivity : AppCompatActivity() {
     }
 
     binding.switchProjectionBtn.setOnClickListener {
-      val newProjection = if (currentProjectionName === Name.GLOBE) {
-        Name.MERCATOR
+      val newProjection = if (currentProjectionName === ProjectionName.GLOBE) {
+        ProjectionName.MERCATOR
       } else {
-        Name.GLOBE
+        ProjectionName.GLOBE
       }
       mapboxMap.getStyle { style ->
         style.setProjectionName(newProjection)

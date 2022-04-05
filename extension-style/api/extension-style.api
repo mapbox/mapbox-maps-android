@@ -3188,18 +3188,12 @@ public final class com/mapbox/maps/extension/style/layers/properties/generated/L
 	public static fun values ()[Lcom/mapbox/maps/extension/style/layers/properties/generated/LineTranslateAnchor;
 }
 
-public final class com/mapbox/maps/extension/style/layers/properties/generated/Name : java/lang/Enum, com/mapbox/maps/extension/style/layers/properties/generated/LayerProperty {
-	public static final field ALBERS Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
-	public static final field EQUAL_EARTH Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
-	public static final field EQUIRECTANGULAR Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
-	public static final field GLOBE Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
-	public static final field LAMBERT_CONFORMAL_CONIC Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
-	public static final field MERCATOR Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
-	public static final field NATURAL_EARTH Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
-	public static final field WINKEL_TRIPEL Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
+public final class com/mapbox/maps/extension/style/layers/properties/generated/ProjectionName : java/lang/Enum, com/mapbox/maps/extension/style/layers/properties/generated/LayerProperty {
+	public static final field GLOBE Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;
+	public static final field MERCATOR Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;
 	public fun getValue ()Ljava/lang/String;
-	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
-	public static fun values ()[Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
+	public static fun valueOf (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;
+	public static fun values ()[Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;
 }
 
 public final class com/mapbox/maps/extension/style/layers/properties/generated/RasterResampling : java/lang/Enum, com/mapbox/maps/extension/style/layers/properties/generated/LayerProperty {
@@ -3406,10 +3400,10 @@ public final class com/mapbox/maps/extension/style/projection/generated/Projecti
 	public static final field Companion Lcom/mapbox/maps/extension/style/projection/generated/Projection$Companion;
 	public fun <init> ()V
 	public fun bindTo (Lcom/mapbox/maps/extension/style/StyleInterface;)V
-	public final fun getName ()Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
+	public final fun getName ()Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;
 	public final fun getNameAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
 	public fun name (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/projection/generated/Projection;
-	public fun name (Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;)Lcom/mapbox/maps/extension/style/projection/generated/Projection;
+	public fun name (Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;)Lcom/mapbox/maps/extension/style/projection/generated/Projection;
 }
 
 public final class com/mapbox/maps/extension/style/projection/generated/Projection$Companion {
@@ -3417,11 +3411,11 @@ public final class com/mapbox/maps/extension/style/projection/generated/Projecti
 
 public abstract interface class com/mapbox/maps/extension/style/projection/generated/ProjectionDslReceiver {
 	public abstract fun name (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/projection/generated/Projection;
-	public abstract fun name (Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;)Lcom/mapbox/maps/extension/style/projection/generated/Projection;
+	public abstract fun name (Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;)Lcom/mapbox/maps/extension/style/projection/generated/Projection;
 }
 
 public final class com/mapbox/maps/extension/style/projection/generated/ProjectionDslReceiver$DefaultImpls {
-	public static synthetic fun name$default (Lcom/mapbox/maps/extension/style/projection/generated/ProjectionDslReceiver;Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/projection/generated/Projection;
+	public static synthetic fun name$default (Lcom/mapbox/maps/extension/style/projection/generated/ProjectionDslReceiver;Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/projection/generated/Projection;
 }
 
 public final class com/mapbox/maps/extension/style/projection/generated/ProjectionKt {
@@ -3429,8 +3423,10 @@ public final class com/mapbox/maps/extension/style/projection/generated/Projecti
 }
 
 public final class com/mapbox/maps/extension/style/projection/generated/StyleProjectionUtils {
-	public static final fun getProjectionName (Lcom/mapbox/maps/extension/style/StyleInterface;)Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;
-	public static final fun setProjectionName (Lcom/mapbox/maps/extension/style/StyleInterface;Lcom/mapbox/maps/extension/style/layers/properties/generated/Name;)V
+	public static final fun getProjection (Lcom/mapbox/maps/extension/style/StyleInterface;)Lcom/mapbox/maps/extension/style/projection/generated/Projection;
+	public static final fun getProjectionName (Lcom/mapbox/maps/extension/style/StyleInterface;)Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;
+	public static final fun setProjection (Lcom/mapbox/maps/extension/style/StyleInterface;Lcom/mapbox/maps/extension/style/projection/generated/Projection;)V
+	public static final fun setProjectionName (Lcom/mapbox/maps/extension/style/StyleInterface;Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;)V
 }
 
 public final class com/mapbox/maps/extension/style/sources/CustomGeometrySource : com/mapbox/maps/extension/style/StyleContract$StyleSourceExtension {

@@ -171,6 +171,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
 
   @VisibleForTesting
   internal constructor(
+
     context: Context,
     attributeSet: AttributeSet,
     pixelRatio: Float,

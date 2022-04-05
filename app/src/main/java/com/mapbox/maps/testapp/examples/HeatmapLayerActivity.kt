@@ -11,7 +11,7 @@ import com.mapbox.maps.extension.style.layers.generated.CircleLayer
 import com.mapbox.maps.extension.style.layers.generated.HeatmapLayer
 import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.layers.generated.heatmapLayer
-import com.mapbox.maps.extension.style.layers.properties.generated.Name
+import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 import com.mapbox.maps.extension.style.projection.generated.setProjectionName
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
@@ -35,7 +35,7 @@ class HeatmapLayerActivity : AppCompatActivity() {
       loadStyleUri(
         styleUri = Style.DARK
       ) { style ->
-        style.setProjectionName(Name.GLOBE)
+        style.setProjectionName(ProjectionName.GLOBE)
         addRuntimeLayers(style)
       }
     }

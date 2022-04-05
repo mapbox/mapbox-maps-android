@@ -10,7 +10,7 @@ import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
-import com.mapbox.maps.extension.style.layers.properties.generated.Name
+import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 import com.mapbox.maps.extension.style.types.ProjectionDsl
 import com.mapbox.maps.extension.style.utils.unwrap
 
@@ -27,11 +27,11 @@ class Projection : ProjectionDslReceiver, StyleContract.StyleProjectionExtension
   /**
    * The name of the projection to be used for rendering the map.
    */
-  val name: Name?
+  val name: ProjectionName?
     /**
      * Get the Name property.
      *
-     * @return name as Name
+     * @return name as ProjectionName
      */
     get() {
       return getPropertyValue("name")
@@ -42,9 +42,9 @@ class Projection : ProjectionDslReceiver, StyleContract.StyleProjectionExtension
    *
    * The name of the projection to be used for rendering the map.
    *
-   * @param name as Name
+   * @param name as ProjectionName
    */
-  override fun name(name: Name) = apply {
+  override fun name(name: ProjectionName) = apply {
     setProperty(PropertyValue("name", name))
   }
 
@@ -57,7 +57,7 @@ class Projection : ProjectionDslReceiver, StyleContract.StyleProjectionExtension
     /**
      * Get the Name property as an Expression
      *
-     * @return Name
+     * @return ProjectionName
      */
     get() {
       getPropertyValue<Expression>("name")?.let {
@@ -144,9 +144,9 @@ interface ProjectionDslReceiver {
    *
    * The name of the projection to be used for rendering the map.
    *
-   * @param name as Name
+   * @param name as ProjectionName
    */
-  fun name(name: Name = Name.MERCATOR): Projection
+  fun name(name: ProjectionName = ProjectionName.MERCATOR): Projection
 
   /**
    * Set the Name property
