@@ -7,7 +7,6 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ViewAnnotationOptions
 
 /**
@@ -25,7 +24,6 @@ import com.mapbox.maps.ViewAnnotationOptions
  *
  * View annotation manager instance is destroyed automatically when [MapView.onDestroy] is called.
  */
-@MapboxExperimental
 interface ViewAnnotationManager {
 
   /**
