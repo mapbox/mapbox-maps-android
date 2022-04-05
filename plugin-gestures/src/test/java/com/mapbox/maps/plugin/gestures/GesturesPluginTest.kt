@@ -887,7 +887,7 @@ class GesturesPluginTest {
 @RunWith(ParameterizedRobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
 class IsPointAboveHorizonTest(
-  private val testProjectionName: String,
+  private val testProjectionStylePropertyValue: StylePropertyValue?,
   private val testScreenCoordinate: ScreenCoordinate,
   private val testMapSize: Size,
   private val testPixelForCoordinate: ScreenCoordinate,
@@ -902,7 +902,7 @@ class IsPointAboveHorizonTest(
   private val mapPluginProviderDelegate: MapPluginProviderDelegate = mockk(relaxUnitFun = true)
   private val mapProjectionDelegate: MapProjectionDelegate = mockk(relaxUnitFun = true)
   private val cameraAnimationsPlugin: CameraAnimationsPlugin = mockk(relaxed = true)
-  private val style: StyleInterface = mockk()
+  private val style: StyleInterface? = mockk()
 
   private lateinit var presenter: GesturesPluginImpl
 
@@ -935,15 +935,12 @@ class IsPointAboveHorizonTest(
     every { mapDelegateProvider.mapProjectionDelegate } returns mapProjectionDelegate
     every { mapDelegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
     every { mapPluginProviderDelegate.getPlugin<CameraAnimationsPlugin>(Plugin.MAPBOX_CAMERA_PLUGIN_ID) } returns cameraAnimationsPlugin
-    every { style.getStyleProjectionProperty("name") } returns StylePropertyValue(
-      Value.valueOf(testProjectionName),
-      StylePropertyValueKind.CONSTANT
-    )
+    every { style?.getStyleProjectionProperty("name") } returns testProjectionStylePropertyValue
     every { mapTransformDelegate.getSize() } returns testMapSize
     every { mapCameraManagerDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
     every { mapCameraManagerDelegate.pixelForCoordinate(any()) } returns testPixelForCoordinate
 
-    presenter = GesturesPluginImpl(context, attrs, style)
+    presenter = GesturesPluginImpl(context, attrs, style!!)
     presenter.bind(context, gesturesManager, attrs, 1f)
     presenter.onDelegateProvider(mapDelegateProvider)
     presenter.initialize()
@@ -1025,56 +1022,97 @@ class IsPointAboveHorizonTest(
     @ParameterizedRobolectricTestRunner.Parameters(name = "IsPointAboveHorizon using {0} projection at {1}, with MapSize {2}, testPixelForCoordinate {3} should be {4}")
     fun data() = listOf(
       arrayOf(
-        "globe",
+        StylePropertyValue(
+          Value.valueOf("globe"),
+          StylePropertyValueKind.CONSTANT
+        ),
         ScreenCoordinate(0.0, 0.0),
         Size(100f, 100f),
         ScreenCoordinate(0.0, 0.0),
         false
       ),
       arrayOf(
-        "mercator",
+        StylePropertyValue(
+          Value.valueOf("mercator"),
+          StylePropertyValueKind.CONSTANT
+        ),
         ScreenCoordinate(0.0, 0.0),
         Size(100f, 100f),
         ScreenCoordinate(0.0, 0.0),
         true
       ),
       arrayOf(
-        "mercator",
+        StylePropertyValue(
+          Value.valueOf("any"),
+          StylePropertyValueKind.UNDEFINED
+        ),
+        ScreenCoordinate(0.0, 0.0),
+        Size(100f, 100f),
+        ScreenCoordinate(0.0, 0.0),
+        true
+      ),
+      arrayOf(
+        null,
+        ScreenCoordinate(0.0, 0.0),
+        Size(100f, 100f),
+        ScreenCoordinate(0.0, 0.0),
+        false
+      ),
+      arrayOf(
+        StylePropertyValue(
+          Value.valueOf("mercator"),
+          StylePropertyValueKind.CONSTANT
+        ),
         ScreenCoordinate(0.0, 2.0),
         Size(100f, 100f),
         ScreenCoordinate(0.0, 0.0),
         true
       ),
       arrayOf(
-        "mercator",
+        StylePropertyValue(
+          Value.valueOf("mercator"),
+          StylePropertyValueKind.CONSTANT
+        ),
         ScreenCoordinate(0.0, 3.0),
         Size(100f, 100f),
         ScreenCoordinate(0.0, 0.0),
         false
       ),
       arrayOf(
-        "mercator",
+        StylePropertyValue(
+          Value.valueOf("mercator"),
+          StylePropertyValueKind.CONSTANT
+        ),
         ScreenCoordinate(0.0, 10.0),
         Size(500f, 500f),
         ScreenCoordinate(0.0, 0.0),
         true
       ),
       arrayOf(
-        "mercator",
+        StylePropertyValue(
+          Value.valueOf("mercator"),
+          StylePropertyValueKind.CONSTANT
+        ),
         ScreenCoordinate(0.0, 11.0),
         Size(500f, 500f),
         ScreenCoordinate(0.0, 0.0),
         false
       ),
       arrayOf(
-        "mercator",
+        StylePropertyValue(
+          Value.valueOf("mercator"),
+          StylePropertyValueKind.CONSTANT
+        ),
         ScreenCoordinate(0.0, 10.0),
         Size(1000f, 1000f),
         ScreenCoordinate(0.0, 0.0),
         true
       ),
       arrayOf(
-        "mercator",
+        StylePropertyValue(
+          Value.valueOf("mercator"),
+          StylePropertyValueKind.CONSTANT
+        ),
         ScreenCoordinate(0.0, 11.0),
         Size(500f, 500f),
         ScreenCoordinate(0.0, 0.0),
