@@ -3,8 +3,9 @@ package com.mapbox.maps
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
-import com.mapbox.maps.extension.style.projection.generated.getProjectionName
-import com.mapbox.maps.extension.style.projection.generated.setProjectionName
+import com.mapbox.maps.extension.style.projection.generated.getProjection
+import com.mapbox.maps.extension.style.projection.generated.projection
+import com.mapbox.maps.extension.style.projection.generated.setProjection
 import org.junit.*
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
@@ -42,7 +43,7 @@ class StyleProjectionTest {
         mapboxMap.getStyle { style ->
           Assert.assertEquals(
             ProjectionName.MERCATOR,
-            style.getProjectionName()
+            style.getProjection().name
           )
         }
       }
@@ -57,13 +58,13 @@ class StyleProjectionTest {
         mapboxMap.apply {
           addOnMapIdleListener {
             getStyle { style ->
-              Assert.assertEquals(ProjectionName.GLOBE, style.getProjectionName())
+              Assert.assertEquals(ProjectionName.GLOBE, style.getProjection().name)
               countDownLatch.countDown()
             }
           }
           setCamera(CameraOptions.Builder().zoom(3.0).build())
           getStyle { style ->
-            style.setProjectionName(ProjectionName.GLOBE)
+            style.setProjection(projection(ProjectionName.GLOBE))
           }
         }
       }
@@ -82,13 +83,13 @@ class StyleProjectionTest {
           addOnMapIdleListener {
             getStyle { style ->
               // although actual projection looks like Mercator - we now report still it's Globe
-              Assert.assertEquals(ProjectionName.GLOBE, style.getProjectionName())
+              Assert.assertEquals(ProjectionName.GLOBE, style.getProjection().name)
               countDownLatch.countDown()
             }
           }
           setCamera(CameraOptions.Builder().zoom(13.0).build())
           getStyle { style ->
-            style.setProjectionName(ProjectionName.GLOBE)
+            style.setProjection(projection(ProjectionName.GLOBE))
           }
         }
       }

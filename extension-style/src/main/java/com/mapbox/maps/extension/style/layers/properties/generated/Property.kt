@@ -533,7 +533,7 @@ enum class Anchor(override val value: String) : LayerProperty {
    */
   VIEWPORT("viewport"),
 }
-// PROJECTIONNAME: The name of the projection to be used for rendering the map.
+// NAME: The name of the projection to be used for rendering the map.
 /**
  * The name of the projection to be used for rendering the map.
  *

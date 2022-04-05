@@ -3397,36 +3397,24 @@ public final class com/mapbox/maps/extension/style/light/generated/LightUtils {
 }
 
 public final class com/mapbox/maps/extension/style/projection/generated/Projection : com/mapbox/maps/extension/style/StyleContract$StyleProjectionExtension, com/mapbox/maps/extension/style/projection/generated/ProjectionDslReceiver {
-	public static final field Companion Lcom/mapbox/maps/extension/style/projection/generated/Projection$Companion;
-	public fun <init> ()V
+	public static final field TAG Ljava/lang/String;
+	public fun <init> (Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;)V
 	public fun bindTo (Lcom/mapbox/maps/extension/style/StyleInterface;)V
 	public final fun getName ()Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;
-	public final fun getNameAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
-	public fun name (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/projection/generated/Projection;
-	public fun name (Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;)Lcom/mapbox/maps/extension/style/projection/generated/Projection;
-}
-
-public final class com/mapbox/maps/extension/style/projection/generated/Projection$Companion {
 }
 
 public abstract interface class com/mapbox/maps/extension/style/projection/generated/ProjectionDslReceiver {
-	public abstract fun name (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/projection/generated/Projection;
-	public abstract fun name (Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;)Lcom/mapbox/maps/extension/style/projection/generated/Projection;
-}
-
-public final class com/mapbox/maps/extension/style/projection/generated/ProjectionDslReceiver$DefaultImpls {
-	public static synthetic fun name$default (Lcom/mapbox/maps/extension/style/projection/generated/ProjectionDslReceiver;Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/projection/generated/Projection;
 }
 
 public final class com/mapbox/maps/extension/style/projection/generated/ProjectionKt {
-	public static final fun projection (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/projection/generated/Projection;
+	public static final fun projection (Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;)Lcom/mapbox/maps/extension/style/projection/generated/Projection;
+	public static final fun projection (Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/projection/generated/Projection;
+	public static synthetic fun projection$default (Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/projection/generated/Projection;
 }
 
 public final class com/mapbox/maps/extension/style/projection/generated/StyleProjectionUtils {
 	public static final fun getProjection (Lcom/mapbox/maps/extension/style/StyleInterface;)Lcom/mapbox/maps/extension/style/projection/generated/Projection;
-	public static final fun getProjectionName (Lcom/mapbox/maps/extension/style/StyleInterface;)Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;
 	public static final fun setProjection (Lcom/mapbox/maps/extension/style/StyleInterface;Lcom/mapbox/maps/extension/style/projection/generated/Projection;)V
-	public static final fun setProjectionName (Lcom/mapbox/maps/extension/style/StyleInterface;Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;)V
 }
 
 public final class com/mapbox/maps/extension/style/sources/CustomGeometrySource : com/mapbox/maps/extension/style/StyleContract$StyleSourceExtension {

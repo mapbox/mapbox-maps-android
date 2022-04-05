@@ -14,9 +14,9 @@ import com.mapbox.maps.extension.style.layers.generated.fillExtrusionLayer
 import com.mapbox.maps.extension.style.layers.generated.skyLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 import com.mapbox.maps.extension.style.layers.properties.generated.SkyType
-import com.mapbox.maps.extension.style.projection.generated.getProjectionName
+import com.mapbox.maps.extension.style.projection.generated.getProjection
 import com.mapbox.maps.extension.style.projection.generated.projection
-import com.mapbox.maps.extension.style.projection.generated.setProjectionName
+import com.mapbox.maps.extension.style.projection.generated.setProjection
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.camera
@@ -33,7 +33,7 @@ class GlobeActivity : AppCompatActivity() {
 
   /**
    * Current projection.
-   * However depending on zoom level actual projection may be mercator even if [currentProjection] is Globe.
+   * However depending on zoom level actual projection may be mercator even if [currentProjectionName] is Globe.
    */
   private var currentProjectionName: ProjectionName = ProjectionName.GLOBE
   private lateinit var mapboxMap: MapboxMap
@@ -66,9 +66,7 @@ class GlobeActivity : AppCompatActivity() {
             skyType(SkyType.ATMOSPHERE)
             skyAtmosphereSun(listOf(15.0, 89.5))
           }
-          +projection {
-            name(currentProjectionName)
-          }
+          +projection(currentProjectionName)
         }
       )
     }
@@ -80,7 +78,7 @@ class GlobeActivity : AppCompatActivity() {
         ProjectionName.GLOBE
       }
       mapboxMap.getStyle { style ->
-        style.setProjectionName(newProjection)
+        style.setProjection(projection(newProjection))
         currentProjectionName = newProjection
         updateInfoText(mapboxMap.cameraState.zoom)
       }
@@ -121,7 +119,7 @@ class GlobeActivity : AppCompatActivity() {
       infoTextView.text = getString(
         R.string.info_text,
         "%.2f".format(zoom.toFloat()),
-        it.getProjectionName().value,
+        it.getProjection().name?.value,
         currentProjectionName.value
       )
     }
