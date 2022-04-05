@@ -40,7 +40,7 @@ class SettingsIntegrationTest {
     @Before
     fun setUp() {
       settingsServiceInterface =
-        SettingsServiceFactory.getInstance(SettingsServiceStorageType.PERSISTENT)
+        SettingsServiceFactory.getInstance(SettingsServiceStorageType.NON_PERSISTENT)
     }
 
     @Test
@@ -121,7 +121,7 @@ class SettingsIntegrationTest {
     @Before
     fun setUp() {
       settingsServiceInterface =
-        SettingsServiceFactory.getInstance(SettingsServiceStorageType.PERSISTENT)
+        SettingsServiceFactory.getInstance(SettingsServiceStorageType.NON_PERSISTENT)
     }
 
     @Test
@@ -163,7 +163,8 @@ class SettingsIntegrationTest {
         Value("fi-Latn-FI"),
         Value(false),
         Value(1.0),
-        Value(1)
+        Value(1),
+        Value(" ")
       )
     }
   }

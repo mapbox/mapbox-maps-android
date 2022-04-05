@@ -1,9 +1,5 @@
 package com.mapbox.maps.extension.localization
 
-import android.os.Handler
-import android.os.HandlerThread
-import android.os.Looper
-import android.os.Process.THREAD_PRIORITY_DEFAULT
 import com.mapbox.common.Logger
 import com.mapbox.common.SettingsServiceFactory
 import com.mapbox.common.SettingsServiceStorageType
@@ -44,7 +40,7 @@ internal fun setMapLanguage(locale: Locale, style: StyleInterface, layerIds: Lis
       Logger.e(
         TAG,
         "Style localization will not work when language or worldview is set." +
-          " Either remove localizeLabel method or remove server side localization " +
+          " Either remove localizeLabel implementation or remove server side localization implementation " +
           "with SettingsInterface.erase(Language) function"
       )
     }
@@ -77,35 +73,20 @@ internal fun setMapLanguage(locale: Locale, style: StyleInterface, layerIds: Lis
     }
 }
 
-fun checkServerSideLocalizationSet(listener: (Boolean) -> Unit) {
-  // create worker thread to run settingsInterface methods.
-  val workerThread = HandlerThread(
-    "SETTINGS_THREAD", THREAD_PRIORITY_DEFAULT
-  ).apply { start() }
-
-  val workerHandler = Handler(workerThread.looper)
+private fun checkServerSideLocalizationSet(listener: (Boolean) -> Unit) {
   val settingsServiceInterface =
-    SettingsServiceFactory.getInstance(SettingsServiceStorageType.PERSISTENT)
-
-  workerHandler.post {
-    var isLocalizationSet = false
-    val expectedLanguageSetting = settingsServiceInterface.has(LANGUAGE)
-    expectedLanguageSetting.value?.let { language ->
-      if (language) {
-        isLocalizationSet = true
-      }
-    }
-    val expectedWorldviewSetting = settingsServiceInterface.has(WORLDVIEW)
-    expectedWorldviewSetting.value?.let { worldview ->
-      if (worldview) {
-        isLocalizationSet = true
-      }
-    }
-    Handler(Looper.getMainLooper()).post {
-      listener.invoke(isLocalizationSet)
-    }
-    workerThread.quitSafely()
+    SettingsServiceFactory.getInstance(SettingsServiceStorageType.NON_PERSISTENT)
+  var isLocalizationSet = false
+  val expectedLanguageSetting = settingsServiceInterface.has(LANGUAGE)
+  expectedLanguageSetting.value?.let { language ->
+    isLocalizationSet = !language
   }
+  val expectedWorldviewSetting = settingsServiceInterface.has(WORLDVIEW)
+  expectedWorldviewSetting.value?.let { worldview ->
+    isLocalizationSet = !worldview
+  }
+
+  listener.invoke(isLocalizationSet)
 }
 
 private fun convertExpression(language: String, layer: SymbolLayer, textField: Expression?) {
@@ -143,3 +124,4 @@ private const val STREET_V7 = "mapbox.mapbox-streets-v7"
 private const val STREET_V8 = "mapbox.mapbox-streets-v8"
 private val EXPRESSION_REGEX = Regex("\\[\"get\",\\s*\"(name_.{2,7})\"\\]")
 private val EXPRESSION_ABBR_REGEX = Regex("\\[\"get\",\\s*\"abbr\"\\]")
+private const val LOCALIZATION_THREAD = "localization_thread"

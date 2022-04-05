@@ -12,25 +12,19 @@ import com.mapbox.bindgen.None
 import com.mapbox.common.SettingsServiceFactory
 import com.mapbox.common.SettingsServiceInterface
 import com.mapbox.common.SettingsServiceStorageType
-import com.mapbox.maps.extension.style.sources.generated.vectorSource
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.observable.eventdata.MapLoadingErrorEventData
 import com.mapbox.maps.extension.observable.model.MapLoadErrorType
-import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityLocalizationSettingBinding
 import java.util.*
 import com.mapbox.common.MapboxCommonSettings.LANGUAGE
 import com.mapbox.common.MapboxCommonSettings.WORLDVIEW
-import com.mapbox.maps.Style
-import kotlinx.coroutines.*
-import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
 
 /**
- * An example to shows how to set Language and Worldview settings with new settings api.
+ * An example to shows how to set Language and Worldview settings with settings api.
  * When set, the tiles will be loaded in localized language / worldview if the query
  * parameters are supported.
  *
@@ -38,7 +32,7 @@ import kotlin.coroutines.CoroutineContext
  * and set [MapboxCommonSettings.LANGAUGE] or [MapboxCommonSettings.WORLDVIEW].
  *
  * [SettingsServiceInterface] stores the provided language/worldview as key:value pair in DataStore
- * and try to apply it to the tiles.if the values are supported,
+ * and try to apply it to the tiles. If the values are supported,
  * the localized tiles will be reloaded on to the map,
  * else server will emit 400 error which can be listen using [OnMapLoadErrorListener] event.
  *
@@ -47,25 +41,22 @@ import kotlin.coroutines.CoroutineContext
  * This is currently an opt-in and experimental feature, i.e. some styles could have a minor visual changes.
  *
  * Previous localization functionality using [StyleInterface.localizeLabel] will not work with the new settings api.
- * it will be deprecated in the future in order to benefit from more languages and additional worldview support.
- * In case If you don't want to use server side localization and its already set, it can be removed
+ * It will be deprecated in the future in order to benefit from more languages and additional worldview support.
+ * In case you don't want to use server-side localization and it's already set, it can be removed
  * using [SettingsServiceInterface.erase] function.
  */
-class LocalizationSettingsActivity : AppCompatActivity(), OnMapLoadErrorListener, CoroutineScope {
+class LocalizationSettingsActivity : AppCompatActivity(), OnMapLoadErrorListener {
   private lateinit var mapboxMap: MapboxMap
   private lateinit var languageSpinner: Spinner
   private lateinit var worldViewSpinner: Spinner
-  private val supportedLanguageList = mutableListOf<LocalizationData>()
-  private val supportedWorldviewList = mutableListOf<LocalizationData>()
-  private val job = Job()
 
   /**
    * In order to update localization settings, Initialize settings interface as a Persistent.
    * the language and worldview changes will persist across application lifecycle.
    */
-  private val settingsServiceInterface: SettingsServiceInterface by lazy {
+  private val settingsService: SettingsServiceInterface by lazy {
     SettingsServiceFactory.getInstance(
-      SettingsServiceStorageType.PERSISTENT
+      SettingsServiceStorageType.NON_PERSISTENT
     )
   }
 
@@ -77,7 +68,11 @@ class LocalizationSettingsActivity : AppCompatActivity(), OnMapLoadErrorListener
     languageSpinner = binding.languageView
     worldViewSpinner = binding.worldView
     mapboxMap = binding.mapView.getMapboxMap()
-    init()
+
+    mapboxMap.addOnMapLoadErrorListener(this)
+    mapboxMap.loadStyleUri(STYLE_URI)
+    getLanguageAndWorldViewSettings()
+    initSpinners()
 
     // check applied settings
     binding.buttonCheck.setOnClickListener {
@@ -85,25 +80,12 @@ class LocalizationSettingsActivity : AppCompatActivity(), OnMapLoadErrorListener
     }
   }
 
-  private fun init() {
-    mapboxMap.addOnMapLoadErrorListener(this)
-    mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) { style ->
-      val source = vectorSource(SOURCE_ID) {
-        url("mapbox://mapbox.mapbox-terrain-v2")
-      }
-      style.addSource(source)
-    }
-    createLocalizationData()
-    getLanguageAndWorldViewSettings()
-    initSpinners()
-  }
-
   /**
    * Set language by providing the string value for language in BCP-47 format.
    * Settings set/get are synchronous, make sure to run it on background thread.
    */
   private fun setLanguage(language: String): Expected<String, None> {
-    return settingsServiceInterface.set(LANGUAGE, Value(language))
+    return settingsService.set(LANGUAGE, Value(language))
   }
 
   /**
@@ -111,7 +93,7 @@ class LocalizationSettingsActivity : AppCompatActivity(), OnMapLoadErrorListener
    * Settings set/get are synchronous, make sure to run it on background thread.
    */
   private fun setWorldView(worldView: String): Expected<String, None> {
-    return settingsServiceInterface.set(WORLDVIEW, Value(worldView))
+    return settingsService.set(WORLDVIEW, Value(worldView))
   }
 
   /**
@@ -119,7 +101,7 @@ class LocalizationSettingsActivity : AppCompatActivity(), OnMapLoadErrorListener
    * Settings set/get are synchronous, make sure to run it on background thread.
    */
   private fun getLanguageSettings(): Expected<String, Value> {
-    return settingsServiceInterface.get(LANGUAGE)
+    return settingsService.get(LANGUAGE)
   }
 
   /**
@@ -127,27 +109,25 @@ class LocalizationSettingsActivity : AppCompatActivity(), OnMapLoadErrorListener
    * Settings set/get are synchronous, make sure to run it on background thread.
    */
   private fun getWorldViewSettings(): Expected<String, Value> {
-    return settingsServiceInterface.get(WORLDVIEW)
+    return settingsService.get(WORLDVIEW)
   }
 
   /**
    * Get language and worldview settings from SettingsInterface.
    */
   private fun getLanguageAndWorldViewSettings() {
-    launch(Dispatchers.IO) {
-      val language: Expected<String, Value> = getLanguageSettings()
-      if (language.isError) {
-        Log.e(TAG, " Error getting language ${language.error}")
-      } else {
-        Log.d(TAG, " Current language = ${language.value}")
-      }
+    val language: Expected<String, Value> = getLanguageSettings()
+    if (language.isError) {
+      Log.e(TAG, " Error getting language ${language.error}")
+    } else {
+      Log.d(TAG, " Current language = ${language.value}")
+    }
 
-      val worldview: Expected<String, Value> = getWorldViewSettings()
-      if (worldview.isError) {
-        Log.e(TAG, " Error getting worldview ${worldview.error}")
-      } else {
-        Log.d(TAG, " Current worldview = ${worldview.value}")
-      }
+    val worldview: Expected<String, Value> = getWorldViewSettings()
+    if (worldview.isError) {
+      Log.e(TAG, " Error getting worldview ${worldview.error}")
+    } else {
+      Log.d(TAG, " Current worldview = ${worldview.value}")
     }
   }
 
@@ -173,15 +153,13 @@ class LocalizationSettingsActivity : AppCompatActivity(), OnMapLoadErrorListener
       override fun onNothingSelected(parent: AdapterView<*>?) {}
 
       override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        val selectedTag = languageAdapter.getItem(position).tag
-        launch(Dispatchers.IO) {
-          val expected = setLanguage(selectedTag)
-          if (expected.isError) {
-            Log.d(
-              TAG,
-              "Failed to set language to dataStore. Error : ${expected.error}"
-            )
-          }
+        val selectedTag = languageAdapter.getItem(position).second
+        val expected = setLanguage(selectedTag)
+        if (expected.isError) {
+          Log.d(
+            TAG,
+            "Failed to set language to dataStore. Error : ${expected.error}"
+          )
         }
       }
     }
@@ -190,15 +168,13 @@ class LocalizationSettingsActivity : AppCompatActivity(), OnMapLoadErrorListener
       override fun onNothingSelected(parent: AdapterView<*>?) {}
 
       override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        val selectedTag = worldViewAdapter.getItem(position).tag
-        launch(Dispatchers.IO) {
-          val expected = setWorldView(selectedTag)
-          if (expected.isError) {
-            Log.d(
-              TAG,
-              "Failed to set worldview to dataStore. Error : ${expected.error}"
-            )
-          }
+        val selectedTag = worldViewAdapter.getItem(position).second
+        val expected = setWorldView(selectedTag)
+        if (expected.isError) {
+          Log.d(
+            TAG,
+            "Failed to set worldview to dataStore. Error : ${expected.error}"
+          )
         }
       }
     }
@@ -213,22 +189,17 @@ class LocalizationSettingsActivity : AppCompatActivity(), OnMapLoadErrorListener
     }
   }
 
-  private companion object {
-    const val TAG = "LocalizationActivity"
-    const val SOURCE_ID = "source-id"
-  }
-
   private class LocalizationAdapter(
     private val baseContext: Context,
     private val layoutResourceId: Int,
-    val localizationDataList: List<LocalizationData>
-  ) : ArrayAdapter<LocalizationData>(baseContext, layoutResourceId, localizationDataList) {
+    val localizationDataList: List<Pair<String, String>>
+  ) : ArrayAdapter<Pair<String, String>>(baseContext, layoutResourceId, localizationDataList) {
 
     override fun getCount(): Int {
       return localizationDataList.size
     }
 
-    override fun getItem(position: Int): LocalizationData {
+    override fun getItem(position: Int): Pair<String, String> {
       return localizationDataList[position]
     }
 
@@ -246,63 +217,50 @@ class LocalizationSettingsActivity : AppCompatActivity(), OnMapLoadErrorListener
       return view
     }
 
-    private fun setSpinnerText(view: View?, localizationData: LocalizationData) {
+    private fun setSpinnerText(view: View?, localizationData: Pair<String, String>) {
       view?.findViewById<TextView>(R.id.text_view_spinner)?.apply {
         text = baseContext.resources.getString(
           R.string.drop_down_text,
-          localizationData.description,
-          localizationData.tag
+          localizationData.first,
+          localizationData.second
         )
       }
     }
   }
 
-  override val coroutineContext: CoroutineContext
-    get() = job + Dispatchers.Default
-
-  /**
-   * Create a localization data that will populate in the drop down view.
-   * language is expected as BCP-47 tag, we extract the language tag from the [Locale] and set
-   * it to SettingsInterface method.
-   */
-  private fun createLocalizationData() {
-    supportedLanguageList.addAll(
-      listOf(
-        LocalizationData("English US", Locale.US.toLanguageTag()),
-        LocalizationData("English UK", Locale.UK.toLanguageTag()),
-        LocalizationData("French (France)", Locale.FRENCH.toLanguageTag()),
-        LocalizationData("French (Canada)", Locale.CANADA_FRENCH.toLanguageTag()),
-        LocalizationData("Japanese", Locale.JAPANESE.toLanguageTag()),
-        LocalizationData("Chinese Mainland", Locale.SIMPLIFIED_CHINESE.toLanguageTag()),
-        LocalizationData("Korean (Korea)", Locale.KOREAN.toLanguageTag()),
-        LocalizationData("Italian (Italy)", Locale.ITALY.toLanguageTag()),
-        LocalizationData("Korean (Korea)", Locale("ru", "RU").toLanguageTag()),
-        LocalizationData("Finnish (Finland)", Locale("fi", "FI").toLanguageTag()),
-        LocalizationData("Arabic (Saudi-Arabia)", Locale("ar", "SA").toLanguageTag()),
-        LocalizationData("Danish (Denmark)", Locale("da", "DK").toLanguageTag()),
-        LocalizationData("Spanish (Spain)", Locale("es", "ES").toLanguageTag()),
-        LocalizationData("Hindi (India)", Locale("hi", "IN").toLanguageTag()),
-        LocalizationData("Chinese (Hong-kong)", Locale("zh", "HK").toLanguageTag()),
-        LocalizationData("Bangla (Bangladesh)", Locale("bn", "BD").toLanguageTag())
-      )
+  private companion object {
+    const val TAG = "LocalizationActivity"
+    const val STYLE_URI = "mapbox://styles/alexshalamov/cl1g16tmo001414nmc992d6ox"
+    val supportedLanguageList = listOf(
+      Pair("English US", Locale.US.toLanguageTag()),
+      Pair("English UK", Locale.UK.toLanguageTag()),
+      Pair("French (France)", Locale.FRENCH.toLanguageTag()),
+      Pair("French (Canada)", Locale.CANADA_FRENCH.toLanguageTag()),
+      Pair("Japanese", Locale.JAPANESE.toLanguageTag()),
+      Pair("Chinese Mainland", Locale.SIMPLIFIED_CHINESE.toLanguageTag()),
+      Pair("Korean (Korea)", Locale.KOREAN.toLanguageTag()),
+      Pair("Italian (Italy)", Locale.ITALY.toLanguageTag()),
+      Pair("Korean (Korea)", Locale("ru", "RU").toLanguageTag()),
+      Pair("Finnish (Finland)", Locale("fi", "FI").toLanguageTag()),
+      Pair("Arabic (Saudi-Arabia)", Locale("ar", "SA").toLanguageTag()),
+      Pair("Danish (Denmark)", Locale("da", "DK").toLanguageTag()),
+      Pair("Spanish (Spain)", Locale("es", "ES").toLanguageTag()),
+      Pair("Hindi (India)", Locale("hi", "IN").toLanguageTag()),
+      Pair("Chinese (Hong-kong)", Locale("zh", "HK").toLanguageTag()),
+      Pair("Bangla (Bangladesh)", Locale("bn", "BD").toLanguageTag()),
+      // invalid languages
+      Pair("English (Invalid)", Locale("xx","US").toLanguageTag()),
+      Pair("Slovanian (Invalid)", Locale("slv", "SVN", "Latn").toLanguageTag())
     )
-
-    supportedWorldviewList.addAll(
-      listOf(
-        LocalizationData("Argentina", "AR"),
-        LocalizationData("China", "CN"),
-        LocalizationData("India", "IN"),
-        LocalizationData("Japan", "JP"),
-        LocalizationData("Morocco", "MA"),
-        LocalizationData("Russian Federation", "RU"),
-        LocalizationData("Turkey", "TR"),
-        LocalizationData("United States", "US"),
-      )
+    val supportedWorldviewList = listOf(
+      Pair("Argentina", "AR"),
+      Pair("China", "CN"),
+      Pair("India", "IN"),
+      Pair("Japan", "JP"),
+      Pair("Morocco", "MA"),
+      Pair("Russian Federation", "RU"),
+      Pair("Turkey", "TR"),
+      Pair("United States", "US"),
     )
   }
-
-  data class LocalizationData(
-    val description: String,
-    val tag: String
-  )
 }
