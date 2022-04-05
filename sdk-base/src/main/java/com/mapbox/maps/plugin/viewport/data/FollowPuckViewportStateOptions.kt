@@ -60,6 +60,7 @@ class FollowPuckViewportStateOptions private constructor(
    *
    * Defaults to [DEFAULT_STATE_ANIMATION_DURATION_MS] milliseconds
    */
+  @Deprecated("AnimationDurationMs is not needed any more, the transition will be handled properly internally.")
   val animationDurationMs: Long
 ) {
   /**
@@ -152,6 +153,7 @@ class FollowPuckViewportStateOptions private constructor(
      *
      * Defaults to [DEFAULT_STATE_ANIMATION_DURATION_MS] milliseconds
      */
+    @Deprecated("AnimationDurationMs is not needed any more, the transition will be handled properly internally.")
     fun animationDurationMs(duration: Long) = apply {
       this.animationDurationMs = duration
     }
