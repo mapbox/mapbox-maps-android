@@ -14,10 +14,18 @@
         mapbox:mapbox_cameraZoom="12" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/trimOffsetButton"
+        android:id="@+id/benchmarkOffsetButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/trim_offset"
+        android:text="@string/benchmark_trim_offset"
+        mapbox:layout_constraintBottom_toTopOf="@id/benchmarkExpressionButton"
+        mapbox:layout_constraintEnd_toEndOf="parent"
+        mapbox:layout_constraintStart_toStartOf="parent" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/benchmarkExpressionButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/benchmark_line_gradient_expression"
         mapbox:layout_constraintBottom_toBottomOf="parent"
         mapbox:layout_constraintEnd_toEndOf="parent"
         mapbox:layout_constraintStart_toStartOf="parent" />

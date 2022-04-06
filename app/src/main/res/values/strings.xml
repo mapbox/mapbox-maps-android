@@ -162,4 +162,6 @@
 
     <!-- Line trim offset -->
     <string name="trim_offset">Increase trim offset</string>
+    <string name="benchmark_trim_offset">Benchmark trim offset</string>
+    <string name="benchmark_line_gradient_expression">Benchmark Line gradient expression</string>
 </resources>
