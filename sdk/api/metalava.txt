@@ -65,9 +65,9 @@ package com.mapbox.maps {
 
   public static final class MapInitOptions.Companion {
     method public com.mapbox.maps.MapOptions getDefaultMapOptions(android.content.Context context);
-    method public error.NonExistentClass! getDefaultPluginList();
+    method public java.util.List<com.mapbox.maps.plugin.Plugin.Mapbox> getDefaultPluginList();
     method public com.mapbox.maps.ResourceOptions getDefaultResourceOptions(android.content.Context context);
-    property public final error.NonExistentClass! defaultPluginList;
+    property public final java.util.List<com.mapbox.maps.plugin.Plugin.Mapbox> defaultPluginList;
   }
 
   public final class MapInitOptionsKt {
@@ -90,7 +90,7 @@ package com.mapbox.maps {
     method public void onStop();
     method public boolean onTouchEvent(android.view.MotionEvent event);
     method public void queueEvent(Runnable event, boolean needRender);
-    method @com.mapbox.maps.MapboxExperimental public error.NonExistentClass! removeWidget(com.mapbox.maps.renderer.widget.Widget widget);
+    method @com.mapbox.maps.MapboxExperimental public boolean removeWidget(com.mapbox.maps.renderer.widget.Widget widget);
     method public void setMaximumFps(int fps);
     method public void setOnFpsChangedListener(com.mapbox.maps.renderer.OnFpsChangedListener listener);
     method public android.graphics.Bitmap? snapshot();
@@ -119,7 +119,7 @@ package com.mapbox.maps {
     method public void onStart();
     method public void onStop();
     method public void queueEvent(Runnable event, boolean needRender);
-    method @com.mapbox.maps.MapboxExperimental public error.NonExistentClass! removeWidget(com.mapbox.maps.renderer.widget.Widget widget);
+    method @com.mapbox.maps.MapboxExperimental public boolean removeWidget(com.mapbox.maps.renderer.widget.Widget widget);
     method public void setMaximumFps(@IntRange(from=1L, to=Int.MAX_VALUE.toLong()) int maximumFps);
     method public void setOnFpsChangedListener(com.mapbox.maps.renderer.OnFpsChangedListener listener);
     method public android.graphics.Bitmap? snapshot();
