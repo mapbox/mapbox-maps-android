@@ -3396,20 +3396,14 @@ public final class com/mapbox/maps/extension/style/light/generated/LightUtils {
 	public static final fun setLight (Lcom/mapbox/maps/extension/style/StyleInterface;Lcom/mapbox/maps/extension/style/StyleContract$StyleLightExtension;)V
 }
 
-public final class com/mapbox/maps/extension/style/projection/generated/Projection : com/mapbox/maps/extension/style/StyleContract$StyleProjectionExtension, com/mapbox/maps/extension/style/projection/generated/ProjectionDslReceiver {
-	public static final field TAG Ljava/lang/String;
+public final class com/mapbox/maps/extension/style/projection/generated/Projection : com/mapbox/maps/extension/style/StyleContract$StyleProjectionExtension {
 	public fun <init> (Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;)V
 	public fun bindTo (Lcom/mapbox/maps/extension/style/StyleInterface;)V
 	public final fun getName ()Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;
 }
 
-public abstract interface class com/mapbox/maps/extension/style/projection/generated/ProjectionDslReceiver {
-}
-
 public final class com/mapbox/maps/extension/style/projection/generated/ProjectionKt {
 	public static final fun projection (Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;)Lcom/mapbox/maps/extension/style/projection/generated/Projection;
-	public static final fun projection (Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/projection/generated/Projection;
-	public static synthetic fun projection$default (Lcom/mapbox/maps/extension/style/layers/properties/generated/ProjectionName;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/projection/generated/Projection;
 }
 
 public final class com/mapbox/maps/extension/style/projection/generated/StyleProjectionUtils {
@@ -3971,9 +3965,6 @@ public abstract interface annotation class com/mapbox/maps/extension/style/types
 }
 
 public abstract interface annotation class com/mapbox/maps/extension/style/types/LightDsl : java/lang/annotation/Annotation {
-}
-
-public abstract interface annotation class com/mapbox/maps/extension/style/types/ProjectionDsl : java/lang/annotation/Annotation {
 }
 
 public final class com/mapbox/maps/extension/style/types/PromoteId {

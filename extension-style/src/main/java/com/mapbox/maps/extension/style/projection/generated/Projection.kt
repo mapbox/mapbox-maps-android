@@ -2,7 +2,6 @@
 
 package com.mapbox.maps.extension.style.projection.generated
 
-import android.util.Log
 import androidx.annotation.UiThread
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxStyleException
@@ -10,16 +9,25 @@ import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
-import com.mapbox.maps.extension.style.types.ProjectionDsl
-import com.mapbox.maps.extension.style.utils.unwrap
 
 /**
  * A style's projection property sets which projection a map is rendered in.
+ * Mercator and Globe projections are supported.
+ *
+ * Globe projection is a custom map projection mode for rendering the map wrapped around a full 3D globe.
+ * Conceptually it is the undistorted and unskewed “ground truth” view of the map
+ * that preserves true proportions between different areas of the map.
+ *
+ * Some layers are not supported when map is in globe projection:
+ *  - custom
+ *  - location indicator
  *
  * @see [The online documentation](https://docs.mapbox.com/mapbox-gl-js/style-spec/projection/)
+ *
+ * @param name from [ProjectionName] enum
  */
 @UiThread
-class Projection(val name: ProjectionName) : ProjectionDslReceiver, StyleContract.StyleProjectionExtension {
+class Projection(val name: ProjectionName) : StyleContract.StyleProjectionExtension {
   private var delegate: StyleInterface? = null
   private val properties = HashMap<String, PropertyValue<*>>()
 
@@ -58,47 +66,13 @@ class Projection(val name: ProjectionName) : ProjectionDslReceiver, StyleContrac
       throw MapboxStyleException("Set projection property failed: $it")
     }
   }
-
-  private inline fun <reified T> getPropertyValue(propertyName: String): T? {
-    delegate?.let {
-      return try {
-        it.getStyleProjectionProperty(propertyName).unwrap()
-      } catch (e: RuntimeException) {
-        Log.e(TAG, "Get projection property failed: ${e.message}")
-        Log.e(TAG, it.getStyleProjectionProperty(propertyName).toString())
-        null
-      }
-    }
-    throw MapboxStyleException("Get property $propertyName failed: projection is not added to style yet.")
-  }
-
-  /**
-   * Static variables and methods.
-   */
-  private companion object {
-    const val TAG = "Mbgl-Projection"
-  }
 }
-
-/**
- * This Interface contains all the functions that will be exposed to Koltin DSL.
- *
- * Separated the DSL receiver class to this interface to avoid IDE code suggestion for
- * property getters.
- */
-@ProjectionDsl
-interface ProjectionDslReceiver
 
 /**
  * DSL function for [Projection].
  */
-@JvmOverloads
-fun projection(name: ProjectionName, block: (ProjectionDslReceiver.() -> Unit)? = null): Projection {
-  return if (block != null) {
-    Projection(name).apply(block)
-  } else {
-    Projection(name)
-  }
+fun projection(name: ProjectionName): Projection {
+  return Projection(name)
 }
 
 // End of generated file.

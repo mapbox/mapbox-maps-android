@@ -39,11 +39,3 @@ annotation class ExpressionDsl
  */
 @DslMarker
 annotation class TerrainDsl
-
-/**
- * Dsl marker for Projection.
- *
- * Controls the scope of the Projection Dsl.
- */
-@DslMarker
-annotation class ProjectionDsl
