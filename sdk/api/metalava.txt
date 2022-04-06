@@ -192,7 +192,6 @@ package com.mapbox.maps {
     method public void getGeoJsonClusterLeaves(String sourceIdentifier, com.mapbox.geojson.Feature cluster, long limit = 10L, com.mapbox.maps.QueryFeatureExtensionCallback callback);
     method public void getGeoJsonClusterLeaves(String sourceIdentifier, com.mapbox.geojson.Feature cluster, com.mapbox.maps.QueryFeatureExtensionCallback callback);
     method public com.mapbox.maps.MapOptions getMapOptions();
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.MapProjection getMapProjection();
     method public double getMetersPerPixelAtLatitude(double latitude, double zoom);
     method public double getMetersPerPixelAtLatitude(double latitude);
     method public byte getPrefetchZoomDelta();
@@ -252,7 +251,6 @@ package com.mapbox.maps {
     method public void setFeatureState(String sourceId, String? sourceLayerId = null, String featureId, com.mapbox.bindgen.Value state);
     method public void setFeatureState(String sourceId, String featureId, com.mapbox.bindgen.Value state);
     method public void setGestureInProgress(boolean inProgress);
-    method @com.mapbox.maps.MapboxExperimental public void setMapProjection(com.mapbox.maps.plugin.MapProjection mapProjection);
     method @com.mapbox.maps.MapboxExperimental public void setMemoryBudget(com.mapbox.maps.MapMemoryBudget? memoryBudget);
     method public void setNorthOrientation(com.mapbox.maps.NorthOrientation northOrientation);
     method public void setPrefetchZoomDelta(byte delta);
@@ -366,6 +364,7 @@ package com.mapbox.maps {
     method public com.mapbox.maps.StylePropertyValue getStyleLayerProperty(String layerId, String property);
     method public java.util.List<com.mapbox.maps.StyleObjectInfo> getStyleLayers();
     method public com.mapbox.maps.StylePropertyValue getStyleLightProperty(String property);
+    method public com.mapbox.maps.StylePropertyValue getStyleProjectionProperty(String property);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.Value> getStyleSourceProperties(String sourceId);
     method public com.mapbox.maps.StylePropertyValue getStyleSourceProperty(String sourceId, String property);
     method public java.util.List<com.mapbox.maps.StyleObjectInfo> getStyleSources();
@@ -389,6 +388,8 @@ package com.mapbox.maps {
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLayerProperty(String layerId, String property, com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLight(com.mapbox.bindgen.Value parameters);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleLightProperty(String id, com.mapbox.bindgen.Value light);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleProjection(com.mapbox.bindgen.Value properties);
+    method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleProjectionProperty(String property, com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleSourceProperties(String sourceId, com.mapbox.bindgen.Value properties);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleSourceProperty(String sourceId, String property, com.mapbox.bindgen.Value value);
     method public com.mapbox.bindgen.Expected<java.lang.String,com.mapbox.bindgen.None> setStyleTerrain(com.mapbox.bindgen.Value properties);

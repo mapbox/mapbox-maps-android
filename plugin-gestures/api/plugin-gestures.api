@@ -1,4 +1,4 @@
-public final class com/mapbox/maps/plugin/gestures/GesturesPluginImpl : com/mapbox/maps/plugin/gestures/generated/GesturesSettingsBase, com/mapbox/maps/plugin/gestures/GesturesPlugin {
+public final class com/mapbox/maps/plugin/gestures/GesturesPluginImpl : com/mapbox/maps/plugin/gestures/generated/GesturesSettingsBase, com/mapbox/maps/plugin/MapStyleObserverPlugin, com/mapbox/maps/plugin/gestures/GesturesPlugin {
 	public static final field MAX_SHOVE_ANGLE F
 	public static final field ROTATION_ANGLE_THRESHOLD F
 	public fun <init> (Landroid/content/Context;F)V
@@ -18,6 +18,7 @@ public final class com/mapbox/maps/plugin/gestures/GesturesPluginImpl : com/mapb
 	public fun onDelegateProvider (Lcom/mapbox/maps/plugin/delegates/MapDelegateProvider;)V
 	public fun onGenericMotionEvent (Landroid/view/MotionEvent;)Z
 	public fun onSizeChanged (II)V
+	public fun onStyleChanged (Lcom/mapbox/maps/extension/style/StyleInterface;)V
 	public fun onTouchEvent (Landroid/view/MotionEvent;)Z
 	public fun removeOnFlingListener (Lcom/mapbox/maps/plugin/gestures/OnFlingListener;)V
 	public fun removeOnMapClickListener (Lcom/mapbox/maps/plugin/gestures/OnMapClickListener;)V

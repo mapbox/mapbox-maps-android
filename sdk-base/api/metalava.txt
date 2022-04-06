@@ -493,6 +493,7 @@ package com.mapbox.maps.extension.style {
     method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleImageExtension> getImages();
     method public java.util.List<kotlin.Pair<com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension,com.mapbox.maps.LayerPosition>> getLayers();
     method public com.mapbox.maps.extension.style.StyleContract.StyleLightExtension? getLight();
+    method public com.mapbox.maps.extension.style.StyleContract.StyleProjectionExtension? getProjection();
     method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleSourceExtension> getSources();
     method public String getStyleUri();
     method public com.mapbox.maps.extension.style.StyleContract.StyleTerrainExtension? getTerrain();
@@ -513,6 +514,10 @@ package com.mapbox.maps.extension.style {
   }
 
   public static fun interface StyleContract.StyleLightExtension {
+    method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
+  }
+
+  public static fun interface StyleContract.StyleProjectionExtension {
     method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
   }
 
@@ -635,22 +640,6 @@ package com.mapbox.maps.plugin {
     method public default void cleanup();
     method public default void initialize();
     method public default void onDelegateProvider(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider);
-  }
-
-  @com.mapbox.maps.MapboxExperimental public abstract sealed class MapProjection {
-    field public static final com.mapbox.maps.plugin.MapProjection.Companion Companion;
-    field public static final double TRANSITION_ZOOM_LEVEL = 5.0;
-  }
-
-  public static final class MapProjection.Companion {
-  }
-
-  public static final class MapProjection.Globe extends com.mapbox.maps.plugin.MapProjection {
-    field public static final com.mapbox.maps.plugin.MapProjection.Globe INSTANCE;
-  }
-
-  public static final class MapProjection.Mercator extends com.mapbox.maps.plugin.MapProjection {
-    field public static final com.mapbox.maps.plugin.MapProjection.Mercator INSTANCE;
   }
 
   public interface MapSizePlugin {
@@ -1535,12 +1524,10 @@ package com.mapbox.maps.plugin.delegates {
 
   public interface MapProjectionDelegate {
     method public com.mapbox.geojson.Point coordinateForProjectedMeters(com.mapbox.maps.ProjectedMeters projectedMeters);
-    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.MapProjection getMapProjection();
     method public double getMetersPerPixelAtLatitude(double latitude, double zoom);
     method public double getMetersPerPixelAtLatitude(double latitude);
     method public com.mapbox.maps.MercatorCoordinate project(com.mapbox.geojson.Point point, double zoomScale);
     method public com.mapbox.maps.ProjectedMeters projectedMetersForCoordinate(com.mapbox.geojson.Point point);
-    method @com.mapbox.maps.MapboxExperimental public void setMapProjection(com.mapbox.maps.plugin.MapProjection mapProjection);
     method public com.mapbox.geojson.Point unproject(com.mapbox.maps.MercatorCoordinate coordinate, double zoomScale);
   }
 

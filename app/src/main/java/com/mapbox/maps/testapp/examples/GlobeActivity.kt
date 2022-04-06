@@ -12,9 +12,12 @@ import com.mapbox.maps.extension.style.expressions.dsl.generated.eq
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.generated.fillExtrusionLayer
 import com.mapbox.maps.extension.style.layers.generated.skyLayer
+import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 import com.mapbox.maps.extension.style.layers.properties.generated.SkyType
+import com.mapbox.maps.extension.style.projection.generated.getProjection
+import com.mapbox.maps.extension.style.projection.generated.projection
+import com.mapbox.maps.extension.style.projection.generated.setProjection
 import com.mapbox.maps.extension.style.style
-import com.mapbox.maps.plugin.MapProjection
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.testapp.R
@@ -30,9 +33,9 @@ class GlobeActivity : AppCompatActivity() {
 
   /**
    * Current projection.
-   * However depending on zoom level actual projection may be mercator even if [currentProjection] is Globe.
+   * However depending on zoom level actual projection may be mercator even if [currentProjectionName] is Globe.
    */
-  private var currentProjection: MapProjection = MapProjection.Globe
+  private var currentProjectionName: ProjectionName = ProjectionName.GLOBE
   private lateinit var mapboxMap: MapboxMap
   private lateinit var infoTextView: TextView
 
@@ -43,7 +46,6 @@ class GlobeActivity : AppCompatActivity() {
 
     infoTextView = binding.infoText
     mapboxMap = binding.mapView.getMapboxMap().apply {
-      setMapProjection(currentProjection)
       loadStyle(
         style(Style.TRAFFIC_DAY) {
           +fillExtrusionLayer("3d-buildings", "composite") {
@@ -64,19 +66,22 @@ class GlobeActivity : AppCompatActivity() {
             skyType(SkyType.ATMOSPHERE)
             skyAtmosphereSun(listOf(15.0, 89.5))
           }
+          +projection(currentProjectionName)
         }
       )
     }
 
     binding.switchProjectionBtn.setOnClickListener {
-      val newProjection = if (currentProjection === MapProjection.Globe) {
-        MapProjection.Mercator
+      val newProjection = if (currentProjectionName === ProjectionName.GLOBE) {
+        ProjectionName.MERCATOR
       } else {
-        MapProjection.Globe
+        ProjectionName.GLOBE
       }
-      mapboxMap.setMapProjection(newProjection)
-      currentProjection = newProjection
-      updateInfoText(mapboxMap.cameraState.zoom)
+      mapboxMap.getStyle { style ->
+        style.setProjection(projection(newProjection))
+        currentProjectionName = newProjection
+        updateInfoText(mapboxMap.cameraState.zoom)
+      }
     }
 
     binding.flyToBtn.setOnClickListener {
@@ -110,12 +115,14 @@ class GlobeActivity : AppCompatActivity() {
   }
 
   private fun updateInfoText(zoom: Double) {
-    infoTextView.text = getString(
-      R.string.info_text,
-      "%.2f".format(zoom.toFloat()),
-      mapboxMap.getMapProjection(),
-      currentProjection
-    )
+    mapboxMap.getStyle {
+      infoTextView.text = getString(
+        R.string.info_text,
+        "%.2f".format(zoom.toFloat()),
+        it.getProjection().name?.value,
+        currentProjectionName.value
+      )
+    }
   }
 
   companion object {

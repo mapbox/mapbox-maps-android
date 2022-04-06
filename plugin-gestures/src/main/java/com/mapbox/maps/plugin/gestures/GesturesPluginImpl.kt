@@ -17,8 +17,10 @@ import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.mapbox.android.gestures.*
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.StylePropertyValueKind
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
-import com.mapbox.maps.plugin.MapProjection
+import com.mapbox.maps.plugin.MapStyleObserverPlugin
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
@@ -41,12 +43,13 @@ import kotlin.math.*
 /**
  * Manages gestures events on a MapView.
  */
-class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
+class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserverPlugin {
 
   private val context: Context
   private var pixelRatio: Float = 1f
 
   private lateinit var gesturesManager: AndroidGesturesManager
+  private var style: StyleInterface? = null
 
   private lateinit var mapTransformDelegate: MapTransformDelegate
   private lateinit var mapCameraManagerDelegate: MapCameraManagerDelegate
@@ -154,6 +157,21 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
 
   @VisibleForTesting
   internal constructor(
+    context: Context,
+    attributeSet: AttributeSet,
+    style: StyleInterface
+  ) {
+    this.context = context
+    this.pixelRatio = 1.0f
+    internalSettings =
+      GesturesAttributeParser.parseGesturesSettings(context, attributeSet, pixelRatio)
+    mainHandler = Handler(Looper.getMainLooper())
+    this.style = style
+  }
+
+  @VisibleForTesting
+  internal constructor(
+
     context: Context,
     attributeSet: AttributeSet,
     pixelRatio: Float,
@@ -1321,8 +1339,19 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
   internal fun isPointAboveHorizon(
     pixel: ScreenCoordinate
   ): Boolean {
-    if (mapProjectionDelegate.getMapProjection() != MapProjection.Mercator) {
-      return false
+    // as we don't depend on style extension - working with raw values here
+    style?.getStyleProjectionProperty("name").apply {
+      if (this == null) {
+        return false
+      }
+      val currentProjection = if (kind == StylePropertyValueKind.UNDEFINED) {
+        "MERCATOR"
+      } else {
+        (value.contents as String).uppercase()
+      }
+      if (currentProjection != "MERCATOR") {
+        return false
+      }
     }
     // Prevent drag start in area around horizon to avoid sharp map movements
     val topMapMargin = 0.04 * mapTransformDelegate.getSize().height
@@ -1623,6 +1652,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
    * Called when the map is destroyed. Should be used to cleanup plugin resources for that map.
    */
   override fun cleanup() {
+    style = null
     protectedCameraAnimatorOwners.clear()
     mainHandler?.removeCallbacksAndMessages(null)
     animationsTimeoutHandler.removeCallbacksAndMessages(null)
@@ -1656,6 +1686,9 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
    * Provides all map delegate instances.
    */
   override fun onDelegateProvider(delegateProvider: MapDelegateProvider) {
+    delegateProvider.getStyle {
+      this.style = it
+    }
     this.mapTransformDelegate = delegateProvider.mapTransformDelegate
     this.mapCameraManagerDelegate = delegateProvider.mapCameraManagerDelegate
     this.mapProjectionDelegate = delegateProvider.mapProjectionDelegate
@@ -1667,6 +1700,13 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
       "Can't look up an instance of plugin, " +
         "is it available on the clazz path and loaded through the map?"
     )
+  }
+
+  /**
+   * Called when new style is loaded.
+   */
+  override fun onStyleChanged(styleDelegate: StyleInterface) {
+    style = styleDelegate
   }
 
   /**

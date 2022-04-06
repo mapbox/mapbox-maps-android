@@ -18,7 +18,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # 10.5.0-beta.1 April 7, 2022
 ## Breaking changes ⚠️
-* Map projection API moved from Map to Style, in order to allow specifying the map projection in the style. ([#1244](https://github.com/mapbox/mapbox-maps-android/pull/1244))
+* Experimental methods `MapboxMap#setMapProjection` / `MapboxMap#getMapProjection` are removed and should be replaced with `StyleInterface#setProjection` / `StyleInterface#getProjection`. Setting projection supports Style DSL as well. ([#1255](https://github.com/mapbox/mapbox-maps-android/pull/1255))
 
 ## Features ✨ and improvements 🏁
 * Map render call optimized further by further reducing computational overhead. ([#1244](https://github.com/mapbox/mapbox-maps-android/pull/1244))

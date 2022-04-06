@@ -13,14 +13,10 @@ import android.view.MotionEvent.*
 import androidx.test.core.view.PointerCoordsBuilder
 import androidx.test.core.view.PointerPropertiesBuilder
 import com.mapbox.android.gestures.*
+import com.mapbox.bindgen.Value
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.CameraState
-import com.mapbox.maps.EdgeInsets
-import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.ScreenCoordinate
-import com.mapbox.maps.Size
-import com.mapbox.maps.plugin.MapProjection
+import com.mapbox.maps.*
+import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.plugin.ScrollMode
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
@@ -95,7 +91,6 @@ class GesturesPluginTest {
     every { mapDelegateProvider.mapTransformDelegate } returns mapTransformDelegate
     every { mapDelegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
     every { mapDelegateProvider.mapProjectionDelegate } returns mapProjectionDelegate
-    every { mapProjectionDelegate.getMapProjection() } returns MapProjection.Mercator
     every { mapPluginProviderDelegate.getPlugin<CameraAnimationsPlugin>(Plugin.MAPBOX_CAMERA_PLUGIN_ID) } returns cameraAnimationsPlugin
 
     every { mapTransformDelegate.getSize() } returns Size(100.0f, 100.0f)
@@ -104,13 +99,18 @@ class GesturesPluginTest {
       0.0,
       -10.0
     )
+    val style = mockk<StyleInterface>()
+    every { style.getStyleProjectionProperty("name") } returns StylePropertyValue(
+      Value.valueOf("mercator"),
+      StylePropertyValueKind.CONSTANT
+    )
 
     every { motionEvent1.x } returns 0.0f
     every { motionEvent1.y } returns 0.0f
     every { motionEvent2.x } returns 0.0f
     every { motionEvent2.y } returns 0.0f
 
-    presenter = GesturesPluginImpl(context, attrs, mockk(relaxed = true))
+    presenter = GesturesPluginImpl(context, attrs, style)
 
     presenter.bind(context, gesturesManager, attrs, 1f)
     presenter.onDelegateProvider(mapDelegateProvider)
@@ -887,7 +887,7 @@ class GesturesPluginTest {
 @RunWith(ParameterizedRobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
 class IsPointAboveHorizonTest(
-  private val testProjection: MapProjection,
+  private val testProjectionStylePropertyValue: StylePropertyValue?,
   private val testScreenCoordinate: ScreenCoordinate,
   private val testMapSize: Size,
   private val testPixelForCoordinate: ScreenCoordinate,
@@ -902,6 +902,7 @@ class IsPointAboveHorizonTest(
   private val mapPluginProviderDelegate: MapPluginProviderDelegate = mockk(relaxUnitFun = true)
   private val mapProjectionDelegate: MapProjectionDelegate = mockk(relaxUnitFun = true)
   private val cameraAnimationsPlugin: CameraAnimationsPlugin = mockk(relaxed = true)
+  private val style: StyleInterface? = mockk()
 
   private lateinit var presenter: GesturesPluginImpl
 
@@ -934,12 +935,12 @@ class IsPointAboveHorizonTest(
     every { mapDelegateProvider.mapProjectionDelegate } returns mapProjectionDelegate
     every { mapDelegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
     every { mapPluginProviderDelegate.getPlugin<CameraAnimationsPlugin>(Plugin.MAPBOX_CAMERA_PLUGIN_ID) } returns cameraAnimationsPlugin
-    every { mapProjectionDelegate.getMapProjection() } returns testProjection
+    every { style?.getStyleProjectionProperty("name") } returns testProjectionStylePropertyValue
     every { mapTransformDelegate.getSize() } returns testMapSize
     every { mapCameraManagerDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
     every { mapCameraManagerDelegate.pixelForCoordinate(any()) } returns testPixelForCoordinate
 
-    presenter = GesturesPluginImpl(context, attrs, mockk(relaxed = true))
+    presenter = GesturesPluginImpl(context, attrs, style!!)
     presenter.bind(context, gesturesManager, attrs, 1f)
     presenter.onDelegateProvider(mapDelegateProvider)
     presenter.initialize()
@@ -1021,56 +1022,97 @@ class IsPointAboveHorizonTest(
     @ParameterizedRobolectricTestRunner.Parameters(name = "IsPointAboveHorizon using {0} projection at {1}, with MapSize {2}, testPixelForCoordinate {3} should be {4}")
     fun data() = listOf(
       arrayOf(
-        MapProjection.Globe,
+        StylePropertyValue(
+          Value.valueOf("globe"),
+          StylePropertyValueKind.CONSTANT
+        ),
         ScreenCoordinate(0.0, 0.0),
         Size(100f, 100f),
         ScreenCoordinate(0.0, 0.0),
         false
       ),
       arrayOf(
-        MapProjection.Mercator,
+        StylePropertyValue(
+          Value.valueOf("mercator"),
+          StylePropertyValueKind.CONSTANT
+        ),
         ScreenCoordinate(0.0, 0.0),
         Size(100f, 100f),
         ScreenCoordinate(0.0, 0.0),
         true
       ),
       arrayOf(
-        MapProjection.Mercator,
+        StylePropertyValue(
+          Value.valueOf("any"),
+          StylePropertyValueKind.UNDEFINED
+        ),
+        ScreenCoordinate(0.0, 0.0),
+        Size(100f, 100f),
+        ScreenCoordinate(0.0, 0.0),
+        true
+      ),
+      arrayOf(
+        null,
+        ScreenCoordinate(0.0, 0.0),
+        Size(100f, 100f),
+        ScreenCoordinate(0.0, 0.0),
+        false
+      ),
+      arrayOf(
+        StylePropertyValue(
+          Value.valueOf("mercator"),
+          StylePropertyValueKind.CONSTANT
+        ),
         ScreenCoordinate(0.0, 2.0),
         Size(100f, 100f),
         ScreenCoordinate(0.0, 0.0),
         true
       ),
       arrayOf(
-        MapProjection.Mercator,
+        StylePropertyValue(
+          Value.valueOf("mercator"),
+          StylePropertyValueKind.CONSTANT
+        ),
         ScreenCoordinate(0.0, 3.0),
         Size(100f, 100f),
         ScreenCoordinate(0.0, 0.0),
         false
       ),
       arrayOf(
-        MapProjection.Mercator,
+        StylePropertyValue(
+          Value.valueOf("mercator"),
+          StylePropertyValueKind.CONSTANT
+        ),
         ScreenCoordinate(0.0, 10.0),
         Size(500f, 500f),
         ScreenCoordinate(0.0, 0.0),
         true
       ),
       arrayOf(
-        MapProjection.Mercator,
+        StylePropertyValue(
+          Value.valueOf("mercator"),
+          StylePropertyValueKind.CONSTANT
+        ),
         ScreenCoordinate(0.0, 11.0),
         Size(500f, 500f),
         ScreenCoordinate(0.0, 0.0),
         false
       ),
       arrayOf(
-        MapProjection.Mercator,
+        StylePropertyValue(
+          Value.valueOf("mercator"),
+          StylePropertyValueKind.CONSTANT
+        ),
         ScreenCoordinate(0.0, 10.0),
         Size(1000f, 1000f),
         ScreenCoordinate(0.0, 0.0),
         true
       ),
       arrayOf(
-        MapProjection.Mercator,
+        StylePropertyValue(
+          Value.valueOf("mercator"),
+          StylePropertyValueKind.CONSTANT
+        ),
         ScreenCoordinate(0.0, 11.0),
         Size(500f, 500f),
         ScreenCoordinate(0.0, 0.0),
@@ -1134,7 +1176,6 @@ class FlingGestureTest(
     every { mapDelegateProvider.mapPluginProviderDelegate } returns mapPluginProviderDelegate
     every { mapDelegateProvider.mapProjectionDelegate } returns mapProjectionDelegate
     every { mapPluginProviderDelegate.getPlugin<CameraAnimationsPlugin>(Plugin.MAPBOX_CAMERA_PLUGIN_ID) } returns cameraAnimationsPlugin
-    every { mapProjectionDelegate.getMapProjection() } returns MapProjection.Mercator
     every { mapTransformDelegate.getSize() } returns Size(100.0f, 100.0f)
     every { mapCameraManagerDelegate.coordinateForPixel(any()) } returns Point.fromLngLat(0.0, 0.0)
     // Make sure isPointAboveHorizon return false
@@ -1142,8 +1183,13 @@ class FlingGestureTest(
       0.0,
       -10.0
     )
+    val style = mockk<StyleInterface>()
+    every { style.getStyleProjectionProperty("name") } returns StylePropertyValue(
+      Value.valueOf("mercator"),
+      StylePropertyValueKind.CONSTANT
+    )
 
-    presenter = GesturesPluginImpl(context, attrs, mockk(relaxed = true))
+    presenter = GesturesPluginImpl(context, attrs, style)
 
     presenter.bind(context, gesturesManager, attrs, 1f)
     presenter.onDelegateProvider(mapDelegateProvider)

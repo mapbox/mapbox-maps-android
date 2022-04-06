@@ -4,7 +4,7 @@ package com.mapbox.maps.plugin.gestures {
   public final class GesturesConstantsKt {
   }
 
-  public final class GesturesPluginImpl extends com.mapbox.maps.plugin.gestures.generated.GesturesSettingsBase implements com.mapbox.maps.plugin.gestures.GesturesPlugin {
+  public final class GesturesPluginImpl extends com.mapbox.maps.plugin.gestures.generated.GesturesSettingsBase implements com.mapbox.maps.plugin.gestures.GesturesPlugin com.mapbox.maps.plugin.MapStyleObserverPlugin {
     ctor public GesturesPluginImpl(android.content.Context context, float pixelRatio);
     ctor public GesturesPluginImpl(android.content.Context context, android.util.AttributeSet attributeSet, float pixelRatio);
     method public void addOnFlingListener(com.mapbox.maps.plugin.gestures.OnFlingListener onFlingListener);
@@ -24,6 +24,7 @@ package com.mapbox.maps.plugin.gestures {
     method public void onDelegateProvider(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider);
     method public boolean onGenericMotionEvent(android.view.MotionEvent event);
     method public void onSizeChanged(int width, int height);
+    method public void onStyleChanged(com.mapbox.maps.extension.style.StyleInterface styleDelegate);
     method public boolean onTouchEvent(android.view.MotionEvent? motionEvent);
     method public void removeOnFlingListener(com.mapbox.maps.plugin.gestures.OnFlingListener onFlingListener);
     method public void removeOnMapClickListener(com.mapbox.maps.plugin.gestures.OnMapClickListener onMapClickListener);

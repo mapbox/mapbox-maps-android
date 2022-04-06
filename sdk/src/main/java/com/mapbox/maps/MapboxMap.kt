@@ -13,7 +13,6 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
-import com.mapbox.maps.plugin.MapProjection
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl
 import com.mapbox.maps.plugin.delegates.*
@@ -332,6 +331,7 @@ class MapboxMap :
     }
     styleExtension.light?.bindTo(style)
     styleExtension.terrain?.bindTo(style)
+    styleExtension.projection?.bindTo(style)
     onStyleLoaded?.onStyleLoaded(style)
   }
 
@@ -1681,35 +1681,6 @@ class MapboxMap :
     observers.clear()
     styleObserver.onDestroy()
     isMapValid = false
-  }
-
-  /**
-   * Set map projection for Mapbox map.
-   *
-   * @param mapProjection either [MapProjection.Globe] or [MapProjection.Mercator] projection that will be applied to Mapbox map.
-   */
-  @MapboxExperimental
-  override fun setMapProjection(mapProjection: MapProjection) {
-    checkNativeMap("setMapProjection")
-    val expected = nativeMap.setStyleProjection(Value.nullValue())
-    if (expected.isError) {
-      Logger.e(TAG_PROJECTION, "Map projection is not supported!")
-    }
-  }
-
-  /**
-   * Get current map projection for Mapbox map.
-   *
-   * Please note that even if MapboxMap is configured to use [MapProjection.Globe]
-   * starting from [MapProjection.TRANSITION_ZOOM_LEVEL] and above this method will return [MapProjection.Mercator].
-   *
-   * @see [MapProjection.TRANSITION_ZOOM_LEVEL]
-   * @return [MapProjection] map is using.
-   */
-  @MapboxExperimental
-  override fun getMapProjection(): MapProjection {
-    checkNativeMap("getMapProjection")
-    return MapProjection.Mercator
   }
 
   internal fun addViewAnnotation(

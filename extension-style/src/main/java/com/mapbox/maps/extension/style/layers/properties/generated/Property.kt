@@ -533,6 +533,22 @@ enum class Anchor(override val value: String) : LayerProperty {
    */
   VIEWPORT("viewport"),
 }
+// NAME: The name of the projection to be used for rendering the map.
+/**
+ * The name of the projection to be used for rendering the map.
+ *
+ * @param value String value of this property
+ */
+enum class ProjectionName(override val value: String) : LayerProperty {
+  /**
+   * The Mercator projection is the default projection.
+   */
+  MERCATOR("mercator"),
+  /**
+   * A globe projection.
+   */
+  GLOBE("globe"),
+}
 // TEXT_WRITING_MODE: The property allows control over a symbol's orientation. Note that the property values act as a hint, so that a symbol whose language doesn’t support the provided orientation will be laid out in its natural orientation. Example: English point symbol will be rendered horizontally even if array value contains single 'vertical' enum value. The order of elements in an array define priority order for the placement of an orientation variant.
 /**
  * The property allows control over a symbol's orientation. Note that the property values act as a hint, so that a symbol whose language doesn’t support the provided orientation will be laid out in its natural orientation. Example: English point symbol will be rendered horizontally even if array value contains single 'vertical' enum value. The order of elements in an array define priority order for the placement of an orientation variant.

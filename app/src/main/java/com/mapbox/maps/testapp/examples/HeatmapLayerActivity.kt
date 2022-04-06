@@ -11,10 +11,12 @@ import com.mapbox.maps.extension.style.layers.generated.CircleLayer
 import com.mapbox.maps.extension.style.layers.generated.HeatmapLayer
 import com.mapbox.maps.extension.style.layers.generated.circleLayer
 import com.mapbox.maps.extension.style.layers.generated.heatmapLayer
+import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
+import com.mapbox.maps.extension.style.projection.generated.projection
+import com.mapbox.maps.extension.style.projection.generated.setProjection
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
-import com.mapbox.maps.plugin.MapProjection
 import com.mapbox.maps.testapp.databinding.ActivityHeatmapLayerBinding
 
 /**
@@ -33,8 +35,10 @@ class HeatmapLayerActivity : AppCompatActivity() {
     mapboxMap = binding.mapView.getMapboxMap().apply {
       loadStyleUri(
         styleUri = Style.DARK
-      ) { style -> addRuntimeLayers(style) }
-      setMapProjection(MapProjection.Globe)
+      ) { style ->
+        style.setProjection(projection(ProjectionName.GLOBE))
+        addRuntimeLayers(style)
+      }
     }
   }
 

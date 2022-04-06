@@ -39,6 +39,11 @@ interface StyleContract {
      * The 3D terrain of the style.
      */
     val terrain: StyleTerrainExtension?
+
+    /**
+     * Map projection of the style.
+     */
+    val projection: StyleProjectionExtension?
   }
 
   /**
@@ -72,6 +77,18 @@ interface StyleContract {
   fun interface StyleTerrainExtension {
     /**
      * Bind the terrain to the Style.
+     *
+     * @param delegate The style delegate
+     */
+    fun bindTo(delegate: StyleInterface)
+  }
+
+  /**
+   * Define the interfaces for the Projection plugin.
+   */
+  fun interface StyleProjectionExtension {
+    /**
+     * Bind the projection to the Style.
      *
      * @param delegate The style delegate
      */
