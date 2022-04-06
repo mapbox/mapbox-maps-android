@@ -250,6 +250,8 @@ class FollowPuckViewportStateImplTest {
     every { animatorSet.addListener(any()) } just runs
     every { animatorSet.childAnimations } returns arrayListOf(animator)
     every { animatorSet.start() } just runs
+    every { animatorSet.setDuration(any()) } returns animatorSet
+    every { animatorSet.cancel() } just runs
     every { cameraPlugin.registerAnimators(any()) } just runs
     every { cameraPlugin.unregisterAnimators(any()) } just runs
 
@@ -275,14 +277,14 @@ class FollowPuckViewportStateImplTest {
       animatorSet.addListener(capture(animatorListenerSlot))
       animatorSet.childAnimations
       cameraPlugin.registerAnimators(animator)
+      animatorSet.duration = 0
       animatorSet.start()
     }
-    assertFalse(followingState.isFollowingStateRunning)
-    animatorListenerSlot.captured.onAnimationEnd(mockk())
     assertTrue(followingState.isFollowingStateRunning)
 
     // test stop updating camera
     followingState.stopUpdatingCamera()
+    verify { animatorSet.cancel() }
     verify {
       locationPlugin.removeOnIndicatorBearingChangedListener(
         indicatorBearingChangedListenerSlot.captured
