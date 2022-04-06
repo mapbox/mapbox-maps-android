@@ -145,13 +145,7 @@ internal class FollowPuckViewportStateImpl(
   override fun startUpdatingCamera() {
     checkLocationComponentEnablement()
     addIndicatorListenerIfNeeded()
-    updateFrame(
-      evaluateViewportData(), instant = false
-    ) { isFinished ->
-      if (isFinished) {
-        isFollowingStateRunning = true
-      }
-    }
+    isFollowingStateRunning = true
   }
 
   /**

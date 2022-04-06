@@ -3,9 +3,14 @@ package com.mapbox.maps.plugin.viewport.transition
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
+import androidx.core.animation.doOnEnd
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.CameraState
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.dsl.cameraOptions
+import com.mapbox.maps.plugin.animation.CameraAnimatorType
 import com.mapbox.maps.plugin.animation.Cancelable
+import com.mapbox.maps.plugin.animation.animator.CameraAnimator
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.viewport.CompletionListener
@@ -49,9 +54,17 @@ internal class DefaultViewportTransitionImpl(
     completionListener: CompletionListener
   ): Cancelable {
     var isCancelableCalled = false
+    var animatorSet: AnimatorSet? = null
+    val startCamera = cameraDelegate.cameraState
+    val completedChildAnimators = mutableSetOf<CameraAnimatorType>()
+    var keepObserving = true
     val cancelable = to.observeDataSource { cameraOptions ->
-      startAnimation(
-        createAnimatorSet(cameraOptions, options.maxDurationMs)
+      animatorSet?.updateTargetCameraOptions(
+        completedChildAnimators,
+        startCamera,
+        cameraOptions
+      ) ?: kotlin.run {
+        val initialAnimatorSet = createAnimatorSet(cameraOptions, options.maxDurationMs)
           .apply {
             addListener(
               object : Animator.AnimatorListener {
@@ -61,6 +74,7 @@ internal class DefaultViewportTransitionImpl(
                 }
 
                 override fun onAnimationEnd(animation: Animator?) {
+                  keepObserving = false
                   if (!isCancelableCalled) {
                     completionListener.onComplete(!isCanceled)
                   }
@@ -76,10 +90,15 @@ internal class DefaultViewportTransitionImpl(
                 }
               }
             )
-          },
-        instant = false
-      )
-      false
+          }
+        initialAnimatorSet.childAnimations.forEach {
+          val cameraAnimator = it as CameraAnimator<*>
+          cameraAnimator.doOnEnd { completedChildAnimators.add(cameraAnimator.type) }
+        }
+        startAnimation(initialAnimatorSet, instant = false)
+        animatorSet = initialAnimatorSet
+      }
+      keepObserving
     }
     return Cancelable {
       isCancelableCalled = true
@@ -137,5 +156,48 @@ internal class DefaultViewportTransitionImpl(
       runningAnimation = null
     }
     cameraPlugin.anchor = cachedAnchor
+  }
+
+  private fun AnimatorSet.updateTargetCameraOptions(
+    completedChildAnimators: Set<CameraAnimatorType>,
+    startCamera: CameraState,
+    targetCamera: CameraOptions
+  ) {
+    childAnimations.forEach {
+      val cameraAnimator = it as CameraAnimator<*>
+      when (cameraAnimator.type) {
+        CameraAnimatorType.ANCHOR -> return@forEach
+        CameraAnimatorType.BEARING ->
+          if (completedChildAnimators.contains(CameraAnimatorType.BEARING)) {
+            cameraDelegate.setCamera(cameraOptions { bearing(targetCamera.bearing) })
+          } else {
+            cameraAnimator.setObjectValues(startCamera.bearing, targetCamera.bearing)
+          }
+        CameraAnimatorType.CENTER ->
+          if (completedChildAnimators.contains(CameraAnimatorType.CENTER)) {
+            cameraDelegate.setCamera(cameraOptions { center(targetCamera.center) })
+          } else {
+            cameraAnimator.setObjectValues(startCamera.center, targetCamera.center)
+          }
+        CameraAnimatorType.ZOOM ->
+          if (completedChildAnimators.contains(CameraAnimatorType.ZOOM)) {
+            cameraDelegate.setCamera(cameraOptions { zoom(targetCamera.zoom) })
+          } else {
+            cameraAnimator.setObjectValues(startCamera.zoom, targetCamera.zoom)
+          }
+        CameraAnimatorType.PITCH ->
+          if (completedChildAnimators.contains(CameraAnimatorType.PITCH)) {
+            cameraDelegate.setCamera(cameraOptions { pitch(targetCamera.pitch) })
+          } else {
+            cameraAnimator.setObjectValues(startCamera.pitch, targetCamera.pitch)
+          }
+        CameraAnimatorType.PADDING ->
+          if (completedChildAnimators.contains(CameraAnimatorType.PADDING)) {
+            cameraDelegate.setCamera(cameraOptions { padding(targetCamera.padding) })
+          } else {
+            cameraAnimator.setObjectValues(startCamera.padding, targetCamera.padding)
+          }
+      }
+    }
   }
 }
