@@ -120,12 +120,13 @@ class DefaultViewportTransitionImplTest {
     animatorListenerSlot.captured.onAnimationEnd(animator)
     assertTrue(dataObserverSlot.captured.onNewData(cameraOptions))
     verify(exactly = 1) { animator.setObjectValues(0.0, 0.0) }
-    verify { mapCameraManagerDelegate.setCamera(cameraOptions { bearing(cameraOptions.bearing) }) }
+    verify(exactly = 1) { mapCameraManagerDelegate.setCamera(cameraOptions { bearing(cameraOptions.bearing) }) }
 
     // try to notify if animation is finished successfully
     animatorSetListenerSlot.captured.onAnimationEnd(mockk())
     // should stop observing data source and return false
     assertFalse(dataObserverSlot.captured.onNewData(cameraOptions))
+    verify(exactly = 2) { mapCameraManagerDelegate.setCamera(cameraOptions { bearing(cameraOptions.bearing) }) }
     // verify cleanup
     verify { cameraPlugin.unregisterAnimators(animator) }
     verify { completionListener.onComplete(true) }
@@ -160,8 +161,11 @@ class DefaultViewportTransitionImplTest {
     verify { cancelable.cancel() }
     animatorSetListenerSlot.captured.onAnimationCancel(animator)
     animatorSetListenerSlot.captured.onAnimationEnd(animator)
+    animatorListenerSlot.captured.onAnimationCancel(animator)
+    animatorListenerSlot.captured.onAnimationEnd(animator)
     // should stop observing data source and return false
     assertFalse(dataObserverSlot.captured.onNewData(cameraOptions))
+    verify(exactly = 0) { mapCameraManagerDelegate.setCamera(cameraOptions { bearing(cameraOptions.bearing) }) }
     verify { cameraPlugin.unregisterAnimators(animator) }
     verify { cameraPlugin.anchor = cachedAnchor }
   }

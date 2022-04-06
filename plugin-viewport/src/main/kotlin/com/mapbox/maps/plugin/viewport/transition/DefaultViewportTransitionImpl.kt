@@ -3,7 +3,6 @@ package com.mapbox.maps.plugin.viewport.transition
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
-import androidx.core.animation.doOnEnd
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.CameraState
 import com.mapbox.maps.ScreenCoordinate
@@ -93,7 +92,28 @@ internal class DefaultViewportTransitionImpl(
           }
         initialAnimatorSet.childAnimations.forEach {
           val cameraAnimator = it as CameraAnimator<*>
-          cameraAnimator.doOnEnd { completedChildAnimators.add(cameraAnimator.type) }
+          cameraAnimator.addListener(
+            object : Animator.AnimatorListener {
+              private var isCanceled = false
+              override fun onAnimationStart(p0: Animator?) {
+                // no-ops
+              }
+
+              override fun onAnimationEnd(p0: Animator?) {
+                if (!isCanceled) {
+                  completedChildAnimators.add(cameraAnimator.type)
+                }
+              }
+
+              override fun onAnimationCancel(p0: Animator?) {
+                isCanceled = true
+              }
+
+              override fun onAnimationRepeat(p0: Animator?) {
+                // no-ops
+              }
+            }
+          )
         }
         startAnimation(initialAnimatorSet, instant = false)
         animatorSet = initialAnimatorSet
@@ -102,6 +122,7 @@ internal class DefaultViewportTransitionImpl(
     }
     return Cancelable {
       isCancelableCalled = true
+      keepObserving = false
       cancelAnimation()
       cancelable.cancel()
     }
