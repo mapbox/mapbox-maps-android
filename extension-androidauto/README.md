@@ -32,11 +32,11 @@ allprojects {
 
 // In your build.gradle, add the extension with your other dependencies.
 dependencies {
-  implementation 'com.mapbox.extension:maps-androidauto:10.4.+'
+  implementation 'com.mapbox.extension:maps-androidauto:0.1.0'
 
-  // Pick your versions of mapbox map and android auto.
-  implementation 'androidx.car.app:app:1.+'
-  implementation 'com.mapbox.maps:android:10.4.+'
+  // Pick your versions of Android Mapbox Map SDK
+  // Note that some Android Auto features like Widgets requires a newer version of Android Mapbox Map SDK
+  implementation 'com.mapbox.maps:android:10.0.+'
 }
 ```
 
