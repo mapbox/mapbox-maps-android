@@ -25,7 +25,7 @@ dependencies {
   compileOnly(project(":sdk"))
   testImplementation(project(":sdk"))
 
-  implementation(Dependencies.googleCarAppLibrary)
+  api(Dependencies.googleCarAppLibrary)
   implementation(Dependencies.kotlin)
   implementation(Dependencies.androidxCoreKtx)
   implementation(Dependencies.androidxAnnotations)
