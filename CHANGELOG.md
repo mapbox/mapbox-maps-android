@@ -6,6 +6,7 @@ Mapbox welcomes participation and contributions from everyone.
 ## Features ✨ and improvements 🏁
 
 ## Bug fixes 🐞
+* Fix NaN latitude native crash rarely happening during `MapboxMap#flyTo`. ([#1271](https://github.com/mapbox/mapbox-maps-android/pull/1271))
 
 # 10.5.0-beta.1 April 7, 2022
 ## Breaking changes ⚠️

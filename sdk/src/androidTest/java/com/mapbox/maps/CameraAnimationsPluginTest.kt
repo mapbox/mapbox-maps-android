@@ -1,11 +1,13 @@
 package com.mapbox.maps
 
 import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import androidx.core.os.postDelayed
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.mapbox.common.Logger
@@ -794,6 +796,42 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
       assertEquals(7.0, mapView.getMapboxMap().cameraState.zoom, EPS)
       assertEquals(120.0, mapView.getMapboxMap().cameraState.bearing, EPS)
     } else {
+      throw TimeoutException()
+    }
+  }
+
+  // particular corner case test with big padding + zoom when projected points need to be considered being close
+  // if not handling infinity values correctly - this will result into java.lang.Error: latitude must not be NaN
+  @Test
+  fun testFlyToUnprojectLatitudeNaNUseCase() {
+    val latch = CountDownLatch(1)
+    mainHandler.post {
+      mapView.getMapboxMap().flyTo(
+        CameraOptions.Builder()
+          .center(Point.fromLngLat(11.57336700000414, 48.19267299999896))
+          .zoom(19.0)
+          .bearing(0.0)
+          .pitch(0.0)
+          .padding(EdgeInsets(161.0, 1012.0, 152.0, 128.0))
+          .build(),
+        MapAnimationOptions.Builder().duration(500L).build()
+      )
+      mainHandler.postDelayed(700L) {
+        mapView.getMapboxMap().flyTo(
+          CameraOptions.Builder().center(Point.fromLngLat(11.573367, 48.192673)).zoom(16.5).build(),
+          MapAnimationOptions.Builder()
+            .duration(500L)
+            .animatorListener(
+              object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator?) {
+                  latch.countDown()
+                }
+              }
+            ).build()
+        )
+      }
+    }
+    if (!latch.await(LATCH_MAX_TIME, TimeUnit.MILLISECONDS)) {
       throw TimeoutException()
     }
   }
