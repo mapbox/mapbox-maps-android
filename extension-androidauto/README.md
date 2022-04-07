@@ -131,6 +131,24 @@ class MyCustomMapExperience : MapboxCarMapObserver {
 }
 ```
 
-#### Dependencies
+## Compatibility with Maps SDK v10
+As the Android Auto extension is released separately from the Android Maps SDK v10, and it have compileOnly dependency on the Android Maps SDK v10, the Android Auto extension is compatible with Maps SDK v10.0+. However some features like Widgets are only supported when used together with Maps SDK v10.4+.
+
+Below is the full feature compatibility table:
+
+Features  | Supported? | Compatible Maps SDK version
+------------- | ------------- | -------------
+Map rendering  | ✅ | v10.0+
+Runtime styling  | ✅ | v10.0+
+Camera animation | ✅ | v10.0+
+Viewport plugin | ✅ | v10.0+
+Location Component plugin | ✅ | v10.0+
+Gestures(scroll and scale) | ✅ | v10.0+
+Annotation plugin | ✅ | v10.0+
+Logo Widget | ✅ | v10.4+
+Compass Widget | ✅ | v10.4+
+View annotation plugin | ❌ | -
+Scale bar plugin | ❌ | -
+Attribution | ❌ | -
 
 View [LICENSE.md](LICENSE.md) for all dependencies used by this extension.
