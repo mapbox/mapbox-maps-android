@@ -39,6 +39,15 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Bump gl-native to v10.5.0-beta.1, mapbox-common to v21.3.0-beta.2. ([#1244](https://github.com/mapbox/mapbox-maps-android/pull/1244))
 
+# 10.4.1 April 7, 2022
+
+## Bug fixes 🐞
+* Re-introduce the API to get the status of the existing offline regions, so that the clients can get the completion status and the local size of the existing legacy offline regions. ([#1263](https://github.com/mapbox/mapbox-maps-android/pull/1263))
+* Fix a bug that occasionally prevents symbols from loading. ([#1263](https://github.com/mapbox/mapbox-maps-android/pull/1263))
+
+## Dependencies
+* Bump gl-native to v10.4.2 ([#1263](https://github.com/mapbox/mapbox-maps-android/pull/1263))
+
 # 10.4.0 March 23, 2022
 [Changes](https://github.com/mapbox/mapbox-maps-android/compare/android-v10.3.0...android-v10.4.0) since [Mapbox Maps SDK for Android 10.3.0](https://github.com/mapbox/mapbox-maps-android/releases/tag/android-v10.3.0)
 ## Features ✨ and improvements 🏁
