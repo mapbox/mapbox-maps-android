@@ -319,16 +319,16 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
     val r0 = if (u1 != 0.0) {
       r(0)
     } else {
-      Double.MAX_VALUE
+      Double.POSITIVE_INFINITY
     }
     val r1 = if (u1 != 0.0) {
       r(1)
     } else {
-      Double.MAX_VALUE
+      Double.POSITIVE_INFINITY
     }
 
     // When u₀ = u₁, the optimal path doesn’t require both ascent and descent.
-    val isClose = abs(u1) < 0.000001 || r0 == Double.MAX_VALUE || r1 == Double.MAX_VALUE
+    val isClose = abs(u1) < 0.000001 || r0.isInfinite() || r1.isInfinite()
 
     /** w(s): Returns the visible span on the ground, measured in pixels with respect to the initial scale.
      * Assumes an angular field of view of 2 arctan ½ ≈ 53°.
