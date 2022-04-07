@@ -23,7 +23,7 @@ fun StyleInterface.getProjection(): Projection {
         ProjectionName.valueOf(projectionAsString.uppercase())
       }
     ).apply {
-      bindTo(this@getProjection)
+      delegate = this@getProjection
     }
   }
 }

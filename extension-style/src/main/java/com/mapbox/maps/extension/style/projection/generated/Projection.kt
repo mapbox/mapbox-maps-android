@@ -28,7 +28,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionNam
  */
 @UiThread
 class Projection(val name: ProjectionName) : StyleContract.StyleProjectionExtension {
-  private var delegate: StyleInterface? = null
+  internal var delegate: StyleInterface? = null
   private val properties = HashMap<String, PropertyValue<*>>()
 
   init {
