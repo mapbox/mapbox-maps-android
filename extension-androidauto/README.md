@@ -35,8 +35,9 @@ dependencies {
   implementation 'com.mapbox.extension:maps-androidauto:0.1.0'
 
   // Pick your versions of Android Mapbox Map SDK
-  // Note that some Android Auto features like Widgets requires a newer version of Android Mapbox Map SDK
-  implementation 'com.mapbox.maps:android:10.0.+'
+  // Note that Android Auto extenison is compatibile with Maps SDK v10.0+, however some Android Auto features like Widgets requires Map SDK v10.4.0+
+  // See the detailed feature compatibility table below
+  implementation 'com.mapbox.maps:android:10.4.0'
 }
 ```
 
