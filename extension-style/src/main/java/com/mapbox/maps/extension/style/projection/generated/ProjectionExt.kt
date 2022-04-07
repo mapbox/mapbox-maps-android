@@ -22,9 +22,7 @@ fun StyleInterface.getProjection(): Projection {
         val projectionAsString = value.unwrapToAny() as String
         ProjectionName.valueOf(projectionAsString.uppercase())
       }
-    ).apply {
-      bindTo(this@getProjection)
-    }
+    )
   }
 }
 
