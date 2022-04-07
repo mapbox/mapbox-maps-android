@@ -57,6 +57,7 @@ class CarCameraController : MapboxCarMapObserver {
       distanceX: Float,
       distanceY: Float
     ) {
+      super.onScroll(mapboxCarMapSurface, visibleCenter, distanceX, distanceY)
       isTrackingPuck = false
     }
   }
