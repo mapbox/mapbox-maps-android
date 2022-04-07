@@ -7,6 +7,10 @@ import com.mapbox.maps.extension.androidauto.widgets.CompassWidget
 import com.mapbox.maps.extension.androidauto.widgets.LogoWidget
 import com.mapbox.maps.plugin.delegates.listeners.OnCameraChangeListener
 
+/**
+ * Note that the Widgets are only available when using android auto extension together with the
+ * Android Maps SDK v10.4.0 and above, otherwise you will get compilation errors.
+ */
 @OptIn(MapboxExperimental::class)
 class CarMapWidgets : MapboxCarMapObserver {
   private lateinit var logoWidget: LogoWidget
