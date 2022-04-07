@@ -36,6 +36,8 @@ class CarMapWidgets : MapboxCarMapObserver {
     super.onDetached(mapboxCarMapSurface)
     with(mapboxCarMapSurface) {
       mapSurface.getMapboxMap().removeOnCameraChangeListener(onCameraChangeListener)
+      mapSurface.removeWidget(logoWidget)
+      mapSurface.removeWidget(compassWidget)
     }
   }
 }

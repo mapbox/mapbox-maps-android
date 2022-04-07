@@ -12,6 +12,8 @@ import com.mapbox.maps.renderer.widget.WidgetPosition
  *
  * Note: This feature is only available for Android Maps SDK v10.4.0 and above
  *
+ * @since Maps SDK v10.4.0
+ *
  * @param position position of logo
  * @param marginX horizontal margin in pixels
  * @param marginY vertical margin in pixels
