@@ -4,6 +4,14 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 ## Features ✨ and improvements 🏁
+
+## Bug fixes 🐞
+
+# 10.5.0-beta.1 April 7, 2022
+## Breaking changes ⚠️
+* Experimental methods `MapboxMap#setMapProjection` / `MapboxMap#getMapProjection` are removed and should be replaced with `StyleInterface#setProjection` / `StyleInterface#getProjection`. Setting projection supports Style DSL as well. ([#1255](https://github.com/mapbox/mapbox-maps-android/pull/1255))
+
+## Features ✨ and improvements 🏁
 * Optimize how plugins handle settings changes. Call `applySettings` only when settings value changes. ([#1189](https://github.com/mapbox/mapbox-maps-android/pull/1189))
 * Add `MapboxMap.isValid()` and `Style.isValid()` methods. `MapboxMap` becomes invalid when `MapView.onDestroy()` is called. `Style` becomes invalid when `MapView.onDestroy()` is called or new style has been loaded. Accessing any method on invalid object will print an error log. Also unsubscribe map observers automatically when `MapboxMap.onDestroy()` is invoked. ([1193](https://github.com/mapbox/mapbox-maps-android/pull/1193)) ([1202](https://github.com/mapbox/mapbox-maps-android/pull/1202) ([1230](https://github.com/mapbox/mapbox-maps-android/pull/1230)) ([1241](https://github.com/mapbox/mapbox-maps-android/pull/1241)))
 * Add `MapboxMap#coordinateBoundsForCameraUnwrapped` method for API consistency. ([1222](https://github.com/mapbox/mapbox-maps-android/pull/1222))
@@ -12,15 +20,6 @@ Mapbox welcomes participation and contributions from everyone.
 * Introduce `line-trim-offset` property for LineLayer. ([1252](https://github.com/mapbox/mapbox-maps-android/pull/1252))
 * Deprecate `FollowPuckViewportStateOptions.animationDurationMs`, the initial transition will be handled properly by the Viewport plugin internally. ([1256](https://github.com/mapbox/mapbox-maps-android/pull/1256), [1261](https://github.com/mapbox/mapbox-maps-android/pull/1261), [1262](https://github.com/mapbox/mapbox-maps-android/pull/1262))
 * Mark `MapView#viewAnnotationManager` as non-experimental meaning View Annotation API will not have breaking changes in upcoming minor releases. ([1260](https://github.com/mapbox/mapbox-maps-android/pull/1260))
-
-## Bug fixes 🐞
-* Fix PolygonAnnotation and PolylineAnnotation being distorted while dragging with 3D terrain. ([#1223](https://github.com/mapbox/mapbox-maps-android/pull/1223))
-
-# 10.5.0-beta.1 April 7, 2022
-## Breaking changes ⚠️
-* Experimental methods `MapboxMap#setMapProjection` / `MapboxMap#getMapProjection` are removed and should be replaced with `StyleInterface#setProjection` / `StyleInterface#getProjection`. Setting projection supports Style DSL as well. ([#1255](https://github.com/mapbox/mapbox-maps-android/pull/1255))
-
-## Features ✨ and improvements 🏁
 * Map render call optimized further by further reducing computational overhead. ([#1244](https://github.com/mapbox/mapbox-maps-android/pull/1244))
 * Layer properties transitions performance improved if the layer is transitioning to the same constant value or if transitioning from/to data-driven property. ([#1244](https://github.com/mapbox/mapbox-maps-android/pull/1244))
 * New line layer paint property introduced: '{"line-trim-offset", [trim-start, trim-end]}', to take the line trim-off percentage range based on the whole line range [0.0, 1.0]. The property will only be effective when 'line-gradient' property is set. The line part between [trim-start, trim-end] will be marked as transparent to make a line gradient a vanishing effect. If either 'trim-start' or 'trim-end' offset is out of valid range, the default range [0.0, 0.0] will be set. ([#1244](https://github.com/mapbox/mapbox-maps-android/pull/1244))
@@ -35,6 +34,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Terrain-related camera issues fixed, previously making it appear under terrain, or incorrectly repositioned after exaggeration change. ([#1244](https://github.com/mapbox/mapbox-maps-android/pull/1244))
 * Terrain rendering disabled on GPUs not supporting Vertex Texture Fetch. ([#1244](https://github.com/mapbox/mapbox-maps-android/pull/1244))
 * Fixed a bug that occasionally prevented symbols from loading. ([#1244](https://github.com/mapbox/mapbox-maps-android/pull/1244))
+* Fix PolygonAnnotation and PolylineAnnotation being distorted while dragging with 3D terrain. ([#1223](https://github.com/mapbox/mapbox-maps-android/pull/1223))
 
 ## Dependencies
 * Bump gl-native to v10.5.0-beta.1, mapbox-common to v21.3.0-beta.2. ([#1244](https://github.com/mapbox/mapbox-maps-android/pull/1244))
