@@ -740,12 +740,12 @@ class MapboxMap :
    *
    * Map must be fully loaded for getting an altitude-compliant result if using 3D terrain.
    *
-   * If the screen coordinate is outside of the bounds of `MapView` the returned screen coordinate
+   * If the screen coordinate is outside of the bounds of [MapView] the returned screen coordinate
    * contains -1 for both coordinates.
    *
    * @param coordinate A geographical coordinate on the map to convert to a screen coordinate.
    *
-   * @return Returns a screen coordinate on the screen in [MapOptions.size] platform pixels. If the screen coordinate is outside of the bounds of `MapView` the returned screen coordinate contains -1 for both coordinates.
+   * @return Returns a screen coordinate on the screen in [MapOptions.size] platform pixels. If the screen coordinate is outside of the bounds of [MapView] the returned screen coordinate contains -1 for both coordinates.
    */
   override fun pixelForCoordinate(coordinate: Point): ScreenCoordinate {
     checkNativeMap("pixelForCoordinate")
