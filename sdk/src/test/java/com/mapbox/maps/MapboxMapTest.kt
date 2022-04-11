@@ -14,10 +14,12 @@ import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.OnMoveListener
 import io.mockk.*
 import junit.framework.Assert.*
+import org.junit.After
 import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
 import org.robolectric.annotation.Config
@@ -579,13 +581,6 @@ class MapboxMapTest {
   }
 
   @Test
-  fun pixelForCoordinate() {
-    val point = mockk<Point>()
-    mapboxMap.pixelForCoordinate(point)
-    verify { nativeMap.pixelForCoordinate(point) }
-  }
-
-  @Test
   fun coordinateForPixel() {
     val point = mockk<ScreenCoordinate>()
     mapboxMap.coordinateForPixel(point)
@@ -703,7 +698,11 @@ class MapboxMapTest {
         callback
       )
     }
-    checkCapturedMap(mapSlot, MapboxMap.QFE_DEFAULT_LIMIT.toString(), MapboxMap.QFE_DEFAULT_OFFSET.toString())
+    checkCapturedMap(
+      mapSlot,
+      MapboxMap.QFE_DEFAULT_LIMIT.toString(),
+      MapboxMap.QFE_DEFAULT_OFFSET.toString()
+    )
   }
 
   private fun checkCapturedMap(
@@ -1026,5 +1025,80 @@ class MapboxMapTest {
     verify(exactly = 1) {
       styleObserver.setLoadStyleListener(options, any(), any())
     }
+  }
+}
+
+@RunWith(ParameterizedRobolectricTestRunner::class)
+@LooperMode(LooperMode.Mode.PAUSED)
+@Config(shadows = [ShadowLogger::class, ShadowMap::class])
+class PixelForCoordinatesTest(
+  private val inputX: Double,
+  private val inputY: Double,
+  private val expectedX: Double,
+  private val expectedY: Double
+) {
+  private val nativeMap: MapInterface = mockk(relaxed = true)
+  private val nativeObserver: NativeObserver = mockk(relaxed = true)
+  private val resourceOptions = mockk<ResourceOptions>(relaxed = true)
+
+  private lateinit var styleObserver: StyleObserver
+  private lateinit var mapboxMap: MapboxMap
+
+  @Before
+  fun setUp() {
+    mockkStatic(kotlin.collections.Map::class)
+    every { nativeMap.resourceOptions } returns resourceOptions
+    styleObserver = mockk(relaxUnitFun = true)
+    mapboxMap = MapboxMap(nativeMap, nativeObserver, styleObserver)
+  }
+
+  @Test
+  fun pixelForCoordinate() {
+    val point = mockk<Point>()
+    val convertedScreenCoordinate = ScreenCoordinate(inputX, inputY)
+    every { nativeMap.size } returns Size(100f, 100f)
+    every { nativeMap.pixelForCoordinate(point) } returns convertedScreenCoordinate
+    val screenCoordinate = mapboxMap.pixelForCoordinate(point)
+    verifySequence {
+      nativeMap.pixelForCoordinate(point)
+      nativeMap.size
+    }
+    assertEquals(ScreenCoordinate(expectedX, expectedY), screenCoordinate)
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkAll()
+  }
+
+  companion object {
+    @JvmStatic
+    @ParameterizedRobolectricTestRunner.Parameters(name = "Input ScreenCoordinate({0}, {1}) should be mapped to ScreenCoordinate({2}, {3})")
+    fun data() = listOf(
+      arrayOf(
+        150.0,
+        150.0,
+        -1.0,
+        -1.0
+      ),
+      arrayOf(
+        50.0,
+        50.0,
+        50.0,
+        50.0
+      ),
+      arrayOf(
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ),
+      arrayOf(
+        100.0,
+        100.0,
+        100.0,
+        100.0
+      )
+    )
   }
 }
