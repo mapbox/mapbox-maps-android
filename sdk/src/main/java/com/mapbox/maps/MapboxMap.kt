@@ -740,13 +740,22 @@ class MapboxMap :
    *
    * Map must be fully loaded for getting an altitude-compliant result if using 3D terrain.
    *
+   * If the screen coordinate is outside of the bounds of [MapView] the returned screen coordinate
+   * contains -1 for both coordinates.
+   *
    * @param coordinate A geographical coordinate on the map to convert to a screen coordinate.
    *
-   * @return Returns a screen coordinate on the screen in [MapOptions.size] platform pixels.
+   * @return Returns a screen coordinate on the screen in [MapOptions.size] platform pixels. If the screen coordinate is outside of the bounds of [MapView] the returned screen coordinate contains -1 for both coordinates.
    */
   override fun pixelForCoordinate(coordinate: Point): ScreenCoordinate {
     checkNativeMap("pixelForCoordinate")
-    return nativeMap.pixelForCoordinate(coordinate)
+    val coordinate = nativeMap.pixelForCoordinate(coordinate)
+    val screenSize = nativeMap.size
+    return if (coordinate.x in 0.0..screenSize.width.toDouble() && coordinate.y in 0.0..screenSize.height.toDouble()) {
+      coordinate
+    } else {
+      ScreenCoordinate(-1.0, -1.0)
+    }
   }
 
   /**
@@ -1742,7 +1751,6 @@ class MapboxMap :
     }
 
     private const val TAG = "Mbgl-MapboxMap"
-    private const val TAG_PROJECTION = "MbxProjection"
     private const val EMPTY_STYLE_JSON = "{}"
     internal const val QFE_SUPER_CLUSTER = "supercluster"
     internal const val QFE_LEAVES = "leaves"
