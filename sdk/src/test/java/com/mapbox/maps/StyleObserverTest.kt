@@ -1,20 +1,22 @@
 package com.mapbox.maps
 
-import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.extension.observable.eventdata.StyleDataLoadedEventData
 import com.mapbox.maps.extension.observable.model.StyleDataType
 import com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
+import io.mockk.*
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
 class StyleObserverTest {
+
+  @Before
+  fun setUp() {
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logE(any(), any()) } just Runs
+  }
 
   /**
    * Verifies if the correct listeners are attached to NativeMapObserver when StyleObserver is created

@@ -4,6 +4,7 @@ import android.graphics.Rect
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.logI
 import java.util.concurrent.CopyOnWriteArraySet
 
 /**

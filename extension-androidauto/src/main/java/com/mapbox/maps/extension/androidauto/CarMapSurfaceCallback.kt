@@ -7,6 +7,7 @@ import androidx.car.app.SurfaceCallback
 import androidx.car.app.SurfaceContainer
 import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.logI
 
 /**
  * @see MapboxCarMap to create new map experiences.
