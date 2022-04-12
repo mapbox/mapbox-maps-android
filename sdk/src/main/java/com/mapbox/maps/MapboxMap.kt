@@ -8,7 +8,6 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.common.Cancelable
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
@@ -1725,7 +1724,7 @@ class MapboxMap :
 
   private fun checkNativeMap(methodName: String) {
     if (!isMapValid) {
-      Logger.e(TAG, "Mapbox SDK memory leak detected! MapboxMap object (accessing $methodName) should not be stored and used after MapView is destroyed.")
+      logE(TAG, "Mapbox SDK memory leak detected! MapboxMap object (accessing $methodName) should not be stored and used after MapView is destroyed.")
     }
   }
 

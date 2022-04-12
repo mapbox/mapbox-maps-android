@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.api.directions.v5.DirectionsCriteria
 import com.mapbox.api.directions.v5.MapboxDirections
 import com.mapbox.api.directions.v5.models.DirectionsResponse
-import com.mapbox.common.Logger
 import com.mapbox.core.constants.Constants.PRECISION_6
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
@@ -30,6 +29,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.LineJoin
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
+import com.mapbox.maps.logE
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.easeTo
 import com.mapbox.maps.testapp.R
@@ -145,7 +145,7 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
       ) {
         response.body()?.let { body ->
           if (body.routes().size < 1) {
-            Logger.e(TAG, "No routes found")
+            logE(TAG, "No routes found")
             return
           }
 
@@ -179,13 +179,13 @@ class MovingIconWithTrailingLineActivity : AppCompatActivity() {
             }
           }
         } ?: run {
-          Logger.e(TAG, "No routes found, make sure you set the right user and access token.")
+          logE(TAG, "No routes found, make sure you set the right user and access token.")
           return
         }
       }
 
       override fun onFailure(call: Call<DirectionsResponse>, t: Throwable) {
-        Logger.e(TAG, "Error: ${t.message}")
+        logE(TAG, "Error: ${t.message}")
         Toast.makeText(
           this@MovingIconWithTrailingLineActivity,
           "Error: ${t.message}",

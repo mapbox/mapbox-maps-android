@@ -1,7 +1,6 @@
 package com.mapbox.maps.extension.androidauto
 
 import android.graphics.Rect
-import com.mapbox.common.Logger
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ScreenCoordinate
@@ -30,13 +29,13 @@ internal class CarMapSurfaceOwner(
 
   fun registerObserver(mapboxCarMapObserver: MapboxCarMapObserver) {
     carMapObservers.add(mapboxCarMapObserver)
-    Logger.i(TAG, "registerObserver + 1 = ${carMapObservers.size}")
+    logI(TAG, "registerObserver + 1 = ${carMapObservers.size}")
 
     mapboxCarMapSurface?.let { carMapSurface ->
       mapboxCarMapObserver.onAttached(carMapSurface)
     }
     ifNonNull(mapboxCarMapSurface, visibleArea, edgeInsets) { _, area, edge ->
-      Logger.i(TAG, "registerObserver visibleAreaChanged")
+      logI(TAG, "registerObserver visibleAreaChanged")
       mapboxCarMapObserver.onVisibleAreaChanged(area, edge)
     }
   }
@@ -44,7 +43,7 @@ internal class CarMapSurfaceOwner(
   fun unregisterObserver(mapboxCarMapObserver: MapboxCarMapObserver) {
     carMapObservers.remove(mapboxCarMapObserver)
     mapboxCarMapSurface?.let { mapboxCarMapObserver.onDetached(it) }
-    Logger.i(TAG, "unregisterObserver - 1 = ${carMapObservers.size}")
+    logI(TAG, "unregisterObserver - 1 = ${carMapObservers.size}")
   }
 
   fun clearObservers() {
@@ -53,7 +52,7 @@ internal class CarMapSurfaceOwner(
   }
 
   fun surfaceAvailable(mapboxCarMapSurface: MapboxCarMapSurface) {
-    Logger.i(TAG, "surfaceAvailable")
+    logI(TAG, "surfaceAvailable")
     val oldCarMapSurface = this.mapboxCarMapSurface
     this.mapboxCarMapSurface = mapboxCarMapSurface
     oldCarMapSurface?.let { carMapObservers.forEach { it.onDetached(oldCarMapSurface) } }
@@ -63,7 +62,7 @@ internal class CarMapSurfaceOwner(
   }
 
   fun surfaceDestroyed() {
-    Logger.i(TAG, "surfaceDestroyed")
+    logI(TAG, "surfaceDestroyed")
     val detachSurface = this.mapboxCarMapSurface
     detachSurface?.mapSurface?.onStop()
     detachSurface?.mapSurface?.surfaceDestroyed()
@@ -73,7 +72,7 @@ internal class CarMapSurfaceOwner(
   }
 
   fun surfaceVisibleAreaChanged(visibleArea: Rect) {
-    Logger.i(TAG, "surfaceVisibleAreaChanged")
+    logI(TAG, "surfaceVisibleAreaChanged")
     this.visibleArea = visibleArea
     notifyVisibleAreaChanged()
   }
@@ -82,7 +81,7 @@ internal class CarMapSurfaceOwner(
     this.edgeInsets = visibleArea?.edgeInsets()
     this.visibleCenter = visibleCenter()
     ifNonNull(mapboxCarMapSurface, visibleArea, edgeInsets) { _, area, edge ->
-      Logger.i(TAG, "notifyVisibleAreaChanged $area $edge")
+      logI(TAG, "notifyVisibleAreaChanged $area $edge")
       carMapObservers.forEach {
         it.onVisibleAreaChanged(area, edge)
       }

@@ -3,7 +3,6 @@ package com.mapbox.maps.testapp.examples.snapshotter
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.Snapshotter
@@ -50,7 +49,7 @@ class MapSnapshotterActivity : AppCompatActivity(), SnapshotStyleListener {
   }
 
   override fun onDidFinishLoadingStyle(style: Style) {
-    Logger.i(TAG, "OnStyleLoaded: ${style.styleURI}")
+    logI(TAG, "OnStyleLoaded: ${style.styleURI}")
   }
 
   override fun onDestroy() {

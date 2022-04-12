@@ -5,7 +5,6 @@ import androidx.car.app.AppManager
 import androidx.car.app.CarContext
 import androidx.car.app.SurfaceCallback
 import androidx.car.app.SurfaceContainer
-import com.mapbox.common.Logger
 import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapboxExperimental
 
@@ -28,7 +27,7 @@ internal class CarMapSurfaceCallback internal constructor(
   }
 
   override fun onSurfaceAvailable(surfaceContainer: SurfaceContainer) {
-    Logger.i(TAG, "onSurfaceAvailable $surfaceContainer")
+    logI(TAG, "onSurfaceAvailable $surfaceContainer")
     surfaceContainer.surface?.let { surface ->
       val mapSurface = MapSurfaceProvider.create(
         carContext,
@@ -44,7 +43,7 @@ internal class CarMapSurfaceCallback internal constructor(
   }
 
   override fun onVisibleAreaChanged(visibleArea: Rect) {
-    Logger.i(TAG, "onVisibleAreaChanged visibleArea:$visibleArea")
+    logI(TAG, "onVisibleAreaChanged visibleArea:$visibleArea")
     carMapSurfaceOwner.surfaceVisibleAreaChanged(visibleArea)
   }
 
@@ -53,22 +52,22 @@ internal class CarMapSurfaceCallback internal constructor(
   }
 
   override fun onScroll(distanceX: Float, distanceY: Float) {
-    Logger.i(TAG, "onScroll $distanceX, $distanceY")
+    logI(TAG, "onScroll $distanceX, $distanceY")
     carMapSurfaceOwner.scroll(distanceX, distanceY)
   }
 
   override fun onFling(velocityX: Float, velocityY: Float) {
-    Logger.i(TAG, "onFling $velocityX, $velocityY")
+    logI(TAG, "onFling $velocityX, $velocityY")
     carMapSurfaceOwner.fling(velocityX, velocityY)
   }
 
   override fun onScale(focusX: Float, focusY: Float, scaleFactor: Float) {
-    Logger.i(TAG, "onScroll $focusX, $focusY, $scaleFactor")
+    logI(TAG, "onScroll $focusX, $focusY, $scaleFactor")
     carMapSurfaceOwner.scale(focusX, focusY, scaleFactor)
   }
 
   override fun onSurfaceDestroyed(surfaceContainer: SurfaceContainer) {
-    Logger.i(TAG, "onSurfaceDestroyed")
+    logI(TAG, "onSurfaceDestroyed")
     carMapSurfaceOwner.surfaceDestroyed()
   }
 

@@ -4,7 +4,6 @@ import android.graphics.Rect
 import androidx.car.app.AppManager
 import androidx.car.app.CarContext
 import androidx.car.app.SurfaceCallback
-import com.mapbox.common.Logger
 import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapSurface
 import com.mapbox.maps.MapboxExperimental
@@ -42,7 +41,7 @@ class CarMapSurfaceCallbackTest {
   @Before
   fun setup() {
     mockkStatic(Logger::class)
-    every { Logger.i(any(), any()) } just Runs
+    every { logI(any(), any()) } just Runs
     mockkObject(MapSurfaceProvider)
     every { MapSurfaceProvider.create(any(), any(), any()) } returns testMapSurface
   }

@@ -3,8 +3,8 @@ package com.mapbox.maps.plugin.animation.animator
 import android.animation.TypeEvaluator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import com.mapbox.common.Logger
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.CameraAnimatorType
 
@@ -83,7 +83,7 @@ abstract class CameraAnimator<out T> (
       canceled = false
       super.start()
     } else {
-      Logger.w(
+      logW(
         TAG,
         "Animation $type was not registered and will not run. Register it with registerAnimation() method."
       )

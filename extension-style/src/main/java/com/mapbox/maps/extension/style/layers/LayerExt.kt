@@ -1,7 +1,6 @@
 @file:JvmName("LayerUtils")
 package com.mapbox.maps.extension.style.layers
 
-import com.mapbox.common.Logger
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.StyleManagerInterface
@@ -10,6 +9,7 @@ import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.layers.generated.*
 import com.mapbox.maps.extension.style.utils.silentUnwrap
 import com.mapbox.maps.extension.style.utils.unwrap
+import com.mapbox.maps.logE
 
 /**
  * Extension function to get a Layer provided by the Style Extension by layer id.
@@ -32,7 +32,7 @@ fun StyleManagerInterface.getLayer(layerId: String): Layer? {
       "raster" -> RasterLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
       "symbol" -> SymbolLayer(layerId, this.getStyleLayerProperty(layerId, "source").unwrap()).also { it.delegate = this }
       else -> {
-        Logger.e(TAG, "Layer type: $type unknown.")
+        logE(TAG, "Layer type: $type unknown.")
         null
       }
     }
@@ -49,7 +49,7 @@ fun StyleManagerInterface.getLayer(layerId: String): Layer? {
 inline fun <reified T : Layer> StyleManagerInterface.getLayerAs(layerId: String): T? {
   val layer = getLayer(layerId) as? T
   if (layer == null) {
-    Logger.e(TAG, "Given layerId = $layerId is not requested type in Layer")
+    logE(TAG, "Given layerId = $layerId is not requested type in Layer")
     return null
   }
   return layer

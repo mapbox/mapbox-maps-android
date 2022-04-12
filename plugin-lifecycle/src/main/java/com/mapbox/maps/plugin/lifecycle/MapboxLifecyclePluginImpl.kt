@@ -14,8 +14,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ViewTreeLifecycleOwner
-import com.mapbox.common.Logger
 import com.mapbox.maps.MapboxLifecycleObserver
+import com.mapbox.maps.logE
+import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_LIFECYCLE_PLUGIN_ID
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 
@@ -32,7 +33,7 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
   override fun registerLifecycleObserver(mapView: View, observer: MapboxLifecycleObserver) {
     val lifecycleOwner = ViewTreeLifecycleOwner.get(mapView)
     if (lifecycleOwner == null) {
-      Logger.e(
+      logE(
         TAG,
         """Can't get lifecycleOwner for mapview,
           please make sure the host Activity is AppCompatActivity and the version of appcompat is 1.3.0+.
@@ -52,7 +53,7 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
         override fun onTrimMemory(level: Int) {
           when (level) {
             TRIM_MEMORY_RUNNING_CRITICAL, TRIM_MEMORY_RUNNING_LOW -> {
-              Logger.w(TAG, "onTrimMemory with level $level is received, reduceMemoryUse will be called.")
+              logW(TAG, "onTrimMemory with level $level is received, reduceMemoryUse will be called.")
               observer.onLowMemory()
             }
             TRIM_MEMORY_BACKGROUND, TRIM_MEMORY_COMPLETE, TRIM_MEMORY_MODERATE, TRIM_MEMORY_RUNNING_MODERATE, TRIM_MEMORY_UI_HIDDEN -> Unit

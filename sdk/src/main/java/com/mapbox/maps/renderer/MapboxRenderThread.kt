@@ -7,7 +7,8 @@ import androidx.annotation.AnyThread
 import androidx.annotation.UiThread
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
-import com.mapbox.common.Logger
+import com.mapbox.maps.logE
+import com.mapbox.maps.logW
 import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.gl.TextureRenderer
 import com.mapbox.maps.renderer.widget.Widget
@@ -171,7 +172,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       if (eglOk) {
         eglPrepared = true
       } else {
-        Logger.e(TAG, "EGL was not configured, please check logs above.")
+        logE(TAG, "EGL was not configured, please check logs above.")
         renderNotSupported = true
         return false
       }
@@ -183,7 +184,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     return if (surface?.isValid == true) {
       true
     } else {
-      Logger.w(TAG, "EGL was configured but Android surface is null or not valid, waiting for a new one...")
+      logW(TAG, "EGL was configured but Android surface is null or not valid, waiting for a new one...")
       // give system a bit of time and try rendering again hoping surface will be valid now
       postPrepareRenderFrame(delayMillis = RETRY_DELAY_MS)
       false
@@ -205,7 +206,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   private fun checkEglContextCurrent(): Boolean {
     val eglContextAttached = eglCore.makeCurrent(eglSurface)
     if (!eglContextAttached) {
-      Logger.w(TAG, "EGL was configured but context could not be made current. Trying again in a moment...")
+      logW(TAG, "EGL was configured but context could not be made current. Trying again in a moment...")
       postPrepareRenderFrame(delayMillis = RETRY_DELAY_MS)
       return false
     }
@@ -260,11 +261,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
       EGL10.EGL_SUCCESS -> {}
       EGL11.EGL_CONTEXT_LOST -> {
-        Logger.w(TAG, "Context lost. Waiting for re-acquire")
+        logW(TAG, "Context lost. Waiting for re-acquire")
         releaseEgl()
       }
       else -> {
-        Logger.w(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
+        logW(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
         releaseEglSurface()
       }
     }
@@ -462,7 +463,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
           if (renderThreadPrepared || renderEvent.eventType == EventType.DESTROY_RENDERER) {
             renderEvent.runnable?.run()
           } else {
-            Logger.w(TAG, "Non-render event could not be run, retrying in $RETRY_DELAY_MS ms...")
+            logW(TAG, "Non-render event could not be run, retrying in $RETRY_DELAY_MS ms...")
             postNonRenderEvent(renderEvent, delayMillis = RETRY_DELAY_MS)
           }
         },

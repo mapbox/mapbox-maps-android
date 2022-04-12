@@ -6,14 +6,10 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxMap
-import com.mapbox.maps.Style
+import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.symbolLayer
 import com.mapbox.maps.extension.style.sources.addSource
@@ -89,7 +85,7 @@ class SpaceStationLocationActivity : AppCompatActivity() {
           if (latitude != null && longitude != null) {
             updateMarkerPosition(longitude = longitude, latitude = latitude)
           } else {
-            Logger.w(TAG, "Wrong response position")
+            logW(TAG, "Wrong response position")
           }
         }
 
@@ -100,9 +96,9 @@ class SpaceStationLocationActivity : AppCompatActivity() {
           // If retrofit fails or the API was unreachable, an error will be called.
           // to check if throwable is null, then give a custom message.
           if (throwable.message == null) {
-            Logger.e(TAG, "Http connection failed")
+            logE(TAG, "Http connection failed")
           } else {
-            Logger.e(TAG, "onFailure: ${throwable.message}")
+            logE(TAG, "onFailure: ${throwable.message}")
           }
         }
       })
