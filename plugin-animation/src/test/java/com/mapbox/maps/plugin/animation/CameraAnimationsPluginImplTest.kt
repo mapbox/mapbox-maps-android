@@ -966,7 +966,7 @@ class CameraAnimationsPluginImplTest {
     shadowOf(getMainLooper()).pause()
     cameraAnimationsPluginImpl.easeTo(cameraState.toCameraOptions(), mapAnimationOptions { duration(DURATION) })
     shadowOf(getMainLooper()).idle()
-    verify { ShadowlogD(TAG, any()) }
+    verify { ShadowLogger.d(TAG, any()) }
     unmockkStatic(ShadowLogger::class)
   }
 
@@ -977,7 +977,7 @@ class CameraAnimationsPluginImplTest {
     shadowOf(getMainLooper()).pause()
     cameraAnimationsPluginImpl.easeTo(cameraState.toCameraOptions(), mapAnimationOptions { duration(DURATION) })
     shadowOf(getMainLooper()).idle()
-    verify(exactly = 0) { ShadowlogD(TAG, any()) }
+    verify(exactly = 0) { ShadowLogger.d(TAG, any()) }
     unmockkStatic(ShadowLogger::class)
   }
 
