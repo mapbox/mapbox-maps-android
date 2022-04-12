@@ -6,6 +6,7 @@ import argparse
 import os
 import requests
 import sys
+import yaml
 
 def str2bool(v):
     if isinstance(v, bool):
@@ -29,7 +30,7 @@ def TriggerPipeline(slug, token, branch, params):
     data = {
         "parameters": params
     }
-    
+
     print(data)
 
     if branch:
@@ -51,7 +52,7 @@ def Main():
     parser = argparse.ArgumentParser(
         description="Creates CircleCI jobs and waits for the result.")
 
-    parser.add_argument("--token", default=token, 
+    parser.add_argument("--token", default=token,
             help="CircleCI token, otherwise environment CIRCLE_API_TOKEN.")
     parser.add_argument("--origin-slug", default="mapbox/mapbox-maps-android",
             help="Origin repository, otherwise CIRCLE_PROJECT_USERNAME/CIRCLE_PROJECT_REPONAME.")
@@ -70,11 +71,17 @@ def Main():
         print("CircleCI token not set. Use --token or set CIRCLE_API_TOKEN.")
         sys.exit(1)
 
+    config = {
+        "mapbox-maps-android": ["pin", args.hash]
+    }
+
+    config_yaml = yaml.dump(config)
+
     params = {
-        "run_android_maps_carbon_benchmark": True,
-        "mapbox_upstream_validation": str2bool(args.mapbox_upstream),
+        "mapbox_upstream": True,
         "mapbox_slug": args.origin_slug,
-        "mapbox_hash": args.hash
+        "mapbox_hash": args.hash,
+        "mapbox_config": yaml.dump(config_yaml, default_flow_style = False)
     }
 
     TriggerPipeline(args.target_slug, args.token, args.branch, params)
