@@ -11,7 +11,6 @@ import com.mapbox.api.directions.v5.DirectionsCriteria.GEOMETRY_POLYLINE
 import com.mapbox.api.directions.v5.MapboxDirections
 import com.mapbox.api.directions.v5.models.DirectionsResponse
 import com.mapbox.api.directions.v5.models.LegStep
-import com.mapbox.common.Logger
 import com.mapbox.core.constants.Constants.PRECISION_5
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
@@ -27,6 +26,7 @@ import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.getSource
 import com.mapbox.maps.extension.style.style
+import com.mapbox.maps.logE
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityJavaservicesSnakingDirectionsRouteBinding
 import retrofit2.Call
@@ -111,14 +111,14 @@ class SnakingDirectionsRouteActivity : AppCompatActivity() {
       ) {
         response.body()?.let { body ->
           if (body.routes().isEmpty()) {
-            Logger.e(TAG, "No routes found")
+            logE(TAG, "No routes found")
             return
           }
           body.routes()[0]?.legs()?.get(0)?.steps()?.let { steps ->
             drawRoute(steps)
           }
         } ?: run {
-          Logger.e(TAG, "No routes found, make sure you set the right user and access token.")
+          logE(TAG, "No routes found, make sure you set the right user and access token.")
           return
         }
       }

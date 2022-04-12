@@ -2,15 +2,11 @@ package com.mapbox.maps.plugin.annotation
 
 import android.graphics.PointF
 import com.mapbox.android.gestures.MoveGestureDetector
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
-import com.mapbox.maps.LayerPosition
-import com.mapbox.maps.RenderedQueryGeometry
-import com.mapbox.maps.RenderedQueryOptions
-import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 import com.mapbox.maps.extension.style.expressions.generated.Expression
@@ -221,7 +217,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
             style.addPersistentLayer(it, LayerPosition(null, annotationConfig.belowLayerId, null))
             layerAdded = true
           } else {
-            Logger.w(
+            logW(
               TAG,
               "Layer with id $belowLayerId doesn't exist in style ${style.styleURI}, will add annotation layer directly."
             )
@@ -348,7 +344,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         updateDragSource()
       }
       else -> {
-        Logger.e(
+        logE(
           TAG,
           "Can't delete annotation: $annotation, the annotation isn't an active annotation."
         )
@@ -398,7 +394,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
       dragSource?.let { geoJsonSource ->
         dragLayer?.let { layer ->
           if (!style.styleSourceExists(geoJsonSource.sourceId) || !style.styleLayerExists(layer.layerId)) {
-            Logger.e(
+            logE(
               TAG,
               "Can't update dragSource: drag source or layer has not been added to style."
             )
@@ -423,7 +419,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
       source?.let { geoJsonSource ->
         layer?.let { layer ->
           if (!style.styleSourceExists(geoJsonSource.sourceId) || !style.styleLayerExists(layer.layerId)) {
-            Logger.e(TAG, "Can't update source: source or layer has not been added to style.")
+            logE(TAG, "Can't update source: source or layer has not been added to style.")
             return@getStyle
           }
           addIconToStyle(style, annotationMap.values)
@@ -473,7 +469,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         updateDragSource()
       }
       else -> {
-        Logger.e(
+        logE(
           TAG,
           "Can't update annotation: $annotation, the annotation isn't an active annotation."
         )
@@ -498,7 +494,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
           needUpdateDragSource = true
         }
         else -> {
-          Logger.e(
+          logE(
             TAG,
             "Can't update annotation: $it, the annotation isn't an active annotation."
           )
@@ -582,7 +578,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
         }
       }
       else -> {
-        Logger.e(
+        logE(
           TAG,
           "Can't select annotation: $annotation, the annotation isn't an active annotation."
         )
@@ -807,7 +803,7 @@ abstract class AnnotationManagerImpl<G : Geometry, T : Annotation<G>, S : Annota
                 annotation = dragAnnotationMap[id]
               }
               else -> {
-                Logger.e(
+                logE(
                   TAG,
                   "The queried id: $id, doesn't belong to an active annotation."
                 )

@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Feature
 import com.mapbox.maps.extension.style.StyleInterface
 import java.nio.ByteBuffer
@@ -888,7 +887,7 @@ class Style internal constructor(
 
   private fun checkNativeStyle(methodName: String) {
     if (!isStyleValid) {
-      Logger.e(TAG, "Mapbox SDK memory leak detected! Style object (accessing $methodName) should not be stored and used after MapView is destroyed or new style has been loaded.")
+      logE(TAG, "Mapbox SDK memory leak detected! Style object (accessing $methodName) should not be stored and used after MapView is destroyed or new style has been loaded.")
     }
   }
 

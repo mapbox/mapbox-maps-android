@@ -1,7 +1,8 @@
 package com.mapbox.maps.renderer.egl
 
 import android.view.Surface
-import com.mapbox.common.Logger
+import com.mapbox.maps.logE
+import com.mapbox.maps.logI
 import javax.microedition.khronos.egl.*
 
 /**
@@ -27,13 +28,13 @@ internal class EGLCore(
     egl = EGLContext.getEGL() as EGL10
     eglDisplay = egl.eglGetDisplay(EGL10.EGL_DEFAULT_DISPLAY)
     if (eglDisplay == EGL10.EGL_NO_DISPLAY) {
-      Logger.e(TAG, "Unable to get EGL14 display")
+      logE(TAG, "Unable to get EGL14 display")
       return false
     }
 
     val versions = IntArray(2)
     if (!egl.eglInitialize(eglDisplay, versions)) {
-      Logger.e(TAG, "eglInitialize failed")
+      logE(TAG, "eglInitialize failed")
       return false
     }
 
@@ -62,7 +63,7 @@ internal class EGLCore(
       EGL_CONTEXT_CLIENT_VERSION,
       values
     )
-    Logger.i(TAG, "EGLContext created, client version ${values[0]}")
+    logI(TAG, "EGLContext created, client version ${values[0]}")
     return true
   }
 
@@ -108,7 +109,7 @@ internal class EGLCore(
     )
     val eglWindowCreated = checkEglErrorNoException("eglCreateWindowSurface")
     if (!eglWindowCreated || eglSurface == null) {
-      Logger.e(TAG, "Surface was null")
+      logE(TAG, "Surface was null")
       return eglNoSurface
     }
     return eglSurface
@@ -127,7 +128,7 @@ internal class EGLCore(
     )
     checkEglErrorNoException("eglCreatePbufferSurface")
     if (eglSurface == null) {
-      Logger.e(TAG, "Offscreen surface was null")
+      logE(TAG, "Offscreen surface was null")
       return eglNoSurface
     }
     return eglSurface
@@ -155,10 +156,10 @@ internal class EGLCore(
       return true
     }
     if (eglDisplay == EGL10.EGL_NO_DISPLAY) {
-      Logger.i(TAG, "NOTE: makeCurrent w/o display")
+      logI(TAG, "NOTE: makeCurrent w/o display")
     }
     if (!egl.eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext)) {
-      Logger.e(TAG, "eglMakeCurrent failed")
+      logE(TAG, "eglMakeCurrent failed")
       return false
     }
     return true
@@ -181,7 +182,7 @@ internal class EGLCore(
   private fun checkEglErrorNoException(msg: String): Boolean {
     val error = egl.eglGetError()
     if (error != EGL10.EGL_SUCCESS) {
-      Logger.e(TAG, msg + ": EGL error: 0x${Integer.toHexString(error)}")
+      logE(TAG, msg + ": EGL error: 0x${Integer.toHexString(error)}")
       return false
     }
     return true

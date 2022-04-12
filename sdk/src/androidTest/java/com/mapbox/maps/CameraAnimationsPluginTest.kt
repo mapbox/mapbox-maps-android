@@ -10,7 +10,6 @@ import android.os.Looper
 import androidx.core.os.postDelayed
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.plugin.animation.*
@@ -307,7 +306,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
 
     val cameraAnimationPlugin = mapView.camera
     cameraAnimationPlugin.addCameraBearingChangeListener {
-      Logger.i(TAG, "onChanged $it")
+      logI(TAG, "onChanged $it")
       actualUpdates += 1
     }
 
@@ -382,7 +381,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     val latch = CountDownLatch(1)
     val cameraAnimationPlugin = mapView.camera
     cameraAnimationPlugin.addCameraBearingChangeListener {
-      Logger.i(TAG, "onChanged $it")
+      logI(TAG, "onChanged $it")
       updatedValues.add(it)
       latch.countDown()
     }
@@ -418,7 +417,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     val latch = CountDownLatch(2)
     val cameraAnimationPlugin = mapView.camera
     cameraAnimationPlugin.addCameraBearingChangeListener {
-      Logger.i(TAG, "onChanged $it")
+      logI(TAG, "onChanged $it")
       updatedValues.add(it)
       latch.countDown()
     }
@@ -447,7 +446,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     val latch = CountDownLatch(3)
     val cameraAnimationPlugin = mapView.camera
     cameraAnimationPlugin.addCameraBearingChangeListener {
-      Logger.i(TAG, "onChanged $it")
+      logI(TAG, "onChanged $it")
       updatedValues.add(it)
       latch.countDown()
     }
@@ -479,7 +478,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     val cameraAnimationPlugin = mapView.camera
     val latch = CountDownLatch(1)
     cameraAnimationPlugin.addCameraBearingChangeListener {
-      Logger.i(TAG, "onChanged $it")
+      logI(TAG, "onChanged $it")
       updatedValues.add(it)
     }
 
@@ -539,7 +538,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     val cameraAnimationPlugin = mapView.camera
     val latch = CountDownLatch(1)
     cameraAnimationPlugin.addCameraBearingChangeListener {
-      Logger.i(TAG, "onChanged $it")
+      logI(TAG, "onChanged $it")
       updatedValues.add(it)
     }
 
@@ -579,7 +578,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     val latch = CountDownLatch(4)
     val cameraAnimationPlugin = mapView.camera
     cameraAnimationPlugin.addCameraBearingChangeListener {
-      Logger.i(TAG, "onChanged $it")
+      logI(TAG, "onChanged $it")
       updatedValues.add(it)
       latch.countDown()
     }
@@ -611,7 +610,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     val latch = CountDownLatch(2)
     val cameraAnimationPlugin = mapView.camera
     cameraAnimationPlugin.addCameraBearingChangeListener {
-      Logger.i(TAG, "onChanged $it")
+      logI(TAG, "onChanged $it")
       updatedValues.add(it)
       latch.countDown()
     }
@@ -674,7 +673,7 @@ class CameraAnimationsPluginTest : BaseAnimationMapTest() {
     var currentPitch = 0.0
     val cameraAnimationPlugin = mapView.camera
     cameraAnimationPlugin.addCameraPitchChangeListener {
-      Logger.i(TAG, "onChanged $it")
+      logI(TAG, "onChanged $it")
       currentPitch = it
     }
     mainHandler.post {

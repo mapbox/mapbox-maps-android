@@ -4,9 +4,9 @@ import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import androidx.annotation.VisibleForTesting
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.animation.Cancelable
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
@@ -132,7 +132,7 @@ internal class FollowPuckViewportStateImpl(
 
   private fun checkLocationComponentEnablement() {
     if (!locationComponent.enabled) {
-      Logger.w(
+      logW(
         TAG,
         "Location component is required to be enabled to use FollowPuckViewportState, otherwise there would be no FollowPuckViewportState updates or ViewportTransition updates towards the FollowPuckViewportState."
       )

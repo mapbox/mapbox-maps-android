@@ -86,7 +86,7 @@ class OfflineTest {
             }
           }
           if (it.isError) {
-            Logger.e(TAG, "Error: ${it.error}")
+            logE(TAG, "Error: ${it.error}")
             it.error?.let { error ->
               downloadedStyleError = error
             }
@@ -140,7 +140,7 @@ class OfflineTest {
             }
           }
           if (it.isError) {
-            Logger.e(TAG, "Error: ${it.error}")
+            logE(TAG, "Error: ${it.error}")
             it.error?.let { error ->
               downloadedStyleError = error
             }
@@ -194,7 +194,7 @@ class OfflineTest {
           }
         }
         if (it.isError) {
-          Logger.e(TAG, "Error: ${it.error}")
+          logE(TAG, "Error: ${it.error}")
           it.error?.let { error ->
             tileRegionError = error
           }
@@ -260,7 +260,7 @@ class OfflineTest {
           }
         }
         if (it.isError) {
-          Logger.e(TAG, "Error: ${it.error}")
+          logE(TAG, "Error: ${it.error}")
           it.error?.let { error ->
             tileRegionError = error
           }
@@ -290,7 +290,7 @@ class OfflineTest {
     var resourceRequests = 0
     var mapLoadingErrorCount = 0
     val observer = Observer { event ->
-      Logger.e(TAG, "type ${event.type}, data ${event.data.toJson()}")
+      logE(TAG, "type ${event.type}, data ${event.data.toJson()}")
       when (event.type) {
         MapEvents.RESOURCE_REQUEST -> {
           val data = event.getResourceEventData()
@@ -337,7 +337,7 @@ class OfflineTest {
     var resourceRequests = 0
     var mapLoadingErrorCount = 0
     val observer = Observer { event ->
-      Logger.e(TAG, "type ${event.type}, data ${event.data.toJson()}")
+      logE(TAG, "type ${event.type}, data ${event.data.toJson()}")
       when (event.type) {
         MapEvents.RESOURCE_REQUEST -> {
           val data = event.getResourceEventData()
@@ -416,7 +416,7 @@ class OfflineTest {
     var idleEventCount = 0
     var mapLoadingErrorCount = 0
     val observer = Observer { event ->
-      Logger.e(TAG, "type ${event.type}, data ${event.data.toJson()}")
+      logE(TAG, "type ${event.type}, data ${event.data.toJson()}")
       if (event.type == MapEvents.MAP_IDLE) {
         idleEventCount++
       }
@@ -449,7 +449,7 @@ class OfflineTest {
     var idleEventCount = 0
     var mapLoadingErrorCount = 0
     val observer = Observer { event ->
-      Logger.e(TAG, "type ${event.type}, data ${event.data.toJson()}")
+      logE(TAG, "type ${event.type}, data ${event.data.toJson()}")
       if (event.type == MapEvents.MAP_IDLE) {
         idleEventCount++
       }
@@ -546,13 +546,13 @@ class OfflineTest {
           .networkRestriction(NetworkRestriction.NONE)
           .build(),
         { progress ->
-          Logger.i(TAG, "completedResourceCount: ${progress.completedResourceCount}, requiredResourceCount: ${progress.requiredResourceCount}")
+          logI(TAG, "completedResourceCount: ${progress.completedResourceCount}, requiredResourceCount: ${progress.requiredResourceCount}")
         }
       ) {
         if (it.isValue) {
           it.value?.let { latch.countDown() }
         } else {
-          Logger.e(TAG, "Error when loading tile: ${it.error?.toString()}")
+          logE(TAG, "Error when loading tile: ${it.error?.toString()}")
         }
       }
     }

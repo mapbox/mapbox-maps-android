@@ -3,7 +3,6 @@ package com.mapbox.maps.testapp.examples.markersandcallouts
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.common.Logger
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.eq
@@ -11,6 +10,7 @@ import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.*
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
+import com.mapbox.maps.logE
 import com.mapbox.maps.testapp.databinding.ActivityMultipleGeometriesBinding
 import java.net.URISyntaxException
 
@@ -46,7 +46,7 @@ class MultipleGeometriesActivity : AppCompatActivity() {
         }
       )
     } catch (exception: URISyntaxException) {
-      Logger.e(TAG, "Creating geojson source failed ${exception.message}")
+      logE(TAG, "Creating geojson source failed ${exception.message}")
     }
   }
 

@@ -1,7 +1,7 @@
 package com.mapbox.maps.renderer
 
 import android.opengl.GLES20
-import com.mapbox.common.Logger
+import com.mapbox.maps.logE
 import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.widget.Widget
 import javax.microedition.khronos.egl.EGLContext
@@ -165,7 +165,7 @@ internal class MapboxWidgetRenderer(
     val eglCore = this.eglCore
 
     if (eglCore == null) {
-      Logger.e(TAG, "Cannot prepare egl, eglCore has not been initialized yet.")
+      logE(TAG, "Cannot prepare egl, eglCore has not been initialized yet.")
       return
     }
     if (eglSurface != null && eglSurface != eglCore.eglNoSurface) {
@@ -175,7 +175,7 @@ internal class MapboxWidgetRenderer(
     if (!eglPrepared) {
       eglPrepared = eglCore.prepareEgl()
       if (!eglPrepared) {
-        Logger.e(TAG, "Widget EGL was not configured, please check logs above.")
+        logE(TAG, "Widget EGL was not configured, please check logs above.")
         return
       }
     }
@@ -183,7 +183,7 @@ internal class MapboxWidgetRenderer(
     if (eglSurface == null || eglSurface == eglCore.eglNoSurface) {
       this.eglSurface = eglCore.createOffscreenSurface(width = width, height = height)
       if (eglSurface == eglCore.eglNoSurface) {
-        Logger.e(TAG, "Widget offscreen surface was not configured, please check logs above.")
+        logE(TAG, "Widget offscreen surface was not configured, please check logs above.")
         return
       }
     }
