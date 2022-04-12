@@ -4,6 +4,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 # main
 ## Features ✨ and improvements 🏁
+* Refactor all Mapbox logs so that Logcat tag will always be 'Mapbox' allowing easier filtering. Previous log tag will become part of the log message now. ([#1276](https://github.com/mapbox/mapbox-maps-android/pull/1276))
 
 ## Bug fixes 🐞
 * Fix NaN latitude native crash rarely happening during `MapboxMap#flyTo`. ([#1271](https://github.com/mapbox/mapbox-maps-android/pull/1271))
