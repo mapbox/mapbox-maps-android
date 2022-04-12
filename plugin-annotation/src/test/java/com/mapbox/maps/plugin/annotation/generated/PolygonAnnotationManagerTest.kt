@@ -37,7 +37,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class, ShadowProjection::class])
+@Config(shadows = [ShadowProjection::class])
 class PolygonAnnotationManagerTest {
   private val delegateProvider: MapDelegateProvider = mockk()
   private val style: StyleInterface = mockk()
@@ -63,6 +63,8 @@ class PolygonAnnotationManagerTest {
     mockkStatic("com.mapbox.maps.extension.style.layers.LayerUtils")
     mockkStatic("com.mapbox.maps.extension.style.sources.SourceUtils")
     mockkStatic(Projection::class)
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logE(any(), any()) } just Runs
     val captureCallback = slot<(StyleInterface) -> Unit>()
     every { delegateProvider.getStyle(capture(captureCallback)) } answers {
       captureCallback.captured.invoke(style)

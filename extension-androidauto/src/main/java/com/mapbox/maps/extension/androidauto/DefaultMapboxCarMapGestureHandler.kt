@@ -1,10 +1,7 @@
 package com.mapbox.maps.extension.androidauto
 
 import androidx.car.app.SurfaceCallback
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.MapboxMap
-import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.*
 import com.mapbox.maps.plugin.animation.camera
 
 /**

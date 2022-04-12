@@ -4,8 +4,8 @@ import android.content.Context
 import android.location.Location
 import com.mapbox.android.core.location.*
 import com.mapbox.android.core.permissions.PermissionsManager
-import com.mapbox.common.ShadowLogger
 import com.mapbox.geojson.Point
+import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.PuckBearingSource
 import io.mockk.*
 import org.junit.Assert.assertEquals
@@ -13,10 +13,8 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
 class DefaultLocationProviderTest {
   private val context = mockk<Context>(relaxed = true)
   private val locationEngine = mockk<LocationEngine>(relaxed = true)
@@ -32,6 +30,8 @@ class DefaultLocationProviderTest {
   @Before
   fun setup() {
     mockkStatic(LocationEngineProvider::class)
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logW(any(), any()) } just Runs
     every { LocationEngineProvider.getBestLocationEngine(context.applicationContext) } returns locationEngine
     defaultLocationProvider = DefaultLocationProvider(context, locationCompassEngine)
   }

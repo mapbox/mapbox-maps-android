@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.DisplayMetrics
 import android.view.MotionEvent
 import android.view.View
-import com.mapbox.common.ShadowLogger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.StyleInterface
@@ -18,10 +17,8 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
 class MapPluginRegistryTest {
 
   private val delegateProvider = mockk<MapDelegateProvider>()
@@ -36,6 +33,8 @@ class MapPluginRegistryTest {
     every { mapInitOptions.mapOptions } returns mapOptions
     every { mapInitOptions.resourceOptions } returns resourceOptions
     every { mapInitOptions.attrs } returns null
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logI(any(), any()) } just Runs
   }
 
   @Test

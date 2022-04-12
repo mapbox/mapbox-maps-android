@@ -3,11 +3,7 @@ package com.mapbox.maps.renderer
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.Looper
-import com.mapbox.common.ShadowLogger
-import com.mapbox.maps.MapInterface
-import com.mapbox.maps.MapView
-import com.mapbox.maps.Size
-import com.mapbox.maps.Task
+import com.mapbox.maps.*
 import com.mapbox.maps.renderer.gl.PixelReader
 import io.mockk.*
 import org.junit.Assert
@@ -16,13 +12,11 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
-import org.robolectric.annotation.Config
 import org.robolectric.annotation.LooperMode
 import java.nio.ByteBuffer
 import java.util.concurrent.atomic.AtomicBoolean
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
 @LooperMode(LooperMode.Mode.PAUSED)
 internal abstract class MapboxRendererTest {
 
@@ -32,6 +26,8 @@ internal abstract class MapboxRendererTest {
   @Before
   open fun setUp() {
     renderThread = mockk(relaxUnitFun = true)
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logE(any(), any()) } just Runs
   }
 
   @Test

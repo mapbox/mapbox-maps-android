@@ -7,7 +7,6 @@ import android.animation.ValueAnimator
 import android.os.Handler
 import android.os.Looper.getMainLooper
 import androidx.core.animation.addListener
-import com.mapbox.common.ShadowLogger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl.Companion.TAG
@@ -21,13 +20,13 @@ import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import io.mockk.*
 import io.mockk.verify
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
-import org.robolectric.annotation.Config
 import org.robolectric.annotation.LooperMode
 import org.robolectric.shadows.ShadowLog
 import java.lang.Error
@@ -35,7 +34,6 @@ import java.lang.Exception
 import java.time.Duration
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
 @LooperMode(LooperMode.Mode.PAUSED)
 class CameraAnimationsPluginImplTest {
 
@@ -77,11 +75,22 @@ class CameraAnimationsPluginImplTest {
     mapCameraManagerDelegate = mockk(relaxed = true)
     mapTransformDelegate = mockk(relaxed = true)
     mockkObject(CameraTransform)
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logW(any(), any()) } just Runs
+    every { logI(any(), any()) } just Runs
+    every { logD(any(), any()) } just Runs
+    every { logE(any(), any()) } just Runs
     every { delegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
     every { delegateProvider.mapTransformDelegate } returns mapTransformDelegate
     cameraAnimationsPluginImpl = CameraAnimationsPluginImpl().apply {
       onDelegateProvider(delegateProvider)
     }
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkObject(CameraTransform)
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test
@@ -961,24 +970,20 @@ class CameraAnimationsPluginImplTest {
 
   @Test
   fun debugModeTrueTest() {
-    mockkStatic(ShadowLogger::class)
     cameraAnimationsPluginImpl.debugMode = true
     shadowOf(getMainLooper()).pause()
     cameraAnimationsPluginImpl.easeTo(cameraState.toCameraOptions(), mapAnimationOptions { duration(DURATION) })
     shadowOf(getMainLooper()).idle()
-    verify { ShadowLogger.d(TAG, any()) }
-    unmockkStatic(ShadowLogger::class)
+    verify { logD(TAG, any()) }
   }
 
   @Test
   fun debugModeFalseTest() {
-    mockkStatic(ShadowLogger::class)
     cameraAnimationsPluginImpl.debugMode = false
     shadowOf(getMainLooper()).pause()
     cameraAnimationsPluginImpl.easeTo(cameraState.toCameraOptions(), mapAnimationOptions { duration(DURATION) })
     shadowOf(getMainLooper()).idle()
-    verify(exactly = 0) { ShadowLogger.d(TAG, any()) }
-    unmockkStatic(ShadowLogger::class)
+    verify(exactly = 0) { logD(TAG, any()) }
   }
 
   @Test
