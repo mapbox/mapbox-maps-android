@@ -9,9 +9,6 @@ parameters:
   mapbox_slug:
     type: string
     default: "owner/repo"
-  mapbox_config:
-    type: string
-    default: empty
 
 workflows:
   version: 2
