@@ -3,11 +3,7 @@ package com.mapbox.maps.extension.androidauto
 import androidx.car.app.AppManager
 import androidx.car.app.CarContext
 import androidx.car.app.SurfaceCallback
-import com.mapbox.common.Logger
-import com.mapbox.maps.MapInitOptions
-import com.mapbox.maps.MapSurface
-import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.*
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -33,8 +29,8 @@ class MapboxCarMapTest {
 
   @Before
   fun setup() {
-    mockkStatic(Logger::class)
-    every { Logger.i(any(), any()) } just Runs
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logI(any(), any()) } just Runs
     mockkObject(MapSurfaceProvider)
     every { MapSurfaceProvider.create(any(), any(), any()) } returns testMapSurface
   }
