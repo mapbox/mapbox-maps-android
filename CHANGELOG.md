@@ -12,7 +12,7 @@ Mapbox welcomes participation and contributions from everyone.
 ### Bug fixes 🐞
 
 * [tile store] Correctly decode compressed content if loaded from the cache. ([#1279](https://github.com/mapbox/mapbox-maps-android/pull/1279))
-* [tile store] TileStore Android Service: Fixed issue that prevented data blobs larger than 1 MB to be transferred via the service. ([#1279](https://github.com/mapbox/mapbox-maps-android/pull/1279))
+* [tile store] Fixed issue that prevented data blobs larger than 1 MB to be transferred via the service. ([#1279](https://github.com/mapbox/mapbox-maps-android/pull/1279))
 
 ## Dependencies
 * Bump common to v21.2.1 ([#1279](https://github.com/mapbox/mapbox-maps-android/pull/1279))
