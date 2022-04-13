@@ -7,6 +7,16 @@ Mapbox welcomes participation and contributions from everyone.
 * Optimize how plugins handle settings changes. Call `applySettings` only when settings value changes. ([#1189](https://github.com/mapbox/mapbox-maps-android/pull/1189))
 * Add new Exception type `MapboxMapMemoryLeakException` which will be thrown when there is a leak for nativeMap. ([1193](https://github.com/mapbox/mapbox-maps-android/pull/1193))
 
+# 10.4.2 April 13, 2022
+
+### Bug fixes 🐞
+
+* [tile store] Correctly decode compressed content if loaded from the cache. ([#1279](https://github.com/mapbox/mapbox-maps-android/pull/1279))
+* [tile store] TileStore Android Service: Fixed issue that prevented data blobs larger than 1 MB to be transferred via the service. ([#1279](https://github.com/mapbox/mapbox-maps-android/pull/1279))
+
+## Dependencies
+* Bump common to v21.2.1 ([#1279](https://github.com/mapbox/mapbox-maps-android/pull/1279))
+
 # 10.4.1 April 7, 2022
 
 ## Bug fixes 🐞
