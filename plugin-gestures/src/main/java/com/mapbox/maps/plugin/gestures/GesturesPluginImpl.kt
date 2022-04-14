@@ -1344,7 +1344,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase {
         return true
       }
 
-      if (detector.pointersCount > 1) {
+      // Skip 3 or more fingers pan
+      if (detector.pointersCount > 2) {
         return false
       }
 
