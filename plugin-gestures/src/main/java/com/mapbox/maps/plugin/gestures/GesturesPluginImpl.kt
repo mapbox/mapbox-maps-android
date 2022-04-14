@@ -1373,6 +1373,11 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
         return true
       }
 
+      // Skip 3 or more fingers pan
+      if (detector.pointersCount > 2) {
+        return false
+      }
+
       val focalPoint = detector.focalPoint
       val fromX = focalPoint.x.toDouble()
       val fromY = focalPoint.y.toDouble()
