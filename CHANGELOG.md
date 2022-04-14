@@ -3,6 +3,12 @@
 Mapbox welcomes participation and contributions from everyone.
 
 # main
+## Features ✨ and improvements 🏁
+
+## Bug fixes 🐞
+* Fix NaN latitude native crash rarely happening during `MapboxMap#flyTo`. ([#1271](https://github.com/mapbox/mapbox-maps-android/pull/1271))
+* Limit `MapboxMap#pixelForCoordinate` to the bounds of MapView. ([#1226](https://github.com/mapbox/mapbox-maps-android/pull/1226))
+* Enable two finger pan gesture. ([#1280](https://github.com/mapbox/mapbox-maps-android/pull/1280))
 
 # 10.5.0-rc.1 April 21, 2022
 ## Features ✨ and improvements 🏁
@@ -10,9 +16,6 @@ Mapbox welcomes participation and contributions from everyone.
 * Switch to use shader to calculate the 'line-trim-offset' property update. ([#1282](https://github.com/mapbox/mapbox-maps-android/pull/1282))
 
 ## Bug fixes 🐞
-* Fix NaN latitude native crash rarely happening during `MapboxMap#flyTo`. ([#1271](https://github.com/mapbox/mapbox-maps-android/pull/1271))
-* Limit `MapboxMap#pixelForCoordinate` to the bounds of MapView. ([#1226](https://github.com/mapbox/mapbox-maps-android/pull/1226))
-* Enable two finger pan gesture. ([#1280](https://github.com/mapbox/mapbox-maps-android/pull/1280))
 * Fix issue where internal hsla() function was converted to an invalid rgba expression. ([#1282](https://github.com/mapbox/mapbox-maps-android/pull/1282))
 * Fix a bug that 'line-trim-offset' calculation did not property cover 'round' or 'square' line cap in line ends. ([#1282](https://github.com/mapbox/mapbox-maps-android/pull/1282))
 
