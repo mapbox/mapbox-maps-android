@@ -403,9 +403,11 @@ class GesturesPluginTest {
     } returns PointF(0.0f, 0.0f)
     every { moveGestureDetector.pointersCount } returns 2
     var handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
-    assertFalse(handled)
+    // verify two finger pan gesture
+    assert(handled)
     every { moveGestureDetector.pointersCount } returns 1
     handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
+    // verify single finger pan gesture
     assert(handled)
     verify { listener.onMove(any()) }
     verify {
