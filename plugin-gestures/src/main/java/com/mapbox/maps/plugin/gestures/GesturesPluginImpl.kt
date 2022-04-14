@@ -1373,7 +1373,8 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
         return true
       }
 
-      if (detector.pointersCount > 1) {
+      // Skip 3 or more fingers pan
+      if (detector.pointersCount > 2) {
         return false
       }
 
