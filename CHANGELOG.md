@@ -10,6 +10,11 @@ Mapbox welcomes participation and contributions from everyone.
 * Limit `MapboxMap#pixelForCoordinate` to the bounds of MapView. ([#1226](https://github.com/mapbox/mapbox-maps-android/pull/1226))
 * Enable two finger pan gesture. ([#1280](https://github.com/mapbox/mapbox-maps-android/pull/1280))
 
+# 10.4.2 April 13, 2022
+### Bug fixes 🐞
+* [tile store] Correctly decode compressed content if loaded from the cache. ([#1279](https://github.com/mapbox/mapbox-maps-android/pull/1279))
+* [tile store] Fixed issue that prevented data blobs larger than 1 MB to be transferred via the service. ([#1279](https://github.com/mapbox/mapbox-maps-android/pull/1279))
+
 # 10.5.0-beta.1 April 7, 2022
 ## Breaking changes ⚠️
 * Experimental methods `MapboxMap#setMapProjection` / `MapboxMap#getMapProjection` are removed and should be replaced with `StyleInterface#setProjection` / `StyleInterface#getProjection`. Setting projection supports Style DSL as well. ([#1255](https://github.com/mapbox/mapbox-maps-android/pull/1255))
