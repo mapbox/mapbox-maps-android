@@ -5,9 +5,14 @@ Mapbox welcomes participation and contributions from everyone.
 # main
 ## Features ✨ and improvements 🏁
 
+# 10.5.0-rc.1 April 21, 2022
 ## Bug fixes 🐞
 * Fix NaN latitude native crash rarely happening during `MapboxMap#flyTo`. ([#1271](https://github.com/mapbox/mapbox-maps-android/pull/1271))
 * Limit `MapboxMap#pixelForCoordinate` to the bounds of MapView. ([#1226](https://github.com/mapbox/mapbox-maps-android/pull/1226))
+* Enable two finger pan gesture. ([#1280](https://github.com/mapbox/mapbox-maps-android/pull/1280))
+
+## Dependencies
+* Bump gl-native to v10.5.0-rc.1, mapbox-common to v21.3.0-rc.2. ([#1244](https://github.com/mapbox/mapbox-maps-android/pull/1244))
 
 # 10.5.0-beta.1 April 7, 2022
 ## Breaking changes ⚠️
