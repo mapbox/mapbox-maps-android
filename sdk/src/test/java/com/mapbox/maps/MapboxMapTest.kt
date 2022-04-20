@@ -1071,7 +1071,8 @@ class PixelForCoordinatesTest(
 
   @After
   fun cleanUp() {
-    unmockkAll()
+    unmockkStatic(Map::class)
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   companion object {

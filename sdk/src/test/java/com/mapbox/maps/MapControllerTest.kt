@@ -55,8 +55,8 @@ class MapControllerTest {
   }
 
   @After
-  fun shutDown() {
-    clearAllMocks()
+  fun cleanUp() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

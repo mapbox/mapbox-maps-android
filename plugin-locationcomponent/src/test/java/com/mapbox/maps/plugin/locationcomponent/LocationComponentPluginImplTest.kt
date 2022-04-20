@@ -20,6 +20,7 @@ import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttri
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttributeParser2
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import io.mockk.*
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -73,6 +74,11 @@ class LocationComponentPluginImplTest {
     every { LocationEngineProvider.getBestLocationEngine(context.applicationContext.applicationContext) } returns locationEngine
 
     locationComponentPlugin = LocationComponentPluginImpl()
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkAll()
   }
 
   // Utility function to setup initialise the plugin.

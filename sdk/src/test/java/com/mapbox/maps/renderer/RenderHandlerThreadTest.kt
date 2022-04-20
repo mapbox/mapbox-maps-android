@@ -4,6 +4,7 @@ import android.os.Handler
 import android.os.Looper
 import com.mapbox.maps.logW
 import io.mockk.*
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -23,6 +24,11 @@ class RenderHandlerThreadTest {
     renderHandlerThread = RenderHandlerThread()
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logW(any(), any()) } just Runs
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

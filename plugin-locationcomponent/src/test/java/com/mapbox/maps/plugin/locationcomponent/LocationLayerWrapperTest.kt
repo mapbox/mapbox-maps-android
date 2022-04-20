@@ -6,6 +6,7 @@ import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.logW
 import io.mockk.*
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -23,6 +24,11 @@ class LocationLayerWrapperTest {
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logW(any(), any()) } just Runs
     locationLayerWrapper = LocationLayerWrapper(layerId)
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

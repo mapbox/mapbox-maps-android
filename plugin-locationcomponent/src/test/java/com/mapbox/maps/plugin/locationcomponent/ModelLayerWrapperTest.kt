@@ -8,6 +8,7 @@ import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.delegates.MapStyleStateDelegate
 import io.mockk.*
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -32,6 +33,11 @@ class ModelLayerWrapperTest {
     val styleState = mockk<MapStyleStateDelegate>()
     every { styleState.isFullyLoaded() } returns true
     layer.bindTo(style)
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

@@ -7,6 +7,7 @@ import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.logW
 import io.mockk.*
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -30,6 +31,11 @@ class LocationIndicatorLayerWrapperTest {
     every { expected.error } returns null
 
     layer.bindTo(style)
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test
