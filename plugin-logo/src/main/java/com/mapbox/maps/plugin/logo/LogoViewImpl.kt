@@ -8,7 +8,7 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.FrameLayout
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.res.ResourcesCompat
-import com.mapbox.common.Logger
+import com.mapbox.maps.logW
 
 /**
  * Concrete implementation of LogoView.
@@ -68,7 +68,7 @@ class LogoViewImpl : LogoView, AppCompatImageView {
     get() = visibility == View.VISIBLE
     set(value) {
       visibility = if (value) View.VISIBLE else {
-        Logger.w("MbxLogo", context.getString(R.string.mapbox_warning_logo_disabled))
+        logW("MbxLogo", context.getString(R.string.mapbox_warning_logo_disabled))
         View.GONE
       }
     }

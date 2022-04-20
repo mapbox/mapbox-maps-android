@@ -1,9 +1,10 @@
 package com.mapbox.maps.testapp.examples.customlayer
 
 import android.opengl.GLES20
-import com.mapbox.common.Logger
 import com.mapbox.maps.CustomLayerHost
 import com.mapbox.maps.CustomLayerRenderParameters
+import com.mapbox.maps.logD
+import com.mapbox.maps.logW
 import com.mapbox.maps.testapp.BuildConfig
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -36,7 +37,7 @@ class ExampleCustomLayer : CustomLayerHost {
   override fun initialize() {
     val maxAttrib = IntArray(1)
     GLES20.glGetIntegerv(GLES20.GL_MAX_VERTEX_ATTRIBS, maxAttrib, 0)
-    Logger.d(TAG, "Max vertex attributes: ${maxAttrib[0]}")
+    logD(TAG, "Max vertex attributes: ${maxAttrib[0]}")
 
     // load and compile shaders
     vertexShader = loadShader(
@@ -101,7 +102,7 @@ class ExampleCustomLayer : CustomLayerHost {
   }
 
   override fun contextLost() {
-    Logger.w(TAG, "contextLost")
+    logW(TAG, "contextLost")
     program = 0
   }
 
@@ -177,7 +178,7 @@ class ExampleCustomLayer : CustomLayerHost {
       if (BuildConfig.DEBUG) {
         when (val error = GLES20.glGetError()) {
           GLES20.GL_NO_ERROR -> {
-            Logger.d(TAG, "$cmd -> no error")
+            logD(TAG, "$cmd -> no error")
           }
           GLES20.GL_INVALID_ENUM -> throw RuntimeException("$cmd -> error in gl: GL_INVALID_ENUM")
           GLES20.GL_INVALID_VALUE -> throw RuntimeException("$cmd -> error in gl: GL_INVALID_VALUE")

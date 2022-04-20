@@ -31,6 +31,13 @@ public final class com/mapbox/maps/MapboxLocationComponentException : java/lang/
 	public fun <init> (Ljava/lang/String;)V
 }
 
+public final class com/mapbox/maps/MapboxLogger {
+	public static final fun logD (Ljava/lang/String;Ljava/lang/String;)V
+	public static final fun logE (Ljava/lang/String;Ljava/lang/String;)V
+	public static final fun logI (Ljava/lang/String;Ljava/lang/String;)V
+	public static final fun logW (Ljava/lang/String;Ljava/lang/String;)V
+}
+
 public final class com/mapbox/maps/MapboxMapException : java/lang/RuntimeException {
 	public fun <init> (Ljava/lang/String;)V
 }

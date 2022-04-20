@@ -1,6 +1,5 @@
 package com.mapbox.maps
 
-import com.mapbox.common.Logger
 import com.mapbox.maps.extension.observable.eventdata.MapLoadingErrorEventData
 import com.mapbox.maps.extension.observable.eventdata.StyleDataLoadedEventData
 import com.mapbox.maps.extension.observable.eventdata.StyleLoadedEventData
@@ -76,7 +75,7 @@ internal class StyleObserver(
   }
 
   override fun onMapLoadError(eventData: MapLoadingErrorEventData) {
-    Logger.e(
+    logE(
       TAG,
       "OnMapLoadError: ${eventData.type}, message: ${eventData.message}, sourceID: ${eventData.sourceId}, tileID: ${eventData.tileId}"
     )

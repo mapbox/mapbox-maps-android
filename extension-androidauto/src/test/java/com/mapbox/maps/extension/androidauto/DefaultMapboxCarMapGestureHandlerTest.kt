@@ -5,21 +5,18 @@ package com.mapbox.maps.extension.androidauto
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.ScreenCoordinate
-import com.mapbox.maps.extension.androidauto.testing.ShadowLogger
+import com.mapbox.maps.logI
 import com.mapbox.maps.plugin.animation.camera
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.slot
-import io.mockk.verifyOrder
+import io.mockk.*
+import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
 @OptIn(MapboxExperimental::class)
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
 class DefaultMapboxCarMapGestureHandlerTest {
 
   private val surface = mockk<MapboxCarMapSurface>(relaxed = true) {
@@ -29,6 +26,17 @@ class DefaultMapboxCarMapGestureHandlerTest {
     }
   }
   private val carMapGestures = DefaultMapboxCarMapGestureHandler()
+
+  @Before
+  fun `set up mocks`() {
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logI(any(), any()) } just Runs
+  }
+
+  @After
+  fun cleanup() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
+  }
 
   @Test
   fun `onScroll will start and stop dragging`() {

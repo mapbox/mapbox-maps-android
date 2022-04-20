@@ -12,11 +12,7 @@ import com.mapbox.common.Cancelable
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
-import com.mapbox.maps.LayerPosition
-import com.mapbox.maps.QueriedFeature
-import com.mapbox.maps.QueryFeaturesCallback
-import com.mapbox.maps.RenderedQueryGeometry
-import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.addPersistentLayer
@@ -32,15 +28,14 @@ import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.OnMoveListener
 import io.mockk.*
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
 class CircleAnnotationManagerTest {
   private val delegateProvider: MapDelegateProvider = mockk()
   private val style: StyleInterface = mockk()
@@ -65,6 +60,8 @@ class CircleAnnotationManagerTest {
   fun setUp() {
     mockkStatic("com.mapbox.maps.extension.style.layers.LayerUtils")
     mockkStatic("com.mapbox.maps.extension.style.sources.SourceUtils")
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logE(any(), any()) } just Runs
     val captureCallback = slot<(StyleInterface) -> Unit>()
     every { delegateProvider.getStyle(capture(captureCallback)) } answers {
       captureCallback.captured.invoke(style)
@@ -135,6 +132,11 @@ class CircleAnnotationManagerTest {
     every { dragLayer.circleStrokeOpacity(any<Expression>()) } answers { dragLayer }
     every { layer.circleStrokeWidth(any<Expression>()) } answers { layer }
     every { dragLayer.circleStrokeWidth(any<Expression>()) } answers { dragLayer }
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkAll()
   }
 
   @Test

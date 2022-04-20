@@ -1,11 +1,7 @@
 package com.mapbox.maps.extension.androidauto
 
 import androidx.car.app.SurfaceCallback
-import com.mapbox.common.Logger
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.MapboxMap
-import com.mapbox.maps.ScreenCoordinate
+import com.mapbox.maps.*
 import com.mapbox.maps.plugin.animation.camera
 
 /**
@@ -36,7 +32,7 @@ open class DefaultMapboxCarMapGestureHandler : MapboxCarMapGestureHandler {
         visibleCenter.x - distanceX,
         visibleCenter.y - distanceY
       )
-      Logger.i(TAG, "scroll from $visibleCenter to $toCoordinate")
+      logI(TAG, "scroll from $visibleCenter to $toCoordinate")
       setCamera(getDragCameraOptions(visibleCenter, toCoordinate))
       dragEnd()
     }
@@ -55,7 +51,7 @@ open class DefaultMapboxCarMapGestureHandler : MapboxCarMapGestureHandler {
     velocityX: Float,
     velocityY: Float
   ) {
-    Logger.i(TAG, "fling $velocityX, $velocityY")
+    logI(TAG, "fling $velocityX, $velocityY")
     // TODO implement fling
     // https://github.com/mapbox/mapbox-navigation-android-examples/issues/67
   }
@@ -89,7 +85,7 @@ open class DefaultMapboxCarMapGestureHandler : MapboxCarMapGestureHandler {
         .anchor(anchor)
         .build()
 
-      Logger.i(TAG, "scale with $focusX, $focusY $scaleFactor -> $fromZoom $toZoom")
+      logI(TAG, "scale with $focusX, $focusY $scaleFactor -> $fromZoom $toZoom")
       if (scaleFactor == DOUBLE_TAP_SCALE_FACTOR) {
         camera.easeTo(cameraOptions)
       } else {

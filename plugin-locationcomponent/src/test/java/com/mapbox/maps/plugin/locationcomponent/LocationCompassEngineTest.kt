@@ -4,18 +4,15 @@ import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.view.WindowManager
-import com.mapbox.common.ShadowLogger
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
+import com.mapbox.maps.logW
+import io.mockk.*
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
 class LocationCompassEngineTest {
   private val windowManager = mockk<WindowManager>()
   private val sensorManager = mockk<SensorManager>(relaxed = true)
@@ -28,11 +25,18 @@ class LocationCompassEngineTest {
 
   @Before
   fun setUp() {
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logW(any(), any()) } just Runs
     every { sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) } returns compassSensor
     every { sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) } returns gravitySensor
     every { sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) } returns magneticFieldSensor
     every { context.applicationContext.getSystemService(Context.WINDOW_SERVICE) } returns windowManager
     every { context.applicationContext.getSystemService(Context.SENSOR_SERVICE) } returns sensorManager
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

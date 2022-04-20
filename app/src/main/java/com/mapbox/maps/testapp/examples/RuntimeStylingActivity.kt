@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.mapbox.bindgen.Value
-import com.mapbox.common.Logger
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.expressions.dsl.generated.*
@@ -58,7 +57,7 @@ class RuntimeStylingActivity : AppCompatActivity() {
     addLayerWithoutStyleExtension(style)
 
     val source = style.getSource("composite") as VectorSource
-    Logger.e(TAG, "getSource: $source")
+    logE(TAG, "getSource: $source")
   }
 
   private fun addImage(style: Style) {
@@ -69,10 +68,10 @@ class RuntimeStylingActivity : AppCompatActivity() {
       true
     )
     expected.error?.let {
-      Logger.e(TAG, it)
+      logE(TAG, it)
     }
     expected.value?.let {
-      Logger.d(TAG, it.toString())
+      logD(TAG, it.toString())
     }
   }
 
@@ -157,9 +156,9 @@ class RuntimeStylingActivity : AppCompatActivity() {
       cluster(true)
       prefetchZoomDelta(1)
     }
-    Logger.i(TAG, source.toString())
+    logI(TAG, source.toString())
     style.addSource(source)
-    Logger.i(TAG, "prefetchZoomDelta : ${source.prefetchZoomDelta}")
+    logI(TAG, "prefetchZoomDelta : ${source.prefetchZoomDelta}")
   }
 
   private fun addSymbolLayer(style: Style) {
@@ -217,7 +216,7 @@ class RuntimeStylingActivity : AppCompatActivity() {
       iconIgnorePlacement(false)
     }
     style.addLayer(symbolLayer)
-    Logger.i(TAG, symbolLayer.iconOpacityAsExpression.toString())
+    logI(TAG, symbolLayer.iconOpacityAsExpression.toString())
   }
 
   private fun addFillSource(style: Style) {
@@ -261,7 +260,7 @@ class RuntimeStylingActivity : AppCompatActivity() {
         )
       )
     }
-    Logger.i(TAG, polygon.toString())
+    logI(TAG, polygon.toString())
     style.addSource(polygon)
   }
 
@@ -288,7 +287,7 @@ class RuntimeStylingActivity : AppCompatActivity() {
       }
     )
     fillLayer.visibility(Visibility.VISIBLE)
-    Logger.i(TAG, fillLayer.fillColorAsExpression.toString())
+    logI(TAG, fillLayer.fillColorAsExpression.toString())
   }
 
   private fun addFillExtrusionLayer(style: Style) {
@@ -347,10 +346,10 @@ class RuntimeStylingActivity : AppCompatActivity() {
       null
     )
     expected.error?.let {
-      Logger.e(TAG, it)
+      logE(TAG, it)
     }
     expected.value?.let {
-      Logger.d(TAG, it.toString())
+      logD(TAG, it.toString())
     }
 
     val sourceParams = HashMap<String, Value>()

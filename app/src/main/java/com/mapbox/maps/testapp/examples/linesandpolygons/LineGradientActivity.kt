@@ -2,7 +2,6 @@ package com.mapbox.maps.testapp.examples.linesandpolygons
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
@@ -15,6 +14,7 @@ import com.mapbox.maps.extension.style.layers.properties.generated.LineCap
 import com.mapbox.maps.extension.style.layers.properties.generated.LineJoin
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.style
+import com.mapbox.maps.logI
 import com.mapbox.maps.testapp.databinding.ActivityLineGradientBinding
 
 class LineGradientActivity : AppCompatActivity() {
@@ -24,7 +24,7 @@ class LineGradientActivity : AppCompatActivity() {
     val binding = ActivityLineGradientBinding.inflate(layoutInflater)
     setContentView(binding.root)
     binding.mapView.getMapboxMap().loadStyle(createStyle()) { style ->
-      Logger.d(TAG, "Style loaded: ${style.styleURI}")
+      logI(TAG, "Style loaded: ${style.styleURI}")
       // Increase trim offset when user click the increase trim offset button.
       binding.trimOffsetButton.setOnClickListener {
         val linelayer = style.getLayerAs<LineLayer>(LAYER_ID)

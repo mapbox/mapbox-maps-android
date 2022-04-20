@@ -2,22 +2,18 @@ package com.mapbox.maps
 
 import android.content.Context
 import android.util.DisplayMetrics
-import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.MapView.Companion.DEFAULT_ANTIALIASING_SAMPLE_COUNT
 import com.mapbox.maps.plugin.*
-import io.mockk.every
-import io.mockk.mockk
+import io.mockk.*
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 import java.io.File
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
 class MapInitOptionsTest {
 
   private val context: Context = mockk(relaxUnitFun = true)
@@ -36,12 +32,15 @@ class MapInitOptionsTest {
     every { context.packageName } returns "com.mapbox.maps"
     every { context.filesDir } returns File("foobar")
     every { context.resources.displayMetrics } returns displayMetrics
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logI(any(), any()) } just Runs
     displayMetrics.density = 1f
   }
 
   @After
   fun cleanUp() {
     ResourceOptionsManager.destroyDefault()
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

@@ -1,12 +1,13 @@
 @file:JvmName("SourceUtils")
 package com.mapbox.maps.extension.style.sources
 
-import com.mapbox.common.Logger
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.sources.generated.*
 import com.mapbox.maps.extension.style.utils.silentUnwrap
+import com.mapbox.maps.logE
+import com.mapbox.maps.logW
 
 /**
  * Extension function to get a Source provided by the Style Extension by source id.
@@ -23,7 +24,7 @@ fun StyleManagerInterface.getSource(sourceId: String): Source? {
       "raster-dem" -> RasterDemSource.Builder(sourceId).build().also { it.delegate = this as StyleInterface }
       "raster" -> RasterSource.Builder(sourceId).build().also { it.delegate = this as StyleInterface }
       else -> {
-        Logger.e("StyleSourcePlugin", "Source type: $type unknown.")
+        logE("StyleSourcePlugin", "Source type: $type unknown.")
         null
       }
     }
@@ -40,7 +41,7 @@ fun StyleManagerInterface.getSource(sourceId: String): Source? {
 inline fun <reified T : Source> StyleManagerInterface.getSourceAs(sourceId: String): T? {
   val source = getSource(sourceId)
   if (source !is T) {
-    Logger.w(
+    logW(
       "StyleSourcePlugin",
       "Given sourceId = $sourceId is not requested type in getSourceAs."
     )

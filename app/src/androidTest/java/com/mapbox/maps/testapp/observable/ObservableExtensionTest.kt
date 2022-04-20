@@ -4,7 +4,6 @@ import android.graphics.BitmapFactory
 import androidx.annotation.UiThread
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.dsl.cameraOptions
@@ -503,7 +502,7 @@ class ObservableExtensionTest : BaseMapTest() {
       activity.runOnUiThread {
         mapboxMap.subscribe(
           {
-            Logger.e(TAG, it.toString())
+            logE(TAG, it.toString())
           },
           SUPPORTED_EVENTS
         )

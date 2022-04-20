@@ -9,7 +9,6 @@ import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.Value
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.dsl.cameraOptions
@@ -82,7 +81,7 @@ class FeatureStateActivity : AppCompatActivity(), OnCameraChangeListener {
           sourceId = SOURCE_ID,
           featureId = featureId
         ) { stateMap ->
-          Logger.d(
+          logD(
             TAG,
             "getFeatureState: ${stateMap.value!!}"
           )

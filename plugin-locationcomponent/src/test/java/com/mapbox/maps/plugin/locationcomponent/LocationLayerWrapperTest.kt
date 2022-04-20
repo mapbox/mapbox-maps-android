@@ -2,21 +2,18 @@ package com.mapbox.maps.plugin.locationcomponent
 
 import com.mapbox.bindgen.ExpectedFactory
 import com.mapbox.bindgen.Value
-import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.extension.style.StyleInterface
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
+import com.mapbox.maps.logW
+import io.mockk.*
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 import java.lang.RuntimeException
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
 class LocationLayerWrapperTest {
   private lateinit var locationLayerWrapper: LocationLayerWrapper
   private val layerId = "testLayerId"
@@ -24,7 +21,14 @@ class LocationLayerWrapperTest {
 
   @Before
   fun setup() {
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logW(any(), any()) } just Runs
     locationLayerWrapper = LocationLayerWrapper(layerId)
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

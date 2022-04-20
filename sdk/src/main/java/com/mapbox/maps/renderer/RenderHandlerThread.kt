@@ -5,7 +5,7 @@ import android.os.HandlerThread
 import android.os.Message
 import android.os.Process.THREAD_PRIORITY_DISPLAY
 import androidx.annotation.VisibleForTesting
-import com.mapbox.common.Logger
+import com.mapbox.maps.logW
 
 internal class RenderHandlerThread {
 
@@ -26,7 +26,7 @@ internal class RenderHandlerThread {
       val message = Message.obtain(it, task)
       message.obj = eventType
       it.sendMessageDelayed(message, delayMillis)
-    } ?: Logger.w(TAG, "Thread $HANDLE_THREAD_NAME was not started, ignoring event")
+    } ?: logW(TAG, "Thread $HANDLE_THREAD_NAME was not started, ignoring event")
   }
 
   fun start() {

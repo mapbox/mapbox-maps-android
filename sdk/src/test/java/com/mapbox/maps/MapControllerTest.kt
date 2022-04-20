@@ -3,7 +3,6 @@ package com.mapbox.maps
 import android.content.Context
 import android.graphics.Bitmap
 import android.view.MotionEvent
-import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.MapPluginRegistry
 import com.mapbox.maps.plugin.Plugin
@@ -19,10 +18,8 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
 class MapControllerTest {
 
   private val mockRenderer: MapboxRenderer = mockk()
@@ -52,11 +49,14 @@ class MapControllerTest {
       mockPluginRegistry,
       mockOnStyleDataLoadedListener
     )
+
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logI(any(), any()) } just Runs
   }
 
   @After
-  fun shutDown() {
-    clearAllMocks()
+  fun cleanUp() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

@@ -1,8 +1,9 @@
 package com.mapbox.maps.renderer
 
 import android.view.Surface
-import com.mapbox.common.ShadowLogger
 import com.mapbox.countDownEvery
+import com.mapbox.maps.logE
+import com.mapbox.maps.logW
 import com.mapbox.maps.renderer.MapboxRenderThread.Companion.RETRY_DELAY_MS
 import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.gl.TextureRenderer
@@ -17,7 +18,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
-import org.robolectric.annotation.Config
 import org.robolectric.annotation.LooperMode
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
@@ -25,7 +25,6 @@ import javax.microedition.khronos.egl.EGL10
 import javax.microedition.khronos.egl.EGLContext
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
 @LooperMode(LooperMode.Mode.PAUSED)
 class MapboxRenderThreadTest {
 
@@ -51,6 +50,9 @@ class MapboxRenderThreadTest {
       textureRenderer,
     )
     renderHandlerThread.start()
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logE(any(), any()) } just Runs
+    every { logW(any(), any()) } just Runs
   }
 
   private fun mockSurface() {
@@ -95,7 +97,7 @@ class MapboxRenderThreadTest {
   @After
   fun cleanup() {
     renderHandlerThread.stop()
-    clearAllMocks()
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

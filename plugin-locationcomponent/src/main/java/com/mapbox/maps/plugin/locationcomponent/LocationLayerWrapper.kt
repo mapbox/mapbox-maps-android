@@ -1,11 +1,11 @@
 package com.mapbox.maps.plugin.locationcomponent
 
 import com.mapbox.bindgen.Value
-import com.mapbox.common.Logger
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.logW
 
 internal open class LocationLayerWrapper(val layerId: String) {
 
@@ -33,7 +33,7 @@ internal open class LocationLayerWrapper(val layerId: String) {
           throw MapboxLocationComponentException("Set layer property \"${propertyName}\" failed:\n$it\n$value")
         }
       } else {
-        Logger.w(TAG, "Skip updating layer property $propertyName, layer $layerId not ready yet.")
+        logW(TAG, "Skip updating layer property $propertyName, layer $layerId not ready yet.")
       }
     }
   }

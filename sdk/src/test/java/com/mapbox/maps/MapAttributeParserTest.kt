@@ -1,28 +1,25 @@
 package com.mapbox.maps
 
 import android.content.res.TypedArray
-import com.mapbox.common.ShadowLogger
-import io.mockk.clearAllMocks
-import io.mockk.every
-import io.mockk.mockk
+import io.mockk.*
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
 class MapAttributeParserTest {
 
   private lateinit var typedArray: TypedArray
 
   @Before
   fun setUp() {
-    clearAllMocks()
     typedArray = mockk(relaxed = true)
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logI(any(), any()) } just Runs
     every { typedArray.getString(any()) } returns null
     every { typedArray.getBoolean(any(), any()) } returns true
     every { typedArray.getFloat(any(), any()) } returns 99.0f
@@ -33,6 +30,11 @@ class MapAttributeParserTest {
         any()
       )
     } returns 1
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

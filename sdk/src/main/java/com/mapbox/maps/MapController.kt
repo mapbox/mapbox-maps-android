@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.MotionEvent
 import androidx.annotation.VisibleForTesting
 import com.mapbox.annotation.module.MapboxModuleType
-import com.mapbox.common.Logger
 import com.mapbox.common.module.provider.MapboxModuleProvider
 import com.mapbox.common.module.provider.ModuleProviderArgument
 import com.mapbox.maps.assets.AssetManagerProvider
@@ -316,9 +315,9 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
           mapboxMap.setGesturesAnimationPlugin(pluginObject)
         }
       } catch (ex: NoClassDefFoundError) {
-        Logger.d(TAG, PLUGIN_MISSING_TEMPLATE.format(plugin.id))
+        logI(TAG, PLUGIN_MISSING_TEMPLATE.format(plugin.id))
       } catch (ex: InvalidViewPluginHostException) {
-        Logger.d(TAG, VIEW_HIERARCHY_MISSING_TEMPLATE.format(plugin))
+        logI(TAG, VIEW_HIERARCHY_MISSING_TEMPLATE.format(plugin))
       }
     }
   }

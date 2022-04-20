@@ -8,15 +8,10 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import com.mapbox.api.directions.v5.models.DirectionsResponse
-import com.mapbox.common.Logger
 import com.mapbox.core.constants.Constants
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.EdgeInsets
-import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.*
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.ViewportPlugin
@@ -135,7 +130,7 @@ class ViewportShowcaseActivity : AppCompatActivity() {
         OverviewViewportStateOptions.Builder().geometry(simulateRouteLocationProvider.route).build()
       )
     viewport.addStatusObserver { from, to, reason ->
-      Logger.i(
+      logI(
         TAG,
         """
         ViewportStatus changed:

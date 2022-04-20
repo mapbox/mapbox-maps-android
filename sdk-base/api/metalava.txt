@@ -33,6 +33,13 @@ package com.mapbox.maps {
     ctor public MapboxLocationComponentException(String? exceptionText);
   }
 
+  public final class MapboxLogger {
+    method public static void logD(String tag, String message);
+    method public static void logE(String tag, String message);
+    method public static void logI(String tag, String message);
+    method public static void logW(String tag, String message);
+  }
+
   public final class MapboxMapException extends java.lang.RuntimeException {
     ctor public MapboxMapException(String? exceptionText);
   }

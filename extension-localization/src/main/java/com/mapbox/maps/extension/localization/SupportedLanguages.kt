@@ -1,6 +1,6 @@
 package com.mapbox.maps.extension.localization
 
-import com.mapbox.common.Logger
+import com.mapbox.maps.logW
 import java.util.*
 
 /**
@@ -130,7 +130,7 @@ internal fun getLanguageNameV7(locale: Locale): String {
   }
   return "name_${locale.language}".apply {
     if (!supportedV7.contains(this)) {
-      Logger.w(TAG, "Language ${locale.displayLanguage} is not supported in the current style")
+      logW(TAG, "Language ${locale.displayLanguage} is not supported in the current style")
     }
   }
 }
@@ -145,7 +145,7 @@ internal fun getLanguageNameV8(locale: Locale): String {
   }
   return "name_${locale.language}".apply {
     if (!supportedV8.contains(this)) {
-      Logger.w(TAG, "Language ${locale.displayLanguage} is not supported in the current style")
+      logW(TAG, "Language ${locale.displayLanguage} is not supported in the current style")
     }
   }
 }

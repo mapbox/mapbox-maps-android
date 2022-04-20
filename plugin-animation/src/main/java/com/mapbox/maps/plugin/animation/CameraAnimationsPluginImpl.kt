@@ -8,7 +8,6 @@ import android.os.Handler
 import android.os.Looper
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.PRIVATE
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.plugin.animation.animator.*
@@ -190,12 +189,12 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       notifyListeners(mapCameraManagerDelegate.cameraState)
       lastCameraOptions = cameraOptions
     } catch (e: Exception) {
-      Logger.e(
+      logE(
         TAG,
         "Exception while setting camera options : ${e.message} CameraOptions = $cameraOptions"
       )
     } catch (error: Error) {
-      Logger.e(
+      logE(
         TAG,
         "Error while setting camera options : ${error.message} CameraOptions = $cameraOptions"
       )
@@ -214,7 +213,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       CameraAnimatorType.PITCH -> mapCameraManagerDelegate.cameraState.pitch
     }.also {
       if (debugMode) {
-        Logger.d(
+        logD(
           TAG,
           "Animation ${cameraAnimator.type.name}(${cameraAnimator.hashCode()}): automatically setting start value $it."
         )
@@ -297,7 +296,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
             // finally register update listener in order to update map properly
             registerInternalUpdateListener(this)
             if (debugMode) {
-              Logger.d(TAG, "Animation ${type.name}(${hashCode()}) started.")
+              logD(TAG, "Animation ${type.name}(${hashCode()}) started.")
             }
           }
         } ?: throw MapboxCameraAnimationException(
@@ -323,11 +322,11 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
               AnimationFinishStatus.CANCELED -> "was canceled."
               AnimationFinishStatus.ENDED -> "ended."
             }
-            Logger.d(TAG, "Animation ${type.name}(${hashCode()}) $logText")
+            logD(TAG, "Animation ${type.name}(${hashCode()}) $logText")
           }
           if (isInternal) {
             if (debugMode) {
-              Logger.d(TAG, "Internal Animator ${type.name} was unregistered")
+              logD(TAG, "Internal Animator ${type.name} was unregistered")
             }
             unregisterAnimators(this, cancelAnimators = false)
           }
@@ -405,7 +404,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
       if (animator is CameraAnimator<*>) {
         registerInternalListener(animator)
       } else {
-        Logger.e(TAG, "All animators must be CameraAnimator's to be registered!")
+        logE(TAG, "All animators must be CameraAnimator's to be registered!")
         return
       }
     }
@@ -430,7 +429,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         animator.removeInternalListener()
         animator.removeInternalUpdateListener()
       } else {
-        Logger.e(TAG, "All animators must be CameraAnimator's to be unregistered!")
+        logE(TAG, "All animators must be CameraAnimator's to be unregistered!")
         return
       }
     }
@@ -786,7 +785,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         cameraAnimator.owner = MapAnimationOwnerRegistry.INTERNAL
         cameraAnimators.add(cameraAnimator)
       } else {
-        Logger.e(TAG, "All animators must be CameraAnimator's to be played together!")
+        logE(TAG, "All animators must be CameraAnimator's to be played together!")
       }
     }
     registerAnimators(*cameraAnimators.toTypedArray())
@@ -809,7 +808,7 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
         cameraAnimator.owner = MapAnimationOwnerRegistry.INTERNAL
         cameraAnimators.add(cameraAnimator)
       } else {
-        Logger.e(TAG, "All animators must be CameraAnimator's to be played sequentially!")
+        logE(TAG, "All animators must be CameraAnimator's to be played sequentially!")
       }
     }
     registerAnimators(*cameraAnimators.toTypedArray())
