@@ -12,16 +12,16 @@ import android.content.Context
 import android.widget.FrameLayout
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewTreeLifecycleOwner
-import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.MapboxLifecycleObserver
+import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePlugin
 import com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePluginImpl
 import io.mockk.*
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
-import org.robolectric.annotation.Config
 
 class MapboxLifecyclePluginImplTest {
   private lateinit var mapboxLifecyclePlugin: MapboxLifecyclePlugin
@@ -51,7 +51,6 @@ class MapboxLifecyclePluginImplTest {
 }
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
 class TrimMemoryLevelTest(private val level: Pair<Int, Int>) {
   private lateinit var mapboxLifecyclePlugin: MapboxLifecyclePlugin
   private val mapView: FrameLayout = mockk(relaxed = true)
@@ -62,9 +61,17 @@ class TrimMemoryLevelTest(private val level: Pair<Int, Int>) {
   @Before
   fun setUp() {
     mockkStatic(ViewTreeLifecycleOwner::class)
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logW(any(), any()) } just Runs
     every { mapView.context } returns context
     every { ViewTreeLifecycleOwner.get(any()) } returns lifecycleOwner
     mapboxLifecyclePlugin = MapboxLifecyclePluginImpl()
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkStatic(ViewTreeLifecycleOwner::class)
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.res.ResourcesCompat
 import com.mapbox.annotation.module.MapboxModuleType
-import com.mapbox.common.Logger
 import com.mapbox.common.module.provider.MapboxModuleProvider
 import com.mapbox.common.module.provider.ModuleProviderArgument
 import com.mapbox.geojson.Point
@@ -143,11 +142,11 @@ open class Snapshotter {
         result.value?.let {
           snapshotCreatedCallback?.onSnapshotResult(addOverlay(Snapshot(it)) as MapSnapshotInterface)
         } ?: run {
-          Logger.e(TAG, result.error ?: "Snapshot is empty.")
+          logE(TAG, result.error ?: "Snapshot is empty.")
           snapshotCreatedCallback?.onSnapshotResult(null)
         }
       } else {
-        Logger.e(TAG, result.error ?: "Undefined error happened.")
+        logE(TAG, result.error ?: "Undefined error happened.")
         snapshotCreatedCallback?.onSnapshotResult(null)
       }
     }
@@ -352,7 +351,7 @@ open class Snapshotter {
       drawAttribution(canvas, measure, anchorPoint)
     } else {
       val snapshot: Bitmap = mapSnapshot.bitmap
-      Logger.e(
+      logE(
         TAG,
         "Could not generate attribution for snapshot size: ${snapshot.width}x${snapshot.height}." +
           " You are required to provide your own attribution for the used sources: ${mapSnapshot.attributions()}"

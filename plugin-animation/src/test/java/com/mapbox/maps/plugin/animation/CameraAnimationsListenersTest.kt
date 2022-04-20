@@ -3,8 +3,8 @@ package com.mapbox.maps.plugin.animation
 import android.animation.Animator
 import android.animation.ValueAnimator
 import android.os.Looper
-import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImplTest.Companion.toCameraState
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.animator.CameraBearingAnimator
@@ -12,18 +12,17 @@ import com.mapbox.maps.plugin.delegates.MapCameraManagerDelegate
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.delegates.MapTransformDelegate
 import io.mockk.*
+import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
-import org.robolectric.annotation.Config
 import org.robolectric.annotation.LooperMode
 import org.robolectric.shadows.ShadowLog
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
 @LooperMode(LooperMode.Mode.PAUSED)
 class CameraAnimationsListenersTest {
 
@@ -47,12 +46,20 @@ class CameraAnimationsListenersTest {
     val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
     mapCameraManagerDelegate = mockk(relaxed = true)
     mapTransformDelegate = mockk(relaxed = true)
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logW(any(), any()) } just Runs
     mockkObject(CameraTransform)
     every { delegateProvider.mapCameraManagerDelegate } returns mapCameraManagerDelegate
     every { delegateProvider.mapTransformDelegate } returns mapTransformDelegate
     cameraAnimationsPluginImpl = CameraAnimationsPluginImpl().apply {
       onDelegateProvider(delegateProvider)
     }
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
+    unmockkObject(CameraTransform)
   }
 
   @Test

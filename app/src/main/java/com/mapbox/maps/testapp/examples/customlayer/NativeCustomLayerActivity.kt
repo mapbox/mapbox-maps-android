@@ -4,12 +4,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.LayerPosition
-import com.mapbox.maps.MapboxMap
-import com.mapbox.maps.Style
+import com.mapbox.maps.*
 import com.mapbox.maps.testapp.R
 import com.mapbox.maps.testapp.databinding.ActivityCustomLayerBinding
 
@@ -55,7 +51,7 @@ class NativeCustomLayerActivity : AppCompatActivity() {
           LayerPosition(null, "building", null)
         )
         expected.error?.let {
-          Logger.e(TAG, "Add custom layer exception $it")
+          logE(TAG, "Add custom layer exception $it")
         }
         binding.fab.setImageResource(R.drawable.ic_layers_clear)
       }

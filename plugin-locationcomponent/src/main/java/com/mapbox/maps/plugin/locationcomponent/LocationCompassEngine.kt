@@ -8,7 +8,7 @@ import android.hardware.SensorManager
 import android.os.SystemClock
 import android.view.Surface
 import android.view.WindowManager
-import com.mapbox.common.Logger
+import com.mapbox.maps.logW
 
 /**
  * This class handles compass events and tracking the current device heading.
@@ -35,7 +35,7 @@ internal class LocationCompassEngine(context: Context) : SensorEventListener {
   init {
     compassSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
     if (compassSensor == null) {
-      Logger.w(
+      logW(
         TAG,
         "Rotation vector sensor not supported on device, falling back to accelerometer and magnetic field."
       )

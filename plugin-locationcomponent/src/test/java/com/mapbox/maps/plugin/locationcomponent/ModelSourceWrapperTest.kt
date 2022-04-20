@@ -3,21 +3,18 @@ package com.mapbox.maps.plugin.locationcomponent
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
-import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleInterface
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
+import com.mapbox.maps.logW
+import io.mockk.*
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
 class ModelSourceWrapperTest {
 
   private val style: StyleManagerInterface = mockk(relaxed = true)
@@ -25,10 +22,17 @@ class ModelSourceWrapperTest {
 
   @Before
   fun setup() {
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logW(any(), any()) } just Runs
     every { style.styleSourceExists(any()) } returns true
     every { style.addStyleSource(any(), any()) } returns expected
     every { style.setStyleSourceProperty(any(), any(), any()) } returns expected
     every { expected.error } returns null
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

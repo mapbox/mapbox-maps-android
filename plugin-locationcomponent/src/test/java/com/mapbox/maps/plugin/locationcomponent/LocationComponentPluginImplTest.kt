@@ -11,24 +11,23 @@ import android.view.WindowManager
 import com.mapbox.android.core.location.LocationEngine
 import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.bindgen.ExpectedFactory
-import com.mapbox.common.ShadowLogger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttributeParser
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentAttributeParser2
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import io.mockk.*
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
 class LocationComponentPluginImplTest {
 
   private val delegateProvider = mockk<MapDelegateProvider>(relaxed = true)
@@ -55,6 +54,8 @@ class LocationComponentPluginImplTest {
     mockkObject(LocationComponentAttributeParser)
     mockkObject(LocationComponentAttributeParser2)
     mockkStatic(LocationEngineProvider::class)
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logW(any(), any()) } just Runs
 
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
     every { context.packageName } returns pack
@@ -73,6 +74,11 @@ class LocationComponentPluginImplTest {
     every { LocationEngineProvider.getBestLocationEngine(context.applicationContext.applicationContext) } returns locationEngine
 
     locationComponentPlugin = LocationComponentPluginImpl()
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkAll()
   }
 
   // Utility function to setup initialise the plugin.

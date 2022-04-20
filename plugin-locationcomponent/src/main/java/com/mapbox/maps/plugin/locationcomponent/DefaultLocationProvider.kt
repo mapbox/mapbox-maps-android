@@ -12,8 +12,9 @@ import com.mapbox.android.core.location.LocationEngineProvider
 import com.mapbox.android.core.location.LocationEngineRequest
 import com.mapbox.android.core.location.LocationEngineResult
 import com.mapbox.android.core.permissions.PermissionsManager
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
+import com.mapbox.maps.logE
+import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.PuckBearingSource
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArraySet
@@ -70,7 +71,7 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
         updateDelay = MAX_UPDATE_DELAY
       }
       handler?.postDelayed(runnable, updateDelay)
-      Logger.w(
+      logW(
         TAG,
         "Missing location permission, location component will not take effect before location permission is granted."
       )
@@ -134,7 +135,7 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
     if (PermissionsManager.areLocationPermissionsGranted(applicationContext)) {
       locationEngine.getLastLocation(locationEngineCallback)
     } else {
-      Logger.w(
+      logW(
         TAG,
         "Missing location permission, location component will not take effect before location permission is granted."
       )
@@ -175,7 +176,7 @@ class DefaultLocationProvider @VisibleForTesting(otherwise = PRIVATE) internal c
     }
 
     override fun onFailure(exception: Exception) {
-      Logger.e(
+      logE(
         TAG,
         "Failed to obtain location update: $exception"
       )

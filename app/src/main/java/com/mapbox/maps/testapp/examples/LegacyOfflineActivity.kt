@@ -3,7 +3,6 @@ package com.mapbox.maps.testapp.examples
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.*
 import com.mapbox.maps.testapp.databinding.ActivityLegacyOfflineBinding
@@ -21,11 +20,11 @@ class LegacyOfflineActivity : AppCompatActivity() {
 
   private val regionObserver: OfflineRegionObserver = object : OfflineRegionObserver {
     override fun mapboxTileCountLimitExceeded(limit: Long) {
-      Logger.e(TAG, "Mapbox tile count max (= $limit) has exceeded!")
+      logE(TAG, "Mapbox tile count max (= $limit) has exceeded!")
     }
 
     override fun statusChanged(status: OfflineRegionStatus) {
-      Logger.d(
+      logD(
         TAG,
         "${status.completedResourceCount}/${status.requiredResourceCount} resources; ${status.completedResourceSize} bytes downloaded."
       )
@@ -36,7 +35,7 @@ class LegacyOfflineActivity : AppCompatActivity() {
     }
 
     override fun responseError(error: ResponseError) {
-      Logger.e(TAG, "onError: ${error.reason}, ${error.message}")
+      logE(TAG, "onError: ${error.reason}, ${error.message}")
       offlineRegion.setOfflineRegionDownloadState(OfflineRegionDownloadState.INACTIVE)
     }
   }
@@ -49,7 +48,7 @@ class LegacyOfflineActivity : AppCompatActivity() {
         it.setOfflineRegionDownloadState(OfflineRegionDownloadState.ACTIVE)
       }
     } else {
-      Logger.e(TAG, expected.error!!)
+      logE(TAG, expected.error!!)
     }
   }
 

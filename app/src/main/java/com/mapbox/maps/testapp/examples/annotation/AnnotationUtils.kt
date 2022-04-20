@@ -1,9 +1,9 @@
 package com.mapbox.maps.testapp.examples.annotation
 
 import android.content.Context
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
 import com.mapbox.maps.Style
+import com.mapbox.maps.logE
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -92,7 +92,7 @@ object AnnotationUtils {
       }
       sb.toString()
     } catch (e: IOException) {
-      Logger.e(TAG, "Unable to parse $fileName")
+      logE(TAG, "Unable to parse $fileName")
       null
     }
   }
@@ -120,7 +120,7 @@ object AnnotationUtils {
       }
       sb.toString()
     } catch (e: IOException) {
-      Logger.e(TAG, "Unable to download $url")
+      logE(TAG, "Unable to download $url")
       null
     }
   }

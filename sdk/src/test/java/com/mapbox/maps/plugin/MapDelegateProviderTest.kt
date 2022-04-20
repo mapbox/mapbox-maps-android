@@ -1,21 +1,16 @@
 package com.mapbox.maps.plugin
 
-import com.mapbox.common.ShadowLogger
-import com.mapbox.maps.MapController
-import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxMap
-import com.mapbox.maps.Style
+import com.mapbox.maps.*
 import io.mockk.*
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
 class MapDelegateProviderTest {
 
   private lateinit var mapView: MapView
@@ -25,6 +20,13 @@ class MapDelegateProviderTest {
   fun setUp() {
     mapView = mockk(relaxed = true)
     every { mapView.getMapboxMap() } returns mapboxMap
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logI(any(), any()) } just Runs
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

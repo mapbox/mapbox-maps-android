@@ -12,7 +12,6 @@ import androidx.core.graphics.drawable.DrawableKt;
 import com.mapbox.bindgen.Expected;
 import com.mapbox.bindgen.None;
 import com.mapbox.bindgen.Value;
-import com.mapbox.common.Logger;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.maps.Image;
 import com.mapbox.maps.MapView;
@@ -41,6 +40,9 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.mapbox.maps.MapboxLogger.logD;
+import static com.mapbox.maps.MapboxLogger.logE;
+import static com.mapbox.maps.MapboxLogger.logI;
 import static com.mapbox.maps.extension.style.expressions.generated.Expression.eq;
 import static com.mapbox.maps.extension.style.expressions.generated.Expression.get;
 import static com.mapbox.maps.extension.style.expressions.generated.Expression.image;
@@ -224,7 +226,7 @@ public class RuntimeStylingJavaActivity extends AppCompatActivity {
         addLayerWithoutStyleExtension(style);
 
         final VectorSource source = (VectorSource) SourceUtils.getSource(style, "composite");
-        Logger.e(TAG, "getSource: " + source);
+        logE(TAG, "getSource: " + source);
     }
 
     private void addImage(Style style) {
@@ -240,9 +242,9 @@ public class RuntimeStylingJavaActivity extends AppCompatActivity {
                 .cluster(true)
                 .prefetchZoomDelta(1)
                 .build();
-        Logger.i(TAG, geoJsonSource.toString());
+        logI(TAG, geoJsonSource.toString());
         SourceUtils.addSource(style, geoJsonSource);
-        Logger.i(TAG, "prefetchZoomDelta :" + geoJsonSource.getPrefetchZoomDelta());
+        logI(TAG, "prefetchZoomDelta :" + geoJsonSource.getPrefetchZoomDelta());
     }
 
     private void addSymbolLayer(Style style) {
@@ -273,14 +275,14 @@ public class RuntimeStylingJavaActivity extends AppCompatActivity {
         symbolLayer.textIgnorePlacement(false);
         symbolLayer.iconIgnorePlacement(false);
         LayerUtils.addLayer(style, symbolLayer);
-        Logger.i(TAG, symbolLayer.getIconOpacityAsExpression().toString());
+        logI(TAG, symbolLayer.getIconOpacityAsExpression().toString());
     }
 
     private void addFillSource(Style style) {
         final GeoJsonSource polygon = new GeoJsonSource.Builder(POLYGON_SOURCE_ID)
                 .featureCollection(FeatureCollection.fromJson(FILL_FEATURE_COLLECTION))
                 .build();
-        Logger.i(TAG, polygon.toString());
+        logI(TAG, polygon.toString());
         SourceUtils.addSource(style, polygon);
     }
 
@@ -309,7 +311,7 @@ public class RuntimeStylingJavaActivity extends AppCompatActivity {
         });
         fillLayer.fillColor(interpolateBuilder.build());
         fillLayer.visibility(Visibility.VISIBLE);
-        Logger.i(TAG, fillLayer.getFillColorAsExpression().toString());
+        logI(TAG, fillLayer.getFillColorAsExpression().toString());
     }
 
 
@@ -357,10 +359,10 @@ public class RuntimeStylingJavaActivity extends AppCompatActivity {
                 null
         );
         if (expected.isError()) {
-            Logger.e(TAG, expected.getError());
+            logE(TAG, expected.getError());
         }
         if (expected.isValue()) {
-            Logger.d(TAG, expected.getValue().toString());
+            logD(TAG, expected.getValue().toString());
         }
 
         final HashMap<String, Value> sourceParams = new HashMap<>();

@@ -6,29 +6,34 @@ import android.graphics.Rect
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapSurface
 import com.mapbox.maps.MapboxExperimental
-import com.mapbox.maps.extension.androidauto.testing.ShadowLogger
-import io.mockk.Runs
-import io.mockk.every
-import io.mockk.just
-import io.mockk.mockk
-import io.mockk.slot
-import io.mockk.verify
-import io.mockk.verifyOrder
+import com.mapbox.maps.logI
+import io.mockk.*
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNull
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
 @OptIn(MapboxExperimental::class)
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
 class CarMapSurfaceOwnerTest {
 
   private val carMapGestures = mockk<DefaultMapboxCarMapGestureHandler>(relaxed = true)
   private val carMapSurfaceOwner = CarMapSurfaceOwner(carMapGestures)
+
+  @Before
+  fun `set up mocks`() {
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logI(any(), any()) } just Runs
+  }
+
+  @After
+  fun cleanup() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
+  }
 
   @Test
   fun `should not notify observer loaded when there is no surface`() {

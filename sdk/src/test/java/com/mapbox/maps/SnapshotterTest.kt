@@ -1,7 +1,7 @@
 package com.mapbox.maps
 
-import com.mapbox.common.ShadowLogger
 import io.mockk.*
+import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -11,7 +11,7 @@ import org.robolectric.annotation.Config
 import java.lang.IllegalStateException
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class, ShadowMap::class])
+@Config(shadows = [ShadowMap::class])
 class SnapshotterTest {
 
   private lateinit var snapshotter: Snapshotter
@@ -22,6 +22,8 @@ class SnapshotterTest {
   @Before
   fun setUp() {
     mockkStatic(Map::class)
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logI(any(), any()) } just Runs
     every { Map.clearData(any(), any()) } just runs
     coreSnapshotter = mockk(relaxed = true)
     every { mapSnapshotOptions.resourceOptions } returns resourceOptions
@@ -32,6 +34,12 @@ class SnapshotterTest {
       coreSnapshotter,
       mockk(relaxed = true)
     )
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkStatic(Map::class)
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

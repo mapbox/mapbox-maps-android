@@ -6,7 +6,6 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.mapbox.common.Logger
 import com.mapbox.common.ValueConverter
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
@@ -18,6 +17,7 @@ import com.mapbox.maps.extension.style.sources.generated.RasterSource
 import com.mapbox.maps.extension.style.sources.generated.Scheme
 import com.mapbox.maps.extension.style.sources.generated.rasterSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
+import com.mapbox.maps.logI
 import com.mapbox.maps.testapp.R
 
 /**
@@ -62,7 +62,7 @@ class TileJsonActivity : AppCompatActivity() {
         mapboxMap.getStyle {
           val properties = it.getStyleSourceProperties(SOURCE_ID).value!!
           val propertiesJson = ValueConverter.toJson(properties)
-          Logger.i(TAG, propertiesJson)
+          logI(TAG, propertiesJson)
           Toast.makeText(this, propertiesJson, Toast.LENGTH_LONG).show()
         }
       }

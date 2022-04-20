@@ -1,7 +1,6 @@
 package com.mapbox.maps
 
 import android.view.MotionEvent
-import com.mapbox.common.ShadowLogger
 import com.mapbox.maps.plugin.MapPlugin
 import com.mapbox.maps.plugin.Plugin
 import com.mapbox.maps.renderer.OnFpsChangedListener
@@ -13,10 +12,8 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
 class MapViewTest {
 
   private lateinit var mapController: MapController
@@ -33,11 +30,13 @@ class MapViewTest {
       mockk(relaxed = true),
       mapController
     )
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logI(any(), any()) } just Runs
   }
 
   @After
-  fun shutDown() {
-    unmockkAll()
+  fun cleanUp() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

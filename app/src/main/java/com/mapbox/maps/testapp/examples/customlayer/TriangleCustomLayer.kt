@@ -1,11 +1,8 @@
 package com.mapbox.maps.testapp.examples.customlayer
 
 import android.opengl.GLES20
-import com.mapbox.common.Logger
 import com.mapbox.geojson.Point
-import com.mapbox.maps.CustomLayerHost
-import com.mapbox.maps.CustomLayerRenderParameters
-import com.mapbox.maps.Projection
+import com.mapbox.maps.*
 import com.mapbox.maps.testapp.BuildConfig
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -146,7 +143,7 @@ class TriangleCustomLayer : CustomLayerHost {
   }
 
   override fun contextLost() {
-    Logger.w(TAG, "contextLost")
+    logW(TAG, "contextLost")
     program = 0
   }
 
@@ -228,7 +225,7 @@ class TriangleCustomLayer : CustomLayerHost {
       if (BuildConfig.DEBUG) {
         when (val error = GLES20.glGetError()) {
           GLES20.GL_NO_ERROR -> {
-            Logger.d(TAG, "$cmd -> no error")
+            logD(TAG, "$cmd -> no error")
           }
           GLES20.GL_INVALID_ENUM -> throw RuntimeException("$cmd -> error in gl: GL_INVALID_ENUM")
           GLES20.GL_INVALID_VALUE -> throw RuntimeException("$cmd -> error in gl: GL_INVALID_VALUE")

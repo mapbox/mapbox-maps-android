@@ -2,13 +2,13 @@ package com.mapbox.maps.extension.style.sources
 
 import android.util.Log
 import com.mapbox.bindgen.Value
-import com.mapbox.common.Logger
 import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.utils.unwrap
+import com.mapbox.maps.logE
 
 /**
  * Base class for sources.
@@ -111,7 +111,7 @@ abstract class Source(
             if (throwRuntimeException) {
               throw MapboxStyleException(it)
             } else {
-              Logger.e(TAG, it)
+              logE(TAG, it)
             }
           }
         }
@@ -119,7 +119,7 @@ abstract class Source(
         if (throwRuntimeException) {
           throw e
         } else {
-          Logger.e(TAG, e.message ?: "")
+          logE(TAG, e.message ?: "")
         }
       }
     }

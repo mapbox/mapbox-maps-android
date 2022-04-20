@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.opengl.GLES20
 import androidx.annotation.*
-import com.mapbox.common.Logger
 import com.mapbox.maps.*
 import com.mapbox.maps.MapView.OnSnapshotReady
 import com.mapbox.maps.Size
@@ -141,7 +140,7 @@ internal abstract class MapboxRenderer : MapClient {
   @WorkerThread
   fun snapshot(): Bitmap? {
     if (!readyForSnapshot.get()) {
-      Logger.e(TAG, "Could not take map snapshot because map is not ready yet.")
+      logE(TAG, "Could not take map snapshot because map is not ready yet.")
       return null
     }
     val lock = ReentrantLock()
@@ -168,7 +167,7 @@ internal abstract class MapboxRenderer : MapClient {
   @AnyThread
   fun snapshot(listener: OnSnapshotReady) {
     if (!readyForSnapshot.get()) {
-      Logger.e(TAG, "Could not take map snapshot because map is not ready yet.")
+      logE(TAG, "Could not take map snapshot because map is not ready yet.")
       listener.onSnapshotReady(null)
     }
     renderThread.queueRenderEvent(
@@ -194,7 +193,7 @@ internal abstract class MapboxRenderer : MapClient {
   @WorkerThread
   private fun performSnapshot(): Bitmap? {
     if (width == 0 && height == 0) {
-      Logger.e(TAG, "Could not take map snapshot because map is not ready yet.")
+      logE(TAG, "Could not take map snapshot because map is not ready yet.")
       return null
     }
 

@@ -1,6 +1,5 @@
 package com.mapbox.maps.extension.localization
 
-import com.mapbox.common.Logger
 import com.mapbox.maps.StyleObjectInfo
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.dsl.generated.get
@@ -9,6 +8,8 @@ import com.mapbox.maps.extension.style.layers.generated.SymbolLayer
 import com.mapbox.maps.extension.style.layers.getLayerAs
 import com.mapbox.maps.extension.style.sources.generated.VectorSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
+import com.mapbox.maps.logE
+import com.mapbox.maps.logI
 import java.util.*
 
 /**
@@ -21,7 +22,7 @@ import java.util.*
 internal fun setMapLanguage(locale: Locale, style: StyleInterface, layerIds: List<String>?) {
   var convertedLocale = "name_${locale.language}"
   if (!isSupportedLanguage(convertedLocale)) {
-    Logger.e(TAG, "Locale: $locale is not supported.")
+    logE(TAG, "Locale: $locale is not supported.")
     return
   }
 
@@ -37,7 +38,7 @@ internal fun setMapLanguage(locale: Locale, style: StyleInterface, layerIds: Lis
           symbolLayer?.let {
             it.textFieldAsExpression?.let { textFieldExpression ->
               if (BuildConfig.DEBUG) {
-                Logger.i(TAG, "Localize layer id: ${it.layerId}")
+                logI(TAG, "Localize layer id: ${it.layerId}")
               }
 
               if (sourceIsStreetsV8(style, source)) {
@@ -59,7 +60,7 @@ private fun convertExpression(language: String, layer: SymbolLayer, textField: E
       get(language).toJson()
     ).replace(EXPRESSION_ABBR_REGEX, get(language).toJson())
     if (BuildConfig.DEBUG) {
-      Logger.i(TAG, "Localize layer with expression: $stringExpression")
+      logI(TAG, "Localize layer with expression: $stringExpression")
     }
     layer.textField(Expression.fromRaw(stringExpression))
   }

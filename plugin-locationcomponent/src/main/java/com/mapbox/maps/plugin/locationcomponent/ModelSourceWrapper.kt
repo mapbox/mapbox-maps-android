@@ -2,10 +2,10 @@ package com.mapbox.maps.plugin.locationcomponent
 
 import android.util.Log
 import com.mapbox.bindgen.Value
-import com.mapbox.common.Logger
 import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.logW
 
 internal class ModelSourceWrapper(
   val sourceId: String,
@@ -63,7 +63,7 @@ internal class ModelSourceWrapper(
           throw MapboxLocationComponentException("Set source property \"${propertyName}\" failed:\nError: $it\nValue set: $value")
         }
       } else {
-        Logger.w(
+        logW(
           TAG,
           "Skip updating source property $propertyName, source $sourceId not ready yet."
         )

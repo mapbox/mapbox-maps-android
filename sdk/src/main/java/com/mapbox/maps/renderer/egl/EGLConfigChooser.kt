@@ -1,9 +1,11 @@
 package com.mapbox.maps.renderer.egl
 
 import android.os.Build
-import com.mapbox.common.Logger
 import com.mapbox.maps.MAPBOX_LOCALE
 import com.mapbox.maps.MapView.Companion.DEFAULT_ANTIALIASING_SAMPLE_COUNT
+import com.mapbox.maps.logE
+import com.mapbox.maps.logI
+import com.mapbox.maps.logW
 import java.lang.Boolean.compare
 import java.lang.Integer.compare
 import java.util.*
@@ -22,7 +24,7 @@ internal class EGLConfigChooser constructor(
   private val configAttributes: IntArray
     get() {
       val emulator = inEmulator() || inGenymotion()
-      Logger.i(TAG, "In emulator: $emulator")
+      logI(TAG, "In emulator: $emulator")
       return intArrayOf(
         EGL_CONFIG_CAVEAT, EGL_NONE,
         EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
@@ -63,7 +65,7 @@ internal class EGLConfigChooser constructor(
       return null
     }
     if (numConfigs[0] < 1) {
-      Logger.e(TAG, "eglChooseConfig() returned no configs at all.")
+      logE(TAG, "eglChooseConfig() returned no configs at all.")
       return null
     }
     // Get all possible configurations
@@ -78,7 +80,7 @@ internal class EGLConfigChooser constructor(
     // Choose best match
     val config = chooseBestMatchConfig(egl, display, possibleConfigurations)
     if (config == null) {
-      Logger.e(TAG, "No config chosen, see log above for concrete error.")
+      logE(TAG, "No config chosen, see log above for concrete error.")
       return null
     }
     return config
@@ -94,7 +96,7 @@ internal class EGLConfigChooser constructor(
     while (!suitableConfigsFound) {
       val success = egl.eglChooseConfig(display, configAttributes, null, 0, numConfigs)
       if (!success || numConfigs[0] < 1) {
-        Logger.e(
+        logE(
           TAG,
           String.format(
             MAPBOX_LOCALE,
@@ -103,11 +105,11 @@ internal class EGLConfigChooser constructor(
           )
         )
         if (antialiasingSampleCount > 1) {
-          Logger.w(TAG, "Reducing sample count in 2 times for MSAA as EGL_SAMPLES=$antialiasingSampleCount is not supported")
+          logW(TAG, "Reducing sample count in 2 times for MSAA as EGL_SAMPLES=$antialiasingSampleCount is not supported")
           antialiasingSampleCount /= 2
         } else {
           // we did all we could, return error
-          Logger.e(TAG, "No suitable EGL configs were found.")
+          logE(TAG, "No suitable EGL configs were found.")
           numConfigs[0] = 0
           eglChooserSuccess = false
           return numConfigs
@@ -118,9 +120,9 @@ internal class EGLConfigChooser constructor(
     }
     if (initialSampleCount != antialiasingSampleCount) {
       if (antialiasingSampleCount == 1) {
-        Logger.w(TAG, "Found EGL configs only with MSAA disabled.")
+        logW(TAG, "Found EGL configs only with MSAA disabled.")
       } else {
-        Logger.w(TAG, "Found EGL configs with MSAA enabled, EGL_SAMPLES=$antialiasingSampleCount.")
+        logW(TAG, "Found EGL configs with MSAA enabled, EGL_SAMPLES=$antialiasingSampleCount.")
       }
     }
     eglChooserSuccess = true
@@ -134,7 +136,7 @@ internal class EGLConfigChooser constructor(
   ): Array<EGLConfig> {
     val configs = arrayOfNulls<EGLConfig>(numConfigs[0])
     if (!egl.eglChooseConfig(display, configAttributes, configs, numConfigs[0], numConfigs)) {
-      Logger.e(
+      logE(
         TAG,
         String.format(
           MAPBOX_LOCALE,
@@ -285,7 +287,7 @@ internal class EGLConfigChooser constructor(
     }
 
     if (matches.size == 0) {
-      Logger.e(TAG, "No matching configurations after filtering")
+      logE(TAG, "No matching configurations after filtering")
       return null
     }
 
@@ -293,13 +295,13 @@ internal class EGLConfigChooser constructor(
     matches.sort()
     val bestMatch = matches[0]
     if (bestMatch.isCaveat) {
-      Logger.w(TAG, "Chosen config has a caveat.")
+      logW(TAG, "Chosen config has a caveat.")
     }
     if (bestMatch.isNotConformant) {
-      Logger.w(TAG, "Chosen config is not conformant.")
+      logW(TAG, "Chosen config is not conformant.")
     }
     if (antialiasingEnabled && bestMatch.samples != antialiasingSampleCount) {
-      Logger.w(
+      logW(
         TAG,
         "Antialiasing was specified with sample count = $antialiasingSampleCount" +
           " but MSAA x${bestMatch.samples} was applied as closest one supported."
@@ -316,7 +318,7 @@ internal class EGLConfigChooser constructor(
   ): Int {
     val attributeValue = IntArray(1)
     if (!egl.eglGetConfigAttrib(display, config, attributeName, attributeValue)) {
-      Logger.e(
+      logE(
         TAG,
         String.format(
           MAPBOX_LOCALE,

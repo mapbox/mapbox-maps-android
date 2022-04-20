@@ -2,7 +2,6 @@ package com.mapbox.maps
 
 import android.os.Looper
 import com.mapbox.bindgen.Value
-import com.mapbox.common.ShadowLogger
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.observable.eventdata.MapLoadingErrorEventData
@@ -28,7 +27,7 @@ import java.lang.ref.WeakReference
 
 @RunWith(RobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
-@Config(shadows = [ShadowLogger::class, ShadowMap::class])
+@Config(shadows = [ShadowMap::class])
 class MapboxMapTest {
 
   private val nativeMap: MapInterface = mockk(relaxed = true)
@@ -41,6 +40,8 @@ class MapboxMapTest {
   @Before
   fun setUp() {
     mockkStatic(Map::class)
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logI(any(), any()) } just Runs
     every { Map.clearData(any(), any()) } just runs
     every { nativeMap.resourceOptions } returns resourceOptions
     styleObserver = mockk(relaxUnitFun = true)
@@ -1030,7 +1031,7 @@ class MapboxMapTest {
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
-@Config(shadows = [ShadowLogger::class, ShadowMap::class])
+@Config(shadows = [ShadowMap::class])
 class PixelForCoordinatesTest(
   private val inputX: Double,
   private val inputY: Double,
@@ -1047,6 +1048,8 @@ class PixelForCoordinatesTest(
   @Before
   fun setUp() {
     mockkStatic(kotlin.collections.Map::class)
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logI(any(), any()) } just Runs
     every { nativeMap.resourceOptions } returns resourceOptions
     styleObserver = mockk(relaxUnitFun = true)
     mapboxMap = MapboxMap(nativeMap, nativeObserver, styleObserver)
@@ -1068,7 +1071,8 @@ class PixelForCoordinatesTest(
 
   @After
   fun cleanUp() {
-    unmockkAll()
+    unmockkStatic(Map::class)
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   companion object {

@@ -2,20 +2,18 @@ package com.mapbox.maps.renderer
 
 import android.os.Handler
 import android.os.Looper
-import com.mapbox.common.ShadowLogger
-import io.mockk.mockk
-import io.mockk.verify
+import com.mapbox.maps.logW
+import io.mockk.*
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
-import org.robolectric.annotation.Config
 import org.robolectric.annotation.LooperMode
 import java.time.Duration
 
 @RunWith(RobolectricTestRunner::class)
-@Config(shadows = [ShadowLogger::class])
 @LooperMode(LooperMode.Mode.PAUSED)
 class RenderHandlerThreadTest {
 
@@ -24,6 +22,13 @@ class RenderHandlerThreadTest {
   @Before
   fun setUp() {
     renderHandlerThread = RenderHandlerThread()
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logW(any(), any()) } just Runs
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test
