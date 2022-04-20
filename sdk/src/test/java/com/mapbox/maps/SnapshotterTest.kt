@@ -1,6 +1,7 @@
 package com.mapbox.maps
 
 import io.mockk.*
+import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -33,6 +34,12 @@ class SnapshotterTest {
       coreSnapshotter,
       mockk(relaxed = true)
     )
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkStatic(Map::class)
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

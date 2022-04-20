@@ -8,6 +8,7 @@ import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.logI
 import com.mapbox.maps.plugin.animation.camera
 import io.mockk.*
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -30,6 +31,11 @@ class DefaultMapboxCarMapGestureHandlerTest {
   fun `set up mocks`() {
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
+  }
+
+  @After
+  fun cleanup() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

@@ -8,6 +8,7 @@ import com.mapbox.maps.MapSurface
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.logI
 import io.mockk.*
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNull
@@ -27,6 +28,11 @@ class CarMapSurfaceOwnerTest {
   fun `set up mocks`() {
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
+  }
+
+  @After
+  fun cleanup() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

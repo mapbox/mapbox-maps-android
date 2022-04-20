@@ -31,6 +31,7 @@ import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.OnMapLongClickListener
 import com.mapbox.maps.plugin.gestures.OnMoveListener
 import io.mockk.*
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -174,6 +175,11 @@ class PointAnnotationManagerTest {
     every { dragLayer.textHaloWidth(any<Expression>()) } answers { dragLayer }
     every { layer.textOpacity(any<Expression>()) } answers { layer }
     every { dragLayer.textOpacity(any<Expression>()) } answers { dragLayer }
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkAll()
   }
 
   @Test

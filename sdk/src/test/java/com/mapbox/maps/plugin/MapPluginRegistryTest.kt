@@ -10,6 +10,7 @@ import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import io.mockk.*
+import org.junit.After
 import org.junit.Assert
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -35,6 +36,11 @@ class MapPluginRegistryTest {
     every { mapInitOptions.attrs } returns null
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

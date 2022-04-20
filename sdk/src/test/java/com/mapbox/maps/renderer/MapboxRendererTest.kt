@@ -6,6 +6,7 @@ import android.os.Looper
 import com.mapbox.maps.*
 import com.mapbox.maps.renderer.gl.PixelReader
 import io.mockk.*
+import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -28,6 +29,11 @@ internal abstract class MapboxRendererTest {
     renderThread = mockk(relaxUnitFun = true)
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logE(any(), any()) } just Runs
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

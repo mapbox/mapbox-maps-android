@@ -6,6 +6,7 @@ import android.hardware.SensorManager
 import android.view.WindowManager
 import com.mapbox.maps.logW
 import io.mockk.*
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,6 +32,11 @@ class LocationCompassEngineTest {
     every { sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) } returns magneticFieldSensor
     every { context.applicationContext.getSystemService(Context.WINDOW_SERVICE) } returns windowManager
     every { context.applicationContext.getSystemService(Context.SENSOR_SERVICE) } returns sensorManager
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

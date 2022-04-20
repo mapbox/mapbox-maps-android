@@ -7,6 +7,7 @@ import android.widget.FrameLayout
 import androidx.test.core.app.ApplicationProvider
 import com.mapbox.maps.logW
 import io.mockk.*
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -23,6 +24,11 @@ class AttributionViewImplTest {
     attributionView = AttributionViewImpl(ApplicationProvider.getApplicationContext())
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logW(any(), any()) } just Runs
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

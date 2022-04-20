@@ -40,6 +40,7 @@ class MapInitOptionsTest {
   @After
   fun cleanUp() {
     ResourceOptionsManager.destroyDefault()
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

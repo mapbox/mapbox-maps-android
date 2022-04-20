@@ -2,6 +2,7 @@ package com.mapbox.maps
 
 import android.content.res.TypedArray
 import io.mockk.*
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Before
@@ -16,7 +17,6 @@ class MapAttributeParserTest {
 
   @Before
   fun setUp() {
-    clearAllMocks()
     typedArray = mockk(relaxed = true)
     mockkStatic("com.mapbox.maps.MapboxLogger")
     every { logI(any(), any()) } just Runs
@@ -30,6 +30,11 @@ class MapAttributeParserTest {
         any()
       )
     } returns 1
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

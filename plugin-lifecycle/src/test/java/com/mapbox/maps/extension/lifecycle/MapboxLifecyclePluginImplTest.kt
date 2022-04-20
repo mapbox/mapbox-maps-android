@@ -17,6 +17,7 @@ import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePlugin
 import com.mapbox.maps.plugin.lifecycle.MapboxLifecyclePluginImpl
 import io.mockk.*
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -65,6 +66,12 @@ class TrimMemoryLevelTest(private val level: Pair<Int, Int>) {
     every { mapView.context } returns context
     every { ViewTreeLifecycleOwner.get(any()) } returns lifecycleOwner
     mapboxLifecyclePlugin = MapboxLifecyclePluginImpl()
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkStatic(ViewTreeLifecycleOwner::class)
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

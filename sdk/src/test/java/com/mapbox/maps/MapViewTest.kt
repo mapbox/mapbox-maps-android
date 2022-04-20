@@ -35,8 +35,8 @@ class MapViewTest {
   }
 
   @After
-  fun shutDown() {
-    unmockkAll()
+  fun cleanUp() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

@@ -7,6 +7,7 @@ import com.mapbox.maps.StyleManagerInterface
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.logW
 import io.mockk.*
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -27,6 +28,11 @@ class ModelSourceWrapperTest {
     every { style.addStyleSource(any(), any()) } returns expected
     every { style.setStyleSourceProperty(any(), any(), any()) } returns expected
     every { expected.error } returns null
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test

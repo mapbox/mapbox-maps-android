@@ -8,6 +8,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.PuckBearingSource
 import io.mockk.*
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -34,6 +35,12 @@ class DefaultLocationProviderTest {
     every { logW(any(), any()) } just Runs
     every { LocationEngineProvider.getBestLocationEngine(context.applicationContext) } returns locationEngine
     defaultLocationProvider = DefaultLocationProvider(context, locationCompassEngine)
+  }
+
+  @After
+  fun cleanUp() {
+    unmockkStatic(LocationEngineProvider::class)
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 
   @Test
