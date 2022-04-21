@@ -10,8 +10,9 @@ pluginManagement {
 include(
   "android-auto-app",
   ":app",
-  "extension-androidauto",
+  ":extension-androidauto",
   ":extension-style",
+  ":extension-framepacing",
   ":extension-localization",
   ":extension-style-app",
   ":mapbox-lint",

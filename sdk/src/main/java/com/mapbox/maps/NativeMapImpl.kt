@@ -557,8 +557,6 @@ internal class NativeMapImpl(private val map: MapInterface) :
   }
 
   override fun subscribe(observer: Observer, events: MutableList<String>) {
-    val observableImpl = map as Observable
-    println("Observable : ${observableImpl.peer}")
     map.subscribe(observer, events)
   }
 

@@ -61,6 +61,7 @@ android {
 
 dependencies {
   implementation(project(":sdk"))
+  implementation(project(":extension-framepacing"))
   implementation(Dependencies.kotlin)
   implementation(Dependencies.mapboxJavaTurf)
   implementation(Dependencies.mapboxJavaGeoJSON)
