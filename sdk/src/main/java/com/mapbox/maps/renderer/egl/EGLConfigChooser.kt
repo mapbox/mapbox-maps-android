@@ -264,6 +264,8 @@ internal class EGLConfigChooser constructor(
           DepthStencilFormat.Format24Depth8Stencil
         }
 
+        Logger.e("KIRYLDD", "index=$i, depth=$depth, stencil=$stencil, bits=$bits")
+
         val isNotConformant = conformant and EGL_OPENGL_ES2_BIT != EGL_OPENGL_ES2_BIT
         val isCaveat = caveat != EGL_NONE
 
@@ -305,6 +307,7 @@ internal class EGLConfigChooser constructor(
           " but MSAA x${bestMatch.samples} was applied as closest one supported."
       )
     }
+    Logger.e("KIRYLDD", "Best match: ${bestMatch.index}")
     return bestMatch.config
   }
 
