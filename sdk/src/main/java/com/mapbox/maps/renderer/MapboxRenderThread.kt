@@ -12,7 +12,6 @@ import com.mapbox.maps.logW
 import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.gl.TextureRenderer
 import com.mapbox.maps.renderer.widget.Widget
-import java.util.LinkedList
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.locks.ReentrantLock
 import javax.microedition.khronos.egl.EGL10
@@ -148,12 +147,15 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
             // finally we can create native renderer if needed or just report OK
             if (eglContextCreated) {
               if (!renderCreated) {
+                // we set `renderCreated` as `true` before creating native render as core could potentially
+                // schedule task in the same callchain and we need to make sure that `renderThreadPrepared` is already `true`
+                // so that we do not drop this task
+                renderCreated = true
                 mapboxRenderer.createRenderer()
                 mapboxRenderer.onSurfaceChanged(
                   width = width,
                   height = height
                 )
-                renderCreated = true
               }
               return true
             }
@@ -420,9 +422,11 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     if (renderThreadPrepared && !paused) {
       draw()
     }
-    // we drain queue despite buffers swapped or not
-    drainQueue(nonRenderEventQueue)
     awaitingNextVsync = false
+    // It's critical to drain queue after setting `awaitingNextVsync` to false as some tasks may recursively schedule other tasks when executed.
+    // With `awaitingNextVsync = false` we will always schedule recursive tasks for later execution
+    // via `renderHandlerThread.postDelayed` instead of updating queue concurrently that is being drained (which may lead to deadlock in core).
+    drainQueue(nonRenderEventQueue)
   }
 
   @AnyThread
@@ -509,22 +513,10 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun drainQueue(originalQueue: ConcurrentLinkedQueue<RenderEvent>) {
-    if (originalQueue.isNotEmpty()) {
-      // we iterate over immutable copy in order to avoid executing recursive tasks
-      val localQueueCopy = LinkedList(originalQueue)
-      // clear original queue before executing
-      originalQueue.clear()
-      localQueueCopy.forEach {
-        it.runnable?.run()
-      }
-      // recursive tasks (if any) were added to the original queue - post draining them in new callchain
-      if (originalQueue.isNotEmpty()) {
-        renderHandlerThread.post {
-          if (renderThreadPrepared) {
-            drainQueue(originalQueue)
-          }
-        }
-      }
+    var event = originalQueue.poll()
+    while (event != null) {
+      event.runnable?.run()
+      event = originalQueue.poll()
     }
   }
 

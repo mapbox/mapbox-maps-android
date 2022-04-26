@@ -8,6 +8,12 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Enable two finger pan gesture. ([#1280](https://github.com/mapbox/mapbox-maps-android/pull/1280))
 
+# 10.5.0 May 4, 2022
+## Features ✨ and improvements 🏁
+
+## Bug fixes 🐞
+* Fix render tasks being skipped when creating the map that could lead to missing tiles. ([#1304](https://github.com/mapbox/mapbox-maps-android/pull/1304))
+
 # 10.5.0-rc.1 April 20, 2022
 ## Features ✨ and improvements 🏁
 * Refactor all Mapbox logs so that Logcat tag will always be 'Mapbox' allowing easier filtering. Previous log tag will become part of the log message now. ([#1276](https://github.com/mapbox/mapbox-maps-android/pull/1276))
