@@ -32,7 +32,7 @@ allprojects {
 
 // In the app build.gradle file
 dependencies {
-  implementation 'com.mapbox.plugin:maps-scalebar:10.4.2'
+  implementation 'com.mapbox.plugin:maps-scalebar:10.4.3'
 }
 ```
 

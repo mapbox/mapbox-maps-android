@@ -7,6 +7,11 @@ Mapbox welcomes participation and contributions from everyone.
 * Optimize how plugins handle settings changes. Call `applySettings` only when settings value changes. ([#1189](https://github.com/mapbox/mapbox-maps-android/pull/1189))
 * Add new Exception type `MapboxMapMemoryLeakException` which will be thrown when there is a leak for nativeMap. ([1193](https://github.com/mapbox/mapbox-maps-android/pull/1193))
 
+# 10.4.3 April 27, 2022
+
+### Bug fixes 🐞
+* Fix render tasks being skipped when creating the map that could lead to missing tiles. ([#1304](https://github.com/mapbox/mapbox-maps-android/pull/1304))
+
 # 10.4.2 April 13, 2022
 
 ### Bug fixes 🐞
