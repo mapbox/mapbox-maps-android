@@ -14,6 +14,11 @@ Mapbox welcomes participation and contributions from everyone.
 ## Bug fixes 🐞
 * Fix render tasks being skipped when creating the map that could lead to missing tiles. ([#1304](https://github.com/mapbox/mapbox-maps-android/pull/1304))
 
+# 10.4.3 April 27, 2022
+
+### Bug fixes 🐞
+* Fix render tasks being skipped when creating the map that could lead to missing tiles. ([#1304](https://github.com/mapbox/mapbox-maps-android/pull/1304))
+
 # 10.5.0-rc.1 April 20, 2022
 ## Features ✨ and improvements 🏁
 * Refactor all Mapbox logs so that Logcat tag will always be 'Mapbox' allowing easier filtering. Previous log tag will become part of the log message now. ([#1276](https://github.com/mapbox/mapbox-maps-android/pull/1276))
