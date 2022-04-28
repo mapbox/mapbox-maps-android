@@ -192,7 +192,8 @@ commands:
           name: Start internal CI release flow
           command: |
             if [[ $CIRCLE_TAG == android-v* ]]; then
-              python3 scripts/start-internal-release-pipeline.py --token ${MOBILE_METRICS_TOKEN} --origin-slug mapbox/mapbox-maps-android --target-slug mapbox/mapbox-maps-android-internal --release_tag $CIRCLE_TAG
+              TARGET_BRANCH=$(echo $CIRCLE_TAG | awk -F\- '{print $2}' | cut -f1-2 -d".")
+              python3 scripts/start-internal-release-pipeline.py --token ${MOBILE_METRICS_TOKEN} --origin-slug mapbox/mapbox-maps-android --target-slug mapbox/mapbox-maps-android-internal --release_tag $CIRCLE_TAG --branch $TARGET_BRANCH
             fi
   track-metrics:
     steps:
