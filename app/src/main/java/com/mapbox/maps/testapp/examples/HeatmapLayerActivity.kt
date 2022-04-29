@@ -36,6 +36,7 @@ class HeatmapLayerActivity : AppCompatActivity() {
       loadStyleUri(
         styleUri = Style.DARK
       ) { style ->
+        // setting projection as part of runtime styling
         style.setProjection(projection(ProjectionName.GLOBE))
         addRuntimeLayers(style)
       }
