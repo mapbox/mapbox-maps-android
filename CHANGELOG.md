@@ -9,11 +9,32 @@ Mapbox welcomes participation and contributions from everyone.
 * Enable two finger pan gesture. ([#1280](https://github.com/mapbox/mapbox-maps-android/pull/1280))
 
 # 10.5.0 May 4, 2022
+
 ## Features ✨ and improvements 🏁
 * Make map projection part of the style-spec and introduce new methods `StyleInterface#setProjection` / `StyleInterface#getProjection`. Setting projection supports Style DSL as well. ([#1255](https://github.com/mapbox/mapbox-maps-android/pull/1255), [#1314](https://github.com/mapbox/mapbox-maps-android/pull/1314))
+* Automatic transition between the globe and mercator projection updated to appear visually more subtle. ([#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315))
+* Avoid repeated tile loading from network (or repeated tile decompression when the tile is fetched from the cache database) and repeated vector tile data allocation and parsing when loading render tiles referring to the same logical tile. ([#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315))
+* Switch to use shader to calculate the 'line-trim-offset' property update. ([#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315))
+* Layer properties transitions performance improved if the layer is transitioning to the same constant value or if transitioning from/to data-driven property. ([#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315))
+* New line layer paint property introduced: '{"line-trim-offset", [trim-start, trim-end]}', to take the line trim-off percentage range based on the whole line range [0.0, 1.0]. The property will only be effective when 'line-gradient' property is set. The line part between [trim-start, trim-end] will be marked as transparent to make a line gradient a vanishing effect. If either 'trim-start' or 'trim-end' offset is out of valid range, the default range [0.0, 0.0] will be set. ([#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315))
+* Globe view controls revamped for more intuitive interaction with touch controls. ([#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315))
+* OfflineRegion::getStatus() API added to get the completion status and the local size of the existing legacy offline regions. ([#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315))
 
 ## Bug fixes 🐞
 * Fix render tasks being skipped when creating the map that could lead to missing tiles. ([#1304](https://github.com/mapbox/mapbox-maps-android/pull/1304))
+* The legacy offline region observer instance is not unnecessarily retained inside the engine. [#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315)
+* Fix a bug of querying rendered feature for circle layer with map-pitch-alignment when the pitch is zero. [#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315)
+* Fix a bug where zooming was not possible with terrain enabled and exaggeration 0. [#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315)
+* Fix an issue where internal hsla() function was converted to an invalid rgba expression. [#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315)
+* Fix a bug that 'line-trim-offset' calculation did not property cover 'round' or 'square' line cap in line ends. [#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315)
+* Dispatched in-flight events will not be delivered if 'unsubscribe' is called before an event is delivered. [#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315)
+* Fix an issue where some of the visible tiles could be erroneously culled during transition between globe and mercator projection. [#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315)
+* Fixes issues where camera appears under terrain, or map gets bumpy repositioning after exaggeration change. [#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315)
+* Disable terrain rendering if GPU does not support Vertex Texture Fetch. [#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315)
+* Fixed a bug that occasionally prevents symbols from loading. [#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315)
+
+## Dependencies
+* Bump gl-native to v10.5.0, mapbox-common to v21.3.1 ([#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315))
 
 # 10.4.3 April 27, 2022
 
