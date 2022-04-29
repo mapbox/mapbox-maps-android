@@ -1696,11 +1696,11 @@ class MapboxMap :
   }
 
   /**
-   * Set map projection for Mapbox map.
+   * Set current map projection for the map.
+   * Should only be used to set projection before initial style was loaded to avoid visual blinking.
+   * When working with projections added during runtime styling please use [Style]'s [setProjection] method.
    *
-   * Note: as projection has become part of the style-spec it is better to use [setProjection] instead.
-   *
-   * @param mapProjection either [MapProjection.Globe] or [MapProjection.Mercator] projection that will be applied to Mapbox map.
+   * @param mapProjection [MapProjection] to be applied to the map
    */
   @MapboxExperimental
   override fun setMapProjection(mapProjection: MapProjection) {
@@ -1718,9 +1718,8 @@ class MapboxMap :
   }
 
   /**
-   * Get current map projection for Mapbox map.
-   *
-   * Note: as projection has become part of the style-spec it is better to use [getProjection] instead.
+   * Get current map projection for the map. Should be used before initial style was loaded.
+   * When working with projections added during runtime styling please use [Style]'s [getProjection] method.
    *
    * @return [MapProjection] map is using.
    */

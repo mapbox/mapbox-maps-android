@@ -11,39 +11,9 @@ Mapbox welcomes participation and contributions from everyone.
 # 10.5.0 May 4, 2022
 ## Features ✨ and improvements 🏁
 * Make map projection part of the style-spec and introduce new methods `StyleInterface#setProjection` / `StyleInterface#getProjection`. Setting projection supports Style DSL as well. ([#1255](https://github.com/mapbox/mapbox-maps-android/pull/1255), [#1314](https://github.com/mapbox/mapbox-maps-android/pull/1314))
-* Optimize how plugins handle settings changes. Call `applySettings` only when settings value changes. ([#1189](https://github.com/mapbox/mapbox-maps-android/pull/1189))
-* Add `MapboxMap.isValid()` and `Style.isValid()` methods. `MapboxMap` becomes invalid when `MapView.onDestroy()` is called. `Style` becomes invalid when `MapView.onDestroy()` is called or new style has been loaded. Accessing any method on invalid object will print an error log. Also unsubscribe map observers automatically when `MapboxMap.onDestroy()` is invoked. ([1193](https://github.com/mapbox/mapbox-maps-android/pull/1193)) ([1202](https://github.com/mapbox/mapbox-maps-android/pull/1202) ([1230](https://github.com/mapbox/mapbox-maps-android/pull/1230)) ([1241](https://github.com/mapbox/mapbox-maps-android/pull/1241)))
-* Add `MapboxMap#coordinateBoundsForCameraUnwrapped` method for API consistency. ([1222](https://github.com/mapbox/mapbox-maps-android/pull/1222))
-* Add `LocationIndicatorLayer.bearingTransition` API to control transition of bearing property. ([1207](https://github.com/mapbox/mapbox-maps-android/pull/1207))
-* Add `MapboxConcurrentGeometryModificationException` with detailed information instead of `ConcurrentModificationException` that is thrown when GeoJson data is mutated. ([1248](https://github.com/mapbox/mapbox-maps-android/pull/1248))
-* Introduce `line-trim-offset` property for LineLayer. ([1252](https://github.com/mapbox/mapbox-maps-android/pull/1252))
-* Deprecate `FollowPuckViewportStateOptions.animationDurationMs`, the initial transition will be handled properly by the Viewport plugin internally. ([1256](https://github.com/mapbox/mapbox-maps-android/pull/1256), [1261](https://github.com/mapbox/mapbox-maps-android/pull/1261), [1262](https://github.com/mapbox/mapbox-maps-android/pull/1262))
-* Mark `MapView#viewAnnotationManager` as non-experimental meaning View Annotation API will not have breaking changes in upcoming minor releases. ([1260](https://github.com/mapbox/mapbox-maps-android/pull/1260))
-* Map render call optimized further by further reducing computational overhead. ([#1244](https://github.com/mapbox/mapbox-maps-android/pull/1244))
-* Layer properties transitions performance improved if the layer is transitioning to the same constant value or if transitioning from/to data-driven property. ([#1244](https://github.com/mapbox/mapbox-maps-android/pull/1244))
-* New line layer paint property introduced: '{"line-trim-offset", [trim-start, trim-end]}', to take the line trim-off percentage range based on the whole line range [0.0, 1.0]. The property will only be effective when 'line-gradient' property is set. The line part between [trim-start, trim-end] will be marked as transparent to make a line gradient a vanishing effect. If either 'trim-start' or 'trim-end' offset is out of valid range, the default range [0.0, 0.0] will be set. ([#1244](https://github.com/mapbox/mapbox-maps-android/pull/1244))
-* Globe view controls revamped for more intuitive interaction with touch controls. ([#1244](https://github.com/mapbox/mapbox-maps-android/pull/1244))
-* OfflineRegion::getStatus() API added to get the completion status and the local size of the existing legacy offline regions. ([#1244](https://github.com/mapbox/mapbox-maps-android/pull/1244))
-* Automatic transition between the globe and mercator projection updated to appear visually more subtle. ([#1244](https://github.com/mapbox/mapbox-maps-android/pull/1244))
-* Refactor all Mapbox logs so that Logcat tag will always be 'Mapbox' allowing easier filtering. Previous log tag will become part of the log message now. ([#1276](https://github.com/mapbox/mapbox-maps-android/pull/1276))
-* Avoid repeated tile loading from network (or repeated tile decompression when the tile is fetched from the cache database) and repeated vector tile data allocation and parsing when loading render tiles referring to the same logical tile. ([#1282](https://github.com/mapbox/mapbox-maps-android/pull/1282))
-* Switch to use shader to calculate the 'line-trim-offset' property update. ([#1282](https://github.com/mapbox/mapbox-maps-android/pull/1282))
 
 ## Bug fixes 🐞
-* Dispatched in-flight events will not be delivered if 'unsubscribe' is called before an event is delivered. ([#1244](https://github.com/mapbox/mapbox-maps-android/pull/1244))
-* Transitions between globe and mercator projection do not cull tiles incorrectly anymore. ([#1244](https://github.com/mapbox/mapbox-maps-android/pull/1244))
-* Map LOD disabled for camera pitch less than 30 degrees to avoid map content missing on maps with insets. ([#1244](https://github.com/mapbox/mapbox-maps-android/pull/1244))
-* Terrain-related camera issues fixed, previously making it appear under terrain, or incorrectly repositioned after exaggeration change. ([#1244](https://github.com/mapbox/mapbox-maps-android/pull/1244))
-* Terrain rendering disabled on GPUs not supporting Vertex Texture Fetch. ([#1244](https://github.com/mapbox/mapbox-maps-android/pull/1244))
-* Fixed a bug that occasionally prevented symbols from loading. ([#1244](https://github.com/mapbox/mapbox-maps-android/pull/1244))
-* Fix PolygonAnnotation and PolylineAnnotation being distorted while dragging with 3D terrain. ([#1223](https://github.com/mapbox/mapbox-maps-android/pull/1223))
-* Fix issue where internal hsla() function was converted to an invalid rgba expression. ([#1282](https://github.com/mapbox/mapbox-maps-android/pull/1282))
-* Fix a bug that 'line-trim-offset' calculation did not property cover 'round' or 'square' line cap in line ends. ([#1282](https://github.com/mapbox/mapbox-maps-android/pull/1282))
-* Fix NaN latitude native crash rarely happening during `MapboxMap#flyTo`. ([#1271](https://github.com/mapbox/mapbox-maps-android/pull/1271))
-* Limit `MapboxMap#pixelForCoordinate` to the bounds of MapView. ([#1226](https://github.com/mapbox/mapbox-maps-android/pull/1226))
 * Fix render tasks being skipped when creating the map that could lead to missing tiles. ([#1304](https://github.com/mapbox/mapbox-maps-android/pull/1304))
-
-## Dependencies
 
 # 10.4.3 April 27, 2022
 
