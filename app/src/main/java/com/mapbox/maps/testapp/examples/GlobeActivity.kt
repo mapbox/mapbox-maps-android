@@ -18,6 +18,7 @@ import com.mapbox.maps.extension.style.projection.generated.getProjection
 import com.mapbox.maps.extension.style.projection.generated.projection
 import com.mapbox.maps.extension.style.projection.generated.setProjection
 import com.mapbox.maps.extension.style.style
+import com.mapbox.maps.plugin.MapProjection
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.camera
 import com.mapbox.maps.testapp.R
@@ -39,6 +40,11 @@ class GlobeActivity : AppCompatActivity() {
   private lateinit var mapboxMap: MapboxMap
   private lateinit var infoTextView: TextView
 
+  private fun ProjectionName.toMapProjection() = when (this) {
+    ProjectionName.MERCATOR -> MapProjection.Mercator
+    ProjectionName.GLOBE -> MapProjection.Globe
+  }
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     val binding = ActivityGlobeViewBinding.inflate(layoutInflater)
@@ -46,6 +52,8 @@ class GlobeActivity : AppCompatActivity() {
 
     infoTextView = binding.infoText
     mapboxMap = binding.mapView.getMapboxMap().apply {
+      // set globe projection even before style load so that it appears immediately
+      setMapProjection(currentProjectionName.toMapProjection())
       loadStyle(
         style(Style.TRAFFIC_DAY) {
           +fillExtrusionLayer("3d-buildings", "composite") {
@@ -66,7 +74,6 @@ class GlobeActivity : AppCompatActivity() {
             skyType(SkyType.ATMOSPHERE)
             skyAtmosphereSun(listOf(15.0, 89.5))
           }
-          +projection(currentProjectionName)
         }
       )
     }
