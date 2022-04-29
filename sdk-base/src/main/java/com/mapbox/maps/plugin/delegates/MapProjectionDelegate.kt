@@ -78,19 +78,18 @@ interface MapProjectionDelegate {
   fun unproject(coordinate: MercatorCoordinate, zoomScale: Double): Point
 
   /**
-   * Set map projection for Mapbox map.
-`  *
-   * Note: as projection has become part of the style-spec it is better to use Projection class within Style instead.
+   * Set current map projection for the map.
+   * Should only be used to set projection before initial style was loaded to avoid visual blinking.
+   * When working with projections added during runtime styling please use Style's setProjection method.
    *
-   * @param mapProjection either [MapProjection.Globe] or [MapProjection.Mercator] projection that will be applied to Mapbox map.
+   * @param mapProjection [MapProjection] to be applied to the map
    */
   @MapboxExperimental
   fun setMapProjection(mapProjection: MapProjection)
 
   /**
-   * Get current map projection for Mapbox map.
-   *
-   * Note: as projection has become part of the style-spec it is better to use Projection class within Style instead.
+   * Get current map projection for the map. Should be used before initial style was loaded.
+   * When working with projections added during runtime styling please use Style's getProjection method.
    *
    * @return [MapProjection] map is using.
    */
