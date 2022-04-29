@@ -1,8 +1,10 @@
 package com.mapbox.maps.plugin.delegates
 
 import com.mapbox.geojson.Point
+import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.MercatorCoordinate
 import com.mapbox.maps.ProjectedMeters
+import com.mapbox.maps.plugin.MapProjection
 
 /**
  * Definition of a map projection delegate.
@@ -74,4 +76,24 @@ interface MapProjectionDelegate {
    * @return Returns a coordinate.
    */
   fun unproject(coordinate: MercatorCoordinate, zoomScale: Double): Point
+
+  /**
+   * Set map projection for Mapbox map.
+`  *
+   * Note: as projection has become part of the style-spec it is better to use Projection class within Style instead.
+   *
+   * @param mapProjection either [MapProjection.Globe] or [MapProjection.Mercator] projection that will be applied to Mapbox map.
+   */
+  @MapboxExperimental
+  fun setMapProjection(mapProjection: MapProjection)
+
+  /**
+   * Get current map projection for Mapbox map.
+   *
+   * Note: as projection has become part of the style-spec it is better to use Projection class within Style instead.
+   *
+   * @return [MapProjection] map is using.
+   */
+  @MapboxExperimental
+  fun getMapProjection(): MapProjection
 }
