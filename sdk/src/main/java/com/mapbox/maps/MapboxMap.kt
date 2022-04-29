@@ -12,6 +12,10 @@ import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import com.mapbox.maps.extension.style.StyleContract
+import com.mapbox.maps.extension.style.projection.generated.getProjection
+import com.mapbox.maps.extension.style.projection.generated.setProjection
+import com.mapbox.maps.extension.style.utils.unwrapToAny
+import com.mapbox.maps.plugin.MapProjection
 import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl
 import com.mapbox.maps.plugin.delegates.*
@@ -1689,6 +1693,53 @@ class MapboxMap :
     observers.clear()
     styleObserver.onDestroy()
     isMapValid = false
+  }
+
+  /**
+   * Set current map projection for the map.
+   * Should only be used to set projection before initial style was loaded to avoid visual blinking.
+   * When working with projections added during runtime styling please use [Style]'s [setProjection] method.
+   *
+   * @param mapProjection [MapProjection] to be applied to the map
+   */
+  @MapboxExperimental
+  override fun setMapProjection(mapProjection: MapProjection) {
+    checkNativeMap("setMapProjection")
+    val expected = nativeMap.setStyleProjection(
+      Value.valueOf(
+        hashMapOf(
+          "name" to Value(mapProjection.toString())
+        )
+      )
+    )
+    if (expected.isError) {
+      logE(TAG, "Map projection is not supported!")
+    }
+  }
+
+  /**
+   * Get current map projection for the map. Should be used before initial style was loaded.
+   * When working with projections added during runtime styling please use [Style]'s [getProjection] method.
+   *
+   * @return [MapProjection] map is using.
+   */
+  @MapboxExperimental
+  override fun getMapProjection(): MapProjection {
+    checkNativeMap("getMapProjection")
+    nativeMap.getStyleProjectionProperty("name").apply {
+      return if (kind == StylePropertyValueKind.UNDEFINED) {
+        MapProjection.Mercator
+      } else {
+        when (val name = value.unwrapToAny() as String) {
+          "globe" -> MapProjection.Globe
+          "mercator" -> MapProjection.Mercator
+          else -> {
+            logE(TAG, "Projection $name is not yet supported, returning Mercator.")
+            MapProjection.Mercator
+          }
+        }
+      }
+    }
   }
 
   internal fun addViewAnnotation(
