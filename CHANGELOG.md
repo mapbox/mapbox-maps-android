@@ -37,9 +37,10 @@ Mapbox welcomes participation and contributions from everyone.
 * Fixes issues where camera appears under terrain, or map gets bumpy repositioning after exaggeration change. [#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315)
 * Disable terrain rendering if GPU does not support Vertex Texture Fetch. [#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315)
 * Fixed a bug that occasionally prevents symbols from loading. [#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315)
+* Fixed a bug that causes line layers to flicker. [#1325](https://github.com/mapbox/mapbox-maps-android/pull/1325)
 
 ## Dependencies
-* Bump gl-native to v10.5.0, mapbox-common to v21.3.1 ([#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315))
+* Bump gl-native to v10.5.1, mapbox-common to v21.3.1 ([#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315), [#1325](https://github.com/mapbox/mapbox-maps-android/pull/1325))
 
 # 10.4.3 April 27, 2022
 
