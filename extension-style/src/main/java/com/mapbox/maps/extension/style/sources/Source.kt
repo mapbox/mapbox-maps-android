@@ -6,7 +6,6 @@ import com.mapbox.maps.MapboxStyleException
 import com.mapbox.maps.extension.style.StyleContract
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
-import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.utils.unwrap
 import com.mapbox.maps.logE
 
@@ -93,14 +92,6 @@ abstract class Source(
   private fun updateProperty(property: PropertyValue<*>, throwRuntimeException: Boolean = true) {
     delegate?.let { styleDelegate ->
       try {
-        // checking for validness makes sense only for geojson as it uses async parsing
-        if (this is GeoJsonSource) {
-          // explicitly reset native reference and return if map is not valid anymore
-          if (!styleDelegate.isValid()) {
-            delegate = null
-            return@let
-          }
-        }
         val expected = styleDelegate.setStyleSourceProperty(
           sourceId,
           property.propertyName,
