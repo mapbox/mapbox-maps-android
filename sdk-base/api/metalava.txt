@@ -1,4 +1,11 @@
 // Signature format: 3.0
+package com.mapbox.common {
+
+  public final class MapboxCommonLoggerKt {
+  }
+
+}
+
 package com.mapbox.maps {
 
   public final class ExtensionUtils {
