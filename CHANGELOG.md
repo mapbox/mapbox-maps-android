@@ -10,7 +10,7 @@ Mapbox welcomes participation and contributions from everyone.
 # 10.5.0 May 4, 2022
 
 ## Features ✨ and improvements 🏁
-* Make map projection part of the style-spec and introduce new methods `StyleInterface#setProjection` / `StyleInterface#getProjection`. Setting projection supports Style DSL as well. ([#1255](https://github.com/mapbox/mapbox-maps-android/pull/1255), [#1314](https://github.com/mapbox/mapbox-maps-android/pull/1314))
+* Make map projection part of the style-spec and introduce new methods `StyleInterface.setProjection` / `StyleInterface.getProjection`. Setting projection supports Style DSL as well. ([#1255](https://github.com/mapbox/mapbox-maps-android/pull/1255), [#1314](https://github.com/mapbox/mapbox-maps-android/pull/1314))
 * Automatic transition between the globe and mercator projection updated to appear visually more subtle. ([#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315))
 * Avoid repeated tile loading from network (or repeated tile decompression when the tile is fetched from the cache database) and repeated vector tile data allocation and parsing when loading render tiles referring to the same logical tile. ([#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315))
 * Switch to use shader to calculate the 'line-trim-offset' property update. ([#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315))
@@ -21,12 +21,12 @@ Mapbox welcomes participation and contributions from everyone.
 * Refactor all Mapbox logs so that Logcat tag will always be 'Mapbox' allowing easier filtering. Previous log tag will become part of the log message now. ([#1276](https://github.com/mapbox/mapbox-maps-android/pull/1276))
 * Optimize how plugins handle settings changes. Call `applySettings` only when settings value changes. ([#1189](https://github.com/mapbox/mapbox-maps-android/pull/1189))
 * Add `MapboxMap.isValid()` and `Style.isValid()` methods. `MapboxMap` becomes invalid when `MapView.onDestroy()` is called. `Style` becomes invalid when `MapView.onDestroy()` is called or new style has been loaded. Accessing any method on invalid object will print an error log. Also unsubscribe map observers automatically when `MapboxMap.onDestroy()` is invoked. ([1193](https://github.com/mapbox/mapbox-maps-android/pull/1193)) ([1202](https://github.com/mapbox/mapbox-maps-android/pull/1202) ([1230](https://github.com/mapbox/mapbox-maps-android/pull/1230)) ([1241](https://github.com/mapbox/mapbox-maps-android/pull/1241)))
-* Add `MapboxMap#coordinateBoundsForCameraUnwrapped` method for API consistency. ([1222](https://github.com/mapbox/mapbox-maps-android/pull/1222))
+* Add `MapboxMap.coordinateBoundsForCameraUnwrapped` method for API consistency. ([1222](https://github.com/mapbox/mapbox-maps-android/pull/1222))
 * Add `LocationIndicatorLayer.bearingTransition` API to control transition of bearing property. ([1207](https://github.com/mapbox/mapbox-maps-android/pull/1207))
 * Add `MapboxConcurrentGeometryModificationException` with detailed information instead of `ConcurrentModificationException` that is thrown when GeoJson data is mutated. ([1248](https://github.com/mapbox/mapbox-maps-android/pull/1248))
 * Introduce `line-trim-offset` property for LineLayer. ([1252](https://github.com/mapbox/mapbox-maps-android/pull/1252))
 * Deprecate `FollowPuckViewportStateOptions.animationDurationMs`, the initial transition will be handled properly by the Viewport plugin internally. ([1256](https://github.com/mapbox/mapbox-maps-android/pull/1256), [1261](https://github.com/mapbox/mapbox-maps-android/pull/1261), [1262](https://github.com/mapbox/mapbox-maps-android/pull/1262))
-* Mark `MapView#viewAnnotationManager` as non-experimental meaning View Annotation API will not have breaking changes in upcoming minor releases. ([1260](https://github.com/mapbox/mapbox-maps-android/pull/1260))
+* Mark `MapView.viewAnnotationManager` as non-experimental meaning View Annotation API will not have breaking changes in upcoming minor releases. ([1260](https://github.com/mapbox/mapbox-maps-android/pull/1260))
 
 ## Bug fixes 🐞
 * Fix geojson missing updates with persistent layer after style change. ([#1324](https://github.com/mapbox/mapbox-maps-android/pull/1324))
@@ -42,8 +42,8 @@ Mapbox welcomes participation and contributions from everyone.
 * Disable terrain rendering if GPU does not support Vertex Texture Fetch. [#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315)
 * Fixed a bug that occasionally prevents symbols from loading. [#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315)
 * Fixed a bug that causes line layers to flicker. [#1325](https://github.com/mapbox/mapbox-maps-android/pull/1325)
-* Fix NaN latitude native crash rarely happening during `MapboxMap#flyTo`. ([#1271](https://github.com/mapbox/mapbox-maps-android/pull/1271))
-* Limit `MapboxMap#pixelForCoordinate` to the bounds of MapView. ([#1226](https://github.com/mapbox/mapbox-maps-android/pull/1226))
+* Fix NaN latitude native crash rarely happening during `MapboxMap.flyTo`. ([#1271](https://github.com/mapbox/mapbox-maps-android/pull/1271))
+* Limit `MapboxMap.pixelForCoordinate` to the bounds of MapView. ([#1226](https://github.com/mapbox/mapbox-maps-android/pull/1226))
 * Fix PolygonAnnotation and PolylineAnnotation being distorted while dragging with 3D terrain. ([#1223](https://github.com/mapbox/mapbox-maps-android/pull/1223))
 
 ## Dependencies
