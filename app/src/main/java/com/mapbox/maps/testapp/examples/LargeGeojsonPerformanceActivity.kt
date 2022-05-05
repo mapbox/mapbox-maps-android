@@ -188,6 +188,7 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() , OnMapClickListener
 
     Log.e("Testing", "Initial primary route is layer_0")
 
+
   }
 
   private fun setFeatureState(featureId: String, sourceId: String, primary: Boolean) {
@@ -231,6 +232,8 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() , OnMapClickListener
       Log.e("Testing", "primary route is layer_0")
     }
     primaryIs1 = !primaryIs1
+
+//    toggleRoute()
     return true
   }
 
@@ -254,6 +257,44 @@ class LargeGeojsonPerformanceActivity : AppCompatActivity() , OnMapClickListener
       }
       featureQueried = true
     }
+  }
+
+  private fun toggleRoute() {
+
+    mapboxMap.getStyle()?.let{
+      it.setStyleLayerProperty("layer_0", "line-color", literal("blue"))
+    }
+    if (!primaryIs1) {
+      mapboxMap.getStyle()?.let{
+        it.getSource("source_1")?.let{
+          (it as GeoJsonSource).data(alter1Str)
+//          (it as GeoJsonSource).featureCollection(alter1)
+        }
+      }
+      mapboxMap.getStyle()?.let{
+        it.getSource("source_0")?.let{
+          (it as GeoJsonSource).data(alter2Str)
+//          (it as GeoJsonSource).featureCollection(alter2)
+        }
+      }
+
+
+    } else {
+      mapboxMap.getStyle()?.let{
+        it.getSource("source_1")?.let{
+          (it as GeoJsonSource).data(alter2Str)
+//          (it as GeoJsonSource).featureCollection(alter2)
+        }
+      }
+      mapboxMap.getStyle()?.let{
+        it.getSource("source_0")?.let{
+          (it as GeoJsonSource).data(alter1Str)
+//          (it as GeoJsonSource).featureCollection(alter1)
+        }
+      }
+
+    }
+    primaryIs1 = !primaryIs1
   }
 
   override fun onDestroy() {
