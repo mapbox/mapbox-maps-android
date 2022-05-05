@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.mapbox.maps.MapInitOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.logD
 
 class MapFragment : Fragment() {
 
@@ -41,5 +42,24 @@ class MapFragment : Fragment() {
 
   fun getMapView(): MapView {
     return mapView
+  }
+
+  override fun onStart() {
+    logD("lifecycle", "fragment - ${mapView.hashCode()} - onStart")
+    super.onStart()
+  }
+
+  override fun onStop() {
+    logD("lifecycle", "fragment - ${mapView.hashCode()} - onStop")
+    super.onStop()
+  }
+  override fun onDestroyView() {
+    logD("lifecycle", "fragment - ${mapView.hashCode()} - onDestroyView")
+    super.onDestroyView()
+  }
+
+  override fun onDestroy() {
+    logD("lifecycle", "fragment - ${mapView.hashCode()} - onDestroy")
+    super.onDestroy()
   }
 }

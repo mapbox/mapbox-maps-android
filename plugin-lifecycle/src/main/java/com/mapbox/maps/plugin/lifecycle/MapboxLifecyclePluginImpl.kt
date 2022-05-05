@@ -10,12 +10,8 @@ import android.content.ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE
 import android.content.ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN
 import android.content.res.Configuration
 import android.view.View
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
-import androidx.lifecycle.ViewTreeLifecycleOwner
+import androidx.lifecycle.*
 import com.mapbox.maps.MapboxLifecycleObserver
-import com.mapbox.maps.logE
 import com.mapbox.maps.logW
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_LIFECYCLE_PLUGIN_ID
 import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
@@ -23,7 +19,9 @@ import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 /**
  * Concrete implementation of MapboxLifecyclePlugin.
  */
-class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
+class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin, LifecycleOwner {
+  private lateinit var viewLifecycleRegistry: ViewLifecycleRegistry
+
   /**
    * Register a MapboxLifecycleObserver to observe life cycle events from LifecycleOwner
    *
@@ -31,37 +29,38 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
    * @param observer the observer that listen to the life cycle events
    */
   override fun registerLifecycleObserver(mapView: View, observer: MapboxLifecycleObserver) {
-    val lifecycleOwner = ViewTreeLifecycleOwner.get(mapView)
-    if (lifecycleOwner == null) {
-      logE(
-        TAG,
+    viewLifecycleRegistry = ViewLifecycleRegistry(
+      view = mapView,
+      localLifecycleOwner = this,
+      hostingLifecycleOwner = requireNotNull(ViewTreeLifecycleOwner.get(mapView)) {
         """Can't get lifecycleOwner for mapview,
           please make sure the host Activity is AppCompatActivity and the version of appcompat is 1.3.0+.
           If the host Activity is not AppCompatActivity,
           you need manually invoke the corresponding lifecycle methods in onStart/onStop/onDestroy/onLowMemory methods of the host Activity"""
-      )
-    } else {
-      val componentCallback = object : ComponentCallbacks2 {
-        override fun onConfigurationChanged(newConfig: Configuration) {
-          // no need
-        }
+      }
+    )
+    val componentCallback = object : ComponentCallbacks2 {
+      override fun onConfigurationChanged(newConfig: Configuration) {
+        // no need
+      }
 
-        override fun onLowMemory() {
-          observer.onLowMemory()
-        }
+      override fun onLowMemory() {
+        observer.onLowMemory()
+      }
 
-        override fun onTrimMemory(level: Int) {
-          when (level) {
-            TRIM_MEMORY_RUNNING_CRITICAL, TRIM_MEMORY_RUNNING_LOW -> {
-              logW(TAG, "onTrimMemory with level $level is received, reduceMemoryUse will be called.")
-              observer.onLowMemory()
-            }
-            TRIM_MEMORY_BACKGROUND, TRIM_MEMORY_COMPLETE, TRIM_MEMORY_MODERATE, TRIM_MEMORY_RUNNING_MODERATE, TRIM_MEMORY_UI_HIDDEN -> Unit
+      override fun onTrimMemory(level: Int) {
+        when (level) {
+          TRIM_MEMORY_RUNNING_CRITICAL, TRIM_MEMORY_RUNNING_LOW -> {
+            logW(TAG, "onTrimMemory with level $level is received, reduceMemoryUse will be called.")
+            observer.onLowMemory()
           }
+          TRIM_MEMORY_BACKGROUND, TRIM_MEMORY_COMPLETE, TRIM_MEMORY_MODERATE, TRIM_MEMORY_RUNNING_MODERATE, TRIM_MEMORY_UI_HIDDEN -> Unit
         }
       }
-      mapView.context.registerComponentCallbacks(componentCallback)
-      lifecycleOwner.lifecycle.addObserver(object : LifecycleObserver {
+    }
+    mapView.context.registerComponentCallbacks(componentCallback)
+    viewLifecycleRegistry.addObserver(
+      object : LifecycleObserver {
         @OnLifecycleEvent(Lifecycle.Event.ON_START)
         fun onStart() {
           observer.onStart()
@@ -75,12 +74,18 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
         @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
         fun onDestroy() {
           observer.onDestroy()
-          lifecycleOwner.lifecycle.removeObserver(this)
+          viewLifecycleRegistry.removeObserver(this)
           mapView.context.unregisterComponentCallbacks(componentCallback)
         }
       })
-    }
   }
+
+  /**
+   * Returns the Lifecycle of the provider.
+   *
+   * @return The lifecycle of the provider.
+   */
+  override fun getLifecycle(): Lifecycle = viewLifecycleRegistry
 
   private companion object {
     private const val TAG = "MapboxLifecyclePlugin"
