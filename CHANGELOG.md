@@ -25,6 +25,7 @@ Mapbox welcomes participation and contributions from everyone.
 * OfflineRegion::getStatus() API added to get the completion status and the local size of the existing legacy offline regions. ([#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315))
 
 ## Bug fixes 🐞
+* Fix geojson missing updates with persistent layer after style change. ([#1324](https://github.com/mapbox/mapbox-maps-android/pull/1324))
 * Fix render tasks being skipped when creating the map that could lead to missing tiles. ([#1304](https://github.com/mapbox/mapbox-maps-android/pull/1304))
 * The legacy offline region observer instance is not unnecessarily retained inside the engine. [#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315)
 * Fix a bug of querying rendered feature for circle layer with map-pitch-alignment when the pitch is zero. [#1315](https://github.com/mapbox/mapbox-maps-android/pull/1315)

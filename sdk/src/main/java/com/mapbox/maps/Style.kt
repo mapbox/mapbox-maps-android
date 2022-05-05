@@ -679,7 +679,8 @@ class Style internal constructor(
    * @return The value of \p property in the source with \p sourceId.
    */
   override fun getStyleSourceProperty(sourceId: String, property: String): StylePropertyValue {
-    checkNativeStyle("getStyleSourceProperty")
+    // TODO see #1105 issue in internal repo
+//    checkNativeStyle("getStyleSourceProperty")
     return styleManager.getStyleSourceProperty(sourceId, property)
   }
 
@@ -697,7 +698,8 @@ class Style internal constructor(
     property: String,
     value: Value
   ): Expected<String, None> {
-    checkNativeStyle("setStyleSourceProperty")
+    // TODO see #1105 issue in internal repo
+//    checkNativeStyle("setStyleSourceProperty")
     return styleManager.setStyleSourceProperty(sourceId, property, value)
   }
 
