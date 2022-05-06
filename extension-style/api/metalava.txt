@@ -5,12 +5,14 @@ package com.mapbox.maps.extension.style {
     method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleImageExtension> getImages();
     method public java.util.List<kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition>> getLayers();
     method public com.mapbox.maps.extension.style.light.generated.Light? getLight();
+    method public com.mapbox.maps.extension.style.projection.generated.Projection? getProjection();
     method public java.util.List<com.mapbox.maps.extension.style.sources.Source> getSources();
     method public String getStyleUri();
     method public com.mapbox.maps.extension.style.terrain.generated.Terrain? getTerrain();
     property public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleImageExtension> images;
     property public java.util.List<kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition>> layers;
     property public com.mapbox.maps.extension.style.light.generated.Light? light;
+    property public com.mapbox.maps.extension.style.projection.generated.Projection? projection;
     property public java.util.List<com.mapbox.maps.extension.style.sources.Source> sources;
     property public String styleUri;
     property public com.mapbox.maps.extension.style.terrain.generated.Terrain? terrain;
@@ -30,6 +32,7 @@ package com.mapbox.maps.extension.style {
     method public kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition> layerAtPosition(com.mapbox.maps.extension.style.layers.Layer layer, String? above = null);
     method public kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition> layerAtPosition(com.mapbox.maps.extension.style.layers.Layer layer);
     method public operator void setLight(com.mapbox.maps.extension.style.light.generated.Light);
+    method public operator void setProjection(com.mapbox.maps.extension.style.projection.generated.Projection);
     method public operator void setTerrain(com.mapbox.maps.extension.style.terrain.generated.Terrain);
     property public final String styleUri;
   }
@@ -3870,6 +3873,13 @@ package com.mapbox.maps.extension.style.layers.properties.generated {
     enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.LineTranslateAnchor VIEWPORT;
   }
 
+  public enum ProjectionName {
+    method public String! getValue();
+    property public String! value;
+    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName GLOBE;
+    enum_constant public static final com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName MERCATOR;
+  }
+
   public enum RasterResampling {
     method public String! getValue();
     property public String! value;
@@ -4065,6 +4075,26 @@ package com.mapbox.maps.extension.style.light.generated {
   public final class LightUtils {
     method public static com.mapbox.maps.extension.style.light.generated.Light getLight(com.mapbox.maps.extension.style.StyleInterface);
     method public static void setLight(com.mapbox.maps.extension.style.StyleInterface, com.mapbox.maps.extension.style.StyleContract.StyleLightExtension light);
+  }
+
+}
+
+package com.mapbox.maps.extension.style.projection.generated {
+
+  @UiThread public final class Projection implements com.mapbox.maps.extension.style.StyleContract.StyleProjectionExtension {
+    ctor public Projection(com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName name);
+    method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
+    method public com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName getName();
+    property public final com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName name;
+  }
+
+  public final class ProjectionKt {
+    method public static com.mapbox.maps.extension.style.projection.generated.Projection projection(com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName name);
+  }
+
+  public final class StyleProjectionUtils {
+    method public static com.mapbox.maps.extension.style.projection.generated.Projection getProjection(com.mapbox.maps.extension.style.StyleInterface);
+    method public static void setProjection(com.mapbox.maps.extension.style.StyleInterface, com.mapbox.maps.extension.style.projection.generated.Projection projection);
   }
 
 }

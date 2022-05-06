@@ -192,6 +192,7 @@ package com.mapbox.maps {
     method public void getGeoJsonClusterLeaves(String sourceIdentifier, com.mapbox.geojson.Feature cluster, long limit = 10L, com.mapbox.maps.QueryFeatureExtensionCallback callback);
     method public void getGeoJsonClusterLeaves(String sourceIdentifier, com.mapbox.geojson.Feature cluster, com.mapbox.maps.QueryFeatureExtensionCallback callback);
     method public com.mapbox.maps.MapOptions getMapOptions();
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.MapProjection getMapProjection();
     method public double getMetersPerPixelAtLatitude(double latitude, double zoom);
     method public double getMetersPerPixelAtLatitude(double latitude);
     method public byte getPrefetchZoomDelta();
@@ -251,6 +252,7 @@ package com.mapbox.maps {
     method public void setFeatureState(String sourceId, String? sourceLayerId = null, String featureId, com.mapbox.bindgen.Value state);
     method public void setFeatureState(String sourceId, String featureId, com.mapbox.bindgen.Value state);
     method public void setGestureInProgress(boolean inProgress);
+    method @com.mapbox.maps.MapboxExperimental public void setMapProjection(com.mapbox.maps.plugin.MapProjection mapProjection);
     method @com.mapbox.maps.MapboxExperimental public void setMemoryBudget(com.mapbox.maps.MapMemoryBudget? memoryBudget);
     method public void setNorthOrientation(com.mapbox.maps.NorthOrientation northOrientation);
     method public void setPrefetchZoomDelta(byte delta);
@@ -541,7 +543,7 @@ package com.mapbox.maps.viewannotation {
     method public void onViewAnnotationVisibilityUpdated(android.view.View view, boolean visible);
   }
 
-  @com.mapbox.maps.MapboxExperimental public interface ViewAnnotationManager {
+  public interface ViewAnnotationManager {
     method public void addOnViewAnnotationUpdatedListener(com.mapbox.maps.viewannotation.OnViewAnnotationUpdatedListener listener);
     method public android.view.View addViewAnnotation(@LayoutRes int resId, com.mapbox.maps.ViewAnnotationOptions options);
     method public void addViewAnnotation(@LayoutRes int resId, com.mapbox.maps.ViewAnnotationOptions options, androidx.asynclayoutinflater.view.AsyncLayoutInflater asyncInflater, kotlin.jvm.functions.Function1<? super android.view.View,kotlin.Unit> asyncInflateCallback);

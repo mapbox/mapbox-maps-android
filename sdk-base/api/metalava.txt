@@ -507,6 +507,7 @@ package com.mapbox.maps.extension.style {
     property public abstract java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleImageExtension> images;
     property public abstract java.util.List<kotlin.Pair<com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension,com.mapbox.maps.LayerPosition>> layers;
     property public abstract com.mapbox.maps.extension.style.StyleContract.StyleLightExtension? light;
+    property public abstract com.mapbox.maps.extension.style.StyleContract.StyleProjectionExtension? projection;
     property public abstract java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleSourceExtension> sources;
     property public abstract String styleUri;
     property public abstract com.mapbox.maps.extension.style.StyleContract.StyleTerrainExtension? terrain;
@@ -647,6 +648,17 @@ package com.mapbox.maps.plugin {
     method public default void cleanup();
     method public default void initialize();
     method public default void onDelegateProvider(com.mapbox.maps.plugin.delegates.MapDelegateProvider delegateProvider);
+  }
+
+  @com.mapbox.maps.MapboxExperimental public abstract sealed class MapProjection {
+  }
+
+  public static final class MapProjection.Globe extends com.mapbox.maps.plugin.MapProjection {
+    field public static final com.mapbox.maps.plugin.MapProjection.Globe INSTANCE;
+  }
+
+  public static final class MapProjection.Mercator extends com.mapbox.maps.plugin.MapProjection {
+    field public static final com.mapbox.maps.plugin.MapProjection.Mercator INSTANCE;
   }
 
   public interface MapSizePlugin {
@@ -1531,10 +1543,12 @@ package com.mapbox.maps.plugin.delegates {
 
   public interface MapProjectionDelegate {
     method public com.mapbox.geojson.Point coordinateForProjectedMeters(com.mapbox.maps.ProjectedMeters projectedMeters);
+    method @com.mapbox.maps.MapboxExperimental public com.mapbox.maps.plugin.MapProjection getMapProjection();
     method public double getMetersPerPixelAtLatitude(double latitude, double zoom);
     method public double getMetersPerPixelAtLatitude(double latitude);
     method public com.mapbox.maps.MercatorCoordinate project(com.mapbox.geojson.Point point, double zoomScale);
     method public com.mapbox.maps.ProjectedMeters projectedMetersForCoordinate(com.mapbox.geojson.Point point);
+    method @com.mapbox.maps.MapboxExperimental public void setMapProjection(com.mapbox.maps.plugin.MapProjection mapProjection);
     method public com.mapbox.geojson.Point unproject(com.mapbox.maps.MercatorCoordinate coordinate, double zoomScale);
   }
 
@@ -2589,13 +2603,13 @@ package com.mapbox.maps.plugin.viewport.data {
   }
 
   @com.mapbox.maps.MapboxExperimental public final class FollowPuckViewportStateOptions {
-    method public long getAnimationDurationMs();
+    method @Deprecated public long getAnimationDurationMs();
     method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing! getBearing();
     method public com.mapbox.maps.EdgeInsets! getPadding();
     method public Double! getPitch();
     method public Double! getZoom();
     method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions.Builder toBuilder();
-    property public final long animationDurationMs;
+    property @Deprecated public final long animationDurationMs;
     property public final com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing! bearing;
     property public final com.mapbox.maps.EdgeInsets! padding;
     property public final Double! pitch;
@@ -2604,7 +2618,7 @@ package com.mapbox.maps.plugin.viewport.data {
 
   public static final class FollowPuckViewportStateOptions.Builder {
     ctor public FollowPuckViewportStateOptions.Builder();
-    method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions.Builder animationDurationMs(long duration);
+    method @Deprecated public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions.Builder animationDurationMs(long duration);
     method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions.Builder bearing(com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateBearing? options);
     method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions build();
     method public com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions.Builder padding(com.mapbox.maps.EdgeInsets? padding);
