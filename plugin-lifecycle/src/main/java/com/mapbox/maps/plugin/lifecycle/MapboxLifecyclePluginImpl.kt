@@ -19,8 +19,19 @@ import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 /**
  * Concrete implementation of MapboxLifecyclePlugin.
  */
-class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin, LifecycleOwner {
+class MapboxLifecyclePluginImpl constructor(mapView: View?) : MapboxLifecyclePlugin,
+  LifecycleOwner {
   private lateinit var viewLifecycleRegistry: ViewLifecycleRegistry
+
+  init {
+    mapView?.let {
+      viewLifecycleRegistry = ViewLifecycleRegistry(
+        view = it,
+        localLifecycleOwner = this,
+        hostingLifecycleOwner = it.context.toLifecycleOwner()
+      )
+    }
+  }
 
   /**
    * Register a MapboxLifecycleObserver to observe life cycle events from LifecycleOwner
@@ -29,16 +40,13 @@ class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin, LifecycleOwner {
    * @param observer the observer that listen to the life cycle events
    */
   override fun registerLifecycleObserver(mapView: View, observer: MapboxLifecycleObserver) {
-    viewLifecycleRegistry = ViewLifecycleRegistry(
-      view = mapView,
-      localLifecycleOwner = this,
-      hostingLifecycleOwner = requireNotNull(ViewTreeLifecycleOwner.get(mapView)) {
-        """Can't get lifecycleOwner for mapview,
-          please make sure the host Activity is AppCompatActivity and the version of appcompat is 1.3.0+.
-          If the host Activity is not AppCompatActivity,
-          you need manually invoke the corresponding lifecycle methods in onStart/onStop/onDestroy/onLowMemory methods of the host Activity"""
-      }
-    )
+    if (!this::viewLifecycleRegistry.isInitialized) {
+      viewLifecycleRegistry = ViewLifecycleRegistry(
+        view = mapView,
+        localLifecycleOwner = this,
+        hostingLifecycleOwner = mapView.context.toLifecycleOwner()
+      )
+    }
     val componentCallback = object : ComponentCallbacks2 {
       override fun onConfigurationChanged(newConfig: Configuration) {
         // no need
