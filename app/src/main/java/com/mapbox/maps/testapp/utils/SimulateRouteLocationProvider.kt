@@ -6,6 +6,7 @@ import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.plugin.locationcomponent.LocationConsumer
 import com.mapbox.maps.plugin.locationcomponent.LocationProvider
+import com.mapbox.turf.TurfConstants
 import com.mapbox.turf.TurfMeasurement
 import java.util.concurrent.*
 
@@ -15,7 +16,7 @@ import java.util.concurrent.*
  */
 class SimulateRouteLocationProvider(
   val route: LineString,
-  private val handler: Handler = Handler(Looper.getMainLooper())
+  private val handler: Handler = Handler(Looper.getMainLooper()),
 ) : LocationProvider {
   private val locationConsumers = CopyOnWriteArraySet<LocationConsumer>()
   private var isFakeLocationEmitting = false
@@ -49,7 +50,6 @@ class SimulateRouteLocationProvider(
           lastLocation = point
           lastBearing = bearing
           iterator.remove()
-
           locationConsumers.forEach { it.onLocationUpdated(point) }
           locationConsumers.forEach { it.onBearingUpdated(bearing) }
         }
