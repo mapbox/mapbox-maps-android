@@ -64,11 +64,11 @@ function prepare_branch_with_documentation() {
 
   INTERIM_BRANCH_WITH_DOCUMENTATION="${BRANCH_WITH_DOCUMENTATION}_${1}"
   git checkout -b $INTERIM_BRANCH_WITH_DOCUMENTATION origin/$BRANCH_WITH_DOCUMENTATION
-  unzip -o -d release-docs release-docs/dokka-docs.zip
+  unzip -qq -o -d release-docs release-docs/dokka-docs.zip
   mkdir -p $1
   cp -fr release-docs/htmlCollector/* $1
   git add $1
-  git commit -m "Add $1 API documentation."
+  git commit --quiet -m "Add $1 API documentation."
   git push --set-upstream origin $INTERIM_BRANCH_WITH_DOCUMENTATION --force
 }
 
