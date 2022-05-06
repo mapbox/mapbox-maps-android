@@ -36,7 +36,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
    *
    * @param cameraOptions Camera options values to animate
    */
-  internal fun getEaseTo(cameraOptions: CameraOptions): Array<CameraAnimator<*>> {
+  fun getEaseTo(cameraOptions: CameraOptions): Array<CameraAnimator<*>> {
     val animationList = mutableListOf<ValueAnimator>()
     val currentCameraState = mapCameraManagerDelegate.cameraState
 
@@ -117,7 +117,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
    * @param pitch The amount to pitch by in degrees
    * @return Array of the created animators
    */
-  internal fun getPitchBy(pitch: Double): Array<CameraAnimator<*>> {
+  fun getPitchBy(pitch: Double): Array<CameraAnimator<*>> {
     val startPitch = mapCameraManagerDelegate.cameraState.pitch
     return Array(1) {
       CameraPitchAnimator(
@@ -137,7 +137,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
    * @param anchor The optional focal point to scale on
    * @return Array of the created animators
    */
-  internal fun getScaleBy(
+  fun getScaleBy(
     amount: Double,
     anchor: ScreenCoordinate? = null
   ): Array<CameraAnimator<*>> {
@@ -172,7 +172,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
    * @param offset The screen coordinate distance to move by
    * @return Array of the created animators
    */
-  internal fun getMoveBy(
+  fun getMoveBy(
     offset: ScreenCoordinate
   ): Array<CameraAnimator<*>> {
     val cameraState = mapCameraManagerDelegate.cameraState
@@ -199,7 +199,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
    * @param second The second pointer to rotate on
    * @return Array of the created animators
    */
-  internal fun getRotateBy(
+  fun getRotateBy(
     first: ScreenCoordinate,
     second: ScreenCoordinate
   ): Array<CameraAnimator<*>> {
@@ -250,7 +250,7 @@ class CameraAnimatorsFactory internal constructor(mapDelegateProvider: MapDelega
    *
    * @param cameraOptions Camera options values to animate
    */
-  internal fun getFlyTo(cameraOptions: CameraOptions): Array<CameraAnimator<*>> {
+  fun getFlyTo(cameraOptions: CameraOptions): Array<CameraAnimator<*>> {
 
     val currentCameraState = mapCameraManagerDelegate.cameraState
 

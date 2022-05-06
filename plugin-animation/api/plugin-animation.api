@@ -75,6 +75,13 @@ public final class com/mapbox/maps/plugin/animation/CameraAnimatorsFactory {
 	public static final field CUBIC_BEZIER_INTERPOLATOR Landroid/view/animation/Interpolator;
 	public static final field Companion Lcom/mapbox/maps/plugin/animation/CameraAnimatorsFactory$Companion;
 	public static final field DEFAULT_ANIMATION_DURATION_MS J
+	public final fun getEaseTo (Lcom/mapbox/maps/CameraOptions;)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
+	public final fun getFlyTo (Lcom/mapbox/maps/CameraOptions;)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
+	public final fun getMoveBy (Lcom/mapbox/maps/ScreenCoordinate;)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
+	public final fun getPitchBy (D)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
+	public final fun getRotateBy (Lcom/mapbox/maps/ScreenCoordinate;Lcom/mapbox/maps/ScreenCoordinate;)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
+	public final fun getScaleBy (DLcom/mapbox/maps/ScreenCoordinate;)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
+	public static synthetic fun getScaleBy$default (Lcom/mapbox/maps/plugin/animation/CameraAnimatorsFactory;DLcom/mapbox/maps/ScreenCoordinate;ILjava/lang/Object;)[Lcom/mapbox/maps/plugin/animation/animator/CameraAnimator;
 	public static final fun setDefaultAnimatorOptions (Lcom/mapbox/maps/plugin/animation/CameraAnimatorType;Lkotlin/jvm/functions/Function1;)V
 	public static final fun setDefaultAnimatorOptions (Lkotlin/jvm/functions/Function1;)V
 }
