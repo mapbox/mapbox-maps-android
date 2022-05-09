@@ -4,10 +4,10 @@ import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.content.res.AppCompatResources
 import com.mapbox.geojson.LineString
-import com.mapbox.maps.EdgeInsets
-import com.mapbox.maps.MapView
-import com.mapbox.maps.Style
+import com.mapbox.geojson.Point
+import com.mapbox.maps.*
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
+import com.mapbox.maps.extension.style.layers.generated.LineLayer
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.LineCap
 import com.mapbox.maps.extension.style.layers.properties.generated.LineJoin
@@ -16,6 +16,7 @@ import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
 import com.mapbox.maps.plugin.gestures.gestures
+import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.ViewportStatus
 import com.mapbox.maps.plugin.viewport.data.DefaultViewportTransitionOptions
@@ -24,6 +25,9 @@ import com.mapbox.maps.plugin.viewport.data.OverviewViewportStateOptions
 import com.mapbox.maps.plugin.viewport.data.ViewportOptions
 import com.mapbox.maps.plugin.viewport.viewport
 import com.mapbox.maps.testapp.R
+import com.mapbox.turf.TurfConstants
+import com.mapbox.turf.TurfMeasurement
+import com.mapbox.turf.TurfMisc
 
 /**
  * Simulate a navigation route with pre-defined route as LineString.
@@ -31,14 +35,21 @@ import com.mapbox.maps.testapp.R
  * The simulator provides 3 camera tracking modes: OVERVIEW, TRACKING and NONE.
  * APIs are exposed so that user can play the navigation route scripts by switching the camera modes.
  */
+@OptIn(MapboxExperimental::class)
 class NavigationSimulator(
   private val mapView: MapView,
-  routePoints: LineString,
+  private val routePoints: LineString,
   private val style: String = DEFAULT_STYLE
 ) :
-  NavigationSimulatorCameraController {
-  private val locationProvider by lazy { SimulateRouteLocationProvider(routePoints) }
+  NavigationSimulatorCameraController, OnIndicatorPositionChangedListener {
+  private val locationProvider by lazy {
+    SimulateRouteLocationProvider(route = routePoints)
+  }
+  private lateinit var routeLayer: LineLayer
+  private lateinit var casingLayer: LineLayer
   private val handler = Handler(Looper.getMainLooper())
+  private val totalRouteLength = TurfMeasurement.length(routePoints, TurfConstants.UNIT_CENTIMETERS)
+  private val routeStartPoint = routePoints.coordinates().first()
   private val viewportPlugin = mapView.viewport
   private val followPuckViewportState =
     viewportPlugin.makeFollowPuckViewportState(FollowPuckViewportStateOptions.Builder().build())
@@ -49,11 +60,11 @@ class NavigationSimulator(
   private var gesturesEnabled = true
 
   init {
-    initMapboxMap()
     viewportPlugin.defaultTransition = viewportPlugin.makeDefaultViewportTransition(
       DefaultViewportTransitionOptions.Builder()
         .maxDurationMs(DEFAULT_VIEWPORT_TRANSITION_MAX_DURATION).build()
     )
+    initMapboxMap()
   }
 
   private val onMapClickListener = OnMapClickListener {
@@ -69,17 +80,126 @@ class NavigationSimulator(
   }
 
   private fun initMapboxMap() {
+    routeLayer = lineLayer(ROUTE_LINE_LAYER_ID, GEOJSON_SOURCE_ID) {
+      lineWidth(
+        interpolate {
+          exponential {
+            literal(1.5)
+          }
+          zoom()
+          stop {
+            literal(4.0)
+            product(3.0, 1.0)
+          }
+          stop {
+            literal(10.0)
+            product(4.0, 1.0)
+          }
+          stop {
+            literal(13.0)
+            product(6.0, 1.0)
+          }
+          stop {
+            literal(16.0)
+            product(10.0, 1.0)
+          }
+          stop {
+            literal(19.0)
+            product(14.0, 1.0)
+          }
+          stop {
+            literal(22.0)
+            product(18.0, 1.0)
+          }
+        }
+      )
+      lineCap(LineCap.ROUND)
+      lineJoin(LineJoin.ROUND)
+      lineGradient(
+        interpolate {
+          linear()
+          lineProgress()
+          stop {
+            literal(0)
+            rgba(6.0, 1.0, 255.0, 1.0)
+          }
+          stop {
+            literal(0.1)
+            rgba(59.0, 118.0, 227.0, 1.0)
+          }
+          stop {
+            literal(0.3)
+            rgba(7.0, 238.0, 251.0, 1.0)
+          }
+          stop {
+            literal(0.5)
+            rgba(0.0, 255.0, 42.0, 1.0)
+          }
+          stop {
+            literal(0.7)
+            rgba(255.0, 252.0, 0.0, 1.0)
+          }
+          stop {
+            literal(1.0)
+            rgba(255.0, 30.0, 0.0, 1.0)
+          }
+        }
+      )
+    }
+    casingLayer = lineLayer(ROUTE_CASING_LAYER_ID, GEOJSON_SOURCE_ID) {
+      lineWidth(
+        interpolate {
+          exponential {
+            literal(1.5)
+          }
+          zoom()
+          stop {
+            literal(10)
+            product(7.0, 1.0)
+          }
+          stop {
+            literal(14.0)
+            product(10.5, 1.0)
+          }
+          stop {
+            literal(16.5)
+            product(15.5, 1.0)
+          }
+          stop {
+            literal(19.0)
+            product(24.0, 1.0)
+          }
+          stop {
+            literal(22.0)
+            product(29.0, 1.0)
+          }
+        }
+      )
+      lineCap(LineCap.ROUND)
+      lineJoin(LineJoin.ROUND)
+      lineGradient(
+        interpolate {
+          linear()
+          lineProgress()
+          stop {
+            literal(0)
+            rgba(47.0, 122.0, 198.0, 1.0)
+          }
+          stop {
+            literal(1.0)
+            rgba(47.0, 122.0, 198.0, 1.0)
+          }
+        }
+      )
+    }
     mapView.getMapboxMap().loadStyle(
       style(style) {
         +geoJsonSource(GEOJSON_SOURCE_ID) {
           geometry(locationProvider.route)
+          lineMetrics(true)
         }
-        +lineLayer(ROUTE_LINE_LAYER_ID, GEOJSON_SOURCE_ID) {
-          lineColor(mapView.context.resources.getColor(R.color.mapbox_blue))
-          lineWidth(10.0)
-          lineCap(LineCap.ROUND)
-          lineJoin(LineJoin.ROUND)
-        }
+        +casingLayer
+        +routeLayer
       }
     ) {
       mapView.recordFrameStats()
@@ -215,10 +335,21 @@ class NavigationSimulator(
       )
     }
     locationComponentPlugin.setLocationProvider(locationProvider)
+    locationComponentPlugin.addOnIndicatorPositionChangedListener(this)
+  }
+
+  override fun onIndicatorPositionChanged(point: Point) {
+    val progress = TurfMeasurement.length(
+      TurfMisc.lineSlice(routeStartPoint, point, routePoints),
+      TurfConstants.UNIT_CENTIMETERS
+    ) / totalRouteLength
+    routeLayer.lineTrimOffset(listOf(0.0, progress))
+    casingLayer.lineTrimOffset(listOf(0.0, progress))
   }
 
   fun onDestroy() {
     handler.removeCallbacksAndMessages(null)
+    mapView.location.removeOnIndicatorPositionChangedListener(this)
     mapView.gestures.apply {
       removeOnMapClickListener(onMapClickListener)
     }
@@ -255,6 +386,7 @@ class NavigationSimulator(
     private const val DEFAULT_VIEWPORT_TRANSITION_MAX_DURATION = 2000L
     private const val GEOJSON_SOURCE_ID = "source_id"
     private const val ROUTE_LINE_LAYER_ID = "route_line_layer_id"
+    private const val ROUTE_CASING_LAYER_ID = "route_casing_layer_id"
   }
 }
 
