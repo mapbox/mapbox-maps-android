@@ -4,8 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
+import com.mapbox.maps.extension.style.atmosphere.generated.atmosphere
 import com.mapbox.maps.extension.style.layers.generated.skyLayer
+import com.mapbox.maps.extension.style.layers.properties.generated.ProjectionName
 import com.mapbox.maps.extension.style.layers.properties.generated.SkyType
+import com.mapbox.maps.extension.style.projection.generated.projection
 import com.mapbox.maps.extension.style.sources.generated.rasterDemSource
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.extension.style.terrain.generated.terrain
@@ -35,6 +38,8 @@ class Terrain3DShowcaseActivity : AppCompatActivity() {
           skyType(SkyType.ATMOSPHERE)
           skyAtmosphereSun(listOf(-50.0, 90.2))
         }
+        +atmosphere { }
+        +projection(ProjectionName.GLOBE)
       }
     )
   }

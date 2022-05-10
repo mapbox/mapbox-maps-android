@@ -41,6 +41,11 @@ interface StyleContract {
     val terrain: StyleTerrainExtension?
 
     /**
+     * The atmosphere of the style.
+     */
+    val atmosphere: StyleAtmosphereExtension?
+
+    /**
      * Map projection of the style.
      */
     val projection: StyleProjectionExtension?
@@ -77,6 +82,18 @@ interface StyleContract {
   fun interface StyleTerrainExtension {
     /**
      * Bind the terrain to the Style.
+     *
+     * @param delegate The style delegate
+     */
+    fun bindTo(delegate: StyleInterface)
+  }
+
+  /**
+   * Define the interfaces for the Atmosphere plugin.
+   */
+  fun interface StyleAtmosphereExtension {
+    /**
+     * Bind the atmosphere to the Style.
      *
      * @param delegate The style delegate
      */
