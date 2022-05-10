@@ -83,6 +83,20 @@ abstract class GesturesSettingsBase : GesturesSettingsInterface {
     }
 
   /**
+   * Whether pan is enabled for the pinch gesture.
+   */
+  override var pinchScrollEnabled: Boolean
+    get() {
+      return this.internalSettings.pinchScrollEnabled
+    }
+    set(value) {
+      if (this.internalSettings.pinchScrollEnabled != value) {
+        this.internalSettings.pinchScrollEnabled = value
+        applySettings()
+      }
+    }
+
+  /**
    * Whether rotation is enabled for the pinch to zoom gesture.
    */
   override var simultaneousRotateAndPinchToZoomEnabled: Boolean

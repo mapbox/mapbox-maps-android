@@ -39,6 +39,11 @@ interface GesturesSettingsInterface {
   var scrollEnabled: Boolean
 
   /**
+   * Whether pan is enabled for the pinch gesture.
+   */
+  var pinchScrollEnabled: Boolean
+
+  /**
    * Whether rotation is enabled for the pinch to zoom gesture.
    */
   var simultaneousRotateAndPinchToZoomEnabled: Boolean

@@ -64,6 +64,8 @@ class GesturesPluginTest {
   private val typedArray: TypedArray = mockk(relaxed = true)
   private val pack = "com.mapbox.maps"
 
+  private val gesturesSettings: GesturesSettings = mockk(relaxUnitFun = true)
+
   private lateinit var presenter: GesturesPluginImpl
 
   @MapboxExperimental
@@ -76,7 +78,7 @@ class GesturesPluginTest {
         attrs,
         any()
       )
-    } returns GesturesSettings()
+    } returns gesturesSettings
 
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
     every { context.packageName } returns pack
@@ -409,6 +411,51 @@ class GesturesPluginTest {
     handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
     // verify two finger pan gesture should work
     assert(handled)
+    every { moveGestureDetector.pointersCount } returns 1
+    handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
+    // verify single finger pan gesture should work
+    assert(handled)
+    verify { listener.onMove(any()) }
+    verify {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        ScreenCoordinate(0.0, 0.0),
+        ScreenCoordinate(-50.0, -50.0)
+      )
+    }
+    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
+  }
+
+  @Test
+  fun verifyMoveListenerPinchScrollDisabled() {
+    every { gesturesSettings.pinchScrollEnabled } returns false
+    val listener: OnMoveListener = mockk(relaxed = true)
+    presenter.addOnMoveListener(listener)
+    every { mapCameraManagerDelegate.cameraState } returns CameraState(
+      Point.fromLngLat(0.0, 0.0),
+      EdgeInsets(0.0, 0.0, 0.0, 0.0),
+      0.0,
+      0.0,
+      0.0
+    )
+    every {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        any(),
+        any()
+      )
+    } returns CameraOptions.Builder().center(Point.fromLngLat(0.0, 0.0)).build()
+
+    val moveGestureDetector = mockk<MoveGestureDetector>()
+    every {
+      moveGestureDetector.focalPoint
+    } returns PointF(0.0f, 0.0f)
+    every { moveGestureDetector.pointersCount } returns 3
+    var handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
+    // verify three finger pan gesture shouldn't work
+    assertFalse(handled)
+    every { moveGestureDetector.pointersCount } returns 2
+    handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
+    // verify two finger pan gesture shouldn't work
+    assertFalse(handled)
     every { moveGestureDetector.pointersCount } returns 1
     handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
     // verify single finger pan gesture should work

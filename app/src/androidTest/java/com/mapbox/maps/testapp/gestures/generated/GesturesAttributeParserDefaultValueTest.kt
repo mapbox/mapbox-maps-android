@@ -37,6 +37,11 @@ class GesturesAttributeParserDefaultValueTest : BaseMapTest() {
       mapView.gestures.getSettings().scrollEnabled
     )
     assertEquals(
+      "pinchScrollEnabled test failed..",
+      true,
+      mapView.gestures.getSettings().pinchScrollEnabled
+    )
+    assertEquals(
       "simultaneousRotateAndPinchToZoomEnabled test failed..",
       true,
       mapView.gestures.getSettings().simultaneousRotateAndPinchToZoomEnabled

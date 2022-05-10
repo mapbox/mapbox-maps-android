@@ -1378,6 +1378,11 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
         return false
       }
 
+      // Skip 2-finger scroll if pinchScrollEnabled is disabled.
+      if (!internalSettings.pinchScrollEnabled && detector.pointersCount > 1) {
+        return false
+      }
+
       val focalPoint = detector.focalPoint
       val fromX = focalPoint.x.toDouble()
       val fromY = focalPoint.y.toDouble()

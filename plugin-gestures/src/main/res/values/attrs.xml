@@ -8,6 +8,8 @@
         <attr name="mapbox_gesturesPinchToZoomEnabled" format="boolean"/>
         <!-- Whether the single-touch scroll gesture is enabled. -->
         <attr name="mapbox_gesturesScrollEnabled" format="boolean"/>
+        <!-- Whether pan is enabled for the pinch gesture. -->
+        <attr name="mapbox_gesturesPinchScrollEnabled" format="boolean"/>
         <!-- Whether rotation is enabled for the pinch to zoom gesture. -->
         <attr name="mapbox_gesturesSimultaneousRotateAndPinchToZoomEnabled" format="boolean"/>
         <!-- Whether the pitch gesture is enabled. -->
