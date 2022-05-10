@@ -64,8 +64,6 @@ class GesturesPluginTest {
   private val typedArray: TypedArray = mockk(relaxed = true)
   private val pack = "com.mapbox.maps"
 
-  private val gesturesSettings: GesturesSettings = mockk(relaxUnitFun = true)
-
   private lateinit var presenter: GesturesPluginImpl
 
   @MapboxExperimental
@@ -78,7 +76,7 @@ class GesturesPluginTest {
         attrs,
         any()
       )
-    } returns gesturesSettings
+    } returns GesturesSettings()
 
     every { context.obtainStyledAttributes(any(), any(), 0, 0) } returns typedArray
     every { context.packageName } returns pack
@@ -427,7 +425,7 @@ class GesturesPluginTest {
 
   @Test
   fun verifyMoveListenerPinchScrollDisabled() {
-    every { gesturesSettings.pinchScrollEnabled } returns false
+    presenter.pinchScrollEnabled = false
     val listener: OnMoveListener = mockk(relaxed = true)
     presenter.addOnMoveListener(listener)
     every { mapCameraManagerDelegate.cameraState } returns CameraState(
