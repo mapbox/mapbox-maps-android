@@ -10,6 +10,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Bug fixes 🐞
 * Enable two finger pan gesture. ([#1280](https://github.com/mapbox/mapbox-maps-android/pull/1280))
+* Fix a bug that scale bar is shorter than it should be; trigger `invalidateScaleBar` while updating settings to make scale keep the latest status. ([#1336](https://github.com/mapbox/mapbox-maps-android/pull/1336))
 
 ## Dependencies
 * Bump Mapbox Android base library to v0.8.0. ([#1323](https://github.com/mapbox/mapbox-maps-android/pull/1323))

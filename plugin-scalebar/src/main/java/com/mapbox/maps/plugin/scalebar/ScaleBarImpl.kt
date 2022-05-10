@@ -67,7 +67,8 @@ class ScaleBarImpl : ScaleBar, View {
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal fun calculateWidthAndHeight(): Pair<Float, Float> {
-    val width = mapViewWidth * settings.ratio
+    // Add padding the width to avoid texts being cut off and the end of scalebar.
+    val width = mapViewWidth * settings.ratio + INTERNAL_PADDING_DP * pixelRatio
     val height = settings.run { textBarMargin + textSize + height + (borderWidth * 2) }
     return Pair(width, height)
   }
@@ -247,7 +248,7 @@ class ScaleBarImpl : ScaleBar, View {
       if (unitDistance == 0) {
         unitDistance = 1
       } else {
-        unitBarWidth = (unitDistance / distancePerPixel) - INTERNAL_PADDING_DP * pixelRatio
+        unitBarWidth = (unitDistance / distancePerPixel)
       }
       // Drawing the surrounding borders
       barPaint.style = Paint.Style.FILL_AND_STROKE

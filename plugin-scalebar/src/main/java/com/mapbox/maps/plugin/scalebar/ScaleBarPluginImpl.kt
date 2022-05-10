@@ -36,6 +36,7 @@ open class ScaleBarPluginImpl(
 
   override fun applySettings() {
     scaleBar.settings = internalSettings
+    invalidateScaleBar()
   }
 
   /**
