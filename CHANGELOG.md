@@ -7,6 +7,11 @@ Mapbox welcomes participation and contributions from everyone.
 * Optimize how plugins handle settings changes. Call `applySettings` only when settings value changes. ([#1189](https://github.com/mapbox/mapbox-maps-android/pull/1189))
 * Add new Exception type `MapboxMapMemoryLeakException` which will be thrown when there is a leak for nativeMap. ([1193](https://github.com/mapbox/mapbox-maps-android/pull/1193))
 
+# 10.4.4 May 12, 2022
+
+### Bug fixes 🐞
+* Fix NaN latitude native crash rarely happening during `MapboxMap#flyTo`. ([#1271](https://github.com/mapbox/mapbox-maps-android/pull/1271))
+
 # 10.4.3 April 27, 2022
 
 ### Bug fixes 🐞
