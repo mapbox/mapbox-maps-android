@@ -19,15 +19,15 @@ import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 /**
  * Concrete implementation of MapboxLifecyclePlugin.
  */
-class MapboxLifecyclePluginImpl constructor(mapView: View?) : MapboxLifecyclePlugin,
-  LifecycleOwner {
+class MapboxLifecyclePluginImpl constructor(mapView: View?) : MapboxLifecyclePlugin {
   private lateinit var viewLifecycleRegistry: ViewLifecycleRegistry
+  private val localLifecycleOwner = LifecycleOwner { viewLifecycleRegistry }
 
   init {
     mapView?.let {
       viewLifecycleRegistry = ViewLifecycleRegistry(
         view = it,
-        localLifecycleOwner = this,
+        localLifecycleOwner = localLifecycleOwner,
         hostingLifecycleOwner = it.context.toLifecycleOwner()
       )
     }
@@ -43,7 +43,7 @@ class MapboxLifecyclePluginImpl constructor(mapView: View?) : MapboxLifecyclePlu
     if (!this::viewLifecycleRegistry.isInitialized) {
       viewLifecycleRegistry = ViewLifecycleRegistry(
         view = mapView,
-        localLifecycleOwner = this,
+        localLifecycleOwner = localLifecycleOwner,
         hostingLifecycleOwner = mapView.context.toLifecycleOwner()
       )
     }
@@ -87,13 +87,6 @@ class MapboxLifecyclePluginImpl constructor(mapView: View?) : MapboxLifecyclePlu
         }
       })
   }
-
-  /**
-   * Returns the Lifecycle of the provider.
-   *
-   * @return The lifecycle of the provider.
-   */
-  override fun getLifecycle(): Lifecycle = viewLifecycleRegistry
 
   private companion object {
     private const val TAG = "MapboxLifecyclePlugin"
