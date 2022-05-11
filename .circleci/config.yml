@@ -442,13 +442,14 @@ jobs:
           path: api_compat_report
 
   verify-internal:
-    executor: ubuntu
+    executor:
+      name: ubuntu
+      machine: small
     steps:
       - checkout
       - add_ssh_keys:
           fingerprints:
             - "3b:cd:47:bf:57:9c:e5:36:b0:4d:5f:12:5e:d3:b3:3e"
-      - restore-gradle-cache
       - validate-internal-ci
 
   run-unit-test:
