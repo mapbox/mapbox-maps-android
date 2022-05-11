@@ -782,7 +782,9 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     for (cameraAnimator in animators) {
       if (cameraAnimator is CameraAnimator<*>) {
         cameraAnimator.isInternal = true
-        cameraAnimator.owner = MapAnimationOwnerRegistry.INTERNAL
+        if (cameraAnimator.owner == null) {
+          cameraAnimator.owner = MapAnimationOwnerRegistry.INTERNAL
+        }
         cameraAnimators.add(cameraAnimator)
       } else {
         logE(TAG, "All animators must be CameraAnimator's to be played together!")
@@ -805,7 +807,9 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     for (cameraAnimator in animators) {
       if (cameraAnimator is CameraAnimator<*>) {
         cameraAnimator.isInternal = true
-        cameraAnimator.owner = MapAnimationOwnerRegistry.INTERNAL
+        if (cameraAnimator.owner == null) {
+          cameraAnimator.owner = MapAnimationOwnerRegistry.INTERNAL
+        }
         cameraAnimators.add(cameraAnimator)
       } else {
         logE(TAG, "All animators must be CameraAnimator's to be played sequentially!")
