@@ -12,6 +12,7 @@ import com.mapbox.maps.*
 import com.mapbox.maps.plugin.animation.CameraAnimationsPluginImpl.Companion.TAG
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions.Companion.cameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
+import com.mapbox.maps.plugin.animation.animator.CameraAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraBearingAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraCenterAnimator
 import com.mapbox.maps.plugin.animation.animator.CameraPitchAnimator
@@ -629,6 +630,30 @@ class CameraAnimationsPluginImplTest {
         assertEquals(pitchListener.started, true)
         assertEquals(pitchListener.ended, false)
         assertEquals(pitchListener.canceled, false)
+        assertEquals((it as CameraAnimator<*>).owner, MapAnimationOwnerRegistry.INTERNAL)
+      }
+    )
+
+    shadowOf(getMainLooper()).pause()
+
+    cameraAnimationsPluginImpl.playAnimatorsTogether(pitch, bearing)
+
+    shadowOf(getMainLooper()).idle()
+  }
+
+  @Test
+  fun testPlayAnimatorsTogetherCustomOwner() {
+    val pitch = createPitchAnimator(15.0, 0, 5, owner = MapAnimationOwnerRegistry.GESTURES)
+    val pitchListener = CameraAnimatorListener()
+    pitch.addListener(pitchListener)
+
+    val bearing = createBearingAnimator(10.0, 0, 5, owner = MapAnimationOwnerRegistry.GESTURES)
+    bearing.addListener(
+      onStart = {
+        assertEquals(pitchListener.started, true)
+        assertEquals(pitchListener.ended, false)
+        assertEquals(pitchListener.canceled, false)
+        assertEquals((it as CameraAnimator<*>).owner, MapAnimationOwnerRegistry.GESTURES)
       }
     )
 
@@ -1092,10 +1117,13 @@ class CameraAnimationsPluginImplTest {
     }
   }
 
-  private fun createBearingAnimator(target: Double, animatorDelay: Long, animatorDuration: Long) =
+  private fun createBearingAnimator(target: Double, animatorDelay: Long, animatorDuration: Long, owner: String? = null) =
     CameraBearingAnimator(
       cameraAnimatorOptions(target) {
         startValue(0.0)
+        owner?.let {
+          owner(it)
+        }
       },
       true
     ) {
@@ -1103,10 +1131,13 @@ class CameraAnimationsPluginImplTest {
       duration = animatorDuration
     }
 
-  private fun createPitchAnimator(target: Double, animatorDelay: Long, animatorDuration: Long) =
+  private fun createPitchAnimator(target: Double, animatorDelay: Long, animatorDuration: Long, owner: String? = null) =
     CameraPitchAnimator(
       cameraAnimatorOptions(target) {
         startValue(0.0)
+        owner?.let {
+          owner(it)
+        }
       }
     ) {
       startDelay = animatorDelay
