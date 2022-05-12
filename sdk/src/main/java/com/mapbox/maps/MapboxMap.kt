@@ -1750,8 +1750,6 @@ class MapboxMap :
    *
    * @param modelId An identifier of the model.
    * @param modelUri A URI for the model.
-   *
-   * @return A string describing an error if the operation was not successful, empty otherwise.
    */
   @MapboxExperimental
   fun addStyleModel(modelId: String, modelUri: String) {
@@ -1766,8 +1764,6 @@ class MapboxMap :
    * Removes a model from the style.
    *
    * @param modelId The identifier of the model to remove.
-   *
-   * @return A string describing an error if the operation was not successful, empty otherwise.
    */
   @MapboxExperimental
   fun removeStyleModel(modelId: String) {
