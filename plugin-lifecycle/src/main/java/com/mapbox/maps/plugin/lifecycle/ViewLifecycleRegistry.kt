@@ -22,32 +22,39 @@ import androidx.lifecycle.LifecycleRegistry
  */
 @UiThread
 internal class ViewLifecycleRegistry(
-  view: View,
-  localLifecycleOwner: LifecycleOwner,
-  hostingLifecycleOwner: LifecycleOwner,
-) : LifecycleRegistry(localLifecycleOwner) {
+  private val view: View,
+  private val hostingLifecycleOwner: LifecycleOwner,
+) : LifecycleOwner {
+
+  private val viewLifecycleRegistry = LifecycleRegistry(this)
+  override fun getLifecycle() = viewLifecycleRegistry
 
   private var isAttached = view.isAttachedToWindow
 
   private val hostingLifecycleObserver = LifecycleEventObserver { _, event ->
-    val isAtLeastCreated = currentState.isAtLeast(State.CREATED)
-    if (isAttached || (isAtLeastCreated && event == Event.ON_DESTROY)) {
-      handleLifecycleEvent(event)
+    val isAtLeastCreated = viewLifecycleRegistry.currentState.isAtLeast(Lifecycle.State.CREATED)
+    if (isAttached || (isAtLeastCreated && event == Lifecycle.Event.ON_DESTROY)) {
+      viewLifecycleRegistry.handleLifecycleEvent(event)
     }
   }
 
   private val attachStateChangeListener = object : View.OnAttachStateChangeListener {
     override fun onViewAttachedToWindow(p0: View?) {
-      currentState = hostingLifecycleOwner.lifecycle.currentState
+      viewLifecycleRegistry.currentState = hostingLifecycleOwner.lifecycle.currentState
       isAttached = true
     }
 
     override fun onViewDetachedFromWindow(p0: View?) {
       isAttached = false
-      if (hostingLifecycleOwner.lifecycle.currentState.isAtLeast(State.STARTED)) {
-        currentState = State.CREATED
+      if (hostingLifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+        viewLifecycleRegistry.currentState = Lifecycle.State.CREATED
       }
     }
+  }
+
+  fun cleanUp() {
+    hostingLifecycleOwner.lifecycle.removeObserver(hostingLifecycleObserver)
+    view.removeOnAttachStateChangeListener(attachStateChangeListener)
   }
 
   init {

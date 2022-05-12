@@ -19,19 +19,8 @@ import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 /**
  * Concrete implementation of MapboxLifecyclePlugin.
  */
-class MapboxLifecyclePluginImpl constructor(mapView: View?) : MapboxLifecyclePlugin {
+class MapboxLifecyclePluginImpl: MapboxLifecyclePlugin {
   private lateinit var viewLifecycleRegistry: ViewLifecycleRegistry
-  private val localLifecycleOwner = LifecycleOwner { viewLifecycleRegistry }
-
-  init {
-    mapView?.let {
-      viewLifecycleRegistry = ViewLifecycleRegistry(
-        view = it,
-        localLifecycleOwner = localLifecycleOwner,
-        hostingLifecycleOwner = it.context.toLifecycleOwner()
-      )
-    }
-  }
 
   /**
    * Register a MapboxLifecycleObserver to observe life cycle events from LifecycleOwner
@@ -43,8 +32,7 @@ class MapboxLifecyclePluginImpl constructor(mapView: View?) : MapboxLifecyclePlu
     if (!this::viewLifecycleRegistry.isInitialized) {
       viewLifecycleRegistry = ViewLifecycleRegistry(
         view = mapView,
-        localLifecycleOwner = localLifecycleOwner,
-        hostingLifecycleOwner = mapView.context.toLifecycleOwner()
+        hostingLifecycleOwner = requireNotNull(ViewTreeLifecycleOwner.get(mapView))
       )
     }
     val componentCallback = object : ComponentCallbacks2 {
@@ -67,7 +55,7 @@ class MapboxLifecyclePluginImpl constructor(mapView: View?) : MapboxLifecyclePlu
       }
     }
     mapView.context.registerComponentCallbacks(componentCallback)
-    viewLifecycleRegistry.addObserver(
+    viewLifecycleRegistry.lifecycle.addObserver(
       object : LifecycleObserver {
         @OnLifecycleEvent(Lifecycle.Event.ON_START)
         fun onStart() {
@@ -82,7 +70,8 @@ class MapboxLifecyclePluginImpl constructor(mapView: View?) : MapboxLifecyclePlu
         @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
         fun onDestroy() {
           observer.onDestroy()
-          viewLifecycleRegistry.removeObserver(this)
+          viewLifecycleRegistry.lifecycle.removeObserver(this)
+          viewLifecycleRegistry.cleanUp()
           mapView.context.unregisterComponentCallbacks(componentCallback)
         }
       })
