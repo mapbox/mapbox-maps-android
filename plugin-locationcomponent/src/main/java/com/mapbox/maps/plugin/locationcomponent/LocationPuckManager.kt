@@ -14,6 +14,8 @@ import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2
+import kotlin.math.abs
+import kotlin.math.cos
 import kotlin.math.pow
 
 internal class LocationPuckManager(
@@ -30,8 +32,19 @@ internal class LocationPuckManager(
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal var lastLocation: Point? = null
+  private var lastMercatorScale = 1.0
+    set(value) {
+      if (abs(value - field) > 0.05) {
+        field = value
+        (settings.locationPuck as? LocationPuck3D)?.let { locationPuck3D ->
+          locationLayerRenderer.styleScaling(get3DPuckScaleExpression(locationPuck3D, field))
+        }
+      }
+    }
+
   private val onLocationUpdated: ((Point) -> Unit) = {
     lastLocation = it
+    lastMercatorScale = mercatorScale(it.latitude())
   }
 
   private var lastBearing: Double = delegateProvider.mapCameraManagerDelegate.cameraState.bearing
@@ -62,7 +75,11 @@ internal class LocationPuckManager(
 
   fun initialize(style: StyleInterface) {
     if (!locationLayerRenderer.isRendererInitialised()) {
-      animationManager.setUpdateListeners(onLocationUpdated, onBearingUpdated, onAccuracyRadiusUpdated)
+      animationManager.setUpdateListeners(
+        onLocationUpdated,
+        onBearingUpdated,
+        onAccuracyRadiusUpdated
+      )
       animationManager.setLocationLayerRenderer(locationLayerRenderer)
       animationManager.applyPulsingAnimationSettings(settings)
       animationManager.applySettings2(settings2)
@@ -196,48 +213,55 @@ internal class LocationPuckManager(
         }
       }
       is LocationPuck3D -> {
-        val modelScaleConstant = 2.0.pow(MAX_ZOOM - MIN_ZOOM)
-        val modelScaleExpression = puck.modelScaleExpression
-        val scaleExpression = if (modelScaleExpression == null) {
+        locationLayerRenderer.styleScaling(get3DPuckScaleExpression(puck, lastMercatorScale))
+      }
+    }
+  }
+
+  private fun get3DPuckScaleExpression(puck: LocationPuck3D, mercatorScale: Double = 1.0): Value {
+    val modelScaleConstant = 2.0.pow(MAX_ZOOM - MIN_ZOOM)
+    val modelScaleExpression = puck.modelScaleExpression
+    return if (modelScaleExpression == null) {
+      Value(
+        arrayListOf(
+          Value("interpolate"),
+          Value(arrayListOf(Value("exponential"), Value(0.5))),
+          Value(arrayListOf(Value("zoom"))),
+          Value(MIN_ZOOM),
           Value(
             arrayListOf(
-              Value("interpolate"),
-              Value(arrayListOf(Value("exponential"), Value(0.5))),
-              Value(arrayListOf(Value("zoom"))),
-              Value(MIN_ZOOM),
+              Value("literal"),
               Value(
                 arrayListOf(
-                  Value("literal"),
-                  Value(
-                    arrayListOf(
-                      Value(modelScaleConstant * puck.modelScale[0].toDouble()),
-                      Value(modelScaleConstant * puck.modelScale[1].toDouble()),
-                      Value(modelScaleConstant * puck.modelScale[2].toDouble())
-                    )
-                  )
+                  Value(modelScaleConstant * puck.modelScale[0].toDouble() * mercatorScale),
+                  Value(modelScaleConstant * puck.modelScale[1].toDouble() * mercatorScale),
+                  Value(modelScaleConstant * puck.modelScale[2].toDouble() * mercatorScale)
                 )
-              ),
-              Value(MAX_ZOOM),
+              )
+            )
+          ),
+          Value(MAX_ZOOM),
+          Value(
+            arrayListOf(
+              Value("literal"),
               Value(
                 arrayListOf(
-                  Value("literal"),
-                  Value(
-                    arrayListOf(
-                      Value(puck.modelScale[0].toDouble()),
-                      Value(puck.modelScale[1].toDouble()),
-                      Value(puck.modelScale[2].toDouble())
-                    )
-                  )
+                  Value(puck.modelScale[0].toDouble() * mercatorScale),
+                  Value(puck.modelScale[1].toDouble() * mercatorScale),
+                  Value(puck.modelScale[2].toDouble() * mercatorScale)
                 )
               )
             )
           )
-        } else {
-          Value.fromJson(modelScaleExpression).take()
-        }
-        locationLayerRenderer.styleScaling(scaleExpression)
-      }
+        )
+      )
+    } else {
+      Value.fromJson(modelScaleExpression).take()
     }
+  }
+
+  private fun mercatorScale(lat: Double): Double {
+    return 1.0 / cos(lat * Math.PI / 180.0)
   }
 
   private companion object {
