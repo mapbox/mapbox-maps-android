@@ -314,8 +314,7 @@ commands:
                 --test << parameters.module_target >>/build/outputs/apk/androidTest/debug/<< parameters.module_target >>-debug-androidTest.apk \
                 --device model=harpia,version=23,locale=en,orientation=portrait \
                 --device model=blueline,version=28,locale=en,orientation=portrait \
-                --timeout 45m --use-orchestrator --no-record-video --num-flaky-test-attempts 3 \
-                --num-uniform-shards 4
+                --timeout 45m --use-orchestrator --no-record-video
               fi
             fi
 
