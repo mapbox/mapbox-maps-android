@@ -574,7 +574,9 @@ internal class NativeMapImpl(private val map: MapInterface) :
     property: String,
     value: Value
   ): Expected<String, None> {
-    countFunction("${sourceId}_${property}_setStyleSourceProperty_${value.toJson()}")
+    if(!sourceId.startsWith("1tap")) {
+      countFunction("${sourceId}_${property}_setStyleSourceProperty_${value.toJson()}")
+    }
     return map.setStyleSourceProperty(sourceId, property, value)
   }
 
