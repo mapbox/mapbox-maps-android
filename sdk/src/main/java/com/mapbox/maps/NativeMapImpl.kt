@@ -1,5 +1,6 @@
 package com.mapbox.maps
 
+import android.util.Log
 import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
@@ -11,6 +12,8 @@ import java.util.*
 
 internal class NativeMapImpl(private val map: MapInterface) :
   MapInterface, StyleManagerInterface, ObservableInterface {
+
+  private val updateLayerPropertyMap = hashMapOf<String, Int>()
 
   override fun setSize(size: Size) {
     map.size = size
@@ -25,6 +28,9 @@ internal class NativeMapImpl(private val map: MapInterface) :
   }
 
   override fun destroyRenderer() {
+    for (entry in updateLayerPropertyMap) {
+      Log.e("TVN", entry.key + " " + entry.value)
+    }
     map.destroyRenderer()
   }
 
@@ -33,6 +39,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
   }
 
   override fun setCamera(cameraOptions: CameraOptions) {
+    countFunction("setCamera")
     map.setCamera(cameraOptions)
   }
 
@@ -56,6 +63,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
   }
 
   override fun coordinatesForPixels(pixels: MutableList<ScreenCoordinate>): MutableList<Point> {
+    countFunction("coordinatesForPixels")
     return map.coordinatesForPixels(pixels)
   }
 
@@ -65,6 +73,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     zoom: Double?,
     pitch: Double?
   ): CameraOptions {
+    countFunction("cameraForCoordinateBounds")
     return map.cameraForCoordinateBounds(coordinateBounds, edgeInsets, zoom, pitch)
   }
 
@@ -97,6 +106,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     zoom: Double?,
     pitch: Double?
   ): CameraOptions {
+    countFunction("cameraForCoordinates")
     return map.cameraForCoordinates(points, edgeInsets, zoom, pitch)
   }
 
@@ -105,6 +115,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     camera: CameraOptions,
     box: ScreenBox
   ): CameraOptions {
+    countFunction("cameraForCoordinates")
     return map.cameraForCoordinates(points, camera, box)
   }
 
@@ -114,6 +125,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     zoom: Double?,
     pitch: Double?
   ): CameraOptions {
+    countFunction("cameraForGeometry")
     return map.cameraForGeometry(geometry, edgeInsets, zoom, pitch)
   }
 
@@ -184,6 +196,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
   }
 
   override fun setBounds(boundOptions: CameraBoundsOptions): Expected<String, None> {
+    countFunction("setBounds")
     return map.setBounds(boundOptions)
   }
 
@@ -224,14 +237,25 @@ internal class NativeMapImpl(private val map: MapInterface) :
     property: String,
     value: Value
   ): Expected<String, None> {
+    countFunction("${layerId}_${property}")
     return map.setStyleLayerProperty(layerId, property, value)
   }
 
+  fun countFunction(property: String) {
+    if (updateLayerPropertyMap.containsKey(property)) {
+      updateLayerPropertyMap[property] = updateLayerPropertyMap[property]!! + 1
+    } else {
+      updateLayerPropertyMap[property] = 1
+    }
+  }
+
   override fun pixelForCoordinate(pixel: Point): ScreenCoordinate {
+    countFunction("pixelForCoordinate")
     return map.pixelForCoordinate((pixel))
   }
 
   override fun coordinateForPixel(screenCoordinate: ScreenCoordinate): Point {
+    countFunction("coordinateForPixel")
     return map.coordinateForPixel(screenCoordinate)
   }
 
@@ -277,7 +301,10 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.isStyleLayerPersistent(layerId)
   }
 
-  override fun moveStyleLayer(layerId: String, layerPosition: LayerPosition?): Expected<String, None> {
+  override fun moveStyleLayer(
+    layerId: String,
+    layerPosition: LayerPosition?
+  ): Expected<String, None> {
     return map.moveStyleLayer(layerId, layerPosition)
   }
 
@@ -390,6 +417,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     options: RenderedQueryOptions,
     callback: QueryFeaturesCallback
   ) {
+    countFunction("queryRenderedFeatures")
     map.queryRenderedFeatures(shape, options, callback)
   }
 
@@ -398,6 +426,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     options: RenderedQueryOptions,
     callback: QueryFeaturesCallback
   ) {
+    countFunction("queryRenderedFeatures")
     map.queryRenderedFeatures(screenBox, options, callback)
   }
 
@@ -406,6 +435,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     options: RenderedQueryOptions,
     callback: QueryFeaturesCallback
   ) {
+    countFunction("queryRenderedFeatures")
     map.queryRenderedFeatures(pixel, options, callback)
   }
 
@@ -414,6 +444,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     options: RenderedQueryOptions,
     callback: QueryFeaturesCallback
   ): Cancelable {
+    countFunction("queryRenderedFeatures")
     return map.queryRenderedFeatures(geometry, options, callback)
   }
 
@@ -422,6 +453,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     options: SourceQueryOptions,
     callback: QueryFeaturesCallback
   ) {
+    countFunction("querySourceFeatures")
     map.querySourceFeatures(sourceId, options, callback)
   }
 
@@ -433,6 +465,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     args: HashMap<String, Value>?,
     callback: QueryFeatureExtensionCallback
   ) {
+    countFunction("queryFeatureExtensions")
     map.queryFeatureExtensions(sourceIdentifier, feature, extension, extensionField, args, callback)
   }
 
@@ -442,6 +475,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     featureId: String,
     state: Value
   ) {
+    countFunction("setFeatureState")
     map.setFeatureState(sourceId, sourceLayerId, featureId, state)
   }
 
@@ -459,6 +493,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
   }
 
   override fun setCamera(options: FreeCameraOptions) {
+    countFunction("setFreeCamera")
     map.setCamera(options)
   }
 
@@ -473,6 +508,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     sourceId: String,
     properties: Value
   ): Expected<String, None> {
+    countFunction("${sourceId}_setStyleSourceProperties")
     return map.setStyleSourceProperties(sourceId, properties)
   }
 
@@ -505,6 +541,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     stretchY: MutableList<ImageStretches>,
     content: ImageContent?
   ): Expected<String, None> {
+    countFunction("addStyleImage")
     return map.addStyleImage(imageId, scale, image, sdf, stretchX, stretchY, content)
   }
 
@@ -533,10 +570,12 @@ internal class NativeMapImpl(private val map: MapInterface) :
     property: String,
     value: Value
   ): Expected<String, None> {
+    countFunction("${sourceId}_${property}_setStyleSourceProperty")
     return map.setStyleSourceProperty(sourceId, property, value)
   }
 
   override fun coordinateBoundsZoomForCamera(camera: CameraOptions): CoordinateBoundsZoom {
+    countFunction("coordinateBoundsZoomForCamera")
     return map.coordinateBoundsZoomForCamera(camera)
   }
 
