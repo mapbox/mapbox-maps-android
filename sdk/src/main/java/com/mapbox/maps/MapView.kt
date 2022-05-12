@@ -344,6 +344,14 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     fun onSnapshotReady(bitmap: Bitmap?)
   }
 
+  internal fun viewAnnotationDraw() {
+    mapController.viewAnnotationDraw()
+  }
+
+  internal fun viewAnnotationPositionArrived() {
+    mapController.viewAnnotationPositionArrived()
+  }
+
   /**
    * Static variables and methods.
    */

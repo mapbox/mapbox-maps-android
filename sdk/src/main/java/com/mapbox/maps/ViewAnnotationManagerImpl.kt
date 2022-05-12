@@ -26,6 +26,16 @@ internal class ViewAnnotationManagerImpl(
 
   init {
     mapView.requestDisallowInterceptTouchEvent(false)
+    mapView.viewTreeObserver.addOnPreDrawListener {
+      if (annotationMap.isNotEmpty()) {
+        logE("KIRYLDD", "mapView onPreDraw")
+        annotationMap.forEach {
+          it.value.view.invalidate()
+        }
+        mapView.viewAnnotationDraw()
+      }
+      true
+    }
     mapboxMap.setViewAnnotationPositionsUpdateListener(this)
   }
 
@@ -132,6 +142,12 @@ internal class ViewAnnotationManagerImpl(
   }
 
   override fun onViewAnnotationPositionsUpdate(positions: MutableList<ViewAnnotationPositionDescriptor>) {
+    logE("KIRYLDD", "onViewAnnotationPositionsUpdate ${positions.joinToString(", ")}")
+//    mapView.handler.postAtFrontOfQueue {
+//      drawAnnotationViews(positions)
+//      logE("KIRYLDD", "onViewAnnotationPositionsUpdate processed")
+//    }
+    mapView.viewAnnotationPositionArrived()
     drawAnnotationViews(positions)
   }
 
@@ -304,6 +320,11 @@ internal class ViewAnnotationManagerImpl(
             else
               ViewAnnotationVisibility.INVISIBLE
           )
+//          annotation.view.viewTreeObserver.addOnPreDrawListener {
+//            annotation.view.invalidate()
+//            mapView.viewAnnotationDraw()
+//            true
+//          }
         }
         if (viewUpdatedListenerSet.isNotEmpty()) {
           viewUpdatedListenerSet.forEach {
