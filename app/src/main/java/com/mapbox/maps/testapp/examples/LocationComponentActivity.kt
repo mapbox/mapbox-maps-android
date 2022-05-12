@@ -11,6 +11,7 @@ import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.expressions.dsl.generated.interpolate
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
+import com.mapbox.maps.plugin.MapProjection
 import com.mapbox.maps.plugin.PuckBearingSource
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.*
@@ -75,6 +76,10 @@ class LocationComponentActivity : AppCompatActivity() {
       }
       R.id.action_map_style_change -> {
         toggleMapStyle()
+        return true
+      }
+      R.id.action_map_projection_change -> {
+        toggleMapProjection()
         return true
       }
       R.id.action_component_disable -> {
@@ -168,6 +173,15 @@ class LocationComponentActivity : AppCompatActivity() {
     val styleUrl = if (lastStyleUri == Style.DARK) Style.LIGHT else Style.DARK
     binding.mapView.getMapboxMap().loadStyleUri(styleUrl) {
       lastStyleUri = styleUrl
+    }
+  }
+
+  private fun toggleMapProjection() {
+    binding.mapView.getMapboxMap().apply {
+      when (getMapProjection()) {
+        MapProjection.Mercator -> setMapProjection(MapProjection.Globe)
+        MapProjection.Globe -> setMapProjection(MapProjection.Mercator)
+      }
     }
   }
 
