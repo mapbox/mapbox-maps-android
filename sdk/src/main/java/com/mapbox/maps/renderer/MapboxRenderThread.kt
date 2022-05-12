@@ -13,6 +13,7 @@ import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.gl.TextureRenderer
 import com.mapbox.maps.renderer.widget.Widget
 import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.locks.ReentrantLock
 import javax.microedition.khronos.egl.EGL10
 import javax.microedition.khronos.egl.EGL11
@@ -231,6 +232,28 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   private fun draw() {
+    if (needSwapBuffersWithCachedMap.getAndSet(false)) {
+      when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
+        EGL10.EGL_SUCCESS -> {
+          logE("KIRYLDD", "Swap with cached map")
+        }
+        EGL11.EGL_CONTEXT_LOST -> {
+          logW(TAG, "Context lost. Waiting for re-acquire")
+          releaseEgl()
+        }
+        else -> {
+          logW(TAG, "eglSwapBuffer error: $swapStatus. Waiting for new surface")
+          releaseEglSurface()
+        }
+      }
+      logE("KIRYLDD", "Render cached start")
+      mapboxRenderer.render()
+      logE("KIRYLDD", "Render cached end")
+//      waitUntilViewAnnotationPositioned.set(true)
+      return
+    }
+    // render but do not swap buffers yet
+    if (waitUntilViewAnnotationPositioned.get()) return
     val renderTimeNsCopy = renderTimeNs
     val currentTimeNs = SystemClock.elapsedRealtimeNanos()
     val expectedEndRenderTimeNs = currentTimeNs + renderTimeNsCopy
@@ -261,7 +284,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     // **note** this queue also holds snapshot tasks
     drainQueue(renderEventQueue)
     when (val swapStatus = eglCore.swapBuffers(eglSurface)) {
-      EGL10.EGL_SUCCESS -> {}
+      EGL10.EGL_SUCCESS -> {
+        logE("KIRYLDD", "Swap with latest map")
+      }
       EGL11.EGL_CONTEXT_LOST -> {
         logW(TAG, "Context lost. Waiting for re-acquire")
         releaseEgl()
@@ -430,7 +455,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
   }
 
   @AnyThread
-  fun queueRenderEvent(renderEvent: RenderEvent) {
+  fun queueRenderEvent(renderEvent: RenderEvent, priority: Int) {
     if (renderEvent.needRender) {
       renderEvent.runnable?.let {
         renderEventQueue.add(renderEvent)
@@ -448,7 +473,7 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
       // as render thread SDK tasks queue will be cleared when new surface will arrive
       if (renderEvent.eventType == EventType.SDK) {
         if (renderThreadPrepared) {
-          postNonRenderEvent(renderEvent)
+          postNonRenderEvent(renderEvent, 0, priority)
         }
       } else {
         postNonRenderEvent(renderEvent)
@@ -456,11 +481,32 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
     }
   }
 
-  private fun postNonRenderEvent(renderEvent: RenderEvent, delayMillis: Long = 0L) {
+  private val needSwapBuffersWithCachedMap = AtomicBoolean(false)
+  private val waitUntilViewAnnotationPositioned = AtomicBoolean(false)
+
+  internal fun viewAnnotationsDraw() {
+//    waitUntilViewAnnotationPositioned.set(false)
+    needSwapBuffersWithCachedMap.set(true)
+    if (!awaitingNextVsync) {
+      postPrepareRenderFrame()
+    }
+  }
+
+  internal fun viewAnnotationPositionArrived() {
+    waitUntilViewAnnotationPositioned.set(true)
+  }
+
+  private fun postNonRenderEvent(renderEvent: RenderEvent, delayMillis: Long = 0L, priority: Int = 0) {
     // if we already waiting listening for next VSYNC then add runnable to queue to execute
     // after actual drawing otherwise execute asap on render thread
-    if (awaitingNextVsync) {
+    if (awaitingNextVsync && priority == 0) {
       nonRenderEventQueue.add(renderEvent)
+    } else if (priority > 0) {
+      renderHandlerThread.postImmediate {
+        if (renderThreadPrepared) {
+          renderEvent.runnable?.run()
+        }
+      }
     } else {
       renderHandlerThread.postDelayed(
         {

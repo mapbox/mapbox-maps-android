@@ -29,6 +29,13 @@ internal class RenderHandlerThread {
     } ?: logW(TAG, "Thread $HANDLE_THREAD_NAME was not started, ignoring event")
   }
 
+  fun postImmediate(task: () -> Unit) {
+    handler?.let {
+      val message = Message.obtain(it, task)
+      it.sendMessageAtFrontOfQueue(message)
+    } ?: logW(TAG, "Thread $HANDLE_THREAD_NAME was not started, ignoring event")
+  }
+
   fun start() {
     handlerThread = HandlerThread(HANDLE_THREAD_NAME, THREAD_PRIORITY_DISPLAY).apply {
       start()
