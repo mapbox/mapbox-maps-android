@@ -19,9 +19,7 @@ import com.mapbox.maps.plugin.delegates.MapPluginProviderDelegate
 /**
  * Concrete implementation of MapboxLifecyclePlugin.
  */
-class MapboxLifecyclePluginImpl: MapboxLifecyclePlugin {
-  private lateinit var viewLifecycleRegistry: ViewLifecycleRegistry
-
+class MapboxLifecyclePluginImpl : MapboxLifecyclePlugin {
   /**
    * Register a MapboxLifecycleObserver to observe life cycle events from LifecycleOwner
    *
@@ -29,12 +27,11 @@ class MapboxLifecyclePluginImpl: MapboxLifecyclePlugin {
    * @param observer the observer that listen to the life cycle events
    */
   override fun registerLifecycleObserver(mapView: View, observer: MapboxLifecycleObserver) {
-    if (!this::viewLifecycleRegistry.isInitialized) {
-      viewLifecycleRegistry = ViewLifecycleRegistry(
-        view = mapView,
-        hostingLifecycleOwner = requireNotNull(ViewTreeLifecycleOwner.get(mapView))
-      )
-    }
+    val viewLifecycleRegistry = ViewLifecycleRegistry(
+      view = mapView,
+      hostingLifecycleOwner = requireNotNull(ViewTreeLifecycleOwner.get(mapView))
+    )
+
     val componentCallback = object : ComponentCallbacks2 {
       override fun onConfigurationChanged(newConfig: Configuration) {
         // no need
