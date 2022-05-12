@@ -5,6 +5,7 @@ import com.mapbox.bindgen.Expected
 import com.mapbox.bindgen.None
 import com.mapbox.bindgen.Value
 import com.mapbox.common.Cancelable
+import com.mapbox.common.Logger
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
@@ -29,7 +30,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
 
   override fun destroyRenderer() {
     for (entry in updateLayerPropertyMap) {
-      Log.e("TVN", entry.key + " " + entry.value)
+      Logger.e("TVN", entry.key + " " + entry.value)
     }
     map.destroyRenderer()
   }
