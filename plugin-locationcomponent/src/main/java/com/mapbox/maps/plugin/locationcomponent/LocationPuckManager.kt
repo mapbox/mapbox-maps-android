@@ -261,7 +261,7 @@ internal class LocationPuckManager(
   }
 
   private fun mercatorScale(lat: Double): Double {
-    return 1.0 / cos(lat * Math.PI / 180.0)
+    return cos(lat * Math.PI / 180.0)
   }
 
   private companion object {
