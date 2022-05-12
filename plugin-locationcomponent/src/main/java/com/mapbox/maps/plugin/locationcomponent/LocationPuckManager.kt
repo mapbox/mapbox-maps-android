@@ -34,7 +34,7 @@ internal class LocationPuckManager(
   internal var lastLocation: Point? = null
   private var lastMercatorScale = 1.0
     set(value) {
-      if (abs(value - field) > 0.05) {
+      if (abs(value - field) > MERCATOR_SCALE_THRESHOLD) {
         field = value
         (settings.locationPuck as? LocationPuck3D)?.let { locationPuck3D ->
           locationLayerRenderer.styleScaling(get3DPuckScaleExpression(locationPuck3D, field))
@@ -261,12 +261,26 @@ internal class LocationPuckManager(
   }
 
   private fun mercatorScale(lat: Double): Double {
-    return cos(lat * Math.PI / 180.0)
+    // In Mercator projection the scale factor is changed along the meridians as a function of latitude
+    // to keep the scale factor equal in all direction: k=sec(latitude), where sec(α) = 1 / cos(α).
+    return cos(
+      // convert decimal latitude degrees to radians
+      lat.coerceIn(-LATITUDE_MAX, LATITUDE_MAX) * Math.PI / 180.0
+    )
   }
 
   private companion object {
     const val MIN_ZOOM = 0.50
     const val MAX_ZOOM = 22.0
+
+    // We display most of the world at the lowest zoom level as a single square image, excluding the
+    // polar regions by truncation at latitudes of φmax = ±85.05113°.
+    // refs: https://en.wikipedia.org/wiki/Mercator_projection#:~:text=Web%20Mercator,-Main%20article%3A%20Web&text=The%20major%20online%20street%20mapping,%CF%86max%20%3D%20%C2%B185.05113%C2%B0
+    const val LATITUDE_MAX = 85.051128779806604
+
+    // Threshold to update the mercator scale factor when the latitude changes, so that we don't update the
+    // scale expression too frequently and cause performance issues.
+    const val MERCATOR_SCALE_THRESHOLD = 0.05
   }
 }
 
