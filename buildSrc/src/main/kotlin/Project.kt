@@ -93,7 +93,7 @@ object Versions {
   const val androidxCore = "1.3.1"
   const val androidxAnnotation = "1.1.0"
   const val androidxAppcompat = "1.3.0"
-  const val androidxTest = "1.3.0"
+  const val androidxTest = "1.2.0"
   const val androidxConstraintLayout = "2.0.0"
   const val androidxEspresso = "3.3.0"
   const val androidxJUnit = "1.1.2"
