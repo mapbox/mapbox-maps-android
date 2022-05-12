@@ -542,7 +542,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     stretchY: MutableList<ImageStretches>,
     content: ImageContent?
   ): Expected<String, None> {
-    countFunction("addStyleImage")
+    countFunction("addStyleImage_${imageId}")
     return map.addStyleImage(imageId, scale, image, sdf, stretchX, stretchY, content)
   }
 
@@ -571,7 +571,7 @@ internal class NativeMapImpl(private val map: MapInterface) :
     property: String,
     value: Value
   ): Expected<String, None> {
-    countFunction("${sourceId}_${property}_setStyleSourceProperty")
+    countFunction("${sourceId}_${property}_setStyleSourceProperty_${value.toJson()}")
     return map.setStyleSourceProperty(sourceId, property, value)
   }
 
