@@ -16,6 +16,11 @@ Mapbox welcomes participation and contributions from everyone.
 ## Dependencies
 * Bump Mapbox Android base library to v0.8.0. ([#1323](https://github.com/mapbox/mapbox-maps-android/pull/1323))
 
+# 10.4.4 May 12, 2022
+
+### Bug fixes 🐞
+* Fix NaN latitude native crash rarely happening during `MapboxMap#flyTo`. ([#1271](https://github.com/mapbox/mapbox-maps-android/pull/1271))
+
 # 10.5.0 May 4, 2022
 
 ## Features ✨ and improvements 🏁
