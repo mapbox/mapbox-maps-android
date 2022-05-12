@@ -7,14 +7,26 @@ Mapbox welcomes participation and contributions from everyone.
 * Enable support for incremental annotation processing. ([#1323](https://github.com/mapbox/mapbox-maps-android/pull/1323))
 * Make use of non-deprecated common Mapbox logger. ([#1327](https://github.com/mapbox/mapbox-maps-android/pull/1327))
 * Expose factory methods for high-level camera animators. ([#1338](https://github.com/mapbox/mapbox-maps-android/pull/1338))
+* Introduce experimental 3D model support. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
+* Add support for sending turnstile event in native for embedded platforms. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
+* Use a single shared buffer across all globe tiles to increase performance. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
+* Simplify bounding box calculation to increase performance. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
+* Re-introduce partial tile loading that provides better TTRC. The new implementation is based on render sources split. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
+* Avoid creating unnecessary image atlas textures. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
+* The `TilesetDescriptorOptions.pixelRatio` parameter is now passed to the Tile Store and considered for the raster tile pack loading. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
 
 ## Bug fixes 🐞
 * Enable two finger pan gesture. ([#1280](https://github.com/mapbox/mapbox-maps-android/pull/1280))
 * Fix a bug that scale bar is shorter than it should be; trigger `invalidateScaleBar` while updating settings to make scale keep the latest status. ([#1336](https://github.com/mapbox/mapbox-maps-android/pull/1336))
 * Keep the original animator owner for `CameraAnimationsPlugin.playAnimatorsTogether` and `CameraAnimationsPlugin.playAnimatorsSequentially`. ([#1345](https://github.com/mapbox/mapbox-maps-android/pull/1345))
+* Fix momentary appearing of the pan tiles labels (i.e. labels that belong to a lower zoom level than the camera zoom) during camera moving.  ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
+* Fix for location indicator not rendered at horizon when terrain is enabled. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
+* Fix for loading gltf models with interleaved buffers. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
+* Fix a bug that 'line-trim-offset' calculation did not property cover 'round' or 'square' line cap in line ends. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
 
 ## Dependencies
 * Bump Mapbox Android base library to v0.8.0. ([#1323](https://github.com/mapbox/mapbox-maps-android/pull/1323))
+* Bump gl-native to v10.6.0-beta.1, common to 22.0.0-beta.1. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
 
 # 10.5.0 May 4, 2022
 
