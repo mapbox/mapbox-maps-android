@@ -160,6 +160,7 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/ObservableInterfa
 	public fun addOnStyleImageMissingListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnStyleImageMissingListener;)V
 	public fun addOnStyleImageUnusedListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnStyleImageUnusedListener;)V
 	public fun addOnStyleLoadedListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnStyleLoadedListener;)V
+	public final fun addStyleModel (Ljava/lang/String;Ljava/lang/String;)V
 	public fun cameraAnimationsPlugin (Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
 	public fun cameraForCoordinateBounds (Lcom/mapbox/maps/CoordinateBounds;Lcom/mapbox/maps/EdgeInsets;Ljava/lang/Double;Ljava/lang/Double;)Lcom/mapbox/maps/CameraOptions;
 	public fun cameraForCoordinates (Ljava/util/List;Lcom/mapbox/maps/CameraOptions;Lcom/mapbox/maps/ScreenBox;)Lcom/mapbox/maps/CameraOptions;
@@ -203,6 +204,7 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/ObservableInterfa
 	public fun getSize ()Lcom/mapbox/maps/Size;
 	public final fun getStyle ()Lcom/mapbox/maps/Style;
 	public final fun getStyle (Lcom/mapbox/maps/Style$OnStyleLoaded;)V
+	public final fun hasStyleModel (Ljava/lang/String;)Z
 	public fun isFullyLoaded ()Z
 	public fun isGestureInProgress ()Z
 	public fun isUserAnimationInProgress ()Z
@@ -253,6 +255,7 @@ public final class com/mapbox/maps/MapboxMap : com/mapbox/maps/ObservableInterfa
 	public fun removeOnStyleImageMissingListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnStyleImageMissingListener;)V
 	public fun removeOnStyleImageUnusedListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnStyleImageUnusedListener;)V
 	public fun removeOnStyleLoadedListener (Lcom/mapbox/maps/plugin/delegates/listeners/OnStyleLoadedListener;)V
+	public final fun removeStyleModel (Ljava/lang/String;)V
 	public fun setBounds (Lcom/mapbox/maps/CameraBoundsOptions;)Lcom/mapbox/bindgen/Expected;
 	public fun setCamera (Lcom/mapbox/maps/CameraOptions;)V
 	public fun setCamera (Lcom/mapbox/maps/FreeCameraOptions;)V
@@ -389,8 +392,10 @@ public final class com/mapbox/maps/Style : com/mapbox/maps/extension/style/Style
 	public fun addStyleCustomLayer (Ljava/lang/String;Lcom/mapbox/maps/CustomLayerHost;Lcom/mapbox/maps/LayerPosition;)Lcom/mapbox/bindgen/Expected;
 	public fun addStyleImage (Ljava/lang/String;FLcom/mapbox/maps/Image;ZLjava/util/List;Ljava/util/List;Lcom/mapbox/maps/ImageContent;)Lcom/mapbox/bindgen/Expected;
 	public fun addStyleLayer (Lcom/mapbox/bindgen/Value;Lcom/mapbox/maps/LayerPosition;)Lcom/mapbox/bindgen/Expected;
+	public fun addStyleModel (Ljava/lang/String;Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun addStyleSource (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun getPixelRatio ()F
+	public fun getStyleAtmosphereProperty (Ljava/lang/String;)Lcom/mapbox/maps/StylePropertyValue;
 	public fun getStyleDefaultCamera ()Lcom/mapbox/maps/CameraOptions;
 	public fun getStyleImage (Ljava/lang/String;)Lcom/mapbox/maps/Image;
 	public fun getStyleJSON ()Ljava/lang/String;
@@ -407,6 +412,7 @@ public final class com/mapbox/maps/Style : com/mapbox/maps/extension/style/Style
 	public fun getStyleTransition ()Lcom/mapbox/maps/TransitionOptions;
 	public fun getStyleURI ()Ljava/lang/String;
 	public fun hasStyleImage (Ljava/lang/String;)Z
+	public fun hasStyleModel (Ljava/lang/String;)Z
 	public fun invalidateStyleCustomGeometrySourceRegion (Ljava/lang/String;Lcom/mapbox/maps/CoordinateBounds;)Lcom/mapbox/bindgen/Expected;
 	public fun invalidateStyleCustomGeometrySourceTile (Ljava/lang/String;Lcom/mapbox/maps/CanonicalTileID;)Lcom/mapbox/bindgen/Expected;
 	public fun isStyleLayerPersistent (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
@@ -415,7 +421,10 @@ public final class com/mapbox/maps/Style : com/mapbox/maps/extension/style/Style
 	public fun moveStyleLayer (Ljava/lang/String;Lcom/mapbox/maps/LayerPosition;)Lcom/mapbox/bindgen/Expected;
 	public fun removeStyleImage (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun removeStyleLayer (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
+	public fun removeStyleModel (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
 	public fun removeStyleSource (Ljava/lang/String;)Lcom/mapbox/bindgen/Expected;
+	public fun setStyleAtmosphere (Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
+	public fun setStyleAtmosphereProperty (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleCustomGeometrySourceTileData (Ljava/lang/String;Lcom/mapbox/maps/CanonicalTileID;Ljava/util/List;)Lcom/mapbox/bindgen/Expected;
 	public fun setStyleJSON (Ljava/lang/String;)V
 	public fun setStyleLayerProperties (Ljava/lang/String;Lcom/mapbox/bindgen/Value;)Lcom/mapbox/bindgen/Expected;

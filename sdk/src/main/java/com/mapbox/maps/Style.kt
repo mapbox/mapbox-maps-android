@@ -377,6 +377,42 @@ class Style internal constructor(
   }
 
   /**
+   * Sets the style global [atmosphere](https://docs.mapbox.com/mapbox-gl-js/style-spec/#fog) properties.
+   *
+   * @param properties A map of style atmosphere properties values, with their names as a key.
+   *
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  override fun setStyleAtmosphere(properties: Value): Expected<String, None> {
+    checkNativeStyle("setStyleAtmosphere")
+    return styleManager.setStyleAtmosphere(properties)
+  }
+
+  /**
+   * Gets the value of a style atmosphere property.
+   *
+   * @param property The style atmosphere property name.
+   * @return The style atmosphere property value.
+   */
+  override fun getStyleAtmosphereProperty(property: String): StylePropertyValue {
+    checkNativeStyle("getStyleAtmosphereProperty")
+    return styleManager.getStyleAtmosphereProperty(property)
+  }
+
+  /**
+   * Sets a value to the the style atmosphere property.
+   *
+   * @param property The style atmosphere property name.
+   * @param value The style atmosphere property value.
+   *
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  override fun setStyleAtmosphereProperty(property: String, value: Value): Expected<String, None> {
+    checkNativeStyle("setStyleAtmosphereProperty")
+    return styleManager.setStyleAtmosphereProperty(property, value)
+  }
+
+  /**
    * Sets the style global terrain source properties.
    *
    * @see [Mapbox Style Specification: Terrrain](https://docs.mapbox.com/mapbox-gl-js/style-spec/#terrain)
@@ -634,6 +670,49 @@ class Style internal constructor(
   override fun hasStyleImage(imageId: String): Boolean {
     checkNativeStyle("hasStyleImage")
     return styleManager.hasStyleImage(imageId)
+  }
+
+  /**
+   * Adds a model to be used in the style. This API can also be used for updating
+   * a model. If the model for a given `modelId` was already added, it gets replaced by the new model.
+   *
+   * The model can be used in `model-id` property in model layer.
+   *
+   * @param modelId An identifier of the model.
+   * @param modelUri A URI for the model.
+   *
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @MapboxExperimental
+  override fun addStyleModel(modelId: String, modelUri: String): Expected<String, None> {
+    checkNativeStyle("addStyleModel")
+    return styleManager.addStyleModel(modelId, modelUri)
+  }
+
+  /**
+   * Removes a model from the style.
+   *
+   * @param modelId The identifier of the model to remove.
+   *
+   * @return A string describing an error if the operation was not successful, empty otherwise.
+   */
+  @MapboxExperimental
+  override fun removeStyleModel(modelId: String): Expected<String, None> {
+    checkNativeStyle("removeStyleModel")
+    return styleManager.removeStyleModel(modelId)
+  }
+
+  /**
+   * Checks whether a model exists.
+   *
+   * @param modelId The identifier of the model.
+   *
+   * @return True if model exists, false otherwise.
+   */
+  @MapboxExperimental
+  override fun hasStyleModel(modelId: String): Boolean {
+    checkNativeStyle("hasStyleModel")
+    return styleManager.hasStyleModel(modelId)
   }
 
   /**
