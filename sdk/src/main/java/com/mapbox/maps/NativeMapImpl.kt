@@ -239,6 +239,9 @@ internal class NativeMapImpl(private val map: MapInterface) :
     value: Value
   ): Expected<String, None> {
     countFunction("${layerId}_${property}")
+    if(property == "visibility"){
+      countFunction("${layerId}_${property}_${value.toJson()}")
+    }
     return map.setStyleLayerProperty(layerId, property, value)
   }
 
