@@ -381,7 +381,7 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
   /**
    * Static variables and methods.
    */
-  companion object {
+  private companion object {
     private const val TAG = "Mbgl-Atmosphere"
   }
 }
