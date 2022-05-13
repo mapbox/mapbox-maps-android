@@ -7,14 +7,22 @@ Mapbox welcomes participation and contributions from everyone.
 * Enable support for incremental annotation processing. ([#1323](https://github.com/mapbox/mapbox-maps-android/pull/1323))
 * Make use of non-deprecated common Mapbox logger. ([#1327](https://github.com/mapbox/mapbox-maps-android/pull/1327))
 * Expose factory methods for high-level camera animators. ([#1338](https://github.com/mapbox/mapbox-maps-android/pull/1338))
+* Introduce experimental 3D model support. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
+* Use a single shared buffer across all globe tiles to increase globe rendering performance. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
+* Re-introduce partial tile loading feature that decreases map load times. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
+* The `TilesetDescriptorOptions.pixelRatio` parameter is now passed to the TileStore and considered for the raster tile pack loading. This enables loading of a raster tilepacks for retina displays. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
 
 ## Bug fixes 🐞
 * Enable two finger pan gesture. ([#1280](https://github.com/mapbox/mapbox-maps-android/pull/1280))
 * Fix a bug that scale bar is shorter than it should be; trigger `invalidateScaleBar` while updating settings to make scale keep the latest status. ([#1336](https://github.com/mapbox/mapbox-maps-android/pull/1336))
 * Keep the original animator owner for `CameraAnimationsPlugin.playAnimatorsTogether` and `CameraAnimationsPlugin.playAnimatorsSequentially`. ([#1345](https://github.com/mapbox/mapbox-maps-android/pull/1345))
+* Fix for momentary appearing of a lower zoom level tile labels during camera movement.  ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
+* Fix for location indicator not being rendered at the horizon when terrain is enabled. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
+* Fix for loading gltf models with interleaved buffers. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
 
 ## Dependencies
 * Bump Mapbox Android base library to v0.8.0. ([#1323](https://github.com/mapbox/mapbox-maps-android/pull/1323))
+* Bump gl-native to v10.6.0-beta.1, common to 22.0.0-beta.1. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
 
 # 10.4.4 May 12, 2022
 

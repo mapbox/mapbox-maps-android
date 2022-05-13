@@ -377,6 +377,18 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.setStyleLightProperty(property, value)
   }
 
+  override fun setStyleAtmosphere(properties: Value): Expected<String, None> {
+    return map.setStyleAtmosphere(properties)
+  }
+
+  override fun getStyleAtmosphereProperty(property: String): StylePropertyValue {
+    return map.getStyleAtmosphereProperty(property)
+  }
+
+  override fun setStyleAtmosphereProperty(property: String, value: Value): Expected<String, None> {
+    return map.setStyleAtmosphereProperty(property, value)
+  }
+
   override fun getStyleLightProperty(property: String): StylePropertyValue {
     return map.getStyleLightProperty(property)
   }
@@ -391,6 +403,18 @@ internal class NativeMapImpl(private val map: MapInterface) :
 
   override fun hasStyleImage(imageId: String): Boolean {
     return map.hasStyleImage(imageId)
+  }
+
+  override fun addStyleModel(modelId: String, modelUri: String): Expected<String, None> {
+    return map.addStyleModel(modelId, modelUri)
+  }
+
+  override fun removeStyleModel(modelId: String): Expected<String, None> {
+    return map.removeStyleModel(modelId)
+  }
+
+  override fun hasStyleModel(modelId: String): Boolean {
+    return map.hasStyleModel(modelId)
   }
 
   override fun queryRenderedFeatures(

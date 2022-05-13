@@ -735,4 +735,54 @@ class NativeMapTest {
     nativeMap.setStyleProjectionProperty("foo", value)
     verify { map.setStyleProjectionProperty("foo", value) }
   }
+
+  @Test
+  fun addStyleModel() {
+    val modelId = "modelId"
+    val modelUri = "modelUri"
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.addStyleModel(modelId, modelUri)
+    verify { map.addStyleModel(modelId, modelUri) }
+  }
+
+  @Test
+  fun removeStyleModel() {
+    val modelId = "modelId"
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.removeStyleModel(modelId)
+    verify { map.removeStyleModel(modelId) }
+  }
+
+  @Test
+  fun hasStyleModel() {
+    val modelId = "modelId"
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.hasStyleModel(modelId)
+    verify { map.hasStyleModel(modelId) }
+  }
+
+  @Test
+  fun setStyleAtmosphere() {
+    val atmosphereValue = mockk<Value>()
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.setStyleAtmosphere(atmosphereValue)
+    verify { map.setStyleAtmosphere(atmosphereValue) }
+  }
+
+  @Test
+  fun setStyleAtmosphereProperty() {
+    val property = "property"
+    val atmosphereValueProperty = mockk<Value>()
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.setStyleAtmosphereProperty(property, atmosphereValueProperty)
+    verify { map.setStyleAtmosphereProperty(property, atmosphereValueProperty) }
+  }
+
+  @Test
+  fun getStyleAtmosphereProperty() {
+    val property = "property"
+    val nativeMap = NativeMapImpl(map)
+    nativeMap.getStyleAtmosphereProperty(property)
+    verify { map.getStyleAtmosphereProperty(property) }
+  }
 }

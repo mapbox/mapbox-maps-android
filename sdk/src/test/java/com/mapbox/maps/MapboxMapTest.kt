@@ -1078,6 +1078,28 @@ class MapboxMapTest {
       styleObserver.setLoadStyleListener(options, any(), any())
     }
   }
+
+  @Test
+  fun addStyleModel() {
+    val modelId = "modelId"
+    val modelUri = "modelUri"
+    mapboxMap.addStyleModel(modelId, modelUri)
+    verify { nativeMap.addStyleModel(modelId, modelUri) }
+  }
+
+  @Test
+  fun removeStyleModel() {
+    val modelId = "modelId"
+    mapboxMap.removeStyleModel(modelId)
+    verify { nativeMap.removeStyleModel(modelId) }
+  }
+
+  @Test
+  fun hasStyleModel() {
+    val modelId = "modelId"
+    mapboxMap.hasStyleModel(modelId)
+    verify { nativeMap.hasStyleModel(modelId) }
+  }
 }
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
