@@ -139,6 +139,54 @@ class MapboxMap :
    *
    * @param styleUri The style URI
    * @param styleTransitionOptions style transition options applied when loading the style
+   * @param earlyStyleCallback whether to invoke [onStyleLoaded] callback earlier on the `StyleDataLoaded#Style`]
+   *    event, default to false. Enable earlyStyleCallback helps with getting the Style Object faster,
+   *    so that the runtime styling can be applied immediately after the style is parsed.
+   * @param onStyleLoaded The OnStyleLoaded callback
+   * @param onMapLoadErrorListener The OnMapLoadErrorListener callback
+   */
+  fun loadStyleUri(
+    styleUri: String,
+    styleTransitionOptions: TransitionOptions? = null,
+    earlyStyleCallback: Boolean = false,
+    onStyleLoaded: Style.OnStyleLoaded? = null,
+    onMapLoadErrorListener: OnMapLoadErrorListener? = null
+  ) {
+    checkNativeMap("loadStyleUri")
+    initializeStyleLoad(earlyStyleCallback, onStyleLoaded, onMapLoadErrorListener, styleTransitionOptions)
+    if (styleUri.isEmpty()) {
+      nativeMap.styleJSON = EMPTY_STYLE_JSON
+    } else {
+      nativeMap.styleURI = styleUri
+    }
+  }
+
+  /**
+   * Will load a new map style asynchronous from the specified URI.
+   *
+   * URI can take the following forms:
+   *
+   * - **Constants**: load one of the bundled styles in [Style].
+   *
+   * - **`mapbox://styles/<user>/<style>`**:
+   * loads the style from a [Mapbox account](https://www.mapbox.com/account/).
+   * *user* is your username. *style* is the ID of your custom
+   * style created in [Mapbox Studio](https://www.mapbox.com/studio).
+   *
+   * - **`http://...` or `https://...`**:
+   * loads the style over the Internet from any web server.
+   *
+   * - **`asset://...`**:
+   * loads the style from the APK *assets* directory.
+   * This is used to load a style bundled with your app.
+   *
+   * - **`file://...`**:
+   * loads the style from a file path. This is used to load a style from disk.
+   *
+   * Will load an empty json `{}` if the styleUri is empty.
+   *
+   * @param styleUri The style URI
+   * @param styleTransitionOptions style transition options applied when loading the style
    * @param onStyleLoaded The OnStyleLoaded callback
    * @param onMapLoadErrorListener The OnMapLoadErrorListener callback
    */
@@ -147,15 +195,13 @@ class MapboxMap :
     styleTransitionOptions: TransitionOptions? = null,
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
-  ) {
-    checkNativeMap("loadStyleUri")
-    initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, styleTransitionOptions)
-    if (styleUri.isEmpty()) {
-      nativeMap.styleJSON = EMPTY_STYLE_JSON
-    } else {
-      nativeMap.styleURI = styleUri
-    }
-  }
+  ) = loadStyleUri(
+    styleUri = styleUri,
+    styleTransitionOptions = styleTransitionOptions,
+    earlyStyleCallback = false,
+    onStyleLoaded = onStyleLoaded,
+    onMapLoadErrorListener = onMapLoadErrorListener
+  )
 
   /**
    * Will load a new map style asynchronous from the specified URI.
@@ -189,18 +235,37 @@ class MapboxMap :
     styleUri: String,
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
-  ) {
-    checkNativeMap("loadStyleUri")
-    initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, null)
-    if (styleUri.isEmpty()) {
-      nativeMap.styleJSON = EMPTY_STYLE_JSON
-    } else {
-      nativeMap.styleURI = styleUri
-    }
-  }
+  ) = loadStyleUri(
+    styleUri = styleUri,
+    styleTransitionOptions = null,
+    earlyStyleCallback = false,
+    onStyleLoaded = onStyleLoaded,
+    onMapLoadErrorListener = onMapLoadErrorListener
+  )
 
   /**
    * Will load a new map style asynchronous from the specified URI.
+   *
+   * URI can take the following forms:
+   *
+   * - **Constants**: load one of the bundled styles in [Style].
+   *
+   * - **`mapbox://styles/<user>/<style>`**:
+   * loads the style from a [Mapbox account](https://www.mapbox.com/account/).
+   * *user* is your username. *style* is the ID of your custom
+   * style created in [Mapbox Studio](https://www.mapbox.com/studio).
+   *
+   * - **`http://...` or `https://...`**:
+   * loads the style over the Internet from any web server.
+   *
+   * - **`asset://...`**:
+   * loads the style from the APK *assets* directory.
+   * This is used to load a style bundled with your app.
+   *
+   * - **`file://...`**:
+   * loads the style from a file path. This is used to load a style from disk.
+   *
+   * Will load an empty json `{}` if the styleUri is empty.
    *
    * @param styleUri The style URI
    * @param onStyleLoaded The OnStyleLoaded callback
@@ -208,68 +273,160 @@ class MapboxMap :
   fun loadStyleUri(
     styleUri: String,
     onStyleLoaded: Style.OnStyleLoaded
-  ) = loadStyleUri(styleUri, null, onStyleLoaded, null)
+  ) = loadStyleUri(
+    styleUri = styleUri,
+    styleTransitionOptions = null,
+    earlyStyleCallback = false,
+    onStyleLoaded = onStyleLoaded,
+    onMapLoadErrorListener = null
+  )
 
   /**
    * Will load a new map style asynchronous from the specified URI.
+   *
+   * URI can take the following forms:
+   *
+   * - **Constants**: load one of the bundled styles in [Style].
+   *
+   * - **`mapbox://styles/<user>/<style>`**:
+   * loads the style from a [Mapbox account](https://www.mapbox.com/account/).
+   * *user* is your username. *style* is the ID of your custom
+   * style created in [Mapbox Studio](https://www.mapbox.com/studio).
+   *
+   * - **`http://...` or `https://...`**:
+   * loads the style over the Internet from any web server.
+   *
+   * - **`asset://...`**:
+   * loads the style from the APK *assets* directory.
+   * This is used to load a style bundled with your app.
+   *
+   * - **`file://...`**:
+   * loads the style from a file path. This is used to load a style from disk.
+   *
+   * Will load an empty json `{}` if the styleUri is empty.
    *
    * @param styleUri The style URI
    */
   fun loadStyleUri(
     styleUri: String,
-  ) = loadStyleUri(styleUri, null, null, null)
+  ) = loadStyleUri(
+    styleUri = styleUri,
+    styleTransitionOptions = null,
+    earlyStyleCallback = false,
+    onStyleLoaded = null,
+    onMapLoadErrorListener = null
+  )
 
   /**
-   * Load style JSON
+   * Will load a new map style asynchronous from the specified Style JSON string.
+   *
+   * @param styleJson The style JSON string
+   * @param styleTransitionOptions style transition options applied when loading the style
+   * @param earlyStyleCallback whether to invoke [onStyleLoaded] callback earlier on the `StyleDataLoaded#Style`]
+   *    event, default to false. Enable earlyStyleCallback helps with getting the Style Object faster,
+   *    so that the runtime styling can be applied immediately after the style is parsed.
+   * @param onStyleLoaded The OnStyleLoaded callback
+   * @param onMapLoadErrorListener The OnMapLoadErrorListener callback
+   */
+  fun loadStyleJson(
+    styleJson: String,
+    styleTransitionOptions: TransitionOptions? = null,
+    earlyStyleCallback: Boolean = false,
+    onStyleLoaded: Style.OnStyleLoaded? = null,
+    onMapLoadErrorListener: OnMapLoadErrorListener? = null,
+  ) {
+    checkNativeMap("loadStyleJson")
+    initializeStyleLoad(earlyStyleCallback, onStyleLoaded, onMapLoadErrorListener, styleTransitionOptions)
+    nativeMap.styleJSON = styleJson
+  }
+
+  /**
+   * Will load a new map style asynchronous from the specified Style JSON string.
+   *
+   * @param styleJson The style JSON string
+   * @param styleTransitionOptions style transition options applied when loading the style
+   * @param onStyleLoaded The OnStyleLoaded callback
+   * @param onMapLoadErrorListener The OnMapLoadErrorListener callback
    */
   fun loadStyleJson(
     styleJson: String,
     styleTransitionOptions: TransitionOptions? = null,
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null,
-  ) {
-    checkNativeMap("loadStyleJson")
-    initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, styleTransitionOptions)
-    nativeMap.styleJSON = styleJson
-  }
+  ) = loadStyleJson(
+    styleJson = styleJson,
+    styleTransitionOptions = styleTransitionOptions,
+    earlyStyleCallback = false,
+    onStyleLoaded = onStyleLoaded,
+    onMapLoadErrorListener = onMapLoadErrorListener
+  )
 
   /**
-   * Load style JSON
+   * Will load a new map style asynchronous from the specified Style JSON string.
+   *
+   * @param styleJson The style JSON string
+   * @param onStyleLoaded The OnStyleLoaded callback
+   * @param onMapLoadErrorListener The OnMapLoadErrorListener callback
    */
   fun loadStyleJson(
     styleJson: String,
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
-  ) {
-    checkNativeMap("loadStyleJson")
-    initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, null)
-    nativeMap.styleJSON = styleJson
-  }
+  ) = loadStyleJson(
+    styleJson = styleJson,
+    styleTransitionOptions = null,
+    earlyStyleCallback = false,
+    onStyleLoaded = onStyleLoaded,
+    onMapLoadErrorListener = onMapLoadErrorListener
+  )
 
   /**
-   * Load style JSON.
+   * Will load a new map style asynchronous from the specified Style JSON string.
+   *
+   * @param styleJson The style JSON string
+   * @param onStyleLoaded The OnStyleLoaded callback
    */
   fun loadStyleJson(
     styleJson: String,
     onStyleLoaded: Style.OnStyleLoaded
-  ) = loadStyleJson(styleJson, null, onStyleLoaded, null)
+  ) = loadStyleJson(
+    styleJson = styleJson,
+    styleTransitionOptions = null,
+    earlyStyleCallback = false,
+    onStyleLoaded = onStyleLoaded,
+    onMapLoadErrorListener = null
+  )
 
   /**
-   * Load style JSON.
+   * Will load a new map style asynchronous from the specified Style JSON string.
+   *
+   * @param styleJson The style JSON string
    */
   fun loadStyleJson(
     styleJson: String
-  ) {
-    checkNativeMap("loadStyleJson")
-    loadStyleJson(styleJson, null, null, null)
-  }
+  ) = loadStyleJson(
+    styleJson = styleJson,
+    styleTransitionOptions = null,
+    earlyStyleCallback = false,
+    onStyleLoaded = null,
+    onMapLoadErrorListener = null
+  )
 
   /**
-   * Load the style from Style Extension.
+   * Will load a new map style asynchronous with the runtime styling from the Style Extension.
+   *
+   * @param styleExtension The style extension
+   * @param transitionOptions style transition options applied when loading the style
+   * @param earlyStyleCallback whether to invoke [onStyleLoaded] callback earlier on the `StyleDataLoaded#Style`]
+   *    event, default to false. Enable earlyStyleCallback helps with getting the Style Object faster,
+   *    so that the runtime styling can be applied immediately after the style is parsed.
+   * @param onStyleLoaded The OnStyleLoaded callback
+   * @param onMapLoadErrorListener The OnMapLoadErrorListener callback
    */
   fun loadStyle(
     styleExtension: StyleContract.StyleExtension,
     transitionOptions: TransitionOptions? = null,
+    earlyStyleCallback: Boolean = false,
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null,
   ) {
@@ -277,42 +434,83 @@ class MapboxMap :
     this.loadStyleUri(
       styleExtension.styleUri,
       transitionOptions,
+      earlyStyleCallback,
       { style -> onFinishLoadingStyleExtension(style, styleExtension, onStyleLoaded) },
       onMapLoadErrorListener
     )
   }
 
   /**
-   * Load the style from Style Extension.
+   * Will load a new map style asynchronous with the runtime styling from the Style Extension.
+   *
+   * @param styleExtension The style extension
+   * @param transitionOptions style transition options applied when loading the style
+   * @param onStyleLoaded The OnStyleLoaded callback
+   * @param onMapLoadErrorListener The OnMapLoadErrorListener callback
+   */
+  fun loadStyle(
+    styleExtension: StyleContract.StyleExtension,
+    transitionOptions: TransitionOptions? = null,
+    onStyleLoaded: Style.OnStyleLoaded? = null,
+    onMapLoadErrorListener: OnMapLoadErrorListener? = null,
+  ) = loadStyle(
+    styleExtension = styleExtension,
+    transitionOptions = transitionOptions,
+    earlyStyleCallback = false,
+    onStyleLoaded = onStyleLoaded,
+    onMapLoadErrorListener = onMapLoadErrorListener
+  )
+
+  /**
+   * Will load a new map style asynchronous with the runtime styling from the Style Extension.
+   *
+   * @param styleExtension The style extension
+   * @param onStyleLoaded The OnStyleLoaded callback
+   * @param onMapLoadErrorListener The OnMapLoadErrorListener callback
    */
   fun loadStyle(
     styleExtension: StyleContract.StyleExtension,
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null,
-  ) {
-    checkNativeMap("loadStyle")
-    this.loadStyleUri(
-      styleExtension.styleUri,
-      null,
-      { style -> onFinishLoadingStyleExtension(style, styleExtension, onStyleLoaded) },
-      onMapLoadErrorListener
-    )
-  }
+  ) = loadStyle(
+    styleExtension = styleExtension,
+    transitionOptions = null,
+    earlyStyleCallback = false,
+    onStyleLoaded = onStyleLoaded,
+    onMapLoadErrorListener = onMapLoadErrorListener
+  )
 
   /**
-   * Load the style from Style Extension.
+   * Will load a new map style asynchronous with the runtime styling from the Style Extension.
+   *
+   * @param styleExtension The style extension
+   * @param onStyleLoaded The OnStyleLoaded callback
    */
   fun loadStyle(
     styleExtension: StyleContract.StyleExtension,
     onStyleLoaded: Style.OnStyleLoaded
-  ) = loadStyle(styleExtension, null, onStyleLoaded, null)
+  ) = loadStyle(
+    styleExtension = styleExtension,
+    transitionOptions = null,
+    earlyStyleCallback = false,
+    onStyleLoaded = onStyleLoaded,
+    onMapLoadErrorListener = null
+  )
 
   /**
-   * Load the style from Style Extension.
+   * Will load a new map style asynchronous with the runtime styling from the Style Extension.
+   *
+   * @param styleExtension The style extension
    */
   fun loadStyle(
     styleExtension: StyleContract.StyleExtension
-  ) = loadStyle(styleExtension, null, null, null)
+  ) = loadStyle(
+    styleExtension = styleExtension,
+    transitionOptions = null,
+    earlyStyleCallback = false,
+    onStyleLoaded = null,
+    onMapLoadErrorListener = null
+  )
 
   /**
    * Handle the style loading from Style Extension.
@@ -339,12 +537,14 @@ class MapboxMap :
   }
 
   private fun initializeStyleLoad(
+    earlyStyleCallback: Boolean,
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null,
     styleTransitionOptions: TransitionOptions? = null
   ) {
     style = null
     styleObserver.setLoadStyleListener(
+      earlyStyleCallback,
       styleTransitionOptions,
       onStyleLoaded,
       onMapLoadErrorListener

@@ -20,6 +20,7 @@ internal class StyleObserver(
   private val pixelRatio: Float
 ) : OnStyleLoadedListener, OnMapLoadErrorListener, OnStyleDataLoadedListener {
 
+  private var loadStyleEarlyStyleCallback: Boolean = false
   private var loadStyleListener: Style.OnStyleLoaded? = null
   private var loadStyleErrorListener: OnMapLoadErrorListener? = null
   private var loadStyleTransitionOptions: TransitionOptions? = null
@@ -39,10 +40,12 @@ internal class StyleObserver(
    * NOTE : listener is invoked only once after successful style load.
    */
   fun setLoadStyleListener(
+    earlyStyleCallback: Boolean = false,
     transitionOptions: TransitionOptions?,
     loadedListener: Style.OnStyleLoaded?,
     onMapLoadErrorListener: OnMapLoadErrorListener?
   ) {
+    loadStyleEarlyStyleCallback = earlyStyleCallback
     loadStyleTransitionOptions = transitionOptions
     loadStyleListener = loadedListener
     loadStyleErrorListener = onMapLoadErrorListener
@@ -60,6 +63,12 @@ internal class StyleObserver(
    * Invoked when a style has loaded
    */
   override fun onStyleLoaded(eventData: StyleLoadedEventData) {
+    if (!loadStyleEarlyStyleCallback) {
+      invokeStyleListeners()
+    }
+  }
+
+  private fun invokeStyleListeners() {
     val style = Style(nativeMap, pixelRatio)
     loadedStyle?.markInvalid()
     loadedStyle = style
@@ -90,6 +99,11 @@ internal class StyleObserver(
         nativeMap.styleTransition = it
         // per gl-native docs style transition options should be reset for a new style so resetting them here
         loadStyleTransitionOptions = null
+      }
+    }
+    if (loadStyleEarlyStyleCallback) {
+      if (eventData.type == StyleDataType.STYLE) {
+        invokeStyleListeners()
       }
     }
   }
