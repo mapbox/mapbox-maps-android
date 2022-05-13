@@ -11,6 +11,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Use a single shared buffer across all globe tiles to increase globe rendering performance. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
 * Re-introduce partial tile loading feature that decreases map load times. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
 * The `TilesetDescriptorOptions.pixelRatio` parameter is now passed to the TileStore and considered for the raster tile pack loading. This enables loading of a raster tilepacks for retina displays. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
+* Introduce earlyStyleCallback parameter to loadStyle APIs. ([#1353](https://github.com/mapbox/mapbox-maps-android/pull/1353))
 
 ## Bug fixes 🐞
 * Enable two finger pan gesture. ([#1280](https://github.com/mapbox/mapbox-maps-android/pull/1280))
