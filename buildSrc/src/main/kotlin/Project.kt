@@ -96,7 +96,7 @@ object Versions {
   const val androidxTest = "1.3.0"
   const val androidxConstraintLayout = "2.0.0"
   const val androidxEspresso = "3.3.0"
-  const val androidxJUnit = "1.1.3"
+  const val androidxJUnit = "1.1.2"
   const val androidxUiAutomator = "2.2.0"
   const val androidxRecyclerView = "1.1.0"
   const val androidxInterpolator="1.0.0"
