@@ -1,5 +1,6 @@
 package com.mapbox.maps.plugin.locationcomponent
 
+import android.util.Log
 import com.mapbox.bindgen.Value
 
 internal class LocationIndicatorLayerWrapper(layerId: String) : LocationLayerWrapper(layerId) {
@@ -20,7 +21,10 @@ internal class LocationIndicatorLayerWrapper(layerId: String) : LocationLayerWra
     return Value(transition)
   }
 
-  fun bearing(bearing: Double) = updateProperty("bearing", Value(bearing))
+  fun bearing(bearing: Double){
+    Log.e("TVN", "Bearing: $bearing")
+    updateProperty("bearing", Value(bearing))
+  }
 
   fun location(location: List<Double>) = updateProperty("location", Value(location.map { Value(it) }))
 
