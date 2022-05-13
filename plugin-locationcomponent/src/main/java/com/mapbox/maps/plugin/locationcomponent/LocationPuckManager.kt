@@ -32,7 +32,8 @@ internal class LocationPuckManager(
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal var lastLocation: Point? = null
-  private var lastMercatorScale = 1.0
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal var lastMercatorScale = 1.0
     set(value) {
       if (abs(value - field) > MERCATOR_SCALE_THRESHOLD) {
         field = value
