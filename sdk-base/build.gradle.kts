@@ -28,20 +28,8 @@ dependencies {
     api(project(":maps-core"))
     api(project(":common"))
   } else {
-    api(Dependencies.mapboxGlNative) {
-      exclude("androidx.test.ext", "junit")
-      exclude("androidx.test", "rules")
-      exclude("androidx.test", "runner")
-      exclude("androidx.test", "core")
-      exclude("androidx.test", "monitor")
-    }
-    api(Dependencies.mapboxCoreCommon) {
-      exclude("androidx.test.ext", "junit")
-      exclude("androidx.test", "rules")
-      exclude("androidx.test", "runner")
-      exclude("androidx.test", "core")
-      exclude("androidx.test", "monitor")
-    }
+    api(Dependencies.mapboxGlNative)
+    api(Dependencies.mapboxCoreCommon)
   }
 
   testImplementation(Dependencies.junit)
