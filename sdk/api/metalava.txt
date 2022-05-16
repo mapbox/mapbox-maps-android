@@ -207,17 +207,17 @@ package com.mapbox.maps {
     method public boolean isGestureInProgress();
     method public boolean isUserAnimationInProgress();
     method public boolean isValid();
-    method public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.TransitionOptions? transitionOptions = null, boolean earlyStyleCallback = false, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
+    method public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.TransitionOptions? transitionOptions = null, com.mapbox.maps.Style.OnStylePreloaded? onStylePreLoaded = null, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
     method public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.TransitionOptions? transitionOptions = null, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
     method public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
     method public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension, com.mapbox.maps.Style.OnStyleLoaded onStyleLoaded);
     method public void loadStyle(com.mapbox.maps.extension.style.StyleContract.StyleExtension styleExtension);
-    method public void loadStyleJson(String styleJson, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null, boolean earlyStyleCallback = false, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
+    method public void loadStyleJson(String styleJson, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null, com.mapbox.maps.Style.OnStylePreloaded? onStylePreLoaded = null, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
     method public void loadStyleJson(String styleJson, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
     method public void loadStyleJson(String styleJson, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
     method public void loadStyleJson(String styleJson, com.mapbox.maps.Style.OnStyleLoaded onStyleLoaded);
     method public void loadStyleJson(String styleJson);
-    method public void loadStyleUri(String styleUri, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null, boolean earlyStyleCallback = false, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
+    method public void loadStyleUri(String styleUri, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null, com.mapbox.maps.Style.OnStylePreloaded? onStylePreLoaded = null, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
     method public void loadStyleUri(String styleUri, com.mapbox.maps.TransitionOptions? styleTransitionOptions = null, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
     method public void loadStyleUri(String styleUri, com.mapbox.maps.Style.OnStyleLoaded? onStyleLoaded = null, com.mapbox.maps.plugin.delegates.listeners.OnMapLoadErrorListener? onMapLoadErrorListener = null);
     method public void loadStyleUri(String styleUri, com.mapbox.maps.Style.OnStyleLoaded onStyleLoaded);
@@ -433,6 +433,10 @@ package com.mapbox.maps {
 
   public static fun interface Style.OnStyleLoaded {
     method public void onStyleLoaded(com.mapbox.maps.Style style);
+  }
+
+  public static fun interface Style.OnStylePreloaded {
+    method public void onStylePreloaded(com.mapbox.maps.Style style);
   }
 
   public final class UtilsKt {

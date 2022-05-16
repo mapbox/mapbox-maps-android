@@ -63,7 +63,7 @@ internal class StyleObserver(
    * Invoked when a style has loaded
    */
   override fun onStyleLoaded(eventData: StyleLoadedEventData) {
-      invokeStyleLoadedListeners()
+    invokeStyleLoadedListeners()
   }
 
   private fun invokeStyleLoadedListeners() {
