@@ -17,6 +17,10 @@ internal object MapProvider {
     )
   )
 
+  fun getNativeMap(mapView: MapView): MapInterface {
+    return mapView.getController().getNativeMap()
+  }
+
   fun getMapboxMap(
     nativeMap: MapInterface,
     nativeObserver: NativeObserver,
@@ -29,4 +33,6 @@ internal object MapProvider {
     mapController: MapController,
     telemetry: MapTelemetry
   ) = MapPluginRegistry(MapDelegateProviderImpl(mapboxMap, mapController, telemetry))
+
+  private fun MapView.getController(): MapController = this.mapController
 }
