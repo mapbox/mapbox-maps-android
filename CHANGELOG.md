@@ -22,7 +22,7 @@ Mapbox welcomes participation and contributions from everyone.
 
 ## Dependencies
 * Bump Mapbox Android base library to v0.8.0. ([#1323](https://github.com/mapbox/mapbox-maps-android/pull/1323))
-* Bump gl-native to v10.6.0-beta.1, common to 22.0.0-beta.1. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
+* Bump gl-native to v10.6.0-beta.2, common to 22.0.0-beta.1. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351), [#1354](https://github.com/mapbox/mapbox-maps-android/pull/1354))
 
 # 10.4.4 May 12, 2022
 
