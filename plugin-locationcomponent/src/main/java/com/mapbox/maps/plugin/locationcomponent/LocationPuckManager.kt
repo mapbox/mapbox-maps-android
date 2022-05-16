@@ -10,6 +10,7 @@ import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
+import com.mapbox.maps.plugin.MapProjection
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
@@ -45,7 +46,10 @@ internal class LocationPuckManager(
 
   private val onLocationUpdated: ((Point) -> Unit) = {
     lastLocation = it
-    lastMercatorScale = mercatorScale(it.latitude())
+    val latitude = if (delegateProvider.mapProjectionDelegate.getMapProjection() == MapProjection.Globe) {
+      delegateProvider.mapCameraManagerDelegate.cameraState.center.latitude()
+    } else it.latitude()
+    lastMercatorScale = mercatorScale(latitude)
   }
 
   private var lastBearing: Double = delegateProvider.mapCameraManagerDelegate.cameraState.bearing
