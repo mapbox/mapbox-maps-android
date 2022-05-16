@@ -35,13 +35,15 @@ class CircleLayerClusteringActivity : AppCompatActivity() {
 
     mapboxMap.loadStyleUri(
       styleUri = Style.LIGHT,
-      // Disable any type of fading transition when icons collide on the map. This enhances the visual
-      // look of the data clustering together and breaking apart.
-      styleTransitionOptions = TransitionOptions.Builder()
-        .duration(0)
-        .delay(0)
-        .enablePlacementTransitions(false)
-        .build(),
+      onStylePreLoaded = {
+        // Disable any type of fading transition when icons collide on the map. This enhances the visual
+        // look of the data clustering together and breaking apart.
+        it.styleTransition = TransitionOptions.Builder()
+          .duration(0)
+          .delay(0)
+          .enablePlacementTransitions(false)
+          .build()
+      },
       onStyleLoaded = {
         mapboxMap.flyTo(
           CameraOptions.Builder()

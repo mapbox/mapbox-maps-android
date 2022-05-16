@@ -342,21 +342,24 @@ public class JavaInterfaceChecker {
         locationPuck3D = new LocationPuck3D("uri", floatList, 1.0f, floatList, "scale", floatList, floatList);
     }
 
-    private void mapboxMapOverLoad(MapView mapView, StyleContract.StyleExtension styleExtension, Style.OnStyleLoaded onStyleLoaded,
+    private void mapboxMapOverLoad(MapView mapView, StyleContract.StyleExtension styleExtension, Style.OnStylePreloaded onStylePreloaded, Style.OnStyleLoaded onStyleLoaded,
                                    OnMapLoadErrorListener onMapLoadErrorListener) {
         final MapboxMap mapboxMap = mapView.getMapboxMap();
         mapboxMap.loadStyleUri(Style.MAPBOX_STREETS);
         mapboxMap.loadStyleUri(Style.MAPBOX_STREETS, onStyleLoaded);
         mapboxMap.loadStyleUri(Style.MAPBOX_STREETS, onStyleLoaded, onMapLoadErrorListener);
         mapboxMap.loadStyleUri(Style.MAPBOX_STREETS, new TransitionOptions.Builder().build(), onStyleLoaded, onMapLoadErrorListener);
+        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS, new TransitionOptions.Builder().build(), onStylePreloaded, onStyleLoaded, onMapLoadErrorListener);
         mapboxMap.loadStyleJson("json");
         mapboxMap.loadStyleJson("json", onStyleLoaded);
         mapboxMap.loadStyleJson("json", onStyleLoaded, onMapLoadErrorListener);
         mapboxMap.loadStyleJson("json", new TransitionOptions.Builder().build(), onStyleLoaded, onMapLoadErrorListener);
+        mapboxMap.loadStyleJson("json", new TransitionOptions.Builder().build(), onStylePreloaded, onStyleLoaded, onMapLoadErrorListener);
         mapboxMap.loadStyle(styleExtension);
         mapboxMap.loadStyle(styleExtension, onStyleLoaded);
         mapboxMap.loadStyle(styleExtension, onStyleLoaded, onMapLoadErrorListener);
         mapboxMap.loadStyle(styleExtension, new TransitionOptions.Builder().build(), onStyleLoaded, onMapLoadErrorListener);
+        mapboxMap.loadStyle(styleExtension, new TransitionOptions.Builder().build(), onStylePreloaded, onStyleLoaded, onMapLoadErrorListener);
     }
 
     private void mapInitOptionsOverloads(Context context,
