@@ -6,12 +6,6 @@ set -Eeuo pipefail
 #   ./java-api-check.sh <current release tag (empty for branches)> <path to current aar> <module name> <optional, path to previously released aar>
 #
 
-if ! command -v gh &> /dev/null
-then
-    echo "gh (github cli tool) is not found, install it first"
-    exit
-fi
-
 if [[ ! -f $2 ]]
 then
   # Assembled aar located under moduleName/build/outputs/aar/moduleName-release.aar
@@ -50,10 +44,9 @@ PREVIOUS_RELEASE=${TMPDIR}/previous/sdk-release.aar
 CURRENT_RELEASE_DIR=$(dirname "${CURRENT_RELEASE}")
 PREVIOUS_RELEASE_DIR=$(dirname "${PREVIOUS_RELEASE}")
 
-gh auth login --with-token < ./gh_token.txt
-LAST_VERSION_TAG=$(gh -R mapbox/mapbox-maps-android release view --json name -q ".name") #android-v10.3.0
-LAST_VERSION_TAG_ARRAY=($LAST_VERSION_TAG)
-LAST_VERSION=${LAST_VERSION_TAG_ARRAY[0]:9}
+LAST_VERSION_TAG=$(grep -o 'VERSION_NAME=[0-9]*\.[0-9]*\.[0-9]*' ./gradle.properties) #10.3.0
+LAST_VERSION_ARRAY=(${LAST_VERSION_TAG//=/ })
+LAST_VERSION=${LAST_VERSION_ARRAY[1]}
 
 RELEASE_TAG=${4-""}
 if [[ -z $RELEASE_TAG ]]; then
