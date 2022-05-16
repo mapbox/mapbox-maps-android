@@ -139,21 +139,19 @@ class MapboxMap :
    *
    * @param styleUri The style URI
    * @param styleTransitionOptions style transition options applied when loading the style
-   * @param earlyStyleCallback whether to invoke [onStyleLoaded] callback earlier on the `StyleDataLoaded#Style`]
-   *    event, default to false. Enable earlyStyleCallback helps with getting the Style Object faster,
-   *    so that the runtime styling can be applied immediately after the style is parsed.
+   * @param onStylePreLoaded The OnStylePreloaded callback
    * @param onStyleLoaded The OnStyleLoaded callback
    * @param onMapLoadErrorListener The OnMapLoadErrorListener callback
    */
   fun loadStyleUri(
     styleUri: String,
     styleTransitionOptions: TransitionOptions? = null,
-    earlyStyleCallback: Boolean = false,
+    onStylePreLoaded: Style.OnStylePreloaded? = null,
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null
   ) {
     checkNativeMap("loadStyleUri")
-    initializeStyleLoad(earlyStyleCallback, onStyleLoaded, onMapLoadErrorListener, styleTransitionOptions)
+    initializeStyleLoad(onStylePreLoaded, onStyleLoaded, onMapLoadErrorListener, styleTransitionOptions)
     if (styleUri.isEmpty()) {
       nativeMap.styleJSON = EMPTY_STYLE_JSON
     } else {
@@ -198,7 +196,7 @@ class MapboxMap :
   ) = loadStyleUri(
     styleUri = styleUri,
     styleTransitionOptions = styleTransitionOptions,
-    earlyStyleCallback = false,
+    onStylePreLoaded = null,
     onStyleLoaded = onStyleLoaded,
     onMapLoadErrorListener = onMapLoadErrorListener
   )
@@ -238,7 +236,7 @@ class MapboxMap :
   ) = loadStyleUri(
     styleUri = styleUri,
     styleTransitionOptions = null,
-    earlyStyleCallback = false,
+    onStylePreLoaded = null,
     onStyleLoaded = onStyleLoaded,
     onMapLoadErrorListener = onMapLoadErrorListener
   )
@@ -276,7 +274,7 @@ class MapboxMap :
   ) = loadStyleUri(
     styleUri = styleUri,
     styleTransitionOptions = null,
-    earlyStyleCallback = false,
+    onStylePreLoaded = null,
     onStyleLoaded = onStyleLoaded,
     onMapLoadErrorListener = null
   )
@@ -312,7 +310,7 @@ class MapboxMap :
   ) = loadStyleUri(
     styleUri = styleUri,
     styleTransitionOptions = null,
-    earlyStyleCallback = false,
+    onStylePreLoaded = null,
     onStyleLoaded = null,
     onMapLoadErrorListener = null
   )
@@ -322,21 +320,19 @@ class MapboxMap :
    *
    * @param styleJson The style JSON string
    * @param styleTransitionOptions style transition options applied when loading the style
-   * @param earlyStyleCallback whether to invoke [onStyleLoaded] callback earlier on the `StyleDataLoaded#Style`]
-   *    event, default to false. Enable earlyStyleCallback helps with getting the Style Object faster,
-   *    so that the runtime styling can be applied immediately after the style is parsed.
+   * @param onStylePreLoaded The OnStylePreloaded callback
    * @param onStyleLoaded The OnStyleLoaded callback
    * @param onMapLoadErrorListener The OnMapLoadErrorListener callback
    */
   fun loadStyleJson(
     styleJson: String,
     styleTransitionOptions: TransitionOptions? = null,
-    earlyStyleCallback: Boolean = false,
+    onStylePreLoaded: Style.OnStylePreloaded? = null,
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null,
   ) {
     checkNativeMap("loadStyleJson")
-    initializeStyleLoad(earlyStyleCallback, onStyleLoaded, onMapLoadErrorListener, styleTransitionOptions)
+    initializeStyleLoad(onStylePreLoaded, onStyleLoaded, onMapLoadErrorListener, styleTransitionOptions)
     nativeMap.styleJSON = styleJson
   }
 
@@ -356,7 +352,7 @@ class MapboxMap :
   ) = loadStyleJson(
     styleJson = styleJson,
     styleTransitionOptions = styleTransitionOptions,
-    earlyStyleCallback = false,
+    onStylePreLoaded = null,
     onStyleLoaded = onStyleLoaded,
     onMapLoadErrorListener = onMapLoadErrorListener
   )
@@ -375,7 +371,7 @@ class MapboxMap :
   ) = loadStyleJson(
     styleJson = styleJson,
     styleTransitionOptions = null,
-    earlyStyleCallback = false,
+    onStylePreLoaded = null,
     onStyleLoaded = onStyleLoaded,
     onMapLoadErrorListener = onMapLoadErrorListener
   )
@@ -392,7 +388,7 @@ class MapboxMap :
   ) = loadStyleJson(
     styleJson = styleJson,
     styleTransitionOptions = null,
-    earlyStyleCallback = false,
+    onStylePreLoaded = null,
     onStyleLoaded = onStyleLoaded,
     onMapLoadErrorListener = null
   )
@@ -407,7 +403,7 @@ class MapboxMap :
   ) = loadStyleJson(
     styleJson = styleJson,
     styleTransitionOptions = null,
-    earlyStyleCallback = false,
+    onStylePreLoaded = null,
     onStyleLoaded = null,
     onMapLoadErrorListener = null
   )
@@ -426,7 +422,7 @@ class MapboxMap :
   fun loadStyle(
     styleExtension: StyleContract.StyleExtension,
     transitionOptions: TransitionOptions? = null,
-    earlyStyleCallback: Boolean = false,
+    onStylePreLoaded: Style.OnStylePreloaded? = null,
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null,
   ) {
@@ -434,7 +430,7 @@ class MapboxMap :
     this.loadStyleUri(
       styleExtension.styleUri,
       transitionOptions,
-      earlyStyleCallback,
+      onStylePreLoaded,
       { style -> onFinishLoadingStyleExtension(style, styleExtension, onStyleLoaded) },
       onMapLoadErrorListener
     )
@@ -456,7 +452,7 @@ class MapboxMap :
   ) = loadStyle(
     styleExtension = styleExtension,
     transitionOptions = transitionOptions,
-    earlyStyleCallback = false,
+    onStylePreLoaded = null,
     onStyleLoaded = onStyleLoaded,
     onMapLoadErrorListener = onMapLoadErrorListener
   )
@@ -475,7 +471,7 @@ class MapboxMap :
   ) = loadStyle(
     styleExtension = styleExtension,
     transitionOptions = null,
-    earlyStyleCallback = false,
+    onStylePreLoaded = null,
     onStyleLoaded = onStyleLoaded,
     onMapLoadErrorListener = onMapLoadErrorListener
   )
@@ -492,7 +488,7 @@ class MapboxMap :
   ) = loadStyle(
     styleExtension = styleExtension,
     transitionOptions = null,
-    earlyStyleCallback = false,
+    onStylePreLoaded = null,
     onStyleLoaded = onStyleLoaded,
     onMapLoadErrorListener = null
   )
@@ -507,7 +503,7 @@ class MapboxMap :
   ) = loadStyle(
     styleExtension = styleExtension,
     transitionOptions = null,
-    earlyStyleCallback = false,
+    onStylePreLoaded = null,
     onStyleLoaded = null,
     onMapLoadErrorListener = null
   )
@@ -537,14 +533,14 @@ class MapboxMap :
   }
 
   private fun initializeStyleLoad(
-    earlyStyleCallback: Boolean,
+    onStylePreloaded: Style.OnStylePreloaded? = null,
     onStyleLoaded: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null,
     styleTransitionOptions: TransitionOptions? = null
   ) {
     style = null
     styleObserver.setLoadStyleListener(
-      earlyStyleCallback,
+      onStylePreloaded,
       styleTransitionOptions,
       onStyleLoaded,
       onMapLoadErrorListener

@@ -1037,14 +1037,30 @@ class Style internal constructor(
   }
 
   /**
-   * Callback to be invoked when a style has finished loading.
+   * Callback to be invoked when a style has been fully loaded, including the style, specified sprite and sources' metadata.
    */
   fun interface OnStyleLoaded {
     /**
-     * Invoked when a style has finished loading.
+     * Invoked when a style has been fully loaded, including the style, specified sprite and sources' metadata.
      *
      * @param style the style that has finished loading
      */
     fun onStyleLoaded(style: Style)
+  }
+
+  /**
+   * Callback to be invoked when a style is parsed, style layer properties could be read and modified, style layers and sources could be
+   * added or removed before rendering is started.
+   *
+   * Note that the style sources has not been loaded at this point, be careful not to use runtime styling to modify the style source properties.
+   */
+  fun interface OnStylePreloaded {
+    /**
+     * Invoked when a style is parsed, style layer properties could be read and modified, style layers and sources could be
+     * added or removed before rendering is started.
+     *
+     * @param style the style that has finished preloading
+     */
+    fun onStylePreloaded(style: Style)
   }
 }
