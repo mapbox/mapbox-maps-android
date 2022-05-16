@@ -2,6 +2,7 @@
 package com.mapbox.maps.extension.style.atmosphere.generated
 
 import android.util.Log
+import androidx.annotation.ColorInt
 import androidx.annotation.UiThread
 import com.mapbox.bindgen.Value
 import com.mapbox.maps.MapboxStyleException
@@ -10,6 +11,9 @@ import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.extension.style.layers.properties.PropertyValue
 import com.mapbox.maps.extension.style.types.AtmosphereDsl
+import com.mapbox.maps.extension.style.utils.ColorUtils.colorIntToRgbaExpression
+import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorInt
+import com.mapbox.maps.extension.style.utils.ColorUtils.rgbaExpressionToColorString
 import com.mapbox.maps.extension.style.utils.unwrap
 
 /**
@@ -25,6 +29,31 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
   /**
    * The color of the atmosphere region immediately below the horizon and within the `range` and above the horizon and within `horizon-blend`. Using opacity is recommended only for smoothly transitioning fog on/off as anything less than 100% opacity results in more tiles loaded and drawn.
    */
+  val colorAsColorInt: Int?
+    /**
+     * Get the color property.
+     *
+     * @return color as int
+     */
+    @ColorInt
+    get() {
+      colorAsExpression?.let {
+        return rgbaExpressionToColorInt(it)
+      }
+      return null
+    }
+  /**
+   * Set the color property.
+   *
+   * @param color as int
+   */
+  override fun color(@ColorInt color: Int) = apply {
+    val propertyValue = PropertyValue("color", colorIntToRgbaExpression(color))
+    setProperty(propertyValue)
+  }
+  /**
+   * The color of the atmosphere region immediately below the horizon and within the `range` and above the horizon and within `horizon-blend`. Using opacity is recommended only for smoothly transitioning fog on/off as anything less than 100% opacity results in more tiles loaded and drawn.
+   */
   val color: String?
     /**
      * Get the Color property.
@@ -32,7 +61,10 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
      * @return color as String
      */
     get() {
-      return getPropertyValue("color")
+      colorAsExpression?.let {
+        return rgbaExpressionToColorString(it)
+      }
+      return null
     }
 
   /**
@@ -75,6 +107,31 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
   /**
    * The color of the atmosphere region above the horizon, `high-color` extends further above the horizon than the `color` property and its spread can be controlled with `horizon-blend`. The opacity can be set to `0` to remove the high atmosphere color contribution.
    */
+  val highColorAsColorInt: Int?
+    /**
+     * Get the highColor property.
+     *
+     * @return highColor as int
+     */
+    @ColorInt
+    get() {
+      highColorAsExpression?.let {
+        return rgbaExpressionToColorInt(it)
+      }
+      return null
+    }
+  /**
+   * Set the highColor property.
+   *
+   * @param highColor as int
+   */
+  override fun highColor(@ColorInt highColor: Int) = apply {
+    val propertyValue = PropertyValue("high-color", colorIntToRgbaExpression(highColor))
+    setProperty(propertyValue)
+  }
+  /**
+   * The color of the atmosphere region above the horizon, `high-color` extends further above the horizon than the `color` property and its spread can be controlled with `horizon-blend`. The opacity can be set to `0` to remove the high atmosphere color contribution.
+   */
   val highColor: String?
     /**
      * Get the HighColor property.
@@ -82,7 +139,10 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
      * @return high-color as String
      */
     get() {
-      return getPropertyValue("high-color")
+      highColorAsExpression?.let {
+        return rgbaExpressionToColorString(it)
+      }
+      return null
     }
 
   /**
@@ -231,6 +291,31 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
   /**
    * The color of the region above the horizon and after the end of the `horizon-blend` contribution. The opacity can be set to `0` to have a transparent background.
    */
+  val spaceColorAsColorInt: Int?
+    /**
+     * Get the spaceColor property.
+     *
+     * @return spaceColor as int
+     */
+    @ColorInt
+    get() {
+      spaceColorAsExpression?.let {
+        return rgbaExpressionToColorInt(it)
+      }
+      return null
+    }
+  /**
+   * Set the spaceColor property.
+   *
+   * @param spaceColor as int
+   */
+  override fun spaceColor(@ColorInt spaceColor: Int) = apply {
+    val propertyValue = PropertyValue("space-color", colorIntToRgbaExpression(spaceColor))
+    setProperty(propertyValue)
+  }
+  /**
+   * The color of the region above the horizon and after the end of the `horizon-blend` contribution. The opacity can be set to `0` to have a transparent background.
+   */
   val spaceColor: String?
     /**
      * Get the SpaceColor property.
@@ -238,7 +323,10 @@ class Atmosphere : AtmosphereDslReceiver, StyleContract.StyleAtmosphereExtension
      * @return space-color as String
      */
     get() {
-      return getPropertyValue("space-color")
+      spaceColorAsExpression?.let {
+        return rgbaExpressionToColorString(it)
+      }
+      return null
     }
 
   /**
@@ -397,6 +485,12 @@ interface AtmosphereDslReceiver {
   /**
    * Set the color property.
    *
+   * @param color as int
+   */
+  fun color(@ColorInt color: Int): Atmosphere
+  /**
+   * Set the color property.
+   *
    * The color of the atmosphere region immediately below the horizon and within the `range` and above the horizon and within `horizon-blend`. Using opacity is recommended only for smoothly transitioning fog on/off as anything less than 100% opacity results in more tiles loaded and drawn.
    *
    * @param color as String
@@ -409,6 +503,12 @@ interface AtmosphereDslReceiver {
    * @param color value of color as Expression
    */
   fun color(color: Expression): Atmosphere
+  /**
+   * Set the highColor property.
+   *
+   * @param highColor as int
+   */
+  fun highColor(@ColorInt highColor: Int): Atmosphere
   /**
    * Set the highColor property.
    *
@@ -454,6 +554,12 @@ interface AtmosphereDslReceiver {
    * @param range value of range as Expression
    */
   fun range(range: Expression): Atmosphere
+  /**
+   * Set the spaceColor property.
+   *
+   * @param spaceColor as int
+   */
+  fun spaceColor(@ColorInt spaceColor: Int): Atmosphere
   /**
    * Set the spaceColor property.
    *

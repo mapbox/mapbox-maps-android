@@ -9,6 +9,7 @@ import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.StyleContract
+import com.mapbox.maps.extension.style.atmosphere.generated.setAtmosphere
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.light.generated.setLight
 import com.mapbox.maps.extension.style.sources.addSource
@@ -83,6 +84,10 @@ abstract class BaseStyleTest {
 
   fun setupTerrain(terrain: StyleContract.StyleTerrainExtension) {
     style.setTerrain(terrain)
+  }
+
+  fun setupAtmosphere(atmosphere: StyleContract.StyleAtmosphereExtension) {
+    style.setAtmosphere(atmosphere)
   }
 
   fun setupSource(source: StyleContract.StyleSourceExtension) {
