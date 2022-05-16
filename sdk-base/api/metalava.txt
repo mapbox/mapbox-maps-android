@@ -496,7 +496,12 @@ package com.mapbox.maps.extension.style {
   public interface StyleContract {
   }
 
+  public static fun interface StyleContract.StyleAtmosphereExtension {
+    method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
+  }
+
   public static interface StyleContract.StyleExtension {
+    method public com.mapbox.maps.extension.style.StyleContract.StyleAtmosphereExtension? getAtmosphere();
     method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleImageExtension> getImages();
     method public java.util.List<kotlin.Pair<com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension,com.mapbox.maps.LayerPosition>> getLayers();
     method public com.mapbox.maps.extension.style.StyleContract.StyleLightExtension? getLight();
@@ -504,6 +509,7 @@ package com.mapbox.maps.extension.style {
     method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleSourceExtension> getSources();
     method public String getStyleUri();
     method public com.mapbox.maps.extension.style.StyleContract.StyleTerrainExtension? getTerrain();
+    property public abstract com.mapbox.maps.extension.style.StyleContract.StyleAtmosphereExtension? atmosphere;
     property public abstract java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleImageExtension> images;
     property public abstract java.util.List<kotlin.Pair<com.mapbox.maps.extension.style.StyleContract.StyleLayerExtension,com.mapbox.maps.LayerPosition>> layers;
     property public abstract com.mapbox.maps.extension.style.StyleContract.StyleLightExtension? light;

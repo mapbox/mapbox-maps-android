@@ -2,6 +2,7 @@
 package com.mapbox.maps.extension.style {
 
   public final class StyleExtensionImpl implements com.mapbox.maps.extension.style.StyleContract.StyleExtension {
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere? getAtmosphere();
     method public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleImageExtension> getImages();
     method public java.util.List<kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition>> getLayers();
     method public com.mapbox.maps.extension.style.light.generated.Light? getLight();
@@ -9,6 +10,7 @@ package com.mapbox.maps.extension.style {
     method public java.util.List<com.mapbox.maps.extension.style.sources.Source> getSources();
     method public String getStyleUri();
     method public com.mapbox.maps.extension.style.terrain.generated.Terrain? getTerrain();
+    property public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere? atmosphere;
     property public java.util.List<com.mapbox.maps.extension.style.StyleContract.StyleImageExtension> images;
     property public java.util.List<kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition>> layers;
     property public com.mapbox.maps.extension.style.light.generated.Light? light;
@@ -31,6 +33,7 @@ package com.mapbox.maps.extension.style {
     method public kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition> layerAtPosition(com.mapbox.maps.extension.style.layers.Layer layer, String? above = null, String? below = null);
     method public kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition> layerAtPosition(com.mapbox.maps.extension.style.layers.Layer layer, String? above = null);
     method public kotlin.Pair<com.mapbox.maps.extension.style.layers.Layer,com.mapbox.maps.LayerPosition> layerAtPosition(com.mapbox.maps.extension.style.layers.Layer layer);
+    method public operator void setAtmosphere(com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere);
     method public operator void setLight(com.mapbox.maps.extension.style.light.generated.Light);
     method public operator void setProjection(com.mapbox.maps.extension.style.projection.generated.Projection);
     method public operator void setTerrain(com.mapbox.maps.extension.style.terrain.generated.Terrain);
@@ -39,6 +42,87 @@ package com.mapbox.maps.extension.style {
 
   public final class StyleExtensionImplKt {
     method public static com.mapbox.maps.extension.style.StyleContract.StyleExtension style(String styleUri = "", kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.StyleExtensionImpl.Builder,kotlin.Unit> block);
+  }
+
+}
+
+package com.mapbox.maps.extension.style.atmosphere.generated {
+
+  @UiThread public final class Atmosphere implements com.mapbox.maps.extension.style.atmosphere.generated.AtmosphereDslReceiver com.mapbox.maps.extension.style.StyleContract.StyleAtmosphereExtension {
+    ctor public Atmosphere();
+    method public void bindTo(com.mapbox.maps.extension.style.StyleInterface delegate);
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere color(@ColorInt int color);
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere color(String color);
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
+    method public String? getColor();
+    method @ColorInt public Integer? getColorAsColorInt();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getColorAsExpression();
+    method public String? getHighColor();
+    method @ColorInt public Integer? getHighColorAsColorInt();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getHighColorAsExpression();
+    method public Double? getHorizonBlend();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getHorizonBlendAsExpression();
+    method public java.util.List<java.lang.Double>? getRange();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getRangeAsExpression();
+    method public String? getSpaceColor();
+    method @ColorInt public Integer? getSpaceColorAsColorInt();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getSpaceColorAsExpression();
+    method public Double? getStarIntensity();
+    method public com.mapbox.maps.extension.style.expressions.generated.Expression? getStarIntensityAsExpression();
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere highColor(@ColorInt int highColor);
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere highColor(String highColor);
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere highColor(com.mapbox.maps.extension.style.expressions.generated.Expression highColor);
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere horizonBlend(double horizonBlend);
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere horizonBlend(com.mapbox.maps.extension.style.expressions.generated.Expression horizonBlend);
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere range(java.util.List<java.lang.Double> range);
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere range(com.mapbox.maps.extension.style.expressions.generated.Expression range);
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere spaceColor(@ColorInt int spaceColor);
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere spaceColor(String spaceColor);
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere spaceColor(com.mapbox.maps.extension.style.expressions.generated.Expression spaceColor);
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere starIntensity(double starIntensity);
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere starIntensity(com.mapbox.maps.extension.style.expressions.generated.Expression starIntensity);
+    property public final String? color;
+    property @ColorInt public final Integer? colorAsColorInt;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? colorAsExpression;
+    property public final String? highColor;
+    property @ColorInt public final Integer? highColorAsColorInt;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? highColorAsExpression;
+    property public final Double? horizonBlend;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? horizonBlendAsExpression;
+    property public final java.util.List<java.lang.Double>? range;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? rangeAsExpression;
+    property public final String? spaceColor;
+    property @ColorInt public final Integer? spaceColorAsColorInt;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? spaceColorAsExpression;
+    property public final Double? starIntensity;
+    property public final com.mapbox.maps.extension.style.expressions.generated.Expression? starIntensityAsExpression;
+  }
+
+  @com.mapbox.maps.extension.style.types.AtmosphereDsl public interface AtmosphereDslReceiver {
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere color(@ColorInt int color);
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere color(String color = "#ffffff");
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere color(com.mapbox.maps.extension.style.expressions.generated.Expression color);
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere highColor(@ColorInt int highColor);
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere highColor(String highColor = "#245cdf");
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere highColor(com.mapbox.maps.extension.style.expressions.generated.Expression highColor);
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere horizonBlend(double horizonBlend);
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere horizonBlend(com.mapbox.maps.extension.style.expressions.generated.Expression horizonBlend = Expression.fromRaw("[" + "\"" + "interpolate" + "\"" + ",[" + "\"" + "linear" + "\"" + "],[" + "\"" + "zoom" + "\"" + "],4,0.2,7,0.1]".trimIndent()));
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere range(java.util.List<java.lang.Double> range = listOf(0.5, 10.0));
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere range(com.mapbox.maps.extension.style.expressions.generated.Expression range);
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere spaceColor(@ColorInt int spaceColor);
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere spaceColor(String spaceColor);
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere spaceColor(com.mapbox.maps.extension.style.expressions.generated.Expression spaceColor = Expression.fromRaw("[" + "\"" + "interpolate" + "\"" + ",[" + "\"" + "linear" + "\"" + "],[" + "\"" + "zoom" + "\"" + "],4," + "\"" + "#010b19" + "\"" + ",7," + "\"" + "#367ab9" + "\"" + "]".trimIndent()));
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere starIntensity(double starIntensity);
+    method public com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere starIntensity(com.mapbox.maps.extension.style.expressions.generated.Expression starIntensity = Expression.fromRaw("[" + "\"" + "interpolate" + "\"" + ",[" + "\"" + "linear" + "\"" + "],[" + "\"" + "zoom" + "\"" + "],5,0.35,6,0]".trimIndent()));
+  }
+
+  public final class AtmosphereKt {
+    method public static com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere atmosphere(kotlin.jvm.functions.Function1<? super com.mapbox.maps.extension.style.atmosphere.generated.AtmosphereDslReceiver,kotlin.Unit> block);
+  }
+
+  public final class AtmosphereUtils {
+    method public static com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere getAtmosphere(com.mapbox.maps.extension.style.StyleInterface);
+    method public static void setAtmosphere(com.mapbox.maps.extension.style.StyleInterface, com.mapbox.maps.extension.style.StyleContract.StyleAtmosphereExtension atmosphere);
   }
 
 }
@@ -4618,6 +4702,9 @@ package com.mapbox.maps.extension.style.terrain.generated {
 }
 
 package com.mapbox.maps.extension.style.types {
+
+  @kotlin.DslMarker public @interface AtmosphereDsl {
+  }
 
   @kotlin.DslMarker public @interface ExpressionDsl {
   }

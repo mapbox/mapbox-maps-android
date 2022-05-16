@@ -1,5 +1,7 @@
 public final class com/mapbox/maps/extension/style/StyleExtensionImpl : com/mapbox/maps/extension/style/StyleContract$StyleExtension {
 	public synthetic fun <init> (Lcom/mapbox/maps/extension/style/StyleExtensionImpl$Builder;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun getAtmosphere ()Lcom/mapbox/maps/extension/style/StyleContract$StyleAtmosphereExtension;
+	public fun getAtmosphere ()Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
 	public fun getImages ()Ljava/util/List;
 	public fun getLayers ()Ljava/util/List;
 	public synthetic fun getLight ()Lcom/mapbox/maps/extension/style/StyleContract$StyleLightExtension;
@@ -26,6 +28,7 @@ public final class com/mapbox/maps/extension/style/StyleExtensionImpl$Builder {
 	public final fun layerAtPosition (Lcom/mapbox/maps/extension/style/layers/Layer;Ljava/lang/String;Ljava/lang/String;)Lkotlin/Pair;
 	public final fun layerAtPosition (Lcom/mapbox/maps/extension/style/layers/Layer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;)Lkotlin/Pair;
 	public static synthetic fun layerAtPosition$default (Lcom/mapbox/maps/extension/style/StyleExtensionImpl$Builder;Lcom/mapbox/maps/extension/style/layers/Layer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;ILjava/lang/Object;)Lkotlin/Pair;
+	public final fun setAtmosphere (Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;)V
 	public final fun setLight (Lcom/mapbox/maps/extension/style/light/generated/Light;)V
 	public final fun setProjection (Lcom/mapbox/maps/extension/style/projection/generated/Projection;)V
 	public final fun setTerrain (Lcom/mapbox/maps/extension/style/terrain/generated/Terrain;)V
@@ -34,6 +37,77 @@ public final class com/mapbox/maps/extension/style/StyleExtensionImpl$Builder {
 public final class com/mapbox/maps/extension/style/StyleExtensionImplKt {
 	public static final fun style (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/StyleContract$StyleExtension;
 	public static synthetic fun style$default (Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/StyleContract$StyleExtension;
+}
+
+public final class com/mapbox/maps/extension/style/atmosphere/generated/Atmosphere : com/mapbox/maps/extension/style/StyleContract$StyleAtmosphereExtension, com/mapbox/maps/extension/style/atmosphere/generated/AtmosphereDslReceiver {
+	public fun <init> ()V
+	public fun bindTo (Lcom/mapbox/maps/extension/style/StyleInterface;)V
+	public fun color (I)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun color (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun color (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public final fun getColor ()Ljava/lang/String;
+	public final fun getColorAsColorInt ()Ljava/lang/Integer;
+	public final fun getColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getHighColor ()Ljava/lang/String;
+	public final fun getHighColorAsColorInt ()Ljava/lang/Integer;
+	public final fun getHighColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getHorizonBlend ()Ljava/lang/Double;
+	public final fun getHorizonBlendAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getRange ()Ljava/util/List;
+	public final fun getRangeAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getSpaceColor ()Ljava/lang/String;
+	public final fun getSpaceColorAsColorInt ()Ljava/lang/Integer;
+	public final fun getSpaceColorAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public final fun getStarIntensity ()Ljava/lang/Double;
+	public final fun getStarIntensityAsExpression ()Lcom/mapbox/maps/extension/style/expressions/generated/Expression;
+	public fun highColor (I)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun highColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun highColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun horizonBlend (D)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun horizonBlend (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun range (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun range (Ljava/util/List;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun spaceColor (I)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun spaceColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun spaceColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun starIntensity (D)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public fun starIntensity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+}
+
+public abstract interface class com/mapbox/maps/extension/style/atmosphere/generated/AtmosphereDslReceiver {
+	public abstract fun color (I)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun color (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun color (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun highColor (I)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun highColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun highColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun horizonBlend (D)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun horizonBlend (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun range (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun range (Ljava/util/List;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun spaceColor (I)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun spaceColor (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun spaceColor (Ljava/lang/String;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun starIntensity (D)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public abstract fun starIntensity (Lcom/mapbox/maps/extension/style/expressions/generated/Expression;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+}
+
+public final class com/mapbox/maps/extension/style/atmosphere/generated/AtmosphereDslReceiver$DefaultImpls {
+	public static synthetic fun color$default (Lcom/mapbox/maps/extension/style/atmosphere/generated/AtmosphereDslReceiver;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public static synthetic fun highColor$default (Lcom/mapbox/maps/extension/style/atmosphere/generated/AtmosphereDslReceiver;Ljava/lang/String;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public static synthetic fun horizonBlend$default (Lcom/mapbox/maps/extension/style/atmosphere/generated/AtmosphereDslReceiver;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public static synthetic fun range$default (Lcom/mapbox/maps/extension/style/atmosphere/generated/AtmosphereDslReceiver;Ljava/util/List;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public static synthetic fun spaceColor$default (Lcom/mapbox/maps/extension/style/atmosphere/generated/AtmosphereDslReceiver;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public static synthetic fun starIntensity$default (Lcom/mapbox/maps/extension/style/atmosphere/generated/AtmosphereDslReceiver;Lcom/mapbox/maps/extension/style/expressions/generated/Expression;ILjava/lang/Object;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+}
+
+public final class com/mapbox/maps/extension/style/atmosphere/generated/AtmosphereKt {
+	public static final fun atmosphere (Lkotlin/jvm/functions/Function1;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+}
+
+public final class com/mapbox/maps/extension/style/atmosphere/generated/AtmosphereUtils {
+	public static final fun getAtmosphere (Lcom/mapbox/maps/extension/style/StyleInterface;)Lcom/mapbox/maps/extension/style/atmosphere/generated/Atmosphere;
+	public static final fun setAtmosphere (Lcom/mapbox/maps/extension/style/StyleInterface;Lcom/mapbox/maps/extension/style/StyleContract$StyleAtmosphereExtension;)V
 }
 
 public final class com/mapbox/maps/extension/style/expressions/dsl/generated/ExpressionDslKt {
@@ -3900,6 +3974,9 @@ public final class com/mapbox/maps/extension/style/terrain/generated/TerrainUtil
 	public static final fun getTerrain (Lcom/mapbox/maps/extension/style/StyleInterface;Ljava/lang/String;)Lcom/mapbox/maps/extension/style/terrain/generated/Terrain;
 	public static final fun removeTerrain (Lcom/mapbox/maps/extension/style/StyleInterface;)V
 	public static final fun setTerrain (Lcom/mapbox/maps/extension/style/StyleInterface;Lcom/mapbox/maps/extension/style/StyleContract$StyleTerrainExtension;)V
+}
+
+public abstract interface annotation class com/mapbox/maps/extension/style/types/AtmosphereDsl : java/lang/annotation/Annotation {
 }
 
 public abstract interface annotation class com/mapbox/maps/extension/style/types/ExpressionDsl : java/lang/annotation/Annotation {
