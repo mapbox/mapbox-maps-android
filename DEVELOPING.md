@@ -208,6 +208,22 @@ Unit tests, for all modules, can be run locally with:
 $ make unit-tests
 ```
 
+### Mutation tests
+
+Mutation testing is a technique used to check quality of unit tests and improve them. 
+The main idea is to change the production code and cause the tests to fail.
+Each mutated version is called a mutant and tests detect and reject mutants by causing the behavior 
+of the original version to differ from the mutant. 
+Read more about [mutation testing](https://en.wikipedia.org/wiki/Mutation_testing). 
+For generating mutants on the JVM we are using [Pitest](http://pitest.org/) library.
+
+Because of such testing type takes lot of time you can only run it on necessary module:
+
+```
+$ ./gradlew plugin-compass:pitestDebug
+```
+
+
 ### Instrumentation tests
 
 Instrumentation tests are integration test that validate the integration with the Android OS and
