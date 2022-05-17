@@ -109,20 +109,6 @@ class GesturesAttributeParserTest {
   }
 
   @Test
-  fun pinchScrollEnabledTestTrue() {
-    every { typedArray.getBoolean(any(), any()) } returns true
-    val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
-    assertEquals(true, settings.pinchScrollEnabled)
-  }
-
-  @Test
-  fun pinchScrollEnabledTestFalse() {
-    every { typedArray.getBoolean(any(), any()) } returns false
-    val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
-    assertEquals(false, settings.pinchScrollEnabled)
-  }
-
-  @Test
   fun simultaneousRotateAndPinchToZoomEnabledTestTrue() {
     every { typedArray.getBoolean(any(), any()) } returns true
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
@@ -294,6 +280,20 @@ class GesturesAttributeParserTest {
     every { typedArray.getFloat(any(), any()) } returns 1f
     val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
     assertEquals(1f, settings.zoomAnimationAmount)
+  }
+
+  @Test
+  fun pinchScrollEnabledTestTrue() {
+    every { typedArray.getBoolean(any(), any()) } returns true
+    val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
+    assertEquals(true, settings.pinchScrollEnabled)
+  }
+
+  @Test
+  fun pinchScrollEnabledTestFalse() {
+    every { typedArray.getBoolean(any(), any()) } returns false
+    val settings = GesturesAttributeParser.parseGesturesSettings(context, attrs, 1.2f)
+    assertEquals(false, settings.pinchScrollEnabled)
   }
 }
 

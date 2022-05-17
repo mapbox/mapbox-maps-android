@@ -25,11 +25,6 @@ data class GesturesSettings @JvmOverloads constructor(
   var scrollEnabled: Boolean = true,
 
   /**
-   * Whether pan is enabled for the pinch gesture.
-   */
-  var pinchScrollEnabled: Boolean = true,
-
-  /**
    * Whether rotation is enabled for the pinch to zoom gesture.
    */
   var simultaneousRotateAndPinchToZoomEnabled: Boolean = true,
@@ -93,6 +88,11 @@ data class GesturesSettings @JvmOverloads constructor(
    * The amount by which the zoom level increases or decreases during a double-tap-to-zoom-in or double-touch-to-zoom-out gesture. 1.0 by default. Must be positive.
    */
   var zoomAnimationAmount: Float = 1f,
+
+  /**
+   * Whether pan is enabled for the pinch gesture.
+   */
+  var pinchScrollEnabled: Boolean = true,
 )
 
 // End of generated file.

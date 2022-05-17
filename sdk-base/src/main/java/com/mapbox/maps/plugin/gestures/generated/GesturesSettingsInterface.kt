@@ -39,11 +39,6 @@ interface GesturesSettingsInterface {
   var scrollEnabled: Boolean
 
   /**
-   * Whether pan is enabled for the pinch gesture.
-   */
-  var pinchScrollEnabled: Boolean
-
-  /**
    * Whether rotation is enabled for the pinch to zoom gesture.
    */
   var simultaneousRotateAndPinchToZoomEnabled: Boolean
@@ -107,6 +102,11 @@ interface GesturesSettingsInterface {
    * The amount by which the zoom level increases or decreases during a double-tap-to-zoom-in or double-touch-to-zoom-out gesture. 1.0 by default. Must be positive.
    */
   var zoomAnimationAmount: Float
+
+  /**
+   * Whether pan is enabled for the pinch gesture.
+   */
+  var pinchScrollEnabled: Boolean
 }
 
 // End of generated file.

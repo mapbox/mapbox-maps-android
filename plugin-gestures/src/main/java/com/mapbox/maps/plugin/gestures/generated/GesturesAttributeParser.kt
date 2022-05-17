@@ -25,7 +25,6 @@ internal object GesturesAttributeParser {
         rotateEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_gesturesRotateEnabled, true),
         pinchToZoomEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_gesturesPinchToZoomEnabled, true),
         scrollEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_gesturesScrollEnabled, true),
-        pinchScrollEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_gesturesPinchScrollEnabled, true),
         simultaneousRotateAndPinchToZoomEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_gesturesSimultaneousRotateAndPinchToZoomEnabled, true),
         pitchEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_gesturesPitchEnabled, true),
         scrollMode = ScrollMode.values()[typedArray.getInt(R.styleable.mapbox_MapView_mapbox_gesturesScrollMode, ScrollMode.HORIZONTAL_AND_VERTICAL.ordinal)],
@@ -46,6 +45,7 @@ internal object GesturesAttributeParser {
         increaseRotateThresholdWhenPinchingToZoom = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_gesturesIncreaseRotateThresholdWhenPinchingToZoom, true),
         increasePinchToZoomThresholdWhenRotating = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_gesturesIncreasePinchToZoomThresholdWhenRotating, true),
         zoomAnimationAmount = typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_gesturesZoomAnimationAmount, 1f),
+        pinchScrollEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_gesturesPinchScrollEnabled, true),
       )
     } finally {
       typedArray.recycle()

@@ -6,7 +6,6 @@
     mapbox:mapbox_gesturesRotateEnabled = "false"
     mapbox:mapbox_gesturesPinchToZoomEnabled = "false"
     mapbox:mapbox_gesturesScrollEnabled = "false"
-    mapbox:mapbox_gesturesPinchScrollEnabled = "false"
     mapbox:mapbox_gesturesSimultaneousRotateAndPinchToZoomEnabled = "false"
     mapbox:mapbox_gesturesPitchEnabled = "false"
     mapbox:mapbox_gesturesScrollMode = "horizontal_and_vertical"
@@ -21,6 +20,7 @@
     mapbox:mapbox_gesturesIncreaseRotateThresholdWhenPinchingToZoom = "false"
     mapbox:mapbox_gesturesIncreasePinchToZoomThresholdWhenRotating = "false"
     mapbox:mapbox_gesturesZoomAnimationAmount = "0.9"
+    mapbox:mapbox_gesturesPinchScrollEnabled = "false"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
 <!-- End of generated file. -->

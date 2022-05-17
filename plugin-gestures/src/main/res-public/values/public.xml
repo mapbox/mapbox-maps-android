@@ -11,9 +11,6 @@
     <!-- Whether the single-touch scroll gesture is enabled. -->
     <public name="mapbox_gesturesScrollEnabled" type="attr" />
 
-    <!-- Whether pan is enabled for the pinch gesture. -->
-    <public name="mapbox_gesturesPinchScrollEnabled" type="attr" />
-
     <!-- Whether rotation is enabled for the pinch to zoom gesture. -->
     <public name="mapbox_gesturesSimultaneousRotateAndPinchToZoomEnabled" type="attr" />
 
@@ -54,5 +51,8 @@
 
     <!-- The amount by which the zoom level increases or decreases during a double-tap-to-zoom-in or double-touch-to-zoom-out gesture. 1.0 by default. Must be positive. -->
     <public name="mapbox_gesturesZoomAnimationAmount" type="attr" />
+
+    <!-- Whether pan is enabled for the pinch gesture. -->
+    <public name="mapbox_gesturesPinchScrollEnabled" type="attr" />
 </resources>
 <!-- End of generated file. -->
