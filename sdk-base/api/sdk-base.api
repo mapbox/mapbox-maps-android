@@ -489,7 +489,12 @@ public final class com/mapbox/maps/extension/observable/model/TileID {
 public abstract interface class com/mapbox/maps/extension/style/StyleContract {
 }
 
+public abstract interface class com/mapbox/maps/extension/style/StyleContract$StyleAtmosphereExtension {
+	public abstract fun bindTo (Lcom/mapbox/maps/extension/style/StyleInterface;)V
+}
+
 public abstract interface class com/mapbox/maps/extension/style/StyleContract$StyleExtension {
+	public abstract fun getAtmosphere ()Lcom/mapbox/maps/extension/style/StyleContract$StyleAtmosphereExtension;
 	public abstract fun getImages ()Ljava/util/List;
 	public abstract fun getLayers ()Ljava/util/List;
 	public abstract fun getLight ()Lcom/mapbox/maps/extension/style/StyleContract$StyleLightExtension;

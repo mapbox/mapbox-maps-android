@@ -39,3 +39,11 @@ annotation class ExpressionDsl
  */
 @DslMarker
 annotation class TerrainDsl
+
+/**
+ * Dsl marker for Atmosphere.
+ *
+ * Controls the scope of the Atmosphere Dsl.
+ */
+@DslMarker
+annotation class AtmosphereDsl

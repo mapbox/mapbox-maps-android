@@ -2,6 +2,7 @@ package com.mapbox.maps.extension.style
 
 import com.mapbox.maps.LayerPosition
 import com.mapbox.maps.extension.style.StyleExtensionImpl.*
+import com.mapbox.maps.extension.style.atmosphere.generated.Atmosphere
 import com.mapbox.maps.extension.style.image.ImageExtensionImpl
 import com.mapbox.maps.extension.style.image.ImageNinePatchExtensionImpl
 import com.mapbox.maps.extension.style.layers.*
@@ -53,6 +54,11 @@ class StyleExtensionImpl private constructor(
   override val projection: Projection? = builder.projection
 
   /**
+   * The atmosphere of the style.
+   */
+  override val atmosphere: Atmosphere? = builder.atmosphere
+
+  /**
    * The builder for style extension.
    */
   class Builder(
@@ -66,6 +72,7 @@ class StyleExtensionImpl private constructor(
     internal val images = mutableListOf<StyleContract.StyleImageExtension>()
     internal var light: Light? = null
     internal var terrain: Terrain? = null
+    internal var atmosphere: Atmosphere? = null
     internal var projection: Projection? = null
 
     /**
@@ -116,6 +123,16 @@ class StyleExtensionImpl private constructor(
     @JvmName("setTerrain")
     operator fun Terrain.unaryPlus() {
       terrain = this
+    }
+
+    /**
+     * Extension function for [Atmosphere] to overload Unary operations.
+     *
+     * Apply +[Atmosphere] will add the atmosphere to the [StyleExtensionImpl].
+     */
+    @JvmName("setAtmosphere")
+    operator fun Atmosphere.unaryPlus() {
+      atmosphere = this
     }
 
     /**

@@ -7,6 +7,7 @@ Mapbox welcomes participation and contributions from everyone.
 * Enable support for incremental annotation processing. ([#1323](https://github.com/mapbox/mapbox-maps-android/pull/1323))
 * Make use of non-deprecated common Mapbox logger. ([#1327](https://github.com/mapbox/mapbox-maps-android/pull/1327))
 * Expose factory methods for high-level camera animators. ([#1338](https://github.com/mapbox/mapbox-maps-android/pull/1338))
+* Introduce map atmosphere and fog. Setting atmosphere and fog supports Style DSL as well. ([#1344](https://github.com/mapbox/mapbox-maps-android/pull/1344))
 * Introduce experimental 3D model support. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
 * Use a single shared buffer across all globe tiles to increase globe rendering performance. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
 * Re-introduce partial tile loading feature that decreases map load times. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))

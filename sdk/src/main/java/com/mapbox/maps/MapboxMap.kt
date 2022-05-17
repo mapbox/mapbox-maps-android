@@ -334,6 +334,7 @@ class MapboxMap :
     }
     styleExtension.light?.bindTo(style)
     styleExtension.terrain?.bindTo(style)
+    styleExtension.atmosphere?.bindTo(style)
     styleExtension.projection?.bindTo(style)
     onStyleLoaded?.onStyleLoaded(style)
   }

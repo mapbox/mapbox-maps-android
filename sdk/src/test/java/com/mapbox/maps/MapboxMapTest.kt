@@ -154,6 +154,9 @@ class MapboxMapTest {
     val terrain = mockk<StyleContract.StyleTerrainExtension>(relaxed = true)
     every { styleExtension.terrain } returns terrain
 
+    val atmosphere = mockk<StyleContract.StyleAtmosphereExtension>(relaxed = true)
+    every { styleExtension.atmosphere } returns atmosphere
+
     val projection = mockk<StyleContract.StyleProjectionExtension>(relaxed = true)
     every { styleExtension.projection } returns projection
 
@@ -168,6 +171,7 @@ class MapboxMapTest {
     verify { light.bindTo(style) }
     verify { terrain.bindTo(style) }
     verify { projection.bindTo(style) }
+    verify { atmosphere.bindTo(style) }
     verify { styleLoadCallback.onStyleLoaded(style) }
   }
 
