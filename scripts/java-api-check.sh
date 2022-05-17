@@ -44,7 +44,7 @@ PREVIOUS_RELEASE=${TMPDIR}/previous/sdk-release.aar
 CURRENT_RELEASE_DIR=$(dirname "${CURRENT_RELEASE}")
 PREVIOUS_RELEASE_DIR=$(dirname "${PREVIOUS_RELEASE}")
 
-LAST_VERSION_TAG=$(grep -o 'VERSION_NAME=[0-9]*\.[0-9]*\.[0-9]*' ./gradle.properties) #10.3.0
+LAST_VERSION_TAG=$(grep -o 'LAST_STABLE_VERSION_NAME=[0-9]*\.[0-9]*\.[0-9]*' ./gradle.properties) #10.5.0
 LAST_VERSION_ARRAY=(${LAST_VERSION_TAG//=/ })
 LAST_VERSION=${LAST_VERSION_ARRAY[1]}
 
