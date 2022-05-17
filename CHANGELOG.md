@@ -21,10 +21,11 @@ Mapbox welcomes participation and contributions from everyone.
 * Fix for momentary appearing of a lower zoom level tile labels during camera movement.  ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
 * Fix for location indicator not being rendered at the horizon when terrain is enabled. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
 * Fix for loading gltf models with interleaved buffers. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351))
+* Fix a bug that `line-trim-offset` input may lose precision via shader calculation. ([#1359](https://github.com/mapbox/mapbox-maps-android/pull/1359))
 
 ## Dependencies
 * Bump Mapbox Android base library to v0.8.0. ([#1323](https://github.com/mapbox/mapbox-maps-android/pull/1323))
-* Bump gl-native to v10.6.0-beta.2, common to 22.0.0-beta.1. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351), [#1354](https://github.com/mapbox/mapbox-maps-android/pull/1354))
+* Bump gl-native to v10.6.0-beta.3, common to 22.0.0-beta.1. ([#1351](https://github.com/mapbox/mapbox-maps-android/pull/1351), [#1354](https://github.com/mapbox/mapbox-maps-android/pull/1354), [#1359](https://github.com/mapbox/mapbox-maps-android/pull/1359))
 
 # 10.4.4 May 12, 2022
 
