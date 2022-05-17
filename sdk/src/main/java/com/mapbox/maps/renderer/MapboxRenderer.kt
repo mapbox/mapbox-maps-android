@@ -60,11 +60,13 @@ internal abstract class MapboxRenderer : MapClient {
 
   @AnyThread
   override fun scheduleRepaint() {
+    logE("KIRYLDD", "scheduleRepaint")
     renderThread.queueRenderEvent(renderEventSdk, 0)
   }
 
   @AnyThread
   override fun scheduleTask(task: Task, priority: Int?) {
+    logE("KIRYLDD", "scheduleTask, priority=$priority")
     renderThread.queueRenderEvent(
       RenderEvent(
         runnable = { task.run() },

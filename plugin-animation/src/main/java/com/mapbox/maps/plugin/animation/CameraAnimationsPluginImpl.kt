@@ -177,13 +177,21 @@ class CameraAnimationsPluginImpl : CameraAnimationsPlugin {
     handler.removeCallbacks(commitChangesRunnable)
   }
 
+  private fun CameraOptions.isEmptyObject() = center == null &&
+    padding == null &&
+    anchor == null &&
+    zoom == null &&
+    bearing == null &&
+    pitch == null
+
   @VisibleForTesting(otherwise = PRIVATE)
   internal fun performMapJump(cameraOptions: CameraOptions) {
-    if (lastCameraOptions == cameraOptions) {
+    if (lastCameraOptions == cameraOptions || cameraOptions.isEmptyObject()) {
       return
     }
     // move native map to new position
     try {
+      logE("KIRYLDD", "Set camera $cameraOptions")
       mapCameraManagerDelegate.setCamera(cameraOptions)
       // notify listeners with actual values
       notifyListeners(mapCameraManagerDelegate.cameraState)

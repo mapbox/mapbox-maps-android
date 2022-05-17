@@ -276,7 +276,9 @@ internal class MapboxRenderThread : Choreographer.FrameCallback {
         widgetTextureRenderer.render(widgetRenderer.getTexture())
       }
     } else {
+      logE("KIRYLDD", "Render start")
       mapboxRenderer.render()
+      logE("KIRYLDD", "Render end")
     }
 
     // assuming render event queue holds user's runnables with OpenGL ES commands

@@ -26,16 +26,16 @@ internal class ViewAnnotationManagerImpl(
 
   init {
     mapView.requestDisallowInterceptTouchEvent(false)
-    mapView.viewTreeObserver.addOnPreDrawListener {
-      if (annotationMap.isNotEmpty()) {
-        logE("KIRYLDD", "mapView onPreDraw")
-        annotationMap.forEach {
-          it.value.view.invalidate()
-        }
-        mapView.viewAnnotationDraw()
-      }
-      true
-    }
+//    mapView.viewTreeObserver.addOnPreDrawListener {
+//      if (annotationMap.isNotEmpty()) {
+////        logE("KIRYLDD", "mapView onPreDraw")
+//        annotationMap.forEach {
+//          it.value.view.invalidate()
+//        }
+////        mapView.viewAnnotationDraw()
+//      }
+//      true
+//    }
     mapboxMap.setViewAnnotationPositionsUpdateListener(this)
   }
 
@@ -142,13 +142,15 @@ internal class ViewAnnotationManagerImpl(
   }
 
   override fun onViewAnnotationPositionsUpdate(positions: MutableList<ViewAnnotationPositionDescriptor>) {
-    logE("KIRYLDD", "onViewAnnotationPositionsUpdate ${positions.joinToString(", ")}")
+//    logE("KIRYLDD", "onViewAnnotationPositionsUpdate ${positions.joinToString(", ")}")
 //    mapView.handler.postAtFrontOfQueue {
 //      drawAnnotationViews(positions)
 //      logE("KIRYLDD", "onViewAnnotationPositionsUpdate processed")
 //    }
-    mapView.viewAnnotationPositionArrived()
-    drawAnnotationViews(positions)
+    if (positions.isNotEmpty()) {
+//      mapView.viewAnnotationPositionArrived()
+      drawAnnotationViews(positions)
+    }
   }
 
   fun destroy() {
@@ -308,8 +310,14 @@ internal class ViewAnnotationManagerImpl(
           }
         }
         annotation.view.apply {
-          translationX = descriptor.leftTopCoordinate.x.toFloat()
-          translationY = descriptor.leftTopCoordinate.y.toFloat()
+          if (translationX != descriptor.leftTopCoordinate.x.toFloat()) {
+            logE("KIRYLDD", "onViewAnnotationPositionsUpdate newX=${descriptor.leftTopCoordinate.x.toFloat()}, oldX=${translationX}")
+            translationX = descriptor.leftTopCoordinate.x.toFloat()
+          }
+          if (translationY != descriptor.leftTopCoordinate.y.toFloat()) {
+            logE("KIRYLDD", "onViewAnnotationPositionsUpdate newY=${descriptor.leftTopCoordinate.y.toFloat()}, oldY=${translationY}")
+            translationY = descriptor.leftTopCoordinate.y.toFloat()
+          }
         }
         if (!currentViewsDrawnMap.keys.contains(descriptor.identifier) && mapView.indexOfChild(annotation.view) == -1) {
           mapView.addView(annotation.view, annotation.viewLayoutParams)
