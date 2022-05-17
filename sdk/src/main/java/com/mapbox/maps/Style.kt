@@ -1052,7 +1052,11 @@ class Style internal constructor(
    * Callback to be invoked when a style is parsed, style layer properties could be read and modified, style layers and sources could be
    * added or removed before rendering is started.
    *
-   * Note that the style sources has not been loaded at this point, be careful not to use runtime styling to modify the style source properties.
+   * **Note** that the style sprites and source metadata has not been loaded at this point, be careful not to use runtime styling to:
+   * * Modify the style source properties(getSource/getSourceAs APIs).
+   * * Add images or use images in the layer properties.
+   *
+   * Typical use case for this callback is to set up terrain, atmosphere and projection etc.
    */
   fun interface OnStylePreloaded {
     /**
