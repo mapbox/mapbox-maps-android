@@ -18,6 +18,7 @@ object Plugins {
   const val dokkaId = "org.jetbrains.dokka"
   const val binaryCompatibilityValidatorId = "org.jetbrains.kotlinx.binary-compatibility-validator"
   const val taskTreeId = "com.dorongold.task-tree"
+  const val pitestPlugin = "pl.droidsonroids.gradle:gradle-pitest-plugin:${Versions.pitest}"
 }
 
 object Dependencies {
@@ -60,6 +61,8 @@ object Dependencies {
   const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.kotlinCoroutines}"
   const val junit = "junit:junit:${Versions.junit}"
   const val mockk = "io.mockk:mockk:${Versions.mockk}"
+  const val mockkAgentApi = "io.mockk:mockk-agent-api:${Versions.mockk}"
+  const val mockkAgentJvm = "io.mockk:mockk-agent-jvm:${Versions.mockk}"
   const val robolectric = "org.robolectric:robolectric:${Versions.robolectric}"
   const val robolectricEgl = "org.khronos:opengl-api:${Versions.robolectricEgl}"
   const val lintApi = "com.android.tools.lint:lint-api:${Versions.lint}"
@@ -71,6 +74,7 @@ object Dependencies {
   const val annotations = androidxAnnotations
   const val equalsVerifier = "nl.jqno.equalsverifier:equalsverifier:${Versions.equalsVerifier}"
   const val asyncInflater = "androidx.asynclayoutinflater:asynclayoutinflater:${Versions.asyncInflater}"
+  const val kotlinReflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.pluginKotlin}"
 }
 
 object Versions {
@@ -117,4 +121,5 @@ object Versions {
   const val equalsVerifier = "3.7"
   const val asyncInflater = "1.0.0"
   const val mapboxSdkVersionsPlugin = "1.1.3"
+  const val pitest = "0.2.8"
 }
