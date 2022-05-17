@@ -1698,6 +1698,7 @@ package com.mapbox.maps.plugin.gestures {
 package com.mapbox.maps.plugin.gestures.generated {
 
   public final class GesturesSettings {
+    ctor public GesturesSettings(boolean rotateEnabled = true, boolean pinchToZoomEnabled = true, boolean scrollEnabled = true, boolean simultaneousRotateAndPinchToZoomEnabled = true, boolean pitchEnabled = true, com.mapbox.maps.plugin.ScrollMode scrollMode = com.mapbox.maps.plugin.ScrollMode.HORIZONTAL_AND_VERTICAL, boolean doubleTapToZoomInEnabled = true, boolean doubleTouchToZoomOutEnabled = true, boolean quickZoomEnabled = true, com.mapbox.maps.ScreenCoordinate? focalPoint = null, boolean pinchToZoomDecelerationEnabled = true, boolean rotateDecelerationEnabled = true, boolean scrollDecelerationEnabled = true, boolean increaseRotateThresholdWhenPinchingToZoom = true, boolean increasePinchToZoomThresholdWhenRotating = true, float zoomAnimationAmount = 1f, boolean pinchScrollEnabled = true);
     ctor public GesturesSettings(boolean rotateEnabled = true, boolean pinchToZoomEnabled = true, boolean scrollEnabled = true, boolean simultaneousRotateAndPinchToZoomEnabled = true, boolean pitchEnabled = true, com.mapbox.maps.plugin.ScrollMode scrollMode = com.mapbox.maps.plugin.ScrollMode.HORIZONTAL_AND_VERTICAL, boolean doubleTapToZoomInEnabled = true, boolean doubleTouchToZoomOutEnabled = true, boolean quickZoomEnabled = true, com.mapbox.maps.ScreenCoordinate? focalPoint = null, boolean pinchToZoomDecelerationEnabled = true, boolean rotateDecelerationEnabled = true, boolean scrollDecelerationEnabled = true, boolean increaseRotateThresholdWhenPinchingToZoom = true, boolean increasePinchToZoomThresholdWhenRotating = true, float zoomAnimationAmount = 1f);
     ctor public GesturesSettings(boolean rotateEnabled = true, boolean pinchToZoomEnabled = true, boolean scrollEnabled = true, boolean simultaneousRotateAndPinchToZoomEnabled = true, boolean pitchEnabled = true, com.mapbox.maps.plugin.ScrollMode scrollMode = com.mapbox.maps.plugin.ScrollMode.HORIZONTAL_AND_VERTICAL, boolean doubleTapToZoomInEnabled = true, boolean doubleTouchToZoomOutEnabled = true, boolean quickZoomEnabled = true, com.mapbox.maps.ScreenCoordinate? focalPoint = null, boolean pinchToZoomDecelerationEnabled = true, boolean rotateDecelerationEnabled = true, boolean scrollDecelerationEnabled = true, boolean increaseRotateThresholdWhenPinchingToZoom = true, boolean increasePinchToZoomThresholdWhenRotating = true);
     ctor public GesturesSettings(boolean rotateEnabled = true, boolean pinchToZoomEnabled = true, boolean scrollEnabled = true, boolean simultaneousRotateAndPinchToZoomEnabled = true, boolean pitchEnabled = true, com.mapbox.maps.plugin.ScrollMode scrollMode = com.mapbox.maps.plugin.ScrollMode.HORIZONTAL_AND_VERTICAL, boolean doubleTapToZoomInEnabled = true, boolean doubleTouchToZoomOutEnabled = true, boolean quickZoomEnabled = true, com.mapbox.maps.ScreenCoordinate? focalPoint = null, boolean pinchToZoomDecelerationEnabled = true, boolean rotateDecelerationEnabled = true, boolean scrollDecelerationEnabled = true, boolean increaseRotateThresholdWhenPinchingToZoom = true);
@@ -1722,6 +1723,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public boolean component14();
     method public boolean component15();
     method public float component16();
+    method public boolean component17();
     method public boolean component2();
     method public boolean component3();
     method public boolean component4();
@@ -1730,12 +1732,13 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public boolean component7();
     method public boolean component8();
     method public boolean component9();
-    method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings copy(boolean rotateEnabled, boolean pinchToZoomEnabled, boolean scrollEnabled, boolean simultaneousRotateAndPinchToZoomEnabled, boolean pitchEnabled, com.mapbox.maps.plugin.ScrollMode scrollMode, boolean doubleTapToZoomInEnabled, boolean doubleTouchToZoomOutEnabled, boolean quickZoomEnabled, com.mapbox.maps.ScreenCoordinate? focalPoint, boolean pinchToZoomDecelerationEnabled, boolean rotateDecelerationEnabled, boolean scrollDecelerationEnabled, boolean increaseRotateThresholdWhenPinchingToZoom, boolean increasePinchToZoomThresholdWhenRotating, float zoomAnimationAmount);
+    method public com.mapbox.maps.plugin.gestures.generated.GesturesSettings copy(boolean rotateEnabled, boolean pinchToZoomEnabled, boolean scrollEnabled, boolean simultaneousRotateAndPinchToZoomEnabled, boolean pitchEnabled, com.mapbox.maps.plugin.ScrollMode scrollMode, boolean doubleTapToZoomInEnabled, boolean doubleTouchToZoomOutEnabled, boolean quickZoomEnabled, com.mapbox.maps.ScreenCoordinate? focalPoint, boolean pinchToZoomDecelerationEnabled, boolean rotateDecelerationEnabled, boolean scrollDecelerationEnabled, boolean increaseRotateThresholdWhenPinchingToZoom, boolean increasePinchToZoomThresholdWhenRotating, float zoomAnimationAmount, boolean pinchScrollEnabled);
     method public boolean getDoubleTapToZoomInEnabled();
     method public boolean getDoubleTouchToZoomOutEnabled();
     method public com.mapbox.maps.ScreenCoordinate? getFocalPoint();
     method public boolean getIncreasePinchToZoomThresholdWhenRotating();
     method public boolean getIncreaseRotateThresholdWhenPinchingToZoom();
+    method public boolean getPinchScrollEnabled();
     method public boolean getPinchToZoomDecelerationEnabled();
     method public boolean getPinchToZoomEnabled();
     method public boolean getPitchEnabled();
@@ -1752,6 +1755,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public void setFocalPoint(com.mapbox.maps.ScreenCoordinate? focalPoint);
     method public void setIncreasePinchToZoomThresholdWhenRotating(boolean increasePinchToZoomThresholdWhenRotating);
     method public void setIncreaseRotateThresholdWhenPinchingToZoom(boolean increaseRotateThresholdWhenPinchingToZoom);
+    method public void setPinchScrollEnabled(boolean pinchScrollEnabled);
     method public void setPinchToZoomDecelerationEnabled(boolean pinchToZoomDecelerationEnabled);
     method public void setPinchToZoomEnabled(boolean pinchToZoomEnabled);
     method public void setPitchEnabled(boolean pitchEnabled);
@@ -1768,6 +1772,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     property public final com.mapbox.maps.ScreenCoordinate? focalPoint;
     property public final boolean increasePinchToZoomThresholdWhenRotating;
     property public final boolean increaseRotateThresholdWhenPinchingToZoom;
+    property public final boolean pinchScrollEnabled;
     property public final boolean pinchToZoomDecelerationEnabled;
     property public final boolean pinchToZoomEnabled;
     property public final boolean pitchEnabled;
@@ -1790,6 +1795,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public boolean getIncreasePinchToZoomThresholdWhenRotating();
     method public boolean getIncreaseRotateThresholdWhenPinchingToZoom();
     method protected abstract com.mapbox.maps.plugin.gestures.generated.GesturesSettings getInternalSettings();
+    method public boolean getPinchScrollEnabled();
     method public boolean getPinchToZoomDecelerationEnabled();
     method public boolean getPinchToZoomEnabled();
     method public boolean getPitchEnabled();
@@ -1808,6 +1814,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public void setIncreasePinchToZoomThresholdWhenRotating(boolean value);
     method public void setIncreaseRotateThresholdWhenPinchingToZoom(boolean value);
     method protected abstract void setInternalSettings(com.mapbox.maps.plugin.gestures.generated.GesturesSettings internalSettings);
+    method public void setPinchScrollEnabled(boolean value);
     method public void setPinchToZoomDecelerationEnabled(boolean value);
     method public void setPinchToZoomEnabled(boolean value);
     method public void setPitchEnabled(boolean value);
@@ -1826,6 +1833,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     property public boolean increasePinchToZoomThresholdWhenRotating;
     property public boolean increaseRotateThresholdWhenPinchingToZoom;
     property protected abstract com.mapbox.maps.plugin.gestures.generated.GesturesSettings internalSettings;
+    property public boolean pinchScrollEnabled;
     property public boolean pinchToZoomDecelerationEnabled;
     property public boolean pinchToZoomEnabled;
     property public boolean pitchEnabled;
@@ -1845,6 +1853,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public com.mapbox.maps.ScreenCoordinate? getFocalPoint();
     method public boolean getIncreasePinchToZoomThresholdWhenRotating();
     method public boolean getIncreaseRotateThresholdWhenPinchingToZoom();
+    method public boolean getPinchScrollEnabled();
     method public boolean getPinchToZoomDecelerationEnabled();
     method public boolean getPinchToZoomEnabled();
     method public boolean getPitchEnabled();
@@ -1862,6 +1871,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     method public void setFocalPoint(com.mapbox.maps.ScreenCoordinate? focalPoint);
     method public void setIncreasePinchToZoomThresholdWhenRotating(boolean increasePinchToZoomThresholdWhenRotating);
     method public void setIncreaseRotateThresholdWhenPinchingToZoom(boolean increaseRotateThresholdWhenPinchingToZoom);
+    method public void setPinchScrollEnabled(boolean pinchScrollEnabled);
     method public void setPinchToZoomDecelerationEnabled(boolean pinchToZoomDecelerationEnabled);
     method public void setPinchToZoomEnabled(boolean pinchToZoomEnabled);
     method public void setPitchEnabled(boolean pitchEnabled);
@@ -1879,6 +1889,7 @@ package com.mapbox.maps.plugin.gestures.generated {
     property public abstract com.mapbox.maps.ScreenCoordinate? focalPoint;
     property public abstract boolean increasePinchToZoomThresholdWhenRotating;
     property public abstract boolean increaseRotateThresholdWhenPinchingToZoom;
+    property public abstract boolean pinchScrollEnabled;
     property public abstract boolean pinchToZoomDecelerationEnabled;
     property public abstract boolean pinchToZoomEnabled;
     property public abstract boolean pitchEnabled;

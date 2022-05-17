@@ -1677,7 +1677,8 @@ public final class com/mapbox/maps/plugin/gestures/generated/GesturesSettings {
 	public fun <init> (ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZZLcom/mapbox/maps/ScreenCoordinate;ZZZZ)V
 	public fun <init> (ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZZLcom/mapbox/maps/ScreenCoordinate;ZZZZZ)V
 	public fun <init> (ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZZLcom/mapbox/maps/ScreenCoordinate;ZZZZZF)V
-	public synthetic fun <init> (ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZZLcom/mapbox/maps/ScreenCoordinate;ZZZZZFILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZZLcom/mapbox/maps/ScreenCoordinate;ZZZZZFZ)V
+	public synthetic fun <init> (ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZZLcom/mapbox/maps/ScreenCoordinate;ZZZZZFZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Z
 	public final fun component10 ()Lcom/mapbox/maps/ScreenCoordinate;
 	public final fun component11 ()Z
@@ -1686,6 +1687,7 @@ public final class com/mapbox/maps/plugin/gestures/generated/GesturesSettings {
 	public final fun component14 ()Z
 	public final fun component15 ()Z
 	public final fun component16 ()F
+	public final fun component17 ()Z
 	public final fun component2 ()Z
 	public final fun component3 ()Z
 	public final fun component4 ()Z
@@ -1694,14 +1696,15 @@ public final class com/mapbox/maps/plugin/gestures/generated/GesturesSettings {
 	public final fun component7 ()Z
 	public final fun component8 ()Z
 	public final fun component9 ()Z
-	public final fun copy (ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZZLcom/mapbox/maps/ScreenCoordinate;ZZZZZF)Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;
-	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZZLcom/mapbox/maps/ScreenCoordinate;ZZZZZFILjava/lang/Object;)Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;
+	public final fun copy (ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZZLcom/mapbox/maps/ScreenCoordinate;ZZZZZFZ)Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;
+	public static synthetic fun copy$default (Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;ZZZZZLcom/mapbox/maps/plugin/ScrollMode;ZZZLcom/mapbox/maps/ScreenCoordinate;ZZZZZFZILjava/lang/Object;)Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDoubleTapToZoomInEnabled ()Z
 	public final fun getDoubleTouchToZoomOutEnabled ()Z
 	public final fun getFocalPoint ()Lcom/mapbox/maps/ScreenCoordinate;
 	public final fun getIncreasePinchToZoomThresholdWhenRotating ()Z
 	public final fun getIncreaseRotateThresholdWhenPinchingToZoom ()Z
+	public final fun getPinchScrollEnabled ()Z
 	public final fun getPinchToZoomDecelerationEnabled ()Z
 	public final fun getPinchToZoomEnabled ()Z
 	public final fun getPitchEnabled ()Z
@@ -1719,6 +1722,7 @@ public final class com/mapbox/maps/plugin/gestures/generated/GesturesSettings {
 	public final fun setFocalPoint (Lcom/mapbox/maps/ScreenCoordinate;)V
 	public final fun setIncreasePinchToZoomThresholdWhenRotating (Z)V
 	public final fun setIncreaseRotateThresholdWhenPinchingToZoom (Z)V
+	public final fun setPinchScrollEnabled (Z)V
 	public final fun setPinchToZoomDecelerationEnabled (Z)V
 	public final fun setPinchToZoomEnabled (Z)V
 	public final fun setPitchEnabled (Z)V
@@ -1742,6 +1746,7 @@ public abstract class com/mapbox/maps/plugin/gestures/generated/GesturesSettings
 	public fun getIncreasePinchToZoomThresholdWhenRotating ()Z
 	public fun getIncreaseRotateThresholdWhenPinchingToZoom ()Z
 	protected abstract fun getInternalSettings ()Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;
+	public fun getPinchScrollEnabled ()Z
 	public fun getPinchToZoomDecelerationEnabled ()Z
 	public fun getPinchToZoomEnabled ()Z
 	public fun getPitchEnabled ()Z
@@ -1760,6 +1765,7 @@ public abstract class com/mapbox/maps/plugin/gestures/generated/GesturesSettings
 	public fun setIncreasePinchToZoomThresholdWhenRotating (Z)V
 	public fun setIncreaseRotateThresholdWhenPinchingToZoom (Z)V
 	protected abstract fun setInternalSettings (Lcom/mapbox/maps/plugin/gestures/generated/GesturesSettings;)V
+	public fun setPinchScrollEnabled (Z)V
 	public fun setPinchToZoomDecelerationEnabled (Z)V
 	public fun setPinchToZoomEnabled (Z)V
 	public fun setPitchEnabled (Z)V
@@ -1780,6 +1786,7 @@ public abstract interface class com/mapbox/maps/plugin/gestures/generated/Gestur
 	public abstract fun getFocalPoint ()Lcom/mapbox/maps/ScreenCoordinate;
 	public abstract fun getIncreasePinchToZoomThresholdWhenRotating ()Z
 	public abstract fun getIncreaseRotateThresholdWhenPinchingToZoom ()Z
+	public abstract fun getPinchScrollEnabled ()Z
 	public abstract fun getPinchToZoomDecelerationEnabled ()Z
 	public abstract fun getPinchToZoomEnabled ()Z
 	public abstract fun getPitchEnabled ()Z
@@ -1797,6 +1804,7 @@ public abstract interface class com/mapbox/maps/plugin/gestures/generated/Gestur
 	public abstract fun setFocalPoint (Lcom/mapbox/maps/ScreenCoordinate;)V
 	public abstract fun setIncreasePinchToZoomThresholdWhenRotating (Z)V
 	public abstract fun setIncreaseRotateThresholdWhenPinchingToZoom (Z)V
+	public abstract fun setPinchScrollEnabled (Z)V
 	public abstract fun setPinchToZoomDecelerationEnabled (Z)V
 	public abstract fun setPinchToZoomEnabled (Z)V
 	public abstract fun setPitchEnabled (Z)V

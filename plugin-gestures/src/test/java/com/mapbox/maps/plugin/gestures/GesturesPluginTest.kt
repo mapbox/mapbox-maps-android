@@ -424,6 +424,96 @@ class GesturesPluginTest {
   }
 
   @Test
+  fun verifyMoveListenerPinchScrollDisabled() {
+    presenter.pinchScrollEnabled = false
+    val listener: OnMoveListener = mockk(relaxed = true)
+    presenter.addOnMoveListener(listener)
+    every { mapCameraManagerDelegate.cameraState } returns CameraState(
+      Point.fromLngLat(0.0, 0.0),
+      EdgeInsets(0.0, 0.0, 0.0, 0.0),
+      0.0,
+      0.0,
+      0.0
+    )
+    every {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        any(),
+        any()
+      )
+    } returns CameraOptions.Builder().center(Point.fromLngLat(0.0, 0.0)).build()
+
+    val moveGestureDetector = mockk<MoveGestureDetector>()
+    every {
+      moveGestureDetector.focalPoint
+    } returns PointF(0.0f, 0.0f)
+    every { moveGestureDetector.pointersCount } returns 3
+    var handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
+    // verify three finger pan gesture shouldn't work
+    assertFalse(handled)
+    every { moveGestureDetector.pointersCount } returns 2
+    handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
+    // verify two finger pan gesture shouldn't work
+    assertFalse(handled)
+    every { moveGestureDetector.pointersCount } returns 1
+    handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
+    // verify single finger pan gesture should work
+    assert(handled)
+    verify { listener.onMove(any()) }
+    verify {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        ScreenCoordinate(0.0, 0.0),
+        ScreenCoordinate(-50.0, -50.0)
+      )
+    }
+    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
+  }
+
+  @Test
+  fun verifyMoveListenerPinchScrollEnabled() {
+    presenter.pinchScrollEnabled = true
+    val listener: OnMoveListener = mockk(relaxed = true)
+    presenter.addOnMoveListener(listener)
+    every { mapCameraManagerDelegate.cameraState } returns CameraState(
+      Point.fromLngLat(0.0, 0.0),
+      EdgeInsets(0.0, 0.0, 0.0, 0.0),
+      0.0,
+      0.0,
+      0.0
+    )
+    every {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        any(),
+        any()
+      )
+    } returns CameraOptions.Builder().center(Point.fromLngLat(0.0, 0.0)).build()
+
+    val moveGestureDetector = mockk<MoveGestureDetector>()
+    every {
+      moveGestureDetector.focalPoint
+    } returns PointF(0.0f, 0.0f)
+    every { moveGestureDetector.pointersCount } returns 3
+    var handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
+    // verify three finger pan gesture shouldn't work
+    assertFalse(handled)
+    every { moveGestureDetector.pointersCount } returns 2
+    handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
+    // verify two finger pan gesture should work
+    assert(handled)
+    every { moveGestureDetector.pointersCount } returns 1
+    handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
+    // verify single finger pan gesture should work
+    assert(handled)
+    verify { listener.onMove(any()) }
+    verify {
+      mapCameraManagerDelegate.getDragCameraOptions(
+        ScreenCoordinate(0.0, 0.0),
+        ScreenCoordinate(-50.0, -50.0)
+      )
+    }
+    verify { cameraAnimationsPlugin.easeTo(any(), any()) }
+  }
+
+  @Test
   fun verifyMoveEndListener() {
     val listener: OnMoveListener = mockk(relaxed = true)
     presenter.addOnMoveListener(listener)

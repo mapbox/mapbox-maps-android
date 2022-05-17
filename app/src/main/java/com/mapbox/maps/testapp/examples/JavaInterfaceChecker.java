@@ -190,6 +190,7 @@ public class JavaInterfaceChecker {
         gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true, true, true);
         gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true, true, true, true);
         gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true, true, true, true, 1f);
+        gesturesSettings = new GesturesSettings(true, true, true, true, true, scrollMode, true, true, true, screenCoordinate, true, true, true, true, true, 1f, true);
     }
 
     private void compassSettings(Drawable drawable) {

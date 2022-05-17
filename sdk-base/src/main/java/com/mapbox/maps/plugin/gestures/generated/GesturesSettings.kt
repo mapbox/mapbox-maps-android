@@ -88,6 +88,11 @@ data class GesturesSettings @JvmOverloads constructor(
    * The amount by which the zoom level increases or decreases during a double-tap-to-zoom-in or double-touch-to-zoom-out gesture. 1.0 by default. Must be positive.
    */
   var zoomAnimationAmount: Float = 1f,
+
+  /**
+   * Whether pan is enabled for the pinch gesture.
+   */
+  var pinchScrollEnabled: Boolean = true,
 )
 
 // End of generated file.

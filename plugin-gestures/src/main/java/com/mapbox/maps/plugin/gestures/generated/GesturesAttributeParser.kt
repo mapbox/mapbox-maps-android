@@ -45,6 +45,7 @@ internal object GesturesAttributeParser {
         increaseRotateThresholdWhenPinchingToZoom = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_gesturesIncreaseRotateThresholdWhenPinchingToZoom, true),
         increasePinchToZoomThresholdWhenRotating = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_gesturesIncreasePinchToZoomThresholdWhenRotating, true),
         zoomAnimationAmount = typedArray.getFloat(R.styleable.mapbox_MapView_mapbox_gesturesZoomAnimationAmount, 1f),
+        pinchScrollEnabled = typedArray.getBoolean(R.styleable.mapbox_MapView_mapbox_gesturesPinchScrollEnabled, true),
       )
     } finally {
       typedArray.recycle()

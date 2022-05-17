@@ -112,6 +112,11 @@ class GesturesAttributeParserTest : BaseMapTest() {
       0.9f,
       mapView.gestures.getSettings().zoomAnimationAmount
     )
+    assertEquals(
+      "pinchScrollEnabled test failed..",
+      false,
+      mapView.gestures.getSettings().pinchScrollEnabled
+    )
   }
 }
 
