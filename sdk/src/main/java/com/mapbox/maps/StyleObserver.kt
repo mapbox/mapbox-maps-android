@@ -20,9 +20,13 @@ internal class StyleObserver(
   private val pixelRatio: Float
 ) : OnStyleLoadedListener, OnMapLoadErrorListener, OnStyleDataLoadedListener {
 
-  private var loadStyleListener: Style.OnStyleLoaded? = null
+  private var userStyleLoadedListener: Style.OnStyleLoaded? = null
+
+  private var styleDataStyleLoadedListener: Style.OnStyleLoaded? = null
+  private var styleDataSpritesLoadedListener: Style.OnStyleLoaded? = null
+  private var styleDataSourcesLoadedListener: Style.OnStyleLoaded? = null
+
   private var loadStyleErrorListener: OnMapLoadErrorListener? = null
-  private var loadStyleTransitionOptions: TransitionOptions? = null
 
   private val getStyleListeners = CopyOnWriteArraySet<Style.OnStyleLoaded>()
   private var loadedStyle: Style? = null
@@ -39,12 +43,16 @@ internal class StyleObserver(
    * NOTE : listener is invoked only once after successful style load.
    */
   fun setLoadStyleListener(
-    transitionOptions: TransitionOptions?,
-    loadedListener: Style.OnStyleLoaded?,
+    userOnStyleLoaded: Style.OnStyleLoaded?,
+    styleDataStyleLoadedListener: Style.OnStyleLoaded? = null,
+    styleDataSpritesLoadedListener: Style.OnStyleLoaded? = null,
+    styleDataSourcesLoadedListener: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener?
   ) {
-    loadStyleTransitionOptions = transitionOptions
-    loadStyleListener = loadedListener
+    this.userStyleLoadedListener = userOnStyleLoaded
+    this.styleDataStyleLoadedListener = styleDataStyleLoadedListener
+    this.styleDataSpritesLoadedListener = styleDataSpritesLoadedListener
+    this.styleDataSourcesLoadedListener = styleDataSourcesLoadedListener
     loadStyleErrorListener = onMapLoadErrorListener
   }
 
@@ -60,13 +68,12 @@ internal class StyleObserver(
    * Invoked when a style has loaded
    */
   override fun onStyleLoaded(eventData: StyleLoadedEventData) {
-    val style = Style(nativeMap, pixelRatio)
-    loadedStyle?.markInvalid()
-    loadedStyle = style
+    println("OnStyleLoaded : $eventData")
+    val style = loadedStyle!!
     styleLoadedListener.onStyleLoaded(style)
 
-    loadStyleListener?.onStyleLoaded(style)
-    loadStyleListener = null
+    userStyleLoadedListener?.onStyleLoaded(style)
+    userStyleLoadedListener = null
 
     getStyleListeners.forEach { listener ->
       listener.onStyleLoaded(style)
@@ -83,21 +90,29 @@ internal class StyleObserver(
   }
 
   override fun onStyleDataLoaded(eventData: StyleDataLoadedEventData) {
-    // style data arrives in following order: STYLE, SOURCES, SPRITE
-    // transition options must be applied after style but before sprite and sources to take effect
-    loadStyleTransitionOptions?.let {
-      if (eventData.type == StyleDataType.STYLE) {
-        nativeMap.styleTransition = it
-        // per gl-native docs style transition options should be reset for a new style so resetting them here
-        loadStyleTransitionOptions = null
+    println("Style data : $eventData")
+    when (eventData.type) {
+      StyleDataType.STYLE -> {
+        loadedStyle?.markInvalid()
+        loadedStyle = Style(nativeMap, pixelRatio).also {
+          styleDataStyleLoadedListener?.onStyleLoaded(it)
+        }
+        styleDataStyleLoadedListener = null
+      }
+      StyleDataType.SPRITE -> {
+        styleDataSpritesLoadedListener?.onStyleLoaded(loadedStyle!!)
+        styleDataSpritesLoadedListener = null
+      }
+      StyleDataType.SOURCES -> {
+        styleDataSourcesLoadedListener?.onStyleLoaded(loadedStyle!!)
+        styleDataSourcesLoadedListener = null
       }
     }
   }
 
   fun onDestroy() {
-    loadStyleListener = null
+    userStyleLoadedListener = null
     loadStyleErrorListener = null
-    loadStyleTransitionOptions = null
     loadedStyle?.markInvalid()
     loadedStyle = null
     getStyleListeners.clear()
