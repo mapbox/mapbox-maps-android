@@ -234,7 +234,7 @@ internal class LocationPuckManager(
       Value(
         arrayListOf(
           Value("interpolate"),
-          Value(arrayListOf(Value("exponential"), Value(0.5))),
+          Value(arrayListOf(Value("exponential"), Value(PUCK_3D_EXPONENTIAL_EXPRESSION_BASE))),
           Value(arrayListOf(Value("zoom"))),
           Value(MIN_ZOOM),
           Value(
@@ -281,6 +281,7 @@ internal class LocationPuckManager(
   private companion object {
     const val MIN_ZOOM = 0.50
     const val MAX_ZOOM = 22.0
+    const val PUCK_3D_EXPONENTIAL_EXPRESSION_BASE = 0.5
 
     // We display most of the world at the lowest zoom level as a single square image, excluding the
     // polar regions by truncation at latitudes of φmax = ±85.05113°.
