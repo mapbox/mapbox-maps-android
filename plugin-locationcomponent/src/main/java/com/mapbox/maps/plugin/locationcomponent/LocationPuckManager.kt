@@ -33,6 +33,7 @@ internal class LocationPuckManager(
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal var lastLocation: Point? = null
+
   @VisibleForTesting(otherwise = PRIVATE)
   internal var lastMercatorScale = 1.0
     set(value) {
@@ -46,10 +47,13 @@ internal class LocationPuckManager(
 
   private val onLocationUpdated: ((Point) -> Unit) = {
     lastLocation = it
-    val latitude = if (delegateProvider.mapProjectionDelegate.getMapProjection() == MapProjection.Globe) {
-      delegateProvider.mapCameraManagerDelegate.cameraState.center.latitude()
-    } else it.latitude()
-    lastMercatorScale = mercatorScale(latitude)
+    if (settings.locationPuck is LocationPuck3D) {
+      val latitude =
+        if (delegateProvider.mapProjectionDelegate.getMapProjection() == MapProjection.Globe) {
+          delegateProvider.mapCameraManagerDelegate.cameraState.center.latitude()
+        } else it.latitude()
+      lastMercatorScale = mercatorScale(latitude)
+    }
   }
 
   private var lastBearing: Double = delegateProvider.mapCameraManagerDelegate.cameraState.bearing
