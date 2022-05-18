@@ -9,7 +9,7 @@ import com.mapbox.geojson.Geometry
 import com.mapbox.geojson.Point
 import java.util.*
 
-internal class NativeMapImpl(private val map: MapInterface) :
+internal class NativeMapImpl(val map: MapInterface) :
   MapInterface, StyleManagerInterface, ObservableInterface {
 
   override fun setSize(size: Size) {
@@ -285,7 +285,10 @@ internal class NativeMapImpl(private val map: MapInterface) :
     return map.isStyleLayerPersistent(layerId)
   }
 
-  override fun moveStyleLayer(layerId: String, layerPosition: LayerPosition?): Expected<String, None> {
+  override fun moveStyleLayer(
+    layerId: String,
+    layerPosition: LayerPosition?
+  ): Expected<String, None> {
     return map.moveStyleLayer(layerId, layerPosition)
   }
 
