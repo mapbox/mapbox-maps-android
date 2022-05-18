@@ -67,9 +67,10 @@ internal class EGLCore(
     if (useDefaultContext) {
       if (!egl.eglMakeCurrent(
           eglDisplay,
-          egl.eglGetCurrentSurface(EGL10.EGL_READ),
-          egl.eglGetCurrentSurface(EGL10.EGL_READ),
-          eglContext)
+          EGL10.EGL_NO_SURFACE,
+          EGL10.EGL_NO_SURFACE,
+          eglContext
+        )
       ) {
         logE(TAG, "Making default context current failed.")
         return false
