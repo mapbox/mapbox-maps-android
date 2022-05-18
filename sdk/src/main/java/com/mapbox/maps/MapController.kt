@@ -113,6 +113,10 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.onStyleDataLoadedListener = onStyleLoadingFinishedListener
   }
 
+  fun getNativeMap(): MapInterface {
+    return nativeMap
+  }
+
   override fun getMapboxMap(): MapboxMap {
     return mapboxMap
   }
