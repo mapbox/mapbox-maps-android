@@ -424,6 +424,27 @@ class GesturesPluginTest {
   }
 
   @Test
+  fun verifyHandleMoveExceptionFreeForInvalidFocalPoint() {
+    mockkStatic("com.mapbox.maps.MapboxLogger")
+    every { logE(any(), any()) } just Runs
+    val moveGestureDetector = mockk<MoveGestureDetector>()
+    every { moveGestureDetector.pointersCount } returns 1
+    every {
+      moveGestureDetector.focalPoint
+    } returns PointF(Float.NaN, Float.NaN)
+    var handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
+    assertFalse(handled)
+    verify(exactly = 1) { logE(any(), any()) }
+    every {
+      moveGestureDetector.focalPoint
+    } returns PointF(Float.POSITIVE_INFINITY, Float.NaN)
+    handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
+    assertFalse(handled)
+    verify(exactly = 2) { logE(any(), any()) }
+    unmockkStatic("com.mapbox.maps.MapboxLogger")
+  }
+
+  @Test
   fun verifyMoveListenerPinchScrollDisabled() {
     presenter.pinchScrollEnabled = false
     val listener: OnMoveListener = mockk(relaxed = true)

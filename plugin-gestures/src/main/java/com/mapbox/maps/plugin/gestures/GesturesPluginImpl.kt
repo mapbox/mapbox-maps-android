@@ -19,6 +19,7 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.StylePropertyValueKind
 import com.mapbox.maps.extension.style.StyleInterface
+import com.mapbox.maps.logE
 import com.mapbox.maps.plugin.InvalidPluginConfigurationException
 import com.mapbox.maps.plugin.MapStyleObserverPlugin
 import com.mapbox.maps.plugin.Plugin.Companion.MAPBOX_CAMERA_PLUGIN_ID
@@ -1387,6 +1388,12 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
       val fromX = focalPoint.x.toDouble()
       val fromY = focalPoint.y.toDouble()
 
+      // Skip invalid focal points with non-finite values
+      if (!focalPoint.x.isFinite() || !focalPoint.y.isFinite()) {
+        logE(TAG, "Invalid focal point=$focalPoint to perform map panning!")
+        return false
+      }
+
       if (!dragInProgress) {
         if (isPointAboveHorizon(ScreenCoordinate(fromX, fromY))) {
           return false
@@ -1724,6 +1731,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
   }
 
   private companion object {
+    private const val TAG = "Gestures"
     const val ROTATION_ANGLE_THRESHOLD = 3.0f
     const val MAX_SHOVE_ANGLE = 45.0f
   }
