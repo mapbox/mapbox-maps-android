@@ -94,8 +94,7 @@ tasks.withType<DokkaTask>().configureEach {
   dokkaSourceSets {
     named("main") {
       reportUndocumented.set(true)
-      // https://github.com/mapbox/mapbox-maps-android/issues/301#issuecomment-712736885
-      failOnWarning.set(false)
+      failOnWarning.set(true)
       if (buildFromSource.toBoolean()) {
         File("upstream-api-doc-list.txt").forEachLine {
           if (!it.startsWith("//")) {
