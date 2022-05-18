@@ -231,10 +231,10 @@ class MapboxMap :
     checkNativeMap("loadStyleJson")
     initializeStyleLoad(
       onStyleLoaded,
-      styleDataStyleLoadedListener = if (styleTransitionOptions != null) {
-        { it.styleTransition = styleTransitionOptions }
-      } else null,
-      onMapLoadErrorListener = styleTransitionOptions
+      styleDataStyleLoadedListener = {
+        styleTransitionOptions?.let(it::setStyleTransition)
+      },
+      onMapLoadErrorListener = onMapLoadErrorListener
     )
     nativeMap.styleJSON = styleJson
   }
