@@ -110,6 +110,7 @@ public class com/mapbox/maps/MapView : android/widget/FrameLayout, com/mapbox/ma
 	public fun getPlugin (Ljava/lang/String;)Lcom/mapbox/maps/plugin/MapPlugin;
 	public final fun getViewAnnotationManager ()Lcom/mapbox/maps/viewannotation/ViewAnnotationManager;
 	public static final fun isRenderingSupported ()Z
+	public static final fun isTerrainRenderingSupported ()Z
 	protected fun onAttachedToWindow ()V
 	public fun onDestroy ()V
 	public fun onGenericMotionEvent (Landroid/view/MotionEvent;)Z
@@ -129,6 +130,7 @@ public class com/mapbox/maps/MapView : android/widget/FrameLayout, com/mapbox/ma
 
 public final class com/mapbox/maps/MapView$Companion {
 	public final fun isRenderingSupported ()Z
+	public final fun isTerrainRenderingSupported ()Z
 }
 
 public abstract interface class com/mapbox/maps/MapView$OnSnapshotReady {

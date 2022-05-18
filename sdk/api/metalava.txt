@@ -112,6 +112,7 @@ package com.mapbox.maps {
     method public <T extends com.mapbox.maps.plugin.MapPlugin> T? getPlugin(String id);
     method public final com.mapbox.maps.viewannotation.ViewAnnotationManager getViewAnnotationManager();
     method public static final boolean isRenderingSupported();
+    method public static final boolean isTerrainRenderingSupported();
     method public void onDestroy();
     method public void onLowMemory();
     method public void onSizeChanged(int w, int h, int oldw, int oldh);
@@ -130,6 +131,7 @@ package com.mapbox.maps {
 
   public static final class MapView.Companion {
     method public boolean isRenderingSupported();
+    method public boolean isTerrainRenderingSupported();
   }
 
   public static fun interface MapView.OnSnapshotReady {
