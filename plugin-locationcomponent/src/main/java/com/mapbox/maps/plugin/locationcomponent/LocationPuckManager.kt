@@ -281,6 +281,10 @@ internal class LocationPuckManager(
   private companion object {
     const val MIN_ZOOM = 0.50
     const val MAX_ZOOM = 22.0
+    // To make the 3D puck's size constant across different zoom levels, the 3D puck's size (real world object size)
+    // should be exponential to the zoom level.
+    // The base of the exponential expression is decided by how the tile pyramid works: at zoom level n, we have 2^(n+1)
+    // tiles to cover the earth.
     const val PUCK_3D_EXPONENTIAL_EXPRESSION_BASE = 0.5
 
     // We display most of the world at the lowest zoom level as a single square image, excluding the
