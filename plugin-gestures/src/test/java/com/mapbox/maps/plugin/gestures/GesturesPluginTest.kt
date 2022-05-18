@@ -434,11 +434,13 @@ class GesturesPluginTest {
     } returns PointF(Float.NaN, Float.NaN)
     var handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
     assertFalse(handled)
+    verify(exactly = 1) { logE(any(), any()) }
     every {
       moveGestureDetector.focalPoint
     } returns PointF(Float.POSITIVE_INFINITY, Float.NaN)
     handled = presenter.handleMove(moveGestureDetector, 50.0f, 50.0f)
     assertFalse(handled)
+    verify(exactly = 2) { logE(any(), any()) }
     unmockkStatic("com.mapbox.maps.MapboxLogger")
   }
 

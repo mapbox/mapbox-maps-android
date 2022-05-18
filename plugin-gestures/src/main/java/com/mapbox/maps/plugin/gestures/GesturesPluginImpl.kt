@@ -1731,7 +1731,7 @@ class GesturesPluginImpl : GesturesPlugin, GesturesSettingsBase, MapStyleObserve
   }
 
   private companion object {
-    const val TAG = "Gestures"
+    private const val TAG = "Gestures"
     const val ROTATION_ANGLE_THRESHOLD = 3.0f
     const val MAX_SHOVE_ANGLE = 45.0f
   }
