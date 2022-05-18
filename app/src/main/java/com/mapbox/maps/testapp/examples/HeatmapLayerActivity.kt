@@ -17,6 +17,7 @@ import com.mapbox.maps.extension.style.projection.generated.setProjection
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
+import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.testapp.databinding.ActivityHeatmapLayerBinding
 
 /**
@@ -33,11 +34,11 @@ class HeatmapLayerActivity : AppCompatActivity() {
     setContentView(binding.root)
 
     mapboxMap = binding.mapView.getMapboxMap().apply {
-      loadStyleUri(
-        styleUri = Style.DARK
+      loadStyle(
+        style(Style.DARK) {
+          +projection(ProjectionName.GLOBE)
+        }
       ) { style ->
-        // setting projection as part of runtime styling
-        style.setProjection(projection(ProjectionName.GLOBE))
         addRuntimeLayers(style)
       }
     }
