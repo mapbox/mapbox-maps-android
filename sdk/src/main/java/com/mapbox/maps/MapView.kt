@@ -373,12 +373,15 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
     @JvmStatic
     fun isTerrainRenderingSupported(): Boolean {
       EGLCore(false, DEFAULT_ANTIALIASING_SAMPLE_COUNT).apply {
-        val eglConfigOk = prepareEgl(useDefaultContext = true)
+        val eglConfigOk = prepareEgl()
+        val eglSurface = createOffscreenSurface(1, 1)
+        makeCurrent(eglSurface)
         val resultBuffer = IntBuffer.allocate(1)
         GLES20.glGetIntegerv(GLES20.GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS, resultBuffer)
         resultBuffer.rewind()
         val result = resultBuffer.get()
         val terrainSupported = result > 0
+        releaseSurface(eglSurface)
         release()
         return eglConfigOk && terrainSupported
       }

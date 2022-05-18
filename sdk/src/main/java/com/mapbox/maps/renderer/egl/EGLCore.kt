@@ -24,7 +24,7 @@ internal class EGLCore(
 
   internal val eglNoSurface: EGLSurface = EGL10.EGL_NO_SURFACE
 
-  fun prepareEgl(useDefaultContext: Boolean = false): Boolean {
+  fun prepareEgl(): Boolean {
     egl = EGLContext.getEGL() as EGL10
     eglDisplay = egl.eglGetDisplay(EGL10.EGL_DEFAULT_DISPLAY)
     if (eglDisplay == EGL10.EGL_NO_DISPLAY) {
@@ -64,18 +64,6 @@ internal class EGLCore(
       values
     )
     logI(TAG, "EGLContext created, client version ${values[0]}")
-    if (useDefaultContext) {
-      if (!egl.eglMakeCurrent(
-          eglDisplay,
-          EGL10.EGL_NO_SURFACE,
-          EGL10.EGL_NO_SURFACE,
-          eglContext
-        )
-      ) {
-        logE(TAG, "Making default context current failed.")
-        return false
-      }
-    }
     return true
   }
 
