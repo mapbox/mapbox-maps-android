@@ -40,7 +40,7 @@ class LocationComponentActivity : AppCompatActivity() {
     locationPermissionHelper.checkPermissions {
       binding.mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
         // Disable scroll gesture, since we are updating the camera position based on the indicator location.
-//        binding.mapView.gestures.scrollEnabled = false
+        binding.mapView.gestures.scrollEnabled = false
         binding.mapView.gestures.addOnMapClickListener { point ->
           binding.mapView.location
             .isLocatedAt(point) { isPuckLocatedAtPoint ->
@@ -196,8 +196,8 @@ class LocationComponentActivity : AppCompatActivity() {
 
   override fun onStart() {
     super.onStart()
-//    binding.mapView.location
-//      .addOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
+    binding.mapView.location
+      .addOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
   }
 
   override fun onStop() {

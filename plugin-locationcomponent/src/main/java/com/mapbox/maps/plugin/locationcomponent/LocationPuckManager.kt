@@ -227,7 +227,7 @@ internal class LocationPuckManager(
     }
   }
 
-  private fun get3DPuckScaleExpression(puck: LocationPuck3D, mercatorScale: Double = 1.0): Value {
+  private fun get3DPuckScaleExpression(puck: LocationPuck3D, mercatorScale: Double): Value {
     val modelScaleConstant = 2.0.pow(MAX_ZOOM - MIN_ZOOM)
     val modelScaleExpression = puck.modelScaleExpression
     return if (modelScaleExpression == null) {
