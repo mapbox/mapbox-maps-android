@@ -290,7 +290,7 @@ internal class LocationPuckManager(
 
     // Threshold to update the mercator scale factor when the latitude changes, so that we don't update the
     // scale expression too frequently and cause performance issues.
-    const val MERCATOR_SCALE_THRESHOLD = 0.05
+    const val MERCATOR_SCALE_THRESHOLD = 0.01
   }
 }
 
