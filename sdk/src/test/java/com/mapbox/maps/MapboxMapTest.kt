@@ -161,19 +161,19 @@ class MapboxMapTest {
 
     val styleLoadCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
 
-    val userCallbackStyleSlot = CapturingSlot<Style.OnStyleLoaded>()
-    val callbackStyleSlot = CapturingSlot<Style.OnStyleLoaded>()
-    val callbackStyleSpritesSlot = CapturingSlot<Style.OnStyleLoaded>()
-    val callbackStyleSourcesSlot = CapturingSlot<Style.OnStyleLoaded>()
+    val userCallbackStyleSlots = mutableListOf<Style.OnStyleLoaded?>()
+    val callbackStyleSlots = mutableListOf<Style.OnStyleLoaded?>()
+    val callbackStyleSpritesSlots = mutableListOf<Style.OnStyleLoaded?>()
+    val callbackStyleSourcesSlots = mutableListOf<Style.OnStyleLoaded?>()
 
     mapboxMap.loadStyle(styleExtension)
 
     verify {
       styleObserver.setLoadStyleListener(
-        capture(userCallbackStyleSlot),
-        capture(callbackStyleSlot),
-        capture(callbackStyleSpritesSlot),
-        capture(callbackStyleSourcesSlot),
+        captureNullable(userCallbackStyleSlots),
+        captureNullable(callbackStyleSlots),
+        captureNullable(callbackStyleSpritesSlots),
+        captureNullable(callbackStyleSourcesSlots),
         any(),
       )
     }
@@ -187,7 +187,7 @@ class MapboxMapTest {
     verifyNo { atmosphere.bindTo(style) }
     verifyNo { styleLoadCallback.onStyleLoaded(style) }
 
-    callbackStyleSlot.captured.onStyleLoaded(style)
+    callbackStyleSlots.first()!!.onStyleLoaded(style)
 
     verify { light.bindTo(style) }
     verify { terrain.bindTo(style) }
@@ -198,14 +198,14 @@ class MapboxMapTest {
     verifyNo { layer.bindTo(style, layerPosition) }
     verifyNo { styleLoadCallback.onStyleLoaded(style) }
 
-    callbackStyleSpritesSlot.captured.onStyleLoaded(style)
+    callbackStyleSpritesSlots.first()!!.onStyleLoaded(style)
 
     verify { image.bindTo(style) }
     verifyNo { source.bindTo(style) }
     verifyNo { layer.bindTo(style, layerPosition) }
     verifyNo { styleLoadCallback.onStyleLoaded(style) }
 
-    callbackStyleSourcesSlot.captured.onStyleLoaded(style)
+    callbackStyleSourcesSlots.first()!!.onStyleLoaded(style)
 
     verify { source.bindTo(style) }
     verify { layer.bindTo(style, layerPosition) }

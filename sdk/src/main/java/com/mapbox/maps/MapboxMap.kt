@@ -1701,7 +1701,7 @@ class MapboxMap :
    */
   @MapboxExperimental
   @Deprecated(
-    "Use Projection style extension instead.",
+    "Use style extension instead: `loadStyle(styleUri) { +projection(projectionName) }`"
   )
   override fun setMapProjection(mapProjection: MapProjection) {
     checkNativeMap("setMapProjection")
@@ -1724,6 +1724,9 @@ class MapboxMap :
    * @return [MapProjection] map is using.
    */
   @MapboxExperimental
+  @Deprecated(
+    "Use Style.getProjection instead"
+  )
   override fun getMapProjection(): MapProjection {
     checkNativeMap("getMapProjection")
     nativeMap.getStyleProjectionProperty("name").apply {

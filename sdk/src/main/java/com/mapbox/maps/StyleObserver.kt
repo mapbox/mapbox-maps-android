@@ -44,9 +44,9 @@ internal class StyleObserver(
    */
   fun setLoadStyleListener(
     userOnStyleLoaded: Style.OnStyleLoaded?,
-    styleDataStyleLoadedListener: Style.OnStyleLoaded? = null,
-    styleDataSpritesLoadedListener: Style.OnStyleLoaded? = null,
-    styleDataSourcesLoadedListener: Style.OnStyleLoaded? = null,
+    styleDataStyleLoadedListener: Style.OnStyleLoaded?,
+    styleDataSpritesLoadedListener: Style.OnStyleLoaded?,
+    styleDataSourcesLoadedListener: Style.OnStyleLoaded?,
     onMapLoadErrorListener: OnMapLoadErrorListener?
   ) {
     this.userStyleLoadedListener = userOnStyleLoaded
@@ -114,6 +114,9 @@ internal class StyleObserver(
 
   fun onDestroy() {
     userStyleLoadedListener = null
+    styleDataStyleLoadedListener = null
+    styleDataSpritesLoadedListener = null
+    styleDataSourcesLoadedListener = null
     loadStyleErrorListener = null
     loadedStyle?.markInvalid()
     loadedStyle = null
