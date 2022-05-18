@@ -272,6 +272,8 @@ internal class LocationPuckManager(
   private fun mercatorScale(lat: Double): Double {
     // In Mercator projection the scale factor is changed along the meridians as a function of latitude
     // to keep the scale factor equal in all direction: k=sec(latitude), where sec(α) = 1 / cos(α).
+    // Here we are inverting the logic, as the 3d puck is using real-world size, and we are revising
+    // the appearance to look constant on a mercator projection map.
     return cos(
       // convert decimal latitude degrees to radians
       lat.coerceIn(-LATITUDE_MAX, LATITUDE_MAX) * Math.PI / 180.0
