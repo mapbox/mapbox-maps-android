@@ -6,7 +6,7 @@ import com.mapbox.maps.plugin.MapPluginRegistry
 
 internal object MapProvider {
 
-  fun getNativeMap(
+  fun getNativeMapWrapper(
     mapInitOptions: MapInitOptions,
     mapClient: MapClient,
   ): MapInterface = NativeMapImpl(
@@ -17,8 +17,8 @@ internal object MapProvider {
     )
   )
 
-  fun getNativeMap(mapView: MapView): MapInterface {
-    return mapView.getController().getNativeMap()
+  fun getNativeMapCore(mapView: MapView): MapInterface {
+    return (mapView.getController().getNativeMap() as NativeMapImpl).map
   }
 
   fun getMapboxMap(

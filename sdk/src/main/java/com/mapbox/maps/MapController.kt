@@ -62,7 +62,7 @@ internal class MapController : MapPluginProviderDelegate, MapControllable {
     this.renderer = renderer
     this.mapInitOptions = mapInitOptions
     AssetManagerProvider().initialize(mapInitOptions.context.assets)
-    this.nativeMap = MapProvider.getNativeMap(
+    this.nativeMap = MapProvider.getNativeMapWrapper(
       mapInitOptions,
       renderer,
     )
