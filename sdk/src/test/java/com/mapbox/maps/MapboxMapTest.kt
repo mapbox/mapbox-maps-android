@@ -12,6 +12,7 @@ import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin
 import com.mapbox.maps.plugin.delegates.listeners.*
 import com.mapbox.maps.plugin.gestures.GesturesPlugin
 import com.mapbox.maps.plugin.gestures.OnMoveListener
+import com.mapbox.verifyNo
 import io.mockk.*
 import junit.framework.Assert.*
 import org.junit.After
@@ -132,9 +133,9 @@ class MapboxMapTest {
   }
 
   @Test
-  fun finishLoadingStyleExtension() {
+  fun bindsStyleExtensionComponentsInCorrectOrderAfterStyleDataLoadEvents() {
     val style = mockk<Style>()
-    val styleExtension = mockk<StyleContract.StyleExtension>()
+    val styleExtension = mockk<StyleContract.StyleExtension>(relaxed = true)
 
     val source = mockk<StyleContract.StyleSourceExtension>(relaxed = true)
     every { styleExtension.sources } returns listOf(source)
@@ -144,9 +145,7 @@ class MapboxMapTest {
 
     val layer = mockk<StyleContract.StyleLayerExtension>(relaxed = true)
     val layerPosition = LayerPosition(null, null, 0)
-    every { styleExtension.layers } returns listOf(
-      Pair(layer, layerPosition)
-    )
+    every { styleExtension.layers } returns listOf(Pair(layer, layerPosition))
 
     val light = mockk<StyleContract.StyleLightExtension>(relaxed = true)
     every { styleExtension.light } returns light
@@ -162,17 +161,54 @@ class MapboxMapTest {
 
     val styleLoadCallback = mockk<Style.OnStyleLoaded>(relaxed = true)
 
-    mapboxMap.onFinishLoadingStyleExtension(style, styleExtension, styleLoadCallback)
+    val userCallbackStyleSlot = CapturingSlot<Style.OnStyleLoaded>()
+    val callbackStyleSlot = CapturingSlot<Style.OnStyleLoaded>()
+    val callbackStyleSpritesSlot = CapturingSlot<Style.OnStyleLoaded>()
+    val callbackStyleSourcesSlot = CapturingSlot<Style.OnStyleLoaded>()
 
-    assertEquals(mapboxMap.style, style)
-    verify { source.bindTo(style) }
-    verify { image.bindTo(style) }
-    verify { layer.bindTo(style, layerPosition) }
+    mapboxMap.loadStyle(styleExtension)
+
+    verify {
+      styleObserver.setLoadStyleListener(
+        capture(userCallbackStyleSlot),
+        capture(callbackStyleSlot),
+        capture(callbackStyleSpritesSlot),
+        capture(callbackStyleSourcesSlot),
+        any(),
+      )
+    }
+
+    verifyNo { source.bindTo(style) }
+    verifyNo { image.bindTo(style) }
+    verifyNo { layer.bindTo(style, layerPosition) }
+    verifyNo { light.bindTo(style) }
+    verifyNo { terrain.bindTo(style) }
+    verifyNo { projection.bindTo(style) }
+    verifyNo { atmosphere.bindTo(style) }
+    verifyNo { styleLoadCallback.onStyleLoaded(style) }
+
+    callbackStyleSlot.captured.onStyleLoaded(style)
+
     verify { light.bindTo(style) }
     verify { terrain.bindTo(style) }
     verify { projection.bindTo(style) }
     verify { atmosphere.bindTo(style) }
-    verify { styleLoadCallback.onStyleLoaded(style) }
+    verifyNo { source.bindTo(style) }
+    verifyNo { image.bindTo(style) }
+    verifyNo { layer.bindTo(style, layerPosition) }
+    verifyNo { styleLoadCallback.onStyleLoaded(style) }
+
+    callbackStyleSpritesSlot.captured.onStyleLoaded(style)
+
+    verify { image.bindTo(style) }
+    verifyNo { source.bindTo(style) }
+    verifyNo { layer.bindTo(style, layerPosition) }
+    verifyNo { styleLoadCallback.onStyleLoaded(style) }
+
+    callbackStyleSourcesSlot.captured.onStyleLoaded(style)
+
+    verify { source.bindTo(style) }
+    verify { layer.bindTo(style, layerPosition) }
   }
 
   @Test
@@ -1068,19 +1104,24 @@ class MapboxMapTest {
   }
 
   @Test
-  fun setStyleTransition() {
+  fun setsStyleTransitionAfterOnStyleDataEvent() {
     val options = mockk<TransitionOptions>(relaxed = true)
+    val style = mockk<Style>(relaxed = true)
     mapboxMap.loadStyleUri(
       "style",
       options,
-      {},
-      object : OnMapLoadErrorListener {
-        override fun onMapLoadError(eventData: MapLoadingErrorEventData) {}
-      }
+      {}
     )
-    verify(exactly = 1) {
-      styleObserver.setLoadStyleListener(options, any(), any())
+
+    val userCallbackStyleSlot = CapturingSlot<Style.OnStyleLoaded>()
+
+    verify {
+      styleObserver.setLoadStyleListener(any(), capture(userCallbackStyleSlot), any(), any(), any())
     }
+
+    userCallbackStyleSlot.captured.onStyleLoaded(style)
+
+    verify { style.styleTransition = options }
   }
 
   @Test

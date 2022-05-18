@@ -146,10 +146,18 @@ class MapboxMap :
     styleUri: String,
     styleTransitionOptions: TransitionOptions? = null,
     onStyleLoaded: Style.OnStyleLoaded? = null,
-    onMapLoadErrorListener: OnMapLoadErrorListener? = null
+    onMapLoadErrorListener: OnMapLoadErrorListener? = null,
   ) {
     checkNativeMap("loadStyleUri")
-    initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, styleTransitionOptions)
+    initializeStyleLoad(
+      onStyleLoaded,
+      styleDataStyleLoadedListener = if (styleTransitionOptions != null) {
+        {
+          it.styleTransition = styleTransitionOptions
+        }
+      } else null,
+      onMapLoadErrorListener = onMapLoadErrorListener,
+    )
     if (styleUri.isEmpty()) {
       nativeMap.styleJSON = EMPTY_STYLE_JSON
     } else {
@@ -221,7 +229,13 @@ class MapboxMap :
     onMapLoadErrorListener: OnMapLoadErrorListener? = null,
   ) {
     checkNativeMap("loadStyleJson")
-    initializeStyleLoad(onStyleLoaded, onMapLoadErrorListener, styleTransitionOptions)
+    initializeStyleLoad(
+      onStyleLoaded,
+      styleDataStyleLoadedListener = if (styleTransitionOptions != null) {
+        { it.styleTransition = styleTransitionOptions }
+      } else null,
+      onMapLoadErrorListener = styleTransitionOptions
+    )
     nativeMap.styleJSON = styleJson
   }
 
@@ -262,17 +276,14 @@ class MapboxMap :
     onMapLoadErrorListener: OnMapLoadErrorListener? = null,
   ) {
     checkNativeMap("loadStyle")
-    style = null
-    styleObserver.setLoadStyleListener(
+    initializeStyleLoad(
       onStyleLoaded,
       styleDataStyleLoadedListener = { style ->
         styleExtension.light?.bindTo(style)
         styleExtension.terrain?.bindTo(style)
         styleExtension.atmosphere?.bindTo(style)
         styleExtension.projection?.bindTo(style)
-        if (transitionOptions != null) {
-          style.styleTransition = transitionOptions
-        }
+        transitionOptions?.let(style::setStyleTransition)
       },
       styleDataSourcesLoadedListener = { style ->
         styleExtension.sources.forEach {
@@ -294,7 +305,6 @@ class MapboxMap :
     } else {
       nativeMap.styleURI = styleExtension.styleUri
     }
-    isStyleLoadInitiated = true
   }
 
   /**
@@ -323,15 +333,17 @@ class MapboxMap :
 
   private fun initializeStyleLoad(
     onStyleLoaded: Style.OnStyleLoaded? = null,
+    styleDataStyleLoadedListener: Style.OnStyleLoaded? = null,
+    styleDataSpritesLoadedListener: Style.OnStyleLoaded? = null,
+    styleDataSourcesLoadedListener: Style.OnStyleLoaded? = null,
     onMapLoadErrorListener: OnMapLoadErrorListener? = null,
-    styleTransitionOptions: TransitionOptions? = null
   ) {
     style = null
     styleObserver.setLoadStyleListener(
       onStyleLoaded,
-      styleDataStyleLoadedListener = if (styleTransitionOptions != null) {
-        { it.styleTransition = styleTransitionOptions }
-      } else null,
+      styleDataStyleLoadedListener = styleDataStyleLoadedListener,
+      styleDataSpritesLoadedListener = styleDataSpritesLoadedListener,
+      styleDataSourcesLoadedListener = styleDataSourcesLoadedListener,
       onMapLoadErrorListener = onMapLoadErrorListener,
     )
     isStyleLoadInitiated = true

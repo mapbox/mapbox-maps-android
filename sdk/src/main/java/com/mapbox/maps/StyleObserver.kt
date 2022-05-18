@@ -53,7 +53,7 @@ internal class StyleObserver(
     this.styleDataStyleLoadedListener = styleDataStyleLoadedListener
     this.styleDataSpritesLoadedListener = styleDataSpritesLoadedListener
     this.styleDataSourcesLoadedListener = styleDataSourcesLoadedListener
-    loadStyleErrorListener = onMapLoadErrorListener
+    this.loadStyleErrorListener = onMapLoadErrorListener
   }
 
   /**
@@ -68,8 +68,7 @@ internal class StyleObserver(
    * Invoked when a style has loaded
    */
   override fun onStyleLoaded(eventData: StyleLoadedEventData) {
-    println("OnStyleLoaded : $eventData")
-    val style = loadedStyle!!
+    val style = loadedStyle ?: throw MapboxMapException("Style is not initialized on onStyleLoaded callback!")
     styleLoadedListener.onStyleLoaded(style)
 
     userStyleLoadedListener?.onStyleLoaded(style)
@@ -90,7 +89,6 @@ internal class StyleObserver(
   }
 
   override fun onStyleDataLoaded(eventData: StyleDataLoadedEventData) {
-    println("Style data : $eventData")
     when (eventData.type) {
       StyleDataType.STYLE -> {
         loadedStyle?.markInvalid()
@@ -100,11 +98,15 @@ internal class StyleObserver(
         styleDataStyleLoadedListener = null
       }
       StyleDataType.SPRITE -> {
-        styleDataSpritesLoadedListener?.onStyleLoaded(loadedStyle!!)
+        styleDataSpritesLoadedListener?.onStyleLoaded(
+          loadedStyle ?: throw MapboxMapException("Style is not initialized but SPRITES event have arrived!")
+        )
         styleDataSpritesLoadedListener = null
       }
       StyleDataType.SOURCES -> {
-        styleDataSourcesLoadedListener?.onStyleLoaded(loadedStyle!!)
+        styleDataSourcesLoadedListener?.onStyleLoaded(
+          loadedStyle ?: throw MapboxMapException("Style is not initialized but SOURCES event have arrived!")
+        )
         styleDataSourcesLoadedListener = null
       }
     }
