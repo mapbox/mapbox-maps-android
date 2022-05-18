@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.content.Context
 import android.graphics.Bitmap
+import android.opengl.GLES20
 import android.os.Build
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -22,6 +23,7 @@ import com.mapbox.maps.renderer.OnFpsChangedListener
 import com.mapbox.maps.renderer.egl.EGLCore
 import com.mapbox.maps.renderer.widget.Widget
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
+import java.nio.IntBuffer
 
 /**
  * A [MapView] provides an embeddable map interface.
@@ -359,6 +361,29 @@ open class MapView : FrameLayout, MapPluginProviderDelegate, MapControllable {
         val eglConfigOk = prepareEgl()
         release()
         return eglConfigOk
+      }
+    }
+
+    /**
+     * Static method to check if [MapView] could properly render 3D terrain on this device.
+     * This method may take some time on slow devices.
+     *
+     * @return true if 3D terrain could be rendered on this device and false otherwise
+     */
+    @JvmStatic
+    fun isTerrainRenderingSupported(): Boolean {
+      EGLCore(false, DEFAULT_ANTIALIASING_SAMPLE_COUNT).apply {
+        val eglConfigOk = prepareEgl()
+        val eglSurface = createOffscreenSurface(1, 1)
+        makeCurrent(eglSurface)
+        val resultBuffer = IntBuffer.allocate(1)
+        GLES20.glGetIntegerv(GLES20.GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS, resultBuffer)
+        resultBuffer.rewind()
+        val result = resultBuffer.get()
+        val terrainSupported = result > 0
+        releaseSurface(eglSurface)
+        release()
+        return eglConfigOk && terrainSupported
       }
     }
   }

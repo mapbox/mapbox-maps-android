@@ -47,4 +47,10 @@ class MapboxMapIntegrationTest {
   fun testMapViewIsRenderingSupported() {
     assertEquals(true, MapView.isRenderingSupported())
   }
+
+  @UiThreadTest
+  @Test
+  fun testMapViewIsTerrainRenderingSupported() {
+    assertEquals(true, MapView.isTerrainRenderingSupported())
+  }
 }
