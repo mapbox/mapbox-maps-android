@@ -264,6 +264,33 @@ class LocationPuckManagerTest {
         assert(absoluteDifference < 2 * maxUlp)
       }
   }
+  @Test
+  fun testDefault3DStyleScalingWithMercatorScale() {
+    val onLocationUpdatedSlot = slot<((Point) -> Unit)>()
+    val valueSlots = mutableListOf<Value>()
+    every { settings.locationPuck } returns LocationPuck3D(
+      modelUri = "uri",
+    )
+    every { Value.fromJson(any()) } returns ExpectedFactory.createValue(Value("expression"))
+    locationPuckManager.initialize(mockk())
+    verify { animationManager.setUpdateListeners(capture(onLocationUpdatedSlot), any(), any()) }
+    onLocationUpdatedSlot.captured.invoke(Point.fromLngLat(60.0, 60.0))
+    assertEquals(locationPuckManager.lastMercatorScale, 0.5, 1E-5)
+    verify { locationLayerRenderer.styleScaling(capture(valueSlots)) }
+    val value = valueSlots.last().toString()
+    assertTrue(value.startsWith("[interpolate, [exponential, 0.5], [zoom], 0.5, [literal, ["))
+    assertTrue(value.endsWith("]], 22.0, [literal, [0.5000000000000001, 0.5000000000000001, 0.5000000000000001]]]"))
+    value
+      .replace("[interpolate, [exponential, 0.5], [zoom], 0.5, [literal, [", "")
+      .replace("]], 22.0, [literal, [0.5000000000000001, 0.5000000000000001, 0.5000000000000001]]]", "")
+      .split(", ")
+      .map { it.toDouble() }
+      .forEach {
+        val absoluteDifference: Float = abs(it - MODEL_SCALE_CONSTANT * 0.5).toFloat()
+        val maxUlp = Math.ulp(it).coerceAtLeast(Math.ulp(MODEL_SCALE_CONSTANT * 0.5)).toFloat()
+        assert(absoluteDifference < 2 * maxUlp)
+      }
+  }
 
   @Test
   fun testDoesntInitialiseIfRendererInitialised() {

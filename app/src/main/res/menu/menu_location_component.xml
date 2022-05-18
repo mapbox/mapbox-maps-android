@@ -9,6 +9,10 @@
         android:title="@string/toggle_custom_map_style"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/action_map_projection_change"
+        android:title="@string/toggle_custom_map_projection"
+        app:showAsAction="never"/>
+
     <item android:id="@+id/action_component_disable"
         android:title="@string/location_disable_component"
         app:showAsAction="never"/>

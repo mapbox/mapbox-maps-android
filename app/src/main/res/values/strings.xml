@@ -29,6 +29,7 @@
     <!--Location-->
     <string name="toggle_customised_puck">Toggle customised puck style</string>
     <string name="toggle_custom_map_style">Toggle custom Map style</string>
+    <string name="toggle_custom_map_projection">Toggle custom Map projection</string>
     <string name="location_disable_component">Disable Component</string>
     <string name="location_enable_component">Enable Component</string>
     <string name="location_show_bearing">Show bearing image</string>

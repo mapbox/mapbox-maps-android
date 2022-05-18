@@ -10,10 +10,13 @@ import com.mapbox.maps.MapboxLocationComponentException
 import com.mapbox.maps.extension.style.StyleInterface
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.LocationPuck3D
+import com.mapbox.maps.plugin.MapProjection
 import com.mapbox.maps.plugin.delegates.MapDelegateProvider
 import com.mapbox.maps.plugin.locationcomponent.animators.PuckAnimatorManager
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings
 import com.mapbox.maps.plugin.locationcomponent.generated.LocationComponentSettings2
+import kotlin.math.abs
+import kotlin.math.cos
 import kotlin.math.pow
 
 internal class LocationPuckManager(
@@ -30,8 +33,27 @@ internal class LocationPuckManager(
 
   @VisibleForTesting(otherwise = PRIVATE)
   internal var lastLocation: Point? = null
+
+  @VisibleForTesting(otherwise = PRIVATE)
+  internal var lastMercatorScale = 1.0
+    set(value) {
+      if (abs(value - field) > MERCATOR_SCALE_THRESHOLD) {
+        field = value
+        (settings.locationPuck as? LocationPuck3D)?.let { locationPuck3D ->
+          locationLayerRenderer.styleScaling(get3DPuckScaleExpression(locationPuck3D, field))
+        }
+      }
+    }
+
   private val onLocationUpdated: ((Point) -> Unit) = {
     lastLocation = it
+    if (settings.locationPuck is LocationPuck3D) {
+      val latitude =
+        if (delegateProvider.mapProjectionDelegate.getMapProjection() == MapProjection.Globe) {
+          delegateProvider.mapCameraManagerDelegate.cameraState.center.latitude()
+        } else it.latitude()
+      lastMercatorScale = mercatorScale(latitude)
+    }
   }
 
   private var lastBearing: Double = delegateProvider.mapCameraManagerDelegate.cameraState.bearing
@@ -62,7 +84,11 @@ internal class LocationPuckManager(
 
   fun initialize(style: StyleInterface) {
     if (!locationLayerRenderer.isRendererInitialised()) {
-      animationManager.setUpdateListeners(onLocationUpdated, onBearingUpdated, onAccuracyRadiusUpdated)
+      animationManager.setUpdateListeners(
+        onLocationUpdated,
+        onBearingUpdated,
+        onAccuracyRadiusUpdated
+      )
       animationManager.setLocationLayerRenderer(locationLayerRenderer)
       animationManager.applyPulsingAnimationSettings(settings)
       animationManager.applySettings2(settings2)
@@ -196,53 +222,81 @@ internal class LocationPuckManager(
         }
       }
       is LocationPuck3D -> {
-        val modelScaleConstant = 2.0.pow(MAX_ZOOM - MIN_ZOOM)
-        val modelScaleExpression = puck.modelScaleExpression
-        val scaleExpression = if (modelScaleExpression == null) {
+        locationLayerRenderer.styleScaling(get3DPuckScaleExpression(puck, lastMercatorScale))
+      }
+    }
+  }
+
+  private fun get3DPuckScaleExpression(puck: LocationPuck3D, mercatorScale: Double): Value {
+    val modelScaleConstant = 2.0.pow(MAX_ZOOM - MIN_ZOOM)
+    val modelScaleExpression = puck.modelScaleExpression
+    return if (modelScaleExpression == null) {
+      Value(
+        arrayListOf(
+          Value("interpolate"),
+          Value(arrayListOf(Value("exponential"), Value(PUCK_3D_EXPONENTIAL_EXPRESSION_BASE))),
+          Value(arrayListOf(Value("zoom"))),
+          Value(MIN_ZOOM),
           Value(
             arrayListOf(
-              Value("interpolate"),
-              Value(arrayListOf(Value("exponential"), Value(0.5))),
-              Value(arrayListOf(Value("zoom"))),
-              Value(MIN_ZOOM),
+              Value("literal"),
               Value(
                 arrayListOf(
-                  Value("literal"),
-                  Value(
-                    arrayListOf(
-                      Value(modelScaleConstant * puck.modelScale[0].toDouble()),
-                      Value(modelScaleConstant * puck.modelScale[1].toDouble()),
-                      Value(modelScaleConstant * puck.modelScale[2].toDouble())
-                    )
-                  )
+                  Value(modelScaleConstant * puck.modelScale[0].toDouble() * mercatorScale),
+                  Value(modelScaleConstant * puck.modelScale[1].toDouble() * mercatorScale),
+                  Value(modelScaleConstant * puck.modelScale[2].toDouble() * mercatorScale)
                 )
-              ),
-              Value(MAX_ZOOM),
+              )
+            )
+          ),
+          Value(MAX_ZOOM),
+          Value(
+            arrayListOf(
+              Value("literal"),
               Value(
                 arrayListOf(
-                  Value("literal"),
-                  Value(
-                    arrayListOf(
-                      Value(puck.modelScale[0].toDouble()),
-                      Value(puck.modelScale[1].toDouble()),
-                      Value(puck.modelScale[2].toDouble())
-                    )
-                  )
+                  Value(puck.modelScale[0].toDouble() * mercatorScale),
+                  Value(puck.modelScale[1].toDouble() * mercatorScale),
+                  Value(puck.modelScale[2].toDouble() * mercatorScale)
                 )
               )
             )
           )
-        } else {
-          Value.fromJson(modelScaleExpression).take()
-        }
-        locationLayerRenderer.styleScaling(scaleExpression)
-      }
+        )
+      )
+    } else {
+      Value.fromJson(modelScaleExpression).take()
     }
+  }
+
+  private fun mercatorScale(lat: Double): Double {
+    // In Mercator projection the scale factor is changed along the meridians as a function of latitude
+    // to keep the scale factor equal in all direction: k=sec(latitude), where sec(α) = 1 / cos(α).
+    // Here we are inverting the logic, as the 3d puck is using real-world size, and we are revising
+    // the appearance to look constant on a mercator projection map.
+    return cos(
+      // convert decimal latitude degrees to radians
+      lat.coerceIn(-LATITUDE_MAX, LATITUDE_MAX) * Math.PI / 180.0
+    )
   }
 
   private companion object {
     const val MIN_ZOOM = 0.50
     const val MAX_ZOOM = 22.0
+    // To make the 3D puck's size constant across different zoom levels, the 3D puck's size (real world object size)
+    // should be exponential to the zoom level.
+    // The base of the exponential expression is decided by how the tile pyramid works: at zoom level n, we have 2^(n+1)
+    // tiles to cover the earth.
+    const val PUCK_3D_EXPONENTIAL_EXPRESSION_BASE = 0.5
+
+    // We display most of the world at the lowest zoom level as a single square image, excluding the
+    // polar regions by truncation at latitudes of φmax = ±85.05113°.
+    // refs: https://en.wikipedia.org/wiki/Mercator_projection#:~:text=Web%20Mercator,-Main%20article%3A%20Web&text=The%20major%20online%20street%20mapping,%CF%86max%20%3D%20%C2%B185.05113%C2%B0
+    const val LATITUDE_MAX = 85.051128779806604
+
+    // Threshold to update the mercator scale factor when the latitude changes, so that we don't update the
+    // scale expression too frequently and cause performance issues.
+    const val MERCATOR_SCALE_THRESHOLD = 0.01
   }
 }
 
