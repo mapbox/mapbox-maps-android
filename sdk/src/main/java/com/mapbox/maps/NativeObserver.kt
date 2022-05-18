@@ -1,5 +1,7 @@
 package com.mapbox.maps
 
+import android.os.Handler
+import android.os.Looper
 import androidx.annotation.UiThread
 import com.mapbox.maps.extension.observable.*
 import com.mapbox.maps.extension.observable.eventdata.*
@@ -35,64 +37,72 @@ internal class NativeObserver(
   //
 
   override fun notify(event: Event) {
-    when (event.type) {
-      // Camera events
-      MapEvents.CAMERA_CHANGED -> onCameraChangeListeners.forEach {
-        it.onCameraChanged(
-          event.getCameraChangedEventData()
-        )
-      }
-      // Map events
-      MapEvents.MAP_IDLE -> onMapIdleListeners.forEach { it.onMapIdle(event.getMapIdleEventData()) }
-      MapEvents.MAP_LOADING_ERROR -> if (onMapLoadErrorListeners.isNotEmpty()) {
-        onMapLoadErrorListeners.forEach {
-          it.onMapLoadError(event.getMapLoadingErrorEventData())
+    try {
+      when (event.type) {
+        // Camera events
+        MapEvents.CAMERA_CHANGED -> onCameraChangeListeners.forEach {
+          it.onCameraChanged(
+            event.getCameraChangedEventData()
+          )
+        }
+        // Map events
+        MapEvents.MAP_IDLE -> onMapIdleListeners.forEach { it.onMapIdle(event.getMapIdleEventData()) }
+        MapEvents.MAP_LOADING_ERROR -> if (onMapLoadErrorListeners.isNotEmpty()) {
+          onMapLoadErrorListeners.forEach {
+            it.onMapLoadError(event.getMapLoadingErrorEventData())
+          }
+        }
+        MapEvents.MAP_LOADED -> onMapLoadedListeners.forEach { it.onMapLoaded(event.getMapLoadedEventData()) }
+        // Style events
+        MapEvents.STYLE_DATA_LOADED -> if (onStyleDataLoadedListeners.isNotEmpty()) {
+          onStyleDataLoadedListeners.forEach {
+            it.onStyleDataLoaded(event.getStyleDataLoadedEventData())
+          }
+        }
+        MapEvents.STYLE_LOADED -> onStyleLoadedListeners.forEach {
+          it.onStyleLoaded(event.getStyleLoadedEventData())
+        }
+        MapEvents.STYLE_IMAGE_MISSING -> if (onStyleImageMissingListeners.isNotEmpty()) {
+          onStyleImageMissingListeners.forEach {
+            it.onStyleImageMissing(event.getStyleImageMissingEventData())
+          }
+        }
+        MapEvents.STYLE_IMAGE_REMOVE_UNUSED -> if (onStyleImageUnusedListeners.isNotEmpty()) {
+          onStyleImageUnusedListeners.forEach {
+            it.onStyleImageUnused(event.getStyleImageUnusedEventData())
+          }
+        }
+        // Render frame events
+        MapEvents.RENDER_FRAME_STARTED -> onRenderFrameStartedListeners.forEach {
+          it.onRenderFrameStarted(event.getRenderFrameStartedEventData())
+        }
+        MapEvents.RENDER_FRAME_FINISHED -> if (onRenderFrameFinishedListeners.isNotEmpty()) {
+          onRenderFrameFinishedListeners.forEach {
+            it.onRenderFrameFinished(event.getRenderFrameFinishedEventData())
+          }
+        }
+        // Source events
+        MapEvents.SOURCE_ADDED -> if (onSourceAddedListeners.isNotEmpty()) {
+          onSourceAddedListeners.forEach {
+            it.onSourceAdded(event.getSourceAddedEventData())
+          }
+        }
+        MapEvents.SOURCE_DATA_LOADED -> if (onSourceDataLoadedListeners.isNotEmpty()) {
+          onSourceDataLoadedListeners.forEach {
+            it.onSourceDataLoaded(event.getSourceDataLoadedEventData())
+          }
+        }
+        MapEvents.SOURCE_REMOVED -> if (onSourceRemovedListeners.isNotEmpty()) {
+          onSourceRemovedListeners.forEach {
+            it.onSourceRemoved(event.getSourceRemovedEventData())
+          }
         }
       }
-      MapEvents.MAP_LOADED -> onMapLoadedListeners.forEach { it.onMapLoaded(event.getMapLoadedEventData()) }
-      // Style events
-      MapEvents.STYLE_DATA_LOADED -> if (onStyleDataLoadedListeners.isNotEmpty()) {
-        onStyleDataLoadedListeners.forEach {
-          it.onStyleDataLoaded(event.getStyleDataLoadedEventData())
-        }
-      }
-      MapEvents.STYLE_LOADED -> onStyleLoadedListeners.forEach {
-        it.onStyleLoaded(event.getStyleLoadedEventData())
-      }
-      MapEvents.STYLE_IMAGE_MISSING -> if (onStyleImageMissingListeners.isNotEmpty()) {
-        onStyleImageMissingListeners.forEach {
-          it.onStyleImageMissing(event.getStyleImageMissingEventData())
-        }
-      }
-      MapEvents.STYLE_IMAGE_REMOVE_UNUSED -> if (onStyleImageUnusedListeners.isNotEmpty()) {
-        onStyleImageUnusedListeners.forEach {
-          it.onStyleImageUnused(event.getStyleImageUnusedEventData())
-        }
-      }
-      // Render frame events
-      MapEvents.RENDER_FRAME_STARTED -> onRenderFrameStartedListeners.forEach {
-        it.onRenderFrameStarted(event.getRenderFrameStartedEventData())
-      }
-      MapEvents.RENDER_FRAME_FINISHED -> if (onRenderFrameFinishedListeners.isNotEmpty()) {
-        onRenderFrameFinishedListeners.forEach {
-          it.onRenderFrameFinished(event.getRenderFrameFinishedEventData())
-        }
-      }
-      // Source events
-      MapEvents.SOURCE_ADDED -> if (onSourceAddedListeners.isNotEmpty()) {
-        onSourceAddedListeners.forEach {
-          it.onSourceAdded(event.getSourceAddedEventData())
-        }
-      }
-      MapEvents.SOURCE_DATA_LOADED -> if (onSourceDataLoadedListeners.isNotEmpty()) {
-        onSourceDataLoadedListeners.forEach {
-          it.onSourceDataLoaded(event.getSourceDataLoadedEventData())
-        }
-      }
-      MapEvents.SOURCE_REMOVED -> if (onSourceRemovedListeners.isNotEmpty()) {
-        onSourceRemovedListeners.forEach {
-          it.onSourceRemoved(event.getSourceRemovedEventData())
-        }
+    } catch (exception: Exception) {
+      // Catching exception and rethrowing on main thread
+      // This avoids a native crash with a pending java exception
+      Handler(Looper.getMainLooper()).postAtFrontOfQueue {
+        throw exception
       }
     }
   }
