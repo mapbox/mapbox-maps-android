@@ -162,7 +162,7 @@ class StyleObserverTest {
 
   @Test
   fun onStyleDataLoadedNotifiesMapboxMap() {
-    val nativeMap = mockk<MapInterface>(relaxed = true)
+    val nativeMap = mockk<MapInterface>(relaxUnitFun = true)
     val styleObserver = StyleObserver(
       nativeMap = nativeMap,
       styleLoadedListener = mockk(relaxUnitFun = true),
@@ -318,7 +318,7 @@ class StyleObserverTest {
 
   @Test
   fun onStyleDataSpritesThrowsIfNoStyleData() {
-    val nativeMap = mockk<MapInterface>(relaxed = true)
+    val nativeMap = mockk<MapInterface>(relaxUnitFun = true)
     val styleObserver = StyleObserver(
       nativeMap = nativeMap,
       styleLoadedListener = mockk(relaxUnitFun = true),
@@ -345,11 +345,11 @@ class StyleObserverTest {
 
   @Test
   fun onStyleLoadedThrowsIfNoStyleData() {
-    val nativeMap = mockk<MapInterface>(relaxed = true)
+    val nativeMap = mockk<MapInterface>(relaxUnitFun = true)
     val styleObserver = StyleObserver(
       nativeMap = nativeMap,
       styleLoadedListener = mockk(relaxUnitFun = true),
-      nativeObserver = mockk(relaxed = true),
+      nativeObserver = mockk(relaxUnitFun = true),
       pixelRatio = 1.0f
     )
 

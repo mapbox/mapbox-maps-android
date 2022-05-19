@@ -198,7 +198,7 @@ class MapboxMapTest {
     verifyNo { layer.bindTo(style, layerPosition) }
     verifyNo { styleLoadCallback.onStyleLoaded(style) }
 
-    // TODO
+    // TODO https://github.com/mapbox/mapbox-maps-android/issues/1371
 //    callbackStyleSpritesSlots.first()!!.onStyleLoaded(style)
 //
 //    verify { image.bindTo(style) }
@@ -1113,7 +1113,7 @@ class MapboxMapTest {
   @Test
   fun setsStyleTransitionAfterOnStyleDataEvent() {
     val options = mockk<TransitionOptions>(relaxed = true)
-    val style = mockk<Style>(relaxed = true)
+    val style = mockk<Style>(relaxUnitFun = true)
     mapboxMap.loadStyleUri(
       "style",
       options,

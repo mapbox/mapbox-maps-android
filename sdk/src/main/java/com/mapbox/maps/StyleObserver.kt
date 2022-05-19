@@ -99,13 +99,13 @@ internal class StyleObserver(
       }
       StyleDataType.SPRITE -> {
         styleDataSpritesLoadedListener?.onStyleLoaded(
-          loadedStyle ?: throw MapboxMapException("Style is not initialized but SPRITES event have arrived!")
+          loadedStyle ?: throw MapboxMapException("Style is not initialized yet although SPRITES event has arrived!")
         )
         styleDataSpritesLoadedListener = null
       }
       StyleDataType.SOURCES -> {
         styleDataSourcesLoadedListener?.onStyleLoaded(
-          loadedStyle ?: throw MapboxMapException("Style is not initialized but SOURCES event have arrived!")
+          loadedStyle ?: throw MapboxMapException("Style is not initialized yet although SOURCES event has arrived!")
         )
         styleDataSourcesLoadedListener = null
       }

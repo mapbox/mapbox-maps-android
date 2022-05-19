@@ -276,11 +276,7 @@ class MapboxMap :
     checkNativeMap("loadStyle")
     initializeStyleLoad(
       onStyleLoaded = { style ->
-        // TODO order of styleDataSourcesLoadedListener / styleDataSpritesLoadedListener is not defined
-        // and the callbacks are optional - e.g. style without sources / sprites won't trigger those events.
-        // To make sure every style extension component is loaded
-        // we bind them in the final onStyleLoaded callback.
-        // Need to revisit in 10.6.0-beta.2
+        // TODO https://github.com/mapbox/mapbox-maps-android/issues/1371
         styleExtension.images.forEach {
           it.bindTo(style)
         }
@@ -300,7 +296,7 @@ class MapboxMap :
         transitionOptions?.let(style::setStyleTransition)
       },
       styleDataSourcesLoadedListener = { style ->
-        // TODO
+        // TODO https://github.com/mapbox/mapbox-maps-android/issues/1371
 //        styleExtension.sources.forEach {
 //          it.bindTo(style)
 //        }
@@ -309,7 +305,7 @@ class MapboxMap :
 //        }
       },
       styleDataSpritesLoadedListener = { style ->
-        // TODO
+        // TODO https://github.com/mapbox/mapbox-maps-android/issues/1371
 //        styleExtension.images.forEach {
 //          it.bindTo(style)
 //        }
